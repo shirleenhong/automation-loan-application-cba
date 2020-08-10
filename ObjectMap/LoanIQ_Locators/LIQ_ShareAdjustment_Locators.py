@@ -1,0 +1,75 @@
+### Make Selection Window ###
+LIQ_MakeSelection_Window = 'JavaWindow("title:=Make Selection")'
+LIQ_MakeSelection_OK_Button = 'JavaWindow("title:=Make Selection").JavaButton("label:=OK")'
+LIQ_MakeSelection_Cancel_Button = 'JavaWindow("title:=Make Selection").JavaButton(label:=Cancel)'
+LIQ_MakeSelection_LenderSharesAdjustment_RadioButton = 'JavaWindow("title:=Make Selection").JavaObject("tagname:=Group","text:=Choices").JavaRadioButton("label:=Lender Shares Adjustment")'
+LIQ_MakeSelection_ServicingGroupChange_RadioButton = 'JavaWindow("title:=Make Selection").JavaObject("tagname:=Group","text:=Choices").JavaRadioButton("label:=Servicing Group Change")'
+LIQ_MakeSelection_PortfolioTransfer_RadioButton = 'JavaWindow("title:=Make Selection").JavaObject("tagname:=Group","text:=Choices").JavaRadioButton("label:=Portfolio Transfer")'
+LIQ_MakeSelection_PortfolioSettledDiscount_RadioButton = 'JavaWindow("title:=Make Selection").JavaObject("tagname:=Group","text:=Choices").JavaRadioButton("label:=Portfolio Settled Discount Change")'
+LIQ_MakeSelection_PortfolioTradeDate_RadioButton = 'JavaWindow("title:=Make Selection").JavaObject("tagname:=Group","text:=Choices").JavaRadioButton("label:=Portfolio Trade Date Discount Change")'
+LIQ_MakeSelection_PortfolioAssignableChange_RadioButton = 'JavaWindow("title:=Make Selection").JavaObject("tagname:=Group","text:=Choices").JavaRadioButton("label:=Portfolio Assignable Change")'
+LIQ_MakeSelection_PortfolioDeferredPLChange_RadioButton = 'JavaWindow("title:=Make Selection").JavaObject("tagname:=Group","text:=Choices").JavaRadioButton("label:=Portfolio Deferred P/L Change")'
+LIQ_MakeSelection_PortfolioDeferredPLIndicator_RadioButton = 'JavaWindow("title:=Make Selection").JavaObject("tagname:=Group","text:=Choices").JavaRadioButton("label:=Portfolio Deferred P/L Indicator Change")'
+LIQ_MakeSelection_PortfolioTransactionCost_RadioButton = 'JavaWindow("title:=Make Selection").JavaObject("tagname:=Group","text:=Choices").JavaRadioButton("label:=Portfolio Transaction Cost Adjustment")'
+
+### Share Adjustment Window ###
+LIQ_ShareAdjustment_Window = 'JavaWindow("title:=Share Adjustment.*")'
+LIQ_ShareAdjustment_Tab = 'JavaWindow("title:=Share Adjustment.*").JavaTab("tagname:=TabFolder")'
+LIQ_ShareAdjustment_Effective_Datefield = 'JavaWindow("title:=Share Adjustment.*").JavaEdit("attached text:=Effective Date:")'
+LIQ_ShareAdjustment_BuySellPrice_Textfield = 'JavaWindow("title:=Share Adjustment.*").JavaEdit("attached text:=.*Buy/Sell Price:")'
+LIQ_ShareAdjustment_Comment_Textfield = 'JavaWindow("title:=Share Adjustment.*").JavaEdit("attached text:=Comment:")'
+LIQ_ShareAdjustment_Workflow_Tree = 'JavaWindow("title:=Share Adjustment.*").JavaTree("attached text:=Drill down to perform Workflow item")'
+LIQ_ShareAdjustment_File_Save = 'JavaWindow("title:=Share Adjustment.*").JavaMenu("label:=File").JavaMenu("label:=Save")'
+LIQ_ShareAdjustment_File_Exit = 'JavaWindow("title:=Share Adjustment.*").JavaMenu("label:=File").JavaMenu("label:=Exit")'
+LIQ_ShareAdjustment_Options_ViewUpdateLenderShares = 'JavaWindow("title:=Share Adjustment.*").JavaMenu("label:=Options").JavaMenu("label:=View/Update Lender Shares")'
+
+LIQ_SharesFor_Window = 'JavaWindow("title:=Shares for.*")'
+LIQ_SharesFor_Primaries_Tree = 'JavaWindow("title:=Shares for.*").JavaObject("tagname:=Group","text:=Primaries/Assignees").JavaTree("attached text:=Drill Down for Primary/Assignment Detail")'
+LIQ_SharesFor_Participants_Tree = 'JavaWindow("title:=Shares for.*").JavaObject("tagname:=Group","text:=Participants").JavaTree("attached text:=Drill Down for Participation Detail")'
+LIQ_SharesFor_HostBankShares_Tree = 'JavaWindow("title:=Shares for.*").JavaObject("tagname:=Group","text:=Host bank shares").JavaTree("attached text:=Drill Down for Portfolio Shares")'
+LIQ_SharesFor_OK_Button = 'JavaWindow("title:=Shares for.*").JavaButton("label:=OK")'
+LIQ_SharesFor_Cancel_Button = 'JavaWindow("title:=Shares for.*").JavaButton("label:=Cancel")'
+LIQ_SharesFor_ActualTotal_Text = 'JavaWindow("title:=Shares for.*").JavaObject("tagname:=Group","text:=Primaries/Assignees").JavaEdit("attached text:=Actual Total:")'
+LIQ_SharesFor_ActualNetAllTotal_Text = 'JavaWindow("title:=Shares for.*").JavaObject("tagname:=Group","text:=Host bank shares").JavaEdit("attached text:=Actual Net All Total:")'
+LIQ_SharesFor_LenderNotebook_Button = 'JavaWindow("title:=Shares for.*").JavaObject("tagname:=Group","text:=Primaries/Assignees").JavaButton("label:=Lender Notebook")'
+LIQ_SharesFor_Comment_Button = 'JavaWindow("title:=Shares for.*").JavaButton("attached text:=Comment")'
+
+LIQ_ServicingGroupShare_Window = 'JavaWindow("title:=Servicing Group Share.*")'
+LIQ_ServicingGroupShare_Adjustment_Textfield = 'JavaWindow("title:=Servicing Group Share.*").JavaEdit("attached text:=.*Adjustment:")'
+LIQ_ServicingGroupShare_NewBalance_Text = 'JavaWindow("title:=Servicing Group Share.*").JavaEdit("attached text:=New Balance:")'
+LIQ_ServicingGroupShare_ActualAmount_Field = 'JavaWindow("title:=Servicing Group Share.*").JavaEdit("attached text:=Actual Amount:")'
+LIQ_ServicingGroupShare_OK_Button = 'JavaWindow("title:=Servicing Group Share.*").JavaButton("label:=OK")'
+
+LIQ_HostBankShare_Window = 'JavaWindow("title:=Host Bank Share.*")'
+LIQ_HostBankShare_BranchPortfolioExpenseCode_Tree = 'JavaWindow("title:=Host Bank Share.*").JavaTree("attached text:=Drill down to view/edit")'
+LIQ_HostBankShare_BranchPortfolioExpenseCode_EmptyTree = 'JavaWindow("title:=Host Bank Share.*").JavaTree("items count:=0")'
+LIQ_HostBankShare_OK_Button = 'JavaWindow("title:=Host Bank Share.*").JavaButton("label:=OK")'
+LIQ_HostBankShare_Cancel_Button = 'JavaWindow("title:=Host Bank Share.*").JavaButton("label:=Cancel")'
+LIQ_HostBankShare_AddPortfolio_Button = 'JavaWindow("title:=Host Bank Share.*").JavaButton("label:=Add Portfolio/Expense Code")'
+LIQ_HostBankShare_SumOfPortfolioShares_Text = 'JavaWindow("title:=Host Bank Share.*").JavaEdit("attached text:=Sum of Portfolio Shares:")'
+
+LIQ_PortfolioSelection_Window = 'JavaWindow("title:=Portfolio Selection.*")'
+LIQ_PortfolioSelection_Tree = 'JavaWindow("title:=Portfolio Selection.*").JavaTree("attached text:=Portfolio/Expense:")'
+LIQ_PortfolioSelection_OK_Button = 'JavaWindow("title:=Portfolio Selection.*").JavaButton("label:=OK")'
+LIQ_PortfolioSelection_Cancel_Button = 'JavaWindow("title:=Portfolio Selection.*").JavaButton("label:=Cancel")'
+
+LIQ_PortfolioShareEdit_Window = 'JavaWindow("title:=Portfolio Share Edit")'
+LIQ_PortfolioShareEdit_Adjustment_Textfield = 'JavaWindow("title:=Portfolio Share Edit").JavaEdit("index:=0")'
+LIQ_PortfolioShareEdit_OK_Button = 'JavaWindow("title:=Portfolio Share Edit").JavaButton("label:=OK")'
+LIQ_PortfolioShareEdit_Cancel_Button = 'JavaWindow("title:=Portfolio Share Edit").JavaButton("label:=Cancel")'
+
+### Share Adjustment Window ###
+LIQ_ShareAdjustment_DealName ='JavaWindow("title:=Share Adjustment.*").JavaStaticText("x:=140","y:=0")'
+LIQ_ShareAdjustment_FacilityName = 'JavaWindow("title:=Share Adjustment.*").JavaStaticText("x:=140","y:=28")'
+LIQ_ShareAdjustment_AmendmentNO = 'JavaWindow("title:=Share Adjustment.*").JavaStaticText("x:=383","y:=83")'
+
+LIQ_ShareAdjustmentInFacility = 'JavaWindow("title:=Shares for .*")'
+LIQ_ShareAdjustment_Options_FacilityNotebook = 'JavaWindow("title:=Shares for .*").JavaMenu("label:=Options").JavaMenu("label:=Facility Notebook")'
+LIQ_ShareAdjustment_Facility_Window = 'JavaWindow("title:=Facility -.*")'
+
+LIQ_ShareAdjustment_Ok_Button = 'JavaWindow("title:=Shares for .*").JavaButton("attached text:=OK")'
+
+### Comment Edit Window ###
+LIQ_CommentEdit_Window = 'JavaWindow("title:=Comment Edit")'
+LIQ_CommentEdit_Comment_Text = 'JavaWindow("title:=Comment Edit").JavaEdit("attached text:=Comment:")'
+LIQ_CommentEdit_OK_Button = 'JavaWindow("title:=Comment Edit").JavaButton("attached text:=OK")'

@@ -1,0 +1,469 @@
+*** Variables *** 
+${POSTMethod}    POST
+${PUTMethod}     PUT
+${DeleteMethod}    DELETE
+
+${CREATE}    CREATE
+${UPDATE}    UPDATE
+${DELETE}    DELETE
+
+
+${MessageStatus_FAILED}    FAILED
+${MessageStatus_SUCCESS}    SUCCESSFUL
+${OPEARATIONSTATUS_SUCCESS}    SUCCESS
+${MESSAGESTATUS_SUCCESSFUL}    SUCCESSFUL
+${MESSAGESTATUS_ERROR}    ERROR
+${MESSAGESTATUS_FAILURE}    FAILURE
+${MESSAGESTATUS_PARTIAL}    PARTIAL
+${Status}
+${MESSAGE_OBJECTNOTFOUND}    Object not found
+${MESSAGE_NOTAVALIDCODE}    not a valid code
+${MESSAGE_USERIDNOTONFILE}    User ID not on file
+${MESSAGE_EXCEPTION}    Exception
+${MESSAGE_EMPTYARRAY}    Payload must contain at least 1 Riskbook
+${MESSAGE_ITEMNOTASSIGNED}    ITEM NOT ASSIGNED TO THE USER
+${MESSAGE_DATASOURCEERROR}    The DataSource is not a subscriber to the API
+
+### Browser Setup Names ###
+${CHROME_BROWSER}    Chrome
+
+###Session Keywords###
+${RESPONSE_FILE}
+${API_RESPONSE}
+${APISESSION}    APISESSION
+${TOKENSESSION}    TOKENSESSION
+${COMMSEESESSION}    COMMSEESESSION
+${RESPONSECODE_201}    201
+${RESPONSECODE_200}    200
+${RESPONSECODE_204}    204
+${RESPONSECODE_400}    400
+${RESPONSECODE_404}    404
+${RESPONSECODE_405}    405
+${MDM_Cal_API}        /corporate/calendars
+${MDM_BASE_API}       /corporate/baseinterestrates 
+${MDM_FX_API}         /corporate/fxrates
+${MDM_User_API}       /corporate/users
+${Corres_API}         /custom/v1/cbanotices/status
+${MDM_ACCESS_TOKEN}    /bfweb/rest/MisysSSOFBPService/jwt/create
+${MDM_COMMSEE_DEALFACILITY_API}    /comrlending/dealFacility/
+${MDM_COM_API}     /custom/v1/comrlending/dealFacility/
+${MDM_COM_API_0}   /custom/v1/comrlending/facility/
+${MDM_COM_API_00}  /outstandings
+${MDM_COM_API_FEES}    /fees
+${COM_HOST}    COM_HOST
+${MDM_PARTY_API}    /bfweb/retail/v1/party/
+${MDM_COMMSEE_API_FAC}    /custom/v1/comrlending/facility/
+${MDM_DATASOURCE_PARAM}    dataSource=LOB
+${MDM_LIMIT_PARAM}    limit
+${MDM_OFFSET_PARAM}    offset
+${MDM_BUSINESSENTITY_PARAM}    defaultBusinessEntityName=AU
+${LOBS}    /lobs/
+${DATASOURCEANDBUSINESSENTITY}    dataSource/LOB/defaultBusinessEntityName/AU
+${MDM_DATASOURCE_VALUE}    dataSource=
+
+${MDM_RISKBOOK_API}    /loaniq/user-profile/user-profiles/
+${RISKBOOK_LOGIN}    login
+${RISKBOOKS}    riskbooks
+
+# FILES
+${Distributor_Audit_File}
+${OpenAPI_Audit_File}
+${Resp_Stat_Code}
+${details_name}
+${causes_name}
+${OpenAPIFileName}    mdm_audit_openApi.txt-
+${DistributorFileName}    mdm_audit_distributor.txt-
+
+### Data needed from API ###
+# FX Rate
+${Exhange_Rate_Field_Value_Global}
+${Exchange_Currency_Global}
+${Effective_Date_Global}
+
+# Base Interest Rate Global Vars
+# interestrate - description - effective date - repricing freq - currency
+${baseRateCode_Global}
+${baseRateOptionName_Global}
+${baseInterestRate_Global}
+${baseInterestRatePercentage_Global}
+${baseDescription_Global}
+${baseEffectiveDate_Global}
+${baseRepricingFrequency_Global}
+${baseCurrency_Global}  
+
+# Calendar
+${calendarNonBusinessDatesGlobal}
+${calendarIdGlobal}
+${calendarDescriptionGlobal}
+${calendarBusinessDatesGlobal}
+
+## LIQ Credential Temporary
+${AdminUsername}    PTSER11
+${AdminPassword}     password
+
+${TRUSER7Username}    PTSER12
+${TRUSER7Password}    password
+
+${PTSER1}    PTSER1
+${PTSER1Password}    password
+
+## ASCII Code
+${Keyboard_Enter}     \\13
+
+
+${TEMPLATEINPUT}    DataSet\\Integration_DataSet\\API\\templateinput.json
+${templateinput_EMPTY}    templateinput_EMPTY.json
+${templateinput_SingleLOB}    templateinput_SingleLOB.json
+${templateinput_MultipleLOB}    templateinput_MultipleLOB.json
+${templateinput_Multiple}    templateinput_Multiple.json
+${templateinput_baserate}    templateinput_baserate.json
+${TEMPLATE_INACTIVEFUNDINGDESK}    template_InactiveFundingDesk.xml
+${CURR_LOB}
+${rowID_Audit}
+
+###TL Keywords###
+${TL_BASE_TOTALROW}
+${ADDITIONAL_FILESTAMP}    100
+# =============================================== SCENARIO 8 VARIABLES ===================================================================#
+### GLOBAL VARIABLES ###
+@{APIBaseRate_InterestRate}
+@{APIBaseRate_Code}
+@{APIBaseRate_EffectiveDate}
+@{APIBaseRate_Frequency}
+@{APIBaseRate_Currency}
+
+###FFC###
+${FFC_RESPONSE}
+${GETTEXTJMS_SOURCENAME}    GETTextJMS
+${TEXTJMS_SOURCENAME}    TextJMS
+${TEXTJMS_INSTANCE}    distributor_1.3.0
+${GETTEXTJMS_INSTANCE}    distributor_CCB-1.2.0.1 Dev Cut
+${OPEAPI_INSTANCE_TL}    openAPI_1.3.0
+${OPEAPI_INSTANCE}    openAPI_1.3.0
+${OPEN_API_CCB}    openAPI_CCB-1.1.0.1
+${CBAINTERFACE_SOURCENAME}    CCBCorrespUpdateMQ_base
+${CBAINTERFACE_INSTANCE}    CustomCBAInterface_Transformation1.1.6
+${CBAINTERFACE_SOURCENAME_FXRATES}    CCBCorrespUpdateMQ_notf
+${CBAPUSH_SOURCENAME}    CCBCorrespUpdateMQ_notf
+${CBAPUSH_INSTANCE}    CustomCBAPush_1.3.0
+${CUSTOM_INTERFACE}    CustomInterface_1.2.6
+${TL_BASE_ACK_MESSAGE_SOURCENAME}    tl_ack_message_splitter_base
+${TL_CAL_ACK_MESSAGE_SOURCENAME}    tl_ack_message_splitter_cal
+${CUSTOM_INTERFACE_INSTANCE}    CustomInterface_1.2.6
+${RESPONSE_MECHANISM_SOURCENAME}    MessageResponseProcessor
+${RESPONSE_MECHANISM_INSTANCE}    responsemechanism_1.3.0
+
+###FFC Summary Headers###
+${SOURCE}    SOURCE
+${INSTANCE}    INSTANCE
+${INPUTTYPE}    INPUTTYPE
+${OUTPUTTYPE}    OUTPUTTYPE
+${PROCESSING}    PROCESSING
+${SUCCESSFUL}    SUCCESSFUL
+${WARNING}    WARNING
+${ERROR}    ERROR
+${FAILED}    FAILED
+${SENT}    SENT
+${DISCARDED}    DISCARDED
+${SPLIT}    SPLIT
+${BATCHED}    BATCHED
+
+###FFC Results Headers - OpenAPI###
+${RESULTSTABLE_STATUS}    STATUS
+${CONTENT_TYPE}    Content-Type
+${X_REQUEST_ID}    X-Request-ID
+${HTTP_OPERATION}    OPERATION
+${AUTHORIZATION}    Authorization
+${URL}    url
+${ID}
+${JSON_FILE_FORMAT}    json  
+${REQUESTS_ID}    REQUESTID
+${TLSUCCESS_OUTPUT_TYPE}    TLSUCCESS
+${REQUEST_DATA_0}
+${SESSIONID}
+${SESSION_0}
+${APIENDPOINT_0}
+${APIENDPOINT}
+${ALIAS}    ALIAS
+${GET_response}
+${LOB}    LOB
+
+###FFC Results Headers - TextJMS###
+${HEADER_CORRELATION_ID}    jms.header.correlationId
+${HEADER_OPERATION}    jms.header.OPERATION
+${ROUTEROPERATION}    ROUTEROPERATION
+${HEADER_ROUTEROPERATION}    ROUTEROPERATION
+${HEADER_CATEGORY}    CATEGORY
+${HEADER_ID}    ID
+${HEADER_QUEUENAME}    QUEUENAME
+${HEADER_HTTP_OPERATION}    OPERATION
+
+###FFC Results Headers - MessageResponseProcessor###
+${DESTINATION}    destination
+${DESTINATION_FX}   RestFXRateDest
+${DESTINATION_BR}   RestBaseRateDest
+${DESTINATION_CAL}   RestCalendarDest
+
+###FFC Results - CBAInterface###
+${JMS_CORRELATION_ID}    jms.correlation.id
+${JMS_INBOUND_QUEUE}    jms.inbound.queue
+${HTTPSTATUS}    HttpStatus
+${OPERATION_STATUS}    OPERATION_STATUS
+${QUEUENAME}    QUEUENAME
+
+###FFC Results - CBAPush###
+${JMS_PAYLOAD}    Payload
+${JMS_HEADERS}    Headers
+${EMPTY_PAYLOAD}    EMPTYPAYLOAD
+
+###CustomCBAPush Payload Keyfields###
+${REQUEST_ID}    requestId
+${APINAME}    apiName
+${CONSOLIDATED_STATUS}    consolidationStatus
+${RESPONSES}    responses
+${MESSAGE_ID}    messageId
+${RESPONSE_DESC}    responseDescription
+${RESPONSE_STAT}    responseStatus
+${RESPONSE_DETAILS}    responseDetails
+
+###FFC Values###
+${CONTENT_TYPE_VALUE}    application/json
+${TL_BASE_OUT}    tl-base-out
+${TL_FX_OUT}    tl-fx-out
+${TL_NOTIF_OUT}    tl-notification-out
+${POST_STATUS}    201
+${PUT_STATUS}    200
+${FUNDING_DESK_STATUS}    Inactive
+${FAILED_STATUS}    404
+${FILE_VALIDATION}    FILE_VALIDATION
+${LIQ_RESPONSE}    LIQResponse
+${AUTH_TOKEN}
+${LIQ_QUEUENAME_SUCCESS}    wsFinalLIQDestination
+${LIQ_QUEUENAME_ERROR}    errorLogQueue
+
+###CBAPush Payload values###
+${INVALIDFILEFORMAT_DESC}    ) is not a CSV file.
+${INVALIDFILENAME_DESC}    ) or file format is wrong.
+${INVALIDDATE_FORMAT}    field value date format is invalid. valid format - [yyyy-MM-dd]
+${INVALIDCURRENCY_FORMAT}    field currency code is invalid
+${INVALIDFIELD_FORMAT}    field value is invalid 
+${INVALIDFILE_FORMAT}    file or file format is wrong   
+${MISSINGHEADERS_DESC}    ROW 1: Cannot parse the file. Either File is having duplicate columns or empty header names.
+${NO_CALENDAR_CHANGE}    NO CALENDAR CHANGES WERE REQUIRED.
+${DUPLICATE_ROW}    Cannot have duplicate currency pairs
+${BASE_MAX_ERROR}    maximum character length (40) exceeded
+${DUPLICATE_RECORD}    Cannot have duplicate records
+${INACTIVE_BASERATECODE}    field baseRate is not an active code in table Base Rate
+${MANDATORYVALUEMISSING_DESC}    field value should not be empty
+${LIQUPDATELOCKED}    Sorry LOAN IQ, the data that you are trying to update (MULTIPLE LOB LNAME, MULTIPLE LOB FNAME) has already been locked
+${INVALID_BASERATECODE_CONFIG}    There is no baseratecode configuration available at COMRLENDING corresponding to baseratecode
+${INVALID_GS_INSTR_TYPE}    GS_INSTR_TYPE field value is invalid
+${INVALID_GS_SNAP}    GS_SNAP field value is not a valid snap value
+${INVALIDGS_BASE_CCY}    GS_BASE_CCY field currency code is invalid
+${INVALID_GS_TRGT_CCY}    GS_TRGT_CCY field currency code is invalid
+${INVALID_GS_INSTR_PRC_TYPE}    GS_INSTR_PRC_TYPE field value is not a valid FX Rate Price Type value
+${INVALID_GS_INSTR_PRICE}    GS_INSTR_PRICE field value should be positive number
+${INVALID_GS_PROCESSING_DATE}    GS_PROCESSING_DATE field value date format is invalid. valid format - [yyyy-MM-dd]
+${FXRATES_MISSINGHEADER}    header(s) not available in the file
+${INVALID_CURRENCYPAIR}    Currency pair should include [USD] as one of the currencies
+
+${INVALID_GS_VENDOR_PUBLISH_DATE}    GS_VENDOR_PUBLISH_DATE field value date format is invalid. valid format - [yyyy-MM-dd]
+${INVALID_BASE_GS_INSTR_PRICE}    GS_INSTR_PRICE field value should be a number
+${GS_INSTR_PRC_TYPE}    GS_INSTR_PRC_TYPE field value is not a valid Base Rate Price Type value
+${GS_INSTR_TENOR}    GS_INSTR_TENOR field value not a valid rate tenor. valid format - nnn(DAYS|MNTH|YEAR|WEEK)
+
+${INVALIDFILEFORMAT}    INVALIDFILEFORMAT
+${INVALIDDATEFORMAT}   INVALIDDATEFORMAT
+${INVALIDFILENAME}    INVALIDFILENAME
+${SMALLCASESFILENAME}    SMALLCASESFILENAME
+${MISSINGHEADERS}   MISSINGHEADERS
+${MISSINGVALUE}    MISSINGMANDATORYFIELDVALUE
+
+${JSON}    json
+${XML}    xml
+${TXT}    txt
+${CSV}    csv
+${XLSX}    xlsx
+${XLS}    xls
+${RESULTS_ROW_WITHREF}
+${ZONE1_BUSINESSDATE}
+${ZONE3_BUSINESSDATE}
+${LIQ_SYS_DATE}
+${REQUESTID_LIST}
+${REQUESTID_VALUE}
+${TRANSFORMEDDATA_LIST}
+${VALUE_DATE}
+${PROCESSING_DATE}
+${PUBLISH_DATE}
+
+###Transformation Layer - SFTP###
+${GSFILENAME_COMPLETE}
+${GSFILENAME_WITHTIMESTAMP}
+${ARCHIVE_GSFILENAME_LIST}
+${TL_USERNAME}    LOANIQ01
+${TL_PASSWORD}    password
+${TL_BASE_FOLDER}    /evgdata/TRANSFORMATION/SFTP/base_rate
+${TL_FX_FOLDER}    /evgdata/TRANSFORMATION/SFTP/fx_rate
+${TL_CALENDAR_FOLDER}    /evgdata/TRANSFORMATION/SFTP/holiday
+
+${TL_BASEERR_FILEVAL_FOLDER}    /evgdata/TRANSFORMATION/SFTP/error/base_rate/file_validation_failed
+${TL_BASEERR_CCBDOWN_FOLDER}    /evgdata/TRANSFORMATION/SFTP/error/base_rate/ccb_service_down
+${TL_BASEERR_SYSDOWN_FOLDER}    /evgdata/TRANSFORMATION/SFTP/error/base_rate/system_component_down
+${TL_BASEERR_RUNTIME_FOLDER}    /evgdata/TRANSFORMATION/SFTP/error/base_rate/runtime_exception
+
+${TL_FXERR_FILEVAL_FOLDER}    /evgdata/TRANSFORMATION/SFTP/error/fx_rate/file_validation_failed
+${TL_FXERR_CCBDOWN_FOLDER}    /evgdata/TRANSFORMATION/SFTP/error/fx_rate/ccb_service_down
+${TL_FXERR_SYSDOWN_FOLDER}    /evgdata/TRANSFORMATION/SFTP/error/fx_rate/system_component_down
+${TL_FXERR_RUNTIME_FOLDER}    /evgdata/TRANSFORMATION/SFTP/error/fx_rate/runtime_exception
+
+${TL_CALENDARERR_FILEVAL_FOLDER}    /evgdata/TRANSFORMATION/SFTP/error/holiday/file_validation_failed
+${TL_CALENDARERR_CCBDOWN_FOLDER}    /evgdata/TRANSFORMATION/SFTP/error/holiday/ccb_service_down
+${TL_CALENDARERR_SYSDOWN_FOLDER}    /evgdata/TRANSFORMATION/SFTP/error/holiday/system_component_down
+${TL_CALENDARERR_RUNTIME_FOLDER}    /evgdata/TRANSFORMATION/SFTP/error/holiday/runtime_exception
+
+${TL_BASE_ARCHIVE_FOLDER}    /evgdata/TRANSFORMATION/SFTP/archive/base_rate
+${TL_BASE_DIRECTORY_FOLDER}    /evgdata/TRANSFORMATION/SFTP/base_directory
+${TL_FX_ARCHIVE_FOLDER}    /evgdata/TRANSFORMATION/SFTP/archive/fx_rate
+${TL_FX_DIRECTORY_FOLDER}    /evgdata/TRANSFORMATION/SFTP/fx_directory
+${TL_CALENDAR_ARCHIVE_FOLDER}    /evgdata/TRANSFORMATION/SFTP/archive/holiday
+${TEMPORARY_FILETEXT}    ..\\CBA_Evergreen\\DataSet\\temp.txt 
+${TL_FXRATE_LOGFILE}    fxRate.log
+${TL_FUTURE_DATE_POLLER}    Future Date Poller
+${TL_FUTURE_DATE_POLLING_TIME}    10 minutes
+
+###Database Keywords###
+${CX_ORACLE}    cx_Oracle
+${MASTER_MAPPING_TABLE}    master_mapping
+${GS_BASE_RATE_TABLE}    gs_base_rate
+${GS_FX_RATE_TABLE}    gs_fx_rate
+
+${TECHNICAL_ERROR}
+${FUNCTIONAL_ERROR}
+
+###LIQ USER CREATION###
+${LIQ_ADMIN_USERNAME}    ADMIN1
+${LIQ_USER_TO_COPY}    LAWLESS
+${LIQ_USER}    TUSER
+${LIQ_PASSWORD}    password
+${LIQ_NUMBER_OF_USERS}    20
+
+### LOB ###
+${COMRLENDING}    COMRLENDING
+${COREBANKING}    COREBANKING
+${PARTY}    PARTY
+${sSearchedDataList}
+${MDM}    MDM
+${MULTIPLE_LOB}    COMRLENDING,MPM,COREBANKING,PARTY
+
+
+${ZONE1}    ZONE1
+${ZONE2}    ZONE2
+${ZONE3}    ZONE3
+${ZONE4}    ZONE4
+
+### GL Posting ###
+${GLExtract_FOLDER}    /evgdata/FBE_GL_Extract/extract
+${GLExtract_FileName_Prefix}    CCB_ESS_GL_SYD_TRANSACTION_
+${GL_Entity}    AU
+${GLExtract_FileName_FileExtension}    .csv.gpg
+${GLExtract_ControlJSON_FileName_Prefix}    CCB_ESS_GL_SYD_TRANSACTION_
+${GLExtract_ControlJSON_FileExtension}    .json
+${GLExtract_Manifest_FileName_Prefix}    Manifest_GL_${GL_Entity}_
+${GLExtract_Manifest_FileName_FileExtension}    .txt
+${GLExtract_DWENotification}    /evgdata/FFC/mch-2.1.3.3.0-6162/config/dwe_notification
+${GLExtract_Output_FFCFolder}    \\DataSet\\Extract_DataSet\\GL\\Output\\
+${GLExtract_NotificationProperties_File}    notification.properties
+${GLExtract_ControlFile_Version}    extracts.controlfile.version
+${GLSource_FOLDER}    /evgdata/FBE_GL_Extract/GLSource
+${GLDone_FOLDER}    /evgdata/FBE_GL_Extract/Done
+
+###FFC Results - GL ###
+${GLNOTIFICATIONSOURCE_ID}	ID
+${GLNOTIFICATIONSOURCE_STATUS}	STATUS
+${GLNOTIFICATIONSOURCE_SUCCESSSTATUS}	SUCCESSFUL
+${GLNOTIFICATIONSOURCE_HTTPRESPONSECODE}	HttpResponseCode
+
+### Loan IQ ###
+${LOANIQ_USERSTATUS_INACTIVE}    INACTIVE
+${LOANIQ_USERSTATUS_ACTIVE}    ACTIVE
+${LOANIQ_USERSTATUS_BOTH_ACTIVE_INACTIVE}    BOTH
+
+### Table Maintenance ###
+${AUTOMATED_TRANSACTIONS}    Automated Transactions
+
+### DELETE USER API AUTH TOKEN ###
+${AUTH_TOKEN_ALL}
+${AUTH_TOKEN_LIQ}
+${AUTH_TOKEN_ESS}
+${AUTH_TOKEN_PTY}
+
+### GET ALL USER API ###
+${GETALLUSER_PARAM}
+${GETSINGLEUSER_PARAM}
+${GETALLUSER_OFFSET}
+
+### API RESPONSE ###
+${GETALLAPIRESPONSE}
+${GETSINGLEAPIRESPONSE}
+${GETOLDSINGLEAPIRESPONSE}
+${PUTAPIRESPONSE}
+${POSTAPIRESPONSE}
+
+### Riskbook ###
+${TL_Transformed_Data_BaseRate}    TL_Transformed_Data_BaseRate.xlsx
+${TL_Transformed_Data_template_BaseRate}    TL_Transformed_Data_template_BaseRate.xlsx
+
+${TL_Transformed_Data_FXRates}    TL_Transformed_Data_FXRates.xlsx
+${TL_Transformed_Data_XMLFXRates}    TL_Transformed_Data_XMLFXRates.xlsx
+${TL_Transformed_Data_template_FXRates}    TL_Transformed_Data_template_FXRates.xlsx
+
+${calendarId}
+${description}
+${saturday}
+${sunday}
+${friday}
+${user_comment}
+${file}    File (
+${filename}    File name (
+
+### Technical Error Message ###
+${400_FNAME_FIELD_LENGTH_MISMATCH}     Field Length mismatch for First Name field
+${400_LNAME_FIELD_LENGTH_MISMATCH}     Field Length mismatch for Surname field
+${400_LOGINID_FIELD_LENGTH_MISMATCH}     Field Length mismatch for Login ID field
+${400_JOBTITLE_FIELD_LENGTH_MISMATCH}     Field Length mismatch for Job Title field
+${400_COUNTRY_FIELD_LENGTH_MISMATCH}     Field Length mismatch for Country Code field
+${400_USERTYPE_FIELD_LENGTH_MISMATCH}     Field Length mismatch for User Type field
+${400_CUSERTYPE_FIELD_LENGTH_MISMATCH}     Field Length mismatch for Central User Type field
+${400_ROLE_FIELD_LENGTH_MISMATCH}     Field Length mismatch for Role field
+${400_PROCESSING_FIELD_LENGTH_MISMATCH}     Field Length mismatch for Processing Area Field
+${400_CONTACT1_FIELD_LENGTH_MISMATCH}     Field Length mismatch for Contact Number1 field
+${400_PROFILE_FIELD_LENGTH_MISMATCH}     Field Length mismatch for profileId Field
+${400_CONTACT2_FIELD_LENGTH_MISMATCH}     Field Length mismatch for Contact Number2 field
+${400_BUSSENTITY_FIELD_LENGTH_MISMATCH}     Field Length mismatch for Business Entity Name Field
+${400_OSUSERID_FIELD_LENGTH_MISMATCH}     Field Length mismatch for os User Id field
+${400_BRANCH_FIELD_LENGTH_MISMATCH}     Field Length mismatch for Default Branch Field
+${400_LOCALE_FIELD_LENGTH_MISMATCH}     Field Length mismatch for Locale field
+
+${400_EMAIL_FIELD_LENGTH_MISMATCH}     Field Length mismatch for Email field
+${400_LOCATION_FIELD_LENGTH_MISMATCH}     Field Length mismatch for Location Field
+${400_DEPTCODE_FIELD_LENGTH_MISMATCH}     Field Length mismatch for Department Code field
+
+${400_FNAME_FIELD_MISSING}     Mandatory field First Name is missing
+${400_LNAME_FIELD_MISSING}     Mandatory field Surname is missing
+${400_LOGINID_FIELD_MISSING}     Mandatory field Login ID is missing
+${400_JOBTITLE_FIELD_MISSING}     Mandatory field Job Title is missing
+${400_COUNTRY_FIELD_MISSING}     Mandatory field Country Code is missing
+
+${400_LOB_INVALID}     The LOB is not a subscriber to the API
+${404_LOGIN_INVALID}     Incorrect response from API Server
+${400_EMAIL_INVALID}     Value provided for email field is incorrect
+${400_LOGIN_MISMATCH}     Login ID at http link and the payload mismatch
+${400_STATUS_INVALID}     No enum constant com.finastra.mdm.model.v1.UserLob.StatusEnum
+
+###PARTY API###
+${PARTY_ZONE}    AU
+
+###Runtime Date Generation Variables
+${INPUT_DATE}   0
+${DATE_OFFSET_IN_DAYS}   1
+${SYSTEM_DATE}   SYSTEMDATE

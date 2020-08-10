@@ -1,0 +1,21 @@
+{
+    "userID": "clanding",
+    "titleCode": "CLR",
+    "firstName": "Aissa",
+    "surname": "ARRIETA-JAO",
+    "countryCode": "GBR",
+    "locale": "en",
+    "contactNumber1": "61123456782",
+    "contactNumber2": "61123243243",
+    "email": "aissa.arrieta@misys.com",
+    "branchSortCode": "CB001",
+    "defaultCluster": "AUSAG",
+    "lobs": [],
+    "clusters": [],
+    "roles": [],
+    "osUserId": "clanding",
+    "userType": "S",
+    "departments": [],
+    "primaryDepartmentCode": "GLB",
+    "status": "ACTIVE"
+}

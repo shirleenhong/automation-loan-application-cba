@@ -1,0 +1,18 @@
+###Facility Add/Unscheduled Commitment Increase/Awaiting Approval- General Tab###
+LIQ_FacAddUnsched_CommitmentInc_Window= 'JavaWindow("title:=Facility Add/Unscheduled Commitment Increase / Awaiting Send To Approval")'
+LIQ_FacAddUnsched_CommitmentInc_Tab= 'JavaWindow("title:=Facility Add/Unscheduled Commitment Increase / Awaiting Send To Approval").JavaTab("tagname:=TabFolder")'
+
+LIQ_FacAddUnsched_DealName= 'JavaWindow("title:=Facility Add/Unscheduled Commitment Increase / Awaiting Send To Approval").JavaStaticText("attached text:=&{ExcelPath}[Deal_Name]")'
+LIQ_FacAddUnsched_Window= 'JavaWindow("title:=Facility Add/Unscheduled Commitment Increase / Awaiting Send To Approval")'
+LIQ_FacAddUnsched_Option_ViewUpdateLenderShares_Menu= 'JavaWindow("title:=Facility Add/Unscheduled Commitment Increase / Awaiting Send To Approval").JavaMenu("label:=Options").JavaMenu("label:=View/Update Lender Shares")'
+LIQ_FacAddUnsched_FileSaveFacility_Menu= 'JavaWindow("title:=Facility Add/Unscheduled Commitment Increase / Awaiting Send To Approval").JavaMenu("label:=File").JavaMenu("label:=Save")'
+LIQ_FacAddUnsched_FileExitFacility_Menu= 'JavaWindow("title:=Facility Add/Unscheduled Commitment Increase / Awaiting Send To Approval").JavaMenu("label:=File").JavaMenu("label:=Exit")'
+LIQ_HostBankShares_LE= 'JavaWindow("title:=Shares for \(AUD\) Facility Add/Unscheduled Commitment Increase in Facility:.*").JavaTree("attached text:=Drill Down for Portfolio Shares")'
+LIQ_FacShares_OK_Button= 'JavaWindow("title:=Shares for \(AUD\) Facility Add/Unscheduled Commitment Increase in Facility:.*").JavaButton("attached text:=OK")'
+LIQ_HostBankShare_AddPortfolioExpenseCode_Button= 'JavaWindow("title:=Host Bank Share .*").JavaButton("attached text:=Add Portfolio/Expense Code")'
+LIQ_HostBankShare_OK_Button= 'JavaWindow("title:=Host Bank Share .*").JavaButton("attached text:=OK")'
+LIQ_PortfolioSelect_Window= 'JavaWindow("title:=Portfolio Selection For: .*")'
+LIQ_PortfolioSelect_PotfolioExpenseCode= 'JavaWindow("title:=Portfolio Selection For: .*").JavaTree("attached text:=Portfolio/Expense:")'
+LIQ_PortfolioSelect_OK_Button= 'JavaWindow("title:=Portfolio Selection For: .*").JavaButton("attached text:=OK")'
+LIQ_PortfolioShareEdit_ActualAmount_Field= 'JavaWindow("title:=Portfolio Share Edit").JavaEdit("x:=246","y:=138")'
+LIQ_PortfolioShareEdit_OK_Button= 'JavaWindow("title:=Portfolio Share Edit").JavaButton("attached text:=OK")'

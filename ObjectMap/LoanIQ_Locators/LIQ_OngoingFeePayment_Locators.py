@@ -1,0 +1,6 @@
+LIQ_OngoingFeePayment_Window = 'JavaWindow("title:=.*Ongoing Fee Payment.*")'
+LIQ_OngoingFeePayment_Tab = 'JavaWindow("title:=.*Ongoing Fee Payment.*").JavaTab("index:=0")'
+LIQ_OngoingFeePayment_Requested_Textfield ='JavaWindow("title:=.*Ongoing Fee Payment.*").JavaObject("tagname:=Group","text:=.*Amounts.*").JavaEdit("editable:=1")'
+LIQ_OngoingFeePayment_EffectiveDate_Textfield = 'JavaWindow("title:=.*Ongoing Fee Payment.*").JavaEdit("attached text:=Effective Date:")'
+LIQ_OngoingFeePayment_DueDate_Text = 'JavaWindow("title:=.*Ongoing Fee Payment.*").JavaObject("tagname:=Group","text:=Cycle").JavaStaticText("index:=5")'
+LIQ_OngoingFeePayment_Workflow = 'JavaWindow("title:=.*Ongoing Fee Payment.*").JavaTree("attached text:=Drill down to perform Workflow item")'

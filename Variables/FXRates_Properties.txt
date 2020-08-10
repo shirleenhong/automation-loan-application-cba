@@ -1,0 +1,157 @@
+*** Variables *** 
+#------------------------------------------------  FX RATES PATH and FILES ------------------------------------------------------------#
+${LOBList}    LOBList.txt
+${tempfile}    tempfile.json
+
+#== JSON INPUT SUCCESS REQUEST FILES ==#
+${API_FXR01_POST01}    API_FXR01_POST01.json
+${API_FXR01_POST02}    API_FXR01_POST02.json
+${API_FXR01_POST03}    API_FXR01_POST03.json
+${API_FXR01_POST04}    API_FXR01_POST04.json
+${API_FXR01_PUT01}    API_FXR01_PUT01.json
+${API_FXR01_PUT02}    API_FXR01_PUT02.json
+${API_FXR01_PUT03}    API_FXR01_PUT03.json
+${API_FXR01_PUT04}    API_FXR01_PUT04.json
+${API_FXR01_DEL01}    API_FXR01_DEL01.json
+${API_FXR01_NEG07}    API_FXR01_NEG07.json
+${API_FXR01_NEG08}    API_FXR01_NEG08.json
+${API_FXR01_NEG09}    API_FXR01_NEG09.json
+${API_FXR01_NEG10}    API_FXR01_NEG10.json
+${API_FXR01_NEG11}    API_FXR01_NEG11.json
+${API_FXR01_NEG01_Invalid_Cluster}    API_FXR01_NEG01_Invalid_Cluster.json
+${API_FXR01_NEG02_Inactive_Cluster}    API_FXR01_NEG02_Inactive_Cluster.json
+${API_FXR01_NEG03_BuyRate_SellRate}    API_FXR01_NEG03_BuyRate_SellRate.json
+${API_FXR01_NEG04_EffectiveDate}    API_FXR01_NEG04_EffectiveDate.json
+${API_FXR01_NEG05_toCurrency}    API_FXR01_NEG05_toCurrency.json
+${API_FXR01_NEG06_fromCurrency}    API_FXR01_NEG06_fromCurrency.json
+
+#== JSON OUTPUT SUCCESS RESPONSE FILES ==#
+${API_FXR01_POST01_RESPONSE}    API_FXR01_POST01_RESPONSE.json
+${API_FXR01_POST01_RESPONSE_02}    API_FXR01_POST01_RESPONSE_02.json
+${API_FXR01_POST01_FFC_RESPONSE}    API_FXR01_POST01_FFC_RESPONSE.json
+${API_FXR01_POST01_FFC_Expected}    API_FXR01_POST01_FFC_Expected.json
+${API_FXR01_POST01_TextJMS_Expected}    API_FXR01_POST01_TextJMS_Expected.txt
+${API_FXR01_POST02_RESPONSE}    API_FXR01_POST02_RESPONSE.json
+${API_FXR01_POST02_FFC_RESPONSE}    API_FXR01_POST02_FFC_RESPONSE.json
+${API_FXR01_POST02_FFC_Expected}    API_FXR01_POST02_FFC_Expected.json
+${API_FXR01_POST02_TextJMS_Expected}    API_FXR01_POST02_TextJMS_Expected.txt
+${API_FXR01_POST03_RESPONSE}    API_FXR01_POST03_RESPONSE.json
+${API_FXR01_POST03_FFC_RESPONSE}    API_FXR01_POST03_FFC_RESPONSE.json
+${API_FXR01_POST03_FFC_Expected}    API_FXR01_POST03_FFC_Expected.json
+${API_FXR01_POST03_TextJMS_Expected}    API_FXR01_POST03_TextJMS_Expected.txt
+${API_FXR01_POST04_RESPONSE}    API_FXR01_POST04_RESPONSE.json
+${API_FXR01_POST04_FFC_RESPONSE}    API_FXR01_POST04_FFC_RESPONSE.json
+${API_FXR01_POST04_FFC_Expected}    API_FXR01_POST04_FFC_Expected.json
+${API_FXR01_POST04_TextJMS_Expected}    API_FXR01_POST04_TextJMS_Expected.txt
+${API_FXR01_PUT01_RESPONSE}    API_FXR01_PUT01_RESPONSE.json
+${API_FXR01_PUT01_FFC_RESPONSE}    API_FXR01_PUT01_FFC_RESPONSE.json
+${API_FXR01_PUT01_FFC_Expected}    API_FXR01_PUT01_FFC_Expected.json
+${API_FXR01_PUT01_TextJMS_Expected}    API_FXR01_PUT01_TextJMS_Expected.txt
+${API_FXR01_PUT02_RESPONSE}    API_FXR01_PUT02_RESPONSE.json
+${API_FXR01_PUT02_FFC_RESPONSE}    API_FXR01_PUT02_FFC_RESPONSE.json
+${API_FXR01_PUT02_FFC_Expected}    API_FXR01_PUT02_FFC_Expected.json
+${API_FXR01_PUT02_TextJMS_Expected}    API_FXR01_PUT02_TextJMS_Expected.txt
+${API_FXR01_PUT03_RESPONSE}    API_FXR01_PUT03_RESPONSE.json
+${API_FXR01_PUT03_FFC_RESPONSE}    API_FXR01_PUT03_FFC_RESPONSE.json
+${API_FXR01_PUT03_FFC_Expected}    API_FXR01_PUT03_FFC_Expected.json
+${API_FXR01_PUT03_TextJMS_Expected}    API_FXR01_PUT03_TextJMS_Expected.txt
+${API_FXR01_PUT04_RESPONSE}    API_FXR01_PUT04_RESPONSE.json
+${API_FXR01_PUT04_FFC_RESPONSE}    API_FXR01_PUT04_FFC_RESPONSE.json
+${API_FXR01_PUT04_FFC_Expected}    API_FXR01_PUT04_FFC_Expected.json
+${API_FXR01_PUT04_TextJMS_Expected}    API_FXR01_PUT04_TextJMS_Expected.txt
+${API_FXR01_DEL01_RESPONSE}    API_FXR01_DEL01_RESPONSE.json
+${API_FXR01_DEL01_TextJMS_Expected}    API_FXR01_DEL01_TextJMS_Expected.txt
+${API_FXR01_NEG01_Invalid_Cluster_RESPONSE}    API_FXR01_NEG01_Invalid_Cluster_RESPONSE.txt
+${API_FXR01_NEG02_Inactive_Cluster_RESPONSE}    API_FXR01_NEG02_Inactive_Cluster_RESPONSE.txt
+${API_FXR01_NEG01_FFC_Expected_Invalid_Cluster}    API_FXR01_NEG01_FFC_Expected_Invalid_Cluster.json
+${API_FXR01_NEG02_FFC_Expected_Inactive_Cluster}    API_FXR01_NEG02_FFC_Expected_Inactive_Cluster.json
+${API_FXR01_NEG01_FFC_RESPONSE_Invalid_Cluster}    API_FXR01_NEG01_FFC_RESPONSE_Invalid_Cluster.json
+${API_FXR01_NEG02_FFC_RESPONSE_Inactive_Cluster}    API_FXR01_NEG02_FFC_RESPONSE_Inactive_Cluster.json
+${API_FXR01_NEG01_TextJMS_Expected_Invalid_Cluster}    API_FXR01_NEG01_TextJMS_Expected_Invalid_Cluster.txt
+${API_FXR01_NEG02_TextJMS_Expected_Inactive_Cluster}    API_FXR01_NEG02_TextJMS_Expected_Inactive_Cluster.txt
+${API_FXR01_NEG03_BuyRate_SellRate_RESPONSE}    API_FXR01_NEG03_BuyRate_SellRate_RESPONSE.txt
+${API_FXR01_NEG03_FFC_Expected_BuyRate_SellRate}    API_FXR01_NEG03_FFC_Expected_BuyRate_SellRate.json
+${API_FXR01_NEG03_FFC_RESPONSE_BuyRate_SellRate}    API_FXR01_NEG03_FFC_RESPONSE_BuyRate_SellRate.json
+${API_FXR01_NEG03_TextJMS_Expected_BuyRate_SellRate}    API_FXR01_NEG03_TextJMS_Expected_BuyRate_SellRate.txt
+${API_FXR01_NEG04_EffectiveDate_RESPONSE}    API_FXR01_NEG04_EffectiveDate_RESPONSE.txt
+${API_FXR01_NEG04_FFC_Expected_EffectiveDate}    API_FXR01_NEG04_FFC_Expected_EffectiveDate.json
+${API_FXR01_NEG04_FFC_RESPONSE_EffectiveDate}    API_FXR01_NEG04_FFC_RESPONSE_EffectiveDate.json
+${API_FXR01_NEG04_TextJMS_Expected_EffectiveDate}    API_FXR01_NEG04_TextJMS_Expected_EffectiveDate.txt
+${API_FXR01_NEG05_toCurrency_RESPONSE}    API_FXR01_NEG05_toCurrency_RESPONSE.txt
+${API_FXR01_NEG05_FFC_Expected_toCurrency}    API_FXR01_NEG05_FFC_Expected_toCurrency.json
+${API_FXR01_NEG05_FFC_RESPONSE_toCurrency}    API_FXR01_NEG05_FFC_RESPONSE_toCurrency.txt
+${API_FXR01_NEG05_TextJMS_Expected_toCurrency}    API_FXR01_NEG05_TextJMS_Expected_toCurrency.txt
+${API_FXR01_NEG06_fromCurrency_RESPONSE}    API_FXR01_NEG06_fromCurrency_RESPONSE.txt
+${API_FXR01_NEG06_FFC_Expected_fromCurrency}    API_FXR01_NEG06_FFC_Expected_fromCurrency.json
+${API_FXR01_NEG06_FFC_RESPONSE_fromCurrency}    API_FXR01_NEG06_FFC_RESPONSE_fromCurrency.txt
+${API_FXR01_NEG06_TextJMS_Expected_fromCurrency}    API_FXR01_NEG06_TextJMS_Expected_fromCurrency.txt
+${API_FXR01_NEG07_RESPONSE}    API_FXR01_NEG07_RESPONSE.json
+${API_FXR01_NEG07_TextJMS_Expected}    API_FXR01_NEG07_TextJMS_Expected.txt
+${API_FXR01_NEG08_RESPONSE}    API_FXR01_NEG08_RESPONSE.json
+${API_FXR01_NEG08_TextJMS_Expected}    API_FXR01_NEG08_TextJMS_Expected.txt
+${API_FXR01_NEG09_RESPONSE}    API_FXR01_NEG09_RESPONSE.json
+${API_FXR01_NEG09_TextJMS_Expected}    API_FXR01_NEG09_TextJMS_Expected.txt
+${API_FXR01_NEG10_RESPONSE}    API_FXR01_NEG10_RESPONSE.json
+${API_FXR01_NEG10_TextJMS_Expected}    API_FXR01_NEG10_TextJMS_Expected.txt
+${API_FXR01_NEG11_RESPONSE}    API_FXR01_NEG11_RESPONSE.json
+${API_FXR01_NEG11_TextJMS_Expected}    API_FXR01_NEG11_TextJMS_Expected.txt
+
+# API MESSAGES
+${FXRATES_SOURCENAME}    FxratesApiSource  
+${FXRATES_CATEGORY}    Fxrates
+${FXRATES_TEXTJMS_STATUS}    SENT     
+${FXRATES_ESSENCE_ROUTEOPERATION}    ESSENCEFXRATE
+${FXRATES_ROUTEROPTION}    FXRATEDEST
+${FXRATES_APINAME_FAILED}    FXRATE
+${FXRATES_ESSENCE_QUEUENAME}    essenceFXRateDestinationQueue
+${FXRATES_LIQ_QUEUENAME}    wsFinalLIQFxRateDestination 
+${FXRATES_ERROR_LOG_QUEUE}    errorLogQueue     
+${FXRATES_ACK_MESSAGE_SPLITTER}    tl_ack_message_splitter_fx
+#== JSON INPUT TECHNICAL FAILURE REQUESTS ==#
+${API_PUT_MANDATORY_FXRates}    MandatoryLength_FXRates.json
+${FXRATE_APINAME}    FXRATE
+
+#JSON EXPECTED RESPONSE API FAILURE FILES (INPUT)   
+${ACTUAL_RESPONSE_MANDATORY_FXRates}    ACTUAL_RESPONSE_MANDATORY_FXRates.json
+
+#JSON ACTUAL / OUTPUT RESPONSE API FAILURE FILES
+
+
+# DISTRIBUTOR
+${DistributorXML_POST_Output_FXRates}    Distributor_POST_Output_FXRates.xml
+${DistributorXML_PUT_Output_FXRates}    Distributor_PUT_Output_FXRates.xml
+
+${FXRatesName}    Fxrates
+${QName_Create_FXRates}    wsFinalLIQDestination
+${QName_Update_FXRates}    wsFinalLIQDestination
+${QName_Create_FXRates_Invalid}    errorLogQueue
+
+##LOAN IQ
+${UserName_FXRates}    LOANIQ01
+${Password_FXRates}    password
+
+
+#------------------------------------------------  END FX RATES PATH and FILES ------------------------------------------------------------#
+
+#------------------------------------------------  START FX RATES CONTENT VARIABLES ------------------------------------------------------------#
+${GS_SNAP_index}    0
+${GS_INSTR_DESC_index}    0
+${GS_BASE_CCY_index}    0
+${GS_TRGT_CCY_index}    0
+${GS_INSTR_TYPE_index}    0
+${GS_INSTR_PRC_TYPE_index}    0
+${GS_INSTR_PRICE_index}    0
+${GS_VALUE_DATE_index}    0
+${GS_PROCESSING_DATE_index}    0
+
+${rowid_index}    0
+${rateType_index}    0
+${fromCurrency_index}    0
+${toCurrency_index}    0
+${effectiveDate_index}    0
+${lineOfBusiness_index}    0
+${businessEntityName_index}    0
+${subEntity_index}    0
+${buyRate_index}    0
+${midRate_index}    0
+${sellRate_index}    0

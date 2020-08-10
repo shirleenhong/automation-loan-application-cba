@@ -1,0 +1,9 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<api:executeCreateUserProfile xmlns:api='http://api.ws.liq.misys.com/'>
+  <CreateUserProfile version='1.0' branch='CB001' countryCode='GB' firstName='Aissa' id='APITEST9' jobFunctionCode='DA' languageCode='EN' lastName='ARRIETA-JAO' locationId=' ' processingAreaCode='AUSAG' titleCode='CLR' address=' ' alias=' ' bank=' ' eMailId='aissa.arrieta@misys.com' expenseCode=' ' faxNumber1=' ' faxNumber2=' ' functionString=' ' groupAddress=' ' middleInit=' ' phoneNumber1='61123456782' phoneNumber2=' ' salesGroup=' ' salesTeamCode='DA' socialSecurityNumber=' ' specialLoanInd='N' userManagerId=' ' userStatus='U'>
+    <CreateUserSecondaryProcessingAreas version='1.0' />
+    <CreateUserDepartments version='1.0'>
+      <CreateDepartment version='1.0' departmentName='GLB' primaryDeptInd='Y' />
+    </CreateUserDepartments>
+  </CreateUserProfile>
+</api:executeCreateUserProfile>

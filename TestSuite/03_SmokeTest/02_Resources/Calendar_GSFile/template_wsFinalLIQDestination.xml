@@ -1,0 +1,2 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<api:executeCreateHolidayCalendarDate xmlns:api='http://api.ws.liq.misys.com/'><CreateHolidayCalendarDate cHolidayCode='DZHKZ' description='1st Day of Dec' cHolidayDate='2020-12-01' activeIndicator='Y' version='1.0'/></api:executeCreateHolidayCalendarDate>

@@ -1,0 +1,11 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<api:executeCreateUserProfile xmlns:api='http://api.ws.liq.misys.com/'>
+  <CreateUserProfile version='1.0' branch='CG852' countryCode='NL' firstName='LIQ FNAME' id='XJ100015' jobFunctionCode='BAT' languageCode='NL' lastName='LIQ INPUTTER' locationId='AM' processingAreaCode='EUOPS' titleCode='CLR' address=' ' alias=' ' eMailId='XJ100015@ccb.com' expenseCode=' ' faxNumber1=' ' faxNumber2=' ' functionString=' ' groupAddress=' ' middleInit=' ' phoneNumber1='61123456782' phoneNumber2='61123243243' salesGroup=' ' salesTeamCode='BAT' socialSecurityNumber=' ' specialLoanInd='N' userManagerId=' ' userStatus='U'>
+    <CreateUserSecondaryProcessingAreas version='1.0'>
+      <CreateSecondaryProcessingArea version='1.0' processingAreaCode='EUOPS' />
+    </CreateUserSecondaryProcessingAreas>
+    <CreateUserDepartments version='1.0'>
+      <CreateDepartment version='1.0' departmentName='GLB' primaryDeptInd='Y' />
+    </CreateUserDepartments>
+  </CreateUserProfile>
+</api:executeCreateUserProfile>

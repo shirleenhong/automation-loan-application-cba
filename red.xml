@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<projectConfiguration>
+    <configVersion>2</configVersion>
+    <relativeTo>WORKSPACE</relativeTo>
+    <variable name="${Root}" value="C:/Git_Evergreen/evergreen_projects/CBA_Evergreen"/>
+    <referencedLibrary type="PYTHON" name="GenericLib" path="UnifiedTestFramework/Libraries/Common/GenericLib.py"/>
+    <referencedLibrary type="PYTHON" name="Keyboard" path="UnifiedTestFramework/Libraries/Common/Keyboard/Keyboard.py"/>
+    <referencedLibrary type="PYTHON" name="UFTGeneric" path="UnifiedTestFramework/Libraries/UFT/UFTGeneric.py"/>
+    <referencedLibrary type="PYTHON" name="HttpLibraryExtended" path="UnifiedTestFramework/Libraries/REST/HttpLibraryExtended/HttpLibraryExtended.py"/>
+    <referencedLibrary type="PYTHON" name="EssenceLib" path="UnifiedTestFramework/Libraries/Selenium/ProductSpecific/EssenceLib.py"/>
+    <referencedLibrary type="PYTHON" name="BaselineComparator" path="UnifiedTestFramework/Libraries/Common/BaselineComparator/__init__.py"/>
+    <referencedLibrary type="PYTHON" name="LoanIQ" path="UnifiedTestFramework/Libraries/UFT/ProductSpecific/LoanIQ.py"/>
+    <referencedLibrary type="PYTHON" name="SeleniumLibraryExtended" path="UnifiedTestFramework/Libraries/Selenium/SeleniumLibraryExtended/__init__.py"/>
+    <referencedLibrary type="PYTHON" name="CSVLib" path="C:/Python37/Lib/site-packages/CSVLib/__init__.py"/>
+    <referencedLibrary type="PYTHON" name="CSVLibrary" path="C:/Python37/Lib/site-packages/CSVLibrary/__init__.py"/>
+    <referencedLibrary type="PYTHON" name="DatabaseLibrary" path="C:/Python37/Lib/site-packages/DatabaseLibrary/__init__.py"/>
+    <referencedLibrary type="PYTHON" name="JSONLibraryKeywords" path="C:/Python37/Lib/site-packages/JSONLibrary/JSONLibraryKeywords.py"/>
+    <referencedLibrary type="PYTHON" name="MathLibrary" path="C:/Python37/Lib/site-packages/MathLibrary/__init__.py"/>
+    <referencedLibrary type="PYTHON" name="RequestsKeywords" path="C:/Python37/Lib/site-packages/RequestsLibrary/RequestsKeywords.py"/>
+    <referencedLibrary type="PYTHON" name="SSHLibrary" path="C:/Python37/Lib/site-packages/SSHLibrary/__init__.py"/>
+    <referencedLibrary type="PYTHON" name="base64" path="C:/Python37/Lib/base64.py"/>
+    <referencedLibrary type="PYTHON" name="ExcelLibrary" path="C:/Python37/Lib/site-packages/ExcelLibrary.py"/>
+    <referencedLibrary type="PYTHON" name="RequestsLibrary" path="C:/Python37/Lib/site-packages/RequestsLibrary/__init__.py"/>
+    <referencedLibrary type="PYTHON" name="PdfToText" path="C:/Python37/Lib/site-packages/Pdf2TextLibrary/PdfToText.py"/>
+    <referencedLibrary type="PYTHON" name="keyboard" path="C:/Python37/Lib/site-packages/keyboard/__init__.py"/>
+    <pythonpath>
+        <path location="C:\Python37\Lib\site-packages"/>
+        <path location="C:\UTF\UnifiedTestFramework"/>
+    </pythonpath>
+    <classpath/>
+    <excludedForValidation/>
+    <isValidatedFileSizeCheckingEnabled>true</isValidatedFileSizeCheckingEnabled>
+    <validatedFileMaxSize>1024</validatedFileMaxSize>
+</projectConfiguration>

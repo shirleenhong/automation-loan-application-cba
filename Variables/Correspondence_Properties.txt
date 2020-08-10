@@ -1,0 +1,26 @@
+*** Variables ***
+
+### INPUT JSON FILES ###
+${API_COR_TC01_Input.json}                          API_COR_TC01.json
+${API_COR_TC01_Expected_Output.json}                API_COR_TC01_Expected_Output.json
+${Correlation.json}                       Correlation.json
+
+### OUTPUT JSON FILES ###
+${API_COR_TC01_Output.json}                         API_COR_TC01_Output.json
+${API_COR_RESPONSE_TC14.json}                         API_COR_RESPONSE_TC14.json
+    
+
+### API MESSAGES ###
+${Correspondence}            Correspondence
+${CBACORRESPUPDATEMQ_SOURCENAME}    CBACorrespUpdateMQ
+${CBACorrespUpdateMQ_Instance}    CustomCBAPush_v1.3.2
+${RESULTTABLEHEADERS}    Headers
+${RESULTTABLECORELATIONID}    CorelationId
+${FFC1CMUPDATESOURCEMQ_SOURCENAME}    FFC1CMUpdateSourceMQ
+${FFC1CMUpdateSourceMQ_Instance}    CustomInterface_v1.3.2
+
+### Notice ###
+${Initial_Notice_Status}    Awaiting release
+${Initial_Transaction_Status}    Awaiting Release
+${Email_Notice_Method}    Email
+${CBA_Email_Notice_Method}    CBA Email with PDF Attachment

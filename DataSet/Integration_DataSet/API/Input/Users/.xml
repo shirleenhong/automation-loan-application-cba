@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<executeUpdateUserProfile xmlns="http://api.ws.liq.misys.com/">
+  <UpdateUserProfile loginId="ESSE0031" userStatus="I" version="1.0" xmlns="">
+    <UpdateUserSecondaryProcessingAreas version="1.0" />
+    <UpdateUserDepartments version="1.0" />
+  </UpdateUserProfile>
+</executeUpdateUserProfile>

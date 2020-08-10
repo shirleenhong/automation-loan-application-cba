@@ -1,0 +1,4 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<api:executeCreateUserSecurityProfile xmlns:api='http://api.ws.liq.misys.com/'>
+<CreateUserSecurityProfile userProfileRID='APITEST9' loginId='apitest9' osUserId='apitest9' version='1.0'/>
+</api:executeCreateUserSecurityProfile>

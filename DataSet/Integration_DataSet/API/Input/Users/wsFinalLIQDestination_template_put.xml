@@ -1,0 +1,11 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<soapenv:Envelope xmlns:soapenv='http://schemas.xmlsoap.org/soap/envelope/' xmlns:api='http://api.ws.liq.misys.com/'>
+  <soapenv:Header>
+    <userid>RETAIL</userid>
+  </soapenv:Header>
+  <soapenv:Body>
+    <api:executeUpdateUserSecurityProfile>
+      <UpdateUserSecurityProfile userProfileRID='LIQ020' loginId='LIQ020' osUserId='LIQ020' lockedIndication='N' version='1.0' />
+    </api:executeUpdateUserSecurityProfile>
+  </soapenv:Body>
+</soapenv:Envelope>

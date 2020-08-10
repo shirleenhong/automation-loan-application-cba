@@ -1,0 +1,11 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<Envelope xmlns="http://schemas.xmlsoap.org/soap/envelope/">
+  <Header>
+    <userid xmlns="">RETAIL</userid>
+  </Header>
+  <Body>
+    <executeCreateUserSecurityProfile xmlns="http://api.ws.liq.misys.com/">
+      <CreateUserSecurityProfile lockedIndication="N" loginId="XJ100015" osUserId="XJ100015" userProfileRID="XJ100015" version="1.0" xmlns="" />
+    </executeCreateUserSecurityProfile>
+  </Body>
+</Envelope>

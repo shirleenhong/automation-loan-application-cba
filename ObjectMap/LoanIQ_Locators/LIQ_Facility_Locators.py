@@ -1,0 +1,636 @@
+###Facility Navigator Window###    
+LIQ_FacilityNavigator_Window = 'JavaWindow("title:=Facility Navigator -.*")'    
+LIQ_FacilityNavigator_Tree = 'JavaWindow("title:=Facility Navigator -.*").JavaTree("tagname:=Drill down to open the facility notebook")'    
+LIQ_FacilityNavigator_Add_Button = 'JavaWindow("title:=Facility Navigator.*").JavaButton("label:=Add")'    
+LIQ_FacilityNavigator_OutstandingSelect_Button = 'JavaWindow("title:=Facility Navigator.*").JavaButton("attached text:=Outstanding Select")'    
+LIQ_FacilityNavigator_OngoingFees_Button = 'JavaWindow("title:=Facility Navigator.*").JavaButton("label:=Ongoing Fees")'
+LIQ_FacilityNavigator_Exit_Button = 'JavaWindow("title:=Facility Navigator.*").JavaButton("label:=Exit")'
+
+    
+###Facility Select Window###  
+LIQ_FacilitySelect_Window = 'JavaWindow("title:=Facility Select")'  
+LIQ_FacilitySelect_New_RadioButton = 'JavaWindow("title:=Facility Select").JavaRadioButton("attached text:=New")'    
+LIQ_FacilitySelect_Existing_RadioButton = 'JavaWindow("title:=Facility Select").JavaRadioButton("attached text:=Existing")'    
+LIQ_FacilitySelect_FCN_Textfield = 'JavaWindow("title:=Facility Select").JavaEdit("attached text:=FCN:")'    
+LIQ_FacilitySelect_Currency_List = 'JavaWindow("title:=Facility Select").JavaList("attached text:=Currency:")'    
+LIQ_FacilitySelect_ANSI_Textfield = 'JavaWindow("title:=Facility Select").JavaEdit("attached text:=ANSI ID:")'    
+LIQ_FacilitySelect_DealName_Textfield = 'JavaWindow("title:=Facility Select").JavaEdit("tagname:=Text","x:=245","y:=75")'    
+LIQ_FacilitySelect_FacilityName_Text = 'JavaWindow("title:=Facility Select").JavaEdit("attached text:=Facility Name:")'     
+LIQ_FacilitySelect_FacilityType_Button = 'JavaWindow("title:=Facility Select").JavaButton("attached text:=Facility Type Select.*")'    
+LIQ_FacilitySelect_ProposedCmt_Textfield = 'JavaWindow("title:=Facility Select").JavaEdit("tagname:=Text","x:=245","y:=246")'#Need to be updated    
+LIQ_FacilitySelect_OK_Button = 'JavaWindow("title:=Facility Select").JavaButton("label:=OK")'    
+LIQ_FacilitySelect_Search_Button = 'JavaWindow("title:=Facility Select").JavaButton("label:=Search")'    
+LIQ_FacilitySelect_Cancel_Button = 'JavaWindow("title:=Facility Select").JavaButton("label:=Cancel")'    
+LIQ_FacilitySelect_TicketMod_Checkbox = 'JavaWindow("title:=Facility Select").JavaCheckBox("attached text:=Ticket Mode.*")'    
+
+LIQ_FacilitySelect_FacilityType_Combobox = 'JavaWindow("title:=Facility Select").JavaList("tagname:=Combo","attached text:=")'
+LIQ_Search_Facility= 'JavaWindow("title:=Facility Select").JavaWindow("title:=Facility List By Name").JavaTree("attached text:=Search:")'
+LIQ_FacilitySelect_IdentifyBy_List = 'JavaWindow("title:=Facility Select").JavaList("attached text:=Identify By:")'
+LIQ_FacilitySelect_FacilityName_Textfield = 'JavaWindow("title:=Facility Select").JavaEdit("x:=245","y:=107")'    
+
+###Facility Type Select Window###    
+LIQ_FacilityTypeSelect_SearchByDescription_Textfield = 'JavaWindow("title:=Facility Type Select.*").JavaEdit("tagname:=Text")'    
+LIQ_FacilityTypeSelect_OK_Button = 'JavaWindow("title:=Facility Type Select.*").JavaButton("attached text:=OK")'    
+    
+###Facility Notebook Window##    
+LIQ_FacilityNotebook_Window = 'JavaWindow("title:=Facility -.*","displayed:=1")'    
+LIQ_FacilityNotebook_InquiryMode_Button = 'JavaWindow("title:=Facility -.*").JavaButton("attached text:=Notebook in Inquiry Mode - F7")'
+LIQ_FacilityNotebook_UpdateMode_Button = 'JavaWindow("title:=Facility -.*").JavaButton("attached text:=Notebook in Update Mode - F7")'
+LIQ_FacilityNotebook_File_Save = 'JavaWindow("title:=Facility -.*").JavaMenu("label:=File").JavaMenu("label:=Save")'    
+LIQ_FacilityNotebook_Options_FacilityChangeTransaction = 'JavaWindow("title:=Facility -.*").JavaMenu("label:=Options").JavaMenu("label:=Facility Change Transaction")'
+LIQ_FacilityNotebook_Options_Update = 'JavaWindow("title:=Facility -.*").JavaMenu("label:=Options").JavaMenu("label:=Update")'
+LIQ_FacilityNotebook_Tab = 'JavaWindow("title:=Facility -.*").JavaTab("tagname:=TabFolder")'    
+LIQ_Facility_ValidateForDealClose_Menu = 'JavaWindow("title:=Facility -.*").JavaMenu("label:=Options").JavaMenu("label:=Validate for Deal Close")'    
+LIQ_Facility_ValidationMessage = 'JavaWindow("title:=Informational Message.*","displayed:=1").JavaEdit("value:=The facility passed all validations.")'    
+LIQ_Facility_ValidationMessage_OK_Button = 'JavaWindow("title:=Informational Message.*","displayed:=1").JavaButton("label:=OK")'    
+LIQ_FacilityNotebook_File_Exit = 'JavaWindow("title:=Facility -.*").JavaMenu("label:=File").JavaMenu("label:=Exit")'    
+LIQ_FacilityNotebook_Queries_OutstandingSelect = 'JavaWindow("title:=Facility -.*").JavaMenu("label:=Queries").JavaMenu("label:=Outstanding Select...")'  
+LIQ_FacilityNotebook_Options_EventFee = 'JavaWindow("title:=Facility -.*").JavaMenu("label:=Options").JavaMenu("label:=Event Fee")'
+LIQ_FacilityNotebook_Options_Update = 'JavaWindow("title:=Facility -.*").JavaMenu("label:=Options").JavaMenu("label:=Update")'
+LIQ_FacilityNotebook_Options_FacilityChangeTransaction = 'JavaWindow("title:=Facility -.*").JavaMenu("label:=Options").JavaMenu("label:=Facility Change Transaction")'
+LIQ_FacilityNotebook_Options_IncreaseDecreaseSchedule = 'JavaWindow("title:=Facility -.*").JavaMenu("label:=Options").JavaMenu("label:=Increase/Decrease Schedule.*")'
+LIQ_FacilityNotebook_Options_AdjustLenderShares = 'JavaWindow("title:=Facility -.*").JavaMenu("label:=Options").JavaMenu("label:=Adjust Lender Shares...")'
+LIQ_FacilityNotebook_Options_PortfolioPositions = 'JavaWindow("title:=Facility -.*").JavaMenu("label:=Options").JavaMenu("label:=Portfolio Positions...")'
+LIQ_FacilityNotebook_Queries_OngoingFeeList = 'JavaWindow("title:=Facility -.*").JavaMenu("label:=Queries").JavaMenu("label:=Ongoing Fee List...")'
+LIQ_FacilityNotebook_Queries_LenderShares = 'JavaWindow("title:=Facility -.*").JavaMenu("label:=Queries").JavaMenu("label:=Lender Shares...")'
+LIQ_FacilityNotebook_Queries_FacilityTypeDetails = 'JavaWindow("title:=Facility -.*").JavaMenu("label:=Queries").JavaMenu("label:=Facility Type Details")'
+LIQ_FacilityNotebook_Options_ChangeBranch_ProcArea = 'JavaWindow("title:=Facility -.*").JavaMenu("label:=Options").JavaMenu("label:=Change Branch / Proc. Area")'
+LIQ_FacilityNotebook_RenameFacility_Menu = 'JavaWindow("title:=Facility -.*").JavaMenu("label:=Options").JavaMenu("label:=Rename Facility...")' 
+LIQ_FacilityNotebook_RenameFacility_Window = 'JavaWindow("title:=Facility -.*").JavaWindow("title:=Rename:.*")' 
+LIQ_FacilityNotebook_RenameFacility_FacilityNewName_Textbox = 'JavaWindow("title:=Facility -.*").JavaWindow("title:=Rename:.*").JavaEdit("attached text:=New Name:")' 
+LIQ_FacilityNotebook_RenameFacility_OK_Button = 'JavaWindow("title:=Facility -.*").JavaWindow("title:=Rename:.*").JavaButton("attached text:=OK")'
+LIQ_FacilityNotebook_Options_AvailabilityChange = 'JavaWindow("title:=Facility -.*").JavaMenu("label:=Options").JavaMenu("label:=Availability Change")'
+
+###Facility Notebook - Summary Tab###
+LIQ_FacilitySummary_Tab = 'JavaWindow("title:=Facility -.*").JavaTab("class description:=tab")'    
+LIQ_FacilitySummary_ProposedCmt_Textfield = 'JavaWindow("title:=Facility -.*").JavaEdit("attached text:=Proposed Cmt:","labeled_containers_path:=.*Global Facility Amounts.*")'    
+LIQ_FacilitySummary_ClosingCmt_Textfield = 'JavaWindow("title:=Facility -.*").JavaEdit("attached text:=Closing Cmt:","labeled_containers_path:=.*Global Facility Amounts.*")'   
+LIQ_FacilitySummary_CurrentCmt_Textfield = 'JavaWindow("title:=Facility -.*").JavaEdit("attached text:=Current Cmt:","labeled_containers_path:=.*Global Facility Amounts.*")'  
+LIQ_FacilitySummary_AgreementDate_Datefield = 'JavaWindow("title:=Facility -.*").JavaEdit("attached text:=Agreement:")'    
+LIQ_FacilitySummary_EffectiveDate_Datefield = 'JavaWindow("title:=Facility -.*").JavaEdit("attached text:=Effective:")'   
+LIQ_FacilitySummary_AvailToDraw_Textfield = 'JavaWindow("title:=Facility -.*").JavaEdit("index:=19")' 
+LIQ_FacilitySummary_Outstandings_Textfield = 'JavaWindow("title:=Facility -.*").JavaEdit("index:=18")' 
+LIQ_FacilitySummary_ExpiryDate_Datefield = 'JavaWindow("title:=Facility -.*").JavaEdit("attached text:=Expiry:")'    
+LIQ_FacilitySummary_FinalMaturityDate_Datefield = 'JavaWindow("title:=Facility -.*").JavaEdit("attached text:=Final Maturity:")'    
+LIQ_FacilitySummary_MainSG_Button = 'JavaWindow("title:=Facility -.*").JavaButton("attached text:=Main SG")'    
+LIQ_FacilitySummary_MultiCurrencyFacility_Checkbox = 'JavaWindow("title:=Facility - .*").JavaCheckBox("attached text:=Multi-Currency Facility")'    
+LIQ_FacilitySummary_Outstandings_Button = 'JavaWindow("title:=Facility -.*").JavaButton("attached text:=Outstandings:","labeled_containers_path:=.*Global Facility Amounts.*")'
+LIQ_FacilitySummary_Currency_StaticText = 'JavaWindow("title:=Facility -.*").JavaStaticText("labeled_containers_path:=Tab:Summary;","index:=5")'
+LIQ_FacilitySummary_FCN_Text = 'JavaWindow("title:=Facility -.*").JavaStaticText("labeled_containers_path:=Tab:Summary;", "Index:=7")'
+LIQ_FacilitySummary_FacilityType_Text = 'JavaWindow("title:=Facility -.*").JavaStaticText("labeled_containers_path:=Tab:Summary;", "Label:=Term")'
+
+###Facility Notebook - Outstanding for Facility###    
+LIQ_OutstandingForFacility_Window = 'JavaWindow("title:=Outstanding for Facility.*")'     
+LIQ_OutstandingForFacility_JavaTree = 'JavaWindow("title:=Outstanding for Facility.*").JavaTree("tagname:=Drill down or use the.*")' 
+LIQ_FacilitySummary_GlobalFacAmt_CurrentCmt_Amount = 'JavaWindow("title:=Facility -.*").JavaEdit("attached text:=Current Cmt:")'   
+LIQ_FacilitySummary_HostBank_AvailToDraw_Amount = 'JavaWindow("title:=Facility -.*").JavaEdit("attached text:=Avail To Draw:")'  
+LIQ_FacilitySummary_GlobalFacAmt_AvailToDraw_Amount = 'JavaWindow("title:=Facility -.*").JavaEdit("tagname:=Text","index:=4","labeled_containers_path:=.*Global Facility Amounts.*")'    
+LIQ_FacilitySummary_GlobalFacAmt_Outstandings_Amount = 'JavaWindow("title:=Facility -.*").JavaEdit("tagname:=Text","index:=3","labeled_containers_path:=.*Global Facility Amounts.*")'   
+LIQ_FacilitySummary_GlobalFacilityAmount_Outstandings = 'JavaWindow("title:=Facility -.*").JavaObject("tagname:=Group","text:=Global Facility Amounts.*").JavaEdit("index:=3")'
+LIQ_FacilitySummary_HostBank_ContrGross = 'JavaWindow("title:=Facility -.*").JavaEdit("attached text:=Contr.* Gross:")'
+LIQ_FacilitySummary_HostBank_Outstandings = 'JavaWindow("title:=Facility -.*").JavaEdit("tagname:=Text","index:=3","labeled_containers_path:=.*Host Bank Share Gross Amounts.*")'
+LIQ_FacilitySummary_HostBank_AvailToDraw = 'JavaWindow("title:=Facility -.*").JavaEdit("tagname:=Text","index:=4","labeled_containers_path:=.*Host Bank Share Gross Amounts.*")'
+LIQ_FacilitySummary_HostBank_NetCmt = 'JavaWindow("title:=Facility -.*").JavaEdit("attached text:=Net Cmt:")'
+LIQ_FacilitySummary_HostBank_FundableCmt = 'JavaWindow("title:=Facility -.*").JavaEdit("attached text:=Fundable Cmt:")'
+LIQ_FacilitySummary_HostBank_Outstandings_Funded = 'JavaWindow("title:=Facility -.*").JavaEdit("tagname:=Text","index:=2","labeled_containers_path:=.*Host Bank Share Net Amounts.*")'
+LIQ_FacilitySummary_HostBank_AvailToDraw_Fundable = 'JavaWindow("title:=Facility -.*").JavaEdit("tagname:=Text","index:=3","labeled_containers_path:=.*Host Bank Share Net Amounts.*")'
+LIQ_FacilitySummary_HostBank__NetAvailToDraw = 'JavaWindow("title:=Facility -.*").JavaEdit("attached text:=Net Avail To Draw:")'
+
+####Facility Notebook - Outstanding for Host Bank####
+LIQ_FacilitySummary_HostBankProposeCmt = 'JavaWindow("title:=Facility -.*").JavaEdit("attached text:=Proposed Cmt:.*","labeled_containers_path:=.*Host Bank Share Gross Amounts.*")'
+LIQ_FacilitySummary_HostBankContrGross = 'JavaWindow("title:=Facility -.*").JavaEdit("attached text:=Contr. Gross:.*","labeled_containers_path:=.*Host Bank Share Gross Amounts.*")'
+LIQ_FacilitySummary_HostBankOutstanding = 'JavaWindow("title:=Facility -.*").JavaEdit("tagname:=Text","index:=3","labeled_containers_path:=.*Host Bank Share Gross Amounts.*")'
+LIQ_FacilitySummary_HostBankAvailToDraw = 'JavaWindow("title:=Facility -.*").JavaEdit("attached text:=Avail To Draw:.*","labeled_containers_path:=.*Host Bank Share Gross Amounts.*")'
+
+LIQ_FacilitySummary_HostBankNet_NetCmt = 'JavaWindow("title:=Facility -.*").JavaEdit("attached text:=Net Cmt:","labeled_containers_path:=Tab:Summary;Group:Host Bank Share Net Amounts ;")'
+LIQ_FacilitySummary_HostBankNet_FundableCmt = 'JavaWindow("title:=Facility -.*").JavaEdit("attached text:=Fundable Cmt:","labeled_containers_path:=Tab:Summary;Group:Host Bank Share Net Amounts ;")'
+LIQ_FacilitySummary_HostBankNet_Outstandings = 'JavaWindow("title:=Facility -.*").JavaEdit("index:=2","labeled_containers_path:=Tab:Summary;Group:Host Bank Share Net Amounts ;")'
+LIQ_FacilitySummary_HostBankNet_AvailToDrawFundable = 'JavaWindow("title:=Facility -.*").JavaEdit("attached text:=Avail To Draw (Fundable):","labeled_containers_path:=Tab:Summary;Group:Host Bank Share Net Amounts ;")'
+LIQ_FacilitySummary_HostBankNet_AvailToDrawNet = 'JavaWindow("title:=Facility -.*").JavaEdit("attached text:=Net Avail To Draw:","labeled_containers_path:=Tab:Summary;Group:Host Bank Share Net Amounts ;")'
+
+###Facility Notebook - Main Customer###    
+LIQ_MainCustomer_Window = 'JavaWindow("title:=Main Customer.*")'    
+LIQ_MainCustomer_Customer_List = 'JavaWindow("title:=Main Customer.*").JavaList("attached text:=Customer:","enabled:=0")'
+LIQ_MainCustomer_ServicingGroup_Button = 'JavaWindow("title:=Main Customer.*").JavaButton("label:=Servicing Group")'
+LIQ_MainCustomer_ServicingGroups_Location_Tree = 'JavaWindow("title:=Servicing Groups For:.*").JavaTree("index:=2")'
+LIQ_MainCustomer_OK_Button = 'JavaWindow("title:=Main Customer.*").JavaButton("label:=OK")'
+    
+###Facility Notebook - Types/Purpose Tab###    
+LIQ_FacilityTypesPurpose_RiskType_Add_Button = 'JavaWindow("title:=Facility -.*").JavaButton("attached text:=Add...")'    
+LIQ_FacilityTypesPurpose_RiskType_JavaTree = 'JavaWindow("title:=Facility -.*").JavaTree("tagname:=Drill down to update","labeled_containers_path:=.*Risk Types.*")'    
+LIQ_FacilityTypesPurpose_LoanPurposeTypes_Button = 'JavaWindow("title:=Facility -.*").JavaButton("label:=Loan Purpose Types")'
+LIQ_FacilityTypesPurpose_LoanPurpose_JavaTree = 'JavaWindow("title:=Facility -.*").JavaTree("labeled_containers_path:=.*empty.*")'
+
+
+###Facility Notebook - Loan Purpose Type Window###    
+LIQ_LoanPurposeTypesSelection_Window = 'JavaWindow("title:=Loan Purpose Types Selection List")'    
+LIQ_FacilityTypesPurpose_LoanPurpose_Search_Textfield = 'JavaWindow("title:=Loan Purpose Types Selection List").JavaEdit("tagname:=Text")'    
+LIQ_FacilityTypesPurpose_LoanPurpose_OK_Button = 'JavaWindow("title:=Loan Purpose Types Selection List").JavaButton("text:=&OK")'    
+LIQ_LoanPurposeTypesSelection_JavaList = 'JavaWindow("title:=Loan Purpose Types Selection List").JavaTree("attached text:=Available")'    
+LIQ_LoanPurposeTypesSelection_Cancel_Button = 'JavaWindow("title:=Loan Purpose Types Selection List").JavaButton("attached text:=Cancel")'    
+LIQ_LoanPurposeTypesSelection_SelectAll_Button = 'JavaWindow("title:=Loan Purpose Types Selection List").JavaButton("attached text:=Select All")'    
+LIQ_LoanPurposeTypesSelection_DeselectAll_Button = 'JavaWindow("title:=Loan Purpose Types Selection List").JavaButton("attached text:=Deselect All")'    
+    
+###Facility Notebook - Risk Type Window###    
+LIQ_RiskType_Window = 'JavaWindow("title:=Risk Type Details")'    
+LIQ_RiskType_Limit_Field = 'JavaWindow("title:=Risk Type Details").JavaEdit("attached text:=Limit:")'    
+LIQ_RiskType_Active_Checkbox = 'JavaWindow("title:=Risk Type Details").JavaCheckBox("attached text:=Active")'    
+LIQ_FacilityTypesPurpose_RiskType_ComboBox = 'JavaWindow("title:=Risk Type Details").JavaList("attached text:=Risk Type:")'    
+LIQ_FacilityTypesPurpose_RiskTypeDetails_OK_Button = 'JavaWindow("title:=Risk Type Details").JavaButton("attached text:=OK")'
+
+###Facility Notebook - Pricing Tab###    
+LIQ_Facility_InterestPricing_AddItem_Window = 'JavaWindow("title:=Add Item")'
+LIQ_FacilityPricing_ModifyOngoingFees_Button = 'JavaWindow("title:=Facility -.*").JavaButton("attached text:=Modify Ongoing Fees.*")'     
+LIQ_FacilityPricing_OngoingFees_OK_Button = 'JavaWindow("title:=Facility:.*").JavaButton("attached text:=OK")'    
+LIQ_FacilityPricing_OngoingFees_Add_Button = 'JavaWindow("title:=Facility:.*").JavaButton("label:=Add")'    
+LIQ_FacilityPricing_OngoingFees_AddItemList = 'JavaWindow("title:=Add Item").JavaList("tagname:=List","index:=0")'    
+LIQ_FacilityPricing_OngoingFees_AddItem_OK_Button = 'JavaWindow("title:=Add Item").JavaButton("label:=OK")'    
+LIQ_FacilityPricing_OngoingFees_AddItem_Cancel_Button = 'JavaWindow("title:=Add Item").JavaButton("label:=Cancel")'    
+LIQ_FacilityPricing_OngoingFees_After_Button = 'JavaWindow("title:=Facility:.*").JavaButton("label:=After")'    
+LIQ_FacilityPricing_OngoingFees_After_AddItemList = 'JavaWindow("title:=Add Item").JavaList("tagname:=List","index:=0")'
+LIQ_FacilityPricing_OngoingFees_After_AddItemType= 'JavaWindow("title:=Add Item").JavaList("attached text:=Type:")'    
+LIQ_FacilityPricing_OngoingFees_After_AddItemList_OK_Button = 'JavaWindow("title:=Add Item").JavaButton("label:=OK")'
+LIQ_Facility_InterestPricing_AddItemType_List= 'JavaWindow("title:=Add Item").JavaList("attached text:=Type:")'    
+LIQ_FacilityPricing_Interest_Tree = 'JavaWindow("title:=Facility -.*").JavaTre("labeled_containers_path:=Tab:Pricing;","index:=1")'
+LIQ_FacilityPricing_OngoingFeeRate = 'JavaWindow("title:=Facility - .*").JavaTree("labeled_containers_path:=Tab:Pricing;","index:=0")'
+LIQ_FacilityPricing_Pricing_Tab = 'JavaWindow("title:=Facility - .*").JavaTab("tagname:=TabFolder", "value:=Pricing")'
+LIQ_FacilityPricing_ModifyInterestPricing_Button = 'JavaWindow("title:=Facility -.*").JavaButton("attached text:=Modify Interest Pricing.*")'
+LIQ_FacilityPricing_InterestPricingZoom_Button = 'JavaWindow("title:=Facility -.*").JavaButton("attached text:=Interest Pricing Zoom")'
+
+##Interest Pricing - Financial Ratio Window###
+LIQ_FacilityPricing_InterestPricing_FinancialRatio_Window= 'JavaWindow("title:=Financial Ratio")'
+LIQ_FinancialRatio_Type= 'JavaWindow("title:=Financial Ratio").JavaList("attached text:=Type:")'
+LIQ_FinancialRatio_GreaterThanEqual_RadioButton= 'JavaWindow("title:=Financial Ratio").JavaRadioButton("attached text:=>=")'
+LIQ_FinancialRatio_MinimumValue_Field= 'JavaWindow("title:=Financial Ratio").JavaEdit("tagname:=Text","x:=138","y:=118")'
+LIQ_FinancialRatio_LessThan_RadioButton= 'JavaWindow("title:=Financial Ratio").JavaRadioButton("attached text:=<")'
+LIQ_FinancialRatio_MaximumValue_Field= 'JavaWindow("title:=Financial Ratio").JavaEdit("tagname:=Text","x:=497","y:=118")'
+LIQ_FinancialRatio_OK_Button= 'JavaWindow("title:=Financial Ratio").JavaButton("attached text:=OK")'
+LIQ_FinancialRatio_Mnemonic_CheckBox= 'JavaWindow("title:=Financial Ratio").JavaCheckBox("attached text:=Mnemonic")'
+LIQ_FinancialRatio_Mnemonic_List= 'JavaWindow("title:=Financial Ratio").JavaList("x:=495","y:=117")'
+    
+    
+###Facility Notebook - Fee Selection###    
+LIQ_Facility_Pricing_FeeSelection_Window = 'JavaWindow("title:=Fee Selection")'
+LIQ_FacilityPricing_OngoingFees_FreeSelection_OK_Button = 'JavaWindow("title:=Fee Selection").JavaButton("label:=OK")'    
+LIQ_FeeSelection_Category_List = 'JavaWindow("title:=Fee Selection").JavaList("attached text:=Category:")'    
+LIQ_FeeSelection_Type_List = 'JavaWindow("title:=Fee Selection").JavaList("attached text:=Type:")'    
+LIQ_FeeSelection_RateBasis_List = 'JavaWindow("title:=Fee Selection").JavaList("attached text:=Rate Basis:")'    
+
+###Facility Notebook - Option Condition###    
+LIQ_OptionCondition_OptionName_List = 'JavaWindow("title:=Option Condition").JavaList("attached text:=Option Name:")'    
+LIQ_OptionCondition_RateBasis_List = 'JavaWindow("title:=Option Condition").JavaList("attached text:=Rate Basis:")'   
+LIQ_OptionCondition_Cancel_Button =  'JavaWindow("title:=Option Condition").JavaButton("attached text:=Cancel")' 
+    
+###Facility Notebook - Formula Category###    
+LIQ_FacilityPricing_FormulaCategory_Percent_Radiobutton = 'JavaWindow("title:=Formula Category").JavaRadioButton("attached text:=Percent")'
+LIQ_FacilityPricing_FormulaCategory_BasisPoints_Radiobutton = 'JavaWindow("title:=Formula Category").JavaRadioButton("attached text:=Basis Points")'
+LIQ_FacilityPricing_FormulaCategory_Percent_Textfield = 'JavaWindow("title:=Formula Category").JavaTab("tagname:=X").JavaEdit("tagname:=X","index:=1")'
+LIQ_FacilityPricing_FormulaCategory_Spread_Textfield = 'JavaWindow("title:=Formula Category").JavaTab("tagname:=X").JavaEdit("tagname:=X","index:=1")'
+LIQ_FacilityPricing_FormulaCategory_OK_Button = 'JavaWindow("title:=Formula Category").JavaButton("attached text:=OK")'
+    
+###Facility Notebook - Interest Pricing###    
+LIQ_Facility_InterestPricing_Window = 'JavaWindow("title:=.*Interest Pricing.*")'    
+LIQ_Facility_InterestPricing_Table = 'JavaWindow("title:=.*Interest Pricing").JavaTree("tagname:=Tree")'
+LIQ_Facility_InterestPricing_OK_Button = 'JavaWindow("title:=.*Interest Pricing.*").JavaButton("attached text:=OK")'
+LIQ_Facility_InterestPricing_Add_Button = 'JavaWindow("title:=.*Interest Pricing.*").JavaButton("label:=Add")'
+LIQ_Facility_InterestPricing_After_Button = 'JavaWindow("title:=.*Interest Pricing.*").JavaButton("label:=After")'
+LIQ_Facility_InterestPricing_Validate_Button = 'JavaWindow("title:=.*Interest Pricing.*").JavaButton("label:=Validate")'
+LIQ_Facility_InterestPricing_AddItem_List = 'JavaWindow("title:=Add Item").JavaList("tagname:=List","index:=0")'  
+LIQ_Facility_InterestPricing_Type_List = 'JavaWindow("title:=Add Item").JavaList("attached text:=Type:")'  
+LIQ_Facility_InterestPricing_AddItem_OK_Button = 'JavaWindow("title:=Add Item").JavaButton("label:=OK")'    
+LIQ_Facility_InterestPricing_OptionCondition_OK_Button = 'JavaWindow("title:=Option Condition").JavaButton("label:=OK")' 
+LIQ_Facility_InterestPricing_OptionCondition_Cancel_Button = 'JavaWindow("title:=Option Condition").JavaButton("label:=Cancel")'
+LIQ_Facility_InterestPricing_ExternalRating_Window = 'JavaWindow("title:=External Rating")'
+LIQ_Facility_InterestPricing_ExternalRating_Type_List = 'JavaWindow("title:=External Rating").JavaList("attached text:=Type:")'
+LIQ_Facility_InterestPricing_ExternalRating_Borrower_RadioButton = 'JavaWindow("title:=External Rating").JavaRadioButton("attached text:=Borrower")'
+LIQ_Facility_InterestPricing_ExternalRating_External_RadioButton = 'JavaWindow("title:=External Rating").JavaRadioButton("attached text:=External")'
+LIQ_Facility_InterestPricing_ExternalRating_GreaterThanOrEqual_RadioButton = 'JavaWindow("title:=External Rating").JavaRadioButton("attached text:=>=")'
+LIQ_Facility_InterestPricing_ExternalRating_GreaterThan_RadioButton = 'JavaWindow("title:=External Rating").JavaRadioButton("attached text:=>")'
+LIQ_Facility_InterestPricing_ExternalRating_LessThan_RadioButton = 'JavaWindow("title:=External Rating").JavaRadioButton("attached text:=<")'
+LIQ_Facility_InterestPricing_ExternalRating_LessThanOrEqual_RadioButton = 'JavaWindow("title:=External Rating").JavaRadioButton("attached text:=<=")'
+LIQ_Facility_InterestPricing_ExternalRating_Type_List = 'JavaWindow("title:=External Rating").JavaList("attached text:=Type:")'
+LIQ_Facility_InterestPricing_ExternalRating_MinRating_List = 'JavaWindow("title:=External Rating").JavaList("tagname:=Combo","index:=0")'
+LIQ_Facility_InterestPricing_ExternalRating_MaxRating_List = 'JavaWindow("title:=External Rating").JavaList("tagname:=Combo","index:=1")'
+LIQ_Facility_InterestPricing_ExternalRating_Customer_List = 'JavaWindow("title:=External Rating").JavaList("attached text:=Customer")'
+LIQ_Facility_InterestPricing_ExternalRating_OK_Button = 'JavaWindow("title:=External Rating").JavaButton("attached text:=OK")'
+LIQ_Facility_InterestPricingZoom_Window = 'JavaWindow("title:=Interest Pricing.*")'  
+LIQ_Facility_InterestPricingZoom_Table = 'JavaWindow("title:=Interest Pricing.*").JavaTree("tagname:=Tree")'
+LIQ_FormulaCategory_Window = 'JavaWindow("title:=Formula Category")'    
+LIQ_Facility_InterestPricing_FormulaCategory_Percent_Radiobutton = 'JavaWindow("title:=Formula Category").JavaRadioButton("attached text:=Percent")'    
+LIQ_Facility_InterestPricing_FormulaCategory_Percent_Textfield = 'JavaWindow("title:=Formula Category").JavaObject("text:=Spread").JavaEdit("tagname:=Text")'    
+LIQ_Facility_InterestPricing_FormulaCategory_OK_Button = 'JavaWindow("title:=Formula Category").JavaButton("attached text:=OK")'
+LIQ_Facility_InterestPricing_FormulaCategory_Cancel_Button = 'JavaWindow("title:=Formula Category").JavaButton("attached text:=Cancel")'     
+LIQ_Facility_InterestPricing_FormulaCategory_JavaTree = 'JavaWindow("title:=Formula Category").JavaTree("tagname:=Search:")'    
+LIQ_Facility_InterestPricing_RateFormulaUsage_List = 'JavaWindow("title:=Formula Category").JavaList("attached text:=Percent of Rate Formula Usage")'  
+LIQ_Facility_InterestPricing_AllInRateCapHistory_Button = 'JavaWindow("title:=.*Interest Pricing.*").JavaButton("attached text:=All-In Rate Cap History.*")'
+LIQ_Facility_InterestPricing_AllInRateFloorHistory_Button = 'JavaWindow("title:=.*Interest Pricing.*").JavaButton("attached text:=All-In Rate Floor History")'
+LIQ_Facility_InterestPricing_AllInRateCapHistory_Window = 'JavaWindow("title:=.*All-In Rate Cap  History")'
+LIQ_Facility_InterestPricing_AllInRateCapHistory_Insert_Button = 'JavaWindow("title:=.*All-In Rate Cap  History").JavaButton("attached text:=Insert")'
+LIQ_Facility_InterestPricing_AllInRateCapHistory_OK_Button = 'JavaWindow("title:=.*All-In Rate Cap  History").JavaButton("attached text:=OK")'
+LIQ_Facility_InterestPricing_AllInRateCapHistory_Cancel_Button = 'JavaWindow("title:=.*All-In Rate Cap  History").JavaButton("attached text:=Cancel")'
+LIQ_Facility_InterestPricing_AllInRateCapHistory_JavaTree = 'JavaWindow("title:=.*All-In Rate Cap  History").JavaTree("attached text:=Drill down to update")'
+LIQ_Facility_InterestPricing_AllInRateCap_Window = 'JavaWindow("text:=.*All-In Rate Cap")'
+LIQ_Facility_InterestPricing_AllInRateCap_Rate_TextField = 'JavaWindow("text:=.*All-In Rate Cap").JavaEdit("attached text:=All-In Rate Cap:")'
+LIQ_Facility_InterestPricing_AllInRateCap_RateChangeMethod_List = 'JavaWindow("text:=.*All-In Rate Cap").JavaList("attached text:=Rate Change Method:")'
+LIQ_Facility_InterestPricing_AllInRateCap_StartDate_TextField = 'JavaWindow("text:=.*All-In Rate Cap").JavaEdit("tagname:=Text","index:=1")'
+LIQ_Facility_InterestPricing_AllInRateCap_EndDate_TextField = 'JavaWindow("text:=.*All-In Rate Cap").JavaEdit("tagname:=Text","index:=2")'
+LIQ_Facility_InterestPricing_AllInRateCap_OK_Button = 'JavaWindow("text:=.*All-In Rate Cap").JavaButton("attached text:=OK")'
+LIQ_Facility_InterestPricing_AllInRateFloorHistory_Window = 'JavaWindow("text:=.*All-In Rate Floor  History")'
+LIQ_Facility_InterestPricing_AllInRateFloorHistory_Insert_Button = 'JavaWindow("title:=.*All-In Rate Floor  History").JavaButton("attached text:=Insert")'
+LIQ_Facility_InterestPricing_AllInRateFloorHistory_OK_Button = 'JavaWindow("title:=.*All-In Rate Floor  History").JavaButton("attached text:=OK")'
+LIQ_Facility_InterestPricing_AllInRateFloorHistory_Cancel_Button = 'JavaWindow("title:=.*All-In Rate Floor  History").JavaButton("attached text:=Cancel")'
+LIQ_Facility_InterestPricing_AllInRateFloorHistory_JavaTree = 'JavaWindow("title:=.*All-In Rate Floor  History").JavaTree("attached text:=Drill down to update")'
+LIQ_Facility_InterestPricing_AllInRateFloor_Window = 'JavaWindow("text:=.*All-In Rate Floor")'
+LIQ_Facility_InterestPricing_AllInRateFloor_Rate_TextField = 'JavaWindow("text:=.*All-In Rate Floor").JavaEdit("attached text:=All-In Rate Floor:")'
+LIQ_Facility_InterestPricing_AllInRateFloor_RateChangeMethod_List = 'JavaWindow("text:=.*All-In Rate Floor").JavaList("attached text:=Rate Change Method:")'
+LIQ_Facility_InterestPricing_AllInRateFloor_StartDate_TextField = 'JavaWindow("text:=.*All-In Rate Floor").JavaEdit("tagname:=Text","index:=1")'
+LIQ_Facility_InterestPricing_AllInRateFloor_EndDate_TextField = 'JavaWindow("text:=.*All-In Rate Floor").JavaEdit("tagname:=Text","index:=2")'
+LIQ_Facility_InterestPricing_AllInRateFloor_OK_Button = 'JavaWindow("text:=.*All-In Rate Floor").JavaButton("attached text:=OK")'
+
+###Facility Notebook - Sublimit/Cust Tab######    
+LIQ_FacilitySublimitCust_AddBorrower_Button = 'JavaWindow("title:=Facility -.*").JavaButton("attached text:=Add Borrower / Depositor")'    
+LIQ_FacilitySublimitCust_Borrowers_Tree = 'JavaWindow("title:=Facility -.*").JavaTree("labeled_containers_path:=Tab:Sublimit/Cust;","index:=1")'
+LIQ_FacilitySublimitCust_AddSublimit_Button = 'JavaWindow("title:=Facility -.*").JavaButton("attached text:=Add Sublimit...")'
+LIQ_FacilitySublimitCust_SublimitDetails_Window = 'JavaWindow("title:=Sublimit Details")'
+LIQ_FacilitySublimitCust_SublimitDetails_Name_Textfield = 'JavaWindow("title:=Sublimit Details").JavaEdit("attached text:=Name:")'
+LIQ_FacilitySublimitCust_SublimitDetails_GlobalAmt_Textfield = 'JavaWindow("title:=Sublimit Details").JavaEdit("attached text:=Global Amount:")'
+LIQ_FacilitySublimitCust_SublimitDetails_Currency_Javalist = 'JavaWindow("title:=Sublimit Details").JavaList("attached text:=Currency:")'
+LIQ_FacilitySublimitCust_SublimitDetails_EffectiveDate = 'JavaWindow("title:=Sublimit Details").JavaEdit("attached text:=Effective:")'
+LIQ_FacilitySublimitCust_SublimitDetails_OK_Button = 'JavaWindow("title:=Sublimit Details").JavaButton("attached text:=OK")'
+LIQ_FacilitySublimitCust_SublimitDetails_RiskTypes_Modify_Button = 'JavaWindow("title:=Sublimit Details").JavaButton("labeled_containers_path:=Group:Risk Types;","attached text:=Modify...")'
+LIQ_FacilitySublimitCust_SublimitDetails_RiskTypes_Javatree = 'JavaWindow("title:=Sublimit Details").JavaTree("labeled_containers_path:=Group:Risk Types;","tagname:=Tree")'
+LIQ_FacilitySublimitCust_ModifyRiskTypes_Window = 'JavaWindow("title:=Modify Risk Types Selection List")'
+LIQ_FacilitySublimitCust_ModifyRiskTypes_Search_Textfield = 'JavaWindow("title:=Modify Risk Types Selection List").JavaEdit("labeled_containers_path:=Group:Search:;","tagname:=Text")'
+LIQ_FacilitySublimitCust_ModifyRiskTypes_OK_Button = 'JavaWindow("title:=Modify Risk Types Selection List").JavaButton("attached text:=OK")'
+LIQ_FacilitySublimitCust_ModifyRiskTypes_Available_JavaTable = 'JavaWindow("title:=Modify Risk Types Selection List").JavaTable("attached text:=Available:")'
+
+###Facility Notebook - Borrower/Depositor Select Window######    
+LIQ_BorrowerDepositorSelect_Window = 'JavaWindow("title:=Borrower/Depositor Select")'    
+LIQ_FacilitySublimitCust_AddBorrower_AddAll_Button = 'JavaWindow("title:=Borrower/Depositor Select").JavaButton("attached text:=Add All")'
+LIQ_FacilitySublimitCust_AddBorrower_AddCurr_Button = 'JavaWindow("title:=Borrower/Depositor Select").JavaButton("attached text:=Add Curr.")'      
+LIQ_FacilitySublimitCust_AddBorrower_OK_Button = 'JavaWindow("title:=Borrower/Depositor Select").JavaButton("attached text:=OK")'    
+LIQ_BorrowerDepositorSelect_AddBorrower_Name_Field = 'JavaWindow("title:=Borrower/Depositor Select", "displayed:=1").JavaList("attached text:=Name:")'    
+LIQ_BorrowerDepositorSelect_AddBorrower_GlobalLimit_Field = 'JavaWindow("title:=Borrower/Depositor Select").JavaEdit("attached text:=Global Limit:")'    
+LIQ_BorrowerDepositorSelect_AddBorrower_Percent_Field = 'JavaWindow("title:=Borrower/Depositor Select").JavaEdit("attached text:=Percent:")'    
+LIQ_BorrowerDepositorSelect_AddBorrower_Maturity_Field = 'JavaWindow("title:=Borrower/Depositor Select").JavaEdit("attached text:=Maturity:")'    
+LIQ_BorrowerDepositorSelect_AddBorrower_EffectiveDate_Field = 'JavaWindow("title:=Borrower/Depositor Select").JavaEdit("attached text:=Effective:")'    
+LIQ_BorrowerDepositorSelect_AddBorrower_Sublimit_JavaTree = 'JavaWindow("title:=Borrower/Depositor Select").JavaTree("tagname:=Drill down to update","labeled_containers_path:=.*Sublimit.*")'    
+LIQ_BorrowerDepositorSelect_AddBorrower_RiskType_JavaTree = 'JavaWindow("title:=Borrower/Depositor Select").JavaTree("tagname:=Drill down to update","labeled_containers_path:=.*Risk Type.*")'    
+LIQ_BorrowerDepositorSelect_AddBorrower_Currency_JavaTree = 'JavaWindow("title:=Borrower/Depositor Select").JavaTree("tagname:=Drill down to update","labeled_containers_path:=.*Currency.*")'    
+LIQ_BorrowerDepositorSelect_AddBorrower_AddAll_Button = 'JavaWindow("title:=Borrower/Depositor Select").JavaButton("attached text:=Add All")'
+LIQ_BorrowerDepositorSelect_AddBorrower_OK_Button = 'JavaWindow("title:=Borrower/Depositor Select").JavaButton("attached text:=OK")'
+LIQ_BorrowerDepositorSelect_AddBorrower_Cancel_Button = 'JavaWindow("title:=Borrower/Depositor Select").JavaButton("attached text:=Cancel")'    
+LIQ_BorrowerDepositorSelect_AddBorrower_AddCurrency_Button = 'JavaWindow("title:=Borrower/Depositor Select").JavaButton("attached text:=Add Curr.")'    
+LIQ_BorrowerDepositorSelect_AddBorrower_DeleteCurrency_Button = 'JavaWindow("title:=Borrower/Depositor Select").JavaButton("attached text:=Delete Curr.")'    
+LIQ_BorrowerDepositorSelect_AddBorrower_AddSublimit_Button = 'JavaWindow("title:=Borrower/Depositor Select").JavaButton("attached text:=Add...","labeled_containers_path:=.*Sublimit.*")'    
+LIQ_BorrowerDepositorSelect_AddBorrower_DeleteSublimit_Button = 'JavaWindow("title:=Borrower/Depositor Select").JavaButton("attached text:=Delete...","labeled_containers_path:=.*Sublimit.*")'    
+LIQ_BorrowerDepositorSelect_AddBorrower_AddRisk_Button = 'JavaWindow("title:=Borrower/Depositor Select").JavaButton("attached text:=Add...","labeled_containers_path:=.*Risk.*")'    
+LIQ_BorrowerDepositorSelect_AddBorrower_DeleteRisk_Button = 'JavaWindow("title:=Borrower/Depositor Select").JavaButton("attached text:=Delete...","labeled_containers_path:=.*Risk.*")'    
+LIQ_Currency_Limit_Edit_Window = 'JavaWindow("title:=Currency Limit Edit")'
+LIQ_Currency_Limit_Edit_Currency_ComboBox = 'JavaWindow("title:=Currency Limit Edit").JavaList("attached text:=Currency:.*")'   
+LIQ_Currency_Limit_Edit_Ok_Button = 'JavaWindow("title:=Currency Limit Edit").JavaButton("attached text:=OK")'
+LIQ_SublimitEditor_Sublimit_List = 'JavaWindow("title:=SublimitLimitEditor").JavaList("attached text:=Sublimit:")' 
+LIQ_SublimitEditor_OK_Button = 'JavaWindow("title:=SublimitLimitEditor").JavaButton("attached text:=OK")'
+ 
+###Facility Notebook - Risk Type Limit Window###    
+LIQ_RiskTypeLimit_RiskType_List = 'JavaWindow("title:=Risk Type Limit Edit").JavaList("attached text:=Risk Type:")'    
+LIQ_RiskTypeLimit_OK_Button = 'JavaWindow("title:=Risk Type Limit Edit").JavaButton("attached text:=OK")'    
+    
+###Facility Notebook - Restrictions Tab###    
+LIQ_Facility_Restriction_Add_Button = 'JavaWindow("title:=Facility -.*").JavaButton("label:=Add")'    
+LIQ_Facility_Restriction_JavaTree = 'JavaWindow("title:=Facility -.*").JavaTree("tagname:=Drill down to update")'  
+LIQ_Facility_Restriction_CommitmentAvailability = 'JavaWindow("title:=Facility -.*").JavaEdit("attached text:=Available:")'   
+LIQ_Facility_Restriction_RepricingFXTolerance_Field = 'JavaWindow("title:=Facility -.*").JavaEdit("labeled_containers_path:=Tab:Restrictions;Group: Currency Limits ;","index:=1")'
+ 
+###Facility Notebook - Select Currency Window###    
+LIQ_Facility_Restriction_Add_Button = 'JavaWindow("title:=Facility -.*").JavaButton("labeled_containers_path:=Tab:Restrictions;Group: Currency Limits ;","label:=Add")'    
+LIQ_Facility_Restriction_JavaTree = 'JavaWindow("title:=Facility -.*").JavaTree("labeled_containers_path:=Tab:Restrictions;Group: Currency Limits ;")'    
+LIQ_Facility_SelectCurrency_Window = 'JavaWindow("title:=Select Currency")'    
+LIQ_Facility_SelectCurrency_JavaTree = 'JavaWindow("title:=Select Currency.*").JavaTree("tagname:=Drill down to select")'    
+LIQ_Facility_SelectCurrency_OK_Button = 'JavaWindow("title:=Select Currency.*").JavaButton("attached text:=OK")'    
+    
+###Facility Notebook - Currency Detail Window###    
+LIQ_CurrencyDetail_Window = 'JavaWindow("title:=Currency Detail")'    
+LIQ_CurrencyDetail_DrawLimit_Field = 'JavaWindow("title:=Currency Detail").JavaEdit("tagname:=Text","labeled_containers_path:=.*Draw Limit.*")'    
+LIQ_CurrencyDetail_DrawLimit_List = 'JavaWindow("title:=Currency Detail").JavaList("tagname:=Combo","labeled_containers_path:=.*Draw Limit.*")'    
+LIQ_CurrencyDetail_ServicingGroup_Button = 'JavaWindow("title:=Currency Detail").JavaButton("attached text:=Servicing Group")'    
+LIQ_CurrencyDetail_OK_Button = 'JavaWindow("title:=Currency Detail").JavaButton("attached text:=OK")'    
+LIQ_CurrencyDetail_PreferredRI_Button = 'JavaWindow("title:=Currency Detail").JavaButton("attached text:=Preferred Remittance Instructions")'    
+    
+###Facility Notebook - Servicing Group For Product Currency Window###    
+LIQ_ServicingGroupForProductCurrency_Window = 'JavaWindow("title:=Servicing Group For Product Currency")'    
+LIQ_ServicingGroupForProductCurrency_Customer_List = 'JavaWindow("title:=Servicing Group For Product Currency").JavaList("tagname:=Customer")'    
+LIQ_ServicingGroupForProductCurrency_ServicingGroup_Button = 'JavaWindow("title:=Servicing Group For Product Currency").JavaButton("attached text:=Servicing Group")'    
+LIQ_ServicingGroupForProductCurrencySelector_OK_Button = 'JavaWindow("title:=Servicing Group For Product Currency").JavaButton("attached text:=OK")'    
+LIQ_ServicingGroupForProductCurrency_ServicingGroup_Tree = 'JavaWindow("title:=Servicing Groups For:.*").JavaTree("tagname:=.*is Inactive","labeled_containers_path:=.*Servicing Group.*")'    
+LIQ_ServicingGroupForProductCurrency_OK_Button = 'JavaWindow("title:=Servicing Groups For:.*").JavaButton("attached text:=OK")'    
+    
+###Facility Notebook - Pricing Rules###    
+LIQ_FacilityPricingRules_Option_Tree = 'JavaWindow("title:=Facility -.*").JavaObject("tagname:=Group","text:=Allowed Pricing Options").JavaTree("index:=0")'    
+    
+###Facility Notebook - Pricing Tab - 1 locator used for Facility Pricing - Ongoing Fee & Interest Pricing Objects ###    
+LIQ_FacilityPricing_OngoingFeeInterest_Window = 'JavaWindow("title:=Facility.*Pricing")'    
+LIQ_FacilityPricing_OngoingFeeInterest_Tree = 'JavaWindow("title:=Facility.*Pricing").JavaTree("index:=0")'
+LIQ_FacilityPricing_OngoingFeeInterest_NoItems_JavaTree = 'JavaWindow("title:=Facility.*Pricing").JavaTree("items count:=0")'
+LIQ_FacilityPricing_OngoingFeeInterest_OK_Button = 'JavaWindow("title:=Facility.*Pricing").JavaButton("attached text:=OK")'    
+LIQ_FacilityPricing_OngoingFeeInterest_Add_Button = 'JavaWindow("title:=Facility.*Pricing").JavaButton("label:=Add")'    
+LIQ_FacilityPricing_OngoingFeeInterest_After_Button = 'JavaWindow("title:=Facility.*Pricing").JavaButton("label:=After")'    
+LIQ_FacilityPricing_OngoingFeeInterest_Validate_Button = 'JavaWindow("title:=Facility.*Pricing").JavaButton("label:=Validate")'    
+    
+LIQ_FacilityPricing_Interest_OptionCondition_Window = 'JavaWindow("title:=Option Condition")'    
+LIQ_FacilityPricing_Interest_OptionCondition_OptionName_Combobox = 'JavaWindow("title:=Option Condition").JavaList("attached text:=Option Name:")'    
+LIQ_FacilityPricing_Interest_OptionCondition_RateBasis_Combobox = 'JavaWindow("title:=Option Condition").JavaList("attached text:=Rate Basis:")'    
+LIQ_FacilityPricing_Interest_OptionCondition_OK_Button = 'JavaWindow("title:=Option Condition").JavaButton("attached text:=OK")'
+LIQ_FacilityPricing_Interest_OptionCondition_Cancel_Button = 'JavaWindow("title:=Option Condition").JavaButton("attached text:=Cancel")'
+
+LIQ_FacilityPricing_PenaltySpread_Modify_Button = 'JavaWindow("title:=Facility -.*").JavaObject("tagname:=Group","Text:=Penalty Spread").JavaButton("label:=Modify")'
+LIQ_FacilityPricing_PenaltySpread_Rate_Text = 'JavaWindow("title:=Facility -.*").JavaObject("tagname:=Group","Text:=Penalty Spread").JavaEdit("index:=0")'
+LIQ_PenaltySpreadEditor_Window = 'JavaWindow("title:=Penalty Spread Editor")'
+LIQ_PenaltySpreadEditor_Spread_Textfield = 'JavaWindow("title:=Penalty Spread Editor").JavaEdit("attached text:=Penalty Spread:")'
+LIQ_PenaltySpreadEditor_Status_List = 'JavaWindow("title:=Penalty Spread Editor").JavaList("attached text:=Penalty Status:")'
+LIQ_PenaltySpreadEditor_OK_Button = 'JavaWindow("title:=Penalty Spread Editor").JavaButton("label:=OK")'
+LIQ_PenaltySpreadEditor_Cancel_Button = 'JavaWindow("title:=Penalty Spread Editor").JavaButton("label:=Cancel")'
+
+###Outstanding Select###
+LIQ_OutstandingSelect_New_RadioButton = 'JavaWindow("label:=Outstanding Select").JavaRadioButton("attached text:=New")'
+LIQ_OutstandingSelect_PricingOption_Dropdown = 'JavaWindow("label:=Outstanding Select").JavaList("attached text:=Pricing Option:")'
+LIQ_OutstandingSelect_Currency_Dropdown = 'JavaWindow("label:=Outstanding Select").JavaList("attached text:=Currency:")'
+LIQ_OutstandingSelect_Ok_Button = 'JavaWindow("label:=Outstanding Select").JavaButton("attached text:=OK")'
+LIQ_OutstandingSelect_Search_Button = 'JavaWindow("label:=Outstanding Select").JavaButton("attached text:=Search")'
+LIQ_OutstandingSelect_Borrower_Dropdown = 'JavaWindow("label:=Outstanding Select").JavaList("attached text:=Borrower:")'
+LIQ_FacilityNotebook_OutstandingSelect_Menu = 'JavaWindow("title:=Facility -.*").JavaMenu("label:=Queries").JavaMenu("label:=Outstanding Select...")'
+
+###Facility Select Window from Actions###
+LIQ_FacililityListByName_Window = 'JavaWindow("title:=Facility Select").JavaWindow("title:=Facility List By Name")'
+LIQ_FacililityListByName_Facility_Namelist = 'JavaWindow("title:=Facility Select").JavaWindow("title:=Facility List By Name").JavaTree("attached text:=Search:")'
+LIQ_FacilitySelect_Deal_Textfield = 'JavaWindow("title:=Facility Select").JavaEdit("tagname:=Text","index:=0")'
+LIQ_FacilitySelect_Deal_Search_Button = 'JavaWindow("title:=Facility Select").JavaButton("attached text:=Search")'
+LIQ_FacililityListByName_OK_Button = 'JavaWindow("title:=Facility Select").JavaWindow("title:=Facility List By Name").JavaButton("attached text:=OK")'
+LIQ_Actions_DealSelect_Search_Button =  'JavaWindow("title:=Deal Select").JavaButton("attached text:=Search")'  
+
+###Facility Notebook - Pricing Tab###    
+LIQ_FacilityNotebook_Pricing_InterestPricing_StaticText = 'JavaWindow("title:=Facility -.*").JavaTree("attached text:=Split Tiered:")'
+LIQ_FacilityNotebook_Options_PricingChangeTransaction = 'JavaWindow("title:=Facility -.*").JavaMenu("label:=Options").JavaMenu("label:=Pricing Change Transaction")'
+LIQ_FacilityNotebook_AvailablePricing_Facility = 'JavaWindow("title:=Available Pricing").JavaTree("tagname:=Tree")'
+LIQ_FacilityNotebook_AvailablePricing_OK_Button = 'JavaWindow("title:=Available Pricing").JavaButton("attached text:=OK")'
+
+###Facility Notebook - Facility Change Transaction###
+LIQ_FacilityChangeTransaction_Window = 'JavaWindow("title:=.* Facility Change Transaction")'
+LIQ_FacilityChangeTransaction_FieldName_List = 'JavaWindow("title:=.* Facility Change Transaction").JavaTree("attached text:=Drill down to edit the new value.*")'
+LIQ_FacilityChangeTransaction_Tab = 'JavaWindow("title:=.* Facility Change Transaction").JavaTab("tagname:=TabFolder")'
+LIQ_FacilityChangeTransaction_Worflow_Tab = 'JavaWindow("title:=.* Facility Change Transaction").JavaTab("text:=Workflow").JavaTree("attached text:=Drill down to perform Workflow item")'
+LIQ_FacilityChangeTransaction_WorkflowNoItems_Tab = 'JavaWindow("title:=.* Facility Change Transaction").JavaTab("text:=Workflow").JavaTree("attached text:=Drill down to perform Workflow item","items count:=0")'
+LIQ_FacilityChangeTransaction_File_Exit = 'JavaWindow("title:=.* Facility Change Transaction").JavaMenu("label:=File").JavaMenu("label:=Exit")'
+LIQ_FacilityChangeTransaction_CreateModifyScheduleButton = 'JavaWindow("title:=.* Facility Change Transaction").JavaButton("attached text:=Create/Modify Schedule")'
+LIQ_FacilityChangeTransaction_ReleasedWindow = 'JavaWindow("title:=.*Released Facility Change Transaction")'
+LIQ_FacilityChangeTransaction_AmortizationSchedule_Window = 'JavaWindow("title:=Amortization Schedule For Facility Change Transaction.*")'
+LIQ_FacilityChangeTransaction_AmortizationSchedule_List = 'JavaWindow("title:=Amortization Schedule For Facility.*").JavaTree("attached text:=item.*(s.*) selected.*.")'
+LIQ_FacilityChangeTransaction_AmortizationSchedule_ModifyButton = 'JavaWindow("title:=Amortization Schedule For Facility Change Transaction.*").JavaButton("attached text:=Modify")'
+LIQ_FacilityChangeTransaction_AmortizationSchedule_CreatePendingButton = 'JavaWindow("title:=Amortization Schedule For Facility.*").JavaButton("attached text:=Create Pending")'
+LIQ_FacilityChangeTransaction_AmortizationSchedule_SaveButton = 'JavaWindow("title:=Amortization Schedule For Facility Change Transaction.*").JavaButton("attached text:=Save")'
+LIQ_FacilityChangeTransaction_AmortizationSchedule_ExitButton = 'JavaWindow("title:=Amortization Schedule For Facility Change Transaction.*").JavaButton("attached text:=Exit")'
+LIQ_FacilityChangeTransaction_AmortizationSchedule_AddButton = 'JavaWindow("title:=Amortization Schedule For Facility Change Transaction.*").JavaButton("attached text:=Add")'
+LIQ_FacilityChangeTransaction_ModifyScheduleItem_Increase_RadioButton = 'JavaWindow("title:=Modify Schedule Item").JavaRadioButton("attached text:=Increase")'
+LIQ_FacilityChangeTransaction_ModifyScheduleItem_Decrease_RadioButton = 'JavaWindow("title:=Modify Schedule Item").JavaRadioButton("attached text:=Decrease")'
+LIQ_FacilityChangeTransaction_ModifyScheduleItem_AmountField = 'JavaWindow("title:=Modify Schedule Item").JavaEdit("attached text:=Amount:")'
+LIQ_FacilityChangeTransaction_ModifyScheduleItem_ScheduleDateField = 'JavaWindow("title:=Modify Schedule Item").JavaEdit("attached text:=Schedule Date:")'
+LIQ_FacilityChangeTransaction_ModifyScheduleItem_OKButton = 'JavaWindow("title:=Modify Schedule Item").JavaButton("attached text:=OK")'
+LIQ_FacilityChangeTransaction_AddScheduleItem_Increase_RadioButton = 'JavaWindow("title:=Add Schedule Item").JavaRadioButton("attached text:=Increase")'
+LIQ_FacilityChangeTransaction_AddScheduleItem_Decrease_RadioButton = 'JavaWindow("title:=Add Schedule Item").JavaRadioButton("attached text:=Decrease")'
+LIQ_FacilityChangeTransaction_AddScheduleItem_AmountField = 'JavaWindow("title:=Add Schedule Item").JavaEdit("attached text:=Amount:")'
+LIQ_FacilityChangeTransaction_AddScheduleItem_ScheduleDateField = 'JavaWindow("title:=Add Schedule Item").JavaEdit("attached text:=Schedule Date:")'
+LIQ_FacilityChangeTransaction_AddScheduleItem_OKButton = 'JavaWindow("title:=Add Schedule Item").JavaButton("attached text:=OK")'
+LIQ_FacilityChangeTransaction_CreatePending_EffectiveDateField = 'JavaWindow("title:=Effective Date").JavaEdit("tagname:=Text")'
+LIQ_FacilityChangeTransaction_CreatePending_OKButton = 'JavaWindow("title:=Effective Date").JavaButton("attached text:=OK")'
+LIQ_FacilityChangeTransaction_BorrowersTab_NewBorrowers_JavaTree = 'JavaWindow("title:=.*Facility Change Transaction").JavaTree("attached text:=Drill down to view/update","labeled_containers_path:=Tab:Borrowers;Group:New Borrowers / Depositors;")'
+LIQ_FacilityChangeTransaction_BorrowersTab_MakePrimary_Button = 'JavaWindow("title:=.*Facility Change Transaction").JavaButton("attached text:=Make Primary")'
+LIQ_FacilityChangeTransaction_BorrowersTab_DeleteBorrower_Button = 'JavaWindow("title:=.*Facility Change Transaction").JavaButton("attached text:=Delete Borrower / Depositor")'
+LIQ_FacilityChangeTransaction_BorrowersTab_AddBorrower_Button = 'JavaWindow("title:=.*Facility Change Transaction").JavaButton("attached text:=Add Borrower / Depositor")'
+LIQ_FacilityChangeTransaction_GuaranteesTab_NewGuarantees_JavaTree = 'JavaWindow("title:=.*Facility Change Transaction").JavaTree("attached text:=Drill down to view/update","labeled_containers_path:=Tab:Guarantees;Group:New Guarantees;")'
+LIQ_FacilityChangeTransaction_GuaranteesTab_AddGuarantee_Button = 'JavaWindow("title:=.*Facility Change Transaction").JavaButton("attached text:=Add Guarantee")'
+LIQ_FacilityChangeTransaction_GuaranteesTab_DeleteGuarantee_Button = 'JavaWindow("title:=.*Facility Change Transaction").JavaButton("attached text:=Delete Guarantee")'
+LIQ_FacilityChangeTransaction_GuaranteesTab_GuarantorSelect_Window = 'JavaWindow("title:=Guarantor Select")'
+LIQ_FacilityChangeTransaction_GuaranteesTab_GuarantorSelect_Textfield = 'JavaWindow("title:=Guarantor Select").JavaEdit("tagname:=Text")'
+LIQ_FacilityChangeTransaction_GuaranteesTab_GuarantorSelect_SearchButton = 'JavaWindow("title:=Guarantor Select").JavaButton("attached text:=Search")'
+LIQ_FacilityChangeTransaction_GuaranteesTab_GuarantorSelect_OKButton = 'JavaWindow("title:=Guarantor Select").JavaButton("attached text:=OK")'
+LIQ_FacilityChangeTransaction_GuaranteesTab_GuarantorSelect_CancelButton = 'JavaWindow("title:=Guarantor Select").JavaButton("attached text:=Cancel")'
+LIQ_FacilityChangeTransaction_InquiryMode_Button = 'JavaWindow("title:=.* Facility Change Transaction").JavaButton("attached text:=Notebook in Inquiry Mode - F7")'
+LIQ_FacilityChangeTransaction_GuaranteesTab_GuarantorListByShortName_Window = 'JavaWindow("title:=Guarantor Select").JavaWindow("title:=Guarantor List By Short Name")'
+LIQ_FacilityChangeTransaction_GuaranteesTab_GuarantorListByShortName_JavaTree = 'JavaWindow("title:=Guarantor Select").JavaWindow("title:=Guarantor List By Short Name").JavaTree("attached text:=Search:")'
+LIQ_FacilityChangeTransaction_ChangeBranchProcArea_List = 'JavaWindow("title:=Change Branch / Processing Area").JavaList("attached text:=Processing Area:")'
+LIQ_FacilityChangeTransaction_ChangeBranchProcArea_OK_Button = 'JavaWindow("title:=Change Branch / Processing Area").JavaButton("attached text:=OK")'
+LIQ_FacilityChangeTransaction_EnterEffectiveDate_Datefield = 'JavaWindow("title:=Enter Effective Date").JavaEdit("tagname:=Text")'
+LIQ_FacilityChangeTransaction_EnterEffectiveDate_OK_Button = 'JavaWindow("title:=Enter Effective Date").JavaButton("attached text:=OK")'
+LIQ_FacilityChangeTransaction_ChangeFacilityType_Type_List = 'JavaWindow("title:=Change Facility Type").JavaList("attached text:=Type:")'
+LIQ_FacilityChangeTransaction_ChangeFacilityType_OK_Button = 'JavaWindow("title:=Change Facility Type").JavaButton("attached text:=OK")'
+LIQ_FacilityChangeTransaction_Workflow_JavaTree = 'JavaWindow("title:=.* Facility Change Transaction").JavaTree("attached text:=Drill down to perform Workflow item")'
+LIQ_FacilityChangeTransaction_GeneralTab_JavaTree = 'JavaWindow("title:=.* Facility Change Transaction").JavaTab("text:=General").JavaTree("attached text:=Drill down to edit the new value.")'
+LIQ_FacilityChangeTransaction_GuaranteesTab_OldGuarantees_JavaTree = 'JavaWindow("title:=.*Facility Change Transaction").JavaTree("attached text:=Drill down to view","labeled_containers_path:=Tab:Guarantees;Group:Old Guarantees;")'
+LIQ_FacilityChangeTransaction_GuaranteesTab_MakePrimary_Button = 'JavaWindow("title:=.*Facility Change Transaction").JavaButton("attached text:=Make Primary")'
+
+###Facility Notebook - Availability Change###
+LIQ_AvailabilityChange_Window = 'JavaWindow("title:=Commitment Availability Change in Facility.*")'
+LIQ_AvailabilityChange_Current_Amountfield = 'JavaWindow("title:=Commitment Availability Change in Facility.*").JavaEdit("index:=4")'
+LIQ_AvailabilityChange_Change_Amountfield = 'JavaWindow("title:=Commitment Availability Change in Facility.*").JavaEdit("index:=0")'
+LIQ_AvailabilityChange_New_Amountfield = 'JavaWindow("title:=Commitment Availability Change in Facility.*").JavaEdit("index:=5")'
+LIQ_AvailabilityChange_Tab = 'JavaWindow("title:=Commitment Availability Change in Facility.*").JavaTab("tagname:=TabFolder")'
+LIQ_AvailabilityChange_Workflow_Tab = 'JavaWindow("title:=Commitment Availability Change in Facility.*").JavaTab("text:=Workflow").JavaTree("attached text:=Drill down to perform Workflow item")'
+LIQ_AvailabilityChange_WorkflowNoItems_Tab = 'JavaWindow("title:=Commitment Availability Change in Facility.*").JavaTab("text:=Workflow").JavaTree("attached text:=Drill down to perform Workflow item","items count:=0")'
+
+LIQ_AvailabilityChange_Effective_Datefield = 'JavaWindow("title:=Commitment Availability Change in Facility.*").JavaEdit("attached text:=Effective Date:")'
+LIQ_AvailabilityChange_Comment_field = 'JavaWindow("title:=Commitment Availability Change in Facility.*").JavaEdit("attached text:=Comment:")'
+LIQ_AvailabilityChange_File_Save = 'JavaWindow("title:=Commitment Availability Change in Facility.*").JavaMenu("label:=File").JavaMenu("label:=Save")'
+LIQ_AvailabilityChange_File_Exit = 'JavaWindow("title:=Commitment Availability Change in Facility.*").JavaMenu("label:=File").JavaMenu("label:=Exit")'
+
+###Facility Notebook - Inactive
+LIQ_InactiveLoan_GlobalCurrent = 'JavaWindow("title:=.*Loan.*Inactive").JavaEdit("attached text:=Global Current:")'
+LIQ_InactiveLoan_CycleDueAmount = 'JavaWindow("title:=.*Loan.*Inactive").JavaTree("attached text:=Cycles.*")'
+
+###Enter Maturity Date###
+LIQ_EnterMaturityDate_Window = 'JavaWindow("title:=Enter Maturity Date")'
+LIQ_EnterMaturityDate_MaturityDate_Textfield = 'JavaWindow("title:=Enter Maturity Date").JavaEdit("tagname:=text")'
+LIQ_EnterMaturityDate_Ok_Button = 'JavaWindow("title:=Enter Maturity Date").JavaButton("attached text:=OK")'
+
+###Interest Pricing - Financial Ratio Window###
+LIQ_FinancialRatio_Window= 'JavaWindow("title:=Financial Ratio")'
+LIQ_FinancialRatio_Type_Combobox= 'JavaWindow("title:=Financial Ratio").JavaList("attached text:=Type:")'
+LIQ_FinancialRatio_GreaterThanEqual_RadioButton= 'JavaWindow("title:=Financial Ratio").JavaRadioButton("attached text:=>=")'
+LIQ_FinancialRatio_GreaterThan_RadioButton= 'JavaWindow("title:=Financial Ratio").JavaRadioButton("attached text:=>")'
+LIQ_FinancialRatio_MinimumValue_Field= 'JavaWindow("title:=Financial Ratio").JavaEdit("index:=0")'
+LIQ_FinancialRatio_LessThan_RadioButton= 'JavaWindow("title:=Financial Ratio").JavaRadioButton("attached text:=<")'
+LIQ_FinancialRatio_LessThanEqual_RadioButton= 'JavaWindow("title:=Financial Ratio").JavaRadioButton("attached text:=<=")'
+LIQ_FinancialRatio_MaximumValue_Field= 'JavaWindow("title:=Financial Ratio").JavaEdit("index:=1")'
+LIQ_FinancialRatio_OK_Button= 'JavaWindow("title:=Financial Ratio").JavaButton("attached text:=OK")'
+LIQ_FinancialRatio_Mnemonic_CheckBox= 'JavaWindow("title:=Financial Ratio").JavaCheckBox("attached text:=Mnemonic")'
+LIQ_FinancialRatio_Mnemonic_List= 'JavaWindow("title:=Financial Ratio").JavaList("value:=Maximum")'
+
+###Enter Expiry Date###
+LIQ_EnterExpiryDate_Window = 'JavaWindow("title:=Enter Expiry Date")'
+LIQ_EnterExpiryDate_ExpiryDate_Textfield = 'JavaWindow("title:=Enter Expiry Date").JavaEdit("tagname:=text")'
+LIQ_EnterExpiryDate_Ok_Button = 'JavaWindow("title:=Enter Expiry Date").JavaButton("attached text:=OK")'
+
+###Terminate Facility###
+LIQ_TerminateFacility_Window = 'JavaWindow("title:=Terminate Facility")'
+LIQ_TerminateFacility_TerminationDate_YesRadioButton = 'JavaWindow("title:=Terminate Facility").JavaRadioButton("attached text:=Yes")'
+LIQ_TerminateFacility_TerminationDate_Textfield = 'JavaWindow("title:=Terminate Facility").JavaEdit("attached text:=Effective Date of Termination:")'
+LIQ_TerminateFacility_Ok_Button = 'JavaWindow("title:=Terminate Facility").JavaButton("attached text:=OK")'
+LIQ_FacilityPricing_InterestPricing_FormulaCategory_BaseRateList = 'JavaWindow("title:=Formula Category").JavaTree("attached text:=Search:")'
+LIQ_FacilitySelect_Window = 'JavaWindow("title:=Facility Select")'
+LIQ_FacilityNavigator_FacilitySelection = 'JavaWindow("title:=Facility Navigator -.*").JavaTree("attached text:=Drill down to open the facility notebook")'
+LIQ_FacilityNotebook_QuestionMessage_StaticText = 'JavaWindow("title:=Question.*","displayed:=1").JavaEdit("attached text:=QUESTION","height:=68")'
+LIQ_FacilityNotebook_UpdateMode_Button = 'JavaWindow("title:=Facility -.*").JavaButton("attached text:=Notebook in Update Mode - F7")'
+
+## Facility Increase Decrease Schedule ## 
+LIQ_FacilityIncreaseDecreaseSchedule_AmortizationSchedule_Window = 'JavaWindow("title:=Amortization Schedule.*")'
+LIQ_FacilityIncreaseDecreaseSchedule_AmortizationSchedule_Reschedule_Button = 'JavaWindow("title:=Amortization Schedule.*").JavaButton("attached text:=Reschedule")'
+LIQ_FacilityIncreaseDecreaseSchedule_AmortizationSchedule_JavaTree = 'JavaWindow("title:=Amortization Schedule.*").JavaObject("text:=Current Schedule").JavaTree("tagname:=item\(s\) selected\.")'
+LIQ_FacilityIncreaseDecreaseSchedule_AmortizationSchedule_Add_Button = 'JavaWindow("title:=Amortization Schedule.*").JavaObject("text:=Current Schedule").JavaButton("attached text:=Add")'
+LIQ_FacilityIncreaseDecreaseSchedule_AmortizationSchedule_EqualizeAmounts_Button = 'JavaWindow("title:=Amortization Schedule.*").JavaObject("text:=Current Schedule").JavaButton("attached text:=Equalize Amounts")'
+LIQ_FacilityIncreaseDecreaseSchedule_AmortizationSchedule_Save_Button = 'JavaWindow("title:=Amortization Schedule.*").JavaButton("attached text:=Save")'
+LIQ_FacilityIncreaseDecreaseSchedule_AmortizationSchedule_Exit_Button = 'JavaWindow("title:=Amortization Schedule.*").JavaButton("attached text:=Exit")'
+LIQ_FacilityIncreaseDecreaseSchedule_AmortizationSchedule_CreateNotices_Button = 'JavaWindow("title:=Amortization Schedule.*").JavaButton("attached text:=Create Notices")'
+LIQ_FacilityIncreaseDecreaseSchedule_AmortizationSchedule_AmortizationScheduleStatus_Dropdown = 'JavaWindow("title:=Amortization Schedule.*").JavaList("attached text:=Amortization Schedule Status:")'
+LIQ_Facility_AmortizationScheduleSetup_CommitmentAmount_Label = 'JavaWindow("title:=Amortization Schedule.*").JavaObject("text:=Commitment Amounts.*").JavaStaticText("index:=2")'
+
+LIQ_Facility_AmortizationScheduleSetup_Window = 'JavaWindow("text:=Automatic Schedule Setup .*")'
+LIQ_Facility_AmortizationScheduleSetup_NoCycItems_Input = 'JavaWindow("text:=Automatic Schedule Setup .*").JavaObject("text:=Cyclical Schedule Terms").JavaEdit("attached text:=No\. Cyc\. Items:")'
+LIQ_Facility_AmortizationScheduleSetup_Amount_Input = 'JavaWindow("text:=Automatic Schedule Setup .*").JavaObject("text:=Cyclical Schedule Terms").JavaEdit("attached text:=Amount:")'
+LIQ_Facility_AmortizationScheduleSetup_Percentage_Input = 'JavaWindow("text:=Automatic Schedule Setup .*").JavaObject("text:=Cyclical Schedule Terms").JavaEdit("attached text:=Percentage:")'
+LIQ_Facility_AmortizationScheduleSetup_Frequency_Dropdown = 'JavaWindow("text:=Automatic Schedule Setup .*").JavaObject("text:=Cyclical Schedule Terms").JavaList("tagname:=Combo")'
+LIQ_Facility_AmortizationScheduleSetup_OK_Button = 'JavaWindow("text:=Automatic Schedule Setup .*").JavaButton("attached text:=OK")'
+LIQ_Facility_AmortizationScheduleSetup_TriggerDate_Input = 'JavaWindow("text:=Automatic Schedule Setup .*").JavaObject("text:=Cyclical Schedule Terms").JavaEdit("attached text:=Trigger Date:")'
+LIQ_Facility_AmortizationScheduleSetup_Exiting_ExitNoSave_Button = 'JavaWindow("title:=Exiting").JavaButton("attached text:=Exit - No Save")'
+LIQ_Facility_AmortizationScheduleSetup_FrequencyNo_Input = 'JavaWindow("text:=Automatic Schedule Setup .*").JavaObject("text:=Cyclical Schedule Terms").JavaEdit("attached text:=Frequency:")'
+
+LIQ_Facility_AddScheduleItem_Window = 'JavaWindow("text:=Add Schedule Item.*")'
+LIQ_Facility_AddScheduleItem_Increase_RadioButton = 'JavaWindow("text:=Add Schedule Item.*").JavaObject("text:=Change type").JavaRadioButton("attached text:=Increase")'
+LIQ_Facility_AddScheduleItem_Decrease_RadioButton = 'JavaWindow("text:=Add Schedule Item.*").JavaObject("text:=Change type").JavaRadioButton("attached text:=Decrease")'
+LIQ_Facility_AddScheduleItem_Amount_Input = 'JavaWindow("text:=Add Schedule Item.*").JavaEdit("attached text:=Amount:")'
+LIQ_Facility_AddScheduleItem_ScheduleDate_Input = 'JavaWindow("text:=Add Schedule Item.*").JavaEdit("attached text:=Schedule Date:")'
+LIQ_Facility_AddScheduleItem_Percent_Input = 'JavaWindow("text:=Add Schedule Item.*").JavaEdit("attached text:=Percent.*:")'
+LIQ_Facility_AddScheduleItem_OK_Button = 'JavaWindow("text:=Add Schedule Item.*").JavaButton("attached text:=OK")'
+
+LIQ_Facility_GroupAddressedNotice_Window = 'JavaWindow("text:=.*Group Addressed Notice.*")'
+LIQ_Facility_GroupAddressedNotice_Create_Button = 'JavaWindow("text:=.*Group Addressed Notice.*").JavaButton("attached text:=Create")'
+LIQ_Facility_Notices_Window = 'JavaWindow("text:=Notices.*")'
+LIQ_Facility_Notices_OK_Button = 'JavaWindow("text:=Notices.*").JavaButton("attached text:=OK")'
+
+LIQ_Facility_AddressedGroup_Window = 'JavaWindow("text:=Facility Addressed Group.*")'
+LIQ_Facility_AddressedGroup_JavaTree = 'JavaWindow("text:=Facility Addressed Group.*").JavaTree("tagname:=Drill down.*")'
+LIQ_Facility_AddressedGroup_Exit_Button = 'JavaWindow("text:=Facility Addressed Group.*").JavaButton("attached text:=Exit")'
+
+###Lender Share###
+LIQ_Facility_Queries_LenderShares_JavaTree = 'JavaWindow("title:=Shares for.*").JavaTree("attached text:=Drill Down for Primary/Assignment Detail")'
+LIQ_Facility_Queries_LenderShares_HostBank_JavaTree = 'JavaWindow("title:=Shares for.*").JavaTree("attached text:=Drill Down for Portfolio Shares")'
+LIQ_FacilityNotebook_Queries_LenderShares = 'JavaWindow("title:=Facility -.*").JavaMenu("label:=Queries").JavaMenu("label:=.*Lender Shares...")'
+LIQ_FacilityNotebook_Options_DealNotebook = 'JavaWindow("title:=Facility -.*").JavaMenu("label:=Options").JavaMenu("label:=.*Deal Notebook...")'
+
+LIQ_FacilityNotebook_HostProposedCmt = 'JavaWindow("title:=Facility -.*").JavaEdit("labeled_containers_path:=Tab:Summary;Group:Host Bank Share Gross Amounts ;", "index:=0")'
+LIQ_FacilityNotebook_HostContrGross = 'JavaWindow("title:=Facility -.*").JavaEdit("labeled_containers_path:=Tab:Summary;Group:Host Bank Share Gross Amounts ;", "index:=2")'
+LIQ_FacilityNotebook_HostOutstandings = 'JavaWindow("title:=Facility -.*").JavaEdit("labeled_containers_path:=Tab:Summary;Group:Host Bank Share Gross Amounts ;", "index:=3")'
+
+###Facility Notebook - Events Tab### 
+LIQ_FacilityEvents_JavaTree = 'JavaWindow("title:=Facility -.*").JavaTree("attached text:=Select event to view details")'
+LIQ_FacilityEvents_Comment_Field = 'JavaWindow("title:=Facility -.*").JavaEdit("attached text:=Comment:")'
+LIQ_FacilityEvents_EventsQueue_Button = 'JavaWindow("title:=Facility -.*").JavaButton("attached text:=Event Queue")'
+LIQ_FacilityEvents_EffectiveDate_Text = 'JavaWindow("title:=Facility -.*").JavaObject("tagname:=Group","text:=.*Event Details.*").JavaStaticText("index:=6")'
+
+### Facility Notebook - MIS Codes Tab ###
+LIQ_FacilityMISCodes_Add_Button = 'JavaWindow("title:=Facility -.*").JavaButton("attached text:=Add...")'
+LIQ_FacilityMISCodes_MISCodes_JavaTree = 'JavaWindow("title:=Facility -.*").JavaTree("attached text:=Drill down for details")'
+
+### Facility Notebook - Facility MIS Code Details Window ###
+LIQ_FacilityMISCodes_FacilityMISCodeDetails_Window = 'JavaWindow("text:=Facility MIS Code Details")'
+LIQ_FacilityMISCodes_MISCode_List = 'JavaWindow("title:=Facility MIS Code Details").JavaList("attached text:=MIS Code:")'
+LIQ_FacilityMISCodes_Value_Field = 'JavaWindow("text:=Facility MIS Code Details").JavaEdit("attached text:=Value:")'
+LIQ_FacilityMISCodes_OK_Button = 'JavaWindow("text:=Facility MIS Code Details").JavaButton("attached text:=OK")'
+LIQ_FacilityMISCodes_Cancel_Button = 'JavaWindow("text:=Facility MIS Code Details").JavaButton("attached text:=Cancel")'
+
+
+### Facility Notebook - Codes Tab ###
+LIQ_Facility_Codes_FundingDesk_Text = 'JavaWindow("title:=Facility -.*").JavaStaticText("labeled_containers_path:=Tab:Codes;Group: General Information ;", "Index:=12")'
+LIQ_FacilityCodes_SIC_Button = 'JavaWindow("title:=Facility -.*").JavaObject("tagname:=Group","text:=.*General Information.*").JavaButton("label:=SIC:")'
+LIQ_FacilityCodes_SICDescription_Text = 'JavaWindow("title:=Facility -.*").JavaObject("tagname:=Group","text:=.*General Information.*").JavaStaticText("index:=6")'
+LIQ_SICSelect_Window = 'JavaWindow("title:=SIC Select")'
+LIQ_SICSelect_Country_List = 'JavaWindow("title:=SIC Select").JavaList("attached text:=Country")'
+LIQ_SICSelect_Code_Textfield = 'JavaWindow("title:=SIC Select").JavaEdit("attached text:=Code")'
+LIQ_SICSelect_Code_List = 'JavaWindow("title:=SIC Select").JavaTree("attached text:=Drill down to select")'
+LIQ_SICSelect_OK_Button = 'JavaWindow("title:=SIC Select").JavaButton("label:=OK")'
+LIQ_SICSelect_Cancel_Button = 'JavaWindow("title:=SIC Select").JavaButton("label:=Cancel")'
+LIQ_FacilityCodes_OwningBranch_Text = 'JavaWindow("title:=Facility -.*").JavaObject("tagname:=Group","text:=.*General Information.*").JavaStaticText("index:=10")'
+LIQ_FacilityCodes_ProcessingArea_Text = 'JavaWindow("title:=Facility -.*").JavaObject("tagname:=Group","text:=.*General Information.*").JavaStaticText("index:=14")'
+
+### Facility Change Transaction - Change Facility Type ###
+LIQ_FacilityChangeTransaction_ChangeFacilityType_Window = 'JavaWindow("title:=Change Facility Type.*")'
+LIQ_FacilityChangeTransaction_ChangeFacilityType_Type_Field = 'JavaWindow("title:=Change Facility Type.*").JavaList("attached text:=Type:")'
+LIQ_FacilityChangeTransaction_ChangeFacilityType_OK_Button = 'JavaWindow("title:=Change Facility Type.*").JavaButton("attached text:=OK")'
+
+### Facility Notebook - Alerts Window ###
+LIQ_Facility_Alerts_Window = 'JavaWindow("title:=Alerts")'
+LIQ_Facility_Alerts_Cancel_Button = 'JavaWindow("title:=Alerts").JavaButton("attached text:=Cancel")'
+
+### Facility Notebook - Lockouts Window ###
+LIQ_Facility_Lockouts_Window = 'JavaWindow("title:=Lockouts")'
+LIQ_Facility_Lockouts_Cancel_Button = 'JavaWindow("title:=Lockouts").JavaButton("attached text:=Cancel")'
+
+### Facility Type Details Window ###
+LIQ_Facility_Type_Details_Window = 'JavaWindow("title:=Facility Type Details -.*")'
+LIQ_Facility_Type_Details_Committed_Field = 'JavaWindow("title:=Facility Type Details -.*").JavaStaticText("attached text:=Committed")'
+LIQ_Facility_Type_Details_Exit_Button = 'JavaWindow("title:=Facility Type Details -.*").JavaButton("attached text:=Exit")'
+
+### Facility Notebook - Change Branch / Processing Area Window ###
+LIQ_FacilityNotebook_ChangeBranchProcArea_Window = 'JavaWindow("title:=Change Branch / Processing Area")'
+LIQ_FacilityNotebook_ChangeBranchProcArea_Branch_Field = 'JavaWindow("title:=Change Branch / Processing Area").JavaList("attached text:=Branch:")'
+LIQ_FacilityNotebook_ChangeBranchProcArea_OK_Button = 'JavaWindow("title:=Change Branch / Processing Area").JavaButton("attached text:=OK")'
+LIQ_FacilityNotebook_ChangeBranchProcArea_ProcessingArea_Field = 'JavaWindow("title:=Change Branch / Processing Area").JavaList("attached text:=Processing Area:")'
+
+### Facility Rename Window ###
+LIQ_FacilityNotebook_Rename_NewName_Field = 'JavaWindow("title:=Facility -.*","displayed:=1").JavaWindow("title:=Rename.*").JavaEdit("attached text:=New Name:")'
+LIQ_FacilityNotebook_Rename_OK_Button = 'JavaWindow("title:=Facility -.*","displayed:=1").JavaWindow("title:=Rename.*").JavaButton("attached text:=OK")'
+
+###Facility Notebook - Risk Tab###
+LIQ_FacilityNoteBook_Risk_Guarantees_JavaTree = 'JavaWindow("title:=Facility -.*").JavaTree("attached text:=Guarantees.*")'
+
+###Facility Notebook - Facility Guarantor Details Window###
+LIQ_FacilityGuarantorDetails_Window = 'JavaWindow("title:=Facility Guarantor Details.*")'
+LIQ_FacilityGuarantorDetails_Guarantor_JavaEdit = 'JavaWindow("title:=Facility Guarantor Details").JavaEdit("attached text:=Guarantor:")'
+LIQ_FacilityGuarantorDetails_PolRiskExpiry_JavaEdit = 'JavaWindow("title:=Facility Guarantor Details").JavaEdit("attached text:=Expiry:","labeled_containers_path:=Group:Political Risk;Group: Guarantor Dates ;")'
+LIQ_FacilityGuarantorDetails_GuaranteeType_List = 'JavaWindow("title:=Facility Guarantor Details.*").JavaList("attached text:=Guarantee Type:")'
+LIQ_FacilityGuarantorDetails_CommercialRisk_EffectiveDate_Datefield = 'JavaWindow("title:=Facility Guarantor Details.*").JavaObject("text:=Commercial Risk").JavaEdit("attached text:=Effective:")'    
+LIQ_FacilityGuarantorDetails_CommercialRisk_ExpiryDate_Datefield = 'JavaWindow("title:=Facility Guarantor Details.*").JavaObject("text:=Commercial Risk").JavaEdit("attached text:=Expiry:")'  
+LIQ_FacilityGuarantorDetails_CommercialRisk_Global_Textfield = 'JavaWindow("title:=Facility Guarantor Details.*").JavaObject("text:=Commercial Risk").JavaEdit("attached text:=Global:")'
+LIQ_FacilityGuarantorDetails_PoliticalRisk_EffectiveDate_Datefield = 'JavaWindow("title:=Facility Guarantor Details.*").JavaObject("text:=Political Risk").JavaEdit("attached text:=Effective:")'    
+LIQ_FacilityGuarantorDetails_PoliticalRisk_ExpiryDate_Datefield = 'JavaWindow("title:=Facility Guarantor Details.*").JavaObject("text:=Political Risk").JavaEdit("attached text:=Expiry:")'  
+LIQ_FacilityGuarantorDetails_PoliticalRisk_Global_Textfield = 'JavaWindow("title:=Facility Guarantor Details.*").JavaObject("text:=Political Risk").JavaEdit("attached text:=Global:")'
+LIQ_FacilityGuarantorDetails_OKButton = 'JavaWindow("title:=Facility Guarantor Details.*").JavaButton("attached text:=OK")'
+
+### Facility Change Transaction - Guarantees ###
+LIQ_FacilityChangeTransaction_Guarantees_Javatree = 'JavaWindow("title:=.* Facility Change Transaction").JavaTree("labeled_containers_path:=Tab:Guarantees;Group:New Guarantees;","attached text:=Drill down to view/update")'
+
+###Facility Notebook - Borrower/Depositor Window######    
+LIQ_BorrowerDepositor_Window = 'JavaWindow("title:=Borrower/Depositor.*")'    
+LIQ_BorrowerDepositor_ShortName_Javalist = 'JavaWindow("title:=Borrower/Depositor.*").JavaList("tagname:=Name:")'
+
+###Facility Change Transaction - Borrower Base ###
+LIQ_FacilityAddBorrowerBase_Button ='JavaWindow("title:=.* Facility Change Transaction").JavaButton("attached text:=Add Borrowing Base")'
+LIQ_FacilityBorrowingBase_JavaTree = 'JavaWindow("title:=Facility -.*").JavaTree("attached text:=.*Borrowing Base.*")'
+
+####Borrowing Base Details window ###
+LIQ_BorrowingBaseDetails_Window ='JavaWindow("title:=Borrowing Base Details")'
+LIQ_BorrowingBaseDetails_Borrow_Combobox = 'JavaWindow("title:=Borrowing Base Details").JavaList("attached text:=Borrowing Base:")'
+LIQ_BorrowingBaseDetails_EffectiveDate ='JavaWindow("title:=Borrowing Base Details").JavaEdit("attached text:=Effective:")'
+LIQ_BorrowingBaseDetails_Expiration = 'JavaWindow("title:=Borrowing Base Details").JavaEdit("attached text:=Expiration:")'
+LIQ_BorrowingBaseDetails_GracePeriod = 'JavaWindow("title:=Borrowing Base Details").JavaEdit("attached text:=Grace Period:")'
+LIQ_BorrowingBaseDetails_Collateral = 'JavaWindow("title:=Borrowing Base Details").JavaEdit("attached text:=Collateral Value:")'
+LIQ_BorrowingBaseDetails_IneligibleValue = 'JavaWindow("title:=Borrowing Base Details").JavaEdit("attached text:=Ineligible Value:")'
+LIQ_BorrowingBaseDetails_IneligiblePercenatge = 'JavaWindow("title:=Borrowing Base Details").JavaEdit("attached text:=Ineligible Percent:")'
+LIQ_BorrowingBaseDetails_Lendable = 'JavaWindow("title:=Borrowing Base Details").JavaEdit("attached text:=Lendable Value:")'
+LIQ_BorrowingBaseDetails_Advance = 'JavaWindow("title:=Borrowing Base Details").JavaEdit("attached text:=Advance Rate:")'
+LIQ_BorrowingBaseDetails_BorrowerBase = 'JavaWindow("title:=Borrowing Base Details").JavaEdit("attached text:=Borrower Base Value:")'
+
+###Borrowing Base Cap Details ###
+LIQ_BorrowingBaseDetails_CapFlat = 'JavaWindow("title:=Borrowing Base Details").JavaEdit("attached text:=Cap Flat Amount:")'
+LIQ_BorrowingBaseDetails_OK_Button = 'JavaWindow("title:=Borrowing Base Details").JavaButton("attached text:=OK")'
+
+###Facility  Pending Tab###
+LIQ_FacilityNotebook_PendingListItem = 'JavaWindow("title:=Facility -.*").JavaTree("attached text:=Pending Transactions")'

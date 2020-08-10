@@ -1,0 +1,11 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<soapenv:Envelope xmlns:soapenv='http://schemas.xmlsoap.org/soap/envelope/' xmlns:api='http://api.ws.liq.misys.com/'>
+  <soapenv:Header>
+    <userid>RETAIL</userid>
+  </soapenv:Header>
+  <soapenv:Body>
+    <api:executeCreateUserSecurityProfile>
+      <CreateUserSecurityProfile userProfileRID='MULT06' loginId='MULT06' osUserId='MULT06' lockedIndication='N' version='1.0' />
+    </api:executeCreateUserSecurityProfile>
+  </soapenv:Body>
+</soapenv:Envelope>

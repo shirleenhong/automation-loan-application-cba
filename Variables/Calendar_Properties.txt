@@ -1,0 +1,147 @@
+*** Variables *** 
+### Calendars ###
+${OpenAPI_POST_Response_Calendar.json}       API-POST-Response-Calendar.json
+${OpenAPI_POST_FFC_Response_Calendar.json}   API-POST-FFC-Response-Calendar.json
+${OpenAPI_PUT_Response_Calendar.json}        API-PUT-Response-Calendar.json
+${OpenAPI_PUT_FFC_Response_Calendar.json}    API-PUT-FFC-Response-Calendar.json
+${OpenAPI_DELETE_Response_Calendar.json}       API-POST-Response-Calendar.json
+${OpenAPI_DELETE_FFC_Response_Calendar.json}   API-POST-FFC-Response-Calendar.json
+
+${Calendar_Response_Post.json}    Calendar_Response_Post.json
+${Calendar_Response_Put.json}    Calendar_Response_Put.json
+${Calendar_Response_Post_PastYear.json}    Calendar_Response_Post_PastYear.json
+${Calendar_Response_Put_PastYear.json}    Calendar_Response_Put_PastYear.json
+${Calendar_mandatory field_missing_error_expected}    Calendar_Mandatoryfield_missing_expected.txt
+${Calendar_mandatory field_missing_error_actual}    Calendar_Mandatoryfield_missing_actual.txt
+
+### ALL_Fields ###
+${Input_POST_Success_Json_Calendar}    Calendar_Post_SuccessData.json
+${Input_PUT_Success_Json_Calendar}    Calendar_Put_SuccessData.json
+${Calendar_Create_Input_XML_File}    Calendar_Create_Code.txt
+${Calendar_Update_Input_XML_File}    Calendar_Update_Code.txt
+${Calendar_Output_Xml_File}    create_calendar_code.txt    
+${CalendarName}    Calendar
+
+### Technical ###
+${Calendar_Input_POST_InvalidLOB_Json}    Calendar_Post_Invalid_LOBs.json  
+${Calendar_Input_PUT_InvalidLOB_Json}    Calendar_Put_Invalid_LOBs.json 
+${Calendar_Lob_failure_message}    xxx : The LOB is not a subscriber to the APIs
+
+### Functional ###
+${Calendar_PastYear_expected}    Calendar_PastYear_expected.json   
+${Calendar_PastYear_actual}    Calendar_PastYear_actual.txt    
+${Calendar_Input_POST_Failure_Json}    Calendar_Post_FailureData.json 
+${Calendar_Input_PUT_Failure_Json}     Calendar_Put_FailureData.json 
+${Calendar_Post_failure_message}    Calendar Year is a past year
+${DistributorXML_POST_output_Calendar}    Distributor_POST_Output_Calendar.xml
+${DistributorXML_PUT_output_Calendar}    Distributor_PUT_Output_Calendar.xml
+${DistributorXML_DELETE_output_Calendar}    Distributor_DELETE_Output_Calendar.xml
+${QName_Create_Calendar}    wsLIQCreateCalendarCodeDestination
+${QName_Update_Calendar}    wsLIQUpdateCalendarCodeDestination
+${QName_Delete_Calendar}    errorLogQueue
+
+### All _Actual files are generated during test case run ###
+${API_CAL_POST01}    API_CAL_POST01.json
+${API_CAL_POST01_FFC_expected}    API_CAL_POST01_FFC_expected.json
+${API_CAL_POST01_TextJMS_expected}    API_CAL_POST01_TextJMS_expected.txt
+${API_CAL_PUT01}    API_CAL_PUT01.json
+${API_CAL_PUT01_FFC_expected}    API_CAL_PUT01_FFC_expected.json
+${API_CAL_PUT01_TextJMS_expected}    API_CAL_PUT01_TextJMS_expected.xml
+${API_CAL_DEL01_TextJMS_expected}    API_CAL_DEL01_TextJMS_expected.txt
+${API_CAL_DEL01_TextJMS_Actual}    API_CAL_DEL01_TextJMS_Actual.txt
+
+${API_CAL_POST02}    API_CAL_POST02.json
+${API_CAL_POST02_FFC_expected}    API_CAL_POST02_FFC_expected.json
+${API_CAL_POST02_TextJMS_expected}    API_CAL_POST02_TextJMS_expected.txt
+${API_CAL_PUT02}    API_CAL_PUT02.json
+${API_CAL_PUT02_FFC_expected}    API_CAL_PUT02_FFC_expected.json
+${API_CAL_PUT02_TextJMS_expected}    API_CAL_PUT02_TextJMS_expected.txt
+${API_CAL_DEL02_TextJMS_expected}    API_CAL_DEL02_TextJMS_expected.txt
+
+${API_CAL_POST03}    API_CAL_POST03.json
+${API_CAL_POST03_FFC_expected}    API_CAL_POST03_FFC_expected.json
+${API_CAL_POST03_TextJMS_expected}    API_CAL_POST03_TextJMS_expected.txt
+${API_CAL_PUT03}    API_CAL_PUT03.json
+${API_CAL_PUT03_FFC_expected}    API_CAL_PUT03_FFC_expected.json
+${API_CAL_PUT03_TextJMS_expected}    API_CAL_PUT03_TextJMS_expected.txt
+${API_CAL_DEL03_TextJMS_expected}    API_CAL_DEL03_TextJMS_expected.txt
+
+${API_CAL_POST04}    API_CAL_POST04.json
+${API_CAL_POST04_FFC_expected}    API_CAL_POST04_FFC_expected.json
+${API_CAL_POST04_TextJMS_expected}    API_CAL_POST04_TextJMS_expected.txt
+${API_CAL_PUT04}    API_CAL_PUT04.json
+${API_CAL_PUT04_FFC_expected}    API_CAL_PUT04_FFC_expected.json
+${API_CAL_PUT04_TextJMS_expected}    API_CAL_PUT04_TextJMS_expected.txt
+${API_CAL_DEL04_TextJMS_expected}    API_CAL_DEL04_TextJMS_expected.txt
+
+${API_CAL_NEG01}    API_CAL_NEG01.json
+${OpenAPI_NEG_Response_Calendar}    OpenAPI_NEG_Response_Calendar.json
+${API_CAL_NEG02}    API_CAL_NEG02.json
+${API_CAL_NEG03}    API_CAL_NEG03.json
+${API_CAL_NEG04}    API_CAL_NEG04.json
+${API_CAL_NEG05}    API_CAL_NEG05.json
+${API_CAL_NEG06}    API_CAL_NEG06.json
+${API_CAL_NEG07}    API_CAL_NEG07.json
+${API_CAL_NEG08}    API_CAL_NEG08.json
+${API_CAL_NEG09}    API_CAL_NEG09.json
+${API_CAL_NEG10}    API_CAL_NEG10.json
+${API_CAL_NEG11}    API_CAL_NEG11.json
+${API_CAL_NEG12}    API_CAL_NEG12.json
+${API_CAL_NEG13}    API_CAL_NEG13.json
+${API_CAL_NEG14}    API_CAL_NEG14.json
+${API_CAL_NEG15}    API_CAL_NEG15.json
+${API_CAL_NEG15_LOANIQ}    API_CAL_NEG15_LOANIQ.json
+${API_CAL_NEG16}    API_CAL_NEG16.json
+${API_CAL_NEG16_LOANIQ}    API_CAL_NEG16_LOANIQ.json
+${API_CAL_NEG_TextJMS_expected}    API_CAL_NEG_TextJMS_expected.txt
+
+${COL_ISOCOUNTRYCODE}    ISOCountryCode
+${COL_CENTRECODE}    CentreCode
+${COL_ISOMICCODE}    ISO MIC Code
+${COL_EVENTYEAR}    EventYear
+${COL_EVENTDATE}    EventDate
+${COL_EVENTDAYOFTHEWEEK}    EventDayOfWeek
+${COL_EVENTNAME}    EventName
+${COL_CENTERID}    CenterID
+${COL_ISOCURRENCYCODE}    ISOCurrencyCode
+${COL_FILETYPE}    FileType
+${CALENDARID_FILE1_LIST_NO_DUPLICATE}
+${CALENDARID_FILE2_LIST_NO_DUPLICATE}
+${CALENDARID_MISC_LIST_NO_DUPLICATE}
+${CALENDARID_CHECKBOX_STATUS_ON}    ON
+${CALENDARID_CHECKBOX_STATUS_OFF}    OFF
+${TEMPLATE_JSON_CAL}    C:\\fms_scotia\\DataSet\\Integration_DataSet\\TL\\Calendar_GSFile\\template_JSON_Calendar.json
+${TEMPLATE_UPDATE_XML_CAL}    C:\\Git_Evergreen\\evergreen_projects\\CBA_Evergreen\\DataSet\\TL_DataSet\\Calendar_GSFile\\template_liqUpdateCalendarDateDestination.xml
+${TEMPLATE_CREATE_XML_CAL}    C:\\Git_Evergreen\\evergreen_projects\\CBA_Evergreen\\DataSet\\TL_DataSet\\Calendar_GSFile\\template_wsFinalLIQDestination.xml
+${File_1}    File_1
+${File_2}    File_2
+${Misc_File}    Misc
+
+### Calendar Type ###
+${FINCENTRE}    FINCENTRE
+
+### FFC ###
+${FILE1_ARCHIVE_NAME}
+${CALENDAR_APINAME}    CALENDAR
+${CAL_SOURCENAME}    CalendarsApiSource
+${CAL_ROUTEROPTION}    LIQUPDATECALENDARDATE
+${CAL_CATEGORY}    Calendar
+${EMPTY_PAYLOAD_RESPONSE}    NO CALENDAR CHANGES WERE REQUIRED.
+${EMPTY_PAYLOAD_MSG_ID}    EMPTYPAYLOAD
+${FILE_VALIDATION_RESPONSE}    File name or file format is wrong.
+${FILE_VALIDATION_MSG_ID}    FILE_VALIDATION
+${MISSING_FIELD_FILE_1_2_VAL_RESPONSE}    ROW 1: CentreCode, EventYear, EventDate, EventDayOfWeek, EventName, FileType header(s) not available in the file
+${MISSING_FIELD_FILE_MISC_VAL_RESPONSE}    ROW 1: EventYear, EventDate, EventDayOfWeek, EventName, FileType header(s) not available in the file
+${OR_FILE_FORMAT_IS_WRONG}    or file format is wrong. || 
+${ROW_1}    ROW 1:
+${HEADERS_NOT_AVAILABLE_IN_THE_FILE}    header(s) not available in the file
+${FINANCIALCENTRE}    FinancialCentre
+${CENTRECODE}    CentreCode
+${CENTRENAME}    CentreName
+${ISOCOUNTRYCODE}    ISOCountryCode
+${ROW_2}    ROW 2:
+${ROW_3}    ROW 3:
+${EMPTY_IN_FILE}    's value should not be empty in file 
+${||}    . || 
+${Invalid_CentreCode_Length}    CentreCode's length should be 3 in file
+${Invalid_EventDate_Value}    EventDate field value date format is invalid. valid format - [yyyyMMdd] in file

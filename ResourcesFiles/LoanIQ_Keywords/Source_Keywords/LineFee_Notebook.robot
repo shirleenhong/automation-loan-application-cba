@@ -1,0 +1,256 @@
+*** Settings ***
+Resource    ../../../Configurations/LoanIQ_Import_File.robot
+
+*** Keywords ***
+Create Line Fee Capitalization Rule
+    [Documentation]    This keyword creates a Capitalization rule for line fee.
+    ...    @author: fmamaril    
+    [Arguments]    ${CapitalizationFeePaymentPercentage}    ${Facility_Name}    ${PricingOption}    ${Loan_Alias}    ${Current_Date}    ${Future_Date}
+    ###Navigation to Capitalization Editor###
+    mx LoanIQ activate window    ${LIQ_LineFeeNotebook_Window}
+    mx LoanIQ click element if present    ${LIQ_LineFee_InquiryMode_Button}
+    mx LoanIQ select    ${LIQ_LineFee_Capitalization_Menu}
+    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
+        
+    ###Capitalization Editor###
+    mx LoanIQ activate window    ${LIQ_LineFee_CapitalizationEditor_Window}
+    mx LoanIQ enter    ${LIQ_LineFee_CapitalizationEditor_ActivateFeeCap_CheckBox}    ON
+    mx LoanIQ enter    ${LIQ_LineFee_CapitalizationEditor_FromDate_Textfield}    ${Current_Date} 
+    mx LoanIQ enter    ${LIQ_LineFee_CapitalizationEditor_ToDate_Textfield}    ${Future_Date}
+    mx LoanIQ enter    ${LIQ_LineFee_CapitalizationEditor_PctofPayment_RadioButton}    ON
+    mx LoanIQ enter    ${LIQ_LineFee_CapitalizationEditor_PctofPayment_Textfield}    ${CapitalizationFeePaymentPercentage}
+    Mx LoanIQ Select Combo Box Value    ${LIQ_LineFee_CapitalizationEditor_ToFacility_DropdownList}    ${Facility_Name}    
+    Mx LoanIQ Select Combo Box Value    ${LIQ_LineFee_CapitalizationEditor_ToLoan_DropdownList}    ${PricingOption}${SPACE}Loan${SPACE}(${Loan_Alias})
+    mx LoanIQ click    ${LIQ_LineFee_CapitalizationEditor_OK_Button}
+    
+Validate Capitalized Line Fee details
+    [Documentation]    This keyword validates the detail Capitalization Rule for Line fee.
+    ...    @author: fmamaril    
+    [Arguments]    ${Capitalization_FromDate}    ${Capitalization_ToDate}    ${CapitalizationFeePaymentPercentage}    ${PricingOption}    ${Loan_Alias}     
+    ###Navigation to Capitalization Editor###
+    mx LoanIQ activate window    ${LIQ_LineFeeNotebook_Window}
+    mx LoanIQ select    ${LIQ_LineFee_Capitalization_Menu}  
+    mx LoanIQ activate window    ${LIQ_LineFee_CapitalizationEditor_Window}      
+    ${UIFromDate}    Mx LoanIQ Get Data    ${LIQ_LineFee_CapitalizationEditor_FromDate_Textfield}    value%date
+    ${UIToDate}    Mx LoanIQ Get Data    ${LIQ_LineFee_CapitalizationEditor_ToDate_Textfield}    value%date 
+    ${PercentofPayment}    Mx LoanIQ Get Data    ${LIQ_LineFee_CapitalizationEditor_PctofPayment_Textfield}    value%percentage    
+    ${UIPercentofPayment}    Remove String    ${PercentofPayment}    .0000%
+    ${UILoan}    Mx LoanIQ Get Data    ${LIQ_LineFee_CapitalizationEditor_ToLoan_DropdownList}    value%loan  
+    
+    ###Validation of Line Fee details###
+    Should Be Equal As Strings    ${UIFromDate}    ${Capitalization_FromDate}
+    Should Be Equal As Strings    ${UIToDate}    ${Capitalization_ToDate}    
+    Should Be Equal As Strings    ${UIPercentofPayment}    ${CapitalizationFeePaymentPercentage}    
+    Should Be Equal As Strings    ${UILoan}    ${PricingOption} Loan (${Loan_Alias})       
+    mx LoanIQ click    ${LIQ_LineFee_CapitalizationEditor_OK_Button}
+    
+Save and Exit Line Fee Notebook
+    [Documentation]    This keyword saves and exits the the LIQ User from Line fee.
+    ...    @author: fmamaril    
+    mx LoanIQ activate window    ${LIQ_LineFeeNotebook_Window}    
+    mx LoanIQ select    ${LIQ_LineFee_Save_Menu}
+    mx LoanIQ click element if present    ${LIQ_Warning_OK_Button}
+    mx LoanIQ select    ${LIQ_LineFee_Exit_Menu} 
+    
+Navigate to Line Fee Notebook
+    [Documentation]    This keyword is used for navigating to Line Fee Notebook
+    ...    @author:ritragel    8AUG2019
+    [Arguments]    ${sOngoingFee_Type}    
+    
+    mx LoanIQ activate window    ${LIQ_FacilityNotebook_Window}
+    mx LoanIQ select    ${LIQ_FacilityNotebook_Queries_OngoingFeeList}
+    mx LoanIQ activate window    ${LIQ_Facility_FeeList}
+    Mx LoanIQ Select Or DoubleClick In Javatree    ${LIQ_Facility_FeeList_JavaTree}    ${sOngoingFee_Type}%d
+    
+Select Payment in Choose a Payment Window
+    [Documentation]    This will allow the user to select Payment if it is a Fee Payment of a Paper Clip
+    ...    @author: ritragel    08AUG2019
+    [Arguments]    ${sPayment_Type}
+    
+    mx LoanIQ activate window    ${LIQ_ChoosePayment_Window}
+    Run Keyword If    "${sPayment_Type}" == "Fee Payment"    mx LoanIQ enter    ${LIQ_ChoosePayment_Fee_RadioButton}    ON
+    Run Keyword If    "${sPayment_Type}" == "Paper Clip Payment"    mx LoanIQ enter    ${LIQ_ChoosePayment_Paperclip_RadioButton}    ON   
+    mx LoanIQ click    ${LIQ_ChoosePayment_OK_Button}
+    Sleep    3
+    
+Setup Line Fee Effective Date and Cycle
+    [Documentation]    This keyword inputs the Line fee payment of the facility
+    ...    @author:fmamaril    09SEP2019    Intial Create
+    [Arguments]    ${sEffective_Date}    ${sCycle}      
+    mx LoanIQ activate window    ${LIQ_LineFee_Window}
+    mx LoanIQ click element if present    ${LIQ_LineFee_InquiryMode_Button}
+    mx LoanIQ enter    ${LIQ_LineFee_EffectiveDate_Field}    ${sEffective_Date}
+    Mx LoanIQ select combo box value    ${LIQ_LineFee_Cycle_List}    ${sCycle}   
+    mx LoanIQ select    ${LIQ_LineFee_Save_Menu}
+    mx LoanIQ click element if present    ${LIQ_Warning_OK_Button}
+    Take Screenshot    LIQ_CommitmentFee_EffectiveDate                
+    
+Run Online Acrual to Line Fee
+    [Documentation]    This keyword runs the online accrual for line fee.
+    ...    @author:fmamaril    09SEP2019    Intial Create
+    mx LoanIQ activate window    ${LIQ_LineFee_Window}
+    mx LoanIQ click element if present    ${LIQ_LineFee_InquiryMode_Button}
+    mx LoanIQ select    ${LIQ_LineFee_OnlineAcrual_Menu}
+    Run Keyword And Continue On Failure     Mx LoanIQ Click Button On Window    Line Fee.*;Warning;Yes            strProcessingObj="JavaWindow(\"title:=Processing.*\")"         WaitForProcessing=500        strProcessingObj="JavaWindow(\"title:=Processing.*\")"         WaitForProcessing=500        strProcessingObj="JavaWindow(\"title:=Processing.*\")"         WaitForProcessing=500
+    Run Keyword And Continue On Failure     Mx LoanIQ Click Button On Window    Line Fee.*;Warning;Yes        strProcessingObj="JavaWindow(\"title:=Processing.*\")"         WaitForProcessing=500        strProcessingObj="JavaWindow(\"title:=Processing.*\")"         WaitForProcessing=500        strProcessingObj="JavaWindow(\"title:=Processing.*\")"         WaitForProcessing=500
+    Run Keyword And Continue On Failure     Mx LoanIQ Click Button On Window    CLine Fee.*;Informational Message.*;OK        strProcessingObj="JavaWindow(\"title:=Processing.*\")"         WaitForProcessing=500        strProcessingObj="JavaWindow(\"title:=Processing.*\")"         WaitForProcessing=500        strProcessingObj="JavaWindow(\"title:=Processing.*\")"         WaitForProcessing=500
+    
+Navigate Directly to Line Fee Notebook from Deal Notebook
+    [Documentation]    This keyword navigates directly the LIQ User to the Line Fee Notebook from Deal Notebook.
+    ...    @author:fmamaril    09SEP2019    Intial Create   
+    [Arguments]    ${Facility_Name}   
+    mx LoanIQ activate window    ${LIQ_DealNotebook_Window}   
+    mx LoanIQ select    ${LIQ_DealNotebook_Options_OngoingFeeList_Menu}
+    mx LoanIQ activate window    ${LIQ_DealNotebook_FeeList_Window}
+    Mx LoanIQ Select Or DoubleClick In Javatree    ${LIQ_FeeList_JavaTree}    ${Facility_Name}%d
+    mx LoanIQ activate window    ${LIQ_LineFee_Window}
+
+Check if Line Fee is already released
+    [Documentation]    This keyword verifies the status of line fee is already released
+    ...    @author:fmamaril    09SEP2019    Intial Create
+    ${status}    Run Keyword And Return Status    Mx LoanIQ Verify Object Exist    ${LIQ_LineFeeReleasedNotebook_Window}        VerificationData="Yes"
+    Run Keyword If    '${status}' == 'True'    Run Keywords    Log    ${status}-Line Fee is already released    
+    ...    AND    Take Screenshot    LineFeeStatus
+    ...    AND    Run Online Acrual to Line Fee    
+    ...    AND    Refresh Tables in LIQ
+ 
+    Run Keyword If    '${status}' == 'False'    Run Keywords    mx LoanIQ activate window    ${LIQ_LineFeeNotebook_Pending_Window}         
+    ...    AND    Mx LoanIQ Select Window Tab    ${LIQ_LineFeeTag_Tab}    Workflow
+    ...    AND    Mx LoanIQ Select Or DoubleClick In Javatree    ${LIQ_LineFeeNotebook_Workflow_JavaTree}    Release%d
+    ...    AND    mx LoanIQ click element if present    ${LIQ_Question_Yes_Button} 
+    ...    AND    Take Screenshot    LineFeeStatus     
+    ...    AND    Run Online Acrual to Line Fee  
+    ...    AND    Refresh Tables in LIQ
+ 
+Get Data in General Tab for Line Fee
+    [Documentation]    This keyword navigates to General Tab wherein it gets and convert the data that will be used for the validation.
+    ...    @author:fmamaril    05SEP2019    Initial Create
+    
+    mx LoanIQ activate window    ${LIQ_LineFee_Window} 
+    Mx LoanIQ Select Window Tab    ${LIQ_LineFeeTag_Tab}    General
+    
+    ${Rate}    Mx LoanIQ Get Data    ${LIQ_LineFee_CurrentRate_Field}    value%test
+    ${Rate}    Remove String    ${Rate}    %
+    ${Rate}    Convert To Number    ${Rate}
+           
+    
+    ${BalanceAmount}    Mx LoanIQ Get Data    ${LIQ_LineFee_BalanceAmount_Field}    value%test 
+    ${BalanceAmount}    Remove String    ${BalanceAmount}    ,
+    ${BalanceAmount}    Convert To Number    ${BalanceAmount}
+   
+        
+    ${RateBasis}    Mx LoanIQ Get Data    ${LIQ_LineFee_RateBasis_Field}    text%test 
+    ${RateBasis}    Remove String    ${RateBasis}    Actual/
+    ${RateBasis}    Convert To Integer    ${RateBasis}
+    
+    [Return]    ${Rate}    ${BalanceAmount}    ${RateBasis}
+    
+Compute Line Fee Amount Per Cycle
+    [Documentation]    This keyword is used in computing the first Projected Cycle Due of the Line Fee
+    ...    @author: fmamaril    05SEP2019    Initial Create
+    [Arguments]    ${iCycleNumber}    ${sSystemDate}
+    mx LoanIQ activate window    ${LIQ_LineFee_Window}
+    Mx LoanIQ Select Window Tab    ${LIQ_LineFeeTag_Tab}    General
+    ${Rate}    Mx LoanIQ Get Data    ${LIQ_LineFee_CurrentRate_Field}    value%test
+    ${RateBasis}    Mx LoanIQ Get Data    ${LIQ_LineFee_RateBasis_Field}    value%test
+    ${BalanceAmount}    Mx LoanIQ Get Data    ${LIQ_LineFee_BalanceAmount_Field}    value%test    
+    ${BalanceAmount}    Remove String    ${BalanceAmount}    ,
+    ${BalanceAmount}    Convert To Number    ${BalanceAmount}
+    ${Rate}    Remove String    ${Rate}    %
+    ${Rate}    Convert To Number    ${Rate}
+    ${Rate}    Evaluate    ${Rate}/100
+    ${RateBasis}    Remove String    ${RateBasis}    Actual/
+    ${RateBasis}    Convert To Integer    ${RateBasis}
+    ${ComputedCycleDue}    Evaluate Line Fee    ${BalanceAmount}    ${Rate}    ${RateBasis}    ${iCycleNumber}    ${sSystemDate}
+    Log    ${ComputedCycleDue}
+    [Return]    ${ComputedCycleDue}    ${Rate}    ${RateBasis}    ${BalanceAmount}
+    
+Evaluate Line Fee
+    [Documentation]    This keyword evaluates the FIRST Projected Cycle Due.
+    ...    @author: fmamaril    05SEP2019    Initial Create
+    [Arguments]    ${iBalanceAmount}    ${iRate}    ${iRateBasis}    ${iCycleNumber}    ${sSystemDate}
+    Mx LoanIQ Select Window Tab    ${LIQ_LineFeeTag_Tab}    Accrual
+    Mx LoanIQ Select Window Tab    ${LIQ_LineFeeTag_Tab}    Workflow
+    Mx LoanIQ Select Window Tab    ${LIQ_LineFeeTag_Tab}    Accrual
+    ${sDueDate}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_LineFee_Accrual_Cycles_JavaTree}    ${iCycleNumber}%Due Date%duedate
+    ${sStartDate}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_LineFee_Accrual_Cycles_JavaTree}    ${iCycleNumber}%Start Date%startdate
+    Log    ${sStartDate}
+    Log    ${sDueDate}
+    ${sSystemDate}    Convert Date    ${sSystemDate}     date_format=%d-%b-%Y
+    ${sStartDate}    Convert Date    ${sStartDate}     date_format=%d-%b-%Y
+    ${sDueDate}    Convert Date    ${sDueDate}     date_format=%d-%b-%Y
+    ${iNumberof Days1}    Subtract Date From Date    ${sSystemDate}    ${sStartDate}    verbose    
+    ${iNumberof Days2}    Subtract Date From Date    ${sDueDate}    ${sStartDate}    verbose 
+    Log    ${iNumberof Days1}
+    Log    ${iNumberof Days2}
+    ${iNumberof Days1}    Remove String    ${iNumberof Days1}     days    seconds    day
+    ${iNumberof Days1}    Convert To Number    ${iNumberof Days1}
+    ${iNumberof Days2}    Remove String    ${iNumberof Days2}     days    seconds    day
+    ${iNumberof Days2}    Convert To Number    ${iNumberof Days2}        
+    ${iNumberof Days}   Run Keyword If    '${iNumberof Days2}' == '0.0'    Set Variable    ${iNumberof Days1}
+    ...    ELSE IF    ${iNumberof Days1} > ${iNumberof Days2}    Set Variable    ${iNumberof Days2}    
+    ...    ELSE IF    '${iNumberof Days1}' == '${iNumberof Days2}'    Set Variable    ${iNumberof Days2}
+    ...    ELSE IF    '${iNumberof Days1}' == '0.0'    Set Variable    ${iNumberof Days2}    
+    ...    ELSE    Set Variable    ${iNumberof Days1}
+    ${iComputedCycleDue}    Evaluate    (((${iBalanceAmount})*(${iRate}))*(${iNumberof Days}))/${iRateBasis}
+    ${iComputedCycleDue}    Convert To Number    ${iComputedCycleDue}    2
+    [Return]    ${iComputedCycleDue}
+    
+Select Cycle Due Line Fee Payment 
+    [Documentation]    This keyword selects a cycle fee payment for Cycle Due amount.
+    ...    @author: fmamaril    05SEP2019    Initial Create 
+    
+    mx LoanIQ activate window    ${LIQ_LineFee_Window}    
+    mx LoanIQ select    ${LIQ_LineFee_General_OptionsPayment_Menu}
+    mx LoanIQ enter    ${LIQ_ChoosePayment_Fee_RadioButton}    ON
+    mx LoanIQ click    ${LIQ_ChoosePayment_OK_Button} 
+    mx LoanIQ enter    ${LIQ_CommitmentFee_Cycles_CycleDue_RadioButton}    ON   
+    mx LoanIQ click    ${LIQ_CommitmentFee_Cycles_OK_Button}
+    Take Screenshot    CycleDueAmount
+    
+Enter Effective Date for Line Fee-Cycle Due Payment
+    [Documentation]    This keywod populates the effective date for ongoing fee-cycle dues payment.
+    ...    @author: fmamaril    05SEP2019    Initial Create
+    [Arguments]    ${sFeePayment_EffectiveDate}
+    mx LoanIQ activate window    ${LIQ_OngoingFeePayment_Window}
+    mx LoanIQ enter    ${LIQ_OngoingFeePayment_EffectiveDate_Field}    ${sFeePayment_EffectiveDate}
+    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
+    Take Screenshot    EffectiveDate 
+
+Navigate to GL Entries from Ongoing Fee Payment
+    [Documentation]    This keyword will be used to navigate to GL Entries from Ongoing Fee Payment Window
+    ...    @author: fmamaril    05SEP2019    Initial Create
+    mx LoanIQ activate window    ${LIQ_OngoingFeePayment_Window}   
+    mx LoanIQ select    ${LIQ_LineFee_Queries_GLEntries} 
+    mx LoanIQ activate window  ${LIQ_GL_Entries_Window}   
+    mx LoanIQ maximize    ${LIQ_GL_Entries_Window}
+    
+Choose Payment Type for Line Fee
+    [Documentation]    Keyword used to choose a payment type for the Line Fee payment
+    ...                @author: bernchua    24SEP2019    Initial create 
+    [Arguments]    ${sOngoingFee_PaymentType}
+    mx LoanIQ activate window    ${LIQ_LineFeeNotebook_Window}    
+    mx LoanIQ select    ${LIQ_LineFee_General_OptionsPayment_Menu}
+    Mx LoanIQ Set    JavaWindow("title:=Choose a Payment.*").JavaRadioButton("label:=${sOngoingFee_PaymentType}")    ON
+    mx LoanIQ click    ${LIQ_ChoosePayment_OK_Button}
+    
+Select Cycle for Line Fee Payment
+    [Documentation]    Keyword used to select the Prorate and Cycle for the Line Fee Payment
+    ...                @author: bernchua    24SEP2019    Initial create
+    [Arguments]    ${sLineFeePayment_CycleProrate}    ${sLineFeePayment_DueDate}
+    mx LoanIQ activate window    ${LIQ_LineFee_Cycles_Window}
+    Mx LoanIQ Set    JavaWindow("title:=Cycles for Line Fee.*").JavaRadioButton("label:=${sLineFeePayment_CycleProrate}")    ON
+    ${CycleDue_Amount}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_LineFee_Cycles_List}    ${sLineFeePayment_DueDate}%Cycle Due%amount
+    Mx LoanIQ Select String    ${LIQ_LineFee_Cycles_List}    ${sLineFeePayment_DueDate}
+    mx LoanIQ click    ${LIQ_LineFee_Cycles_OKButton}
+    [Return]    ${CycleDue_Amount}
+    
+Set Ongoing Fee Payment General Tab Details
+    [Documentation]    Keyword used to set the General tab details of the Ongoing Fee Payment
+    ...                @author: bernchua    24SEP2019    Initial create
+    [Arguments]    ${sRequested_Amount}    ${sEffective_Date}
+    mx LoanIQ activate window    ${LIQ_OngoingFeePayment_Window}
+    Mx LoanIQ Select Window Tab    ${LIQ_OngoingFeePayment_Tab}    General
+    mx LoanIQ enter    ${LIQ_OngoingFeePayment_Requested_Textfield}    ${sRequested_Amount}
+    mx LoanIQ enter    ${LIQ_OngoingFeePayment_EffectiveDate_Textfield}    ${sEffective_Date}
+     

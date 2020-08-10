@@ -1,0 +1,407 @@
+*** Variables *** 
+#------------------------------------------------  BASE RATES PATH and FILES ------------------------------------------------------------#
+
+#== JSON INPUT SUCCESS REQUEST FILES ==#
+${Post_Success_File_BaseInt}                  Post_SuccessData_BaseInt.json
+${Put_Success_File_BaseInt}                   Put_SuccessData_BaseInt.json
+${Post_Success_File_Multiple_BaseInt}         Post_SuccessData_Multiple_BaseInt.json
+
+#== JSON OUTPUT SUCCESS RESPONSE FILES ==#
+${OpenAPI_POST_Response_BaseRates.json}       API-POST-Response-BaseRates.json
+${OpenAPI_POST_FFC_Response_BaseRates.json}   API-POST-FFC-Response-BaseRates.json
+${OpenAPI_PUT_Response_BaseRates.json}        API-PUT-Response-BaseRates.json
+${OpenAPI_PUT_FFC_Response_BaseRates.json}    API-PUT-FFC-Response-BaseRates.json
+
+#== JSON INPUT TECHNICAL FAILURE REQUESTS ==#
+${Mandatory_Missing_File_BaseInt.json}             Mandatory_Missing_BaseInt.json
+${MaxLength_File_BaseInt.json}                     MaxLength_BaseInt.json
+${MinLength_File_BaseInt.json}                     MinLength_BaseInt.json
+${EmptyStrings_File_BaseInt.json}                  EmptyStrings_BaseInt.json
+${SpaceValue_File_BaseInt.json}                    SpaceValue_BaseInt.json
+${NullValue_File_BaseInt.json}                     NullValue_BaseInt.json
+
+#JSON EXPECTED RESPONSE API FAILURE FILES (INPUT)   
+${Exp_Response_MandatoryMissing_BaseRates.json}            Expected-Response-MandatoryMissing-BaseRates.json
+${Exp_Response_MaxLength_BaseRates.json}                   Expected-Response-MaxLength-BaseRates.json
+${Exp_POST_Response_Min_BaseRates.json}                    Expected-Response-MinLength-BaseRates.json
+${Exp_Response_EmptyStrings_BaseRates.json}                Expected-Response-EmptyStrings-BaseRates.json
+${Exp_Response_SpaceValue_BaseRates.json}                  Expected-Response-SpaceValue-BaseRates.json
+${Exp_Response_NullValue_BaseRates.json}                   Expected-Response-NullValue-BaseRates.json
+
+#JSON ACTUAL / OUTPUT RESPONSE API FAILURE FILES
+${Actual_Response_MandatoryMissing_BaseRates.json}          Actual-Response-MandatoryMissing-BaseRates.json
+${Actual_Response_MaxLength_BaseRates.json}                 Actual-Response-MaxLength-BaseRates.json
+${Actual_Response_MinLength_BaseRates.json}                 Actual-Response-MinLength-BaseRates.json
+${Actual_Response_EmptyStrings_BaseRates.json}              Actual-Response-EmptyStrings-BaseRates.json
+${Actual_Response_SpaceValue_BaseRates.json}                Actual-Response-SpaceValue-BaseRates.json
+${Actual_Response_NullValue_BaseRates.json}                 Actual-Response-NullValue-BaseRates.json
+
+
+# API_BIR_CRE01 FILES
+# INPUT
+#CREATE METHOD
+${API_BIR_CRE01_Input.json}                                     API_BIR_CRE01_Input.json
+${API_BIR_CRE01_Expected.json}                                  API_BIR_CRE01_Expected.json
+${API_BIR_CRE01_FFC_Expected.json}                              API_BIR_CRE01_FFC_Expected.json
+${API_BIR_CRE01_Create_BaseRates.xml}                           API_BIR_CRE01_Create_BaseRates.xml
+
+${API_BIR_CRE01_Input2.json}                                     API_BIR_CRE01_Input2.json
+${API_BIR_CRE01_Expected2.json}                                  API_BIR_CRE01_Expected2.json
+${API_BIR_CRE01_FFC_Expected2.json}                              API_BIR_CRE01_FFC_Expected2.json
+${API_BIR_CRE01_Create_BaseRates2.xml}                           API_BIR_CRE01_Create_BaseRates2.xml
+
+${API_BIR_CRE01_Input3.json}                                     API_BIR_CRE01_Input3.json
+${API_BIR_CRE01_Expected3.json}                                  API_BIR_CRE01_Expected3.json
+${API_BIR_CRE01_FFC_Expected3.json}                              API_BIR_CRE01_FFC_Expected3.json
+${API_BIR_CRE01_Create_BaseRates3.xml}                           API_BIR_CRE01_Create_BaseRates3.xml
+
+${API_BIR_CRE02_Input.json}                                     API_BIR_CRE02_Input.json
+${API_BIR_CRE02_Expected.json}                                  API_BIR_CRE02_Expected.json
+${API_BIR_CRE02_FFC_Expected.json}                              API_BIR_CRE02_FFC_Expected.json
+${API_BIR_CRE02_Create_BaseRates.xml}                           API_BIR_CRE02_Create_BaseRates.xml
+
+${API_BIR_CRE03_Input.json}                                     API_BIR_CRE03_Input.json
+${API_BIR_CRE03_Expected.json}                                  API_BIR_CRE03_Expected.json
+${API_BIR_CRE03_FFC_Expected.json}                              API_BIR_CRE03_FFC_Expected.json
+${API_BIR_CRE03_Create_BaseRates.xml}                           API_BIR_CRE03_Create_BaseRates.xml
+
+${API_BIR_CRE04_Input.json}                                     API_BIR_CRE04_Input.json
+${API_BIR_CRE04_Expected.json}                                  API_BIR_CRE04_Expected.json
+${API_BIR_CRE04_FFC_Expected.json}                              API_BIR_CRE04_FFC_Expected.json
+${API_BIR_CRE04_Create_BaseRates.xml}                           API_BIR_CRE04_Create_BaseRates.xml
+
+${API_BIR_CRE05_Input.json}                                     API_BIR_CRE05_Input.json
+${API_BIR_CRE05_Expected.json}                                  API_BIR_CRE05_Expected.json
+${API_BIR_CRE05_FFC_Expected.json}                              API_BIR_CRE05_FFC_Expected.json
+${API_BIR_CRE05_Create_BaseRates.xml}                           API_BIR_CRE05_Create_BaseRates.xml
+
+${API_BIR_CRE06_Input.json}                                     API_BIR_CRE06_Input.json
+${API_BIR_CRE06_Expected.json}                                  API_BIR_CRE06_Expected.json
+${API_BIR_CRE06_FFC_Expected.json}                              API_BIR_CRE06_FFC_Expected.json
+${API_BIR_CRE06_Create_BaseRates.xml}                           API_BIR_CRE06_Create_BaseRates.xml
+
+${API_BIR_CRE07_Input.json}                                     API_BIR_CRE07_Input.json
+${API_BIR_CRE07_Expected.json}                                  API_BIR_CRE07_Expected.json
+${API_BIR_CRE07_FFC_Expected.json}                              API_BIR_CRE07_FFC_Expected.json
+${API_BIR_CRE07_Create_BaseRates.xml}                           API_BIR_CRE07_Create_BaseRates.xml
+
+${API_BIR_CRE08_Input.json}                                     API_BIR_CRE08_Input.json
+${API_BIR_CRE08_Expected.json}                                  API_BIR_CRE08_Expected.json
+${API_BIR_CRE08_FFC_Expected.json}                              API_BIR_CRE08_FFC_Expected.json
+${API_BIR_CRE08_Create_BaseRates.xml}                           API_BIR_CRE08_Create_BaseRates.xml
+
+# UPDATE METHOD
+${API_BIR_UPD091_Input.json}                                     API_BIR_UPD091_Input.json
+${API_BIR_UPD091_Expected.json}                                  API_BIR_UPD091_Expected.json
+${API_BIR_UPD091_FFC_Expected.json}                              API_BIR_UPD091_FFC_Expected.json
+${API_BIR_UPD091_Update_BaseRates.xml}                           API_BIR_UPD091_Update_BaseRates.xml
+
+${API_BIR_UPD09_Input.json}                                     API_BIR_UPD09_Input.json
+${API_BIR_UPD09_Expected.json}                                  API_BIR_UPD09_Expected.json
+${API_BIR_UPD09_FFC_Expected.json}                              API_BIR_UPD09_FFC_Expected.json
+${API_BIR_UPD09_Update_BaseRates.xml}                           API_BIR_UPD09_Update_BaseRates.xml
+
+${API_BIR_UPD10_Input.json}                                     API_BIR_UPD10_Input.json
+${API_BIR_UPD10_Expected.json}                                  API_BIR_UPD10_Expected.json
+${API_BIR_UPD10_FFC_Expected.json}                              API_BIR_UPD10_FFC_Expected.json
+${API_BIR_UPD10_Update_BaseRates.xml}                           API_BIR_UPD10_Update_BaseRates.xml
+
+${API_BIR_UPD11_Input.json}                                     API_BIR_UPD11_Input.json
+${API_BIR_UPD11_Expected.json}                                  API_BIR_UPD11_Expected.json
+${API_BIR_UPD11_FFC_Expected.json}                              API_BIR_UPD11_FFC_Expected.json
+${API_BIR_UPD11_Update_BaseRates.xml}                           API_BIR_UPD11_Update_BaseRates.xml
+
+${API_BIR_UPD12_Input.json}                                     API_BIR_UPD12_Input.json
+${API_BIR_UPD12_Expected.json}                                  API_BIR_UPD12_Expected.json
+${API_BIR_UPD12_FFC_Expected.json}                              API_BIR_UPD12_FFC_Expected.json
+${API_BIR_UPD12_Update_BaseRates.xml}                           API_BIR_UPD12_Update_BaseRates.xml
+
+${API_BIR_UPD13_Input.json}                                     API_BIR_UPD13_Input.json
+${API_BIR_UPD13_Expected.json}                                  API_BIR_UPD13_Expected.json
+${API_BIR_UPD13_FFC_Expected.json}                              API_BIR_UPD13_FFC_Expected.json
+${API_BIR_UPD13_Update_BaseRates.xml}                           API_BIR_UPD13_Update_BaseRates.xml
+
+${SCENARIO8_API_BIR_COMPR06_Input.json}                         SCENARIO8_API_BIR_COMPR06_Input.json
+${SCENARIO8_API_BIR_COMPR06_Expected.json}                      SCENARIO8_API_BIR_COMPR06_Expected.json
+${SCENARIO8_API_BIR_COMPR06_FFC_Expected.json}                  SCENARIO8_API_BIR_COMPR06_FFC_Expected.json
+${SCENARIO8_API_BIR_COMPR06_Update_BaseRates.xml}               SCENARIO8_API_BIR_COMPR06_Update_BaseRates.xml
+
+#DELETE METHOD
+${API_BIR_DEL15_Input.json}                                     API_BIR_DEL15_Input.json
+${API_BIR_DEL15_TextJMS_Expected.xml}                           API_BIR_DEL15_TextJMS_Expected.xml
+${API_BIR_DEL16_Input.json}                                     API_BIR_DEL16_Input.json
+${API_BIR_DEL16_TextJMS_Expected.xml}                           API_BIR_DEL16_TextJMS_Expected.xml
+${API_BIR_DEL17_Input.json}                                     API_BIR_DEL17_Input.json
+${API_BIR_DEL17_TextJMS_Expected.xml}                           API_BIR_DEL17_TextJMS_Expected.xml
+${API_BIR_DEL18_Input.json}                                     API_BIR_DEL18_Input.json
+${API_BIR_DEL18_TextJMS_Expected.xml}                           API_BIR_DEL18_TextJMS_Expected.xml
+
+#NEGATIVE
+${API_BIR_NEG18_Input.json}                                     API_BIR_NEG18_Input.json
+${API_BIR_NEG18_Expected.json}                                  API_BIR_NEG18_Expected.json
+
+${API_BIR_NEG19_Input.json}                                     API_BIR_NEG19_Input.json
+${API_BIR_NEG19_Expected.json}                                  API_BIR_NEG19_Expected.json
+
+${API_BIR_NEG20_Input.json}                                     API_BIR_NEG20_Input.json
+${API_BIR_NEG20_Expected.txt}                                   API_BIR_NEG20_Expected.txt
+
+${API_BIR_NEG21_Input.json}                                     API_BIR_NEG21_Input.json
+${API_BIR_NEG21_Expected.json}                                  API_BIR_NEG21_Expected.json
+
+${API_BIR_NEG22_Input_CannotParseEffective.json}                API_BIR_NEG22_Input_CannotParseEffective.json
+${API_BIR_NEG22_Input_CannotParseSpreadEffective.json}          API_BIR_NEG22_Input_CannotParseSpreadEffective.json
+
+${API_BIR_NEG23_Input.json}                                     API_BIR_NEG23_Input.json
+${API_BIR_NEG23_Expected.json}                                  API_BIR_NEG23_Expected.json
+${API_BIR_NEG23_FFC_Expected.json}                              API_BIR_NEG23_FFC_Expected.json
+${API_BIR_NEG23_Create_BaseRates.xml}                           API_BIR_NEG23_Create_BaseRates.xml
+
+${API_BIR_NEG24_Input.json}                                     API_BIR_NEG24_Input.json
+${API_BIR_NEG24_Expected.json}                                  API_BIR_NEG24_Expected.json
+
+${API_BIR_NEG25_Input.json}                                     API_BIR_NEG25_Input.json
+${API_BIR_NEG25_Expected.json}                                  API_BIR_NEG25_Expected.json
+
+${API_BIR_NEG26_Input.json}                                     API_BIR_NEG26_Input.json
+
+${API_BIR_NEG27_Input.json}                                     API_BIR_NEG27_Input.json
+${API_BIR_NEG27_Expected.json}                                  API_BIR_NEG27_Expected.json
+${API_BIR_NEG27_FFC_Expected.json}                              API_BIR_NEG27_FFC_Expected.json
+${API_BIR_NEG27_Create_BaseRates.xml}                           API_BIR_NEG27_Create_BaseRates.xml
+
+${API_BIR_NEG28_Input.json}                                     API_BIR_NEG28_Input.json
+${API_BIR_NEG28_Expected.json}                                  API_BIR_NEG28_Expected.json
+${API_BIR_NEG28_FFC_Expected.json}                              API_BIR_NEG28_FFC_Expected.json
+${API_BIR_NEG28_Update_BaseRates.xml}                           API_BIR_NEG28_Update_BaseRates.xml
+
+${API_BIR_NEG29_Input.json}                                     API_BIR_NEG29_Input.json
+${API_BIR_NEG29_Expected.json}                                  API_BIR_NEG29_Expected.json
+${API_BIR_NEG29_FFC_Expected.json}                              API_BIR_NEG29_FFC_Expected.json
+${API_BIR_NEG29_Create_BaseRates.xml}                           API_BIR_NEG29_Create_BaseRates.xml
+
+${API_BIR_NEG30_Input_InvalidFormatDateEffective.json}          API_BIR_NEG30_Input_InvalidFormatDateEffective.json
+${API_BIR_NEG30_Expected_InvalidFormatDateEffective.json}       API_BIR_NEG30_Expected_InvalidFormatDateEffective.json
+
+${API_BIR_NEG30_Input_InvalidFormatDateSpreadEffective.json}          API_BIR_NEG30_Input_InvalidFormatDateSpreadEffective.json
+${API_BIR_NEG30_Expected_InvalidFormatDateSpreadEffective.json}       API_BIR_NEG30_Expected_InvalidFormatDateSpreadEffective.json
+
+${API_BIR_NEG31_Input_RateMaxDecimal.json}                      API_BIR_NEG31_Input_RateMaxDecimal.json    
+${API_BIR_NEG31_Expected_RateMaxDecimal.json}                   API_BIR_NEG31_Expected_RateMaxDecimal.json
+${API_BIR_NEG31_FFC_Expected_RateMaxDecimal.json}               API_BIR_NEG31_FFC_Expected_RateMaxDecimal.json
+${API_BIR_NEG31_RateMaxDecimal.xml}                             API_BIR_NEG31_RateMaxDecimal.xml
+
+${API_BIR_NEG31_Input_SpreadRateMaxDecimal.json}                API_BIR_NEG31_Input_SpreadRateMaxDecimal.json    
+${API_BIR_NEG31_Expected_SpreadRateMaxDecimal.json}             API_BIR_NEG31_Expected_SpreadRateMaxDecimal.json
+${API_BIR_NEG31_FFC_Expected_SpreadRateMaxDecimal.json}         API_BIR_NEG31_FFC_Expected_SpreadRateMaxDecimal.json
+${API_BIR_NEG31_SpreadRateMaxDecimal.xml}                       API_BIR_NEG31_SpreadRateMaxDecimal.xml
+
+${API_BIR_NEG32_Input_RateMaxSize.json}                         API_BIR_NEG32_Input_RateMaxSize.json    
+${API_BIR_NEG32_Expected_RateMaxSize.json}                      API_BIR_NEG32_Expected_RateMaxSize.json
+${API_BIR_NEG32_FFC_Expected_RateMaxSize.json}                  API_BIR_NEG32_FFC_Expected_RateMaxSize.json
+${API_BIR_NEG32_RateMaxSize.xml}                                API_BIR_NEG32_RateMaxSize.xml
+
+${API_BIR_NEG32_Input_SpreadRateMaxSize.json}                   API_BIR_NEG32_Input_SpreadRateMaxSize.json    
+${API_BIR_NEG32_Expected_SpreadRateMaxSize.json}                API_BIR_NEG32_Expected_SpreadRateMaxSize.json
+${API_BIR_NEG32_FFC_Expected_SpreadRateMaxSize.json}            API_BIR_NEG32_FFC_Expected_SpreadRateMaxSize.json
+${API_BIR_NEG32_SpreadRateMaxSize.xml}                          API_BIR_NEG32_SpreadRateMaxSize.xml
+
+
+
+
+#OUTPUT
+${API_BIR_CRE01_Output.xml}                                     API_BIR_CRE01_Output.xml
+${API_BIR_CRE01_Output.json}                                    API_BIR_CRE01_Output.json
+${API_BIR_CRE01_FFC_Actual.json}                                API_BIR_CRE01_FFC_Actual.json
+
+${API_BIR_CRE01_Output_02.xml}                                  API_BIR_CRE01_Output_2.xml
+${API_BIR_CRE01_FFC_Actual_02.json}                             API_BIR_CRE01_FFC_Actual_2.json
+
+${API_BIR_CRE01_Output_03.xml}                                  API_BIR_CRE01_Output_3.xml
+${API_BIR_CRE01_FFC_Actual_03.json}                             API_BIR_CRE01_FFC_Actual_3.json
+
+${API_BIR_CRE01_Output2.xml}                                     API_BIR_CRE01_Output2.xml
+${API_BIR_CRE01_Output2.json}                                    API_BIR_CRE01_Output2.json
+${API_BIR_CRE01_FFC_Actual2.json}                                API_BIR_CRE01_FFC_Actual2.json
+
+${API_BIR_CRE01_Output3.xml}                                     API_BIR_CRE01_Output3.xml
+${API_BIR_CRE01_Output3.json}                                    API_BIR_CRE01_Output3.json
+${API_BIR_CRE01_FFC_Actual3.json}                                API_BIR_CRE01_FFC_Actual3.json
+
+${API_BIR_CRE02_Output.xml}                                     API_BIR_CRE02_Output.xml
+${API_BIR_CRE02_Output.json}                                    API_BIR_CRE02_Output.json
+${API_BIR_CRE02_FFC_Actual.json}                                API_BIR_CRE02_FFC_Actual.json
+
+${API_BIR_CRE03_Output.xml}                                     API_BIR_CRE03_Output.xml
+${API_BIR_CRE03_Output.json}                                    API_BIR_CRE03_Output.json
+${API_BIR_CRE03_FFC_Actual.json}                                API_BIR_CRE03_FFC_Actual.json
+
+${API_BIR_CRE04_Output.xml}                                     API_BIR_CRE04_Output.xml
+${API_BIR_CRE04_Output.json}                                    API_BIR_CRE04_Output.json
+${API_BIR_CRE04_FFC_Actual.json}                                API_BIR_CRE04_FFC_Actual.json
+
+${API_BIR_CRE05_Output.xml}                                     API_BIR_CRE05_Output.xml
+${API_BIR_CRE05_Output.json}                                    API_BIR_CRE05_Output.json
+${API_BIR_CRE05_FFC_Actual.json}                                API_BIR_CRE05_FFC_Actual.json
+
+${API_BIR_CRE06_Output.xml}                                     API_BIR_CRE06_Output.xml
+${API_BIR_CRE06_Output.json}                                    API_BIR_CRE06_Output.json
+${API_BIR_CRE06_FFC_Actual.json}                                API_BIR_CRE06_FFC_Actual.json
+
+${API_BIR_CRE07_Output.xml}                                     API_BIR_CRE07_Output.xml
+${API_BIR_CRE07_Output.json}                                    API_BIR_CRE07_Output.json
+${API_BIR_CRE07_FFC_Actual.json}                                API_BIR_CRE07_FFC_Actual.json
+
+${API_BIR_CRE08_Output.xml}                                     API_BIR_CRE08_Output.xml
+${API_BIR_CRE08_Output.json}                                    API_BIR_CRE08_Output.json
+${API_BIR_CRE08_FFC_Actual.json}                                API_BIR_CRE08_FFC_Actual.json
+
+## UPDATE METHOD ##
+${API_BIR_UPD091_Output.xml}                                     API_BIR_UPD091_Output.xml
+${API_BIR_UPD091_Output.json}                                    API_BIR_UPD091_Output.json
+${API_BIR_UPD091_FFC_Actual.json}                                API_BIR_UPD091_FFC_Actual.json
+
+${API_BIR_UPD09_Output.xml}                                     API_BIR_UPD09_Output.xml
+${API_BIR_UPD09_Output.json}                                    API_BIR_UPD09_Output.json
+${API_BIR_UPD09_FFC_Actual.json}                                API_BIR_UPD09_FFC_Actual.json
+
+${API_BIR_UPD10_Output.xml}                                     API_BIR_UPD10_Output.xml
+${API_BIR_UPD10_Output.json}                                    API_BIR_UPD10_Output.json
+${API_BIR_UPD10_FFC_Actual.json}                                API_BIR_UPD10_FFC_Actual.json
+
+${API_BIR_UPD11_Output.xml}                                     API_BIR_UPD11_Output.xml
+${API_BIR_UPD11_Output.json}                                    API_BIR_UPD11_Output.json
+${API_BIR_UPD11_FFC_Actual.json}                                API_BIR_UPD11_FFC_Actual.json
+
+${API_BIR_UPD12_Output.xml}                                     API_BIR_UPD12_Output.xml
+${API_BIR_UPD12_Output.json}                                    API_BIR_UPD12_Output.json
+${API_BIR_UPD12_FFC_Actual.json}                                API_BIR_UPD12_FFC_Actual.json
+
+${API_BIR_UPD13_Output.xml}                                     API_BIR_UPD13_Output.xml
+${API_BIR_UPD13_Output.json}                                    API_BIR_UPD13_Output.json
+${API_BIR_UPD13_FFC_Actual.json}                                API_BIR_UPD13_FFC_Actual.json
+
+${SCENARIO8_API_BIR_COMPR06_Output.xml}                         SCENARIO8_API_BIR_COMPR06_Output.xml
+${SCENARIO8_API_BIR_COMPR06_Output.json}                        SCENARIO8_API_BIR_COMPR06_Output.json
+${SCENARIO8_API_BIR_COMPR06_FFC_Actual.json}                    SCENARIO8_API_BIR_COMPR06_FFC_Actual.json
+
+## DELETE METHOD ###
+${API_BIR_DEL15_Output.json}                                    API_BIR_DEL15_Output.json
+${API_BIR_DEL16_Output.json}                                    API_BIR_DEL16_Output.json
+${API_BIR_DEL17_Output.json}                                    API_BIR_DEL17_Output.json
+${API_BIR_DEL18_Output.json}                                    API_BIR_DEL18_Output.json
+
+### NEGATIVE ###
+${API_BIR_NEG18_Output.json}                                    API_BIR_NEG18_Output.json
+${API_BIR_NEG19_Output.json}                                    API_BIR_NEG19_Output.json
+${API_BIR_NEG20_Output.json}                                    API_BIR_NEG20_Output.json
+${API_BIR_NEG21_Output.json}                                    API_BIR_NEG21_Output.json
+
+${API_BIR_NEG22_Output_CannotParseEffective.json}               API_BIR_NEG22_Output_CannotParseEffective.json
+${API_BIR_NEG22_Output_CannotParseSpreadEffective.json}         API_BIR_NEG22_Output_CannotParseSpreadEffective.json
+
+${API_BIR_NEG23_Output.json}                                    API_BIR_NEG23_Output.json
+${API_BIR_NEG23_FFC_Actual.json}                                API_BIR_NEG23_FFC_Actual.json
+${API_BIR_NEG23_Output.xml}                                     API_BIR_NEG23_Output.xml
+
+${API_BIR_NEG24_Output.json}                                    API_BIR_NEG24_Output.json
+${API_BIR_NEG25_Output.json}                                    API_BIR_NEG25_Output.json
+${API_BIR_NEG26_Output.json}                                    API_BIR_NEG26_Output.json
+
+${API_BIR_NEG27_Output.json}                                    API_BIR_NEG27_Output.json
+${API_BIR_NEG27_FFC_Actual.json}                                API_BIR_NEG27_FFC_Actual.json
+${API_BIR_NEG27_Output.xml}                                     API_BIR_NEG27_Output.xml
+
+${API_BIR_NEG28_Output.json}                                    API_BIR_NEG28_Output.json
+${API_BIR_NEG28_FFC_Actual.json}                                API_BIR_NEG28_FFC_Actual.json
+${API_BIR_NEG28_Output.xml}                                     API_BIR_NEG28_Output.xml
+
+${API_BIR_NEG29_Output.json}                                    API_BIR_NEG29_Output.json
+${API_BIR_NEG29_FFC_Actual.json}                                API_BIR_NEG29_FFC_Actual.json
+${API_BIR_NEG29_Output.xml}                                     API_BIR_NEG29_Output.xml
+
+${API_BIR_NEG30_Output_InvalidFormatDateEffective.json}         API_BIR_NEG30_Output_InvalidFormatDateEffective.json
+${API_BIR_NEG30_Output_InvalidFormatDateSpreadEffective.json}   API_BIR_NEG30_Output_InvalidFormatDateSpreadEffective.json
+
+${API_BIR_NEG31_Output_RateMaxDecimal.json}                     API_BIR_NEG31_Output_RateMaxDecimal.json
+${API_BIR_NEG31_FFC_Actual_RateMaxDecimal.json}                 API_BIR_NEG31_FFC_Actual_RateMaxDecimal.json
+${API_BIR_NEG31_Output_RateMaxDecimal.xml}                      API_BIR_NEG31_Output_RateMaxDecimal.xml
+
+${API_BIR_NEG31_Output_SpreadRateMaxDecimal.json}               API_BIR_NEG31_Output_SpreadRateMaxDecimal.json
+${API_BIR_NEG31_FFC_Actual_SpreadRateMaxDecimal.json}           API_BIR_NEG31_FFC_Actual_SpreadRateMaxDecimal.json
+${API_BIR_NEG31_Output_SpreadRateMaxDecimal.xml}                API_BIR_NEG31_Output_SpreadRateMaxDecimal.xml
+
+${API_BIR_NEG32_Output_RateMaxSize.json}                        API_BIR_NEG32_Output_RateMaxSize.json
+${API_BIR_NEG32_FFC_Actual_RateMaxSize.json}                    API_BIR_NEG32_FFC_Actual_RateMaxSize.json
+${API_BIR_NEG32_Output_RateMaxSize.xml}                         API_BIR_NEG32_Output_RateMaxSize.xml
+
+${API_BIR_NEG32_Output_SpreadRateMaxSize.json}                  API_BIR_NEG32_Output_SpreadRateMaxSize.json
+${API_BIR_NEG32_FFC_Actual_SpreadRateMaxSize.json}              API_BIR_NEG32_FFC_Actual_SpreadRateMaxSize.json
+${API_BIR_NEG32_Output_SpreadRateMaxSize.xml}                   API_BIR_NEG32_Output_SpreadRateMaxSize.xml
+
+${OpenAPI_NEG_Response_BaseRates.json}                          OpenAPI_NEG_Response_BaseRates.json
+
+${FundingRates.csv}            FundingRates.csv
+
+#----------------------------------------------  END BASE RATES PATH and FILES ------------------------------------------------------------#
+
+#---- TEXTJMS OUTPUT FILES ----#
+${DistributorXML_input_BaseRates}            Distributor_Input.xml
+${DistributorXML_POST_output_BaseRates}      Distributor_POST_Output_BaseRates.xml
+${DistributorXML_PUT_output_BaseRates}       Distributor_PUT_Output_BaseRates.xml
+
+
+
+### API MESSAGES
+${BaseInterestName}            Baseinterestrates
+${BASEINTERESTRATE_APINAME}    BASEINTERESTRATE
+${BASE_SOURCENAME}    BaseinterestratesApiSource
+${BASE_ROUTEROPTION}    BASERATEDEST
+${BASE_CATEGORY}            Baseinterestrates
+${BASE_APINAME_FAILED}    BASEINTERESTRATE
+${MessageStatus_SENT}          SENT
+${MessageStatus_SUCCESSFUL}    SUCCESSFUL
+${MessageStatus_ERROR}         ERROR
+${QName_BaseRates}             wsFinalLIQDestination
+${QName_ErrorLog_BaseRates}    errorLogQueue
+${Lob_failure_message}         xxx : The LOB is not a subscriber to the API
+${POST}    xpath=//div[text()="POST"]
+
+${baseRateCode}                  baseRateCode
+${currency}                      currency
+${interestRate}                  interestRate
+${cluster}                       cluster
+${effectiveDate}                 effectiveDate
+${repricingFrequency}            repricingFrequency
+${spreadRate}                    spreadRate
+${spreadEffectiveDate}           spreadEffectiveDate
+${FUNDINGDESK_INACTIVE_COUNTER}    0
+
+${Years}     Years
+${Months}    Months
+${Days}      Days
+${REPRICING_LENGTH}
+${REPRICING_FREQUENCY_LABEL}
+
+###LIQ VARIABLES
+${BASE_EFFECTIVE_DATE_WITH_0}
+${BASE_EFFECTIVE_DATE_WITHOUT_0}
+${CONV_BACKDATED_DATE_WITH_0}
+${CONV_BACKDATED_DATE_WITHOUT_0}
+${SPREAD_EFFECTIVE_DATE_WITH_0}
+${SPREAD_EFFECTIVE_DATE_WITHOUT_0}
+${CONV_BACKDATED_SPREAD_DATE_WITH_0}
+${CONV_BACKDATED_SPREAD_DATE_WITHOUT_0}
+
+${Expected_Error_Message}    FAILED_No_BaseCode_RateType_expected_error_msg.txt
+
+### SCENARIO 8
+${baseRateCode_List}
+${baseRateOptionName_List}
+${baseInterestRate_List}
+${baseInterestRatePercentage_List}
+${baseDescription_List}
+${baseEffectiveDate_List}
+${baseRepricingFrequency_List}
+${baseCurrency_List}
+${writeToExcel_counter}

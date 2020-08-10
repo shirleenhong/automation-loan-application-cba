@@ -1,0 +1,11 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<api:executeUpdateUserProfile xmlns:api='http://api.ws.liq.misys.com/'>
+  <UpdateUserProfile version='1.0' branch='CB001' countryCode='GB' firstName='FNAME UPD010919' id='POUSR29' loginId='TSUSR29' jobFunctionCode='BAT' languageCode='EN' lastName='LNAME UPD010919' locationId='SYD' processingAreaCode='AUSAG' titleCode='ASC' eMailId='upd1218@ccb.com' phoneNumber1='8201091358' salesTeamCode='BAT' userStatus='U'>
+    <UpdateUserSecondaryProcessingAreas version='1.0'>
+      <UpdateSecondaryProcessingArea version='1.0' deleteIndicator='N' processingAreaCode='INTOL' />
+    </UpdateUserSecondaryProcessingAreas>
+    <UpdateUserDepartments version='1.0'>
+      <UpdateDepartment version='1.0' deleteIndicator='N' departmentName='GLB' primaryDeptInd='Y' />
+    </UpdateUserDepartments>
+  </UpdateUserProfile>
+</api:executeUpdateUserProfile>

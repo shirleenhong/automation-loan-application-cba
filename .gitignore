@@ -1,0 +1,24 @@
+# Ignoring Screenshot produced by Run
+ 
+screenshot
+ 
+*.png
+*.jpg
+*.jpeg
+ 
+ 
+#ignoring project files and logs
+*.html
+*.project
+ 
+#ignoring all .pyc files
+*.pyc
+
+# Report
+output.xml
+*.png
+*.html
+*.js
+
+*.libspec
+/libspecs/

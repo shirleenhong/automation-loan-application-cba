@@ -1,0 +1,65 @@
+*** Variables ***
+
+#### New IEE DB Server ####
+${DBServiceName}    MLFFC.misys.global.ad
+${DBUsername}       mch
+${DBPassword}       oracle
+${DBHost}           mancsleverg0017
+${DBPort}           1539
+${DB_URL}           jdbc:oracle:thin:mch@//mancsleverg0017:1539/MLFFC.misys.global.ad
+
+#### CORRESPONDENCE
+${DBServiceName_Corres}    MLFFC.misys.global.ad
+${DBUsername_Corres}       mch
+${DBPassword_Corres}       oracle
+${DBHost_Corres}           mancsleverg0017
+${DBPort_Corres}           1539
+${DB_URL_Corres}           jdbc:oracle:thin:mch@//mancsleverg0017:1539/MLFFC.misys.global.ad
+
+### IDT ESSENCE AU SERVER ###
+${DBSERVICENAME_ESS_AU}    AUGLBPDB
+${DBUSERNAME_ESS_AU}    bfdbusr
+${DBPASSWORD_ESS_AU}    password
+${DBHOST_ESS_AU}    MANCSLEVERG0017
+${DBPORT_ESS_AU}    1521
+${DBUR_ESS_AU}    jdbc:oracle:thin:bfdbusr@//MANCSLEVERG0017:1521/AUGLBPDB
+
+### IDT ESSENCE GLOBAL SERVER ###
+${DBSERVICENAME_ESS_GLB}    GLBPDB
+${DBUSERNAME_ESS_GLB}    bfdbusr
+${DBPASSWORD_ESS_GLB}    password
+${DBHOST_ESS_GLB}    MANCSLEVERG0017
+${DBPORT_ESS_GLB}    1521
+${DBUR_ESS_GLB}    jdbc:oracle:thin:bfdbusr@//MANCSLEVERG0017:1521/GLBPDB
+
+### IDT ESSENCE  SERVER ###
+${DBSERVICENAME_ESS}    MLESSME4
+${DBUSERNAME_ESS}    audbusr
+${DBPASSWORD_ESS}    password
+${DBHOST_ESS}    MANCSLEVERG0017
+${DBPORT_ESS}    1521
+${DBUR_ESS}    jdbc:oracle:thin:audbusr@//MANCSLEVERG0017:1521:MLESSME4
+
+
+### IDT PARTY SERVER ###
+${DBSERVICENAME_PTY}    MLESSME4
+${DBUSERNAME_PTY}    audbusr
+${DBPASSWORD_PTY}    password
+${DBHOST_PTY}    MANCSLEVERG0017
+${DBPORT_PTY}    1521
+${DBUR_PTY}    jdbc:oracle:thin:bfdbusr@//MANCSLEVERG0017:1521/MLESSME4
+
+### IDT LIQ SERVER ###
+${DBSERVICENAME_LIQ}    MLLOANIQ.misys.global.ad
+${DBUSERNAME_LIQ}    LIQ7511
+${DBPASSWORD_LIQ}    password
+${DBHOST_LIQ}    MANCSLEVERG0017
+${DBPORT_LIQ}    1539
+${DBUR_LIQ}    jdbc:oracle:thin:@mancsleverg0017:1539:MLLOANIQ
+
+### Holiday Calendars ###
+${TLS_FAM_GLOBAL2_TABLE}    TLS_FAM_GLOBAL2
+${GB2_TID_TABLE_ID}    GB2_TID_TABLE_ID
+${GB2_CDE_CODE}    GB2_CDE_CODE
+${GB2_DSC_CODE}    GB2_DSC_CODE
+${GB2_IND_ACTIVE}    GB2_IND_ACTIVE

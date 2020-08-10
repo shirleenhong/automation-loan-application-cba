@@ -1,0 +1,8 @@
+Relationship Manager=Syndicated Manager
+Portfolio Manager=Syndicated Manager
+Credit Officer=Credit Officer
+BranchManager=Branch Manager
+Sales and Trading Manager=Sales and Trading Manager
+ADMIN=SystemGroup
+Authorizor=superit
+superit=superit
