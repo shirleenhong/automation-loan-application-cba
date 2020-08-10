@@ -9,7 +9,6 @@ screenshot
  
 #ignoring project files and logs
 *.html
-*.project
  
 #ignoring all .pyc files
 *.pyc
