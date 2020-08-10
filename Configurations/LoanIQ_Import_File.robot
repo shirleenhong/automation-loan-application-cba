@@ -184,6 +184,42 @@ Resource    ../ResourcesFiles/Integration_Keywords/Source_Keywords/Transformatio
 Resource    ../ResourcesFiles/Integration_Keywords/Source_Keywords/Transformation_Layer/FXRates/TL_FXRATES_FFC_VAL.robot
 Resource    ../ResourcesFiles/Integration_Keywords/Source_Keywords/Transformation_Layer/FXRates/TL_FXRATES_DATABASE_VAL.robot
 
+### Integration Resource Files - DWE LIQ Extracts - Business Keywords ###
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/Extracts/DWE_LIQ_Extracts/DWELIQ_Multi_E2E_001.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/Extracts/DWE_LIQ_Extracts/DWELIQ_Multi_EV_001.robot
+
+### Integration Resource Files - DWE LIQ Extracts Source Keywords ###
+Resource    ../ResourcesFiles/Integration_Keywords/Source_Keywords/Extracts/DWE_LIQ_Extracts/DWELIQ_Extracts_Validation.robot
+
+### Integration Resource Files - DWE LIQ Functional - Business Keywords ###
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/Extracts/DWE_LIQ_Functional/DWE_LIQ_FuncVal01.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/Extracts/DWE_LIQ_Functional/DWE_LIQ_FuncVal02.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/Extracts/DWE_LIQ_Functional/DWE_LIQ_FuncVal03.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/Extracts/DWE_LIQ_Functional/DWE_LIQ_FuncVal04.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/Extracts/DWE_LIQ_Functional/DWE_LIQ_FuncVal05.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/Extracts/DWE_LIQ_Functional/DWE_LIQ_FuncVal06.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/Extracts/DWE_LIQ_Functional/DWE_LIQ_FuncVal07.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/Extracts/DWE_LIQ_Functional/DWE_LIQ_FuncVal08.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/Extracts/DWE_LIQ_Functional/DWE_LIQ_FuncVal09.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/Extracts/DWE_LIQ_Functional/DWE_LIQ_FuncVal11.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/Extracts/DWE_LIQ_Functional/DWE_LIQ_FuncVal12.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/Extracts/DWE_LIQ_Functional/DWE_LIQ_FuncVal13.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/Extracts/DWE_LIQ_Functional/DWE_LIQ_FuncVal14.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/Extracts/DWE_LIQ_Functional/DWE_LIQ_FuncVal15.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/Extracts/DWE_LIQ_Functional/DWE_LIQ_FuncVal16.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/Extracts/DWE_LIQ_Functional/DWE_LIQ_FuncVal17.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/Extracts/DWE_LIQ_Functional/DWE_LIQ_FuncVal19.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/Extracts/DWE_LIQ_Functional/DWE_LIQ_FuncVal21.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/Extracts/DWE_LIQ_Functional/DWE_LIQ_FuncVal22.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/Extracts/DWE_LIQ_Functional/DWE_LIQ_FuncVal23.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/Extracts/DWE_LIQ_Functional/DWE_LIQ_FuncVal24.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/Extracts/DWE_LIQ_Functional/DWE_LIQ_FuncVal25.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/Extracts/DWE_LIQ_Functional/DWE_LIQ_FuncVal26.robot
+
+### Integration Resource Files - DWE LIQ Functional Source Keywords ###
+Resource    ../ResourcesFiles/Integration_Keywords/Source_Keywords/Extracts/DWE_LIQ_Functional/DWELIQ_Database_Validation.robot
+Resource    ../ResourcesFiles/Integration_Keywords/Source_Keywords/Extracts/DWE_LIQ_Functional/DWELIQ_Functional_Validation.robot
+
 ### LoanIQ Resource Files - Business Process ###
 Resource    ../ResourcesFiles/LoanIQ_Keywords/BusinessProcess_Keywords/AdditionalSetUpOptions/SERV13_InterestCapitalization.robot
 Resource    ../ResourcesFiles/LoanIQ_Keywords/BusinessProcess_Keywords/AdditionalSetUpOptions/SERV14_CapsAndFloorsSetUp.robot
