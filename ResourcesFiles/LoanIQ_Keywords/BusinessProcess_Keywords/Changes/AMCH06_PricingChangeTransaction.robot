@@ -51,6 +51,7 @@ Create Pricing Change Transaction
 Create Interest Pricing Change via Facility Notebook
     [Documentation]    Create Interest Pricing Change Transaction via Facility Notebook.
     ...    @author: mgaling
+    ...    @update: clanding    11AUG2020    - removed Mx keywords, added Clearing of Interest Pricing current values before adding to matrix
     [Arguments]    ${ExcelPath}
     
     ${TransactionNo}    Auto Generate Only 4 Numeric Test Data    &{ExcelPath}[TransactionNo_Prefix]
@@ -61,7 +62,6 @@ Create Interest Pricing Change via Facility Notebook
     ###Launch Pricing Change Transasction Notebook###  
     Search Existing Deal    &{ExcelPath}[Deal_Name]
     Open Facility Notebook  &{ExcelPath}[Facility_Name]
-    # Select Pricing Change Transaction Menu    &{ExcelPath}[Pricing_Status]     
     Navigate to Pricing Change Transaction Menu        
     
     ####Pricing Change Transaction Notebook- General Tab###

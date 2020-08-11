@@ -6,15 +6,20 @@ Select Pricing Change Transaction Menu
     [Documentation]    This keyword selects the option Pricing Change Transaction from the Facility Notebook.
     ...    @author: mgaling  
     ...    @update: jdelacru    09OCT2019    - Added message box validation after selecting pricing change transaction menu
-    [Arguments]    ${Pricing_Status}
+    ...    @update: clanding    10AUG2020    - Added screenshot, added pre processing keyword; removed sleep
+    [Arguments]    ${sPricing_Status}
+    
+    ### Keyword Pre-processing ###
+    ${Pricing_Status}    Acquire Argument Value    ${sPricing_Status}
+    
     mx LoanIQ activate window    ${LIQ_FacilityNotebook_Window}
     mx LoanIQ select    ${LIQ_FacilityNotebook_Options_PricingChangeTransaction}
     mx LoanIQ click element if present    ${LIQ_Question_Yes_Button}
-    Sleep    3s    
     mx LoanIQ activate window    ${LIQ_PCT_AvailablePricing_Window}       
     Mx LoanIQ Select Or DoubleClick In Javatree    ${LIQ_PCT_AvailablePricing_List}    ${Pricing_Status}%s     
     mx LoanIQ click    ${LIQ_PCT_AvailablePricing_OK_Button}
     mx LoanIQ click element if present    ${LIQ_Question_Yes_Button}
+    Take Screenshot    ${Screenshot_Path}/Screenshots/LoanIQ/AvailablePricingWindow
     
 Populate Pricing Change Notebook General Tab
      [Documentation]    This keyword is used to populate data in Pricing Change Notebook-General Tab.
@@ -23,27 +28,56 @@ Populate Pricing Change Notebook General Tab
     ...                                      - Removed "Auto Generate Only 4 Numeric Test Data" & "Get System Date". This keywords should be used in the high-level prior to calling of this keyword.
     ...                                      - Removed "Write Data To Excel" of ${TransactionNo} & ${PCT_EffectiveDate}
     ...    	                                 - Removed Argument ${TransactionNo_Prefix}
-    [Arguments]    ${Transaction_Number}    ${PCT_EffectiveDate}    ${PricingChange_Description}  
+    ...    @update: clanding    10AUG2020    - Added screenshot; added pre processing keyword; replaced 'Mx Native Type' to 'Mx Press Combination'
+    [Arguments]    ${sTransaction_Number}    ${sPCT_EffectiveDate}    ${sPricingChange_Description}
+   
+    ### Keyword Pre-processing ###
+    ${Transaction_Number}    Acquire Argument Value    ${sTransaction_Number}
+    ${PCT_EffectiveDate}    Acquire Argument Value    ${sPCT_EffectiveDate}
+    ${PricingChange_Description}    Acquire Argument Value    ${sPricingChange_Description}
+    
     mx LoanIQ activate    ${LIQ_PricingChangeTransaction_Notebook}
-    Mx LoanIQ Select Window Tab    ${LIQ_PCT_Tab}    General   
+    Mx LoanIQ Select Window Tab    ${LIQ_PCT_Tab}    ${GENERAL_TAB}   
     mx LoanIQ enter    ${LIQ_PCT_TransactionNo}    ${Transaction_Number}
     mx LoanIQ enter    ${LIQ_PCT_EffectiveDate}    ${PCT_EffectiveDate}
     mx LoanIQ enter    ${LIQ_PCT_Description}    ${PricingChange_Description}
-    Mx Native Type    {BACKSPACE}
+    Mx Press Combination    Key.BACKSPACE
+    Take Screenshot    ${Screenshot_Path}/Screenshots/LoanIQ/PricingChangeTransactionNotebook
     
 Navigate to Pricing Tab - Modify Interest Pricing
      [Documentation]    This keyword is used to navigate Interest Pricing.
-    ...    @author: mgaling        
+    ...    @author: mgaling
+    ...    @update: clanding    10AUG2020    - Added screenshot; replaced hard coded value to global variables
+    
     mx LoanIQ activate    ${LIQ_PricingChangeTransaction_Notebook}
-    Mx LoanIQ Select Window Tab    ${LIQ_PCT_Tab}    Pricing
+    Mx LoanIQ Select Window Tab    ${LIQ_PCT_Tab}    ${PRICING_TAB}
     mx LoanIQ click    ${LIQ_PCT_ModifyInterestPricing_Button}
-    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}    
+    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
+    Take Screenshot    ${Screenshot_Path}/Screenshots/LoanIQ/PricingChangeTransactionNotebook
+
+Clear Interest Pricing Current Values
+     [Documentation]    This keyword is used to clear current Interest Pricing values.
+    ...    @author: clanding    11AUG2020    - initial create
+
+    mx LoanIQ activate window     ${LIQ_Facility_InterestPricing_Window}
+    mx LoanIQ click element if present    ${LIQ_Information_OK_Button}
+    mx LoanIQ click    ${LIQ_PCT_InterestPricing_Clear_Button}
+    mx LoanIQ click    ${LIQ_Question_Yes_Button}
+    mx LoanIQ activate window     ${LIQ_Facility_InterestPricing_Window}
 
 Add Matrix Item
      [Documentation]    This keyword is used to modify Interest Pricing by adding Matrix Item.
     ...    @author: mgaling
-    [Arguments]    ${PCT_InterestPricingItem}    ${PCT_InterestPricingType}     ${PCT_FinancialRatioType}    ${MinimumValue}    ${MaximumValue}
-    mx LoanIQ activate window     ${LIQ_Facility_InterestPricing_Window}
+    ...    @update: clanding    10AUG2020    - Added screenshot; added pre processing keyword
+    [Arguments]    ${sPCT_InterestPricingItem}    ${sPCT_InterestPricingType}     ${sPCT_FinancialRatioType}    ${sMinimumValue}    ${sMaximumValue}
+    
+    ### Keyword Pre-processing ###
+    ${PCT_InterestPricingItem}    Acquire Argument Value    ${sPCT_InterestPricingItem}
+    ${PCT_InterestPricingType}    Acquire Argument Value    ${sPCT_InterestPricingType}
+    ${PCT_FinancialRatioType}    Acquire Argument Value    ${sPCT_FinancialRatioType}
+    ${MinimumValue}    Acquire Argument Value    ${sMinimumValue}
+    ${MaximumValue}    Acquire Argument Value    ${sMaximumValue}
+
     mx LoanIQ click    ${LIQ_PCT_InterestPricing_Add_Button}
     Mx LoanIQ Select Combo Box Value    ${LIQ_Facility_InterestPricing_AddItem_List}    ${PCT_InterestPricingItem}
     Mx LoanIQ Select Combo Box Value    ${LIQ_Facility_InterestPricing_Type_List}    ${PCT_InterestPricingType}
@@ -51,13 +85,25 @@ Add Matrix Item
     mx LoanIQ activate    ${LIQ_FacilityPricing_InterestPricing_FinancialRatio_Window}
     mx LoanIQ select list    ${LIQ_FinancialRatio_Type}    ${PCT_FinancialRatioType}    
     mx LoanIQ enter    ${LIQ_FinancialRatio_MinimumValue_Field}    ${MinimumValue}
-    mx LoanIQ enter    ${LIQ_FinancialRatio_MaximumValue_Field}    ${MaximumValue} 
+    mx LoanIQ enter    ${LIQ_FinancialRatio_MaximumValue_Field}    ${MaximumValue}
+    Take Screenshot    ${Screenshot_Path}/Screenshots/LoanIQ/FacilityInterestPricingWindow
     mx LoanIQ click    ${LIQ_FinancialRatio_OK_Button}
+    Take Screenshot    ${Screenshot_Path}/Screenshots/LoanIQ/FacilityInterestPricingWindow
 
 Add Matrix Item - Mnemonic
     [Documentation]    This keyword is used to add matrix item with Mnemonic being checked.
     ...    @author: mgaling
-    [Arguments]    ${PCT_InterestPricingItem}    ${PCT_InterestPricingType}     ${PCT_FinancialRatioType}    ${MaximumValue}    ${Mnemonic_Value}      
+    ...    @update: clanding    10AUG2020    - Added screenshot; added pre processing keyword
+    [Arguments]    ${sPCT_InterestPricingItem}    ${sPCT_InterestPricingType}     ${sPCT_FinancialRatioType}    ${sMaximumValue}    ${sMnemonic_Value}
+    
+    ### Keyword Pre-processing ###
+    ${PCT_InterestPricingItem}    Acquire Argument Value    ${sPCT_InterestPricingItem}
+    ${PCT_InterestPricingType}    Acquire Argument Value    ${sPCT_InterestPricingType}
+    ${PCT_FinancialRatioType}    Acquire Argument Value    ${sPCT_FinancialRatioType}
+    ${Mnemonic_Value}    Acquire Argument Value    ${sMnemonic_Value}
+    ${MaximumValue}    Acquire Argument Value    ${sMaximumValue}
+    
+   
     mx LoanIQ activate window     ${LIQ_Facility_InterestPricing_Window}
     mx LoanIQ click    ${LIQ_PCT_InterestPricing_Add_Button}
     Mx LoanIQ Select Combo Box Value    ${LIQ_Facility_InterestPricing_AddItem_List}    ${PCT_InterestPricingItem}
@@ -66,14 +112,26 @@ Add Matrix Item - Mnemonic
     mx LoanIQ activate    ${LIQ_FacilityPricing_InterestPricing_FinancialRatio_Window}
     mx LoanIQ select list    ${LIQ_FinancialRatio_Type}    ${PCT_FinancialRatioType}    
     mx LoanIQ enter    ${LIQ_FinancialRatio_MinimumValue_Field}    ${MaximumValue}
-    Mx LoanIQ Check Or Uncheck    ${LIQ_FinancialRatio_Mnemonic_CheckBox}    ON
-    mx LoanIQ select list    ${LIQ_FinancialRatio_Mnemonic_List}    ${Mnemonic_Value}     
+    Mx LoanIQ Check Or Uncheck    ${LIQ_FinancialRatio_Mnemonic_CheckBox}    ${ON}
+    mx LoanIQ select list    ${LIQ_FinancialRatio_Mnemonic_List}    ${Mnemonic_Value}
+    Take Screenshot    ${Screenshot_Path}/Screenshots/LoanIQ/FacilityInterestPricingWindow   
     mx LoanIQ click    ${LIQ_FinancialRatio_OK_Button}
+    Take Screenshot    ${Screenshot_Path}/Screenshots/LoanIQ/FacilityInterestPricingWindow
     
 Add After Option Item - First
     [Documentation]    Select the value for the First Option.
     ...    @author: mgaling
-    [Arguments]    ${PCT_InterestPricingItem}    ${PCT_InterestPricingType}    ${OptionName}    ${RateBasisInterestPricing}    ${Spread}    ${RateFormulaUsage}=None
+    ...    @update: clanding    10AUG2020    - Added screenshot; added pre processing keyword
+    [Arguments]    ${sPCT_InterestPricingItem}    ${sPCT_InterestPricingType}    ${sOptionName}    ${sRateBasisInterestPricing}    ${sSpread}    ${sRateFormulaUsage}=None
+    
+    ### Keyword Pre-processing ###
+    ${PCT_InterestPricingItem}    Acquire Argument Value    ${sPCT_InterestPricingItem}
+    ${PCT_InterestPricingType}    Acquire Argument Value    ${sPCT_InterestPricingType}
+    ${OptionName}    Acquire Argument Value    ${sOptionName}
+    ${RateBasisInterestPricing}    Acquire Argument Value    ${sRateBasisInterestPricing}
+    ${Spread}    Acquire Argument Value    ${sSpread}
+    ${RateFormulaUsage}    Acquire Argument Value    ${sRateFormulaUsage}
+    
     mx LoanIQ click    ${LIQ_PCT_InterestPricing_After_Button} 
     Mx LoanIQ Select Combo Box Value    ${LIQ_Facility_InterestPricing_AddItem_List}    ${PCT_InterestPricingItem}
     Mx LoanIQ Select Combo Box Value    ${LIQ_Facility_InterestPricing_Type_List}    ${PCT_InterestPricingType}
@@ -82,25 +140,40 @@ Add After Option Item - First
     Mx LoanIQ Select Combo Box Value    ${LIQ_OptionCondition_OptionName_List}    ${OptionName}
     Mx LoanIQ Select Combo Box Value    ${LIQ_OptionCondition_RateBasis_List}    ${RateBasisInterestPricing}
     mx LoanIQ click    ${LIQ_Facility_InterestPricing_OptionCondition_OK_Button}
-    mx LoanIQ enter    ${LIQ_Facility_InterestPricing_FormulaCategory_Percent_Radiobutton}    ON
+    mx LoanIQ enter    ${LIQ_Facility_InterestPricing_FormulaCategory_Percent_Radiobutton}    ${ON}
     mx LoanIQ enter    ${LIQ_Facility_InterestPricing_FormulaCategory_Percent_Textfield}    ${Spread}
     Run Keyword If    '${RateFormulaUsage}' != 'None'    Mx LoanIQ Select Combo Box Value    ${LIQ_Facility_InterestPricing_RateFormulaUsage_List}    ${RateFormulaUsage}
+    ...    ELSE    Log    No Rate Formulate Usage provided
+    Take Screenshot    ${Screenshot_Path}/Screenshots/LoanIQ/FacilityInterestPricingWindow
     mx LoanIQ click    ${LIQ_Facility_InterestPricing_FormulaCategory_OK_Button}
-    mx LoanIQ click element if present    ${LIQ_PleaseConfirm_Yes_Button}         
+    mx LoanIQ click element if present    ${LIQ_PleaseConfirm_Yes_Button}
+    Take Screenshot    ${Screenshot_Path}/Screenshots/LoanIQ/FacilityInterestPricingWindow
 
 Add After Option Item - Second
     [Documentation]    Select the value for the Second Option.
     ...    @author: mgaling
-    [Arguments]    ${OptionName}    ${RateBasisInterestPricing}    ${Spread}    ${RateFormulaUsage}=None
+    ...    @update: clanding    10AUG2020    - Added screenshot; added pre processing keyword
+    [Arguments]    ${sOptionName}    ${sRateBasisInterestPricing}    ${sSpread}    ${sRateFormulaUsage}=None
+    
+    ### Keyword Pre-processing ###
+    ${OptionName}    Acquire Argument Value    ${sOptionName}
+    ${RateBasisInterestPricing}    Acquire Argument Value    ${sRateBasisInterestPricing}
+    ${Spread}    Acquire Argument Value    ${sSpread}
+    ${RateFormulaUsage}    Acquire Argument Value    ${sRateFormulaUsage}
+    
     mx LoanIQ activate    ${LIQ_FacilityPricing_Interest_OptionCondition_Window}    
     Mx LoanIQ Select Combo Box Value    ${LIQ_OptionCondition_OptionName_List}    ${OptionName}
     Mx LoanIQ Select Combo Box Value    ${LIQ_OptionCondition_RateBasis_List}    ${RateBasisInterestPricing}
     mx LoanIQ click    ${LIQ_Facility_InterestPricing_OptionCondition_OK_Button}
-    mx LoanIQ enter    ${LIQ_Facility_InterestPricing_FormulaCategory_Percent_Radiobutton}    ON
+    mx LoanIQ enter    ${LIQ_Facility_InterestPricing_FormulaCategory_Percent_Radiobutton}    ${ON}
     mx LoanIQ enter    ${LIQ_Facility_InterestPricing_FormulaCategory_Percent_Textfield}    ${Spread}
     Run Keyword If    '${RateFormulaUsage}' != 'None'    Mx LoanIQ Select Combo Box Value    ${LIQ_Facility_InterestPricing_RateFormulaUsage_List}    ${RateFormulaUsage}
+    ...    ELSE    Log    No Rate Formulate Usage provided
+    Take Screenshot    ${Screenshot_Path}/Screenshots/LoanIQ/FacilityInterestPricingWindow
     mx LoanIQ click    ${LIQ_Facility_InterestPricing_FormulaCategory_OK_Button} 
     mx LoanIQ click element if present    ${LIQ_PleaseConfirm_Yes_Button}
+    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
+    Take Screenshot    ${Screenshot_Path}/Screenshots/LoanIQ/FacilityInterestPricingWindow
 
 Add After Option Item - Third
     [Documentation]    Select the value for the Third Option.
@@ -115,75 +188,109 @@ Add After Option Item - Third
     mx LoanIQ click    ${LIQ_Facility_InterestPricing_FormulaCategory_OK_Button} 
     mx LoanIQ click element if present    ${LIQ_PleaseConfirm_Yes_Button} 
  
-Validate the Interest Pricing values With Matrix Item
+Validate the Interest Pricing Values with Matrix Item
     [Documentation]    This keyword validates the values.
     ...    @author: mgaling
-    [Tags]    Validation 
+    ...    @update: clanding    10AUG2020    - Added screenshot
+    [Tags]    Validation
+    
     mx LoanIQ activate    ${LIQ_Facility_InterestPricing_Window}   
     mx LoanIQ click    ${LIQ_PCT_InterestPricing_Validate_Button}
     Run Keyword And Continue On Failure    Mx LoanIQ Verify Object Exist    ${LIQ_Validation_Congratulations_Window}    VerificationData="Yes"
+    Take Screenshot    ${Screenshot_Path}/Screenshots/LoanIQ/FacilityInterestPricingWindow
     mx LoanIQ click    ${LIQ_Congratulations_OK_Button}
+    Take Screenshot    ${Screenshot_Path}/Screenshots/LoanIQ/FacilityInterestPricingWindow
     mx LoanIQ click    ${LIQ_PCT_InterestPricing_OK_Button}
+    Take Screenshot    ${Screenshot_Path}/Screenshots/LoanIQ/FacilityInterestPricingWindow
     
 Pricing Change Transaction Send to Approval
       [Documentation]    This keyword is for Send to Approval in Pricing Change Transaction.
     ...    @author: mgaling
+    ...    @update: clanding    10AUG2020    - Added screenshot; replaced hard coded values to global variables
+    
     mx LoanIQ activate    ${LIQ_PricingChangeTransaction_Notebook}
-    Mx LoanIQ Select Window Tab    ${LIQ_PCT_Tab}    Workflow
-	Mx LoanIQ Select Or DoubleClick In Javatree    ${LIQ_PCT_Workflow_JavaTree}    Send to Approval%d 
+    Mx LoanIQ Select Window Tab    ${LIQ_PCT_Tab}    ${WORKFLOW_TAB}
+	Mx LoanIQ Select Or DoubleClick In Javatree    ${LIQ_PCT_Workflow_JavaTree}    ${SEND_TO_APPROVAL_STATUS}%d
+	Take Screenshot    ${Screenshot_Path}/Screenshots/LoanIQ/PricingChangeTransactionNotebook
     mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
     mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
     mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
     mx LoanIQ activate window   ${LIQ_PCT_AwaitingApproval_Window}
+    Take Screenshot    ${Screenshot_Path}/Screenshots/LoanIQ/AwaitingApprovalWindow
 
 Pricing Change Transaction Approval
     [Documentation]    This keyword is for approval of Pricing Change Transaction Notebook.
     ...    @author: mgaling
     ...    @update: bernchua    08MAR2019    Updated clicking of warning messages to use "Validate if Question or Warning Message is Displayed"
-    [Arguments]    ${WIPTransaction_Type}    ${Transaction_Status_AwaitingApproval}    ${FacilityTransaction_Type}    ${Deal_Name}
+    ...    @update: clanding    10AUG2020    - Added screenshot; added pre processing keyword; replaced sleep; replaced hard coded values to global variables
+    [Arguments]    ${sWIPTransaction_Type}    ${sTransaction_Status_AwaitingApproval}    ${sFacilityTransaction_Type}    ${sDeal_Name}
     
-        ##Open Amendment Notebook thru WIP - Awaiting Approval     
+    ### Keyword Pre-processing ###
+    ${WIPTransaction_Type}    Acquire Argument Value    ${sWIPTransaction_Type}
+    ${Transaction_Status_AwaitingApproval}    Acquire Argument Value    ${sTransaction_Status_AwaitingApproval}
+    ${FacilityTransaction_Type}    Acquire Argument Value    ${sFacilityTransaction_Type}
+    ${Deal_Name}    Acquire Argument Value    ${sDeal_Name}
+
+    ##Open Amendment Notebook thru WIP - Awaiting Approval     
     mx LoanIQ click    ${LIQ_WorkInProgress_Button}
     mx LoanIQ activate    ${LIQ_WorkInProgress_Window}   
     Mx LoanIQ Verify Object Exist    ${LIQ_WorkInProgress_Window}     VerificationData="Yes"
     Mx LoanIQ DoubleClick    ${LIQ_WorkInProgress_TransactionList}    ${WIPTransaction_Type}
     
-    
     ${status}    Run Keyword And Return Status    Mx LoanIQ Select String    ${LIQ_WorkInProcess_TransactionStatus_FacilityList}    ${Transaction_Status_AwaitingApproval}         
-    Run Keyword If    ${status}==True    Mx LoanIQ DoubleClick    ${LIQ_WorkInProcess_TransactionStatus_FacilityList}    ${Transaction_Status_AwaitingApproval}   
+    Run Keyword If    ${status}==${True}    Mx LoanIQ DoubleClick    ${LIQ_WorkInProcess_TransactionStatus_FacilityList}    ${Transaction_Status_AwaitingApproval}
+    ...    ELSE    Run Keyword And Continue On Failure    FAIL    '${Transaction_Status_AwaitingApproval}' is not displayed in Work In Process.
 
     ${status}    Run Keyword And Return Status    Mx LoanIQ Select String    ${LIQ_WorkInProcess_TransactionStatus_FacilityList}    ${FacilityTransaction_Type}
-    Run Keyword If    ${status}==True    Mx LoanIQ DoubleClick    ${LIQ_WorkInProcess_TransactionStatus_FacilityList}    ${FacilityTransaction_Type}  
+    Run Keyword If    ${status}==${True}    Mx LoanIQ DoubleClick    ${LIQ_WorkInProcess_TransactionStatus_FacilityList}    ${FacilityTransaction_Type}  
+    ...    ELSE    Run Keyword And Continue On Failure    FAIL    '${FacilityTransaction_Type}' is not displayed in Work In Process.    
+
+    mx LoanIQ maximize    ${LIQ_WorkInProgress_Window}
+    Take Screenshot    ${Screenshot_Path}/Screenshots/LoanIQ/WIP_Transaction
+    Mx LoanIQ Select Or Doubleclick In Tree By Text    ${LIQ_WorkInProcess_TransactionStatus_FacilityList}    ${Deal_Name}%d
     
-    mx LoanIQ maximize    ${LIQ_WorkInProgress_Window}   
-    Mx LoanIQ Select Or Doubleclick In Tree By Text    ${LIQ_WorkInProcess_TransactionStatus_FacilityList}    ${Deal_Name}%s
-    Sleep    3s 
-	
-	Mx LoanIQ Select Window Tab    ${LIQ_PCT_Tab}    Workflow
-    Mx LoanIQ Select Or DoubleClick In Javatree    ${LIQ_PCT_Workflow_JavaTree}    Approval%d  
+	mx LoanIQ activate window    ${LIQ_PricingChangeTransaction_Notebook}
+	Mx LoanIQ Select Window Tab    ${LIQ_PCT_Tab}    ${WORKFLOW_TAB}
+    Mx LoanIQ Select Or DoubleClick In Javatree    ${LIQ_PCT_Workflow_JavaTree}    ${APPROVAL_STATUS}%d  
     Validate if Question or Warning Message is Displayed
-    mx LoanIQ activate window    ${LIQ_PCT_AwaitingRelease_Window} 
+    mx LoanIQ activate window    ${LIQ_PCT_AwaitingRelease_Window}
+    Take Screenshot    ${Screenshot_Path}/Screenshots/LoanIQ/AwaitingReleaseWindow
     
 Pricing Change Transaction Release
      [Documentation]    This keyword is for the release of Pricing Change Transaction Notebook.
     ...    @author: mgaling
-    [Arguments]    ${WIPTransaction_Type}    ${Transaction_Status_AwaitingRelease}    ${FacilityTransaction_Type}    ${Deal_Name} 
+    ...    @update: clanding    10AUG2020    - Added screenshot; added pre processing keyword; replaced sleep; replaced hard coded values to global variables
+    [Arguments]    ${sWIPTransaction_Type}    ${sTransaction_Status_AwaitingRelease}    ${sFacilityTransaction_Type}    ${sDeal_Name}
+    
+    ### Keyword Pre-processing ###
+    ${WIPTransaction_Type}    Acquire Argument Value    ${sWIPTransaction_Type}
+    ${Transaction_Status_AwaitingRelease}    Acquire Argument Value    ${sTransaction_Status_AwaitingRelease}
+    ${FacilityTransaction_Type}    Acquire Argument Value    ${sFacilityTransaction_Type}
+    ${Deal_Name}    Acquire Argument Value    ${sDeal_Name}
+
         
-        ##Open Amendment Notebook thru WIP - Awaiting Release Approval     
+    ##Open Amendment Notebook thru WIP - Awaiting Release Approval     
     mx LoanIQ click    ${LIQ_WorkInProgress_Button}
     mx LoanIQ activate    ${LIQ_WorkInProgress_Window}   
     Mx LoanIQ Verify Object Exist    ${LIQ_WorkInProgress_Window}     VerificationData="Yes"
     Mx LoanIQ DoubleClick    ${LIQ_WorkInProgress_TransactionList}    ${WIPTransaction_Type}
-    ${status}    Run Keyword And Return Status    Mx LoanIQ Select String    ${LIQ_WorkInProcess_TransactionStatus_FacilityList}    ${Transaction_Status_AwaitingRelease}         
-    Run Keyword If    ${status}==True    Mx LoanIQ DoubleClick    ${LIQ_WorkInProcess_TransactionStatus_FacilityList}    ${Transaction_Status_AwaitingRelease}   
-    ${status}    Run Keyword And Return Status    Mx LoanIQ Select String    ${LIQ_WorkInProcess_TransactionStatus_FacilityList}    ${FacilityTransaction_Type}
-    Run Keyword If    ${status}==True    Mx LoanIQ DoubleClick    ${LIQ_WorkInProcess_TransactionStatus_FacilityList}    ${FacilityTransaction_Type}    
-    mx LoanIQ maximize    ${LIQ_WorkInProgress_Window}  
-    Mx LoanIQ Select Or Doubleclick In Tree By Text    ${LIQ_WorkInProcess_TransactionStatus_FacilityList}    ${Deal_Name}%s
-    Sleep    3s 
     
-    Mx LoanIQ Select Window Tab    ${LIQ_PCT_Tab}    Workflow
-    Mx LoanIQ Select Or DoubleClick In Javatree    ${LIQ_PCT_Workflow_JavaTree}    Release%d
+    ${status}    Run Keyword And Return Status    Mx LoanIQ Select String    ${LIQ_WorkInProcess_TransactionStatus_FacilityList}    ${Transaction_Status_AwaitingRelease}         
+    Run Keyword If    ${status}==${True}    Mx LoanIQ DoubleClick    ${LIQ_WorkInProcess_TransactionStatus_FacilityList}    ${Transaction_Status_AwaitingRelease}
+    ...    ELSE    Run Keyword And Continue On Failure    FAIL    '${Transaction_Status_AwaitingRelease}' is not displayed in Work In Process.
+
+    ${status}    Run Keyword And Return Status    Mx LoanIQ Select String    ${LIQ_WorkInProcess_TransactionStatus_FacilityList}    ${FacilityTransaction_Type}
+    Run Keyword If    ${status}==${True}    Mx LoanIQ DoubleClick    ${LIQ_WorkInProcess_TransactionStatus_FacilityList}    ${FacilityTransaction_Type}
+    ...    ELSE    Run Keyword And Continue On Failure    FAIL    '${FacilityTransaction_Type}' is not displayed in Work In Process.
+    
+    mx LoanIQ maximize    ${LIQ_WorkInProgress_Window}
+    Take Screenshot    ${Screenshot_Path}/Screenshots/LoanIQ/WorkInProgressWindow  
+    Mx LoanIQ Select Or Doubleclick In Tree By Text    ${LIQ_WorkInProcess_TransactionStatus_FacilityList}    ${Deal_Name}%d
+    
+    mx LoanIQ activate window    ${LIQ_PricingChangeTransaction_Notebook}
+    Mx LoanIQ Select Window Tab    ${LIQ_PCT_Tab}    ${WORKFLOW_TAB}
+    Mx LoanIQ Select Or DoubleClick In Javatree    ${LIQ_PCT_Workflow_JavaTree}    ${RELEASE_STATUS}%d
+    Take Screenshot    ${Screenshot_Path}/Screenshots/LoanIQ/PricingChangeTransactionWindow
     mx LoanIQ click element if present    ${LIQ_Question_Yes_Button} 
     mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
     mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
@@ -195,6 +302,7 @@ Pricing Change Transaction Release
     mx LoanIQ activate    ${LIQ_TransactionInProcess_Window}
     mx LoanIQ select    ${LIQ_TransactionsInProcess_FileExit_Menu}
     mx LoanIQ activate window    ${LIQ_PCT_Released_Window}
+    Take Screenshot    ${Screenshot_Path}/Screenshots/LoanIQ/ReleasedWindow
     
 ##########Pricing Change Ongoing Fees##############
 Save Ongoing Fee Rate in Facility Notebook  
@@ -513,5 +621,15 @@ Update Interest Pricing via Pricing Change Transaction
     Take Screenshot    ${Screenshot_Path}/Screenshots/LoanIQ/InterestPricingWindow
     Mx LoanIQ click    ${LIQ_PricingChangeTransaction_InterestPricing_OK_Button}
 
+Select Financial Ratio in Interest Pricing List
+    [Documentation]    This keyword is used to select Financial Ration in Interest Pricing List
+    ...    @author: clanding    11AUG2020    - initial create
+    [Arguments]    ${sPCT_FinancialRatioType}
 
+    ### Keyword Pre-processing ###
+    ${PCT_FinancialRatioType}    Acquire Argument Value    ${sPCT_FinancialRatioType}
+    
+    mx LoanIQ activate    ${LIQ_Facility_InterestPricing_Window}
+	Mx LoanIQ Select Or DoubleClick In Javatree    ${LIQ_PCT_InterestPricing_List}    ${PCT_FinancialRatioType}%s
+	Take Screenshot    ${Screenshot_Path}/Screenshots/LoanIQ/InterestPricingWindow
     
