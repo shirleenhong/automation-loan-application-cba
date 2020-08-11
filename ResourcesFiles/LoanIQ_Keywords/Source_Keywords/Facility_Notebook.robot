@@ -1306,10 +1306,12 @@ Navigate to Commitment Fee Notebook
 Navigate to Outstanding Select Window
     [Documentation]    This keyword enables the LIQ User to navigate to the Outstanding Select window thru the Facility Notebook.
     ...    @author: rtarayao
+    ...    @update: clanding    10AUG2020    - added screenshot
     
     mx LoanIQ activate window    ${LIQ_FacilityNotebook_Window}       
     mx LoanIQ select    ${LIQ_FacilityNotebook_Queries_OutstandingSelect}
     mx LoanIQ activate    ${LIQ_OutstandingSelect_Window}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/OutstandingSelectWindow
 
 Navigate to Facility Increase Decrease Schedule
     [Documentation]    This keyword will navigate to Increase/Decrease Schedule in Facility

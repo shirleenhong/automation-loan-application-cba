@@ -81,6 +81,80 @@ BUS_Select Pricing Change Transaction Release
 
     Run Keyword   Select Pricing Change Transaction Release
  
+BUS_Select Pricing Change Transaction Menu
+    [Documentation]    This keyword is used to run the assigned low level keyword.
+    ...    @author: clanding    11AUG2020    - initial create
 
+    Run Keyword   Select Pricing Change Transaction Menu    ${ARGUMENT_1}
 
+BUS_Populate Pricing Change Notebook General Tab
+    [Documentation]    This keyword is used to run the assigned low level keyword.
+    ...    @author: clanding    11AUG2020    - initial create
+
+    Run Keyword   Populate Pricing Change Notebook General Tab    ${ARGUMENT_1}    ${ARGUMENT_2}    ${ARGUMENT_3}
+
+BUS_Navigate to Pricing Tab - Modify Interest Pricing
+    [Documentation]    This keyword is used to run the assigned low level keyword.
+    ...    @author: clanding    11AUG2020    - initial create
+
+    Run Keyword   Navigate to Pricing Tab - Modify Interest Pricing
+
+BUS_Add Matrix Item
+    [Documentation]    This keyword is used to run the assigned low level keyword.
+    ...    @author: clanding    11AUG2020    - initial create
+
+    Run Keyword   Add Matrix Item    ${ARGUMENT_1}    ${ARGUMENT_2}    ${ARGUMENT_3}    ${ARGUMENT_4}    ${ARGUMENT_5}
+
+BUS_Add After Option Item - First
+    [Documentation]    This keyword is used to run the assigned low level keyword.
+    ...    @author: clanding    11AUG2020    - initial create
+
+    Run Keyword   Add After Option Item - First    ${ARGUMENT_1}    ${ARGUMENT_2}    ${ARGUMENT_3}    ${ARGUMENT_4}    ${ARGUMENT_5}    ${ARGUMENT_6}
+
+BUS_Add After Option Item - Second
+    [Documentation]    This keyword is used to run the assigned low level keyword.
+    ...    @author: clanding    11AUG2020    - initial create
+
+    Run Keyword   Add After Option Item - Second    ${ARGUMENT_1}    ${ARGUMENT_2}    ${ARGUMENT_3}    ${ARGUMENT_4}
+
+BUS_Select Financial Ratio in Interest Pricing List
+    [Documentation]    This keyword is used to run the assigned low level keyword.
+    ...    @author: clanding    11AUG2020    - initial create
+
+    Run Keyword   Select Financial Ratio in Interest Pricing List    ${ARGUMENT_1}
+
+BUS_Add Matrix Item - Mnemonic
+    [Documentation]    This keyword is used to run the assigned low level keyword.
+    ...    @author: clanding    11AUG2020    - initial create
+
+    Run Keyword   Add Matrix Item - Mnemonic    ${ARGUMENT_1}    ${ARGUMENT_2}    ${ARGUMENT_3}    ${ARGUMENT_4}    ${ARGUMENT_5}
+
+BUS_Validate the Interest Pricing Values with Matrix Item
+    [Documentation]    This keyword is used to run the assigned low level keyword.
+    ...    @author: clanding    11AUG2020    - initial create
+
+    Run Keyword   Validate the Interest Pricing Values with Matrix Item
+
+BUS_Pricing Change Transaction Send to Approval
+    [Documentation]    This keyword is used to run the assigned low level keyword.
+    ...    @author: clanding    11AUG2020    - initial create
+
+    Run Keyword   Pricing Change Transaction Send to Approval
+
+BUS_Pricing Change Transaction Approval
+    [Documentation]    This keyword is used to run the assigned low level keyword.
+    ...    @author: clanding    11AUG2020    - initial create
+
+    Run Keyword   Pricing Change Transaction Approval    ${ARGUMENT_1}    ${ARGUMENT_2}    ${ARGUMENT_3}    ${ARGUMENT_4}
+
+BUS_Pricing Change Transaction Release
+    [Documentation]    This keyword is used to run the assigned low level keyword.
+    ...    @author: clanding    11AUG2020    - initial create
+
+    Run Keyword   Pricing Change Transaction Release    ${ARGUMENT_1}    ${ARGUMENT_2}    ${ARGUMENT_3}    ${ARGUMENT_4}
     
+BUS_Clear Interest Pricing Current Values
+    [Documentation]    This keyword is used to run the assigned low level keyword.
+    ...    @author: clanding    11AUG2020    - initial create
+
+    Run Keyword   Clear Interest Pricing Current Values
