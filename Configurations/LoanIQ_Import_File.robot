@@ -133,57 +133,6 @@ Resource    ../ResourcesFiles/Generic_Keywords/Utility_Keywords/WinSCP_Keywords.
 Resource    ../ResourcesFiles/Generic_Keywords/Utility_Keywords/MCH_Keywords.robot
 Resource    ../ResourcesFiles/Generic_Keywords/Utility_Keywords/SSO_Keywords.robot
 
-### Integration Resource Files - Correspondence - Source Keywords ###
-Resource    ../ResourcesFiles/Integration_Keywords/Source_Keywords/API/Correspondence/API_COR_LOANIQ_VAL.robot
-Resource    ../ResourcesFiles/Integration_Keywords/Source_Keywords/API/Correspondence/API_COR_FFC_VAL.robot
-Resource    ../ResourcesFiles/Integration_Keywords/Source_Keywords/API/Correspondence/API_COR_PREREQUISITE.robot
-Resource    ../ResourcesFiles/Integration_Keywords/Source_Keywords/API/Correspondence/API_COR_VAL.robot
-
-### Integration Resource Files - Correspondence - Business Keywords ###
-Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Correspondence/API_COR_TC01.robot
-
-### Integration Resource Files - User - Business Keywords ###
-Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/Users/API_SSO_CRE01.robot
-
-### Integration Resource Files - User - Source Keywords ###
-Resource    ../ResourcesFiles/Integration_Keywords/Source_Keywords/Users/API_SSO_API_VAL.robot
-Resource    ../ResourcesFiles/Integration_Keywords/Source_Keywords/Users/API_SSO_DATABASE_VAL.robot
-Resource    ../ResourcesFiles/Integration_Keywords/Source_Keywords/Users/API_SSO_FFC_VAL.robot
-Resource    ../ResourcesFiles/Integration_Keywords/Source_Keywords/Users/API_SSO_LOANIQ_VAL.robot
-Resource    ../ResourcesFiles/Integration_Keywords/Source_Keywords/Users/API_SSO_PREREQUISITE.robot
-Resource    ../ResourcesFiles/Integration_Keywords/Source_Keywords/Users/API_SSO_VAL.robot
-
-### Integration Resource Files - TL Calendar - Business Keywords ###
-Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/Transformation_Layer/Calendar/TL_CAL_01.robot
-
-### Integration Resource Files - TL Calendar - Source Keywords ###
-Resource    ../ResourcesFiles/Integration_Keywords/Source_Keywords/Transformation_Layer/Calendar/TL_CAL_PREREQUISITE.robot
-Resource    ../ResourcesFiles/Integration_Keywords/Source_Keywords/Transformation_Layer/Calendar/TL_CAL_LIQ_VAL.robot
-Resource    ../ResourcesFiles/Integration_Keywords/Source_Keywords/Transformation_Layer/Calendar/TL_CAL_FFC_VAL.robot
-Resource    ../ResourcesFiles/Integration_Keywords/Source_Keywords/Transformation_Layer/Calendar/TL_CAL_DATABASE_VAL.robot
-
-### Integration Resource Files - TL Base Rates - Business Keywords###
-Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/Transformation_Layer/BaseRates/TL_BASE_01.robot
-
-### Integration Resource Files - TL Base Rates - Source Keywords ###
-Resource    ../ResourcesFiles/Integration_Keywords/Source_Keywords/Transformation_Layer/BaseRates/TL_BASE_DATABASE_VAL.robot
-Resource    ../ResourcesFiles/Integration_Keywords/Source_Keywords/Transformation_Layer/BaseRates/TL_BASE_FFC_VAL.robot
-Resource    ../ResourcesFiles/Integration_Keywords/Source_Keywords/Transformation_Layer/BaseRates/TL_BASE_LIQ_VAL.robot
-Resource    ../ResourcesFiles/Integration_Keywords/Source_Keywords/Transformation_Layer/BaseRates/TL_BASE_PREREQUISITE.robot
-
-### Integration Resource Files - API Base Rates - Source Keywords ###
-Resource    ../ResourcesFiles/Integration_Keywords/Source_Keywords/API/BaseRates/API_BIR_PREREQUISITE.robot
-Resource    ../ResourcesFiles/Integration_Keywords/Source_Keywords/API/BaseRates/API_BIR_LOANIQ_VAL.robot
-
-### Integration Resource Files - TL FX Rates - Business Keywords ###
-Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/Transformation_Layer/FXRates/TL_FXRATES_01.robot
-
-### Integration Resource Files - TL FX Rates - Source Keywords ###
-Resource    ../ResourcesFiles/Integration_Keywords/Source_Keywords/Transformation_Layer/FXRates/TL_FXRATES_PREREQUISITE.robot
-Resource    ../ResourcesFiles/Integration_Keywords/Source_Keywords/Transformation_Layer/FXRates/TL_FXRATES_LIQ_VAL.robot
-Resource    ../ResourcesFiles/Integration_Keywords/Source_Keywords/Transformation_Layer/FXRates/TL_FXRATES_FFC_VAL.robot
-Resource    ../ResourcesFiles/Integration_Keywords/Source_Keywords/Transformation_Layer/FXRates/TL_FXRATES_DATABASE_VAL.robot
-
 ### LoanIQ Resource Files - Business Process ###
 Resource    ../ResourcesFiles/LoanIQ_Keywords/BusinessProcess_Keywords/AdditionalSetUpOptions/SERV13_InterestCapitalization.robot
 Resource    ../ResourcesFiles/LoanIQ_Keywords/BusinessProcess_Keywords/AdditionalSetUpOptions/SERV14_CapsAndFloorsSetUp.robot
