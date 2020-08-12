@@ -1,5 +1,5 @@
 *** Settings ***
-Resource    ../../../../../Configurations/LoanIQ_Import_File.robot
+Resource    ../../../../../Configurations/Integration_Import_File.robot
 
 *** Keywords ***
 
@@ -1164,7 +1164,7 @@ Verify NBD List if Existing in LIQ DB and Return Row Count
     [Arguments]    ${sCalendarID}    ${sDateValue}
     
     ${dateValue_LIQ_Format}    Convert Date With Zero    ${sDateValue}
-    ${Query_NBD}    Catenate    SELECT * FROM ${DBUSERNAME_LIQ}.${TLS_HOL_CAL_DATES_TABLE} WHERE ${HCD_CDE_HOL_CAL}='${sCalendarID}' 
+    ${Query_NBD}    Catenate    SELECT * FROM ${LIQ7474_USER}.${TLS_HOL_CAL_DATES_TABLE} WHERE ${HCD_CDE_HOL_CAL}='${sCalendarID}' 
     ...    AND ${HCD_DTE_HOL_CAL}='${dateValue_LIQ_Format}'
     ${Query_NBD_RowCount}    Connect to LIQ Database and Return Row Count    ${Query_NBD}
     [Return]    ${Query_NBD_RowCount}

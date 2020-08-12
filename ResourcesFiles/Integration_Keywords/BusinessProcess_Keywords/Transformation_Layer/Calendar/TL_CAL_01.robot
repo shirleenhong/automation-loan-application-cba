@@ -1,9 +1,8 @@
 *** Settings ***
-Resource     ../../../../../Configurations/LoanIQ_Import_File.robot
-
-*** Variables ***
+Resource    ../../../../../Configurations/Integration_Import_File.robot
 
 *** Keywords ***
+
 Send Valid Copp Clark Files
     [Documentation]    Used to send a valid Copp Clark files to SFTP site. Then validate if Copp Clark files are processed and moved to Archive folder.
     ...    Then validate FFC if file is sent to CCB OpenAPI, distributor and CustomCBAPush. Then validate in LoanIQ if Holiday Calendar Dates are reflected.
@@ -11,7 +10,7 @@ Send Valid Copp Clark Files
     [Arguments]    ${ExcelPath}
     
     ###PREREQUISITE###
-    Login to Loan IQ    ${TL_USERNAME}    ${TL_PASSWORD}
+    # Login to Loan IQ    ${TL_USERNAME}    ${TL_PASSWORD}
     ${LIQ_Zone3}    Get LoanIQ Business Date per Zone and Return    ${ZONE3}
     Verify if Copp Clark Files Have No Missing File    &{ExcelPath}[InputCoppClarkFiles]
     ${CalendarID_List_File1}    Get Calendar ID from File 1 of Copp Clark Files and Return    &{ExcelPath}[InputFilePath]    &{ExcelPath}[InputCoppClarkFiles]    Holidays
@@ -36,3 +35,7 @@ Send Valid Copp Clark Files
     Run Keyword And Continue On Failure    Validate FFC for TL Calendar Success    &{ExcelPath}[InputFilePath]    &{ExcelPath}[InputJson]    &{ExcelPath}[Expected_wsFinalLIQDestination]    &{ExcelPath}[OutputFilePath]    
     ...    &{ExcelPath}[OutputFFCResponse]    &{ExcelPath}[Actual_wsFinalLIQDestination]    &{ExcelPath}[Actual_CustomCBAPush_Response]    &{ExcelPath}[Actual_ResponseMechanism]
     Run Keyword And Continue On Failure    Validate Holiday Calendar Dates in Loan IQ Database    &{ExcelPath}[InputFilePath]    &{ExcelPath}[InputJson]
+    
+    ### GDE-2364 is raised for slowness of screen to load, hence, Loan IQ Validation is not yet tested. Validation will be made on Loan IQ database instead ###
+    ### Run Keyword And Continue On Failure    Validate Holiday Calendar in LoanIQ    &{ExcelPath}[InputFilePath]    &{ExcelPath}[InputJson]
+    

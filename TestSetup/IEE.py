@@ -1,8 +1,8 @@
 ### Dataset Locations ###
 APIDataSet = "C:\\Git_Evergreen\\fms_scotia\DataSet\\Integration_DataSet\\API\\API_Data_Set.xlsx"
-ExcelPath = "C:\\Git_Evergreen\\fms_scotia\\DataSet\\LoanIQ_DataSet\\EVG_PTYLIQ01_BaselineBilateralCustomer.xlsx"
-dataset_path = "C:\\Git_Evergreen\\fms_scotia"
-CBAUAT_ExcelPath = "C:\\Git_Evergreen\\fms_cba\\DataSet\\CBAUATDeal_DataSet\\EVG_CBAUAT03.xlsx"
+ExcelPath = "C:\\Git_Evergreen\\fms_cba\\DataSet\\Integration_DataSet\\TL\\TL_Data_Set_AU.xlsx"
+dataset_path = "C:\\Git_Evergreen\\fms_cba"
+CBAUAT_ExcelPath = "C:\\Git_Evergreen\\evergreen_projects\\CBA_Evergreen\\DataSet\\CBA_UAT_DataSet\\EVG_CBAUAT01.xls"
 TL_DATASET = "C:\\Git_Evergreen\\evergreen_projects\\CBA_Evergreen\\DataSet\\TL_DataSet\\TL_Data_Set.xls"
 SAPWUL_DATASET = "C:\\Git_evergreen\\evergreen_projects\\CBA_Evergreen\\DataSet\\Downstream_DataSet\\SAPWUL\\SAPWUL_Data_Set.xlsx"
 ComSeeDataSet = 'C:\\Git_Evergreen\\evergreen_projects\\CBA_Evergreen\\DataSet\\Downstream_DataSet\\ComSee\\COMSEE_Data_Set.xls'
@@ -12,18 +12,18 @@ SERVER = "http://mancsleverg0007"
 PORT = "9090"
 MDM_FFC_URL="/mch-ui"
 
-SFTP_HOST = "mancsleverg0006"
+SFTP_HOST = "mancsleverg0005"
 SFTP_PORT = "22"
 SFTP_USER = "micloud"
 SFTP_PASSWORD = "misys123"
 
-OPEAPI_INSTANCE_TL = "API"
-OPEAPI_INSTANCE = "API"
-TEXTJMS_INSTANCE = "Distributor_1.2.0.1"
-CBAINTERFACE_INSTANCE = "CustomInterface_v1.2.9"
-CBAPUSH_INSTANCE = "CustomCBAPush_v1.2.9"
-CUSTOM_INTERFACE_INSTANCE = "CustomInterface_v1.2.9"
-RESPONSE_MECHANISM_INSTANCE = "responsemechanism_1.2.0.0"
+OPEAPI_INSTANCE_TL = "openAPI_1.3.0"
+OPEAPI_INSTANCE = "openAPI_1.3.0"
+TEXTJMS_INSTANCE = "distributor_1.3.0"
+CBAINTERFACE_INSTANCE = "CustomInterface_v1.3.2"
+CBAPUSH_INSTANCE = "CustomCBAPush_v1.3.2"
+CUSTOM_INTERFACE_INSTANCE = "CustomInterface_v1.3.2"
+RESPONSE_MECHANISM_INSTANCE = "responsemechanism_1.3.0"
 
 DBServiceName = "MLFFC1.misys.global.ad"
 DBUsername = "MCH"
@@ -42,7 +42,7 @@ MDM_FFC_Username ='admin'
 MDM_FFC_Password = 'admin'
 
 ### TL Credentials ###
-TL_USERNAME = "DONATELO"
+TL_USERNAME = "JCUSR01"
 TL_PASSWORD = "password"
 
 ### LIQ Credentials ###
@@ -79,10 +79,10 @@ TL_SERVICE_HOST = "mancsleverg0007"
 TL_SERVICE_PORT = "22"
 TL_SERVER_USER = "micloud"
 TL_SERVER_PASSWORD = "misys123"
-TL_SERVICE_DIR = "/evgdata/FFC/mch-2.1.3.3.0-6162/config/Transformation/"
+TL_SERVICE_DIR = "/evgdata/FFC/mch-2.1.3.3.0-6162/config/Transformation_129/"
 
 ###Screenshots###
-screenshot_Path = "C:\\Git_Evergreen\\fms_scotia\\Results"
+screenshot_Path = "C:\\Git_Evergreen\\fms_cba\\Results"
 SCREENSHOT_FILENAME = ""
 
 ###LIQ ADMIN CREDENTIALS###
