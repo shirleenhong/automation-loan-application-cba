@@ -8,7 +8,7 @@ Create Initial Loan Drawdown with Repayment Schedule for Non Agent Syndication
     ...                                    - Replaced 'Should Be Equal As Numbers' with 'Compare Two Numbers'
     ...                                    - Added user logout and login as INPUTTER_USERNAME at the end of the test case
     ...    @update: hstone    22MAY2020    - Removed '${Loan_Alias}    Read Data From Excel    SERV02_LoanDrawdownNonAgent    Loan_Alias    ${rowid}'
-    ...    @update: clanding    10AUG2020    - updated hard coded values to dataset/global variables
+    ...    @update: clanding    10AUG2020    - updated hard coded values to dataset/global variables; removed Create Principal Repayment Schedule as per scenario review
     [Arguments]    ${ExcelPath}
     
     ###Upfront Fee Payment Workflow Tab- Release Item###
@@ -40,9 +40,6 @@ Create Initial Loan Drawdown with Repayment Schedule for Non Agent Syndication
     ...    &{ExcelPath}[Loan_RepricingFrequency]    &{ExcelPath}[Loan_IntCycleFrequency]    ${TO_THE_ACTUAL_DUE_DATE}
 
     Input Loan Drawdown Rates    &{ExcelPath}[Borrower_BaseRate]    &{ExcelPath}[Facility_Spread]
-    
-    ###Repayment Schedule###
-    Create Principal Repayment Schedule    &{ExcelPath}[Repayment_ScheduleFrequency]    &{ExcelPath}[Repayment_NumberOfCycles]    ${Loan_EffectiveDate}    &{ExcelPath}[Repayment_NonBusDayRule]    &{ExcelPath}[Loan_RequestedAmount]
     
     ###Cashflows###
     Navigate to Drawdown Cashflow Window
