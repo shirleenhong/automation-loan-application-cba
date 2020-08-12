@@ -2,7 +2,7 @@
 Resource    ../../../../Configurations/LoanIQ_Import_File.robot
 
 *** Keywords ***
-Create Initial Loan Drawdown with Repayment Schedule for Non Agent Syndication
+Create Initial Loan Drawdown for Non Agent Syndication
     [Documentation]    This keyword is used to creat an initial loan drawdown with repayment schedule for a non-agent syndication
     ...    @update: hstone    19MAY2020    - Replaced 'Add Days to Date' with 'Add Time from From Date and Returns Weekday'
     ...                                    - Replaced 'Should Be Equal As Numbers' with 'Compare Two Numbers'
