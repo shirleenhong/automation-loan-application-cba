@@ -537,12 +537,16 @@ Auto Generate Only 5 Numeric Test Data
 
 Auto Generate Only 4 Numeric Test Data
     [Documentation]    This keyword concatenates current date as a unique 3 numeric test data
-    ...    @author: ghabal  
-    [Arguments]    ${NameTestData}
-    [Return]    ${GeneratedName}
+    ...    @author: ghabal
+    ...    @update: clanding    10AUG2020    - moved Return at the end of the script; added post processing
+    [Arguments]    ${NameTestData}    ${sRunTimeVar_GeneratedName}=None
     ${datetime.microsecond}    Get Current Date    result_format=%M%S  
     log to console    ${datetime.microsecond}
-    ${GeneratedName} =   Catenate    SEPARATOR=  ${NameTestData}   ${datetime.microsecond}  
+    ${GeneratedName} =   Catenate    SEPARATOR=  ${NameTestData}   ${datetime.microsecond}
+    
+    ### Keyword Post-processing ###
+    Save Values of Runtime Execution on Excel File    ${sRunTimeVar_GeneratedName}    ${GeneratedName}
+    [Return]    ${GeneratedName}
     
 Verify Window
     [Documentation]    This keyword will validate if you are in the correct window
@@ -946,14 +950,19 @@ Open Facility Notebook
     [Documentation]    This keyword opens an existing facility on LIQ.
     ...    @author: mgaling
     ...    @author: ghabal change  'AMCH06a1_InterestPricingChange' sheet name to 'AMCH06_PricingChangeTransaction'
-    [Arguments]    ${Facility_Name}
+    ...    @update: clanding    10AUG2020    - removed Read Data From Excel; add pre processing keyword and screenshot
+    [Arguments]    ${sFacility_Name}
+    
+    ### Keyword Pre-processing ###
+    ${Facility_Name}    Acquire Argument Value    ${sFacility_Name}
+    
     mx LoanIQ activate    ${LIQ_DealNotebook_Window}
     mx LoanIQ select    ${LIQ_DealNotebook_Options_Facilities}
     mx LoanIQ activate    ${LIQ_FacilityNavigator_Window}
     
-    # ${Facility_Name}    Read Data From Excel    AMCH06_PricingChangeTransaction    Facility_Name    ${rowid}
     Mx LoanIQ Select Or DoubleClick In Javatree    ${LIQ_FacilityNavigator_Tree}    ${Facility_Name}%d
     mx LoanIQ activate window    ${LIQ_FacilityNotebook_Window}
+    Take Screenshot    ${Screenshot_Path}/Screenshots/LoanIQ/FacilityNotebookWindow
 
 Get Number 12 Digits
     [Arguments]    ${number}
