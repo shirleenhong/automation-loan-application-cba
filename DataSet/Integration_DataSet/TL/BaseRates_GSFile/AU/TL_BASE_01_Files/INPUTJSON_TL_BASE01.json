@@ -1,0 +1,1 @@
+[{"baseRateCode": "BANKBILL", "currency": "AUD", "buyRate": 5.219, "midRate": null, "sellRate": null, "lastRate": null, "rateEffectiveDate": "2018-06-21", "spreadRate": null, "spreadEffectiveDate": null, "rateTenor": "002M", "instrumentType": "DEPOSIT", "lobs": [{"lineOfBusiness": "COMRLENDING", "businessEntityName": [], "subEntity": ["AUD", "EUR"]}]}]
