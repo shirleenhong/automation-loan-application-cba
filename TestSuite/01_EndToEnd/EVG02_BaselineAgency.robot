@@ -48,11 +48,9 @@ Verify Facility Share Adjustments - MTAM07
 Initiate Ongoing Fee Payment - SERV29
     [Tags]    09 perform Ongoing Fee Payment on Syndicated Dea (SERV29)
     Mx Execute Template With Multiple Data    Update Commitment Fee Cycle    ${ExcelPath}    ${rowid}    SERV29_PaymentFees
-    Mx Execute Template With Multiple Data    Update Indemnity Fee Cycle    ${ExcelPath}    ${rowid}    SERV29_PaymentFees
     Log to Console    Pause Execution - Run Daily EOD
     Pause Execution
     Mx Execute Template With Multiple Data    Pay Commitment Fee Amount - Syndicated    ${ExcelPath}    ${rowid}    SERV29_PaymentFees
-    Mx Execute Template With Multiple Data    Pay Indemnity Fee Amount - Syndicated    ${ExcelPath}    ${rowid}    SERV29_PaymentFees 
     Log to Console    Pause Execution - Run Monthly EOD
     Pause Execution
     
