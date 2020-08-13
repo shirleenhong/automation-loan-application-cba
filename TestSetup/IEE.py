@@ -55,12 +55,12 @@ MANAGER_PASSWORD = "password"
 
 SSO_USERLINK = "mancsleverg0028"
 SSO_PORT = "8080"
-USER_LINK = "mancsleverg0028"
-PORT = "9090"
+USER_LINK = "mancsleverg0031"
+PORT = "7080"
 PARTY_URL_SUFFIX = "/uxp/rt/html/login.html"
 DOMAIN = "http://misysroot"
 SSO_URL_LINK = "/bfweb/servlet/GetServiceTicketForUser?redirectTo=http://"
-SSO_ENABLED = "YES"
+SSO_ENABLED = "NO"
 
 SSO_SERVER = 'mancsleverg0028'
 SSO_PORT_NUMBER = '8080'
@@ -68,9 +68,12 @@ PARTY_SSO_URL = 'http://${PARTY_HTML_CREDENTIALS}@${SSO_SERVER}:${SSO_PORT_NUMBE
 PARTY_HTML_USER_CREDENTIALS = 'misysroot%5Cbrad:welcome%4099'
 PARTY_HTML_APPROVER_CREDENTIALS = 'misysroot%5Csuperit:welcome%4099'
 PARTY_SUPERVISOR_USERNAME  = 'superit'
-PARTY_SUPERVISOR_PASSWORD = 'welcome@99'
+PARTY_SUPERVISOR_PASSWORD = 'superit'
 PARTY_SERVER = 'mancsleverg0031:8080'
-PARTY_URL = 'mancsleverg0031:8080/uxp/rt/html/login.html'
+PARTY_URL = 'mancsleverg0031:7080/uxp/rt/html/login.html'
+PARTY_USERNAME = "brad"
+PARTY_PASSWORD = "brad"
+
 
 TL_SERVICE_HOST = "mancsleverg0007"
 TL_SERVICE_PORT = "22"

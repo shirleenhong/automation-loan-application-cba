@@ -1,10 +1,61 @@
 *** Settings ***
 Resource    ../../../../Configurations/Import_File.robot
+Resource    ../../../../Configurations/Party_Import_File.robot
 
 *** Variables ***
 ${SCENARIO}
 
 *** Keywords ***
+Create Deal Borrower initial details in Quick Party Onboarding
+    [Documentation]    This keyword creates a Deal Borrower in Quick Party Onboarding.
+    ...    @author:    fmamaril    26JUN2019
+    [Arguments]    ${ExcelPath}
+    ###User Creates a Party Record###
+    Login User to Party    ${PARTY_USERNAME}    ${PARTY_PASSWORD}    ${USER_LINK}    ${USER_PORT}    ${PARTY_SSO_URL_SUFFIX}    ${PARTY_HTML_USER_CREDENTIALS}    ${SSO_ENABLED}    ${PARTY_SSO_URL} 
+    Navigate Process    &{ExcelPath}[Selected_Module]    
+    Populate Party Onboarding    &{ExcelPath}[Locality]    &{ExcelPath}[Party_Type]    &{ExcelPath}[Party_Sub_Type]    &{ExcelPath}[Party_Category]    &{ExcelPath}[Branch_Code]          
+    ${EnterpriseName}    ${PartyID}    Run Keyword If    '&{ExcelPath}[AutoGen_EnterpriseName]'=='Yes'    Run Keyword    Populate Pre-Existence Check    &{ExcelPath}[Enterprise_Prefix]
+    Run Keyword If    '&{ExcelPath}[AutoGen_EnterpriseName]'=='Yes'    Run Keywords    Write Data To Excel    PTY001_QuickPartyOnboarding    Party_ID    ${rowid}    ${PartyID}    ${CBAUAT_ExcelPath}
+    ...    AND    Write Data To Excel    ORIG03_Customer    Party_ID    ${rowid}    ${PartyID}    ${CBAUAT_ExcelPath}
+    ...    AND    Write Data To Excel    ORIG03_Customer    LIQCustomer_LegalName    ${rowid}    ${EnterpriseName}    ${CBAUAT_ExcelPath}
+    ...    AND    Write Data To Excel    PTY001_QuickPartyOnboarding    Enterprise_Name    ${rowid}    ${EnterpriseName}    ${CBAUAT_ExcelPath}
+    ...    AND    Write Data To Excel    PTY001_QuickPartyOnboarding    Party_ID    ${rowid}    ${PartyID}    ${CBAUAT_ExcelPath}
+    ...    AND    Write Data To Excel    SERV01A_LoanDrawdown    Borrower_Name    ${rowid}    ${PartyID}    ${CBAUAT_ExcelPath}    Y
+    ...    ELSE    Populate Pre-Existence Check with No Suffix    &{ExcelPath}[Enterprise_Name]    
+
+Populate Quick Enterprise Party with Approval
+    [Documentation]    This keyword creates a Deal Borrower in Quick Party Onboarding.
+    ...    @author:    fmamaril    26JUN2019
+    [Arguments]    ${ExcelPath}           
+    Populate Quick Enterprise Party    &{ExcelPath}[Party_ID]    &{ExcelPath}[Country_of_Tax_Domicile]    &{ExcelPath}[Date_Formed]    &{ExcelPath}[Country_of_Registration]
+    ...    &{ExcelPath}[Address_Type]    &{ExcelPath}[Country_Region]    &{ExcelPath}[Post_Code]    &{ExcelPath}[Email_Contact_Type]    &{ExcelPath}[Email]
+    ...    &{ExcelPath}[Confirm_Email]    &{ExcelPath}[Mobile_Contact_Type]    &{ExcelPath}[Country_Code]    &{ExcelPath}[Number]    &{ExcelPath}[Document_Collection_Status]
+    ...    &{ExcelPath}[Industry_Sector]    &{ExcelPath}[Business_Activity]    &{ExcelPath}[Business_Focus]    &{ExcelPath}[Business_Type]    &{ExcelPath}[Is_Main_Activity]
+    ...    &{ExcelPath}[GSTID]    &{ExcelPath}[Address_Line_1]    &{ExcelPath}[Address_Line_2]    &{ExcelPath}[Town_City]    
+    ...    &{ExcelPath}[State_Province]    &{ExcelPath}[Business_Country]    &{ExcelPath}[Is_Primary_Activity]    &{ExcelPath}[Registered_Number]    &{ExcelPath}[Party_ID]    
+    Screenshot.Set Screenshot Directory    ${Screenshot_Path}
+    Set Test Variable    ${SCREENSHOT_FILENAME}    Party Details
+    Take Screenshot    ${SCREENSHOT_FILENAME}   
+    Close Browser
+    
+    ###Supervisor Approves the Party Record###
+    Run Keyword If    '${SSO_ENABLED}'=='NO'    Logout User on Party
+    Login User to Party    ${PARTY_USERNAME}    ${PARTY_PASSWORD}    ${USER_LINK}    ${USER_PORT}    ${PARTY_SSO_URL_SUFFIX}    ${PARTY_HTML_APPROVER_CREDENTIALS}    ${SSO_ENABLED}    ${PARTY_SSO_URL}
+    ${Task_ID_From_Supervisor}    Approve Registered Party    &{ExcelPath}[Party_ID]
+    Run Keyword If    '${SSO_ENABLED}'=='NO'    Logout User on Party 
+    Close Browser
+    
+    ###User Validates the Party Record###
+    Login User to Party    ${PARTY_USERNAME}    ${PARTY_PASSWORD}    ${USER_LINK}    ${USER_PORT}    ${PARTY_SSO_URL_SUFFIX}    ${PARTY_HTML_USER_CREDENTIALS}    ${SSO_ENABLED}    ${PARTY_SSO_URL}   
+    Accept Approved Party    &{ExcelPath}[rowid]    ${Task_ID_From_Supervisor}
+    Validate Enterprise Party Details    &{ExcelPath}[Locality]    &{ExcelPath}[Party_Type]    &{ExcelPath}[Party_Sub_Type]    &{ExcelPath}[Party_Category]    &{ExcelPath}[Party_ID]    &{ExcelPath}[Enterprise_Name]    &{ExcelPath}[Registered_Number]    
+    Navigate Party Details Enquiry    &{ExcelPath}[Party_ID]
+    Validate Enquire Enterprise Party Details    &{ExcelPath}[Locality]    &{ExcelPath}[Party_Type]    &{ExcelPath}[Party_Sub_Type]    &{ExcelPath}[Party_Category]    &{ExcelPath}[Enterprise_Name]    &{ExcelPath}[Registered_Number]    &{ExcelPath}[Date_Formed]    &{ExcelPath}[Country_of_Tax_Domicile]    &{ExcelPath}[Country_of_Registration]    
+    Set Test Variable    ${SCREENSHOT_FILENAME}    Party Record
+    Take Screenshot    ${SCREENSHOT_FILENAME}
+    Run Keyword If    '${SSO_ENABLED}'=='NO'    Logout User on Party 
+    Close Browser
+    
 Search Customer and Complete its Borrower Profile Creation with default values for Deal Template Three
     [Documentation]    This keyword searches a customer and complete its Borrower Profile creation with default values
     ...    @author: fmamaril    06AUG2019
