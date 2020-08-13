@@ -34,8 +34,8 @@ Update Commitment Fee Cycle
     ###Commitment Fee Notebook - General Tab###  
     ${AdjustedDueDate}    Update Cycle on Commitment Fee   &{ExcelPath}[Fee_Cycle]
     
-    ${ScheduleActivity_FromDate}    Subtract Days to Date    ${AdjustedDueDate}    &{ExcelPath}[days]
-    ${ScheduledActivity_ThruDate}    Add Days to Date    ${AdjustedDueDate}    &{ExcelPath}[days]
+    ${ScheduleActivity_FromDate}    Subtract Days to Date    ${AdjustedDueDate}    &{ExcelPath}[Days]
+    ${ScheduledActivity_ThruDate}    Add Days to Date    ${AdjustedDueDate}    &{ExcelPath}[Days]
     Run Keyword If    '${SCENARIO}'=='6'    Run Keywords    Write Data To Excel    SERV29_PaymentFees    ScheduleActivity_FromDate    &{ExcelPath}[rowid]    ${ScheduleActivity_FromDate}   
     ...    AND    Write Data To Excel    SERV29_PaymentFees    ScheduledActivity_ThruDate    &{ExcelPath}[rowid]    ${ScheduledActivity_ThruDate}        
     ...    AND    Write Data To Excel    SERV29_PaymentFees    ScheduledActivityReport_Date    &{ExcelPath}[rowid]    ${AdjustedDueDate}
@@ -207,8 +207,8 @@ Pay Commitment Fee Amount - Syndicated
     Navigate to Scheduled Activity Filter
     
     ${SysDate}    Get System Date
-    ${FromDate}    Subtract Days to Date    ${SysDate}    &{ExcelPath}[days]
-    ${ThruDate}    Add Days to Date    ${SysDate}    &{ExcelPath}[days]
+    ${FromDate}    Subtract Days to Date    ${SysDate}    &{ExcelPath}[Days]
+    ${ThruDate}    Add Days to Date    ${SysDate}    &{ExcelPath}[Days]
     Write Data To Excel    SERV29_PaymentFees    ScheduleActivity_FromDate    ${rowid}    ${FromDate}
     Write Data To Excel    SERV29_PaymentFees    ScheduledActivity_ThruDate    ${rowid}    ${ThruDate}
     ###Scheduled Activity Filter###
