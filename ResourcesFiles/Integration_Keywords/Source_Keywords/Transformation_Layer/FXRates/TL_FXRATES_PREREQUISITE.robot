@@ -1,5 +1,5 @@
 *** Settings ***
-Resource    ../../../../../Configurations/LoanIQ_Import_File.robot
+Resource    ../../../../../Configurations/Integration_Import_File.robot
 
 
 *** Keywords ***
@@ -9,8 +9,16 @@ Create Dictionary per Row Count for Csv FXRates Content
     ...    This will create dictionary and return dictionoary.
     ...    Then create dictionary and return.
     ...    @author: mnanquil    04MAR2019    - initial create
-    ...    @update: dahijara    16APR2020    - Optimized keyword. Separated Getting of header index to another keyword 'Set Header Index for FXRates CSV Header to Global Variable'
     [Arguments]    ${aCSV_Content}    ${aCSV_Row_Val}
+    ${GS_SNAP_index}    Get Column Header Index From Input Csv File And Return    ${aCSV_Content}    GS_SNAP
+    ${GS_INSTR_DESC_index}    Get Column Header Index From Input Csv File And Return    ${aCSV_Content}    GS_INSTR_DESC
+    ${GS_BASE_CCY_index}    Get Column Header Index From Input Csv File And Return    ${aCSV_Content}    GS_BASE_CCY
+    ${GS_TRGT_CCY_index}    Get Column Header Index From Input Csv File And Return    ${aCSV_Content}    GS_TRGT_CCY
+    ${GS_INSTR_TYPE_index}    Get Column Header Index From Input Csv File And Return    ${aCSV_Content}    GS_INSTR_TYPE
+    ${GS_INSTR_PRC_TYPE_index}    Get Column Header Index From Input Csv File And Return    ${aCSV_Content}    GS_INSTR_PRC_TYPE
+    ${GS_INSTR_PRICE_index}    Get Column Header Index From Input Csv File And Return    ${aCSV_Content}    GS_INSTR_PRICE
+    ${GS_VALUE_DATE_index}    Get Column Header Index From Input Csv File And Return    ${aCSV_Content}    GS_VALUE_DATE
+    ${GS_PROCESSING_DATE_index}    Get Column Header Index From Input Csv File And Return    ${aCSV_Content}    GS_PROCESSING_DATE
     ${FromCurrency}    Get From List    ${aCSV_Row_Val}    ${GS_BASE_CCY_index}
     ${ToCurrency}    Get From List    ${aCSV_Row_Val}    ${GS_TRGT_CCY_index}
     ${RateType}    Get From List    ${aCSV_Row_Val}    ${GS_INSTR_TYPE_index}
@@ -20,89 +28,7 @@ Create Dictionary per Row Count for Csv FXRates Content
     ${dCSV_Row}    Create Dictionary    GS_BASE_CCY=${FromCurrency}    GS_TRGT_CCY=${ToCurrency}    GS_INSTR_TYPE=${RateType}
     ...    GS_INSTR_PRC_TYPE=${Rate}    GS_INSTR_PRICE=${PriceRate}    GS_PROCESSING_DATE=${ProcessingDate}
     [Return]    ${dCSV_Row}
-
-Set Header Index for FXRates CSV Header to Global Variable
-    [Documentation]    This keyword is used to fxRates csv file Header to global variable.
-    ...    @author: dahijara    14APR2020    - initial create
-    [Arguments]    ${aCSV_Content}    
-    ${GS_SNAP_index}    Get Column Header Index From Input Csv File And Return    ${aCSV_Content}    GS_SNAP
-    Set Global Variable    ${GS_SNAP_index}
-    ${GS_INSTR_DESC_index}    Get Column Header Index From Input Csv File And Return    ${aCSV_Content}    GS_INSTR_DESC
-    Set Global Variable    ${GS_INSTR_DESC_index}
-    ${GS_BASE_CCY_index}    Get Column Header Index From Input Csv File And Return    ${aCSV_Content}    GS_BASE_CCY
-    Set Global Variable    ${GS_BASE_CCY_index}
-    ${GS_TRGT_CCY_index}    Get Column Header Index From Input Csv File And Return    ${aCSV_Content}    GS_TRGT_CCY
-    Set Global Variable    ${GS_TRGT_CCY_index}
-    ${GS_INSTR_TYPE_index}    Get Column Header Index From Input Csv File And Return    ${aCSV_Content}    GS_INSTR_TYPE
-    Set Global Variable    ${GS_INSTR_TYPE_index}
-    ${GS_INSTR_PRC_TYPE_index}    Get Column Header Index From Input Csv File And Return    ${aCSV_Content}    GS_INSTR_PRC_TYPE
-    Set Global Variable    ${GS_INSTR_PRC_TYPE_index}
-    ${GS_INSTR_PRICE_index}    Get Column Header Index From Input Csv File And Return    ${aCSV_Content}    GS_INSTR_PRICE
-    Set Global Variable    ${GS_INSTR_PRICE_index}
-    ${GS_VALUE_DATE_index}    Get Column Header Index From Input Csv File And Return    ${aCSV_Content}    GS_VALUE_DATE
-    Set Global Variable    ${GS_VALUE_DATE_index}
-    ${GS_PROCESSING_DATE_index}    Get Column Header Index From Input Csv File And Return    ${aCSV_Content}    GS_PROCESSING_DATE
-    Set Global Variable    ${GS_PROCESSING_DATE_index}
-
-Set Header Index for Transformed FXRates File Header to Global Variable
-    [Documentation]    This keyword is used to Transformed fxRates xls file Header to global variable in preparation for excel writing.
-    ...    1 is added per Header index as excel index starts with 1.
-    ...    @author: dahijara    15APR2020    - initial create
-    [Arguments]    ${sSheetName}    ${sFilePath}
-
-    Open Excel    ${sFilePath}
-    Log    Data Set Open: '${sFilePath}'
-
-    ${ColumnHeader_List}    Read Excel Row    1    sheet_name=${sSheetName}
-    Log    Sheet Name: '${sSheetName}'
-    Log    Column Header List: '${ColumnHeader_List}'
-
-    ${rowid_index}    Get Index From List    ${ColumnHeader_List}    rowid
-    ${rowid_index}    Evaluate    ${rowid_index} + 1
-    Set Global Variable    ${rowid_index}
-
-    ${rateType_index}    Get Index From List    ${ColumnHeader_List}    rateType
-    ${rateType_index}    Evaluate    ${rateType_index} + 1
-    Set Global Variable    ${rateType_index}
-
-    ${fromCurrency_index}    Get Index From List    ${ColumnHeader_List}    fromCurrency
-    ${fromCurrency_index}    Evaluate    ${fromCurrency_index} + 1
-    Set Global Variable    ${fromCurrency_index}
-
-    ${toCurrency_index}    Get Index From List    ${ColumnHeader_List}    toCurrency
-    ${toCurrency_index}    Evaluate    ${toCurrency_index} + 1
-    Set Global Variable    ${toCurrency_index}
-
-    ${effectiveDate_index}    Get Index From List    ${ColumnHeader_List}    effectiveDate
-    ${effectiveDate_index}    Evaluate    ${effectiveDate_index} + 1
-    Set Global Variable    ${effectiveDate_index}
-
-    ${lineOfBusiness_index}    Get Index From List    ${ColumnHeader_List}    lineOfBusiness
-    ${lineOfBusiness_index}    Evaluate    ${lineOfBusiness_index} + 1
-    Set Global Variable    ${lineOfBusiness_index}
-
-    ${businessEntityName_index}    Get Index From List    ${ColumnHeader_List}    businessEntityName
-    ${businessEntityName_index}    Evaluate    ${businessEntityName_index} + 1
-    Set Global Variable    ${businessEntityName_index}
-
-    ${subEntity_index}    Get Index From List    ${ColumnHeader_List}    subEntity
-    ${subEntity_index}    Evaluate    ${subEntity_index} + 1
-    Set Global Variable    ${subEntity_index}
-
-    ${buyRate_index}    Get Index From List    ${ColumnHeader_List}    buyRate
-    ${buyRate_index}    Evaluate    ${buyRate_index} + 1
-    Set Global Variable    ${buyRate_index}
-
-    ${midRate_index}    Get Index From List    ${ColumnHeader_List}    midRate
-    ${midRate_index}    Evaluate    ${midRate_index} + 1
-    Set Global Variable    ${midRate_index}
-
-    ${sellRate_index}    Get Index From List    ${ColumnHeader_List}    sellRate
-    ${sellRate_index}    Evaluate    ${sellRate_index} + 1
-    Set Global Variable    ${sellRate_index}
-
-    Close Current Excel Document
-
+    
 Transform FXRates CSV Data to XLS File Readable for JSON Creation
     [Documentation]    This keyword is used to get Zone 1 and Zone 3 LIQ Business Dates, read each row of the CSV File and write to an XLS File in preparation for
     ...    JSON creation. 
@@ -112,7 +38,6 @@ Transform FXRates CSV Data to XLS File Readable for JSON Creation
     ...    @update: cfrancis    15AUG2019    - added checking for emtpy rows and will be ignored on loop
     ...    @update: cfrancis    19AUG2019    - added checking for duplicate rows and will be ignored on loop
     ...    Get Single Row value from CSV File and Write to Excel for FXRates Keyword
-    ...    @update: dahijara    16APR2020    - add keywords to set header index for FX csv file and TransformedData xls file before looping.
     [Arguments]    ${sCSV_FilePath}    ${sTransformedData_FilePath}    ${sTransformedDataTemplate_FilePath}    ${sTransformedDataXML_FilePath}    ${sFunding_Desk}  
     ${CSV_Content_List}    Read Csv As List    ${dataset_path}${sCSVFilePath}
     ${GS_INSTR_SUB_TYPE_prev}    Set Variable
@@ -126,15 +51,12 @@ Transform FXRates CSV Data to XLS File Readable for JSON Creation
     Delete File If Exist    ${dataset_path}${sTransformedData_FilePath}
     Copy File    ${dataset_path}${sTransformedDataTemplate_FilePath}    ${dataset_path}${sTransformedData_FilePath}
     Copy File    ${dataset_path}${sTransformedDataTemplate_FilePath}    ${dataset_path}${sTransformedDataXML_FilePath}
-
     ${Csv_Row_Count}    Get Length    ${CSV_Content_List}
     ${INDEX}    Set Variable    1
     ${New_INDEX}    Set Variable    1
     ${INDEX_ForGrouping}    Set Variable    1
     ${Counter}    Set Variable    0
     ${Offset}    Set Variable    1
-    Set Header Index for FXRates CSV Header to Global Variable    ${CSV_Content_List}
-    Set Header Index for Transformed FXRates File Header to Global Variable    Transformed_FXRates    ${dataset_path}${sTransformedData_FilePath}
     :FOR    ${INDEX}    IN RANGE    1    ${Csv_Row_Count}
     \    ${Row_Val_List}    Get From List    ${CSV_Content_List}    ${INDEX}
     \    ${Row_Val_0}    Get From List    ${Row_Val_List}    0
@@ -144,7 +66,12 @@ Transform FXRates CSV Data to XLS File Readable for JSON Creation
     \    ${Row_Val_0_List}    Split String    ${Row_Val_0}    ,    
     \    ${Row_Dictionary}    Create Dictionary per Row Count for Csv FXRates Content    ${CSV_Content_List}    ${Row_Val_0_List}
     \    Set Test Variable    ${ROW_${INDEX}}    ${Row_Dictionary}
+    \    ${GS_INSTR_CCY}    Get From Dictionary    ${ROW_${INDEX}}    GS_BASE_CCY
+    \    ${GS_TRGT_CCY}    Get From Dictionary    ${ROW_${INDEX}}    GS_TRGT_CCY
+    \    ${GS_INSTR_TYPE}    Get From Dictionary    ${ROW_${INDEX}}    GS_INSTR_TYPE
     \    ${GS_INSTR_PRC_TYPE}    Get From Dictionary    ${ROW_${INDEX}}    GS_INSTR_PRC_TYPE
+    \    ${GS_INSTR_PRICE}    Get From Dictionary    ${ROW_${INDEX}}    GS_INSTR_PRICE
+    \    ${GS_PROCESSING_DATE}    Get From Dictionary    ${ROW_${INDEX}}    GS_PROCESSING_DATE
     \    ${CONFIG_PRICE_TYPE}    Convert Input Price Type to Config Price Type and Return Config Price Type    ${GS_INSTR_PRC_TYPE}
     \    Get Single Row value from CSV File and Write to Excel for FXRates    ${ROW_${INDEX}}    ${Offset}    ${Zone1_Curr_Date}    ${Zone3_Curr_Date}    ${CONFIG_PRICE_TYPE}    ${dataset_path}${sTransformedData_FilePath}    ${sFunding_Desk}
     \    ${Offset}    Evaluate    ${Offset} + 1       
@@ -157,9 +84,7 @@ Get Single Row value from CSV File and Write to Excel for FXRates
     ...    @author: mnanquil    04MAR2019    - initial create
     ...    @update: cfrancis    18JUL2019    - change logic for subentity to be dependent on excel rather than zone dates
     ...    @update: dahijara    21NOV2019    - Added keyword to close opened excel file
-    ...    @update: dahijara    16APR2020    - Replaced excel writing keyword.
     [Arguments]    ${dRow}    ${irowid}    ${sZone1_Curr_Date}    ${sZone3_Curr_Date}    ${sConfigPriceType}    ${sTLPath_Transformed_Data}    ${sFunding_Desk}
-
     ${GS_INSTR_CCY}    Get From Dictionary    ${dRow}    GS_BASE_CCY
     ${GS_TRGT_CCY}    Get From Dictionary    ${dRow}    GS_TRGT_CCY
     ${GS_INSTR_TYPE}    Get From Dictionary    ${dRow}    GS_INSTR_TYPE
@@ -169,8 +94,8 @@ Get Single Row value from CSV File and Write to Excel for FXRates
     Open Excel    ${sTLPath_Transformed_Data}    
     ${RowCountTotal}    Get Row Count    Transformed_FXRates
     ${lib}    Get Library Instance    ExcelLibrary 
+    # Call Method    ${lib.wb}    release_resources
     Close Current Excel Document
-
     :FOR    ${index}    IN RANGE    1    ${RowCountTotal}
     \    ${index}    Convert To String    ${index}
     \    ${index}    Remove String    ${index}    .0   
@@ -179,24 +104,30 @@ Get Single Row value from CSV File and Write to Excel for FXRates
     \    Run Keyword If    '${GS_INSTR_CCY}' == '${fromCurrency}' and '${GS_TRGT_CCY}' == '${toCurrency}'    Set Global Variable    ${irowid}    ${index}
     \    Run Keyword If    '${GS_INSTR_CCY}' == '${fromCurrency}' and '${GS_TRGT_CCY}' == '${toCurrency}'    Exit For Loop
          ...    ELSE    Set Global Variable    ${irowid}
-
-    ${irowid_value}    Set Variable    ${irowid}
-    ${irowid}    Evaluate    ${irowid} + 1     
+    Write Data to Excel Using Row Index    Transformed_FXRates    rowid    ${irowid}    ${irowid}    ${sTLPath_Transformed_Data}
+    Run Keyword If    '${GS_INSTR_TYPE}'=='FX-SPOT'    Write Data to Excel Using Row Index    Transformed_FXRates    rateType    ${irowid}    SPOT    ${sTLPath_Transformed_Data}
+    Write Data to Excel Using Row Index    Transformed_FXRates    fromCurrency    ${irowid}    ${GS_INSTR_CCY}    ${sTLPath_Transformed_Data}
+    Write Data to Excel Using Row Index    Transformed_FXRates    toCurrency    ${irowid}    ${GS_TRGT_CCY}    ${sTLPath_Transformed_Data}
+    Write Data to Excel Using Row Index    Transformed_FXRates    effectiveDate    ${irowid}    ${GS_PROCESSING_DATE}    ${sTLPath_Transformed_Data}
+    Write Data to Excel Using Row Index    Transformed_FXRates    lineOfBusiness    ${irowid}    COMRLENDING    ${sTLPath_Transformed_Data}
+    Write Data to Excel Using Row Index    Transformed_FXRates    businessEntityName    ${irowid}    AUSTRALIA    ${sTLPath_Transformed_Data}
+    # ${sZone1_Curr_Date}    Convert Date    ${sZone1_Curr_Date}    date_format=%d-%b-%Y    result_format=datetime
+    # ${sZone3_Curr_Date}    Convert Date    ${sZone3_Curr_Date}    date_format=%d-%b-%Y    result_format=datetime 
+    # ${Zone1_Input_Diff}    Subtract Date From Date    ${sZone1_Curr_Date}    ${GS_PROCESSING_DATE}   
+    # ${Zone3_Input_Diff}    Subtract Date From Date    ${sZone3_Curr_Date}    ${GS_PROCESSING_DATE}
+    # ${Zone1_Input_Diff}    Convert To String    ${Zone1_Input_Diff}
+    # ${Zone3_Input_Diff}    Convert To String    ${Zone3_Input_Diff}      
+    # ${SubEntity_NY_Status}    Run Keyword And Return Status    Should Contain    ${Zone1_Input_Diff}    -
+    # ${SubEntity_AUD_Status}    Run Keyword And Return Status    Should Contain    ${Zone3_Input_Diff}    -  
+    # Run Keyword If    ${SubEntity_NY_Status}==False and ${SubEntity_AUD_Status}==True    Write Data to Excel Using Row Index    Transformed_FXRates    subEntity    ${irowid}    NY    ${sTLPath_Transformed_Data}
+    # ...    ELSE IF    ${SubEntity_NY_Status}==True and ${SubEntity_AUD_Status}==False    Write Data to Excel Using Row Index    Transformed_FXRates    subEntity    ${irowid}    AUD    ${sTLPath_Transformed_Data}
+    # ...    ELSE IF    ${SubEntity_NY_Status}==False and ${SubEntity_AUD_Status}==False    Write Data to Excel Using Row Index    Transformed_FXRates    subEntity    ${irowid}    NY,AUD    ${sTLPath_Transformed_Data}
+    Run Keyword If    '${sFunding_Desk}'=='NY'    Write Data to Excel Using Row Index    Transformed_FXRates    subEntity    ${irowid}    NY    ${sTLPath_Transformed_Data}
+    ...    ELSE IF    '${sFunding_Desk}'=='AUD'    Write Data to Excel Using Row Index    Transformed_FXRates    subEntity    ${irowid}    AUD    ${sTLPath_Transformed_Data}
+    Run Keyword If    '${sConfigPriceType}'=='BUYRATE'    Write Data to Excel Using Row Index    Transformed_FXRates    buyRate    ${irowid}    ${GS_INSTR_PRICE}    ${sTLPath_Transformed_Data}
+    ...    ELSE IF    '${sConfigPriceType}'=='MIDRATE'    Write Data to Excel Using Row Index    Transformed_FXRates    midRate    ${irowid}    ${GS_INSTR_PRICE}    ${sTLPath_Transformed_Data}
+    ...    ELSE IF    '${sConfigPriceType}'=='SELLRATE'   Write Data to Excel Using Row Index    Transformed_FXRates    sellRate    ${irowid}    ${GS_INSTR_PRICE}    ${sTLPath_Transformed_Data}
     
-    ######## New Writing #####
-    Write Data to Excel Using Row Index and Column Index    Transformed_FXRates    ${rowid_index}    ${irowid}    ${irowid_value}    ${sTLPath_Transformed_Data}
-    Run Keyword If    '${GS_INSTR_TYPE}'=='FX-SPOT'    Write Data to Excel Using Row Index and Column Index    Transformed_FXRates    ${rateType_index}    ${irowid}    SPOT    ${sTLPath_Transformed_Data}
-    Write Data to Excel Using Row Index and Column Index    Transformed_FXRates    ${fromCurrency_index}    ${irowid}    ${GS_INSTR_CCY}    ${sTLPath_Transformed_Data}
-    Write Data to Excel Using Row Index and Column Index    Transformed_FXRates    ${toCurrency_index}    ${irowid}    ${GS_TRGT_CCY}    ${sTLPath_Transformed_Data}
-    Write Data to Excel Using Row Index and Column Index    Transformed_FXRates    ${effectiveDate_index}    ${irowid}    ${GS_PROCESSING_DATE}    ${sTLPath_Transformed_Data}
-    Write Data to Excel Using Row Index and Column Index    Transformed_FXRates    ${lineOfBusiness_index}    ${irowid}    COMRLENDING    ${sTLPath_Transformed_Data}
-    Write Data to Excel Using Row Index and Column Index    Transformed_FXRates    ${businessEntityName_index}    ${irowid}    AUSTRALIA    ${sTLPath_Transformed_Data}
-    Run Keyword If    '${sFunding_Desk}'=='NY'    Write Data to Excel Using Row Index and Column Index    Transformed_FXRates    ${subEntity_index}    ${irowid}    NY    ${sTLPath_Transformed_Data}
-    ...    ELSE IF    '${sFunding_Desk}'=='AUD'    Write Data to Excel Using Row Index and Column Index    Transformed_FXRates    ${subEntity_index}    ${irowid}    AUD    ${sTLPath_Transformed_Data}
-    Run Keyword If    '${sConfigPriceType}'=='BUYRATE'    Write Data to Excel Using Row Index and Column Index    Transformed_FXRates    ${buyRate_index}    ${irowid}    ${GS_INSTR_PRICE}    ${sTLPath_Transformed_Data}
-    ...    ELSE IF    '${sConfigPriceType}'=='MIDRATE'    Write Data to Excel Using Row Index and Column Index    Transformed_FXRates    ${midRate_index}    ${irowid}    ${GS_INSTR_PRICE}    ${sTLPath_Transformed_Data}
-    ...    ELSE IF    '${sConfigPriceType}'=='SELLRATE'   Write Data to Excel Using Row Index and Column Index    Transformed_FXRates    ${sellRate_index}    ${irowid}    ${GS_INSTR_PRICE}    ${sTLPath_Transformed_Data}
-
 Create Expected JSON for FXRates TL
     [Documentation]    This keyword is used to create expected JSON payload for FXRates Transformation Layer using the transformed data.
     ...    @author: mnanquil    04MAR2019    - initial create
@@ -637,22 +568,22 @@ Create Prerequisite for Multiple FX Files Scenario
     :FOR    ${Index}    IN RANGE    ${InputGSFile_Count}
     \    Set Global Variable    ${COUNTER}    0    
     \    ${InputGSFile}    Get From List    ${InputGSFile_List}    ${Index}
-    \    Transform FXRates CSV Data to XLS File Readable for JSON Creation    ${sInputFilePath}${InputGSFile}    ${sTransformedDataFile_FXRates_NoExt}${Index}.${XLSX}    ${sTransformedDataFile_Template_FXRates}    ${sTransformedDataFileXML_FXRates_NoExt}${Index}.${XLSX}    ${sfundingDesk}
+    # \    Transform FXRates CSV Data to XLS File Readable for JSON Creation    ${sInputFilePath}${InputGSFile}    ${sTransformedDataFile_FXRates_NoExt}${Index}.${XLSX}    ${sTransformedDataFile_Template_FXRates}    ${sTransformedDataFileXML_FXRates_NoExt}${Index}.${XLSX}    ${sfundingDesk}
     \    Create Expected JSON for FXRates TL    ${sTransformedDataFile_FXRates_NoExt}${Index}.${XLSX}    ${sInputJSON}_${Index}    ${dataset_path}${sTransformedDataFile_FXRates_NoExt}${Index}.${XLSX}    ${dataset_path}${sTransformedDataFileXML_FXRates_NoExt}${Index}.${XLSX}
     \    Create Expected TextJMS XML for FXRates TL    ${sTransformedDataFileXML_FXRates_NoExt}${Index}.${XLSX}    ${sInputFilePath}    ${sFinalLIQDestination}_${Index}
+    #\    Append To List    ${TransformedData_List}    ${sTransformedDataFileXML_FXRates_NoExt}${Index}.xls
+    #\    ${InputGSFile_Count}    Evaluate    ${InputGSFile_Count}-1    
     Set Global Variable    ${TRANSFORMEDDATA_LIST}    ${TransformedData_List}
     
 Check for Duplicate Currency Pair
     [Documentation]    This keyword is used to verify if there are duplicate rows in the file
     ...    @author: cfrancis    19AUG2019    - initial create
     ...    @update: xmiranda    28AUG2019    - 'in Range' Keyword changed to 'IN RANGE' (uppercase)
-    ...    @update: dahijara    16APR2020    - added exit loop condition when ${Duplicate} value is greater than 2.
     [Arguments]    ${aCSV_Content_List}    ${aRow_Val_List_Check}    ${iCurrent_Index}
     ${Index}    Set Variable    1
     ${Duplicate}    Set Variable    0
     ${Csv_Row_Count}    Get Length    ${aCSV_Content_List}
     :FOR    ${Index}    IN RANGE    1    ${Csv_Row_Count}
-    \    Exit For Loop If    ${Duplicate}>1
     \    Run Keyword If    ${iCurrent_Index}>${Index}    Continue For Loop
     \    ${Row_Val_List}    Get From List    ${aCSV_Content_List}    ${Index}
     \    ${Row_Val_0}    Get From List    ${Row_Val_List}    0

@@ -1,5 +1,5 @@
 *** Settings ***
-Resource    ../../../../../Configurations/LoanIQ_Import_File.robot
+Resource    ../../../../../Configurations/Integration_Import_File.robot
 
 *** Keywords ***
 Get All Holiday Calendar Dates Records for Calendar ID
@@ -7,7 +7,7 @@ Get All Holiday Calendar Dates Records for Calendar ID
     ...    @author: clanding    28JUN2019    - initial creae
     [Arguments]    ${sCal_ID}
     
-    ${Query}    Catenate    SELECT * FROM ${DBUSERNAME_LIQ}.${TLS_HOL_CAL_DATES_TABLE} WHERE ${HCD_CDE_HOL_CAL} = '${sCal_ID}'
+    ${Query}    Catenate    SELECT * FROM ${LIQ7474_USER}.${TLS_HOL_CAL_DATES_TABLE} WHERE ${HCD_CDE_HOL_CAL} = '${sCal_ID}'
     ${Cal_ID_DBCount}    Connect to LIQ Database and Return Row Count    ${Query}
     [Return]    ${Cal_ID_DBCount}
 
@@ -28,7 +28,7 @@ Get Calendar ID Status from Database
     ...    @author: clanding    28JUN2019    - initial create
     [Arguments]    ${sCal_ID}
     
-    ${Query_GetStatus}    Catenate    SELECT ${GB2_IND_ACTIVE} from ${DBUSERNAME_LIQ}.${TLS_FAM_GLOBAL2_TABLE} WHERE ${GB2_TID_TABLE_ID} = 'HCL'
+    ${Query_GetStatus}    Catenate    SELECT ${GB2_IND_ACTIVE} from ${LIQ7474_USER}.${TLS_FAM_GLOBAL2_TABLE} WHERE ${GB2_TID_TABLE_ID} = 'HCL'
     ...    AND ${GB2_CDE_CODE} = '${sCal_ID}'
     ${Query_GetStatus_Res}    Connect to LIQ Database and Return Results    ${Query_GetStatus}
     ${Cal_ID_Stat_Res_List}    Convert SQL Result to List and Return    ${Query_GetStatus_Res}
@@ -42,7 +42,7 @@ Get Calendar ID Description from Database
     ...    @author: clanding    28JUN2019    - initial create
     [Arguments]    ${sCal_ID}
     
-    ${Query_GetDescription}    Catenate    SELECT ${GB2_DSC_CODE} FROM ${DBUSERNAME_LIQ}.${TLS_FAM_GLOBAL2_TABLE} WHERE ${GB2_TID_TABLE_ID} = 'HCL'
+    ${Query_GetDescription}    Catenate    SELECT ${GB2_DSC_CODE} FROM ${LIQ7474_USER}.${TLS_FAM_GLOBAL2_TABLE} WHERE ${GB2_TID_TABLE_ID} = 'HCL'
     ...    AND ${GB2_CDE_CODE} = '${sCal_ID}'
     ${Query_GetDescription_Res}    Connect to LIQ Database and Return Results    ${Query_GetDescription}
     ${Cal_ID_Desc_Res_List}    Convert SQL Result to List and Return    ${Query_GetDescription_Res}
@@ -57,7 +57,7 @@ Get Status from Holiday Calendar Dates table in Database
     ...    @author: clanding    28JUN2019    - initial create
     [Arguments]    ${sCal_ID}    ${sHol_Date}
     
-    ${Query}    Catenate    SELECT ${HCD_IND_ACTIVE} FROM ${DBUSERNAME_LIQ}.${TLS_HOL_CAL_DATES_TABLE} 
+    ${Query}    Catenate    SELECT ${HCD_IND_ACTIVE} FROM ${LIQ7474_USER}.${TLS_HOL_CAL_DATES_TABLE} 
     ...    WHERE ${HCD_CDE_HOL_CAL} = '${sCal_ID}' AND ${HCD_DTE_HOL_CAL}='${sHol_Date}'
     
     ${Query_Result}    Connect to LIQ Database and Return Results    ${Query}
@@ -71,7 +71,7 @@ Get Event Name from Holiday Calendar Dates table in Database
     ...    @author: clanding    28JUN2019    - initial create
     [Arguments]    ${sCal_ID}    ${sHol_Date}
     
-    ${Query}    Catenate    SELECT ${HCD_DSC_HOL_CAL} FROM ${DBUSERNAME_LIQ}.${TLS_HOL_CAL_DATES_TABLE} 
+    ${Query}    Catenate    SELECT ${HCD_DSC_HOL_CAL} FROM ${LIQ7474_USER}.${TLS_HOL_CAL_DATES_TABLE} 
     ...    WHERE ${HCD_CDE_HOL_CAL} = '${sCal_ID}' AND ${HCD_DTE_HOL_CAL}='${sHol_Date}'
     
     ${Query_Result}    Connect to LIQ Database and Return Results    ${Query}
@@ -84,7 +84,7 @@ Get Event Date and Name from Holiday Calendar Dates table in Database
     ...    @author: clanding    28JUN2019    - initial create
     [Arguments]    ${sCal_ID}
     
-    ${Query}    Catenate    SELECT ${HCD_DTE_HOL_CAL}, ${HCD_DSC_HOL_CAL}, ${HCD_IND_ACTIVE} FROM ${DBUSERNAME_LIQ}.${TLS_HOL_CAL_DATES_TABLE} 
+    ${Query}    Catenate    SELECT ${HCD_DTE_HOL_CAL}, ${HCD_DSC_HOL_CAL}, ${HCD_IND_ACTIVE} FROM ${LIQ7474_USER}.${TLS_HOL_CAL_DATES_TABLE} 
     ...    WHERE ${HCD_CDE_HOL_CAL} = '${sCal_ID}'
     
     ${Query_ResultList}    Connect to LIQ Database and Return Results    ${Query}
@@ -176,7 +176,7 @@ Validate Holiday Dates in LoanIQ DB
     \    ${reason}    Run Keyword If    ${Contains_Apostrophe}==${True}    Replace String    ${reason}    '    ''
          ...    ELSE    Set Variable    ${reason}
     \    
-    \    ${Query}    Catenate    SELECT * FROM ${DBUSERNAME_LIQ}.${TLS_HOL_CAL_DATES_TABLE} WHERE ${HCD_CDE_HOL_CAL}='${sCalendarID}' AND ${HCD_DSC_HOL_CAL} LIKE '%${reason}%' 
+    \    ${Query}    Catenate    SELECT * FROM ${LIQ7474_USER}.${TLS_HOL_CAL_DATES_TABLE} WHERE ${HCD_CDE_HOL_CAL}='${sCalendarID}' AND ${HCD_DSC_HOL_CAL} LIKE '%${reason}%' 
          ...    AND HCD_DTE_HOL_CAL='${dateValue}' AND ${HCD_IND_ACTIVE}='${sStatus}'
     \    
     \    ${HolidayStatus}    Run Keyword If    '${sStatus}'=='Y'    Set Variable    Active
@@ -235,7 +235,7 @@ Validate Holiday Date Does Not Exist in LoanIQ DB
     \	${EventDate_PayloadFormat}    Catenate    SEPARATOR=-    ${EventDate_Year}    ${EventDate_Month}    ${EventDate_Day}
     \	${dateValue}    Convert Date    ${EventDate_PayloadFormat}    result_format=%d-%b-%Y
 
-    \	${Query}    Catenate    SELECT * FROM ${DBUSERNAME_LIQ}.${TLS_HOL_CAL_DATES_TABLE} WHERE ${HCD_CDE_HOL_CAL}='${CalendarID}' 
+    \	${Query}    Catenate    SELECT * FROM ${LIQ7474_USER}.${TLS_HOL_CAL_DATES_TABLE} WHERE ${HCD_CDE_HOL_CAL}='${CalendarID}' 
 		...    AND HCD_DTE_HOL_CAL='${dateValue}'
         
     \	${Holiday_Count}    Connect to LIQ Database and Return Row Count    ${Query}
