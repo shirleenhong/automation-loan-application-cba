@@ -1,5 +1,5 @@
 *** Settings ***
-Resource    ../../../../Configurations/Import_File.robot
+Resource    ../../../../Configurations/LoanIQ_Import_File.robot
 
 *** Keywords ***
 Comprehensive Repricing Principal and Interest Payment - 2 Cashflows
@@ -38,7 +38,7 @@ Comprehensive Repricing Principal and Interest Payment - 2 Cashflows
     Send Loan Repricing for Approval
     
     ### LIQ Window ###
-    Logout from LIQ
+    Logout from Loan IQ
     Login to Loan IQ    ${SUPERVISOR_USERNAME}    ${SUPERVISOR_PASSWORD}
     
     ### Work in process notebook ###
@@ -49,7 +49,7 @@ Comprehensive Repricing Principal and Interest Payment - 2 Cashflows
     Send to Rate Approval
     
     ### LIQ Window ###
-    Logout from LIQ
+    Logout from Loan IQ
     Login to Loan IQ    ${MANAGER_USERNAME}    ${MANAGER_PASSWORD}
     
     ### Work in process notebook ###
@@ -63,7 +63,7 @@ Comprehensive Repricing Principal and Interest Payment - 2 Cashflows
     Close All Windows on LIQ
     
     ### LIQ Window ###
-    Logout from LIQ
+    Logout from Loan IQ
     Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
 
 Comprehensive Repricing Principal and Interest Payment - 1 Cashflow
@@ -99,7 +99,7 @@ Comprehensive Repricing Principal and Interest Payment - 1 Cashflow
     Send Loan Repricing for Approval
     
     ### LIQ Window ###
-    Logout from LIQ
+    Logout from Loan IQ
     Login to Loan IQ    ${SUPERVISOR_USERNAME}    ${SUPERVISOR_PASSWORD}
     
     ### Work in process notebook ###
@@ -110,7 +110,7 @@ Comprehensive Repricing Principal and Interest Payment - 1 Cashflow
     Send to Rate Approval
     
     ### LIQ Window ###
-    Logout from LIQ
+    Logout from Loan IQ
     Login to Loan IQ    ${MANAGER_USERNAME}    ${MANAGER_PASSWORD}
     
     ### Work in process notebook ###
@@ -129,7 +129,7 @@ Comprehensive Repricing Principal and Interest Payment - 1 Cashflow
     Close All Windows on LIQ
     
     ### LIQ Window ###
-    Logout from LIQ
+    Logout from Loan IQ
     Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
     
 Comprehensive Repricing Interest Payment
@@ -164,7 +164,7 @@ Comprehensive Repricing Interest Payment
     Send Loan Repricing for Approval
     
     ### LIQ Window ###
-    Logout from LIQ
+    Logout from Loan IQ
     Login to Loan IQ    ${SUPERVISOR_USERNAME}    ${SUPERVISOR_PASSWORD}
     
     ### Work in process notebook ###
@@ -175,7 +175,7 @@ Comprehensive Repricing Interest Payment
     Send to Rate Approval
     
     ### LIQ Window ###
-    Logout from LIQ
+    Logout from Loan IQ
     Login to Loan IQ    ${MANAGER_USERNAME}    ${MANAGER_PASSWORD}
     
     ### Work in process notebook ###
@@ -193,7 +193,7 @@ Comprehensive Repricing Interest Payment
     Close All Windows on LIQ
     
     ### LIQ Window ###
-    Logout from LIQ
+    Logout from Loan IQ
     Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
     
 Check Limit after Rollover/Repayment

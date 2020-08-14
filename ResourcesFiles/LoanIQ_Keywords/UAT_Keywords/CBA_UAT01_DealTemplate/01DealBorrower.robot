@@ -1,5 +1,6 @@
 *** Settings ***
-Resource    ../../../../Configurations/Import_File.robot
+Resource    ../../../../Configurations/LoanIQ_Import_File.robot
+Resource    ../../../../Configurations/Party_Import_File.robot
 
 *** Variables ***
 ${SCENARIO}
@@ -38,7 +39,7 @@ Search Customer and Complete its Borrower Profile Creation with default values f
     Navigate to "SIC" tab and Validate Primary SIC Code    &{ExcelPath}[Primary_SICCode]    &{ExcelPath}[PrimarySICCode_Description]
     
     ###Navigating to Profile Tab     
-    Navigate to "Profiles" tab and Validate 'Add Profile' Button
+    # Navigate to "Profiles" tab and Validate 'Add Profile' Button
 
     ###Adding Profile          
     Add Profile under Profiles Tab    &{ExcelPath}[Profile_Type]
@@ -47,13 +48,13 @@ Search Customer and Complete its Borrower Profile Creation with default values f
     Add Borrower Profile Details under Profiles Tab    &{ExcelPath}[Profile_Type]
     
     ###Validating Buttons      
-    Validate Only 'Add Profile', 'Add Location' and 'Delete' Buttons are Enabled in Profile Tab
+    # Validate Only 'Add Profile', 'Add Location' and 'Delete' Buttons are Enabled in Profile Tab
     
     ###Adding Location          
     Add Location under Profiles Tab    &{ExcelPath}[Customer_Location]  
     
     ###Adding Borrowwer/Location Details
-    Add Borrowwer/Location Details under Profiles Tab   &{ExcelPath}[Profile_Type]    &{ExcelPath}[Customer_Location]    
+    # Add Borrowwer/Location Details under Profiles Tab   &{ExcelPath}[Profile_Type]    &{ExcelPath}[Customer_Location]    
     
     ###Validating Buttons if Enabled 
     Validate If All Buttons are Enabled
@@ -74,30 +75,30 @@ Search Customer and Complete its Borrower Profile Creation with default values f
     Sleep    4s
     mx LoanIQ click    ${RemittanceInstructions_Button} 
     
-    Add RTGS Remittance Instruction for UAT Deal    &{ExcelPath}[Customer_Location]    &{ExcelPath}[RemittanceInstruction_RTGSMethod]    &{ExcelPath}[RemittanceInstruction_RTGSDescriptionAUD]    &{ExcelPath}[RemittanceInstruction_RTGSCurrencyAUD]
-    ...    &{ExcelPath}[RemittanceInstruction_DirectionSelected]    &{ExcelPath}[IMT_MessageCode]    &{ExcelPath}[BOC_Level]    
-    ...    &{ExcelPath}[RI_FromCust_Checkbox]    &{ExcelPath}[RI_AutoDoIt_Checkbox]    &{ExcelPath}[RI_SendersCorrespondent_Checkbox]
-    ...    &{ExcelPath}[NoticesSummary]    &{ExcelPath}[RI_ToCust_Checkbox]
+    # Add RTGS Remittance Instruction for UAT Deal    &{ExcelPath}[Customer_Location]    &{ExcelPath}[RemittanceInstruction_RTGSMethod]    &{ExcelPath}[RemittanceInstruction_RTGSDescriptionAUD]    &{ExcelPath}[RemittanceInstruction_RTGSCurrencyAUD]
+    # ...    &{ExcelPath}[RemittanceInstruction_DirectionSelected]    &{ExcelPath}[IMT_MessageCode]    &{ExcelPath}[BOC_Level]    
+    # ...    &{ExcelPath}[RI_FromCust_Checkbox]    &{ExcelPath}[RI_AutoDoIt_Checkbox]    &{ExcelPath}[RI_SendersCorrespondent_Checkbox]
+    # ...    &{ExcelPath}[NoticesSummary]    &{ExcelPath}[RI_ToCust_Checkbox]
     
-    Add IMT Message in Remittance Instruction with Default values    &{ExcelPath}[IMT_MessageCode]    &{ExcelPath}[RI_SendersCorrespondent_Checkbox]    &{ExcelPath}[BOC_Level]
+    # Add IMT Message in Remittance Instruction with Default values    &{ExcelPath}[IMT_MessageCode]    &{ExcelPath}[RI_SendersCorrespondent_Checkbox]    &{ExcelPath}[BOC_Level]
     
-    Add RTGS Remittance Instruction for UAT Deal    &{ExcelPath}[Customer_Location]    &{ExcelPath}[RemittanceInstruction_RTGSMethod]    &{ExcelPath}[RemittanceInstruction_RTGSDescriptionAUD2]    &{ExcelPath}[RemittanceInstruction_RTGSCurrencyAUD]
-    ...    &{ExcelPath}[RemittanceInstruction_DirectionSelected]    &{ExcelPath}[IMT_MessageCode]    &{ExcelPath}[BOC_Level]    
-    ...    &{ExcelPath}[RI_FromCust_Checkbox2]    &{ExcelPath}[RI_AutoDoIt_Checkbox]    &{ExcelPath}[RI_SendersCorrespondent_Checkbox]
-    ...    &{ExcelPath}[NoticesSummary]    &{ExcelPath}[RI_ToCust_Checkbox2]
+    # Add RTGS Remittance Instruction for UAT Deal    &{ExcelPath}[Customer_Location]    &{ExcelPath}[RemittanceInstruction_RTGSMethod]    &{ExcelPath}[RemittanceInstruction_RTGSDescriptionAUD2]    &{ExcelPath}[RemittanceInstruction_RTGSCurrencyAUD]
+    # ...    &{ExcelPath}[RemittanceInstruction_DirectionSelected]    &{ExcelPath}[IMT_MessageCode]    &{ExcelPath}[BOC_Level]    
+    # ...    &{ExcelPath}[RI_FromCust_Checkbox2]    &{ExcelPath}[RI_AutoDoIt_Checkbox]    &{ExcelPath}[RI_SendersCorrespondent_Checkbox]
+    # ...    &{ExcelPath}[NoticesSummary]    &{ExcelPath}[RI_ToCust_Checkbox2]
 
-    Add IMT Message in Remittance Instruction with Default values    &{ExcelPath}[IMT_MessageCode]    &{ExcelPath}[RI_SendersCorrespondent_Checkbox]    &{ExcelPath}[BOC_Level]
+    # Add IMT Message in Remittance Instruction with Default values    &{ExcelPath}[IMT_MessageCode]    &{ExcelPath}[RI_SendersCorrespondent_Checkbox]    &{ExcelPath}[BOC_Level]
 
-    Add RTGS Remittance Instruction for UAT Deal    &{ExcelPath}[Customer_Location]    &{ExcelPath}[RemittanceInstruction_RTGSMethod]    &{ExcelPath}[RemittanceInstruction_RTGSDescriptionAUD3]    &{ExcelPath}[RemittanceInstruction_RTGSCurrencyAUD]
-    ...    &{ExcelPath}[RemittanceInstruction_DirectionSelected]    &{ExcelPath}[IMT_MessageCode]    &{ExcelPath}[BOC_Level]    
-    ...    &{ExcelPath}[RI_FromCust_Checkbox3]    &{ExcelPath}[RI_AutoDoIt_Checkbox]    &{ExcelPath}[RI_SendersCorrespondent_Checkbox]
-    ...    &{ExcelPath}[NoticesSummary2]    &{ExcelPath}[RI_ToCust_Checkbox3]
+    # Add RTGS Remittance Instruction for UAT Deal    &{ExcelPath}[Customer_Location]    &{ExcelPath}[RemittanceInstruction_RTGSMethod]    &{ExcelPath}[RemittanceInstruction_RTGSDescriptionAUD3]    &{ExcelPath}[RemittanceInstruction_RTGSCurrencyAUD]
+    # ...    &{ExcelPath}[RemittanceInstruction_DirectionSelected]    &{ExcelPath}[IMT_MessageCode]    &{ExcelPath}[BOC_Level]    
+    # ...    &{ExcelPath}[RI_FromCust_Checkbox3]    &{ExcelPath}[RI_AutoDoIt_Checkbox]    &{ExcelPath}[RI_SendersCorrespondent_Checkbox]
+    # ...    &{ExcelPath}[NoticesSummary2]    &{ExcelPath}[RI_ToCust_Checkbox3]
     
-    Add IMT Message in Remittance Instruction with Default values    &{ExcelPath}[IMT_MessageCode]    &{ExcelPath}[RI_SendersCorrespondent_Checkbox]    &{ExcelPath}[BOC_Level]
+    # Add IMT Message in Remittance Instruction with Default values    &{ExcelPath}[IMT_MessageCode]    &{ExcelPath}[RI_SendersCorrespondent_Checkbox]    &{ExcelPath}[BOC_Level]
      
-    mx LoanIQ click    ${RemittanceList_Window_ExitButton}
-    Add Servicing Groups Details    &{ExcelPath}[Customer_Search]    &{ExcelPath}[Party_ID]    &{ExcelPath}[Party_ID]    &{ExcelPath}[Profile_Type]    &{ExcelPath}[Group_Contact]   &{ExcelPath}[Contact_LastName]
-    Add Remittance Instruction to Servicing Group    &{ExcelPath}[RemittanceInstruction_RTGSDescriptionAUD]
+    # mx LoanIQ click    ${RemittanceList_Window_ExitButton}
+    # Add Servicing Groups Details    &{ExcelPath}[Customer_Search]    &{ExcelPath}[Party_ID]    &{ExcelPath}[Party_ID]    &{ExcelPath}[Profile_Type]    &{ExcelPath}[Group_Contact]   &{ExcelPath}[Contact_LastName]
+    # Add Remittance Instruction to Servicing Group    &{ExcelPath}[RemittanceInstruction_RTGSDescriptionAUD]
     Add Remittance Instruction to Servicing Group    &{ExcelPath}[RemittanceInstruction_RTGSDescriptionAUD2]
     Add Remittance Instruction to Servicing Group    &{ExcelPath}[RemittanceInstruction_RTGSDescriptionAUD3]    
     Close Servicing Group Remittance Instructions Selection List Window    &{ExcelPath}[LIQCustomer_ShortName]
@@ -105,7 +106,7 @@ Search Customer and Complete its Borrower Profile Creation with default values f
          
     ###Logout and Relogin in Supervisor Level
     Close All Windows on LIQ
-    Logout from LIQ
+    Logout from Loan IQ
     Login to Loan IQ    ${SUPERVISOR_USERNAME}    ${SUPERVISOR_PASSWORD}
     
     ###Searching Customer 	
@@ -122,7 +123,7 @@ Search Customer and Complete its Borrower Profile Creation with default values f
           
     ##Logout and Relogin in Manager Level
     Close All Windows on LIQ
-    Logout from LIQ
+    Logout from Loan IQ
     Login to Loan IQ    ${MANAGER_USERNAME}    ${MANAGER_PASSWORD}
     
     ###Searching Customer 	
@@ -146,7 +147,7 @@ Search Customer and Complete its Borrower Profile Creation with default values f
         
     ###Logout and Relogin in Inputter Level
     Close All Windows on LIQ
-    Logout from LIQ
+    Logout from Loan IQ
     Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
     
 Create Deal Borrower initial details in Quick Party Onboarding for D00000454

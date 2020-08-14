@@ -1,5 +1,5 @@
 *** Settings ***
-Resource    ../../../../Configurations/Import_File.robot
+Resource    ../../../../Configurations/LoanIQ_Import_File.robot
 
 
 *** Keywords ***
@@ -8,7 +8,7 @@ Collect Break Cost Fee for Early Prepayment D00000454
     ...    @author: fmamaril    17SEP2019
     [Arguments]    ${ExcelPath}
     ###Login to Original User###
-    Logout from LIQ
+    Logout from Loan IQ
     Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
     
     #LIQ Window
@@ -44,13 +44,13 @@ Collect Break Cost Fee for Early Prepayment D00000454
 
     ### Send Fee to Approval
     Navigate Notebook Workflow    ${LIQ_Breakfunding_Window}    ${LIQ_Breakfunding_Workflow_Tab}    ${LIQ_Breakfunding_WorkflowItems_List}    Send to Approval
-    Logout from LIQ
+    Logout from Loan IQ
     Login to Loan IQ    ${MANAGER_USERNAME}    ${MANAGER_PASSWORD}
     Select Item in Work in Process    Payments    Awaiting Approval    Break Cost Fee     &{ExcelPath}[Facility_Name]
     Navigate Notebook Workflow    ${LIQ_Breakfunding_Window}    ${LIQ_Breakfunding_AwaitingApproval_Tab}    ${LIQ_Breakfunding_WorkflowItems_AwaitingApproval_List}    Approval 
     
     ### Approve and Release Breakfunding Fee
-    Logout from LIQ
+    Logout from Loan IQ
     Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
     Select Item in Work in Process    Payments    Awaiting Release    Break Cost Fee     &{ExcelPath}[Facility_Name]
     Navigate Notebook Workflow    ${LIQ_Breakfunding_Window}    ${LIQ_Breakfunding_AwaitingRelease_Tab}    ${LIQ_Breakfunding_WorkflowItems_AwaitingRelease_List}    Release

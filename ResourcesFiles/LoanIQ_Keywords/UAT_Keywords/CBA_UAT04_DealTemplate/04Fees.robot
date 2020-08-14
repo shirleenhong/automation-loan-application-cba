@@ -1,5 +1,5 @@
 *** Settings ***
-Resource    ../../../../Configurations/Import_File.robot
+Resource    ../../../../Configurations/LoanIQ_Import_File.robot
 
 
 *** Keywords ***
@@ -70,7 +70,7 @@ Create Payment for Ongoing Fees in Deal D00000963
     
     Navigate Notebook Workflow    ${LIQ_OngoingFeePayment_Window}    ${LIQ_OngoingFeePayment_Tab}    ${LIQ_OngoingFeePayment_Workflow}    Send to Approval
     
-    Logout from LIQ
+    Logout from Loan IQ
     Login to Loan IQ    ${MANAGER_USERNAME}    ${MANAGER_PASSWORD}
     Navigate Transaction in WIP    Payments    Awaiting Approval    Ongoing Fee Payment    &{ExcelPath}[Deal_Name]
     Navigate Notebook Workflow    ${LIQ_OngoingFeePayment_Window}    ${LIQ_OngoingFeePayment_Tab}    ${LIQ_OngoingFeePayment_Workflow}    Approval
@@ -82,7 +82,7 @@ Create Payment for Ongoing Fees in Deal D00000963
     Navigate Notebook Workflow    ${LIQ_OngoingFeePayment_Window}    ${LIQ_OngoingFeePayment_Tab}    ${LIQ_OngoingFeePayment_Workflow}    Release
     
     Close All Windows on LIQ
-    Logout from LIQ
+    Logout from Loan IQ
     Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
     
 

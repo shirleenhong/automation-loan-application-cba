@@ -1,5 +1,5 @@
 *** Settings ***
-Resource    ../../../../Configurations/Import_File.robot
+Resource    ../../../../Configurations/LoanIQ_Import_File.robot
 
 *** Keywords ***
 Setup Repayment Schedule for Loans in Deal D00001053
@@ -59,7 +59,7 @@ Create Scheduled Repayment for Loans in Deal D00001053
     Click OK In Cashflows
     
     Navigate Notebook Workflow    ${LIQ_Repayment_Window}    ${LIQ_Repayment_Tab}    ${LIQ_Repayment_WorkflowItems}    Send to Approval        
-    Logout from LIQ
+    Logout from Loan IQ
     Login to Loan IQ    ${MANAGER_USERNAME}    ${MANAGER_PASSWORD}
     Navigate Transaction in WIP    Payments    Awaiting Approval    Repayment Paper Clip    &{ExcelPath}[Deal_Name]
     Navigate Notebook Workflow    ${LIQ_Repayment_Window}    ${LIQ_Repayment_Tab}    ${LIQ_Repayment_WorkflowItems}    Approval
@@ -70,7 +70,7 @@ Create Scheduled Repayment for Loans in Deal D00001053
     
     Navigate Notebook Workflow    ${LIQ_Repayment_Window}    ${LIQ_Repayment_Tab}    ${LIQ_Repayment_WorkflowItems}    Release
     
-    Logout from LIQ
+    Logout from Loan IQ
     Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
 
 Unscheduled Full Prepayment for Loans in Deal D00001053
@@ -113,7 +113,7 @@ Unscheduled Full Prepayment for Loans in Deal D00001053
     Click OK In Cashflows
     
     Navigate Notebook Workflow    ${LIQ_Repayment_Window}    ${LIQ_Repayment_Tab}    ${LIQ_Repayment_WorkflowItems}    Send to Approval        
-    Logout from LIQ
+    Logout from Loan IQ
     Login to Loan IQ    ${MANAGER_USERNAME}    ${MANAGER_PASSWORD}
     Navigate Transaction in WIP    Payments    Awaiting Approval    Repayment Paper Clip    &{ExcelPath}[Deal_Name]
     Navigate Notebook Workflow    ${LIQ_Repayment_Window}    ${LIQ_Repayment_Tab}    ${LIQ_Repayment_WorkflowItems}    Approval
@@ -125,6 +125,6 @@ Unscheduled Full Prepayment for Loans in Deal D00001053
     Navigate Notebook Workflow    ${LIQ_Repayment_Window}    ${LIQ_Repayment_Tab}    ${LIQ_Repayment_WorkflowItems}    Release
 
     Close All Windows on LIQ
-    Logout from LIQ
+    Logout from Loan IQ
     Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
     

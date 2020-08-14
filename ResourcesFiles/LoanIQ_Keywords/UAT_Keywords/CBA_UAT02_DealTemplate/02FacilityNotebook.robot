@@ -1,5 +1,5 @@
 *** Settings ***
-Resource    ../../../../Configurations/Import_File.robot
+Resource    ../../../../Configurations/LoanIQ_Import_File.robot
     
 *** Keywords ***
 Setup Facility Template D00001053

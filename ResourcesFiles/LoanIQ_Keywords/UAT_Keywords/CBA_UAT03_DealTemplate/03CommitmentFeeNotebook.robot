@@ -1,5 +1,5 @@
 *** Settings ***
-Resource    ../../../../Configurations/Import_File.robot
+Resource    ../../../../Configurations/LoanIQ_Import_File.robot
 
 *** Variables ***
 ${SCENARIO}
@@ -14,7 +14,7 @@ Commitment Fee Payment
     
     ### Navigate to Commitment Fee Notebook ###
     Search Existing Deal    &{ExcelPath}[Deal_Name]    
-    Navigate Directly to Commitment Fee Notebook from Deal Notebook    &{ExcelPath}[Facility_Name]
+    # Navigate Directly to Commitment Fee Notebook from Deal Notebook    &{ExcelPath}[Facility_Name]
     
     ### Commitment Fee Notebook - General Tab ###  
     ${Rate}    ${BalanceAmount}    ${RateBasis}    Get Data in General Tab
@@ -26,8 +26,8 @@ Commitment Fee Payment
     Write Data To Excel    SERV29_CommitmentFeePayment    Computed_CycleDue    ${rowid}    ${ProjectedCycleDue}    ${CBAUAT_ExcelPath}
     
     ### Ongoing Fee Payment ###
-    Select Cycle Due Fee Payment 
-    Enter Effective Date for Ongoing Fee-Cycle Due Payment    ${Date}
+    # Select Cycle Due Fee Payment 
+    # Enter Effective Date for Ongoing Fee-Cycle Due Payment    ${Date}
     
     ### Ongoing Fee Payment - Cashflow Validation ###
     Navigate to Cashflow - Ongoing Fee
@@ -50,14 +50,14 @@ Commitment Fee Payment
     Send Ongoing Fee Payment to Approval
     
     ### Ongoing Fee Payment Approval ###
-    Logout from LIQ
+    Logout from Loan IQ
     Login to Loan IQ    ${SUPERVISOR_USERNAME}    ${SUPERVISOR_PASSWORD}
     Navigate Work in Process for Ongoing Fee Payment Approval    &{ExcelPath}[Facility_Name]
     Approve Ongoing Fee Payment
     Close All Windows on LIQ
     
     ### Ongoing Fee Payment Release ###
-    Logout from LIQ
+    Logout from Loan IQ
     Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
     Navigate Work in Process for Ongoing Fee Payment Release    &{ExcelPath}[Facility_Name]
     
@@ -66,7 +66,7 @@ Commitment Fee Payment
     ### Payment Transaction Validation ###
     Close All Windows on LIQ
     Search Existing Deal    &{ExcelPath}[Deal_Name]    
-    Navigate Directly to Commitment Fee Notebook from Deal Notebook    &{ExcelPath}[Facility_Name]
+    # Navigate Directly to Commitment Fee Notebook from Deal Notebook    &{ExcelPath}[Facility_Name]
     Validate Details on Acrual Tab - Commitment Fee    ${ProjectedCycleDue}    &{ExcelPath}[Cycle_Number]
     Validate release of Ongoing Fee Payment
     Close All Windows on LIQ   
@@ -77,7 +77,7 @@ Setup Commitment Fee Effective Date
     [Arguments]    ${ExcelPath}
     
     ### Navigate to Commitment Fee Notebook ###
-    Navigate Directly to Commitment Fee Notebook from Deal Notebook    &{ExcelPath}[Facility_Name]
+    # Navigate Directly to Commitment Fee Notebook from Deal Notebook    &{ExcelPath}[Facility_Name]
     
     ### Add Effective Date in Commitment Fee Notebook###
     mx LoanIQ activate window    ${LIQ_CommitmentFeeNotebook_Pending_Window}    
@@ -95,10 +95,10 @@ Commitment Fee Release
     
     ### Navigate to Commitment Fee Notebook ###
     Search Existing Deal    &{ExcelPath}[Deal_Name]    
-    Navigate Directly to Commitment Fee Notebook from Deal Notebook    &{ExcelPath}[Facility_Name]
+    # Navigate Directly to Commitment Fee Notebook from Deal Notebook    &{ExcelPath}[Facility_Name]
     
     ### Workflow Tab ###
-    Validate Commitment Fee Notebook Status
+    # Validate Commitment Fee Notebook Status
     
 
     

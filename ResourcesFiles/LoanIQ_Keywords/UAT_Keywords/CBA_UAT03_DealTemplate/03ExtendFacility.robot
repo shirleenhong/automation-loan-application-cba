@@ -1,5 +1,5 @@
 *** Settings ***
-Resource    ../../../../Configurations/Import_File.robot
+Resource    ../../../../Configurations/LoanIQ_Import_File.robot
 
 *** Keywords ***
 Extend Maturity and Limit for MOF
@@ -7,7 +7,7 @@ Extend Maturity and Limit for MOF
     [Arguments]    ${ExcelPath}
     
     ###Loan IQ Window###
-    Logout from LIQ
+    Logout from Loan IQ
     Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
     
     ###Facility Notebook###
@@ -28,14 +28,14 @@ Extend Maturity and Limit for MOF
     Send to Approval Facility Change Transaction
     
     ###Loan IQ Window###
-    Logout from LIQ
+    Logout from Loan IQ
     Login to Loan IQ    ${MANAGER_USERNAME}    ${MANAGER_PASSWORD}
     
     ###WIP - Facility Change Transaction Notebook###
     Approve Facility Change Transaction    &{ExcelPath}[Deal_Name]
     
     ###Loan IQ Window###
-    Logout from LIQ
+    Logout from Loan IQ
     Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
     
     ###WIP - Facility Change Transaction Notebook
@@ -55,7 +55,7 @@ Extend Maturity and Limit for MOF
     Navigate Notebook Workflow    ${LIQ_ScheduledCommitment_Notebook}    ${LIQ_ScheduledCommitment_Tab}    ${LIQ_ScheduledCommitment_Workflow_JavaTree}    Send to Approval
     
     ###Loan IQ Window###
-    Logout from LIQ
+    Logout from Loan IQ
     Login to Loan IQ    ${MANAGER_USERNAME}    ${MANAGER_PASSWORD}
     
     Select Item in Work in Process    Facilities    Awaiting Approval    Scheduled Commitment Increase    &{ExcelPath}[Facility_Name]
@@ -63,7 +63,7 @@ Extend Maturity and Limit for MOF
 
     
     ###Loan IQ Window###
-    Logout from LIQ
+    Logout from Loan IQ
     Login to Loan IQ    ${MANAGER_USERNAME}    ${MANAGER_PASSWORD}
     
     Select Item in Work in Process    Facilities    Awaiting Release    Scheduled Commitment Increase    &{ExcelPath}[Facility_Name]
@@ -74,7 +74,7 @@ Extend Maturity and Limit for FCAF
     [Arguments]    ${ExcelPath}
     
     ###Loan IQ Window###
-    Logout from LIQ
+    Logout from Loan IQ
     Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
     
     ###Facility Notebook###
@@ -91,14 +91,14 @@ Extend Maturity and Limit for FCAF
     Send to Approval Facility Change Transaction
     
     ###Loan IQ Window###
-    Logout from LIQ
+    Logout from Loan IQ
     Login to Loan IQ    ${MANAGER_USERNAME}    ${MANAGER_PASSWORD}
     
     ###WIP - Facility Change Transaction Notebook###
     Approve Facility Change Transaction    &{ExcelPath}[Deal_Name]
     
     ###Loan IQ Window###
-    Logout from LIQ
+    Logout from Loan IQ
     Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
     
     ###WIP - Facility Change Transaction Notebook
