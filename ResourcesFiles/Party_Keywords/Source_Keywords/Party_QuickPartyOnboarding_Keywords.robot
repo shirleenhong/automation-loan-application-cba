@@ -277,6 +277,7 @@ Accept Approved Party
     ...    @update: amansuet    18MAR2020    - updated based on automation standard guidelines and replaced keyword to get table row value
     ...    @update: dahijara    05MAY2020    - Updated logic for validation points and wait keywords.
     ...    @update: dahijara    09JUN2020    - Updated Next button locator and Get Element Attribute Keyword
+    ...    @update: ritragel    13AUG2020    - Removed validation of title page
     [Arguments]    ${sTask_ID_From_Supervisor}    ${sPartyID}
 
     Mx Click Element    ${Party_HomePage_Notification_Icon}    
@@ -307,7 +308,6 @@ Accept Approved Party
 
     Wait Until Browser Ready State
     Wait Until Loading Page Is Not Visible    ${PARTY_TIMEOUT}
-    Validate Page Screen is Displayed    ${PARTY_ENTERPRISERELATEDPARTYSTATUS_PAGETITLE}
     ${EnterprisePartyID}    Get Value    ${Party_EnterpriseRelatedPartyStatus_EnterprisePartyId_Label}
     ${isMatched}    Run Keyword And Return Status    Should Be Equal    ${sPartyID}    ${EnterprisePartyID}
     Run Keyword If    ${isMatched}==${True}    Log    Party ID value is correct! Party ID:${EnterprisePartyID}    level=INFO

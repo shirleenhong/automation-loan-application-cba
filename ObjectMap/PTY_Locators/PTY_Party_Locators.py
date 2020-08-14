@@ -29,3 +29,13 @@ Party_EnquireEnterpriseParty_PartyId_Text = '//input[@name="03PartyID"]'
 Party_EnquireEnterpriseParty_EnterpriseName_Text = '//input[contains(@id, "name") and not(contains(@id, "Rs2")) and not(contains(@id, "OffScreen"))]'
 Party_EnquireEnterpriseParty_CountryOfTaxDomicile_Text = '//td//input[contains(@id, "taxCountry")]'
 Party_EnquireEnterpriseParty_CountryOfRegistration_Text = '//input[contains(@id, "regCountry")]'
+
+### Enterprise Party Summary Details Page ###
+FBE_Locality_Text = '//input[@name="03locality"]'
+FBE_PartyType_Text = '//input[@name="03PartyType"]'
+FBE_PartySubType_Text = '//input[@name="03PartySubeType"]'
+FBE_PartyCategory_Text = '//input[@name="03PartyCategory"]'
+FBE_PartyId_Text = '//input[contains(@id, "partyId") and not(contains(@id, "OffScreen"))]'
+FBE_EnterpriseName_Text = '//input[contains(@id, "name") and not(contains(@id, "OffScreen"))]'
+FBE_RegisteredNumber_Text = '//input[contains(@id, "regNumber") and not(contains(@id, "OffScreen"))]'
+FBE_AcceptanceStatus_Text = '//input[@name="03AcceptanceStatus"]'

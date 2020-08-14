@@ -1,5 +1,5 @@
 *** Settings ***
-Resource    ../../../../Configurations/Import_File.robot
+Resource    ../../../../Configurations/LoanIQ_Import_File.robot
 Resource    ../../../../Configurations/Party_Import_File.robot
 
 *** Variables ***
@@ -27,33 +27,32 @@ Populate Quick Enterprise Party with Approval
     [Documentation]    This keyword creates a Deal Borrower in Quick Party Onboarding.
     ...    @author:    fmamaril    26JUN2019
     [Arguments]    ${ExcelPath}           
-    Populate Quick Enterprise Party    &{ExcelPath}[Party_ID]    &{ExcelPath}[Country_of_Tax_Domicile]    &{ExcelPath}[Date_Formed]    &{ExcelPath}[Country_of_Registration]
-    ...    &{ExcelPath}[Address_Type]    &{ExcelPath}[Country_Region]    &{ExcelPath}[Post_Code]    &{ExcelPath}[Email_Contact_Type]    &{ExcelPath}[Email]
-    ...    &{ExcelPath}[Confirm_Email]    &{ExcelPath}[Mobile_Contact_Type]    &{ExcelPath}[Country_Code]    &{ExcelPath}[Number]    &{ExcelPath}[Document_Collection_Status]
-    ...    &{ExcelPath}[Industry_Sector]    &{ExcelPath}[Business_Activity]    &{ExcelPath}[Business_Focus]    &{ExcelPath}[Business_Type]    &{ExcelPath}[Is_Main_Activity]
+    ${PartyID}    Read Data From Excel    PTY001_QuickPartyOnboarding    Party_ID    ${rowid}    ${CBAUAT_ExcelPath}    
+    ${EnterpriseName}    Read Data From Excel    PTY001_QuickPartyOnboarding    Enterprise_Name    ${rowid}    ${CBAUAT_ExcelPath}
+    Populate Quick Enterprise Party    ${PartyID}    &{ExcelPath}[Country_of_Tax_Domicile]    &{ExcelPath}[Country_of_Registration]
+    ...    &{ExcelPath}[Address_Type]    &{ExcelPath}[Country_Region]    &{ExcelPath}[Post_Code]    &{ExcelPath}[Document_Collection_Status]
+    ...    &{ExcelPath}[Industry_Sector]    &{ExcelPath}[Business_Activity]    &{ExcelPath}[Is_Main_Activity]
     ...    &{ExcelPath}[GSTID]    &{ExcelPath}[Address_Line_1]    &{ExcelPath}[Address_Line_2]    &{ExcelPath}[Town_City]    
-    ...    &{ExcelPath}[State_Province]    &{ExcelPath}[Business_Country]    &{ExcelPath}[Is_Primary_Activity]    &{ExcelPath}[Registered_Number]    &{ExcelPath}[Party_ID]    
+    ...    &{ExcelPath}[State_Province]    &{ExcelPath}[Business_Country]    &{ExcelPath}[Is_Primary_Activity]    &{ExcelPath}[Registered_Number]    ${EnterpriseName}    
+       
     Screenshot.Set Screenshot Directory    ${Screenshot_Path}
     Set Test Variable    ${SCREENSHOT_FILENAME}    Party Details
-    Take Screenshot    ${SCREENSHOT_FILENAME}   
-    Close Browser
-    
-    ###Supervisor Approves the Party Record###
-    Run Keyword If    '${SSO_ENABLED}'=='NO'    Logout User on Party
-    Login User to Party    ${PARTY_USERNAME}    ${PARTY_PASSWORD}    ${USER_LINK}    ${USER_PORT}    ${PARTY_SSO_URL_SUFFIX}    ${PARTY_HTML_APPROVER_CREDENTIALS}    ${SSO_ENABLED}    ${PARTY_SSO_URL}
-    ${Task_ID_From_Supervisor}    Approve Registered Party    &{ExcelPath}[Party_ID]
-    Run Keyword If    '${SSO_ENABLED}'=='NO'    Logout User on Party 
-    Close Browser
-    
-    ###User Validates the Party Record###
-    Login User to Party    ${PARTY_USERNAME}    ${PARTY_PASSWORD}    ${USER_LINK}    ${USER_PORT}    ${PARTY_SSO_URL_SUFFIX}    ${PARTY_HTML_USER_CREDENTIALS}    ${SSO_ENABLED}    ${PARTY_SSO_URL}   
-    Accept Approved Party    &{ExcelPath}[rowid]    ${Task_ID_From_Supervisor}
-    Validate Enterprise Party Details    &{ExcelPath}[Locality]    &{ExcelPath}[Party_Type]    &{ExcelPath}[Party_Sub_Type]    &{ExcelPath}[Party_Category]    &{ExcelPath}[Party_ID]    &{ExcelPath}[Enterprise_Name]    &{ExcelPath}[Registered_Number]    
-    Navigate Party Details Enquiry    &{ExcelPath}[Party_ID]
-    Validate Enquire Enterprise Party Details    &{ExcelPath}[Locality]    &{ExcelPath}[Party_Type]    &{ExcelPath}[Party_Sub_Type]    &{ExcelPath}[Party_Category]    &{ExcelPath}[Enterprise_Name]    &{ExcelPath}[Registered_Number]    &{ExcelPath}[Date_Formed]    &{ExcelPath}[Country_of_Tax_Domicile]    &{ExcelPath}[Country_of_Registration]    
-    Set Test Variable    ${SCREENSHOT_FILENAME}    Party Record
     Take Screenshot    ${SCREENSHOT_FILENAME}
+    Run Keyword If    '${SSO_ENABLED}'=='NO'    Logout User on Party
+    Close Browser
+    
+    Login User to Party    ${PARTY_SUPERVISOR_USERNAME}    ${PARTY_SUPERVISOR_PASSWORD}    ${USER_LINK}    ${USER_PORT}    ${PARTY_SSO_URL_SUFFIX}    ${PARTY_HTML_APPROVER_CREDENTIALS}    ${SSO_ENABLED}    ${PARTY_URL}
+    ${Task_ID_From_Supervisor}    Approve Registered Party    ${PartyID}
     Run Keyword If    '${SSO_ENABLED}'=='NO'    Logout User on Party 
+    Close Browser
+
+    Login User to Party    ${PARTY_USERNAME}    ${PARTY_PASSWORD}    ${USER_LINK}    ${USER_PORT}    ${PARTY_SSO_URL_SUFFIX}    ${PARTY_HTML_USER_CREDENTIALS}    ${SSO_ENABLED}    ${PARTY_URL}   
+    Accept Approved Party    ${Task_ID_From_Supervisor}    ${PartyID}
+    Validate Enterprise Party Details    &{ExcelPath}[Locality]    &{ExcelPath}[Party_Type]    &{ExcelPath}[Party_Sub_Type]    &{ExcelPath}[Party_Category]    ${PartyID}    ${EnterpriseName}    &{ExcelPath}[Registered_Number]
+    Navigate Party Details Enquiry    ${PartyID}
+    Validate Enquire Enterprise Party Details    &{ExcelPath}[Locality]    &{ExcelPath}[Party_Type]    &{ExcelPath}[Party_Sub_Type]    &{ExcelPath}[Party_Category]    ${EnterpriseName}    &{ExcelPath}[Registered_Number]    &{ExcelPath}[Date_Formed]    &{ExcelPath}[Country_of_Tax_Domicile]    &{ExcelPath}[Country_of_Registration]
+    Run Keyword If    '${SSO_ENABLED}'=='NO'    Logout User on Party
+    
     Close Browser
     
 Search Customer and Complete its Borrower Profile Creation with default values for Deal Template Three
@@ -61,22 +60,22 @@ Search Customer and Complete its Borrower Profile Creation with default values f
     ...    @author: fmamaril    06AUG2019
     [Arguments]    ${ExcelPath}
 	
-	# ## Login to LoanIQ###
-	# Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
+	# # ## Login to LoanIQ###
+	# # Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
 
-	###Searching Customer 	
-    Search Customer    &{ExcelPath}[Customer_Search]    &{ExcelPath}[Party_ID]    &{ExcelPath}[LIQCustomer_LegalName]          
+	###Searching Customer
+    Search Customer    &{ExcelPath}[Customer_Search]    &{ExcelPath}[Party_ID]    &{ExcelPath}[LIQCustomer_LegalName]
     
     ###Adding Customer Notice Type Method
     Select Customer Notice Type Method    &{ExcelPath}[CustomerNotice_TypeMethod]
     
-    ###Adding Expense Code Details 
+    ###Adding Expense Code Details
     Add Expense Code Details under General tab    &{ExcelPath}[Expense_Code]
     
     ###Adding Department Code Details
     Add Department Code Details under General tab    &{ExcelPath}[Deparment_Code]
     
-    ##Adding Classification Code Details      	    
+    ##Adding Classification Code Details
     Add Classification Code Details under General tab    None    None
         
     ###Unchecking "Subject to GST" checkbox
@@ -93,28 +92,28 @@ Search Customer and Complete its Borrower Profile Creation with default values f
     Set Test Variable    ${SCREENSHOT_FILENAME}    UATDEAL3-Customer-SIC
     Take Screenshot    ${SCREENSHOT_FILENAME}
     
-    ###Navigating to Profile Tab     
-    Navigate to "Profiles" tab and Validate 'Add Profile' Button
+    ###Navigating to Profile Tab
+    Navigate to "Profiles" tab and Validate "Add Profile" Button
 
-    ###Adding Profile          
+    ###Adding Profile
     Add Profile under Profiles Tab    &{ExcelPath}[Profile_Type]
           
     ###Adding Borrower Profile Details
     Add Borrower Profile Details under Profiles Tab    &{ExcelPath}[Profile_Type]
     
-    ###Validating Buttons      
-    Validate Only 'Add Profile', 'Add Location' and 'Delete' Buttons are Enabled in Profile Tab
+    ###Validating Buttons
+    Validate Only 'Add Profile Button' is Enabled in Profile Tab
     
-    ###Adding Location          
+    ###Adding Location
     Add Location under Profiles Tab    &{ExcelPath}[Customer_Location]  
     
     ###Adding Borrowwer/Location Details
     Add Borrowwer/Location Details under Profiles Tab   &{ExcelPath}[Profile_Type]    &{ExcelPath}[Customer_Location]    
     
-    ###Validating Buttons if Enabled 
+    ###Validating Buttons if Enabled
     Validate If All Buttons are Enabled
     
-	###Adding Fax Details                 
+	###Adding Fax Details
     Add Fax Details under Profiles Tab    &{ExcelPath}[Customer_Location]    &{ExcelPath}[Fax_Number]    &{ExcelPath}[Fax_Description]    
   
     Add Contact under Profiles Tab    &{ExcelPath}[Customer_Location]    &{ExcelPath}[LIQCustomer_ShortName]    &{ExcelPath}[Contact_FirstName]    &{ExcelPath}[Contact_LastName]    &{ExcelPath}[Contact_PreferredLanguage]    &{ExcelPath}[Contact_PrimaryPhone]
@@ -122,7 +121,7 @@ Search Customer and Complete its Borrower Profile Creation with default values f
     ...    &{ExcelPath}[ProductSBLC_Checkbox]    &{ExcelPath}[ProductLoan_Checkbox]    &{ExcelPath}[BalanceType_Principal_Checkbox]
     ...    &{ExcelPath}[BalanceType_Interest_Checkbox]    &{ExcelPath}[BalanceType_Fees_Checkbox]    &{ExcelPath}[Address_Code]    
        
-    ##Completing Location              
+    ##Completing Location
     Complete Location under Profile Tab    &{ExcelPath}[Profile_Type]    &{ExcelPath}[Customer_Location]
     Set Test Variable    ${SCREENSHOT_FILENAME}    UATDEAL3-Customer-Profile
     Take Screenshot    ${SCREENSHOT_FILENAME}
@@ -177,7 +176,7 @@ Populate Details on IMT for UAT Deal
     mx LoanIQ select    ${LIQ_RemittanceInstruction_Notebook_FileMenu_SaveMenu}
     mx LoanIQ click element if present    ${LIQ_Warning_OK_Button}
     
-Send Remittance Instruction to Approval and Close RI Notebook 
+Send Remittance Instruction to Approval and Close RI Notebook
     [Documentation]    This keyword sends RI to approval and closes the RI notebook
     ...    @author: fmamaril    19AUG2019
     Send Remittance Instruction to Approval
@@ -208,11 +207,11 @@ Logout and Search Customer in UAT - 1st Approver
     Logout from LIQ
     Login to Loan IQ    ${SUPERVISOR_USERNAME}    ${SUPERVISOR_PASSWORD}
     
-    ###Searching Customer 	
+    ###Searching Customer
     Search Customer    &{ExcelPath}[Customer_Search]    &{ExcelPath}[Party_ID]    &{ExcelPath}[Party_ID]  
     Switch Customer Notebook to Update Mode
     
-    ###Approving Added Remittance Instructions - First Approval   
+    ###Approving Added Remittance Instructions - First Approval
     Access Remittance List upon Login    &{ExcelPath}[Profile_Type]    &{ExcelPath}[Customer_Location]
 
 Approve Remittance Instruction in UAT
@@ -231,18 +230,18 @@ Logout and Search Customer in UAT - 2nd Approver
     Logout from LIQ
     Login to Loan IQ    ${MANAGER_USERNAME}    ${MANAGER_PASSWORD}
     
-    ###Searching Customer### 	
+    ###Searching Customer###
     Search Customer    &{ExcelPath}[Customer_Search]    &{ExcelPath}[Party_ID]    &{ExcelPath}[Party_ID]
     Switch Customer Notebook to Update Mode
     
-    ###Approving Added Remittance Instructions - Second Approval###   
+    ###Approving Added Remittance Instructions - Second Approval###
     Access Remittance List upon Login    &{ExcelPath}[Profile_Type]    &{ExcelPath}[Customer_Location]
 
 Logout and Search Customer in UAT - Inputter
     [Documentation]    This keyword logsout and search customer in UAT (Inputter)
     ...    @author: fmamaril    19AUG2019
     [Arguments]    ${ExcelPath}
-    ###Validate status of Customer###	           
+    ###Validate status of Customer###
     mx LoanIQ click    ${RemittanceList_Window_ExitButton}
     Sleep    4s
     Validate 'Active Customer' Window    &{ExcelPath}[Party_ID]

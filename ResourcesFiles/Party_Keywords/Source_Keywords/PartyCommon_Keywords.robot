@@ -12,23 +12,24 @@ Navigate Process
     ...    @author: jcdelacruz
     ...    @update: amansuet    17MAR2020    - updated based on automation standard guidelines
     ...    @update: dahijara    28APR2020    - used 'Mx Input Text' instead of 'Input Text'. And removed line "Press Key    ${Party_HomePage_Process_TextBox}    \\13"
+    ...    @update: ritragel    13AUG2020    - added Press Keys since Press Key is now deprecated
     [Arguments]    ${sSelected_Module}
 
-    Mx Input Text    ${Party_HomePage_Process_TextBox}    ${sSelected_Module}
+    Mx Input Text and Press Enter    ${Party_HomePage_Process_TextBox}    ${sSelected_Module}
     
 Navigate Party Details Enquiry
     [Documentation]    This keyword navigates the user to Party Details Enquiry page.
     ...    @author: jcdelacruz
     ...    @update: gerhabal    16SEP2019    - added "Wait Until Browser Ready State" upon click of Next buttona nd increase 10s to 20s     
     ...    @update: amansuet    17MAR2020    - updated based on automation standard guidelines
+    ...    @update: ritragel    13AUG2020    - added Press Keys since Press Key is now deprecated
     [Arguments]    ${sParty_id}
     Input Text    ${Party_HomePage_Process_TextBox}    Party Details Enquiry
-    Press Key    ${Party_HomePage_Process_TextBox}    \\13
-    Mx Input Text    ${Party_EnquireEnterpriseParty_PartyId_TextBox}     ${sParty_id}
+    Press Keys    ${Party_HomePage_Process_TextBox}    RETURN
+    Mx Input Text    ${Party_EnquireEnterpriseParty_PartyId_Text}     ${sParty_id}
     Wait Until Browser Ready State
     Wait Until Element Is Visible    ${Party_EnquireEnterpriseParty_Next_Button}
-    Wait Until Element Is Enabled    ${Party_EnquireEnterpriseParty_Next_Button}    
-    # //div[contains(@class,"Visible")]//div[@class="ux-form-footerbuttons"]    
+    Wait Until Element Is Enabled    ${Party_EnquireEnterpriseParty_Next_Button}       
     Mx Click Element    ${Party_EnquireEnterpriseParty_Next_Button}
     Wait Until Browser Ready State
     Wait Until Page Contains    Enquire Enterprise Party    20s
@@ -40,6 +41,7 @@ Validate Enterprise Party Details
     ...    @update: amansuet    18MAR2020    - updated based on automation standard guidelines
     [Arguments]    ${sLocality}    ${sParty_Type}    ${sParty_Sub_Type}    ${sParty_Category}    ${sParty_ID}    ${sEnterprise_Name}    ${iRegistered_Number}
     
+    Wait Until Browser Ready State
     Compare Two Arguments    ${sLocality}    ${FBE_Locality_Text}
     Compare Two Arguments    ${sParty_Type}    ${FBE_PartyType_Text}
     Compare Two Arguments    ${sParty_Sub_Type}    ${FBE_PartySubType_Text}
