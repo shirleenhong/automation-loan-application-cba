@@ -534,23 +534,23 @@ Navigate Pending Approval
     # Run Keyword And Continue On Failure    Compare Two Arguments    ${Preferred_Language}    ${FBE_ClassIndicator_PreferredLanguage_Dropdown}
     # Mx Click Element    ${FBE_ClassIndicator_Next_Button}
     
-Update Party FBE Enterprise 
-    [Arguments]    ${userName}    ${userPassword}    ${userLink}    ${port}    ${partyUrl}    ${selectedModule}    ${partyID}    ${branchCode}    ${enterpriseName}    ${industrySector}
-    ...    ${businessActivity}    ${businessFocus}    ${businessType}    ${isMainActivity}    ${supervisorUserName}    ${supervisorPassword}    ${enterprisePartyTaskDescription}
-    # Login User to Party    ${userName}    ${userPassword}    ${userLink}    ${port}    ${partyUrl}    
-    Navigate Process    ${selectedModule}
-    Verify Party Details Page
-    Update Branch, Enterprise Name and Enterprise Business Activity    ${partyID}    ${branchCode}    ${enterpriseName}    ${industrySector}
-    ...    ${businessActivity}    ${businessFocus}    ${businessType}    ${isMainActivity}
-    Logout User on Party
-    # Login User to Party    ${supervisorUserName}    ${supervisorPassword}    ${userLink}    ${port}    ${partyUrl}
-    ${Task_ID}    Approve Amendments    ${enterprisePartyTaskDescription}    Task_ID_For_Enterprise_Party
-    Logout User on Party
-    # Login User to Party    ${userName}    ${userPassword}    ${userLink}    ${port}    ${partyUrl}
-    Accept Amendments    ${Task_ID}
-    Navigate Party Details Enquiry    ${partyID}
-    Validate Amendments for Enterprise Party
-    Logout User on Party
+# Update Party FBE Enterprise 
+    # [Arguments]    ${userName}    ${userPassword}    ${userLink}    ${port}    ${partyUrl}    ${selectedModule}    ${partyID}    ${branchCode}    ${enterpriseName}    ${industrySector}
+    # ...    ${businessActivity}    ${businessFocus}    ${businessType}    ${isMainActivity}    ${supervisorUserName}    ${supervisorPassword}    ${enterprisePartyTaskDescription}
+    # # Login User to Party    ${userName}    ${userPassword}    ${userLink}    ${port}    ${partyUrl}    
+    # Navigate Process    ${selectedModule}
+    # Verify Party Details Page
+    # Update Branch, Enterprise Name and Enterprise Business Activity    ${partyID}    ${branchCode}    ${enterpriseName}    ${industrySector}
+    # ...    ${businessActivity}    ${businessFocus}    ${businessType}    ${isMainActivity}
+    # Logout User on Party
+    # # Login User to Party    ${supervisorUserName}    ${supervisorPassword}    ${userLink}    ${port}    ${partyUrl}
+    # ${Task_ID}    Approve Amendments    ${enterprisePartyTaskDescription}    Task_ID_For_Enterprise_Party
+    # Logout User on Party
+    # # Login User to Party    ${userName}    ${userPassword}    ${userLink}    ${port}    ${partyUrl}
+    # Accept Amendments    ${Task_ID}
+    # Navigate Party Details Enquiry    ${partyID}
+    # Validate Amendments for Enterprise Party
+    # Logout User on Party
     
 Validate LoanIQ Party FBE Enterprise 
     [Documentation]    This keyword is used to validate the updates from essence party to loan iq
@@ -594,25 +594,25 @@ Validate LoanIQ Party FBE Enterprise
     Run Keyword And Continue On Failure   Should Be Equal As Strings    ${Prefix_for_SIC}${SPACE}/${SPACE}${Business_Activity}    ${liq_primary}
     Close All Windows on LIQ
 
-Update Party FBE Addresses 
-    [Arguments]    ${userName}    ${userPassword}    ${userLink}    ${port}    ${partyUrl}    ${selectedModule}    ${partyID}
-    ...    ${addressType}    ${countryRegion}    ${postCode}    ${validTo}    ${stateProvince}
-    ...    ${townCity}    ${addressLine1}    ${addressLine2}    ${addressLine3}    ${addressLine4}    ${addressLine5}
-    ...    ${supervisorUserName}    ${supervisorPassword}    ${addressTaskDescription}    
-    # Login User to Party    ${userName}    ${userPassword}    ${userLink}    ${port}    ${partyUrl} 
-    Navigate Process    ${selectedModule}
-    Verify Party Details Page
-    Update Addresses    ${partyID}    ${addressType}    ${countryRegion}    ${postCode}    ${validTo}    ${stateProvince}    
-    ...    ${townCity}    ${addressLine1}    ${addressLine2}    ${addressLine3}    ${addressLine4}    ${addressLine5}
-    Logout User on Party
-    # Login User to Party    ${supervisorUserName}    ${supervisorPassword}    ${userLink}    ${port}    ${partyUrl}    
-    ${Task_ID}    Approve Amendments    ${addressTaskDescription}    Task_ID_For_Address
-    Logout User on Party
-    # Login User to Party    ${userName}    ${userPassword}    ${userLink}    ${port}    ${partyUrl}
-    Accept Amendments    ${Task_ID}
-    Navigate Party Details Enquiry    ${partyID}
-    Validate Amendments for Addresses
-    Logout User on Party
+# Update Party FBE Addresses 
+    # [Arguments]    ${userName}    ${userPassword}    ${userLink}    ${port}    ${partyUrl}    ${selectedModule}    ${partyID}
+    # ...    ${addressType}    ${countryRegion}    ${postCode}    ${validTo}    ${stateProvince}
+    # ...    ${townCity}    ${addressLine1}    ${addressLine2}    ${addressLine3}    ${addressLine4}    ${addressLine5}
+    # ...    ${supervisorUserName}    ${supervisorPassword}    ${addressTaskDescription}    
+    # # Login User to Party    ${userName}    ${userPassword}    ${userLink}    ${port}    ${partyUrl} 
+    # Navigate Process    ${selectedModule}
+    # Verify Party Details Page
+    # Update Addresses    ${partyID}    ${addressType}    ${countryRegion}    ${postCode}    ${validTo}    ${stateProvince}    
+    # ...    ${townCity}    ${addressLine1}    ${addressLine2}    ${addressLine3}    ${addressLine4}    ${addressLine5}
+    # Logout User on Party
+    # # Login User to Party    ${supervisorUserName}    ${supervisorPassword}    ${userLink}    ${port}    ${partyUrl}    
+    # ${Task_ID}    Approve Amendments    ${addressTaskDescription}    Task_ID_For_Address
+    # Logout User on Party
+    # # Login User to Party    ${userName}    ${userPassword}    ${userLink}    ${port}    ${partyUrl}
+    # Accept Amendments    ${Task_ID}
+    # Navigate Party Details Enquiry    ${partyID}
+    # Validate Amendments for Addresses
+    # Logout User on Party
 
 Validate LoanIQ Party Addresses 
     [Documentation]    This keyword is used to validate the updates from essence party to loan iq
@@ -669,22 +669,22 @@ Validate LoanIQ Party Addresses
     mx LoanIQ click    ${LIQ_ViewAddress_Ok_CancelButton}
     Close All Windows on LIQ
     
-Update Party FBE Language    
-    [Arguments]    ${userName}    ${userPassword}    ${userLink}    ${port}    ${partyUrl}    ${selectedModule}    ${partyID}    ${preferredLangauge}    ${supervisorUserName}    ${supervisorPassword}
-    ...    ${classificationIndicatorsTaskDescription}          
-    # Login User to Party    ${userName}    ${userPassword}    ${userLink}    ${port}    ${partyUrl}
-    Navigate Process    ${selectedModule}
-    Verify Party Details Page
-    Updated Preferred Language    ${partyID}    ${preferredLangauge}
-    Logout User on Party
-    # Login User to Party    ${supervisorUserName}    ${supervisorPassword}    ${userLink}    ${port}    ${partyUrl}
-    ${Task_ID}    Approve Amendments    ${classificationIndicatorsTaskDescription}    Task_ID_For_Classfication_Indicators
-    Logout User on Party
-    # Login User to Party    ${userName}    ${userPassword}    ${userLink}    ${port}    ${partyUrl}
-    Accept Amendments    ${Task_ID}
-    Navigate Party Details Enquiry    ${partyID}
-    Validate Amendments for Classification
-    Logout User on Party
+# Update Party FBE Language    
+    # [Arguments]    ${userName}    ${userPassword}    ${userLink}    ${port}    ${partyUrl}    ${selectedModule}    ${partyID}    ${preferredLangauge}    ${supervisorUserName}    ${supervisorPassword}
+    # ...    ${classificationIndicatorsTaskDescription}          
+    # # Login User to Party    ${userName}    ${userPassword}    ${userLink}    ${port}    ${partyUrl}
+    # Navigate Process    ${selectedModule}
+    # Verify Party Details Page
+    # Updated Preferred Language    ${partyID}    ${preferredLangauge}
+    # Logout User on Party
+    # # Login User to Party    ${supervisorUserName}    ${supervisorPassword}    ${userLink}    ${port}    ${partyUrl}
+    # ${Task_ID}    Approve Amendments    ${classificationIndicatorsTaskDescription}    Task_ID_For_Classfication_Indicators
+    # Logout User on Party
+    # # Login User to Party    ${userName}    ${userPassword}    ${userLink}    ${port}    ${partyUrl}
+    # Accept Amendments    ${Task_ID}
+    # Navigate Party Details Enquiry    ${partyID}
+    # Validate Amendments for Classification
+    # Logout User on Party
     
 Validate LoanIQ Party Language    
     [Documentation]    This keyword is used to validate the updates from essence party to loan iq

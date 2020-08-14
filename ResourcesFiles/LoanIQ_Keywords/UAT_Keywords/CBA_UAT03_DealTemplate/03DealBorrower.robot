@@ -108,7 +108,7 @@ Search Customer and Complete its Borrower Profile Creation with default values f
     Add Location under Profiles Tab    &{ExcelPath}[Customer_Location]  
     
     ###Adding Borrowwer/Location Details
-    Add Borrowwer/Location Details under Profiles Tab   &{ExcelPath}[Profile_Type]    &{ExcelPath}[Customer_Location]    
+    # Add Borrowwer/Location Details under Profiles Tab   &{ExcelPath}[Profile_Type]    &{ExcelPath}[Customer_Location]    
     
     ###Validating Buttons if Enabled
     Validate If All Buttons are Enabled
@@ -128,22 +128,12 @@ Search Customer and Complete its Borrower Profile Creation with default values f
     
     ###Adding Remittance Instructions
     Navigate to Remittance List Page
-
-Add Remittance Instruction
-    [Documentation]    This keyword adds a Remittance Instruction for the customer
-    ...    @author: fmamaril    19AUG2019
-    [Arguments]    ${ExcelPath}
-    Populate Details on Customer Remittance Instructions    &{ExcelPath}[RemittanceInstruction_Method]    &{ExcelPath}[RemittanceInstruction_Description]    &{ExcelPath}[RemittanceInstruction_Currency]
-    ...    &{ExcelPath}[ProductLoan_Checkbox]    &{ExcelPath}[ProductSBLC_Checkbox]    &{ExcelPath}[RI_FromCust_Checkbox]    &{ExcelPath}[RI_ToCust_Checkbox]    &{ExcelPath}[BalanceType_Principal_Checkbox]
-    ...    &{ExcelPath}[BalanceType_Interest_Checkbox]    &{ExcelPath}[BalanceType_Fees_Checkbox]    &{ExcelPath}[RI_AutoDoIt_Checkbox]    &{ExcelPath}[NoticesSummary]	        
-    Set Test Variable    ${SCREENSHOT_FILENAME}    UATDEAL3-Customer-RemittanceInstruction
-    Take Screenshot    ${SCREENSHOT_FILENAME}
     
 Add IMT message code for UAT Deal
     [Documentation]    This keyword adds an IMT message code for the customer
     ...    @author: fmamaril    19AUG2019
     [Arguments]    ${ExcelPath}
-	Add IMT Message in Remittance Instructions Detail    &{ExcelPath}[IMT_MessageCode]
+	# Add IMT Message in Remittance Instructions Detail    &{ExcelPath}[IMT_MessageCode]
     Set Test Variable    ${SCREENSHOT_FILENAME}    UATDEAL3-Customer-RemittanceInstructionDetail
     Take Screenshot    ${SCREENSHOT_FILENAME}
 
@@ -151,8 +141,8 @@ Add Swift Role in IMT message for UAT Deal
     [Documentation]    This keyword adds a swift role for the customer in UAT Deal
     ...    @author: fmamaril    19AUG2019
     [Arguments]    ${ExcelPath}	
-	Add Swift Role in IMT message    &{ExcelPath}[RI_SendersCorrespondent_Checkbox]    &{ExcelPath}[Swift_Role]    &{ExcelPath}[SwiftID]    &{ExcelPath}[Swift_Description]
-	...    &{ExcelPath}[ClearingType]    &{ExcelPath}[ClearingNumber]    &{ExcelPath}[AccountNumber]
+	# Add Swift Role in IMT message    &{ExcelPath}[RI_SendersCorrespondent_Checkbox]    &{ExcelPath}[Swift_Role]    &{ExcelPath}[SwiftID]    &{ExcelPath}[Swift_Description]
+	# ...    &{ExcelPath}[ClearingType]    &{ExcelPath}[ClearingNumber]    &{ExcelPath}[AccountNumber]
     Set Test Variable    ${SCREENSHOT_FILENAME}    UATDEAL3-Customer-SwiftRole
     Take Screenshot    ${SCREENSHOT_FILENAME}
 
@@ -160,8 +150,8 @@ Update Swift Role in IMT message for UAT Deal
     [Documentation]    This keyword updates a swift role in IMT message for a UAT Deal
     ...    @author: fmamaril    19AUG2019
     [Arguments]    ${ExcelPath}	
-	Update Swift Role in IMT message    &{ExcelPath}[Swift_Role]    &{ExcelPath}[Swift_Description]    &{ExcelPath}[ClearingType]
-	...    &{ExcelPath}[ClearingNumber]    &{ExcelPath}[AccountNumber]	
+	# Update Swift Role in IMT message    &{ExcelPath}[Swift_Role]    &{ExcelPath}[Swift_Description]    &{ExcelPath}[ClearingType]
+	# ...    &{ExcelPath}[ClearingNumber]    &{ExcelPath}[AccountNumber]	
     Set Test Variable    ${SCREENSHOT_FILENAME}    UATDEAL3-Customer-SwiftRole
     Take Screenshot    ${SCREENSHOT_FILENAME}
 		
@@ -169,7 +159,7 @@ Populate Details on IMT for UAT Deal
     [Documentation]    This keyword populates the details on IMT for UAT Deal
     ...    @author: fmamaril    19AUG2019
     [Arguments]    ${ExcelPath}		
-    Populate Details on IMT    &{ExcelPath}[Details_Of_Charges]    &{ExcelPath}[BOC_Level]    &{ExcelPath}[DetailsOfPayment]    &{ExcelPath}[SenderToReceiverInfo]    &{ExcelPath}[OrderingCustomer]
+    # Populate Details on IMT    &{ExcelPath}[Details_Of_Charges]    &{ExcelPath}[BOC_Level]    &{ExcelPath}[DetailsOfPayment]    &{ExcelPath}[SenderToReceiverInfo]    &{ExcelPath}[OrderingCustomer]
     Set Test Variable    ${SCREENSHOT_FILENAME}    UATDEAL3-Customer-IMTDetails
     Take Screenshot    ${SCREENSHOT_FILENAME}
     mx LoanIQ click    ${RemittanceList_Window_RemittanceInstructionsDetail_IMT_OKButton}        
@@ -187,7 +177,7 @@ Complete Servicing Group Details
     ...    @author: fmamaril    19AUG2019
     [Arguments]    ${ExcelPath}	        
     mx LoanIQ click element if present    ${RemittanceList_Window_ExitButton}
-    Add Servicing Groups Details    &{ExcelPath}[Customer_Search]    &{ExcelPath}[Party_ID]    &{ExcelPath}[Party_ID]    &{ExcelPath}[Profile_Type]    &{ExcelPath}[Group_Contact]   &{ExcelPath}[Contact_LastName]
+    # Add Servicing Groups Details    &{ExcelPath}[Customer_Search]    &{ExcelPath}[Party_ID]    &{ExcelPath}[Party_ID]    &{ExcelPath}[Profile_Type]    &{ExcelPath}[Group_Contact]   &{ExcelPath}[Contact_LastName]
 
 Add Remittance Instruction to Servicing Group in UAT
     [Documentation]    This keyword adds a Remittance Instruction to Servicing Group in UAT
@@ -204,7 +194,7 @@ Logout and Search Customer in UAT - 1st Approver
     mx LoanIQ click element if present    ${ServicingGroupWindow_ExitButton}
     mx LoanIQ click element if present    ${RemittanceList_Window_ExitButton}    
     Close All Windows on LIQ
-    Logout from LIQ
+    Logout from Loan IQ
     Login to Loan IQ    ${SUPERVISOR_USERNAME}    ${SUPERVISOR_PASSWORD}
     
     ###Searching Customer
@@ -227,7 +217,7 @@ Logout and Search Customer in UAT - 2nd Approver
     ###Logout and Relogin in Manager Level###
     mx LoanIQ click    ${RemittanceList_Window_ExitButton}
     Close All Windows on LIQ
-    Logout from LIQ
+    Logout from Loan IQ
     Login to Loan IQ    ${MANAGER_USERNAME}    ${MANAGER_PASSWORD}
     
     ###Searching Customer###
@@ -249,5 +239,5 @@ Logout and Search Customer in UAT - Inputter
     Take Screenshot    ${SCREENSHOT_FILENAME}    
     ###Logout and Relogin in Inputter Level
     Close All Windows on LIQ
-    Logout from LIQ
+    Logout from Loan IQ
     Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
