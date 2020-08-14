@@ -311,6 +311,25 @@ Add Interest Payment for Loan Repricing
     Save Values of Runtime Execution on Excel File    ${sRunTimeVar_InterestPaymentRequestedAmount}    ${InterestPaymentRequestedAmount}
 
     [Return]    ${InterestPaymentRequestedAmount}
+
+Get Cycle Due Date for Loan Repricing
+    [Documentation]    This keyword is used to get Cycle Due Date for Loan Repricing.
+    ...    @author: clanding    13AUG2020     - initial create
+    [Arguments]    ${sItemToBeDoubleclicked}    ${sRunTimeVar_CycleDueDate}=None
+    
+    ### Keyword Pre-processing ###
+    ${ItemToBeDoubleclicked}    Acquire Argument Value    ${sItemToBeDoubleclicked}
+
+    Wait Until Keyword Succeeds    3x    5 sec    Mx LoanIQ Select Or Doubleclick In Tree By Text    ${LIQ_LoanRepricing_GeneralTab_Description_JavaTree}    ${ItemToBeDoubleclicked}%d
+    Mx LoanIQ Activate Window    ${LIQ_InterestPayment_Window}
+    ${Cycle_Due_Date}    Mx LoanIQ Get Data    ${LIQ_InterestPayment_CycleDueDate_Text}    Cycle_Due_Date
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/InterestPaymentWindow
+    mx LoanIQ close window    ${LIQ_Payment_Window}
+
+    ### Keyword Post-processing ###
+    Save Values of Runtime Execution on Excel File    ${sRunTimeVar_CycleDueDate}    ${Cycle_Due_Date}
+    
+    [Return]    ${Cycle_Due_Date}
     
 Add New Outstandings
     [Documentation]    This keywword adds new outstandings for the specified loan
@@ -1621,7 +1640,8 @@ Add Rollover Conversion to New
 Get Calculated Cycle Due Amount and Validate
     [Documentation]    This keyword is for calculating cycle due amount and return.
     ...    @author: amansuet    18JUN2020    - initial create
-	[Arguments]    ${iBalance_Amount}    ${iAllInRate_Pct}    ${sRate_Basis}    ${iUI_CycleDue}    ${sStart_Date}    ${sRuntimeVar_CalculatedCycleDue}=None
+    ...    @update: clanding    13AUG2020    - added using Cycle Due Date value if provided
+	[Arguments]    ${iBalance_Amount}    ${iAllInRate_Pct}    ${sRate_Basis}    ${iUI_CycleDue}    ${sStart_Date}    ${sCycleDueDate}=None    ${sRuntimeVar_CalculatedCycleDue}=None
 
     ### Keyword Pre-processing ###
     ${Balance_Amount}    Acquire Argument Value    ${iBalance_Amount}
@@ -1629,8 +1649,10 @@ Get Calculated Cycle Due Amount and Validate
     ${Rate_Basis}    Acquire Argument Value    ${sRate_Basis}
     ${UI_CycleDue}    Acquire Argument Value    ${iUI_CycleDue}
     ${Start_Date}    Acquire Argument Value    ${sStart_Date}
+    ${CycleDueDate}    Acquire Argument Value    ${sCycleDueDate}
 
-	${CurrentSystemDate}    Get System Date
+	${CurrentSystemDate}    Run Keyword If    '${sCycleDueDate}'=='None'    Get System Date
+	...    ELSE    Set Variable    ${CycleDueDate}
 
 	###Get Number of Days###
 	${CycleDue_CurrentNoofDays}    Subtract Date From Date    ${CurrentSystemDate}    ${Start_Date}    result_format=verbose    date1_format=%d-%b-%Y    date2_format=%d-%b-%Y

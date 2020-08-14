@@ -43,7 +43,9 @@ Create Comprehensive Repricing for Non-Agent Syndicated Deal
 
     ### Add Loan Repricing Details ###
     ${InterestPaymentRequestedAmount}    Add Interest Payment for Loan Repricing    &{ExcelPath}[Cycles_For_Loan]
+    ${Cycle_Due_Date}    Get Cycle Due Date for Loan Repricing    &{ExcelPath}[Pricing_Option] ${INTEREST_PAYMENT} (&{ExcelPath}[Loan_Alias])
     ${Calculated_CycleDue}    Get Calculated Cycle Due Amount and Validate    &{ExcelPath}[Loan_RequestedAmount]    &{ExcelPath}[AllInRate_Value]    &{ExcelPath}[RateBasis_Days]    ${InterestPaymentRequestedAmount}    &{ExcelPath}[Loan_EffectiveDate]
+    ...    ${Cycle_Due_Date}
     ${NewLoanAlias}    ${IncreaseAmount}    Add Rollover Conversion to New    &{ExcelPath}[Pricing_Option]    &{ExcelPath}[Base_Rate]    &{ExcelPath}[Loan_NewOutstanding]
     
     ### Compute Lender Share Trans Amount for Cash Flow ###

@@ -9,6 +9,7 @@ Create Initial Loan Drawdown for Non Agent Syndication
     ...                                    - Added user logout and login as INPUTTER_USERNAME at the end of the test case
     ...    @update: hstone    22MAY2020    - Removed '${Loan_Alias}    Read Data From Excel    SERV02_LoanDrawdownNonAgent    Loan_Alias    ${rowid}'
     ...    @update: clanding    10AUG2020    - updated hard coded values to dataset/global variables; removed Create Principal Repayment Schedule as per scenario review
+    ...    @update: clanding    13AUG2020    - added writing of Loan_Alias and Loan_EffectiveDate to SERV09_LoanRepricing
     [Arguments]    ${ExcelPath}
     
     ###Upfront Fee Payment Workflow Tab- Release Item###
@@ -26,6 +27,7 @@ Create Initial Loan Drawdown for Non Agent Syndication
     Write Data To Excel    SERV02_LoanDrawdownNonAgent    Facility_CurrentAvailToDraw    ${rowid}    ${AvailToDrawAmount}
     Write Data To Excel    SERV02_LoanDrawdownNonAgent    Facility_CurrentGlobalOutstandings    ${rowid}    ${GlobalOutstandings}
     Write Data To Excel    SERV02_LoanDrawdownNonAgent    Loan_EffectiveDate    ${rowid}    ${Loan_EffectiveDate}
+    Write Data To Excel    SERV09_LoanRepricing    Loan_EffectiveDate    ${rowid}    ${Loan_EffectiveDate}
     
     ###Outstanding Select Window###
     Navigate to Outstanding Select Window
@@ -33,6 +35,7 @@ Create Initial Loan Drawdown for Non Agent Syndication
     Write Data To Excel    SERV02_LoanDrawdownNonAgent    Loan_Alias    ${rowid}    ${Loan_Alias}
     Write Data To Excel    SERV22_InterestPayments    Loan_Alias    ${rowid}    ${Loan_Alias}
     Write Data To Excel    AMCH02_LenderShareAdjustment    New_Loan_Alias    ${rowid}    ${Loan_Alias}
+    Write Data To Excel    SERV09_LoanRepricing    Loan_Alias    ${rowid}    ${Loan_Alias}
     
     ###Initial Loan Drawdown###
     Validate Initial Loan Dradown Details    &{ExcelPath}[Facility_Name]    &{ExcelPath}[Borrower_ShortName]    &{ExcelPath}[Loan_Currency]
