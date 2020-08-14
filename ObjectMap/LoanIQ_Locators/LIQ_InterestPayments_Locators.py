@@ -48,7 +48,8 @@ LIQ_InterestPayment_Window = 'JavaWindow("title:=.* Interest Payment.*")'
 LIQ_InterestPayment_EffectiveDate_Textfield = 'JavaWindow("title:=.* Interest Payment.*").JavaEdit("attached text:=Effective Date:")'
 LIQ_InterestPayment_FileSave_Menu = 'JavaWindow("title:=.* Interest Payment.*").JavaMenu("label:=File").JavaMenu("label:=Save")'
 LIQ_InterestPayment_CurrentCycDue_Text = 'JavaWindow("title:=.* Interest Payment.*").JavaEdit("x:=231","y:=51")'
-LIQ_InterestPayment_RequestedAmount_Textfield = 'JavaWindow("title:=.* Interest Payment.*").JavaEdit("x:=231","y:=114")'
+LIQ_InterestPayment_RequestedAmount_Textfield = 'JavaWindow("title:=.* Interest Payment.*").JavaEdit("labeled_containers_path:=.*Amounts.*","Index:=0")'
+LIQ_InterestPayment_CycleDueDate_Text = 'JavaWindow("title:=.* Interest Payment.*").JavaStaticText("labeled_containers_path:=.*Cycle.*","Index:=5")'
 
 ###GL Entries####
 LIQ_Payment_GLEntries_Table = 'JavaWindow("title:=GL Entries.*").JavaTree("attached text:=Drill down to view details")'
