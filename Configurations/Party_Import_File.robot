@@ -16,10 +16,5 @@ Resource    ../ResourcesFiles/Party_Keywords/BusinessProcess_Keywords/PTY004_Qui
 
 ###Party Resource Files - Sourcel###
 Resource    ../ResourcesFiles/Party_Keywords/Source_Keywords/PartyCommon_Keywords.robot
-Resource    ../ResourcesFiles/Party_Keywords/Source_Keywords/Party_DeleteUser_Keywords.robot
-Resource    ../ResourcesFiles/Party_Keywords/Source_Keywords/Party_DetailsEnquiry_Keywords.robot
-Resource    ../ResourcesFiles/Party_Keywords/Source_Keywords/Party_EnquireUser_Keywords.robot
 Resource    ../ResourcesFiles/Party_Keywords/Source_Keywords/Party_Generic_Keywords.robot
-Resource    ../ResourcesFiles/Party_Keywords/Source_Keywords/Party_LoanIQVal_Keywords.robot
-Resource    ../ResourcesFiles/Party_Keywords/Source_Keywords/Party_MaintainPartyDetails_Keywords.robot
 Resource    ../ResourcesFiles/Party_Keywords/Source_Keywords/Party_QuickPartyOnboarding_Keywords.robot

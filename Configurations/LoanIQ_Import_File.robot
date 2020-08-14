@@ -347,7 +347,6 @@ Resource    ../ResourcesFiles/LoanIQ_Keywords/Source_Keywords/UpfrontFeeDistribu
 
 
 ### CBA UAT Keywords ###
-
 # ### UAT Deal 1 ###
 # Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/CBA_UAT01_DealTemplate/01CommitmentFeeNotebook.robot
 # Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/CBA_UAT01_DealTemplate/01DealBorrower.robot
@@ -364,11 +363,6 @@ Resource    ../ResourcesFiles/LoanIQ_Keywords/Source_Keywords/UpfrontFeeDistribu
 # Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/CBA_UAT02_DealTemplate/02DealNotebook.robot
 
 ### UAT Deal 3 ###
-Resource    ../ResourcesFiles/LoanIQ_Keywords/BusinessProcess_Keywords/Customer/ORIG03_BeneficiaryProfile.robot
-Resource    ../ResourcesFiles/LoanIQ_Keywords/BusinessProcess_Keywords/Customer/ORIG03_BorrowerProfile.robot
-Resource    ../ResourcesFiles/LoanIQ_Keywords/BusinessProcess_Keywords/Customer/ORIG03_GuarantorProfile.robot
-Resource    ../ResourcesFiles/LoanIQ_Keywords/BusinessProcess_Keywords/Customer/ORIG03_LenderProfile.robot
-Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/CBA_UAT03_DealTemplate/03DealBorrower.robot
 # Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/CBA_UAT03_DealTemplate/03CommitmentFeeNotebook.robot
 # Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/CBA_UAT03_DealTemplate/03DealNotebook.robot
 # Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/CBA_UAT03_DealTemplate/03Drawdown.robot

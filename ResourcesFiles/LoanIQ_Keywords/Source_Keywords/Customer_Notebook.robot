@@ -17,7 +17,7 @@ Search Customer
 
     Run Keyword If    '${sCustomer_Search}' == 'Search by Customer ID'    Search by Customer ID    ${LIQCustomer_ID}    ${LIQCustomer_ShortName}                
     Run Keyword If    '${sCustomer_Search}' == 'Search by Customer Short Name'    Search by Customer Short Name    ${LIQCustomer_ShortName}    ${LIQCustomer_ID}
-    Take Screenshot    ${Screenshot_Path}
+    Take Screenshot    ${Screenshot_Path}/Screenshots/LoanIQ/ActiveCustomerWindow_GeneralTab
 
 Search by Customer ID
     [Documentation]    This keyword searches existing customer using Customer's ID
@@ -33,7 +33,7 @@ Search by Customer ID
     Mx LoanIQ Select Combo Box Value    ${LIQ_CustomerSelect_Search_Filter}      Customer ID
     Log    "Customer ID" is selected in the "Identify By" dropdown list.
     Mx LoanIQ Enter    ${LIQ_CustomerSelect_Search_Inputfield}     ${sLIQCustomer_ID}
-    Take Screenshot    ${Screenshot_Path}
+    Take Screenshot    ${Screenshot_Path}/Screenshots/LoanIQ/CustomerSelectWindow
     Validate Customer ID if a Numeric Value Upon Customer Search by Customer ID    ${sLIQCustomer_ID}    ${sLIQCustomer_ShortName}
     
 Validate Customer ID if a Numeric Value Upon Customer Search by Customer ID    

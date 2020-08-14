@@ -89,6 +89,11 @@ SCREENSHOT_FILENAME = ""
 LIQ_ADMIN_USERNAME = "ADMIN1"
 LIQ_ADMIN_PASSWORD = "password"
 
+###CORRESPONDENCE###
+CORRES_SERVER = 'http://mancsleverg0007'
+CORRES_PORT = '8480'
+API_CORRES_HOST = 'http://mancsleverg0007:9150'
+
 ###COMSEE###
 COM_HOST = 'http://mancsleverg0007:9150'
 
@@ -132,6 +137,9 @@ DBHOST_ESS_AU = 'MANCSLEVERG0023'
 DBPORT_ESS_AU = '1521'
 DBUR_ESS_AU = 'jdbc:oracle:thin:@//mancsleverg0023:1521/AUGLBPDB'
 
+
+
+
 ### IEE PARTY SERVER ###
 DBSERVICENAME_PTY = 'AUPTYPDB'
 DBUSERNAME_PTY = 'bfdbusr'
@@ -143,6 +151,9 @@ DBUR_PTY = 'jdbc:oracle:thin:@//MANCSLEVERG0023:1521/AUPTYPDB'
 
 ###SFTP HOST/CREDENTIALS###
 SFTP_HOST_GL = "mancsleverg0005"
+SFTP_PORT = "22"
+SFTP_USER = "micloud"
+SFTP_PASSWORD = "misys123"
 
 ###FFC MCH DB DETAILS###
 DBHost = 'mancsleverg0023'
