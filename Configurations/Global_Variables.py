@@ -187,7 +187,11 @@ SHARE_ADJUSTMENT_TYPE = "Share Adjustment"
 RELEASE_TRANSACTION = "release" 
 PAYMENT_TRANSACTION = "Payment"
 LENDER_SHARES_ADJUSTMENT_LABEL = "Lender Shares Adjustment"
-
+DEBIT_AMT_LABEL = "Debit Amt"
+CREDIT_AMT_LABEL = "Credit Amt"
+AWAITING_SEND_TO_RATE_APPROVAL_STATUS = "Awaiting Send to Rate Approval"
+LOAN_INITIAL_DRAWDOWN_TYPE = "Loan Initial Drawdown"
+RATE_APPROVAL_TRANSACTION = "Rate Approval"
 ### Bank Role ###
 REFERENCE_BANK_ROLE = "Reference Bank"
 
@@ -206,6 +210,8 @@ RESTRICTIONS_TAB = "Restrictions"
 SUBLIMIT_CUST_TAB = "Sublimit/Cust"
 PRICING_RULES_TAB = "Pricing Rules"
 WORKFLOW_TAB = "Workflow"
+GENERAL_TAB = "General"
+RATES_TAB = "Rates"
 
 ### Payment Type ###
 FEE_PAYMENT_FROM_BORROWER_TYPE = "Fee Payment From Borrower"
@@ -217,3 +223,6 @@ ADMIN_FEE_PAYMENT_TITLE = "Admin Fee Payment"
 
 ### Workflow ###
 PAYMENT_WORKFLOW = "Payment"
+
+### Loan Acrrue ###
+TO_THE_ACTUAL_DUE_DATE = "to the actual due date"

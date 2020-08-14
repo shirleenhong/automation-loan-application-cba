@@ -117,7 +117,7 @@ ${templateinput_SingleLOB}    templateinput_SingleLOB.json
 ${templateinput_MultipleLOB}    templateinput_MultipleLOB.json
 ${templateinput_Multiple}    templateinput_Multiple.json
 ${templateinput_baserate}    templateinput_baserate.json
-${TEMPLATE_INACTIVEFUNDINGDESK}    template_InactiveFundingDesk.xml
+${TEMPLATE_INACTIVEFUNDINGDESK}    template_InactiveFundingDesk.xml    
 ${CURR_LOB}
 ${rowID_Audit}
 
@@ -326,7 +326,7 @@ ${TL_BASE_DIRECTORY_FOLDER}    /evgdata/TRANSFORMATION/SFTP/base_directory
 ${TL_FX_ARCHIVE_FOLDER}    /evgdata/TRANSFORMATION/SFTP/archive/fx_rate
 ${TL_FX_DIRECTORY_FOLDER}    /evgdata/TRANSFORMATION/SFTP/fx_directory
 ${TL_CALENDAR_ARCHIVE_FOLDER}    /evgdata/TRANSFORMATION/SFTP/archive/holiday
-${TEMPORARY_FILETEXT}    ..\\CBA_Evergreen\\DataSet\\temp.txt 
+${TEMPORARY_FILETEXT}    ..\\CBA_Evergreen\\DataSet\\temp.txt
 ${TL_FXRATE_LOGFILE}    fxRate.log
 ${TL_FUTURE_DATE_POLLER}    Future Date Poller
 ${TL_FUTURE_DATE_POLLING_TIME}    10 minutes

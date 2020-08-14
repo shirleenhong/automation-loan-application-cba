@@ -83,6 +83,7 @@ LIQ_PCT_InterestPricing_After_Button= 'JavaWindow("title:= .* Interest Pricing")
 LIQ_PCT_InterestPricing_List= 'JavaWindow("title:= .* Interest Pricing").JavaTree("tagname:=Tree")'
 LIQ_PCT_InterestPricing_Validate_Button= 'JavaWindow("title:= .* Interest Pricing").JavaButton("attached text:=Validate")'
 LIQ_PCT_InterestPricing_OK_Button=  'JavaWindow("title:= .* Interest Pricing").JavaButton("attached text:=OK")'
+LIQ_PCT_InterestPricing_Clear_Button = 'JavaWindow("title:= .* Interest Pricing").JavaButton("attached text:=Clear")'
 
 ###Pricing Change Transaction Notebook via FCT - Workflow Tab###
 LIQ_PCT_Workflow_JavaTree= 'JavaWindow("title:=.* Pricing Change Transaction").JavaTab("tagname:=TabFolder").JavaTree("attached text:=Drill down to perform Workflow item")'

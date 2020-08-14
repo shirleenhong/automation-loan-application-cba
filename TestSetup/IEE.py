@@ -1,9 +1,8 @@
-dataset_path = "C:\\Git_Evergreen\\evergreen_projects\\CBA_Evergreen"
-ExcelPath = "C:\\Git_Evergreen\\evergreen_projects\\CBA_Evergreen\\DataSet\\CBA_UAT_DataSet\\EVG_CBAUAT01.xlsx"
+### Dataset Locations ###
+APIDataSet = "C:\\Git_Evergreen\\fms_scotia\DataSet\\Integration_DataSet\\API\\API_Data_Set.xlsx"
+ExcelPath = "C:\\Git_Evergreen\\fms_cba\\DataSet\\Integration_DataSet\\TL\\TL_Data_Set_AU.xlsx"
+dataset_path = "C:\\Git_Evergreen\\fms_cba"
 CBAUAT_ExcelPath = "C:\\Git_Evergreen\\fms_cba\\DataSet\\CBAUATDeal_DataSet\\EVG_CBAUAT03.xlsx"
-APIDataSet = "C:\\Git_Evergreen\\evergreen_projects\\CBA_Evergreen\\DataSet\\API_DataSet\\API_Data_Set.xlsx"
-APIDataSet_EU = "C:\\Git_Evergreen\\evergreen_projects\\CBA_Evergreen\\DataSet\\API_DataSet\\API_Data_Set_EU.xlsx"
-Countries_Codes = "C:\\Git_Evergreen\\evergreen_projects\\CBA_Evergreen\\DataSet\\API_DataSet\\Countries_Codes.xlsx"
 TL_DATASET = "C:\\Git_Evergreen\\evergreen_projects\\CBA_Evergreen\\DataSet\\TL_DataSet\\TL_Data_Set.xls"
 SAPWUL_DATASET = "C:\\Git_evergreen\\evergreen_projects\\CBA_Evergreen\\DataSet\\Downstream_DataSet\\SAPWUL\\SAPWUL_Data_Set.xlsx"
 ComSeeDataSet = 'C:\\Git_Evergreen\\evergreen_projects\\CBA_Evergreen\\DataSet\\Downstream_DataSet\\ComSee\\COMSEE_Data_Set.xls'
@@ -14,10 +13,18 @@ SERVER = "http://mancsleverg0007"
 PORT = "9090"
 MDM_FFC_URL="/mch-ui"
 
-SFTP_HOST = "mancsleverg0006"
+SFTP_HOST = "mancsleverg0005"
 SFTP_PORT = "22"
 SFTP_USER = "micloud"
 SFTP_PASSWORD = "misys123"
+
+OPEAPI_INSTANCE_TL = "openAPI_1.3.0"
+OPEAPI_INSTANCE = "openAPI_1.3.0"
+TEXTJMS_INSTANCE = "distributor_1.3.0"
+CBAINTERFACE_INSTANCE = "CustomInterface_v1.3.2"
+CBAPUSH_INSTANCE = "CustomCBAPush_v1.3.2"
+CUSTOM_INTERFACE_INSTANCE = "CustomInterface_v1.3.2"
+RESPONSE_MECHANISM_INSTANCE = "responsemechanism_1.3.0"
 
 DBServiceName = "MLFFC1.misys.global.ad"
 DBUsername = "MCH"
@@ -31,7 +38,12 @@ MDM_HOST = "http://mancsleverg0007:8081"
 MDM_HOST_PARTY = 'http://mancsleverg0007:8081'
 MDM_User_API = "/corporate/v1/users"
 
-TL_USERNAME = "DONATELO"
+### FFC Credentials ###
+MDM_FFC_Username ='admin'
+MDM_FFC_Password = 'admin'
+
+### TL Credentials ###
+TL_USERNAME = "JCUSR01"
 TL_PASSWORD = "password"
 INPUTTER_USERNAME = "RPTINP01"
 INPUTTER_PASSWORD = "password01"
@@ -67,7 +79,11 @@ TL_SERVICE_HOST = "mancsleverg0007"
 TL_SERVICE_PORT = "22"
 TL_SERVER_USER = "micloud"
 TL_SERVER_PASSWORD = "misys123"
-TL_SERVICE_DIR = "/evgdata/FFC/mch-2.1.3.3.0-6162/config/Transformation/"
+TL_SERVICE_DIR = "/evgdata/FFC/mch-2.1.3.3.0-6162/config/Transformation_129/"
+
+###Screenshots###
+screenshot_Path = "C:\\Git_Evergreen\\fms_cba\\Results"
+SCREENSHOT_FILENAME = ""
 
 ###LIQ ADMIN CREDENTIALS###
 LIQ_ADMIN_USERNAME = "ADMIN1"
@@ -219,6 +235,5 @@ dataset_path = os.path.dirname(os.path.abspath('.//Data_Set'))
 screenshot_path = os.path.dirname(os.path.abspath('.//Results'))
 apidataset_path = os.path.dirname(os.path.abspath('.//API_DataSet'))
 
-Screenshot_Path = "C:\\Git_Evergreen\\fms_cba\\Results"
 retry = "30x"
 retry_interval = "3s" 

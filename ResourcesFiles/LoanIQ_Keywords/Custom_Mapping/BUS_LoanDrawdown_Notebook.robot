@@ -30,20 +30,23 @@ BUS_Input Initial Loan Drawdown Details
 BUS_Validate Initial Loan Dradown Details
     [Documentation]    This keyword is used to run the assigned low level keyword.
     ...    @author: amansuet    24APR2020    - initial create
+    ...    @update: clanding    11AUG2020    - added optional argument
 
     Run Keyword   Validate Initial Loan Dradown Details    ${ARGUMENT_1}    ${ARGUMENT_2}    ${ARGUMENT_3}
     
 BUS_Input General Loan Drawdown Details
     [Documentation]    This keyword is used to run the assigned low level keyword.
     ...    @author: amansuet    24APR2020    - initial create
+    ...    @update: clanding    11AUG2020    - added optional argument
 
     Run Keyword   Input General Loan Drawdown Details    ${ARGUMENT_1}    ${ARGUMENT_2}    ${ARGUMENT_3}    ${ARGUMENT_4}    ${ARGUMENT_5}    ${ARGUMENT_6}
+    ...    ${ARGUMENT_7}    ${ARGUMENT_8}    ${ARGUMENT_9}
     
 BUS_Input Loan Drawdown Rates
     [Documentation]    This keyword is used to run the assigned low level keyword.
     ...    @author: amansuet    24APR2020    - initial create
 
-    Run Keyword   Input Loan Drawdown Rates    ${ARGUMENT_1}    ${ARGUMENT_2}
+    Run Keyword   Input Loan Drawdown Rates    ${ARGUMENT_1}    ${ARGUMENT_2}    ${ARGUMENT_3}    ${ARGUMENT_4}
     
 BUS_Navigate to Drawdown Cashflow Window
     [Documentation]    This keyword is used to run the assigned low level keyword.
@@ -398,5 +401,10 @@ BUS_Enter Loan Drawdown Rates
     ...    @author: dahijara    30JUL2020    - initial create
 
     Run Keyword   Enter Loan Drawdown Rates    ${ARGUMENT_1}    ${ARGUMENT_2}       
-    
+
+BUS_Compute New Facility Available to Draw Amount
+    [Documentation]    This keyword is used to run the assigned low level keyword.
+    ...    @author: dahijara    30JUL2020    - initial create
+
+    Run Keyword   Compute New Facility Available to Draw Amount    ${ARGUMENT_1}    ${ARGUMENT_2}    ${ARGUMENT_3}    
        
