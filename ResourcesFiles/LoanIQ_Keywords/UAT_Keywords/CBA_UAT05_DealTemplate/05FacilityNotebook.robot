@@ -1,5 +1,5 @@
 *** Settings ***
-Resource    ../../../../Configurations/Import_File.robot
+Resource    ../../../../Configurations/LoanIQ_Import_File.robot
     
 *** Keywords ***
 Setup Facility Template D00001151
@@ -105,13 +105,13 @@ Facility Limit Change
     ### Sending to Approval the Facility Change Transaction ###    
     Send to Approval Facility Change Transaction
     
-    Logout from LIQ
+    Logout from Loan IQ
     Login to Loan IQ    ${MANAGER_USERNAME}    ${MANAGER_PASSWORD} 
     
     ### Approving the Facility Change Transaction ###    
     Approve Facility Change Transaction    &{ExcelPath}[Deal_Name]
     Close All Windows on LIQ
-    Logout from LIQ
+    Logout from Loan IQ
     Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}    
     
     ### Releasing the Facility Change Transaction ###
@@ -130,13 +130,13 @@ Facility Limit Change
     ### Sending to Approval the Scheduled Commitment Decrease Transaction        
     Send to Approval Scheduled Commitment Decrease Transaction
     Close All Windows on LIQ    
-    Logout from LIQ
+    Logout from Loan IQ
     Login to Loan IQ    ${MANAGER_USERNAME}    ${MANAGER_PASSWORD}       
     
     ### Approving the Scheduled Commitment Decrease Transaction
     Approval Scheduled Commitment Decrease Transaction    &{ExcelPath}[Deal_Name]
     Close All Windows on LIQ
-    Logout from LIQ
+    Logout from Loan IQ
     Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}   
     
     ### Releasing the Scheduled Commitment Decrease Transaction

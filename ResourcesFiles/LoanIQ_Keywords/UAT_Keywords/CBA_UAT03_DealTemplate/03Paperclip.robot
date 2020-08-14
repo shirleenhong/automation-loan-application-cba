@@ -1,5 +1,5 @@
 *** Settings ***
-Resource    ../../../../Configurations/Import_File.robot
+Resource    ../../../../Configurations/LoanIQ_Import_File.robot
 
 *** Variable ***
 ${sCurrency}
@@ -8,7 +8,7 @@ ${sCurrency}
 Collect Early Prepayment via Paper Clip D00000476
     [Arguments]    ${ExcelPath}
     
-    Logout from LIQ
+    Logout from Loan IQ
 	Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
     
     ### Search for Existing Loan
@@ -39,7 +39,7 @@ Collect Early Prepayment via Paper Clip D00000476
     
     ### Send Paperclip to Approval
     Navigate Notebook Workflow    ${LIQ_PendingPaperClip_Window}    ${LIQ_PaperClip_Tabs}    ${LIQ_PaperClip_Workflow_Tab}    Send to Approval
-    Logout from LIQ
+    Logout from Loan IQ
     Login to Loan IQ    ${MANAGER_USERNAME}    ${MANAGER_PASSWORD}
     
     ### Approve Paperclip Transaction
@@ -49,7 +49,7 @@ Collect Early Prepayment via Paper Clip D00000476
     Release Cashflow    &{ExcelPath}[Borrower_ShortName]    release
     
     #### Release PaperClip
-    Logout from LIQ
+    Logout from Loan IQ
     Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
     Select Item in Work in Process    Payments    Awaiting Release    Paper Clip     &{ExcelPath}[Deal_Name]
     Navigate Notebook Workflow    ${LIQ_PendingPaperClip_Window}    ${LIQ_PaperClip_Tabs}    ${LIQ_PaperClip_Workflow_Tab}    Release

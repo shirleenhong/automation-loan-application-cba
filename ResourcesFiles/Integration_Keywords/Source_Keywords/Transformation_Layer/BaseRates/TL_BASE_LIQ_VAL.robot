@@ -1,5 +1,5 @@
 *** Settings ***
-Resource    ../../../../../Configurations/LoanIQ_Import_File.robot
+Resource    ../../../../../Configurations/Integration_Import_File.robot
 
 *** Keywords ***
 
@@ -231,7 +231,6 @@ Validate Funding Rates in Table Maintenance is Reflected
     ...    @update: clanding    19MAR2019    - update when ${sRepricingFreq} is empty
     ...    @update: clanding    25MAR2019    - updated '${sRepricingFreq}'=='UNKN'
     ...    @update: jdelacru    14FEB2020    - removed additional number arguments for select string
-    ...    @update: ehugo    18JUN2020    - updated screenshot location
     [Arguments]    ${sBaseRateCode}    ${sRepricingFreq}    ${iRate}    ${sFundingDesk}    ${sEffDate}    ${sCurrency}
     
     ${NewRatePercent_5Dec}    ${NewRate}    Compute Rate Percentage to N Decimal Values and Return    ${iRate}    5
@@ -286,7 +285,7 @@ Validate Funding Rates in Table Maintenance is Reflected
     ...    ELSE IF    '${hasCluster_with_repfreq}'=='False'    Log    
     ...    ${sBaseRateCode.upper()} - ${sFundingDesk} - ${sRepricingFreq} - ${sCurrency} - ${EffDate_Without_0} - ${NewRate} does not exists in the table.
     ...    ELSE    Log    Keyword not applicable
-    Run Keyword If    ${hasCluster_with_repfreq}==True    Take Screenshot    ${screenshot_path}/Screenshots/Integration/TableMaintenance_FundingDesk
+    Run Keyword If    ${hasCluster_with_repfreq}==True    Take Screenshot    TableMaintenance_FundingDesk
         
     ###WITHOUT CLUSTER and WITH REPRICING FREQUENCY###
     ${hasNoCluster_with_repfreq}    Run Keyword If    '${sFundingDesk}'=='None' and '${sRepricingFreq}'!='None'    Run Keyword And Return Status     Mx LoanIQ Select String    
@@ -296,7 +295,7 @@ Validate Funding Rates in Table Maintenance is Reflected
     ...    ELSE IF    '${hasNoCluster_with_repfreq}'=='False'    Log    
     ...    ${sBaseRateCode.upper()} - - ${sRepricingFreq} - ${sCurrency} - ${EffDate_Without_0} - ${NewRate} does not exists in the table.
     ...    ELSE    Log    Keyword not applicable
-    Run Keyword If    ${hasNoCluster_with_repfreq}==True    Take Screenshot    ${screenshot_path}/Screenshots/Integration/TableMaintenance_FundingDesk
+    Run Keyword If    ${hasNoCluster_with_repfreq}==True    Take Screenshot    TableMaintenance_FundingDesk
     
     ###WITH CLUSTER and WITHOUT REPRICING FREQUENCY###
     ${hasCluster_without_repfreq}      Run Keyword If    '${sFundingDesk}'!='None' and '${sRepricingFreq}'=='None'    Run Keyword And Return Status     Mx LoanIQ Select String    
@@ -306,7 +305,7 @@ Validate Funding Rates in Table Maintenance is Reflected
     ...    ELSE IF    '${hasCluster_without_repfreq}'=='False'    Log    
     ...    ${sBaseRateCode.upper()} - ${sFundingDesk} - - ${sCurrency} - ${EffDate_Without_0} - ${NewRate} does not exists in the table.
     ...    ELSE    Log    Keyword not applicable
-    Run Keyword If    ${hasCluster_without_repfreq}==True    Take Screenshot    ${screenshot_path}/Screenshots/Integration/TableMaintenance_FundingDesk
+    Run Keyword If    ${hasCluster_without_repfreq}==True    Take Screenshot    TableMaintenance_FundingDesk
     
     ###WITHOUT CLUSTER and WITHOUT REPRICING FREQUENCY###
     ${hasNoCluster_without_repfreq}    Run Keyword If    '${sFundingDesk}'=='None'    Run Keyword And Return Status     Mx LoanIQ Select String    
@@ -318,7 +317,7 @@ Validate Funding Rates in Table Maintenance is Reflected
     ...    ELSE IF    '${hasNoCluster_without_repfreq}'=='False'    Log    
     ...    ${sBaseRateCode.upper()} - - - ${sCurrency}\t${EffDate_Without_0}\t${NewRate} does not exists in the table.
     ...    ELSE    Log    Keyword not applicable
-    Take Screenshot    ${screenshot_path}/Screenshots/Integration/TableMaintenance_FundingDesk
+    Take Screenshot    TableMaintenance_FundingDesk
    
     Run Keyword If    '${hasCluster_with_repfreq}'=='False' and '${hasCluster_with_repfreq}'!='None'    Log    Base Rate Code of ${sBaseRateCode.upper()} with Repricing Frequency of ${sRepricingFreq} and Funding Desk of ${sFundingDesk} with Effective Date ${EffDate_Without_0} does not exists in the table.    level=ERROR
     ...    ELSE IF    '${hasNoCluster_with_repfreq}'=='False' and '${hasNoCluster_with_repfreq}'!='None'    Log    Base Rate Code of ${sBaseRateCode.upper()} with Repricing Frequency of ${sRepricingFreq} with Effective Date ${EffDate_Without_0} and without Cluster does not exists in the table.    level=ERROR
@@ -364,7 +363,7 @@ Validate Funding Rates in Table Maintenance is Reflected
     Run Keyword If    '${VALUE_DATE}' > '${PUBLISH_DATE}'    Log    Processing GS File even Value Date ${VALUE_DATE} is greater than Rate Publish Date ${PUBLISH_DATE}.
     Run Keyword If    '${PROCESSING_DATE}' > '${PUBLISH_DATE}'     Log    Processing GS File even Processing Date ${PROCESSING_DATE} is greater than Rate Publish Date ${PUBLISH_DATE}.
     
-    Take Screenshot    ${screenshot_path}/Screenshots/Integration/TableMaintenance_FundingRatesUpdates
+    Take Screenshot    TableMaintenance_FundingRatesUpdates
     
     mx LoanIQ click    ${LIQ_FundingRatesUpdate_Cancel_Btn}
     mx LoanIQ click    ${LIQ_BrowseFundingRates_Exit_Button}
@@ -432,7 +431,6 @@ Validate Funding Rates in Treasury Navigation is Reflected
     ...    @updated: clanding    01MAR2019    - Refactor based from CBA Evergreen Automation Checklist and PointSheet_v1.0.1. 
     ...                                       - Moved spread rate and spread effective date to last part of arguments to make it optional.
     ...    @update: clanding    19MAR2019     - Update when ${sRepricingFreq} is empty, fixed codes for Spread Rate and Date
-    ...    @update: ehugo    18JUN2020    - updated screenshot location
     [Arguments]    ${sBaseRateCode}    ${sRepricingFreq}    ${iRate}    ${sFundingDesk}    ${sEffDate}    ${sCurrency}
     ...    ${sSpreadRate}=None    ${sSpreadEffDate}=None
     
@@ -490,35 +488,35 @@ Validate Funding Rates in Treasury Navigation is Reflected
     ###CLICK THE BASE RATE CODE###
     ###WITH CLUSTER and REPRICING FREQUENCY###
     ${isBaseRateCodeExists}    Run Keyword If    '${sFundingDesk}'!='None' and '${sRepricingFreq}'!='None'    Run Keyword And Return Status     Mx LoanIQ Select String    ${LIQ_BaseRate_Table_Row}    ${sBaseRateCode.upper()}\t${Funding_Desk_Desc}\t${Repricing_Frequency_Text}\t${sCurrency}\t${iRate}\t${BASE_EFFECTIVE_DATE_WITH_0}
-    Run Keyword If    ${isBaseRateCodeExists}==${True}    Take Screenshot    ${screenshot_path}/Screenshots/Integration/TreasuryNavigation_FundingRates
+    Run Keyword If    ${isBaseRateCodeExists}==${True}    Take Screenshot    TreasuryNavigation_FundingRates
     Run Keyword If    ${isBaseRateCodeExists}==${True}    Mx LoanIQ DoubleClick    ${LIQ_BaseRate_Table_Row}    ${sBaseRateCode.upper()}\t${Funding_Desk_Desc}\t${Repricing_Frequency_Text}\t${sCurrency}\t${iRate}\t${BASE_EFFECTIVE_DATE_WITH_0}
     ...    ELSE IF    ${isBaseRateCodeExists}==${False}    Log    Base Rate Code of ${sBaseRateCode.upper()} with Funding Desk of ${Funding_Desk_Desc} and Repricing Frequency of ${Repricing_Frequency_Text} does not exists in the table. Some of the fields doesn't match.
     Run Keyword If    ${isBaseRateCodeExists}==${False} and '${isBaseRateCodeExists}'!='None'    Fail    Base Rate Code of ${sBaseRateCode.upper()} with Funding Desk of ${Funding_Desk_Desc} and Repricing Frequency of ${Repricing_Frequency_Text} and Effective Date of ${BASE_EFFECTIVE_DATE_WITH_0} does not exists in the table.
     
     ###WITHOUT CLUSTER and WITH REPRICING FREQUENCY###
     ${isBaseRateCodeExists_without_cluster}    Run Keyword If    '${sFundingDesk}'=='None' and '${sRepricingFreq}'!='None'    Run Keyword And Return Status     Mx LoanIQ Select String    ${LIQ_BaseRate_Table_Row}    ${sBaseRateCode.upper()}\t\t${Repricing_Frequency_Text}\t${sCurrency}\t${iRate}\t${BASE_EFFECTIVE_DATE_WITH_0}
-    Run Keyword If    ${isBaseRateCodeExists_without_cluster}==${True}    Take Screenshot    ${screenshot_path}/Screenshots/Integration/TreasuryNavigation_FundingRates
+    Run Keyword If    ${isBaseRateCodeExists_without_cluster}==${True}    Take Screenshot    TreasuryNavigation_FundingRates
     Run Keyword If    ${isBaseRateCodeExists_without_cluster}==${True}    Mx LoanIQ DoubleClick    ${LIQ_BaseRate_Table_Row}    ${sBaseRateCode.upper()}\t\t${Repricing_Frequency_Text}\t${sCurrency}\t${iRate}\t${BASE_EFFECTIVE_DATE_WITH_0}
     ...    ELSE IF    ${isBaseRateCodeExists_without_cluster}==${False}    Log    Base Rate Code of ${sBaseRateCode.upper()} without Funding Desk and with Repricing Frequency of ${Repricing_Frequency_Text} does not exists in the table. Some of the fields doesn't match.     
     Run Keyword If    ${isBaseRateCodeExists_without_cluster}==${False} and '${isBaseRateCodeExists_without_cluster}'!='None'    Fail    Base Rate Code of ${sBaseRateCode.upper()} without Funding Desk and with Repricing Frequency of ${Repricing_Frequency_Text} and Effective Date of ${BASE_EFFECTIVE_DATE_WITH_0} does not exists in the table.
     
     ###WITHOUT REPRICING FREQUENCY###
     ${isBaseRateCodeExists_without_repfreq}    Run Keyword If    '${sFundingDesk}'!='None' and '${sRepricingFreq}'=='None'    Run Keyword And Return Status     Mx LoanIQ Select String    ${LIQ_BaseRate_Table_Row}    ${sBaseRateCode.upper()}\t${Funding_Desk_Desc}\t\t${sCurrency}\t${iRate}\t${BASE_EFFECTIVE_DATE_WITH_0}
-    Run Keyword If    ${isBaseRateCodeExists_without_repfreq}==${True}    Take Screenshot    ${screenshot_path}/Screenshots/Integration/TreasuryNavigation_FundingRates
+    Run Keyword If    ${isBaseRateCodeExists_without_repfreq}==${True}    Take Screenshot    TreasuryNavigation_FundingRates
     Run Keyword If    ${isBaseRateCodeExists_without_repfreq}==${True}    Mx LoanIQ DoubleClick    ${LIQ_BaseRate_Table_Row}    ${sBaseRateCode.upper()}\t${Funding_Desk_Desc}\t\t${sCurrency}\t${iRate}\t${BASE_EFFECTIVE_DATE_WITH_0}     
     ...    ELSE IF    ${isBaseRateCodeExists_without_repfreq}==${False}    Log    Base Rate Code of ${sBaseRateCode.upper()} with Funding Desk of ${Funding_Desk_Desc} without Repricing Frequency does not exists in the table. Some of the fields doesn't match.
     Run Keyword If    ${isBaseRateCodeExists_without_repfreq}==${False} and '${isBaseRateCodeExists_without_repfreq}'!='None'    Fail    Base Rate Code of ${sBaseRateCode.upper()} with Funding Desk of ${Funding_Desk_Desc} without Repricing Frequency and Effective Date of ${BASE_EFFECTIVE_DATE_WITH_0} does not exists in the table.
     
     ###WITHOUT CLUSTER AND REPRICING FREQUENCY###
     ${isBaseRateCodeExists_without_cluster_repfreq}    Run Keyword If    '${sFundingDesk}'=='None' and '${sRepricingFreq}'=='None'    Run Keyword And Return Status     Mx LoanIQ Select String    ${LIQ_BaseRate_Table_Row}    ${sBaseRateCode.upper()}\t\t\t${sCurrency}\t${iRate}\t${BASE_EFFECTIVE_DATE_WITH_0}
-    Run Keyword If    ${isBaseRateCodeExists_without_cluster_repfreq}==${True}    Take Screenshot    ${screenshot_path}/Screenshots/Integration/TreasuryNavigation_FundingRates
+    Run Keyword If    ${isBaseRateCodeExists_without_cluster_repfreq}==${True}    Take Screenshot    TreasuryNavigation_FundingRates
     Run Keyword If    ${isBaseRateCodeExists_without_cluster_repfreq}==${True}    Mx LoanIQ DoubleClick    ${LIQ_BaseRate_Table_Row}    ${sBaseRateCode.upper()}\t\t\t${sCurrency}\t${iRate}\t${BASE_EFFECTIVE_DATE_WITH_0}     
     ...    ELSE IF    ${isBaseRateCodeExists_without_cluster_repfreq}==${False}    Log    Base Rate Code of ${sBaseRateCode.upper()} without Funding Desk and Repricing Frequency does not exists in the table. Some of the fields doesn't match.
     Run Keyword If    ${isBaseRateCodeExists_without_cluster_repfreq}==${False} and '${isBaseRateCodeExists_without_cluster_repfreq}'!='None'    Fail    Base Rate Code of ${sBaseRateCode.upper()} without Funding Desk and Repricing Frequency with Effective Date of ${BASE_EFFECTIVE_DATE_WITH_0} does not exists in the table.    
     
     ###ACTIVATE FUNDING RATE DETAILS WINDOW###
     mx LoanIQ activate window    ${LIQ_FundingRatesDetails_Window}
-    Take Screenshot    ${screenshot_path}/Screenshots/Integration/TreasuryNavigation_FundingRatesDetails
+    Take Screenshot    TreasuryNavigation_FundingRatesDetails
    
     ###SETTING OF LOCATORS###
     ${LIQ_FundingDesk_BaseRateDescription_Text}     Set Attached Text and Label Locator Single Text        Funding Rate Details    ${BaseRate_Description}
@@ -556,7 +554,7 @@ Validate Funding Rates in Treasury Navigation is Reflected
     ...    ${LIQ_History_Tree_Field}    ${BASE_EFFECTIVE_DATE_WITHOUT_0}    ${BASE_EFFECTIVE_DATE_WITH_0}    ${iRate}    ${NewRatePercent_6Dec}    ${CONV_BACKDATED_DATE_WITH_0}    ${CONV_BACKDATED_DATE_WITHOUT_0}
     ...    ELSE    Run Keyword And Continue On Failure    Validate Base Rate History Table in Funding Rate    ${LIQ_History_Button}    ${LIQ_History_Tree_Field}    
     ...    ${BASE_EFFECTIVE_DATE_WITHOUT_0}    ${BASE_EFFECTIVE_DATE_WITH_0}    ${iRate}    ${NewRatePercent_6Dec}    ${CONV_BACKDATED_DATE_WITH_0}    ${CONV_BACKDATED_DATE_WITHOUT_0}       
-    Run Keyword If    '${sEffDate}' == 'None'    Take Screenshot    ${screenshot_path}/Screenshots/Integration/TreasuryNavigation_FundingRatesHistory
+    Run Keyword If    '${sEffDate}' == 'None'    Take Screenshot    TreasuryNavigation_FundingRatesHistory
     
     ###VALIDATE FUNDING RATE SPREAD HISTORY LIST###
     Run Keyword If    '${sSpreadRate}'=='None'    Log    Spread Effective Date is Empty.
@@ -575,7 +573,7 @@ Validate Funding Rates in Treasury Navigation is Reflected
     ...    ELSE IF    ${Line_Count}!=1 and '${sSpreadRate}'=='no tag'    Run Keyword And Continue On Failure    Validate Events Rate Record in Events Table in Funding Rate    ${LIQ_FundingEventsList_Tree_Field}    ${BASE_EFFECTIVE_DATE_WITH_0}    ${SPREAD_EFFECTIVE_DATE_WITH_0}    ${iRate}    ${sSpreadRate}    
     ...    ELSE IF    ${Line_Count}!=1 and '${sSpreadRate}'!='no tag' and '${sSpreadRate}'!='None' and '${sSpreadRate}'!=''    Run Keyword And Continue On Failure    Validate Events Spread Record in Events Table in Funding Rate    ${SPREAD_EFFECTIVE_DATE_WITH_0}    ${SpreadRate}
     ...    ELSE    Log    Events will only record change in Rates and Effective Dates.
-    Take Screenshot    ${screenshot_path}/Screenshots/Integration/TreasuryNavigation_FundingRatesEvents    
+    Take Screenshot    TreasuryNavigation_FundingRatesEvents    
     Run Keyword If    ${Line_Count}==1    Run Keywords    mx LoanIQ activate window    ${LIQ_FundingRatesDetails_Window}    
     ...    AND    mx LoanIQ click    ${LIQ_FundingRate_Exit_Btn}
     ...    AND    mx LoanIQ activate    ${LIQ_FundingRates_Window}
@@ -587,7 +585,6 @@ Validate Funding Rates in Treasury Navigation is Not Reflected
     [Documentation]    This keyword is used to validate records not displaying in LIQ Treasury Navigation > Funding Rates for Base Rates.
     ...    @author: clanding    07MAR2019    - initial create, clone from Validation Loan IQ Base Rates in Treasury Navigation
     ...                                      - removed maximize and activate window for Funding Rates
-    ...    @update: ehugo    18JUN2020    - updated screenshot location
     [Arguments]    ${sBaseRateCode}    ${sRepricingFreq}    ${iRate}    ${sFundingDesk}    ${sEffDate}    ${sCurrency}
     ...    ${sSpreadRate}=None    ${sSpreadEffDate}=None
     
@@ -664,7 +661,7 @@ Validate Funding Rates in Treasury Navigation is Not Reflected
     Run Keyword If    ${isBaseRateCodeExists_without_cluster_repfreq}==${False}    Log    Correct!! Base Rate is not existing in Treasury Navigation.
     ...    ELSE IF    ${isBaseRateCodeExists_without_cluster_repfreq}==${True}    Log    Incorrect!! Base Rate is existing in Treasury Navigation.    level=ERROR
     ...    ELSE    Log    Keyword not applicable.
-    Take Screenshot    ${screenshot_path}/Screenshots/Integration/TreasuryNavigation_FundingRates
+    Take Screenshot    TreasuryNavigation_FundingRates
     
     Close All Windows on LIQ
     
@@ -708,24 +705,21 @@ Validate Inactive Tenor Code Cannot be Used for Pricing Option in LoanIQ
     \    ${RateTenor}    Run Keyword and Continue on Failure   Trim Leading 0 from Rate Tenor    &{dTransformedData}[rateTenor] 
     \    Run Keyword and Continue on Failure    Verify Pricing Option Frequency is not Available    ${PricingOption}    ${RateTenor}
     Close Current Excel Document
-
 Verify Pricing Option Frequency is not Available
     [Documentation]    This keyword verifies the pricing option is not present
     ...    @author: cfrancis    10SEP2019    - initial create
-    ...    @update: ehugo    18JUN2020    - updated screenshot location
     [Arguments]    ${sPricingOption}    ${sRateTenor}
-    
     mx LoanIQ activate window    ${LIQ_InterestPricingOption_Window}
     Mx LoanIQ Verify Object Exist    ${LIQ_InterestPricingOption_Dropdown}    VerificationData="Yes"
     Mx LoanIQ Select Combo Box Value    ${LIQ_InterestPricingOption_Dropdown}    ${sPricingOption}
-    Take Screenshot    ${screenshot_path}/Screenshots/Integration/PricingOption_Selected
+    Take Screenshot    PricingOption_Selected
     mx LoanIQ click    ${LIQ_InterestPricingOption_Frequency_Button}
     ${Status}    Run Keyword and Return Status    Mx LoanIQ Select Or Doubleclick In Tree By Text    ${LIQ_FrequencySelectionList_Available_JavaTree}    ${sRateTenor}%s
     Log    ${Status}
     Run Keyword If    ${Status}==${False} and '${sPricingOption}' != 'Default'    Log    Correct!! Base Rate Code ${sPricingOption} with ${sRateTenor} Tenor is not existing in Pricing Option.
     ...    ELSE IF    ${Status}==${True}    Run Keyword and Continue on Failure    Fail    Incorrect!! Base Rate Code ${sPricingOption} with ${sRateTenor} Tenor is existing in Pricing Option.
     ...    ELSE    Run Keyword and Continue on Failure    Fail    Keyword not applicable for Pricing Option ${sPricingOption} and ${sRateTenor} Tenor.
-    Take Screenshot    ${screenshot_path}/Screenshots/Integration/PricingOption_Frequency
+    Take Screenshot    PricingOption_Frequency
     mx LoanIQ click    ${LIQ_FrequencySelectionList_Cancel_Button}
     
 Convert Pricing Option from Base Rate Code and Available Rate

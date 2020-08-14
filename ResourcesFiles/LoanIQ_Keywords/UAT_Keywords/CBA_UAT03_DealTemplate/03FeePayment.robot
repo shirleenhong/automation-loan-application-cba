@@ -1,5 +1,5 @@
 *** Settings ***
-Resource    ../../../../Configurations/Import_File.robot
+Resource    ../../../../Configurations/LoanIQ_Import_File.robot
 
 
 *** Keywords ***
@@ -10,7 +10,7 @@ Collect LFIA Payment D00000476
     [Arguments]    ${ExcelPath}
         
     ### Login to LIQ ###
-    Logout from LIQ
+    Logout from Loan IQ
     Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
         
     ### Launch Facility ###
@@ -51,14 +51,14 @@ Collect LFIA Payment D00000476
     
     ### Send to Approval ###
     Navigate Notebook Workflow    ${LIQ_OngoingFeePayment_Window}    ${LIQ_PaymentNotebook_Tab}    ${LIQ_OngoingFeePaymentNotebook_Workflow_JavaTree}    Send to Approval
-    Logout from LIQ
+    Logout from Loan IQ
     Login to Loan IQ    ${SUPERVISOR_USERNAME}    ${SUPERVISOR_PASSWORD}
     Select Item in Work in Process    Payments    Awaiting Approval    Ongoing Fee Payment     &{ExcelPath}[Facility_Name]
     
     Navigate Notebook Workflow    ${LIQ_OngoingFeePayment_Window}    ${LIQ_PaymentNotebook_Tab}    ${LIQ_OngoingFeePaymentNotebook_Workflow_JavaTree}    Approval
     
     ### Release ###
-    Logout from LIQ
+    Logout from Loan IQ
     Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
     Select Item in Work in Process    Payments    Awaiting Release    Ongoing Fee Payment     &{ExcelPath}[Facility_Name]
     # Navigate Notebook Workflow    ${LIQ_OngoingFeePayment_Window}    ${LIQ_PaymentNotebook_Tab}    ${LIQ_OngoingFeePaymentNotebook_Workflow_JavaTree}    Release Cashflows
@@ -71,7 +71,7 @@ Collect Break Cost Fee for Early Prepayment D00000476
     [Arguments]    ${ExcelPath}
     
     ###Login to Original User###
-    Logout from LIQ
+    Logout from Loan IQ
     Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
     
     #LIQ Window
@@ -99,13 +99,13 @@ Collect Break Cost Fee for Early Prepayment D00000476
 
     ### Send Fee to Approval
     Navigate Notebook Workflow    ${LIQ_Breakfunding_Window}    ${LIQ_Breakfunding_Workflow_Tab}    ${LIQ_Breakfunding_WorkflowItems_List}    Send to Approval
-    Logout from LIQ
+    Logout from Loan IQ
     Login to Loan IQ    ${SUPERVISOR_USERNAME}    ${SUPERVISOR_USERNAME}
     Select Item in Work in Process    Payments    Awaiting Approval    Break Cost Fee     &{ExcelPath}[Facility_Name]
     Navigate Notebook Workflow    ${LIQ_Breakfunding_Window}    ${LIQ_Breakfunding_Workflow_Tab}    ${LIQ_Breakfunding_WorkflowItems_List}    Approval 
     
     ### Approve and Release Breakfunding Fee
-    Logout from LIQ
+    Logout from Loan IQ
     Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
     Select Item in Work in Process    Payments    Awaiting Release    Break Cost Fee     &{ExcelPath}[Facility_Name]
     Navigate Notebook Workflow    ${LIQ_Breakfunding_Window}    ${LIQ_Breakfunding_Workflow_Tab}    ${LIQ_Breakfunding_WorkflowItems_List}    Release
@@ -118,7 +118,7 @@ Collect Extension Fee for D00000476
     [Arguments]    ${ExcelPath}
     
     ### Approve and Release Breakfunding Fee
-    Logout from LIQ
+    Logout from Loan IQ
     Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
     
     Open Existing Deal    &{ExcelPath}[Deal_Name]
@@ -134,7 +134,7 @@ Collect Extension Fee for D00000476
     Send to Approval Upfront Fee Payment    
     
     ###Upfront Fee Payment Workflow Tab- Approval Item###
-    Logout from LIQ
+    Logout from Loan IQ
     Login to Loan IQ    ${SUPERVISOR_USERNAME}   ${SUPERVISOR_PASSWORD}
     Navigate to Payment Notebook via WIP    Payments    Awaiting Approval    Fee Payment From Borrower    &{ExcelPath}[Deal_Name]    
     Approve Upfront Fee Payment

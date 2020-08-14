@@ -1,12 +1,11 @@
 *** Settings ***
-Resource    ../../../../../Configurations/LoanIQ_Import_File.robot
+Resource    ../../../../../Configurations/Integration_Import_File.robot
 
 *** Keywords ***
 
 Validate FFC for TL Calendar Success
     [Documentation]    This keyword is used to validate Calendar Splitter, OpenAPI, Distributor, CustomCBAPush and Response Mechanism in MCH FFC UI.
     ...    @author: clanding    15JUL2019    - initial create
-    ...    @updated: mgaling    12MAR2020    changed ${CUSTOM_INTERFACE_INSTANCE} into sOutputType=${TLSUCCESS_OUTPUT_TYPE}  
     [Arguments]    ${sInputFilePath}    ${sInputFileName}    ${sInputXML}    ${sOutputFilePath}    ${sOutputFileName}    ${sOutputXML}    ${sResponse}    ${sResponseMechanism}
     
     Login to MCH UI
@@ -15,7 +14,7 @@ Validate FFC for TL Calendar Success
     Wait Until Element Is Visible    ${FFC_Dashboard}    30s
     ${aHeaderRefNameList}    Create List    ${REQUESTS_ID}
     ${aExpectedRefList}    Create List    ${FILE1_ARCHIVE_NAME}
-    Go to Dashboard and Click Source API Name    ${TL_CAL_ACK_MESSAGE_SOURCENAME}    sOutputType=${TLSUCCESS_OUTPUT_TYPE}
+    Go to Dashboard and Click Source API Name    ${TL_CAL_ACK_MESSAGE_SOURCENAME}    ${CUSTOM_INTERFACE_INSTANCE}
     ${ColumnIndex}    Filter by Multiple Reference Headers and Values and Return Column Index    ${aHeaderRefNameList}    ${aExpectedRefList}
     ${Results_Row_Count}    SeleniumLibraryExtended.Get Element Count    ${Results_Row}
     ${RequestID_UI}    Get Results Table Column Value by Header Title and Return    ${Results_Row_Count}    ${REQUESTS_ID}

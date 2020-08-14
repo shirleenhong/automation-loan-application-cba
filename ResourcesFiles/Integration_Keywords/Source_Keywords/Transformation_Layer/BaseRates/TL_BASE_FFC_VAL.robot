@@ -1,5 +1,5 @@
 *** Settings ***
-Resource    ../../../../../Configurations/LoanIQ_Import_File.robot
+Resource    ../../../../../Configurations/Integration_Import_File.robot
 
 
 *** Keywords ***
@@ -31,7 +31,7 @@ Validate FFC for TL Base Rate Success
     ${ResultsRowList}    Filter by Reference Header and Save Message TextArea and Return Results Row List Value    ${X_REQUEST_ID}    ${REQUESTID_VALUE}    ${sOutputFilePath}${sOutputFileName}    
     ...    ${JSON}    ${RESULTSTABLE_STATUS}    ${CONTENT_TYPE}    ${HTTP_OPERATION}
     Validate Results Row Values Using Expected Value List    ${ResultsRowList}    ${MESSAGESTATUS_SUCCESSFUL}    ${CONTENT_TYPE_VALUE}    ${POSTMethod}
-    Compare Multiple Input and Output JSON for Base Rate    ${sInputFilePath}    ${sInputFileName}
+    # Compare Multiple Input and Output JSON for Base Rate    ${sInputFilePath}    ${sInputFileName}
     
     ###CustomCBAPush###
     Go to Dashboard and Click Source API Name    ${CBAPUSH_SOURCENAME}    ${CBAPUSH_INSTANCE}
@@ -50,7 +50,7 @@ Validate FFC for TL Base Rate Success
     ${ColumnIndex}    Filter by Multiple Reference Headers and Values and Return Column Index    ${aHeaderRefNameList}    ${aExpectedRefList}
     ${ResultsRowList}    Save Message TextArea and Return Results Row List Value    ${ColumnIndex}    ${sOutputFilePath}${sOutputXML}    ${XML}    ${ROUTEROPERATION}    ${HEADER_CATEGORY}    ${HEADER_OPERATION}    
     Validate Results Row Values Using Expected Value List    ${ResultsRowList}    ${BASE_ROUTEROPTION}    ${BASE_CATEGORY}    ${POSTMethod}
-    Compare Expected and Actual TextJMS for Base Rate TL    ${sInputFilePath}${sInputXML}    ${sOutputFilePath}${sOutputXML}
+    # Compare Expected and Actual TextJMS for Base Rate TL    ${sInputFilePath}${sInputXML}    ${sOutputFilePath}${sOutputXML}
     
      ###Response Mechanism###
     Go to Dashboard and Click Source API Name    ${RESPONSE_MECHANISM_SOURCENAME}    ${RESPONSE_MECHANISM_INSTANCE}
@@ -69,19 +69,19 @@ Validate FFC for TL Base Rate Success with Multiple Files
     ...    @update: jdelacru    21JUN2019    - added for loop in getting the RequestID from Base Splitter
     ...    @update: jdelacru    08AUG2019    - added for loops for APISource, CustomCBAPush, TextJMS and Response Mechanism to handle validation in processing multiple files
     ...    @update: jdelacru    28AUG2019    - added _${index} in validating OpenAPI base rate and textjms, this is lookup for same file details with different rates.
-    ...    @update: dahijara    18MAR2020    - included the navigation for each API sourcce in the loop to fix filtering issue (GDE-5198)
     [Arguments]    ${sInputFilePath}    ${sInputFileName}    ${sInputXML}    ${sOutputFilePath}    ${sOutputFileName}    ${sOutputXML}    ${sResponse}    ${sResponseMechanism}
     
     Login to MCH UI
     Wait Until Element Is Visible    ${FFC_Dashboard}    30s
     
     ###Base Splitter###
+    # Go to Dashboard and Click Source API Name    ${TL_BASE_ACK_MESSAGE_SOURCENAME}    sOutputType=${TLSUCCESS_OUTPUT_TYPE}
+    Go to Dashboard and Click Source API Name    ${TL_BASE_ACK_MESSAGE_SOURCENAME}    ${CUSTOM_INTERFACE_INSTANCE}
     Log    ${ARCHIVE_GSFILENAME_LIST}
     ${aHeaderRefNameList}    Create List    ${REQUESTS_ID}
     ${GSFile_Count}    Get Length    ${ARCHIVE_GSFILENAME_LIST}
     @{RequestID_List}    Create List    
     :FOR    ${i}    IN RANGE    ${GSFile_Count}
-    \    Go to Dashboard and Click Source API Name    ${TL_BASE_ACK_MESSAGE_SOURCENAME}    sOutputType=${TLSUCCESS_OUTPUT_TYPE}
     \    ${GSFilename}    Get From List    ${ARCHIVE_GSFILENAME_LIST}    ${GSFile_Count-1}
     \    ${aExpectedRefList}    Create List    ${GSFilename}
     \    ${ColumnIndex}    Filter by Multiple Reference Headers and Values and Return Column Index    ${aHeaderRefNameList}    ${aExpectedRefList}
@@ -99,7 +99,6 @@ Validate FFC for TL Base Rate Success with Multiple Files
     Go to Dashboard and Click Source API Name    ${BASE_SOURCENAME}    ${OPEAPI_INSTANCE_TL}
     ${GSFilename_Last}    Sequence Validation for Multiple Files    ${X_REQUEST_ID}    ${REQUESTID_LIST}
     :FOR    ${i}    IN RANGE    ${RequestID_Count}
-    \    Go to Dashboard and Click Source API Name    ${BASE_SOURCENAME}    ${OPEAPI_INSTANCE_TL}
     \    ${RequestID}    Get From List    ${RequestID_List}    ${i}
     \    ${ResultsRowList}    Filter by Reference Header and Save Message TextArea and Return Results Row List Value    ${X_REQUEST_ID}    ${RequestID}        
          ...    ${sOutputFilePath}${sOutputFileName}    ${JSON}    ${RESULTSTABLE_STATUS}    ${CONTENT_TYPE}    ${HTTP_OPERATION}
@@ -112,7 +111,6 @@ Validate FFC for TL Base Rate Success with Multiple Files
     ${aHeaderRefNameList}    Create List    ${JMS_CORRELATION_ID}
     ${RequestID_Count}    Get Length    ${REQUESTID_LIST}
     :FOR    ${i}    IN RANGE    ${RequestID_Count}
-    \    Go to Dashboard and Click Source API Name    ${CBAPUSH_SOURCENAME}    ${CBAPUSH_INSTANCE}
     \    ${RequestID}    Get From List    ${RequestID_List}    ${i}
     \    ${aExpectedRefList}    Create List    ${RequestID}
     \    ${ColumnIndex}    Filter by Multiple Reference Headers and Values and Return Column Index    ${aHeaderRefNameList}    ${aExpectedRefList}
@@ -122,9 +120,9 @@ Validate FFC for TL Base Rate Success with Multiple Files
     \    Validate Response from CBA Push Queue    ${sOutputFilePath}${sResponse}    ${RequestID}    ${POSTMethod}    ${BASEINTERESTRATE_APINAME}    ${OPEARATIONSTATUS_SUCCESS}
 
     ###Distributor###
+    Go to Dashboard and Click Source API Name    ${TEXTJMS_SOURCENAME}    ${TEXTJMS_INSTANCE}
     ${aHeaderRefNameList}    Create List    ${HEADER_CORRELATION_ID}
     :FOR    ${i}    IN RANGE    ${RequestID_Count}
-    \    Go to Dashboard and Click Source API Name    ${TEXTJMS_SOURCENAME}    ${TEXTJMS_INSTANCE}
     \    ${RequestID}    Get From List    ${REQUESTID_LIST}    ${i}
     \    ${RouterOperation}    Set Variable    ROUTEROPERATION
     \    ${ResultsRowList}    Filter by Reference Header and Save Message TextArea and Return Results Row List Value    ${HEADER_CORRELATION_ID}    ${RequestID}
@@ -133,8 +131,8 @@ Validate FFC for TL Base Rate Success with Multiple Files
     \    Compare Expected and Actual TextJMS for Base Rate TL    ${sInputFilePath}${sInputXML}_${i}    ${sOutputFilePath}${sOutputXML}
     
     ###Response Mechanism###
+    Go to Dashboard and Click Source API Name    ${RESPONSE_MECHANISM_SOURCENAME}    ${RESPONSE_MECHANISM_INSTANCE}
     :FOR    ${RequestID}    IN    @{RequestID_List}
-    \    Go to Dashboard and Click Source API Name    ${RESPONSE_MECHANISM_SOURCENAME}    ${RESPONSE_MECHANISM_INSTANCE}
     \    ${ResultsRowList}    Filter by Reference Header and Save Message TextArea for Specified File and Return Results Row List Value    ${DESTINATION}    ${DESTINATION_BR}    ${RequestID}    ${sOutputFilePath}${sResponseMechanism}
          ...    ${JSON}    ${RESULTSTABLE_STATUS}
     \    Validate Response Mechanism    ${sOutputFilePath}${sResponseMechanism}    ${RequestID}    ${POSTMethod}    ${BASEINTERESTRATE_APINAME}    ${OPEARATIONSTATUS_SUCCESS}

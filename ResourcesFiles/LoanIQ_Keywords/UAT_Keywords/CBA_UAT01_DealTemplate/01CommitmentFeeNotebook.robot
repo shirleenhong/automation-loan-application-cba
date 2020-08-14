@@ -1,5 +1,5 @@
 *** Settings ***
-Resource    ../../../../Configurations/Import_File.robot
+Resource    ../../../../Configurations/LoanIQ_Import_File.robot
 
 *** Variables ***
 ${SCENARIO}
@@ -14,7 +14,7 @@ Commitment Fee Payment for D00000454
     
     ### Navigate to Commitment Fee Notebook ###
     Search Existing Deal    &{ExcelPath}[Deal_Name]    
-    Navigate Directly to Commitment Fee Notebook from Deal Notebook    &{ExcelPath}[Facility_Name]
+    # Navigate Directly to Commitment Fee Notebook from Deal Notebook    &{ExcelPath}[Facility_Name]
     
     ### Commitment Fee Notebook - General Tab ###  
     ${Rate}    ${BalanceAmount}    ${RateBasis}    Get Data in General Tab
@@ -27,8 +27,8 @@ Commitment Fee Payment for D00000454
     Write Data To Excel    SERV29_CommitmentFeePayment    Computed_CycleDue    ${rowid}    ${ProjectedCycleDue}    ${CBAUAT_ExcelPath}
 
     ### Ongoing Fee Payment ###
-    Select Cycle Due Fee Payment 
-    Enter Effective Date for Ongoing Fee-Cycle Due Payment    ${Date}
+    # Select Cycle Due Fee Payment 
+    # Enter Effective Date for Ongoing Fee-Cycle Due Payment    ${Date}
     
     ### Ongoing Fee Payment - Cashflow Validation ###
     Navigate to Cashflow - Ongoing Fee
@@ -71,7 +71,7 @@ Commitment Fee Payment for D00000454
     Send Ongoing Fee Payment to Approval
     
     ### Ongoing Fee Payment Approval ###
-    Logout from LIQ
+    Logout from Loan IQ
     Login to Loan IQ    ${SUPERVISOR_USERNAME}    ${SUPERVISOR_PASSWORD}
     Navigate Work in Process for Ongoing Fee Payment Approval    &{ExcelPath}[Facility_Name]
     Approve Ongoing Fee Payment
@@ -114,7 +114,7 @@ Commitment Fee Payment for D00000454
     Set Test Variable    ${SCREENSHOT_FILENAME}    UATDEAL1-CommitmentFeeRelease
     Take Screenshot    ${SCREENSHOT_FILENAME}    
     Close All Windows on LIQ
-    Logout from LIQ
+    Logout from Loan IQ
     Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
 
 Update Ongoing Fee Cycle for UAT Deal
@@ -129,7 +129,7 @@ Update Ongoing Fee Cycle for UAT Deal
     ###Commitment Fee Notebook - General Tab###
     Run Keyword If    '&{ExcelPath}[rowid]'=='1'    Run Keywords    Open Existing Deal    &{ExcelPath}[Deal_Name]    
     ...    AND    Open Ongoing Fee from Deal Notebook    &{ExcelPath}[Facility_Name]    &{ExcelPath}[OngoingFee_Type]
-    ...    AND    Setup Commitment Fee Effective Date and Cycle   &{ExcelPath}[Effective_Date]    &{ExcelPath}[Fee_Cycle]  
+    # ...    AND    Setup Commitment Fee Effective Date and Cycle   &{ExcelPath}[Effective_Date]    &{ExcelPath}[Fee_Cycle]  
     ...    AND    Close All Windows on LIQ
 
     Run Keyword If    '&{ExcelPath}[rowid]'=='2'    Run Keywords    Open Existing Deal    &{ExcelPath}[Deal_Name]    
@@ -193,7 +193,7 @@ Line Fee Payment for D00000454
     Send Ongoing Fee Payment to Approval
     
     ### Ongoing Fee Payment Approval ###
-    Logout from LIQ
+    Logout from Loan IQ
     Login to Loan IQ    ${SUPERVISOR_USERNAME}    ${SUPERVISOR_PASSWORD}
     Navigate Work in Process for Ongoing Fee Payment Approval    &{ExcelPath}[Facility_Name]
     Approve Ongoing Fee Payment
@@ -215,7 +215,7 @@ Line Fee Payment for D00000454
     Validate if Debit and Credit Amt is Balanced    ${HostBank_Credit}|${Lender1_Credit}    ${Borrower_Debit} 
     Validate if Debit and Credit Amt is equal to Transaction Amount    ${UITotalDebitAmt}    ${UITotalCreditAmt}    ${ComputedCycleDue}
     Close GL Entries and Cashflow Window
-    Logout from LIQ
+    Logout from Loan IQ
     Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
     
 Commitment Fee Release for D00000454 
@@ -225,8 +225,8 @@ Commitment Fee Release for D00000454
     
     ### Navigate to Commitment Fee Notebook ###
     Search Existing Deal    &{ExcelPath}[Deal_Name]    
-    Navigate Directly to Commitment Fee Notebook from Deal Notebook    &{ExcelPath}[Facility_Name]
-    Check if Commitment Fee is already released
+    # Navigate Directly to Commitment Fee Notebook from Deal Notebook    &{ExcelPath}[Facility_Name]
+    # Check if Commitment Fee is already released
     
 Line Fee Release for D00000454 
     [Documentation]    This keyword releases the line fee of the facility
@@ -247,7 +247,7 @@ Commitment Fee Payment with Split Balance for D00000454
     
     ### Navigate to Commitment Fee Notebook ###
     Search Existing Deal    &{ExcelPath}[Deal_Name]    
-    Navigate Directly to Commitment Fee Notebook from Deal Notebook    &{ExcelPath}[Facility_Name]
+    # Navigate Directly to Commitment Fee Notebook from Deal Notebook    &{ExcelPath}[Facility_Name]
     
     ### Commitment Fee Notebook - General Tab ###  
     ${Rate}    ${BalanceAmount}    ${RateBasis}    Get Data in General Tab
@@ -257,8 +257,8 @@ Commitment Fee Payment with Split Balance for D00000454
     Write Data To Excel    SERV29_CommitmentFeePayment    Computed_CycleDue    ${rowid}    ${ProjectedCycleDue}    ${CBAUAT_ExcelPath}
     
     ### Ongoing Fee Payment ###
-    Select Cycle Due Fee Payment 
-    Enter Effective Date for Ongoing Fee-Cycle Due Payment    ${Date}
+    # Select Cycle Due Fee Payment 
+    # Enter Effective Date for Ongoing Fee-Cycle Due Payment    ${Date}
     
     ### Ongoing Fee Payment - Cashflow Validation ###
     Navigate to Cashflow - Ongoing Fee
@@ -299,7 +299,7 @@ Commitment Fee Payment with Split Balance for D00000454
     Send Ongoing Fee Payment to Approval
     
     ### Ongoing Fee Payment Approval ###
-    Logout from LIQ
+    Logout from Loan IQ
     Login to Loan IQ    ${SUPERVISOR_USERNAME}    ${SUPERVISOR_PASSWORD}
     Navigate Work in Process for Ongoing Fee Payment Approval    &{ExcelPath}[Facility_Name]
     Approve Ongoing Fee Payment
@@ -339,7 +339,7 @@ Commitment Fee Payment with Split Balance for D00000454
     Set Test Variable    ${SCREENSHOT_FILENAME}    UATDEAL1-CommitmentFeeRelease
     Take Screenshot    ${SCREENSHOT_FILENAME}    
     Close All Windows on LIQ
-    Logout from LIQ
+    Logout from Loan IQ
     Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
     
 Run Online Accrual for Commitment Fee
@@ -347,7 +347,7 @@ Run Online Accrual for Commitment Fee
     ...    @author:fmamaril    12SEP2019    Intial Create
     [Arguments]    ${ExcelPath}
     Search Existing Deal    &{ExcelPath}[Deal_Name]    
-    Navigate Directly to Commitment Fee Notebook from Deal Notebook    &{ExcelPath}[Facility_Name]
+    # Navigate Directly to Commitment Fee Notebook from Deal Notebook    &{ExcelPath}[Facility_Name]
     Run Online Acrual to Commitment Fee
     
 Run Online Accrual for Line Fee
@@ -411,7 +411,7 @@ Line Fee Payment with Split Balance for D00000454
     Send Ongoing Fee Payment to Approval
     
     ### Ongoing Fee Payment Approval ###
-    Logout from LIQ
+    Logout from Loan IQ
     Login to Loan IQ    ${SUPERVISOR_USERNAME}    ${SUPERVISOR_PASSWORD}
     Navigate Work in Process for Ongoing Fee Payment Approval    &{ExcelPath}[Facility_Name]
     Approve Ongoing Fee Payment
@@ -433,5 +433,5 @@ Line Fee Payment with Split Balance for D00000454
     Validate if Debit and Credit Amt is Balanced    ${HostBank_Credit}|${Lender1_Credit}    ${Borrower_Debit} 
     Validate if Debit and Credit Amt is equal to Transaction Amount    ${UITotalDebitAmt}    ${UITotalCreditAmt}    ${ExcelPath}[Total]
     Close GL Entries and Cashflow Window
-    Logout from LIQ
+    Logout from Loan IQ
     Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}          
