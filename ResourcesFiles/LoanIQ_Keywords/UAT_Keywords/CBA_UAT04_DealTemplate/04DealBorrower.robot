@@ -1,5 +1,6 @@
 *** Settings ***
-Resource    ../../../../Configurations/Import_File.robot
+Resource    ../../../../Configurations/LoanIQ_Import_File.robot
+Resource    ../../../../Configurations/Party_Import_File.robot
 
 *** Variables ***
 ${SCENARIO}
@@ -42,23 +43,23 @@ Search Customer and Complete its Borrower Profile Creation with default values f
     Set Test Variable    ${SCREENSHOT_FILENAME}    UATDEAL3-Customer-SIC
     Take Screenshot    ${SCREENSHOT_FILENAME}
     
-    ###Navigating to Profile Tab     
-    Navigate to "Profiles" tab and Validate 'Add Profile' Button
+    # ###Navigating to Profile Tab     
+    # Navigate to "Profiles" tab and Validate 'Add Profile' Button
 
-    ###Adding Profile          
-    Add Profile under Profiles Tab    &{ExcelPath}[Profile_Type]
+    # ###Adding Profile          
+    # Add Profile under Profiles Tab    &{ExcelPath}[Profile_Type]
           
-    ###Adding Borrower Profile Details
-    Add Borrower Profile Details under Profiles Tab    &{ExcelPath}[Profile_Type]
+    # ###Adding Borrower Profile Details
+    # Add Borrower Profile Details under Profiles Tab    &{ExcelPath}[Profile_Type]
     
-    ###Validating Buttons      
-    Validate Only 'Add Profile', 'Add Location' and 'Delete' Buttons are Enabled in Profile Tab
+    # ###Validating Buttons      
+    # Validate Only 'Add Profile', 'Add Location' and 'Delete' Buttons are Enabled in Profile Tab
     
-    ###Adding Location          
-    Add Location under Profiles Tab    &{ExcelPath}[Customer_Location]  
+    # ###Adding Location          
+    # Add Location under Profiles Tab    &{ExcelPath}[Customer_Location]  
     
-    ###Adding Borrowwer/Location Details
-    Add Borrowwer/Location Details under Profiles Tab   &{ExcelPath}[Profile_Type]    &{ExcelPath}[Customer_Location]    
+    # ###Adding Borrowwer/Location Details
+    # Add Borrowwer/Location Details under Profiles Tab   &{ExcelPath}[Profile_Type]    &{ExcelPath}[Customer_Location]    
     
     ###Validating Buttons if Enabled 
     Validate If All Buttons are Enabled

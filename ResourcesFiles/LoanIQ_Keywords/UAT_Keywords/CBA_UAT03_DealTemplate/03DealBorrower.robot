@@ -61,8 +61,8 @@ Search Customer and Complete its Borrower Profile Creation with default values f
     ...    @update: ritragel    16AUG2020    Swapped validating fields before adding of profiles
     [Arguments]    ${ExcelPath}
 	
-	# ## Login to LoanIQ###
-	# Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
+	# # ## Login to LoanIQ###
+	# # Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
 
 	###Searching Customer
     Search Customer    &{ExcelPath}[Customer_Search]    &{ExcelPath}[Party_ID]    &{ExcelPath}[LIQCustomer_LegalName]

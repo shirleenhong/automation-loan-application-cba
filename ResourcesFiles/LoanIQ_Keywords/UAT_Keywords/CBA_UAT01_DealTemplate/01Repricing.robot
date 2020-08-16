@@ -1,5 +1,5 @@
 *** Settings ***
-Resource    ../../../../Configurations/Import_File.robot
+Resource    ../../../../Configurations/LoanIQ_Import_File.robot
 
 
 *** Keywords ***
@@ -63,21 +63,21 @@ Loan Merge in Deal D00000454
         
     ## Approve Loan Repricing
     Close All Windows on LIQ
-    Logout from LIQ
+    Logout from Loan IQ
     Login to Loan IQ    ${MANAGER_USERNAME}    ${MANAGER_PASSWORD}
     Navigate Transaction in WIP    Outstandings    Awaiting Generate Rate Setting Notices    Loan Repricing    &{ExcelPath}[Deal_Name]
     Navigate Notebook Workflow    ${LIQ_LoanRepricing_Window}    ${LIQ_LoanRepricing_Tab}    ${LIQ_LoanRepricing_WorkflowItems}    Approval
     Validate Window Title Status    Loan Repricing    Awaiting Send to Rate Approval
         
     ### Send to Rate Approval
-    Logout from LIQ
+    Logout from Loan IQ
     Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
     Navigate Transaction in WIP    Outstandings    Awaiting Send to Rate Approval    Loan Repricing    &{ExcelPath}[Deal_Name]
     Navigate Notebook Workflow    ${LIQ_LoanRepricing_Window}    ${LIQ_LoanRepricing_Tab}    ${LIQ_LoanRepricing_WorkflowItems}    Send to Rate Approval
     Validate Window Title Status    Loan Repricing    Awaiting Rate Approval
     
     ### Rate Approval and Release###
-    Logout from LIQ
+    Logout from Loan IQ
     Login to Loan IQ    ${MANAGER_USERNAME}    ${MANAGER_PASSWORD}
     Navigate Transaction in WIP    Outstandings    Awaiting Generate Rate Setting Notices    Loan Repricing    &{ExcelPath}[Deal_Name]
     Navigate Notebook Workflow    ${LIQ_LoanRepricing_Window}    ${LIQ_LoanRepricing_Tab}    ${LIQ_LoanRepricing_WorkflowItems}    Rate Approval
@@ -85,7 +85,7 @@ Loan Merge in Deal D00000454
     Navigate Notebook Workflow    ${LIQ_LoanRepricing_Window}    ${LIQ_LoanRepricing_Tab}    ${LIQ_LoanRepricing_WorkflowItems}    Release
     Validate Window Title Status    Loan Repricing    Released    
     Close All Windows on LIQ
-    Logout from LIQ
+    Logout from Loan IQ
     Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
     
 Comprehensive Repricing Interest Payment with Multiple Lenders in Deal D00000454
@@ -139,7 +139,7 @@ Comprehensive Repricing Interest Payment with Multiple Lenders in Deal D00000454
     Navigate Notebook Workflow    ${LIQ_LoanRepricingForDeal_Window}    ${LIQ_LoanRepricingForDeal_Workflow_Tab}    ${LIQ_LoanRepricingForDeal_Workflow_JavaTree}    Send to Approval
     
     ### LIQ Window ###
-    Logout from LIQ
+    Logout from Loan IQ
     Login to Loan IQ    ${SUPERVISOR_USERNAME}    ${SUPERVISOR_PASSWORD}
     
     ### Work in process notebook ###
@@ -150,7 +150,7 @@ Comprehensive Repricing Interest Payment with Multiple Lenders in Deal D00000454
     Send to Rate Approval
     
     ### LIQ Window ###
-    Logout from LIQ
+    Logout from Loan IQ
     Login to Loan IQ    ${MANAGER_USERNAME}    ${MANAGER_PASSWORD}
     
     ## Work in process notebook ###
@@ -165,7 +165,7 @@ Comprehensive Repricing Interest Payment with Multiple Lenders in Deal D00000454
     Take Screenshot    LoanRepricing-Released
     
     Close All Windows on LIQ
-    Logout from LIQ
+    Logout from Loan IQ
     Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
     
 Comprehensive Repricing Interest Payment in Deal D00000454
@@ -210,7 +210,7 @@ Comprehensive Repricing Interest Payment in Deal D00000454
     Navigate Notebook Workflow    ${LIQ_LoanRepricingForDeal_Window}    ${LIQ_LoanRepricingForDeal_Workflow_Tab}    ${LIQ_LoanRepricingForDeal_Workflow_JavaTree}    Send to Approval
     
     ### LIQ Window ###
-    Logout from LIQ
+    Logout from Loan IQ
     Login to Loan IQ    ${SUPERVISOR_USERNAME}    ${SUPERVISOR_PASSWORD}
     
     ### Work in process notebook ###
@@ -221,7 +221,7 @@ Comprehensive Repricing Interest Payment in Deal D00000454
     Send to Rate Approval
     
     ### LIQ Window ###
-    Logout from LIQ
+    Logout from Loan IQ
     Login to Loan IQ    ${MANAGER_USERNAME}    ${MANAGER_PASSWORD}
     
     ### Work in process notebook ###
@@ -235,5 +235,5 @@ Comprehensive Repricing Interest Payment in Deal D00000454
     Take Screenshot    LoanRepricing-Released
     
     Close All Windows on LIQ
-    Logout from LIQ
+    Logout from Loan IQ
     Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
