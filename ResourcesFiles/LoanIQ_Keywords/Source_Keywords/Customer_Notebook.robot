@@ -2236,6 +2236,7 @@ Populate Details on Customer Remittance Instructions
     Mx LoanIQ Check Or Uncheck    ${RemittanceList_Window_RemittanceInstructionsDetail_BalanceType_Fees_Checkbox}    ${sBalanceType_Fees_Checkbox}    
     Mx LoanIQ Check Or Uncheck    ${RemittanceList_Window_RemittanceInstructionsDetail_AutoDoIt_Checkbox}    ${sRI_AutoDoIt_Checkbox}
     Run Keyword If    '${sRI_FromCust_Checkbox}'=='OFF'    mx LoanIQ enter    ${RemittanceList_Window_RemittanceInstructionsDetail_SummaryNotices_TextField}    ${sNoticesSummary}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/Remittance_Instruction_List
 
 Add IMT Message in Remittance Instructions Detail
     [Documentation]    This keyword adds IMT message in Remittance Instructions detail of a Customer

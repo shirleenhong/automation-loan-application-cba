@@ -81,18 +81,13 @@ Search Customer and Complete its Borrower Profile Creation with default values f
         
     ###Unchecking "Subject to GST" checkbox
     Uncheck "Subject to GST" checkbox
-    Screenshot.Set Screenshot Directory    ${Screenshot_Path}
-    Set Test Variable    ${SCREENSHOT_FILENAME}    UATDEAL3-Customer-General
-    Take Screenshot    ${SCREENSHOT_FILENAME}
     
     ###Adding Province Details in the Legal Address
     Add Province Details in the Legal Address    None
         
     ###Navigating to SIC tab
     Navigate to "SIC" tab and Validate Primary SIC Code    &{ExcelPath}[Primary_SICCode]    &{ExcelPath}[PrimarySICCode_Description]
-    Set Test Variable    ${SCREENSHOT_FILENAME}    UATDEAL3-Customer-SIC
-    Take Screenshot    ${SCREENSHOT_FILENAME}
-    
+
     ###Navigating to Profile Tab
     Navigate to "Profiles" tab and Validate "Add Profile" Button
 
@@ -124,8 +119,6 @@ Search Customer and Complete its Borrower Profile Creation with default values f
        
     ##Completing Location
     Complete Location under Profile Tab    &{ExcelPath}[Profile_Type]    &{ExcelPath}[Customer_Location]
-    Set Test Variable    ${SCREENSHOT_FILENAME}    UATDEAL3-Customer-Profile
-    Take Screenshot    ${SCREENSHOT_FILENAME}
     
     ###Adding Remittance Instructions
     Navigate to Remittance List Page
@@ -137,45 +130,40 @@ Add Remittance Instruction for D00000476
     Populate Details on Customer Remittance Instructions    &{ExcelPath}[RemittanceInstruction_Method]    &{ExcelPath}[RemittanceInstruction_Description]    &{ExcelPath}[RemittanceInstruction_Currency]
     ...    &{ExcelPath}[ProductLoan_Checkbox]    &{ExcelPath}[ProductSBLC_Checkbox]    &{ExcelPath}[RI_FromCust_Checkbox]    &{ExcelPath}[RI_ToCust_Checkbox]    &{ExcelPath}[BalanceType_Principal_Checkbox]
     ...    &{ExcelPath}[BalanceType_Interest_Checkbox]    &{ExcelPath}[BalanceType_Fees_Checkbox]    &{ExcelPath}[RI_AutoDoIt_Checkbox]    &{ExcelPath}[NoticesSummary]	        
-    Set Test Variable    ${SCREENSHOT_FILENAME}    UATDEAL3-Customer-RemittanceInstruction
-    Take Screenshot    ${SCREENSHOT_FILENAME}
+    Take Screenshot    ${Screenshot_Path}/Screenshots/LoanIQ/Remittance_Instruction
     
 Add IMT message code for UAT Deal for D00000476
     [Documentation]    This keyword adds an IMT message code for the customer
     ...    @author: fmamaril    19AUG2019
     [Arguments]    ${ExcelPath}
 	Add IMT Message in Remittance Instructions Detail    &{ExcelPath}[IMT_MessageCode]
-    Set Test Variable    ${SCREENSHOT_FILENAME}    UATDEAL3-Customer-RemittanceInstructionDetail
-    Take Screenshot    ${SCREENSHOT_FILENAME}
-
+    Take Screenshot    ${Screenshot_Path}/Screenshots/LoanIQ/Remittance_Instruction
+    
 Add Swift Role in IMT message for UAT Deal for D00000476
     [Documentation]    This keyword adds a swift role for the customer in UAT Deal
     ...    @author: fmamaril    19AUG2019
     [Arguments]    ${ExcelPath}	
 	Add Swift Role in IMT message    &{ExcelPath}[RI_SendersCorrespondent_Checkbox]    &{ExcelPath}[Swift_Role]    &{ExcelPath}[SwiftID]    &{ExcelPath}[Swift_Description]
 	...    &{ExcelPath}[ClearingType]    &{ExcelPath}[ClearingNumber]    &{ExcelPath}[AccountNumber]
-    Set Test Variable    ${SCREENSHOT_FILENAME}    UATDEAL3-Customer-SwiftRole
-    Take Screenshot    ${SCREENSHOT_FILENAME}
-
+    Take Screenshot    ${Screenshot_Path}/Screenshots/LoanIQ/Remittance_Instruction
+    
 Update Swift Role in IMT message for UAT Deal for D00000476
     [Documentation]    This keyword updates a swift role in IMT message for a UAT Deal
     ...    @author: fmamaril    19AUG2019
     [Arguments]    ${ExcelPath}	
 	Update Swift Role in IMT message    &{ExcelPath}[Swift_Role]    &{ExcelPath}[Swift_Description]    &{ExcelPath}[ClearingType]
 	...    &{ExcelPath}[ClearingNumber]    &{ExcelPath}[AccountNumber]	
-    Set Test Variable    ${SCREENSHOT_FILENAME}    UATDEAL3-Customer-SwiftRole
-    Take Screenshot    ${SCREENSHOT_FILENAME}
+    Take Screenshot    ${Screenshot_Path}/Screenshots/LoanIQ/Remittance_Instruction
 		
 Populate Details on IMT for UAT Deal for D00000476
     [Documentation]    This keyword populates the details on IMT for UAT Deal
     ...    @author: fmamaril    19AUG2019
     [Arguments]    ${ExcelPath}		
     Populate Details on IMT    &{ExcelPath}[Details_Of_Charges]    &{ExcelPath}[BOC_Level]    &{ExcelPath}[DetailsOfPayment]    &{ExcelPath}[SenderToReceiverInfo]    &{ExcelPath}[OrderingCustomer]
-    Set Test Variable    ${SCREENSHOT_FILENAME}    UATDEAL3-Customer-IMTDetails
-    Take Screenshot    ${SCREENSHOT_FILENAME}
     mx LoanIQ click    ${RemittanceList_Window_RemittanceInstructionsDetail_IMT_OKButton}        
     mx LoanIQ select    ${LIQ_RemittanceInstruction_Notebook_FileMenu_SaveMenu}
     mx LoanIQ click element if present    ${LIQ_Warning_OK_Button}
+    Take Screenshot    ${Screenshot_Path}/Screenshots/LoanIQ/Remittance_Instruction
     
 Send Remittance Instruction to Approval and Close RI Notebook
     [Documentation]    This keyword sends RI to approval and closes the RI notebook
@@ -239,15 +227,15 @@ Logout and Search Customer in UAT - 2nd Approver
     Access Remittance List upon Login    &{ExcelPath}[Profile_Type]    &{ExcelPath}[Customer_Location]
 
 Logout and Search Customer in UAT - Inputter
-    [Documentation]    This keyword logsout and search customer in UAT (Inputter)
+    [Documentation]    This keyword logout and search customer in UAT (Inputter)
     ...    @author: fmamaril    19AUG2019
     [Arguments]    ${ExcelPath}
+    
     ###Validate status of Customer###
     mx LoanIQ click    ${RemittanceList_Window_ExitButton}
-    Sleep    4s
     Validate 'Active Customer' Window    &{ExcelPath}[Party_ID]
-    Set Test Variable    ${SCREENSHOT_FILENAME}    UATDEAL3-Customer-SwiftRole
-    Take Screenshot    ${SCREENSHOT_FILENAME}    
+   
+    Take Screenshot    ${Screenshot_Path}/Screenshots/LoanIQ/Customer_Notebook
     ###Logout and Relogin in Inputter Level
     Close All Windows on LIQ
     Logout From Loan IQ
