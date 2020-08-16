@@ -58,10 +58,11 @@ Populate Quick Enterprise Party with Approval
 Search Customer and Complete its Borrower Profile Creation with default values for Deal Template Three
     [Documentation]    This keyword searches a customer and complete its Borrower Profile creation with default values
     ...    @author: fmamaril    06AUG2019
+    ...    @update: ritragel    16AUG2020    Swapped validating fields before adding of profiles
     [Arguments]    ${ExcelPath}
 	
-	# # ## Login to LoanIQ###
-	# # Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
+	# ## Login to LoanIQ###
+	# Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
 
 	###Searching Customer
     Search Customer    &{ExcelPath}[Customer_Search]    &{ExcelPath}[Party_ID]    &{ExcelPath}[LIQCustomer_LegalName]
@@ -95,20 +96,20 @@ Search Customer and Complete its Borrower Profile Creation with default values f
     ###Navigating to Profile Tab
     Navigate to "Profiles" tab and Validate "Add Profile" Button
 
+    ###Validating Buttons
+    Validate Only 'Add Profile Button' is Enabled in Profile Tab
+
     ###Adding Profile
     Add Profile under Profiles Tab    &{ExcelPath}[Profile_Type]
           
     ###Adding Borrower Profile Details
     Add Borrower Profile Details under Profiles Tab    &{ExcelPath}[Profile_Type]
     
-    ###Validating Buttons
-    Validate Only 'Add Profile Button' is Enabled in Profile Tab
-    
     ###Adding Location
     Add Location under Profiles Tab    &{ExcelPath}[Customer_Location]  
     
     ###Adding Borrowwer/Location Details
-    Add Borrowwer/Location Details under Profiles Tab   &{ExcelPath}[Profile_Type]    &{ExcelPath}[Customer_Location]    
+    Add Borrower/Location Details under Profiles Tab   &{ExcelPath}[Profile_Type]    &{ExcelPath}[Customer_Location]    
     
     ###Validating Buttons if Enabled
     Validate If All Buttons are Enabled
@@ -129,7 +130,7 @@ Search Customer and Complete its Borrower Profile Creation with default values f
     ###Adding Remittance Instructions
     Navigate to Remittance List Page
 
-Add Remittance Instruction
+Add Remittance Instruction for D00000476
     [Documentation]    This keyword adds a Remittance Instruction for the customer
     ...    @author: fmamaril    19AUG2019
     [Arguments]    ${ExcelPath}
@@ -139,7 +140,7 @@ Add Remittance Instruction
     Set Test Variable    ${SCREENSHOT_FILENAME}    UATDEAL3-Customer-RemittanceInstruction
     Take Screenshot    ${SCREENSHOT_FILENAME}
     
-Add IMT message code for UAT Deal
+Add IMT message code for UAT Deal for D00000476
     [Documentation]    This keyword adds an IMT message code for the customer
     ...    @author: fmamaril    19AUG2019
     [Arguments]    ${ExcelPath}
@@ -147,7 +148,7 @@ Add IMT message code for UAT Deal
     Set Test Variable    ${SCREENSHOT_FILENAME}    UATDEAL3-Customer-RemittanceInstructionDetail
     Take Screenshot    ${SCREENSHOT_FILENAME}
 
-Add Swift Role in IMT message for UAT Deal
+Add Swift Role in IMT message for UAT Deal for D00000476
     [Documentation]    This keyword adds a swift role for the customer in UAT Deal
     ...    @author: fmamaril    19AUG2019
     [Arguments]    ${ExcelPath}	
@@ -156,7 +157,7 @@ Add Swift Role in IMT message for UAT Deal
     Set Test Variable    ${SCREENSHOT_FILENAME}    UATDEAL3-Customer-SwiftRole
     Take Screenshot    ${SCREENSHOT_FILENAME}
 
-Update Swift Role in IMT message for UAT Deal
+Update Swift Role in IMT message for UAT Deal for D00000476
     [Documentation]    This keyword updates a swift role in IMT message for a UAT Deal
     ...    @author: fmamaril    19AUG2019
     [Arguments]    ${ExcelPath}	
@@ -165,7 +166,7 @@ Update Swift Role in IMT message for UAT Deal
     Set Test Variable    ${SCREENSHOT_FILENAME}    UATDEAL3-Customer-SwiftRole
     Take Screenshot    ${SCREENSHOT_FILENAME}
 		
-Populate Details on IMT for UAT Deal
+Populate Details on IMT for UAT Deal for D00000476
     [Documentation]    This keyword populates the details on IMT for UAT Deal
     ...    @author: fmamaril    19AUG2019
     [Arguments]    ${ExcelPath}		
@@ -187,7 +188,7 @@ Complete Servicing Group Details
     ...    @author: fmamaril    19AUG2019
     [Arguments]    ${ExcelPath}	        
     mx LoanIQ click element if present    ${RemittanceList_Window_ExitButton}
-    Add Servicing Groups Details    &{ExcelPath}[Customer_Search]    &{ExcelPath}[Party_ID]    &{ExcelPath}[Party_ID]    &{ExcelPath}[Profile_Type]    &{ExcelPath}[Group_Contact]   &{ExcelPath}[Contact_LastName]
+    Add Servicing Groups Details    &{ExcelPath}[Party_ID]   &{ExcelPath}[Group_Contact]   &{ExcelPath}[Contact_LastName]
 
 Add Remittance Instruction to Servicing Group in UAT
     [Documentation]    This keyword adds a Remittance Instruction to Servicing Group in UAT
@@ -204,7 +205,7 @@ Logout and Search Customer in UAT - 1st Approver
     mx LoanIQ click element if present    ${ServicingGroupWindow_ExitButton}
     mx LoanIQ click element if present    ${RemittanceList_Window_ExitButton}    
     Close All Windows on LIQ
-    Logout from LIQ
+    Logout From Loan IQ
     Login to Loan IQ    ${SUPERVISOR_USERNAME}    ${SUPERVISOR_PASSWORD}
     
     ###Searching Customer
@@ -227,7 +228,7 @@ Logout and Search Customer in UAT - 2nd Approver
     ###Logout and Relogin in Manager Level###
     mx LoanIQ click    ${RemittanceList_Window_ExitButton}
     Close All Windows on LIQ
-    Logout from LIQ
+    Logout From Loan IQ
     Login to Loan IQ    ${MANAGER_USERNAME}    ${MANAGER_PASSWORD}
     
     ###Searching Customer###
@@ -249,5 +250,5 @@ Logout and Search Customer in UAT - Inputter
     Take Screenshot    ${SCREENSHOT_FILENAME}    
     ###Logout and Relogin in Inputter Level
     Close All Windows on LIQ
-    Logout from LIQ
+    Logout From Loan IQ
     Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
