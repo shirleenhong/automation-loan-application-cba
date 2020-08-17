@@ -1,0 +1,30 @@
+*** Settings ***
+Resource    ../Configurations/Party_Import_File.robot
+
+*** Variables ***
+
+### API - INPUT AND OUTPUT FOLDER PATHS ###
+${Input_File_Path_Party}               ${dataset_path}\\DataSet\\API_DataSet\\Input\\Party\\
+${Output_File_Path_Party}              ${dataset_path}\\DataSet\\API_DataSet\\Output\\Party\\
+
+### API Variables ###
+${PARTYDETAILS_ENQUIRY}    Party Details Enquiry
+${Party_UserDeletedSuccessfully}    User(s) deleted successfully.
+
+### Party Page Title ###
+${PARTY_PARTYONBOARDING_PAGETITLE}    Party Onboarding
+${PARTY_PREEXISTENCECHECK_PAGETITLE}    Pre-Existence Check
+${PARTY_QUICKENTERPRISEPARTY_PAGETITLE}    Quick Enterprise Party
+${PARTY_NOTIFICATIONTYPES_PAGETITLE}    Notification Types
+${PARTY_PROCESSREFERRALS_PAGETITLE}    Process Referrals
+${PARTY_APPROVALS_PAGETITLE}    Approvals
+${PARTY_DATAPROTECTIONSTATEMENT_PAGETITLE}    Data Protection Statement
+${PARTY_ENTERPRISERELATEDPARTYSTATUS_PAGETITLE}    Enterprise Related Party Status
+${PARTY_ENTERPRISEPARTYSUMMARYDETAILS_PAGETITLE}    Enterprise Party Summary Details
+${PARTY_REJECTIONS_PAGETITLE}    Rejections
+${PARTY_PARTYDETAILS_PAGETITLE}    Party Details
+${PARTY_ENTERPRISEPARTY_PAGETITLE}    Enterprise Party
+${PARTY_AMENDSUCCESSFUL_PAGETITLE}    Amend Successful
+${PARTY_ZONEANDBRANCHSELECTION_PAGETITLE}    Zone and Branch Selection
+${PARTY_MESSAGE_PAGETITLE}    Message
+${PARTY_TIMEOUT}    60s

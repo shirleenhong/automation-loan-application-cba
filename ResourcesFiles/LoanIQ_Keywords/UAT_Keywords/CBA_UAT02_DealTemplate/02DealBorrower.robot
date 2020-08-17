@@ -1,8 +1,8 @@
 *** Settings ***
-Resource    ../../../../Configurations/Import_File.robot
+Resource    ../../../../Configurations/LoanIQ_Import_File.robot
 
 *** Variables ***
-${SCENARIO}
+# ${SCENARIO}
 
 *** Keywords ***
 Create Deal Borrower initial details in Quick Party Onboarding for BEPTYLTDATF
@@ -11,7 +11,8 @@ Create Deal Borrower initial details in Quick Party Onboarding for BEPTYLTDATF
     [Arguments]    ${ExcelPath}
     ###User Creates a Party Record###
     Login User to Party    ${PARTY_USERNAME}    ${PARTY_PASSWORD}    ${USER_LINK}    ${USER_PORT}    ${PARTY_SSO_URL_SUFFIX}    ${PARTY_HTML_USER_CREDENTIALS}    ${SSO_ENABLED}    ${PARTY_SSO_URL} 
-    Navigate Process    &{ExcelPath}[Selected_Module]    
+    # Navigate Process    &{ExcelPath}[Selected_Module]    
+    Search Process in Party    Quick Party Onboarding    
     Populate Party Onboarding    &{ExcelPath}[Locality]    &{ExcelPath}[Party_Type]    &{ExcelPath}[Party_Sub_Type]    &{ExcelPath}[Party_Category]    &{ExcelPath}[Branch_Code]          
     ${EnterpriseName}    ${PartyID}    Run Keyword If    '&{ExcelPath}[AutoGen_EnterpriseName]'=='Yes'    Run Keyword    Populate Pre-Existence Check    &{ExcelPath}[Enterprise_Prefix]    
     ###Writing for Party ID
@@ -34,19 +35,20 @@ Populate Quick Enterprise Party with Approval for BEPTYLTDATF
     [Documentation]    This keyword creates a Deal Borrower in Quick Party Onboarding.
     ...    @author:    gerhabal    26SEP2019, based from "Populate Quick Enterprise Party with Approval". shortname is being passed instead of party id
     [Arguments]    ${ExcelPath}           
-    Populate Quick Enterprise Party    &{ExcelPath}[Party_ID]    &{ExcelPath}[Country_of_Tax_Domicile]    &{ExcelPath}[Date_Formed]    &{ExcelPath}[Country_of_Registration]
-    ...    &{ExcelPath}[Address_Type]    &{ExcelPath}[Country_Region]    &{ExcelPath}[Post_Code]    &{ExcelPath}[Email_Contact_Type]    &{ExcelPath}[Email]
-    ...    &{ExcelPath}[Confirm_Email]    &{ExcelPath}[Mobile_Contact_Type]    &{ExcelPath}[Country_Code]    &{ExcelPath}[Number]    &{ExcelPath}[Document_Collection_Status]
-    ...    &{ExcelPath}[Industry_Sector]    &{ExcelPath}[Business_Activity]    &{ExcelPath}[Business_Focus]    &{ExcelPath}[Business_Type]    &{ExcelPath}[Is_Main_Activity]
+    Populate Quick Enterprise Party    &{ExcelPath}[Party_ID]    &{ExcelPath}[Country_of_Tax_Domicile]    &{ExcelPath}[Country_of_Registration]
+    ...    &{ExcelPath}[Address_Type]    &{ExcelPath}[Country_Region]    &{ExcelPath}[Post_Code]
+    ...    &{ExcelPath}[Document_Collection_Status]
+    ...    &{ExcelPath}[Industry_Sector]    &{ExcelPath}[Business_Activity]    &{ExcelPath}[Is_Main_Activity]
     ...    &{ExcelPath}[GSTID]    &{ExcelPath}[Address_Line_1]    &{ExcelPath}[Address_Line_2]    &{ExcelPath}[Town_City]    
     ...    &{ExcelPath}[State_Province]    &{ExcelPath}[Business_Country]    &{ExcelPath}[Is_Primary_Activity]    &{ExcelPath}[Registered_Number]    &{ExcelPath}[Short_Name]    
     Screenshot.Set Screenshot Directory    ${Screenshot_Path}
     Set Test Variable    ${SCREENSHOT_FILENAME}    Party Details
-    Take Screenshot    ${SCREENSHOT_FILENAME}           
+    Take Screenshot    ${SCREENSHOT_FILENAME}
+    Run Keyword If    '${SSO_ENABLED}'=='NO'    Logout User on Party        
     Close Browser
     
     ###Supervisor Approves the Party Record###
-    Run Keyword If    '${SSO_ENABLED}'=='NO'    Logout User on Party
+    
     Login User to Party    ${PARTY_USERNAME}    ${PARTY_PASSWORD}    ${USER_LINK}    ${USER_PORT}    ${PARTY_SSO_URL_SUFFIX}    ${PARTY_HTML_APPROVER_CREDENTIALS}    ${SSO_ENABLED}    ${PARTY_SSO_URL}
     ${Task_ID_From_Supervisor}    Approve Registered Party    &{ExcelPath}[Party_ID]
     Run Keyword If    '${SSO_ENABLED}'=='NO'    Logout User on Party 

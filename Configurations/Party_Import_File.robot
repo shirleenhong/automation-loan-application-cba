@@ -22,3 +22,6 @@ Resource    ../ResourcesFiles/Party_Keywords/Source_Keywords/Party_Generic_Keywo
 Resource    ../ResourcesFiles/Party_Keywords/Source_Keywords/Party_LoanIQVal_Keywords.robot
 Resource    ../ResourcesFiles/Party_Keywords/Source_Keywords/Party_MaintainPartyDetails_Keywords.robot
 Resource    ../ResourcesFiles/Party_Keywords/Source_Keywords/Party_QuickPartyOnboarding_Keywords.robot
+
+##Party Global Variables##
+Resource    ../Variables/Party_Properties.txt
