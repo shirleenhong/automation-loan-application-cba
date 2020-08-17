@@ -1,5 +1,5 @@
 *** Settings ***
-Resource     ../../../../Configurations/Import_File.robot
+Resource    ../../../../Configurations/LoanIQ_Import_File.robot
 
 *** Keywords ***
 Initiate LC Collection D00000476
@@ -8,7 +8,7 @@ Initiate LC Collection D00000476
     [Arguments]    ${ExcelPath}
     
     ###LIQ Window###
-    Logout from LIQ
+    Logout from Loan IQ
     Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
     Verify if Standby Letters of Credit Exist    &{ExcelPath}[Deal_Name]    &{ExcelPath}[Type]    &{ExcelPath}[Search_By]    &{ExcelPath}[Facility_Name]
     
@@ -50,7 +50,7 @@ Initiate LC Collection D00000476
     
     ### Send to Approval ###
     Navigate Notebook Workflow    ${LIQ_Payment_Window}    ${LIQ_Payment_Tab}    ${LIQ_Payment_WorkflowItems}    Send to Approval
-    Logout from LIQ
+    Logout from Loan IQ
     Login to Loan IQ    ${SUPERVISOR_USERNAME}    ${SUPERVISOR_PASSWORD}
     Select Item in Work in Process    Payments    Awaiting Approval    Issuance Fee Payment     &{ExcelPath}[Facility_Name]
     
@@ -59,7 +59,7 @@ Initiate LC Collection D00000476
     Release Cashflow    &{ExcelPath}[Borrower_ShortName]    release
 
     ### Release ###
-    Logout from LIQ
+    Logout from Loan IQ
     Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
     Select Item in Work in Process    Payments    Awaiting Release    Issuance Fee Payment     &{ExcelPath}[Facility_Name]
     Navigate Notebook Workflow    ${LIQ_Payment_Window}    ${LIQ_Payment_Tab}    ${LIQ_Payment_WorkflowItems}    Release

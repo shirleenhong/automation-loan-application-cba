@@ -1,5 +1,5 @@
 *** Settings ***
-Resource    ../../../../Configurations/Import_File.robot
+Resource    ../../../../Configurations/LoanIQ_Import_File.robot
 
 
 *** Keywords ***
@@ -45,7 +45,7 @@ Create Full Repayment for Loans in Deal D00000963
     Validate if Debit and Credit Amt is equal to Transaction Amount    ${UITotalCreditAmt}    ${UITotalCreditAmt}    &{ExcelPath}[FullRepayment_PrincipalAmount]    
     
     Navigate Notebook Workflow    ${LIQ_PrincipalPayment_Window}    ${LIQ_PrincipalPayment_Tab}    ${LIQ_PrincipalPayment_WorkflowTree}    Send to Approval        
-    Logout from LIQ
+    Logout from Loan IQ
     Login to Loan IQ    ${MANAGER_USERNAME}    ${MANAGER_PASSWORD}
     Navigate Transaction in WIP    Payments    Awaiting Approval    Loan Principal Prepayment    &{ExcelPath}[Loan_Alias]
     Navigate Notebook Workflow    ${LIQ_PrincipalPayment_Window}    ${LIQ_PrincipalPayment_Tab}    ${LIQ_PrincipalPayment_WorkflowTree}    Approval
@@ -57,7 +57,7 @@ Create Full Repayment for Loans in Deal D00000963
     Navigate Notebook Workflow    ${LIQ_PrincipalPayment_Window}    ${LIQ_PrincipalPayment_Tab}    ${LIQ_PrincipalPayment_WorkflowTree}    Release
     
     Close All Windows on LIQ
-    Logout from LIQ
+    Logout from Loan IQ
     Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
     
     

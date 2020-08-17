@@ -16,57 +16,58 @@ Create Quick Party Onboarding for CBA UAT Deal 3 - PTY001
     Mx Execute Template With Multiple Data    Create Deal Borrower initial details in Quick Party Onboarding    ${CBAUAT_ExcelPath}    1    PTY001_QuickPartyOnboarding
     Mx Execute Template With Multiple Data    Populate Quick Enterprise Party with Approval    ${CBAUAT_ExcelPath}    1    PTY001_QuickPartyOnboarding   
 
-# Complete Customer Profile - ORIG03
-    # [Tags]    02 Complete Borrower's Profile - 0RIG03
-    # Mx Execute Template With Multiple Data    Search Customer and Complete its Borrower Profile Creation with default values for Deal Template Three    ${CBAUAT_ExcelPath}    1    ORIG03_Customer
-    # Mx Execute Template With Multiple Data    Add Remittance Instruction    ${CBAUAT_ExcelPath}    1    ORIG03_Customer
-    # Mx Execute Template With Multiple Data    Add IMT message code for UAT Deal    ${CBAUAT_ExcelPath}    1    ORIG03_Customer    
-    # Mx Execute Template With Multiple Data    Add Swift Role in IMT message for UAT Deal    ${CBAUAT_ExcelPath}    1    ORIG03_Customer
-    # Mx Execute Template With Multiple Data    Update Swift Role in IMT message for UAT Deal    ${CBAUAT_ExcelPath}    2-3    ORIG03_Customer         
-    # Mx Execute Template With Multiple Data    Populate Details on IMT for UAT Deal    ${CBAUAT_ExcelPath}    1    ORIG03_Customer
-    # Send Remittance Instruction to Approval and Close RI Notebook        
-    # Mx Execute Template With Multiple Data    Add Remittance Instruction    ${CBAUAT_ExcelPath}    4    ORIG03_Customer
-    # Mx Execute Template With Multiple Data    Add IMT message code for UAT Deal    ${CBAUAT_ExcelPath}    4    ORIG03_Customer    
-    # Mx Execute Template With Multiple Data    Add Swift Role in IMT message for UAT Deal    ${CBAUAT_ExcelPath}    4    ORIG03_Customer
-    # Mx Execute Template With Multiple Data    Update Swift Role in IMT message for UAT Deal    ${CBAUAT_ExcelPath}    5-6    ORIG03_Customer         
-    # Mx Execute Template With Multiple Data    Populate Details on IMT for UAT Deal    ${CBAUAT_ExcelPath}    4    ORIG03_Customer
-    # Send Remittance Instruction to Approval and Close RI Notebook
-    # Mx Execute Template With Multiple Data    Add Remittance Instruction    ${CBAUAT_ExcelPath}    7    ORIG03_Customer
-    # Mx Execute Template With Multiple Data    Add IMT message code for UAT Deal    ${CBAUAT_ExcelPath}    7    ORIG03_Customer    
-    # Mx Execute Template With Multiple Data    Add Swift Role in IMT message for UAT Deal    ${CBAUAT_ExcelPath}    7    ORIG03_Customer
-    # Mx Execute Template With Multiple Data    Update Swift Role in IMT message for UAT Deal    ${CBAUAT_ExcelPath}    8-9    ORIG03_Customer         
-    # Mx Execute Template With Multiple Data    Populate Details on IMT for UAT Deal    ${CBAUAT_ExcelPath}    7    ORIG03_Customer
-    # Send Remittance Instruction to Approval and Close RI Notebook
-    # Mx Execute Template With Multiple Data    Add Remittance Instruction    ${CBAUAT_ExcelPath}    10    ORIG03_Customer
-    # Mx Execute Template With Multiple Data    Add IMT message code for UAT Deal    ${CBAUAT_ExcelPath}    10    ORIG03_Customer    
-    # Mx Execute Template With Multiple Data    Add Swift Role in IMT message for UAT Deal    ${CBAUAT_ExcelPath}    10    ORIG03_Customer
-    # Mx Execute Template With Multiple Data    Update Swift Role in IMT message for UAT Deal    ${CBAUAT_ExcelPath}    11-12    ORIG03_Customer         
-    # Mx Execute Template With Multiple Data    Populate Details on IMT for UAT Deal    ${CBAUAT_ExcelPath}    10    ORIG03_Customer
-    # Send Remittance Instruction to Approval and Close RI Notebook
-    # Mx Execute Template With Multiple Data    Add Remittance Instruction    ${CBAUAT_ExcelPath}    13    ORIG03_Customer
-    # Mx Execute Template With Multiple Data    Add IMT message code for UAT Deal    ${CBAUAT_ExcelPath}    13    ORIG03_Customer    
-    # Mx Execute Template With Multiple Data    Add Swift Role in IMT message for UAT Deal    ${CBAUAT_ExcelPath}    13-15    ORIG03_Customer      
-    # Mx Execute Template With Multiple Data    Update Swift Role in IMT message for UAT Deal    ${CBAUAT_ExcelPath}    16    ORIG03_Customer         
-    # Mx Execute Template With Multiple Data    Populate Details on IMT for UAT Deal    ${CBAUAT_ExcelPath}    13    ORIG03_Customer
-    # Mx Execute Template With Multiple Data    Add IMT message code for UAT Deal    ${CBAUAT_ExcelPath}    17    ORIG03_Customer    
-    # Mx Execute Template With Multiple Data    Add Swift Role in IMT message for UAT Deal    ${CBAUAT_ExcelPath}    18    ORIG03_Customer      
-    # Mx Execute Template With Multiple Data    Update Swift Role in IMT message for UAT Deal    ${CBAUAT_ExcelPath}    20-21    ORIG03_Customer         
-    # Mx Execute Template With Multiple Data    Populate Details on IMT for UAT Deal    ${CBAUAT_ExcelPath}    17    ORIG03_Customer
-    # Send Remittance Instruction to Approval and Close RI Notebook
-    # Mx Execute Template With Multiple Data    Add Remittance Instruction    ${CBAUAT_ExcelPath}    22    ORIG03_Customer
-    # Mx Execute Template With Multiple Data    Add IMT message code for UAT Deal    ${CBAUAT_ExcelPath}    22    ORIG03_Customer 
-    # Mx Execute Template With Multiple Data    Add Swift Role in IMT message for UAT Deal    ${CBAUAT_ExcelPath}    22-24    ORIG03_Customer 
-    # Mx Execute Template With Multiple Data    Populate Details on IMT for UAT Deal    ${CBAUAT_ExcelPath}    22    ORIG03_Customer
-    # Mx Execute Template With Multiple Data    Add IMT message code for UAT Deal    ${CBAUAT_ExcelPath}    25    ORIG03_Customer    
-    # Mx Execute Template With Multiple Data    Populate Details on IMT for UAT Deal    ${CBAUAT_ExcelPath}    25    ORIG03_Customer
-    # Send Remittance Instruction to Approval and Close RI Notebook
-    # Mx Execute Template With Multiple Data    Complete Servicing Group Details    ${CBAUAT_ExcelPath}    1    ORIG03_Customer    
-    # Mx Execute Template With Multiple Data    Add Remittance Instruction to Servicing Group in UAT    ${CBAUAT_ExcelPath}    1,4,7,10,13,22    ORIG03_Customer    
-    # Mx Execute Template With Multiple Data    Logout and Search Customer in UAT - 1st Approver    ${CBAUAT_ExcelPath}    1    ORIG03_Customer
-    # Mx Execute Template With Multiple Data    Approve Remittance Instruction in UAT    ${CBAUAT_ExcelPath}    1,4,7,10,13,22    ORIG03_Customer
-    # Mx Execute Template With Multiple Data    Logout and Search Customer in UAT - 2nd Approver    ${CBAUAT_ExcelPath}    1    ORIG03_Customer
-    # Mx Execute Template With Multiple Data    Approve Remittance Instruction in UAT    ${CBAUAT_ExcelPath}    1,4,7,10,13,22    ORIG03_Customer
-    # Mx Execute Template With Multiple Data    Logout and Search Customer in UAT - Inputter    ${CBAUAT_ExcelPath}    1    ORIG03_Customer 
+Complete Customer Profile - ORIG03
+    [Tags]    02 Complete Borrower's Profile - 0RIG03
+    #Mx Launch UFT    Visiblity=True    UFTAddins=Java
+    Mx Execute Template With Multiple Data    Search Customer and Complete its Borrower Profile Creation with default values for Deal Template Three    ${CBAUAT_ExcelPath}    1    ORIG03_Customer
+    Mx Execute Template With Multiple Data    Add Remittance Instruction    ${CBAUAT_ExcelPath}    1    ORIG03_Customer
+    Mx Execute Template With Multiple Data    Add IMT message code for UAT Deal    ${CBAUAT_ExcelPath}    1    ORIG03_Customer    
+    Mx Execute Template With Multiple Data    Add Swift Role in IMT message for UAT Deal    ${CBAUAT_ExcelPath}    1    ORIG03_Customer
+    Mx Execute Template With Multiple Data    Update Swift Role in IMT message for UAT Deal    ${CBAUAT_ExcelPath}    2-3    ORIG03_Customer         
+    Mx Execute Template With Multiple Data    Populate Details on IMT for UAT Deal    ${CBAUAT_ExcelPath}    1    ORIG03_Customer
+    Send Remittance Instruction to Approval and Close RI Notebook        
+    Mx Execute Template With Multiple Data    Add Remittance Instruction    ${CBAUAT_ExcelPath}    4    ORIG03_Customer
+    Mx Execute Template With Multiple Data    Add IMT message code for UAT Deal    ${CBAUAT_ExcelPath}    4    ORIG03_Customer    
+    Mx Execute Template With Multiple Data    Add Swift Role in IMT message for UAT Deal    ${CBAUAT_ExcelPath}    4    ORIG03_Customer
+    Mx Execute Template With Multiple Data    Update Swift Role in IMT message for UAT Deal    ${CBAUAT_ExcelPath}    5-6    ORIG03_Customer         
+    Mx Execute Template With Multiple Data    Populate Details on IMT for UAT Deal    ${CBAUAT_ExcelPath}    4    ORIG03_Customer
+    Send Remittance Instruction to Approval and Close RI Notebook
+    Mx Execute Template With Multiple Data    Add Remittance Instruction    ${CBAUAT_ExcelPath}    7    ORIG03_Customer
+    Mx Execute Template With Multiple Data    Add IMT message code for UAT Deal    ${CBAUAT_ExcelPath}    7    ORIG03_Customer    
+    Mx Execute Template With Multiple Data    Add Swift Role in IMT message for UAT Deal    ${CBAUAT_ExcelPath}    7    ORIG03_Customer
+    Mx Execute Template With Multiple Data    Update Swift Role in IMT message for UAT Deal    ${CBAUAT_ExcelPath}    8-9    ORIG03_Customer         
+    Mx Execute Template With Multiple Data    Populate Details on IMT for UAT Deal    ${CBAUAT_ExcelPath}    7    ORIG03_Customer
+    Send Remittance Instruction to Approval and Close RI Notebook
+    Mx Execute Template With Multiple Data    Add Remittance Instruction    ${CBAUAT_ExcelPath}    10    ORIG03_Customer
+    Mx Execute Template With Multiple Data    Add IMT message code for UAT Deal    ${CBAUAT_ExcelPath}    10    ORIG03_Customer    
+    Mx Execute Template With Multiple Data    Add Swift Role in IMT message for UAT Deal    ${CBAUAT_ExcelPath}    10    ORIG03_Customer
+    Mx Execute Template With Multiple Data    Update Swift Role in IMT message for UAT Deal    ${CBAUAT_ExcelPath}    11-12    ORIG03_Customer         
+    Mx Execute Template With Multiple Data    Populate Details on IMT for UAT Deal    ${CBAUAT_ExcelPath}    10    ORIG03_Customer
+    Send Remittance Instruction to Approval and Close RI Notebook
+    Mx Execute Template With Multiple Data    Add Remittance Instruction    ${CBAUAT_ExcelPath}    13    ORIG03_Customer
+    Mx Execute Template With Multiple Data    Add IMT message code for UAT Deal    ${CBAUAT_ExcelPath}    13    ORIG03_Customer    
+    Mx Execute Template With Multiple Data    Add Swift Role in IMT message for UAT Deal    ${CBAUAT_ExcelPath}    13-15    ORIG03_Customer      
+    Mx Execute Template With Multiple Data    Update Swift Role in IMT message for UAT Deal    ${CBAUAT_ExcelPath}    16    ORIG03_Customer         
+    Mx Execute Template With Multiple Data    Populate Details on IMT for UAT Deal    ${CBAUAT_ExcelPath}    13    ORIG03_Customer
+    Mx Execute Template With Multiple Data    Add IMT message code for UAT Deal    ${CBAUAT_ExcelPath}    17    ORIG03_Customer    
+    Mx Execute Template With Multiple Data    Add Swift Role in IMT message for UAT Deal    ${CBAUAT_ExcelPath}    18    ORIG03_Customer      
+    Mx Execute Template With Multiple Data    Update Swift Role in IMT message for UAT Deal    ${CBAUAT_ExcelPath}    20-21    ORIG03_Customer         
+    Mx Execute Template With Multiple Data    Populate Details on IMT for UAT Deal    ${CBAUAT_ExcelPath}    17    ORIG03_Customer
+    Send Remittance Instruction to Approval and Close RI Notebook
+    Mx Execute Template With Multiple Data    Add Remittance Instruction    ${CBAUAT_ExcelPath}    22    ORIG03_Customer
+    Mx Execute Template With Multiple Data    Add IMT message code for UAT Deal    ${CBAUAT_ExcelPath}    22    ORIG03_Customer 
+    Mx Execute Template With Multiple Data    Add Swift Role in IMT message for UAT Deal    ${CBAUAT_ExcelPath}    22-24    ORIG03_Customer 
+    Mx Execute Template With Multiple Data    Populate Details on IMT for UAT Deal    ${CBAUAT_ExcelPath}    22    ORIG03_Customer
+    Mx Execute Template With Multiple Data    Add IMT message code for UAT Deal    ${CBAUAT_ExcelPath}    25    ORIG03_Customer    
+    Mx Execute Template With Multiple Data    Populate Details on IMT for UAT Deal    ${CBAUAT_ExcelPath}    25    ORIG03_Customer
+    Send Remittance Instruction to Approval and Close RI Notebook
+    Mx Execute Template With Multiple Data    Complete Servicing Group Details    ${CBAUAT_ExcelPath}    1    ORIG03_Customer    
+    Mx Execute Template With Multiple Data    Add Remittance Instruction to Servicing Group in UAT    ${CBAUAT_ExcelPath}    1,4,7,10,13,22    ORIG03_Customer    
+    Mx Execute Template With Multiple Data    Logout and Search Customer in UAT - 1st Approver    ${CBAUAT_ExcelPath}    1    ORIG03_Customer
+    Mx Execute Template With Multiple Data    Approve Remittance Instruction in UAT    ${CBAUAT_ExcelPath}    1,4,7,10,13,22    ORIG03_Customer
+    Mx Execute Template With Multiple Data    Logout and Search Customer in UAT - 2nd Approver    ${CBAUAT_ExcelPath}    1    ORIG03_Customer
+    Mx Execute Template With Multiple Data    Approve Remittance Instruction in UAT    ${CBAUAT_ExcelPath}    1,4,7,10,13,22    ORIG03_Customer
+    Mx Execute Template With Multiple Data    Logout and Search Customer in UAT - Inputter    ${CBAUAT_ExcelPath}    1    ORIG03_Customer 
 
 # ### November 23
 # Setup TL API - Prerequisite

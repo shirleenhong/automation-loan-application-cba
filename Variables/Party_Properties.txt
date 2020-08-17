@@ -1,6 +1,7 @@
 *** Settings ***
 Resource    ../Configurations/Party_Import_File.robot
 
+
 *** Variables ***
 
 ### API - INPUT AND OUTPUT FOLDER PATHS ###

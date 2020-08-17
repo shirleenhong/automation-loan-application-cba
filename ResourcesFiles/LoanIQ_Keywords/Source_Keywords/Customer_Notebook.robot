@@ -1,5 +1,6 @@
 *** Settings ***
 Resource    ../../../Configurations/LoanIQ_Import_File.robot
+Resource    ../../../Configurations/Party_Import_File.robot
 
 *** Keywords ***
 Search Customer

@@ -1,4 +1,4 @@
-﻿*** Settings ***
+*** Settings ***
 Resource    ../../../Configurations/LoanIQ_Import_File.robot
 
 *** Keywords ***
@@ -43,6 +43,21 @@ Mx Input Text
     Wait Until Browser Ready State
     Wait Until Keyword Succeeds    ${retry}    ${retry_interval}    Input Text    ${locator}    ${text}
     Press Keys    ${locator}    TAB
+    Wait Until Browser Ready State
+
+Mx Input Text and Press Enter
+    [Arguments]    ${locator}    ${text}
+    Wait Until Browser Ready State
+    Wait Until Keyword Succeeds    ${retry}    ${retry_interval}    Wait Until Page Contains Element    ${locator}    1s
+    Wait Until Keyword Succeeds    ${retry}    ${retry_interval}    Wait Until Element Is Visible    ${locator}
+    Wait Until Keyword Succeeds    ${retry}    ${retry_interval}    Wait Until Element Is Enabled    ${locator}    1s
+    Wait Until Keyword Succeeds    ${retry}    ${retry_interval}    Click Element    ${locator}
+    Wait Until Browser Ready State
+    Wait Until Keyword Succeeds    ${retry}    ${retry_interval}    Clear Element Text    ${locator}
+    Press Keys    ${locator}    RETURN
+    Wait Until Browser Ready State
+    Wait Until Keyword Succeeds    ${retry}    ${retry_interval}    Input Text    ${locator}    ${text}
+    Press Keys    ${locator}    RETURN
     Wait Until Browser Ready State
   
 Mx Input Amount
@@ -287,7 +302,7 @@ Select Actions
     Mx LoanIQ Maximize    ${LIQ_Window}    
     Mx LoanIQ Click    ${LIQ_Actions_Button}
     Mx LoanIQ Active Javatree Item    ${LIQ_Tree}    ${ActionName}
-    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/SelectActions
+    Take Screenshot    ${Screenshot_Path}
 
 Auto Generate Name Test Data
     [Arguments]    ${sNameTestData}    ${sTotalNumberToBeGenerated}=1

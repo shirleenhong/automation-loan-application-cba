@@ -1,5 +1,5 @@
 *** Settings ***
-Resource    ../../../../Configurations/Import_File.robot
+Resource    ../../../../Configurations/LoanIQ_Import_File.robot
 
 *** Variables ***
 ${SCENARIO}
@@ -27,7 +27,7 @@ Deal Change Transaction on Financial Ratio for D00000454
     Send Approval Deal Change Transaction    ${Current_Date}
 
     ###Loan IQ Desktop###  
-    Logout from LIQ
+    Logout from Loan IQ
     Login to Loan IQ    ${MANAGER_USERNAME}    ${MANAGER_PASSWORD}
     Search for Deal    &{ExcelPath}[Deal_Name]
      
@@ -37,7 +37,7 @@ Deal Change Transaction on Financial Ratio for D00000454
     ###Deal Change Transaction - Workflow Tab###  
     Approve Deal Change Transaction
     
-    Logout from LIQ
+    Logout from Loan IQ
     Login to Loan IQ    ${SUPERVISOR_USERNAME}    ${SUPERVISOR_PASSWORD}
     
     Search for Deal    &{ExcelPath}[Deal_Name]
@@ -47,5 +47,5 @@ Deal Change Transaction on Financial Ratio for D00000454
     
     ###Deal Notebook - Ratio/Conds###  
     Validate added financial ratio on the deal    &{ExcelPath}[Financial_Ratio]
-    Logout from LIQ
+    Logout from Loan IQ
     Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}

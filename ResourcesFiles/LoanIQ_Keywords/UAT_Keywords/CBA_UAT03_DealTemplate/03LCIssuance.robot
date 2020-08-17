@@ -1,5 +1,5 @@
 *** Settings ***
-Resource    ../../../../Configurations/Import_File.robot
+Resource    ../../../../Configurations/LoanIQ_Import_File.robot
     
 *** Keywords ***
 Issue LC D00000476
@@ -8,7 +8,7 @@ Issue LC D00000476
     [Arguments]    ${ExcelPath}
     
     ##LIQ Window###
-    Logout from LIQ
+    Logout from Loan IQ
     Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
     
     ###Deal Notebook###
@@ -28,7 +28,7 @@ Issue LC D00000476
     Complete Workflow Items    &{ExcelPath}[Customer_Legal_Name]    &{ExcelPath}[SBLC_Status]   
     
     ###LIQ Window###
-    Logout from LIQ
+    Logout from Loan IQ
     Login to Loan IQ    ${SUPERVISOR_USERNAME}    ${SUPERVISOR_PASSWORD}
     
     ###Transaction in Process###
@@ -38,7 +38,7 @@ Issue LC D00000476
     Approve SBLC Issuance
     
     ###LIQ Window###
-    Logout from LIQ
+    Logout from Loan IQ
     Login to Loan IQ    ${MANAGER_USERNAME}    ${MANAGER_PASSWORD}
     
     ###Transaction In Process###

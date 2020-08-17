@@ -1,5 +1,5 @@
 *** Settings ***
-Resource    ../../../../Configurations/Import_File.robot
+Resource    ../../../../Configurations/LoanIQ_Import_File.robot
 
 *** Keywords ***
 Setup Deal D00000963
@@ -136,7 +136,7 @@ Approve and Close UAT Deal D00000963
     
     mx LoanIQ activate    ${LIQ_DealNotebook_Window}
     Navigate Notebook Workflow    ${LIQ_DealNotebook_Window}    ${LIQ_DealNotebook_Tab}    ${LIQ_DealNotebook_Workflow_JavaTree}    Send to Approval
-    Logout from LIQ
+    Logout from Loan IQ
     Login to Loan IQ    ${MANAGER_USERNAME}    ${MANAGER_PASSWORD}
     Open Existing Deal    &{ExcelPath}[Deal_Name]
     Navigate Notebook Workflow    ${LIQ_DealNotebook_Window}    ${LIQ_DealNotebook_Tab}    ${LIQ_DealNotebook_Workflow_JavaTree}    Approval
@@ -150,5 +150,5 @@ Approve and Close UAT Deal D00000963
     Write Data To Excel    UAT04_Fees    OngoingFee_Alias    1    ${OngoingFee_Alias1}    ${CBAUAT_ExcelPath}
     Write Data To Excel    UAT04_Fees    OngoingFee_Alias    2    ${OngoingFee_Alias2}    ${CBAUAT_ExcelPath}
     
-    Logout from LIQ
+    Logout from Loan IQ
     Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}    

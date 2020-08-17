@@ -1,12 +1,12 @@
 *** Settings ***
-Resource    ../../../../Configurations/Import_File.robot
+Resource    ../../../../Configurations/LoanIQ_Import_File.robot
 
 *** Keywords ***
 Collect Early Prepayment via Paper Clip D00000454
     [Documentation]    This Keyword creates a partial early payment via paperclip
     ...    @author: fmamaril    17SEP2019
     [Arguments]    ${ExcelPath}
-    Logout from LIQ
+    Logout from Loan IQ
 	Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
     
     ## Search for Existing Loan
@@ -53,7 +53,7 @@ Collect Early Prepayment via Paper Clip D00000454
     
     ### Send Paperclip to Approval
     Navigate Notebook Workflow    ${LIQ_PendingPaperClip_Window}    ${LIQ_PaperClip_Tabs}    ${LIQ_PaperClip_Workflow_Tab}    Send to Approval
-    Logout from LIQ
+    Logout from Loan IQ
     Login to Loan IQ    ${MANAGER_USERNAME}    ${MANAGER_PASSWORD}
     
     ### Approve Paperclip Transaction
@@ -61,7 +61,7 @@ Collect Early Prepayment via Paper Clip D00000454
     Navigate Notebook Workflow    ${LIQ_PendingPaperClip_Window}    ${LIQ_PaperClip_Tabs}    ${LIQ_PaperClip_Workflow_Tab}    Approval
     
     #### Release PaperClip
-    Logout from LIQ
+    Logout from Loan IQ
     Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
     Select Item in Work in Process    Payments    Awaiting Release    Paper Clip     &{ExcelPath}[Deal_Name]
     Navigate Notebook Workflow    ${LIQ_PendingPaperClip_Window}    ${LIQ_PaperClip_Tabs}    ${LIQ_PaperClip_Workflow_Tab}    Release Cashflows
@@ -117,7 +117,7 @@ Collect Full Payment via Paper Clip Outstanding B1 D00000454
     
     ### Send Paperclip to Approval
     Navigate Notebook Workflow    ${LIQ_PendingPaperClip_Window}    ${LIQ_PaperClip_Tabs}    ${LIQ_PaperClip_Workflow_Tab}    Send to Approval
-    Logout from LIQ
+    Logout from Loan IQ
     Login to Loan IQ    ${MANAGER_USERNAME}    ${MANAGER_PASSWORD}
     
     ### Approve Paperclip Transaction
@@ -125,7 +125,7 @@ Collect Full Payment via Paper Clip Outstanding B1 D00000454
     Navigate Notebook Workflow    ${LIQ_PendingPaperClip_Window}    ${LIQ_PaperClip_Tabs}    ${LIQ_PaperClip_Workflow_Tab}    Approval
     
     #### Release PaperClip
-    Logout from LIQ
+    Logout from Loan IQ
     Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
     Select Item in Work in Process    Payments    Awaiting Release    Paper Clip     &{ExcelPath}[Deal_Name]
     Navigate Notebook Workflow    ${LIQ_PendingPaperClip_Window}    ${LIQ_PaperClip_Tabs}    ${LIQ_PaperClip_Workflow_Tab}    Release Cashflows

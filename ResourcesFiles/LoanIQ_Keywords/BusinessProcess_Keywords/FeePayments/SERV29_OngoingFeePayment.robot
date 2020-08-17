@@ -14,6 +14,7 @@ Update Commitment Fee Cycle
     ...    @update: fmamaril    23APR2019    Commented writing on projected cycle due for Scenario 6 - Should be handled on Payment
     ...    @update: dahijara    09JUL2020    Updated Writing for Serv29 data set.
     ...    @update: dahijara    05AUG2020    Added writing for fee alias for scenario 5
+    ...    @update: dfajardo    13AUG2020    Change hardcoded value 30
     [Arguments]    ${ExcelPath}
 
     ###LoanIQ Window###
@@ -33,8 +34,8 @@ Update Commitment Fee Cycle
     ###Commitment Fee Notebook - General Tab###  
     ${AdjustedDueDate}    Update Cycle on Commitment Fee   &{ExcelPath}[Fee_Cycle]
     
-    ${ScheduleActivity_FromDate}    Subtract Days to Date    ${AdjustedDueDate}    30
-    ${ScheduledActivity_ThruDate}    Add Days to Date    ${AdjustedDueDate}    30
+    ${ScheduleActivity_FromDate}    Subtract Days to Date    ${AdjustedDueDate}    &{ExcelPath}[Days]
+    ${ScheduledActivity_ThruDate}    Add Days to Date    ${AdjustedDueDate}    &{ExcelPath}[Days]
     Run Keyword If    '${SCENARIO}'=='6'    Run Keywords    Write Data To Excel    SERV29_PaymentFees    ScheduleActivity_FromDate    &{ExcelPath}[rowid]    ${ScheduleActivity_FromDate}   
     ...    AND    Write Data To Excel    SERV29_PaymentFees    ScheduledActivity_ThruDate    &{ExcelPath}[rowid]    ${ScheduledActivity_ThruDate}        
     ...    AND    Write Data To Excel    SERV29_PaymentFees    ScheduledActivityReport_Date    &{ExcelPath}[rowid]    ${AdjustedDueDate}
@@ -198,13 +199,16 @@ Pay Commitment Fee Amount - Syndicated
     [Documentation]    This keyword will be used for payments and transactions of commitment fee amount for Syndicated Deals
     ...    @author: fmamaril
     ...    @update: ritragel    19MAR2019    Update for the dataSet and Standards
+    ...    @update: dfajardo    12AUG2020    Changed hard coded value 30, Debit Amt and Credit Amt
+    ...                                      Updated GL Entries to remove hardcoded values and removed keyword mx LoanIQ click element if present since its already covered by new GL Entries script
+    ...                                      Removed duplicate GL Entries after Manager sign on for approval 
  
     #Return to Scheduled Activity Fiter###    
     Navigate to Scheduled Activity Filter
     
     ${SysDate}    Get System Date
-    ${FromDate}    Subtract Days to Date    ${SysDate}    30
-    ${ThruDate}    Add Days to Date    ${SysDate}    30
+    ${FromDate}    Subtract Days to Date    ${SysDate}    &{ExcelPath}[Days]
+    ${ThruDate}    Add Days to Date    ${SysDate}    &{ExcelPath}[Days]
     Write Data To Excel    SERV29_PaymentFees    ScheduleActivity_FromDate    ${rowid}    ${FromDate}
     Write Data To Excel    SERV29_PaymentFees    ScheduledActivity_ThruDate    ${rowid}    ${ThruDate}
     ###Scheduled Activity Filter###
@@ -249,18 +253,17 @@ Pay Commitment Fee Amount - Syndicated
  
     ###GL Entries###
     Navigate to GL Entries
-    ${Borrower_Debit}    Get GL Entries Amount    &{ExcelPath}[Borrower_ShortName]    Debit Amt
-    ${HostBank_Credit}    Get GL Entries Amount    &{ExcelPath}[Host_Bank]    Credit Amt
-    ${Lender2_Credit}    Get GL Entries Amount    &{ExcelPath}[Lender2_ShortName]    Credit Amt
-    ${Lender1_Credit}    Get GL Entries Amount    &{ExcelPath}[Lender1_ShortName]    Credit Amt
-    ${UITotalCreditAmt}    Get GL Entries Amount    ${SPACE}Total For: CB001   Credit Amt
-    ${UITotalDebitAmt}    Get GL Entries Amount    ${SPACE}Total For: CB001    Debit Amt
+    ${HostBank_Debit}    Get GL Entries Amount    &{ExcelPath}[Host_Bank]    ${CREDIT_AMT_LABEL}
+    ${Lender1_Debit}    Get GL Entries Amount    &{ExcelPath}[Lender1_ShortName]    ${CREDIT_AMT_LABEL}
+    ${Lender2_Debit}    Get GL Entries Amount    &{ExcelPath}[Lender2_ShortName]    ${CREDIT_AMT_LABEL}
+    ${Borrower_Credit}    Get GL Entries Amount    &{ExcelPath}[Borrower_ShortName]    ${DEBIT_AMT_LABEL}
+    ${UITotalCreditAmt}    Get GL Entries Amount    Total For:    ${CREDIT_AMT_LABEL}
+    ${UITotalCreditAmt}    Get GL Entries Amount    Total For:    ${DEBIT_AMT_LABEL}
     
-    Compare UIAmount versus Computed Amount    ${HostBankShare}|${Lend1TranAmount}|${Lend2TranAmount}    ${HostBank_Credit}|${Lender1_Credit}|${Lender2_Credit}
-    Validate if Debit and Credit Amt is Balanced    ${Borrower_Debit}    ${HostBank_Credit}|${Lender1_Credit}|${Lender2_Credit}
-    Validate if Debit and Credit Amt is equal to Transaction Amount    ${UITotalDebitAmt}    ${UITotalCreditAmt}    ${ProjectedCycleDue}
-    
-    mx LoanIQ click element if present     ${LIQ_PaymentNotebook_Cashflow_OK_Button}      
+    Compare UIAmount versus Computed Amount    ${HostBankShare}|${Lend1TranAmount}|${Lend2TranAmount}    ${HostBank_Debit}|${${Lender1_Debit}}|${${Lender2_Debit}}
+    Validate if Debit and Credit Amt is Balanced    ${HostBank_Debit}|${Lender1_Debit}|${Lender2_Debit}    ${Borrower_Credit}
+    Validate if Debit and Credit Amt is equal to Transaction Amount    ${UITotalCreditAmt}    ${UITotalCreditAmt}    &{ExcelPath}[Computed_ProjectedCycleDue]
+        
     Send Ongoing Fee Payment to Approval
     
     #Loan IQ Desktop###
@@ -282,25 +285,12 @@ Pay Commitment Fee Amount - Syndicated
     ###Ongoing Fee Payment Notebook - Workflow Tab###  
     Navigate Work in Process for Ongoing Fee Payment Release    &{ExcelPath}[Facility_Name]
     Generate Intent Notices for Ongoing Fee Payment
-    Verify Status and Notice Method in Notices    &{ExcelPath}[Contact_Email]    &{ExcelPath}[Borrower_LegalName]     &{ExcelPath}[Borrower_Contact]    ${MANAGER_USERNAME}    Email    &{ExcelPath}[NoticeStatus]
-    
-    ###Cashflow Notebook - Release Cashflows###
-    Navigate Notebook Workflow    ${LIQ_OngoingFeePayment_Window}    ${LIQ_OngoingFeePayment_Tab}    ${LIQ_OngoingFeePayment_WorkflowItems}     Release Cashflows
-    Release Cashflow    &{ExcelPath}[Borrower_ShortName]|&{ExcelPath}[Lender1_ShortName]|&{ExcelPath}[Lender2_ShortName]
-
-    ###GL Entries###
-    Navigate to GL Entries
-    ${Borrower_Debit}    Get GL Entries Amount    &{ExcelPath}[Borrower_ShortName]    Debit Amt
-    ${HostBank_Credit}    Get GL Entries Amount    &{ExcelPath}[Host_Bank]    Credit Amt
-    ${Lender2_Credit}    Get GL Entries Amount    &{ExcelPath}[Lender2_ShortName]    Credit Amt
-    ${Lender1_Credit}    Get GL Entries Amount    &{ExcelPath}[Lender1_ShortName]    Credit Amt
-    ${UITotalCreditAmt}    Get GL Entries Amount    ${SPACE}Total For: CB001   Credit Amt
-    ${UITotalDebitAmt}    Get GL Entries Amount    ${SPACE}Total For: CB001    Debit Amt
-    
-    Validate if Debit and Credit Amt is Balanced    ${HostBank_Credit}|${Lender2_Credit}|${Lender1_Credit}    ${Borrower_Debit} 
-    Validate if Debit and Credit Amt is equal to Transaction Amount    ${UITotalDebitAmt}    ${UITotalCreditAmt}    ${ProjectedCycleDue}
-
-
+    Verify Status and Notice Method in Notices    &{ExcelPath}[Contact_Email]    &{ExcelPath}[Borrower_LegalName]     &{ExcelPath}[Borrower_Contact]    ${MANAGER_USERNAME}    &{ExcelPath}[NoticeMethod]    &{ExcelPath}[NoticeStatus]
+    Close Notice Window
+    ##Cashflow Notebook - Release Cashflows###
+    Release Cashflow Based on Remittance Instruction    &{ExcelPath}[Remittance_Instruction]    &{ExcelPath}[Borrower_ShortName]    &{ExcelPath}[Cashflow_DataType]    Payment
+    Release Cashflow Based on Remittance Instruction    &{ExcelPath}[Remittance_Instruction]    &{ExcelPath}[Lender1_ShortName]    &{ExcelPath}[Cashflow_DataType]    Payment
+    Release Cashflow Based on Remittance Instruction    &{ExcelPath}[Remittance_Instruction]    &{ExcelPath}[Lender2_ShortName]    &{ExcelPath}[Cashflow_DataType]    Payment
     Release Ongoing Fee Payment
 
     ###Loan IQ Desktop###

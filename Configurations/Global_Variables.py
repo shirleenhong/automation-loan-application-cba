@@ -187,9 +187,15 @@ SHARE_ADJUSTMENT_TYPE = "Share Adjustment"
 RELEASE_TRANSACTION = "release" 
 PAYMENT_TRANSACTION = "Payment"
 LENDER_SHARES_ADJUSTMENT_LABEL = "Lender Shares Adjustment"
+DEBIT_AMT_LABEL = "Debit Amt"
+CREDIT_AMT_LABEL = "Credit Amt"
 AWAITING_SEND_TO_RATE_APPROVAL_STATUS = "Awaiting Send to Rate Approval"
+SEND_TO_RATE_APPROVAL_STATUS = "Send to Rate Approval"
 LOAN_INITIAL_DRAWDOWN_TYPE = "Loan Initial Drawdown"
 RATE_APPROVAL_TRANSACTION = "Rate Approval"
+LOAN_REPRICING_FOR_THE_DEAL = "Loan Repricing for the Deal"
+LOAN_REPRICING = "Loan Repricing"
+
 ### Bank Role ###
 REFERENCE_BANK_ROLE = "Reference Bank"
 
@@ -224,3 +230,9 @@ PAYMENT_WORKFLOW = "Payment"
 
 ### Loan Acrrue ###
 TO_THE_ACTUAL_DUE_DATE = "to the actual due date"
+
+### Loan Repricing ###
+INTEREST_PAYMENT_REQUESTED_AMOUNT = "InterestPaymentRequestedAmount"
+NEW_LOAN_ALIAS = "NewLoanAlias"
+ROLLOVER_CONVERSION_TO_NEW = "Rollover/Conversion To New"
+INTEREST_PAYMENT = "Interest Payment"
