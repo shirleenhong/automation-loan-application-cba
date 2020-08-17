@@ -23,6 +23,7 @@ Create Comprehensive Repricing for Non-Agent Syndicated Deal
     ...    @update: amansuet    15JUN2020    - Updated as Cashflow details is not correct and must only have Lender which in for NonHostBank
     ...    @update: amansuet    18JUN2020    - Replaced hardcoded values and added new keyword to get accurate Cycle Due for trans amount calculation
     ...    @update: amansuet    22JUN2020    - Updated base on the 'Release Cashflow Based on Remittance Instruction' keyword updates
+    ...    @update: clanding    13AUG2020    - Updated hard coded values to global variables/dataset value
     [Arguments]    ${ExcelPath}
     
     ###Login to Original User###
@@ -42,7 +43,9 @@ Create Comprehensive Repricing for Non-Agent Syndicated Deal
 
     ### Add Loan Repricing Details ###
     ${InterestPaymentRequestedAmount}    Add Interest Payment for Loan Repricing    &{ExcelPath}[Cycles_For_Loan]
+    ${Cycle_Due_Date}    Get Cycle Due Date for Loan Repricing    &{ExcelPath}[Pricing_Option] ${INTEREST_PAYMENT} (&{ExcelPath}[Loan_Alias])
     ${Calculated_CycleDue}    Get Calculated Cycle Due Amount and Validate    &{ExcelPath}[Loan_RequestedAmount]    &{ExcelPath}[AllInRate_Value]    &{ExcelPath}[RateBasis_Days]    ${InterestPaymentRequestedAmount}    &{ExcelPath}[Loan_EffectiveDate]
+    ...    ${Cycle_Due_Date}
     ${NewLoanAlias}    ${IncreaseAmount}    Add Rollover Conversion to New    &{ExcelPath}[Pricing_Option]    &{ExcelPath}[Base_Rate]    &{ExcelPath}[Loan_NewOutstanding]
     
     ### Compute Lender Share Trans Amount for Cash Flow ###
@@ -54,10 +57,10 @@ Create Comprehensive Repricing for Non-Agent Syndicated Deal
     Verify if Method has Remittance Instruction    &{ExcelPath}[Lender1_ShortName]    &{ExcelPath}[Remittance1_Description]    &{ExcelPath}[Remittance1_Instruction]    ${ComputedLender_IncreaseTransAmount}    &{ExcelPath}[Loan_Currency]
     Verify if Method has Remittance Instruction    &{ExcelPath}[Lender1_ShortName]    &{ExcelPath}[Remittance1_Description]    &{ExcelPath}[Remittance1_Instruction]    ${ComputedLender_InterestPaymentTransAmount}    &{ExcelPath}[Loan_Currency]
     
-    Create Cashflow    &{ExcelPath}[Lender1_ShortName]    release
+    Create Cashflow    &{ExcelPath}[Lender1_ShortName]    ${RELEASE_TRANSACTION}
 
     ${SysDate}    Get System Date
-    ${AdjustedDueDate}    Add Time from From Date and Returns Weekday    ${SysDate}    30
+    ${AdjustedDueDate}    Add Time from From Date and Returns Weekday    ${SysDate}    &{ExcelPath}[Add_To_SysDate]
     Write Data To Excel    SERV09_LoanRepricing    New_Loan_Alias    ${rowid}    ${NewLoanAlias}
     Write Data To Excel    SERV22_InterestPayments    ScheduledActivityReport_Date    ${rowid}    ${AdjustedDueDate}
     Write Data To Excel    SERV22_InterestPayments    New_Loan_Alias    ${rowid}    ${NewLoanAlias}
@@ -70,8 +73,8 @@ Create Comprehensive Repricing for Non-Agent Syndicated Deal
     Navigate to Facility Notebook    &{ExcelPath}[Deal_Name]    &{ExcelPath}[Facility_Name]
     Navigate to Outstanding Select Window
     Navigate to Existing Loan    &{ExcelPath}[OutstandingSelect_Type]     &{ExcelPath}[Facility_Name]    &{ExcelPath}[Loan_Alias]
-    Navigate to Loan Pending Tab and Proceed with the Transaction     Loan Repricing for the Deal &{ExcelPath}[Deal_Name].
-    Navigate to Loan Repricing Workflow and Proceed With Transaction    Approval
+    Navigate to Loan Pending Tab and Proceed with the Transaction     ${LOAN_REPRICING_FOR_THE_DEAL} &{ExcelPath}[Deal_Name].
+    Navigate to Loan Repricing Workflow and Proceed With Transaction    ${APPROVAL_STATUS}
     Send to Rate Approval
     
     ### Loan Repricing: Rate Approval, Release Cashflows and Release Loan Repricing ###
@@ -80,15 +83,15 @@ Create Comprehensive Repricing for Non-Agent Syndicated Deal
     Navigate to Facility Notebook    &{ExcelPath}[Deal_Name]    &{ExcelPath}[Facility_Name]
     Navigate to Outstanding Select Window
     Navigate to Existing Loan    &{ExcelPath}[OutstandingSelect_Type]     &{ExcelPath}[Facility_Name]    &{ExcelPath}[Loan_Alias]
-    Navigate to Loan Pending Tab and Proceed with the Transaction     Loan Repricing for the Deal &{ExcelPath}[Deal_Name].
+    Navigate to Loan Pending Tab and Proceed with the Transaction     ${LOAN_REPRICING_FOR_THE_DEAL} &{ExcelPath}[Deal_Name].
     Close Facility Notebook and Navigator Windows
-    Navigate to Loan Repricing Workflow and Proceed With Transaction    Rate Approval
+    Navigate to Loan Repricing Workflow and Proceed With Transaction    ${RATE_APPROVAL_TRANSACTION}
 
     ### Release Cashflows ###
-    Release Cashflow Based on Remittance Instruction    &{ExcelPath}[Remittance1_Instruction]    ${ComputedLender_InterestPaymentTransAmount}|${ComputedLender_IncreaseTransAmount}    &{ExcelPath}[Cashflow_DataType]    Loan Repricing
+    Release Cashflow Based on Remittance Instruction    &{ExcelPath}[Remittance1_Instruction]    ${ComputedLender_InterestPaymentTransAmount}|${ComputedLender_IncreaseTransAmount}    &{ExcelPath}[Cashflow_DataType]    ${LOAN_REPRICING}
 
     ### Release Loan Repricing ###
-    Navigate to Loan Repricing Workflow and Proceed With Transaction    Release
+    Navigate to Loan Repricing Workflow and Proceed With Transaction    ${RELEASE_STATUS}
     
     Close All Windows on LIQ
 

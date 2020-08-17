@@ -2626,8 +2626,11 @@ Navigate to Interest Fee Pricing Window
 Close Facility Notebook and Navigator Windows
     [Documentation]    This keyword is used to close the Facility Notebook and Navigtor windows when a user tries to add another Facility to a Deal.
     ...    @author: rtarayao    07MAR2019    Initial create
-    mx LoanIQ close window    ${LIQ_FacilityNotebook_Window}    
+    ...    @update: clanding    13AUG2020    Added screenshot
+    mx LoanIQ close window    ${LIQ_FacilityNotebook_Window}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/FacilityNotebookWindow
     mx LoanIQ close window    ${LIQ_FacilityNavigator_Window}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/FacilityNavigatorWindow
     
 Add MIS Code
     [Documentation]    This keyword is used to add MIS Codes at the Facility Notebook
