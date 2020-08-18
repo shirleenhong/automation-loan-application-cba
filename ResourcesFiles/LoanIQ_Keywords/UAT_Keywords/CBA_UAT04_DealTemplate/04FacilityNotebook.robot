@@ -7,6 +7,7 @@ Setup Facility for Deal D00000963
     ...                @author: bernchua    20AUG2019    Initial create
     ...                @update: bernchua    21AUG2019    Added setting of SIC & MIS Codes, Taking of screenshots
     ...                @update: bernchua    26AUG2019    Added Write to Excel of Facility_Name for Runbook test cases
+    ...                @update: allanramos  17AUG2019    Commented Out Add MIS Codes
     [Arguments]    ${ExcelPath}
     
     ${Facility_Name}    Generate Name Test Data    &{ExcelPath}[Facility_NamePrefix]
@@ -65,8 +66,8 @@ Setup Facility for Deal D00000963
     
     Set Facility SIC Details    &{ExcelPath}[FacilitySIC_Country]    &{ExcelPath}[FacilitySIC_SearchBy]    &{ExcelPath}[FacilitySIC_Code]
     Take Screenshot    FacilityNotebook-Codes
-    Add MIS Code    &{ExcelPath}[FacilityMIS_Code]    &{ExcelPath}[FacilityMIS_Value]
-    Take Screenshot    FacilityNotebook-MISCodes
+    # Add MIS Code    &{ExcelPath}[FacilityMIS_Code]    &{ExcelPath}[FacilityMIS_Value]
+    # Take Screenshot    FacilityNotebook-MISCodes
     
     Validate Facility
     Take Screenshot    FacilityNavigator-Window

@@ -26,8 +26,9 @@ Create Deal Borrower initial details in Quick Party Onboarding
 Populate Quick Enterprise Party with Approval
     [Documentation]    This keyword creates a Deal Borrower in Quick Party Onboarding.
     ...    @author:    fmamaril    26JUN2019
+    ...    @update:    aramos      18AUG2020 Updated Screenshot path to ${Screenshot_Path}/Screenshots/Party/PartyDetails
     [Arguments]    ${ExcelPath}           
-    ${PartyID}    Read Data From Excel    PTY001_QuickPartyOnboarding    Party_ID    ${rowid}    ${CBAUAT_ExcelPath}    
+        ${PartyID}    Read Data From Excel    PTY001_QuickPartyOnboarding    Party_ID    ${rowid}    ${CBAUAT_ExcelPath}    
     ${EnterpriseName}    Read Data From Excel    PTY001_QuickPartyOnboarding    Enterprise_Name    ${rowid}    ${CBAUAT_ExcelPath}
     Populate Quick Enterprise Party    ${PartyID}    &{ExcelPath}[Country_of_Tax_Domicile]    &{ExcelPath}[Country_of_Registration]
     ...    &{ExcelPath}[Address_Type]    &{ExcelPath}[Country_Region]    &{ExcelPath}[Post_Code]    &{ExcelPath}[Document_Collection_Status]
@@ -35,9 +36,7 @@ Populate Quick Enterprise Party with Approval
     ...    &{ExcelPath}[GSTID]    &{ExcelPath}[Address_Line_1]    &{ExcelPath}[Address_Line_2]    &{ExcelPath}[Town_City]    
     ...    &{ExcelPath}[State_Province]    &{ExcelPath}[Business_Country]    &{ExcelPath}[Is_Primary_Activity]    &{ExcelPath}[Registered_Number]    ${EnterpriseName}    
        
-    Screenshot.Set Screenshot Directory    ${Screenshot_Path}
-    Set Test Variable    ${SCREENSHOT_FILENAME}    Party Details
-    Take Screenshot    ${SCREENSHOT_FILENAME}
+    Take Screenshot    ${Screenshot_Path}/Screenshots/Party/PartyDetails
     Run Keyword If    '${SSO_ENABLED}'=='NO'    Logout User on Party
     Close Browser
     
