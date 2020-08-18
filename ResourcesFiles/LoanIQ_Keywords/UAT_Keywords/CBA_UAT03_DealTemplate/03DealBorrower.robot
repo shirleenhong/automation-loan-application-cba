@@ -26,6 +26,7 @@ Create Deal Borrower initial details in Quick Party Onboarding
 Populate Quick Enterprise Party with Approval
     [Documentation]    This keyword creates a Deal Borrower in Quick Party Onboarding.
     ...    @author:    fmamaril    26JUN2019
+    ...    @author     aramos      18AUG2020 Updated Screenshot path to ${Screenshot_Path}/Screenshots/Party/PartyDetails/${SCREENSHOT_FILENAME}
     [Arguments]    ${ExcelPath}           
         ${PartyID}    Read Data From Excel    PTY001_QuickPartyOnboarding    Party_ID    ${rowid}    ${CBAUAT_ExcelPath}    
     ${EnterpriseName}    Read Data From Excel    PTY001_QuickPartyOnboarding    Enterprise_Name    ${rowid}    ${CBAUAT_ExcelPath}
