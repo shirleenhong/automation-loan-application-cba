@@ -42,7 +42,6 @@ Populate Quick Enterprise Party with Approval for BEPTYLTDATF
     ...    &{ExcelPath}[GSTID]    &{ExcelPath}[Address_Line_1]    &{ExcelPath}[Address_Line_2]    &{ExcelPath}[Town_City]    
     ...    &{ExcelPath}[State_Province]    &{ExcelPath}[Business_Country]    &{ExcelPath}[Is_Primary_Activity]    &{ExcelPath}[Registered_Number]    ${EnterpriseName}    
        
-    Screenshot.Set Screenshot Directory    ${Screenshot_Path}
     Take Screenshot    ${SCREENSHOT_FILENAME}
     Run Keyword If    '${SSO_ENABLED}'=='NO'    Logout User on Party
     Close Browser
