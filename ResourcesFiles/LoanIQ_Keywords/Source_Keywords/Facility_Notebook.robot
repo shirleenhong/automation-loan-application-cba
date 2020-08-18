@@ -355,7 +355,7 @@ Add Borrower
     ${status}    Run Keyword And Return Status    Verify If Text Value Exist as Static Text on Page    Borrower/Depositor Select    ${Currency}
     Run Keyword If    ${status}==True    Log    Currency text is validated.
     ...    ELSE IF    ${status}==False    Mx LoanIQ Verify Object Exist    JavaWindow("title:=.*Borrower/Depositor Select.*").JavaStaticText("text:=.*${Currency}.*")                    VerificationData="Yes"
-    # Run Keyword And Continue On Failure    Verify If Text Value Exist as Static Text on Page    Borrower/Depositor Select    ${Facility_BorrowerSGName}
+    Run Keyword And Continue On Failure    Verify If Text Value Exist as Static Text on Page    Borrower/Depositor Select    ${Facility_BorrowerSGName}
     Run Keyword And Continue On Failure    Mx LoanIQ Verify Object Exist    JavaWindow("title:=Borrower/Depositor Select").JavaEdit("value:=${Facility_BorrowerPercent}","attached text:=Percent:")    VerificationData="Yes"
     Validate Loan IQ Details    ${Facility_Borrower}   ${LIQ_BorrowerDepositorSelect_AddBorrower_Name_Field}    
     Validate Loan IQ Details    ${Facility_GlobalLimit}   ${LIQ_BorrowerDepositorSelect_AddBorrower_GlobalLimit_Field}   
