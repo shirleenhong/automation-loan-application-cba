@@ -23,7 +23,7 @@ Library    UFTGeneric    Visibility=True     UFTAddins=Java
 Library    Dialogs
 Library    XML
 Library    base64
-Library    PdfToText
+#Library    PdfToText
 Library    MathLibrary    
 
 ### Global Variables ###
@@ -360,7 +360,11 @@ Resource    ../ResourcesFiles/LoanIQ_Keywords/Source_Keywords/UpfrontFeeDistribu
 
 # ### UAT Deal 2 ###
 Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/CBA_UAT02_DealTemplate/02DealBorrower.robot
+<<<<<<< HEAD
+Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/CBA_UAT02_DealTemplate/02DealNotebook.robot
+=======
 # Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/CBA_UAT02_DealTemplate/02DealNotebook.robot
+>>>>>>> be2d08ec880fdf22af424caa014ad24e7a2fe2e9
 
 ### UAT Deal 3 ###
 Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/CBA_UAT03_DealTemplate/03DealBorrower.robot
@@ -376,3 +380,13 @@ Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/CBA_UAT03_DealTemplat
 # Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/CBA_UAT03_DealTemplate/03LoanMerge.robot
 # Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/CBA_UAT03_DealTemplate/03Paperclip.robot
 # Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/CBA_UAT03_DealTemplate/03Repricing.robot
+
+
+### UAT Deal 4 ###
+Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/CBA_UAT04_DealTemplate/04DealBorrower.robot
+Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/CBA_UAT04_DealTemplate/04DealNotebook.robot
+Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/CBA_UAT04_DealTemplate/04FacilityNotebook.robot
+Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/CBA_UAT04_DealTemplate/04Fees.robot
+Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/CBA_UAT04_DealTemplate/04Outstandings.robot
+Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/CBA_UAT04_DealTemplate/04Repayment.robot
+Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/CBA_UAT04_DealTemplate/04Repricing.robot

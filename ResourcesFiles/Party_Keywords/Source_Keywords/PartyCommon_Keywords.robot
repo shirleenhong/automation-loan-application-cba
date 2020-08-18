@@ -59,6 +59,7 @@ Validate Enquire Enterprise Party Details
     ...    @update: amansuet    18MAR2020    - updated based on automation standard guidelines
     [Arguments]    ${sLocality}    ${sParty_Type}    ${sParty_Sub_Type}    ${sParty_Category}    ${sEnterprise_Name}    ${iRegistered_Number}    ${sDate_Formed}    ${sCountry_of_Tax_Domicile}    ${sCountry_of_Registration}
     
+    Wait Until Browser Ready State
     Wait Until Browser Ready State 
     Compare Two Arguments    ${sLocality}    ${FBE_Locality_Text}
     Compare Two Arguments    ${sParty_Type}    ${FBE_PartyType_Text}
