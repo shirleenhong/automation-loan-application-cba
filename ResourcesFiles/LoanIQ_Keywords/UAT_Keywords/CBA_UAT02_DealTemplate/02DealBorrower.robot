@@ -3,7 +3,6 @@ Resource    ../../../../Configurations/LoanIQ_Import_File.robot
 Resource    ../../../../Configurations/Party_Import_File.robot
 
 *** Variables ***
-# ${SCENARIO}
 
 *** Keywords ***
 Create Deal Borrower initial details in Quick Party Onboarding for BEPTYLTDATF
@@ -44,7 +43,6 @@ Populate Quick Enterprise Party with Approval for BEPTYLTDATF
     ...    &{ExcelPath}[State_Province]    &{ExcelPath}[Business_Country]    &{ExcelPath}[Is_Primary_Activity]    &{ExcelPath}[Registered_Number]    ${EnterpriseName}    
        
     Screenshot.Set Screenshot Directory    ${Screenshot_Path}
-    Set Test Variable    ${SCREENSHOT_FILENAME}    Party Details
     Take Screenshot    ${SCREENSHOT_FILENAME}
     Run Keyword If    '${SSO_ENABLED}'=='NO'    Logout User on Party
     Close Browser
