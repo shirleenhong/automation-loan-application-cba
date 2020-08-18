@@ -27,7 +27,7 @@ Populate Quick Enterprise Party with Approval
     [Documentation]    This keyword creates a Deal Borrower in Quick Party Onboarding.
     ...    @author:    fmamaril    26JUN2019
     [Arguments]    ${ExcelPath}           
-    ${PartyID}    Read Data From Excel    PTY001_QuickPartyOnboarding    Party_ID    ${rowid}    ${CBAUAT_ExcelPath}    
+        ${PartyID}    Read Data From Excel    PTY001_QuickPartyOnboarding    Party_ID    ${rowid}    ${CBAUAT_ExcelPath}    
     ${EnterpriseName}    Read Data From Excel    PTY001_QuickPartyOnboarding    Enterprise_Name    ${rowid}    ${CBAUAT_ExcelPath}
     Populate Quick Enterprise Party    ${PartyID}    &{ExcelPath}[Country_of_Tax_Domicile]    &{ExcelPath}[Country_of_Registration]
     ...    &{ExcelPath}[Address_Type]    &{ExcelPath}[Country_Region]    &{ExcelPath}[Post_Code]    &{ExcelPath}[Document_Collection_Status]
