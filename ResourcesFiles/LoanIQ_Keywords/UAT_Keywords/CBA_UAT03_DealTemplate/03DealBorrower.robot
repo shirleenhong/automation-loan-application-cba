@@ -36,7 +36,7 @@ Populate Quick Enterprise Party with Approval
     ...    &{ExcelPath}[GSTID]    &{ExcelPath}[Address_Line_1]    &{ExcelPath}[Address_Line_2]    &{ExcelPath}[Town_City]    
     ...    &{ExcelPath}[State_Province]    &{ExcelPath}[Business_Country]    &{ExcelPath}[Is_Primary_Activity]    &{ExcelPath}[Registered_Number]    ${EnterpriseName}    
        
-    Take Screenshot    ${Screenshot_Path}/Screenshots/Party/PartyDetails/
+    Take Screenshot    ${Screenshot_Path}/Screenshots/Party/PartyDetails
     Run Keyword If    '${SSO_ENABLED}'=='NO'    Logout User on Party
     Close Browser
     
