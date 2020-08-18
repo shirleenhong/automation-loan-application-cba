@@ -2108,7 +2108,7 @@ Add Standard Remittance Instruction
 Add Internal Risk Rating
     [Documentation]    This keyword adds an internal risk rating at the customer notebook.
     ...    @author: hstone    09JUN2020    - initial create
-    [Arguments]    ${sRatingType}    ${sRating}    ${sPercent}    ${sEffectiveDate}    ${    }
+    [Arguments]    ${sRatingType}    ${sRating}    ${sPercent}    ${sEffectiveDate}    ${sExpiryDate}
 
     ### Keyword Pre-processing ###
     ${RatingType}    Acquire Argument Value    ${sRatingType}
