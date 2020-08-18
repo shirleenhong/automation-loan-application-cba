@@ -36,8 +36,8 @@ Populate Quick Enterprise Party with Approval
     ...    &{ExcelPath}[State_Province]    &{ExcelPath}[Business_Country]    &{ExcelPath}[Is_Primary_Activity]    &{ExcelPath}[Registered_Number]    ${EnterpriseName}    
        
     Screenshot.Set Screenshot Directory    ${Screenshot_Path}
-    Set Test Variable    ${SCREENSHOT_FILENAME}    Party Details
-    Take Screenshot    ${SCREENSHOT_FILENAME}
+
+    Take Screenshot    ${Screenshot_Path}/Screenshots/Party/PartyDetails/${SCREENSHOT_FILENAME}
     Run Keyword If    '${SSO_ENABLED}'=='NO'    Logout User on Party
     Close Browser
     
