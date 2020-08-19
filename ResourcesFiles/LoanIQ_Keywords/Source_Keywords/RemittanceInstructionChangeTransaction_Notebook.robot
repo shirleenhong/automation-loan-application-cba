@@ -2,7 +2,6 @@
 Resource    ../../../Configurations/LoanIQ_Import_File.robot
 
 *** Keywords ***
-
 Add Remittance Instruction
     [Documentation]    This keyword is used to add the Remittance Instruction
     ...    @author:Archana 30JUN2020
