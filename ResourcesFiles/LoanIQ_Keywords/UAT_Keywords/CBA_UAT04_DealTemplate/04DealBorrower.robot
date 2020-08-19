@@ -9,6 +9,7 @@ ${SCENARIO}
 Search Customer and Complete its Borrower Profile Creation with default values for Deal Template Four
     [Documentation]    This keyword searches a customer and complete its Borrower Profile creation with default values
     ...    @author: fmamaril    23AUG2019
+    ...    @update: aramos      19AUG2020  Update to uncomment create profile / location
     [Arguments]    ${ExcelPath}
 	
 	# ## Login to LoanIQ###
@@ -47,16 +48,16 @@ Search Customer and Complete its Borrower Profile Creation with default values f
     # Navigate to "Profiles" tab and Validate 'Add Profile' Button
 
     # ###Adding Profile          
-    # Add Profile under Profiles Tab    &{ExcelPath}[Profile_Type]
+    Add Profile under Profiles Tab    &{ExcelPath}[Profile_Type]
           
     # ###Adding Borrower Profile Details
-    # Add Borrower Profile Details under Profiles Tab    &{ExcelPath}[Profile_Type]
+    Add Borrower Profile Details under Profiles Tab    &{ExcelPath}[Profile_Type]
     
     # ###Validating Buttons      
     # Validate Only 'Add Profile', 'Add Location' and 'Delete' Buttons are Enabled in Profile Tab
     
     # ###Adding Location          
-    # Add Location under Profiles Tab    &{ExcelPath}[Customer_Location]  
+    Add Location under Profiles Tab    &{ExcelPath}[Customer_Location]  
     
     # ###Adding Borrowwer/Location Details
     # Add Borrowwer/Location Details under Profiles Tab   &{ExcelPath}[Profile_Type]    &{ExcelPath}[Customer_Location]    
