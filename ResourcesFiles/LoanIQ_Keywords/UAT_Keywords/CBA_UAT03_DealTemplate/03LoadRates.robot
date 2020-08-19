@@ -10,7 +10,6 @@ Load Base Rate D00000476
     [Arguments]    ${ExcelPath}
     
     ###PREREQUISITE###
-    #Login to Loan IQ    ${TL_USERNAME}    ${TL_PASSWORD}
     ${CSVFile}    Set Variable    &{ExcelPath}[InputFilePath]&{ExcelPath}[InputGSFile]
     ${TransformedDataFile_BaseRate}    Set Variable    &{ExcelPath}[InputFilePath]TL_Transformed_Data_BaseRate.xlsx
     ${TransformedDataFile_Template_BaseRate}    Set Variable    &{ExcelPath}[InputFilePath]TL_Transformed_Data_template_BaseRate.xlsx
@@ -29,7 +28,6 @@ Load FX Rate D00000476
     [Arguments]    ${ExcelPath}
     
     ###PREREQUISITE###
-    #Login to Loan IQ    ${TL_USERNAME}    ${TL_PASSWORD}
     ${fundingDeskStatus}    Get Funding Desk Status from Table Maintenance    &{ExcelPath}[FundingDesk_1]
     ${CSVFile}    Set Variable    &{ExcelPath}[InputFilePath]&{ExcelPath}[InputGSFile]
     ${TransformedDataFile_FXRates}    Set Variable    &{ExcelPath}[InputFilePath]TL_Transformed_Data_FXRates.xls
