@@ -1484,7 +1484,7 @@ Generate LIQ Remittance Instruction Descriptions
     [Documentation]    This keyword generates LIQ Remittance Instruction Descriptions and Save it to Excel
     ...    @author: ghabal
     ...    @update: amansuet    22MAY2020    - updated to align with automation standards
-    [Arguments]    ${sRemittanceInstruction_DDADescriptionAUDPrefix}    ${sRemittanceInstruction_IMTDescriptionUSDPrefix}    ${sRemittanceInstruction_RTGSDescriptionAUDPrefix}    #${sRunTimeVar_RemittanceInstruction_DDADescriptionAUD}=None       
+    [Arguments]    ${sRemittanceInstruction_DDADescriptionAUDPrefix}    ${sRemittanceInstruction_IMTDescriptionUSDPrefix}    ${sRemittanceInstruction_RTGSDescriptionAUDPrefix}   
         
     ${RemittanceInstruction_DDADescriptionAUD}    Auto Generate Only 4 Numeric Test Data    ${sRemittanceInstruction_DDADescriptionAUDPrefix}
     log    LIQ Customer DDA AUD Remittance Instruction Description: ${RemittanceInstruction_DDADescriptionAUD}

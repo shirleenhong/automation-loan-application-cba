@@ -23,7 +23,7 @@ Library    UFTGeneric    Visibility=True     UFTAddins=Java
 Library    Dialogs
 Library    XML
 Library    base64
-#Library    PdfToText
+Library    PdfToText
 Library    MathLibrary    
 
 ### Global Variables ###
