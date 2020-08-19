@@ -9,7 +9,7 @@ ${SCENARIO}
 Search Customer and Complete its Borrower Profile Creation with default values for Deal Template Four
     [Documentation]    This keyword searches a customer and complete its Borrower Profile creation with default values
     ...    @author: fmamaril    23AUG2019
-    ...    @update: aramos      19AUG2020  Update to uncomment create profile / location
+    ...    @update: aramos      19AUG2020  Update to Add Remittance Instructions Inclusion Steps.
     [Arguments]    ${ExcelPath}
 	
 	# ## Login to LoanIQ###
