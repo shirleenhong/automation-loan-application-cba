@@ -9,7 +9,6 @@ Set up Secondary Sale for Agency
     ...    @update: dahijara    19AUG2020    Removed previously commented codes.
     ...                                      Updated "Check Deal Closing Commitment Amount" and Check Host Bank Lender Share with correct argument.
     ...                                      Added writing for Deal_ClosingCmt, sHostBank_AvailableShare, ExpectedCloseDate, Assignment_CircledDate
-    ...                                      Added excel data reading for ExpectedCloseDate & Assignment_CircledDate
     [Arguments]    ${ExcelPath}    
     ###Loan IQ Desktop###
     Logout from Loan IQ
@@ -34,8 +33,6 @@ Set up Secondary Sale for Agency
     ${CurrentBusinessDate}    Get System Date
     Write Data To Excel    TRP002_SecondarySale    ExpectedCloseDate    ${rowid}    ${CurrentBusinessDate}
     Write Data To Excel    TRP002_SecondarySale    Assignment_CircledDate    ${rowid}    ${CurrentBusinessDate}
-    ${ExpectedCloseDate}    Read Data From Excel    TRP002_SecondarySale    ExpectedCloseDate    ${rowid}        
-    ${Assignment_CircledDate}    Read Data From Excel    TRP002_SecondarySale    Assignment_CircledDate    ${rowid}        
     Populate Amts or Dates Tab    ${CurrentBusinessDate}
     Add Contacts    &{ExcelPath}[Buyer_Lender]    &{ExcelPath}[Buyer_Location]    &{ExcelPath}[Buyer_ContactName] 
     Add Servicing Groups    &{ExcelPath}[Buyer_Lender]    &{ExcelPath}[Seller_LegalEntity]
@@ -48,7 +45,7 @@ Set up Secondary Sale for Agency
     ###Circle Notebook - Workflow Tab###
     Logout from Loan IQ
     Login to Loan IQ    ${SUPERVISOR_USERNAME}    ${SUPERVISOR_PASSWORD}
-    Assignment Approval    &{ExcelPath}[WIPTransaction_Type]    &{ExcelPath}[Lender_Host]    &{ExcelPath}[CircleTransaction_Type]    &{ExcelPath}[Deal_Name]    ${Assignment_CircledDate}    &{ExcelPath}[QualifiedBuyerCheckbox_Label]    
+    Assignment Approval    &{ExcelPath}[WIPTransaction_Type]    &{ExcelPath}[Lender_Host]    &{ExcelPath}[CircleTransaction_Type]    &{ExcelPath}[Deal_Name]    ${CurrentBusinessDate}    &{ExcelPath}[QualifiedBuyerCheckbox_Label]    
     
     ###Circle Notebook - Workflow Tab###
     Logout from Loan IQ
@@ -61,7 +58,7 @@ Set up Secondary Sale for Agency
     Logout from Loan IQ
     Login to Loan IQ    ${MANAGER_USERNAME}    ${MANAGER_PASSWORD}
     Assignment Settlement Approval    &{ExcelPath}[WIPTransaction_Type]    &{ExcelPath}[Lender_Host]    &{ExcelPath}[CircleTransaction_Type]    &{ExcelPath}[Deal_Name] 
-    Close Assignment Transaction    &{ExcelPath}[WIPTransaction_Type]    &{ExcelPath}[Lender_Host]    &{ExcelPath}[CircleTransaction_Type]    &{ExcelPath}[Deal_Name]    ${ExpectedCloseDate}
+    Close Assignment Transaction    &{ExcelPath}[WIPTransaction_Type]    &{ExcelPath}[Lender_Host]    &{ExcelPath}[CircleTransaction_Type]    &{ExcelPath}[Deal_Name]    ${CurrentBusinessDate}
     
     ###Check the remaing lender share###
     Logout from Loan IQ
