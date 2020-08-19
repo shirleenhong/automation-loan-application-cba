@@ -79,4 +79,15 @@ Search Customer and Complete its Borrower Profile Creation with default values f
     Take Screenshot    ${SCREENSHOT_FILENAME}
     
     ###Adding Remittance Instructions
-    Navigate to Remittance List Page
+    # Navigate to Remittance List Page
+    
+    Log To Console    ExcelPathLIQCustomerShortName
+    Log To Console    &{ExcelPath}[LIQCustomer_ShortName] 
+    
+    Add Remittance Instruction   &{ExcelPath}[LIQCustomer_ShortName]
+    Add IMT message code for UAT Deal    ${ExcelPath}
+    Add Swift Role in IMT message for UAT Deal    ${ExcelPath}
+    Mx Execute Template With Multiple Data    Update Swift Role in IMT message for UAT Deal    ${ExcelPath}    2-3    ORIG03_Customer  
+    Populate Details on IMT for UAT Deal    ${ExcelPath}
+    Send Remittance Instruction to Approval and Close RI Notebook  
+    

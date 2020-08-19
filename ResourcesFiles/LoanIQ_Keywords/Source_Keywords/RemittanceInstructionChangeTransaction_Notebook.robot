@@ -2,6 +2,7 @@
 Resource    ../../../Configurations/LoanIQ_Import_File.robot
 
 *** Keywords ***
+
 Add Remittance Instruction
     [Documentation]    This keyword is used to add the Remittance Instruction
     ...    @author:Archana 30JUN2020
@@ -9,9 +10,10 @@ Add Remittance Instruction
     [Arguments]    ${sBorrower}
      
     ###Pre-processing keyword###
-    ${Borrower}    Acquire Argument Value    ${sBorrower}
+    ${Borrower}    Acquire Argument Value    ${sBorrower} 
            
     Mx LoanIQ Activate    ${LIQ_ActiveCustomer_Window}
+    # Mx LoanIQ Activate    ${LIQ_ActiveCustomer_RemittanceList_Window}
     Mx LoanIQ Select Or DoubleClick In Javatree    ${LIQ_SelectBorrower_JavaTree}    ${Borrower}%s 
     Mx LoanIQ Click    ${LIQ_ActiveCustomer_RemittanceInstructions_Button}    
     mx LoanIQ click element if present    ${LIQ_Question_Yes_Button}
