@@ -1060,33 +1060,41 @@ Exit Primaries List Window
 Check Deal Closing Commitment Amount
     [Documentation]    This keyword is for checking the Closing Cmt under Summary Tab of Deal Notebook used for the computation validation.
     ...    @author: mgaling
-    [Arguments]    ${sDeal_ClosingCmt}
-    
-    ### GetRuntime Keyword Pre-processing ###
-    ${Deal_ClosingCmt}    Acquire Argument Value    ${sDeal_ClosingCmt}
+    ...    @update: dahijara    10AUG2020    - Refactored codes. Remove required arguments and added return value.
+    ...                                      - Removed writing inside the keyword and pre-processing keyword.
+    ...                                      - And added screenshot and pre processing keywords. Added optional argunment for data runtime varname.
+    [Arguments]    ${sRunVar_Deal_ClosingCmt}=None
     
     mx LoanIQ activate window    ${LIQ_DealNotebook_Window}
     Mx LoanIQ Select Window Tab    ${LIQ_DealNotebook_Tab}    Summary
     ${Deal_ClosingCmt}    Mx LoanIQ Get Data    ${LIQ_ClosedDeal__DealNB_CurrentCmt_StaticText}    text%Deal_ClosingCmt
     ${Deal_ClosingCmt}    Remove String    ${Deal_ClosingCmt}    ,  
     ${Deal_ClosingCmt}    Convert To Number    ${Deal_ClosingCmt}    2    
-    Write Data To Excel    TRP002_SecondarySale    Deal_ClosingCmt    ${rowid}    ${Deal_ClosingCmt}
-    
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/DealNotebook_Summary
+
+    ### ConstRuntime Keyword Post-processing ###
+    Save Values of Runtime Execution on Excel File    ${sRunVar_Deal_ClosingCmt}    ${Deal_ClosingCmt}
+    [Return]    ${Deal_ClosingCmt}
+
 Check Host Bank Lender Share
     [Documentation]    This keyword checks the Actual Amount or share of Host Bank.
     ...    @author: mgaling
-    [Arguments]    ${sHostBank_LegalEntity}    ${sHostBank_AvailableShare}
+    ...    @update: dahijara    10AUG2020    - Refactored codes. Remove required arguments and added return value.
+    ...                                      - Removed writing inside the keyword and updtaed pre-processing keyword.
+    ...                                      - And added screenshot and pre processing keywords. Added optional argunment for data runtime varname.
+    ...                                      - Replaced sleep with 'Wait Until Keyword Succeeds'
+    [Arguments]    ${sHostBank_LegalEntity}    ${sRunVar_LenShare_Amount}=None
     
     ### GetRuntime Keyword Pre-processing ###
     ${HostBank_LegalEntity}    Acquire Argument Value    ${sHostBank_LegalEntity}
-    ${HostBank_AvailableShare}    Acquire Argument Value    ${sHostBank_AvailableShare}
       
     mx LoanIQ activate window    ${LIQ_DealNotebook_Window}      
     mx LoanIQ select    ${LIQ_DealNotebook_Queries_LenderShares}
     mx LoanIQ activate window    ${LIQ_LenderShares_Window}
     
-    Run Keyword And Continue On Failure    Mx LoanIQ Select String    ${LIQ_LenderShares_PrimariesAssignees_List}    ${HostBank_LegalEntity}    
-     ${status}    Run Keyword And Return Status    Mx LoanIQ Select String    ${LIQ_LenderShares_PrimariesAssignees_List}    ${HostBank_LegalEntity}          
+    Run Keyword And Continue On Failure    Mx LoanIQ Select String    ${LIQ_LenderShares_PrimariesAssignees_List}    ${HostBank_LegalEntity} 
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LenderShares   
+    ${status}    Run Keyword And Return Status    Mx LoanIQ Select String    ${LIQ_LenderShares_PrimariesAssignees_List}    ${HostBank_LegalEntity}          
     Run Keyword If    ${status}==True    Mx LoanIQ DoubleClick    ${LIQ_LenderShares_PrimariesAssignees_List}    ${HostBank_LegalEntity} 
     Run Keyword If    ${status}==False    Log    Host Bank is not available       
     
@@ -1094,23 +1102,25 @@ Check Host Bank Lender Share
     ${LenShare_Amount}    Mx LoanIQ Get Data    ${LIQ_ServicingGroupShare_ActualAmount}    text%LenShare_Amount
     ${LenShare_Amount}    Remove String    ${LenShare_Amount}    ,  
     ${LenShare_Amount}    Convert To Number    ${LenShare_Amount}    2
-    Write Data To Excel    TRP002_SecondarySale    HostBank_AvailableShare    ${rowid}    ${LenShare_Amount}
-    ${HostBank_AvailableShare}    Read Data From Excel    TRP002_SecondarySale    HostBank_AvailableShare    ${rowid}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/ServicingGroupShare
     mx LoanIQ click    ${LIQ_ServicingGroupShare_Exit_Button}
     
     mx LoanIQ activate window    ${LIQ_LenderShares_Window}
     Run Keyword And Continue On Failure    Mx LoanIQ Select Or DoubleClick In Javatree    ${LIQ_LenderShares_HostBankShares_List}    ${HostBank_LegalEntity}%d
-    Sleep    3s    
-    
    
-    ${HostBank_Amount}    Mx LoanIQ Get Data    ${LIQ_HostBankShare_ActualAmount}    text%HostBank_Amount
+    ${HostBank_Amount}    Wait Until Keyword Succeeds    10x    2s    Mx LoanIQ Get Data    ${LIQ_HostBankShare_ActualAmount}    text%HostBank_Amount
     ${HostBank_Amount}    Remove String    ${HostBank_Amount}    ,  
     ${HostBank_Amount}    Convert To Number    ${HostBank_Amount}    2
     
-    Should Be Equal    ${HostBank_AvailableShare}    ${HostBank_Amount}    
+    Should Be Equal    ${LenShare_Amount}    ${HostBank_Amount}    
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LenderShares
     mx LoanIQ click    ${LIQ_HostBankShare_Cancel_Button}    
     
-    mx LoanIQ close window    ${LIQ_LenderShares_Window}                
+    mx LoanIQ close window    ${LIQ_LenderShares_Window}
+
+    ### ConstRuntime Keyword Post-processing ###
+    Save Values of Runtime Execution on Excel File    ${sRunVar_LenShare_Amount}    ${LenShare_Amount}
+    [Return]    ${LenShare_Amount}
          
 Launch Circle Select
     [Documentation]    This keyword is for navigating to Circle Notebook.
@@ -1173,7 +1183,8 @@ Populate Facilities Tab
     [Documentation]    This keyword is for populating the fields under Circle Notebook - Facilities Tab.
     ...    @author: mgaling
     ...    @update: jdelacru    21MAR2019    - Moved writing to High Level
-    [Arguments]    ${sPctofDeal}    ${sDeal_ClosingCmt}    ${sSell_Amount}    ${sHostBank_AvailableShare}    ${sInt_Fee}    ${sPaidBy}    ${sBuySell_Price}             
+    ...    @update: dahijara    10AUG2020    - Added screenshot and post processing keyword. Removed Sleep
+    [Arguments]    ${sPctofDeal}    ${sDeal_ClosingCmt}    ${sSell_Amount}    ${sHostBank_AvailableShare}    ${sInt_Fee}    ${sPaidBy}    ${sBuySell_Price}    ${sRunVar_Sell_Amount}=None
     
     ### GetRuntime Keyword Pre-processing ###
    ${PctofDeal}    Acquire Argument Value    ${sPctofDeal}
@@ -1184,7 +1195,6 @@ Populate Facilities Tab
    ${PaidBy}    Acquire Argument Value    ${sPaidBy}
    ${BuySell_Price}    Acquire Argument Value    ${sBuySell_Price}
 
-    Sleep    5s       
     mx LoanIQ activate window    ${LIQ_PendingAssignmentSell_Window}
     Mx LoanIQ Select Window Tab    ${LIQ_AssignmentSell_Tab}    Facilities
     
@@ -1209,11 +1219,15 @@ Populate Facilities Tab
          
     mx LoanIQ select list    ${LIQ_PendingAssignmentSell_IntFeeDropdownList}    ${Int_Fee}
     mx LoanIQ select list    ${LIQ_PendingAssignmentSell_PaidByDropdownList}    ${PaidBy}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/PendingAssignmentSell
     mx LoanIQ click    ${LIQ_PendingAssignmentSell_ProRate_Button}
     mx LoanIQ enter    ${LIQ_ProRate_BuySellPrice_Textfield}    ${BuySell_Price}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/ProRate
     mx LoanIQ click    ${LIQ_ProRate_BuySellPrice_Ok_Button}
-    
-    
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/ProRate
+
+    ### ConstRuntime Keyword Post-processing ###
+    Save Values of Runtime Execution on Excel File    ${sRunVar_Sell_Amount}    ${Sell_Amount}
     [Return]    ${Sell_Amount}
     
 Populate Facilities Lender Tab
@@ -1241,21 +1255,21 @@ Populate Facilities Lender Tab
 Populate Amts or Dates Tab
     [Documentation]    This keyword is for populating the fields under Circle Notebook - Amts/Dates Tab.
     ...    @author: mgaling
+    ...    @update: dahijara    10AUG2020    - Removed writing and moved it to business/testcase keyword level
+    ...                                      - Added screenshot.
     [Arguments]    ${sExpectedCloseDate}   
     
     ### GetRuntime Keyword Pre-processing ###
     ${ExpectedCloseDate}    Acquire Argument Value    ${sExpectedCloseDate}
-
-    ${CurrentBusinessDate}    Get System Date
-    Write Data To Excel    TRP002_SecondarySale    ExpectedCloseDate    ${rowid}    ${CurrentBusinessDate}
-    Write Data To Excel    TRP002_SecondarySale    Assignment_CircledDate    ${rowid}    ${CurrentBusinessDate}
     
     Mx LoanIQ Select Window Tab    ${LIQ_AssignmentSell_Tab}    Amts/Dates
     
     ###Input data in Dates Section###    
     ${ExpectedCloseDate}    Read Data From Excel    TRP002_SecondarySale    ExpectedCloseDate    ${rowid}      
     mx LoanIQ enter    ${LIQ_PendingAssignmentSell_AmtsDates_ExpectedCloseDate}    ${ExpectedCloseDate}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/PendingAssignmentSell
     mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}    
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/PendingAssignmentSell
 
 Add Contacts 
     [Documentation]    This keyword is for adding Buyer's contact under Contacts Tab.
@@ -1271,7 +1285,9 @@ Add Contacts
     Mx LoanIQ Select Window Tab    ${LIQ_AssignmentSell_Tab}    Contacts
        
     ###Add Buyer's Contact###
-    Wait Until Keyword Succeeds    ${retry}    ${retry_interval}    mx LoanIQ click    ${LIQ_PendingAssignmentSell_ContactTab_AddContacts_Button}
+    Wait Until Keyword Succeeds    ${retry}    ${retry_interval}    Mx LoanIQ Click    ${LIQ_PendingAssignmentSell_ContactTab_AddContacts_Button}
+    ${IsExisting}    Run Keyword And Return Status    Mx LoanIQ Verify Object Exist    ${LIQ_AssignmentSell_ContactSelection}
+    Run Keyword If    ${IsExisting}==${False}    Mx LoanIQ Click    ${LIQ_PendingAssignmentSell_ContactTab_AddContacts_Button}
     mx LoanIQ activate window    ${LIQ_AssignmentSell_ContactSelection}
     mx LoanIQ select list    ${LIQ_AssignmentSell_ContactSelection_LenderList}    ${Buyer_Lender}
     mx LoanIQ select list    ${LIQ_AssignmentSell_ContactSelection_LocationList}    ${Buyer_Location}
@@ -1344,6 +1360,7 @@ Complete Portfolio Allocations for Assignment Sell
     [Documentation]    This keyword completes the Portfolio Allocations Workflow Item.
     ...    @author: mgaling
     ...    @update: jdelacru    21MAR2019    - Used the generic number conversion
+    ...    @update: dahijara    10AUG2020    - Added screenshot
     [Arguments]    ${sSeller_Riskbook}    ${sSell_Amount}
     
     ### GetRuntime Keyword Pre-processing ###
@@ -1351,17 +1368,22 @@ Complete Portfolio Allocations for Assignment Sell
     ${Sell_Amount}    Acquire Argument Value    ${sSell_Amount}
 
     Mx LoanIQ Select Window Tab    ${LIQ_AssignmentSell_Tab}    Workflow
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/AssignmentSell_Workflow
     Mx LoanIQ Select Or DoubleClick In Javatree    ${AssignmentSell_Workflow_JavaTree}    Complete Portfolio Allocations%d
     mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/AssignmentSell_Workflow
     mx LoanIQ activate window    ${LIQ_PortfolioAllocation_Window}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/PortfolioAllocation
     Mx LoanIQ Select Or DoubleClick In Javatree    ${AssignmentSell_PortfolioAllocations_List}    ${Seller_Riskbook}%d
     
     ${LIQ_AllocatedAmount}    Mx LoanIQ Get Data    ${AssignmentSell_PortfolioAllocations_AllocatedAmount}    text%LIQ_AllocatedAmount
     ${LIQ_AllocatedAmount}    Remove Comma and Convert to Number    ${LIQ_AllocatedAmount} 
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/PortfolioAllocation
     Should Be Equal    ${Sell_Amount}    ${LIQ_AllocatedAmount} 
           
     mx LoanIQ click    ${AssignmentSell_Allocations_OKButton}
     mx LoanIQ click    ${AssignmentSell_PortfolioAllocations_OKButton}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/PortfolioAllocation
     
 Complete Portfolio Allocations for Pending Assignment Sell 
    [Documentation]    This keyword completes the Portfolio Allocations Workflow Item.
@@ -1412,6 +1434,7 @@ Assignment Send to Approval
 Assignment Approval
     [Documentation]    This keyword is for approving the Assignment/Circle Notebook
     ...    @author: mgaling
+    ...    @update: dahijara    10AUG2020    - Added screenshots.
     [Arguments]    ${sWIPTransaction_Type}    ${sLender_Host}    ${sCircleTransaction_Type}    ${sDeal_Name}    ${sAssignment_CircledDate}    ${sQualifiedBuyerCheckbox_Label}
     
     ### GetRuntime Keyword Pre-processing ###
@@ -1426,37 +1449,47 @@ Assignment Approval
     mx LoanIQ click    ${LIQ_WorkInProgress_Button}
     mx LoanIQ activate window    ${LIQ_WorkInProgress_Window}   
     Run Keyword And Continue On Failure    Mx LoanIQ Verify Object Exist    ${LIQ_WorkInProgress_Window}     VerificationData="Yes"
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/WorkInProgress_Window
     Mx LoanIQ DoubleClick    ${LIQ_WorkInProgress_TransactionList}    ${WIPTransaction_Type}
     
     
     Run Keyword And Continue On Failure    Mx LoanIQ Select String    ${LIQ_TransactionsInProcess_Circles_List}    Awaiting Approval    
     ${status}    Run Keyword And Return Status    Mx LoanIQ Select String    ${LIQ_TransactionsInProcess_Circles_List}    Awaiting Approval         
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/TransactionsInProcess_Circles
     Run Keyword If    ${status}==True    Mx LoanIQ DoubleClick    ${LIQ_TransactionsInProcess_Circles_List}    Awaiting Approval   
     Run Keyword If    ${status}==False    Log    'Awaiting Approval' status is not available    
     
     Run Keyword And Continue On Failure    Mx LoanIQ Select String    ${LIQ_TransactionsInProcess_Circles_List}    ${Lender_Host}    
     ${status}    Run Keyword And Return Status    Mx LoanIQ Select String    ${LIQ_TransactionsInProcess_Circles_List}    ${Lender_Host}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/TransactionsInProcess_Circles
     Run Keyword If    ${status}==True    Mx LoanIQ DoubleClick    ${LIQ_TransactionsInProcess_Circles_List}    ${Lender_Host}  
     Run Keyword If    ${status}==False    Log    Lender Host is not available    
     
     Run Keyword And Continue On Failure    Mx LoanIQ Select String    ${LIQ_TransactionsInProcess_Circles_List}    ${CircleTransaction_Type}    
     ${status}    Run Keyword And Return Status    Mx LoanIQ Select String    ${LIQ_TransactionsInProcess_Circles_List}    ${CircleTransaction_Type}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/TransactionsInProcess_Circles
     Run Keyword If    ${status}==True    Mx LoanIQ DoubleClick    ${LIQ_TransactionsInProcess_Circles_List}    ${CircleTransaction_Type}  
     Run Keyword If    ${status}==False    Log    Circle Transaction Type is not available    
     
     mx LoanIQ maximize    ${LIQ_WorkInProgress_Window}   
     Mx LoanIQ Select String    ${LIQ_TransactionsInProcess_Circles_List}    ${Deal_Name}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/TransactionsInProcess_Circles
     Wait Until Keyword Succeeds    3x    5 sec    Mx Press Combination    Key.ENTER
-    Wait Until Keyword Succeeds    ${retry}    ${retry_interval}    mx LoanIQ activate window    ${LIQ_AssignmentSell_Window}    1s
+    Wait Until Keyword Succeeds    ${retry}    ${retry_interval}    mx LoanIQ activate window    ${LIQ_AssignmentSell_Window}
     Mx LoanIQ Select Window Tab    ${LIQ_AssignmentSell_Tab}    Workflow
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/AssignmentSell_Workflow
     Mx LoanIQ Select Or DoubleClick In Javatree    ${AwatingApprovalAssignmentSell_Workflow_JavaTree}    Approval%d
     mx LoanIQ click element if present    ${LIQ_Question_Yes_Button}    
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/AssignmentSell_Workflow
     mx LoanIQ activate window    ${LIQ_ApprovingAssignment_Window}
     Validate Loan IQ Details    ${Assignment_CircledDate}    ${LIQ_ApprovingAssignment_CircledTradeDate}
     Validate if Element is Checked    ${LIQ_ApprovingAssignment_QualifiedBuyerforCircle_Checkbox}    ${QualifiedBuyerCheckbox_Label}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/ApprovingAssignment
     mx LoanIQ click    ${LIQ_ApprovingAssignment_OK_Button}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/ApprovingAssignment
     mx LoanIQ close window    ${LIQ_AssignmentSell_Window}  
     mx LoanIQ click element if present     ${LIQ_Information_OK_Button}        
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/AssignmentSell
 
 Process Funding Memo
     [Documentation]    This keyword is for processing Funding Memo using Original User.
@@ -1583,6 +1616,7 @@ Assignment Send to Settlement Approval
 Assignment Settlement Approval       
      [Documentation]    This keyword is for processing Settlement Approval using Approver User.
     ...    @author:mgaling
+    ...    @update: dahijara    19AUG2020    Removed extra arg for mx LoanIQ activate window
     [Arguments]    ${sWIPTransaction_Type}    ${sLender_Host}    ${sCircleTransaction_Type}    ${sDeal_Name}
     
     ### GetRuntime Keyword Pre-processing ###
@@ -1593,7 +1627,7 @@ Assignment Settlement Approval
 
     ###Open Amendment Notebook thru WIP - Awaiting Settlement Approval###
     mx LoanIQ click    ${LIQ_WorkInProgress_Button}
-    Wait Until Keyword Succeeds    ${retry}    ${retry_interval}    mx LoanIQ activate window    ${LIQ_WorkInProgress_Window}    1s   
+    Wait Until Keyword Succeeds    ${retry}    ${retry_interval}    mx LoanIQ activate window    ${LIQ_WorkInProgress_Window}
     Run Keyword And Continue On Failure     Mx LoanIQ Verify Object Exist    ${LIQ_WorkInProgress_Window}     VerificationData="Yes"
     Mx LoanIQ DoubleClick    ${LIQ_WorkInProgress_TransactionList}    ${WIPTransaction_Type}
     
@@ -1884,12 +1918,15 @@ Navigate to Primaries List Window
 Complete Assignment Fee Sell on Event Fees
     [Documentation]    This keywords circles the cirle by completing the Assignment Fee in Event Fees from Circle Notebook
     ...    @author: jdelacru
+    ...    @update: dahijara    10AUG2020    - Added screenshot
     mx LoanIQ activate window    ${LIQ_AssignmentSell_Window}
     mx LoanIQ select    ${LIQ_AssignmentSell_MaintenanceEventFees_Menu}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/AssignmentSell
     mx LoanIQ click element if present    ${LIQ_Question_Yes_Button}   
     mx LoanIQ activate window      ${LIQ_AssignmentSell_EventFees_Window}
     mx LoanIQ click    ${LIQ_AssignmentSell_EventFees_FlowDownFeeFromDeal_Button}
     mx LoanIQ click    ${LIQ_AssignmentSell_EventFees_OK_Button}    
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/AssignmentSell
     
 Close Primaries Windows
     [Documentation]    This keyword closes the Primaries windows.

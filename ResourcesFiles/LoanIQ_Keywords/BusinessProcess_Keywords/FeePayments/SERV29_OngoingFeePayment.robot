@@ -448,6 +448,7 @@ Pay Commitment Fee Amount - Syndicated with Secondary Sale
     [Documentation]    This high level keyword pays the commitment fee for Secondary Sale Deal
     ...    @update: jdelacru    09MAR2019    - Applied the latest cashflow keywords
     ...    @update: dahijara    04AUG2020    - Updated create cashflow navigation. Updated variables for Verify Status and Notice Method in Notices. Removed commented codes.
+    ...    @update: dahijara    19AUG2020    - Updated Variable from "&{ExcelPath}[Computed_ProjectedCycleDue]" to ${ProjectedCycleDue} for Compute Lender Share Transaction Amount and Validate if Debit and Credit Amt is equal to Transaction Amount
     [Arguments]    ${ExcelPath}    
     ${SystemDate}    Get System Date
     Set Global Variable    ${SystemDate}   
@@ -473,8 +474,8 @@ Pay Commitment Fee Amount - Syndicated with Secondary Sale
     ${HostBankShare}    Get Host Bank Cash in Cashflow
     ${BorrowerTranAmount}    Get Transaction Amount in Cashflow    &{ExcelPath}[Borrower1_ShortName]
     ${Lend1TranAmount}    Get Transaction Amount in Cashflow    &{ExcelPath}[Lender1_ShortName]
-    ${ComputedHBTranAmount}    Compute Lender Share Transaction Amount    &{ExcelPath}[Computed_ProjectedCycleDue]    &{ExcelPath}[HostBankSharePct]
-    ${ComputedLend1TranAmount}    Compute Lender Share Transaction Amount    &{ExcelPath}[Computed_ProjectedCycleDue]    &{ExcelPath}[LenderSharePct1]
+    ${ComputedHBTranAmount}    Compute Lender Share Transaction Amount    ${ProjectedCycleDue}    &{ExcelPath}[HostBankSharePct]
+    ${ComputedLend1TranAmount}    Compute Lender Share Transaction Amount    ${ProjectedCycleDue}    &{ExcelPath}[LenderSharePct1]
     Compare UIAmount versus Computed Amount    ${HostBankShare}|${Lend1TranAmount}    ${ComputedHBTranAmount}|${ComputedLend1TranAmount}
 
     ###GL Entries###
@@ -487,7 +488,7 @@ Pay Commitment Fee Amount - Syndicated with Secondary Sale
     
     Compare UIAmount versus Computed Amount    ${HostBankShare}|${Lend1TranAmount}    ${HostBank_Debit}|${Lender1_Debit}
     Validate if Debit and Credit Amt is Balanced    ${HostBank_Debit}|${Lender1_Debit}    ${Borrower_Credit}
-    Validate if Debit and Credit Amt is equal to Transaction Amount    ${UITotalCreditAmt}    ${UITotalCreditAmt}    &{ExcelPath}[Computed_ProjectedCycleDue]
+    Validate if Debit and Credit Amt is equal to Transaction Amount    ${UITotalCreditAmt}    ${UITotalCreditAmt}    ${ProjectedCycleDue}
 
     ###Ongoing Fee Notebook###
     Send Ongoing Fee Payment to Approval

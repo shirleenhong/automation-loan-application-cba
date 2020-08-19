@@ -353,6 +353,7 @@ Search Existing Deal
      [Documentation]    This keyword search the existing deal on LIQ.
     ...    @author: mgaling
     ...    @update: fmamaril    15MAY2020    - added argument for keyword pre processing
+    ...    @update: dahijara    10AUG2020    - Added screenshot
     [Arguments]    ${sDeal_Name}
     ### GetRuntime Keyword Pre-processing ###
     ${Deal_Name}    Acquire Argument Value    ${sDeal_Name}
@@ -360,10 +361,12 @@ Search Existing Deal
     Select Actions    [Actions];Deal
     mx LoanIQ activate    ${LIQ_DealSelect_Window}   
     mx LoanIQ enter    ${LIQ_DealSelect_DealIdentifyBy_Textfield}    ${Deal_Name}   
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/DealSelect
     mx LoanIQ click    ${LIQ_DealSelect_Search_Button} 
     mx LoanIQ click    ${LIQ_DealListByName_OK_Button}
     mx LoanIQ activate    ${LIQ_DealNotebook_Window}
-    mx LoanIQ click element if present    ${LIQ_DealNotebook_InquiryMode_Button} 
+    mx LoanIQ click element if present    ${LIQ_DealNotebook_InquiryMode_Button}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/DealNotebook
     
 Close Active Windows
     [Documentation]    This keyword closes main active windows on LIQ.
