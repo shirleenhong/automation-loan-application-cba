@@ -147,11 +147,12 @@ BUS_Circling for Pending Assignment Sell
 
     Run Keyword    Circling for Pending Assignment Sell    ${ARGUMENT_1}
 
-BUS_Complete Portfolio Allocations Worflow for Pending Assignment Sell for Agency Deal
+BUS_Complete Portfolio Allocations Workflow for Pending Assignment Sell for Agency Deal
     [Documentation]    This keyword is used to run the assigned low level keyword.
     ...    @author: amansuet    19JUN2020    - initial create
+    ...    @update: clanding    17AUG2020    - updated keyword
 
-    Run Keyword    Complete Portfolio Allocations Worflow for Pending Assignment Sell for Agency Deal    ${ARGUMENT_1}    ${ARGUMENT_2}
+    Run Keyword    Complete Portfolio Allocations Workflow for Pending Assignment Sell for Agency Deal    ${ARGUMENT_1}    ${ARGUMENT_2}
 
 BUS_Send to Approval for Pending Assignment Sell
     [Documentation]    This keyword is used to run the assigned low level keyword.
