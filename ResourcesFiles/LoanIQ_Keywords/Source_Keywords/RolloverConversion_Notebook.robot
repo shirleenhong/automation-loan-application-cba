@@ -110,13 +110,17 @@ Send Loan Repricing for Approval
     [Documentation]    This keyword is used to Send the Transaction Rates for approval and approve it with different user
     ...    @author: ritragel
     ...    @update: jdelacru    12MAR2019    - Added error handler to cater those scenario with no Cashflows
+    ...    @update: clanding    13AUG2020    - updated hard coded values to global variables; added screenshot
     mx LoanIQ click element if present    ${LIQ_Error_OK_Button}
     mx LoanIQ activate window    ${LIQ_LoanRepricingForDeal_Window}
-    Mx LoanIQ Select Window Tab    ${LIQ_LoanRepricingForDeal_Workflow_Tab}    Workflow  
-    Mx LoanIQ DoubleClick    ${LIQ_LoanRepricingForDeal_Workflow_JavaTree}    Send to Approval   
-    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button} 
-    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}   
-    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}  
+    Mx LoanIQ Select Window Tab    ${LIQ_LoanRepricingForDeal_Workflow_Tab}    ${WORKFLOW_TAB}  
+    Mx LoanIQ DoubleClick    ${LIQ_LoanRepricingForDeal_Workflow_JavaTree}    ${SEND_TO_APPROVAL_STATUS}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LoanRepricingForDealWindow
+    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LoanRepricingForDealWindow 
+    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
+    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LoanRepricingForDealWindow
     
 Approve Loan Repricing
     [Documentation]    This keyword is used to Approved Rate Setting Notice
@@ -134,10 +138,14 @@ Approve Loan Repricing
      
 Send to Rate Approval
     [Documentation]    This keyword is used to Send the Transaction Rates for approval and approve it with different user
-    ...    @author: ritragel  
+    ...    @author: ritragel
+    ...    @update: clanding    13AUG2020    - added screenshot; updated hard coded values to global variables
     mx LoanIQ activate window    ${LIQ_LoanRepricingForDeal_Window}
-    Mx LoanIQ Select Window Tab    ${LIQ_LoanRepricingForDeal_Workflow_Tab}    Workflow  
-    Mx LoanIQ DoubleClick    ${LIQ_LoanRepricingForDeal_Workflow_JavaTree}    Send to Rate Approval
+    Mx LoanIQ Select Window Tab    ${LIQ_LoanRepricingForDeal_Workflow_Tab}    ${WORKFLOW_TAB}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LoanRepricingWindow_WorkflowTab
+    Mx LoanIQ DoubleClick    ${LIQ_LoanRepricingForDeal_Workflow_JavaTree}    ${SEND_TO_RATE_APPROVAL_STATUS}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LoanRepricingWindow_WorkflowTab_Approval
+    
      
 Approve Rate Setting Notice
     [Documentation]    This keyword is used to Approved Rate Setting Notice

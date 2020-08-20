@@ -10,13 +10,14 @@ Navigate to Drawdown Cashflow Window
     ...    @update: hstone     22MAY2020     - Updated the logic for Cashflows Window Displayed Validation
     ...                                      - Removed Sleep
     ...                                      - Added Take Screenshot
+    ...    @update: clanding    10AUG2020    - Replaced hard coded values to global variables
     mx LoanIQ activate window    ${LIQ_InitialDrawdown_Window}    
-    Mx LoanIQ Select Window Tab    ${LIQ_InitialDrawdown_Tab}    Workflow
-    Mx LoanIQ DoubleClick    ${LIQ_InitialDrawdown_WorkflowAction}    Create Cashflows
+    Mx LoanIQ Select Window Tab    ${LIQ_InitialDrawdown_Tab}    ${WORKFLOW_TAB}
+    Mx LoanIQ DoubleClick    ${LIQ_InitialDrawdown_WorkflowAction}    ${CREATE_CASHFLOWS_TYPE}
    :FOR    ${i}    IN RANGE    7
     \    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
     \    ${Warning_Status}    Run Keyword And Return Status    Mx LoanIQ Verify Object Exist    ${LIQ_Warning_Window}     VerificationData="Yes"
-    \    Exit For Loop If    ${Warning_Status}==False 
+    \    Exit For Loop If    ${Warning_Status}==${False} 
     Wait Until Keyword Succeeds    3x    5 sec    Mx LoanIQ Verify Object Exist    ${LIQ_Cashflows_Window}      VerificationData="Yes"
     mx LoanIQ activate window    ${LIQ_Cashflows_Window}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/Chashflows
@@ -96,6 +97,7 @@ Input General Loan Drawdown Details
     ...    @update: hstone      18JUN2020    Added Keyword Pre-processing
     ...                                      Added Optional Argument: ${sRunTimeVar_AdjustedDueDate}
     ...                                      Added Keyword Post-processing
+    ...    @update: clanding    10AUG2020    Replaced hard coded value to global variable
     [Arguments]    ${sLoan_RequestedAmount}    ${sLoan_EffectiveDate}    ${sLoan_MaturityDate}=None    ${sLoan_RepricingFrequency}=None    ${sLoan_IntCycleFrequency}=None    ${sLoan_Accrue}=None    ${sRepricing_Date}=None    ${sLoan_RiskType}=None
     ...        ${sRunTimeVar_AdjustedDueDate}=None
     
@@ -110,7 +112,7 @@ Input General Loan Drawdown Details
     ${Loan_RiskType}    Acquire Argument Value    ${sLoan_RiskType}
 
     mx LoanIQ activate    ${LIQ_InitialDrawdown_Window}
-    Mx LoanIQ Select Window Tab    ${LIQ_InitialDrawdown_Tab}    General 
+    Mx LoanIQ Select Window Tab    ${LIQ_InitialDrawdown_Tab}    ${GENERAL_TAB} 
     mx LoanIQ enter    ${LIQ_InitialDrawdown_RequestedAmt_Textfield}    ${Loan_RequestedAmount} 
     mx LoanIQ enter    ${LIQ_InitialDrawdown_EffectiveDate_Datefield}    ${Loan_EffectiveDate}
     Run Keyword If    '${Loan_MaturityDate}'!='None'    mx LoanIQ enter    ${LIQ_InitialDrawdown_MaturityDate_Datefield}    ${Loan_MaturityDate} 
@@ -140,13 +142,15 @@ Input Loan Drawdown Rates
     ...    @update: hstone      13MAY2020    Added Click Element if Present for a Warning Message
     ...    @update: hstone      22MAY2020    - Added Take Screenshot
     ...    @update: dahijara    03JUL2020    - Added keywords for pre-processing
-    [Arguments]    ${sBorrower_BaseRate}    ${sFacility_Spread}    ${writeBaseRate}=Y 
+    ...    @update: clanding    10AUG2020    - Replaced hard coded value to global variable; refactor argument
+    [Arguments]    ${sBorrower_BaseRate}    ${sFacility_Spread}    ${sWriteBaseRate}=Y    ${sRuntime_Variable_AllInRate}=None
 
     ### GetRuntime Keyword Pre-processing ###
     ${Borrower_BaseRate}    Acquire Argument Value    ${sBorrower_BaseRate}
     ${Facility_Spread}    Acquire Argument Value    ${sFacility_Spread}
+    ${writeBaseRate}    Acquire Argument Value    ${sWriteBaseRate}
 
-    Mx LoanIQ Select Window Tab    ${LIQ_InitialDrawdown_Tab}    Rates
+    Mx LoanIQ Select Window Tab    ${LIQ_InitialDrawdown_Tab}    ${RATES_TAB}
     mx LoanIQ click    ${LIQ_InitialDrawdown_BaseRate_Button}
       
     :FOR    ${i}    IN RANGE    4
@@ -163,13 +167,16 @@ Input Loan Drawdown Rates
     ${Computed_AllInRate}    Evaluate    ${Borrower_BaseRate}+${Facility_Spread}
     Convert To Number    ${Computed_AllInRate}    4
             
-    ${sAllInRate}    Mx LoanIQ Get Data    ${LIQ_InitialDrawdown_AllInRate}    value%AllInRate
-    ${sAllInRate}    Remove String    ${sAllInRate}    %
-    ${sAllInRate}    Convert To Number    ${sAllInRate}    4    
+    ${AllInRate}    Mx LoanIQ Get Data    ${LIQ_InitialDrawdown_AllInRate}    value%AllInRate
+    ${AllInRate}    Remove String    ${AllInRate}    %
+    ${AllInRate}    Convert To Number    ${AllInRate}    4    
     
-    Should Be Equal As Numbers    ${Computed_AllInRate}    ${sAllInRate} 
+    Should Be Equal As Numbers    ${Computed_AllInRate}    ${AllInRate} 
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LoanDrawdown_Rates
-    [Return]    ${sAllInRate}          
+    
+    ### Keyword Post-processing ###
+    Save Values of Runtime Execution on Excel File    ${sRuntime_Variable_AllInRate}    ${AllInRate}
+    [Return]    ${AllInRate}          
         
 Create Principal Repayment Schedule
     [Documentation]    This keyword is used to create a Loan Repayment Schedule.
@@ -181,6 +188,7 @@ Create Principal Repayment Schedule
     ...                                      - Added Keyword Post-processing
     ...   @update: hstone       22MAY2020    - Removed duplicate 'mx LoanIQ click    ${LIQ_AutomaticScheduleSetup_OK_Button}'
     ...                                      - Added Take Screenshots
+    ...   @update: clanding     10AUG2020    - Replaced hard coded values to global variables
     [Arguments]    ${sRepayment_ScheduleFrequency}    ${sRepayment_NumberOfCycles}    ${sRepayment_TriggerDate}    ${sRepayment_NonBusDayRule}    ${sLoan_RequestedAmount}    ${sRuntime_Variable}=None
     
     ### Keyword Pre-processing ###
@@ -203,7 +211,7 @@ Create Principal Repayment Schedule
     Validate Loan Repayment Schedule Types
     
     Mx LoanIQ Verify Runtime Property    ${LIQ_RepaymentSchedule_ScheduleType_Prorate_CheckBox}    enabled%1
-    mx LoanIQ enter    ${LIQ_RepaymentSchedule_ScheduleType_PrincipalOnly_RadioButton}    ON
+    mx LoanIQ enter    ${LIQ_RepaymentSchedule_ScheduleType_PrincipalOnly_RadioButton}    ${ON}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/RepaymentSchedule
     mx LoanIQ click    ${LIQ_RepaymentSchedule_ScheduleType_OK_Button}
     mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}    
@@ -218,7 +226,7 @@ Create Principal Repayment Schedule
     :FOR    ${i}    IN RANGE    2
     \    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
     \    ${status}    Run Keyword And Return Status    Mx LoanIQ Verify Object Exist    ${LIQ_Warning_Window}    VerificationData="Yes"
-    \    Exit For Loop If    ${status}==False   
+    \    Exit For Loop If    ${status}==${False}   
     
     mx LoanIQ activate    ${LIQ_RepaymentSchedule_Window}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/RepaymentSchedule
@@ -232,7 +240,7 @@ Create Principal Repayment Schedule
     :FOR    ${i}    IN RANGE    3
     \    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
     \    ${status}    Run Keyword And Return Status    Mx LoanIQ Verify Object Exist    ${LIQ_Warning_Window}    VerificationData="Yes"
-    \    Exit For Loop If    ${status}==False
+    \    Exit For Loop If    ${status}==${False}
     
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/RepaymentSchedule
     mx LoanIQ click    ${LIQ_RepaymentSchedule_Exit_Button}
@@ -280,15 +288,16 @@ Send Loan Drawdown to Approval
     ...    @update: mnanquilada - Change the verify text in javatree to max loaniq selec string
     ...    @update: fmamaril    08MAR2019    Update Mx Activate to Mx Activate Window
     ...    @update: hstone      22MAY2020    - Added Take Screenshots
+    ...    @update: clanding    10AUG2020    - Replaced hard coded values to global variables
     mx LoanIQ activate window    ${LIQ_Drawdown_Window}    
-    Mx LoanIQ Select Window Tab    ${LIQ_Drawdown_Tab}    Workflow
-    Mx LoanIQ Select String    ${LIQ_Drawdown_WorkflowItems}    Send to Approval
-    Mx LoanIQ DoubleClick    ${LIQ_Drawdown_WorkflowItems}    Send to Approval
+    Mx LoanIQ Select Window Tab    ${LIQ_Drawdown_Tab}    ${WORKFLOW_TAB}
+    Mx LoanIQ Select String    ${LIQ_Drawdown_WorkflowItems}    ${SEND_TO_APPROVAL_STATUS}
+    Mx LoanIQ DoubleClick    ${LIQ_Drawdown_WorkflowItems}    ${SEND_TO_APPROVAL_STATUS}
                  
     :FOR    ${i}    IN RANGE    6
     \    Mx LoanIQ Click Element If Present    ${LIQ_Warning_Yes_Button}
     \    ${Warning_Status}    Run Keyword And Return Status    Mx LoanIQ Verify Object Exist    ${LIQ_Warning_Window}     VerificationData="Yes"
-    \    Exit For Loop If    ${Warning_Status}==False 
+    \    Exit For Loop If    ${Warning_Status}==${False} 
      
      Run Keyword And Continue On Failure    Verify Window    ${LIQ_InitialDrawdown_AwaitingApproval_Status_Window}
      Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LoanDrawdown_Workflow
@@ -525,30 +534,31 @@ Release Loan Initial Drawdown
     [Documentation]    This keyword is used to Release the Loan Initial Drawdown.
     ...    @author: rtarayao     
     ...    @update: hstone    22MAY2020     - Added Take Screenshot
+    ...    @update: clanding    10AUG2020    - Replaced hard coded values to global variables
     
     mx LoanIQ activate window    ${LIQ_InitialDrawdown_Window}
     Run Keyword And Continue On Failure    Verify Window    ${LIQ_InitialDrawdown_AwaitingRelease_Status_Window}
-    Mx LoanIQ Select Window Tab    ${LIQ_Drawdown_Tab}    Workflow
-    Mx LoanIQ DoubleClick    ${LIQ_Drawdown_WorkflowItems}    Release
+    Mx LoanIQ Select Window Tab    ${LIQ_Drawdown_Tab}    ${WORKFLOW_TAB}
+    Mx LoanIQ DoubleClick    ${LIQ_Drawdown_WorkflowItems}    ${RELEASE_STATUS}
     
     :FOR    ${i}    IN RANGE    2
     \    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
     \    ${Warning_Status}    Run Keyword And Return Status    Mx LoanIQ Verify Object Exist    ${LIQ_Warning_Window}     VerificationData="Yes"
-    \    Exit For Loop If    ${Warning_Status}==False
+    \    Exit For Loop If    ${Warning_Status}==${False}
              
     mx LoanIQ click element if present    ${LIQ_Question_Yes_Button}
     
     :FOR    ${i}    IN RANGE    2
     \    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
     \    ${Warning_Status}    Run Keyword And Return Status    Mx LoanIQ Verify Object Exist    ${LIQ_Warning_Window}     VerificationData="Yes"
-    \    Exit For Loop If    ${Warning_Status}==False 
+    \    Exit For Loop If    ${Warning_Status}==${False} 
         
     mx LoanIQ click element if present    ${LIQ_Question_Yes_Button}
      
      :FOR    ${i}    IN RANGE    2
     \    mx LoanIQ click element if present    ${LIQ_Information_OK_Button}
     \    ${Information_Status}    Run Keyword And Return Status    Mx LoanIQ Verify Object Exist    ${LIQ_Information_Window}     VerificationData="Yes"
-    \    Exit For Loop If    ${Information_Status}==False
+    \    Exit For Loop If    ${Information_Status}==${False}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/Drawdown_Workflow
     
 Get Facility Global Available to Draw Amount
@@ -650,8 +660,13 @@ Compute New Global Outstandings
     ...    <update>@mgaling: Created a variable for Read Data from Excel Sheet Name
     ...    @update: rtarayao - removed the read data and moved it to high level. removed the rowid and sheetname argument as well
     ...    @update: mnanquil - added remove string , for loan requested amount.
-    [Arguments]    ${Facility_CurrentGlobalOutstandings}    ${Loan_RequestedAmount}   
+    ...    @update: clanding    10AUG2020    - added saving of runtime value; add pre processing keywords
+    [Arguments]    ${sFacility_CurrentGlobalOutstandings}    ${sLoan_RequestedAmount}    ${sRunTimeVar_ComputedGlobalOutstandings}=None
     
+    ### Keyword Pre-processing ###
+    ${Facility_CurrentGlobalOutstandings}    Acquire Argument Value    ${sFacility_CurrentGlobalOutstandings}
+    ${Loan_RequestedAmount}    Acquire Argument Value    ${sLoan_RequestedAmount}
+
     Log    ${Facility_CurrentGlobalOutstandings}   
     ${Facility_CurrentGlobalOutstandings}    Remove String    ${Facility_CurrentGlobalOutstandings}    ,
     ${Loan_RequestedAmount}   Remove String    ${Loan_RequestedAmount}    ,
@@ -664,12 +679,21 @@ Compute New Global Outstandings
     
     Log    ${Computed_GlobalOutstandings}    
     
+    ### Keyword Post-processing ###
+    Save Values of Runtime Execution on Excel File    ${sRunTimeVar_ComputedGlobalOutstandings}    ${Computed_GlobalOutstandings}
+    
     [Return]    ${Computed_GlobalOutstandings}
 
 Compute New Facility Available to Draw Amount
     [Documentation]    This keyword computes the new available to draw amount in a Facility after Drawdown.
-    ...    @author: rtarayao 
-    [Arguments]    ${rowid}    ${Facility_CurrentAvailToDraw}    ${Loan_RequestedAmount}   
+    ...    @author: rtarayao
+    ...    @update: clanding    10AUG2020    - added saving of runtime value; added pre processing
+    [Arguments]    ${sFacility_CurrentAvailToDraw}    ${sLoan_RequestedAmount}    ${sRunTimeVar_Computed_AvailToDrawAmt}=None
+    
+    ### Keyword Pre-processing ###
+    ${Facility_CurrentAvailToDraw}    Acquire Argument Value    ${sFacility_CurrentAvailToDraw}
+    ${Loan_RequestedAmount}    Acquire Argument Value    ${sLoan_RequestedAmount}    
+
     ${Facility_CurrentAvailToDraw}    Remove String    ${Facility_CurrentAvailToDraw}    ,
     ${Loan_RequestedAmount}   Remove String    ${Loan_RequestedAmount}    ,
     ${Facility_CurrentAvailToDraw}    Convert To Number    ${Facility_CurrentAvailToDraw}       
@@ -677,6 +701,9 @@ Compute New Facility Available to Draw Amount
     ${Computed_AvailToDrawAmt}    Evaluate    ${Facility_CurrentAvailToDraw}-${Loan_RequestedAmount}
     
     Log    ${Computed_AvailToDrawAmt}    
+    
+    ### Keyword Post-processing ###
+    Save Values of Runtime Execution on Excel File    ${sRunTimeVar_Computed_AvailToDrawAmt}    ${Computed_AvailToDrawAmt}
     
     [Return]    ${Computed_AvailToDrawAmt}
 
@@ -688,18 +715,19 @@ Get Current Commitment Amount
     ...    @update: hstone      29APR2020    - Added Optional Arguments: ${sRunTimeVar_CurrentCmtAmt}
     ...                                      - Added Keyword Post-processing: Save Runtime Value
     ...    @update: hstone      22MAY2020    - Added Take Screenshot
+    ...    @update: clanding    11AUG2020    - Removed s in CurrentCmtAmt
     [Arguments]    ${sRunTimeVar_CurrentCmtAmt}=None
     mx LoanIQ activate window    ${LIQ_FacilityNotebook_Window}  
-    ${sCurrentCmtAmt}    Mx LoanIQ Get Data    ${LIQ_FacilitySummary_GlobalFacAmt_CurrentCmt_Amount}    value%test
-    ${sCurrentCmtAmt}    Remove Comma and Convert to Number    ${sCurrentCmtAmt}  
-    Log    ${sCurrentCmtAmt}
+    ${CurrentCmtAmt}    Mx LoanIQ Get Data    ${LIQ_FacilitySummary_GlobalFacAmt_CurrentCmt_Amount}    value%test
+    ${CurrentCmtAmt}    Remove Comma and Convert to Number    ${CurrentCmtAmt}  
+    Log    ${CurrentCmtAmt}
 
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/FacilityNotebook_General
 
     ### Keyword Post-processing ###
-    Save Values of Runtime Execution on Excel File    ${sRunTimeVar_CurrentCmtAmt}    ${sCurrentCmtAmt}
+    Save Values of Runtime Execution on Excel File    ${sRunTimeVar_CurrentCmtAmt}    ${CurrentCmtAmt}
 
-    [Return]    ${sCurrentCmtAmt}
+    [Return]    ${CurrentCmtAmt}
     
 
 Validate Global Facility Amounts - Balanced

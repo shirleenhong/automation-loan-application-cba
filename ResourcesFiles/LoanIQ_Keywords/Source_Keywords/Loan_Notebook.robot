@@ -626,7 +626,8 @@ Navigate to Existing Loan
     ...    @update: bernchua    09AUG2019    Added ticking of 'Existing' radio button.
     ...    @update: hstone      29MAY2020    - Added Keyword Pre-processing
 	...    @update: amansuet    01JUN2020    - updated to align with automation standards, added take screenshot and added keyword pre-processing
-	...    @update: sahalder    26JUN2020    - moved the keyword from LoanDrawdown_Notebook to Loan_Notebook 
+	...    @update: sahalder    26JUN2020    - moved the keyword from LoanDrawdown_Notebook to Loan_Notebook
+	...    @update: clanding    13AUG2020    - updated hard coded values to global variables
     [Arguments]    ${sOutstanding_Type}    ${sLoan_FacilityName}    ${sLoan_Alias}
     
     ### Keyword Pre-processing ###
@@ -635,7 +636,7 @@ Navigate to Existing Loan
     ${Loan_Alias}    Acquire Argument Value    ${sLoan_Alias}
 
     Mx LoanIQ Activate Window    ${LIQ_OutstandingSelect_Window}
-    Mx LoanIQ Set    ${LIQ_OutstandingSelect_Existing_RadioButton}    ON
+    Mx LoanIQ Set    ${LIQ_OutstandingSelect_Existing_RadioButton}    ${ON}
     Mx LoanIQ Select Combo Box Value    ${LIQ_OutstandingSelect_Type_Dropdown}    ${Outstanding_Type}
     Mx LoanIQ Select Combo Box Value    ${LIQ_OutstandingSelect_Facility_Dropdown}    ${Loan_FacilityName}
     Mx LoanIQ Click    ${LIQ_OutstandingSelect_Search_Button}
