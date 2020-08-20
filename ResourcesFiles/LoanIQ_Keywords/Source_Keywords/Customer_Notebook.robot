@@ -415,7 +415,11 @@ Add Location under Profiles Tab
     [Documentation]    This keyword adds a Location to a Customer
     ...    @author: ghabal
     ...    @update: amansuet    19MAY2020    - added acquire argument and take screenshot keywords and remove unused keyword
+<<<<<<< HEAD
     ...    @Update: aramos      19Aug2020    - changed Search by description of Location
+=======
+    ...    @update: aramos      20AUG2020    - Updated to Click the pop up window after adding location
+>>>>>>> GDE-6730 Update 04DealBorrower.robot for remittance instructions and
     [Arguments]    ${sCustomer_Location}=None
     
     ### Keyword Pre-processing ###

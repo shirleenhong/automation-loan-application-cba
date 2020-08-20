@@ -81,10 +81,8 @@ Search Customer and Complete its Borrower Profile Creation with default values f
     ###Adding Remittance Instructions
     # Navigate to Remittance List Page
     
-    Log To Console    ExcelPathLIQCustomerShortName
-    Log To Console    &{ExcelPath}[LIQCustomer_ShortName] 
-    
     Add Remittance Instruction   &{ExcelPath}[LIQCustomer_ShortName]
+    Add Remittance Instruction for D00000476    ${ExcelPath}
     # Add IMT message code for UAT Deal    ${ExcelPath}
     Add IMT message code for UAT Deal for D00000476    ${ExcelPath}
     # Add Swift Role in IMT message for UAT Deal    ${ExcelPath}
