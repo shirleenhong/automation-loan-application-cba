@@ -2022,6 +2022,7 @@ Calculate for System Date Offset
     ...    ELSE    Fail    Invalid Offset Days Input. Value should contain '+' or '-'.
 
     [Return]    ${System_Date_With_Offset}
+    
 Driver Script
     [Documentation]    This keyword is used to execute list of scenarios on excel file.
     ...    @author: dahijara    24MAR2020    - initial create
