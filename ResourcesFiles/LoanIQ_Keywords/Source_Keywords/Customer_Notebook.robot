@@ -2218,3 +2218,148 @@ Validate External Risk Rating Table
     Run Keyword And Continue On Failure    Should Be Equal   ${Actual_Rating}    ${Expected_Rating}
     Run Keyword And Continue On Failure    Should Be Equal   ${Actual_StartDate}    ${Expected_StartDate}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/ActiveCustomer_Risk
+<<<<<<< HEAD
+=======
+
+Populate Details on Customer Remittance Instructions
+    [Documentation]    This keyword populates the Customer Remittance Instruction Details
+    ...    @author: fmamaril    16AUG2019
+    ...    @update: ritragel    16AUG2020    Added Activate Window to for 2nd round of run to focus on Remmitance Instruction List
+    ...    @update: ritragel    17AUG2020    Added Keyword preprocessing for customization
+    [Arguments]    ${sRemittanceInstruction_Method}    ${sRemittanceInstruction_Description}    ${sRemittanceInstruction_Currency}    ${sProductLoan_Checkbox}    ${sProductSBLC_Checkbox}
+    ...    ${sRI_FromCust_Checkbox}    ${sRI_ToCust_Checkbox}    ${sBalanceType_Principal_Checkbox}    ${sBalanceType_Interest_Checkbox}    ${sBalanceType_Fees_Checkbox}
+    ...    ${sRI_AutoDoIt_Checkbox}    ${sNoticesSummary}
+    
+    ### Keyword Pre-processing ###
+    ${RemittanceInstruction_Method}    Acquire Argument Value    ${sRemittanceInstruction_Method}
+    ${RemittanceInstruction_Description}    Acquire Argument Value    ${sRemittanceInstruction_Description}
+    ${RemittanceInstruction_Currency}    Acquire Argument Value    ${sRemittanceInstruction_Currency}
+    ${ProductLoan_Checkbox}    Acquire Argument Value    ${sProductLoan_Checkbox}
+    ${ProductSBLC_Checkbox}    Acquire Argument Value    ${sProductSBLC_Checkbox}
+    ${RI_FromCust_Checkbox}    Acquire Argument Value    ${sRI_FromCust_Checkbox}
+    ${RI_ToCust_Checkbox}    Acquire Argument Value    ${sRI_ToCust_Checkbox}
+    ${BalanceType_Principal_Checkbox}    Acquire Argument Value    ${sBalanceType_Principal_Checkbox}    
+    ${BalanceType_Interest_Checkbox}    Acquire Argument Value    ${sBalanceType_Interest_Checkbox}  
+    ${BalanceType_Fees_Checkbox}    Acquire Argument Value    ${sBalanceType_Fees_Checkbox}  
+    ${RI_AutoDoIt_Checkbox}    Acquire Argument Value    ${sRI_AutoDoIt_Checkbox}
+    ${NoticesSummary}    Acquire Argument Value    ${sNoticesSummary}
+
+
+    mx LoanIQ Activate Window    ${RemittanceList_Window_RemittanceInstructionsDetail_Window}             
+    mx LoanIQ click    ${RemittanceList_Window_AddButton}
+    mx LoanIQ activate    ${RemittanceList_Window_AddRemittanceInstruction_Window}
+    Validate Window Title    Add Remittance Instruction
+    mx LoanIQ click    ${RemittanceList_Window_AddRemittanceInstruction_OkButton} 
+    mx LoanIQ activate window   ${RemittanceList_Window_RemittanceInstructionsDetail_Window}
+    Mx LoanIQ Select Window Tab    ${RemittanceList_Window_RemittanceInstructionsDetail__Notebook_TabSelection}    General
+    Mx LoanIQ Select Combo Box Value    ${RemittanceList_Window_RemittanceInstructionsDetail_MethodType}    ${RemittanceInstruction_Method}
+    mx LoanIQ enter    ${RemittanceList_Window_RemittanceInstructionsDetail_Description}    ${RemittanceInstruction_Description}    
+    Mx LoanIQ Select Combo Box Value    ${RemittanceList_Window_RemittanceInstructionsDetail_Currency}    ${RemittanceInstruction_Currency}
+    Mx LoanIQ Check Or Uncheck    ${RemittanceList_Window_RemittanceInstructionsDetail_ProductLoan_Checkbox}    ${ProductLoan_Checkbox}
+    Mx LoanIQ Check Or Uncheck    ${RemittanceList_Window_RemittanceInstructionsDetail_ProductSBLC_Checkbox}    ${ProductSBLC_Checkbox}    
+    Mx LoanIQ Check Or Uncheck    ${RemittanceList_Window_RemittanceInstructionsDetail_Direction_FromCust_Checkbox}    ${RI_FromCust_Checkbox}
+    Mx LoanIQ Check Or Uncheck    ${RemittanceList_Window_RemittanceInstructionsDetail_Direction_ToCust_Checkbox}    ${RI_ToCust_Checkbox}
+    Mx LoanIQ Check Or Uncheck    ${RemittanceList_Window_RemittanceInstructionsDetail_BalanceType_Principal_Checkbox}    ${BalanceType_Principal_Checkbox}      
+    Mx LoanIQ Check Or Uncheck    ${RemittanceList_Window_RemittanceInstructionsDetail_BalanceType_Interest_Checkbox}    ${BalanceType_Interest_Checkbox}
+    Mx LoanIQ Check Or Uncheck    ${RemittanceList_Window_RemittanceInstructionsDetail_BalanceType_Fees_Checkbox}    ${BalanceType_Fees_Checkbox}    
+    Mx LoanIQ Check Or Uncheck    ${RemittanceList_Window_RemittanceInstructionsDetail_AutoDoIt_Checkbox}    ${RI_AutoDoIt_Checkbox}
+    Run Keyword If    '${sRI_FromCust_Checkbox}'=='OFF'    mx LoanIQ enter    ${RemittanceList_Window_RemittanceInstructionsDetail_SummaryNotices_TextField}    ${NoticesSummary}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/Remittance_Instruction_List
+
+Add IMT Message in Remittance Instructions Detail
+    [Documentation]    This keyword adds IMT message in Remittance Instructions detail of a Customer
+    ...    @author: fmamaril    19AUG2019
+    ...    @update: ritragel    17AUG2020    Added Keyword preprocessing for customization
+    [Arguments]    ${sIMT_MessageCode} 
+   
+    ### Keyword Pre-processing ###
+    ${IMT_MessageCode}    Acquire Argument Value    ${sIMT_MessageCode}
+ 
+    mx LoanIQ click    ${RemittanceList_Window_RemittanceInstructionsDetail_AddButton}    
+    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
+    mx LoanIQ enter   ${RemittanceList_Window_RemittanceInstructionsDetail_SelectMessageType_SearchField}    ${IMT_MessageCode}
+    Mx Native Type    {ENTER}
+    mx LoanIQ activate window    ${RemittanceList_Window_RemittanceInstructionsDetail_IMT_Window}
+    Mx LoanIQ Check Or Uncheck    ${RemittanceList_Window_RemittanceInstructionsDetail_IMT_SendersCorrespondent_Checkbox}    ON
+    
+Add Swift Role in IMT message
+    [Documentation]    This keyword adds a swift role in IMT message
+    ...    @author: fmamaril    19AUG2019
+    ...    @update: ritragel    17AUG2020    Added Keyword preprocessing for customization
+    ...    @update: aramos      20AUG2020    Add Keywords to select a swift code
+    [Arguments]    ${sRI_SendersCorrespondent_Checkbox}    ${sSwift_Role}    ${sSwiftID}    ${sSwift_Description}=${EMPTY}
+    ...    ${sClearingType}=${EMPTY}    ${sClearingNumber}=${EMPTY}    ${sAccountNumber}=${EMPTY}
+
+    ### Keyword Pre-processing ###
+    ${RI_SendersCorrespondent_Checkbox}    Acquire Argument Value    ${sRI_SendersCorrespondent_Checkbox}    
+    ${Swift_Role}    Acquire Argument Value    ${sSwift_Role}    
+    ${SwiftID}    Acquire Argument Value    ${sSwiftID}    
+    ${Swift_Description}    Acquire Argument Value    ${sSwift_Description}
+    ${ClearingType}    Acquire Argument Value    ${sClearingType}
+    ${ClearingNumber}    Acquire Argument Value    ${sClearingNumber}
+    ${AccountNumber}    Acquire Argument Value    ${sAccountNumber}    
+
+    mx LoanIQ activate window    ${RemittanceList_Window_RemittanceInstructionsDetail_IMT_Window}            
+    Mx LoanIQ Check Or Uncheck    ${RemittanceList_Window_RemittanceInstructionsDetail_IMT_SendersCorrespondent_Checkbox}    ${RI_SendersCorrespondent_Checkbox}
+    mx LoanIQ click    ${RemittanceList_Window_RemittanceInstructionsDetail_IMT_AddButton}
+    mx LoanIQ activate window    ${RemittanceList_Window_RemittanceInstructionsDetail_AddSwiftID_Window}  
+    Mx LoanIQ select combo box value    ${RemittanceList_Window_RemittanceInstructionsDetail_SwiftRoleType}    ${Swift_Role}    
+    Run Keyword If    '${sSwiftID}'!='${EMPTY}'    mx LoanIQ click    ${RemittanceList_Window_RemittanceInstructionsDetail_SwiftIDButton}
+    Run Keyword If    '${sSwiftID}'!='${EMPTY}'    mx LoanIQ enter    ${RemittanceList_Window_RemittanceInstructionsDetail_SearchBySWIFTID}    ON
+    Run Keyword If    '${sSwiftID}'!='${EMPTY}'    mx LoanIQ enter    ${RemittanceList_Window_RemittanceInstructionsDetail_SWIFTIDInputField}    ${SwiftID}    
+    Run Keyword If    '${sSwiftID}'!='${EMPTY}'    mx LoanIQ click    ${RemittanceList_Window_RemittanceInstructionsDetail_OKButton} 
+    ${Is_Visible}      Run Keyword And Return Status    Wait Until Element Is Visible    ${RemittanceList_Window_RemittanceInstructionDetail_BankSwiftID_MainWindow}
+    Run Keyword If    ${Is_Visible}==True   Run Keywords    Mx LoanIQ Select Or DoubleClick In Javatree    ${RemittanceList_Window_RemittanceInstructionDetail_BankSwiftID_SwiftCodeList}    ${SwiftID}%s   
+    ...    AND    Mx LoanIQ click    ${RemittanceList_Window_RemittanceInstructionDetail_BankSwiftID_OK}
+   
+    Run Keyword If    '${sSwiftID}'!='${EMPTY}'    mx LoanIQ activate window    ${RemittanceList_Window_RemittanceInstructionsDetail_AddSwiftID_Window}
+    Run Keyword If    '${sSwiftID}'=='${EMPTY}'    Mx Press Combination    KEY.TAB    
+    Run Keyword If    '${sSwiftID}'=='${EMPTY}'    Mx Press Combination    KEY.TAB 
+    Run Keyword If    '${sSwift_Description}'!='${EMPTY}'    mx LoanIQ enter    ${RemittanceList_Window_RemittanceInstructionsDetail_AddSwiftID_Description}    ${Swift_Description}
+    Run Keyword If    '${sClearingType}'!='${EMPTY}'    Mx LoanIQ Select Combo Box Value    ${RemittanceList_Window_RemittanceInstructionsDetail_AddSwiftID_ClearingTypeList}    ${ClearingType}    
+    Run Keyword If    '${sClearingNumber}'!='${EMPTY}'    mx LoanIQ enter    ${RemittanceList_Window_RemittanceInstructionsDetail_AddSwiftID_ClearingNumber}    ${ClearingNumber}
+    Run Keyword If    '${sAccountNumber}'!='${EMPTY}'    mx LoanIQ enter    ${RemittanceList_Window_RemittanceInstructionsDetail_AddSwiftID_AccountNumber}    ${AccountNumber}
+    mx LoanIQ click    ${RemittanceList_Window_RemittanceInstructionsDetail_AddSwiftID_OKButton}
+    
+Update Swift Role in IMT message    
+    [Documentation]    This keyword updates a swift role in IMT message
+    ...    @author: fmamaril    19AUG2019
+    ...    @update: ritragel    17AUG2020    Added Keyword preprocessing for customization
+    [Arguments]    ${sSwift_Role}    ${sSwift_Description}=${EMPTY}    ${sClearingType}=${EMPTY}    ${sClearingNumber}=${EMPTY}    ${sAccountNumber}=${EMPTY}      
+
+    ### Keyword Pre-processing ###  
+    ${Swift_Role}    Acquire Argument Value    ${sSwift_Role} 
+    ${Swift_Description}    Acquire Argument Value    ${sSwift_Description}
+    ${ClearingType}    Acquire Argument Value    ${sClearingType}
+    ${ClearingNumber}    Acquire Argument Value    ${sClearingNumber}
+    ${AccountNumber}    Acquire Argument Value    ${sAccountNumber}
+
+    mx LoanIQ activate window    ${RemittanceList_Window_RemittanceInstructionsDetail_IMT_Window}
+    Mx LoanIQ Select Or DoubleClick In Javatree    ${RemittanceList_Window_RemittanceInstructionsDetail_IMT_SwiftRoleList}    ${SwiftRole}%d    
+    mx LoanIQ activate window    ${RemittanceList_Window_RemittanceInstructionsDetail_AddSwiftID_Window}
+    Run Keyword If    '${sSwift_Description}'!='${EMPTY}'    mx LoanIQ enter    ${RemittanceList_Window_RemittanceInstructionsDetail_UpdateMode_AddSwiftID_Description}    ${Swift_Description}
+    Run Keyword If    '${sClearingType}'!='${EMPTY}'    Mx LoanIQ Select Combo Box Value    ${RemittanceList_Window_RemittanceInstructionsDetail_UpdateMode_ClearingTypeList}    ${ClearingType}            
+    Run Keyword If    '${sClearingNumber}'!='${EMPTY}'    mx LoanIQ enter    ${RemittanceList_Window_RemittanceInstructionsDetail_UpdateMode_AddSwiftID_ClearingNumber}    ${ClearingNumber}
+    Run Keyword If    '${sAccountNumber}'!='${EMPTY}'    mx LoanIQ enter    ${RemittanceList_Window_RemittanceInstructionsDetail_UpdateMode_AddSwiftID_AccountNumber}    ${AccountNumber}    
+    mx LoanIQ click    ${RemittanceList_Window_RemittanceInstructionsDetail_UpdateMode_AddSwiftID_OKButton}
+    
+Populate Details on IMT     
+    [Documentation]    This keyword populates details in IMT message window
+    ...    @author: fmamaril    19AUG2019
+    ...    @update: ritragel    17AUG2020    Added Keyword preprocessing for customization
+    [Arguments]    ${sDetails_Of_Charges}=${EMPTY}    ${sBOC_Level}=${EMPTY}    ${sDetailsOfPayment}=${EMPTY}    ${sSenderToReceiverInfo}=${EMPTY}    ${sOrderingCustomer}=${EMPTY}
+
+    ### Keyword Pre-processing ###  
+    ${Details_Of_Charges}    Acquire Argument Value    ${sDetails_Of_Charges} 
+    ${BOC_Level}    Acquire Argument Value    ${sBOC_Level} 
+    ${DetailsOfPayment}    Acquire Argument Value    ${sDetailsOfPayment} 
+    ${SenderToReceiverInfo}    Acquire Argument Value    ${sSenderToReceiverInfo} 
+    ${OrderingCustomer}    Acquire Argument Value    ${sOrderingCustomer} 
+                       
+    mx LoanIQ activate window    ${RemittanceList_Window_RemittanceInstructionsDetail_IMT_Window}
+    Run Keyword If    '${sDetailsOfPayment}'!='${EMPTY}'    Mx LoanIQ Select Combo Box Value    ${RemittanceList_Window_RemittanceInstructionsDetail_IMT_DetailsofCharges}    ${Details_Of_Charges}
+    Run Keyword If    '${sDetailsOfPayment}'!='${EMPTY}'    mx LoanIQ enter    ${RemittanceList_Window_RemittanceInstructionsDetail_IMT_DetailsofPayment}    ${DetailsOfPayment}
+    Run Keyword If    '${sSenderToReceiverInfo}'!='${EMPTY}'    mx LoanIQ enter    ${RemittanceList_Window_RemittanceInstructionsDetail_IMT_SenderToReceiver}    ${SenderToReceiverInfo}        
+    Run Keyword If    '${sBOC_Level}'!='${EMPTY}'    Mx LoanIQ Select Combo Box Value    ${RemittanceList_Window_RemittanceInstructionsDetail_IMT_BankOperationCode}    ${BOC_Level}
+    Run Keyword If    '${sOrderingCustomer}'!='${EMPTY}'    mx LoanIQ enter    ${RemittanceList_Window_RemittanceInstructionsDetail_IMT_OrderingCustomer}    ${OrderingCustomer}    
+>>>>>>> GDE-6730 Update 04DealBorrower.robot Customer_Notebook.robot and

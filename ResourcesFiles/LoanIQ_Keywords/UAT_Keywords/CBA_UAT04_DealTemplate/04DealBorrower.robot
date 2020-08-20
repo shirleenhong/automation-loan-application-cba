@@ -82,14 +82,5 @@ Search Customer and Complete its Borrower Profile Creation with default values f
     # Navigate to Remittance List Page
     
     Add Remittance Instruction   &{ExcelPath}[LIQCustomer_ShortName]
-    Add Remittance Instruction for D00000476    ${ExcelPath}
-    # Add IMT message code for UAT Deal    ${ExcelPath}
-    Add IMT message code for UAT Deal for D00000476    ${ExcelPath}
-    # Add Swift Role in IMT message for UAT Deal    ${ExcelPath}
-    Add Swift Role in IMT message for UAT Deal for D00000476    ${ExcelPath}
-    # Mx Execute Template With Multiple Data    Update Swift Role in IMT message for UAT Deal    ${ExcelPath}    2-3    ORIG03_Customer  
-    Mx Execute Template With Multiple Data    Update Swift Role in IMT message for UAT Deal for D00000476    ${ExcelPath}    2-3    ORIG03_Customer  
-    # Populate Details on IMT for UAT Deal    ${ExcelPath}
-    Populate Details on IMT for UAT Deal for D00000476    ${ExcelPath}
-    Send Remittance Instruction to Approval and Close RI Notebook  
+
     
