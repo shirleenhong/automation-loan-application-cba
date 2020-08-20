@@ -423,10 +423,12 @@ Add Location under Profiles Tab
     Mx LoanIQ Select Window Tab    ${LIQ_Active_Customer_Notebook_TabSelection}    Profiles
     Run Keyword If    '${Customer_Location}' != 'None'    Mx LoanIQ Click    ${AddLocation_Button}
     Validate Window Title    Select Location
-    Run Keyword If    '${Customer_Location}' != 'None'    Mx LoanIQ Enter    ${LIQ_SelectLocation_SearchByDescription}    ${Customer_Location}   
-    Run Keyword If    '${Customer_Location}' != 'None'    Mx LoanIQ Click    ${LIQ_SelectLocation_OKButton}
+    Run Keyword If    '${Customer_Location}' != 'None'    Run Keywords    Mx LoanIQ Enter    ${LIQ_SelectLocation_SearchByDescription}    ${Customer_Location}  
+    ...    AND    Mx LoanIQ Click    ${LIQ_SelectLocation_OKButton}   
+    ...    AND    Mx LoanIQ Activate    ${LIQ_BorrowerDetails_Window}
+    ...    AND    Mx LoanIQ Click    ${LIQ_BorrowerDetails_OKButton}
     Take Screenshot    ${Screenshot_Path}/Screenshots/LoanIQ/LocationDetailsWindow
-
+    
 Read Excel Data and Validate Location Details under Profile column in Profile Tab
     [Documentation]    This keyword validates the Location Details under Profile column in Profile Tab  against from excel data 
     ...    @author: ghabal

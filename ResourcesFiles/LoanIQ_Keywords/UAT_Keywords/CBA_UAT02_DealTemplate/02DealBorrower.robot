@@ -106,10 +106,10 @@ Search Customer and Complete its Borrower Profile Creation with default values f
     # Validate Only 'Add Profile', 'Add Location' and 'Delete' Buttons are Enabled in Profile Tab
     
     ###Adding Location          
-    Add Location under Profiles Tab    &{ExcelPath}[Customer_Location]  
+    Add Location under Profiles Tab    &{ExcelPath}[Customer_Location]
     
     ###Adding Borrowwer/Location Details
-    # Add Borrowwer/Location Details under Profiles Tab   &{ExcelPath}[Profile_Type]    &{ExcelPath}[Customer_Location]    
+    # Add Borrowwer/Location Details under Profiles Tab   &{ExcelPath}[Profile_Type]    &{ExcelPath}[Customer_Location]
     
     ###Validating Buttons if Enabled 
     Validate If All Buttons are Enabled
