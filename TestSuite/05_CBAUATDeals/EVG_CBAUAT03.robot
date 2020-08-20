@@ -72,7 +72,7 @@ Complete Customer Profile - ORIG03
 
 ### November 23
 Setup TL API - Prerequisite
-    Mx Execute Template With Multiple Data    Load Base Rate D00000476    ${CBAUAT_ExcelPath}    1    BaseRate_Fields
+    #Mx Execute Template With Multiple Data    Load Base Rate D00000476    ${CBAUAT_ExcelPath}    1    BaseRate_Fields
     Mx Execute Template With Multiple Data    Load FX Rate D00000476     ${CBAUAT_ExcelPath}    1    FXRates_Fields
 
 # ### November 28

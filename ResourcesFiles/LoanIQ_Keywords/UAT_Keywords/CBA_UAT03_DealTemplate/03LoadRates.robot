@@ -6,7 +6,7 @@ Resource    ../../../../Configurations/Integration_Import_File.robot
 Load Base Rate D00000476
     [Documentation]    Used to send a valid Golden Source file to SFTP site. Then validate if GS file is processed and moved to Archive folder.
     ...    Then validate FFC if file is sent to CCB OpenAPI, distributor and CustomCBAPush. Then validate in LoanIQ if Base Rate
-    ...    @update: ritragel    Updated the FFC Validation and upgraded xls to xlsx dataset
+    ...    @update: ritragel    18AUG2020    Updated the FFC Validation and upgraded xls to xlsx dataset
     [Arguments]    ${ExcelPath}
     
     ###PREREQUISITE###
@@ -25,14 +25,15 @@ Load Base Rate D00000476
 
 Load FX Rate D00000476
     [Documentation]    Used to send Group 1 Golden Source file to SFTP site. Then validate if GS file is processed and moved to Archive folder.
+    ...    @update: ritragel    18AUG2020    Updated the FFC Validation and upgraded xls to xlsx dataset
     [Arguments]    ${ExcelPath}
     
     ###PREREQUISITE###
     ${fundingDeskStatus}    Get Funding Desk Status from Table Maintenance    &{ExcelPath}[FundingDesk_1]
     ${CSVFile}    Set Variable    &{ExcelPath}[InputFilePath]&{ExcelPath}[InputGSFile]
-    ${TransformedDataFile_FXRates}    Set Variable    &{ExcelPath}[InputFilePath]TL_Transformed_Data_FXRates.xls
-    ${TransformedDataFileXML_FXRates}    Set Variable    &{ExcelPath}[InputFilePath]TL_Transformed_Data_XMLFXRates.xls
-    ${TransformedDataFile_Template_FXRates}    Set Variable    &{ExcelPath}[InputFilePath]TL_Transformed_Data_template_FXRates.xls
+    ${TransformedDataFile_FXRates}    Set Variable    &{ExcelPath}[InputFilePath]TL_Transformed_Data_FXRates.xlsx
+    ${TransformedDataFileXML_FXRates}    Set Variable    &{ExcelPath}[InputFilePath]TL_Transformed_Data_XMLFXRates.xlsx
+    ${TransformedDataFile_Template_FXRates}    Set Variable    &{ExcelPath}[InputFilePath]TL_Transformed_Data_template_FXRates.xlsx
     ${row}    Set Variable    18
     Transform FXRates CSV Data to XLS File Readable for JSON Creation    ${CSVFile}    ${TransformedDataFile_FXRates}    ${TransformedDataFile_Template_FXRates}    ${TransformedDataFileXML_FXRates}        &{ExcelPath}[FundingDesk_1]
     Create Expected JSON for FXRates TL    ${TransformedDataFile_FXRates}    &{ExcelPath}[InputFilePath]&{ExcelPath}[InputJson]    ${dataset_path}${TransformedDataFile_FXRates}    ${dataset_path}${TransformedDataFileXML_FXRates}    
@@ -46,6 +47,4 @@ Load FX Rate D00000476
     
     Send Single File to SFTP and Validate If File is Processed    &{ExcelPath}[InputFilePath]    &{ExcelPath}[InputGSFile]    ${TL_FX_FOLDER}
     Validate File If Moved to Archive Folder    ${TL_FX_ARCHIVE_FOLDER}    &{ExcelPath}[InputGSFile]
-    Run Keyword And Continue On Failure    FXRates FFC Validation for TL Success    &{ExcelPath}[InputFilePath]    &{ExcelPath}[InputJson]    &{ExcelPath}[Expected_wsFinalLIQDestination]    &{ExcelPath}[OutputFilePath]    &{ExcelPath}[OutputFFCResponse]    &{ExcelPath}[Actual_wsFinalLIQDestination]
-    ...    ${dataset_path}${TransformedDataFileXML_FXRates}    ${fundingDeskStatus}    &{ExcelPath}[Actual_CustomCBAPush_Response]    &{ExcelPath}[Actual_ResponseMechanism]    &{ExcelPath}[FundingDesk_1]    
     Run Keyword And Continue On Failure    Validate FXRate in LoanIQ     ${From_Currency}    ${To_Currency}    ${subEntity}    ${Mid_Rate}    ${Effective_Date}
