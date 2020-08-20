@@ -82,5 +82,12 @@ Search Customer and Complete its Borrower Profile Creation with default values f
     # Navigate to Remittance List Page
     
     Add Remittance Instruction   &{ExcelPath}[LIQCustomer_ShortName]
+    
+Release Remittance Instruction in UAT
+    [Documentation]    This keyword releases remittance instructions
+    ...    @author: arammos    20AUG2020
+    [Arguments]    ${ExcelPath}	
+    Releasing Remittance Instruction    &{ExcelPath}[RemittanceInstruction_Description]    &{ExcelPath}[Customer_Location]
+
 
     
