@@ -265,26 +265,26 @@ Search Customer and Complete its Borrower Profile Creation with default values f
     
     ###Adding Remittance Instructions
     Mx LoanIQ Select Window Tab    ${LIQ_Active_Customer_Notebook_TabSelection}    Profiles
-    Sleep    4s
+ 
     mx LoanIQ click    ${RemittanceInstructions_Button} 
     
-    # Add RTGS Remittance Instruction for UAT Deal    &{ExcelPath}[Customer_Location]    &{ExcelPath}[RemittanceInstruction_RTGSMethod]    &{ExcelPath}[RemittanceInstruction_RTGSDescriptionAUD]    &{ExcelPath}[RemittanceInstruction_RTGSCurrencyAUD]
-    # ...    &{ExcelPath}[RemittanceInstruction_DirectionSelected]    &{ExcelPath}[IMT_MessageCode]    &{ExcelPath}[BOC_Level]    
-    # ...    &{ExcelPath}[RI_FromCust_Checkbox]    &{ExcelPath}[RI_AutoDoIt_Checkbox]    &{ExcelPath}[RI_SendersCorrespondent_Checkbox]
-    # ...    &{ExcelPath}[NoticesSummary]    &{ExcelPath}[RI_ToCust_Checkbox]
+    Add RTGS Remittance Instruction for UAT Deal    &{ExcelPath}[Customer_Location]    &{ExcelPath}[RemittanceInstruction_RTGSMethod]    &{ExcelPath}[RemittanceInstruction_RTGSDescriptionAUD]    &{ExcelPath}[RemittanceInstruction_RTGSCurrencyAUD]
+    ...    &{ExcelPath}[RemittanceInstruction_DirectionSelected]    &{ExcelPath}[IMT_MessageCode]    &{ExcelPath}[BOC_Level]    
+    ...    &{ExcelPath}[RI_FromCust_Checkbox]    &{ExcelPath}[RI_AutoDoIt_Checkbox]    &{ExcelPath}[RI_SendersCorrespondent_Checkbox]
+    ...    &{ExcelPath}[NoticesSummary]    &{ExcelPath}[RI_ToCust_Checkbox]
     
-    # Add IMT Message in Remittance Instruction    &{ExcelPath}[IMT_MessageCode]    &{ExcelPath}[BOC_Level]    &{ExcelPath}[RI_SendersCorrespondent_Checkbox]    &{ExcelPath}[Swift_Role]    
-    # ...    &{ExcelPath}[AWI_SwiftID]    &{ExcelPath}[AWI_ClearingNumber]    &{ExcelPath}[SwiftRole_OC]    &{ExcelPath}[SwiftRole_BC]    &{ExcelPath}[Details_Of_Charges]
-    # ...    &{ExcelPath}[BC_AccountNumber]
+    Add IMT Message in Remittance Instruction    &{ExcelPath}[IMT_MessageCode]    &{ExcelPath}[BOC_Level]    &{ExcelPath}[RI_SendersCorrespondent_Checkbox]    &{ExcelPath}[Swift_Role]    
+    ...    &{ExcelPath}[AWI_SwiftID]    &{ExcelPath}[AWI_ClearingNumber]    &{ExcelPath}[SwiftRole_OC]    &{ExcelPath}[SwiftRole_BC]    &{ExcelPath}[Details_Of_Charges]
+    ...    &{ExcelPath}[BC_AccountNumber]
     
-    # Add RTGS Remittance Instruction for UAT Deal    &{ExcelPath}[Customer_Location]    &{ExcelPath}[RemittanceInstruction_RTGSMethod]    &{ExcelPath}[RemittanceInstruction_RTGSDescriptionAUD2]    &{ExcelPath}[RemittanceInstruction_RTGSCurrencyAUD]
-    # ...    &{ExcelPath}[RemittanceInstruction_DirectionSelected]    &{ExcelPath}[IMT_MessageCode]    &{ExcelPath}[BOC_Level]    
-    # ...    &{ExcelPath}[RI_FromCust_Checkbox2]    &{ExcelPath}[RI_AutoDoIt_Checkbox]    &{ExcelPath}[RI_SendersCorrespondent_Checkbox]
-    # ...    &{ExcelPath}[NoticesSummary]    &{ExcelPath}[RI_ToCust_Checkbox2]
+    Add RTGS Remittance Instruction for UAT Deal    &{ExcelPath}[Customer_Location]    &{ExcelPath}[RemittanceInstruction_RTGSMethod]    &{ExcelPath}[RemittanceInstruction_RTGSDescriptionAUD2]    &{ExcelPath}[RemittanceInstruction_RTGSCurrencyAUD]
+    ...    &{ExcelPath}[RemittanceInstruction_DirectionSelected]    &{ExcelPath}[IMT_MessageCode]    &{ExcelPath}[BOC_Level]    
+    ...    &{ExcelPath}[RI_FromCust_Checkbox2]    &{ExcelPath}[RI_AutoDoIt_Checkbox]    &{ExcelPath}[RI_SendersCorrespondent_Checkbox]
+    ...    &{ExcelPath}[NoticesSummary]    &{ExcelPath}[RI_ToCust_Checkbox2]
     
-    # Add IMT Message in Remittance Instruction    &{ExcelPath}[IMT_MessageCode]    &{ExcelPath}[BOC_Level]    &{ExcelPath}[RI_SendersCorrespondent_Checkbox]    &{ExcelPath}[Swift_Role]    
-    # ...    &{ExcelPath}[AWI_SwiftID]    &{ExcelPath}[AWI_ClearingNumber]    &{ExcelPath}[SwiftRole_OC]    &{ExcelPath}[SwiftRole_BC]    &{ExcelPath}[Details_Of_Charges]
-    # ...    &{ExcelPath}[BC_AccountNumber]
+    Add IMT Message in Remittance Instruction    &{ExcelPath}[IMT_MessageCode]    &{ExcelPath}[BOC_Level]    &{ExcelPath}[RI_SendersCorrespondent_Checkbox]    &{ExcelPath}[Swift_Role]    
+    ...    &{ExcelPath}[AWI_SwiftID]    &{ExcelPath}[AWI_ClearingNumber]    &{ExcelPath}[SwiftRole_OC]    &{ExcelPath}[SwiftRole_BC]    &{ExcelPath}[Details_Of_Charges]
+    ...    &{ExcelPath}[BC_AccountNumber]
     
     ${RemittanceDescription}    Read Data From Excel    ORIG03_Customer    RemittanceInstruction_RTGSDescriptionAUD   ${rowid}    ${CBAUAT_ExcelPath}    
     
@@ -292,7 +292,8 @@ Search Customer and Complete its Borrower Profile Creation with default values f
     Write Data To Excel    UAT02_Runbook    Remittance_Description    ${rowid}    ${RemittanceDescription}    ${CBAUAT_ExcelPath}    multipleValue=Y
     
     mx LoanIQ click    ${RemittanceList_Window_ExitButton}
-    # Add Servicing Groups Details    &{ExcelPath}[Customer_Search]    &{ExcelPath}[Party_ID]    &{ExcelPath}[Party_ID]    &{ExcelPath}[Profile_Type]    &{ExcelPath}[Group_Contact]   &{ExcelPath}[Contact_LastName]
+    
+    Add Servicing Groups Details    &{ExcelPath}[LIQCustomer_ShortName]    &{ExcelPath}[Group_Contact]    &{ExcelPath}[Contact_LastName]
     Add Remittance Instruction to Servicing Group    &{ExcelPath}[RemittanceInstruction_RTGSDescriptionAUD]
     Add Remittance Instruction to Servicing Group    &{ExcelPath}[RemittanceInstruction_RTGSDescriptionAUD2]
     Close Servicing Group Remittance Instructions Selection List Window    &{ExcelPath}[LIQCustomer_ShortName]
