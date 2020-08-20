@@ -364,6 +364,9 @@ RemittanceList_Window_RemittanceInstructionsDetail_SWIFTIDInputField =  'JavaWin
 RemittanceList_Window_RemittanceInstructionsDetail_SWIFTIDescriptionField =  'JavaWindow("title:=Choose a SWIFT ID").JavaEdit("attached text:=Description:")'
 RemittanceList_Window_RemittanceInstructionsDetail_OKButton =  'JavaWindow("title:=Choose a SWIFT ID").JavaButton("label:=OK")'
 RemittanceList_Window_RemittanceInstructionsDetail_ClearingTypeList =  'JavaWindow("title:=Choose a SWIFT ID").JavaList("attached text:=Clearing Type:")'
+RemittanceList_Window_RemittanceInstructionDetail_BankSwiftID_MainWindow = 'JavaWindow("title:=Choose a Swift Bank ID")'
+RemittanceList_Window_RemittanceInstructionDetail_BankSwiftID_SwiftCodeList = 'JavaWindow("title:=Choose a Swift Bank ID").JavaTree("tagname:=Tree.*")'
+RemittanceList_Window_RemittanceInstructionDetail_BankSwiftID_OK = 'JavaWindow("title:=Choose a Swift Bank ID").JavaButton("label:=OK")'
 
 ###Profile Tab_Remittance Instructions_Detail - Approvals###
 RemittanceList_Window_RemittanceInstructionsDetail_PasswordRequiredWindow_InputPassword = 'JavaWindow("title:=Password Required.*").JavaEdit("attached text:=Please enter password for.*")'
