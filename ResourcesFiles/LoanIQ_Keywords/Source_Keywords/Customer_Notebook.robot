@@ -2284,6 +2284,9 @@ Add RTGS Remittance Instruction for UAT Deal
     Mx LoanIQ Check Or Uncheck    ${RemittanceList_Window_RemittanceInstructionsDetail_AutoDoIt_Checkbox}    ${RI_AutoDoIt_Checkbox}
     
     Run Keyword If    '${RI_FromCust_Checkbox}'=='OFF'    mx LoanIQ enter    ${RemittanceList_Window_RemittanceInstructionsDetail_SummaryNotices_TextField}    ${NoticesSummary}
+    
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/AddRTGSRemittance
+    
     Mx Native Type    {BACKSPACE}
     mx LoanIQ select    ${LIQ_RemittanceInstruction_Notebook_FileMenu_SaveMenu}
     
@@ -2320,7 +2323,10 @@ Add IMT Message in Remittance Instruction
     mx LoanIQ activate window    ${RemittanceList_Window_RemittanceInstructionsDetail_AddSwiftID_Window}
     mx LoanIQ enter    ${RemittanceList_Window_RemittanceInstructionsDetail_UpdateMode_AddSwiftID_AccountNumber}    ${sBC_AccountNumber}    
     mx LoanIQ click    ${RemittanceList_Window_RemittanceInstructionsDetail_UpdateMode_AddSwiftID_OKButton}
-    mx LoanIQ click    ${RemittanceList_Window_RemittanceInstructionsDetail_IMT_OKButton}        
+    mx LoanIQ click    ${RemittanceList_Window_RemittanceInstructionsDetail_IMT_OKButton}    
+    
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/AddIMTMessageRemittance    
+    
     mx LoanIQ select    ${LIQ_RemittanceInstruction_Notebook_FileMenu_SaveMenu}
     mx LoanIQ click element if present    ${LIQ_Warning_OK_Button}
     Send Remittance Instruction to Approval
