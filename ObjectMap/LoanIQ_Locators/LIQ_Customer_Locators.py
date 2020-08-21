@@ -178,7 +178,7 @@ LIQ_BorrowerDetails_ExternalID_Field = 'JavaWindow("title:=Borrower/.*").JavaEdi
 LIQ_BorrowerDetails_PreferredLanguage_Field = 'JavaWindow("title:=Borrower/.*").JavaList("tagname:=Combo")' 
 LIQ_BorrowerDetails_MEI_Field = 'JavaWindow("title:=Borrower/.*").JavaEdit("attached text:=MEI:")' 
 LIQ_BorrowerDetails_OKButton = 'JavaWindow("title:=Borrower/.*").JavaButton("attached text:=OK")'
-
+LIQ_BorrowerDetails_Window = 'JavaWindow("title:=Borrower/.*")'
 ###Active Customer_ProfileTab_SelectLocation_BeneficiaryDetails_Window###
 LIQ_BeneficiaryDetails_ExternalID_Field = 'JavaWindow("title:=Beneficiary/.*").JavaEdit("tagname:=Text","x:=250","y:=50")' 
 LIQ_BeneficiaryDetails_PreferredLanguage_Field = 'JavaWindow("title:=Beneficiary/.*").JavaList("tagname:=Combo")' 
