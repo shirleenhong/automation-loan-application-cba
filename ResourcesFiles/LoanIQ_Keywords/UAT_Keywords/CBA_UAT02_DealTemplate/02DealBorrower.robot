@@ -106,10 +106,10 @@ Search Customer and Complete its Borrower Profile Creation with default values f
     # Validate Only 'Add Profile', 'Add Location' and 'Delete' Buttons are Enabled in Profile Tab
     
     ###Adding Location          
-    Add Location under Profiles Tab    &{ExcelPath}[Customer_Location]
+    Add Location under Profiles Tab for UAT Deal    &{ExcelPath}[Customer_Location]
     
     ###Adding Borrowwer/Location Details
-    # Add Borrowwer/Location Details under Profiles Tab   &{ExcelPath}[Profile_Type]    &{ExcelPath}[Customer_Location]
+    Add Borrowwer/Location Details under Profiles Tab   &{ExcelPath}[Profile_Type]    &{ExcelPath}[Customer_Location]
     
     ###Validating Buttons if Enabled 
     Validate If All Buttons are Enabled
@@ -202,6 +202,7 @@ Search Customer and Complete its Borrower Profile Creation with default values f
     [Documentation]    This keyword searches a customer and complete its Borrower Profile creation with default values
     ...    @author: gerhabal    25SEP2019    - initial create    
     ...    @update: gerhabal    27SEP2019    - added writing for Remittance Description in multiple row    
+    ...    @update: rmendoza    20AUG2020    - updated to follow new framework design [GDE-6722]
     [Arguments]    ${ExcelPath}
 	
 	# Login to LoanIQ###
@@ -232,7 +233,7 @@ Search Customer and Complete its Borrower Profile Creation with default values f
     Navigate to "SIC" tab and Validate Primary SIC Code    &{ExcelPath}[Primary_SICCode]    &{ExcelPath}[PrimarySICCode_Description]
     
     ###Navigating to Profile Tab     
-    # Navigate to "Profiles" tab and Validate 'Add Profile' Button
+    Navigate to "Profiles" tab and Validate 'Add Profile' Button
 
     ###Adding Profile          
     Add Profile under Profiles Tab    &{ExcelPath}[Profile_Type]
@@ -241,13 +242,13 @@ Search Customer and Complete its Borrower Profile Creation with default values f
     Add Borrower Profile Details under Profiles Tab    &{ExcelPath}[Profile_Type]
     
     ###Validating Buttons      
-    # Validate Only 'Add Profile', 'Add Location' and 'Delete' Buttons are Enabled in Profile Tab
+    Validate Only 'Add Profile', 'Add Location' and 'Delete' Buttons are Enabled in Profile Tab
     
     ###Adding Location          
     Add Location under Profiles Tab    &{ExcelPath}[Customer_Location]  
     
     ###Adding Borrowwer/Location Details
-    # Add Borrowwer/Location Details under Profiles Tab   &{ExcelPath}[Profile_Type]    &{ExcelPath}[Customer_Location]    
+    Add Borrowwer/Location Details under Profiles Tab   &{ExcelPath}[Profile_Type]    &{ExcelPath}[Customer_Location]    
     
     ###Validating Buttons if Enabled 
     Validate If All Buttons are Enabled
