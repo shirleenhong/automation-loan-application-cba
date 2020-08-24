@@ -30,7 +30,7 @@ Setup Deal D00000963
     Create New Deal    ${Deal_Name}    ${Deal_Alias}    &{ExcelPath}[Deal_Currency]    &{ExcelPath}[Deal_Department]    &{ExcelPath}[Deal_SalesGroup]
     Unrestrict Deal
     
-    ### Summary Tab ###
+    #### Summary Tab ###
     Set Deal Borrower    ${Borrower_ShortName}    ${Borrower_Location}
     Set Deal Borrower Servicing Group    &{ExcelPath}[Borrower_SG_Alias]    &{ExcelPath}[Borrower_SG_Name]    &{ExcelPath}[Borrower_ContactName]    &{ExcelPath}[Borrower_PreferredRIMthd]
     Go To Deal Borrower Preferred RI Window
@@ -45,18 +45,19 @@ Setup Deal D00000963
     Enter Agreement Date and Proposed Commitment Amount    &{ExcelPath}[Deal_AgreementDate]    &{ExcelPath}[Deal_ProposedCmt]
     Set Deal as Sole Lender
     Save Changes on Deal Notebook
+
     Take Screenshot    DealNotebook-SummaryTab
     
-    ### Personnel Tab ###
+    #### Personnel Tab ###
     Enter Department on Personel Tab    &{ExcelPath}[Deal_DepartmentCode]    &{ExcelPath}[Deal_Department]
     Enter Expense Code    &{ExcelPath}[Deal_ExpenseCode]
     Take Screenshot    DealNotebook-PersonnelTab
     
-    ### Calendars Tab ###
+    #### Calendars Tab ###
     Set Deal Calendar    &{ExcelPath}[Deal_Calendar]
     Take Screenshot    DealNotebook-CalendarsTab
     
-    ### Pricing Rules Tab ###
+    #### Pricing Rules Tab ###
     ${RoundingDecimalPrecision}    Set Variable    &{ExcelPath}[RoundingDecimal_Precision]
     ${MinPayAmount}    Set Variable    &{ExcelPath}[MinimumPaymentAmount]
     ${MinAmountMultiples}    Set Variable    &{ExcelPath}[MinimumAmountMultiples]
