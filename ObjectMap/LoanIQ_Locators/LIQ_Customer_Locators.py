@@ -498,3 +498,4 @@ LIQ_ContactChangeTransactionApproval_JavaTree ='JavaWindow("title:=.*Contact Cha
 
 LIQ_ContactChangeTransaction_Workflow_Tab = 'JavaWindow("title:=.*Contact Change Transaction").JavaTab("tagname:=TabFolder")'
 LIQ_ContactChangeTransaction_Warning_Yes_Button = 'JavaWindow("title:=Warning.*","displayed:=1").JavaButton("label:=Yes.*")'
+LIQ_ContactChangeTransaction_ListItem = 'JavaWindow("title:=.*Contact Change Transaction").JavaTree("attached text:=Drill down to perform Workflow item")'
