@@ -48,16 +48,16 @@ Setup Deal D00000963
 
     Take Screenshot    DealNotebook-SummaryTab
     
-    #### Personnel Tab ###
+    ### Personnel Tab ###
     Enter Department on Personel Tab    &{ExcelPath}[Deal_DepartmentCode]    &{ExcelPath}[Deal_Department]
     Enter Expense Code    &{ExcelPath}[Deal_ExpenseCode]
     Take Screenshot    DealNotebook-PersonnelTab
     
-    #### Calendars Tab ###
+    ### Calendars Tab ###
     Set Deal Calendar    &{ExcelPath}[Deal_Calendar]
     Take Screenshot    DealNotebook-CalendarsTab
     
-    #### Pricing Rules Tab ###
+    ### Pricing Rules Tab ###
     ${RoundingDecimalPrecision}    Set Variable    &{ExcelPath}[RoundingDecimal_Precision]
     ${MinPayAmount}    Set Variable    &{ExcelPath}[MinimumPaymentAmount]
     ${MinAmountMultiples}    Set Variable    &{ExcelPath}[MinimumAmountMultiples]
