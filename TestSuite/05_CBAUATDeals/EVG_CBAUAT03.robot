@@ -70,10 +70,10 @@ Complete Customer Profile - ORIG03
     Mx Execute Template With Multiple Data    Approve Remittance Instruction in UAT    ${CBAUAT_ExcelPath}    1,4,7,10,13,22    ORIG03_Customer
     Mx Execute Template With Multiple Data    Logout and Search Customer in UAT - Inputter    ${CBAUAT_ExcelPath}    1    ORIG03_Customer 
 
-# ### November 23
-# Setup TL API - Prerequisite
-    # Mx Execute Template With Multiple Data    Load Base Rate D00000476    ${CBAUAT_ExcelPath}    1    BaseRate_Fields
-    # Mx Execute Template With Multiple Data    Load FX Rate D00000476     ${CBAUAT_ExcelPath}    1    FXRates_Fields
+### November 23
+Setup TL API - Prerequisite
+    Mx Execute Template With Multiple Data    Load Base Rate D00000476    ${CBAUAT_ExcelPath}    1    BaseRate_Fields
+    Mx Execute Template With Multiple Data    Load FX Rate D00000476     ${CBAUAT_ExcelPath}    1    FXRates_Fields
 
 # ### November 28
 # Setup BaseRate for Nov 28
