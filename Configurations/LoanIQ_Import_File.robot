@@ -384,4 +384,7 @@ Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/CBA_UAT05_DealTemplat
 Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/CBA_UAT05_DealTemplate/05FacilityNotebook.robot
 Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/CBA_UAT05_DealTemplate/05Outstandings.robot
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 614c1819714b18e83730c22a56f7503e20449745
