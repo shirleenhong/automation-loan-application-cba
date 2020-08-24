@@ -410,16 +410,25 @@ Validate If Remaining Buttons are Disabled
     Validate if Element is Disabled    ${RemittanceInstructions_Button}    Remittance Instructions
     Validate if Element is Disabled    ${Personnel_Button}    Personnel
     Validate if Element is Disabled    ${ServicingGroups_Button}    Servicing Groups
-    
+
 Add Location under Profiles Tab     
     [Documentation]    This keyword adds a Location to a Customer
     ...    @author: ghabal
     ...    @update: amansuet    19MAY2020    - added acquire argument and take screenshot keywords and remove unused keyword
-<<<<<<< HEAD
-    ...    @Update: aramos      19Aug2020    - changed Search by description of Location
-=======
-    ...    @update: aramos      20AUG2020    - Updated to Click the pop up window after adding location
->>>>>>> GDE-6730 Update 04DealBorrower.robot for remittance instructions and
+    [Arguments]    ${sCustomer_Location}=None
+    
+    ### Keyword Pre-processing ###
+    ${Customer_Location}    Acquire Argument Value    ${sCustomer_Location}
+
+    Mx LoanIQ Select Window Tab    ${LIQ_Active_Customer_Notebook_TabSelection}    Profiles
+    Run Keyword If    '${Customer_Location}' != 'None'    Mx LoanIQ Click    ${AddLocation_Button}
+    Validate Window Title    Select Location
+    Run Keyword If    '${Customer_Location}' != 'None'    Mx LoanIQ Enter    ${LIQ_SelectLocation_SearchByDescription}    ${Customer_Location}   
+    Run Keyword If    '${Customer_Location}' != 'None'    Mx LoanIQ Click    ${LIQ_SelectLocation_OKButton}
+    Take Screenshot    ${Screenshot_Path}/Screenshots/LoanIQ/LocationDetailsWindo 
+
+Add Location under Profiles Tab for CBAUAT04     
+    [Documentation]    This keyword adds a Location to a Customer used for CBA UAT Deal 4 test case
     [Arguments]    ${sCustomer_Location}=None
     
     ### Keyword Pre-processing ###
@@ -2218,8 +2227,6 @@ Validate External Risk Rating Table
     Run Keyword And Continue On Failure    Should Be Equal   ${Actual_Rating}    ${Expected_Rating}
     Run Keyword And Continue On Failure    Should Be Equal   ${Actual_StartDate}    ${Expected_StartDate}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/ActiveCustomer_Risk
-<<<<<<< HEAD
-=======
 
 Populate Details on Customer Remittance Instructions
     [Documentation]    This keyword populates the Customer Remittance Instruction Details
@@ -2362,4 +2369,3 @@ Populate Details on IMT
     Run Keyword If    '${sSenderToReceiverInfo}'!='${EMPTY}'    mx LoanIQ enter    ${RemittanceList_Window_RemittanceInstructionsDetail_IMT_SenderToReceiver}    ${SenderToReceiverInfo}        
     Run Keyword If    '${sBOC_Level}'!='${EMPTY}'    Mx LoanIQ Select Combo Box Value    ${RemittanceList_Window_RemittanceInstructionsDetail_IMT_BankOperationCode}    ${BOC_Level}
     Run Keyword If    '${sOrderingCustomer}'!='${EMPTY}'    mx LoanIQ enter    ${RemittanceList_Window_RemittanceInstructionsDetail_IMT_OrderingCustomer}    ${OrderingCustomer}    
->>>>>>> GDE-6730 Update 04DealBorrower.robot Customer_Notebook.robot and
