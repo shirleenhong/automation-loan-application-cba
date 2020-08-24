@@ -447,7 +447,7 @@ Get System Date
     ...    @update: hstone    28APR2020    - Added Keyword Post-process: Save Runtime Value
     ...                                    - Added Optional Argument: ${sRunTimeVar_SystemDate}
     [Arguments]    ${sRunTimeVar_SystemDate}=None
-    # Mx Activate Window    ${LIQ_Window}
+    Mx Activate Window    ${LIQ_Window}
     ${temp}    Mx LoanIQ Get Data    ${LIQ_Window}    title%temp
     # log to console    Label: ${temp}
     ${SystemDate}    Fetch From Right    ${temp}    :${SPACE}    
