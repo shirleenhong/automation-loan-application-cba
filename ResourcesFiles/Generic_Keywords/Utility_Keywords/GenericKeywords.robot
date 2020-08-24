@@ -1,4 +1,4 @@
-﻿*** Settings ***
+*** Settings ***
 Resource    ../../../Configurations/LoanIQ_Import_File.robot
 
 *** Keywords ***
@@ -43,6 +43,21 @@ Mx Input Text
     Wait Until Browser Ready State
     Wait Until Keyword Succeeds    ${retry}    ${retry_interval}    Input Text    ${locator}    ${text}
     Press Keys    ${locator}    TAB
+    Wait Until Browser Ready State
+
+Mx Input Text and Press Enter
+    [Arguments]    ${locator}    ${text}
+    Wait Until Browser Ready State
+    Wait Until Keyword Succeeds    ${retry}    ${retry_interval}    Wait Until Page Contains Element    ${locator}    1s
+    Wait Until Keyword Succeeds    ${retry}    ${retry_interval}    Wait Until Element Is Visible    ${locator}
+    Wait Until Keyword Succeeds    ${retry}    ${retry_interval}    Wait Until Element Is Enabled    ${locator}    1s
+    Wait Until Keyword Succeeds    ${retry}    ${retry_interval}    Click Element    ${locator}
+    Wait Until Browser Ready State
+    Wait Until Keyword Succeeds    ${retry}    ${retry_interval}    Clear Element Text    ${locator}
+    Press Keys    ${locator}    RETURN
+    Wait Until Browser Ready State
+    Wait Until Keyword Succeeds    ${retry}    ${retry_interval}    Input Text    ${locator}    ${text}
+    Press Keys    ${locator}    RETURN
     Wait Until Browser Ready State
   
 Mx Input Amount
@@ -287,7 +302,7 @@ Select Actions
     Mx LoanIQ Maximize    ${LIQ_Window}    
     Mx LoanIQ Click    ${LIQ_Actions_Button}
     Mx LoanIQ Active Javatree Item    ${LIQ_Tree}    ${ActionName}
-    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/SelectActions
+    Take Screenshot    ${Screenshot_Path}
 
 Auto Generate Name Test Data
     [Arguments]    ${sNameTestData}    ${sTotalNumberToBeGenerated}=1
@@ -353,6 +368,7 @@ Search Existing Deal
      [Documentation]    This keyword search the existing deal on LIQ.
     ...    @author: mgaling
     ...    @update: fmamaril    15MAY2020    - added argument for keyword pre processing
+    ...    @update: dahijara    10AUG2020    - Added screenshot
     [Arguments]    ${sDeal_Name}
     ### GetRuntime Keyword Pre-processing ###
     ${Deal_Name}    Acquire Argument Value    ${sDeal_Name}
@@ -360,10 +376,12 @@ Search Existing Deal
     Select Actions    [Actions];Deal
     mx LoanIQ activate    ${LIQ_DealSelect_Window}   
     mx LoanIQ enter    ${LIQ_DealSelect_DealIdentifyBy_Textfield}    ${Deal_Name}   
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/DealSelect
     mx LoanIQ click    ${LIQ_DealSelect_Search_Button} 
     mx LoanIQ click    ${LIQ_DealListByName_OK_Button}
     mx LoanIQ activate    ${LIQ_DealNotebook_Window}
-    mx LoanIQ click element if present    ${LIQ_DealNotebook_InquiryMode_Button} 
+    mx LoanIQ click element if present    ${LIQ_DealNotebook_InquiryMode_Button}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/DealNotebook
     
 Close Active Windows
     [Documentation]    This keyword closes main active windows on LIQ.
@@ -537,12 +555,16 @@ Auto Generate Only 5 Numeric Test Data
 
 Auto Generate Only 4 Numeric Test Data
     [Documentation]    This keyword concatenates current date as a unique 3 numeric test data
-    ...    @author: ghabal  
-    [Arguments]    ${NameTestData}
-    [Return]    ${GeneratedName}
+    ...    @author: ghabal
+    ...    @update: clanding    10AUG2020    - moved Return at the end of the script; added post processing
+    [Arguments]    ${NameTestData}    ${sRunTimeVar_GeneratedName}=None
     ${datetime.microsecond}    Get Current Date    result_format=%M%S  
     log to console    ${datetime.microsecond}
-    ${GeneratedName} =   Catenate    SEPARATOR=  ${NameTestData}   ${datetime.microsecond}  
+    ${GeneratedName} =   Catenate    SEPARATOR=  ${NameTestData}   ${datetime.microsecond}
+    
+    ### Keyword Post-processing ###
+    Save Values of Runtime Execution on Excel File    ${sRunTimeVar_GeneratedName}    ${GeneratedName}
+    [Return]    ${GeneratedName}
     
 Verify Window
     [Documentation]    This keyword will validate if you are in the correct window
@@ -946,14 +968,19 @@ Open Facility Notebook
     [Documentation]    This keyword opens an existing facility on LIQ.
     ...    @author: mgaling
     ...    @author: ghabal change  'AMCH06a1_InterestPricingChange' sheet name to 'AMCH06_PricingChangeTransaction'
-    [Arguments]    ${Facility_Name}
+    ...    @update: clanding    10AUG2020    - removed Read Data From Excel; add pre processing keyword and screenshot
+    [Arguments]    ${sFacility_Name}
+    
+    ### Keyword Pre-processing ###
+    ${Facility_Name}    Acquire Argument Value    ${sFacility_Name}
+    
     mx LoanIQ activate    ${LIQ_DealNotebook_Window}
     mx LoanIQ select    ${LIQ_DealNotebook_Options_Facilities}
     mx LoanIQ activate    ${LIQ_FacilityNavigator_Window}
     
-    # ${Facility_Name}    Read Data From Excel    AMCH06_PricingChangeTransaction    Facility_Name    ${rowid}
     Mx LoanIQ Select Or DoubleClick In Javatree    ${LIQ_FacilityNavigator_Tree}    ${Facility_Name}%d
     mx LoanIQ activate window    ${LIQ_FacilityNotebook_Window}
+    Take Screenshot    ${Screenshot_Path}/Screenshots/LoanIQ/FacilityNotebookWindow
 
 Get Number 12 Digits
     [Arguments]    ${number}
@@ -1998,6 +2025,7 @@ Calculate for System Date Offset
     ...    ELSE    Fail    Invalid Offset Days Input. Value should contain '+' or '-'.
 
     [Return]    ${System_Date_With_Offset}
+    
 Driver Script
     [Documentation]    This keyword is used to execute list of scenarios on excel file.
     ...    @author: dahijara    24MAR2020    - initial create

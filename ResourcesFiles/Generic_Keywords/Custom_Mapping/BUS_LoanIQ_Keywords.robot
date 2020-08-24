@@ -104,3 +104,9 @@ BUS_Navigate to Payment Notebook via WIP
     ...    @author: clanding    23JUL2020    - initial create
 
     Run Keyword    Navigate to Payment Notebook via WIP    ${ARGUMENT_1}    ${ARGUMENT_2}    ${ARGUMENT_3}    ${ARGUMENT_4}    ${ARGUMENT_5}
+
+BUS_Open Facility Notebook
+    [Documentation]    This keyword is used to run the assigned low level keyword.
+    ...    @author: clanding    11AUG2020    - initial create
+
+    Run Keyword    Open Facility Notebook    ${ARGUMENT_1}

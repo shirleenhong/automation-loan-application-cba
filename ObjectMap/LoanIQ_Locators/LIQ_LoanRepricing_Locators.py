@@ -50,6 +50,7 @@ LIQ_LoanRepricing_WorkflowNoItems = 'JavaWindow("title:=Loan Repricing.*").JavaT
 LIQ_LoanRepricing_ChangeEffectiveDate_Menu = 'JavaWindow("title:=Loan Repricing.*").JavaMenu("label:=Options").JavaMenu("label:=Change Effective Date")'
 LIQ_LoanRepricing_Facility_Menu = 'JavaWindow("title:=Loan Repricing.*").JavaMenu("label:=Options").JavaMenu("label:=Facility Notebook")'
 LIQ_LoanRepricing_EffectiveDate_Text = 'JavaWindow("title:=Loan Repricing.*").JavaStaticText("index:=2")'
+LIQ_LoanRepricing_GeneralTab_Description_JavaTree = 'JavaWindow("label:=Loan Repricing For Deal.*").JavaTree("tagname:=Drill down to view/edit details")'
 
 ### Loan Repricing Notebook - Enter New Effective Date
 LIQ_EffectiveDate_TextBox = 'JavaWindow("title:=Enter New Effective Date","displayed:=1").JavaEdit("tagname:=Text")'

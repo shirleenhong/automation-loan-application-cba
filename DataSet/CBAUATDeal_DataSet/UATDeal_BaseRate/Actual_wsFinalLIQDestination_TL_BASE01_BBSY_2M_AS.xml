@@ -1,0 +1,4 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<api:executeUpdateFundingRate xmlns:api='http://api.ws.liq.misys.com/'>
+  <UpdateFundingRate version='1.0' baseRate='BBSY' currency='AUD' rate='0.03' effectiveDate='21-May-2018' fundingDesk='AS' repricingFrequency='2M' />
+</api:executeUpdateFundingRate>

@@ -46,7 +46,7 @@ Initiate Upfront Fee Payment - SYND05
 Create Initial Loan Drawdown - SERV02
     [Documentation]    Creation of Initial Loan Drawdown
     [Tags]    06 Create Initial Loan Drawdown - SERV02
-    Mx Execute Template With Multiple Data    Create Initial Loan Drawdown with Repayment Schedule for Non Agent Syndication    ${ExcelPath}   ${rowid}    SERV02_LoanDrawdownNonAgent
+    Mx Execute Template With Multiple Data    Create Initial Loan Drawdown for Non Agent Syndication    ${ExcelPath}   ${rowid}    SERV02_LoanDrawdownNonAgent
 
 Create Pricing Change Transaction - AMCH06
     [Documentation]    Change Interest Pricing Matrix from Debt Service Cover Ratio (DSCR) into Loan to Value Ratio (LVR).

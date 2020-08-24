@@ -175,10 +175,10 @@ FACILITIES_TRANSACTION = "Facilities"
 AWAITING_APPROVAL_STATUS = "Awaiting Approval"
 AWAITING_RELEASE_STATUS = "Awaiting Release"
 SEND_TO_APPROVAL_STATUS = "Send to Approval"
+RATE_APPROVAL_STATUS = "Rate Approval"
 APPROVAL_STATUS = "Approval"
 RELEASE_STATUS = "Release"
 RELEASED_STATUS = "Released"
-RATE_APPROVAL_STATUS = "Rate Approval"
 FEE_ACCRUAL_SHARES_ADJUSTMENT_TYPE = "Fee Accrual Shares Adjustment"
 SBLC_GUARANTEE_DECREASE_TYPE = "SBLC/Guarantee Decrease"
 CREATE_CASHFLOWS_TYPE = "Create Cashflows"
@@ -188,6 +188,14 @@ SHARE_ADJUSTMENT_TYPE = "Share Adjustment"
 RELEASE_TRANSACTION = "release" 
 PAYMENT_TRANSACTION = "Payment"
 LENDER_SHARES_ADJUSTMENT_LABEL = "Lender Shares Adjustment"
+DEBIT_AMT_LABEL = "Debit Amt"
+CREDIT_AMT_LABEL = "Credit Amt"
+AWAITING_SEND_TO_RATE_APPROVAL_STATUS = "Awaiting Send to Rate Approval"
+SEND_TO_RATE_APPROVAL_STATUS = "Send to Rate Approval"
+LOAN_INITIAL_DRAWDOWN_TYPE = "Loan Initial Drawdown"
+RATE_APPROVAL_TRANSACTION = "Rate Approval"
+LOAN_REPRICING_FOR_THE_DEAL = "Loan Repricing for the Deal"
+LOAN_REPRICING = "Loan Repricing"
 
 ### Bank Role ###
 REFERENCE_BANK_ROLE = "Reference Bank"
@@ -207,6 +215,8 @@ RESTRICTIONS_TAB = "Restrictions"
 SUBLIMIT_CUST_TAB = "Sublimit/Cust"
 PRICING_RULES_TAB = "Pricing Rules"
 WORKFLOW_TAB = "Workflow"
+GENERAL_TAB = "General"
+RATES_TAB = "Rates"
 
 ### Payment Type ###
 FEE_PAYMENT_FROM_BORROWER_TYPE = "Fee Payment From Borrower"
@@ -218,3 +228,12 @@ ADMIN_FEE_PAYMENT_TITLE = "Admin Fee Payment"
 
 ### Workflow ###
 PAYMENT_WORKFLOW = "Payment"
+
+### Loan Acrrue ###
+TO_THE_ACTUAL_DUE_DATE = "to the actual due date"
+
+### Loan Repricing ###
+INTEREST_PAYMENT_REQUESTED_AMOUNT = "InterestPaymentRequestedAmount"
+NEW_LOAN_ALIAS = "NewLoanAlias"
+ROLLOVER_CONVERSION_TO_NEW = "Rollover/Conversion To New"
+INTEREST_PAYMENT = "Interest Payment"
