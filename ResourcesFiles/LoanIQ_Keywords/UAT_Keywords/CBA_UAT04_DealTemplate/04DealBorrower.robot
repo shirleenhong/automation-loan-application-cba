@@ -54,7 +54,7 @@ Search Customer and Complete its Borrower Profile Creation with default values f
     # ###Validating Buttons      
     
     # ###Adding Location          
-    Add Location under Profiles Tab for CBAUAT04     &{ExcelPath}[Customer_Location]  
+    Add Location under Profiles Tab for UAT Deal     &{ExcelPath}[Customer_Location]  
        
     ###Validating Buttons if Enabled 
     Validate If All Buttons are Enabled
