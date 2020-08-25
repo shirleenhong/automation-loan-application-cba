@@ -8,6 +8,7 @@ Create Outstandings for Deal D00000963
     ...                @author: bernchua    22AUG2019    Initial create
     ...                @author: bernchua    23AUG2019    Added taking of screenshots
     ...                @author: bernchua    28AUG2019    Added Write to Excel to Runbook sheet
+    ...                @update: aramos      25AUG2020    Updated Take Screenshots to correct format
     [Arguments]    ${ExcelPath}
     
     ${Portfolio_Name}    Read Data From Excel    CRED01_DealSetup    Primary_Portfolio    1    ${CBAUAT_ExcelPath}
@@ -36,7 +37,7 @@ Create Outstandings for Deal D00000963
     Set Base Rate Details    &{ExcelPath}[Loan_BorrowerBaseRate]
     ${AllInRate}    Add Borrower Base Rate and Facility Spread    &{ExcelPath}[Loan_BorrowerBaseRate]    ${Faciltiy_Spread}
     ${AllInRate}    Set Variable    ${AllInRate}%
-    Take Screenshot    InitialDrawdown-Rates
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/InitialDrawdown-Rates
     Validate String Data In LIQ Object    ${LIQ_InitialDrawdown_Window}    ${LIQ_InitialDrawdown_AllInRateFromPricing_Text}    ${AllInRate}
     
     Navigate Notebook Workflow    ${LIQ_InitialDrawdown_Window}    ${LIQ_InitialDrawdown_Tab}    ${LIQ_InitialDrawdown_WorkflowAction}    Create Cashflows
@@ -65,16 +66,16 @@ Create Outstandings for Deal D00000963
     Login to Loan IQ    ${MANAGER_USERNAME}    ${MANAGER_PASSWORD}
     Navigate Transaction in WIP    Outstandings    Awaiting Approval    Loan Initial Drawdown    ${Loan_Alias}
     Navigate Notebook Workflow    ${LIQ_InitialDrawdown_Window}    ${LIQ_InitialDrawdown_Tab}    ${LIQ_InitialDrawdown_WorkflowAction}    Approval
-    Take Screenshot    InitialDrawdown-Approved
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/InitialDrawdown-Approved
     
     Navigate Notebook Workflow    ${LIQ_InitialDrawdown_Window}    ${LIQ_InitialDrawdown_Tab}    ${LIQ_InitialDrawdown_WorkflowAction}    Send to Rate Approval
     Logout from Loan IQ
     Login to Loan IQ    ${SUPERVISOR_USERNAME}    ${SUPERVISOR_PASSWORD}
     Navigate Transaction in WIP    Outstandings    Awaiting Rate Approval    Loan Initial Drawdown    ${Loan_Alias}
     Navigate Notebook Workflow    ${LIQ_InitialDrawdown_Window}    ${LIQ_InitialDrawdown_Tab}    ${LIQ_InitialDrawdown_WorkflowAction}    Rate Approval
-    Take Screenshot    InitialDrawdown-RateApproved
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/InitialDrawdown-RateApproved
     Navigate Notebook Workflow    ${LIQ_InitialDrawdown_Window}    ${LIQ_InitialDrawdown_Tab}    ${LIQ_InitialDrawdown_WorkflowAction}    Release
-    Take Screenshot    InitialDrawdown-Released
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/InitialDrawdown-Released
     
     Close All Windows on LIQ
     Logout from Loan IQ
