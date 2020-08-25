@@ -10,7 +10,7 @@ Add Remittance Instruction
     [Arguments]    ${sBorrower}
      
     ###Pre-processing keyword###
-    ${Borrower}    Acquire Argument Value    ${sBorrower}
+    ${Borrower}    Acquire Argument Value    ${sBorrower} 
            
     Mx LoanIQ Activate    ${LIQ_ActiveCustomer_Window}
     Mx LoanIQ Select Or DoubleClick In Javatree    ${LIQ_SelectBorrower_JavaTree}    ${Borrower}%s 

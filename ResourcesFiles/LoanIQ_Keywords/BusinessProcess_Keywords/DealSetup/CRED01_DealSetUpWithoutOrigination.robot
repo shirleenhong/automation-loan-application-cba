@@ -515,6 +515,8 @@ Setup Syndicated Deal for Non-Agent and Host Bank
     ...    @author: bernchua
     ...    @update: amansueto    15APR2020    - merged select actions and validate field keywords to Create New Deal
     ...    @update: clanding    29JUL2020    - updated hardcoded values to dataset/global variable; removed writing for CRED09
+    ...    @update: clanding    10AUG2020    - added writing of Deal to SERV02
+    ...    @update: clanding    13AUG2020    - added writing of Deal to SERV09
     [Arguments]    ${ExcelPath}
     
 	###Switch to Original User###
@@ -535,6 +537,8 @@ Setup Syndicated Deal for Non-Agent and Host Bank
     Write Data to Excel    SERV22_InterestPayments    Deal_Name    ${rowid}    ${Deal_Name}
     Write Data to Excel    AMCH02_LenderShareAdjustment    Deal_Name    ${rowid}    ${Deal_Name}
     Write Data to Excel    AMCH05_ExtendMaturityDate    Deal_Name    ${rowid}    ${Deal_Name}
+    Write Data to Excel    SERV02_LoanDrawdownNonAgent    Deal_Name    ${rowid}    ${Deal_Name}
+    Write Data to Excel    SERV09_LoanRepricing    Deal_Name    ${rowid}    ${Deal_Name}
     ${Deal_Name}    Read Data From Excel    CRED01_DealSetup    Deal_Name    ${rowid}
     ${Deal_Alias}    Read Data From Excel    CRED01_DealSetup    Deal_Alias    ${rowid}
     
@@ -598,6 +602,7 @@ Create Revolver Facility
     ...    @author: ritragel
     ...    @update: clanding    27JUL2020    - updated SERV09C_LoanRepricing to SERV09_LoanRepricing
     ...                                      - updated SERV01_LoanDrawdown to SERV02_LoanDrawdownNonAgent
+    ...    @update: clanding    10AUG2020    - added writing of facility to SERV02_LoanDrawdownNonAgent
     [Arguments]    ${ExcelPath}
     
     ###Test Data Generation and Writings###
@@ -610,6 +615,7 @@ Create Revolver Facility
 	Write Data To Excel    SERV22_InterestPayments    Facility_Name    ${rowid}    ${FacilityName}
 	Write Data To Excel    AMCH02_LenderShareAdjustment    Facility_Name    ${rowid}    ${Facility_Name}
 	Write Data to Excel    AMCH05_ExtendMaturityDate    Facility_Name    ${rowid}    ${Facility_Name}
+	Write Data to Excel    SERV02_LoanDrawdownNonAgent    Facility_Name    ${rowid}    ${Facility_Name}
 	Set To Dictionary    ${ExcelPath}    Facility_Name=${FacilityName}
 	
 	###Add Revolver Facility###

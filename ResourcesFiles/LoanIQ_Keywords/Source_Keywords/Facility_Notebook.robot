@@ -368,7 +368,7 @@ Add Borrower
     mx LoanIQ click    ${LIQ_FacilitySublimitCust_AddBorrower_OK_Button}  
     mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}  
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/FacilityWindow_SublimitCust
-
+   
 Validation on Borrower Window
     [Documentation]    This keyword verifies elements on borrower window
     ...    @author: fmamaril
@@ -1306,10 +1306,12 @@ Navigate to Commitment Fee Notebook
 Navigate to Outstanding Select Window
     [Documentation]    This keyword enables the LIQ User to navigate to the Outstanding Select window thru the Facility Notebook.
     ...    @author: rtarayao
+    ...    @update: clanding    10AUG2020    - added screenshot
     
     mx LoanIQ activate window    ${LIQ_FacilityNotebook_Window}       
     mx LoanIQ select    ${LIQ_FacilityNotebook_Queries_OutstandingSelect}
     mx LoanIQ activate    ${LIQ_OutstandingSelect_Window}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/OutstandingSelectWindow
 
 Navigate to Facility Increase Decrease Schedule
     [Documentation]    This keyword will navigate to Increase/Decrease Schedule in Facility
@@ -2624,8 +2626,11 @@ Navigate to Interest Fee Pricing Window
 Close Facility Notebook and Navigator Windows
     [Documentation]    This keyword is used to close the Facility Notebook and Navigtor windows when a user tries to add another Facility to a Deal.
     ...    @author: rtarayao    07MAR2019    Initial create
-    mx LoanIQ close window    ${LIQ_FacilityNotebook_Window}    
+    ...    @update: clanding    13AUG2020    Added screenshot
+    mx LoanIQ close window    ${LIQ_FacilityNotebook_Window}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/FacilityNotebookWindow
     mx LoanIQ close window    ${LIQ_FacilityNavigator_Window}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/FacilityNavigatorWindow
     
 Add MIS Code
     [Documentation]    This keyword is used to add MIS Codes at the Facility Notebook
