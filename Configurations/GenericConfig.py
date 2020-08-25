@@ -25,6 +25,7 @@ COMMSEEDataSet= ""
 SAPWUL_DATASET = ""
 DWHExcelPath = ""
 CBARPA_ExcelPath = ""
+DWELIQFunc_Dataset = ""
 
 FBTIDataset = ""
 FBTIDataset_ILC = ""
@@ -162,6 +163,30 @@ ACTIVEMQ_URL = ""
 
 ###MD5 site###
 MD5_URL = ""
+
+### DWE ###
+DWE_SERVER = ""
+DWE_PORT = ""
+DWE_SERVER_USER = ""
+DWE_SERVER_PASSWORD = ""
+DWE_LANDING_AREA_PATH = ""
+DWE_EXTRACTION_PATH = ""
+DWE_DATASET = ""
+DWE_EXCEL_DATASET = ""
+DWE_TABLE_LIST = ""
+DWE_LIQ_USER = ""
+DWE_LIQ_PASSWORD = ""
+DWE_BATCH_NET = ""
+DWE_DECRYPT_TOOL_PATH = ""
+DWE_EXTRACTION_AREA_PATH = ""
+DWE_DECRYPTOR_JAR = ""
+DWE_CSV_FILES_COUNT = ""
+DWE_MANIFEST_FILE_FIELDLIST = ""
+DWE_DECRYPTION_PART1 = ""
+DWE_DECRYPTION_PART2 = ""
+DWE_LIQ_EXTRACT_PATH = ""
+DWE_PGP_SECRET_KEY = ""
+DWE_PASSPHRASE = ""
 
 import os
 project_path = os.path.dirname(os.path.realpath(__file__)).replace("MDM_ConfigFile","")

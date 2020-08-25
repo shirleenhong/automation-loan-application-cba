@@ -1,5 +1,5 @@
 *** Settings ***
-Resource    ../../../../../Configurations/LoanIQ_Import_File.robot
+Resource    ../../../../../Configurations/Integration_Import_File.robot
 
 *** Keywords ***
 Validate VLS_ACCRUAL_CYCLE Extract
