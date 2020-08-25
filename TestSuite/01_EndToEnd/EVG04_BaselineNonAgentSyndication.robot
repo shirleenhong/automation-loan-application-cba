@@ -60,12 +60,6 @@ Create Comprehensive Repricing - SERV09
     [Tags]    08 Loan Repricing - Other Bank is Agent
     Mx Execute Template With Multiple Data    Create Comprehensive Repricing for Non-Agent Syndicated Deal    ${ExcelPath}   ${rowid}    SERV09_LoanRepricing
     
-Create Interest Payment - SERV22
-    [Documentation]    Need to Run Eod Here
-    ...    Commenting this for now as discussed with Ice will do changes accordingly once feedback from Travis has been received
-    [Tags]    09 Interest Payment - Other Bank is Agent
-    Mx Execute Template With Multiple Data    Initiate Interest Payment for Agency Deal    ${ExcelPath}   ${rowid}    SERV22_InterestPayments
-      
 Perform Lender Share Adjustment - AMCH02
     [Documentation]    This keyword performs lender share adjustment to a deal
     [Tags]    10 Perform Lender Share Adjustment - AMCH02 

@@ -32,8 +32,8 @@ Extend Maturity Date
     Logout from Loan IQ
     Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
     
-    #WIP - Facility Change Transaction Notebook
+    ###WIP - Facility Change Transaction Notebook###
     Release Facility Change Transaction    &{ExcelPath}[Deal_Name]
     
-    #Facility Notebook
+    ###Facility Notebook###
     Validate Facility Change Transaction    ${MaturityDate}    &{ExcelPath}[Deal_Name]    &{ExcelPath}[Facility_Name]

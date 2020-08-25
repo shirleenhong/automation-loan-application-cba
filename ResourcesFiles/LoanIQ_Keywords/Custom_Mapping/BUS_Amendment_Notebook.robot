@@ -113,8 +113,10 @@ BUS_Populate Add Transaction Window
 BUS_Add a Schedule Item
     [Documentation]    This keyword is used to run the assigned low level keyword.
     ...    @author: sahalder    25JUN2020    - initial create
+    ...    @update: clanding    20AUG2020    - added new argument
 
-    Run Keyword   Add a Schedule Item    ${ARGUMENT_1}    ${ARGUMENT_2}    ${ARGUMENT_3}    ${ARGUMENT_4}    ${ARGUMENT_5}    ${ARGUMENT_6}    ${ARGUMENT_7}    ${ARGUMENT_8}
+    Run Keyword   Add a Schedule Item    ${ARGUMENT_1}    ${ARGUMENT_2}    ${ARGUMENT_3}    ${ARGUMENT_4}    ${ARGUMENT_5}    ${ARGUMENT_6}
+    ...    ${ARGUMENT_7}    ${ARGUMENT_8}    ${ARGUMENT_9}
 
 BUS_Amendment Send to Approval
     [Documentation]    This keyword is used to run the assigned low level keyword.
