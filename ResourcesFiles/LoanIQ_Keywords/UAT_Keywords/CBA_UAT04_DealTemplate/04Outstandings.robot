@@ -30,7 +30,7 @@ Create Outstandings for Deal D00000963
     ...    ELSE IF    '&{ExcelPath}[rowid]'=='4'    Write Data To Excel    UAT04_Runbook    Loan_Alias    10    ${Loan_Alias}    ${CBAUAT_ExcelPath}
     
     ${Repricing_Frequency}    Set Variable    &{ExcelPath}[Loan_RepricingFrequency]
-    Input General Loan Drawdown Details    &{ExcelPath}[Loan_RequestedAmount]    &{ExcelPath}[Loan_EffectiveDate]    &{ExcelPath}[Loan_MaturityDate]    Loan_RepricingFrequency=${Repricing_Frequency}
+    Input General Loan Drawdown Details    &{ExcelPath}[Loan_RequestedAmount]    &{ExcelPath}[Loan_EffectiveDate]    &{ExcelPath}[Loan_MaturityDate]    sLoan_RepricingFrequency=${Repricing_Frequency}
     
     Navigate to Rates Tab
     Set Base Rate Details    &{ExcelPath}[Loan_BorrowerBaseRate]

@@ -49,27 +49,27 @@ Deal Setup
     
 Servicing Transactions - Initial Drawdown, Repricing & Partial Repayments
     Mx Execute Template With Multiple Data    Create Outstandings for Deal D00000963    ${CBAUAT_ExcelPath}    1-3    SERV01_LoanDrawdown
-    Pause Execution    ### EOD 30-Nov-2018
-    Mx Execute Template With Multiple Data    Create Repricing for Loan AA in Deal D00000963    ${CBAUAT_ExcelPath}    1    UAT04_Runbook
-    Pause Execution    ### EOD 07-Dec-2018
-    Mx Execute Template With Multiple Data    Create Payment for Ongoing Fees in Deal D00000963    ${CBAUAT_ExcelPath}    1-2    UAT04_Fees
-    Pause Execution    ### EOD 19-Dec-2018
-    Mx Execute Template With Multiple Data    Create Repricing for Loans in Deal D00000963    ${CBAUAT_ExcelPath}    5    UAT04_Runbook
-    Pause Execution    ### EOD 28-Dec-2018
-    Mx Execute Template With Multiple Data    Create Repricing for Loans in Deal D00000963    ${CBAUAT_ExcelPath}    8    UAT04_Runbook
-    Pause Execution    ### EOD 31-Dec-2018
-    Mx Execute Template With Multiple Data    Create Repricing and Partial Repayment for Loan AA    ${CBAUAT_ExcelPath}    2    UAT04_Runbook
-    Pause Execution    ### EOD 10-Jan-2019
-    Mx Execute Template With Multiple Data    Create Full Repayment for Loans in Deal D00000963    ${CBAUAT_ExcelPath}    9    UAT04_Runbook
-    Pause Execution    ### EOD 21-Jan-2019
-    Mx Execute Template With Multiple Data    Create Repricing for Loans in Deal D00000963    ${CBAUAT_ExcelPath}    6    UAT04_Runbook
-    Pause Execution    ### EOD 31-Jan-2019
-    Mx Execute Template With Multiple Data    Create Repricing and Partial Repayment for Loan AA    ${CBAUAT_ExcelPath}    3    UAT04_Runbook
-    Pause Execution    ### EOD 19-Feb-2019
-    Mx Execute Template With Multiple Data    Create Outstandings for Deal D00000963    ${CBAUAT_ExcelPath}    4    SERV01_LoanDrawdown
-    Pause Execution    ### EOD 21-Feb-2019
-    Mx Execute Template With Multiple Data    Create Repricing for Loans in Deal D00000963    ${CBAUAT_ExcelPath}    7    UAT04_Runbook
-    Pause Execution    ### EOD 28-Feb-2019
-    Mx Execute Template With Multiple Data    Create Repricing and Partial Repayment for Loan AA    ${CBAUAT_ExcelPath}    4    UAT04_Runbook
-    Mx Execute Template With Multiple Data    Create Full Repayment for Loans in Deal D00000963    ${CBAUAT_ExcelPath}    10    UAT04_Runbook
+    # Pause Execution    ### EOD 30-Nov-2018
+    # Mx Execute Template With Multiple Data    Create Repricing for Loan AA in Deal D00000963    ${CBAUAT_ExcelPath}    1    UAT04_Runbook
+    # Pause Execution    ### EOD 07-Dec-2018
+    # Mx Execute Template With Multiple Data    Create Payment for Ongoing Fees in Deal D00000963    ${CBAUAT_ExcelPath}    1-2    UAT04_Fees
+    # Pause Execution    ### EOD 19-Dec-2018
+    # Mx Execute Template With Multiple Data    Create Repricing for Loans in Deal D00000963    ${CBAUAT_ExcelPath}    5    UAT04_Runbook
+    # Pause Execution    ### EOD 28-Dec-2018
+    # Mx Execute Template With Multiple Data    Create Repricing for Loans in Deal D00000963    ${CBAUAT_ExcelPath}    8    UAT04_Runbook
+    # Pause Execution    ### EOD 31-Dec-2018
+    # Mx Execute Template With Multiple Data    Create Repricing and Partial Repayment for Loan AA    ${CBAUAT_ExcelPath}    2    UAT04_Runbook
+    # Pause Execution    ### EOD 10-Jan-2019
+    # Mx Execute Template With Multiple Data    Create Full Repayment for Loans in Deal D00000963    ${CBAUAT_ExcelPath}    9    UAT04_Runbook
+    # Pause Execution    ### EOD 21-Jan-2019
+    # Mx Execute Template With Multiple Data    Create Repricing for Loans in Deal D00000963    ${CBAUAT_ExcelPath}    6    UAT04_Runbook
+    # Pause Execution    ### EOD 31-Jan-2019
+    # Mx Execute Template With Multiple Data    Create Repricing and Partial Repayment for Loan AA    ${CBAUAT_ExcelPath}    3    UAT04_Runbook
+    # Pause Execution    ### EOD 19-Feb-2019
+    # Mx Execute Template With Multiple Data    Create Outstandings for Deal D00000963    ${CBAUAT_ExcelPath}    4    SERV01_LoanDrawdown
+    # Pause Execution    ### EOD 21-Feb-2019
+    # Mx Execute Template With Multiple Data    Create Repricing for Loans in Deal D00000963    ${CBAUAT_ExcelPath}    7    UAT04_Runbook
+    # Pause Execution    ### EOD 28-Feb-2019
+    # Mx Execute Template With Multiple Data    Create Repricing and Partial Repayment for Loan AA    ${CBAUAT_ExcelPath}    4    UAT04_Runbook
+    # Mx Execute Template With Multiple Data    Create Full Repayment for Loans in Deal D00000963    ${CBAUAT_ExcelPath}    10    UAT04_Runbook
     
