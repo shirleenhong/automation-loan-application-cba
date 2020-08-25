@@ -1,0 +1,4 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<api:executeUpdateCrossCurrency xmlns:api='http://api.ws.liq.misys.com/'>
+  <UpdateCrossCurrency version='1.0' currency='SEK' date='05-Jul-2018' fundingDesk='NY' rate='9.0553' />
+</api:executeUpdateCrossCurrency>

@@ -36,8 +36,9 @@ BUS_Populate Circle Selection
 BUS_Populate Facilities Tab
     [Documentation]    This keyword is used to run the assigned low level keyword.
     ...    @author:sahalder    19JUN2020    - initial create
+    ...    @updated: dahijara    10AUG2020    - added 1 argument for runtime varname.
 
-    Run Keyword    Populate Facilities Tab    ${ARGUMENT_1}    ${ARGUMENT_2}    ${ARGUMENT_3}    ${ARGUMENT_4}    ${ARGUMENT_5}    ${ARGUMENT_6}    ${ARGUMENT_7}
+    Run Keyword    Populate Facilities Tab    ${ARGUMENT_1}    ${ARGUMENT_2}    ${ARGUMENT_3}    ${ARGUMENT_4}    ${ARGUMENT_5}    ${ARGUMENT_6}    ${ARGUMENT_7}    ${ARGUMENT_8}
     
 BUS_Populate Amts or Dates Tab
     [Documentation]    This keyword is used to run the assigned low level keyword.

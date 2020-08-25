@@ -366,3 +366,114 @@ Initiate Interest Payment with Two Lenders
     Validate Loan Events Tab after Interest Payment
     Validate Interest Payment in Loan Accrual Tab - Paid Projected Cycle Due    &{ExcelPath}[CycleNumber]    ${Computed_LoanIntProjectedCycleDue}    
     Close All Windows on LIQ
+    
+Initiate Interest Payment with Three Lenders
+    [Documentation]    This keyword will pay Interest Fees with three Lenders on a Comprehensive Reprcing for SYNDICATED deal using PRINCIPAL
+    ...    @author: dfajardo
+
+    [Arguments]    ${ExcelPath}
+   
+    ###Facility Notebook###
+    ${SystemDate}    Get System Date
+    Navigate to Facility Notebook    &{ExcelPath}[Deal_Name]    &{ExcelPath}[Facility_Name]
+   
+    ####Outstanding Select####  
+    Navigate to Outstanding Select Window
+    
+    ###Loan Notebook####
+    Navigate to Existing Loan    &{ExcelPath}[Outstanding_Type]    &{ExcelPath}[Facility_Name]    &{ExcelPath}[Loan_Alias]
+     
+    ${Computed_LoanIntProjectedCycleDue}    Compute Interest Payment Amount Per Cycle    &{ExcelPath}[CycleNumber]
+    ${Computed_LoanIntProjectedCycleDue}    Read Data From Excel    SERV21_InterestPayments    Computed_LoanIntProjectedCycleDue    ${rowid}
+     
+    # ###Interest Payment Notebook####
+    Initiate Loan Interest Payment    &{ExcelPath}[CycleNumber]    &{ExcelPath}[Pro_Rate]  
+
+    ${Loan_InterestCycleDueDate}    Read Data From Excel    SERV21_InterestPayments    Loan_InterestCycleDueDate    ${rowid}
+    ${Loan_InterestCycleStartDate}    Read Data From Excel    SERV21_InterestPayments    Loan_InterestCycleStartDate    ${rowid}
+   
+    Validate Loan Interest Payment Details    &{ExcelPath}[Deal_Name]    &{ExcelPath}[Facility_Name]    &{ExcelPath}[Loan_Borrower]    &{ExcelPath}[Loan_Alias]    ${Loan_InterestCycleDueDate}    ${Loan_InterestCycleStartDate}
+    Input Effective Date and Requested Amount for Loan Interest Payment    ${SystemDate}    ${Computed_LoanIntProjectedCycleDue}  
+
+    ###Workflow Tab - Create Cashfows and GL Entries###
+    Navigate Notebook Workflow    ${LIQ_Payment_Window}    ${LIQ_Payment_Tab}    ${LIQ_Payment_WorkflowItems}    &{ExcelPath}[Create_Cashflow]  
+    ###Cashflow Notebook - Create Cashflows###
+    Verify if Method has Remittance Instruction    &{ExcelPath}[Borrower_ShortName]    &{ExcelPath}[Remittance_Description]    &{ExcelPath}[Remittance_Instruction]
+    Verify if Method has Remittance Instruction    &{ExcelPath}[Lender1_ShortName]    &{ExcelPath}[Remittance1_Description]    &{ExcelPath}[Remittance1_Instruction]
+    Verify if Method has Remittance Instruction    &{ExcelPath}[Lender2_ShortName]    &{ExcelPath}[Remittance2_Description]    &{ExcelPath}[Remittance2_Instruction]
+    Verify if Status is set to Do It    &{ExcelPath}[Borrower_ShortName]  
+    Verify if Status is set to Do It    &{ExcelPath}[Lender1_ShortName]
+    Verify if Status is set to Do It    &{ExcelPath}[Lender2_ShortName]
+    
+    ##Get Transaction Amount for Cashflow###
+    ${HostBankShare}    Get Host Bank Cash in Cashflow
+    ${BorrowerTranAmount}    Get Transaction Amount in Cashflow    &{ExcelPath}[Borrower_ShortName]
+    ${Lend1TranAmount}    Get Transaction Amount in Cashflow    &{ExcelPath}[Lender1_ShortName]
+    ${Lend2TranAmount}    Get Transaction Amount in Cashflow    &{ExcelPath}[Lender2_ShortName]
+    
+    ${ComputedHBTranAmount}    Compute Lender Share Transaction Amount    &{ExcelPath}[Loan_RequestedAmount]    &{ExcelPath}[HostBankSharePct]
+    ${ComputedLend1TranAmount}    Compute Lender Share Transaction Amount    &{ExcelPath}[Loan_RequestedAmount]    &{ExcelPath}[LenderSharePct1]
+    ${ComputedLend2TranAmount}    Compute Lender Share Transaction Amount    &{ExcelPath}[Loan_RequestedAmount]    &{ExcelPath}[LenderSharePct2] 
+    
+    Compare UIAmount versus Computed Amount    ${HostBankShare}|${Lend1TranAmount}|${Lend2TranAmount}    ${ComputedHBTranAmount}|${ComputedLend1TranAmount}|${ComputedLend2TranAmount}
+ 
+    ###GL Entries###
+    Navigate to GL Entries
+    ${HostBank_Debit}    Get GL Entries Amount    &{ExcelPath}[Host_Bank]    ${CREDIT_AMT_LABEL}
+    ${Lender1_Debit}    Get GL Entries Amount    &{ExcelPath}[Lender1_ShortName]    ${CREDIT_AMT_LABEL}
+    ${Lender2_Debit}    Get GL Entries Amount    &{ExcelPath}[Lender2_ShortName]    ${CREDIT_AMT_LABEL}
+    ${Borrower_Credit}    Get GL Entries Amount    &{ExcelPath}[Borrower_ShortName]    ${DEBIT_AMT_LABEL}
+    ${UITotalCreditAmt}    Get GL Entries Amount    ${SPACE}Total For:    ${CREDIT_AMT_LABEL}
+    ${UITotalDebitAmt}    Get GL Entries Amount    ${SPACE}Total For:    ${DEBIT_AMT_LABEL}
+    
+    Compare UIAmount versus Computed Amount    ${HostBankShare}|${Lend1TranAmount}|${Lend2TranAmount}    ${HostBank_Debit}|${Lender1_Debit}|${Lender2_Debit}
+    Validate if Debit and Credit Amt is Balanced    ${HostBank_Debit}|${Lender1_Debit}|${Lender2_Debit}    ${Borrower_Credit}
+    Validate if Debit and Credit Amt is equal to Transaction Amount    ${UITotalDebitAmt}    ${UITotalCreditAmt}    &{ExcelPath}[Computed_LoanIntProjectedCycleDue]
+    
+    ###Workflow Tab - Send to Approval###
+    Send Interest Payment to Approval
+   
+    ###Loan IQ Desktop###
+    Logout from Loan IQ
+    Login to Loan IQ    ${SUPERVISOR_USERNAME}    ${SUPERVISOR_PASSWORD}
+   
+    ###Work in Process - Approval###
+    Open Interest Payment Notebook via WIP - Awaiting Approval    &{ExcelPath}[WIP_TransactionType]    &{ExcelPath}[WIP_AwaitingApprovalStatus]    &{ExcelPath}[WIP_PaymentType]    &{ExcelPath}[Loan_Alias]
+    Approve Interest Payment
+  
+    # ##Worflow Tab - Generate Intent Notices###
+    Navigate to Interest Payment Intent Notices Window
+    Verify Customer Notice Method    &{ExcelPath}[Borrower_LegalName]    &{ExcelPath}[Borrower_IntenNoticeContact]    &{ExcelPath}[IntentNoticeStatus]    &{ExcelPath}[UserName_Original]    CBA Email with PDF Attachment    &{ExcelPath}[Borrower_ContactEmail]
+    Verify Customer Notice Method    &{ExcelPath}[Lender1_LegalName]    &{ExcelPath}[Lender1_IntenNoticeContact]    &{ExcelPath}[IntentNoticeStatus]    &{ExcelPath}[UserName_Original]    Email    &{ExcelPath}[Lender1_ContactEmail]
+    Verify Customer Notice Method    &{ExcelPath}[Lender2_LegalName]    &{ExcelPath}[Lender2_IntenNoticeContact]    &{ExcelPath}[IntentNoticeStatus]    &{ExcelPath}[UserName_Original]    CBA Email with PDF Attachment    &{ExcelPath}[Lender2_ContactEmail]
+    Close All Windows on LIQ
+   
+    ##Loan IQ Desktop###
+    Logout from Loan IQ
+    Login to Loan IQ    ${MANAGER_USERNAME}    ${MANAGER_PASSWORD}
+    
+    Open Interest Payment Notebook via WIP - Awaiting Release    &{ExcelPath}[WIP_TransactionType]    &{ExcelPath}[WIP_AwaitingReleaseCashflowsStatus]    &{ExcelPath}[WIP_PaymentType]    &{ExcelPath}[Loan_Alias]
+    
+    ###Cashflow Notebook - Release Cashflows###
+    Release Cashflow Based on Remittance Instruction    &{ExcelPath}[Remittance_Instruction]    &{ExcelPath}[Borrower_ShortName]    &{ExcelPath}[Cashflow_DataType]    Payment
+    Release Cashflow Based on Remittance Instruction    &{ExcelPath}[Remittance1_Instruction]    &{ExcelPath}[Lender1_ShortName]    &{ExcelPath}[Cashflow_DataType]    Payment
+    Release Cashflow Based on Remittance Instruction    &{ExcelPath}[Remittance2_Instruction]    &{ExcelPath}[Lender2_ShortName]    &{ExcelPath}[Cashflow_DataType]    Payment
+    Release Payment
+
+    
+    ##Loan IQ Desktop###
+    Logout from Loan IQ
+    Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
+    
+    ##Facility Notebook####
+    Navigate to Facility Notebook    &{ExcelPath}[Deal_Name]    &{ExcelPath}[Facility_Name] 
+
+    ####Outstanding Select####  
+    Navigate to Outstanding Select Window
+
+    
+    ###Deal Notebook
+    Search Loan    &{ExcelPath}[OutstandingSelect_Type]    &{ExcelPath}[Search_By]    &{ExcelPath}[Facility_Name]    &{ExcelPath}[Active]
+    Open Existing Inactive Loan from a Facility    &{ExcelPath}[Loan_Alias]
+   
+    

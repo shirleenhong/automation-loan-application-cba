@@ -1,5 +1,5 @@
 *** Settings ***
-Resource    ../../Configurations/Import_File.robot
+Resource    ../../Configurations/LoanIQ_Import_File.robot
 # Suite Setup    Launch LoanIQ Application    ${LoanIQPath}
 # Suite Teardown    Close Application Via CMD   ${LoanIQ}
 # Test Setup    Fail if Previous Test Case Failed

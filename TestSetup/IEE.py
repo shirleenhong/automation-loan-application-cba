@@ -1,8 +1,8 @@
 ### Dataset Locations ###
 APIDataSet = "C:\\Git_Evergreen\\fms_scotia\DataSet\\Integration_DataSet\\API\\API_Data_Set.xlsx"
-ExcelPath = "C:\\Git_Evergreen\\fms_cba\\DataSet\\Integration_DataSet\\TL\\TL_Data_Set_AU.xlsx"
+ExcelPath = "C:\\Git_Evergreen\\fms_cba\DataSet\\LoanIQ_DataSet\\EVG_PTYLIQ01_BaselineBilateralCustomer.xlsx"
 dataset_path = "C:\\Git_Evergreen\\fms_cba"
-CBAUAT_ExcelPath = "C:\\Git_Evergreen\\fms_cba\\DataSet\\CBAUATDeal_DataSet\\EVG_CBAUAT03.xlsx"
+CBAUAT_ExcelPath = "C:\\Git_Evergreen\\fms_cba\\DataSet\\CBAUATDeal_DataSet\\EVG_CBAUAT05.xlsx"
 TL_DATASET = "C:\\Git_Evergreen\\evergreen_projects\\CBA_Evergreen\\DataSet\\TL_DataSet\\TL_Data_Set.xls"
 SAPWUL_DATASET = "C:\\Git_evergreen\\evergreen_projects\\CBA_Evergreen\\DataSet\\Downstream_DataSet\\SAPWUL\\SAPWUL_Data_Set.xlsx"
 ComSeeDataSet = 'C:\\Git_Evergreen\\evergreen_projects\\CBA_Evergreen\\DataSet\\Downstream_DataSet\\ComSee\\COMSEE_Data_Set.xls'
@@ -45,12 +45,12 @@ MDM_FFC_Password = 'admin'
 ### TL Credentials ###
 TL_USERNAME = "JCUSR01"
 TL_PASSWORD = "password"
-INPUTTER_USERNAME = "RPTINP01"
-INPUTTER_PASSWORD = "password01"
-SUPERVISOR_USERNAME = "RPTSUP01"
-SUPERVISOR_PASSWORD = "password01"
-MANAGER_USERNAME = "RPTMGR01"
-MANAGER_PASSWORD = "password01"
+INPUTTER_USERNAME = "INPAMT01"
+INPUTTER_PASSWORD = "password"
+SUPERVISOR_USERNAME = "SUPAMT01"
+SUPERVISOR_PASSWORD = "password"
+MANAGER_USERNAME = "MGRAMT01"
+MANAGER_PASSWORD = "password"
 
 SSO_USERLINK = "mancsleverg0028"
 SSO_PORT = "8080"
@@ -72,7 +72,7 @@ PARTY_SERVER = 'mancsleverg0031:7080'
 PARTY_URL = 'mancsleverg0031:7080/uxp/rt/html/login.html'
 
 ###Party Credential###
-PARTY_USERNAME = 'ritragel'
+PARTY_USERNAME = 'amipac'
 PARTY_PASSWORD = 'password'
 
 TL_SERVICE_HOST = "mancsleverg0007"
