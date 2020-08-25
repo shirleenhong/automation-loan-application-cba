@@ -172,10 +172,14 @@ FAC_INTPRICING_FIXRATEOPT_SPREADVALUE = 1
 PAYMENTS_TRANSACTION = "Payments"
 OUTSTANDINGS_TRANSACTION = "Outstandings"
 FACILITIES_TRANSACTION = "Facilities"
+CIRCLES_TRANSACTION = "Circles"
+FACILITY_CHANGE_TRANSACTION = "Facility Change Transaction"
 AWAITING_APPROVAL_STATUS = "Awaiting Approval"
 AWAITING_RELEASE_STATUS = "Awaiting Release"
 SEND_TO_APPROVAL_STATUS = "Send to Approval"
 RATE_APPROVAL_STATUS = "Rate Approval"
+AWAITING_SETTLEMENT_APPROVAL_STATUS = "Awaiting Settlement Approval"
+SETTLEMENT_APPROVAL_STATUS = "Settlement Approval"
 APPROVAL_STATUS = "Approval"
 RELEASE_STATUS = "Release"
 RELEASED_STATUS = "Released"
@@ -196,6 +200,7 @@ LOAN_INITIAL_DRAWDOWN_TYPE = "Loan Initial Drawdown"
 RATE_APPROVAL_TRANSACTION = "Rate Approval"
 LOAN_REPRICING_FOR_THE_DEAL = "Loan Repricing for the Deal"
 LOAN_REPRICING = "Loan Repricing"
+AWAITING_FUNDING_MEMO_STATUS = "Awaiting Funding Memo"
 
 ### Bank Role ###
 REFERENCE_BANK_ROLE = "Reference Bank"
@@ -217,6 +222,8 @@ PRICING_RULES_TAB = "Pricing Rules"
 WORKFLOW_TAB = "Workflow"
 GENERAL_TAB = "General"
 RATES_TAB = "Rates"
+FACILITIES_TAB = "Facilities"
+CONTACTS_TAB = "Contacts"
 
 ### Payment Type ###
 FEE_PAYMENT_FROM_BORROWER_TYPE = "Fee Payment From Borrower"
@@ -228,6 +235,11 @@ ADMIN_FEE_PAYMENT_TITLE = "Admin Fee Payment"
 
 ### Workflow ###
 PAYMENT_WORKFLOW = "Payment"
+CIRCLING_WORKFLOW = "Circling"
+COMPLETE_PORTFOLIO_ALLOCATIONS_WORKFLOW = "Complete Portfolio Allocations"
+FUNDING_MEMO_WORKFLOW = "Funding Memo"
+SEND_TO_SETTLEMENT_APPROVAL_WORKFLOW = "Send to Settlement Approval"
+CLOSE_WORKFLOW = "Close"
 
 ### Loan Acrrue ###
 TO_THE_ACTUAL_DUE_DATE = "to the actual due date"
@@ -237,3 +249,9 @@ INTEREST_PAYMENT_REQUESTED_AMOUNT = "InterestPaymentRequestedAmount"
 NEW_LOAN_ALIAS = "NewLoanAlias"
 ROLLOVER_CONVERSION_TO_NEW = "Rollover/Conversion To New"
 INTEREST_PAYMENT = "Interest Payment"
+
+### Other ###
+SHORT_NAME = "Short Name"
+HOST_BANK = "Host Bank"
+ASSIGNMENT = "Assignment"
+MATURITY_DATE = "Maturity Date"
