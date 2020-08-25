@@ -22,14 +22,14 @@ ${rowid}    1
 Setup Deal
     [Tags]    03 Deal Setup - CRED01
     Mx Execute Template With Multiple Data    Setup Deal D00001053    ${CBAUAT_ExcelPath}    1    CRED01_DealSetup
-    Mx Execute Template With Multiple Data    Setup Facility Template D00001053    ${CBAUAT_ExcelPath}    1    CRED02_FacilitySetup
-    Mx Execute Template With Multiple Data    Setup Facility Fees D00001053    ${CBAUAT_ExcelPath}    1    CRED08_FacilityFeeSetup
-    Mx Execute Template With Multiple Data    Setup Facility Template D00001053    ${CBAUAT_ExcelPath}    2    CRED02_FacilitySetup
-    Mx Execute Template With Multiple Data    Setup Facility Fees D00001053    ${CBAUAT_ExcelPath}    2    CRED08_FacilityFeeSetup
-    Mx Execute Template With Multiple Data    Setup Facility Template D00001053    ${CBAUAT_ExcelPath}    3    CRED02_FacilitySetup
-    Mx Execute Template With Multiple Data    Setup Facility Fees D00001053    ${CBAUAT_ExcelPath}    3    CRED08_FacilityFeeSetup
-    Mx Execute Template With Multiple Data    Setup Primaries for Deal D00001053    ${CBAUAT_ExcelPath}    1    CRED01_DealSetup
-    Mx Execute Template With Multiple Data    Approve and Close UAT Deal    ${CBAUAT_ExcelPath}    1    CRED01_DealSetup
+    # Mx Execute Template With Multiple Data    Setup Facility Template D00001053    ${CBAUAT_ExcelPath}    1    CRED02_FacilitySetup
+    # Mx Execute Template With Multiple Data    Setup Facility Fees D00001053    ${CBAUAT_ExcelPath}    1    CRED08_FacilityFeeSetup
+    # Mx Execute Template With Multiple Data    Setup Facility Template D00001053    ${CBAUAT_ExcelPath}    2    CRED02_FacilitySetup
+    # Mx Execute Template With Multiple Data    Setup Facility Fees D00001053    ${CBAUAT_ExcelPath}    2    CRED08_FacilityFeeSetup
+    # Mx Execute Template With Multiple Data    Setup Facility Template D00001053    ${CBAUAT_ExcelPath}    3    CRED02_FacilitySetup
+    # Mx Execute Template With Multiple Data    Setup Facility Fees D00001053    ${CBAUAT_ExcelPath}    3    CRED08_FacilityFeeSetup
+    # Mx Execute Template With Multiple Data    Setup Primaries for Deal D00001053    ${CBAUAT_ExcelPath}    1    CRED01_DealSetup
+    # Mx Execute Template With Multiple Data    Approve and Close UAT Deal    ${CBAUAT_ExcelPath}    1    CRED01_DealSetup
     
 # Create Outstandings
     # Mx Execute Template With Multiple Data    Setup Deal D00001053 Outstandings    ${CBAUAT_ExcelPath}    1-3    SERV01_LoanDrawdown

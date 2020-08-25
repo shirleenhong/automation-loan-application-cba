@@ -27,7 +27,7 @@ Setup Deal D00001053
     Unrestrict Deal
     
     ### Summary Tab ###
-    Set Deal Borrower    ${Borrower_ShortName}    ${Borrower_Location}
+    Set Deal Borrower for UAT Deal    ${Borrower_ShortName}    ${Borrower_Location}
     Set Deal Borrower Servicing Group    &{ExcelPath}[Borrower_SG_Alias]    &{ExcelPath}[Borrower_SG_Name]    &{ExcelPath}[Borrower_ContactName]    &{ExcelPath}[Borrower_PreferredRIMthd1]
     Go To Deal Borrower Preferred RI Window
     Mark All Preferred Remittance Instruction
