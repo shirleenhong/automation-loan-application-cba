@@ -144,6 +144,7 @@ Populate the Fields in Facility Notebook - Summary Tab
     ...    @author: mgaling
     ...    @update: sahalder    25JUN2020    Added keyword pre-processing steps
     ...    @update: clanding    30JUL2020    Fixed tabbing; updated hard coded values to global variables; removed writing of dataset; refactor keyword name
+    ...    @update: clanding    20AUG2020    Added Portfolio in argument
     [Arguments]    ${sMSG_Customer}    ${sFacility_AgreementDate}    ${sExpiry_Date}    ${sFinalmaturity_Date}    
     
     ### GetRuntime Keyword Pre-processing ###
@@ -160,9 +161,12 @@ Populate the Fields in Facility Notebook - Summary Tab
 
     mx LoanIQ select list    ${LIQ_MainCustomer_Customer_List}    ${MSG_Customer}    
 
-    mx LoanIQ click    ${LIQ_MainCustomer_SG_Button} 
-    mx LoanIQ click    ${LIQ_ServicingGroup_OK_Button} 
+    mx LoanIQ click    ${LIQ_MainCustomer_SG_Button}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/MainCustomer_SG
+    mx LoanIQ click    ${LIQ_ServicingGroup_OK_Button}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/MainCustomer_SG
     mx LoanIQ click    ${LIQ_MainCustomer_OK_Button}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/MainCustomer_SG
     
     mx LoanIQ enter    ${LIQ_FacilitySummary_AgreementDate_Datefield}    ${Facility_AgreementDate}
     mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}         
@@ -170,6 +174,7 @@ Populate the Fields in Facility Notebook - Summary Tab
     mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
     mx LoanIQ enter    ${LIQ_FacilitySummary_FinalMaturityDate_Datefield}    ${Finalmaturity_Date}
     mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/FacilityNotebook
     
 Validate the Entered Values in Facility Notebook - Summary Tab
      [Documentation]    This keywod validates if the entered data in Amendment List- General Tab Window are matched with the data in Test Data sheet.
@@ -395,7 +400,9 @@ Add a Schedule Item
     ...    @update: ritragel    1MAY2019    Updated as per scripting standards
     ...    @update: sahalder    25JUN2020    Added keyword pre-processing steps
     ...    @update: clanding    30JUL2020    Updated hard coded values; added Run Keyword And Continue On Failure on FAIL
-    [Arguments]    ${sNewTran_Amount}    ${sNewTran_PercentofCurrentBal}    ${sSchedule_Date}    ${sCurrent_Schedule}    ${sDeal_Name}    ${sMSG_Customer}    ${sPortfolio_Expense}    ${sPercentOfDeal_HB}   
+    ...    @update: clanding    20AUG2020    Added optional argument Portfolio
+    [Arguments]    ${sNewTran_Amount}    ${sNewTran_PercentofCurrentBal}    ${sSchedule_Date}    ${sCurrent_Schedule}    ${sDeal_Name}    ${sMSG_Customer}    ${sPortfolio_Expense}    ${sPercentOfDeal_HB}
+    ...    ${sPortfolio}=None   
     
     ### GetRuntime Keyword Pre-processing ###
 	${NewTran_Amount}    Acquire Argument Value    ${sNewTran_Amount}
@@ -405,7 +412,8 @@ Add a Schedule Item
 	${Deal_Name}    Acquire Argument Value    ${sDeal_Name}
 	${MSG_Customer}    Acquire Argument Value    ${sMSG_Customer}
 	${Portfolio_Expense}    Acquire Argument Value    ${sPortfolio_Expense}
-	${PercentOfDeal_HB}    Acquire Argument Value    ${sPercentOfDeal_HB}  
+	${PercentOfDeal_HB}    Acquire Argument Value    ${sPercentOfDeal_HB}
+	${Portfolio}    Acquire Argument Value    ${sPortfolio}
     
     mx LoanIQ activate    ${LIQ_AMD_AmortizationSchedforFacility_Window}    
     Run Keyword and Continue on Failure    Mx LoanIQ Verify Object Exist    ${LIQ_AMD_AmortizationSchedforFacility_Window}    VerificationData="Yes"
@@ -440,16 +448,18 @@ Add a Schedule Item
     Validate the Facility Add/Unscheduled Commitment Increase/Awaiting Approval Window - General Tab    ${Deal_Name}         
   
    ${status}    Run Keyword And Return Status    Mx LoanIQ Select String    ${LIQ_HostBankShares_LE}    ${MSG_Customer}          
-    Run Keyword If    ${status}==True    Mx LoanIQ DoubleClick    ${LIQ_HostBankShares_LE}    ${MSG_Customer} 
+    Run Keyword If    ${status}==${True}    Mx LoanIQ DoubleClick    ${LIQ_HostBankShares_LE}    ${MSG_Customer} 
     ...    ELSE    Run Keyword And Continue On Failure    Fail    Customers is not available   
   
     mx LoanIQ click    ${LIQ_HostBankShare_AddPortfolioExpenseCode_Button}
     mx LoanIQ activate    ${LIQ_PortfolioSelect_Window}
     
-   ${status}    Run Keyword And Return Status    Mx LoanIQ Select String    ${LIQ_PortfolioSelect_PotfolioExpenseCode}    ${Portfolio_Expense}         
-    Run Keyword If    ${status}==True    Mx LoanIQ Select Or Doubleclick In Tree By Text    ${LIQ_PortfolioSelect_PotfolioExpenseCode}    ${Portfolio_Expense}%s
+    ${status}    Run Keyword If    '${Portfolio}'=='None'    Run Keyword And Return Status    Mx LoanIQ Select String    ${LIQ_PortfolioSelect_PotfolioExpenseCode}    ${Portfolio_Expense}
+    ...    ELSE    Run Keyword And Return Status    Mx LoanIQ Select Or Doubleclick In Tree By Text    ${LIQ_PortfolioSelect_PotfolioExpenseCode}    ${Portfolio}\t${Portfolio_Expense}%s
+    Run Keyword If    ${status}==${True} and '${Portfolio}'=='None'    Run Keywords    Mx LoanIQ Select Or Doubleclick In Tree By Text    ${LIQ_PortfolioSelect_PotfolioExpenseCode}    ${Portfolio_Expense}%s
+    ...    AND    mx LoanIQ click    ${LIQ_PortfolioSelect_OK_Button}
+    ...    ELSE IF    ${status}==${True} and '${Portfolio}'!='None'    Mx LoanIQ DoubleClick    ${LIQ_PortfolioSelect_PotfolioExpenseCode}    ${Portfolio}\t${Portfolio_Expense}
     ...    ELSE    Run Keyword And Continue On Failure    Fail    Portfolio Expense is not available
-    mx LoanIQ click    ${LIQ_PortfolioSelect_OK_Button}    
 
     ${Actual_Amount}    Evaluate    (${NewTran_Amount})*(${PercentOfDeal_HB})
     ${Actual_Amount}    Convert To Integer    ${Actual_Amount}
