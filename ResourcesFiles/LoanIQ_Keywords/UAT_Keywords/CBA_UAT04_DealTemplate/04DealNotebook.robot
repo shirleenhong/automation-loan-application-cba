@@ -45,8 +45,6 @@ Setup Deal D00000963
     Enter Agreement Date and Proposed Commitment Amount    &{ExcelPath}[Deal_AgreementDate]    &{ExcelPath}[Deal_ProposedCmt]
     Set Deal as Sole Lender
     Save Changes on Deal Notebook
-
-    Take Screenshot    DealNotebook-SummaryTab
     
     ### Personnel Tab ###
     Enter Department on Personel Tab    &{ExcelPath}[Deal_DepartmentCode]    &{ExcelPath}[Deal_Department]
@@ -69,12 +67,10 @@ Setup Deal D00000963
     Tick Interest Due Upon Repciring Checkbox
     Tick Interest Due Upon Principal Payment Checkbox
     Set Pricing Option Intent Notice Details    &{ExcelPath}[IntentNotice_DaysInAdvance]    &{ExcelPath}[IntentNotice_Time]    &{ExcelPath}[IntentNotice_AMPM]
-    Take Screenshot    PricingOption_BBSY
     Click OK In Interest Pricing Option Details Window
     Validate Added Deal Pricing Option    &{ExcelPath}[Deal_PricingOption]
     
     Add Fee Pricing Rules    &{ExcelPath}[PricingRule_Fee]    &{ExcelPath}[PricingRule_MatrixChangeAppMthd]    &{ExcelPath}[PricingRule_NonBussDayRule]
-    Take Screenshot    DealNotebook-PricingRulesTab
     
     
 Setup Primaries for Deal D00000963
@@ -92,14 +88,12 @@ Setup Primaries for Deal D00000963
     Set Sell Amount and Percent of Deal    &{ExcelPath}[Primary_PctOfDeal]
     Add Pro Rate    &{ExcelPath}[Primary_BuySellPrice]
     Verify Buy/Sell Price in Circle Notebook
-    Take Screenshot    CircleNotebook-FacilitiesTab
     Add Contact in Primary    &{ExcelPath}[Primary_Contact]
     
     ### Primary Servicing Group Remittance Instruction validation.
     Open Primary Servicing Groups
     Validate Primary SG Remittance Instructions    &{ExcelPath}[Primary_SGRIMethod]
     Complete Primary Servicing Group Setup
-    Take Screenshot    CircleNotebook-ContactsTab
     
     ### Get Sell Amount Data and store to Excel for Portfolio Allocation    
     ${SellAmount1}    Get Circle Notebook Sell Amount Per Facility    ${Facility_Name1}
@@ -115,13 +109,11 @@ Setup Primaries for Deal D00000963
     Click Portfolio Allocations from Circle Notebook
     Circle Notebook Portfolio Allocation Per Facility    ${Facility_Name1}    &{ExcelPath}[Primary_Portfolio]    &{ExcelPath}[Primary_PortfolioBranch]    ${SellAmount1}    ${Facility_Expiry1}    &{ExcelPath}[Primary_RiskBookExpCode]    ${ExpCode_Description}
     Circle Notebook Portfolio Allocation Per Facility    ${Facility_Name2}    &{ExcelPath}[Primary_Portfolio]    &{ExcelPath}[Primary_PortfolioBranch]    ${SellAmount2}    ${Facility_Expiry2}    &{ExcelPath}[Primary_RiskBookExpCode]    ${ExpCode_Description}
-    Take Screenshot    CircleNotebook-PortfolioAllocation
     Complete Circle Notebook Portfolio Allocation
     
     ### Workflow Tab - Circling and Sending to Settlement Approval
     Circling for Primary Workflow    &{ExcelPath}[Primary_CircledDate]
     Circle Notebook Save And Exit
-    Take Screenshot    Deal-PrimariesList
     Exit Primaries List Window
     
     
