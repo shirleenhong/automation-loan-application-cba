@@ -1171,7 +1171,8 @@ Set Pricing Option Intent Notice Details
     mx LoanIQ enter    ${LIQ_InterestPricingOption_IntentNoticeDaysInAdvance_Textfield}    ${sIntentNotice_DaysInAdvance}
     mx LoanIQ enter    ${LIQ_InterestPricingOption_IntentNoticeTimeInAdvance_Textfield}    ${sIntentNotice_Time}
     Mx LoanIQ Set    JavaWindow("title:=Interest Pricing Option.*").JavaRadioButton("labeled_containers_path:=.*Intent Notice.*","attached text:=${sIntentNotice_AMPM}")    ON
-
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/DealNotebook_NoticeDetails
+    
 Set Interest Pricing Option Amounts And Multiples
     [Documentation]    This keyword adds data to the 'Amounts' and 'Multiples' fields in the Interest Pricing Option Details window.
     ...                @author: bernchua    04JUL2019    Initial create
@@ -2880,3 +2881,4 @@ Get Financial Ratio Type Effective Date and Return
     
     Save Values of Runtime Execution on Excel File    ${sRuntime_Variable_EffectiveDate}    ${EffectiveDate}
     [Return]    ${EffectiveDate} 
+    
