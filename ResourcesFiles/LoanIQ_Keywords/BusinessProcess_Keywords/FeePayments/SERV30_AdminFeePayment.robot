@@ -6,6 +6,7 @@ Admin Fee Payment
     [Documentation]    This keyword makes an Admin/Agency Fee Payment.
     ...    @author: bernchua
     ...    @update: ritragel    21MAR2019    Updated to conform to our scripting standards
+    ...    @update: dfajardo    25AUG2020    Removed hard coded values and updated scripts
     [Arguments]    ${ExcelPath}
     
     Close All Windows on LIQ
@@ -18,8 +19,8 @@ Admin Fee Payment
     Verify Admin Fee Status    &{ExcelPath}[Deal_Name]    &{ExcelPath}[AdminFee_Alias]    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}    ${SUPERVISOR_USERNAME}    ${SUPERVISOR_PASSWORD}
     
     ${SysDate}    Get System Date
-    ${FromDate}    Subtract Days to Date    ${SysDate}    90
-    ${ThruDate}    Add Days to Date    ${SysDate}    15
+    ${FromDate}    Subtract Days to Date    ${SysDate}    &{ExcelPath}[Subtract_Days]
+    ${ThruDate}    Add Days to Date    ${SysDate}    &{ExcelPath}[Add_Days]
     
  	Run Keyword If    "${SCENARIO}"=="2"    Write Data To Excel    SERV21_InterestPayments    ScheduledActivity_FromDate    ${rowid}    ${FromDate}
     Run Keyword If    "${SCENARIO}"=="2"    Write Data To Excel    SERV21_InterestPayments    ScheduledActivity_ThruDate    ${rowid}    ${ThruDate}  
@@ -28,47 +29,68 @@ Admin Fee Payment
     Open Deal Scheduled Activity Report    &{ExcelPath}[Deal_Name]    ${FromDate}    ${ThruDate}
     
     ###Open the transaction in the Scheduled Activity Report###
-    Open Transaction In Scheduled Activity Report    &{ExcelPath}[Deal_Name]    &{ExcelPath}[AdminFee_DueDate]    Adm Fee (Amort)
+    Open Transaction In Scheduled Activity Report    &{ExcelPath}[Deal_Name]    &{ExcelPath}[AdminFee_DueDate]    ${ADMIN_FEE_AMORT}
     
     ###Initiate the Admin Fee Payment by entering the required fields###
     ${AdminFeePayment_EffectiveDate}    Get System Date
     Write Data To Excel    SERV30_AdminFeePayment    AdminFeePayment_EffectiveDate    ${rowid}    ${AdminFeePayment_EffectiveDate}
     Create Admin Fee Payment    &{ExcelPath}[Deal_Name]    ${AdminFeePayment_EffectiveDate}    &{ExcelPath}[AdminFeePayment_Comment]
     
-    ###Cashflows for the Admin Fee Payment###
-    Navigate Notebook Workflow    ${LIQ_AdminFeePayment_Window}    ${LIQ_AdminFeePayment_Tab}    ${LIQ_AdminFeePayment_Workflow_Tree}    Create Cashflows
-    Verify if Method has Remittance Instruction    &{ExcelPath}[Borrower_ShortName]    &{ExcelPath}[Remittance_Description]    &{ExcelPath}[Remittance_Instruction]
-    Create Cashflow    &{ExcelPath}[Borrower_ShortName]    release
+    ### Create cashflows and verifying the remittance details
+    Navigate Notebook Workflow for Admin Fee Payment    ${CREATE_CASHFLOWS_TYPE}
+    Verify if Method has Remittance Instruction    &{ExcelPath}[Borrower_ShortName]    &{ExcelPath}[Borrower_RTGSRemittanceDescription]    &{ExcelPath}[Borrower_RemittanceInstruction]
+    Verify if Status is set to Do It    &{ExcelPath}[Borrower_ShortName]
+ 
+    ##Get Transaction Amount for Cashflow###
+    ${HostBankShare}    Get Host Bank Cash in Cashflow
+    ${BorrowerTranAmount}    Get Transaction Amount in Cashflow    &{ExcelPath}[Borrower_ShortName]  
     
-    ##Generate Intent Notices for the Admin Fee Payment###
-    Navigate Notebook Workflow    ${LIQ_AdminFeePayment_Window}    ${LIQ_AdminFeePayment_Tab}    ${LIQ_AdminFeePayment_Workflow_Tree}    Generate Intent Notices
-    Generate Intent Notices    &{ExcelPath}[Customer_LegalName]
+    ${ComputedHBTranAmount}    Compute Lender Share Transaction Amount    &{ExcelPath}[Admin_FeeAmount]    &{ExcelPath}[HostBankSharePct] 
 
-    Verify Customer Notice Method    &{ExcelPath}[Customer_LegalName]    &{ExcelPath}[Borrower_IntenNoticeContact]    &{ExcelPath}[IntentNoticeStatus]    ${INPUTTER_USERNAME}    Email    &{ExcelPath}[Borrower_ContactEmail]
-    mx LoanIQ click    ${LIQ_NoticeGroup_Exit_Button}
+    Compare UIAmount versus Computed Amount    ${HostBankShare}    ${ComputedHBTranAmount}
     
-    mx LoanIQ activate    ${LIQ_AdminFeePayment_Window}
-    Mx LoanIQ Select Window Tab    ${LIQ_AdminFeePayment_Tab}    Workflow
-    Mx LoanIQ Select Or DoubleClick In Javatree    ${LIQ_AdminFeePayment_Workflow_Tree}    Create Cashflow%d
+    ###GL Entries###
+    Navigate to GL Entries
+    ${HostBank_Debit}    Get GL Entries Amount    &{ExcelPath}[Borrower_ShortName]    ${DEBIT_AMT_LABEL}
+    ${Borrower_Credit}    Get GL Entries Amount    &{ExcelPath}[Host_Bank]    ${CREDIT_AMT_LABEL}
+    ${UITotalCreditAmt}    Get GL Entries Amount    ${SPACE}Total For:    ${CREDIT_AMT_LABEL}
+    ${UITotalDebitAmt}    Get GL Entries Amount    ${SPACE}Total For:    ${DEBIT_AMT_LABEL}
+    
+    Compare UIAmount versus Computed Amount    ${HostBankShare}    ${HostBank_Debit}
+    Validate if Debit and Credit Amt is Balanced    ${HostBank_Debit}    ${Borrower_Credit}
+    Validate if Debit and Credit Amt is equal to Transaction Amount    ${UITotalDebitAmt}    ${UITotalCreditAmt}    &{ExcelPath}[Admin_FeeAmount]
+
+ 
+    Close GL Entries and Cashflow Window
     
     ###Send Admin Fee Payment to Approval###
-    Navigate Notebook Workflow    ${LIQ_AdminFeePayment_Window}    ${LIQ_AdminFeePayment_Tab}    ${LIQ_AdminFeePayment_Workflow_Tree}    Send to Approval
-    Validate Window Title Status    Admin Fee Payment    Awaiting Approval
+    Navigate Notebook Workflow    ${LIQ_AdminFeePayment_Window}    ${LIQ_AdminFeePayment_Tab}    ${LIQ_AdminFeePayment_Workflow_Tree}    ${SEND_TO_APPROVAL_STATUS}
+
+      ### Approve Admin Fee Payment###
+    Logout from Loan IQ
+    Login to Loan IQ    ${SUPERVISOR_USERNAME}    ${SUPERVISOR_PASSWORD}    
+    Navigate Transaction in WIP    ${PAYMENTS_TRANSACTION}    ${AWAITING_APPROVAL_STATUS}    ${AMORTIZING_ADMIN_FEE_PAYMENT_TYPE}    &{ExcelPath}[Deal_Name]
+    Navigate Notebook Workflow    ${LIQ_AdminFeePayment_Window}    ${LIQ_AdminFeePayment_Tab}    ${LIQ_AdminFeePayment_Workflow_Tree}    ${APPROVAL_STATUS}
     
+    ##Generate Intent Notices for the Admin Fee Payment###
+    Navigate Notebook Workflow    ${LIQ_AdminFeePayment_Window}    ${LIQ_AdminFeePayment_Tab}    ${LIQ_AdminFeePayment_Workflow_Tree}    ${GENERATE_INTENT_NOTICES} 
+    Generate Intent Notices    &{ExcelPath}[Customer_LegalName]
+
+    Verify Customer Notice Method    &{ExcelPath}[Customer_LegalName]    &{ExcelPath}[Borrower_IntenNoticeContact]    &{ExcelPath}[IntentNoticeStatus]    &{ExcelPath}[User]     ${CBA_EMAIL_PDF_METHOD}    &{ExcelPath}[Borrower_ContactEmail]
+    Close All Windows on LIQ
+
+
     ### Approve Admin Fee Payment###
     Logout from Loan IQ
     Login to Loan IQ    ${MANAGER_USERNAME}    ${MANAGER_PASSWORD}
-    Navigate Transaction in WIP    Payments    Awaiting Approval    Amortizing Admin Fee Payment    &{ExcelPath}[Deal_Name]
-    Navigate Notebook Workflow    ${LIQ_AdminFeePayment_Window}    ${LIQ_AdminFeePayment_Tab}    ${LIQ_AdminFeePayment_Workflow_Tree}    Approval
-    Validate Window Title Status    Admin Fee Payment    Awaiting Release
+    Navigate Transaction in WIP    ${PAYMENTS_TRANSACTION}    ${AWAITING_RELEASE_STATUS}    ${AMORTIZING_ADMIN_FEE_PAYMENT_TYPE}    &{ExcelPath}[Deal_Name]
     
     ###Release cashflow###
-    Navigate Notebook Workflow    ${LIQ_AdminFeePayment_Window}    ${LIQ_AdminFeePayment_Tab}    ${LIQ_AdminFeePayment_Workflow_Tree}    Release Cashflows
-    Release Cashflow    &{ExcelPath}[Borrower_ShortName]    release
+    Navigate Notebook Workflow    ${LIQ_AdminFeePayment_Window}    ${LIQ_AdminFeePayment_Tab}    ${LIQ_AdminFeePayment_Workflow_Tree}    ${RELEASE_CASHFLOWS_TYPE}
+    Release Cashflow    &{ExcelPath}[Borrower_ShortName]    ${RELEASE_STATUS}
     
     ###Release Admin Fee Payment###
-    Navigate Notebook Workflow    ${LIQ_AdminFeePayment_Window}    ${LIQ_AdminFeePayment_Tab}    ${LIQ_AdminFeePayment_Workflow_Tree}    Release
-    Validate Window Title Status    Admin Fee Payment    Released
+    Navigate Notebook Workflow    ${LIQ_AdminFeePayment_Window}    ${LIQ_AdminFeePayment_Tab}    ${LIQ_AdminFeePayment_Workflow_Tree}    ${RELEASE_STATUS}
     
     ###Close all other LIQ windows except for the main LIQ window###
     Close All Windows on LIQ
