@@ -2879,25 +2879,3 @@ Get Financial Ratio Type Effective Date and Return
     Save Values of Runtime Execution on Excel File    ${sRuntime_Variable_EffectiveDate}    ${EffectiveDate}
     [Return]    ${EffectiveDate} 
     
-Set Deal Borrower for UAT Deal
-    [Documentation]    This keyword add a Borrower to a Deal for UAT - modified window title
-    ...    @author: rmendoza
-    [Arguments]    ${sBorrower_Name}    ${sBorrower_Location}
-
-    ### GetRuntime Keyword Pre-processing ###
-    ${Borrower_Name}    Acquire Argument Value    ${sBorrower_Name}
-    ${Borrower_Location}    Acquire Argument Value    ${sBorrower_Location}
-
-    Mx LoanIQ Select Window Tab    ${LIQ_DealNotebook_Tab}    Summary   
-    mx LoanIQ click element if present    ${LIQ_InquiryMode_Button}
-    mx LoanIQ click    ${LIQ_DealSummary_Add_Button}
-    Validate Add Deal Borrower Select
-    mx LoanIQ enter    ${LIQ_DealBorrowerSelect_ShortName_TextField}    ${Borrower_Name}
-    mx LoanIQ click    ${LIQ_DealBorrowerSelect_Ok_Button}    
-    ${Location}    Mx LoanIQ Get Data    ${LIQ_DealBorrower_Location_List}    value%location
-    Run Keyword If    '${Location}'=='${EMPTY}'    Mx LoanIQ Select Combo Box Value    ${LIQ_DealBorrower_Location_List}    ${Borrower_Location}
-    ${ConvertedBorrowerName}    Convert To UpperCase    ${Borrower_Name}
-    mx LoanIQ activate Window    JavaWindow("title:=Deal Borrower - ").JavaStaticText("text:=${ConvertedBorrowerName}")
-    Run Keyword And Continue On Failure    Mx LoanIQ Verify Object Exist    JavaWindow("title:=Deal Borrower - ${ConvertedBorrowerName}")    VerificationData="Yes"
-
-    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/DealNotebook_Borrower
