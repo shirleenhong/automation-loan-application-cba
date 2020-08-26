@@ -270,6 +270,7 @@ Compare Two Arguments
     ...    @update: gerhabal    09SEP2019    - added condition to strip string to value from UI to remove space before comparing    
     [Arguments]    ${value_from_sheet}    ${value_from_ui}
     
+    Wait Until Page Contains Element    ${value_from_ui}    
     ${value_from_ui}    Get Value    ${value_from_ui}
     ${value_from_ui}    Strip String    ${value_from_ui}
     Log    ${value_from_ui}
@@ -1766,8 +1767,8 @@ Write Data To All Column Rows
     [Arguments]    ${sSheetName}    ${sColumnName}    ${sData}
 
     ${ColumnHeader_Index}    Get Index of a Column Header Value    ${sSheetName}    ${sColumnName}
-    ${Row_Count_Total}    Read Excel Column    ${ColumnHeader_Index}    0    ${sSheetName}
-    Write Excel Column    ${ColumnHeader_Index}    ${Row_Count_Total}    ${sData}    1    ${sSheetName}
+    ${Row_Count_Total}    Read Excel Column    ${ColumnHeader_Index}    0    ${sSheetName}       
+    Write Excel Column    ${ColumnHeader_Index}    ${Row_Count_Total}    ${sData}    1    ${sSheetName}       
 
 Write Data To Cell
     [Documentation]    This keyword will be used for writing data to single excel cell.
