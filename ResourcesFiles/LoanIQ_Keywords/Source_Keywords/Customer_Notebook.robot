@@ -426,7 +426,7 @@ Add Location under Profiles Tab
     Run Keyword If    '${Customer_Location}' != 'None'    Mx LoanIQ Enter    ${LIQ_SelectLocation_SearchByDescription}    ${Customer_Location}   
     Run Keyword If    '${Customer_Location}' != 'None'    Mx LoanIQ Click    ${LIQ_SelectLocation_OKButton}
     Take Screenshot    ${Screenshot_Path}/Screenshots/LoanIQ/LocationDetailsWindow
-
+    
 Read Excel Data and Validate Location Details under Profile column in Profile Tab
     [Documentation]    This keyword validates the Location Details under Profile column in Profile Tab  against from excel data 
     ...    @author: ghabal
@@ -1420,6 +1420,8 @@ Add Remittance Instruction to Servicing Group
 
     ### GetRuntime Keyword Pre-processing ###
     ${RemittanceInstruction_DDADescriptionAUD}    Acquire Argument Value    ${sRemittanceInstruction_DDADescriptionAUD}
+    
+    
 
     Validate Window Title    Servicing Group Remittance Instructions Selection List
     Run Keyword If    '${RemittanceInstruction_DDADescriptionAUD}' != 'None'    Mx LoanIQ Select Or Doubleclick In Tree By Text    ${ServicingGroupWindow_SelectionList_RemittanceInstructionItem}    ${RemittanceInstruction_DDADescriptionAUD}%s
@@ -2255,6 +2257,79 @@ Populate Details on Customer Remittance Instructions
     Run Keyword If    '${sRI_FromCust_Checkbox}'=='OFF'    mx LoanIQ enter    ${RemittanceList_Window_RemittanceInstructionsDetail_SummaryNotices_TextField}    ${NoticesSummary}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/Remittance_Instruction_List
 
+Add RTGS Remittance Instruction for UAT Deal
+    [Documentation]    This keyword adds RTGS-AUD Remittance Instruction to the Details of a Contact of a Customer
+    ...    @author: fmamaril    06AUG2019
+    ...    @update: gerhabal    26SEP2019    - added saving of details     
+    [Arguments]    ${Customer_Location}    ${RemittanceInstruction_RTGSMethod}    ${RemittanceInstruction_RTGSDescriptionAUD}    ${RemittanceInstruction_RTGSCurrencyAUD}    ${RemittanceInstruction_DirectionSelected}    ${IMT_MessageCode}        ${BOC_Level}
+    ...    ${RI_FromCust_Checkbox}    ${RI_AutoDoIt_Checkbox}    ${RI_SendersCorrespondent_Checkbox}    ${NoticesSummary}    ${RI_ToCust_Checkbox}
+    mx LoanIQ click    ${RemittanceList_Window_AddButton}
+    mx LoanIQ activate    ${RemittanceList_Window_AddRemittanceInstruction_Window}
+    Validate Window Title    Add Remittance Instruction
+    mx LoanIQ click    ${RemittanceList_Window_AddRemittanceInstruction_OkButton} 
+    mx LoanIQ activate window   ${RemittanceList_Window_RemittanceInstructionsDetail_Window}
+    Mx LoanIQ Select Window Tab    ${RemittanceList_Window_RemittanceInstructionsDetail__Notebook_TabSelection}    General
+    Mx LoanIQ Select Combo Box Value    ${RemittanceList_Window_RemittanceInstructionsDetail_MethodType}    ${RemittanceInstruction_RTGSMethod}
+    
+    mx LoanIQ enter    ${RemittanceList_Window_RemittanceInstructionsDetail_Description}    ${RemittanceInstruction_RTGSDescriptionAUD}
+    
+    Mx LoanIQ Select Combo Box Value    ${RemittanceList_Window_RemittanceInstructionsDetail_Currency}    ${RemittanceInstruction_RTGSCurrencyAUD}
+    
+    Mx LoanIQ Check Or Uncheck    ${RemittanceList_Window_RemittanceInstructionsDetail_Direction_FromCust_Checkbox}    ${RI_FromCust_Checkbox}
+    
+    Mx LoanIQ Check Or Uncheck    ${RemittanceList_Window_RemittanceInstructionsDetail_Direction_ToCust_Checkbox}    ${RI_ToCust_Checkbox}
+      
+    Mx LoanIQ Check Or Uncheck    ${RemittanceList_Window_RemittanceInstructionsDetail_AutoDoIt_Checkbox}    ${RI_AutoDoIt_Checkbox}
+    
+    Run Keyword If    '${RI_FromCust_Checkbox}'=='OFF'    mx LoanIQ enter    ${RemittanceList_Window_RemittanceInstructionsDetail_SummaryNotices_TextField}    ${NoticesSummary}
+    
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/AddRTGSRemittance
+    
+    Mx Native Type    {BACKSPACE}
+    mx LoanIQ select    ${LIQ_RemittanceInstruction_Notebook_FileMenu_SaveMenu}
+    
+    mx LoanIQ click element if present    ${LIQ_Warning_OK_Button}
+    
+Add IMT Message in Remittance Instruction
+    [Documentation]    This keyword adds RTGS-AUD Remittance Instruction to the Details of a Contact of a Customer
+    ...    @author: fmamaril    06AUG2019
+    [Arguments]    ${sIMT_MessageCode}    ${sBOC_Level}    ${sRI_SendersCorrespondent_Checkbox}    ${sSwift_Role}    
+    ...    ${sAWI_SwiftID}    ${sAWI_ClearingNumber}    ${sSwiftRole_OC}    ${sSwiftRole_BC}    ${sDetails_Of_Charges}    ${sBC_AccountNumber}    
+    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
+    
+    mx LoanIQ click    ${RemittanceList_Window_RemittanceInstructionsDetail_AddButton} 
+    
+    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
+    mx LoanIQ enter   ${RemittanceList_Window_RemittanceInstructionsDetail_SelectMessageType_SearchField}    ${sIMT_MessageCode}
+    Mx Native Type    {ENTER}
+    mx LoanIQ activate window    ${RemittanceList_Window_RemittanceInstructionsDetail_IMT_Window}    
+    Mx LoanIQ Check Or Uncheck    ${RemittanceList_Window_RemittanceInstructionsDetail_IMT_SendersCorrespondent_Checkbox}    ${sRI_SendersCorrespondent_Checkbox}
+    mx LoanIQ click    ${RemittanceList_Window_RemittanceInstructionsDetail_IMT_AddButton}
+    mx LoanIQ activate window    ${RemittanceList_Window_RemittanceInstructionsDetail_AddSwiftID_Window}  
+    Mx LoanIQ select combo box value    ${RemittanceList_Window_RemittanceInstructionsDetail_SwiftRoleType}    ${sSwift_Role}    
+    mx LoanIQ click    ${RemittanceList_Window_RemittanceInstructionsDetail_SwiftIDButton}
+    mx LoanIQ enter    ${RemittanceList_Window_RemittanceInstructionsDetail_SearchBySWIFTID}    ON
+    mx LoanIQ enter    ${RemittanceList_Window_RemittanceInstructionsDetail_SWIFTIDInputField}    ${sAWI_SwiftID}    
+    mx LoanIQ click    ${RemittanceList_Window_RemittanceInstructionsDetail_OKButton} 
+    mx LoanIQ activate window    ${RemittanceList_Window_RemittanceInstructionsDetail_AddSwiftID_Window}
+    mx LoanIQ enter    ${RemittanceList_Window_RemittanceInstructionsDetail_AddSwiftID_ClearingNumber}    ${sAWI_ClearingNumber}
+    mx LoanIQ click    ${RemittanceList_Window_RemittanceInstructionsDetail_AddSwiftID_OKButton}
+    mx LoanIQ activate window    ${RemittanceList_Window_RemittanceInstructionsDetail_IMT_Window}
+    Mx LoanIQ Select Combo Box Value    ${RemittanceList_Window_RemittanceInstructionsDetail_IMT_DetailsofCharges}    ${sDetails_Of_Charges}    
+    Mx LoanIQ Select Combo Box Value    ${RemittanceList_Window_RemittanceInstructionsDetail_IMT_BankOperationCode}    ${sBOC_Level}
+    Mx LoanIQ Select Or DoubleClick In Javatree    ${RemittanceList_Window_RemittanceInstructionsDetail_IMT_SwiftRoleList}    ${sSwiftRole_BC}%d    
+    mx LoanIQ activate window    ${RemittanceList_Window_RemittanceInstructionsDetail_AddSwiftID_Window}
+    mx LoanIQ enter    ${RemittanceList_Window_RemittanceInstructionsDetail_UpdateMode_AddSwiftID_AccountNumber}    ${sBC_AccountNumber}    
+    mx LoanIQ click    ${RemittanceList_Window_RemittanceInstructionsDetail_UpdateMode_AddSwiftID_OKButton}
+    mx LoanIQ click    ${RemittanceList_Window_RemittanceInstructionsDetail_IMT_OKButton}    
+    
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/AddIMTMessageRemittance    
+    
+    mx LoanIQ select    ${LIQ_RemittanceInstruction_Notebook_FileMenu_SaveMenu}
+    mx LoanIQ click element if present    ${LIQ_Warning_OK_Button}
+    Send Remittance Instruction to Approval
+    mx LoanIQ select    ${LIQ_RemittanceInstruction_Notebook_FileMenu_ExitMenu} 
+
 Add IMT Message in Remittance Instructions Detail
     [Documentation]    This keyword adds IMT message in Remittance Instructions detail of a Customer
     ...    @author: fmamaril    19AUG2019
@@ -2346,3 +2421,52 @@ Populate Details on IMT
     Run Keyword If    '${sSenderToReceiverInfo}'!='${EMPTY}'    mx LoanIQ enter    ${RemittanceList_Window_RemittanceInstructionsDetail_IMT_SenderToReceiver}    ${SenderToReceiverInfo}        
     Run Keyword If    '${sBOC_Level}'!='${EMPTY}'    Mx LoanIQ Select Combo Box Value    ${RemittanceList_Window_RemittanceInstructionsDetail_IMT_BankOperationCode}    ${BOC_Level}
     Run Keyword If    '${sOrderingCustomer}'!='${EMPTY}'    mx LoanIQ enter    ${RemittanceList_Window_RemittanceInstructionsDetail_IMT_OrderingCustomer}    ${OrderingCustomer}    
+    
+Navigate to "Profiles" tab and Validate 'Add Profile' Button
+    [Documentation]    This keyword navigates user to "Profiles" tab and validates 'Add Profile' button 
+    ...    @author: ghabal
+    ...    @update: rmendoza    21AUG2020    Added from cba_evergreen for framework design migration [GDE-6722]
+    Mx LoanIQ Select Window Tab    ${LIQ_Active_Customer_Notebook_TabSelection}    Profiles
+    
+    mx LoanIQ activate    ${LIQ_ActiveCustomer_Window}  
+    Validate Only 'Add Profile Button' is Enabled in Profile Tab
+    
+Validate Only 'Add Profile', 'Add Location' and 'Delete' Buttons are Enabled in Profile Tab
+    [Documentation]    This keyword validates that only 'Add Profile', 'Add Location' and 'Delete' Buttons are Enabled in Profile Tab 
+    ...    @author: ghabal
+    ...    @update: rmendoza    21AUG2020    Added from cba_evergreen for framework design migration [GDE-6722]
+    Mx LoanIQ Select Window Tab    ${LIQ_Active_Customer_Notebook_TabSelection}    Profiles
+    
+    Validate if Element is Enabled    ${AddProfile_Button}    Add Profile
+    Validate if Element is Enabled    ${AddLocation_Button}    Add Location
+    Validate if Element is Enabled    ${Delete_Button}    Delete
+    Validate If Remaining Buttons are Disabled
+
+Add Borrowwer/Location Details under Profiles Tab
+    [Documentation]    This keyword adds Borrower Details to a Customer upon adding a location
+    ...    @author: ghabal
+    [Arguments]    ${Profile_Type}    ${Customer_Location}     
+    mx LoanIQ activate    JavaWindow("title:=${Profile_Type}.*")    
+    Validate 'Profile/Location' Window    ${Profile_Type}	${Customer_Location}  
+    
+    mx LoanIQ click    ${LIQ_BorrowerDetails_OKButton}
+    
+    Read Excel Data and Validate Location Details under Profile column in Profile Tab    ${Customer_Location}    ${Profile_Type}  
+    
+Add Location under Profiles Tab for UAT Deal
+    [Documentation]    This keyword adds a Location to a Customer
+    ...    @author: ghabal
+    ...    @update: amansuet    19MAY2020    - added acquire argument and take screenshot keywords and remove unused keyword
+    [Arguments]    ${sCustomer_Location}=None
+    
+    ### Keyword Pre-processing ###
+    ${Customer_Location}    Acquire Argument Value    ${sCustomer_Location}
+
+    Mx LoanIQ Select Window Tab    ${LIQ_Active_Customer_Notebook_TabSelection}    Profiles
+    Run Keyword If    '${Customer_Location}' != 'None'    Mx LoanIQ Click    ${AddLocation_Button}
+    Validate Window Title    Select Location
+    Run Keyword If    '${Customer_Location}' != 'None'    Run Keywords    Mx LoanIQ Enter    ${LIQ_SelectLocation_SearchByDescription}    ${Customer_Location}  
+    ...    AND    Mx LoanIQ Click    ${LIQ_SelectLocation_OKButton}   
+    ...    AND    Mx LoanIQ Activate    ${LIQ_BorrowerDetails_Window}
+    ...    AND    Mx LoanIQ Click    ${LIQ_BorrowerDetails_OKButton}
+    Take Screenshot    ${Screenshot_Path}/Screenshots/LoanIQ/LocationDetailsWindow

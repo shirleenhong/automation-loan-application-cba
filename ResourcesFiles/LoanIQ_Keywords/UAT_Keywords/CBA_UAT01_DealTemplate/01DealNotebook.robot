@@ -43,20 +43,13 @@ Setup Deal D00000454
     Select Deal Classification    &{ExcelPath}[Deal_ClassificationCode]    &{ExcelPath}[Deal_ClassificationDesc]
     Enter Agreement Date and Proposed Commitment Amount    &{ExcelPath}[Deal_AgreementDate]    &{ExcelPath}[Deal_ProposedCmt]
     Save Changes on Deal Notebook
-    Screenshot.Set Screenshot Directory    ${Screenshot_Path}
-    Set Test Variable    ${SCREENSHOT_FILENAME}    UATDEAL1-Summary Tab
-    Take Screenshot    ${SCREENSHOT_FILENAME}
     
     ### Personnel Tab ###
     Enter Department on Personel Tab    &{ExcelPath}[Deal_DepartmentCode]    &{ExcelPath}[Deal_Department]
     Enter Expense Code    &{ExcelPath}[Deal_ExpenseCode]
-    Set Test Variable    ${SCREENSHOT_FILENAME}    UATDEAL1-Personnel Tab
-    Take Screenshot    ${SCREENSHOT_FILENAME}
     
     ### Calendars Tab ###    
     Set Deal Calendar    &{ExcelPath}[Deal_Calendar]
-    Set Test Variable    ${SCREENSHOT_FILENAME}    UATDEAL1-Calendar Tab
-    Take Screenshot    ${SCREENSHOT_FILENAME}
         
     ###Deal Notebook - Ratios/Conds Tab###
     Add Financial Ratio    &{ExcelPath}[Ratio_Type]    &{ExcelPath}[Financial_Ratio]    &{ExcelPath}[Ratio_StartDate]
@@ -66,14 +59,10 @@ Setup Deal D00000454
     ...    &{ExcelPath}[BankRole_SGRIMethod]    &{ExcelPath}[BankRole_Portfolio]    &{ExcelPath}[BankRole_ExpenseCode]    &{ExcelPath}[BankRole_ExpenseCodeDesc]
     ...    &{ExcelPath}[Reference_Bank]    &{ExcelPath}[Bid_Bank]    &{ExcelPath}[SBLC_Issuer]    &{ExcelPath}[Swingline_Bank]    &{ExcelPath}[BA_Issuing_Bank]
     ...    &{ExcelPath}[BA_Reference_Bank]    &{ExcelPath}[BA_Owner_Bank]    &{ExcelPath}[RAC_Reference_Bank]    &{ExcelPath}[BankRole_Percent]
-    Set Test Variable    ${SCREENSHOT_FILENAME}    UATDEAL1-Bank Roles
-    Take Screenshot    ${SCREENSHOT_FILENAME}
     
     ###Add Fee Pricing Rules###
     Add Fee Pricing Rules    &{ExcelPath}[PricingRule_Fee]    &{ExcelPath}[PricingRule_MatrixChangeAppMthd]    &{ExcelPath}[PricingRule_NonBussDayRule]
     Add Fee Pricing Rules    &{ExcelPath}[PricingRule_Fee2]    &{ExcelPath}[PricingRule_MatrixChangeAppMthd2]    &{ExcelPath}[PricingRule_NonBussDayRule2]    
-    Set Test Variable    ${SCREENSHOT_FILENAME}    UATDEAL1-FeePricingRules
-    Take Screenshot    ${SCREENSHOT_FILENAME}
 
 Setup Deal D00000454 Interest Pricing Options
     [Documentation]    This high-level keyword is used to add Interest Pricing Options in the Deal Notebook
@@ -92,8 +81,6 @@ Setup Deal D00000454 Interest Pricing Options
     Click OK In Interest Pricing Option Details Window
     Validate Added Deal Pricing Option    &{ExcelPath}[Deal_PricingOption]
     Screenshot.Set Screenshot Directory    ${Screenshot_Path}    
-    Set Test Variable    ${SCREENSHOT_FILENAME}    UATDEAL1-InterestPricingOption
-    Take Screenshot    ${SCREENSHOT_FILENAME}
   
 Setup Deal Amortizing Admin Fee
     [Documentation]    This high-level keyword is used to add an Admin Fee in the Deal Notebook.

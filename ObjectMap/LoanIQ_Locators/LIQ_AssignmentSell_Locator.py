@@ -7,8 +7,8 @@ LIQ_AssignmentSell_MaintenanceEventFees_Menu = 'JavaWindow("title:=.*Assignment 
 LIQ_AssignmentSell_Window = 'JavaWindow("title:=.* Assignment Sell.*")'
 LIQ_AssignmentSell_Tab = 'JavaWindow("title:=.*Assignment.*").JavaTab("tagname:=TabFolder")'
 LIQ_PendingAssignmentSell_PctofDeal_InputField = 'JavaWindow("title:=Pending Assignment Sell.*").JavaEdit("attached text:=Pct of Deal:")'
-LIQ_PendingAssignmentSell_CurrentDealAmount = 'JavaWindow("title:=Pending Assignment Sell.*").JavaEdit("x:=230","y:=17")'
-LIQ_PendingAssignmentSell_SellAmount = 'JavaWindow("title:=Pending Assignment Sell.*").JavaEdit("x:=230","y:=47")'
+LIQ_PendingAssignmentSell_CurrentDealAmount = 'JavaWindow("title:=Pending Assignment Sell.*").JavaEdit("labeled_containers_path:=.*Aggregate Amounts.*","Index:=2")'
+LIQ_PendingAssignmentSell_SellAmount = 'JavaWindow("title:=Pending Assignment Sell.*").JavaEdit("labeled_containers_path:=.*Aggregate Amounts.*","Index:=0")'
 LIQ_PendingAssignmentSell_IntFeeDropdownList = 'JavaWindow("title:=Pending Assignment Sell.*").JavaList("attached text:=Int/Fee.*")'
 LIQ_PendingAssignmentSell_PaidByDropdownList = 'JavaWindow("title:=Pending Assignment Sell.*").JavaList("attached text:=Paid By:.*")'
 LIQ_PendingAssignmentSell_ProRate_Button = 'JavaWindow("title:=Pending Assignment Sell.*").JavaButton("attached text:=Pro Rate")'
@@ -42,6 +42,8 @@ LIQ_AssignmentSell_ServicingGroupsSelectionFor_Ok_Button = 'JavaWindow("title:=S
 LIQ_AssignmentSell_FileSave = 'JavaWindow("title:=.*Assignment .*").JavaMenu("label:=File").JavaMenu("label:=Save")'
 LIQ_PendingAssignmentSell_Facilities_JavaTree = 'JavaWindow("title:=Portfolio allocations for.*").JavaTree("labeled_containers_path:=Group:Facilities;.*")'
 LIQ_PendingAssignmentSell_ContactTab_ContactName_JavaTree = 'JavaWindow("title:=Pending.*").JavaTree("developer name:=.*${ContactName}.*","labeled_containers_path:=Tab:Contacts.*")'
+LIQ_AssignmentSell_Facilities_JavaTree = 'JavaWindow("title:=Pending Assignment.*").JavaTree("labeled_containers_path:=.*Facilities;.*")'
+LIQ_PortfolioAllocations_PortfolioExpense_JavaTree = 'JavaWindow("title:=Portfolio allocations for.*").JavaTree("labeled_containers_path:=.*Portfolio Allocations.*")'
 
 ###Awaiting Approval Assignment Sell###
 LIQ_AwaitingApprovalAssignmentSell_Tab = 'JavaWindow("title:=Awaiting.*").JavaTab("Tagname:=TabFolder")'
@@ -95,9 +97,16 @@ LIQ_PrimaryCircles_TradeDate_OK_Button = 'JavaWindow("title:=Set Circled/Legal T
 ###Assignment Sell - Portfolio allocations###
 AssignmentSell_PortfolioAllocations_List = 'JavaWindow("title:=Portfolio allocations for.*").JavaTree("attached text:=Drill down to change allocations for.*")'
 AssignmentSell_PortfolioAllocations_OKButton = 'JavaWindow("title:=Portfolio allocations for.*").JavaButton("attached text:=OK")'
-AssignmentSell_PortfolioAllocations_AllocatedAmount = 'JavaWindow("title:=Allocation").JavaEdit("attached text:=Allocate:")'
+AssignmentSell_PortfolioAllocations_AllocatedAmount = 'JavaWindow("title:=Allocation").JavaEdit("attached text:=Allocate.*")'
+AssignmentSell_PortfolioAllocations_AssignableAmount = 'JavaWindow("title:=Allocation").JavaEdit("attached text:=Assignable.*")'
 AssignmentSell_Allocations_OKButton = 'JavaWindow("title:=Allocation").JavaButton("attached text:=OK")'
-AssignmentSell_PortfolioAllocations_Facilities_List = 'JavaWindow("title:=Portfolio allocations for.*").JavaTree("labeled_containers_path:=Group:Facilities;")'
+LIQ_AssignmentSell_PortfolioAllocations_Facilities_List = 'JavaWindow("title:=Portfolio allocations for.*").JavaTree("labeled_containers_path:=Group:Facilities;")'
+LIQ_AssignmentSell_PortfolioAllocations_AddPortfolioExpenseCode_Button = 'JavaWindow("title:=Portfolio allocations.*").JavaButton("attached text:=Add Portfolio/Expense Code")'
+LIQ_AssignmentSell_PortfolioAllocations_Window = 'JavaWindow("title:=Portfolio Allocation.*")'
+LIQ_AssignmentSell_PortfolioAllocations_PortfolioExpenseCodes_JavaTree = 'JavaWindow("title:=Portfolio Allocation.*").JavaTree("tagname:=Portfolio/Expense Codes.*")'
+LIQ_AssignmentSell_PortfolioAllocations_Branch_List = 'JavaWindow("title:=Portfolio Allocation.*").JavaList("attached text:=Branch.*")'
+LIQ_AssignmentSell_PortfolioAllocations_Short_Textbox = 'JavaWindow("title:=.*Allocation.*").JavaEdit("attached text:=Short.*")'
+LIQ_AssignmentSell_PortfolioAllocations_OK_Button = 'JavaWindow("title:=Portfolio Allocation.*").JavaButton("attached text:=OK.*")'
 
 ###Deal Notebook###
 ContrGross_Value = 'JavaWindow("title:=Deal Notebook - Closed Deal .*").JavaStaticText("x:=162","y:=81")'
