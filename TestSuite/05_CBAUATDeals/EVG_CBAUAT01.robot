@@ -76,3 +76,57 @@ Collect Commitment Fee for Facility A - D00000454 - 31DEC2018
     Mx Execute Template With Multiple Data    Run Online Accrual for Commitment Fee    ${CBAUAT_ExcelPath}   3    SERV29_CommitmentFeePayment
     Mx Execute Template With Multiple Data    Run Online Accrual for Line Fee    ${CBAUAT_ExcelPath}   4    SERV29_CommitmentFeePayment
     Pause Execution  # eod to 31DEC2018 # 
+     Mx Execute Template With Multiple Data    Commitment Fee Payment with Split Balance for D00000454    ${CBAUAT_ExcelPath}   3    SERV29_CommitmentFeePayment
+
+Collect Line Fee for Facility B - D00000454 - 31DEC2018
+    Mx Execute Template With Multiple Data    Line Fee Payment for D00000454    ${CBAUAT_ExcelPath}   4    SERV29_CommitmentFeePayment
+    
+Create Outstanding B2
+    Pause Execution  # eod to 10JAN2019 #     
+    Mx Execute Template With Multiple Data    Setup Deal D00000454 Outstandings    ${CBAUAT_ExcelPath}    4    SERV01_LoanDrawdown
+
+Rollover Outstanding
+    Pause Execution  # eod to 14JAN2019 #     
+    Mx Execute Template With Multiple Data    Comprehensive Repricing Interest Payment with Multiple Lenders in Deal D00000454    ${CBAUAT_ExcelPath}    2    SERV08C_ComprehensiveRepricing
+    Pause Execution  # eod to 29JAN2019 # 
+    Mx Execute Template With Multiple Data    Comprehensive Repricing Interest Payment in Deal D00000454    ${CBAUAT_ExcelPath}    3    SERV08C_ComprehensiveRepricing
+    
+Collect Commitment Fee for Facility A - D00000454 - 31JAN2019
+    Mx Execute Template With Multiple Data    Run Online Accrual for Commitment Fee    ${CBAUAT_ExcelPath}   5    SERV29_CommitmentFeePayment
+    Mx Execute Template With Multiple Data    Run Online Accrual for Line Fee    ${CBAUAT_ExcelPath}   6    SERV29_CommitmentFeePayment
+    Pause Execution  # eod to 31JAN2018 # 
+    Mx Execute Template With Multiple Data    Commitment Fee Payment for D00000454    ${CBAUAT_ExcelPath}   5    SERV29_CommitmentFeePayment
+
+Collect Line Fee for Facility B - D00000454 - 31JAN2019
+    Mx Execute Template With Multiple Data    Line Fee Payment for D00000454    ${CBAUAT_ExcelPath}   6    SERV29_CommitmentFeePayment 
+    
+Change LVR from 0.95 to 1.65 - D00000454
+    Pause Execution  # eod to 04FEB2018 #  
+    Mx Execute Template With Multiple Data    Deal Change Transaction on Financial Ratio for D00000454    ${CBAUAT_ExcelPath}   1    AMCH04_DealChangeTransaction                     
+
+Collect Early Prepayment for A1 - D00000454
+    Pause Execution  # eod to 05FEB2018 #
+    Mx Execute Template With Multiple Data    Collect Early Prepayment via Paper Clip D00000454    ${CBAUAT_ExcelPath}    1    SERV23_Paperclip
+    
+Charge Breakcost Fee - D00000454
+    Mx Execute Template With Multiple Data    Collect Break Cost Fee for Early Prepayment D00000454    ${CBAUAT_ExcelPath}    1    SERV40_BreakFunding
+    
+Collect Full Payment for B1 - D00000454
+    Mx Execute Template With Multiple Data    Collect Full Payment via Paper Clip Outstanding B1 D00000454    ${CBAUAT_ExcelPath}    2    SERV23_Paperclip
+    
+Rollover Outstanding for Outstanding B2 - D00000454
+    Pause Execution  # eod to 11FEB2019 #
+    Mx Execute Template With Multiple Data    Comprehensive Repricing Interest Payment in Deal D00000454    ${CBAUAT_ExcelPath}    4    SERV08C_ComprehensiveRepricing
+    
+Loan Merge for Outstanding B2 - D00000454
+    Pause Execution  # eod to 12FEB2019 #     
+    Mx Execute Template With Multiple Data    Loan Merge in Deal D00000454    ${CBAUAT_ExcelPath}    1    COMPR06_LoanMerge
+    
+Collect Commitment Fee for Facility A - D00000454 - 28FEB2019
+    Mx Execute Template With Multiple Data    Run Online Accrual for Commitment Fee    ${CBAUAT_ExcelPath}   5    SERV29_CommitmentFeePayment
+    Mx Execute Template With Multiple Data    Run Online Accrual for Line Fee    ${CBAUAT_ExcelPath}   6    SERV29_CommitmentFeePayment
+    Pause Execution  # eod to 31JAN2018 # 
+    Mx Execute Template With Multiple Data    Commitment Fee Payment with Split Balance for D00000454    ${CBAUAT_ExcelPath}   5    SERV29_CommitmentFeePayment
+
+Collect Line Fee for Facility B - D00000454 - 28FEB2019
+    Mx Execute Template With Multiple Data    Line Fee Payment for D00000454    ${CBAUAT_ExcelPath}   6    SERV29_CommitmentFeePayment                 
