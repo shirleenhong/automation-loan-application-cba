@@ -2878,3 +2878,4 @@ Get Financial Ratio Type Effective Date and Return
     
     Save Values of Runtime Execution on Excel File    ${sRuntime_Variable_EffectiveDate}    ${EffectiveDate}
     [Return]    ${EffectiveDate} 
+    
