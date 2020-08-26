@@ -79,8 +79,7 @@ Setup Deal D00000454 Interest Pricing Options
     ...    Tick Interest Due Upon Repciring Checkbox
     ...    AND    Tick Interest Due Upon Principal Payment Checkbox
     Click OK In Interest Pricing Option Details Window
-    Validate Added Deal Pricing Option    &{ExcelPath}[Deal_PricingOption]
-    Screenshot.Set Screenshot Directory    ${Screenshot_Path}    
+    Validate Added Deal Pricing Option    &{ExcelPath}[Deal_PricingOption]    
   
 Setup Deal Amortizing Admin Fee
     [Documentation]    This high-level keyword is used to add an Admin Fee in the Deal Notebook.
