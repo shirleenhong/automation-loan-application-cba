@@ -1868,7 +1868,7 @@ Set Servicing Group Remittance Instructions
 Validate Remittance Instruction Selection List If Marked All
     [Documentation]    This keyword checks the Remittance Instruction Selection List if all Methods are selected.
     ...    @author: bernchua
-    ...    @author: mcastro    26Aug2020    -updated LIQ_RISelectionList_MarkAll_Checkbox locator value; added screenshot
+    ...    @author: mcastro    26Aug2020    -added screenshot
     mx LoanIQ click    ${LIQ_ServicingGroup_RemittanceInstructions_Button}
     mx LoanIQ activate    ${LIQ_RISelectionList_Window}
     ${MarkAll_Enabled}    Mx LoanIQ Get Data    ${LIQ_RISelectionList_MarkAll_Checkbox}    enabled%value
