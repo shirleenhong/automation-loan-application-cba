@@ -1,5 +1,5 @@
 *** Settings ***
-Resource    ../../../../../Configurations/LoanIQ_Import_File.robot
+Resource    ../../../../../../Configurations/Integration_Import_File.robot
 
 *** Keywords ***
 Create Query for VLS_RISK_PORT_EXP to validate RPE_CDE_EXPENSE
