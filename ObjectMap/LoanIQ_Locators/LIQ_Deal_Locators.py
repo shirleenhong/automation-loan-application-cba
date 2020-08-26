@@ -115,7 +115,6 @@ LIQ_DealBorrowerListByShortName_Tree = 'JavaWindow("title:=Borrower Select.*").J
     
 ###Deal Notebook - Deal Borrower Window###    
 LIQ_DealBorrower_Window = 'JavaWindow("title:=Deal Borrower.*")'
-LIQ_DealBorrower_Window_UAT = 'JavaWindow("title:=Deal Borrower - ")'    
 LIQ_DealBorrower_Location_List = 'JavaWindow("title:=Deal Borrower.*").JavaList("tagname:=Location:")'    
 LIQ_DealBorrower_ServicingGroup_Button = 'JavaWindow("title:=Deal Borrower.*").JavaButton("attached text:=Servicing Group")'    
 LIQ_DealBorrower_PreferredRemittanceInstructions_Button = 'JavaWindow("title:=Deal Borrower.*").JavaButton("attached text:=Preferred Remittance Instructions")'    
