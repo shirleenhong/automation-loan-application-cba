@@ -45,11 +45,7 @@ Setup Deal D00000963
     Enter Agreement Date and Proposed Commitment Amount    &{ExcelPath}[Deal_AgreementDate]    &{ExcelPath}[Deal_ProposedCmt]
     Set Deal as Sole Lender
     Save Changes on Deal Notebook
-<<<<<<< HEAD
 
-    Take Screenshot    DealNotebook-SummaryTab
-=======
->>>>>>> a98ed948cac6cf87ecffe50195b1da2ac8a9703c
     
     ### Personnel Tab ###
     Enter Department on Personel Tab    &{ExcelPath}[Deal_DepartmentCode]    &{ExcelPath}[Deal_Department]
