@@ -5,7 +5,7 @@ Resource    ../../../../Configurations/LoanIQ_Import_File.robot
 Setup Facility Template D00001151
     [Documentation]    High Level Keyword for Facility Template Creation
     ...    author: henstone    13AUG2019    Initial create
-    ...    update: mcastro    27Aug2020    Deleted screenshot; comment out duplicate step
+    ...    update: mcastro    27Aug2020    Deleted screenshot; delete duplicate step
     [Arguments]    ${ExcelPath}
    
     ### New Facility Name Generation ###
@@ -15,9 +15,7 @@ Setup Facility Template D00001151
     Write Data To Excel    CRED01_DealSetup    Facility_Name    &{ExcelPath}[rowid]    ${FacilityName}    ${CBAUAT_ExcelPath}
     Write Data To Excel    CRED02_FacilitySetup    Facility_Name    &{ExcelPath}[rowid]    ${FacilityName}    ${CBAUAT_ExcelPath}
     Write Data To Excel    CRED08_FacilityFeeSetup    Facility_Name    &{ExcelPath}[rowid]    ${FacilityName}    ${CBAUAT_ExcelPath}
-    ### Comment out duplicate step ### 
-    # Write Data To Excel    CRED01_DealSetup    Facility_Name    &{ExcelPath}[rowid]    ${FacilityName}    ${CBAUAT_ExcelPath}
-    
+ 
     ${FacilityName}    Read Data From Excel    CRED02_FacilitySetup    Facility_Name   &{ExcelPath}[rowid]    ${CBAUAT_ExcelPath}
     ${Deal_Name}    Read Data From Excel    CRED02_FacilitySetup    Deal_Name   &{ExcelPath}[rowid]    ${CBAUAT_ExcelPath}
     
