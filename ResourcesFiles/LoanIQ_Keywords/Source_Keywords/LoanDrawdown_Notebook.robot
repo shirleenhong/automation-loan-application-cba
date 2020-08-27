@@ -116,7 +116,9 @@ Input General Loan Drawdown Details
     mx LoanIQ enter    ${LIQ_InitialDrawdown_RequestedAmt_Textfield}    ${Loan_RequestedAmount} 
     mx LoanIQ enter    ${LIQ_InitialDrawdown_EffectiveDate_Datefield}    ${Loan_EffectiveDate}
     Run Keyword If    '${Loan_MaturityDate}'!='None'    mx LoanIQ enter    ${LIQ_InitialDrawdown_MaturityDate_Datefield}    ${Loan_MaturityDate} 
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LoanDrawdown_General
     mx LoanIQ click element if present    ${LIQ_Question_Yes_Button}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LoanDrawdown_General
     Log    ${Loan_RepricingFrequency}
     Run Keyword If    '${Loan_RepricingFrequency}'!='None'    Mx LoanIQ Select Combo Box Value    ${LIQ_InitialDrawdown_Repricing_Dropdownlist}    ${Loan_RepricingFrequency}
     Run Keyword If    '${Loan_IntCycleFrequency}'!='None'    Mx LoanIQ Select Combo Box Value    ${LIQ_InitialDrawdown_IntCycleFreq_Dropdownlist}    ${Loan_IntCycleFrequency}

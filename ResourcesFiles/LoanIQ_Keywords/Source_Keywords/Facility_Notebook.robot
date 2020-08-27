@@ -569,6 +569,7 @@ Add Item to Facility Ongoing Fee or Interest
     ...    @author: bernchua
     [Arguments]    ${Fee_Interest_Category}    ${Fee_Interest_Type}
     ${FinancialRatio_AddItem}    Run Keyword And Return Status    Mx LoanIQ Verify Object Exist    JavaWindow("title:=Facility.*Pricing").JavaTree("developer name:=.*Financial Ratio.*")    VerificationData="Yes"
+    
     Run Keyword If    ${FinancialRatio_AddItem}==False    mx LoanIQ click    ${LIQ_FacilityPricing_OngoingFeeInterest_Add_Button}
     ...    ELSE IF    ${FinancialRatio_AddItem}==True    mx LoanIQ click    ${LIQ_FacilityPricing_OngoingFeeInterest_After_Button}
     ${AddItem_WindowExists}    Run Keyword And Return Status    Mx LoanIQ Verify Object Exist    ${LIQ_AddItem_Window}    VerificationData="Yes"
