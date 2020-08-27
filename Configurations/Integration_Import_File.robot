@@ -30,6 +30,7 @@ Library    MathLibrary
 ### Global Variables ###
 Resource    ../Variables/Global_Variables.txt
 Resource    ../Variables/Calendar_Properties.txt
+Resource    ../Variables/DWE_LIQ_Config.txt
 Resource    ../Variables/Queries.txt
 Resource    ../Variables/Users_Properties.txt
 Resource    ../Variables/BaseRatesInterest_Properties.txt
@@ -248,3 +249,7 @@ Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/Extr
 Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/Extracts/DWE_LIQ_Functional/DWE_LIQ_FuncVal24.robot
 Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/Extracts/DWE_LIQ_Functional/DWE_LIQ_FuncVal25.robot
 Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/Extracts/DWE_LIQ_Functional/DWE_LIQ_FuncVal26.robot
+
+### Integration Resource Files - DWE LIQ Extracts - Business Process Keywords ###
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/Extracts/DWE_LIQ_Extracts/DWE_LIQ_E2E.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/Extracts/DWE_LIQ_Extracts/DWE_LIQ_EV.robot
