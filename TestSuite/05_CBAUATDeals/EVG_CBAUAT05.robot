@@ -1,5 +1,6 @@
 *** Settings ***
 Resource    ../../Configurations/LoanIQ_Import_File.robot
+
 *** Variables ***
 ${rowid}    1
 ${Facility_A}    1
@@ -9,6 +10,7 @@ ${Facility_A-Outstanding_A}    1
 ${Facility_A-Outstanding_B}    2
 ${Facility_B-Outstanding_A}    3
 ${Facility_C-Outstanding_A}    4
+
 *** Test Cases ***
 Create Quick Party Onboarding for CBA UAT Deal 5 - PTY001
     [Tags]    01 Create Party within Essence - PTY001
@@ -16,12 +18,11 @@ Create Quick Party Onboarding for CBA UAT Deal 5 - PTY001
     Mx Execute Template With Multiple Data    Populate Quick Enterprise Party with Approval    ${CBAUAT_ExcelPath}    1    PTY001_QuickPartyOnboarding
 
 Deal Setup
-    [Tags]    02 Deal Setup   
+    [Tags]    02 Deal Setup
     Mx Execute Template With Multiple Data    Setup Deal D00001151    ${CBAUAT_ExcelPath}    ${rowid}    CRED01_DealSetup 
     
     Mx Execute Template With Multiple Data    Setup Facility Template D00001151    ${CBAUAT_ExcelPath}    ${Facility_A}    CRED02_FacilitySetup 
     Mx Execute Template With Multiple Data    Setup Facility Fees D00001151    ${CBAUAT_ExcelPath}    ${Facility_A}    CRED08_FacilityFeeSetup
-    Mx Execute Template With Multiple Data    Setup MIS Code D00001151    ${CBAUAT_ExcelPath}    ${Facility_A}    CRED08_FacilityFeeSetup
     
     Mx Execute Template With Multiple Data    Setup Facility Template D00001151    ${CBAUAT_ExcelPath}    ${Facility_B}    CRED02_FacilitySetup
     Mx Execute Template With Multiple Data    Setup Facility Fees D00001151    ${CBAUAT_ExcelPath}    ${Facility_B}    CRED08_FacilityFeeSetup
@@ -33,7 +34,7 @@ Deal Setup
     
     Mx Execute Template With Multiple Data    Setup Primaries for Deal D00001151    ${CBAUAT_ExcelPath}    ${rowid}    CRED01_DealSetup
     Mx Execute Template With Multiple Data    Approve and Close Deal D00001151    ${CBAUAT_ExcelPath}    ${rowid}    CRED01_DealSetup
-    
+
 Facility Change Limit - A
     [Tags]    03 Facility Change Limit 
     Mx Execute Template With Multiple Data    Facility Limit Change    ${CBAUAT_ExcelPath}    ${Facility_A}    CRED02_FacilitySetup

@@ -13,19 +13,20 @@ ${rowid}    1
 #   a. Two Lenders are created
 #   b. Remittance Description for Two Lenders are updated on data set    
   
-Create Quick Party Onboarding for CBA UAT Deal 1 - PTY001
-    [Tags]    01 Create Party within Essence - PTY001
-    Mx Execute Template With Multiple Data    Create Deal Borrower initial details in Quick Party Onboarding for D00000454    ${CBAUAT_ExcelPath}    1    PTY001_QuickPartyOnboarding
-    Mx Execute Template With Multiple Data    Populate Quick Enterprise Party with Approval    ${CBAUAT_ExcelPath}    1    PTY001_QuickPartyOnboarding
+# Create Quick Party Onboarding for CBA UAT Deal 1 - PTY001
+    # [Tags]    01 Create Party within Essence - PTY001
+    # Mx Execute Template With Multiple Data    Create Deal Borrower initial details in Quick Party Onboarding for D00000454    ${CBAUAT_ExcelPath}    1    PTY001_QuickPartyOnboarding
+    # Mx Execute Template With Multiple Data    Populate Quick Enterprise Party with Approval    ${CBAUAT_ExcelPath}    1    PTY001_QuickPartyOnboarding
 
-Search Customer and Complete its Borrower Profile Creation - ORIG03
-    [Tags]    02 Complete Borrower's Profile - 0RIG03
-    Mx Execute Template With Multiple Data    Search Customer and Complete its Borrower Profile Creation with default values for Deal Template One    ${CBAUAT_ExcelPath}    1    ORIG03_Customer
+# Search Customer and Complete its Borrower Profile Creation - ORIG03
+    # [Tags]    02 Complete Borrower's Profile - 0RIG03
+    # Mx Execute Template With Multiple Data    Search Customer and Complete its Borrower Profile Creation with default values for Deal Template One    ${CBAUAT_ExcelPath}    1    ORIG03_Customer
 
 Deal Template D00000454
-    Mx Execute Template With Multiple Data    Setup Deal D00000454    ${CBAUAT_ExcelPath}    1    CRED01_DealSetup
+    [Tags]    03 Deal Setup - CRED01
+    Mx Execute Template With Multiple Data    Setup Deal D00000454    ${CBAUAT_ExcelPath}    ${rowid}    CRED01_DealSetup
     Mx Execute Template With Multiple Data    Setup Deal D00000454 Interest Pricing Options    ${CBAUAT_ExcelPath}    1-2    CRED01_DealSetup
-    Mx Execute Template With Multiple Data    Setup Deal Amortizing Admin Fee    ${CBAUAT_ExcelPath}    1    CRED01_DealSetup
+    Mx Execute Template With Multiple Data    Setup Deal Amortizing Admin Fee    ${CBAUAT_ExcelPath}    ${rowid}    CRED01_DealSetup
     Mx Execute Template With Multiple Data    Setup Facility Template D00000454-1    ${CBAUAT_ExcelPath}    1    CRED02_FacilitySetup
     Navigate to Interest Pricing
     Mx Execute Template With Multiple Data    Add Interest Pricing Matrix Facility D00000454    ${CBAUAT_ExcelPath}    3-7    CRED08_FacilityFeeSetup
@@ -75,7 +76,7 @@ Collect Commitment Fee for Facility A - D00000454 - 31DEC2018
     Mx Execute Template With Multiple Data    Run Online Accrual for Commitment Fee    ${CBAUAT_ExcelPath}   3    SERV29_CommitmentFeePayment
     Mx Execute Template With Multiple Data    Run Online Accrual for Line Fee    ${CBAUAT_ExcelPath}   4    SERV29_CommitmentFeePayment
     Pause Execution  # eod to 31DEC2018 # 
-    Mx Execute Template With Multiple Data    Commitment Fee Payment with Split Balance for D00000454    ${CBAUAT_ExcelPath}   3    SERV29_CommitmentFeePayment
+     Mx Execute Template With Multiple Data    Commitment Fee Payment with Split Balance for D00000454    ${CBAUAT_ExcelPath}   3    SERV29_CommitmentFeePayment
 
 Collect Line Fee for Facility B - D00000454 - 31DEC2018
     Mx Execute Template With Multiple Data    Line Fee Payment for D00000454    ${CBAUAT_ExcelPath}   4    SERV29_CommitmentFeePayment
