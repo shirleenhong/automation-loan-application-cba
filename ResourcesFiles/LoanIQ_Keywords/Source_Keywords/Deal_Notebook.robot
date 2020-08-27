@@ -1301,8 +1301,8 @@ Add Admin Fee in Deal Notebook
     Mx LoanIQ Set    JavaWindow("title:=Select an Income Method.*").JavaRadioButton("label:=${IncomeMethod}")    ON
     mx LoanIQ click    ${LIQ_AdminFees_IncomeMethod_OK_Button}
     mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}    
-    ${STATUS}    Run Keyword If    '${IncomeMethod}'=='Amortize'    Mx LoanIQ Verify Object Exist    JavaWindow("title:=.*Amortizing Admin Fee.*")    VerificationData="Yes"
-    ...    ELSE IF    '${IncomeMethod}'=='Accrue'    Mx LoanIQ Verify Object Exist    JavaWindow("title:=.*Accruing Admin Fee.*")      VerificationData="Yes"
+    ${STATUS}    Run Keyword If    '${IncomeMethod}'=='Amortize'    Mx LoanIQ Verify Object Exist    ${LIQ_AmortizingAdmin_Window}    VerificationData="Yes"
+    ...    ELSE IF    '${IncomeMethod}'=='Accrue'    Mx LoanIQ Verify Object Exist    ${LIQ_AccruingAdmin_Window}      VerificationData="Yes"
     Run Keyword If    ${STATUS}==True    Log    ${IncomeMethod} Admin Fee Notebook is displayed.
     mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
     mx LoanIQ click element if present    ${LIQ_Question_No_Button}
