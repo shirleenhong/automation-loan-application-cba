@@ -2439,7 +2439,7 @@ Set Facility Pricing Penalty Spread
     ${PenaltySpread_UI}    Convert To Number    ${PenaltySpread_UI}
     ${PenaltySpread_Value}    Convert To Number    ${PenaltySpread_Value}
     Run Keyword If    '${PenaltySpread_UI}'=='${PenaltySpread_Value}'    Log    Penalty spread sucessfully added.
-    
+
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/FacilityNotebook_Pricing Tab
     
 Add Sublimit for Facility
@@ -2664,7 +2664,7 @@ Add MIS Code
     ${result}    Run Keyword And Return Status    Should Be Equal As Strings    ${sMIS_Value_JavaTree}    ${sValue}
     Run Keyword If    '${result}'=='True'    Log    MIS Code Value is Verified   level=INFO
     Run Keyword If    '${result}'=='False'    Log    MIS Code Value is ${sMIS_Value_JavaTree} instead of ${sValue}    level=ERROR  
-    
+
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/FacilityNotebook_MIS Code
     
 Go to Facility Pricing Tab

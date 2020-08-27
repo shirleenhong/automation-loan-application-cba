@@ -36,7 +36,8 @@ Setup Facility Template D00001053
     Add Facility Currency    &{ExcelPath}[CurrencyLimit]
         
     ### Add Facility Borrower
-    Add Borrower    &{ExcelPath}[Borrower_Currency]    &{ExcelPath}[Facility_BorrowerSGName]    &{ExcelPath}[Facility_BorrowerPercent]    &{ExcelPath}[Facility_Borrower]
+    ${Converted_FacilityBorrower}    Convert To UpperCase    &{ExcelPath}[Facility_Borrower]
+    Add Borrower    &{ExcelPath}[Borrower_Currency]    &{ExcelPath}[Facility_BorrowerSGName]    &{ExcelPath}[Facility_BorrowerPercent]    ${Converted_FacilityBorrower}
     ...    &{ExcelPath}[Facility_GlobalLimit]    &{ExcelPath}[Facility_BorrowerMaturity]    &{ExcelPath}[Facility_EffectiveDate]
     
     Validate Multi CCY Facility
