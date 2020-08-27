@@ -23,7 +23,8 @@ Deal Setup
     
     Mx Execute Template With Multiple Data    Setup Facility Template D00001151    ${CBAUAT_ExcelPath}    ${Facility_A}    CRED02_FacilitySetup 
     Mx Execute Template With Multiple Data    Setup Facility Fees D00001151    ${CBAUAT_ExcelPath}    ${Facility_A}    CRED08_FacilityFeeSetup
-    Mx Execute Template With Multiple Data    Setup MIS Code D00001151    ${CBAUAT_ExcelPath}    ${Facility_A}    CRED08_FacilityFeeSetup
+    ### confirmed with Ritz that Setup MIS Code D00001151 is no longer required ###
+    # Mx Execute Template With Multiple Data    Setup MIS Code D00001151    ${CBAUAT_ExcelPath}    ${Facility_A}    CRED08_FacilityFeeSetup
     
     Mx Execute Template With Multiple Data    Setup Facility Template D00001151    ${CBAUAT_ExcelPath}    ${Facility_B}    CRED02_FacilitySetup
     Mx Execute Template With Multiple Data    Setup Facility Fees D00001151    ${CBAUAT_ExcelPath}    ${Facility_B}    CRED08_FacilityFeeSetup

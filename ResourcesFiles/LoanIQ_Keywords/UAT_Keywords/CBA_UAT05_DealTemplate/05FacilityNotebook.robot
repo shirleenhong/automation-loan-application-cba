@@ -5,6 +5,7 @@ Resource    ../../../../Configurations/LoanIQ_Import_File.robot
 Setup Facility Template D00001151
     [Documentation]    High Level Keyword for Facility Template Creation
     ...    author: henstone    13AUG2019    Initial create
+    ...    update: mcastro    27Aug2020    Deleted screenshot; comment out duplicate step
     [Arguments]    ${ExcelPath}
    
     ### New Facility Name Generation ###
@@ -14,40 +15,37 @@ Setup Facility Template D00001151
     Write Data To Excel    CRED01_DealSetup    Facility_Name    &{ExcelPath}[rowid]    ${FacilityName}    ${CBAUAT_ExcelPath}
     Write Data To Excel    CRED02_FacilitySetup    Facility_Name    &{ExcelPath}[rowid]    ${FacilityName}    ${CBAUAT_ExcelPath}
     Write Data To Excel    CRED08_FacilityFeeSetup    Facility_Name    &{ExcelPath}[rowid]    ${FacilityName}    ${CBAUAT_ExcelPath}
-    Write Data To Excel    CRED01_DealSetup    Facility_Name    &{ExcelPath}[rowid]    ${FacilityName}    ${CBAUAT_ExcelPath}
+    ### Comment out duplicate step ### 
+    # Write Data To Excel    CRED01_DealSetup    Facility_Name    &{ExcelPath}[rowid]    ${FacilityName}    ${CBAUAT_ExcelPath}
     
     ${FacilityName}    Read Data From Excel    CRED02_FacilitySetup    Facility_Name   &{ExcelPath}[rowid]    ${CBAUAT_ExcelPath}
     ${Deal_Name}    Read Data From Excel    CRED02_FacilitySetup    Deal_Name   &{ExcelPath}[rowid]    ${CBAUAT_ExcelPath}
     
-    ### Facility Creation ###S
+    ### Facility Creation ###
     Add New Facility    ${Deal_Name}    &{ExcelPath}[Deal_Currency]    ${FacilityName}
     ...    &{ExcelPath}[Facility_Type]    &{ExcelPath}[Facility_ProposedCmtAmt]    &{ExcelPath}[Facility_Currency]
     Verify Main SG Details    &{ExcelPath}[Facility_ServicingGroup]    &{ExcelPath}[Facility_Customer]    &{ExcelPath}[Facility_SGLocation]
-    Take Screenshot    FacilityNotebook_Add New Facility
     
     ### Summary Tab: Set Facility Dates ###
     Set Facility Dates    &{ExcelPath}[Facility_AgreementDate]    &{ExcelPath}[Facility_EffectiveDate]    &{ExcelPath}[Facility_ExpiryDate]    &{ExcelPath}[Facility_MaturityDate]
-    Take Screenshot    FacilityNotebook_Summary Tab
     
     ### Types/Purpose Tab: Enter Multiple Risk Types ###
     Set Facility Risk Type    &{ExcelPath}[Facility_RiskType]
     
     ### Types/Purpose Tab: Enter Loan Purpose Type ###
     Set Facility Loan Purpose Type    &{ExcelPath}[Facility_LoanPurposeType]
-    Take Screenshot    FacilityNotebook_Types and Purpose Tab
     
     ### Sublimit/Cust Tab: Add Facility Borrower ###
     Add Borrower    &{ExcelPath}[Borrower_Currency]    &{ExcelPath}[Facility_BorrowerSGName]    &{ExcelPath}[Facility_BorrowerPercent]    &{ExcelPath}[Facility_Borrower]
     ...    &{ExcelPath}[Facility_GlobalLimit]    &{ExcelPath}[Facility_BorrowerMaturity]    &{ExcelPath}[Facility_EffectiveDate]
-    Take Screenshot    FacilityNotebook_Sublimit and Cust Tab
     
     ### Codes Tab: General Information ###
     Validate General Information Details    &{ExcelPath}[Facility_SIC]    &{ExcelPath}[Facility_OwningBranch]    &{ExcelPath}[Facility_FundingDesk]    &{ExcelPath}[Facility_ProcessingArea]
-    Take Screenshot    FacilityNotebook_Codes Tab
     
 Setup Facility Fees D00001151   
     [Documentation]    High-level keyword for Facility Pricing set up.
     ...    author: henstone    13AUG2019    Initial create
+    ...    @update: mcastro    27Aug2020    Removed screenshot    
     [Arguments]    ${ExcelPath}
     
     ### BBSW - Mid Base Rate Code Formula and Locator Preparation ###
@@ -61,7 +59,6 @@ Setup Facility Fees D00001151
     ...    ${ExcelPath}[Interest_RateBasis]    ${ExcelPath}[Interest_SpreadValue]    ${BBSW_MID_BasRateCode} 
 
     Set Facility Pricing Penalty Spread    &{ExcelPath}[Penalty_Spread]    &{ExcelPath}[Penalty_Status]
-    Take Screenshot    FacilityNotebook_Pricing Tab
     
     Validate Facility 
     mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button} 
@@ -72,12 +69,12 @@ Setup MIS Code D00001151
     [Documentation]    High Level Keyword for Facility MIS Code Addition.
     ...    @author: hstone    13AUG2019    Initial create
     ...    @update: hstone    21AUG2019    Added Warning Window Confirmation
+    ...    @update: mcastro    27Aug2020    Delete screenshot
     [Arguments]    ${ExcelPath}
     Open Existing Deal    &{ExcelPath}[Deal_Name]
     Navigate to Facility Notebook from Deal Notebook    &{ExcelPath}[Facility_Name]
     
     Add MIS Code    ${ExcelPath}[MIS_Code]    ${ExcelPath}[MIS_Value]
-    Take Screenshot    FacilityNotebook_MIS Code
     Validate Facility 
     mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button} 
     mx LoanIQ click element if present    ${LIQ_Warning_OK_Button} 
