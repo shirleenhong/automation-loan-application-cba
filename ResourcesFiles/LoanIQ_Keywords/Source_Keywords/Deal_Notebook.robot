@@ -158,7 +158,7 @@ Set Deal Borrower
     ${Borrower_Name}    Acquire Argument Value    ${sBorrower_Name}
     ${Borrower_Location}    Acquire Argument Value    ${sBorrower_Location}
 
-    Mx LoanIQ Select Window Tab    ${LIQ_DealNotebook_Tab}    Summary   
+    Mx LoanIQ Select Window Tab    ${LIQ_DealNotebook_Tab}    Summary  
     mx LoanIQ click element if present    ${LIQ_InquiryMode_Button}
     mx LoanIQ click    ${LIQ_DealSummary_Add_Button}
     Validate Add Deal Borrower Select
@@ -1868,11 +1868,14 @@ Set Servicing Group Remittance Instructions
 Validate Remittance Instruction Selection List If Marked All
     [Documentation]    This keyword checks the Remittance Instruction Selection List if all Methods are selected.
     ...    @author: bernchua
+    ...    @author: mcastro    26Aug2020    -added screenshot
     mx LoanIQ click    ${LIQ_ServicingGroup_RemittanceInstructions_Button}
     mx LoanIQ activate    ${LIQ_RISelectionList_Window}
     ${MarkAll_Enabled}    Mx LoanIQ Get Data    ${LIQ_RISelectionList_MarkAll_Checkbox}    enabled%value
     Run Keyword If    '${MarkAll_Enabled}'=='0'    Mx LoanIQ Set    ${LIQ_RISelectionList_MarkAll_Checkbox}    ON
     mx LoanIQ click    ${LIQ_RISelectionList_OK_Button}
+    
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/DealAdminAgentWindow_ServicingGroup
     
 Validate Deal As Not Sole Lender
     [Documentation]    This keyword verifies the Deal if it's not a Sole Lender, and unticks the checkbox if it's enabled.
