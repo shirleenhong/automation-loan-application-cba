@@ -7,6 +7,7 @@ Setup Deal D00001053
     [Documentation]    This keyword is the template for setting up UAT Deal 2
     ...                @author: bernchua    28JUN2019    Initial create
     ...                @update: bernchua    21AUG2019    Added keyword for setting Deal as Sole Lender
+    ...                @update: rmendoza    26AUG2020    converted borrower name to upppercase
     [Arguments]    ${ExcelPath}
     ${Deal_Name}    ${Deal_Alias}    Generate And Return Deal Name And Alias    &{ExcelPath}[Deal_NamePrefix]    &{ExcelPath}[Deal_AliasPrefix]
     ${Borrower_ShortName}    Read Data From Excel    ORIG03_Customer    LIQCustomer_ShortName    &{ExcelPath}[rowid]    ${CBAUAT_ExcelPath}   
@@ -27,7 +28,8 @@ Setup Deal D00001053
     Unrestrict Deal
     
     ### Summary Tab ###
-    Set Deal Borrower    ${Borrower_ShortName}    ${Borrower_Location}
+    ${Converted_BorrowerName}    Convert To UpperCase    ${Borrower_ShortName}
+    Set Deal Borrower    ${Converted_BorrowerName}    ${Borrower_Location}
     Set Deal Borrower Servicing Group    &{ExcelPath}[Borrower_SG_Alias]    &{ExcelPath}[Borrower_SG_Name]    &{ExcelPath}[Borrower_ContactName]    &{ExcelPath}[Borrower_PreferredRIMthd1]
     Go To Deal Borrower Preferred RI Window
     Mark All Preferred Remittance Instruction
