@@ -20,13 +20,6 @@
 		<nature>org.robotframework.ide.eclipse.main.plugin.robotNature</nature>
 		<nature>org.python.pydev.pythonNature</nature>
 	</natures>
-	<linkedResources>
-		<link>
-			<name>libspecs/GenericLib.py</name>
-			<type>1</type>
-			<location>C:/UTF_Installation/UTF_Setup/UnifiedTestFramework/Libraries/Common/GenericLib.py</location>
-		</link>
-	</linkedResources>
 	<filteredResources>
 		<filter>
 			<id>0</id>
