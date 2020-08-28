@@ -33,7 +33,7 @@ Create Repricing for Loan AA in Deal D00000963
     Set RolloverConversion Notebook Rates    &{ExcelPath}[Rollover_BaseRate]
     ${AllInRate}    Add Borrower Base Rate and Facility Spread    &{ExcelPath}[Rollover_BaseRate]    ${Facility_Spread}
     ${AllInRate}    Set Variable    ${AllInRate}%
-    Take Screenshot    LoanRepricing-Rates
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LoanRepricing-Rates
     Validate String Data In LIQ Object    ${LIQ_RolloverConversion_Window}    ${LIQ_RolloverConversion_AllInRate_Text}    ${AllInRate}
     
     ### Setting up of Repayment Schedule
@@ -49,7 +49,7 @@ Create Repricing for Loan AA in Deal D00000963
     Click OK in Add Items for Flexible Schedule
     
     Click OK in Flexible Schedule Window
-    Take Screenshot    LoanNotebook-RepaymentSchedule
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LoanNotebook-RepaymentSchedule
     Save and Exit Repayment Schedule For Loan
     ### End of Repayment Schedule setup script 
     
@@ -65,16 +65,16 @@ Create Repricing for Loan AA in Deal D00000963
     Login to Loan IQ    ${MANAGER_USERNAME}    ${MANAGER_PASSWORD}
     Navigate Transaction in WIP    Outstandings    Awaiting Approval    Loan Repricing    &{ExcelPath}[Deal_Name]
     Navigate Notebook Workflow    ${LIQ_LoanRepricingForDeal_Window}    ${LIQ_LoanRepricingForDeal_Workflow_Tab}    ${LIQ_LoanRepricingForDeal_Workflow_JavaTree}    Approval
-    Take Screenshot    LoanRepricing-Approved
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LoanRepricing-Approved
     
     Navigate Notebook Workflow    ${LIQ_LoanRepricingForDeal_Window}    ${LIQ_LoanRepricingForDeal_Workflow_Tab}    ${LIQ_LoanRepricingForDeal_Workflow_JavaTree}    Send to Rate Approval
     Logout from Loan IQ
     Login to Loan IQ    ${SUPERVISOR_USERNAME}    ${SUPERVISOR_PASSWORD}
     Navigate Transaction in WIP    Outstandings    Awaiting Rate Approval    Loan Repricing    &{ExcelPath}[Deal_Name]
     Navigate Notebook Workflow    ${LIQ_LoanRepricingForDeal_Window}    ${LIQ_LoanRepricingForDeal_Workflow_Tab}    ${LIQ_LoanRepricingForDeal_Workflow_JavaTree}    Rate Approval
-    Take Screenshot    LoanRepricing-RateApproved
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LoanRepricing-RateApproved
     Navigate Notebook Workflow    ${LIQ_LoanRepricingForDeal_Window}    ${LIQ_LoanRepricingForDeal_Workflow_Tab}    ${LIQ_LoanRepricingForDeal_Workflow_JavaTree}    Release
-    Take Screenshot    LoanRepricing-Released
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LoanRepricing-Released
     
     Close All Windows on LIQ
     Logout from Loan IQ
