@@ -6,8 +6,9 @@ Create Comprehensive Repricing for Syndicated Deal
     [Documentation]    This is a high-level keyword to Create Comprehensive Repricing for Syndicated deal using Auto-Gen Repricing
     ...    @author: ritragel
     ...    @update: jdelacru    - 05MAR2019    - Deleted high level for Comprehensive Repricing for Scenario 5
+    ...    @udpate: dfajardo    - 21AUG2020    - Updated Repricing testscripts includes only Principal Payments     
     [Arguments]    ${ExcelPath}
-    
+
     ###Login to Original User###
     Logout from Loan IQ
     Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
@@ -22,30 +23,20 @@ Create Comprehensive Repricing for Syndicated Deal
     Select Loan to Reprice    &{ExcelPath}[Loan_Alias]
     Select Repricing Type    &{ExcelPath}[Repricing_Type]
     Select Loan Repricing for Deal    &{ExcelPath}[Loan_Alias]
-    Add Repricing Detail    &{ExcelPath}[Repricing_Add_Option]    ${rowid}    &{ExcelPath}[Pricing_Option]
-    ###Add Interest Payment for Loan Repricing
     
-    ###Cashflows Notebook - Create Cashflows###
-    Navigate to Create Cashflow for Loan Repricing
-    Verify if Method has Remittance Instruction    &{ExcelPath}[Borrower_ShortName]    &{ExcelPath}[Remittance_Description]    &{ExcelPath}[Remittance_Instruction]
-    Verify if Method has Remittance Instruction    &{ExcelPath}[Lender1_ShortName]    &{ExcelPath}[Remittance1_Description]    &{ExcelPath}[Remittance1_Instruction]
-    Verify if Method has Remittance Instruction    &{ExcelPath}[Lender2_ShortName]    &{ExcelPath}[Remittance2_Description]    &{ExcelPath}[Remittance2_Instruction]
-    Verify if Status is set to Do It    &{ExcelPath}[Borrower_ShortName]  
-    Verify if Status is set to Do It    &{ExcelPath}[Lender1_ShortName]
-    Verify if Status is set to Do It    &{ExcelPath}[Lender2_ShortName]
-    mx LoanIQ click    ${LIQ_Cashflows_OK_Button}
-    
-    ###Repricing Notebook - Setup Repricing###  
+   ###Repricing Notebook - Setup Repricing###  
     ${NewLoanAlias}    Setup Repricing    &{ExcelPath}[Repricing_Add_Option_Setup]    &{ExcelPath}[Base_Rate]    &{ExcelPath}[Pricing_Option]    &{ExcelPath}[Rollover_Amount]    &{ExcelPath}[Repricing_Frequency]
       
     ${SysDate}    Get System Date
-    ${AdjustedDueDate}    Add Days to Date    ${SysDate}    30
-    Write Data To Excel    SERV08_ComprehensiveRepricing    Loan_Alias    ${rowid}    ${NewLoanAlias}
+    ${AdjustedDueDate}    Add Days to Date    ${SysDate}    &{ExcelPath}[Days]
+    Write Data To Excel    SERV08_ComprehensiveRepricing    NewLoanAlias    ${rowid}    ${NewLoanAlias}
     Write Data To Excel    SERV21_InterestPayments    ScheduledActivityReport_Date    ${rowid}    ${AdjustedDueDate}
-    Write Data To Excel    SERV21_InterestPayments    Loan_Alias    ${rowid}    ${NewLoanAlias}
-    Write Data To Excel    SERV40_BreakFunding    Loan_Alias    ${rowid}    ${NewLoanAlias}
-    Write Data To Excel    SERV20_UnschedPrincipalPayments    Loan_Alias    ${rowid}    ${NewLoanAlias}
+    Write Data To Excel    SERV21_InterestPayments    NewLoanAlias    ${rowid}    ${NewLoanAlias}
+    Write Data To Excel    SERV40_BreakFunding    NewLoanAlias    ${rowid}    ${NewLoanAlias}
+    Write Data To Excel    SERV20_UnschedPrincipalPayments    NewLoanAlias    ${rowid}    ${NewLoanAlias}
 
+    Add Repricing Detail    &{ExcelPath}[Repricing_Add_Option]    ${rowid}    &{ExcelPath}[Pricing_Option]
+    
     ###Creation of Repricing Schedule###
     Create Repayment Schedule - Loan Repricing
     Get Data from Automatic Schedule Setup
@@ -60,42 +51,62 @@ Create Comprehensive Repricing for Syndicated Deal
     Verify if Status is set to Do It    &{ExcelPath}[Borrower_ShortName]  
     Verify if Status is set to Do It    &{ExcelPath}[Lender1_ShortName]
     Verify if Status is set to Do It    &{ExcelPath}[Lender2_ShortName]
-    mx LoanIQ click    ${LIQ_Cashflows_OK_Button}
     
-    ###Loan Approval###
-    Send Loan Repricing for Approval
+    ##Get Transaction Amount for Cashflow###
+    ${HostBankShare}    Get Host Bank Cash in Cashflow
+    ${BorrowerTranAmount}    Get Transaction Amount in Cashflow    &{ExcelPath}[Borrower_ShortName]
+    ${Lend1TranAmount}    Get Transaction Amount in Cashflow    &{ExcelPath}[Lender1_ShortName]
+    ${Lend2TranAmount}    Get Transaction Amount in Cashflow    &{ExcelPath}[Lender2_ShortName]
     
-    Logout from Loan IQ
-    Login to Loan IQ    ${SUPERVISOR_USERNAME}    ${SUPERVISOR_PASSWORD}
-    ${Deal_Name}    Read Data From Excel    SERV08_ComprehensiveRepricing    Deal_Name    ${rowid}
-    Select Item in Work in Process    Outstandings    Awaiting Generate Rate Setting Notices    Loan Repricing    ${Deal_Name}
-    Approve Loan Repricing
-
-    ##Rate Setting Notice###
-    Send to Rate Approval
-    Logout from Loan IQ
-    Login to Loan IQ    ${MANAGER_USERNAME}    ${MANAGER_PASSWORD}
-    Select Item in Work in Process    Outstandings    Awaiting Generate Rate Setting Notices    Loan Repricing    &{ExcelPath}[Deal_Name]
-    Approve Rate Setting Notice
-    Generate Rate Setting Notices    &{ExcelPath}[Customer_Legal_Name]    &{ExcelPath}[NoticeStatus]
-            
-    #Cashflow Notebook - Release Cashflows###
-    Navigate Notebook Workflow    ${LIQ_LoanRepricingForDeal_Window}    ${LIQ_LoanRepricingForDeal_Workflow_Tab}    ${LIQ_LoanRepricingForDeal_Workflow_JavaTree}    Release Cashflows
-    Release Cashflow    &{ExcelPath}[Borrower_ShortName]|&{ExcelPath}[Lender1_ShortName]|&{ExcelPath}[Lender2_ShortName]    release
+    ${ComputedHBTranAmount}    Compute Lender Share Transaction Amount    &{ExcelPath}[Loan_RequestedAmount]    &{ExcelPath}[HostBankSharePct]
+    ${ComputedLend1TranAmount}    Compute Lender Share Transaction Amount    &{ExcelPath}[Loan_RequestedAmount]    &{ExcelPath}[LenderSharePct1]
+    ${ComputedLend2TranAmount}    Compute Lender Share Transaction Amount    &{ExcelPath}[Loan_RequestedAmount]    &{ExcelPath}[LenderSharePct2] 
     
+    Compare UIAmount versus Computed Amount    ${HostBankShare}|${Lend1TranAmount}|${Lend2TranAmount}    ${ComputedHBTranAmount}|${ComputedLend1TranAmount}|${ComputedLend2TranAmount}
+ 
     ###GL Entries###
     Navigate to GL Entries
-    ${HostBank_Debit}    Get GL Entries Amount    &{ExcelPath}[Host_Bank]    Debit Amt
-    ${Lender1_Debit}    Get GL Entries Amount    &{ExcelPath}[Lender1_ShortName]    Debit Amt
-    ${Lender2_Debit}    Get GL Entries Amount    &{ExcelPath}[Lender2_ShortName]    Debit Amt
-    ${Borrower_Credit}    Get GL Entries Amount    &{ExcelPath}[Borrower_ShortName]    Credit Amt
-    ${UITotalCreditAmt}    Get GL Entries Amount    ${SPACE}Total For:    Credit Amt
-    ${UITotalDebitAmt}    Get GL Entries Amount    ${SPACE}Total For:    Debit Amt
- 
-    ###Release Loan Repricing###
-    Navigate Notebook Workflow    ${LIQ_LoanRepricingForDeal_Window}    ${LIQ_LoanRepricingForDeal_Workflow_Tab}    ${LIQ_LoanRepricingForDeal_Workflow_JavaTree}    Release
+    ${HostBank_Debit}    Get GL Entries Amount    &{ExcelPath}[Host_Bank]    ${DEBIT_AMT_LABEL}
+    ${Lender1_Debit}    Get GL Entries Amount    &{ExcelPath}[Lender1_ShortName]    ${CREDIT_AMT_LABEL}
+    ${Lender2_Debit}    Get GL Entries Amount    &{ExcelPath}[Lender2_ShortName]    ${CREDIT_AMT_LABEL}
+    ${Borrower_Credit}    Get GL Entries Amount    &{ExcelPath}[Borrower_ShortName]    ${DEBIT_AMT_LABEL}
+    ${UITotalCreditAmt}    Get GL Entries Amount    ${SPACE}Total For:    ${CREDIT_AMT_LABEL}
+    ${UITotalDebitAmt}    Get GL Entries Amount    ${SPACE}Total For:    ${DEBIT_AMT_LABEL}
+    
+    Compare UIAmount versus Computed Amount    ${HostBankShare}|${Lend1TranAmount}|${Lend2TranAmount}    ${HostBank_Debit}|${Lender1_Debit}|${Lender2_Debit}
+    Validate if Debit and Credit Amt is Balanced    ${HostBank_Debit}|${Lender1_Debit}|${Lender2_Debit}    ${Borrower_Credit}
+    Validate if Debit and Credit Amt is equal to Transaction Amount    ${UITotalDebitAmt}    ${UITotalCreditAmt}    &{ExcelPath}[Loan_RequestedAmount]
+
+    ##Loan Approval###
+    Send Loan Repricing for Approval
+
+    Close All Windows on LIQ
+    ## LIQ Window ###
+    Logout from Loan IQ
+    Login to Loan IQ    ${SUPERVISOR_USERNAME}    ${SUPERVISOR_PASSWORD}
+    
+    ### Work in process notebook ###
+    Select Item in Work in Process    Outstandings    Awaiting Generate Rate Setting Notices    Loan Repricing    &{ExcelPath}[Deal_Name]
+   
+    ### Rate Approval ###
+    Approve Loan Repricing
+    Send to Rate Approval
+    
+    ###LIQ Window###
+    Logout from Loan IQ
+    Login to Loan IQ    ${MANAGER_USERNAME}    ${MANAGER_PASSWORD}
+    
+    ###Work in process notebook###
+    Select Item in Work in Process    Outstandings    Awaiting Generate Rate Setting Notices    Loan Repricing    &{ExcelPath}[Deal_Name]
+    Navigate to Loan Repricing Workflow and Proceed With Transaction    ${RATE_APPROVAL_STATUS}
+    
+    # ###Approve Rate Setting Notice###
+    Navigate to Loan Repricing Workflow and Proceed With Transaction    ${RELEASE_STATUS}
     
     Close All Windows on LIQ
+    Logout from Loan IQ
+    Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}    
+    
 
 Create Comprehensive Repricing for Syndicated Deal - Secondary Sale
     [Documentation]    This is a high-level keyword to Create Comprehensive Repricing for Syndicated deal using Auto-Gen Repricing

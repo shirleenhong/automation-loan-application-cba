@@ -36,8 +36,9 @@ BUS_Populate Circle Selection
 BUS_Populate Facilities Tab
     [Documentation]    This keyword is used to run the assigned low level keyword.
     ...    @author:sahalder    19JUN2020    - initial create
+    ...    @updated: dahijara    10AUG2020    - added 1 argument for runtime varname.
 
-    Run Keyword    Populate Facilities Tab    ${ARGUMENT_1}    ${ARGUMENT_2}    ${ARGUMENT_3}    ${ARGUMENT_4}    ${ARGUMENT_5}    ${ARGUMENT_6}    ${ARGUMENT_7}
+    Run Keyword    Populate Facilities Tab    ${ARGUMENT_1}    ${ARGUMENT_2}    ${ARGUMENT_3}    ${ARGUMENT_4}    ${ARGUMENT_5}    ${ARGUMENT_6}    ${ARGUMENT_7}    ${ARGUMENT_8}
     
 BUS_Populate Amts or Dates Tab
     [Documentation]    This keyword is used to run the assigned low level keyword.
@@ -147,11 +148,12 @@ BUS_Circling for Pending Assignment Sell
 
     Run Keyword    Circling for Pending Assignment Sell    ${ARGUMENT_1}
 
-BUS_Complete Portfolio Allocations Worflow for Pending Assignment Sell for Agency Deal
+BUS_Complete Portfolio Allocations Workflow for Pending Assignment Sell for Agency Deal
     [Documentation]    This keyword is used to run the assigned low level keyword.
     ...    @author: amansuet    19JUN2020    - initial create
+    ...    @update: clanding    17AUG2020    - updated keyword
 
-    Run Keyword    Complete Portfolio Allocations Worflow for Pending Assignment Sell for Agency Deal    ${ARGUMENT_1}    ${ARGUMENT_2}
+    Run Keyword    Complete Portfolio Allocations Workflow for Pending Assignment Sell for Agency Deal    ${ARGUMENT_1}    ${ARGUMENT_2}
 
 BUS_Send to Approval for Pending Assignment Sell
     [Documentation]    This keyword is used to run the assigned low level keyword.

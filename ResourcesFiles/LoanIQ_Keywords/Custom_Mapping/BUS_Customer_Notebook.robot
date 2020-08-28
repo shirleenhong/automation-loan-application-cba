@@ -292,3 +292,34 @@ BUS_Validate External Risk Rating Table
     ...    @author: hstone    10JUN2020    - initial create
 
     Run Keyword    Validate External Risk Rating Table    ${ARGUMENT_1}    ${ARGUMENT_2}    ${ARGUMENT_3}
+    
+BUS_Validate Details on Customer Remittance Instruction
+    [Documentation]    This keyword is used to run the assigned low level keyword.
+    ...    @author: ritragel    17AUG2020    - initial create
+    
+    Run Keyword    Populate Details on Customer Remittance Instructions    ${ARGUMENT_1}    ${ARGUMENT_2}    ${ARGUMENT_3}    ${ARGUMENT_4}    ${ARGUMENT_5}    ${ARGUMENT_6}    ${ARGUMENT_7}
+    ...    ${ARGUMENT_8}    ${ARGUMENT_9}    ${ARGUMENT_10}    ${ARGUMENT_11}    ${ARGUMENT_12}
+
+BUS_Add IMT Message in Remittance Instruction Detail
+    [Documentation]    This keyword is used to run the assigned low level keyword.
+    ...    @author: ritragel    17AUG2020    - initial create
+    
+    Run Keyword    Add IMT Message in Remittance Instructions Detail    ${ARGUMENT_1}
+    
+BUS_Add Swift Role in IMT message
+    [Documentation]    This keyword is used to run the assigned low level keyword.
+    ...    @author: ritragel    17AUG2020    - initial create
+    
+    Run Keyword    Add Swift Role in IMT message    ${ARGUMENT_1}    ${ARGUMENT_2}    ${ARGUMENT_3}    ${ARGUMENT_4}    ${ARGUMENT_5}    ${ARGUMENT_6}    ${ARGUMENT_7}
+           
+BUS_Update Swift Role in IMT message
+    [Documentation]    This keyword is used to run the assigned low level keyword.
+    ...    @author: ritragel    17AUG2020    - initial create
+    
+    Run Keyword    Update Swift Role in IMT message    ${ARGUMENT_1}    ${ARGUMENT_2}    ${ARGUMENT_3}    ${ARGUMENT_4}    ${ARGUMENT_5}   
+    
+BUS_Populate Details on IMT
+    [Documentation]    This keyword is used to run the assigned low level keyword.
+    ...    @author: ritragel    17AUG2020    - initial create
+    
+    Run Keyword    Populate Details on IMT   ${ARGUMENT_1}    ${ARGUMENT_2}    ${ARGUMENT_3}    ${ARGUMENT_4}    ${ARGUMENT_5}

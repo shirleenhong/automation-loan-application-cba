@@ -6,6 +6,9 @@ Set up Secondary Sale for Agency
     [Documentation]    This keyword is for setting up Secondary Sale for Agency for Syndicated Deal
     ...    @author: mgaling
     ...    @update: sahalder    19JUN2020    Updated keywords for new framework
+    ...    @update: dahijara    19AUG2020    Removed previously commented codes.
+    ...                                      Updated "Check Deal Closing Commitment Amount" and Check Host Bank Lender Share with correct argument.
+    ...                                      Added writing for Deal_ClosingCmt, sHostBank_AvailableShare, ExpectedCloseDate, Assignment_CircledDate
     [Arguments]    ${ExcelPath}    
     ###Loan IQ Desktop###
     Logout from Loan IQ
@@ -13,8 +16,10 @@ Set up Secondary Sale for Agency
     
     ###Launch Deal Notebook###
     Search Existing Deal    &{ExcelPath}[Deal_Name]
-    Check Deal Closing Commitment Amount    &{ExcelPath}[Deal_ClosingCmt]
-    Check Host Bank Lender Share    &{ExcelPath}[HostBank_LegalEntity]    &{ExcelPath}[HostBank_AvailableShare]    
+    ${Deal_ClosingCmt}    Check Deal Closing Commitment Amount
+    Write Data To Excel    TRP002_SecondarySale    Deal_ClosingCmt    ${rowid}    ${Deal_ClosingCmt}
+    ${sHostBank_AvailableShare}    Check Host Bank Lender Share    &{ExcelPath}[HostBank_LegalEntity]
+    Write Data To Excel    TRP002_SecondarySale    HostBank_AvailableShare    ${rowid}    ${sHostBank_AvailableShare}
     
     ###Circle Selection Window###
     Launch Circle Select    &{ExcelPath}[CircleSelection_Transaction]
@@ -24,22 +29,23 @@ Set up Secondary Sale for Agency
     ###Populate Circle Notebook###
     ${Sell_Amount}    Populate Facilities Tab    &{ExcelPath}[PctofDeal]    &{ExcelPath}[Deal_ClosingCmt]    &{ExcelPath}[Sell_Amount]    &{ExcelPath}[HostBank_AvailableShare]    &{ExcelPath}[Int_Fee]    &{ExcelPath}[PaidBy]    &{ExcelPath}[BuySell_Price]
     Write Data To Excel    TRP002_SecondarySale    Sell_Amount    ${rowid}    ${Sell_Amount}
-    Populate Amts or Dates Tab    &{ExcelPath}[ExpectedCloseDate]
+    
+    ${CurrentBusinessDate}    Get System Date
+    Write Data To Excel    TRP002_SecondarySale    ExpectedCloseDate    ${rowid}    ${CurrentBusinessDate}
+    Write Data To Excel    TRP002_SecondarySale    Assignment_CircledDate    ${rowid}    ${CurrentBusinessDate}
+    Populate Amts or Dates Tab    ${CurrentBusinessDate}
     Add Contacts    &{ExcelPath}[Buyer_Lender]    &{ExcelPath}[Buyer_Location]    &{ExcelPath}[Buyer_ContactName] 
     Add Servicing Groups    &{ExcelPath}[Buyer_Lender]    &{ExcelPath}[Seller_LegalEntity]
     
-    
-    
     ###Circle Notebook - Workflow Tab###
     Complete Assignment Fee Sell on Event Fees
-    ###### Circling for Assignment Sell    &{ExcelPath}[Assignment_CircledDate]    
     Complete Portfolio Allocations for Assignment Sell    &{ExcelPath}[Seller_Riskbook]    &{ExcelPath}[Sell_Amount]        
     Assignment Send to Approval
     
     ###Circle Notebook - Workflow Tab###
     Logout from Loan IQ
     Login to Loan IQ    ${SUPERVISOR_USERNAME}    ${SUPERVISOR_PASSWORD}
-    Assignment Approval    &{ExcelPath}[WIPTransaction_Type]    &{ExcelPath}[Lender_Host]    &{ExcelPath}[CircleTransaction_Type]    &{ExcelPath}[Deal_Name]    &{ExcelPath}[Assignment_CircledDate]    &{ExcelPath}[QualifiedBuyerCheckbox_Label]    
+    Assignment Approval    &{ExcelPath}[WIPTransaction_Type]    &{ExcelPath}[Lender_Host]    &{ExcelPath}[CircleTransaction_Type]    &{ExcelPath}[Deal_Name]    ${CurrentBusinessDate}    &{ExcelPath}[QualifiedBuyerCheckbox_Label]    
     
     ###Circle Notebook - Workflow Tab###
     Logout from Loan IQ
@@ -52,8 +58,7 @@ Set up Secondary Sale for Agency
     Logout from Loan IQ
     Login to Loan IQ    ${MANAGER_USERNAME}    ${MANAGER_PASSWORD}
     Assignment Settlement Approval    &{ExcelPath}[WIPTransaction_Type]    &{ExcelPath}[Lender_Host]    &{ExcelPath}[CircleTransaction_Type]    &{ExcelPath}[Deal_Name] 
-    Close Assignment Transaction    &{ExcelPath}[WIPTransaction_Type]    &{ExcelPath}[Lender_Host]    &{ExcelPath}[CircleTransaction_Type]    &{ExcelPath}[Deal_Name]    &{ExcelPath}[Assignment_CircledDate] 
-    #####Complete Cashflow in Assignment Transaction    &{ExcelPath}[Buyer_Lender]    &{ExcelPath}[Remittance_Description]    &{ExcelPath}[Remittance_Instruction]    &{ExcelPath}[Remittance_Status]
+    Close Assignment Transaction    &{ExcelPath}[WIPTransaction_Type]    &{ExcelPath}[Lender_Host]    &{ExcelPath}[CircleTransaction_Type]    &{ExcelPath}[Deal_Name]    ${CurrentBusinessDate}
     
     ###Check the remaing lender share###
     Logout from Loan IQ

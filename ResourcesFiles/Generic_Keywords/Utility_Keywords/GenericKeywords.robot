@@ -368,6 +368,7 @@ Search Existing Deal
      [Documentation]    This keyword search the existing deal on LIQ.
     ...    @author: mgaling
     ...    @update: fmamaril    15MAY2020    - added argument for keyword pre processing
+    ...    @update: dahijara    10AUG2020    - Added screenshot
     [Arguments]    ${sDeal_Name}
     ### GetRuntime Keyword Pre-processing ###
     ${Deal_Name}    Acquire Argument Value    ${sDeal_Name}
@@ -375,10 +376,12 @@ Search Existing Deal
     Select Actions    [Actions];Deal
     mx LoanIQ activate    ${LIQ_DealSelect_Window}   
     mx LoanIQ enter    ${LIQ_DealSelect_DealIdentifyBy_Textfield}    ${Deal_Name}   
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/DealSelect
     mx LoanIQ click    ${LIQ_DealSelect_Search_Button} 
     mx LoanIQ click    ${LIQ_DealListByName_OK_Button}
     mx LoanIQ activate    ${LIQ_DealNotebook_Window}
-    mx LoanIQ click element if present    ${LIQ_DealNotebook_InquiryMode_Button} 
+    mx LoanIQ click element if present    ${LIQ_DealNotebook_InquiryMode_Button}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/DealNotebook
     
 Close Active Windows
     [Documentation]    This keyword closes main active windows on LIQ.
@@ -444,7 +447,7 @@ Get System Date
     ...    @update: hstone    28APR2020    - Added Keyword Post-process: Save Runtime Value
     ...                                    - Added Optional Argument: ${sRunTimeVar_SystemDate}
     [Arguments]    ${sRunTimeVar_SystemDate}=None
-    # Mx Activate Window    ${LIQ_Window}
+    Mx Activate Window    ${LIQ_Window}
     ${temp}    Mx LoanIQ Get Data    ${LIQ_Window}    title%temp
     # log to console    Label: ${temp}
     ${SystemDate}    Fetch From Right    ${temp}    :${SPACE}    
@@ -2022,6 +2025,7 @@ Calculate for System Date Offset
     ...    ELSE    Fail    Invalid Offset Days Input. Value should contain '+' or '-'.
 
     [Return]    ${System_Date_With_Offset}
+    
 Driver Script
     [Documentation]    This keyword is used to execute list of scenarios on excel file.
     ...    @author: dahijara    24MAR2020    - initial create
