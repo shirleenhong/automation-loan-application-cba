@@ -17,6 +17,10 @@ Create Quick Party Onboarding for CBA UAT Deal 5 - PTY001
     Mx Execute Template With Multiple Data    Create Deal Borrower initial details in Quick Party Onboarding for UAT Deal Five    ${CBAUAT_ExcelPath}    1    PTY001_QuickPartyOnboarding
     Mx Execute Template With Multiple Data    Populate Quick Enterprise Party with Approval    ${CBAUAT_ExcelPath}    1    PTY001_QuickPartyOnboarding
 
+Search Customer and Complete its Borrower Profile Creation - ORIG03
+    [Tags]    02 Complete Borrower's Profile - 0RIG03
+    Mx Execute Template With Multiple Data    Search Customer and Complete its Borrower Profile Creation with default values for UAT Deal Five     ${CBAUAT_ExcelPath}    ${rowid}    ORIG03_Customer
+
 Deal Setup
     [Tags]    02 Deal Setup
     Mx Execute Template With Multiple Data    Setup Deal D00001151    ${CBAUAT_ExcelPath}    ${rowid}    CRED01_DealSetup 
