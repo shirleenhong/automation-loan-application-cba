@@ -25,7 +25,7 @@ Deal Template D00000454
     [Tags]    03 Deal Setup - CRED01
     Mx Execute Template With Multiple Data    Setup Deal D00000454    ${CBAUAT_ExcelPath}    ${rowid}    CRED01_DealSetup
     Mx Execute Template With Multiple Data    Setup Deal D00000454 Interest Pricing Options    ${CBAUAT_ExcelPath}    1-2    CRED01_DealSetup
-    Mx Execute Template With Multiple Data    Setup Deal Amortizing Admin Fee    ${CBAUAT_ExcelPath}    1    CRED01_DealSetup
+    Mx Execute Template With Multiple Data    Setup Deal Amortizing Admin Fee    ${CBAUAT_ExcelPath}    ${rowid}    CRED01_DealSetup
     Mx Execute Template With Multiple Data    Setup Facility Template D00000454-1    ${CBAUAT_ExcelPath}    1    CRED02_FacilitySetup
     Navigate to Interest Pricing
     Mx Execute Template With Multiple Data    Add Interest Pricing Matrix Facility D00000454    ${CBAUAT_ExcelPath}    3-7    CRED08_FacilityFeeSetup

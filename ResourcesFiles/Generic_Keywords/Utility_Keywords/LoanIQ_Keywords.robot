@@ -202,3 +202,16 @@ Verify if String Exists as Java Tree Header
     \    ${bExistenceStatus}    Run Keyword And Return Status    Should Be Equal As Strings    ${sTableHeader}    ${sStringToFind}     
 
     [Return]    ${bExistenceStatus}
+    
+Click Loan IQ Element
+    [Documentation]    Click on element identified by locator.
+    ...    @author:  ap    27AAUG2020    Initail create
+    [Arguments]    ${sElement_Locator}
+    mx LoanIQ click    ${sElement_Locator}
+    
+Select Loan IQ Java Window Tab
+    [Documentation]    Used to select the Java window tab.
+    ...    @author:  ap    27AAUG2020    Initail create
+    ...    locator, input, Processtimeout=180
+    [Arguments]    ${sJavaWindow_Locator}    ${sInput}    ${sTimeout}=180    
+    Mx LoanIQ Select Window Tab    ${sJavaWindow_Locator}    ${sInput}    ${sTimeout}    
