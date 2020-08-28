@@ -8,6 +8,7 @@ Create Repricing for Loan AA in Deal D00000963
     ...                @author: bernchua    26AUG2019    Inital create
     ...                @author: bernchua    10SEP2019    Added setting up of Repayment Schedule during Repricing
     ...                @author: bernchua    18SEP2019    Updated keyword name
+    ...                @update: aramos      28AUG2020    Update Take Screenshots
     [Arguments]    ${ExcelPath}
     
     ${Facility_Spread}    Run Keyword If    '&{ExcelPath}[rowid]'=='1'    Read Data From Excel    CRED02_FacilitySetup    Interest_SpreadValue    1    ${CBAUAT_ExcelPath} 
