@@ -9,7 +9,6 @@ ${Facility_A-Outstanding_A}    1
 ${Facility_A-Outstanding_B}    2
 ${Facility_B-Outstanding_A}    3
 ${Facility_C-Outstanding_A}    4
-
 *** Test Cases ***
 Create Quick Party Onboarding for CBA UAT Deal 5 - PTY001
     [Tags]    01 Create Party within Essence - PTY001
