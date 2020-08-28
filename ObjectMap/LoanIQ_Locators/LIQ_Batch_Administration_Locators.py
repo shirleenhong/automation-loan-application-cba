@@ -29,6 +29,7 @@ LIQ_Execution_Scheduled_Items_Count = 'JavaWindow("title:=Exec Journal for MASTE
 LIQ_Execution_Window = 'JavaWindow("title:=Exec Journal for MASTER")'
 LIQ_Execution_Scheduled_JavaTree = 'JavaWindow("title:=Exec Journal for MASTER").JavaTree("attached text:=Execution Date:")'
 LIQ_Execution_Scheduled_File_Refresh = 'JavaWindow("title:=Exec Journal for MASTER").JavaMenu("label:=File").JavaMenu("label:=Refresh")'
+LIQ_Execution_Scheduled_Location_ComboBox = 'JavaWindow("title:=.*Exec Journal.*").JavaList("attached text:=Location.*")'
 
 ###ENVIRONMENT PARAMETER###
 LIQ_Environment_Parameter_Window = 'JavaWindow("title:=Environment Parameters")'
