@@ -152,7 +152,7 @@ Add Contact in Primary
     ${ContactName}    Acquire Argument Value    ${sContactName}  
 
     Mx LoanIQ Select Window Tab    ${LIQ_OrigPrimaries_Tab}    Contacts
-    mx LoanIQ click    ${LIQ_Contact_AddContacts_Button} 
+    mx LoanIQ click    ${LIQ_Contact_AddContacts_Button}
     Mx LoanIQ Select String    ${LIQ_CircleContacts_Available_JavaTree}    ${ContactName}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/CircleNotebook_Contacts      
     mx LoanIQ click    ${LIQ_CircleContacts_OK_Button} 
