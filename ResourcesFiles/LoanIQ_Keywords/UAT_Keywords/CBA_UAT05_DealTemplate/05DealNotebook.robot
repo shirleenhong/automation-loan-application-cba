@@ -86,7 +86,6 @@ Setup Primaries for Deal D00001151
     ${Deal_Name}    Read Data From Excel    CRED01_DealSetup    Deal_Name    1    ${CBAUAT_ExcelPath}
     
     ### Add Host Bank Primary Lender
-
     ${ExpCode_Description}    Add Lender and Location    &{ExcelPath}[Deal_Name]    &{ExcelPath}[Primary_Lender]    &{ExcelPath}[Primary_LenderLoc]    &{ExcelPath}[Primary_RiskBookExpCode]    &{ExcelPath}[Primary_TransactionType]
     Set Sell Amount and Percent of Deal    &{ExcelPath}[Primary_PctOfDeal]
     Add Pro Rate    &{ExcelPath}[Primary_BuySellPrice]

@@ -22,7 +22,7 @@ Search Customer and Complete its Borrower Profile Creation - ORIG03
     Mx Execute Template With Multiple Data    Search Customer and Complete its Borrower Profile Creation with default values for UAT Deal Five     ${CBAUAT_ExcelPath}    ${rowid}    ORIG03_Customer
 
 Deal Setup
-    [Tags]    02 Deal Setup
+    [Tags]    02 Deal Setup   
     Mx Execute Template With Multiple Data    Setup Deal D00001151    ${CBAUAT_ExcelPath}    ${rowid}    CRED01_DealSetup 
     
     Mx Execute Template With Multiple Data    Setup Facility Template D00001151    ${CBAUAT_ExcelPath}    ${Facility_A}    CRED02_FacilitySetup 
@@ -30,11 +30,9 @@ Deal Setup
     
     Mx Execute Template With Multiple Data    Setup Facility Template D00001151    ${CBAUAT_ExcelPath}    ${Facility_B}    CRED02_FacilitySetup
     Mx Execute Template With Multiple Data    Setup Facility Fees D00001151    ${CBAUAT_ExcelPath}    ${Facility_B}    CRED08_FacilityFeeSetup
-    Mx Execute Template With Multiple Data    Setup MIS Code D00001151    ${CBAUAT_ExcelPath}    ${Facility_B}    CRED08_FacilityFeeSetup
     
     Mx Execute Template With Multiple Data    Setup Facility Template D00001151    ${CBAUAT_ExcelPath}    ${Facility_C}    CRED02_FacilitySetup
     Mx Execute Template With Multiple Data    Setup Facility Fees D00001151    ${CBAUAT_ExcelPath}    ${Facility_C}    CRED08_FacilityFeeSetup
-    Mx Execute Template With Multiple Data    Setup MIS Code D00001151    ${CBAUAT_ExcelPath}    ${Facility_C}    CRED08_FacilityFeeSetup
     
     Mx Execute Template With Multiple Data    Setup Primaries for Deal D00001151    ${CBAUAT_ExcelPath}    ${rowid}    CRED01_DealSetup
     Mx Execute Template With Multiple Data    Approve and Close Deal D00001151    ${CBAUAT_ExcelPath}    ${rowid}    CRED01_DealSetup
