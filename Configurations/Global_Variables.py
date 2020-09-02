@@ -231,6 +231,7 @@ CONTACTS_TAB = "Contacts"
 ### Payment Type ###
 FEE_PAYMENT_FROM_BORROWER_TYPE = "Fee Payment From Borrower"
 ADMIN_FEE_AMORT = "Adm Fee (Amort)"
+
 ### Amendment Tab ###
 EVENTS_TAB = "Events"
 
@@ -258,4 +259,5 @@ INTEREST_PAYMENT = "Interest Payment"
 SHORT_NAME = "Short Name"
 HOST_BANK = "Host Bank"
 ASSIGNMENT = "Assignment"
-MATURITY_DATE = "Maturity Date"
+
+MULTIPLE_REFERENCE = "False"

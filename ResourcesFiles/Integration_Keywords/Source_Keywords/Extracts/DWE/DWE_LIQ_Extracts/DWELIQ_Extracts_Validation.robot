@@ -7,6 +7,7 @@ Validate Execution Journal for DWE LIQ Extract
     [Documentation]    This keyword is used to go to Actions > Batch Administration and validate TEST_DE Batch Nets if data are correct.
     ...    sZone value format must be ZONE2 or ZONE3.
     ...    @author: clanding    09JUL2020    - initial create
+    ...    @update: clanding    01SEP2020    - added screenshot
     [Arguments]    ${sZone}    ${sJobName}    ${sBPR_Name}
 
     Select Actions    [Actions];Batch Administration
@@ -16,6 +17,7 @@ Validate Execution Journal for DWE LIQ Extract
     ${Job_RC_UI}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_Execution_Scheduled_JavaTree}    ${sJobName}%Job RC%Job_RC_UI
     ${BPR_Name_UI}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_Execution_Scheduled_JavaTree}    ${sJobName}%BPR Name%BPR_Name_UI
     ${Location_UI}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_Execution_Scheduled_JavaTree}    ${sJobName}%Location%Location_UI
+    Take Screenshot    ExecutionJournal_${DWE_BATCH_NET}_${sZone}
     Close All Windows on LIQ
 
     Compare Two Strings    0    ${Job_RC_UI}
@@ -26,11 +28,13 @@ Get Business Date by Batch Net for DWE
     [Documentation]    This keyword is used to go to Actions > Batch Administration and if sBatch_Net is 'Master', get Previous Date for sZone.
     ...    If sBatch_Net is 'TEST_DE', get Current Date for sZone.
     ...    @author: clanding    15JUL2020    - initial create
+    ...    @update: clanding    01SEP2020    - added screenshot
     [Arguments]    ${sZone}    ${sBatch_Net}
 
     Select Actions    [Actions];Batch Administration
     ${BusDate}    Run Keyword If    '${sBatch_Net}'=='MASTER'    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_Batch_Admin_TimeZone_JavaTree}    ${sZone}%Previous%BusDate
     ...    ELSE IF    '${sBatch_Net}'=='TEST_DE'    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_Batch_Admin_TimeZone_JavaTree}    ${sZone}%Current%BusDate
+    Take Screenshot    ExecutionJournal_${sBatch_Net}_${sZone}
     Close All Windows on LIQ
     [Return]    ${BusDate}
 
@@ -38,25 +42,30 @@ Validate Alphanumeric Folder from Landing Area
     [Documentation]    This keyword is used to go to Landing Area and validate the alphanumeric folder if existing and contents are correct.
     ...    sZone value format must be ZONE2 or ZONE3.
     ...    @author: clanding    09JUL2020    - initial create
+    ...    @update: clanding    26AUG2020    - added ELSE in the validation of LandingArea_FileCount; added Log to report
     [Arguments]    ${sZone}    ${sExtract_Path}
 
     @{LandingArea_Files}    SSHLibrary.List Directory    ${DWE_LANDING_AREA_PATH}${sZone}
     ${LandingArea_FileCount}    Get Length    ${LandingArea_Files}
     Run Keyword If    ${LandingArea_FileCount}>1    FAIL    There are more than 1 alphanumeric folder in the landing area. Please check. Actual count is ${LandingArea_FileCount}.
     ...    ELSE IF    ${LandingArea_FileCount}==0    FAIL    There are no alphanumeric folder in the landing area. Please check. Actual count is ${LandingArea_FileCount}.
+    ...    ELSE    Log    There is only 1 alphanumeric folder in the landing area.
     
     ### Validate alphanumeric folder length is 23 ###
     ${AlphanumericFolder_Name}    Set Variable    @{LandingArea_Files}[0]
     ${AlphanumericFolder_Length}    Get Length    @{LandingArea_Files}[0]
-    Run Keyword If    ${AlphanumericFolder_Length}==23    Log To Console    Alphanumeric folder '${AlphanumericFolder_Name}' length in Landing Area '${DWE_LANDING_AREA_PATH}${sZone}' is 23.
+    Run Keyword If    ${AlphanumericFolder_Length}==23    Run Keywords    Log To Console    Alphanumeric folder '${AlphanumericFolder_Name}' length in Landing Area '${DWE_LANDING_AREA_PATH}${sZone}' is 23.
+    ...    AND    Log    Alphanumeric folder '${AlphanumericFolder_Name}' length in Landing Area '${DWE_LANDING_AREA_PATH}${sZone}' is 23.
     ...    ELSE    Run Keyword and Continue On Failure    FAIL    Alphanumeric folder '${AlphanumericFolder_Name}' length in Landing Area '${DWE_LANDING_AREA_PATH}${sZone}' is ${AlphanumericFolder_Length} and NOT EQUAL to 23.
 
     ### Validate alphanumeric folder contents ###
     @{AlphanumericFolder_Files}    SSHLibrary.List Directory    ${DWE_LANDING_AREA_PATH}${sZone}/${AlphanumericFolder_Name}
 
     :FOR    ${File}    IN    @{AlphanumericFolder_Files}
-    \    Run Keyword If    '${File}'=='manifest.properties'    Log To Console    'manifest.properties' is EXISTING in ${AlphanumericFolder_Name} folder.
-         ...    ELSE IF    '${File}'=='dwh'    Log To Console    'dwh' is EXISTING in ${AlphanumericFolder_Name} folder.
+    \    Run Keyword If    '${File}'=='manifest.properties'    Run Keywords    Log To Console    'manifest.properties' is EXISTING in ${AlphanumericFolder_Name} folder.
+         ...    AND    Log    'manifest.properties' is EXISTING in ${AlphanumericFolder_Name} folder.
+         ...    ELSE IF    '${File}'=='dwh'    Run Keywords    Log To Console    'dwh' is EXISTING in ${AlphanumericFolder_Name} folder.
+         ...    AND    Log    'dwh' is EXISTING in ${AlphanumericFolder_Name} folder.
          ...    ELSE    Run Keyword and Continue On Failure    FAIL    '${File}' should NOT BE EXISTING in ${AlphanumericFolder_Name} folder.
 
     [Return]    ${AlphanumericFolder_Name}
@@ -112,22 +121,25 @@ Validate DWH Folder from Landing Area
     [Documentation]    This keyword is used to download contents of dwh folder from Landing Area and validate csv files are correct.
     ...    sZone value format must be ZONE2 or ZONE3.
     ...    @author: clanding    09JUL2020    - initial create
+    ...    @update: clanding    27AUG2020    - added Log for Log To Console
     [Arguments]    ${sZone}    ${sExtract_Path}    ${sAlphanumeric_Folder_Name}
 
     ### Download dwh from Landing Area ###
-    Empty Directory    ${sExtract_Path}dwh
+    Run Keyword And Ignore Error    Empty Directory    ${sExtract_Path}dwh
     SSHLibrary.Get Directory    ${DWE_LANDING_AREA_PATH}${sZone}/${sAlphanumeric_Folder_Name}/dwh    ${sExtract_Path}
 
     ### Validate csv count in dwh folder ###
     @{DWH_Files}    SSHLibrary.List Directory    ${DWE_LANDING_AREA_PATH}${sZone}/${sAlphanumeric_Folder_Name}/dwh
     ${DWH_Files_Count}    Get Length    ${DWH_Files}
-    Run Keyword If    ${DWH_Files_Count}==${DWE_CSV_FILES_COUNT}    Log To Console    dwh folder contains ${DWE_CSV_FILES_COUNT} csv files.
+    Run Keyword If    ${DWH_Files_Count}==${DWE_CSV_FILES_COUNT}    Run Keywords    Log To Console    dwh folder contains ${DWE_CSV_FILES_COUNT} csv files.
+    ...    AND    Log    dwh folder contains ${DWE_CSV_FILES_COUNT} csv files.
     ...    ELSE    Run Keyword and Continue On Failure    FAIL    dwh folder DOES NOT contain ${DWE_CSV_FILES_COUNT} csv files. Actual count is ${DWH_Files_Count}.
 
     ### Validate table name count in DWE List ###
     ${DWE_Table_List_Content}    OperatingSystem.Get File    ${DWE_TABLE_LIST}
     ${DWE_Table_List_Count}    Get Line Count    ${DWE_Table_List_Content}
-    Run Keyword If    ${DWE_Table_List_Count}==${DWE_CSV_FILES_COUNT}    Log To Console    ${DWE_TABLE_LIST} contains ${DWE_CSV_FILES_COUNT} table names.
+    Run Keyword If    ${DWE_Table_List_Count}==${DWE_CSV_FILES_COUNT}     Run Keywords    Log To Console    ${DWE_TABLE_LIST} contains ${DWE_CSV_FILES_COUNT} table names.
+    ...    AND    Log    ${DWE_TABLE_LIST} contains ${DWE_CSV_FILES_COUNT} table names.
     ...    ELSE    Run Keyword and Continue On Failure    FAIL    ${DWE_TABLE_LIST} DOES NOT contain ${DWE_CSV_FILES_COUNT} table names. Actual count is ${DWE_Table_List_Count}.
     
     :FOR    ${LineCount}    IN RANGE    ${DWE_Table_List_Count}
@@ -137,7 +149,7 @@ Validate DWH Folder from Landing Area
     \    ${Contains_Table_Name}    Run Keyword And Return Status    Should Contain    ${DWH_Files}    ${DWE_Table_List_Line_Content.strip()}.csv
     \    Run Keyword If    ${Contains_Table_Name}==${True}    Log    Table Name '${DWE_Table_List_Line_Content.strip()}' is existing in dwh folder with contents:${\n}${DWH_Files}.
          ...    ELSE    Log    Table Name '${DWE_Table_List_Line_Content.strip()}' is NOT existing in dwh folder with contents:${\n}${DWH_Files}.    level=ERROR
-    \    Verify CSV File Contains Delimiter    ${sExtract_Path}/dwh/${DWE_Table_List_Line_Content.strip()}.csv    ,
+    \    Verify CSV File Contains Delimiter    ${sExtract_Path}dwh/${DWE_Table_List_Line_Content.strip()}.csv    ,
 
 Download Compressed and JSON File from Extraction Area
     [Documentation]    This keyword is used to go to Extraction Area and download compressed file (GPG) and json file.
@@ -235,3 +247,18 @@ Validate Compressed File from Extraction Area
     @{Decompressed_Folder_Files}    OperatingSystem.List Directory    ${sExtract_Path}${Decompressed_Folder}    *.csv
     ${CSV_Count}    Get Length    ${Decompressed_Folder_Files}
     Compare Two Strings    ${Element_Value_Per_FileType}    ${CSV_Count}
+
+Test Teardown for DWE Extract
+    [Documentation]    This keyword is consists of Test Teardown keywords for DWE execution.
+    ...    @author: clanding    28AUG2020    - initial create
+    
+    Close All Connections
+    Run Keyword And Ignore Error    Close All Windows on LIQ
+    Run Keyword And Ignore Error    Logout from Loan IQ
+
+Test Setup for DWE Extract
+    [Documentation]    This keyword is consists of Test Setup keywords for DWE execution.
+    ...    @author: clanding    28AUG2020    - initial create
+    
+    # Mx Launch UFT    Visibility=True    UFTAddins=Java
+    Login to Loan IQ    ${DWE_LIQ_USER}    ${DWE_LIQ_PASSWORD}
