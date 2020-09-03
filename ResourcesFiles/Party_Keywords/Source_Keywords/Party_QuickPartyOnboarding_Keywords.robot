@@ -197,11 +197,11 @@ Populate Quick Enterprise Party
 
     ##### Warning Popup #####
     Wait Until Loading Page Is Not Visible    ${PARTY_TIMEOUT}
-    ${isWarningDisplayed}    Run Keyword And Return Status    Wait Until Page Contains Element    ${Party_QuickEnterpriseParty_BiometricsWarning_Dialog}    10s
+    ${isWarningDisplayed}    Run Keyword And Return Status    Wait Until Page Contains Element    ${Party_QuickEnterpriseParty_BiometricsWarning_Dialog}    30s
     Run Keyword If    ${isWarningDisplayed}==${True}    Mx Click Element    ${Party_QuickEnterpriseParty_ProceedWarning_Button}
     Wait Until Loading Page Is Not Visible    ${PARTY_TIMEOUT}
 
-    Wait Until Page Contains Element    ${Party_QuickEnterpriseParty_ApprovalRequired_Dialog}
+    Wait Until Page Contains Element    ${Party_QuickEnterpriseParty_ApprovalRequired_Dialog}    20s 
     Capture Page Screenshot    ${screenshot_path}/Screenshots/Party/PartyApprovalDialog-{index}.png
     Mx Click Element    ${Party_QuickEnterpriseParty_AskForApproval_Button}
 

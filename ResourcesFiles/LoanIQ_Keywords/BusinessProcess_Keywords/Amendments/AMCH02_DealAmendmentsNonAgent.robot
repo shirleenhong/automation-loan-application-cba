@@ -21,6 +21,12 @@ Perform Lender Share Adjustment
     
     ###Pending Sell Assignment notebook - Facilities tab###
     Create Assignment Sell    &{ExcelPath}[LenderShare_Type]    &{ExcelPath}[Lender_ShortName]   &{ExcelPath}[AssignmentSell_PercentofDeal]     &{ExcelPath}[Seller_Riskbook]    &{ExcelPath}[AssignmentSell_IntFeeType]    &{ExcelPath}[BuyandSellPrice_Percentage]
+    ${Facility_SellAmount}    Get Sell Amount from Pending Assignment Sell    &{ExcelPath}[Facility_Name]
+    ${Facility_SellAmount2}    Get Sell Amount from Pending Assignment Sell    &{ExcelPath}[Facility_Name2]
+    Write Data To Excel    AMCH02_LenderShareAdjustment    Facility_SellAmount    ${rowid}    ${Facility_SellAmount}
+    Write Data To Excel    AMCH02_LenderShareAdjustment    Facility_SellAmount2    ${rowid}    ${Facility_SellAmount2}
+    Set To Dictionary    ${ExcelPath}    Facility_SellAmount=${Facility_SellAmount}
+    Set To Dictionary    ${ExcelPath}    Facility_SellAmount2=${Facility_SellAmount2}
     ${Actual_DisplayedSellAmount}    Validate Displayed Sell Amount and Return Value
     
     ###Pending Sell Assignment notebook - Amts/Dates tab###
@@ -31,8 +37,10 @@ Perform Lender Share Adjustment
     Add Servicing Group in Pending Assignment Sell    &{ExcelPath}[AssignmentSell_SGLender]    &{ExcelPath}[AssignmentSell_SGAlias]
 
     ###Pending Sell Assignment notebook - Worfklow tab###       
+    Write Data To Excel    AMCH02_LenderShareAdjustment    AssignmentSell_CircledDate    ${rowid}    ${AssignmentSell_CircledDate}
+    Set To Dictionary    ${ExcelPath}    AssignmentSell_CircledDate=${AssignmentSell_CircledDate}
     Circling for Pending Assignment Sell    &{ExcelPath}[AssignmentSell_CircledDate]
-    Complete Portfolio Allocations Worflow for Pending Assignment Sell for Agency Deal    &{ExcelPath}[Facility_Name]    &{ExcelPath}[Facility_Name2]
+    Complete Portfolio Allocations Workflow for Pending Assignment Sell for Agency Deal    &{ExcelPath}[Facility_Name]    &{ExcelPath}[Facility_Name2]
     Send to Approval for Pending Assignment Sell
 
     ###Logout and Relogin in Supervisor Level###

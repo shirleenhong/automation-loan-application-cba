@@ -152,7 +152,7 @@ Add Contact in Primary
     ${ContactName}    Acquire Argument Value    ${sContactName}  
 
     Mx LoanIQ Select Window Tab    ${LIQ_OrigPrimaries_Tab}    Contacts
-    mx LoanIQ click    ${LIQ_Contact_AddContacts_Button} 
+    mx LoanIQ click    ${LIQ_Contact_AddContacts_Button}
     Mx LoanIQ Select String    ${LIQ_CircleContacts_Available_JavaTree}    ${ContactName}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/CircleNotebook_Contacts      
     mx LoanIQ click    ${LIQ_CircleContacts_OK_Button} 
@@ -164,6 +164,7 @@ Create Assignment Sell
     [Documentation]    This keyword creates an Assignment Sell
     ...    @author: ghabal
     ...    @update: amansuet    19JUN2020    - updated to align with automation standards, added take screenshot and added keyword pre-processing
+    ...    @update: clanding    14AUG2020    - updated hard coded values to global variables; replaced 'Mx Native Type' to 'Mx Press Combination'
     [Arguments]    ${sLenderShare_Type}    ${sLenderCustomer_Shortname}    ${sAssignmentSell_PercentofDeal}    ${sSeller_Riskbook}    ${sAssignmentSell_IntFeeType}    ${sBuyandSellPrice_Percentage}
 
     ### Keyword Pre-processing ###
@@ -175,30 +176,34 @@ Create Assignment Sell
     ${BuyandSellPrice_Percentage}    Acquire Argument Value    ${sBuyandSellPrice_Percentage}
 
     Mx LoanIQ Select    ${LIQ_DealNotebook_Options_CircleSelect}
-    Mx LoanIQ Set    ${LIQ_CircleSelection_NewExternaloption}    ON
-    Mx LoanIQ Set    ${LIQ_CircleSelection_Selloption}    ON
+    Mx LoanIQ Set    ${LIQ_CircleSelection_NewExternaloption}    ${ON}
+    Mx LoanIQ Set    ${LIQ_CircleSelection_Selloption}    ${ON}
     Mx LoanIQ Select Combo Box Value    ${LIQ_CircleSelection_LenderShareType}    ${LenderShare_Type}
-    Mx LoanIQ Click    ${LIQ_CircleSelection_LenderButton}
-    Mx LoanIQ Select Combo Box Value    ${LIQ_LenderSelect_Search_Filter}      Short Name
+    mx LoanIQ click    ${LIQ_CircleSelection_LenderButton}
+    Mx LoanIQ Select Combo Box Value    ${LIQ_LenderSelect_Search_Filter}      ${SHORT_NAME}
     Mx LoanIQ Activate    ${LIQ_LenderSelect_SearchWindow}    
     Mx LoanIQ Enter    ${LIQ_LenderSelect_Search_Inputfield}    ${LenderCustomer_Shortname}
     
-    Mx LoanIQ Click    ${LIQ_LenderSelect_OK_Button}
+    mx LoanIQ click    ${LIQ_LenderSelect_OK_Button}
     
-    Mx LoanIQ Click    ${LIQ_CircleSelection_RiskBook_Button}
+    mx LoanIQ click    ${LIQ_CircleSelection_RiskBook_Button}
     Mx LoanIQ Select String    ${LIQ_CreatePrimary_Riskbook_JavaTree}    ${Seller_Riskbook}
-    Mx LoanIQ Click    ${LIQ_CreatePrimary_Riskbook_OK_Button}
+    mx LoanIQ click    ${LIQ_CreatePrimary_Riskbook_OK_Button}
     Take Screenshot    ${Screenshot_Path}/Screenshots/LoanIQ/CircleSelectionWindow
-    Mx LoanIQ Click    ${LIQ_CircleSelection_OKButton}
+    mx LoanIQ click    ${LIQ_CircleSelection_OKButton}
+    Mx LoanIQ Activate    ${LIQ_PendingAssignmentSell_Window}
+    Take Screenshot    ${Screenshot_Path}/Screenshots/LoanIQ/PendingAssignmentSellWindow_FacilityTab
     
     Mx LoanIQ Activate    ${LIQ_PendingAssignmentSell_Window}
-    Mx LoanIQ Select Window Tab    ${LIQ_PendingAssignmentSell_Tab}    Facilities
+    Mx LoanIQ Select Window Tab    ${LIQ_PendingAssignmentSell_Tab}    ${FACILITIES_TAB}
     Mx LoanIQ Enter    ${LIQ_PendingAssignmentSell_PctofDeal_InputField}    ${AssignmentSell_PercentofDeal}
-    Mx Native Type    {TAB}
+    Mx Press Combination    Key.TAB
     Mx LoanIQ Select    ${LIQ_PendingAssignmentSell_IntFeeDropdownList}    ${AssignmentSell_IntFeeType}
-    Mx LoanIQ Click    ${LIQ_PendingAssignmentSell_ProRate_Button}
+    mx LoanIQ click    ${LIQ_PendingAssignmentSell_ProRate_Button}
     Mx LoanIQ Enter    ${LIQ_ProRate_BuySellPrice_Textfield}    ${BuyandSellPrice_Percentage}
-    Mx LoanIQ Click    ${LIQ_ProRate_BuySellPrice_Ok_Button}
+    Take Screenshot    ${Screenshot_Path}/Screenshots/LoanIQ/CircleSelectionWindow
+    mx LoanIQ click    ${LIQ_ProRate_BuySellPrice_Ok_Button}
+    Mx LoanIQ Activate    ${LIQ_PendingAssignmentSell_Window}
     Take Screenshot    ${Screenshot_Path}/Screenshots/LoanIQ/PendingAssignmentSellWindow_FacilityTab
     
 Validate Displayed Sell Amount and Return Value
@@ -324,20 +329,23 @@ Add Contact in Pending Assignment Sell
     ...    @update: amansuet    19JUN2020    - updated to align with automation standards, added take screenshot and added keyword pre-processing
     ...                                      - updated flow to handle selection of lender
     ...                                      - replaced hardcoded locator
+    ...    @update: clanding    14AUG2020    - updated hard coded values to global variables; updated loaniq keywords; added multiple retry for clicking Add Contacts button
     [Arguments]    ${sContactName}    ${sBuyer_Lender}
 
     ### Keyword Pre-processing ###
     ${ContactName}    Acquire Argument Value    ${sContactName}
     ${Buyer_Lender}    Acquire Argument Value    ${sBuyer_Lender}
 
-    Mx LoanIQ Select Window Tab    ${LIQ_PendingAssignmentSell_Tab}    Contacts
-    Mx LoanIQ Click    ${LIQ_PendingAssignmentSell_ContactTab_AddContacts_Button}
-    Mx LoanIQ Activate Window    ${LIQ_AssignmentSell_ContactSelection}
+    Mx LoanIQ Select Window Tab    ${LIQ_PendingAssignmentSell_Tab}    ${CONTACTS_TAB}
+    :FOR    ${Index}    IN RANGE    10
+    \    mx LoanIQ click    ${LIQ_PendingAssignmentSell_ContactTab_AddContacts_Button}
+    \    ${IsDisplayed}    Run Keyword And Return Status    mx LoanIQ activate    ${LIQ_AssignmentSell_ContactSelection}
+    \    Exit For Loop If    ${IsDisplayed}==${True}
     Mx LoanIQ Select List    ${LIQ_AssignmentSell_ContactSelection_LenderList}    ${Buyer_Lender}
-    Mx LoanIQ Click    ${LIQ_ContactSelection_Contacts_Button}
+    mx LoanIQ click    ${LIQ_ContactSelection_Contacts_Button}
     Mx LoanIQ Select String    ${LIQ_CircleContacts_Available_JavaTree}    ${ContactName}      
-    Mx LoanIQ Click    ${LIQ_CircleContacts_OK_Button}
-    Mx LoanIQ Click    ${LIQ_ContactSelection_Exit_Button}
+    mx LoanIQ click    ${LIQ_CircleContacts_OK_Button}
+    mx LoanIQ click    ${LIQ_ContactSelection_Exit_Button}
 
     ${ContactName}    Replace Variables    ${ContactName}
     ${LIQ_PendingAssignmentSell_ContactTab_ContactName_JavaTree}    Replace Variables    ${LIQ_PendingAssignmentSell_ContactTab_ContactName_JavaTree}
@@ -347,6 +355,7 @@ Add Contact in Pending Assignment Sell
 Add Servicing Group in Pending Assignment Sell
     [Documentation]    This keyword will add a servicing group in pending assignment sell
     ...    @author: amansuet    25JUN2020    - initial create
+    ...    @author: clanding    17AUG2020    - updated loaniq keywords
     [Arguments]    ${sBuyer_Lender}    ${sBuyer_SGAlias}
 
     ### Keyword Pre-processing ###
@@ -354,16 +363,16 @@ Add Servicing Group in Pending Assignment Sell
     ${Buyer_SGAlias}    Acquire Argument Value    ${sBuyer_SGAlias}
 
     Mx LoanIQ Activate Window    ${LIQ_PendingAssignmentSell_Window}
-    Mx LoanIQ Click    ${LIQ_AssignmentSell_ServicingGroups_Button}
+    mx LoanIQ click    ${LIQ_AssignmentSell_ServicingGroups_Button}
     Mx LoanIQ Activate Window    ${LIQ_AssignmentSell_ServicingGroupsSelection_Window}
     Mx LoanIQ Select Combo Box Value    ${LIQ_AssignmentSell_ServicingGroupsSelection_LenderList}    ${Buyer_Lender}
-    Mx LoanIQ Click    ${LIQ_AssignmentSell_ServicingGroupsSelection_SG_Button} 
+    mx LoanIQ click    ${LIQ_AssignmentSell_ServicingGroupsSelection_SG_Button} 
     Mx LoanIQ Activate Window    ${LIQ_AssignmentSell_ServicingGroupsSelectionFor_Window}
     Mx LoanIQ Select String    ${LIQ_ServicingGroups_JavaTree}   ${Buyer_SGAlias}
-    Mx LoanIQ Click    ${LIQ_AssignmentSell_ServicingGroupsSelectionFor_Ok_Button}
+    mx LoanIQ click    ${LIQ_AssignmentSell_ServicingGroupsSelectionFor_Ok_Button}
     Mx LoanIQ Activate Window    ${LIQ_Warning_Window}
-    Mx LoanIQ Click    ${LIQ_Warning_Yes_Button}
-    Mx LoanIQ Click Element If Present    ${LIQ_Warning_Yes_Button}  
+    mx LoanIQ click    ${LIQ_Warning_Yes_Button}
+    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}  
     Mx LoanIQ Close Window     ${LIQ_AssignmentSell_ServicingGroupsSelection_Window}
     Take Screenshot    ${Screenshot_Path}/Screenshots/LoanIQ/AssignmentSellWindow_ContactsTab          
 
@@ -511,17 +520,19 @@ Circling for Pending Assignment Sell
     [Documentation]    This keyword completes the Circling Workflow Item.
     ...    @author: ghabal
     ...    @update: amansuet    19JUN2020    - updated to align with automation standards, added take screenshot and added keyword pre-processing
+    ...    @update: clanding    14AUG2020    - updated hard coded values to global variables; updated loaniq keywords
     [Arguments]    ${sAssignmentSell_CircledDate}
 
     ### Keyword Pre-processing ###
     ${AssignmentSell_CircledDate}    Acquire Argument Value    ${sAssignmentSell_CircledDate}
 
-    Mx LoanIQ Select Window Tab    ${LIQ_PendingAssignmentSell_Tab}    Workflow
-    Mx LoanIQ Select Or DoubleClick In Javatree    ${AssignmentSell_Workflow_JavaTree}    Circling%d  
-    Mx LoanIQ Click Element If Present    ${LIQ_Warning_Yes_Button}
+    Mx LoanIQ Select Window Tab    ${LIQ_PendingAssignmentSell_Tab}    ${WORKFLOW_TAB}
+    Mx LoanIQ Select Or DoubleClick In Javatree    ${AssignmentSell_Workflow_JavaTree}    ${CIRCLING_WORKFLOW}%d  
+    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
     Mx LoanIQ Enter    ${LIQ_PrimaryCircles_TradeDate_TextField}    ${AssignmentSell_CircledDate}
     Take Screenshot    ${Screenshot_Path}/Screenshots/LoanIQ/SelectCircledLegalTradeDateWindow
-    Mx LoanIQ Click    ${LIQ_PrimaryCircles_TradeDate_OK_Button}
+    mx LoanIQ click    ${LIQ_PrimaryCircles_TradeDate_OK_Button}
+    Take Screenshot    ${Screenshot_Path}/Screenshots/LoanIQ/PendingAssignmentSell
     
 Complete Portfolio Allocations Worflow - Bel
     [Documentation]    This keyword completes the Portfolio Allocation Workflow Item.
@@ -701,33 +712,59 @@ Complete Portfolio Allocations Worflow for Pending Assignment Sell
     mx LoanIQ click    ${LIQ_Portfolio_OK_Button}
     # Mx Click Element If Present    ${LIQ_Information_OK_Button}    
 
-Complete Portfolio Allocations Worflow for Pending Assignment Sell for Agency Deal
+Complete Portfolio Allocations Workflow for Pending Assignment Sell for Agency Deal
     [Documentation]    This keyword completes the Portfolio Allocation Workflow Item.
     ...    @author: fmamaril
     ...    @update: ghabal                   - updated locators to confirm with Scenario 4
     ...    @update: amansuet    19JUN2020    - updated to align with automation standards, added take screenshot and added keyword pre-processing
     ...                                      - removed unused keywords and argument
     ...                                      - replaced hardcoded locators
+    ...    @update: clanding    14AUG2020    - updated hard coded values to global variables; updated loaniq keywords
     [Arguments]    ${sFacility_Name}    ${sFacility_Name2}
 
     ### Keyword Pre-processing ###
     ${Facility_Name}    Acquire Argument Value    ${sFacility_Name}
     ${Facility_Name2}    Acquire Argument Value    ${sFacility_Name2}
 
-    Mx LoanIQ Select Window Tab    ${LIQ_PendingAssignmentSell_Tab}    Workflow
-    Mx LoanIQ Select Or DoubleClick In Javatree    ${AssignmentSell_Workflow_JavaTree}    Complete Portfolio Allocations%d       
+    Mx LoanIQ Select Window Tab    ${LIQ_PendingAssignmentSell_Tab}    ${WORKFLOW_TAB}
+    Mx LoanIQ Select Or DoubleClick In Javatree    ${AssignmentSell_Workflow_JavaTree}    ${COMPLETE_PORTFOLIO_ALLOCATIONS_WORKFLOW}%d       
 
-    Mx LoanIQ Activate Window    ${LIQ_PortfolioAllocationsFor_Window}
-    Mx LoanIQ Select String    ${AssignmentSell_PortfolioAllocations_Facilities_List}    ${Facility_Name}
-    Mx LoanIQ DoubleClick    ${AssignmentSell_PortfolioAllocations_List}    0.00
-    Mx LoanIQ Click    ${AssignmentSell_Allocations_OKButton}
-
-    Mx LoanIQ Select String    ${AssignmentSell_PortfolioAllocations_Facilities_List}    ${Facility_Name2}
-    Mx LoanIQ DoubleClick    ${AssignmentSell_PortfolioAllocations_List}    0.00
-    Mx LoanIQ Click    ${AssignmentSell_Allocations_OKButton}
+    mx LoanIQ activate    ${LIQ_PortfolioAllocationsFor_Window}
     Take Screenshot    ${Screenshot_Path}/Screenshots/LoanIQ/PorfolioAllocationsWindow
-    Mx LoanIQ Click    ${AssignmentSell_PortfolioAllocations_OKButton}
-                   
+    Mx LoanIQ Select String    ${LIQ_AssignmentSell_PortfolioAllocations_Facilities_List}    ${Facility_Name}
+    Mx LoanIQ DoubleClick    ${LIQ_PortfolioAllocations_PortfolioExpense_JavaTree}    0.00
+    Take Screenshot    ${Screenshot_Path}/Screenshots/LoanIQ/PorfolioAllocationsWindow
+    mx LoanIQ click    ${AssignmentSell_Allocations_OKButton}
+    Take Screenshot    ${Screenshot_Path}/Screenshots/LoanIQ/PorfolioAllocationsWindow
+
+    Mx LoanIQ Select String    ${LIQ_AssignmentSell_PortfolioAllocations_Facilities_List}    ${Facility_Name2}
+    Mx LoanIQ DoubleClick    ${LIQ_PortfolioAllocations_PortfolioExpense_JavaTree}    0.00
+    Take Screenshot    ${Screenshot_Path}/Screenshots/LoanIQ/PorfolioAllocationsWindow
+    mx LoanIQ click    ${AssignmentSell_Allocations_OKButton}
+    Take Screenshot    ${Screenshot_Path}/Screenshots/LoanIQ/PorfolioAllocationsWindow
+    
+    mx LoanIQ click    ${AssignmentSell_PortfolioAllocations_OKButton}
+    mx LoanIQ activate    ${LIQ_PendingAssignmentSell_Window}
+    Take Screenshot    ${Screenshot_Path}/Screenshots/LoanIQ/PendingAssignment
+
+Add Portfolio and Expense Code for Pending Assigment Sell
+    [Documentation]    This keyword is used to add Portfolio/Expense Code for Pending Assignment Sell.
+    ...    @author: clanding    17AUG2020    - initial create
+    [Arguments]    ${sExpense_Code}    ${sBranch}    ${sShort_Amount}
+
+    ### Keyword Pre-processing ###
+    ${Expense_Code}    Acquire Argument Value    ${sExpense_Code}
+    ${Branch}    Acquire Argument Value    ${sBranch}
+    ${Short_Amount}    Acquire Argument Value    ${sShort_Amount}
+    
+    mx LoanIQ click    ${LIQ_AssignmentSell_PortfolioAllocations_AddPortfolioExpenseCode_Button}
+    mx LoanIQ activate    ${LIQ_AssignmentSell_PortfolioAllocations_Window}
+    Mx LoanIQ Select Or DoubleClick In Javatree    ${LIQ_AssignmentSell_PortfolioAllocations_PortfolioExpenseCodes_JavaTree}    ${Expense_Code}%s
+    mx LoanIQ select list    ${LIQ_AssignmentSell_PortfolioAllocations_Branch_List}    ${Branch}
+    mx LoanIQ enter    ${LIQ_AssignmentSell_PortfolioAllocations_Short_Textbox}    ${Short_Amount}
+    Take Screenshot    ${Screenshot_Path}/Screenshots/LoanIQ/PendingAssignmentWindow_FacilitiesTree
+    mx LoanIQ click    ${LIQ_AssignmentSell_PortfolioAllocations_OK_Button}
+
 Send to Settlement Approval
     [Documentation]    This keyword completes the Send to Settlement Approval Workflow Item.
     ...    @author: fmamaril
@@ -755,65 +792,76 @@ Send to Settlement Approval for Open Assignment Sell
     ...    @author: ghabal
     ...    @update: amansuet    22JUN2020    - updated to align with automation standards and added take screenshot
     ...                                      - replaced hardcoded locator
+    ...    @update: clanding    14AUG2020    - replaced hard coded values to global variables; added screenshot
 
-    Mx LoanIQ Select Window Tab    ${LIQ_OpenAssignmentSell_Tab}    Workflow
+    Mx LoanIQ Select Window Tab    ${LIQ_OpenAssignmentSell_Tab}    ${WORKFLOW_TAB}
     Take Screenshot    ${Screenshot_Path}/Screenshots/LoanIQ/OpenAssignmentSellWindow_WorkflowTab
-    Mx LoanIQ Select Or DoubleClick In Javatree    ${LIQ_OpenAssignmentSell_Workflow_JavaTree}     Send to Settlement Approval%d
-    Mx LoanIQ Click Element If Present    ${LIQ_Warning_Yes_Button} 
+    Mx LoanIQ Select Or DoubleClick In Javatree    ${LIQ_OpenAssignmentSell_Workflow_JavaTree}     ${SEND_TO_SETTLEMENT_APPROVAL_WORKFLOW}%d
+    Take Screenshot    ${Screenshot_Path}/Screenshots/LoanIQ/OpenAssignmentSellWindow_WorkflowTab
+    Mx LoanIQ Click Element If Present    ${LIQ_Warning_Yes_Button}
     Run Keyword And Continue On Failure    Mx LoanIQ Verify Object Exist    ${LIQ_AssignmentSell_SendToSettlementApproval}    VerificationData="Yes"
+    Take Screenshot    ${Screenshot_Path}/Screenshots/LoanIQ/OpenAssignmentSellWindow_WorkflowTab
 
 Settlement Approval for Open/Awaiting Settlement Approval Assignment Sell
     [Documentation]    This keyword completes the Send to Settlement Approval Workflow Item.
     ...    @author: ghabal
     ...    @update: amansuet    22JUN2020    - updated to align with automation standards, added take screenshot and added keyword pre-processing
     ...                                      - replaced hardcoded locator
+    ...    @update: clanding    14AUG2020    - replaced hard coded values to global variables
     [Arguments]    ${sDeal_Name}
 
     ### Keyword Pre-processing ###
     ${Deal_Name}    Acquire Argument Value    ${sDeal_Name}
 
-    Mx LoanIQ Click    ${LIQ_WorkInProgress_Button}
-    Mx LoanIQ DoubleClick    ${LIQ_TransactionsInProcess_Transactions_List}    Circles
-    Mx LoanIQ DoubleClick    ${LIQ_WorkInProgress_TransactionDetails_List}    Awaiting Settlement Approval
-    Mx LoanIQ DoubleClick    ${LIQ_WorkInProgress_TransactionDetails_List}    Host Bank
-    Mx LoanIQ DoubleClick    ${LIQ_WorkInProgress_TransactionDetails_List}    Assignment
+    mx LoanIQ click    ${LIQ_WorkInProgress_Button}
+    Mx LoanIQ DoubleClick    ${LIQ_TransactionsInProcess_Transactions_List}    ${CIRCLES_TRANSACTION}
+    Mx LoanIQ DoubleClick    ${LIQ_WorkInProgress_TransactionDetails_List}    ${AWAITING_SETTLEMENT_APPROVAL_STATUS}
+    Mx LoanIQ DoubleClick    ${LIQ_WorkInProgress_TransactionDetails_List}    ${HOST_BANK}
+    Mx LoanIQ DoubleClick    ${LIQ_WorkInProgress_TransactionDetails_List}    ${ASSIGNMENT}
     Mx LoanIQ DoubleClick    ${LIQ_WorkInProgress_TransactionDetails_List}    ${Deal_Name}
-    Mx LoanIQ Select Window Tab    ${LIQ_OpenAwaitingSettlementApprovalAssignmentSell_Tab}    Workflow
+    Mx LoanIQ Select Window Tab    ${LIQ_OpenAwaitingSettlementApprovalAssignmentSell_Tab}    ${WORKFLOW_TAB}
     Take Screenshot    ${Screenshot_Path}/Screenshots/LoanIQ/OpenAwaitingSettlementApprovalAssignmentSellWindow_WorkflowTab
-    Mx LoanIQ Select Or DoubleClick In Javatree    ${LIQ_OpenAwatingAssignmentSell_Workflow_JavaTree}     Settlement Approval%d
-    Mx LoanIQ Click Element If Present    ${LIQ_Warning_Yes_Button}
-    Mx LoanIQ Click Element If Present    ${LIQ_Question_Yes_Button}
+    Mx LoanIQ Select Or DoubleClick In Javatree    ${LIQ_OpenAwatingAssignmentSell_Workflow_JavaTree}     ${SETTLEMENT_APPROVAL_STATUS}%d
+    Take Screenshot    ${Screenshot_Path}/Screenshots/LoanIQ/OpenAwaitingSettlementApprovalAssignmentSellWindow_WorkflowTab
+    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
+    mx LoanIQ click element if present    ${LIQ_Question_Yes_Button}
     Run Keyword And Continue On Failure    Mx LoanIQ Verify Object Exist    ${LIQ_OpenSettlementApprovedAssignmentSell_JavaWindow}    VerificationData="Yes"
+    Take Screenshot    ${Screenshot_Path}/Screenshots/LoanIQ/OpenAwaitingSettlementApprovalAssignmentSellWindow_WorkflowTab
 
 Close for Open/Settlement Approved Assignment Sell
     [Documentation]    This keyword completes the Send to Settlement Approval Workflow Item.
     ...    @author: ghabal
     ...    @update: amansuet    22JUN2020    - updated to align with automation standards and added take screenshot
     ...                                      - replaced hardcoded locator
+    ...    @update: clanding    14AUG2020    - updated hard coded values to global variables
 
-    Mx LoanIQ Select Window Tab    ${LIQ_OpenSettlementApprovedAssignmentSell_Tab}    Workflow
+    Mx LoanIQ Select Window Tab    ${LIQ_OpenSettlementApprovedAssignmentSell_Tab}    ${WORKFLOW_TAB}
     Take Screenshot    ${Screenshot_Path}/Screenshots/LoanIQ/OpenSettlementApprovalAssignmentSellWindow_WorkflowTab
-    Mx LoanIQ Select Or DoubleClick In Javatree    ${LIQ_OpenSettlementApprovedAssignmentSell_Workflow_JavaTree}    Close%d
-    Mx LoanIQ Click Element If Present    ${LIQ_Warning_Yes_Button}
-    Mx LoanIQ Click Element If Present    ${LIQ_Question_Yes_Button}
-    Mx LoanIQ Click    ${LIQ_ClosedApprovedAssignmentSell_OKButton}
+    Mx LoanIQ Select Or DoubleClick In Javatree    ${LIQ_OpenSettlementApprovedAssignmentSell_Workflow_JavaTree}    ${CLOSE_WORKFLOW}%d
+    Take Screenshot    ${Screenshot_Path}/Screenshots/LoanIQ/OpenSettlementApprovalAssignmentSellWindow_WorkflowTab
+    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
+    mx LoanIQ click element if present    ${LIQ_Question_Yes_Button}
+    mx LoanIQ click    ${LIQ_ClosedApprovedAssignmentSell_OKButton}
     Run Keyword And Continue On Failure    Mx LoanIQ Verify Object Exist    ${LIQ_ClosedApprovedAssignmentSell_Window}    VerificationData="Yes"
+    Take Screenshot    ${Screenshot_Path}/Screenshots/LoanIQ/OpenSettlementApprovalAssignmentSellWindow_WorkflowTab
     
-    Mx LoanIQ Click Element If Present    ${LIQ_NotificationInformation_OK_Button}
+    mx LoanIQ click element if present    ${LIQ_NotificationInformation_OK_Button}
     Mx LoanIQ Close Window    ${LIQ_ClosedApprovedAssignmentSell_Window}
     
 Send to Approval for Pending Assignment Sell
     [Documentation]    This keyword completes the Send to Approval Workflow Item
     ...    @author: ghabal
     ...    @update: amansuet    19JUN2020    - updated to align with automation standards and added take screenshot
+    ...    @update: clanding    14AUG2020    - updated hard coded values to global variables; updated loaniq keywords
 
-    Mx LoanIQ Select Window Tab    ${LIQ_PendingAssignmentSell_Tab}    Workflow
+    Mx LoanIQ Select Window Tab    ${LIQ_PendingAssignmentSell_Tab}    ${WORKFLOW_TAB}
     Take Screenshot    ${Screenshot_Path}/Screenshots/LoanIQ/AssignmentSellWindow_WorkflowTab
-    Mx LoanIQ Select Or DoubleClick In Javatree    ${AssignmentSell_Workflow_JavaTree}    Send to Approval%d
+    Mx LoanIQ Select Or DoubleClick In Javatree    ${AssignmentSell_Workflow_JavaTree}    ${SEND_TO_APPROVAL_STATUS}%d
     Run Keyword And Continue On Failure    Mx LoanIQ Verify Object Exist    JavaWindow("title:=Awaiting Approval.*")    VerificationData="Yes"
-    Mx LoanIQ Click Element If Present    ${LIQ_NotificationInformation_OK_Button}
+    mx LoanIQ click element if present    ${LIQ_NotificationInformation_OK_Button}
+    Take Screenshot    ${Screenshot_Path}/Screenshots/LoanIQ/AssignmentSellWindow_WorkflowTab
     Close All Windows on LIQ
-    Mx LoanIQ Click Element If Present    ${LIQ_Information_OK_Button}
+    mx LoanIQ click element if present    ${LIQ_Information_OK_Button}
     
 Approval for Pending Assignment Sell
     [Documentation]    This keyword completes the Send to Approval Workflow Item
@@ -821,25 +869,28 @@ Approval for Pending Assignment Sell
     ...    @update: amansuet    19JUN2020    - updated to align with automation standards, added take screenshot and added keyword pre-processing
     ...                                      - replaced hardcoded locators
     ...                                      - added 'Mx LoanIQ Click Element If Present' for Question
+    ...    @update: clanding    14AUG2020    - updated hard coded values to global variables; updated loaniq keywords
     [Arguments]    ${sDeal_Name}
 
     ### Keyword Pre-processing ###
     ${Deal_Name}    Acquire Argument Value    ${sDeal_Name}
 
-    Mx LoanIQ Click    ${LIQ_WorkInProgress_Button}
-    Mx LoanIQ DoubleClick    ${LIQ_TransactionsInProcess_Transactions_List}    Circles
-    Mx LoanIQ DoubleClick    ${LIQ_WorkInProgress_TransactionDetails_List}    Awaiting Approval
-    Mx LoanIQ DoubleClick    ${LIQ_WorkInProgress_TransactionDetails_List}    Host Bank
-    Mx LoanIQ DoubleClick    ${LIQ_WorkInProgress_TransactionDetails_List}    Assignment
+    mx LoanIQ click    ${LIQ_WorkInProgress_Button}
+    Mx LoanIQ DoubleClick    ${LIQ_TransactionsInProcess_Transactions_List}    ${CIRCLES_TRANSACTION}
+    Mx LoanIQ DoubleClick    ${LIQ_WorkInProgress_TransactionDetails_List}    ${AWAITING_APPROVAL_STATUS}
+    Mx LoanIQ DoubleClick    ${LIQ_WorkInProgress_TransactionDetails_List}    ${HOST_BANK}
+    Mx LoanIQ DoubleClick    ${LIQ_WorkInProgress_TransactionDetails_List}    ${ASSIGNMENT}
     Mx LoanIQ DoubleClick    ${LIQ_WorkInProgress_TransactionDetails_List}    ${Deal_Name}
-    Mx LoanIQ Select Window Tab    ${LIQ_AwaitingApprovalAssignmentSell_Tab}    Workflow
+    Mx LoanIQ Select Window Tab    ${LIQ_AwaitingApprovalAssignmentSell_Tab}    ${WORKFLOW_TAB}
     Take Screenshot    ${Screenshot_Path}/Screenshots/LoanIQ/AssignmentSellWindow_WorkflowTab
-    Mx LoanIQ Select Or DoubleClick In Javatree    ${AwatingApprovalAssignmentSell_Workflow_JavaTree}    Approval%d
-    Mx LoanIQ Click Element If Present    ${LIQ_Warning_Yes_Button}
-    Mx LoanIQ Click Element If Present    ${LIQ_Question_Yes_Button}
-    Mx LoanIQ Click    ${LIQ_AwaitingApprovalAssignmentSell_OKButton}
-    Run Keyword And Continue On Failure    Mx LoanIQ Verify Object Exist    ${LIQ_OpenAssignmentSell_JavaWindow}    VerificationData="Yes"  
-    Mx LoanIQ Click Element If Present    ${LIQ_NotificationInformation_OK_Button}
+    Mx LoanIQ Select Or DoubleClick In Javatree    ${AwatingApprovalAssignmentSell_Workflow_JavaTree}    ${APPROVAL_STATUS}%d
+    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
+    mx LoanIQ click element if present    ${LIQ_Question_Yes_Button}
+    mx LoanIQ click    ${LIQ_AwaitingApprovalAssignmentSell_OKButton}
+    Run Keyword And Continue On Failure    Mx LoanIQ Verify Object Exist    ${LIQ_OpenAssignmentSell_JavaWindow}    VerificationData="Yes"
+    Take Screenshot    ${Screenshot_Path}/Screenshots/LoanIQ/AssignmentSellWindow_WorkflowTab  
+    mx LoanIQ click element if present    ${LIQ_NotificationInformation_OK_Button}
+    Take Screenshot    ${Screenshot_Path}/Screenshots/LoanIQ/AssignmentSellWindow_WorkflowTab
          
 Verify Buy/Sell Price in Circle Notebook
     [Documentation]    This validates the Buy/Sell Price of the Circle Notebook.
@@ -929,7 +980,7 @@ Circle Notebook Settlement Approval
 
     Navigate Transaction in WIP for Circles    Awaiting Settlement Approval    ${Lender_Type}    ${Deal_Name}
     Navigate Notebook Workflow    ${LIQ_OrigPrimaries_Window}    ${LIQ_OrigPrimaries_Tab}    ${LIQ_PrimaryCircle_Workflow_JavaTree}    Settlement Approval
-    ${OrigPrimary_Status}    Run Keyword And Return Status    Mx LoanIQ Verify Object Exist    JavaWindow("title:=.*Settlement Approved.*Orig Primary.*")    VerificationData="Yes"
+    ${OrigPrimary_Status}    Run Keyword And Return Status    Mx LoanIQ Verify Object Exist    ${LIQ_PrimaryCircle_OrigPrimary_Window}    VerificationData="Yes"
     ${OrigPrimary_Status}    Set Variable If    ${OrigPrimary_Status}==True    Settlement Approved
     Run Keyword If    '${OrigPrimary_Status}'=='Settlement Approved'    Log    Lender Status is ${OrigPrimary_Status}.
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/PrimariesWindow_Approval
@@ -1497,6 +1548,7 @@ Process Funding Memo
     ...    <update> @ghabal - created a separate keyword for the other half(Outstandings window ) of this keyword to make this reusable
     ...    <update> @ghabal - Mx Click Element If Present    ${LIQ_Warning_Yes_Button} for Matured facilities in case
     ...    @update: amansuet    22JUN2020    - updated to align with automation standards, added take screenshot and added keyword pre-processing
+    ...    @update: clanding    14AUG2020    - updated hard coded values to global variables; updated loaniq keywords
     [Arguments]    ${sWIPTransaction_Type}    ${sLender_Host}    ${sCircleTransaction_Type}    ${sDeal_Name}
     
     ### Keyword Pre-processing ###
@@ -1505,36 +1557,36 @@ Process Funding Memo
     ${CircleTransaction_Type}    Acquire Argument Value    ${sCircleTransaction_Type}
     ${Deal_Name}    Acquire Argument Value    ${sDeal_Name}
 
-    Mx LoanIQ Click    ${LIQ_WorkInProgress_Button}
-    Mx LoanIQ Activate Window    ${LIQ_WorkInProgress_Window}  
+    mx LoanIQ click    ${LIQ_WorkInProgress_Button}
+    mx LoanIQ activate window    ${LIQ_WorkInProgress_Window}  
     Run Keyword And Continue On Failure     Mx LoanIQ Verify Object Exist    ${LIQ_WorkInProgress_Window}     VerificationData="Yes"
     Mx LoanIQ DoubleClick    ${LIQ_WorkInProgress_TransactionList}    ${WIPTransaction_Type}
     
-    Run Keyword And Continue On Failure    Mx LoanIQ Select String    ${LIQ_TransactionsInProcess_Circles_List}    Awaiting Funding Memo    
-    ${status}    Run Keyword And Return Status    Mx LoanIQ Select String    ${LIQ_TransactionsInProcess_Circles_List}    Awaiting Funding Memo         
-    Run Keyword If    ${status}==True    Mx LoanIQ DoubleClick    ${LIQ_TransactionsInProcess_Circles_List}    Awaiting Funding Memo
-    Mx LoanIQ Click Element If Present    ${LIQ_Warning_Yes_Button}   
-    Run Keyword If    ${status}==False    Log    'Awaiting Funding Memo' status is not available    
+    Run Keyword And Continue On Failure    Mx LoanIQ Select String    ${LIQ_TransactionsInProcess_Circles_List}    ${AWAITING_FUNDING_MEMO_STATUS}    
+    ${status}    Run Keyword And Return Status    Mx LoanIQ Select String    ${LIQ_TransactionsInProcess_Circles_List}    ${AWAITING_FUNDING_MEMO_STATUS}         
+    Run Keyword If    ${status}==${True}    Mx LoanIQ DoubleClick    ${LIQ_TransactionsInProcess_Circles_List}    ${AWAITING_FUNDING_MEMO_STATUS}
+    ...    ELSE    Log    '${AWAITING_FUNDING_MEMO_STATUS}' status is not available
+    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}   
 
     Run Keyword And Continue On Failure    Mx LoanIQ Select String    ${LIQ_TransactionsInProcess_Circles_List}    ${Lender_Host}    
     ${status}    Run Keyword And Return Status    Mx LoanIQ Select String    ${LIQ_TransactionsInProcess_Circles_List}    ${Lender_Host}
-    Run Keyword If    ${status}==True    Mx LoanIQ DoubleClick    ${LIQ_TransactionsInProcess_Circles_List}    ${Lender_Host}  
-    Run Keyword If    ${status}==False    Log    Lender Host is not available    
+    Run Keyword If    ${status}==${True}    Mx LoanIQ DoubleClick    ${LIQ_TransactionsInProcess_Circles_List}    ${Lender_Host}  
+    ...    ELSE    Log    Lender Host is not available    
     
     Run Keyword And Continue On Failure    Mx LoanIQ Select String    ${LIQ_TransactionsInProcess_Circles_List}    ${CircleTransaction_Type}    
     ${status}    Run Keyword And Return Status    Mx LoanIQ Select String    ${LIQ_TransactionsInProcess_Circles_List}    ${CircleTransaction_Type}
-    Run Keyword If    ${status}==True    Mx LoanIQ DoubleClick    ${LIQ_TransactionsInProcess_Circles_List}    ${CircleTransaction_Type}  
-    Run Keyword If    ${status}==False    Log    Circle Transaction Type is not available  
+    Run Keyword If    ${status}==${True}    Mx LoanIQ DoubleClick    ${LIQ_TransactionsInProcess_Circles_List}    ${CircleTransaction_Type}  
+    ...    ELSE    Log    Circle Transaction Type is not available  
     
     Mx LoanIQ Maximize    ${LIQ_WorkInProgress_Window}
     Mx LoanIQ Select Or Doubleclick In Tree By Text    ${LIQ_TransactionsInProcess_Circles_List}    ${Deal_Name}%d
 	
-    Mx LoanIQ Activate Window    ${LIQ_AssignmentSell_Window}
+    mx LoanIQ activate window    ${LIQ_AssignmentSell_Window}
 	Mx LoanIQ Select Window Tab    ${LIQ_AssignmentSell_Tab}    Workflow
     Take Screenshot    ${Screenshot_Path}/Screenshots/LoanIQ/AssignmentSellWindow_WorkflowTab
-    Mx LoanIQ Select Or DoubleClick In Javatree    ${LIQ_OpenAssignmentSell_Workflow_JavaTree}    Funding Memo%d
-    Mx LoanIQ Click Element If Present    ${LIQ_Question_Yes_Button}
-    Mx LoanIQ Click Element If Present    ${LIQ_Warning_Yes_Button}
+    Mx LoanIQ Select Or DoubleClick In Javatree    ${LIQ_OpenAssignmentSell_Workflow_JavaTree}    ${FUNDING_MEMO_WORKFLOW}%d
+    mx LoanIQ click element if present    ${LIQ_Question_Yes_Button}
+    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
     
 Complete Funding Memo for Secondary Sale    
     [Documentation]    This keyword is for completes the Funding Memo using Original User for Secondary Sale
@@ -1568,6 +1620,7 @@ Complete Funding Memo for Lender Share Adjustment
     ...    @update: ghabal - created separate keyword from 'Process Funding Memo' keyword     
     ...    @update: jdelacru    26MAR2019    - Remove completing funding memo for first loan since it is in inactive status
     ...    @update: amansuet    22JUN2020    - updated to align with automation standards, added take screenshot and added keyword pre-processing
+    ...    @update: clanding    14AUG2020    - replaced 'Mx Native Type' to 'Mx Press Combination'
     [Arguments]    ${sNew_Loan_Alias}
 
     ### Keyword Pre-processing ###
@@ -1575,7 +1628,7 @@ Complete Funding Memo for Lender Share Adjustment
 
     Mx LoanIQ Activate Window   ${LIQ_FundingMemo_Outstanding_Window}   
     Mx LoanIQ Click Javatree Cell    ${LIQ_FundingMemo_JavaTree}    ${New_Loan_Alias}%${New_Loan_Alias}%Alias  
-    Mx Native Type    {ENTER}
+    Mx Press Combination    Key.ENTER
     Mx LoanIQ Activate Window    ${LIQ_FundingMemo_NewAmount_Window}
     Mx LoanIQ Enter    ${LIQ_FundingMemo_NewAmount_Window_AmountField}    0.00
     Mx LoanIQ Click    ${LIQ_FundingMemo_NewAmount_Window_OKButton}
@@ -2075,3 +2128,16 @@ Go to Lender
     mx LoanIQ activate window    ${LIQ_PrimariesList_Window}
     Mx LoanIQ Select Or DoubleClick In Javatree    ${LIQ_PrimariesList_JavaTree}    ${Lender_Name}%d
     Take Screenshot    ${Screenshot_Path}/Screenshots/LoanIQ/OrigPrimariesWindow_Lender
+
+Get Sell Amount from Pending Assignment Sell
+    [Documentation]    This keyword is used to get sell amount from Pending Assignment Sell.
+    ...    @author: clanding    17AUG2020    - initial create
+    [Arguments]    ${sFacility_Name}
+
+    ### Keyword Pre-processing ###
+    ${Facility_Name}    Acquire Argument Value    ${sFacility_Name}
+    
+    ${Sell_Amount}    Mx LoanIQ Store TableCell To Clipboard   ${LIQ_AssignmentSell_Facilities_JavaTree}    ${Facility_Name}%Sell Amount%Sell_Amount
+    Take Screenshot    ${Screenshot_Path}/Screenshots/LoanIQ/PendingAssignmentWindow_FacilitiesTree
+    [Return]    ${Sell_Amount}
+

@@ -6,6 +6,7 @@ Add New Facility via Amendment Notebook
     [Documentation]    Add a New Facility via Amendment Notebook.
     ...    @author: mgaling
     ...    @update: clanding    30JUL2020    - updated hard coded values to dataset input; added writing of data and setting to dictionary
+    ...										 - added new argument for Add a Schedule Item
     [Arguments]    ${ExcelPath}
         
     ###Close all windows and Login as original user###
@@ -75,8 +76,8 @@ Add New Facility via Amendment Notebook
     
     ###Amortization Schedule For Facility Window###
     Add a Schedule Item    &{ExcelPath}[NewTran_Amount]    &{ExcelPath}[NewTran_PercentofCurrentBal]    ${CurrentSchedDate}    &{ExcelPath}[Current_Schedule]    &{ExcelPath}[Deal_Name]
-    ...    &{ExcelPath}[MSG_Customer]    &{ExcelPath}[Portfolio_Expense]    &{ExcelPath}[PercentOfDeal_HB]     
-  
+    ...    &{ExcelPath}[MSG_Customer]    &{ExcelPath}[Portfolio_Expense]    &{ExcelPath}[PercentOfDeal_HB]    &{ExcelPath}[Portfolio]
+
     ###Amendment Notebook- Workflow Tab###
     Amendment Send to Approval 
 	Logout from Loan IQ

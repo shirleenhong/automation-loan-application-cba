@@ -270,6 +270,7 @@ Compare Two Arguments
     ...    @update: gerhabal    09SEP2019    - added condition to strip string to value from UI to remove space before comparing    
     [Arguments]    ${value_from_sheet}    ${value_from_ui}
     
+    Wait Until Page Contains Element    ${value_from_ui}    
     ${value_from_ui}    Get Value    ${value_from_ui}
     ${value_from_ui}    Strip String    ${value_from_ui}
     Log    ${value_from_ui}
@@ -447,7 +448,7 @@ Get System Date
     ...    @update: hstone    28APR2020    - Added Keyword Post-process: Save Runtime Value
     ...                                    - Added Optional Argument: ${sRunTimeVar_SystemDate}
     [Arguments]    ${sRunTimeVar_SystemDate}=None
-    # Mx Activate Window    ${LIQ_Window}
+    Mx Activate Window    ${LIQ_Window}
     ${temp}    Mx LoanIQ Get Data    ${LIQ_Window}    title%temp
     # log to console    Label: ${temp}
     ${SystemDate}    Fetch From Right    ${temp}    :${SPACE}    
@@ -1769,8 +1770,8 @@ Write Data To All Column Rows
     [Arguments]    ${sSheetName}    ${sColumnName}    ${sData}
 
     ${ColumnHeader_Index}    Get Index of a Column Header Value    ${sSheetName}    ${sColumnName}
-    ${Row_Count_Total}    Read Excel Column    ${ColumnHeader_Index}    0    ${sSheetName}
-    Write Excel Column    ${ColumnHeader_Index}    ${Row_Count_Total}    ${sData}    1    ${sSheetName}
+    ${Row_Count_Total}    Read Excel Column    ${ColumnHeader_Index}    0    ${sSheetName}       
+    Write Excel Column    ${ColumnHeader_Index}    ${Row_Count_Total}    ${sData}    1    ${sSheetName}       
 
 Write Data To Cell
     [Documentation]    This keyword will be used for writing data to single excel cell.
