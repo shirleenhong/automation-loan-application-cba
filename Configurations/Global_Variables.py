@@ -195,6 +195,9 @@ LOAN_INITIAL_DRAWDOWN_TYPE = "Loan Initial Drawdown"
 RATE_APPROVAL_TRANSACTION = "Rate Approval"
 LOAN_REPRICING_FOR_THE_DEAL = "Loan Repricing for the Deal"
 LOAN_REPRICING = "Loan Repricing"
+AWAITING_RELEASE_CASHFLOWS_STATUS = "Awaiting Release Cashflows"
+AWAITING_RATE_APPROVAL_STATUS = "Awaiting Rate Approval"
+AWAITING_GENERATE_RATE_SETTING_NOTICES_STATUS = "Awaiting Generate Rate Setting Notices"
 
 ### Bank Role ###
 REFERENCE_BANK_ROLE = "Reference Bank"
@@ -216,6 +219,7 @@ PRICING_RULES_TAB = "Pricing Rules"
 WORKFLOW_TAB = "Workflow"
 GENERAL_TAB = "General"
 RATES_TAB = "Rates"
+CURRENCY_TAB = "Currency"
 
 ### Payment Type ###
 FEE_PAYMENT_FROM_BORROWER_TYPE = "Fee Payment From Borrower"
@@ -236,3 +240,6 @@ INTEREST_PAYMENT_REQUESTED_AMOUNT = "InterestPaymentRequestedAmount"
 NEW_LOAN_ALIAS = "NewLoanAlias"
 ROLLOVER_CONVERSION_TO_NEW = "Rollover/Conversion To New"
 INTEREST_PAYMENT = "Interest Payment"
+
+### Outstanding Type ###
+LOAN_TYPE = "Loan"
