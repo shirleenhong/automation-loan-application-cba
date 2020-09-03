@@ -30,14 +30,16 @@ BUS_Update Host Bank Lender Share
 BUS_Verify the New Balance in Servicing Group Share Window
     [Documentation]    This keyword is used to run the assigned low level keyword.
     ...    @author: sahalder    01JUL2020    - initial create
+    ...    @update: dahijara    19AUG2020    - Added argument
 
-    Run Keyword   Verify the New Balance in Servicing Group Share Window    ${ARGUMENT_1}    ${ARGUMENT_2}    ${ARGUMENT_3}
+    Run Keyword   Verify the New Balance in Servicing Group Share Window    ${ARGUMENT_1}    ${ARGUMENT_2}    ${ARGUMENT_3}    ${ARGUMENT_4}
     
 BUS_Update Host Bank Share Value - Host bank shares section
     [Documentation]    This keyword is used to run the assigned low level keyword.
     ...    @author: sahalder    01JUL2020    - initial create
+    ...    @update: dahijara    19AUG2020    - Removed 1 argument.
 
-    Run Keyword   Update Host Bank Share Value - Host bank shares section    ${ARGUMENT_1}    ${ARGUMENT_2}    ${ARGUMENT_3}    ${ARGUMENT_4}
+    Run Keyword   Update Host Bank Share Value - Host bank shares section    ${ARGUMENT_1}    ${ARGUMENT_2}    ${ARGUMENT_3}
     
 BUS_Verify the New Balance for Host Bank Share Value - Host bank shares section
     [Documentation]    This keyword is used to run the assigned low level keyword.
@@ -54,8 +56,9 @@ BUS_Update NonHost Bank Lender Share
 BUS_Verify the New Balance for NonHost Bank Share
     [Documentation]    This keyword is used to run the assigned low level keyword.
     ...    @author: sahalder    01JUL2020    - initial create
+    ...    @update: dahijara    19AUG2020    - added 2 arguments
 
-    Run Keyword   Verify the New Balance for NonHost Bank Share    ${ARGUMENT_1}    ${ARGUMENT_2}
+    Run Keyword   Verify the New Balance for NonHost Bank Share    ${ARGUMENT_1}    ${ARGUMENT_2}    ${ARGUMENT_3}    ${ARGUMENT_4}
 
 BUS_Adjustment Send to Approval
     [Documentation]    This keyword is used to run the assigned low level keyword.
