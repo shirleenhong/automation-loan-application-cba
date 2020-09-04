@@ -7,17 +7,17 @@ Validate Execution Journal for DWE LIQ Extract
     [Documentation]    This keyword is used to go to Actions > Batch Administration and validate TEST_DE Batch Nets if data are correct.
     ...    sZone value format must be ZONE2 or ZONE3.
     ...    @author: clanding    09JUL2020    - initial create
-    ...    @update: clanding    01SEP2020    - added screenshot
-    [Arguments]    ${sZone}    ${sJobName}    ${sBPR_Name}
+    ...    @update: clanding    01SEP2020    - added screenshot; replaced ${DWE_BATCH_NET} to ${sBatch_Net} to make it dynamic
+    [Arguments]    ${sZone}    ${sJobName}    ${sBPR_Name}    ${sBatch_Net}
 
     Select Actions    [Actions];Batch Administration
-    Mx LoanIQ Select List    ${LIQ_Batch_Admin_Master_ComboBox}    ${DWE_BATCH_NET}
+    Mx LoanIQ Select List    ${LIQ_Batch_Admin_Master_ComboBox}    ${sBatch_Net}
     Mx LoanIQ Click    ${LIQ_Batch_Admin_Execution_Journal_Button}
     Mx LoanIQ Select List    ${LIQ_Execution_Scheduled_Location_ComboBox}    ${sZone}
     ${Job_RC_UI}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_Execution_Scheduled_JavaTree}    ${sJobName}%Job RC%Job_RC_UI
     ${BPR_Name_UI}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_Execution_Scheduled_JavaTree}    ${sJobName}%BPR Name%BPR_Name_UI
     ${Location_UI}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_Execution_Scheduled_JavaTree}    ${sJobName}%Location%Location_UI
-    Take Screenshot    ExecutionJournal_${DWE_BATCH_NET}_${sZone}
+    Take Screenshot    ExecutionJournal_${sJobName}_${sZone}
     Close All Windows on LIQ
 
     Compare Two Strings    0    ${Job_RC_UI}
