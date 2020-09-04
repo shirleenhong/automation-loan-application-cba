@@ -48,8 +48,9 @@ BUS_Approve Rate Setting Notice
 BUS_Set RolloverConversion Notebook General Details
     [Documentation]    This keyword is used to run the assigned low level keyword.
     ...    @author: sahalder    24JUN2020    - initial create
+    ...    @update: dahijara    28aug2020    - Updated arguments
 
-    Run Keyword   Set RolloverConversion Notebook General Details    ${ARGUMENT_1}    ${ARGUMENT_2}
+    Run Keyword   Set RolloverConversion Notebook General Details    ${ARGUMENT_1}    ${ARGUMENT_2}    ${ARGUMENT_3}    ${ARGUMENT_4}
     
 BUS_Set RolloverConversion Notebook Rates
     [Documentation]    This keyword is used to run the assigned low level keyword.
@@ -75,5 +76,9 @@ BUS_Navigate to Rollover Conversion Notebook Workflow
 
     Run Keyword   Navigate to Rollover Conversion Notebook Workflow    ${ARGUMENT_1}    ${ARGUMENT_2}
 
-           
+BUS_Set FX Rates Rollover or Conversion
+    [Documentation]    This keyword is used to run the assigned low level keyword.
+    ...    @author: dahijara    27AUG2020    - initial create
+
+    Run Keyword   Set FX Rates Rollover or Conversion    ${ARGUMENT_1}
     

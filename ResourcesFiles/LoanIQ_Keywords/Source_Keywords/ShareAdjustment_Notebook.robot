@@ -369,3 +369,31 @@ Navigate to Shared Adjustment Notebook Workflow
     ...    AND    mx LoanIQ click element if present    ${LIQ_Information_OK_Button}
     ...    ELSE IF    '${Transaction}'=='Close'    mx LoanIQ click element if present    ${LIQ_Information_OK_Button}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/SharedAdjustment_Notebook_Workflow
+
+Get Host Bank and Lender Shares
+    [Documentation]    This keyword navigates from deal notbook to Lender shares and Get the shares percentage for Host bank and Lender.
+    ...    @author: dahijara    25AUG2020    initial create
+    [Arguments]    ${sHostBank_LegalName}    ${sLender_LegalName}    ${sRunVar_HostBankSharePct}=None    ${sRunVar_LenderSharePct}=None
+    ###Pre-processing Keyword##
+    ${HostBank_LegalName}    Acquire Argument Value    ${sHostBank_LegalName}
+    ${Lender_LegalName}    Acquire Argument Value    ${sLender_LegalName}
+
+    ${status}    Run Keyword And Return Status    Mx LoanIQ Verify Object Exist    ${LIQ_DealNotebook_InquiryMode_Button}    VerificationData="Yes"
+    Run Keyword If    ${status}==True    mx LoanIQ click    ${LIQ_DealNotebook_InquiryMode_Button}
+    ...    ELSE    Run Keyword    Mx LoanIQ Verify Object Exist    ${LIQ_DealNotebook_UpdateMode_Button}    VerificationData="Yes"
+
+    Mx LoanIQ Activate Window    ${LIQ_DealNotebook_Window}      
+    Mx LoanIQ Select    ${LIQ_DealNotebook_Queries_LenderShares}
+    Mx LoanIQ Activate Window    ${LIQ_LenderShares_Window}
+    ${ColumnName}    Set Variable    <PERCENTAGE> of Global
+    ${HostBankSharePct_Value}    Mx LoanIQ Store TableCell To Clipboard   ${LIQ_LenderShares_PrimariesAssignees_List}    ${HostBank_LegalName}%${ColumnName}%var    Processtimeout=180
+    ${LenderSharePct_Value}    Mx LoanIQ Store TableCell To Clipboard   ${LIQ_LenderShares_PrimariesAssignees_List}    ${Lender_LegalName}%${ColumnName}%var    Processtimeout=180
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/SharedAdjustment
+    ### Convert Percentage to Whole Number ###
+    ${HostBankSharePct_Value}    Evaluate    ${HostBankSharePct_Value}*100
+    ${LenderSharePct_Value}    Evaluate    ${LenderSharePct_Value}*100
+	Mx LoanIQ Close Window    ${LIQ_LenderShares_Window}
+    ### ConstRuntime Keyword Post-processing ###
+    Save Values of Runtime Execution on Excel File    ${sRunVar_HostBankSharePct}    ${HostBankSharePct_Value}
+    Save Values of Runtime Execution on Excel File    ${sRunVar_LenderSharePct}    ${LenderSharePct_Value}
+    [Return]    ${HostBankSharePct_Value}    ${LenderSharePct_Value}
