@@ -270,6 +270,7 @@ Compare Two Arguments
     ...    @update: gerhabal    09SEP2019    - added condition to strip string to value from UI to remove space before comparing    
     [Arguments]    ${value_from_sheet}    ${value_from_ui}
     
+    Wait Until Page Contains Element    ${value_from_ui}    
     ${value_from_ui}    Get Value    ${value_from_ui}
     ${value_from_ui}    Strip String    ${value_from_ui}
     Log    ${value_from_ui}
@@ -447,7 +448,7 @@ Get System Date
     ...    @update: hstone    28APR2020    - Added Keyword Post-process: Save Runtime Value
     ...                                    - Added Optional Argument: ${sRunTimeVar_SystemDate}
     [Arguments]    ${sRunTimeVar_SystemDate}=None
-    # Mx Activate Window    ${LIQ_Window}
+    Mx Activate Window    ${LIQ_Window}
     ${temp}    Mx LoanIQ Get Data    ${LIQ_Window}    title%temp
     # log to console    Label: ${temp}
     ${SystemDate}    Fetch From Right    ${temp}    :${SPACE}    
@@ -1769,8 +1770,8 @@ Write Data To All Column Rows
     [Arguments]    ${sSheetName}    ${sColumnName}    ${sData}
 
     ${ColumnHeader_Index}    Get Index of a Column Header Value    ${sSheetName}    ${sColumnName}
-    ${Row_Count_Total}    Read Excel Column    ${ColumnHeader_Index}    0    ${sSheetName}
-    Write Excel Column    ${ColumnHeader_Index}    ${Row_Count_Total}    ${sData}    1    ${sSheetName}
+    ${Row_Count_Total}    Read Excel Column    ${ColumnHeader_Index}    0    ${sSheetName}       
+    Write Excel Column    ${ColumnHeader_Index}    ${Row_Count_Total}    ${sData}    1    ${sSheetName}       
 
 Write Data To Cell
     [Documentation]    This keyword will be used for writing data to single excel cell.
@@ -2515,3 +2516,38 @@ Enter Text on Java Tree Text Field
     \     Mx Press Combination    Key.@{Text_Value_List}[${KEY_PRESS_INDEX}]
 
     Mx LoanIQ Click    ${sJavaTree_Locator}
+
+Mx Execute Template With Multiple Test Case Name
+    [Documentation]    This keyword will execute the template using the rowname instead of rowid and multiple row names are allowed.
+    ...    @author: clanding    27AUG2020    - initial create
+    [Arguments]    ${stemplateName}    ${sDataSet}    ${sDataColumnName}    ${sDataRowNames}    ${sDataSheetName}    ${sDelimiter}=None
+
+    ${DataRowNames_List}    Run Keyword If    '${sDelimiter}'=='None'    Split String    ${sDataRowNames}    |
+    ...    ELSE    Split String    ${sDataRowNames}    ${sDelimiter}
+    
+    :FOR    ${DataRowNames}    IN    @{DataRowNames_List}
+    \    Open Excel    ${sDataSet}
+    \    Log    Data Set Open: '${sDataSet}'
+    \
+    \    ${DataColumn_List}    Read Excel Row    1    sheet_name=${sDataSheetName}
+    \    Log    Data Set Sheet Name: '${sDataSheetName}'
+    \    Log    Data Set Sheet Column Names: '${DataColumn_List}'
+    \
+    \    ${DataColumnName_Index}    Get Index From List    ${DataColumn_List}    ${sDataColumnName}
+    \    Log    Column Name Index : '${DataColumnName_Index}'
+    \    Run Keyword If    ${DataColumnName_Index}<0    Fail    '${sDataColumnName}' is not found at '${DataColumn_List}' Data Sheet Column Names.
+    \    ${DataColumnName_Index}    Evaluate    ${DataColumnName_Index}+1
+    \
+    \    ${DataRow_List}    Read Excel Column    ${DataColumnName_Index}    sheet_name=${sDataSheetName}
+    \    Log    Row Names for '${sDataColumnName}': '${DataRow_List}'
+    \
+    \    ${DataRowValue_Index}    Get Index From List    ${DataRow_List}    ${DataRowNames}
+    \    Log    Row Name Index : '${DataRowValue_Index}'
+    \    Run Keyword If    ${DataColumnName_Index}<0    Fail    '${DataRowNames}' is not found at '${DataRow_List}' Data Row Values.
+    \    
+    \    ${rowid_Column_Index}    Get Index From List    ${DataColumn_List}    rowid
+    \    Put String To Cell    ${sDataSheetName}    ${rowid_Column_Index}    ${DataRowValue_Index}   ${DataRowValue_Index}
+    \    Close Current Excel Document
+    \    
+    \    Set Global Variable    ${TestCase_Name}    ${DataRowNames}
+    \    Mx Execute Template With Multiple Data    ${stemplateName}    ${sDataSet}    ${DataRowValue_Index}    ${sDataSheetName}

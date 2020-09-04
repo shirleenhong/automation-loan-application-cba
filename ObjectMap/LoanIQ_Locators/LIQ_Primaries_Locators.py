@@ -82,6 +82,7 @@ LIQ_PrimaryCircles_TradeDate_TextField = 'JavaWindow("title:=Set Circled/Legal T
 LIQ_PrimaryCircles_TradeDate_OK_Button = 'JavaWindow("title:=Set Circled/Legal Trade.*").JavaButton("attached text:=OK")'
 LIQ_PrimaryCircle_Workflow_JavaTree_NoItems= 'JavaWindow("title:=.*Approved Orig Primary.*").JavaTree("items count:= 0")'
 LIQ_PrimaryCircles_TradeDate_OK_Button = 'JavaWindow("title:=Set Circled/Legal Trade.*").JavaButton("attached text:=OK")'
+LIQ_PrimaryCircle_OrigPrimary_Window = 'JavaWindow("title:=.*Settlement Approved.*Orig Primary.*")'
 
 ###Pending Orig Primaries - Portfolio allocations###
 LIQ_PortfolioAllocations_Facility_JavaTree = 'JavaWindow("title:=Portfolio allocations.*").JavaTree("tagname:=Tree","index:=1")'

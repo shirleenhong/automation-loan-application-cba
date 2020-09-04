@@ -938,6 +938,7 @@ Validate Facility Pricing Window
 Validate General Information Details
     [Documentation]     This keyword validates the SIC of the facility based on the borrower.
     ...    @author: henstone
+    ...    @update: mcastro    27Aug2020    Added screenshot with correct path
     [Arguments]    ${SIC}    ${OwningBranch}    ${FundingDesk}    ${ProcessingArea}
     Mx LoanIQ Select Window Tab    ${LIQ_FacilityNotebook_Tab}    Codes
     
@@ -960,6 +961,8 @@ Validate General Information Details
     ${Verify_ProcessingArea}    Run Keyword And Return Status    Mx LoanIQ Verify Runtime Property
     ...    JavaWindow("title:=Facility -.*").JavaStaticText("text:=${ProcessingArea}")    text%${ProcessingArea}
     Run Keyword If    ${Verify_ProcessingArea} == True    Log    SIC Verified
+    
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/FacilityNotebook_Codes Tab
     
 Verify If Facility Window Does Not Exist
     [Documentation]    This keyword validates if the Facility Window is not existing then navigates from Deal Notebook
@@ -2421,6 +2424,7 @@ Complete Facility Pricing Setup
 Set Facility Pricing Penalty Spread
     [Documentation]    This keyword sets the Penalty Spread in the Facility > Pricing Tab.
     ...                @author: bernchua
+    ...    @update: mcastro    27Aug2020    Added screenshot with correct path
     [Arguments]        ${PenaltySpread_Value}    ${PenaltySpread_Status}
     mx LoanIQ activate    ${LIQ_FacilityNotebook_Window}
     Mx LoanIQ Select Window Tab    ${LIQ_FacilityNotebook_Tab}    Pricing
@@ -2435,6 +2439,8 @@ Set Facility Pricing Penalty Spread
     ${PenaltySpread_UI}    Convert To Number    ${PenaltySpread_UI}
     ${PenaltySpread_Value}    Convert To Number    ${PenaltySpread_Value}
     Run Keyword If    '${PenaltySpread_UI}'=='${PenaltySpread_Value}'    Log    Penalty spread sucessfully added.
+
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/FacilityNotebook_Pricing Tab
     
 Add Sublimit for Facility
     [Documentation]    This keyword is used to add a Sublimit to the Facility.
@@ -2634,7 +2640,8 @@ Close Facility Notebook and Navigator Windows
     
 Add MIS Code
     [Documentation]    This keyword is used to add MIS Codes at the Facility Notebook
-    ...    @author: henstone    14AUG2019    Initial create   
+    ...    @author: henstone    14AUG2019    Initial create
+    ...    @author: mcastro    27Aug2020    Added correct screenshot path   
     [Arguments]    ${sMIS_Code}    ${sValue}
     mx LoanIQ activate window    ${LIQ_FacilityNotebook_Window}    
     Mx LoanIQ Select Window Tab    ${LIQ_FacilityNotebook_Tab}    MIS Codes
@@ -2657,6 +2664,8 @@ Add MIS Code
     ${result}    Run Keyword And Return Status    Should Be Equal As Strings    ${sMIS_Value_JavaTree}    ${sValue}
     Run Keyword If    '${result}'=='True'    Log    MIS Code Value is Verified   level=INFO
     Run Keyword If    '${result}'=='False'    Log    MIS Code Value is ${sMIS_Value_JavaTree} instead of ${sValue}    level=ERROR  
+
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/FacilityNotebook_MIS Code
     
 Go to Facility Pricing Tab
     [Documentation]    This keyword will go to the Facility's Pricing Tab.
@@ -2830,7 +2839,7 @@ Add Facility Ongoing Fees with Matrix
     [Arguments]    ${sOngoingFee_Category}    ${sOngoingFee_Type}    ${sOngoingFee_RateBasis}    ${sOngoingFee_AfterItem}    
     ...    ${sOngoingFee_AfterItem_Type}    ${sFormulaCategoryType}    ${sOngoingFee_SpreadType}    ${sOngoingFee_SpreadAmount}
     ...    ${sInterest_FinancialRatioType}    ${sMnemonic_Status}    ${iGreater_Than}    ${iLess_Than}    ${iFinancialRatio_Minimum}    ${iFinancialRatio_Maximum}    ${sSetFeeSelectionDetails}
-    ${status}    Run Keyword And Return Status    Mx LoanIQ Verify Object Exist    JavaWindow("title:=Facility.*Pricing").JavaTree("items count:=0")    VerificationData="Yes"
+    ${status}    Run Keyword And Return Status    Mx LoanIQ Verify Object Exist    ${LIQ_FacilityPricing_OngoingFeeInterest_NoItems_JavaTree}    VerificationData="Yes"
     Run Keyword If    ${status}==False    Mx Press Combination    Key.Up   
     ${ContinueAdd}    Run Keyword    Add Item to Facility Ongoing Fee or Interest   ${sOngoingFee_Category}    ${sOngoingFee_Type}    
     Run Keyword If    ${ContinueAdd}==True and ${sSetFeeSelectionDetails}==True    Set Fee Selection Details    ${sOngoingFee_Category}    ${sOngoingFee_Type}    ${sOngoingFee_RateBasis}
@@ -2849,7 +2858,7 @@ Add Multiple Ratio
     [Arguments]    ${sOngoingFee_Category}    ${sOngoingFee_Type}    ${sOngoingFee_RateBasis}    
     ...    ${sOngoingFee_SpreadType}    ${sOngoingFee_SpreadAmount}    ${sInterest_FinancialRatioType}    ${sMnemonic_Status}
     ...    ${iGreater_Than}    ${iLess_Than}    ${iFinancialRatio_Minimum}    ${iFinancialRatio_Maximum}
-    ${status}    Run Keyword And Return Status    Mx LoanIQ Verify Object Exist    JavaWindow("title:=Facility.*Pricing").JavaTree("items count:=0")    VerificationData="Yes"
+    ${status}    Run Keyword And Return Status    Mx LoanIQ Verify Object Exist    ${LIQ_FacilityPricing_OngoingFeeInterest_NoItems_JavaTree}    VerificationData="Yes"
     Run Keyword If    ${status}==False    Mx Press Combination    Key.Up 
     mx LoanIQ click    ${LIQ_FacilityPricing_OngoingFeeInterest_Add_Button}
     Mx LoanIQ Optional Select    ${LIQ_AddItem_List}    ${sOngoingFee_Category}

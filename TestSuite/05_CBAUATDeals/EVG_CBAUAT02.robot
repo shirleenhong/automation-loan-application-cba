@@ -32,7 +32,7 @@ Setup Deal
     Mx Execute Template With Multiple Data    Approve and Close UAT Deal    ${CBAUAT_ExcelPath}    1    CRED01_DealSetup
     
 Create Outstandings
-    Mx Execute Template With Multiple Data    Setup Deal D00001053 Outstandings    ${CBAUAT_ExcelPath}    1-3    SERV01_LoanDrawdown
+    Mx Execute Template With Multiple Data    Setup Deal D00001053 Outstandings    ${CBAUAT_ExcelPath}    1-3   SERV01_LoanDrawdown
     
 Initiate Runbook Transactions
     Mx Execute Template With Multiple Data    Setup Repayment Schedule for Loans in Deal D00001053    ${CBAUAT_ExcelPath}    1-3    UAT02_Runbook

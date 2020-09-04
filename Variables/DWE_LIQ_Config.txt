@@ -1,0 +1,28 @@
+*** Variables ***
+
+### Branch ###
+${BRANCH_CB001}    CB001
+${BRANCH_CB001_Customer}    COMMONWEALTH BANK AU-DBU
+${BRANCH_CB001_Desc}    Commonwealth Bank of Australia - DBU
+${BRANCH_CB022}    CB022
+${BRANCH_CB022_Customer}    COMMONWEALTH BANK AUST -OBU
+${BRANCH_CB022_Desc}    Commonwealth Bank of Australia - OBU
+${BRANCH_CG852}    CG852
+${BRANCH_CG852_Customer}    CBA AMSTERDAM
+${BRANCH_CG852_Desc}    Commonwealth Bank of Australia - Amsterdam    
+
+### Outstanding Window Status ###
+${EXPIR_Window}    Expired
+${LRELS_Window}    Active
+${INCAN_Window}    Inactive-Cancelled
+${INACT_Window}    Inactive
+${CNCLD_Window}    Cancelled
+${DUMMY_Window}
+${PEND_Window}    Pending
+
+
+### Performing Status ###
+${ACCR_Desc}    Accrual
+
+${DWE_DATASET}
+       
