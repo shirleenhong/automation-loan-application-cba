@@ -180,10 +180,11 @@ SAPWUL_INSTANCE = 'CustomCBAPush_1.3.0'
 
 ### DWE ###
 DWE_SERVER = 'mancsleverg0007'
+DWE_SERVER_LIQ = 'mancsleverg0005'
 DWE_PORT = '22'
 DWE_SERVER_USER = 'micloud'
 DWE_SERVER_PASSWORD = 'misys123'
-DWE_LANDING_AREA_PATH = '/evgdata/STREAMSETS/workspace/landing_area/COMRLENDING/'
+DWE_LANDING_AREA_PATH = '/evgdata/misys/loaniq/server/data/release/'
 DWE_EXTRACTION_PATH = '/evgdata/STREAMSETS/workspace/extraction_area/COMRLENDING/'
 DWE_DATASET = 'C:\\Git_Evergreen\\fms_cba\\DataSet\\Integration_DataSet\Extracts\\DWE_LIQ\\EVG_DWE_LIQEXTRACT_TestData.xlsx'
 DWE_EXCEL_DATASET = 'C:\\Git_Evergreen\\fms_cba\\DataSet\\Integration_DataSet\Extracts\\DWE_LIQ\\EVG_DWE_LIQEXTRACT_TestData.xlsx'

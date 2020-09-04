@@ -1,0 +1,9 @@
+Status
+businessDate
+EndTime
+RequestId
+StartTime
+LoadType
+TimeRegion
+VirtualPath
+PhysicalPath
