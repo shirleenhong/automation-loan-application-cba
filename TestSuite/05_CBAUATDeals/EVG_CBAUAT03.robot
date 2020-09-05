@@ -13,9 +13,9 @@ ${SCENARIO}    3
    
 Create Quick Party Onboarding for CBA UAT Deal 3 - PTY001
     [Tags]    01 Create Party within Essence - PTY001
-    # Mx Launch UFT    Visilibity=True    UFTAddins=Java
-    Mx Execute Template With Multiple Data    Create Deal Borrower initial details in Quick Party Onboarding    ${CBAUAT_ExcelPath}    1    PTY001_QuickPartyOnboarding
-    Mx Execute Template With Multiple Data    Populate Quick Enterprise Party with Approval    ${CBAUAT_ExcelPath}    1    PTY001_QuickPartyOnboarding   
+    Mx Launch UFT    Visilibity=True    UFTAddins=Java
+    # Mx Execute Template With Multiple Data    Create Deal Borrower initial details in Quick Party Onboarding    ${CBAUAT_ExcelPath}    1    PTY001_QuickPartyOnboarding
+    # Mx Execute Template With Multiple Data    Populate Quick Enterprise Party with Approval    ${CBAUAT_ExcelPath}    1    PTY001_QuickPartyOnboarding   
 
 Complete Customer Profile - ORIG03
     [Tags]    02 Complete Borrower's Profile - 0RIG03
@@ -75,12 +75,12 @@ Setup TL API - Prerequisite
     Mx Execute Template With Multiple Data    Load Base Rate D00000476    ${CBAUAT_ExcelPath}    1    BaseRate_Fields
     Mx Execute Template With Multiple Data    Load FX Rate D00000476     ${CBAUAT_ExcelPath}    1    FXRates_Fields
 
-# ### November 28
-# Setup BaseRate for Nov 28
-    # Mx Execute Template With Multiple Data    Load Base Rate D00000476    ${CBAUAT_ExcelPath}    1    BaseRate_Fields
+### November 28
+Setup BaseRate for Nov 28
+    Mx Execute Template With Multiple Data    Load Base Rate D00000476    ${CBAUAT_ExcelPath}    1    BaseRate_Fields
     
-# Deal Template
-    # Mx Execute Template With Multiple Data    Setup Deal D00000476    ${CBAUAT_ExcelPath}    1    CRED01_DealSetup
+Deal Template 
+    Mx Execute Template With Multiple Data    Setup Deal D00000476    ${CBAUAT_ExcelPath}    1    CRED01_DealSetup
     # Mx Execute Template With Multiple Data    Setup Deal Bank Role    ${CBAUAT_ExcelPath}    1    CRED01_DealSetup
     # Mx Execute Template With Multiple Data    Setup Deal Admin Fee    ${CBAUAT_ExcelPath}    1    CRED01_DealSetup
     # Mx Execute Template With Multiple Data    Setup Deal Calendar    ${CBAUAT_ExcelPath}    1-2    CRED01_DealSetup

@@ -7,29 +7,29 @@ Setup Deal D00000476
     [Documentation]    This keyword is the template for setting up UAT Deal 3
     ...                @author: bernchua    28JUN2019    Initial create
     [Arguments]    ${ExcelPath}
-    ${Deal_Name}    ${Deal_Alias}    Generate And Return Deal Name And Alias    &{ExcelPath}[Deal_NamePrefix]    &{ExcelPath}[Deal_AliasPrefix]
-    ${Borrower_ShortName}    Read Data From Excel    ORIG03_Customer    Party_ID    &{ExcelPath}[rowid]    ${CBAUAT_ExcelPath}
-    ${Borrower_Location}    Read Data From Excel    ORIG03_Customer    Customer_Location    &{ExcelPath}[rowid]    ${CBAUAT_ExcelPath}
+    # ${Deal_Name}    ${Deal_Alias}    Generate And Return Deal Name And Alias    &{ExcelPath}[Deal_NamePrefix]    &{ExcelPath}[Deal_AliasPrefix]
+    # ${Borrower_ShortName}    Read Data From Excel    ORIG03_Customer    Party_ID    &{ExcelPath}[rowid]    ${CBAUAT_ExcelPath}
+    # ${Borrower_Location}    Read Data From Excel    ORIG03_Customer    Customer_Location    &{ExcelPath}[rowid]    ${CBAUAT_ExcelPath}
 
-    Write Data To Excel    CRED01_DealSetup    Deal_Name    &{ExcelPath}[rowid]    ${Deal_Name}    ${CBAUAT_ExcelPath}
-    Write Data To Excel    CRED01_DealSetup    Deal_Alias    &{ExcelPath}[rowid]    ${Deal_Alias}    ${CBAUAT_ExcelPath}
-    Write Data To Excel    CRED01_DealSetup    Borrower_ShortName    &{ExcelPath}[rowid]    ${Borrower_ShortName}    ${CBAUAT_ExcelPath}
-    Write Data To Excel    CRED01_DealSetup    Borrower_Location    &{ExcelPath}[rowid]    ${Borrower_Location}    ${CBAUAT_ExcelPath}
-    Write Data To Excel    CRED02_FacilitySetup    Deal_Name    &{ExcelPath}[rowid]    ${Deal_Name}    ${CBAUAT_ExcelPath}    multipleValue=Y
-    Write Data To Excel    CRED02_FacilitySetup    Facility_Borrower1    &{ExcelPath}[rowid]    ${Borrower_ShortName}    ${CBAUAT_ExcelPath}    multipleValue=Y
-    Write Data To Excel    CRED01_Primaries    Deal_Name    &{ExcelPath}[rowid]    ${Deal_Name}    ${CBAUAT_ExcelPath}
-    Write Data To Excel    SERV05_SBLCIssuance    Deal_Name    &{ExcelPath}[rowid]    ${Deal_Name}    ${CBAUAT_ExcelPath}    multipleValue=Y
-    Write Data To Excel    SERV01A_LoanDrawdown    Deal_Name    &{ExcelPath}[rowid]    ${Deal_Name}    ${CBAUAT_ExcelPath}    multipleValue=Y
-    Write Data To Excel    SERV08C_ComprehensiveRepricing    Deal_Name    &{ExcelPath}[rowid]    ${Deal_Name}    ${CBAUAT_ExcelPath}    multipleValue=Y
-    Write Data To Excel    SERV23_Paperclip    Deal_Name    &{ExcelPath}[rowid]    ${Deal_Name}    ${CBAUAT_ExcelPath}    multipleValue=Y 
-    Write Data To Excel    SERV40_BreakFunding    Deal_Name   &{ExcelPath}[rowid]    ${Deal_Name}    ${CBAUAT_ExcelPath}    multipleValue=Y
-    Write Data To Excel    SERV29_CommitmentFeePayment    Deal_Name    &{ExcelPath}[rowid]    ${Deal_Name}    ${CBAUAT_ExcelPath}    multipleValue=Y
-    Write Data To Excel    CommitmentFee    Deal_Name    &{ExcelPath}[rowid]    ${Deal_Name}    ${CBAUAT_ExcelPath}    multipleValue=Y
-    Write Data To Excel    SERV18_FeeOnLenderSharesPayment    Deal_Name    &{ExcelPath}[rowid]    ${Deal_Name}    ${CBAUAT_ExcelPath}    multipleValue=Y
-    Write Data To Excel    SERV29_Payments    Deal_Name    &{ExcelPath}[rowid]    ${Deal_Name}    ${CBAUAT_ExcelPath}    multipleValue=Y    
-    Write Data To Excel    AMCH05_ExtendFacility    Deal_Name    &{ExcelPath}[rowid]    ${Deal_Name}    ${CBAUAT_ExcelPath}    multipleValue=Y 
-    Write Data To Excel    CRED01_UpfrontFee    Deal_Name    &{ExcelPath}[rowid]    ${Deal_Name}    ${CBAUAT_ExcelPath}    multipleValue=Y 
-    Write Data To Excel    COM06_LoanMerge    Deal_Name    &{ExcelPath}[rowid]    ${Deal_Name}    ${CBAUAT_ExcelPath}    multipleValue=Y 
+    # Write Data To Excel    CRED01_DealSetup    Deal_Name    &{ExcelPath}[rowid]    ${Deal_Name}    ${CBAUAT_ExcelPath}
+    # Write Data To Excel    CRED01_DealSetup    Deal_Alias    &{ExcelPath}[rowid]    ${Deal_Alias}    ${CBAUAT_ExcelPath}
+    # Write Data To Excel    CRED01_DealSetup    Borrower_ShortName    &{ExcelPath}[rowid]    ${Borrower_ShortName}    ${CBAUAT_ExcelPath}
+    # Write Data To Excel    CRED01_DealSetup    Borrower_Location    &{ExcelPath}[rowid]    ${Borrower_Location}    ${CBAUAT_ExcelPath}
+    # Write Data To Excel    CRED02_FacilitySetup    Deal_Name    &{ExcelPath}[rowid]    ${Deal_Name}    ${CBAUAT_ExcelPath}    multipleValue=Y
+    # Write Data To Excel    CRED02_FacilitySetup    Facility_Borrower1    &{ExcelPath}[rowid]    ${Borrower_ShortName}    ${CBAUAT_ExcelPath}    multipleValue=Y
+    # Write Data To Excel    CRED01_Primaries    Deal_Name    &{ExcelPath}[rowid]    ${Deal_Name}    ${CBAUAT_ExcelPath}
+    # Write Data To Excel    SERV05_SBLCIssuance    Deal_Name    &{ExcelPath}[rowid]    ${Deal_Name}    ${CBAUAT_ExcelPath}    multipleValue=Y
+    # Write Data To Excel    SERV01A_LoanDrawdown    Deal_Name    &{ExcelPath}[rowid]    ${Deal_Name}    ${CBAUAT_ExcelPath}    multipleValue=Y
+    # Write Data To Excel    SERV08C_ComprehensiveRepricing    Deal_Name    &{ExcelPath}[rowid]    ${Deal_Name}    ${CBAUAT_ExcelPath}    multipleValue=Y
+    # Write Data To Excel    SERV23_Paperclip    Deal_Name    &{ExcelPath}[rowid]    ${Deal_Name}    ${CBAUAT_ExcelPath}    multipleValue=Y 
+    # Write Data To Excel    SERV40_BreakFunding    Deal_Name   &{ExcelPath}[rowid]    ${Deal_Name}    ${CBAUAT_ExcelPath}    multipleValue=Y
+    # Write Data To Excel    SERV29_CommitmentFeePayment    Deal_Name    &{ExcelPath}[rowid]    ${Deal_Name}    ${CBAUAT_ExcelPath}    multipleValue=Y
+    # Write Data To Excel    CommitmentFee    Deal_Name    &{ExcelPath}[rowid]    ${Deal_Name}    ${CBAUAT_ExcelPath}    multipleValue=Y
+    # Write Data To Excel    SERV18_FeeOnLenderSharesPayment    Deal_Name    &{ExcelPath}[rowid]    ${Deal_Name}    ${CBAUAT_ExcelPath}    multipleValue=Y
+    # Write Data To Excel    SERV29_Payments    Deal_Name    &{ExcelPath}[rowid]    ${Deal_Name}    ${CBAUAT_ExcelPath}    multipleValue=Y    
+    # Write Data To Excel    AMCH05_ExtendFacility    Deal_Name    &{ExcelPath}[rowid]    ${Deal_Name}    ${CBAUAT_ExcelPath}    multipleValue=Y 
+    # Write Data To Excel    CRED01_UpfrontFee    Deal_Name    &{ExcelPath}[rowid]    ${Deal_Name}    ${CBAUAT_ExcelPath}    multipleValue=Y 
+    # Write Data To Excel    COM06_LoanMerge    Deal_Name    &{ExcelPath}[rowid]    ${Deal_Name}    ${CBAUAT_ExcelPath}    multipleValue=Y 
 
     Select Actions    [Actions];Deal
     Screenshot.Take Screenshot    Deal_Notebook
