@@ -14,8 +14,8 @@ ${SCENARIO}    3
 Create Quick Party Onboarding for CBA UAT Deal 3 - PTY001
     [Tags]    01 Create Party within Essence - PTY001
     Mx Launch UFT    Visilibity=True    UFTAddins=Java
-    # Mx Execute Template With Multiple Data    Create Deal Borrower initial details in Quick Party Onboarding    ${CBAUAT_ExcelPath}    1    PTY001_QuickPartyOnboarding
-    # Mx Execute Template With Multiple Data    Populate Quick Enterprise Party with Approval    ${CBAUAT_ExcelPath}    1    PTY001_QuickPartyOnboarding   
+    Mx Execute Template With Multiple Data    Create Deal Borrower initial details in Quick Party Onboarding    ${CBAUAT_ExcelPath}    1    PTY001_QuickPartyOnboarding
+    Mx Execute Template With Multiple Data    Populate Quick Enterprise Party with Approval    ${CBAUAT_ExcelPath}    1    PTY001_QuickPartyOnboarding   
 
 Complete Customer Profile - ORIG03
     [Tags]    02 Complete Borrower's Profile - 0RIG03

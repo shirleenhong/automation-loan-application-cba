@@ -300,7 +300,7 @@ Select Actions
     ${ActionName}    Acquire Argument Value    ${sActionName}
 
     Mx LoanIQ Activate Window    ${LIQ_Window}
-    Mx LoanIQ Maximize   ${LIQ_Window}    
+    Mx LoanIQ Maximize    ${LIQ_Window}    
     Mx LoanIQ Click    ${LIQ_Actions_Button}
     Mx LoanIQ Active Javatree Item    ${LIQ_Tree}    ${ActionName}
     Take Screenshot    ${Screenshot_Path}
