@@ -81,10 +81,9 @@ Setup BaseRate for Nov 28
     
 Deal Template 
     Mx Execute Template With Multiple Data    Setup Deal D00000476    ${CBAUAT_ExcelPath}    1    CRED01_DealSetup
-    # Mx Execute Template With Multiple Data    Setup Deal Bank Role    ${CBAUAT_ExcelPath}    1    CRED01_DealSetup
-    # Mx Execute Template With Multiple Data    Setup Deal Admin Fee    ${CBAUAT_ExcelPath}    1    CRED01_DealSetup
-    # Mx Execute Template With Multiple Data    Setup Deal Calendar    ${CBAUAT_ExcelPath}    1-2    CRED01_DealSetup
-    # Mx Execute Template With Multiple Data    Setup Deal Interest Pricing Options    ${CBAUAT_ExcelPath}    1-5    CRED01_DealSetup
+    Mx Execute Template With Multiple Data    Setup Deal Bank Role    ${CBAUAT_ExcelPath}    1    CRED01_DealSetup
+    Mx Execute Template With Multiple Data    Setup Deal Calendar    ${CBAUAT_ExcelPath}    1-2    CRED01_DealSetup
+    Mx Execute Template With Multiple Data    Setup Deal Interest Pricing Options    ${CBAUAT_ExcelPath}    1-5    CRED01_DealSetup
     # Mx Execute Template With Multiple Data    Setup Deal Fee Pricing Rules    ${CBAUAT_ExcelPath}    1    CRED01_DealSetup
     # Mx Execute Template With Multiple Data    Setup Facility Template D00000476    ${CBAUAT_ExcelPath}    1    CRED02_FacilitySetup
     # Mx Execute Template With Multiple Data    Setup Facility Fees D00000476    ${CBAUAT_ExcelPath}    1    CRED08_FacilityFeeSetup
