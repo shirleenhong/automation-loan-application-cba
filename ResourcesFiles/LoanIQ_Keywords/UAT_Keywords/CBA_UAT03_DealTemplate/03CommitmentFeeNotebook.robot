@@ -1,8 +1,6 @@
 *** Settings ***
 Resource    ../../../../Configurations/LoanIQ_Import_File.robot
 
-*** Variables ***
-${SCENARIO}
 
 *** Keywords ***
 Commitment Fee Payment
@@ -14,7 +12,7 @@ Commitment Fee Payment
     
     ### Navigate to Commitment Fee Notebook ###
     Search Existing Deal    &{ExcelPath}[Deal_Name]    
-    # Navigate Directly to Commitment Fee Notebook from Deal Notebook    &{ExcelPath}[Facility_Name]
+    #Navigate Directly to Commitment Fee Notebook from Deal Notebook    &{ExcelPath}[Facility_Name]
     
     ### Commitment Fee Notebook - General Tab ###  
     ${Rate}    ${BalanceAmount}    ${RateBasis}    Get Data in General Tab
@@ -74,19 +72,15 @@ Commitment Fee Payment
 Setup Commitment Fee Effective Date
     [Documentation]    This keyword collects the commitment fee payment of the facility
     ...    @author:mgaling    31July2019    Intial Create
+    ...    @update:ritragel    09SEP2020    Addded selection of Due Date
     [Arguments]    ${ExcelPath}
     
     ### Navigate to Commitment Fee Notebook ###
-    # Navigate Directly to Commitment Fee Notebook from Deal Notebook    &{ExcelPath}[Facility_Name]
+    Open Ongoing Fee from Deal Notebook    &{ExcelPath}[Facility_Name]    &{ExcelPath}[Fee_Type]
     
-    ### Add Effective Date in Commitment Fee Notebook###
-    mx LoanIQ activate window    ${LIQ_CommitmentFeeNotebook_Pending_Window}    
-    mx LoanIQ click element if present    ${LIQ_CommitmentFee_InquiryMode_Button}
-    mx LoanIQ enter    ${LIQ_CommitmentFee_EffectiveDate_Field}    &{ExcelPath}[Effective_Date]   
-    mx LoanIQ select    ${LIQ_CommitmentFee_Save_Menu}
-    mx LoanIQ click element if present    ${LIQ_Warning_OK_Button}
-    Take Screenshot    LIQ_CommitmentFee_EffectiveDate                
-    mx LoanIQ select    ${LIQ_CommitmentFee_Exit_Menu}    
+    ### Enter Details
+    Enter Commitment Fee Deailts    &{ExcelPath}[Effective_Date]    &{ExcelPath}[Actual_DueDate]    &{ExcelPath}[Adjusted_DueDate]    &{ExcelPath}[Cycle_Frequency]    &{ExcelPath}[Accrue]
+   
     
 Commitment Fee Release
     [Documentation]    This keyword validates the status of commitment fee notebook of the facility.

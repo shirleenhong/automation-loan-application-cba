@@ -68,7 +68,8 @@ Setup Facility Template D00000476
     ...    &{ExcelPath}[Facility_GlobalLimit1]    &{ExcelPath}[Facility_BorrowerMaturity1]    &{ExcelPath}[Facility_EffectiveDate]     
     Run Keyword If    &{ExcelPath}[rowid] == 4    Add Borrower    &{ExcelPath}[Borrower_Currency1]    &{ExcelPath}[Facility_BorrowerSGName1]    &{ExcelPath}[Facility_BorrowerPercent1]    &{ExcelPath}[Facility_Borrower1]
     ...    &{ExcelPath}[Facility_GlobalLimit1]    &{ExcelPath}[Facility_BorrowerMaturity1]    &{ExcelPath}[Facility_EffectiveDate]        
-    Validate Multi CCY Facility
+    
+    Run Keyword If    &{ExcelPath}[rowid] == 4    Validate Multi CCY Facility
 
 Setup Facility Fees D00000476
     [Arguments]    ${ExcelPath}
