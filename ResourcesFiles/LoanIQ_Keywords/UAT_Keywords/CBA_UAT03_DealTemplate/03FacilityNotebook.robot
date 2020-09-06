@@ -12,7 +12,7 @@ Setup Facility Template D00000476
 	Write Data To Excel    CRED02_FacilitySetup    Facility_Name    &{ExcelPath}[rowid]    ${FacilityName}    ${CBAUAT_ExcelPath}
 	Write Data To Excel    CRED08_FacilityFeeSetup    Facility_Name    &{ExcelPath}[rowid]   ${FacilityName}    ${CBAUAT_ExcelPath}
     Write Data To Excel    CRED01_Primaries    Facility_Name&{ExcelPath}[rowid]    ${rowid}    ${FacilityName}    ${CBAUAT_ExcelPath}
-    Write Data To Excel    CommitmentFee    Facility_Name    &{ExcelPath}[rowid]   ${FacilityName}    ${CBAUAT_ExcelPath}
+    Write Data To Excel    CRED08_OngoingFeeSetup    Facility_Name    &{ExcelPath}[rowid]   ${FacilityName}    ${CBAUAT_ExcelPath}
     Write Data To Excel    SERV29_CommitmentFeePayment    Facility_Name    &{ExcelPath}[rowid]   ${FacilityName}    ${CBAUAT_ExcelPath}
     Write Data To Excel    SERV01A_LoanDrawdown    Facility_Name    &{ExcelPath}[rowid]    ${FacilityName}    ${CBAUAT_ExcelPath}
     Write Data To Excel    AMCH05_ExtendFacility    Facility_Name    &{ExcelPath}[rowid]    ${FacilityName}    ${CBAUAT_ExcelPath}
