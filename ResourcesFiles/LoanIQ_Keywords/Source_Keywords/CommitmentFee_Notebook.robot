@@ -183,7 +183,6 @@ Open Ongoing Fee from Deal Notebook
     ...    @author: fmamaril
     ...    <update> 12Dec18 - bernchua : Gets and returns the "Fee Alias"
     ...    @update: ehugo    04JUN2020    - added keyword pre-processing and post-processing; added optional runtime variable; added screenshot
-    ...    @update:    ritragel    06SEP2020    Added set to update mode
     [Arguments]    ${sFacility_Name}    ${sFee_Type}    ${sRunTimeVar_FeeAlias}=None
 
     ### GetRuntime Keyword Pre-processing ###
@@ -198,7 +197,6 @@ Open Ongoing Fee from Deal Notebook
     ${Fee_Alias}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_FeeList_JavaTree}    ${Fee_Type}%Fee Alias%alias
     Mx LoanIQ Select Or DoubleClick In Javatree    ${LIQ_FeeList_JavaTree}    ${Fee_Type}%d
     mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
-    mx LoanIQ click    ${LIQ_CommitmentFee_InquiryMode_Button}
 
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/FacilityNavigatorWindow_OngoingFee
 
@@ -1431,7 +1429,7 @@ Navigate to Reverse Fee Workflow and Proceed With Transaction
     Navigate Notebook Workflow    ${LIQ_ReverseFee_Window}    ${LIQ_ReversePayment_Tab}    ${LIQ_ReversePayment_WorkflowItems_Tree}    ${Transaction}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/ReverseFeeWindow_WorkflowTab
       
-Enter Commitment Fee Deailts
+Enter Commitment Fee Details
     [Documentation]    This keyword will handle the dynamic updates in setting Commitment Fee days
     ...   @author: ritragel    06SEP2020
     [Arguments]    ${sEffectiveDate}    ${sActual_DueDate}    ${sAdjusted_DueDate}    ${sCycle_Frequency}    ${sAccrue}
@@ -1444,7 +1442,9 @@ Enter Commitment Fee Deailts
     ${Accrue}    Acquire Argument Value    ${sAccrue}
 
     mx LoanIQ activate window    ${LIQ_CommitmentFee_Window}
+    mx LoanIQ click    ${LIQ_CommitmentFee_InquiryMode_Button}
     mx LoanIQ enter    ${LIQ_CommitmentFee_EffectiveDate_Field}    ${EffectiveDate} 
+    Mx Press Combination    Key.ENTER
     Mx Click Element If Present    ${LIQ_Warning_OK_Button}    
     mx LoanIQ enter    ${LIQ_CommitmentFee_ActualDueDate_Field}    ${Actual_DueDate} 
     Mx Click Element If Present    ${LIQ_Warning_OK_Button}   
@@ -1456,4 +1456,4 @@ Enter Commitment Fee Deailts
     mx LoanIQ click element if present    ${LIQ_Warning_OK_Button}
     Mx Click Element If Present    ${LIQ_Warning_Yes_Button}  
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/CommitmentFee_Notebook               
-    mx LoanIQ select    ${LIQ_CommitmentFee_Exit_Menu} 
+    Select Menu Item    ${LIQ_CommitmentFee_Window}    File    Exit

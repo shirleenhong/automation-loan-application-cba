@@ -69,18 +69,17 @@ Commitment Fee Payment
     Validate release of Ongoing Fee Payment
     Close All Windows on LIQ   
 
-Setup Commitment Fee Effective Date
-    [Documentation]    This keyword collects the commitment fee payment of the facility
-    ...    @author:mgaling    31July2019    Intial Create
-    ...    @update:ritragel    09SEP2020    Addded selection of Due Date
+Setup Ongoing Fee
+    [Documentation]    This keyword will update the Setup the Ongoing Fees in the Deal
+    ...    @author:    ritragel    09SEP2020    Addded selection of Due Date
     [Arguments]    ${ExcelPath}
     
     ### Navigate to Commitment Fee Notebook ###
     Open Ongoing Fee from Deal Notebook    &{ExcelPath}[Facility_Name]    &{ExcelPath}[Fee_Type]
     
     ### Enter Details
-    Enter Commitment Fee Deailts    &{ExcelPath}[Effective_Date]    &{ExcelPath}[Actual_DueDate]    &{ExcelPath}[Adjusted_DueDate]    &{ExcelPath}[Cycle_Frequency]    &{ExcelPath}[Accrue]
-   
+    Run Keyword If    '&{ExcelPath}[rowid]' != '4'    Enter Commitment Fee Details    &{ExcelPath}[Effective_Date]    &{ExcelPath}[Actual_DueDate]    &{ExcelPath}[Adjusted_DueDate]    &{ExcelPath}[Cycle_Frequency]    &{ExcelPath}[Accrue]
+    Run Keyword If    '&{ExcelPath}[rowid]' == '4'    Enter Line Fee Details    &{ExcelPath}[Effective_Date]    &{ExcelPath}[Actual_DueDate]    &{ExcelPath}[Adjusted_DueDate]    &{ExcelPath}[Cycle_Frequency]    &{ExcelPath}[Accrue]
     
 Commitment Fee Release
     [Documentation]    This keyword validates the status of commitment fee notebook of the facility.
