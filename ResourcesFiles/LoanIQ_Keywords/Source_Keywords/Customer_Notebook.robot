@@ -645,7 +645,7 @@ Add Contact under Profiles Tab
     [Arguments]    ${sCustomer_Location}    ${sLIQCustomer_ShortName}    ${sContact_FirstName}    ${sContact_LastName}    ${sContact_PreferredLanguage}    ${sContact_PrimaryPhone}    ${sBorrowerContact_Phone}    ${sContact_PurposeType}    ${sContactNotice_Method}    ${sContact_Email}
     ...    ${sProductSBLC_Checkbox}    ${sProductLoan_Checkbox}    ${bBalanceType_Principal_Checkbox}    ${bBalanceType_Interest_Checkbox}    ${bBalanceType_Fees_Checkbox}    ${sAddress_Code}   
     
-    ### Keyword Pre-processing ###
+    ## Keyword Pre-processing ###
     ${Customer_Location}    Acquire Argument Value    ${sCustomer_Location}
     ${LIQCustomer_ShortName}    Acquire Argument Value    ${sLIQCustomer_ShortName}
     ${Contact_FirstName}    Acquire Argument Value    ${sContact_FirstName}
@@ -676,6 +676,7 @@ Add Contact under Profiles Tab
     Validate Contact List for 'Location' Window    ${Customer_Location}
     Mx LoanIQ Click    ${ContactListWindow_ExitButton}
     Validate 'Active Customer' Window    ${LIQCustomer_ShortName}
+    
     
 Validate Contact List for 'Location' Window
     [Documentation]    This keyword validates the Window Name of Contact List for 'Location' Window
@@ -2329,6 +2330,23 @@ Add IMT Message in Remittance Instruction
     mx LoanIQ click element if present    ${LIQ_Warning_OK_Button}
     Send Remittance Instruction to Approval
     mx LoanIQ select    ${LIQ_RemittanceInstruction_Notebook_FileMenu_ExitMenu} 
+
+Add IMT Message in Remittance Instruction with Default values    
+    [Documentation]    This keyword adds RTGS-AUD Remittance Instruction with default values
+    ...    @author: fmamaril    09AUG2019    
+    [Arguments]    ${sIMT_MessageCode}    ${sRI_SendersCorrespondent_Checkbox}    ${sBOC_Level}   
+    mx LoanIQ click    ${RemittanceList_Window_RemittanceInstructionsDetail_AddButton}    
+    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
+    mx LoanIQ enter   ${RemittanceList_Window_RemittanceInstructionsDetail_SelectMessageType_SearchField}    ${sIMT_MessageCode}
+    Mx Native Type    {ENTER}
+    mx LoanIQ activate window    ${RemittanceList_Window_RemittanceInstructionsDetail_IMT_Window}
+    Mx LoanIQ Check Or Uncheck    ${RemittanceList_Window_RemittanceInstructionsDetail_IMT_SendersCorrespondent_Checkbox}    ${sRI_SendersCorrespondent_Checkbox}    
+    Mx LoanIQ Select Combo Box Value    ${RemittanceList_Window_RemittanceInstructionsDetail_IMT_BankOperationCode}    ${sBOC_Level}
+    mx LoanIQ click    ${RemittanceList_Window_RemittanceInstructionsDetail_IMT_OKButton}        
+    mx LoanIQ select    ${LIQ_RemittanceInstruction_Notebook_FileMenu_SaveMenu}
+    mx LoanIQ click element if present    ${LIQ_Warning_OK_Button}
+    Send Remittance Instruction to Approval
+    mx LoanIQ select    ${LIQ_RemittanceInstruction_Notebook_FileMenu_ExitMenu}
 
 Add IMT Message in Remittance Instructions Detail
     [Documentation]    This keyword adds IMT message in Remittance Instructions detail of a Customer
