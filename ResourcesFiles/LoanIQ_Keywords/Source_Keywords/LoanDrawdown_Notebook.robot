@@ -3235,7 +3235,8 @@ Add Borrower Base Rate and Facility Spread
     ...                @author: bernchua    08AUG2019    Initial create
     ...                @author: bernchua    22AUG2019    Added line to evaluate and return value with 6 decimal places
     ...                @update: sahalder    25JUN2020    Added keyword Pre-Processing steps
-    ...    @update: dahijara    25AUG2020    Inserted validation for all in rate (from test case level.)
+    ...                @update: dahijara    25AUG2020    Inserted validation for all in rate (from test case level.)
+    ...                @update: mcastro     07SEP2020    Added condition to handle latest inserted validation
     [Arguments]    ${sBorrowerBaseRate}    ${sFacitliySpread}
     
     ### GetRuntime Keyword Pre-processing ###
@@ -3247,8 +3248,8 @@ Add Borrower Base Rate and Facility Spread
     ${Loan_AllInRate}    Evaluate    ${BorrowerBaseRate}+${FacitliySpread}
     ${Loan_AllInRate}    Evaluate    "%.6f" % ${Loan_AllInRate}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LoanRepricing-Rates
-    Validate String Data In LIQ Object    ${LIQ_RolloverConversion_Window}    ${LIQ_RolloverConversion_AllInRate_Text}    ${Loan_AllInRate}%
-    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LoanRepricing-Rates
+    ${STATUS}    Run Keyword And Return Status    Mx LoanIQ Verify Object Exist    ${LIQ_InitialDrawdown_Window}    VerificationData="Yes"       
+    Run Keyword If    ${STATUS}==False    Validate String Data In LIQ Object    ${LIQ_RolloverConversion_Window}    ${LIQ_RolloverConversion_AllInRate_Text}    ${Loan_AllInRate}%
     [Return]    ${Loan_AllInRate}
 
 Set Outstanding Servicing Group Details
