@@ -2861,6 +2861,7 @@ New Outstanding Select
     ...                This keyword also returns the Alias generated.
     ...                @author: bernchua
     ...                @update: bernchua    23AUG2019    Added taking of screenshots
+    ...                @update: mcastro     04SEP2020    Updated screenshot path
     [Arguments]    ${Deal_Name}    ${Facility_Name}    ${Borrower_Name}    ${Outstanding_Type}    ${Pricing_Option}    ${Outstanding_Currency}
     mx LoanIQ activate    ${LIQ_OutstandingSelect_Window}
     Mx LoanIQ Set    ${LIQ_OutstandingSelect_New_RadioButton}    ON
@@ -2883,7 +2884,7 @@ New Outstanding Select
     
     ${Alias}    Mx LoanIQ Get Data    ${LIQ_OutstandingSelect_Alias_JavaEdit}    value%alias    
     
-    Take Screenshot    OutstandingSelect-Window
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/OutstandingSelect-Window
     mx LoanIQ click    ${LIQ_OutstandingSelect_OK_Button}
     mx LoanIQ click element if present    ${LIQ_Information_OK_Button}
     [Return]    ${Alias}
@@ -3211,6 +3212,7 @@ Set Base Rate Details
     ...                @update: bernchua    23AUG2019    Added taking of screenshots
     ...                @update: hstone      05SEP2019    Added Question Window Confirmation
     ...                @update: hstone      18JUN2020    Added Keyword Pre-processing
+    ...                @update: mcastro     03SEP2020    Updated screenshot path
     [Arguments]    ${sBorrowerBaseRate}    ${sAcceptRateFromPricing}=N
 
     ### Keyword Pre-processing ###
@@ -3224,7 +3226,7 @@ Set Base Rate Details
     mx LoanIQ click element if present    ${LIQ_Question_Yes_Button}
     Run Keyword If    '${AcceptRateFromPricing}'=='N'    mx LoanIQ enter    ${LIQ_InitialDrawdown_BorrowerBaseRate_Field}    ${BorrowerBaseRate}
     ...    ELSE IF    '${AcceptRateFromPricing}'=='Y'    mx LoanIQ click    ${LIQ_InitialDrawdown_AcceptBaseRate}
-    Take Screenshot    BaseRate-Window
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/BaseRate-Window
     mx LoanIQ click    ${LIQ_InitialDrawdown_SetBaseRate_OK_Button}
     Verify If Warning Is Displayed
 
@@ -3233,7 +3235,8 @@ Add Borrower Base Rate and Facility Spread
     ...                @author: bernchua    08AUG2019    Initial create
     ...                @author: bernchua    22AUG2019    Added line to evaluate and return value with 6 decimal places
     ...                @update: sahalder    25JUN2020    Added keyword Pre-Processing steps
-    ...    @update: dahijara    25AUG2020    Inserted validation for all in rate (from test case level.)
+    ...                @update: dahijara    25AUG2020    Inserted validation for all in rate (from test case level.)
+    ...                @update: mcastro     07SEP2020    Added condition to handle latest inserted validation
     [Arguments]    ${sBorrowerBaseRate}    ${sFacitliySpread}
     
     ### GetRuntime Keyword Pre-processing ###
@@ -3245,8 +3248,8 @@ Add Borrower Base Rate and Facility Spread
     ${Loan_AllInRate}    Evaluate    ${BorrowerBaseRate}+${FacitliySpread}
     ${Loan_AllInRate}    Evaluate    "%.6f" % ${Loan_AllInRate}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LoanRepricing-Rates
-    Validate String Data In LIQ Object    ${LIQ_RolloverConversion_Window}    ${LIQ_RolloverConversion_AllInRate_Text}    ${Loan_AllInRate}%
-    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LoanRepricing-Rates
+    ${STATUS}    Run Keyword And Return Status    Mx LoanIQ Verify Object Exist    ${LIQ_InitialDrawdown_Window}    VerificationData="Yes"       
+    Run Keyword If    ${STATUS}==False    Validate String Data In LIQ Object    ${LIQ_RolloverConversion_Window}    ${LIQ_RolloverConversion_AllInRate_Text}    ${Loan_AllInRate}%
     [Return]    ${Loan_AllInRate}
 
 Set Outstanding Servicing Group Details
@@ -3663,5 +3666,4 @@ Get Loan FX Rate
 	
     ### ConstRuntime Keyword Post-processing ###
     Save Values of Runtime Execution on Excel File    ${sRunVar_FXRate}    ${FXRate}
-    [Return]    ${FXRate}
-
+    [Return]    ${FXRate}   
