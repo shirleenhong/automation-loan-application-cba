@@ -1454,6 +1454,7 @@ Navigate to Facility Notebook from Deal Notebook
     mx LoanIQ activate window    ${LIQ_FacilityNotebook_Window}  
     
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/DealNotebook_Options
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/Cashflow_FacilityChangeTransaction_ModifyScheduleItem
 
 Navigate to Facility Notebook from Deal Notebook in Inquiry Mode
     [Documentation]    This keyword navigates the LIQ User from the Deal Notebook to the Facility Notebook .
