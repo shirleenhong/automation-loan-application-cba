@@ -254,3 +254,31 @@ Set Ongoing Fee Payment General Tab Details
     mx LoanIQ enter    ${LIQ_OngoingFeePayment_Requested_Textfield}    ${sRequested_Amount}
     mx LoanIQ enter    ${LIQ_OngoingFeePayment_EffectiveDate_Textfield}    ${sEffective_Date}
      
+Enter Line Fee Details
+    [Documentation]    This keyword will handle the dynamic updates in setting Line Fee dates
+    ...   @author: ritragel    06SEP2020
+    [Arguments]    ${sEffectiveDate}    ${sActual_DueDate}    ${sAdjusted_DueDate}    ${sCycle_Frequency}    ${sAccrue}
+    
+    ### Keyword Pre-processing ###
+    ${EffectiveDate}    Acquire Argument Value    ${sEffectiveDate}
+    ${Actual_DueDate}    Acquire Argument Value    ${sActual_DueDate}
+    ${Cycle_Frequency}    Acquire Argument Value    ${sCycle_Frequency}
+    ${Adjusted_DueDate}    Acquire Argument Value    ${sAdjusted_DueDate}
+    ${Accrue}    Acquire Argument Value    ${sAccrue}
+
+    mx LoanIQ activate window    ${LIQ_LineFeeNotebook_Window}
+    mx LoanIQ click    ${LIQ_LineFee_InquiryMode_Button}
+    mx LoanIQ enter    ${LIQ_LineFee_EffectiveDate_Field}    ${EffectiveDate} 
+    Mx Press Combination    Key.ENTER
+    Mx Click Element If Present    ${LIQ_Warning_OK_Button}    
+    mx LoanIQ enter    ${LIQ_LineFee_ActualDue_Date}    ${Actual_DueDate} 
+    Mx Click Element If Present    ${LIQ_Warning_OK_Button}   
+    mx LoanIQ enter    ${LIQ_LineFee_AdjustedDue_Date}    ${Adjusted_DueDate}  
+    Mx Click Element If Present    ${LIQ_Warning_OK_Button}   
+    mx LoanIQ Select Combo Box Value    ${LIQ_LineFee_Cycle}    ${Cycle_Frequency}
+    mx LoanIQ Select Combo Box Value    ${LIQ_LineFee_Accrue_Dropdown}    ${Accrue}
+    Select Menu Item    ${LIQ_LineFeeNotebook_Window}    File    Save
+    mx LoanIQ click element if present    ${LIQ_Warning_OK_Button}
+    Mx Click Element If Present    ${LIQ_Warning_Yes_Button}  
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/CommitmentFee_Notebook               
+    Select Menu Item    ${LIQ_LineFeeNotebook_Window}    File    Exit
