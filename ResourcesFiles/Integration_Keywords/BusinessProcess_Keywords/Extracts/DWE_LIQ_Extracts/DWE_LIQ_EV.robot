@@ -21,3 +21,10 @@ Generate and Verify LIQ Extract for Specific Zone
     Validate Manifest File from Landing Area    &{DWE_DATASET}[Zone]    &{DWE_DATASET}[Extract_Files_Path]    ${sAlphanumericFolder_Name}    &{DWE_DATASET}[Status]
     ...    &{DWE_DATASET}[Business_Date]    &{DWE_DATASET}[Load_Type]
     Validate DWH Folder from Landing Area    &{DWE_DATASET}[Zone]    &{DWE_DATASET}[Extract_Files_Path]    ${sAlphanumericFolder_Name}
+
+Validate New Columns Based on LIQ Upgrade in Extracted CSV Files
+    [Documentation]    This keyword is used to validate new columns are existing in the extracted CSV files based LIQ upgrades.
+    ...    @author: clanding    04SEP2020    - initial create
+    [Arguments]    ${DWE_DATASET}
+    
+    Get CSV Files from Extract and Validate New Columns are Existing    &{DWE_DATASET}[Extract_Files_Path]&{DWE_DATASET}[CSV_File].${CSV}    &{DWE_DATASET}[Columns_To_Validate]

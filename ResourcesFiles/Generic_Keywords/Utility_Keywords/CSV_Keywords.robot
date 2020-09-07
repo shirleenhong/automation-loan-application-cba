@@ -118,3 +118,21 @@ Verify CSV File Contains Delimiter
     ${CSV_Line_Content_List_Count}    Get Length    ${CSV_Line_Content_List}
     Run Keyword If    ${CSV_Line_Content_List_Count}==1    Run Keyword And Continue On Failure    FAIL    CSV DOES NOT contain delimiter: '${Delimiter}'.
     ...    ELSE    Log    CSV contains delimiter: '${Delimiter}'.
+
+Get CSV Files from Extract and Validate New Columns are Existing
+    [Documentation]    This keyword is used to get CSV Files from extract and validate if new columns are existing.
+    ...    @author: clanding    04SEP2020    - initial create
+    [Arguments]    ${sCSV_File}    ${sColumn_To_Validate}    ${sDelimiter}=None
+
+    ${Delimiter}    Run Keyword If    '${sDelimiter}'=='None'    Set Variable    |
+    ...    ELSE    Set Variable    ${sDelimiter}
+
+    ${CSV_Content}    OperatingSystem.Get File    ${sCSV_File}
+    ${Columns_To_Validate_List}    Split String    ${sColumn_To_Validate}    ${Delimiter}
+    
+    :FOR    ${Column_Name}    IN    @{Columns_To_Validate_List}
+    \    Run Keyword And Continue On Failure    Should Contain    ${CSV_Content}    ${Column_Name}
+    \    ${IsColumnExisting}    Run Keyword and Return Status    Should Contain    ${CSV_Content}    ${Column_Name}
+    \    Run Keyword If    ${IsColumnExisting}==${True}    Run Keywords    Log To Console    New column '${Column_Name}' is existing in '${sCSV_File}'.
+         ...    AND    Log    New column '${Column_Name}' is existing in '${sCSV_File}' with content '${CSV_Content}'.
+         ...    ELSE    Run Keyword And Continue On Failure    FAIL    New column '${Column_Name}' is NOT existing in '${sCSV_File}' with content '${CSV_Content}'.
