@@ -6,6 +6,7 @@ LIQ_LineFee_Save_Menu = 'JavaWindow("title:=Line Fee.*").JavaMenu("label:=File")
 LIQ_LineFee_Exit_Menu = 'JavaWindow("title:=Line Fee.*").JavaMenu("label:=File").JavaMenu("label:=Exit")'
 LIQ_LineFee_CurrentRate_Field = 'JavaWindow("title:=Line Fee .*Released:.*").JavaEdit("attached text:=Current Rate:")'
 LIQ_LineFee_BalanceAmount_Field = 'JavaWindow("title:=Line Fee .*Released:.*").JavaEdit("attached text:=Balance Amount:")'
+LIQ_LineFee_RateBasis_Field = 'JavaWindow("title:=Line Fee.*","displayed:=1").JavaStaticText("labeled_containers_path:=Tab:General;","index:=9")'
 LIQ_LineFee_Update_Menu = 'JavaWindow("title:=Line Fee.*").JavaMenu("label:=Options").JavaMenu("label:=Update")'
 LIQ_LineFee_Effective_Date = 'JavaWindow("title:=Line Fee.*").JavaEdit("attached text:=Effective Date:")'
 LIQ_LineFee_FloatRate_Date = 'JavaWindow("title:=Line Fee.*").JavaEdit("attached text:=Float Rate Start Date:")'

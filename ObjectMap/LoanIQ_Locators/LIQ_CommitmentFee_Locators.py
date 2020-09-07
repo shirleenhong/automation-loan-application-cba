@@ -1,4 +1,5 @@
-LIQ_CommitmentFee_ActualDueDate_Field = 'JavaWindow("title:=Commitment Fee.*").JavaEdit("attached text:=Actual Due Date:.*")'###Commitment Fee Notebook - General Tab### 
+###Commitment Fee Notebook - General Tab### 
+LIQ_CommitmentFee_ActualDueDate_Field = 'JavaWindow("title:=Commitment Fee.*").JavaEdit("attached text:=Actual Due Date:.*")'
 LIQ_CommitmentFeeNotebook_Window = 'JavaWindow("title:=Commitment Fee Fee / Released:.*")'   
 LIQ_CommitmentFee_General_OptionsPayment_Menu = 'JavaWindow("title:=Commitment Fee.*","displayed:=1").JavaMenu("label:=Options").JavaMenu("label:=Payment")'
 LIQ_CommitmentFee_Tab = 'JavaWindow("title:=Commitment Fee.*").JavaTab("tagname:=TabFolder")' 
