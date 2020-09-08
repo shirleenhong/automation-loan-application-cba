@@ -4,7 +4,7 @@ Resource    ../../../../../Configurations/Integration_Import_File.robot
 *** Keywords ***
 
 Decrypt GL Extract File
-    [Documentation]    This keyword is used to connect server and decrypt GL extract file and validate if extract file is decrypted successfully.
+    [Documentation]    This keyword is used to connect to server and decrypt GL extract file and validate if extract file is decrypted successfully.
     ...    @author: clanding    07SEP2020    - initial create
     [Arguments]    ${ExcelPath}
     

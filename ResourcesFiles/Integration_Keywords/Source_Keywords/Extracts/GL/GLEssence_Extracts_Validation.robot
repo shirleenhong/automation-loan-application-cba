@@ -6,23 +6,33 @@ Resource    ../../../../../Configurations/Integration_Import_File.robot
 Download Compressed File from GL Extraction Area
     [Documentation]    This keyword is used to go to Extraction Area and download compressed file (GPG) and return gpg and csv file names.
     ...    @author: clanding    07SEP2020    - initial create
+    ...    @update: clanding    08SEP2020    - added exit for loop; updated global variables; added validation if file is downloaded
     [Arguments]    ${sExtract_Path}    ${sZoneAndCode}    ${sBus_Date}
 
     @{ExtractionArea_Files}    SSHLibrary.List Directory    ${GL_EXTRACT_PATH}
     ${Bus_Date_Converted}    Remove String    ${sBus_Date}    -
-    ${Zone}    Run Keyword If    '${sZoneAndCode}'=='Australia(AU)'    Set Variable    SYD
-    ...    ELSE IF    '${sZoneAndCode}'=='Europe(EU)'    Set Variable    EUR
+    ${Zone}    Run Keyword If    '${sZoneAndCode}'=='${LIQ_ZONEANDCODE_AU}'    Set Variable    ${GL_THREE_CHAR_ENTITY_CODE_SYD}
+    ...    ELSE IF    '${sZoneAndCode}'=='${LIQ_ZONEANDCODE_EU}'    Set Variable    ${GL_THREE_CHAR_ENTITY_CODE_EUR}
     ...    ELSE    Log    '${sZoneAndCode}' is NOT yet configured.    level=WARN
+    
+    ### Validate GPG File is existing in SFTP Extract Path ###
+    ${GPG_File_Exist}    Run Keyword And Return Status    Should Contain    ${ExtractionArea_Files}    ${CCB_ESS_GL_FILENAME}${Zone}${GL_FILENAME_TRANSACTION}${Bus_Date_Converted}${GL_CSV_GPG_FILEEXTENSION}
+    Run Keyword If    ${GPG_File_Exist}==${True}    Run Keywords    Log To Console    '${CCB_ESS_GL_FILENAME}${Zone}${GL_FILENAME_TRANSACTION}${Bus_Date_Converted}${GL_CSV_GPG_FILEEXTENSION}' is EXISTING in Extraction Area '${GL_EXTRACT_PATH}'.
+    ...    AND    Log    '${CCB_ESS_GL_FILENAME}${Zone}${GL_FILENAME_TRANSACTION}${Bus_Date_Converted}${GL_CSV_GPG_FILEEXTENSION}' is EXISTING in Extraction Area '${GL_EXTRACT_PATH}'.
+    ...    ELSE    FAIL    '${CCB_ESS_GL_FILENAME}${Zone}${GL_FILENAME_TRANSACTION}${Bus_Date_Converted}${GL_CSV_GPG_FILEEXTENSION}' is NOT EXISTING in Extraction Area '${GL_EXTRACT_PATH}':${\n}${ExtractionArea_Files}
+
+    ### Download GPG File ###
     :FOR    ${File}    IN    @{ExtractionArea_Files}
     \    ${File_To_Download_GPG}    Run Keyword And Return Status    Should Be Equal    ${File}    ${CCB_ESS_GL_FILENAME}${Zone}${GL_FILENAME_TRANSACTION}${Bus_Date_Converted}${GL_CSV_GPG_FILEEXTENSION}
     \    Run Keyword If    ${File_To_Download_GPG}==${True}    Run Keywords    Delete File If Exist    ${sExtract_Path}/${File}
          ...    AND    SSHLibrary.Get File    ${GL_EXTRACT_PATH}/${File}    ${sExtract_Path}
+    \    Exit For Loop If    ${File_To_Download_GPG}==${True}
 
-    ### Validate GPG File is existing ###
-    ${GPG_File_Exist}    Run Keyword And Return Status    Should Contain    ${ExtractionArea_Files}    ${CCB_ESS_GL_FILENAME}${Zone}${GL_FILENAME_TRANSACTION}${Bus_Date_Converted}${GL_CSV_GPG_FILEEXTENSION}
-    Run Keyword If    ${GPG_File_Exist}==${True}    Run Keywords    Log To Console    '${CCB_ESS_GL_FILENAME}${Zone}${GL_FILENAME_TRANSACTION}${Bus_Date_Converted}${GL_CSV_GPG_FILEEXTENSION}' is EXISTING in Extraction Area '${GL_EXTRACT_PATH}'.
-    ...    AND    Log    '${CCB_ESS_GL_FILENAME}${Zone}${GL_FILENAME_TRANSACTION}${Bus_Date_Converted}${GL_CSV_GPG_FILEEXTENSION}' is EXISTING in Extraction Area '${GL_EXTRACT_PATH}'.
-    ...    ELSE    Run Keyword and Continue On Failure    FAIL    '${CCB_ESS_GL_FILENAME}${Zone}${GL_FILENAME_TRANSACTION}${Bus_Date_Converted}${GL_CSV_GPG_FILEEXTENSION}' is NOT EXISTING in Extraction Area '${GL_EXTRACT_PATH}':${\n}${ExtractionArea_Files}
+    ### Validate GPG file is downloaded successfully ###
+    ${GPG_File_Exist}    Run Keyword And Return Status    File Should Exist    ${sExtract_Path}${CCB_ESS_GL_FILENAME}${Zone}${GL_FILENAME_TRANSACTION}${Bus_Date_Converted}${GL_CSV_GPG_FILEEXTENSION}
+    Run Keyword If    ${GPG_File_Exist}==${True}    Run Keywords    Log To Console    '${CCB_ESS_GL_FILENAME}${Zone}${GL_FILENAME_TRANSACTION}${Bus_Date_Converted}${GL_CSV_GPG_FILEEXTENSION}' is downloaded successfully in '${sExtract_Path}'.
+    ...    AND    Log    '${CCB_ESS_GL_FILENAME}${Zone}${GL_FILENAME_TRANSACTION}${Bus_Date_Converted}${GL_CSV_GPG_FILEEXTENSION}' is downloaded successfully in '${sExtract_Path}'.
+    ...    ELSE    FAIL    '${CCB_ESS_GL_FILENAME}${Zone}${GL_FILENAME_TRANSACTION}${Bus_Date_Converted}${GL_CSV_GPG_FILEEXTENSION}' is NOT downloaded successfully in '${sExtract_Path}'.
 
     [Return]    ${CCB_ESS_GL_FILENAME}${Zone}${GL_FILENAME_TRANSACTION}${Bus_Date_Converted}${GL_CSV_GPG_FILEEXTENSION}    ${CCB_ESS_GL_FILENAME}${Zone}${GL_FILENAME_TRANSACTION}${Bus_Date_Converted}.${CSV}
 
