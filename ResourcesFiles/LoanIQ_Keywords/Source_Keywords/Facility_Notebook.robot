@@ -1104,7 +1104,8 @@ Save Scheduled Facility Limit Change
     mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
     mx LoanIQ click    ${LIQ_FacilityChangeTransaction_AmortizationSchedule_ExitButton}      
     mx LoanIQ activate window    ${LIQ_FacilityChangeTransaction_Window}
-      
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/Cashflow_FacilityChangeTransaction_ModifyScheduleItem   
+
 Create Pending Transaction from Schedule item
     [Documentation]    This keyword is used to create pending transaction from Schedule Item
     ...    @author: ghabal
