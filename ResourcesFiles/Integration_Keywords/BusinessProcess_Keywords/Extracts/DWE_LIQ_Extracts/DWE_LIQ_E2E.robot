@@ -3,8 +3,8 @@ Resource    ../../../../../Configurations/Integration_Import_File.robot
 
 *** Keywords ***
 
-Generate and Process LIQ Extracts for Zone 3
-    [Documentation]    This keyword is used to verify that the User is able to generate and processed the Extracts from LIQ for Zone 3.
+Generate and Process LIQ Extracts for Specific Zone
+    [Documentation]    This keyword is used to verify that the User is able to generate and processed the Extracts from LIQ for Zone value.
     ...    @author: clanding    10JUL2020    - initial create
     [Arguments]    ${DWE_DATASET}
 

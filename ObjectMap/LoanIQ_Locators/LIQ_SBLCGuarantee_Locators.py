@@ -130,7 +130,7 @@ LIQ_RateSettingNoticeGroup_EditHighlightedNotice_Button = 'JavaWindow("title:=Ra
 LIQ_RateSetting_Notice_Email_Window = 'JavaWindow("title:=Rate Setting Notice created.*","displayed:=1")'
 LIQ_RateSetting_Notice_FileMenu_PreviewMenu = 'JavaWindow("title:=Rate Setting Notice created.*","displayed:=1").JavaMenu("index:=0").JavaMenu("label:=Preview")'
 LIQ_RateSettingNoticeGroup_Exit_Button = 'JavaWindow("title:=Rate Setting Notice Group.*","displayed:=1").JavaButton("label:=Exit.*")'
-
+LIQ_RateSettingNoticeGroup_Table = 'JavaWindow("title:=Rate Setting Notice Group.*","displayed:=1").JavaTree("attached text:=Drill down to.*")'
 
 #### Interest Payment Notice
 LIQ_InterestPayment_Notice_FileMenu_PreviewMenu = 'JavaWindow("title:=Interest Payment Notice created.*","displayed:=1").JavaMenu("index:=0").JavaMenu("label:=Preview")'

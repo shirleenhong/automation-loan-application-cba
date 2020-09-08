@@ -281,7 +281,8 @@ Setup Term Facility for Syndicated Deal
     [Documentation]    This keyword is used to create a Term Facility.
     ...    @author: bernchua
     ...    @update: ritragel    21FEB2019    Updated Writing and dataSet
-    ...    @updsate: dahijara    24JUL2020    Added scenario 5 condition for writing Facility_Name in SYND02_PrimaryAllocation
+    ...    @update: dahijara    24JUL2020    Added scenario 5 condition for writing Facility_Name in SYND02_PrimaryAllocation
+    ...    @update: dahijara    25 AUG2020    Added writing for scenario 5 Facility name - SERV10_ConversionOfInterestType
     [Arguments]    ${ExcelPath}
     
     ###Data Generation###
@@ -311,6 +312,7 @@ Setup Term Facility for Syndicated Deal
     ...    AND    Write Data To Excel    SERV29_PaymentFees    Facility_Name    ${rowid}    ${Facility_Name}
     ...    AND    Write Data To Excel    MTAM08_LoanShareAdjustment    Facility_Name    ${rowid}    ${Facility_Name}
     ...    AND    Write Data To Excel    SERV01_TermLoanDrawdowninUSD    Facility_Name    ${rowid}    ${Facility_Name}
+    ...    AND    Write Data To Excel    SERV10_ConversionOfInterestType    Facility_Name    ${rowid}    ${Facility_Name}
     
     ${FacilityName}    Read Data From Excel    CRED02_FacilitySetup    Facility_Name    ${rowid}
     
@@ -657,6 +659,7 @@ Setup Syndicated Deal For Secondary Sale
     ...    @update: jdelacru    27FEB2019    - Moved writing of Deal Name and Deal Alias in highlevel keyword
     ...    @update: bernchua    28JUN2019    Removed 1 argument in Create New Deal keyword
     ...    @update: amansueto    15APR2020    - merged select actions and validate field keywords to Create New Deal
+    ...    @update: dahijara    25 AUG2020    Added writing for scenario 5 Deal name - SERV10_ConversionOfInterestType
     [Arguments]    ${ExcelPath}
     ###Data Generation###
     ${Deal_Name}    ${Deal_Alias}    Generate Deal Name and Alias    &{ExcelPath}[Deal_NamePrefix]    &{ExcelPath}[Deal_AliasPrefix]    &{ExcelPath}[rowid]
@@ -668,6 +671,7 @@ Setup Syndicated Deal For Secondary Sale
     Write Data To Excel    MTAM08_LoanShareAdjustment    Deal_Name    ${rowid}    ${Deal_Name}
     Write Data To Excel    SERV01A_TermAndSBLC    Deal_Name    ${rowid}    ${Deal_Name}
     Write Data To Excel    SERV01_TermLoanDrawdowninUSD    Deal_Name    ${rowid}    ${Deal_Name}
+    Write Data To Excel    SERV10_ConversionOfInterestType    Deal_Name    ${rowid}    ${Deal_Name}
     Write Data To Excel    SERV08C_ComprehensiveRepricing    Deal_Name    ${rowid}    ${Deal_Name}
     Write Data To Excel    SERV13_InterestCapitalization    Deal_Name    ${rowid}    ${Deal_Name}
     Write Data To Excel    SERV21_InterestPayments    Deal_Name    ${rowid}    ${Deal_Name}
