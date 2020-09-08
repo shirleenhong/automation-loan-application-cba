@@ -29,7 +29,7 @@ Download Compressed File from GL Extraction Area
     \    Exit For Loop If    ${File_To_Download_GPG}==${True}
 
     ### Validate GPG file is downloaded successfully ###
-    ${GPG_File_Exist}    Run Keyword And Return Status    File Should Exist    ${sExtract_Path}${CCB_ESS_GL_FILENAME}${Zone}${GL_FILENAME_TRANSACTION}${Bus_Date_Converted}${GL_CSV_GPG_FILEEXTENSION}
+    ${GPG_File_Exist}    Run Keyword And Return Status    OperatingSystem.File Should Exist    ${sExtract_Path}${CCB_ESS_GL_FILENAME}${Zone}${GL_FILENAME_TRANSACTION}${Bus_Date_Converted}${GL_CSV_GPG_FILEEXTENSION}
     Run Keyword If    ${GPG_File_Exist}==${True}    Run Keywords    Log To Console    '${CCB_ESS_GL_FILENAME}${Zone}${GL_FILENAME_TRANSACTION}${Bus_Date_Converted}${GL_CSV_GPG_FILEEXTENSION}' is downloaded successfully in '${sExtract_Path}'.
     ...    AND    Log    '${CCB_ESS_GL_FILENAME}${Zone}${GL_FILENAME_TRANSACTION}${Bus_Date_Converted}${GL_CSV_GPG_FILEEXTENSION}' is downloaded successfully in '${sExtract_Path}'.
     ...    ELSE    FAIL    '${CCB_ESS_GL_FILENAME}${Zone}${GL_FILENAME_TRANSACTION}${Bus_Date_Converted}${GL_CSV_GPG_FILEEXTENSION}' is NOT downloaded successfully in '${sExtract_Path}'.
