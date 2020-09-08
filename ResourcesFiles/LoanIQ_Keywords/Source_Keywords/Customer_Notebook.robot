@@ -1443,6 +1443,7 @@ Close Servicing Group Remittance Instructions Selection List Window
     Mx LoanIQ Activate    ${ServicingGroupWindow}
     Take Screenshot    ${Screenshot_Path}/Screenshots/LoanIQ/ServicingGroupsWindow
     Run Keyword If    '${LIQCustomer_ShortName}' != 'None'    Validate 'Serving Groups For:' Window    ${LIQCustomer_ShortName}
+    mx LoanIQ click    ${ServicingGroupWindow_ExitButton}
     
 Validate Added Remittance Instructions
     [Documentation]    This keyword validates the Added Remittance Instructions against from excel data  
@@ -1895,7 +1896,7 @@ Approving Remittance Instruction
     Mx LoanIQ DoubleClick    ${RemittanceList_Window_RemittanceList}    ${RemittanceInstruction_DDADescriptionAUD}
     Approve Remittance Instruction
     Take Screenshot    ${Screenshot_Path}/Screenshots/LoanIQ/RemittanceInstructionsDetailWindow
-    Mx LoanIQ Select    ${LIQ_RemittanceInstruction_Notebook_FileMenu_ExitMenu}
+    Mx LoanIQ Select    ${LIQ_RemittanceInstruction_Notebook_FileMenu_ExitMenu}    
         
 Approving DDA-AUD Remittance Instruction
     [Documentation]    This keyword approves DDA-AUD Remittance Instruction to the Details of a Contact of a Customer
@@ -2347,6 +2348,7 @@ Add IMT Message in Remittance Instruction with Default values
     mx LoanIQ click element if present    ${LIQ_Warning_OK_Button}
     Send Remittance Instruction to Approval
     mx LoanIQ select    ${LIQ_RemittanceInstruction_Notebook_FileMenu_ExitMenu}
+    mx LoanIQ click    ${RemittanceList_Window_ExitButton}
 
 Add IMT Message in Remittance Instructions Detail
     [Documentation]    This keyword adds IMT message in Remittance Instructions detail of a Customer
