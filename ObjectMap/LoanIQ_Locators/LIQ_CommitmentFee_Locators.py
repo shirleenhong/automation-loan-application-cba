@@ -1,4 +1,5 @@
 ###Commitment Fee Notebook - General Tab### 
+LIQ_CommitmentFee_ActualDueDate_Field = 'JavaWindow("title:=Commitment Fee.*").JavaEdit("attached text:=Actual Due Date:.*")'
 LIQ_CommitmentFeeNotebook_Window = 'JavaWindow("title:=Commitment Fee Fee / Released:.*")'   
 LIQ_CommitmentFee_General_OptionsPayment_Menu = 'JavaWindow("title:=Commitment Fee.*","displayed:=1").JavaMenu("label:=Options").JavaMenu("label:=Payment")'
 LIQ_CommitmentFee_Tab = 'JavaWindow("title:=Commitment Fee.*").JavaTab("tagname:=TabFolder")' 
@@ -74,6 +75,10 @@ LIQ_CommitmentFee_InquiryMode_Button = 'JavaWindow("title:=Commitment Fee.*").Ja
 
 ###Commitment Fee - General###   
 LIQ_CommitmentFee_InquiryMode_Button = 'JavaWindow("title:=Commitment Fee.*").JavaButton("attached text:=Notebook in Inquiry Mode - F7")'
+LIQ_CommitmentFee_EffectiveDate_Field = 'JavaWindow("title:=Commitment Fee.*").JavaEdit("attached text:=Effective Date:.*")'
+LIQ_CommitmentFee_ActualDueDate_Field = 'JavaWindow("title:=Commitment Fee.*").JavaEdit("attached text:=Actual Due Date:.*")'
+LIQ_CommitmentFee_Accrue_Dropdown = 'JavaWindow("title:=Commitment Fee.*").JavaList("attached text:=Accrue.*")'
+LIQ_CommitmentFee_Cycle_Frequency_Dropdown = 'JavaWindow("title:=Commitment Fee.*").JavaList("attached text:=Cycle Frequency.*")'
 LIQ_CommitmentFee_EffectiveDate_Field = 'JavaWindow("title:=Commitment Fee.*").JavaEdit("attached text:=Effective Date:.*")'
 LIQ_CommitmentFee_AccrualEndDate_Field = 'JavaWindow("title:=Commitment Fee.*").JavaEdit("attached text:=Accrual End Date:.*")'
 LIQ_CommitmentFee_RequestedDate_Field = 'JavaWindow("title:=Commitment Fee Ongoing Fee Payment.*").JavaEdit("tagname:=Text","x:=231","y:=117")'

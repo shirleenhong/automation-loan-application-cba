@@ -11,7 +11,9 @@ LIQ_LineFee_Update_Menu = 'JavaWindow("title:=Line Fee.*").JavaMenu("label:=Opti
 LIQ_LineFee_Effective_Date = 'JavaWindow("title:=Line Fee.*").JavaEdit("attached text:=Effective Date:")'
 LIQ_LineFee_FloatRate_Date = 'JavaWindow("title:=Line Fee.*").JavaEdit("attached text:=Float Rate Start Date:")'
 LIQ_LineFee_ActualDue_Date = 'JavaWindow("title:=Line Fee.*").JavaEdit("attached text:=Actual Due Date:")'
+LIQ_LineFee_AdjustedDue_Date = 'JavaWindow("title:=Line Fee.*").JavaEdit("attached text:=Adjusted Due Date:")'
 LIQ_LineFee_Cycle = 'JavaWindow("title:=Line Fee.*").JavaList("attached text:=Cycle Frequency:")' 
+LIQ_LineFee_Accrue_Dropdown = 'JavaWindow("title:=Line Fee.*").JavaList("attached text:=Accrue.*")' 
 LIQ_LineFeeReleasedNotebook_Window = 'JavaWindow("title:=Line Fee.* / Released:.*")'
 ###Line Fee Notebook - Facility Ongoing Fee Capitalization Editor### 
 LIQ_LineFee_CapitalizationEditor_Window = 'JavaWindow("title:=Facility Ongoing Fee Capitalization Editor")'

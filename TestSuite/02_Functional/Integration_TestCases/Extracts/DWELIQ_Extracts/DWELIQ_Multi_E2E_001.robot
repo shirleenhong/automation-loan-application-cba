@@ -10,4 +10,4 @@ DWELIQ_Multi_E2E_001
     ...    @author: clanding    10JUL2020    - initial create
 
     Set Global Variable    ${TestCase_Name}    DWELIQ_Multi_E2E_001
-    Mx Execute Template With Specific Test Case Name    Generate and Process LIQ Extracts for Zone 3    ${DWE_DATASET}    Test_Case    ${TestCase_Name}    DWE
+    Mx Execute Template With Specific Test Case Name    Generate and Process LIQ Extracts for Specific Zone    ${DWE_DATASET}    Test_Case    ${TestCase_Name}    DWE

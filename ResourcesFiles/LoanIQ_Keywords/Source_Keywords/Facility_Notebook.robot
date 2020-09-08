@@ -2839,7 +2839,7 @@ Add Facility Ongoing Fees with Matrix
     [Arguments]    ${sOngoingFee_Category}    ${sOngoingFee_Type}    ${sOngoingFee_RateBasis}    ${sOngoingFee_AfterItem}    
     ...    ${sOngoingFee_AfterItem_Type}    ${sFormulaCategoryType}    ${sOngoingFee_SpreadType}    ${sOngoingFee_SpreadAmount}
     ...    ${sInterest_FinancialRatioType}    ${sMnemonic_Status}    ${iGreater_Than}    ${iLess_Than}    ${iFinancialRatio_Minimum}    ${iFinancialRatio_Maximum}    ${sSetFeeSelectionDetails}
-    ${status}    Run Keyword And Return Status    Mx LoanIQ Verify Object Exist    JavaWindow("title:=Facility.*Pricing").JavaTree("items count:=0")    VerificationData="Yes"
+    ${status}    Run Keyword And Return Status    Mx LoanIQ Verify Object Exist    ${LIQ_FacilityPricing_OngoingFeeInterest_NoItems_JavaTree}    VerificationData="Yes"
     Run Keyword If    ${status}==False    Mx Press Combination    Key.Up   
     ${ContinueAdd}    Run Keyword    Add Item to Facility Ongoing Fee or Interest   ${sOngoingFee_Category}    ${sOngoingFee_Type}    
     Run Keyword If    ${ContinueAdd}==True and ${sSetFeeSelectionDetails}==True    Set Fee Selection Details    ${sOngoingFee_Category}    ${sOngoingFee_Type}    ${sOngoingFee_RateBasis}
@@ -2858,7 +2858,7 @@ Add Multiple Ratio
     [Arguments]    ${sOngoingFee_Category}    ${sOngoingFee_Type}    ${sOngoingFee_RateBasis}    
     ...    ${sOngoingFee_SpreadType}    ${sOngoingFee_SpreadAmount}    ${sInterest_FinancialRatioType}    ${sMnemonic_Status}
     ...    ${iGreater_Than}    ${iLess_Than}    ${iFinancialRatio_Minimum}    ${iFinancialRatio_Maximum}
-    ${status}    Run Keyword And Return Status    Mx LoanIQ Verify Object Exist    JavaWindow("title:=Facility.*Pricing").JavaTree("items count:=0")    VerificationData="Yes"
+    ${status}    Run Keyword And Return Status    Mx LoanIQ Verify Object Exist    ${LIQ_FacilityPricing_OngoingFeeInterest_NoItems_JavaTree}    VerificationData="Yes"
     Run Keyword If    ${status}==False    Mx Press Combination    Key.Up 
     mx LoanIQ click    ${LIQ_FacilityPricing_OngoingFeeInterest_Add_Button}
     Mx LoanIQ Optional Select    ${LIQ_AddItem_List}    ${sOngoingFee_Category}

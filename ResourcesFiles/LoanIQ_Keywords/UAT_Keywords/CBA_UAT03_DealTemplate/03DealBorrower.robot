@@ -20,7 +20,7 @@ Create Deal Borrower initial details in Quick Party Onboarding
     ...    AND    Write Data To Excel    ORIG03_Customer    LIQCustomer_LegalName    ${rowid}    ${EnterpriseName}    ${CBAUAT_ExcelPath}
     ...    AND    Write Data To Excel    PTY001_QuickPartyOnboarding    Enterprise_Name    ${rowid}    ${EnterpriseName}    ${CBAUAT_ExcelPath}
     ...    AND    Write Data To Excel    PTY001_QuickPartyOnboarding    Party_ID    ${rowid}    ${PartyID}    ${CBAUAT_ExcelPath}
-    ...    AND    Write Data To Excel    SERV01A_LoanDrawdown    Borrower_Name    ${rowid}    ${PartyID}    ${CBAUAT_ExcelPath}    Y
+    ...    AND    Write Data To Excel    SERV01A_LoanDrawdown    Borrower_Name    ${rowid}    ${PartyID}    ${CBAUAT_ExcelPath}    multipleValue=Y
     ...    ELSE    Populate Pre-Existence Check with No Suffix    &{ExcelPath}[Enterprise_Name]    
 
 Populate Quick Enterprise Party with Approval

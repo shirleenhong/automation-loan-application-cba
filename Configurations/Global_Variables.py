@@ -177,6 +177,7 @@ FACILITY_CHANGE_TRANSACTION = "Facility Change Transaction"
 AWAITING_APPROVAL_STATUS = "Awaiting Approval"
 AWAITING_RELEASE_STATUS = "Awaiting Release"
 SEND_TO_APPROVAL_STATUS = "Send to Approval"
+GENERATE_INTENT_NOTICES = "Generate Intent Notices"
 RATE_APPROVAL_STATUS = "Rate Approval"
 AWAITING_SETTLEMENT_APPROVAL_STATUS = "Awaiting Settlement Approval"
 SETTLEMENT_APPROVAL_STATUS = "Settlement Approval"
@@ -189,6 +190,7 @@ CREATE_CASHFLOWS_TYPE = "Create Cashflows"
 RELEASE_CASHFLOWS_TYPE = "Release Cashflows"
 AMORTIZING_ADMIN_FEE_PAYMENT_TYPE = "Amortizing Admin Fee Payment"
 SHARE_ADJUSTMENT_TYPE = "Share Adjustment"
+CREATE_CASHFLOW_TYPE = "Create Cashflow"
 RELEASE_TRANSACTION = "release" 
 PAYMENT_TRANSACTION = "Payment"
 DEBIT_AMT_LABEL = "Debit Amt"
@@ -201,6 +203,10 @@ RATE_APPROVAL_TRANSACTION = "Rate Approval"
 LOAN_REPRICING_FOR_THE_DEAL = "Loan Repricing for the Deal"
 LOAN_REPRICING = "Loan Repricing"
 AWAITING_FUNDING_MEMO_STATUS = "Awaiting Funding Memo"
+CBA_EMAIL_PDF_METHOD = "CBA Email with PDF Attachment"
+AWAITING_RELEASE_CASHFLOWS_STATUS = "Awaiting Release Cashflows"
+AWAITING_RATE_APPROVAL_STATUS = "Awaiting Rate Approval"
+AWAITING_GENERATE_RATE_SETTING_NOTICES_STATUS = "Awaiting Generate Rate Setting Notices"
 
 ### Bank Role ###
 REFERENCE_BANK_ROLE = "Reference Bank"
@@ -224,9 +230,12 @@ GENERAL_TAB = "General"
 RATES_TAB = "Rates"
 FACILITIES_TAB = "Facilities"
 CONTACTS_TAB = "Contacts"
+CURRENCY_TAB = "Currency"
 
 ### Payment Type ###
 FEE_PAYMENT_FROM_BORROWER_TYPE = "Fee Payment From Borrower"
+ADMIN_FEE_AMORT = "Adm Fee (Amort)"
+
 ### Amendment Tab ###
 EVENTS_TAB = "Events"
 
@@ -250,8 +259,12 @@ NEW_LOAN_ALIAS = "NewLoanAlias"
 ROLLOVER_CONVERSION_TO_NEW = "Rollover/Conversion To New"
 INTEREST_PAYMENT = "Interest Payment"
 
+### Outstanding Type ###
+LOAN_TYPE = "Loan"
+
 ### Other ###
 SHORT_NAME = "Short Name"
 HOST_BANK = "Host Bank"
 ASSIGNMENT = "Assignment"
 MATURITY_DATE = "Maturity Date"
+MULTIPLE_REFERENCE = "False"
