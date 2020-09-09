@@ -44,15 +44,15 @@ Decrypt Compressed File for GL Extract
     Delete File If Exist    ${sExtract_Path}${sCSV_File}
     Run    ${GL_DECRYPTION_PART1} ${GL_DECRYPTOR_TOOL_PATH}
     Run    ${GL_DECRYPTION_PART2} ${GL_DECRYPTOR_JAR}
-    Take Screenshot    CMD_Decrytion
+    Take Screenshot    ${screenshot_path}/Screenshots/GL/CMD_Decrytion
     Run    ${GL_DECRYPTION_PART3} ${sExtract_Path}${sGPG_File}
-    Take Screenshot    CMD_Decrytion
+    Take Screenshot    ${screenshot_path}/Screenshots/GL/CMD_Decrytion
     Run    ${GL_DECRYPTION_PART3} ${GL_DECRYPTOR_TOOL_PATH}\\${GL_PGP_SECRET_KEY}
-    Take Screenshot    CMD_Decrytion
+    Take Screenshot    ${screenshot_path}/Screenshots/GL/CMD_Decrytion
     Run    ${GL_DECRYPTION_PART3} ${GL_PASSPHRASE}
-    Take Screenshot    CMD_Decrytion
+    Take Screenshot    ${screenshot_path}/Screenshots/GL/CMD_Decrytion
     Run    ${GL_DECRYPTION_PART3} ${sExtract_Path}${sCSV_File}
-    Take Screenshot    CMD_Decrytion
+    Take Screenshot    ${screenshot_path}/Screenshots/GL/CMD_Decrytion
     Run    ${GL_DECRYPTION_PART3} exit
     
     ### Check if CSV File is existing in Extract Path ###
