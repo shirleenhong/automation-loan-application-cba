@@ -13,6 +13,7 @@ Add Facility Change Transaction
     Mx LoanIQ Select    ${LIQ_FacilityNotebook_Options_FacilityChangeTransaction}
     Take Screenshot    ${Screenshot_Path}/Screenshots/LoanIQ/FacilityChangeTransactionNotebook_GeneralTab
     Mx LoanIQ Click Element If Present    ${LIQ_Question_Yes_Button}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/FacilityChangeTransaction
     
 Modify Maturity Date in Facility Change Transaction
     [Documentation]    This keyword extends the Maturity Date of the Facility by entering future date

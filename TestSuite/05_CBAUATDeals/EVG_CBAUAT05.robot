@@ -38,7 +38,7 @@ Deal Setup
     Mx Execute Template With Multiple Data    Approve and Close Deal D00001151    ${CBAUAT_ExcelPath}    ${rowid}    CRED01_DealSetup
 
 Facility Change Limit - A
-    [Tags]    03 Facility Change Limit 
+    [Tags]    03 Facility Change Limit       
     Mx Execute Template With Multiple Data    Facility Limit Change    ${CBAUAT_ExcelPath}    ${Facility_A}    CRED02_FacilitySetup
     
 Facility A - Outstandings

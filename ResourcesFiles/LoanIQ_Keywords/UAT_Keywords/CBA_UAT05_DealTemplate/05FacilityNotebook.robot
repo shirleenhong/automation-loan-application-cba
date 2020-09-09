@@ -88,14 +88,12 @@ Facility Limit Change
     
     ### Navigate to Facility Change Transaction ### 
     Add Facility Change Transaction
-    Take Screenshot    FacilityChangeTransaction
     
     ### Set the  amortization schedule ammounts ###
     Navigate to Ammortization Schedule for Facility Change Transaction
     Modify Current Amortization Amount    Decrease    &{ExcelPath}[Facility_LimitChangeDecreaseAmount]    &{ExcelPath}[Facility_LimitChangeDecreaseAmtSched]     
     Add Scheduled Facility Limit Change    Decrease    &{ExcelPath}[Facility_LimitChangeRemainingAmount]    &{ExcelPath}[Facility_LimitChangeRemainingAmtSched]    
-    Save Scheduled Facility Limit Change
-    Take Screenshot    FacilityChangeTransaction_ModifyScheduleItem 
+    Save Scheduled Facility Limit Change  
     
     ### Sending to Approval the Facility Change Transaction ###    
     Send to Approval Facility Change Transaction
@@ -116,8 +114,7 @@ Facility Limit Change
     Open Existing Deal    &{ExcelPath}[Deal_Name]
     
     ###...Navigating a Facility
-    Navigate to Facility Notebook from Deal Notebook    &{ExcelPath}[Facility_Name]
-    Take Screenshot    FacilityChangeTransaction_ModifyScheduleItem 
+    Navigate to Facility Notebook from Deal Notebook    &{ExcelPath}[Facility_Name] 
     
     ### Create pending transaction from Schedule Item  
     Create Pending Transaction from Schedule item    ${CurrentBusinessDate}
