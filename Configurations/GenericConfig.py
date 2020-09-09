@@ -194,6 +194,19 @@ DWE_TAR_GZ_EXT = ""
 DWE_TAR_GZ_GPG_EXT = ""
 DWE_CCB_LIQ_ZONE_FILENAME = ""
 
+### GL ###
+GL_LIQ_USER = ""
+GL_LIQ_PASSWORD = ""
+GL_EXTRACT_PATH = ""
+GL_DECRYPTOR_TOOL_PATH = ""
+GL_DECRYPTOR_JAR = ""
+GL_DECRYPTION_PART1 = ""
+GL_DECRYPTION_PART2 = ""
+GL_DECRYPTION_PART3 = ""
+GL_PGP_SECRET_KEY = ""
+GL_PASSPHRASE = ""
+GL_CSV_GPG_FILEEXTENSION = ""
+
 import os
 project_path = os.path.dirname(os.path.realpath(__file__)).replace("MDM_ConfigFile","")
 dataset_path = os.path.dirname(os.path.abspath('.//Data_Set'))
