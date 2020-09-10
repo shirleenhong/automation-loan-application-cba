@@ -9,6 +9,7 @@ Create Repricing for Loan AA in Deal D00000963
     ...                @author: bernchua    10SEP2019    Added setting up of Repayment Schedule during Repricing
     ...                @author: bernchua    18SEP2019    Updated keyword name
     ...                @update: aramos      28AUG2020    Update Take Screenshots
+    ...                @update: aramos      10SEP2020    Update [Validate Loan Repricing New Outstanding Amount] in order to provide separate paths for Pricing_Option and Loan_Alias
     [Arguments]    ${ExcelPath}
     
     ${Facility_Spread}    Run Keyword If    '&{ExcelPath}[rowid]'=='1'    Read Data From Excel    CRED02_FacilitySetup    Interest_SpreadValue    1    ${CBAUAT_ExcelPath} 
@@ -56,8 +57,7 @@ Create Repricing for Loan AA in Deal D00000963
     
     Close RolloverConversion Notebook
     
-    ${New_Outstanding}    Set Variable    &{ExcelPath}[Pricing_Option] (${Loan_Alias})
-    Validate Loan Repricing New Outstanding Amount    ${New_Outstanding}    &{ExcelPath}[Rollover_RequestedAmount]
+    Validate Loan Repricing New Outstanding Amount    &{ExcelPath}[Pricing_Option]    ${Loan_Alias}    &{ExcelPath}[Rollover_RequestedAmount]
     Validate Loan Repricing Effective Date    ${Effective_Date}
     
     Navigate Notebook Workflow    ${LIQ_LoanRepricingForDeal_Window}    ${LIQ_LoanRepricingForDeal_Workflow_Tab}    ${LIQ_LoanRepricingForDeal_Workflow_JavaTree}    Send to Approval
