@@ -35,4 +35,4 @@ SAPWUL_CRE04
     Mx Execute Template With Multiple Data    Verify Deal Event XML     ${SAPWUL_DATASET}    ${DealRowID}    DealData
     Mx Execute Template With Multiple Data    Verify Facility Event XML    ${SAPWUL_DATASET}    ${Facility_F}    FacilityData
     Mx Execute Template With Multiple Data    Verify Facility Event XML    ${SAPWUL_DATASET}    ${Facility_G}    FacilityData
-    Mx Execute Template With Multiple Data    Verify Facility Event XML    ${SAPWUL_DATASET}    ${Facility_H}    FacilityData
+    Mx Execute Template With Multiple Data    Verify Facility Event XML    ${SAPWUL_DATASET}    ${Facility_H}    FacilityData 
