@@ -1,9 +1,10 @@
 *** Settings ***
-Resource    ../../../../Configurations/Import_File.robot
+Resource    ../../../../../Configurations/Integration_Import_File.robot
 
 *** Variables ***
 ${Facility_RowID}    18
 ${SAPWULRowID}    14
+
 *** Test Cases ***
 SAPWUL_UPD10
     [Tags]    SAPWUL_UPD10

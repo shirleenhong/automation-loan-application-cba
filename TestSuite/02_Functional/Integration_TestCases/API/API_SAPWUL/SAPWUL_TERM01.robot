@@ -1,5 +1,5 @@
 *** Settings ***
-Resource    ../../../../Configurations/Import_File.robot
+Resource    ../../../../../Configurations/Integration_Import_File.robot
 
 *** Variables ***
 ${SAPWULTERM01_FACILITY}    32

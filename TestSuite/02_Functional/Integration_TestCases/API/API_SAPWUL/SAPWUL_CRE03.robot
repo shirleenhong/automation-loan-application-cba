@@ -1,10 +1,11 @@
 *** Settings ***
-Resource    ../../../../../Configurations/LoanIQ_Import_File.robot
+Resource    ../../../../../Configurations/Integration_Import_File.robot
 
 *** Variables ***
 ${DealRowID}    3
 ${Facility_E}    5
 ${SAPWULRowID}    3
+
 *** Test Cases ***
 SAPWUL_CRE03
     [Tags]    SAPWUL_CRE03

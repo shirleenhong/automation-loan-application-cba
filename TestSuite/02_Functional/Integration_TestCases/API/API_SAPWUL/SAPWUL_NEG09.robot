@@ -1,10 +1,11 @@
 *** Settings ***
-Resource    ../../../../Configurations/Import_File.robot
+Resource    ../../../../../Configurations/Integration_Import_File.robot
 
 *** Variables ***
 ${SAPWULNEG09_DEAL}    7
 ${SAPWULNEG09_FACILITY-A}    26
 ${SAPWULNEG09_FACILITYFEE-A}    13
+
 *** Test Cases ***
 SAPWUL_NEG09
     [Tags]    SAPWUL_NEG09

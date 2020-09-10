@@ -1,5 +1,5 @@
 *** Settings ***
-Resource    ../../../../Configurations/Import_File.robot
+Resource    ../../../../../Configurations/Integration_Import_File.robot
 
 *** Variables ***
 ${DealRowID}    5
@@ -10,6 +10,7 @@ ${FacilityFees_I}    9
 ${FacilityFees_J}    10
 ${FacilityFees_K}    11
 ${SAPWULRowID}    19
+
 *** Test Cases ***
 SAPWUL_CRE05
     [Tags]    SAPWUL_CRE05

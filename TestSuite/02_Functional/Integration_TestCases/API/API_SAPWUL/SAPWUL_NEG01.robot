@@ -1,11 +1,12 @@
 *** Settings ***
-Resource    ../../../../Configurations/Import_File.robot
+Resource    ../../../../../Configurations/Integration_Import_File.robot
 
 *** Variables ***
 ${DealRowID}    6
 ${Facility_G}    30
 ${FacilityFees_G}    12
 ${SAPWULRowID}    24
+
 *** Test Cases ***
 SAPWUL_NEG01
     [Tags]    SAPWUL_NEG01

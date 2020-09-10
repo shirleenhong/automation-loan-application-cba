@@ -1,13 +1,10 @@
-
-
-
-
 *** Settings ***
-Resource    ../../../../Configurations/Import_File.robot
+Resource    ../../../../../Configurations/Integration_Import_File.robot
 
 *** Variables ***
 ${Facility_RowID_Preq}    33
 ${Facility_RowID}    34
+
 *** Test Cases ***
 SAPWUL_NEG03
     [Tags]    SAPWUL_NEG03
