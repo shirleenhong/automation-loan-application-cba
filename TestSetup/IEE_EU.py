@@ -7,7 +7,7 @@ Countries_Codes = "C:\\Git_Evergreen\\evergreen_projects\\CBA_Evergreen\\DataSet
 TL_DATASET = "C:\\Git_Evergreen\\evergreen_projects\\CBA_Evergreen\\DataSet\\TL_DataSet\\TL_Data_Set.xls"
 SAPWUL_DATASET = "C:\\Git_evergreen\\evergreen_projects\\CBA_Evergreen\\DataSet\\Downstream_DataSet\\SAPWUL\\SAPWUL_Data_Set.xlsx"
 ComSeeDataSet = 'C:\\Git_Evergreen\\evergreen_projects\\CBA_Evergreen\\DataSet\\Downstream_DataSet\\ComSee\\COMSEE_Data_Set.xls'
-GLExcelPath = "C:\\Git_Evergreen\\evergreen_projects\\CBA_Evergreen\\DataSet\\Extract_DataSet\\GL\\EVG_GL_TestData.xls"
+GLExcelPath = 'C:\\Git_Evergreen\\fms_cba\\DataSet\\Integration_DataSet\Extracts\\GL\\EVG_GL_TestData_EU.xlsx'
 PTY_DATASET = "C:\\Git_Evergreen\\evergreen_projects\\CBA_Evergreen\\DataSet\\PTY_DataSet\\PTY_DataSet.xlsx"
 
 SERVER = "http://mancsleverg0007"
@@ -154,5 +154,18 @@ SAPWUL_INSTANCE = 'CustomCBAPush_1.3.0'
 RUNTIME_EXCEL_FILE = "C:\\fms_scotia\\Customization\\Temp\\RUNTIME_VALUES.xlsx"
 
 ###Screenshots###
-Screenshot_Path = "C:\\Git_Evergreen\\fms_scotia\\Results"
+screenshot_path = "C:\\Git_Evergreen\\fms_cba\\Results"
 SCREENSHOT_FILENAME = ""
+
+### GL Postings/Extracts###
+GL_LIQ_USER = 'RPTINP01'
+GL_LIQ_PASSWORD = 'password02'
+GL_EXTRACT_PATH = '/evgdata/FBE_GL_Extract/extract'
+GL_DECRYPTOR_TOOL_PATH = 'C:\\Git_Evergreen\\fms_cba\\DataSet\\Integration_DataSet\Extracts\\GL\\Decryptor_Tool'
+GL_DECRYPTOR_JAR = 'Decryptor-1.0.0-jar-with-dependencies.jar'
+GL_DECRYPTION_PART1 = 'C:/Git_Evergreen/fms_cba/DataSet/Integration_DataSet/Extracts/GL/Decryptor_Tool/GL_DECRYPTION_PART1.vbs'
+GL_DECRYPTION_PART2 = 'C:/Git_Evergreen/fms_cba/DataSet/Integration_DataSet/Extracts/GL/Decryptor_Tool/GL_DECRYPTION_PART2.vbs'
+GL_DECRYPTION_PART3 = 'C:/Git_Evergreen/fms_cba/DataSet/Integration_DataSet/Extracts/GL/Decryptor_Tool/GL_DECRYPTION_PART3.vbs'
+GL_PGP_SECRET_KEY = 'secret.skr'
+GL_PASSPHRASE = 'password'
+GL_CSV_GPG_FILEEXTENSION = '.csv.gpg'
