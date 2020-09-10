@@ -3,7 +3,7 @@
 ${EXCELDATA_DELIMITER_PIPE}    |
 ${EXCELDATA_DELIMITER_DICTIONARY}    /
 ${EXCELDATA_DELIMITER_LISTITEMS}    ;
-${SAPWUL_EXPECTEDJSON_PATH}    \\DataSet\\Downstream_DataSet\\SAPWUL\\ExpectedJson\\
+${SAPWUL_EXPECTEDJSON_PATH}    \\DataSet\\Integration_DataSet\\SAPWUL\\ExpectedJson\\
 ${SAPWUL_EVENTRECORDS_PATH}    \\DataSet\\Downstream_DataSet\\SAPWUL\\EventRecords\\
 ${SAPWUL_FFCPAYLOAD_PATH}    \\DataSet\\Downstream_DataSet\\SAPWUL\\FFCPayloads\\
 ${SAPWUL_FILENAME_PREFIX}    SAPWUL
