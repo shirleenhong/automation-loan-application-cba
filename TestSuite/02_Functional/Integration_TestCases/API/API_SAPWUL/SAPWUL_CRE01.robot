@@ -14,7 +14,7 @@ SAPWUL_CRE01
     ### SAPWUL Data Clear ###
     Mx Execute Template With Multiple Data    Clear SAPWUL Data     ${SAPWUL_DATASET}    ${SAPWULRowID}    SAPWUL_Payload
     
-    ### Deal Creation ###
+    ### Deal Creation Setup ###
     Mx Execute Template With Multiple Data    Deal Create    ${SAPWUL_DATASET}    ${DealRowID}    DealData
     
     ### Facility Creation ###
