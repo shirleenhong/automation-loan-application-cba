@@ -10,7 +10,7 @@ Verify the Response 404 CBA not Lender
     ...    @author: sacuisia 14AUG2019
     [Arguments]    ${ComSeeDataSet}  
 
-   Verify Response of Deal Facility 404 Response    &{ComSeeDataSet}[COM_ID]    &{ComSeeDataSet}[Headers]    &{ComSeeDataSet}[InputFilePath]    &{ComSeeDataSet}[ResponseJson] 
+   Verify Response of Deal Facility 404 Response    &{ComSeeDataSet}[COM_ID]    &{ComSeeDataSet}[Headers]    &{ComSeeDataSet}[Version]    &{ComSeeDataSet}[InputFilePath]    &{ComSeeDataSet}[ResponseJson] 
    
 Get Response for Deal Single Facility - Scenario1
     [Documentation]    This keyword is used to GET Response for SINGLE FACILITY, SINGLE LENDER, and SINGLE BORROWER DEAL. 
@@ -53,7 +53,7 @@ Get Response for Deal Single Facility - Scenario1
    ${Facility_FundingDeskDescription}    Read Data From Excel    ComSee_SC1_FacSetup    Facility_FundingDeskDescription    ${rowid}    ${ComSeeDataSet}
    ${Facility_ExpiryDate}    Read Data From Excel    ComSee_SC1_FacSetup    Facility_ExpiryDate    ${rowid}    ${ComSeeDataSet}
    
-   Validation for CommSee   &{ExcelPath}[COM_ID]    ${ExcelPath}[Headers]    &{ExcelPath}[InputFilePath]    &{ExcelPath}[ResponseJson]    ${ExtractDate}    &{ExcelPath}[Deal_Name]    &{ExcelPath}[Deal_TrackingNumber]    
+   Validation for CommSee   &{ExcelPath}[COM_ID]    &{ExcelPath}[Headers]    &{ExcelPath}[Version]    &{ExcelPath}[InputFilePath]    &{ExcelPath}[ResponseJson]    ${ExtractDate}    &{ExcelPath}[Deal_Name]    &{ExcelPath}[Deal_TrackingNumber]    
    ...    &{ExcelPath}[Deal_ClosedDate]    &{ExcelPath}[Deal_Currency]    &{ExcelPath}[Deal_HostBankNetCommitment]    &{ExcelPath}[Deal_ProcessingAreaCode]    &{ExcelPath}[Deal_ProcessingAreaDescription]    
    ...    &{ExcelPath}[Deal_ExpenseCode]    &{ExcelPath}[Deal_ExpenseDescription]    
    ...    &{ExcelPath}[Deal_NoOfFacitlities]    &{ExcelPath}[Deal_NoOfLenders]    &{ExcelPath}[Deal_NoOfBorrowers]    &{ExcelPath}[Deal_HostBankClosingCommitment]    &{ExcelPath}[Deal_GlobalDealClosingCommitment]

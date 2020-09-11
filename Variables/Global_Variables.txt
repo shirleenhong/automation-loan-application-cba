@@ -46,7 +46,8 @@ ${MDM_User_API}       /corporate/users
 ${Corres_API}         /custom/v1/cbanotices/status
 ${MDM_ACCESS_TOKEN}    /bfweb/rest/MisysSSOFBPService/jwt/create
 ${MDM_COMMSEE_DEALFACILITY_API}    /comrlending/dealFacility/
-${MDM_COM_API}     /custom/v1/comrlending/dealFacility/
+${MDM_COM_API_V1}     /custom/v1/comrlending/dealFacility/
+${MDM_COM_API_V2}     /custom/v2/comrlending/dealFacility/
 ${MDM_COM_API_0}   /custom/v1/comrlending/facility/
 ${MDM_COM_API_00}  /outstandings
 ${MDM_COM_API_FEES}    /fees
