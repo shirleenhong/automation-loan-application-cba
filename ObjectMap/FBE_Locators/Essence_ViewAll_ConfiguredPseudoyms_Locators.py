@@ -1,0 +1,6 @@
+Essence_ViewAllConfiguredPseudonyms_AccountNumber_Textbox_Locator = '//input[contains(@id,"AccountNo")]'
+Essence_ViewAllConfiguredPseudonyms_FilterDetails_Button_Locator = '//input[contains(@id, "Button")]'
+Essence_ViewAllConfiguredPseudonyms_SearchResults_AccountNumber_Locator = '//div[contains(@id, "AllPseudomymMaps")]//td[text()="${SearchResult_AccountNumber}"]'
+Essence_ViewAllConfiguredPseudonyms_RelatedItemMenu_Locator = '//span[contains(@widgetid,"relatedItems")]'
+Essence_ViewAllConfiguredPseudonyms_RelatedItemMenu_ViewTransactionDetailsforSelectedAccountSubMenu_Locator = '//div[contains(@class,"MenuPopup")]//tr[contains(@id,"ViewTransactionDetailsforSelectedAccount")]'
+Essence_ViewAllConfiguredPseudonyms_Close_Button = '//div[contains(@widgetid, "ViewAllPseudonyms")]//span[contains(@class, "TabCloseIcon")]'

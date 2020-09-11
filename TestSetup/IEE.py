@@ -140,7 +140,13 @@ DBHOST_ESS_AU = 'MANCSLEVERG0023'
 DBPORT_ESS_AU = '1521'
 DBUR_ESS_AU = 'jdbc:oracle:thin:@//mancsleverg0023:1521/AUGLBPDB'
 
-
+### ESSENCE SERVER ###
+DBSERVICENAME_ESS = 'FBE203R'
+DBUSERNAME_ESS = 'audbusr'
+DBPASSWORD_ESS = 'password'
+DBHOST_ESS = 'MANCSLEVERG0023'
+DBPORT_ESS = '1521'
+DBUR_ESS = 'jdbc:oracle:thin:@//mancsleverg0023:1521/FBE203R'
 
 
 ### IEE PARTY SERVER ###
@@ -217,6 +223,7 @@ GL_DECRYPTION_PART3 = 'C:/Git_Evergreen/fms_cba/DataSet/Integration_DataSet/Extr
 GL_PGP_SECRET_KEY = 'secret.skr'
 GL_PASSPHRASE = 'password'
 GL_CSV_GPG_FILEEXTENSION = '.csv.gpg'
+ESS_AUWASADMIN_SCHEMA = "AUWASADMIN"
 
 ### TI ###
 FBTIDataset = 'C:\\Git_Evergreen\\evergreen_projects\\CBA_Evergreen\\DataSet\\FBTI_DataSet\\FBTI_User_Data_Set.xlsx'

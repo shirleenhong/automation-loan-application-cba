@@ -1,0 +1,6 @@
+Essence_ExchangeRateType_Searchbox_Locator = '//input[contains(@id,"ExchangeRateType")]'
+Essence_ExchangeRateType_NextButton_Locator = '//input[@name="Next"]'
+Essence_ExchangeRateType_FromCurrency_Locator = '//input[contains(@id,"FromCurrency")]'
+Essence_ExchangeRateType_ToCurrency_Locator = '//input[contains(@id,"ToCurrency")]'
+Essence_ExchangeRateType_TableValidation_Locator = '//td[text()="${sFromCurrency}"]/following-sibling::td[text()="${sToCurrency}"]/following-sibling::td[text()="${sExchangeRateType}"]/following-sibling::td[text()="${sSpotRate}"]/following-sibling::td[text()="${sMultiplyOrDivide}"]'
+Essence_ExchangeRateType_ExchangeRateType_Locator = '//td[text()="${sFromCurrency}"]/following-sibling::td[text()="${sToCurrency}"]/following-sibling::td[text()="${sExchangeRateType}"]/following-sibling::td[[1]'
