@@ -1441,9 +1441,12 @@ Navigate to Facility Notebook from Deal Notebook
     ...    @update: fmamaril    12MAR2019    Change Mx Active to Mx Activate Window
     ...    @update: hstone      09JUN2020    - Added Keyword Pre-processing
     ...    @update: dfajardo    22JUL2020    - Added Screenshot
+    ...    @update: cfrancis    10SEP2020    - Added Clicking an object on deal notebook summary for deal window to be placed as primary window on multiple LIQ screens
     [Arguments]    ${sFacility_Name}
 
     ### Keyword Pre-processing ###
+    Mx LoanIQ Click    ${LIQ_DealSummary_AdminAgent_Textfield}
+    
     ${Facility_Name}    Acquire Argument Value    ${sFacility_Name}
 
     ${status}    Run Keyword And Return Status    Mx LoanIQ Verify Object Exist    ${LIQ_DealNotebook_InquiryMode_Button}    VerificationData="Yes"
