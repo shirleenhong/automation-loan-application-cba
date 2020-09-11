@@ -1,8 +1,4 @@
 *** Variables *** 
 ##COMMSEE
-${ID}	cielo
-${SINGLE_ID}    00000024
-${data}
-
 ${OUTSTANDING}    Outstanding
 ${FACILITY}    Facility
