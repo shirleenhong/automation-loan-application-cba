@@ -2540,6 +2540,7 @@ Navigate to Deal Business Event
     [Documentation]    This keyword navigates LoanIQ to the deal's business event window.
     ...    @create: hstone    05SEP2019    Initial create
     ...    @update: amansuet    02OCT2019    -added screenshot
+    ...    @update: mcastro   10SEP2020    Updated screenshot path
     [Arguments]    ${sDealName}    ${sEvent}
     Open Existing Deal    ${sDealName}
     Mx LoanIQ Select Window Tab    ${LIQ_DealNotebook_Tab}    Events
@@ -2547,7 +2548,7 @@ Navigate to Deal Business Event
     ${sFetchedEvent}    Run Keyword If    '${sEvent}'!='None'    Select Java Tree Cell Value First Match    ${LIQ_Events_Javatree}    ${sEvent}    Event 
     ...    ELSE    Set Variable    None           
     
-    Take Screenshot    Deal_Business_Event
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/Deal_Business_Event
     
     ${IsMatched}    Run Keyword And Return Status    Should Be Equal As Strings    ${sFetchedEvent}    ${sEvent}        
     Run Keyword If    ${IsMatched}==${True}    Log    Event Verification Passed        
