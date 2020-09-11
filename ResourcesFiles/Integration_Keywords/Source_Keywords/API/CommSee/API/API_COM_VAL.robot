@@ -5,11 +5,12 @@ Resource    ../../../../../../Configurations/LoanIQ_Import_File.robot
 Verify Response of Deal Facility 404 Response 
     [Documentation]    This keyword is to validate GET response of 404 code. 
     ...    @author: sacuisia    15AUG2019
-    [Arguments]    ${COMID}    ${Headers}    ${sResponseFilePath}    ${sResponseJson}   
+    [Arguments]    ${COMID}    ${Headers}    ${Version}    ${sResponseFilePath}    ${sResponseJson}   
 
     Delete All Sessions
     Create Session    COMHOST    ${COM_HOST}
-    ${REQUEST_DATA}    GET Request API for Comsee Deal Facility 404 Response    COMHOST    ${MDM_COM_API}${COMID}    ${Headers}
+    ${REQUEST_DATA}    Run Keyword If    '${Version}'=='V1'    GET Request API for Comsee Deal Facility 404 Response    COMHOST    ${MDM_COM_API_V1}${COMID}    ${Headers}
+    ...    ELSE    GET Request API for Comsee Deal Facility 404 Response    COMHOST    ${MDM_COM_API_V2}${COMID}    ${Headers}
     ${JSON_File}    Set Variable    ${sResponseFilePath}${sResponseJson}.json
     Create File    ${dataset_path}${JSON_File}
     ${Content}    Convert to String    ${GET_response.content}
@@ -18,7 +19,7 @@ Verify Response of Deal Facility 404 Response
 Validation for CommSee 
     [Documentation]     This keyword is to get token and create session for CommSEE and Get Request 200 Response Ok.
     ...    @author: sacuisia
-    [Arguments]   ${COMID}    ${Headers}    ${sResponseFilePath}    ${sResponseJson}    ${dataExtracted}    ${sDealName}    ${sdealTrackingNumber}    ${sdealclosedDate}    ${sdealCurrency}    ${sdealHostBankCom}
+    [Arguments]   ${COMID}    ${Headers}    ${Version}    ${sResponseFilePath}    ${sResponseJson}    ${dataExtracted}    ${sDealName}    ${sdealTrackingNumber}    ${sdealclosedDate}    ${sdealCurrency}    ${sdealHostBankCom}
     ...    ${sdealCode}    ${sdealDesc}    ${sdealExpenseCode}    ${sdealExpenseDesc}    ${sdealNoFacilities}    ${sdealNolenders}    ${sdealNoBorrowers}
     ...    ${sdealHostClosingBankCom}    ${sdealGlobalClosing}    ${sdealGobalCurrent}    ${sdealDepartmentCode}    ${sdealDepartmentDesc}    ${sfacilityName}    ${sfacilityCN}
     ...    ${sfacilityeffectiveDate}    ${sfacilityMaturityDate}    ${sfacilityCurr}    ${sfacilityMultiCCY}    ${sfacilityType}
@@ -30,7 +31,8 @@ Validation for CommSee
     ###GET RESOPONSE###           
     Delete All Sessions
     Create Session    COMHOST    ${COM_HOST}
-    ${REQUEST_DATA}    GET Request API for Comsee Deal Facility    COMHOST    ${MDM_COM_API}${COMID}    ${Headers}        
+    ${REQUEST_DATA}    Run Keyword If    '${Version}'=='V1'    GET Request API for Comsee Deal Facility    COMHOST    ${MDM_COM_API_V1}${COMID}    ${Headers}
+    ...    ELSE    GET Request API for Comsee Deal Facility    COMHOST    ${MDM_COM_API_V2}${COMID}    ${Headers}
 
     ###FIELDS VALIDATION###
     ${Expect_dataExtract}    Run Keyword If    '${dataExtracted}'==''    Set Variable    ${EMPTY}
