@@ -1,0 +1,4 @@
+*** Variables *** 
+##COMMSEE
+${OUTSTANDING}    Outstanding
+${FACILITY}    Facility
