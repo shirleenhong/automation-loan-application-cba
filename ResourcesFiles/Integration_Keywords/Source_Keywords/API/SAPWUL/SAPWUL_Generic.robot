@@ -214,22 +214,3 @@ Convert LIQ Date to Payload Date
          ...    ELSE    Set Variable    @{sExpectedTimeFormat_List}[${str_index}]
     \    ${sTimeResult}    Catenate    SEPARATOR=    ${sTimeResult}    ${sTimePartResult}
     [Return]    ${sTimeResult} 
-
-Verify if String Exists as Java Tree Header
-    [Documentation]    This keyword checks if the input string exists at the supplied Java Tree Locator.
-    ...    @author: hstone    08JAN2020    Initial create
-    [Arguments]    ${sJavaTree_Locator}    ${sStringToFind}    
-    ${bExistenceStatus}    Set Variable    ${FALSE}
-    
-    ${JavaTree_Table}    Mx LoanIQ Store Java Tree Items To Array    ${sJavaTree_Locator}    Table
-    ${JavaTree_Table}    Split To Lines    ${JavaTree_Table}
-    ${TableHeaders}    Replace String    @{JavaTree_Table}[0]    \r    ${Empty} 
-    ${TableHeader_List}    Split String    ${TableHeaders}    \t   
-    
-    :FOR    ${sTableHeader}    IN    @{TableHeader_List}
-    \    Exit For Loop If    ${bExistenceStatus}==${TRUE}
-    \    ${sTableHeader}    Convert To Uppercase    ${sTableHeader}
-    \    ${sStringToFind}    Convert To Uppercase    ${sStringToFind}
-    \    ${bExistenceStatus}    Run Keyword And Return Status    Should Be Equal As Strings    ${sTableHeader}    ${sStringToFind}     
-
-    [Return]    ${bExistenceStatus}
