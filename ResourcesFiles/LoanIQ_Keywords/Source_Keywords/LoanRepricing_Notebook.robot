@@ -1437,7 +1437,7 @@ Validate Loan Repricing New Outstanding Amount
     ...                @author: bernchua    27AUG2019    Initial create
     ...                @author: bernchua    11SEP2019    Updated keyword documentation
     ...                @update: sahalder    25JUN2020    Added keyword Pre-Processing steps
-    ...    @update: dahijara    25AUG2020    Added arguments, inserted set variable for description from test case level. Added screenshot
+    ...                @update: dahijara    25AUG2020    Added arguments, inserted set variable for description from test case level. Added screenshot
     [Arguments]    ${sPricing_Option}    ${sLoan_Alias}    ${sNewOutstanding_Amount}
     
     ### GetRuntime Keyword Pre-processing ###

@@ -1457,3 +1457,10 @@ Enter Commitment Fee Details
     Mx Click Element If Present    ${LIQ_Warning_Yes_Button}  
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/CommitmentFee_Notebook               
     Select Menu Item    ${LIQ_CommitmentFee_Window}    File    Exit
+    
+Close Commitment Fee and Fee List Windows
+    [Documentation]    This keyword exits the Commitment Fee List and Commitment Fee Notebook.
+    ...    author: rtarayao    19AUG2019    - Initial Create
+    mx LoanIQ activate window    ${LIQ_CommitmentFee_Window} 
+    mx LoanIQ close window    ${LIQ_CommitmentFee_Window}
+    mx LoanIQ close window    ${LIQ_Facility_FeeList}

@@ -394,15 +394,18 @@ Open Cashflows Window from Notebook Menu
 Click OK In Cashflows
     [Documentation]    This keyword clicks the OK button in the Cashflows window after all validations are complete.
     ...    @author: bernchua    03JUN2019    Initial create
-    mx LoanIQ activate    ${LIQ_Cashflows_Window}
-    mx LoanIQ click    ${LIQ_Cashflows_OK_Button}
-    mx LoanIQ click element if present    ${LIQ_Question_Yes_Button}
+    ...    @update: aramos    11SEP2020    Update Keyword in order to know the status of LIQ_Cashflows_Window
+    ${status}    Run Keyword And Return Status    mx LoanIQ activate    ${LIQ_Cashflows_Window}
+    Run Keyword If    ${status}==True    mx LoanIQ click    ${LIQ_Cashflows_OK_Button}
+    Run Keyword If    ${status}==True    mx LoanIQ click element if present    ${LIQ_Question_Yes_Button}
     
 Cashflows Mark All To Release
     [Documentation]    This keyword clicks the "Mark All To Release" menu in the Cashflows window.
     ...                @author: bernchua
-    mx LoanIQ activate    ${LIQ_Cashflows_Window}
-    mx LoanIQ select    ${LIQ_Cashflow_Options_MarkAllRelease}
+    ...                @update: aramos    11SEP2020    Update Keyword in order to know the status of LIQ_Cashflows_Window
+    ${status}    Run Keyword And Return Status    mx LoanIQ activate    ${LIQ_Cashflows_Window}
+    Run Keyword If    ${status}==True    mx LoanIQ select    ${LIQ_Cashflow_Options_MarkAllRelease}    
+    
 
 # Navigate to Payment Cashflow Window
     # [Documentation]    This keyword is used to navigate to the Payment Cashflow Window thru the Workflow action - Create Cashflow.
