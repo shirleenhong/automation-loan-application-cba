@@ -107,7 +107,7 @@ Issue LC1 - D00000476
 # Collect LC1 - D00000476
     # Mx Execute Template With Multiple Data    Initiate LC Collection D00000476    ${CBAUAT_ExcelPath}    1    SERV18_FeeOnLenderSharesPayment
    
-# Collect LFIA1 - D00000476q
+# Collect LFIA1 - D00000476
     # Mx Execute Template With Multiple Data    Collect LFIA Payment D00000476    ${CBAUAT_ExcelPath}    1    SERV29_Payments
 
 # ###December 19
