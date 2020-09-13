@@ -21,6 +21,7 @@ LIQ_InitialDrawdown_Options_ViewOrUpdateLenderShares = 'JavaWindow("title:=.*Ini
 LIQ_Loan_Options_OutstandingServicingGroupDetails = 'JavaWindow("title:=.*Loan.*Active").JavaMenu("label:=Options").JavaMenu("label:=Outstanding Servicing Group Details")'
 
 ###General Tab###
+###General Tab###
 LIQ_InitialDrawdown_ActualAmt_Textfield  = 'JavaWindow("title:=.*Initial Drawdown.*").JavaEdit("attached text:=Actual Amt:")'
 LIQ_InitialDrawdown_RequestedAmt_Textfield  = 'JavaWindow("title:=.*Initial Drawdown.*").JavaEdit("attached text:=Requested Amt:")'
 LIQ_InitialDrawdown_EffectiveDate_Datefield  = 'JavaWindow("title:=.*Initial Drawdown.*").JavaEdit("attached text:=Effective Date:")'
@@ -31,7 +32,8 @@ LIQ_InitialDrawdown_ActualDueDate_Datefield  = 'JavaWindow("title:=.*Initial Dra
 LIQ_InitialDrawdown_RepricingDate_Datefield  = 'JavaWindow("title:=.*Initial Drawdown.*").JavaEdit("attached text:=Repricing Date:")'
 LIQ_InitialDrawdown_AccrualEndDate_Datefield = 'JavaWindow("title:=.*Initial Drawdown.*").JavaEdit("attached text:=Accrual End Date:")'
 LIQ_InitialDrawdown_AdjustedDueDate_Datefield = 'JavaWindow("title:=.*Initial Drawdown.*").JavaEdit("attached text:=Adjusted Due Date:")'
-LIQ_InitialDrawdown_Accue_Dropdown = 'JavaWindow("title:=.*Initial Drawdown.*").JavaList("attached text:=Accrue:")'
+LIQ_InitialDrawdown_Accrue_Dropdown = 'JavaWindow("title:=.*Initial Drawdown.*").JavaList("attached text:=Accrue:")'
+LIQ_InitialDrawdown_PaymentMode_Dropdown = 'JavaWindow("title:=.*Initial Drawdown.*").JavaList("attached text:=Payment Mode:")'
 LIQ_InitialDrawdown_RequestedCCY_StaticDropdown = 'JavaWindow("title:=.*Initial Drawdown .*").JavaList("attached text:=Requested CCY:")'
 LIQ_InitialDrawdown_ActualCCY_StaticText = 'JavaWindow("title:=.*Initial Drawdown .*").JavaObject("tagname:=Group","text:=Amounts").JavaStaticText("index:=4")'
 LIQ_InitialDrawdown_IntCycleFreq_Dropdownlist  = 'JavaWindow("title:=.*Initial Drawdown.*").JavaList("attached text:=Int. Cycle Freq:")'
