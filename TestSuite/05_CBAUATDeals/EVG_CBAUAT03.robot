@@ -97,8 +97,8 @@ Deal Template
     Mx Execute Template With Multiple Data    Approve and Close UAT Deal    ${CBAUAT_ExcelPath}    1    CRED01_DealSetup
     Mx Execute Template With Multiple Data    Commitment Fee Release    ${CBAUAT_ExcelPath}    1-3    SERV29_CommitmentFeePayment
 
-# Issue LC1 - D00000476
-    # Mx Execute Template With Multiple Data    Issue LC D00000476    ${CBAUAT_ExcelPath}    1    SERV05_SBLCIssuance
+Issue LC1 - D00000476
+    Mx Execute Template With Multiple Data    Issue LC D00000476    ${CBAUAT_ExcelPath}    1    SERV05_SBLCIssuance
     
 # Create Drawdown A B C D00000476
     # Mx Execute Template With Multiple Data    Create Drawdown D00000476    ${CBAUAT_ExcelPath}    1-3    SERV01A_LoanDrawdown
