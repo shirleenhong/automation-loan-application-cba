@@ -892,6 +892,8 @@ Input General Loan Drawdown Details with Accrual End Date
     Run Keyword If    '${Loan_AccrueEndDate}'=='None'    mx LoanIQ enter    ${LIQ_InitialDrawdown_AccrualEndDate_Datefield}    ${AdjustedDueDate}
     Run Keyword If    '${Loan_AccrueEndDate}'!='None'    mx LoanIQ enter    ${LIQ_InitialDrawdown_AccrualEndDate_Datefield}    ${sLoan_AccrueEndDate}    
     mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
+    Select Menu Item    ${LIQ_InitialDrawdown_Window}    File    Save
+    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
 
 Create Repayment Schedule - Fixed Payment
     [Documentation]    This keyword is used to input Loan Drawdown details in the General tab including Accrual End Date
@@ -2928,7 +2930,7 @@ Enter Initial Loan Drawdown General Details
     \    Exit For Loop If    ${errorDisplayed}==False
     Run Keyword If    '${Repricing_Date}'!='${EMPTY}'    Enter Date With Business Day and Non-Business Day Validations    ${LIQ_InitialDrawdown_RepricingDate_Datefield}    ${Repricing_Date}    ${NBD_Reason}
     Run Keyword If    '${IntCycleFreq}'!='${EMPTY}'    Mx LoanIQ Select Combo Box Value    ${LIQ_InitialDrawdown_IntCycleFreq_Dropdownlist}    ${IntCycleFreq}
-    Mx LoanIQ Select Combo Box Value    ${LIQ_InitialDrawdown_Accue_Dropdown}    ${Accrue}
+    Mx LoanIQ Select Combo Box Value    ${LIQ_InitialDrawdown_Accrue_Dropdown}    ${Accrue}
     mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}    
     ${Drawdown_ActualDueDate}    Mx LoanIQ Get Data    ${LIQ_InitialDrawdown_ActualDueDate_Datefield}    value%date
     mx LoanIQ enter    ${LIQ_InitialDrawdown_AccrualEndDate_Datefield}    ${Drawdown_ActualDueDate}        

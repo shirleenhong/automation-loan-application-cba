@@ -21,7 +21,6 @@ LIQ_InitialDrawdown_Options_ViewOrUpdateLenderShares = 'JavaWindow("title:=.*Ini
 LIQ_Loan_Options_OutstandingServicingGroupDetails = 'JavaWindow("title:=.*Loan.*Active").JavaMenu("label:=Options").JavaMenu("label:=Outstanding Servicing Group Details")'
 
 ###General Tab###
-###General Tab###
 LIQ_InitialDrawdown_ActualAmt_Textfield  = 'JavaWindow("title:=.*Initial Drawdown.*").JavaEdit("attached text:=Actual Amt:")'
 LIQ_InitialDrawdown_RequestedAmt_Textfield  = 'JavaWindow("title:=.*Initial Drawdown.*").JavaEdit("attached text:=Requested Amt:")'
 LIQ_InitialDrawdown_EffectiveDate_Datefield  = 'JavaWindow("title:=.*Initial Drawdown.*").JavaEdit("attached text:=Effective Date:")'
