@@ -57,6 +57,7 @@ Variables    ../ObjectMap/LoanIQ_Locators/LIQ_User_Administration_Locators.py
 Variables    ../ObjectMap/FBE_Locators/Essence_AdhocExtraction_Locators.py
 Variables    ../ObjectMap/FBE_Locators/Essence_ChangeOfBusinessDate_Locators.py
 Variables    ../ObjectMap/FBE_Locators/Essence_Dashboard_Locators.py
+Variables    ../ObjectMap/FBE_Locators/Essence_EODControlAndStatusEnquiry_Locators.py
 Variables    ../ObjectMap/FBE_Locators/Essence_ZoneBranchConfig_Locators.py
 
 ### FFC Variable Files - Locators ###
