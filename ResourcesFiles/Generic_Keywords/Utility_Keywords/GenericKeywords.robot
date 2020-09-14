@@ -1,4 +1,4 @@
-﻿*** Settings ***
+*** Settings ***
 Resource    ../../../Configurations/LoanIQ_Import_File.robot
 
 *** Keywords ***
@@ -43,6 +43,21 @@ Mx Input Text
     Wait Until Browser Ready State
     Wait Until Keyword Succeeds    ${retry}    ${retry_interval}    Input Text    ${locator}    ${text}
     Press Keys    ${locator}    TAB
+    Wait Until Browser Ready State
+
+Mx Input Text and Press Enter
+    [Arguments]    ${locator}    ${text}
+    Wait Until Browser Ready State
+    Wait Until Keyword Succeeds    ${retry}    ${retry_interval}    Wait Until Page Contains Element    ${locator}    1s
+    Wait Until Keyword Succeeds    ${retry}    ${retry_interval}    Wait Until Element Is Visible    ${locator}
+    Wait Until Keyword Succeeds    ${retry}    ${retry_interval}    Wait Until Element Is Enabled    ${locator}    1s
+    Wait Until Keyword Succeeds    ${retry}    ${retry_interval}    Click Element    ${locator}
+    Wait Until Browser Ready State
+    Wait Until Keyword Succeeds    ${retry}    ${retry_interval}    Clear Element Text    ${locator}
+    Press Keys    ${locator}    RETURN
+    Wait Until Browser Ready State
+    Wait Until Keyword Succeeds    ${retry}    ${retry_interval}    Input Text    ${locator}    ${text}
+    Press Keys    ${locator}    RETURN
     Wait Until Browser Ready State
   
 Mx Input Amount
@@ -255,6 +270,7 @@ Compare Two Arguments
     ...    @update: gerhabal    09SEP2019    - added condition to strip string to value from UI to remove space before comparing    
     [Arguments]    ${value_from_sheet}    ${value_from_ui}
     
+    Wait Until Page Contains Element    ${value_from_ui}    
     ${value_from_ui}    Get Value    ${value_from_ui}
     ${value_from_ui}    Strip String    ${value_from_ui}
     Log    ${value_from_ui}
@@ -287,7 +303,7 @@ Select Actions
     Mx LoanIQ Maximize    ${LIQ_Window}    
     Mx LoanIQ Click    ${LIQ_Actions_Button}
     Mx LoanIQ Active Javatree Item    ${LIQ_Tree}    ${ActionName}
-    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/SelectActions
+    Take Screenshot    ${Screenshot_Path}
 
 Auto Generate Name Test Data
     [Arguments]    ${sNameTestData}    ${sTotalNumberToBeGenerated}=1
@@ -353,6 +369,7 @@ Search Existing Deal
      [Documentation]    This keyword search the existing deal on LIQ.
     ...    @author: mgaling
     ...    @update: fmamaril    15MAY2020    - added argument for keyword pre processing
+    ...    @update: dahijara    10AUG2020    - Added screenshot
     [Arguments]    ${sDeal_Name}
     ### GetRuntime Keyword Pre-processing ###
     ${Deal_Name}    Acquire Argument Value    ${sDeal_Name}
@@ -360,10 +377,12 @@ Search Existing Deal
     Select Actions    [Actions];Deal
     mx LoanIQ activate    ${LIQ_DealSelect_Window}   
     mx LoanIQ enter    ${LIQ_DealSelect_DealIdentifyBy_Textfield}    ${Deal_Name}   
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/DealSelect
     mx LoanIQ click    ${LIQ_DealSelect_Search_Button} 
     mx LoanIQ click    ${LIQ_DealListByName_OK_Button}
     mx LoanIQ activate    ${LIQ_DealNotebook_Window}
-    mx LoanIQ click element if present    ${LIQ_DealNotebook_InquiryMode_Button} 
+    mx LoanIQ click element if present    ${LIQ_DealNotebook_InquiryMode_Button}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/DealNotebook
     
 Close Active Windows
     [Documentation]    This keyword closes main active windows on LIQ.
@@ -429,7 +448,7 @@ Get System Date
     ...    @update: hstone    28APR2020    - Added Keyword Post-process: Save Runtime Value
     ...                                    - Added Optional Argument: ${sRunTimeVar_SystemDate}
     [Arguments]    ${sRunTimeVar_SystemDate}=None
-    # Mx Activate Window    ${LIQ_Window}
+    Mx Activate Window    ${LIQ_Window}
     ${temp}    Mx LoanIQ Get Data    ${LIQ_Window}    title%temp
     # log to console    Label: ${temp}
     ${SystemDate}    Fetch From Right    ${temp}    :${SPACE}    
@@ -1751,8 +1770,8 @@ Write Data To All Column Rows
     [Arguments]    ${sSheetName}    ${sColumnName}    ${sData}
 
     ${ColumnHeader_Index}    Get Index of a Column Header Value    ${sSheetName}    ${sColumnName}
-    ${Row_Count_Total}    Read Excel Column    ${ColumnHeader_Index}    0    ${sSheetName}
-    Write Excel Column    ${ColumnHeader_Index}    ${Row_Count_Total}    ${sData}    1    ${sSheetName}
+    ${Row_Count_Total}    Read Excel Column    ${ColumnHeader_Index}    0    ${sSheetName}       
+    Write Excel Column    ${ColumnHeader_Index}    ${Row_Count_Total}    ${sData}    1    ${sSheetName}       
 
 Write Data To Cell
     [Documentation]    This keyword will be used for writing data to single excel cell.
@@ -2007,6 +2026,7 @@ Calculate for System Date Offset
     ...    ELSE    Fail    Invalid Offset Days Input. Value should contain '+' or '-'.
 
     [Return]    ${System_Date_With_Offset}
+    
 Driver Script
     [Documentation]    This keyword is used to execute list of scenarios on excel file.
     ...    @author: dahijara    24MAR2020    - initial create
@@ -2496,3 +2516,38 @@ Enter Text on Java Tree Text Field
     \     Mx Press Combination    Key.@{Text_Value_List}[${KEY_PRESS_INDEX}]
 
     Mx LoanIQ Click    ${sJavaTree_Locator}
+
+Mx Execute Template With Multiple Test Case Name
+    [Documentation]    This keyword will execute the template using the rowname instead of rowid and multiple row names are allowed.
+    ...    @author: clanding    27AUG2020    - initial create
+    [Arguments]    ${stemplateName}    ${sDataSet}    ${sDataColumnName}    ${sDataRowNames}    ${sDataSheetName}    ${sDelimiter}=None
+
+    ${DataRowNames_List}    Run Keyword If    '${sDelimiter}'=='None'    Split String    ${sDataRowNames}    |
+    ...    ELSE    Split String    ${sDataRowNames}    ${sDelimiter}
+    
+    :FOR    ${DataRowNames}    IN    @{DataRowNames_List}
+    \    Open Excel    ${sDataSet}
+    \    Log    Data Set Open: '${sDataSet}'
+    \
+    \    ${DataColumn_List}    Read Excel Row    1    sheet_name=${sDataSheetName}
+    \    Log    Data Set Sheet Name: '${sDataSheetName}'
+    \    Log    Data Set Sheet Column Names: '${DataColumn_List}'
+    \
+    \    ${DataColumnName_Index}    Get Index From List    ${DataColumn_List}    ${sDataColumnName}
+    \    Log    Column Name Index : '${DataColumnName_Index}'
+    \    Run Keyword If    ${DataColumnName_Index}<0    Fail    '${sDataColumnName}' is not found at '${DataColumn_List}' Data Sheet Column Names.
+    \    ${DataColumnName_Index}    Evaluate    ${DataColumnName_Index}+1
+    \
+    \    ${DataRow_List}    Read Excel Column    ${DataColumnName_Index}    sheet_name=${sDataSheetName}
+    \    Log    Row Names for '${sDataColumnName}': '${DataRow_List}'
+    \
+    \    ${DataRowValue_Index}    Get Index From List    ${DataRow_List}    ${DataRowNames}
+    \    Log    Row Name Index : '${DataRowValue_Index}'
+    \    Run Keyword If    ${DataColumnName_Index}<0    Fail    '${DataRowNames}' is not found at '${DataRow_List}' Data Row Values.
+    \    
+    \    ${rowid_Column_Index}    Get Index From List    ${DataColumn_List}    rowid
+    \    Put String To Cell    ${sDataSheetName}    ${rowid_Column_Index}    ${DataRowValue_Index}   ${DataRowValue_Index}
+    \    Close Current Excel Document
+    \    
+    \    Set Global Variable    ${TestCase_Name}    ${DataRowNames}
+    \    Mx Execute Template With Multiple Data    ${stemplateName}    ${sDataSet}    ${DataRowValue_Index}    ${sDataSheetName}

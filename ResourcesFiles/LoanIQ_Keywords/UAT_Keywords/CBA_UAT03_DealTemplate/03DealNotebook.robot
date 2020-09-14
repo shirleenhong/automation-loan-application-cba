@@ -1,5 +1,5 @@
 *** Settings ***
-Resource    ../../../../Configurations/Import_File.robot
+Resource    ../../../../Configurations/LoanIQ_Import_File.robot
 
 
 *** Keywords ***
@@ -24,7 +24,7 @@ Setup Deal D00000476
     Write Data To Excel    SERV23_Paperclip    Deal_Name    &{ExcelPath}[rowid]    ${Deal_Name}    ${CBAUAT_ExcelPath}    multipleValue=Y 
     Write Data To Excel    SERV40_BreakFunding    Deal_Name   &{ExcelPath}[rowid]    ${Deal_Name}    ${CBAUAT_ExcelPath}    multipleValue=Y
     Write Data To Excel    SERV29_CommitmentFeePayment    Deal_Name    &{ExcelPath}[rowid]    ${Deal_Name}    ${CBAUAT_ExcelPath}    multipleValue=Y
-    Write Data To Excel    CommitmentFee    Deal_Name    &{ExcelPath}[rowid]    ${Deal_Name}    ${CBAUAT_ExcelPath}    multipleValue=Y
+    Write Data To Excel    CRED08_OngoingFeeSetup    Deal_Name    &{ExcelPath}[rowid]    ${Deal_Name}    ${CBAUAT_ExcelPath}    multipleValue=Y
     Write Data To Excel    SERV18_FeeOnLenderSharesPayment    Deal_Name    &{ExcelPath}[rowid]    ${Deal_Name}    ${CBAUAT_ExcelPath}    multipleValue=Y
     Write Data To Excel    SERV29_Payments    Deal_Name    &{ExcelPath}[rowid]    ${Deal_Name}    ${CBAUAT_ExcelPath}    multipleValue=Y    
     Write Data To Excel    AMCH05_ExtendFacility    Deal_Name    &{ExcelPath}[rowid]    ${Deal_Name}    ${CBAUAT_ExcelPath}    multipleValue=Y 
@@ -72,11 +72,11 @@ Setup Deal Admin Fee
     Set Admin Fee General Details    &{ExcelPath}[AdminFee_AmountType]    &{ExcelPath}[AdminFee_Amount]    &{ExcelPath}[AdminFee_EffectiveDate]    &{ExcelPath}[AdminFee_Frequency]
     Set Distribution Details in Admin Fee Notebook    &{ExcelPath}[AdminFee_Customer]    &{ExcelPath}[AdminFee_CustomerLocation]    &{ExcelPath}[AdminFee_ExpenseCode]    &{ExcelPath}[AdminFee_PercentOfFee]
     Navigate Notebook Workflow    ${LIQ_AdminFeeNotebook_Window}    ${LIQ_AdminFeeNotebook_JavaTab}    ${LIQ_AdminFeeNotebook_Workflow_JavaTree}    Send to Approval
-    Logout from LIQ
+    Logout from Loan IQ
     Login to Loan IQ    ${MANAGER_USERNAME}    ${MANAGER_PASSWORD}
     Navigate Transaction in WIP    Deals    Awaiting Approval    Accruing Admin Fee    &{ExcelPath}[Deal_Name]
     Navigate Notebook Workflow    ${LIQ_AdminFeeNotebook_Window}    ${LIQ_AdminFeeNotebook_JavaTab}    ${LIQ_AdminFeeNotebook_Workflow_JavaTree}    Approval
-    Logout from LIQ
+    Logout from Loan IQ
     Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
     Open Existing Deal    &{ExcelPath}[Deal_Name]
     
@@ -132,19 +132,20 @@ Setup Primaries D00000476
     Write Data To Excel    CRED01_DealSetup    Primary_PortfolioAllocation    ${rowid}    ${SellAmount}    ${CBAUAT_ExcelPath}
     
     ####Complete Portfolio Allocations###
-    Complete Portfolio Allocations Workflow    &{ExcelPath}[Primary_Portfolio]    &{ExcelPath}[Primary_PortfolioBranch]
+    Complete Portfolio Allocations Workflow    &{ExcelPath}[Primary_Portfolio]|&{ExcelPath}[Primary_Portfolio]|&{ExcelPath}[Primary_Portfolio]|&{ExcelPath}[Primary_Portfolio]
+    ...    &{ExcelPath}[Primary_PortfolioBranch]
     ...    &{ExcelPath}[Primary_PortfolioAllocation1]|&{ExcelPath}[Primary_PortfolioAllocation2]|&{ExcelPath}[Primary_PortfolioAllocation3]|&{ExcelPath}[Primary_PortfolioAllocation4]
     ...    None|None|None|None
     ...    &{ExcelPath}[Facility_Name1]|&{ExcelPath}[Facility_Name2]|&{ExcelPath}[Facility_Name3]|&{ExcelPath}[Facility_Name4]
     Circling for Primary Workflow    &{ExcelPath}[Primary_CircledDate]
     Send to Settlement Approval
-    Logout from LIQ
+    Logout from Loan IQ
     Login to Loan IQ    ${MANAGER_USERNAME}    ${MANAGER_PASSWORD}
     Select Actions    [Actions];Work In Process
     Circle Notebook Settlement Approval    &{ExcelPath}[Deal_Name]    Host Bank
     
     ###Login to Original User### 
-    Logout from LIQ
+    Logout from Loan IQ
     Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
     Open Existing Deal    &{ExcelPath}[Deal_Name]
     
@@ -154,7 +155,7 @@ Approve and Close UAT Deal
     [Arguments]    ${ExcelPath}
     mx LoanIQ activate    ${LIQ_DealNotebook_Window}
     Navigate Notebook Workflow    ${LIQ_DealNotebook_Window}    ${LIQ_DealNotebook_Tab}    ${LIQ_DealNotebook_Workflow_JavaTree}    Send to Approval
-    Logout from LIQ
+    Logout from Loan IQ
     Login to Loan IQ    ${MANAGER_USERNAME}    ${MANAGER_PASSWORD}
     Open Existing Deal    &{ExcelPath}[Deal_Name]
     Navigate Notebook Workflow    ${LIQ_DealNotebook_Window}    ${LIQ_DealNotebook_Tab}    ${LIQ_DealNotebook_Workflow_JavaTree}    Approval
@@ -162,5 +163,5 @@ Approve and Close UAT Deal
     Navigate Notebook Workflow    ${LIQ_DealNotebook_Window}    ${LIQ_DealNotebook_Tab}    ${LIQ_DealNotebook_Workflow_JavaTree}    Close
     Enter Deal Close Date    &{ExcelPath}[Deal_CloseDate]
     Verify Deal Status After Deal Close
-    Logout from LIQ
+    Logout from Loan IQ
     Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}

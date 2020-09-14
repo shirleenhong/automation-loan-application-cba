@@ -1,5 +1,6 @@
 *** Settings ***
-Resource    ../../Configurations/Import_File.robot
+Resource    ../../Configurations/LoanIQ_Import_File.robot
+
 *** Variables ***
 ${rowid}    1
 ${Facility_A}    1
@@ -9,11 +10,16 @@ ${Facility_A-Outstanding_A}    1
 ${Facility_A-Outstanding_B}    2
 ${Facility_B-Outstanding_A}    3
 ${Facility_C-Outstanding_A}    4
+
 *** Test Cases ***
 Create Quick Party Onboarding for CBA UAT Deal 5 - PTY001
     [Tags]    01 Create Party within Essence - PTY001
-    Mx Execute Template With Multiple Data    Create Deal Borrower initial details in Quick Party Onboarding    ${CBAUAT_ExcelPath}    1    PTY001_QuickPartyOnboarding
+    Mx Execute Template With Multiple Data    Create Deal Borrower initial details in Quick Party Onboarding for UAT Deal Five    ${CBAUAT_ExcelPath}    1    PTY001_QuickPartyOnboarding
     Mx Execute Template With Multiple Data    Populate Quick Enterprise Party with Approval    ${CBAUAT_ExcelPath}    1    PTY001_QuickPartyOnboarding
+
+Search Customer and Complete its Borrower Profile Creation - ORIG03
+    [Tags]    02 Complete Borrower's Profile - 0RIG03
+    Mx Execute Template With Multiple Data    Search Customer and Complete its Borrower Profile Creation with default values for UAT Deal Five     ${CBAUAT_ExcelPath}    ${rowid}    ORIG03_Customer
 
 Deal Setup
     [Tags]    02 Deal Setup   
@@ -21,21 +27,18 @@ Deal Setup
     
     Mx Execute Template With Multiple Data    Setup Facility Template D00001151    ${CBAUAT_ExcelPath}    ${Facility_A}    CRED02_FacilitySetup 
     Mx Execute Template With Multiple Data    Setup Facility Fees D00001151    ${CBAUAT_ExcelPath}    ${Facility_A}    CRED08_FacilityFeeSetup
-    Mx Execute Template With Multiple Data    Setup MIS Code D00001151    ${CBAUAT_ExcelPath}    ${Facility_A}    CRED08_FacilityFeeSetup
     
     Mx Execute Template With Multiple Data    Setup Facility Template D00001151    ${CBAUAT_ExcelPath}    ${Facility_B}    CRED02_FacilitySetup
     Mx Execute Template With Multiple Data    Setup Facility Fees D00001151    ${CBAUAT_ExcelPath}    ${Facility_B}    CRED08_FacilityFeeSetup
-    Mx Execute Template With Multiple Data    Setup MIS Code D00001151    ${CBAUAT_ExcelPath}    ${Facility_B}    CRED08_FacilityFeeSetup
     
     Mx Execute Template With Multiple Data    Setup Facility Template D00001151    ${CBAUAT_ExcelPath}    ${Facility_C}    CRED02_FacilitySetup
     Mx Execute Template With Multiple Data    Setup Facility Fees D00001151    ${CBAUAT_ExcelPath}    ${Facility_C}    CRED08_FacilityFeeSetup
-    Mx Execute Template With Multiple Data    Setup MIS Code D00001151    ${CBAUAT_ExcelPath}    ${Facility_C}    CRED08_FacilityFeeSetup
     
     Mx Execute Template With Multiple Data    Setup Primaries for Deal D00001151    ${CBAUAT_ExcelPath}    ${rowid}    CRED01_DealSetup
     Mx Execute Template With Multiple Data    Approve and Close Deal D00001151    ${CBAUAT_ExcelPath}    ${rowid}    CRED01_DealSetup
-    
+
 Facility Change Limit - A
-    [Tags]    03 Facility Change Limit 
+    [Tags]    03 Facility Change Limit       
     Mx Execute Template With Multiple Data    Facility Limit Change    ${CBAUAT_ExcelPath}    ${Facility_A}    CRED02_FacilitySetup
     
 Facility A - Outstandings

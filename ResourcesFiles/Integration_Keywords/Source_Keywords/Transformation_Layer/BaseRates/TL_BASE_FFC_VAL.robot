@@ -3,7 +3,6 @@ Resource    ../../../../../Configurations/Integration_Import_File.robot
 
 
 *** Keywords ***
-
 Validate FFC for TL Base Rate Success
     [Documentation]    This keyword is used to validate OpenAPI, Distributor and CustomCBAInterface in MCH FFC UI.
     ...    @author: clanding    21FEB2019    - initial create

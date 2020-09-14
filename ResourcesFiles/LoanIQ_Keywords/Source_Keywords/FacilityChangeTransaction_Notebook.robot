@@ -13,16 +13,18 @@ Add Facility Change Transaction
     Mx LoanIQ Select    ${LIQ_FacilityNotebook_Options_FacilityChangeTransaction}
     Take Screenshot    ${Screenshot_Path}/Screenshots/LoanIQ/FacilityChangeTransactionNotebook_GeneralTab
     Mx LoanIQ Click Element If Present    ${LIQ_Question_Yes_Button}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/FacilityChangeTransaction
     
 Modify Maturity Date in Facility Change Transaction
     [Documentation]    This keyword extends the Maturity Date of the Facility by entering future date
     ...    @autor: jdelacruz
     ...    @update: ritragel     20MAY2019    Removed writing in the low-level keywords
     ...    @update: amansuet    22JUN2020    - updated to align with automation standards, added take screenshot and added keyword post-processing
+    ...    @update: clanding    14AUG2020    - updated hard coded values to global variables
     [Arguments]    ${sRunTimeVar_MaturityTemp}=None
 
     Mx LoanIQ Activate    ${LIQ_FacilityChangeTransaction_Window}    
-    Mx LoanIQ DoubleClick    ${LIQ_FacilityChangeTransaction_FieldName_List}    Maturity Date
+    Mx LoanIQ DoubleClick    ${LIQ_FacilityChangeTransaction_FieldName_List}    ${MATURITY_DATE}
     Mx LoanIQ Activate    ${LIQ_EnterMaturityDate_Window}
     ${MaturityTemp}    Mx LoanIQ Get Data    ${LIQ_EnterMaturityDate_MaturityDate_Textfield}    maturityDate
     ${MaturityTemp}    Convert Date    ${MaturityTemp}     date_format=%d-%b-%Y
@@ -92,17 +94,20 @@ Send to Approval Facility Change Transaction
     ...    <update> @ghabal - removed "Run Keyword And Continue On Failure Mx LoanIQ Verify Object Exist" that makes this keyword to fail as discussed with Carlo. This will be handled by the
     ...    "Mx Click Element If Present" scripts instead
     ...    @update: amansuet    22JUN2020    - updated to align with automation standards and added take screenshot
+    ...    @update: clanding    14AUG2020    - updated hard coded values to global variables; added take screenshot
 
     Mx LoanIQ Activate    ${LIQ_FacilityChangeTransaction_Window}
-    Mx LoanIQ Select Window Tab    ${LIQ_FacilityChangeTransaction_Tab}    Workflow
+    Mx LoanIQ Select Window Tab    ${LIQ_FacilityChangeTransaction_Tab}    ${WORKFLOW_TAB}
     Take Screenshot    ${Screenshot_Path}/Screenshots/LoanIQ/FacilityChangeTransactionWindow_WorkflowTab
-    Mx LoanIQ Select Or DoubleClick In Javatree    ${LIQ_FacilityChangeTransaction_Worflow_Tab}    Send to Approval%d
+    Mx LoanIQ Select Or DoubleClick In Javatree    ${LIQ_FacilityChangeTransaction_Worflow_Tab}    ${SEND_TO_APPROVAL_STATUS}%d
+    Take Screenshot    ${Screenshot_Path}/Screenshots/LoanIQ/FacilityChangeTransactionWindow_WorkflowTab
     Mx LoanIQ Click Element If Present    ${LIQ_Warning_Yes_Button}
     Mx LoanIQ Click Element If Present     ${LIQ_Warning_Yes_Button}
     :FOR    ${i}    IN RANGE    3
      \    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
      \    ${Warning_Status}    Run Keyword And Return Status    Mx LoanIQ Verify Object Exist    ${LIQ_Warning_Window}     VerificationData="Yes"
      \    Exit For Loop If    ${Warning_Status}==False
+     Take Screenshot    ${Screenshot_Path}/Screenshots/LoanIQ/FacilityChangeTransactionWindow_WorkflowTab
 
 Approve Facility Change Transaction
     [Documentation]    This keyword approves the Facility Change Transaction in work in process
@@ -112,6 +117,7 @@ Approve Facility Change Transaction
     ...    "Mx Click Element If Present" scripts instead
     ...    @update:    fmamaril    24APR2019    Added handling for Question message box             
     ...    @update: amansuet    22JUN2020    - updated to align with automation standards, added take screenshot and added keyword pre-processing
+    ...    @update: clanding    14AUG2020    - updated hard coded values to global variables; added take screenshot
     [Arguments]    ${sDeal_Name}
 
     ### Keyword Pre-processing ###
@@ -119,14 +125,15 @@ Approve Facility Change Transaction
 
     Mx LoanIQ Activate Window   ${LIQ_Window}
     Select Actions    [Actions];Work In Process
-    Mx LoanIQ DoubleClick    ${LIQ_TransactionsInProcess_Transactions_List}    Facilities    
-    Mx LoanIQ DoubleClick    ${LIQ_TransactionsInProcess_Outstanding_List}    Awaiting Approval
-    Mx LoanIQ DoubleClick    ${LIQ_TransactionsInProcess_Outstanding_List}    Facility Change Transaction
+    Mx LoanIQ DoubleClick    ${LIQ_TransactionsInProcess_Transactions_List}    ${FACILITIES_TAB}    
+    Mx LoanIQ DoubleClick    ${LIQ_TransactionsInProcess_Outstanding_List}    ${AWAITING_APPROVAL_STATUS}
+    Mx LoanIQ DoubleClick    ${LIQ_TransactionsInProcess_Outstanding_List}    ${FACILITY_CHANGE_TRANSACTION}
     Mx LoanIQ DoubleClick    ${LIQ_TransactionsInProcess_Outstanding_List}    ${Deal_Name}
     Mx LoanIQ Activate Window    ${LIQ_FacilityChangeTransaction_Window}
-    Mx LoanIQ Select Window Tab    ${LIQ_FacilityChangeTransaction_Tab}    Workflow
+    Mx LoanIQ Select Window Tab    ${LIQ_FacilityChangeTransaction_Tab}    ${WORKFLOW_TAB}
     Take Screenshot    ${Screenshot_Path}/Screenshots/LoanIQ/FacilityChangeTransactionWindow_WorkflowTab
-    Mx LoanIQ Select Or DoubleClick In Javatree    ${LIQ_FacilityChangeTransaction_Worflow_Tab}    Approval%d
+    Mx LoanIQ Select Or DoubleClick In Javatree    ${LIQ_FacilityChangeTransaction_Worflow_Tab}    ${APPROVAL_STATUS}%d
+    Take Screenshot    ${Screenshot_Path}/Screenshots/LoanIQ/FacilityChangeTransactionWindow_WorkflowTab
     Mx LoanIQ Click Element If Present    ${LIQ_Warning_Yes_Button}
     Mx LoanIQ Click Element If Present    ${LIQ_Question_Yes_Button}
     Mx LoanIQ Click Element If Present    ${LIQ_Question_Yes_Button}
@@ -134,6 +141,7 @@ Approve Facility Change Transaction
      \    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
      \    ${Warning_Status}    Run Keyword And Return Status    Mx LoanIQ Verify Object Exist    ${LIQ_Warning_Window}     VerificationData="Yes"
      \    Exit For Loop If    ${Warning_Status}==False
+     Take Screenshot    ${Screenshot_Path}/Screenshots/LoanIQ/FacilityChangeTransactionWindow_WorkflowTab
      
 Release Facility Change Transaction 
     [Documentation]    This keyword releases the approved Facility Change Transaction in work in process
@@ -142,6 +150,7 @@ Release Facility Change Transaction
     ...    <update> @ghabal - removed "Run Keyword And Continue On Failure Mx LoanIQ Verify Object Exist" that makes this keyword to fail as discussed with Carlo. This will be handled by the
     ...    "Mx Click Element If Present" scripts instead
     ...    @update: amansuet    22JUN2020    - updated to align with automation standards, added take screenshot and added keyword pre-processing
+    ...    @update: clanding    14AUG2020    - updated hard coded values to global variables; added take screenshot
     [Arguments]    ${sDeal_Name}
 
     ### Keyword Pre-processing ###
@@ -149,19 +158,21 @@ Release Facility Change Transaction
     
     Mx LoanIQ Activate Window   ${LIQ_Window}
     Select Actions    [Actions];Work In Process
-    Mx LoanIQ DoubleClick    ${LIQ_TransactionsInProcess_Transactions_List}    Facilities    
-    Mx LoanIQ DoubleClick    ${LIQ_TransactionsInProcess_Outstanding_List}    Awaiting Release
-    Mx LoanIQ DoubleClick    ${LIQ_TransactionsInProcess_Outstanding_List}    Facility Change Transaction
+    Mx LoanIQ DoubleClick    ${LIQ_TransactionsInProcess_Transactions_List}    ${FACILITIES_TAB}    
+    Mx LoanIQ DoubleClick    ${LIQ_TransactionsInProcess_Outstanding_List}    ${AWAITING_RELEASE_STATUS}
+    Mx LoanIQ DoubleClick    ${LIQ_TransactionsInProcess_Outstanding_List}    ${FACILITY_CHANGE_TRANSACTION}
     Mx LoanIQ DoubleClick    ${LIQ_TransactionsInProcess_Outstanding_List}    ${Deal_Name}
     Mx LoanIQ Activate    ${LIQ_FacilityChangeTransaction_Window}
-    Mx LoanIQ Select Window Tab    ${LIQ_FacilityChangeTransaction_Tab}    Workflow
+    Mx LoanIQ Select Window Tab    ${LIQ_FacilityChangeTransaction_Tab}    ${WORKFLOW_TAB}
     Take Screenshot    ${Screenshot_Path}/Screenshots/LoanIQ/FacilityChangeTransactionWindow_WorkflowTab
-    Mx LoanIQ Select Or DoubleClick In Javatree    ${LIQ_FacilityChangeTransaction_Worflow_Tab}    Release%d
+    Mx LoanIQ Select Or DoubleClick In Javatree    ${LIQ_FacilityChangeTransaction_Worflow_Tab}    ${RELEASE_STATUS}%d
+    Take Screenshot    ${Screenshot_Path}/Screenshots/LoanIQ/FacilityChangeTransactionWindow_WorkflowTab
     Mx LoanIQ Click Element If Present    ${LIQ_Question_Yes_Button}
     Mx LoanIQ Click Element If Present    ${LIQ_Warning_Yes_Button}
     Mx LoanIQ Click Element If Present     ${LIQ_Warning_Yes_Button}
     Mx LoanIQ Click Element If Present    ${LIQ_Warning_Yes_Button}
     Mx LoanIQ Verify Object Exist    ${LIQ_FacilityChangeTransaction_WorkflowNoItems_Tab}    VerificationData="Yes"
+    Take Screenshot    ${Screenshot_Path}/Screenshots/LoanIQ/FacilityChangeTransactionWindow_WorkflowTab
     Mx LoanIQ Select    ${LIQ_FacilityChangeTransaction_File_Exit}
     Mx LoanIQ Click Element If Present     ${LIQ_Reminder_OK_Button}
     Mx LoanIQ Activate Window    ${LIQ_TransactionInProcess_Window}

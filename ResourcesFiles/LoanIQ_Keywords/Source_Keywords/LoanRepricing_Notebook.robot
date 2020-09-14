@@ -8,6 +8,7 @@ Search for Existing Outstanding
     ...    @update: hstone    23AUG22019    Added Take Screenshot on Outstanding Selection
     ...    @update: hstone    26MAY2020     - Added Keyword Pre-processing
     ...                                     - Removed Sleep, replaced with 'Wait Until Keyword Succeeds'
+    ...    @update: clanding    13AUG2020    - Updated hard coded values to global variables; added path to screenshot
     [Arguments]    ${sOutstandingSelect_Type}    ${sFacility_Name}
 
     ### Keyword Pre-processing ###
@@ -16,11 +17,11 @@ Search for Existing Outstanding
 
     mx LoanIQ select    ${LIQ_OutstandingSelect_Submenu}
     mx LoanIQ activate window    ${LIQ_OutstandingSelect_Window}
-    Wait Until Keyword Succeeds    ${retry}    ${retry_interval}    mx LoanIQ enter    ${LIQ_OutstandingSelect_Existing_RadioButton}    ON 
+    Wait Until Keyword Succeeds    ${retry}    ${retry_interval}    mx LoanIQ enter    ${LIQ_OutstandingSelect_Existing_RadioButton}    ${ON} 
     mx LoanIQ select    ${LIQ_OutstandingSelect_Type_Dropdown}    ${OutstandingSelect_Type}    
     mx LoanIQ select    ${LIQ_OutstandingSelect_Facility_Dropdown}    ${Facility_Name}
     mx LoanIQ click    ${LIQ_OutstandingSelect_Search_Button}      
-    Take Screenshot    ComprehensiveRepricing_OutstandingSelect
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/ComprehensiveRepricing_OutstandingSelect
     ${status}    Run Keyword And Return Status    Mx LoanIQ Verify Object Exist    ${LIQ_ExistingLoansForFacility_CreateRepricing_Button}      VerificationData="Yes"
     Run Keyword If    '${status}'=='True'    Log    Existing Loan/s for Facility is successfully displaying
     ...    ELSE    Log    No existing loans for the selected Facility
@@ -56,6 +57,7 @@ Select Repricing Type
     ...    @update: hstone    23AUG2019     - Added Take Screenshot on Repricing Type Selection
     ...    @update: hstine    26MAY2020     - Added Keyword Pre-processing
     ...    @update: amansuet    15JUN2020    - updated take screenshot
+    ...    @update: clanding    13AUG2020    - updated hard coded values to global variables
     [Arguments]    ${sRepricing_Type}
 
     ### Keyword Pre-processing ###
@@ -63,8 +65,8 @@ Select Repricing Type
 
     Mx LoanIQ activate Window    ${LIQ_CreateRepricing_Window}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/CreateRepricingWindow
-    Run Keyword If    '${Repricing_Type}'=='Comprehensive Repricing'    Mx LoanIQ Enter    ${LIQ_CreateRepricing_ComprehensiveRepricing_RadioButton}    ON    
-    ...    ELSE IF    '${Repricing_Type}'=='Quick Repricing'    Mx LoanIQ Enter    ${LIQ_CreateRepricing_QuickRepricing_RadioButton}    ON    
+    Run Keyword If    '${Repricing_Type}'=='Comprehensive Repricing'    Mx LoanIQ Enter    ${LIQ_CreateRepricing_ComprehensiveRepricing_RadioButton}    ${ON}    
+    ...    ELSE IF    '${Repricing_Type}'=='Quick Repricing'    Mx LoanIQ Enter    ${LIQ_CreateRepricing_QuickRepricing_RadioButton}    ${ON}    
     Mx LoanIQ Click    ${LIQ_CreateRepricing_Ok_Button}     
     Log    Select Repricing Keyword is complete 
  
@@ -148,13 +150,15 @@ Navigate to Create Cashflow for Loan Repricing
     [Documentation]    This keyword is used to navigate from Generate to Workflow to Create Cashflow in Loan Repricing
     ...    @author: ritragel
     ...    @update: amansuet    15JUN2020    - updated to align with automation standards and added take screenshot
+    ...    @update: clanding    13AUG2020    - updated hard coded values to global variables
 
     Mx LoanIQ Activate Window    ${LIQ_LoanRepricingForDeal_Window}
-    Mx LoanIQ Select Window Tab    ${LIQ_LoanRepricingForDeal_Workflow_Tab}    Workflow    
+    Mx LoanIQ Select Window Tab    ${LIQ_LoanRepricingForDeal_Workflow_Tab}    ${WORKFLOW_TAB}    
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LoanRepricingForDealWindow_WorkflowTab
-    Mx LoanIQ DoubleClick    ${LIQ_LoanRepricingForDeal_Workflow_JavaTree}    Create Cashflows    
+    Mx LoanIQ DoubleClick    ${LIQ_LoanRepricingForDeal_Workflow_JavaTree}    ${CREATE_CASHFLOWS_TYPE}    
     Mx LoanIQ Click Element If Present    ${LIQ_Warning_Yes_Button}  
     Mx LoanIQ Activate Window    ${LIQ_LoanRepricing_Cashflow_Window}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LoanRepricing_CashflowWindow
 
 Select Repricing Detail Add Options
     [Documentation]    This keyword is used to Add Repricing Detail Add Option
@@ -265,6 +269,7 @@ Add Interest Payment for Loan Repricing
     ...    @update: amansuet    15JUN2020      - added condition for Cycle Select if Cycle Loan is Cycle Due
     ...                                        - added return value as this will be use for Cashflow calculations
     ...                                        - Updated take screenshot
+    ...    @update: clanding    13AUG2020     - Updated hardcoded values to global variables
     [Arguments]    ${sCyclesForLoan}=None    ${sInterestRequestedAmount}=None    ${sRunTimeVar_InterestPaymentRequestedAmount}=None
 
     ### Keyword Pre-processing ###
@@ -274,20 +279,20 @@ Add Interest Payment for Loan Repricing
     ### Loan Repricing Window ###
     Mx LoanIQ Activate Window    ${LIQ_LoanRepricing_Window}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LoanRepricingWindow_GeneralTab
-    Mx LoanIQ Enter    ${LIQ_LoanRepricing_AutoReduceFacility_Checkbox}    ON
+    Mx LoanIQ Enter    ${LIQ_LoanRepricing_AutoReduceFacility_Checkbox}    ${ON}
     Mx LoanIQ Click    ${LIQ_LoanRepricingForDeal_Add_Button}
     Mx LoanIQ Click Element If Present    ${LIQ_Warning_Yes_Button}
 
     ### Repricing Detail Add Options Window ###
     Mx LoanIQ Activate Window   ${LIQ_RepricingDetailAddOptions_Window}
-    Mx LoanIQ Enter    ${LIQ_RepricingDetailAddOptions_InterestPayment_RadioButton}    ON
+    Mx LoanIQ Enter    ${LIQ_RepricingDetailAddOptions_InterestPayment_RadioButton}    ${ON}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/RepricingDetailAddOptionsWindow
     Mx LoanIQ Click    ${LIQ_RepricingDetailAddOptions_Ok_Button}
 
     ### Cycles for Loan Window Selection Condition ###
-    Run Keyword If    '${sCyclesForLoan}'=='Lender Shares (Prepay Cycle)'    mx LoanIQ enter    ${LIQ_CyclesForLoan_LenderSharesPrepayCycle_RadioButton}    ON
-    ...    ELSE IF    '${sCyclesForLoan}'=='Cycle Due'    mx LoanIQ enter    ${LIQ_CyclesForLoan_CycleDue_RadioButton}    ON
-    ...    ELSE    mx LoanIQ enter    ${LIQ_CyclesForLoan_ProjectedDue_RadioButton}    ON
+    Run Keyword If    '${sCyclesForLoan}'=='Lender Shares (Prepay Cycle)'    mx LoanIQ enter    ${LIQ_CyclesForLoan_LenderSharesPrepayCycle_RadioButton}    ${ON}
+    ...    ELSE IF    '${sCyclesForLoan}'=='Cycle Due'    mx LoanIQ enter    ${LIQ_CyclesForLoan_CycleDue_RadioButton}    ${ON}
+    ...    ELSE    mx LoanIQ enter    ${LIQ_CyclesForLoan_ProjectedDue_RadioButton}    ${ON}
 	Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/CyclesForLoanWindow
     Mx LoanIQ Click    ${LIQ_CyclesForLoan_Ok_Button}
     Mx LoanIQ Click Element If Present    ${LIQ_Warning_Yes_Button}
@@ -295,7 +300,7 @@ Add Interest Payment for Loan Repricing
     ### Interest Payment Window ###
     Mx LoanIQ Activate Window    ${LIQ_InterestPayment_Window}
     Run Keyword If    '${InterestRequestedAmount}'!='None'    Mx Enter    ${LIQ_InterestPayment_RequestedAmount_Textfield}    ${InterestRequestedAmount}
-    ${InterestPaymentRequestedAmount}    Run Keyword If    '${InterestRequestedAmount}'=='None' and '${sCyclesForLoan}'=='Cycle Due'    Mx LoanIQ Get Data    ${LIQ_InterestPayment_RequestedAmount_Textfield}    InterestPaymentRequestedAmount
+    ${InterestPaymentRequestedAmount}    Run Keyword If    '${InterestRequestedAmount}'=='None' and '${sCyclesForLoan}'=='Cycle Due'    Mx LoanIQ Get Data    ${LIQ_InterestPayment_RequestedAmount_Textfield}    ${INTEREST_PAYMENT_REQUESTED_AMOUNT}
     Mx LoanIQ Click Element If Present    ${LIQ_Warning_Yes_Button} 
     Mx LoanIQ select    ${LIQ_InterestPayment_FileSave_Menu}
     Mx LoanIQ Click Element If Present    ${LIQ_Warning_Yes_Button}
@@ -306,6 +311,25 @@ Add Interest Payment for Loan Repricing
     Save Values of Runtime Execution on Excel File    ${sRunTimeVar_InterestPaymentRequestedAmount}    ${InterestPaymentRequestedAmount}
 
     [Return]    ${InterestPaymentRequestedAmount}
+
+Get Cycle Due Date for Loan Repricing
+    [Documentation]    This keyword is used to get Cycle Due Date for Loan Repricing.
+    ...    @author: clanding    13AUG2020     - initial create
+    [Arguments]    ${sItemToBeDoubleclicked}    ${sRunTimeVar_CycleDueDate}=None
+    
+    ### Keyword Pre-processing ###
+    ${ItemToBeDoubleclicked}    Acquire Argument Value    ${sItemToBeDoubleclicked}
+
+    Wait Until Keyword Succeeds    3x    5 sec    Mx LoanIQ Select Or Doubleclick In Tree By Text    ${LIQ_LoanRepricing_GeneralTab_Description_JavaTree}    ${ItemToBeDoubleclicked}%d
+    Mx LoanIQ Activate Window    ${LIQ_InterestPayment_Window}
+    ${Cycle_Due_Date}    Mx LoanIQ Get Data    ${LIQ_InterestPayment_CycleDueDate_Text}    Cycle_Due_Date
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/InterestPaymentWindow
+    mx LoanIQ close window    ${LIQ_Payment_Window}
+
+    ### Keyword Post-processing ###
+    Save Values of Runtime Execution on Excel File    ${sRunTimeVar_CycleDueDate}    ${Cycle_Due_Date}
+    
+    [Return]    ${Cycle_Due_Date}
     
 Add New Outstandings
     [Documentation]    This keywword adds new outstandings for the specified loan
@@ -1413,15 +1437,20 @@ Validate Loan Repricing New Outstanding Amount
     ...                @author: bernchua    27AUG2019    Initial create
     ...                @author: bernchua    11SEP2019    Updated keyword documentation
     ...                @update: sahalder    25JUN2020    Added keyword Pre-Processing steps
-    [Arguments]    ${sDescription}    ${sNewOutstanding_Amount}
+    ...                @update: dahijara    25AUG2020    Added arguments, inserted set variable for description from test case level. Added screenshot
+    [Arguments]    ${sPricing_Option}    ${sLoan_Alias}    ${sNewOutstanding_Amount}
     
     ### GetRuntime Keyword Pre-processing ###
-    ${Description}    Acquire Argument Value    ${sDescription}
+    ${Pricing_Option}    Acquire Argument Value    ${sPricing_Option}
+    ${Loan_Alias}    Acquire Argument Value    ${sLoan_Alias}
     ${NewOutstanding_Amount}    Acquire Argument Value    ${sNewOutstanding_Amount}
+
+    ${Description}    Set Variable    ${Pricing_Option} (${Loan_Alias})
     
     mx LoanIQ activate window    ${LIQ_LoanRepricingForDeal_Window}
     ${UI_NewAmount}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_LoanRepricing_Outstanding_List}    ${Description}%Amount%amount
     ${VALIDATE_NEWAMOUNT}    Run Keyword And Return Status    Should Be Equal    ${NewOutstanding_Amount}    ${UI_NewAmount}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LoanRepricing_Outstanding
     Run Keyword If    ${VALIDATE_NEWAMOUNT}==True    Log    Amount for ${Description} successfully validated.
     ...    ELSE    Fail    Amount for ${Description} not validated successfully.     
     
@@ -1429,6 +1458,7 @@ Validate Loan Repricing Effective Date
     [Documentation]    Low-level keyword used to validate the displayed 'Effective Date' in the Loan Repricing Notebook - General Tab.
     ...                @author: bernchua     27AUG2019    Initial create
     ...                @update: sahalder    25JUN2020    Added keyword Pre-Processing steps
+    ...    @update: dahijara    25AUG2020    Added screenshot
     [Arguments]    ${sEffective_Date}
     
     ### GetRuntime Keyword Pre-processing ###
@@ -1437,6 +1467,7 @@ Validate Loan Repricing Effective Date
     mx LoanIQ activate window    ${LIQ_LoanRepricingForDeal_Window}
     ${UI_EffectiveDate}    Mx LoanIQ Get Data    ${LIQ_LoanRepricing_EffectiveDate_Text}    value%date
     ${VALIDATE_EFFECTIVEDATE}    Run Keyword And Return Status    Should Be Equal    ${Effective_Date}    ${UI_EffectiveDate}    
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LoanRepricing_Outstanding
     Run Keyword If    ${VALIDATE_EFFECTIVEDATE}==True    Log    Loan Repricing Effective Date successfully validated.
     ...    ELSE    Fail    Loan Repricing Effective Date not validated successfully.
     
@@ -1567,6 +1598,7 @@ Add Rollover Conversion to New
     ...    @update: amansuet    15JUN2020    - added condition to get Increase amount value and return for Cashflow calculation
     ...                                      - updated take screenshot
     ...                                      - added post processing keyword for returned values
+    ...    @update: clanding    13AUG2020    - updated hard coded values to global variables
     [Arguments]    ${sPricing_Option}    ${sBorrower_Base_Rate}    ${sNewRequestedAmt}=None    ${sRepricingFrequency}=None    ${sRunTimeVar_NewLoanAlias}=None    ${sRunTimeVar_IncreaseAmount}=None
 
     ### Keyword Pre-processing ###
@@ -1581,17 +1613,17 @@ Add Rollover Conversion to New
     Mx LoanIQ Click    ${LIQ_LoanRepricingForDeal_Add_Button}
 
     ### Repricing Detail Add Window ###
-    Select Repricing Detail Add Options    Rollover/Conversion To New    ${Pricing_Option}
+    Select Repricing Detail Add Options    ${ROLLOVER_CONVERSION_TO_NEW}    ${Pricing_Option}
 
     ### Rollover Conversion Window
     Mx LoanIQ Activate Window    ${LIQ_RolloverConversion_Window} 
-    ${NewLoanAlias}    Mx LoanIQ Get Data    ${LIQ_RolloverConversion_Alias_Textfield}    NewLoanAlias
+    ${NewLoanAlias}    Mx LoanIQ Get Data    ${LIQ_RolloverConversion_Alias_Textfield}    ${NEW_LOAN_ALIAS}
     Run Keyword If    '${NewRequestedAmt}'!='None'    Mx LoanIQ Enter    ${LIQ_RolloverConversion_RequestedAmt_TextField}    ${NewRequestedAmt}
     Run Keyword If    '${RepricingFrequency}'!='None'    Mx LoanIQ Select List    ${LIQ_PendingRollover_RepricingFrequency_Dropdown}    ${RepricingFrequency}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/RolloverConversionWindow_GeneralTab
     Mx LoanIQ Select    ${LIQ_RolloverConversion_Save_Menu}     
     Mx LoanIQ Click Element If Present    ${LIQ_Warning_Yes_Button}
-    Mx LoanIQ Select Window Tab    ${LIQ_RolloverConversion_Tab}    Rates
+    Mx LoanIQ Select Window Tab    ${LIQ_RolloverConversion_Tab}    ${RATES_TAB}
     Mx LoanIQ Click    ${LIQ_RolloverConversion_BaseRate_Button}
     Mx LoanIQ Click Element If Present    ${LIQ_Warning_Yes_Button}
     Mx LoanIQ Click Element If Present    ${LIQ_Warning_Yes_Button}
@@ -1615,7 +1647,8 @@ Add Rollover Conversion to New
 Get Calculated Cycle Due Amount and Validate
     [Documentation]    This keyword is for calculating cycle due amount and return.
     ...    @author: amansuet    18JUN2020    - initial create
-	[Arguments]    ${iBalance_Amount}    ${iAllInRate_Pct}    ${sRate_Basis}    ${iUI_CycleDue}    ${sStart_Date}    ${sRuntimeVar_CalculatedCycleDue}=None
+    ...    @update: clanding    13AUG2020    - added using Cycle Due Date value if provided
+	[Arguments]    ${iBalance_Amount}    ${iAllInRate_Pct}    ${sRate_Basis}    ${iUI_CycleDue}    ${sStart_Date}    ${sCycleDueDate}=None    ${sRuntimeVar_CalculatedCycleDue}=None
 
     ### Keyword Pre-processing ###
     ${Balance_Amount}    Acquire Argument Value    ${iBalance_Amount}
@@ -1623,8 +1656,10 @@ Get Calculated Cycle Due Amount and Validate
     ${Rate_Basis}    Acquire Argument Value    ${sRate_Basis}
     ${UI_CycleDue}    Acquire Argument Value    ${iUI_CycleDue}
     ${Start_Date}    Acquire Argument Value    ${sStart_Date}
+    ${CycleDueDate}    Acquire Argument Value    ${sCycleDueDate}
 
-	${CurrentSystemDate}    Get System Date
+	${CurrentSystemDate}    Run Keyword If    '${sCycleDueDate}'=='None'    Get System Date
+	...    ELSE    Set Variable    ${CycleDueDate}
 
 	###Get Number of Days###
 	${CycleDue_CurrentNoofDays}    Subtract Date From Date    ${CurrentSystemDate}    ${Start_Date}    result_format=verbose    date1_format=%d-%b-%Y    date2_format=%d-%b-%Y

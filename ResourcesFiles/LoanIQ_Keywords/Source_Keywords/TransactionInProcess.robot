@@ -39,6 +39,7 @@ Navigate Transaction in WIP
     :FOR    ${i}    IN RANGE    3
     \    Mx LoanIQ DoubleClick    ${TransactionsList_Locator}    ${TransactionStatus}
     \    Mx LoanIQ Select Or Doubleclick In Tree By Text    ${TransactionsList_Locator}    ${TransactionType}%d
+    \    Sleep    2s
     \    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/WIP_${Transaction}
     \    ${STATUS}    Run Keyword And Return Status    Mx LoanIQ DoubleClick    ${TransactionsList_Locator}    ${TransactionName}
     \    Run Keyword If    ${STATUS}==False and '${TargetDate}'!='${EMPTY}'    Run Keywords

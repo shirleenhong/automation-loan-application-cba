@@ -178,6 +178,7 @@ LIQ_BorrowerDetails_ExternalID_Field = 'JavaWindow("title:=Borrower/.*").JavaEdi
 LIQ_BorrowerDetails_PreferredLanguage_Field = 'JavaWindow("title:=Borrower/.*").JavaList("tagname:=Combo")' 
 LIQ_BorrowerDetails_MEI_Field = 'JavaWindow("title:=Borrower/.*").JavaEdit("attached text:=MEI:")' 
 LIQ_BorrowerDetails_OKButton = 'JavaWindow("title:=Borrower/.*").JavaButton("attached text:=OK")'
+LIQ_BorrowerDetails_Window = 'JavaWindow("title:=Borrower/.*")'
 
 ###Active Customer_ProfileTab_SelectLocation_BeneficiaryDetails_Window###
 LIQ_BeneficiaryDetails_ExternalID_Field = 'JavaWindow("title:=Beneficiary/.*").JavaEdit("tagname:=Text","x:=250","y:=50")' 
@@ -363,6 +364,9 @@ RemittanceList_Window_RemittanceInstructionsDetail_SWIFTIDInputField =  'JavaWin
 RemittanceList_Window_RemittanceInstructionsDetail_SWIFTIDescriptionField =  'JavaWindow("title:=Choose a SWIFT ID").JavaEdit("attached text:=Description:")'
 RemittanceList_Window_RemittanceInstructionsDetail_OKButton =  'JavaWindow("title:=Choose a SWIFT ID").JavaButton("label:=OK")'
 RemittanceList_Window_RemittanceInstructionsDetail_ClearingTypeList =  'JavaWindow("title:=Choose a SWIFT ID").JavaList("attached text:=Clearing Type:")'
+RemittanceList_Window_RemittanceInstructionDetail_BankSwiftID_MainWindow = 'JavaWindow("title:=Choose a Swift Bank ID")'
+RemittanceList_Window_RemittanceInstructionDetail_BankSwiftID_SwiftCodeList = 'JavaWindow("title:=Choose a Swift Bank ID").JavaTree("tagname:=Tree.*")'
+RemittanceList_Window_RemittanceInstructionDetail_BankSwiftID_OK = 'JavaWindow("title:=Choose a Swift Bank ID").JavaButton("label:=OK")'
 
 ###Profile Tab_Remittance Instructions_Detail - Approvals###
 RemittanceList_Window_RemittanceInstructionsDetail_PasswordRequiredWindow_InputPassword = 'JavaWindow("title:=Password Required.*").JavaEdit("attached text:=Please enter password for.*")'

@@ -190,6 +190,7 @@ Select Type of Schedule
     [Documentation]    This keyword selects a Schedule Type for a new Repayment Schedule
     ...                @author: bernchua    09AUG2019    Initial create
     ...                @update: sahalder    25JUN2020    Added keyword Pre-Processing steps
+    ...    @update: dahijara    25AUG2020    Added screenshot
     [Arguments]    ${sTypeOfSchedule}
     
     ### GetRuntime Keyword Pre-processing ###
@@ -197,6 +198,7 @@ Select Type of Schedule
 
     mx LoanIQ activate    ${LIQ_RepaymentSchedule_ScheduleType_Window}
     Mx LoanIQ Set    JavaWindow("title:=Choose a Type of Schedule").JavaRadioButton("label:=${TypeOfSchedule}")    ON
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/RepaymentSchedule
     mx LoanIQ click    ${LIQ_RepaymentSchedule_ScheduleType_OK_Button}
     
 Add Item in Flexible Schedule Window
@@ -296,6 +298,7 @@ Enter Flexible Schedule Add Item PI Amount
     [Documentation]    This keyword will enter the "Principal Amount" or "P&I Amount" in the Add Items window for Flexible Schedule.
     ...                @author: bernchua    14AUG2019    Initial create
     ...                @update: sahalder    25JUN2020    Added keyword Pre-Processing steps
+    ...    @update: dahijara    25AUG2020    Added screenshot
     [Arguments]    ${sFlexSched_PIAmount}
     
     ### GetRuntime Keyword Pre-processing ###
@@ -305,6 +308,7 @@ Enter Flexible Schedule Add Item PI Amount
     ${PayThruMaturity_STATUS}    Mx LoanIQ Get Data    ${LIQ_FSched_AddItems_PayThruMaturity_CheckBox}    enabled%status
     Run Keyword If    '${PayThruMaturity_STATUS}'=='1'    mx LoanIQ enter    ${LIQ_FSched_AddItems_PIAmount_Field_MaturityEnabled}    ${FlexSched_PIAmount}
     ...    ELSE IF    '${PayThruMaturity_STATUS}'=='0'    mx LoanIQ enter    ${LIQ_FSched_AddItems_PIAmount_Field_MaturityDisabled}    ${FlexSched_PIAmount}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/FSched_AddItems
 
 Add Unscheduled Transaction In Repayment Schedule
     [Documentation]    This keyword will click the 'Add Unsch Tran.' in the Repayment Schedule window.
@@ -626,7 +630,8 @@ Navigate to Existing Loan
     ...    @update: bernchua    09AUG2019    Added ticking of 'Existing' radio button.
     ...    @update: hstone      29MAY2020    - Added Keyword Pre-processing
 	...    @update: amansuet    01JUN2020    - updated to align with automation standards, added take screenshot and added keyword pre-processing
-	...    @update: sahalder    26JUN2020    - moved the keyword from LoanDrawdown_Notebook to Loan_Notebook 
+	...    @update: sahalder    26JUN2020    - moved the keyword from LoanDrawdown_Notebook to Loan_Notebook
+	...    @update: clanding    13AUG2020    - updated hard coded values to global variables
     [Arguments]    ${sOutstanding_Type}    ${sLoan_FacilityName}    ${sLoan_Alias}
     
     ### Keyword Pre-processing ###
@@ -635,7 +640,7 @@ Navigate to Existing Loan
     ${Loan_Alias}    Acquire Argument Value    ${sLoan_Alias}
 
     Mx LoanIQ Activate Window    ${LIQ_OutstandingSelect_Window}
-    Mx LoanIQ Set    ${LIQ_OutstandingSelect_Existing_RadioButton}    ON
+    Mx LoanIQ Set    ${LIQ_OutstandingSelect_Existing_RadioButton}    ${ON}
     Mx LoanIQ Select Combo Box Value    ${LIQ_OutstandingSelect_Type_Dropdown}    ${Outstanding_Type}
     Mx LoanIQ Select Combo Box Value    ${LIQ_OutstandingSelect_Facility_Dropdown}    ${Loan_FacilityName}
     Mx LoanIQ Click    ${LIQ_OutstandingSelect_Search_Button}

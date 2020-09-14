@@ -6,6 +6,7 @@ Initiate Recurring Fee Payment
     [Documentation]    This Keyword is use to complete the Event Fee from cashflow to its release.
     ...    @author: jcdelacruz
     ...    @update: fmamaril    24MAY2019    Delete Commented steps not used for Cashflow
+    ...    @update: dfajardo    26AUG2020    Removed Hard coded values
     [Arguments]    ${ExcelPath}
     
     Logout from Loan IQ
@@ -15,7 +16,7 @@ Initiate Recurring Fee Payment
     Navigate Event Fee Notebook in WIP    &{ExcelPath}[WIP_TransactionType]    &{ExcelPath}[WIP_AwaitingCreateCashflowsStatus]    &{ExcelPath}[WIP_OutstandingType]    &{ExcelPath}[Facility_Name]
     
     #Cashflow Window###
-    Navigate Notebook Workflow    ${LIQ_EventFeeNotebook_Window}    ${LIQ_EventFeeNotebook_PendingTab_Window}    ${LIQ_EventFee_WorkflowItems_Pending_List}    Create Cashflow
+    Navigate Notebook Workflow    ${LIQ_EventFeeNotebook_Window}    ${LIQ_EventFeeNotebook_PendingTab_Window}    ${LIQ_EventFee_WorkflowItems_Pending_List}    ${CREATE_CASHFLOWS_TYPE}
     Verify if Method has Remittance Instruction    &{ExcelPath}[Borrower_ShortName]    &{ExcelPath}[Remittance_Description]    &{ExcelPath}[Remittance_Instruction]
     Verify if Method has Remittance Instruction    &{ExcelPath}[Lender1_ShortName]    &{ExcelPath}[Remittance1_Description]    &{ExcelPath}[Remittance1_Instruction]
     Verify if Method has Remittance Instruction    &{ExcelPath}[Lender2_ShortName]    &{ExcelPath}[Remittance2_Description]    &{ExcelPath}[Remittance2_Instruction]
@@ -35,12 +36,12 @@ Initiate Recurring Fee Payment
  
     ###GL Entries###
     Navigate to GL Entries
-    ${HostBank_Credit}    Get GL Entries Amount    &{ExcelPath}[Host_Bank]    Credit Amt
-    ${Lender1_Credit}    Get GL Entries Amount    &{ExcelPath}[Lender1_ShortName]    Credit Amt
-    ${Lender2_Credit}    Get GL Entries Amount    &{ExcelPath}[Lender2_ShortName]    Credit Amt
-    ${Borrower_Debit}    Get GL Entries Amount    &{ExcelPath}[Borrower_ShortName]    Debit Amt
-    ${UITotalCreditAmt}    Get GL Entries Amount    ${SPACE}Total For:    Credit Amt
-    ${UITotalDebitAmt}    Get GL Entries Amount    ${SPACE}Total For:    Debit Amt
+    ${HostBank_Credit}    Get GL Entries Amount    &{ExcelPath}[Host_Bank]    ${CREDIT_AMT_LABEL}
+    ${Lender1_Credit}    Get GL Entries Amount    &{ExcelPath}[Lender1_ShortName]    ${CREDIT_AMT_LABEL}
+    ${Lender2_Credit}    Get GL Entries Amount    &{ExcelPath}[Lender2_ShortName]    ${CREDIT_AMT_LABEL}
+    ${Borrower_Debit}    Get GL Entries Amount    &{ExcelPath}[Borrower_ShortName]   ${DEBIT_AMT_LABEL}
+    ${UITotalCreditAmt}    Get GL Entries Amount    ${SPACE}Total For:    ${CREDIT_AMT_LABEL}
+    ${UITotalDebitAmt}    Get GL Entries Amount    ${SPACE}Total For:    ${DEBIT_AMT_LABEL}
     
     Compare UIAmount versus Computed Amount    ${HostBankShare}|${Lend1TranAmount}|${Lend2TranAmount}    ${HostBank_Credit}|${Lender1_Credit}|${Lender2_Credit}
     Validate if Debit and Credit Amt is Balanced    ${HostBank_Credit}|${Lender1_Credit}|${Lender2_Credit}    ${Borrower_Debit}

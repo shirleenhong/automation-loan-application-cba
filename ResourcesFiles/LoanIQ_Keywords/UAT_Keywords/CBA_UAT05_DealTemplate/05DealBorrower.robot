@@ -1,5 +1,6 @@
 *** Settings ***
-Resource    ../../../../Configurations/Import_File.robot
+Resource    ../../../../Configurations/LoanIQ_Import_File.robot
+Resource    ../../../../Configurations/Party_Import_File.robot
 
 *** Keywords ***
 Create Deal Borrower initial details in Quick Party Onboarding for UAT Deal Five
@@ -42,7 +43,7 @@ Search Customer and Complete its Borrower Profile Creation with default values f
     Add Province Details in the Legal Address    None
     ###Navigating to SIC tab
     Navigate to "SIC" tab and Validate Primary SIC Code    &{ExcelPath}[Primary_SICCode]    &{ExcelPath}[PrimarySICCode_Description]
-    ###Navigating to Profile Tab
+    ##Navigating to Profile Tab
     Navigate to "Profiles" tab and Validate 'Add Profile' Button
     ###Adding Profile
     Add Profile under Profiles Tab    &{ExcelPath}[Profile_Type]
@@ -65,9 +66,8 @@ Search Customer and Complete its Borrower Profile Creation with default values f
     ##Completing Location
     Complete Location under Profile Tab    &{ExcelPath}[Profile_Type]    &{ExcelPath}[Customer_Location]
     ###Adding Remittance Instructions
-    Mx LoanIQ Select Window Tab    ${LIQ_Active_Customer_Notebook_TabSelection}    Profiles
-    Sleep    4s
-    mx LoanIQ click    ${RemittanceInstructions_Button} 
+    Select Loan IQ Java Window Tab    ${LIQ_Active_Customer_Notebook_TabSelection}    Profiles
+    Click Loan IQ Element	${RemittanceInstructions_Button}
     Add RTGS Remittance Instruction for UAT Deal    &{ExcelPath}[Customer_Location]    &{ExcelPath}[RemittanceInstruction_RTGSMethod]    &{ExcelPath}[RemittanceInstruction_RTGSDescriptionAUD]    &{ExcelPath}[RemittanceInstruction_RTGSCurrencyAUD]
     ...    &{ExcelPath}[RemittanceInstruction_DirectionSelected]    &{ExcelPath}[IMT_MessageCode]    &{ExcelPath}[BOC_Level]    
     ...    &{ExcelPath}[RI_FromCust_Checkbox]    &{ExcelPath}[RI_AutoDoIt_Checkbox]    &{ExcelPath}[RI_SendersCorrespondent_Checkbox]
@@ -87,15 +87,15 @@ Search Customer and Complete its Borrower Profile Creation with default values f
     Write Data To Excel    SERV01_LoanDrawdown    Remittance_Instruction    ${rowid}    &{ExcelPath}[Remittance_Instruction]    ${CBAUAT_ExcelPath}    multipleValue=Y
     Write Data To Excel    SERV08C_ComprehensiveRepricing    Borrower_RemittanceDescription    ${rowid}    ${RemittanceDescription}    ${CBAUAT_ExcelPath}    multipleValue=Y 
     Write Data To Excel    SERV08C_ComprehensiveRepricing    Borrower_RemittanceInstruction    ${rowid}    &{ExcelPath}[Remittance_Instruction]    ${CBAUAT_ExcelPath}    multipleValue=Y
-    mx LoanIQ click    ${RemittanceList_Window_ExitButton}
-    Add Servicing Groups Details    &{ExcelPath}[Customer_Search]    &{ExcelPath}[Party_ID]    &{ExcelPath}[Party_ID]    &{ExcelPath}[Profile_Type]    &{ExcelPath}[Group_Contact]   &{ExcelPath}[Contact_LastName]
+    Click Loan IQ Element    ${RemittanceList_Window_ExitButton}
+    Add Servicing Groups Details    &{ExcelPath}[LIQCustomer_ShortName]    &{ExcelPath}[Group_Contact]   &{ExcelPath}[Contact_LastName]
     Add Remittance Instruction to Servicing Group    &{ExcelPath}[RemittanceInstruction_RTGSDescriptionAUD]
     Add Remittance Instruction to Servicing Group    &{ExcelPath}[RemittanceInstruction_RTGSDescriptionAUD2]
     Close Servicing Group Remittance Instructions Selection List Window    &{ExcelPath}[LIQCustomer_ShortName]
-    mx LoanIQ click    ${ServicingGroupWindow_ExitButton}
+    Click Loan IQ Element    ${ServicingGroupWindow_ExitButton}
     ###Logout and Relogin in Supervisor Level
     Close All Windows on LIQ
-    Logout from LIQ
+    Logout from Loan IQ
     Login to Loan IQ    ${SUPERVISOR_USERNAME}    ${SUPERVISOR_PASSWORD}
     ###Searching Customer
     Search Customer    &{ExcelPath}[Customer_Search]    &{ExcelPath}[Party_ID]    &{ExcelPath}[Party_ID]  
@@ -104,10 +104,10 @@ Search Customer and Complete its Borrower Profile Creation with default values f
     Access Remittance List upon Login    &{ExcelPath}[Profile_Type]    &{ExcelPath}[Customer_Location]
     Approving Remittance Instruction    &{ExcelPath}[RemittanceInstruction_RTGSDescriptionAUD]   &{ExcelPath}[Customer_Location]
     Approving Remittance Instruction    &{ExcelPath}[RemittanceInstruction_RTGSDescriptionAUD2]   &{ExcelPath}[Customer_Location]
-    mx LoanIQ click    ${RemittanceList_Window_ExitButton}
+    Click Loan IQ Element    ${RemittanceList_Window_ExitButton}
     ##Logout and Relogin in Manager Level
     Close All Windows on LIQ
-    Logout from LIQ
+    Logout from Loan IQ
     Login to Loan IQ    ${MANAGER_USERNAME}    ${MANAGER_PASSWORD}
     ###Searching Customer
     Search Customer    &{ExcelPath}[Customer_Search]    &{ExcelPath}[Party_ID]    &{ExcelPath}[Party_ID]
@@ -119,10 +119,10 @@ Search Customer and Complete its Borrower Profile Creation with default values f
     ###Releasing Added Remittance Instructions
     Releasing Remittance Instruction    &{ExcelPath}[RemittanceInstruction_RTGSDescriptionAUD]    &{ExcelPath}[Customer_Location]
     Releasing Remittance Instruction    &{ExcelPath}[RemittanceInstruction_RTGSDescriptionAUD2]    &{ExcelPath}[Customer_Location]
-    mx LoanIQ click    ${RemittanceList_Window_ExitButton}
-    Sleep    4s
+    Click Loan IQ Element    ${RemittanceList_Window_ExitButton}
+    Verify Window    ${LIQ_ActiveCustomer_Window}
     Validate 'Active Customer' Window    &{ExcelPath}[Party_ID]
     ###Logout and Relogin in Inputter Level
     Close All Windows on LIQ
-    Logout from LIQ
+    Logout from Loan IQ
     Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}

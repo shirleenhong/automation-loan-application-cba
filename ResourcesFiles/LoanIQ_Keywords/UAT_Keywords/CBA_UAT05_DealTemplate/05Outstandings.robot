@@ -1,10 +1,11 @@
 *** Settings ***
-Resource    ../../../../Configurations/Import_File.robot
+Resource    ../../../../Configurations/LoanIQ_Import_File.robot
 
 *** Keywords ***
 Facility Drawdown
     [Documentation]    This high-level keyword is used to make a loan drawdown on a facility.
     ...                @author: hstone    21AUG2019    Initial create
+    ...                @update: mcastro   03SEP2020    Replaced incorrect argument variable for ${sLoan_RepricingFrequency} on Input General Loan Drawdown Details keyword; Updated screenshot path
     [Arguments]    ${ExcelPath}
      
     ${Portfolio_Name}    Read Data From Excel    CRED01_DealSetup    Primary_Portfolio    1    ${CBAUAT_ExcelPath}
@@ -29,13 +30,13 @@ Facility Drawdown
     Write Data To Excel    SERV01_LoanDrawdown    Loan_Alias    &{ExcelPath}[rowid]    ${Loan_Alias}    ${CBAUAT_ExcelPath}
     Write Data To Excel    SERV08C_ComprehensiveRepricing    Loan_Alias    &{ExcelPath}[rowid]    ${Loan_Alias}    ${CBAUAT_ExcelPath}
     ${Loan_Alias}    Read Data From Excel    SERV01_LoanDrawdown    Loan_Alias    &{ExcelPath}[rowid]    ${CBAUAT_ExcelPath}
-    Take Screenshot    CreateOutstandings_Outstanding Select  
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/CreateOutstandings_Outstanding Select  
     
     ${RepricingFrequency}    Set Variable    &{ExcelPath}[Loan_RepricingFrequency]
     ${RepricingDate}    Set Variable    &{ExcelPath}[Loan_RepricingDate]
     Input General Loan Drawdown Details    &{ExcelPath}[Loan_RequestedAmount]    &{ExcelPath}[Loan_EffectiveDate]    &{ExcelPath}[Loan_MaturityDate]
-    ...    Loan_RepricingFrequency=${RepricingFrequency}    sRepricing_Date=${RepricingDate}
-    Take Screenshot    CreateOutstandings_Input General Loan Details    
+    ...    ${RepricingFrequency}    sRepricing_Date=${RepricingDate}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/CreateOutstandings_Input General Loan Details    
     
     ### Outstanding Servicing Group Details Setup ###
     ${RepricingSingleCashflow}    Set Variable    &{ExcelPath}[Loan_RepricingSingleCashflow]
@@ -43,7 +44,7 @@ Facility Drawdown
     
     Navigate to Rates Tab
     Set Base Rate Details    &{ExcelPath}[Loan_BorrowerBaseRate]
-    Take Screenshot    CreateOutstandings_Set Base Rate
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/CreateOutstandings_Set Base Rate
     ${AllInRate}    Add Borrower Base Rate and Facility Spread    &{ExcelPath}[Loan_BorrowerBaseRate]    ${Faciltiy_Spread}
     ${AllInRate}    Set Variable    ${AllInRate}%
     Validate String Data In LIQ Object    ${LIQ_InitialDrawdown_Window}    ${LIQ_InitialDrawdown_AllInRateFromPricing_Text}    ${AllInRate}
@@ -51,7 +52,7 @@ Facility Drawdown
     Navigate Notebook Workflow    ${LIQ_InitialDrawdown_Window}    ${LIQ_InitialDrawdown_Tab}    ${LIQ_InitialDrawdown_WorkflowAction}    Create Cashflows
     Verify if Method has Remittance Instruction    &{ExcelPath}[Borrower_Name]    &{ExcelPath}[Remittance_Description]    &{ExcelPath}[Remittance_Instruction]
     Verify if Status is set to Do It    &{ExcelPath}[Borrower_Name]
-    Take Screenshot    CreateOutstandings_Create Cashflows
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/CreateOutstandings_Create Cashflows
     
     ### Get Transaction Amount for Cashflow
     ${HostBankShare}    Get Host Bank Cash in Cashflow
@@ -68,15 +69,15 @@ Facility Drawdown
     Compare UIAmount versus Computed Amount    ${HostBankShare}    ${HostBank_Debit}
     Validate if Debit and Credit Amt is Balanced    ${HostBank_Debit}    ${Borrower_Credit}
     Validate if Debit and Credit Amt is equal to Transaction Amount    ${UITotalCreditAmt}    ${UITotalCreditAmt}    &{ExcelPath}[Loan_RequestedAmount]
-    Take Screenshot    CreateOutstandings_GL Entries
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/CreateOutstandings_GL Entries
       
     Navigate Notebook Workflow    ${LIQ_InitialDrawdown_Window}    ${LIQ_InitialDrawdown_Tab}    ${LIQ_InitialDrawdown_WorkflowAction}    Send to Approval
-    Logout from LIQ
+    Logout from Loan IQ
     Login to Loan IQ    ${MANAGER_USERNAME}    ${MANAGER_PASSWORD}
     Navigate Transaction in WIP    Outstandings    Awaiting Approval    Loan Initial Drawdown    ${Loan_Alias}
     Navigate Notebook Workflow    ${LIQ_InitialDrawdown_Window}    ${LIQ_InitialDrawdown_Tab}    ${LIQ_InitialDrawdown_WorkflowAction}    Approval
     Navigate Notebook Workflow    ${LIQ_InitialDrawdown_Window}    ${LIQ_InitialDrawdown_Tab}    ${LIQ_InitialDrawdown_WorkflowAction}    Send to Rate Approval
-    Logout from LIQ
+    Logout from Loan IQ
     
     Login to Loan IQ    ${SUPERVISOR_USERNAME}    ${SUPERVISOR_PASSWORD}
     Navigate Transaction in WIP    Outstandings    Awaiting Rate Approval    Loan Initial Drawdown    ${Loan_Alias}
@@ -84,5 +85,5 @@ Facility Drawdown
     Navigate Notebook Workflow    ${LIQ_InitialDrawdown_Window}    ${LIQ_InitialDrawdown_Tab}    ${LIQ_InitialDrawdown_WorkflowAction}    Release
     
     Close All Windows on LIQ
-    Logout from LIQ
+    Logout from Loan IQ
     Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}

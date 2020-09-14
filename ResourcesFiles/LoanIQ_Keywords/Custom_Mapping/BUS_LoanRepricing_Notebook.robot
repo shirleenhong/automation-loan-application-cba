@@ -86,8 +86,9 @@ BUS_Compute Lender Share Transaction Amount - Repricing
 BUS_Get Calculated Cycle Due Amount and Validate
     [Documentation]    This keyword is used to run the assigned low level keyword.
     ...    @author: amansuet    15JUN2020    - initial create
+    ...    @update: clanding    14AUG2020    - added additional argument
 
-    Run Keyword    Get Calculated Cycle Due Amount and Validate    ${ARGUMENT_1}    ${ARGUMENT_2}    ${ARGUMENT_3}    ${ARGUMENT_4}    ${ARGUMENT_5}    ${ARGUMENT_6}
+    Run Keyword    Get Calculated Cycle Due Amount and Validate    ${ARGUMENT_1}    ${ARGUMENT_2}    ${ARGUMENT_3}    ${ARGUMENT_4}    ${ARGUMENT_5}    ${ARGUMENT_6}    ${ARGUMENT_7}
     
 BUS_Select Existing Outstandings for Loan Repricing
     [Documentation]    This keyword is used to run the assigned low level keyword.
@@ -110,8 +111,9 @@ BUS_Set Repricing Detail Add Options
 BUS_Validate Loan Repricing New Outstanding Amount
     [Documentation]    This keyword is used to run the assigned low level keyword.
     ...    @author: sahalder    24JUN2020    - initial create
+    ...    @update: dahijara    25AUG2020    - added 1 argument
 
-    Run Keyword   Validate Loan Repricing New Outstanding Amount    ${ARGUMENT_1}    ${ARGUMENT_2}
+    Run Keyword   Validate Loan Repricing New Outstanding Amount    ${ARGUMENT_1}    ${ARGUMENT_2}    ${ARGUMENT_3}
 
 BUS_Validate Loan Repricing Effective Date
     [Documentation]    This keyword is used to run the assigned low level keyword.
@@ -154,3 +156,9 @@ BUS_Navigate to Loan Repricing Notebook Workflow
     ...    @author: amansuet    09JUL2020    - initial create
 
     Run Keyword    Navigate to Loan Repricing Notebook Workflow    ${ARGUMENT_1}
+
+BUS_Get Cycle Due Date for Loan Repricing
+    [Documentation]    This keyword is used to run the assigned low level keyword.
+    ...    @author: clanding    14AUG2020    - initial create
+
+    Run Keyword    Get Cycle Due Date for Loan Repricing    ${ARGUMENT_1}    ${ARGUMENT_2}

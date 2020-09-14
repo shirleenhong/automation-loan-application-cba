@@ -172,9 +172,15 @@ FAC_INTPRICING_FIXRATEOPT_SPREADVALUE = 1
 PAYMENTS_TRANSACTION = "Payments"
 OUTSTANDINGS_TRANSACTION = "Outstandings"
 FACILITIES_TRANSACTION = "Facilities"
+CIRCLES_TRANSACTION = "Circles"
+FACILITY_CHANGE_TRANSACTION = "Facility Change Transaction"
 AWAITING_APPROVAL_STATUS = "Awaiting Approval"
 AWAITING_RELEASE_STATUS = "Awaiting Release"
 SEND_TO_APPROVAL_STATUS = "Send to Approval"
+GENERATE_INTENT_NOTICES = "Generate Intent Notices"
+RATE_APPROVAL_STATUS = "Rate Approval"
+AWAITING_SETTLEMENT_APPROVAL_STATUS = "Awaiting Settlement Approval"
+SETTLEMENT_APPROVAL_STATUS = "Settlement Approval"
 APPROVAL_STATUS = "Approval"
 RELEASE_STATUS = "Release"
 RELEASED_STATUS = "Released"
@@ -184,12 +190,24 @@ CREATE_CASHFLOWS_TYPE = "Create Cashflows"
 RELEASE_CASHFLOWS_TYPE = "Release Cashflows"
 AMORTIZING_ADMIN_FEE_PAYMENT_TYPE = "Amortizing Admin Fee Payment"
 SHARE_ADJUSTMENT_TYPE = "Share Adjustment"
+CREATE_CASHFLOW_TYPE = "Create Cashflow"
 RELEASE_TRANSACTION = "release" 
 PAYMENT_TRANSACTION = "Payment"
+DEBIT_AMT_LABEL = "Debit Amt"
+CREDIT_AMT_LABEL = "Credit Amt"
 LENDER_SHARES_ADJUSTMENT_LABEL = "Lender Shares Adjustment"
 AWAITING_SEND_TO_RATE_APPROVAL_STATUS = "Awaiting Send to Rate Approval"
+SEND_TO_RATE_APPROVAL_STATUS = "Send to Rate Approval"
 LOAN_INITIAL_DRAWDOWN_TYPE = "Loan Initial Drawdown"
 RATE_APPROVAL_TRANSACTION = "Rate Approval"
+LOAN_REPRICING_FOR_THE_DEAL = "Loan Repricing for the Deal"
+LOAN_REPRICING = "Loan Repricing"
+AWAITING_FUNDING_MEMO_STATUS = "Awaiting Funding Memo"
+CBA_EMAIL_PDF_METHOD = "CBA Email with PDF Attachment"
+AWAITING_RELEASE_CASHFLOWS_STATUS = "Awaiting Release Cashflows"
+AWAITING_RATE_APPROVAL_STATUS = "Awaiting Rate Approval"
+AWAITING_GENERATE_RATE_SETTING_NOTICES_STATUS = "Awaiting Generate Rate Setting Notices"
+
 ### Bank Role ###
 REFERENCE_BANK_ROLE = "Reference Bank"
 
@@ -210,9 +228,14 @@ PRICING_RULES_TAB = "Pricing Rules"
 WORKFLOW_TAB = "Workflow"
 GENERAL_TAB = "General"
 RATES_TAB = "Rates"
+FACILITIES_TAB = "Facilities"
+CONTACTS_TAB = "Contacts"
+CURRENCY_TAB = "Currency"
 
 ### Payment Type ###
 FEE_PAYMENT_FROM_BORROWER_TYPE = "Fee Payment From Borrower"
+ADMIN_FEE_AMORT = "Adm Fee (Amort)"
+
 ### Amendment Tab ###
 EVENTS_TAB = "Events"
 
@@ -221,6 +244,43 @@ ADMIN_FEE_PAYMENT_TITLE = "Admin Fee Payment"
 
 ### Workflow ###
 PAYMENT_WORKFLOW = "Payment"
+CIRCLING_WORKFLOW = "Circling"
+COMPLETE_PORTFOLIO_ALLOCATIONS_WORKFLOW = "Complete Portfolio Allocations"
+FUNDING_MEMO_WORKFLOW = "Funding Memo"
+SEND_TO_SETTLEMENT_APPROVAL_WORKFLOW = "Send to Settlement Approval"
+CLOSE_WORKFLOW = "Close"
 
 ### Loan Acrrue ###
 TO_THE_ACTUAL_DUE_DATE = "to the actual due date"
+
+### Loan Repricing ###
+INTEREST_PAYMENT_REQUESTED_AMOUNT = "InterestPaymentRequestedAmount"
+NEW_LOAN_ALIAS = "NewLoanAlias"
+ROLLOVER_CONVERSION_TO_NEW = "Rollover/Conversion To New"
+INTEREST_PAYMENT = "Interest Payment"
+
+### Outstanding Type ###
+LOAN_TYPE = "Loan"
+
+### Other ###
+SHORT_NAME = "Short Name"
+HOST_BANK = "Host Bank"
+ASSIGNMENT = "Assignment"
+MATURITY_DATE = "Maturity Date"
+MULTIPLE_REFERENCE = "False"
+
+### GL Posting ###
+ZONEBRANCH_SUCCESSMESSAGE = "Zone/Branch Switched Successfully"
+LIQ_ZONEANDCODE_AU = "Australia(AU)"
+LIQ_ZONEANDCODE_EU = "Europe(EU)"
+AUUBINTERFACE_SCHEMA = "AUUBINTERFACE"
+EUUBINTERFACE_SCHEMA = "EUUBINTERFACE"
+AUWASADMIN_SCHEMA = "AUWASADMIN"
+EUWASADMIN_SCHEMA = "EUWASADMIN"
+GL_ENTITY_AU = "AU"
+GL_ENTITY_EU = "EU"
+GL_THREE_CHAR_ENTITY_CODE_SYD = "SYD"
+GL_THREE_CHAR_ENTITY_CODE_EUR = "EUR"
+MD5_URL = "http://onlinemd5.com/"
+GL_FILENAME_TRANSACTION = "_TRANSACTION_"
+CCB_ESS_GL_FILENAME = "CCB_ESS_GL_"

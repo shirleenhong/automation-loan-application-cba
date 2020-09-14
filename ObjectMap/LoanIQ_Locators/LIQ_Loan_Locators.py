@@ -59,6 +59,10 @@ LIQ_Loan_Currency_FXRateAUDtoUSD = 'JavaWindow("title:=.*Loan.*Active").JavaObje
 LIQ_Loan_Currency_Textbox = 'JavaWindow("title:=Facility Currency.*").JavaEdit("attached text:=AUD to USD Rate:")'
 LIQ_Loan_Currency_RateHistory_Window = 'JavaWindow("title:=.* History")'
 LIQ_Loan_Currency_Current='JavaWindow("title:=.*Loan.*Active").JavaStaticText("labeled_containers_path:=Tab:Currency;Group:Amounts in Facility Currency;","index:=3")'
+LIQ_Loan_History_Button='JavaWindow("title:=.*Loan.*Active").JavaButton("attached text:=History")'
+LIQ_Loan_Currency_RateHistory_Table = 'JavaWindow("title:=.* History").JavaTree("attached text:=.*Drill down to update.*")'
+LIQ_Loan_Currency_RateHistory_OK_Button = 'JavaWindow("title:=.* History").JavaButton("attached text:=OK")'
+
  
 ###Inactive Loan Window####
 LIQ_InactiveLoan_Window = 'JavaWindow("title:=.*Loan.*Inactive")'

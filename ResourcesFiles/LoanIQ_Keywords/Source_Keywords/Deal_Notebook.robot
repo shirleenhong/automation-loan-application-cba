@@ -158,7 +158,7 @@ Set Deal Borrower
     ${Borrower_Name}    Acquire Argument Value    ${sBorrower_Name}
     ${Borrower_Location}    Acquire Argument Value    ${sBorrower_Location}
 
-    Mx LoanIQ Select Window Tab    ${LIQ_DealNotebook_Tab}    Summary   
+    Mx LoanIQ Select Window Tab    ${LIQ_DealNotebook_Tab}    Summary  
     mx LoanIQ click element if present    ${LIQ_InquiryMode_Button}
     mx LoanIQ click    ${LIQ_DealSummary_Add_Button}
     Validate Add Deal Borrower Select
@@ -1171,7 +1171,8 @@ Set Pricing Option Intent Notice Details
     mx LoanIQ enter    ${LIQ_InterestPricingOption_IntentNoticeDaysInAdvance_Textfield}    ${sIntentNotice_DaysInAdvance}
     mx LoanIQ enter    ${LIQ_InterestPricingOption_IntentNoticeTimeInAdvance_Textfield}    ${sIntentNotice_Time}
     Mx LoanIQ Set    JavaWindow("title:=Interest Pricing Option.*").JavaRadioButton("labeled_containers_path:=.*Intent Notice.*","attached text:=${sIntentNotice_AMPM}")    ON
-
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/DealNotebook_NoticeDetails
+    
 Set Interest Pricing Option Amounts And Multiples
     [Documentation]    This keyword adds data to the 'Amounts' and 'Multiples' fields in the Interest Pricing Option Details window.
     ...                @author: bernchua    04JUL2019    Initial create
@@ -1300,8 +1301,8 @@ Add Admin Fee in Deal Notebook
     Mx LoanIQ Set    JavaWindow("title:=Select an Income Method.*").JavaRadioButton("label:=${IncomeMethod}")    ON
     mx LoanIQ click    ${LIQ_AdminFees_IncomeMethod_OK_Button}
     mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}    
-    ${STATUS}    Run Keyword If    '${IncomeMethod}'=='Amortize'    Mx LoanIQ Verify Object Exist    JavaWindow("title:=.*Amortizing Admin Fee.*")    VerificationData="Yes"
-    ...    ELSE IF    '${IncomeMethod}'=='Accrue'    Mx LoanIQ Verify Object Exist    JavaWindow("title:=.*Accruing Admin Fee.*")      VerificationData="Yes"
+    ${STATUS}    Run Keyword If    '${IncomeMethod}'=='Amortize'    Mx LoanIQ Verify Object Exist    ${LIQ_AmortizingAdmin_Window}    VerificationData="Yes"
+    ...    ELSE IF    '${IncomeMethod}'=='Accrue'    Mx LoanIQ Verify Object Exist    ${LIQ_AccruingAdmin_Window}      VerificationData="Yes"
     Run Keyword If    ${STATUS}==True    Log    ${IncomeMethod} Admin Fee Notebook is displayed.
     mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
     mx LoanIQ click element if present    ${LIQ_Question_No_Button}
@@ -1440,9 +1441,12 @@ Navigate to Facility Notebook from Deal Notebook
     ...    @update: fmamaril    12MAR2019    Change Mx Active to Mx Activate Window
     ...    @update: hstone      09JUN2020    - Added Keyword Pre-processing
     ...    @update: dfajardo    22JUL2020    - Added Screenshot
+    ...    @update: cfrancis    10SEP2020    - Added Clicking an object on deal notebook summary for deal window to be placed as primary window on multiple LIQ screens
     [Arguments]    ${sFacility_Name}
 
     ### Keyword Pre-processing ###
+    Mx LoanIQ Click    ${LIQ_DealSummary_AdminAgent_Textfield}
+    
     ${Facility_Name}    Acquire Argument Value    ${sFacility_Name}
 
     ${status}    Run Keyword And Return Status    Mx LoanIQ Verify Object Exist    ${LIQ_DealNotebook_InquiryMode_Button}    VerificationData="Yes"
@@ -1453,6 +1457,7 @@ Navigate to Facility Notebook from Deal Notebook
     mx LoanIQ activate window    ${LIQ_FacilityNotebook_Window}  
     
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/DealNotebook_Options
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/Cashflow_FacilityChangeTransaction_ModifyScheduleItem
 
 Navigate to Facility Notebook from Deal Notebook in Inquiry Mode
     [Documentation]    This keyword navigates the LIQ User from the Deal Notebook to the Facility Notebook .
@@ -1867,11 +1872,14 @@ Set Servicing Group Remittance Instructions
 Validate Remittance Instruction Selection List If Marked All
     [Documentation]    This keyword checks the Remittance Instruction Selection List if all Methods are selected.
     ...    @author: bernchua
+    ...    @author: mcastro    26Aug2020    -added screenshot
     mx LoanIQ click    ${LIQ_ServicingGroup_RemittanceInstructions_Button}
     mx LoanIQ activate    ${LIQ_RISelectionList_Window}
     ${MarkAll_Enabled}    Mx LoanIQ Get Data    ${LIQ_RISelectionList_MarkAll_Checkbox}    enabled%value
     Run Keyword If    '${MarkAll_Enabled}'=='0'    Mx LoanIQ Set    ${LIQ_RISelectionList_MarkAll_Checkbox}    ON
     mx LoanIQ click    ${LIQ_RISelectionList_OK_Button}
+    
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/DealAdminAgentWindow_ServicingGroup
     
 Validate Deal As Not Sole Lender
     [Documentation]    This keyword verifies the Deal if it's not a Sole Lender, and unticks the checkbox if it's enabled.
@@ -2532,6 +2540,7 @@ Navigate to Deal Business Event
     [Documentation]    This keyword navigates LoanIQ to the deal's business event window.
     ...    @create: hstone    05SEP2019    Initial create
     ...    @update: amansuet    02OCT2019    -added screenshot
+    ...    @update: mcastro   10SEP2020    Updated screenshot path
     [Arguments]    ${sDealName}    ${sEvent}
     Open Existing Deal    ${sDealName}
     Mx LoanIQ Select Window Tab    ${LIQ_DealNotebook_Tab}    Events
@@ -2539,7 +2548,7 @@ Navigate to Deal Business Event
     ${sFetchedEvent}    Run Keyword If    '${sEvent}'!='None'    Select Java Tree Cell Value First Match    ${LIQ_Events_Javatree}    ${sEvent}    Event 
     ...    ELSE    Set Variable    None           
     
-    Take Screenshot    Deal_Business_Event
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/Deal_Business_Event
     
     ${IsMatched}    Run Keyword And Return Status    Should Be Equal As Strings    ${sFetchedEvent}    ${sEvent}        
     Run Keyword If    ${IsMatched}==${True}    Log    Event Verification Passed        
@@ -2877,3 +2886,4 @@ Get Financial Ratio Type Effective Date and Return
     
     Save Values of Runtime Execution on Excel File    ${sRuntime_Variable_EffectiveDate}    ${EffectiveDate}
     [Return]    ${EffectiveDate} 
+    
