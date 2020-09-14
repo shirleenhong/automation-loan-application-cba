@@ -1464,3 +1464,27 @@ Close Commitment Fee and Fee List Windows
     mx LoanIQ activate window    ${LIQ_CommitmentFee_Window} 
     mx LoanIQ close window    ${LIQ_CommitmentFee_Window}
     mx LoanIQ close window    ${LIQ_Facility_FeeList}
+    
+Compute Total Accruals for Fee
+    [Documentation]    This keyword returns the total Accrued to date value of a Fee.
+    ...    @author: rtarayao    04SEP2019    - Initial Create
+    [Arguments]    ${iRowCount}    ${sTab_Locator}    ${sAccrualCycle_Locator}
+    Mx LoanIQ Select Window Tab    ${sTab_Locator}    Accrual
+    ${iRowCount}    Evaluate    ${iRowCount}+1    
+    ${TotalAmount}    Set Variable    0
+    :FOR    ${Index}    IN RANGE    1    ${iRowCount}
+    \    ${AccruedtodateAmount}    Mx LoanIQ Store TableCell To Clipboard    ${sAccrualCycle_Locator}    ${Index}%Accrued to date%Amount
+    \    ${AccruedtodateAmount}    Remove Comma and Convert to Number    ${AccruedtodateAmount}
+    \    ${TotalAmount}    Evaluate    ${TotalAmount}+${AccruedtodateAmount}
+    \    Log    ${TotalAmount}
+    \    Exit For Loop If    ${Index}==${iRowCount}
+    [Return]    ${TotalAmount}
+        
+Validate Accrued to Date Amount
+    [Documentation]    This keyword validate that the computed total value for the accrued to date is the same as the one displayed in LIQ.
+    ...    @author: rtarayao    05SEP2019    - Initial Create
+    [Arguments]    ${iComputedValue}    ${iUIValue}
+    Run Keyword And Continue On Failure    Should Be Equal As Numbers    ${iComputedValue}    ${iUIValue}    
+    ${Computation_status}    Run Keyword And Return Status    Should Be Equal As Numbers    ${iComputedValue}    ${iUIValue}    
+    Run Keyword If    '${Computation_status}' == 'True'    Log    Correct!! Computed Sum is the same as the total displayed value in LIQ.
+    ...    ELSE    Log    Incorrect!! Computed Sum is different from the total displayed value in LIQ.    level=ERROR 
