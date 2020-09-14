@@ -62,5 +62,43 @@ Set Up Facility - ComSee
     Write Data To Excel    ComSee_SC1_FacSetup    Facility_ExpiryDate    ${rowid}    ${Facility_ExpiryDate}    ${ComSeeDataSet}
     Write Data To Excel    ComSee_SC1_FacSetup    Facility_FinalMaturityDate    ${rowid}    ${Facility_MaturityDate}    ${ComSeeDataSet}
     
+Setup Multi-Currency SBLC Facility - ComSee
+    [Documentation]    Sets up a multi-currency SBLC Facility.
+    ...    @author: rtarayao    20AUG2019    Initial Create
+    [Arguments]    ${ExcelPath}
+    ###Test Data Name Generation
+    ${FacilityName}    Generate Name Test Data    &{ExcelPath}[Facility_NamePrefix]
+    Write Data To Excel    ComSee_SC3_FacSetup    Facility_Name    ${rowid}    ${FacilityName}    ${ComSeeDataSet}
+	Write Data To Excel    ComSee_SC3_Issuance    Facility_Name    ${rowid}    ${FacilityName}    ${ComSeeDataSet}    
+	Write Data To Excel    ComSee_SC3_IssuanceFeePayment    Facility_Name    ${rowid}    ${FacilityName}    ${ComSeeDataSet}
+	${FacilityName}    Read Data From Excel    ComSee_SC3_FacSetup    Facility_Name    ${rowid}    ${ComSeeDataSet}
     
+    ###Date Generation
+    ${Facility_AgreementDate}    Get System Date
+    ${Facility_EffectiveDate}    Get System Date
+    ${Facility_ExpiryDate}    Add Days to Date    ${Facility_EffectiveDate}    365
+    ${Facility_MaturityDate}    Add Days to Date    ${Facility_EffectiveDate}    395 
+    Write Data To Excel    ComSee_SC3_Deal    Primary_PortfolioExpiryDate    ${rowid}    ${Facility_ExpiryDate}    ${ComSeeDataSet}
+    Write Data To Excel    ComSee_SC3_Issuance    SBLC_ExpiryDate    ${rowid}    ${Facility_ExpiryDate}    ${ComSeeDataSet}
     
+    ###Facility Notebook
+    Close All Windows on LIQ
+    Open Existing Deal    &{ExcelPath}[Deal_Name]
+    Add New Facility    &{ExcelPath}[Deal_Name]    &{ExcelPath}[Deal_Currency]
+    ...    ${FacilityName}    &{ExcelPath}[Facility_Type]    &{ExcelPath}[Facility_ProposedCmtAmt]    &{ExcelPath}[Facility_Currency]
+    Set Facility Dates    ${Facility_AgreementDate}    ${Facility_EffectiveDate}    ${Facility_ExpiryDate}    ${Facility_MaturityDate}     
+    Set Facility Risk Type    &{ExcelPath}[Facility_RiskType1]
+    Set Facility Loan Purpose Type    &{ExcelPath}[Facility_LoanPurposeType]
+    Add Facility Currency    &{ExcelPath}[Facility_CurrencyCode1]
+    Add Facility Currency    &{ExcelPath}[Facility_CurrencyCode2]
+    Add Facility Borrower - Add All
+    Validate Risk Type in Borrower Select    &{ExcelPath}[Facility_RiskType1]
+    Validate Currency Limit in Borrower Select    &{ExcelPath}[Facility_Currency1]
+    Validate Currency Limit in Borrower Select    &{ExcelPath}[Facility_Currency2]
+    Complete Facility Borrower Setup
+    Validate Multi CCY Facility
+    
+    ###Get FCN Number
+    ${FacilityControlNumber}    Get Facility Control Number
+    Write Data To Excel    ComSee_SC3_Issuance    COM_ID    ${rowid}    ${FacilityControlNumber}    ${ComSeeDataSet}
+    Write Data To Excel    ComSee_SC3_IssuanceFeePayment    COM_ID    ${rowid}    ${FacilityControlNumber}    ${ComSeeDataSet}
