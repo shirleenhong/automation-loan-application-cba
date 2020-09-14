@@ -87,6 +87,7 @@ Create Repricing and Partial Repayment for Loan AA
     ...                @author: bernchua    11SEP2019    Initial create
     ...                @update: bernchua    18SEP2019    Setting up of new Repayment Schedule for Repriced Loan should be done after Release of Rollover transaction, and on the new Loan
     ...                @update: bernchua    20SEP2019    Added Resynchronizing of Loan's Repayment Schedule before Repricing transaction.
+    ...                @update: aramos      14SEP2020    Updated to change Validate Loan Repricing New Outstanding Amount to Validate Loan Repricing New Outstanding Amount with Description
     [Arguments]    ${ExcelPath}
     
     ${Facility_Spread}    Run Keyword If    '&{ExcelPath}[rowid]'=='1'    Read Data From Excel    CRED02_FacilitySetup    Interest_SpreadValue    1    ${CBAUAT_ExcelPath} 
