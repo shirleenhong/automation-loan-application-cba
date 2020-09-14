@@ -320,6 +320,7 @@ Verify SAPWUL JSON Event Timestamp
 Compare SAPWUL JSON Files
     [Documentation]    This keyword is used to compare two SAPWUL Json File.
     ...    @author: hstone    12SEP2019    initial create
+    ...    @update: mcastro   14SEP2020    Updated validation to reflect failure 
     [Arguments]    ${sJsonFile_1}    ${sJsonFile_2}    ${sJsonFileDetails_1}=None    ${sJsonFileDetails_2}=None
     ${JsonDetails_1}    Run Keyword If    '${sJsonFileDetails_1}'!='None'    Set Variable    (${sJsonFileDetails_1})
     ...    ELSE    Set Variable    (JSON_1)    
@@ -332,7 +333,7 @@ Compare SAPWUL JSON Files
     ${Json_2}    OperatingSystem.Get File    ${sJsonFile_2}
     
     ### JSON Comparison Block ###
-    ${IsMatched}    Run Keyword And Return Status    Mx Compare Json Data    ${Json_1}     ${Json_2}
+    ${IsMatched}    Run Keyword And Continue On Failure    Run Keyword And Return Status    Mx Compare Json Data    ${Json_1}     ${Json_2}
     Run Keyword If    ${IsMatched}==${True}    Log    JSON Files Matched.
     ...    ELSE    Log    ${JsonDetails_1} and ${JsonDetails_2} JSON File did not Matched. ${JsonDetails_1} ${Json_1} != ${JsonDetails_2} ${Json_2}    level=ERROR  
     
