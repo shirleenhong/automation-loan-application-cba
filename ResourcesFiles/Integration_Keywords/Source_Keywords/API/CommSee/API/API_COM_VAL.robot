@@ -1342,3 +1342,27 @@ Verify 404 Response Code for Get API Fee Details
     ${JSON_File}    Set Variable    ${sResponseFilePath}${sResponseJson}.json
     Create File    ${dataset_path}${JSON_File}
     Append To File    ${dataset_path}${JSON_File}    ${GET_response.content}
+    
+Get Request API for Outstandings
+    [Documentation]    This keyword is used to get request api for Outstandings.
+    ...    @author: clanding    20AUG2019    - initial create
+    [Arguments]    ${sOutputPath}    ${sOutputFile}    ${sFCN}    ${sExternalCtrlID}
+    
+    Delete All Sessions
+    Create Session    COMHOST    ${COM_HOST}
+    ${REQUEST_DATA}    GET Request API for Comsee Outstandings and Fees    COMHOST    ${MDM_COMMSEE_API_FAC}${sFCN}/${sExternalCtrlID}/outstandings    ${APISESSION}
+    Delete File If Exist    ${dataset_path}${sOutputPath}${sOutputFile}.json
+    ${API_RESPONSE_STRING}    Convert To String    ${GET_response.content}
+    Create file    ${dataset_path}${sOutputPath}${sOutputFile}.json    ${API_RESPONSE_STRING}
+    
+Get Request API for Fees
+    [Documentation]    This keyword is used to get request api for Fees.
+    ...    @author: clanding    26AUG2019    - initial create
+    [Arguments]    ${sOutputPath}    ${sOutputFile}    ${sFCN}    ${sExternalCtrlID}
+    
+    Delete All Sessions
+    Create Session    COMHOST    ${COM_HOST}    
+    ${REQUEST_DATA}    GET Request API for Comsee Outstandings and Fees    COMHOST    ${MDM_COMMSEE_API_FAC}${sFCN}/${sExternalCtrlID}/fees    ${APISESSION}
+    Delete File If Exist    ${dataset_path}${sOutputPath}${sOutputFile}.json
+    ${API_RESPONSE_STRING}    Convert To String    ${GET_response.content}
+    Create file    ${dataset_path}${sOutputPath}${sOutputFile}.json    ${API_RESPONSE_STRING}
