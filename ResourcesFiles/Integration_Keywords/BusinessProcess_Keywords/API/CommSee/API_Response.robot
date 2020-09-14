@@ -64,4 +64,36 @@ Get Response for Deal Single Facility - Scenario1
    ...    ${Facility_NoOfOutstanding}    ${Facility_HostBankFundableCommitment}    ${Facility_GlobalClosingCommitment}
    ...    ${Facility_GlobalCurrentCommitment}    ${Facility_GlobalOutstandings}    ${Facility_GlobalAvailableToDraw}    ${Facility_PortfolioCode}   
    ...    ${Facility_PortfolioDescription}    ${Facility_BranchCode}    ${Facility_BranchDescription}    ${Facility_FundingDeskCode}
-   ...    ${Facility_FundingDeskDescription}     ${Facility_ExpiryDate}   
+   ...    ${Facility_FundingDeskDescription}     ${Facility_ExpiryDate}
+
+Get and Validate API Outstanding Response
+    [Documentation]    This keyword is used to validate Outstanding details based on the GET API Response.
+    ...    Response are being validated with the Data Set values.
+    ...    Outstanding's Risk Type is used to identify which outstanding details to be validated.
+    ...    This is used for all positive Comsee Get API response validation for Outstandings.
+    ...    @author: clanding    20AUG2019    - Initial create
+    ...    @update: rtarayao    27AUG2019    - Updated the Documentation
+    [Arguments]    ${ComSeeDataSet}
+
+    Get Request API for Outstandings    &{ComSeeDataSet}[OutputFilePath]    &{ComSeeDataSet}[ResponseJson]_OUT    &{ComSeeDataSet}[COM_ID]    &{ComSeeDataSet}[Customer_ExternalID]
+    
+    Get Risk Type and Validate Response Per Risk Type    &{ComSeeDataSet}[OutputFilePath]    &{ComSeeDataSet}[ResponseJson]_OUT    &{ComSeeDataSet}[Outstanding_Alias]    &{ComSeeDataSet}[Outstanding_RiskType]    
+    ...    &{ComSeeDataSet}[Outstanding_Currency]    &{ComSeeDataSet}[Outstanding_EffectiveDate]    &{ComSeeDataSet}[Outstanding_HBNetAmount]    &{ComSeeDataSet}[Outstanding_HBNetFacCCYAmount]    &{ComSeeDataSet}[Outstanding_MaturityExpiryDate]
+    ...    &{ComSeeDataSet}[Outstanding_Favouree]    &{ComSeeDataSet}[Outstanding_HBGrossAmount]    &{ComSeeDataSet}[Outstanding_GlobalOriginalAmount]    &{ComSeeDataSet}[Outstanding_GlobalCurrentAmount]    &{ComSeeDataSet}[Outstanding_RepricingFrequency]    
+    ...    &{ComSeeDataSet}[Outstanding_RepricingDate]    &{ComSeeDataSet}[Outstanding_PaymentMode]    &{ComSeeDataSet}[Outstanding_IntCycleFrequency]
+    ...    &{ComSeeDataSet}[Outstanding_PricingOption]    &{ComSeeDataSet}[Outstanding_Margin]    &{ComSeeDataSet}[Outstanding_AllInRate]    &{ComSeeDataSet}[Outstanding_AccruedInterest]    ,
+
+Get and Validate API Fee Response
+    [Documentation]    This keyword is used to validate Fee details based on the GET API Response.
+    ...    Response are being validated with the Data Set values.
+    ...    Fee Type is used to identify which Fee details to be validated.
+    ...    This is used for all positive Comsee Get API response validation for Fees.
+    ...    @author: clanding    20AUG2019    - Initial create
+    ...    @update: rtarayao    27AUG2019    - Updated the Documentation
+    [Arguments]    ${ComSeeDataSet}  
+    
+    Get Request API for Fees    &{ComSeeDataSet}[OutputFilePath]    &{ComSeeDataSet}[ResponseJson]_FEE    &{ComSeeDataSet}[COM_ID]    &{ComSeeDataSet}[Customer_ExternalID]
+    
+    Get Fee Type and Validate Response Per Level    &{ComSeeDataSet}[OutputFilePath]    &{ComSeeDataSet}[ResponseJson]_FEE    &{ComSeeDataSet}[Fee_Name]    &{ComSeeDataSet}[Fee_Type]    
+    ...    &{ComSeeDataSet}[Fee_Currency]    &{ComSeeDataSet}[Fee_CurrentRate]    &{ComSeeDataSet}[Fee_EffectiveDate]    &{ComSeeDataSet}[Fee_ExpiryDate]    &{ComSeeDataSet}[Fee_FeeAlias]
+    ...    &{ComSeeDataSet}[Fee_Status]    &{ComSeeDataSet}[Fee_AccruedToDate]    &{ComSeeDataSet}[Fee_DueDate]    ,    

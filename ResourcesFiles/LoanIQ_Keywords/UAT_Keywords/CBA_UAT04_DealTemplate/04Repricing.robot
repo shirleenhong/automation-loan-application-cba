@@ -204,6 +204,7 @@ Create Repricing and Partial Repayment for Loan AA
 Create Repricing for Loans in Deal D00000963
     [Documentation]    High-level keyword used to Create Repricing for Loans in Deal D00000963.
     ...                @author: bernchua    18SEP2019    Inital create
+    ...                @update: aramos      14SEP2020    Update Validate Loan Repricing New Outstanding Amount to include parameters loan_alias and pricing option
     [Arguments]    ${ExcelPath}
     
     ${Facility_Spread}    Run Keyword If    '&{ExcelPath}[rowid]'=='1'    Read Data From Excel    CRED02_FacilitySetup    Interest_SpreadValue    1    ${CBAUAT_ExcelPath} 
@@ -238,8 +239,9 @@ Create Repricing for Loans in Deal D00000963
     Validate String Data In LIQ Object    ${LIQ_RolloverConversion_Window}    ${LIQ_RolloverConversion_AllInRate_Text}    ${AllInRate}
     Close RolloverConversion Notebook
     
-    ${New_Outstanding}    Set Variable    &{ExcelPath}[Pricing_Option] (${Loan_Alias})
-    Validate Loan Repricing New Outstanding Amount    ${New_Outstanding}    &{ExcelPath}[Rollover_RequestedAmount]
+    # ${New_Outstanding}    Set Variable    &{ExcelPath}[Pricing_Option] (${Loan_Alias})
+    Validate Loan Repricing New Outstanding Amount    &{ExcelPath}[Pricing_Option]    ${Loan_Alias}    &{ExcelPath}[Rollover_RequestedAmount]
+    
     Validate Loan Repricing Effective Date    ${Effective_Date}
     
     Navigate Notebook Workflow    ${LIQ_LoanRepricingForDeal_Window}    ${LIQ_LoanRepricingForDeal_Workflow_Tab}    ${LIQ_LoanRepricingForDeal_Workflow_JavaTree}    Send to Approval

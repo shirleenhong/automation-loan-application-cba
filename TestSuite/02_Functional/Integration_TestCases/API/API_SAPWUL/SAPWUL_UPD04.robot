@@ -2,8 +2,8 @@
 Resource    ../../../../../Configurations/Integration_Import_File.robot
 
 *** Variables ***
-${Facility_RowID}    15
-${SAPWULRowID}    9
+${Facility_RowID}    12
+${SAPWULRowID}    8
 
 *** Test Cases ***
 SAPWUL_UPD04
@@ -11,7 +11,8 @@ SAPWUL_UPD04
 	[Documentation]    Verify that user is able to update Facility processsing area once Deal is closed and payload is generated successfully
     ...    @author: hstone 
     ...    @update: amansuet    30OCT2019    - Updated values in Variables
-    ### SAPWUL Data Clear ###
+    ...    @update: mcastro     11SEP2020    Updated values in variables
+    ### SAPWUL Data Clear ###    
     Mx Execute Template With Multiple Data    Clear SAPWUL Data     ${SAPWUL_DATASET}    ${SAPWULRowID}    SAPWUL_Payload
     
     ### Facility Update ###
