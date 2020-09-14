@@ -1453,6 +1453,26 @@ Validate Loan Repricing New Outstanding Amount
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LoanRepricing_Outstanding
     Run Keyword If    ${VALIDATE_NEWAMOUNT}==True    Log    Amount for ${Description} successfully validated.
     ...    ELSE    Fail    Amount for ${Description} not validated successfully.     
+ 
+Validate Loan Repricing New Outstanding Amount with Description
+    [Documentation]    Low-level keyword used to validate the displayed Amounts in the Loan Repricing Notebook JavaTee with description
+    ...                @author: aramos    14SEP2020    Initial Create
+    [Arguments]    ${sPricing_Option}    ${sLoan_Alias}    ${ExtraDesc}    ${sNewOutstanding_Amount}
+    
+    ### GetRuntime Keyword Pre-processing ###
+    ${Pricing_Option}    Acquire Argument Value    ${sPricing_Option}
+    ${Loan_Alias}    Acquire Argument Value    ${sLoan_Alias}
+    ${NewOutstanding_Amount}    Acquire Argument Value    ${sNewOutstanding_Amount}
+
+    ${Description}    Set Variable    ${Pricing_Option} ${ExtraDesc} (${Loan_Alias})
+    Log    ${Description}
+
+    mx LoanIQ activate window    ${LIQ_LoanRepricingForDeal_Window}
+    ${UI_NewAmount}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_LoanRepricing_Outstanding_List}    ${Description}%Amount%amount
+    ${VALIDATE_NEWAMOUNT}    Run Keyword And Return Status    Should Be Equal    ${NewOutstanding_Amount}    ${UI_NewAmount}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LoanRepricing_Outstanding
+    Run Keyword If    ${VALIDATE_NEWAMOUNT}==True    Log    Amount for ${Description} successfully validated.
+    ...    ELSE    Fail    Amount for ${Description} not validated successfully.  
     
 Validate Loan Repricing Effective Date
     [Documentation]    Low-level keyword used to validate the displayed 'Effective Date' in the Loan Repricing Notebook - General Tab.
