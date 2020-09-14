@@ -56,17 +56,7 @@ Variables    ../ObjectMap/LoanIQ_Locators/LIQ_User_Administration_Locators.py
 ### Fusion Banking Essence - Locators ###
 Variables    ../ObjectMap/FBE_Locators/Essence_AdhocExtraction_Locators.py
 Variables    ../ObjectMap/FBE_Locators/Essence_ChangeOfBusinessDate_Locators.py
-Variables    ../ObjectMap/FBE_Locators/Essence_CreateUser_Locators.py
 Variables    ../ObjectMap/FBE_Locators/Essence_Dashboard_Locators.py
-Variables    ../ObjectMap/FBE_Locators/Essence_DeleteUser_Locators.py
-Variables    ../ObjectMap/FBE_Locators/Essence_EnquireUser_Locators.py
-Variables    ../ObjectMap/FBE_Locators/Essence_EODControlAndStatusEnquiry_Locators.py
-Variables    ../ObjectMap/FBE_Locators/Essence_ListofContraTransactions_Locators.py
-Variables    ../ObjectMap/FBE_Locators/Essence_LoanIQ_IncomingPosting_Inquiry_Locators.py
-Variables    ../ObjectMap/FBE_Locators/Essence_MaintainExchangeRate_Locators.py
-Variables    ../ObjectMap/FBE_Locators/Essence_TransactionDetails_Locators.py
-Variables    ../ObjectMap/FBE_Locators/Essence_TransactionList_Enquiry_Locators.py
-Variables    ../ObjectMap/FBE_Locators/Essence_ViewAll_ConfiguredPseudoyms_Locators.py
 Variables    ../ObjectMap/FBE_Locators/Essence_ZoneBranchConfig_Locators.py
 
 ### FFC Variable Files - Locators ###
@@ -290,8 +280,8 @@ Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/Extr
 Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/Extracts/GL_Essence/GLPOST_14.robot
 
 ### Integration Resource Files - Essence - Source Keywords ###
-Resource    ../ResourcesFiles/Integration_Keywords/Source_Keywords/Essence/EssenceCommon_Keywords.robot
-Resource    ../ResourcesFiles/Integration_Keywords/Source_Keywords/Essence/Essence_EODControlAndStatusEnquiry_Keywords.robot
+Resource    ../ResourcesFiles/Essence_Keywords.robot/Source_Keywords/EssenceCommon_Keywords.robot
+Resource    ../ResourcesFiles/Essence_Keywords.robot/Source_Keywords/Essence_EODControlAndStatusEnquiry_Keywords.robot
 
 ### Integration Resource Files - SAPWUL - Business Keywords ###
 Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/SAPWUL/SAPWUL_DealSetup.robot

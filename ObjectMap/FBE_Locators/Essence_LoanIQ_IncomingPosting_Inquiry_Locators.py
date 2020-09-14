@@ -1,5 +1,0 @@
-Essence_LoanIQIncomingPostingInquiry_FromDatefield_Locator = '//input[contains(@id, "fromDate")]'
-Essence_LoanIQIncomingPostingInquiry_ToDatefield_Locator = '//input[contains(@id, "toDate")]'
-Essence_LoanIQIncomingPostingInquiry_OwnerID_Textbox_Locator = '//input[contains(@id, "ownerId")]'
-Essence_LoanIQIncomingPostingInquiry_FilterDetails_Button_Locator = '//input[contains(@id, "Button")]'
-Essence_LoanIQIncomingPostingInquiry_SearchResults_OwnerID_Locator = '//div[contains(@widgetid, "incomingPostingDataCollection")]//td[text()="${SearchResult_OwnerID}"]'
