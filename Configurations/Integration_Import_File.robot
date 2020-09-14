@@ -280,8 +280,8 @@ Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/Extr
 Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/Extracts/GL_Essence/GLPOST_14.robot
 
 ### Integration Resource Files - Essence - Source Keywords ###
-Resource    ../ResourcesFiles/Essence_Keywords.robot/Source_Keywords/EssenceCommon_Keywords.robot
-Resource    ../ResourcesFiles/Essence_Keywords.robot/Source_Keywords/Essence_EODControlAndStatusEnquiry_Keywords.robot
+Resource    ../ResourcesFiles/Essence_Keywords/Source_Keywords/EssenceCommon_Keywords.robot
+Resource    ../ResourcesFiles/Essence_Keywords/Source_Keywords/Essence_EODControlAndStatusEnquiry_Keywords.robot
 
 ### Integration Resource Files - SAPWUL - Business Keywords ###
 Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/SAPWUL/SAPWUL_DealSetup.robot
