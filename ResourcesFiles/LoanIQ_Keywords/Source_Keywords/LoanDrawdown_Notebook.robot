@@ -862,7 +862,6 @@ Input General Loan Drawdown Details with Accrual End Date
     ...    ${sLoan_RepricingDate}=None    ${sLoan_RiskType}=None    ${sFixedandLoanRiskType}=None
     ...    ${sLoan_PaymentMode}=None    ${sLoan_Accrue}=None    ${sLoan_AccrueEndDate}=None
 
-
     ### Keyword Pre-processing ###
     ${Loan_RequestedAmount}    Acquire Argument Value    ${sLoan_RequestedAmount}
     ${Loan_MaturityDate}    Acquire Argument Value    ${sLoan_MaturityDate}
