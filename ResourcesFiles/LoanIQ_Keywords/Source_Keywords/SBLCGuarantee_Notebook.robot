@@ -885,8 +885,8 @@ Get Issuance Rate
     Screenshot.Set Screenshot Directory    ${Screenshot_Path}
     Set Test Variable    ${SCREENSHOT_FILENAME}    Issuance Rate
     Take Screenshot    ${SCREENSHOT_FILENAME}
-    [Return]    ${IssuanceRate}
-    
+    [Return]    ${IssuanceRate} 
+
 Get Issuance Accrued to Date Amount
     [Documentation]    This keyword returns the Issuance total accrued to date amount.
     ...    @author: rtarayao    23AUG2019    - Initial Create
@@ -896,7 +896,18 @@ Get Issuance Accrued to Date Amount
     Screenshot.Set Screenshot Directory    ${Screenshot_Path}
     Set Test Variable    ${SCREENSHOT_FILENAME}    Issuance Accrual Screen
     Take Screenshot    ${SCREENSHOT_FILENAME}
-    [Return]    ${AccruedtodateAmount}    
+    [Return]    ${AccruedtodateAmount}
+    
+Get Issuance Paid to Date Amount
+    [Documentation]    This keyword returns the Issuance total paid to date amount.
+    ...    @author: cfrancis    15SEP2020    - Initial Create
+    Mx LoanIQ Select Window Tab    ${LIQ_SBLCGuarantee_Window_Tab}    Accrual
+    ${PaidtodateAmount}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_BankGuarantee_Accrual_JavaTree}    TOTAL:${SPACE}%Paid to date%Paidtodate    
+    Log    The Issuance Paid to Date amount is ${PaidtodateAmount} 
+    Screenshot.Set Screenshot Directory    ${Screenshot_Path}
+    Set Test Variable    ${SCREENSHOT_FILENAME}    Issuance Paid to Date
+    Take Screenshot    ${SCREENSHOT_FILENAME}
+    [Return]    ${PaidtodateAmount}
 
 Get Issuance Risk Type
     [Documentation]    This keyword gets the Issuance Risk type and returns the value.

@@ -141,5 +141,9 @@ Update SBLC Guarantee Issuance - ComSee
     ${IssuanceFee_AccruedToDate}    Remove Comma and Convert to Number    ${IssuanceFee_AccruedToDate}
     Write Data To Excel    ComSee_SC3_Issuance    Fee_AccruedToDate    ${rowid}    ${IssuanceFee_AccruedToDate}    ${ComSeeDataSet}
     
+    ${IssuanceFee_PaidToDate}    Get Issuance Paid to Date Amount
+    ${IssuanceFee_PaidToDate}    Remove Comma and Convert to Number    ${IssuanceFee_PaidToDate}
+    Write Data To Excel    ComSee_SC3_Issuance    Fee_PaidToDate    ${rowid}    ${IssuanceFee_PaidToDate}    ${ComSeeDataSet}
+    
     Close All Windows on LIQ
     Logout from Loan IQ
