@@ -430,7 +430,8 @@ Create Expected TextJMS XML for FXRates TL
     [Documentation]    This keyword is used to create expected XML for every row in the csv file and save file name with Base Rate Code, Funding Desk and Repricing Frequency.
     ...    @author: mnanquil    04MAR2019    - initial create
     ...    @update: dahijara    21NOV2019    - Added keyword to close opened excel file
-    [Arguments]    ${sTransformedData_FilePath}    ${sInputFilePath}    ${sFileName}
+    ...    @update: jdelacru    04SEP2020    - added new argument for the location of template files, TemplateFilePath
+    [Arguments]    ${sTransformedData_FilePath}    ${sInputFilePath}    ${sFileName}    ${sTemplateFilePath}
     Open Excel    ${dataset_path}${sTransformedData_FilePath}    
     ${Row_Count}    Get Row Count    Transformed_FXRates
     Close Current Excel Document
@@ -438,30 +439,32 @@ Create Expected TextJMS XML for FXRates TL
     \    
     \    ${dTransformedData}    ${rowCount}    Create Dictionary Using Transformed Data and Return FXRates    ${dataset_path}${sTransformedData_FilePath}    ${INDEX}
     \    
-    \    Get Individual Subentity Value and Create XML for FXRates TL    ${dTransformedData}    ${sInputFilePath}    ${sFileName}
+    \    Get Individual Subentity Value and Create XML for FXRates TL    ${dTransformedData}    ${sInputFilePath}    ${sFileName}    ${sTemplateFilePath}
     \    Exit For Loop If    ${INDEX}==${Row_Count}
 
 Get Individual Subentity Value and Create XML for FXRates TL
     [Documentation]    This keyword is used to get individual subentity values for multiple subentities in one line of business values.
     ...    i.e. sample input in datasheet AUD,NY
     ...    @author: mnanquil    04MAR2019    - initial create
-    [Arguments]    ${dRowData}    ${sInputFilePath}    ${sFileName}
+    ...    @update: jdelacru    04SEP2020    - added new argument for the location of template files, TemplateFilePath
+    [Arguments]    ${dRowData}    ${sInputFilePath}    ${sFileName}    ${sTemplateFilePath}
     Log    ${dRowData}
     ${SubEntityList}    Split String    &{dRowData}[subEntity]    ,
     ${subentity_count}    Get Length    ${subentity_list}
     :FOR    ${INDEX}    IN RANGE    0    ${subentity_count}
     \    ${SubEntityVal}    Get From List    ${SubEntityList}    ${INDEX}  
-    \    Update Expected XML Elements for wsFinalLIQDestination - FXRates TL    ${sInputFilePath}    ${sFileName}    &{dRowData}[fromCurrency]    &{dRowData}[toCurrency]    &{dRowData}[effectiveDate]    ${SubEntityVal}       &{dRowData}[midRate]             
+    \    Update Expected XML Elements for wsFinalLIQDestination - FXRates TL    ${sInputFilePath}    ${sFileName}    &{dRowData}[fromCurrency]    &{dRowData}[toCurrency]    &{dRowData}[effectiveDate]    ${SubEntityVal}       &{dRowData}[midRate]    ${sTemplateFilePath}         
     \    Exit For Loop If    ${INDEX}==${subentity_count}
 
 Update Expected XML Elements for wsFinalLIQDestination - FXRates TL
     [Documentation]    This keyword is used to update XML Elements using the input dictionary values for wsFinalLIQDestination for FX Rate TL
     ...    @author: mnanquil    04MAR2019    - initial create
     ...    @update: cfrancis    18JUL2019    - update added saving XML for NY subentity
-    [Arguments]    ${sInputFilePath}    ${sFileName}    ${fromCurrency}    ${sCurrency}    ${sRateEffDate}    ${sSubentityVal}    ${sMidRate} 
+    ...    @update: jdelacru    04SEP2020    - added new argument for the location of template files, TemplateFilePath
+    [Arguments]    ${sInputFilePath}    ${sFileName}    ${fromCurrency}    ${sCurrency}    ${sRateEffDate}    ${sSubentityVal}    ${sMidRate}    ${sTemplateFilePath} 
     Run Keyword If    '${sSubentityVal}'=='AUD' and '${fromCurrency}'=='USD'    Set Global Variable    ${fromCurrency}    AUD    
     ${Expected_wsFinalLIQDestination}    Set Variable    ${dataset_path}${sInputFilePath}${sFileName}_${fromCurrency}_${sCurrency}.xml
-    ${template}    Set Variable    ${dataset_path}${sInputFilePath}template_TextJMS_fxrates_tl.xml
+    ${template}    Set Variable    ${dataset_path}${sTemplateFilePath}template_TextJMS_fxrates_tl.xml
     Delete File If Exist    ${Expected_wsFinalLIQDestination}    
     ${xpath}    Set Variable    UpdateCrossCurrency
     ${val_RateEffDate}    Convert Date    ${sRateEffDate}    result_format=%d-%b-%Y

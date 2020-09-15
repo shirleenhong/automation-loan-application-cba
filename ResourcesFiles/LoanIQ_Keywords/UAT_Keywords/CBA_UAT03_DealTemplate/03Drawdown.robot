@@ -23,12 +23,12 @@ Create Drawdown D00000476
     Run Keyword If    '&{ExcelPath}[rowid]'=='4'    Write Data To Excel    SERV40_BreakFunding    Loan_Alias    1    ${Loan_Alias}    ${CBAUAT_ExcelPath}
     Run Keyword If    '&{ExcelPath}[rowid]'=='4'    Write Data To Excel    COM06_LoanMerge    Alias_Loan1    1    ${Loan_Alias}    ${CBAUAT_ExcelPath} 
     Run Keyword If    '&{ExcelPath}[rowid]'=='3'    Write Data To Excel    COM06_LoanMerge    Alias_Loan2    1    ${Loan_Alias}    ${CBAUAT_ExcelPath}       
-    ${Loan_Alias}    Read Data From Excel    SERV01_LoanDrawdown    Loan_Alias    &{ExcelPath}[rowid]    ${CBAUAT_ExcelPath}
+    ${Loan_Alias}    Read Data From Excel    SERV01_LoanDrawdown    Loan_Alias    &{ExcelPath}[rowid]    ${CBAUAT_ExcelPath}    
     Input General Loan Drawdown Details with Accrual End Date    &{ExcelPath}[Loan_RequestedAmount]    &{ExcelPath}[Loan_MaturityDate]
-    ...    &{ExcelPath}[Loan_RepricingFrequency]    &{ExcelPath}[Loan_EffectiveDate]    &{ExcelPath}[Loan_RepricingDate]    None    None
-    ...    &{ExcelPath}[Loan_PaymentMode]    &{ExcelPath}[Loan_Accrue]    &{ExcelPath}[Loan_AccrueEndDate]
+    ...    &{ExcelPath}[Loan_RepricingFrequency]    &{ExcelPath}[Loan_EffectiveDate]    &{ExcelPath}[Loan_RepricingDate]
+    ...    None    None    &{ExcelPath}[Loan_PaymentMode]    &{ExcelPath}[Loan_Accrue]    &{ExcelPath}[Loan_AccrueEndDate]
   
-    ####Accept Loan Drawdown Rates for Term Facility    &{ExcelPath}[Borrower_BaseRate]
+    ###Accept Loan Drawdown Rates for Term Facility    &{ExcelPath}[Borrower_BaseRate]
     Input Loan Drawdown Rates    &{ExcelPath}[Borrower_BaseRate]    &{ExcelPath}[Facility_Spread]
     Set Outstanding Servicing Group Details    &{ExcelPath}[Borrower_ShortName]    &{ExcelPath}[Remittance_Instruction]
 
