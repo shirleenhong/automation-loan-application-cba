@@ -2490,21 +2490,3 @@ Add Location under Profiles Tab for UAT Deal
     ...    AND    Mx LoanIQ Activate    ${LIQ_BorrowerDetails_Window}
     ...    AND    Mx LoanIQ Click    ${LIQ_BorrowerDetails_OKButton}
     Take Screenshot    ${Screenshot_Path}/Screenshots/LoanIQ/LocationDetailsWindow
-
-Navigate to Customer Notebook
-    [Documentation]    This keyword searches existing customer using Customer's Enterprise Name\Legal\Short Name
-    ...    @author: rtarayao    26AUG2019    - Initial Create
-    [Arguments]    ${LIQCustomer_ShortName}         
-    Select Actions    [Actions];Customer
-    mx LoanIQ activate window    ${LIQ_CustomerSelect_Window}
-    Validate Window Title    Customer Select
-    mx LoanIQ enter    ${LIQ_CustomerSelect_Search_Inputfield}     ${LIQCustomer_ShortName}
-    mx LoanIQ click    ${LIQ_CustomerSelect_OK_Button}
-    mx LoanIQ activate window    ${LIQ_ActiveCustomer_Window}   
-    
-Get Customer ID
-    [Documentation]    This keyword returns the Customer ID. 
-    ...    @author: rtarayao    27AUG2019    - Initial Create
-    mx LoanIQ activate window    ${LIQ_ActiveCustomer_Window}        
-    ${LIQCustomer_ID}    Mx LoanIQ Get Data    ${LIQ_ActiveCustomer_Window_CustomerID}    testdata
-    [Return]    ${LIQCustomer_ID}
