@@ -75,7 +75,7 @@ Get and Validate API Outstanding Response
     ...    @update: rtarayao    27AUG2019    - Updated the Documentation
     [Arguments]    ${ComSeeDataSet}
 
-    Get Request API for Outstandings    &{ComSeeDataSet}[OutputFilePath]    &{ComSeeDataSet}[ResponseJson]_OUT    &{ComSeeDataSet}[COM_ID]    &{ComSeeDataSet}[Customer_ExternalID]
+    Get Request API for Outstandings    &{ComSeeDataSet}[OutputFilePath]    &{ComSeeDataSet}[ResponseJson]_OUT    &{ComSeeDataSet}[COM_ID]    &{ComSeeDataSet}[Customer_ExternalID]    &{ComSeeDataSet}[Version]
     
     Get Risk Type and Validate Response Per Risk Type    &{ComSeeDataSet}[OutputFilePath]    &{ComSeeDataSet}[ResponseJson]_OUT    &{ComSeeDataSet}[Outstanding_Alias]    &{ComSeeDataSet}[Outstanding_RiskType]    
     ...    &{ComSeeDataSet}[Outstanding_Currency]    &{ComSeeDataSet}[Outstanding_EffectiveDate]    &{ComSeeDataSet}[Outstanding_HBNetAmount]    &{ComSeeDataSet}[Outstanding_HBNetFacCCYAmount]    &{ComSeeDataSet}[Outstanding_MaturityExpiryDate]
@@ -92,7 +92,7 @@ Get and Validate API Fee Response
     ...    @update: rtarayao    27AUG2019    - Updated the Documentation
     [Arguments]    ${ComSeeDataSet}  
     
-    Get Request API for Fees    &{ComSeeDataSet}[OutputFilePath]    &{ComSeeDataSet}[ResponseJson]_FEE    &{ComSeeDataSet}[COM_ID]    &{ComSeeDataSet}[Customer_ExternalID]
+    Get Request API for Fees    &{ComSeeDataSet}[OutputFilePath]    &{ComSeeDataSet}[ResponseJson]_FEE    &{ComSeeDataSet}[COM_ID]    &{ComSeeDataSet}[Customer_ExternalID]    &{ComSeeDataSet}[Version]
     
     Get Fee Type and Validate Response Per Level    &{ComSeeDataSet}[OutputFilePath]    &{ComSeeDataSet}[ResponseJson]_FEE    &{ComSeeDataSet}[Fee_Name]    &{ComSeeDataSet}[Fee_Type]    
     ...    &{ComSeeDataSet}[Fee_Currency]    &{ComSeeDataSet}[Fee_CurrentRate]    &{ComSeeDataSet}[Fee_EffectiveDate]    &{ComSeeDataSet}[Fee_ExpiryDate]    &{ComSeeDataSet}[Fee_FeeAlias]

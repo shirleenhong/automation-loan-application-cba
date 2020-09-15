@@ -1338,7 +1338,7 @@ Verify 404 Response Code for Get API Fee Details
     
     Delete All Sessions
     Create Session    COMHOST    ${COM_HOST}
-    ${REQUEST_DATA}    GET Request API for Comsee Deal Facility 404 Response    COMHOST    ${MDM_COMMSEE_API_FAC}${sFCN}/${sExternalCtrlID}/fees    ${Headers}
+    ${REQUEST_DATA}    GET Request API for Comsee Deal Facility 404 Response    COMHOST    ${MDM_COMMSEE_API_FAC_V1}${sFCN}/${sExternalCtrlID}/fees    ${Headers}
     ${JSON_File}    Set Variable    ${sResponseFilePath}${sResponseJson}.json
     Create File    ${dataset_path}${JSON_File}
     Append To File    ${dataset_path}${JSON_File}    ${GET_response.content}
@@ -1346,11 +1346,12 @@ Verify 404 Response Code for Get API Fee Details
 Get Request API for Outstandings
     [Documentation]    This keyword is used to get request api for Outstandings.
     ...    @author: clanding    20AUG2019    - initial create
-    [Arguments]    ${sOutputPath}    ${sOutputFile}    ${sFCN}    ${sExternalCtrlID}
+    [Arguments]    ${sOutputPath}    ${sOutputFile}    ${sFCN}    ${sExternalCtrlID}    ${sVersion}
     
     Delete All Sessions
     Create Session    COMHOST    ${COM_HOST}
-    ${REQUEST_DATA}    GET Request API for Comsee Outstandings and Fees    COMHOST    ${MDM_COMMSEE_API_FAC}${sFCN}/${sExternalCtrlID}/outstandings    ${APISESSION}
+    ${REQUEST_DATA}    Run Keyword If    '${sVersion}'=='V1'    GET Request API for Comsee Outstandings and Fees    COMHOST    ${MDM_COMMSEE_API_FAC_V1}${sFCN}/${sExternalCtrlID}/outstandings    ${APISESSION}
+    ...    ELSE    GET Request API for Comsee Outstandings and Fees    COMHOST    ${MDM_COMMSEE_API_FAC_V2}${sFCN}/${sExternalCtrlID}/outstandings    ${APISESSION}
     Delete File If Exist    ${dataset_path}${sOutputPath}${sOutputFile}.json
     ${API_RESPONSE_STRING}    Convert To String    ${GET_response.content}
     Create file    ${dataset_path}${sOutputPath}${sOutputFile}.json    ${API_RESPONSE_STRING}
@@ -1358,11 +1359,12 @@ Get Request API for Outstandings
 Get Request API for Fees
     [Documentation]    This keyword is used to get request api for Fees.
     ...    @author: clanding    26AUG2019    - initial create
-    [Arguments]    ${sOutputPath}    ${sOutputFile}    ${sFCN}    ${sExternalCtrlID}
+    [Arguments]    ${sOutputPath}    ${sOutputFile}    ${sFCN}    ${sExternalCtrlID}    ${sVersion}
     
     Delete All Sessions
     Create Session    COMHOST    ${COM_HOST}    
-    ${REQUEST_DATA}    GET Request API for Comsee Outstandings and Fees    COMHOST    ${MDM_COMMSEE_API_FAC}${sFCN}/${sExternalCtrlID}/fees    ${APISESSION}
+    ${REQUEST_DATA}    Run Keyword If    '${sVersion}'=='V1'    GET Request API for Comsee Outstandings and Fees    COMHOST    ${MDM_COMMSEE_API_FAC_V1}${sFCN}/${sExternalCtrlID}/fees    ${APISESSION}
+    ...    ELSE    GET Request API for Comsee Outstandings and Fees    COMHOST    ${MDM_COMMSEE_API_FAC_V2}${sFCN}/${sExternalCtrlID}/fees    ${APISESSION} 
     Delete File If Exist    ${dataset_path}${sOutputPath}${sOutputFile}.json
     ${API_RESPONSE_STRING}    Convert To String    ${GET_response.content}
     Create file    ${dataset_path}${sOutputPath}${sOutputFile}.json    ${API_RESPONSE_STRING}

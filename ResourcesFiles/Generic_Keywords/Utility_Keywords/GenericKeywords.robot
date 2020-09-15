@@ -1490,7 +1490,7 @@ Get Accrual Row Count
     ...    @author: rtarayao    05SEP2019    - initial create
     [Arguments]    ${sNotebook_Locator}    ${sAccrualCycle_Locator}
     mx LoanIQ activate window    ${sNotebook_Locator}
-    ${rowcount}    Mx LoanIQ Get Data    ${sAccrualCycle_Locator}    input=rowcount%value
+    ${rowcount}    Mx LoanIQ Get Data    ${sAccrualCycle_Locator}    input=rowcount%tableRow
     ${rowcount}    Evaluate    ${rowcount}-3  
     Log    The total rowcount is ${rowcount}
     [Return]    ${rowcount}    
