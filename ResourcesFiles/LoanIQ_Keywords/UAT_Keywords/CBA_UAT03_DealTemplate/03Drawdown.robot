@@ -12,7 +12,7 @@ Create Drawdown D00000476
     ###Deal Notebook###
     Search for Deal    &{ExcelPath}[Deal_Name]
     
-    # ###Creation of Initial Loan Drawdown in Loan NoteBook###
+    ###Creation of Initial Loan Drawdown in Loan NoteBook###
     Navigate to Outstanding Select Window from Deal
     ${Loan_Alias}    Create Loan Outstanding    &{ExcelPath}[Outstanding_Type]    &{ExcelPath}[Facility_Name]    &{ExcelPath}[Borrower_ShortName]    &{ExcelPath}[Loan_PricingOption]    &{ExcelPath}[Loan_Currency]  
     Write Data To Excel    SERV01_LoanDrawdown    Loan_Alias    &{ExcelPath}[rowid]    ${Loan_Alias}    ${CBAUAT_ExcelPath}
