@@ -2,7 +2,7 @@
 Resource    ../../../../../Configurations/LoanIQ_Import_File.robot
 
 *** Variables ***
-${rowid}    1
+${rowid}    2
 
 *** Test Cases ***
 
