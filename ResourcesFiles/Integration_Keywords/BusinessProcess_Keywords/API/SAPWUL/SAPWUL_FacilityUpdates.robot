@@ -127,7 +127,7 @@ Update Facility Name
     Navigate to Facility Business Event
     ${sFacilityID}    Get Business Event ID
     
-    ### Rename Facility ###
+    # ### Rename Facility ###
     Write Data To Excel    FacilityData    Facility_Name    ${sFacilityRowID}    ${sNewFacilityName}    ${SAPWUL_DATASET}
     Write Data To Excel    FacilityData    Facility_Name    &{FacilityDataSet}[rowid]    ${sNewFacilityName}    ${SAPWUL_DATASET}
     ${sNewFacilityName}    Read Data From Excel    FacilityData    Facility_Name   &{FacilityDataSet}[rowid]    ${SAPWUL_DATASET}
@@ -424,6 +424,7 @@ Update Facility Effective Date Then Approve and Release the Facility Change Tran
     [Documentation]    This keyword updates Effective Date of the Facility then Approve and Release the transaction
     ...    @author: hstone    26SEP2019    Initial create
     ...    @update: hstone    02OCT2019    Facility Effective Date Update on SAPWUL Test Data
+    ...    @update: mcastro   14SEP2020    Updated Facility Effective Date on SAPWUL Test Data
     [Arguments]    ${FacilityDataSet}
     ${sDealName}    Read Data From Excel    DealData    Deal_Name   &{FacilityDataSet}[Deal_RowID]    ${SAPWUL_DATASET}
     ${sFacilityRowID}    Read Data From Excel    DealData    Deal_FacilityRowID1   &{FacilityDataSet}[Deal_RowID]    ${SAPWUL_DATASET}
