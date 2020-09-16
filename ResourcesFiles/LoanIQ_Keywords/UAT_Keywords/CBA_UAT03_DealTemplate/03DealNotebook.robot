@@ -19,7 +19,7 @@ Setup Deal D00000476
     Write Data To Excel    CRED02_FacilitySetup    Facility_Borrower1    &{ExcelPath}[rowid]    ${Borrower_ShortName}    ${CBAUAT_ExcelPath}    multipleValue=Y
     Write Data To Excel    CRED01_Primaries    Deal_Name    &{ExcelPath}[rowid]    ${Deal_Name}    ${CBAUAT_ExcelPath}
     Write Data To Excel    SERV05_SBLCIssuance    Deal_Name    &{ExcelPath}[rowid]    ${Deal_Name}    ${CBAUAT_ExcelPath}    multipleValue=Y
-    Write Data To Excel    SERV01A_LoanDrawdown    Deal_Name    &{ExcelPath}[rowid]    ${Deal_Name}    ${CBAUAT_ExcelPath}    multipleValue=Y
+    Write Data To Excel    SERV01_LoanDrawdown    Deal_Name    &{ExcelPath}[rowid]    ${Deal_Name}    ${CBAUAT_ExcelPath}    multipleValue=Y
     Write Data To Excel    SERV08C_ComprehensiveRepricing    Deal_Name    &{ExcelPath}[rowid]    ${Deal_Name}    ${CBAUAT_ExcelPath}    multipleValue=Y
     Write Data To Excel    SERV23_Paperclip    Deal_Name    &{ExcelPath}[rowid]    ${Deal_Name}    ${CBAUAT_ExcelPath}    multipleValue=Y 
     Write Data To Excel    SERV40_BreakFunding    Deal_Name   &{ExcelPath}[rowid]    ${Deal_Name}    ${CBAUAT_ExcelPath}    multipleValue=Y
