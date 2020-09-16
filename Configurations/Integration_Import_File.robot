@@ -281,6 +281,7 @@ Resource    ../ResourcesFiles/Integration_Keywords/Source_Keywords/Extracts/GL/G
 ### Integration Resource Files - GL - Business Process Keywords ###
 Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/Extracts/GL_Essence/GLPOST_13.robot
 Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/Extracts/GL_Essence/GLPOST_14.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/Extracts/GL_Essence/GLPOST_15.robot
 
 ### Integration Resource Files - Essence - Source Keywords ###
 Resource    ../ResourcesFiles/Essence_Keywords/Source_Keywords/EssenceCommon_Keywords.robot
