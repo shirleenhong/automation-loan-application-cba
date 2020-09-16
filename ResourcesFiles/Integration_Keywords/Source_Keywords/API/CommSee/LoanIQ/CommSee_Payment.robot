@@ -129,9 +129,9 @@ Pay SBLC Issuance - ComSee
     ###Accrual Tab - Get Total Accrued to Date
     ${IssuanceFee_AccruedToDate}    Get Issuance Accrued to Date Amount
     ${IssuanceFee_AccruedToDate}    Remove Comma and Convert to Number    ${IssuanceFee_AccruedToDate}
-    ${TotalRowCount}    Get Accrual Row Count    ${LIQ_BankGuarantee_Window}    ${LIQ_BankGuarantee_Accrual_JavaTree}
-    ${AccruedtoDateAmt}    Compute Total Accruals for Fee    ${TotalRowCount}    ${LIQ_SBLCGuarantee_Window_Tab}    ${LIQ_BankGuarantee_Accrual_JavaTree}
-    ${AccruedtoDateAmt}    Remove Comma and Convert to Number    ${AccruedtoDateAmt}
+    # ${TotalRowCount}    Get Accrual Row Count    ${LIQ_BankGuarantee_Window}    ${LIQ_BankGuarantee_Accrual_JavaTree}
+    # ${AccruedtoDateAmt}    Compute Total Accruals for Fee    ${TotalRowCount}    ${LIQ_SBLCGuarantee_Window_Tab}    ${LIQ_BankGuarantee_Accrual_JavaTree}
+    # ${AccruedtoDateAmt}    Remove Comma and Convert to Number    ${AccruedtoDateAmt}
     Validate Accrued to Date Amount    ${AccruedtoDateAmt}    ${IssuanceFee_AccruedToDate}
     Write Data To Excel    ComSee_SC3_IssuanceFeePayment    Fee_AccruedToDate    ${rowid}    ${IssuanceFee_AccruedToDate}    ${ComSeeDataSet}
     

@@ -105,10 +105,40 @@ Create SBLC Guarantee Issuance - ComSee
     ###Accrual Tab - Get Total Accrued to Date
     ${IssuanceFee_AccruedToDate}    Get Issuance Accrued to Date Amount
     ${IssuanceFee_AccruedToDate}    Remove Comma and Convert to Number    ${IssuanceFee_AccruedToDate}
-    ${TotalRowCount}    Get Accrual Row Count    ${LIQ_BankGuarantee_Window}    ${LIQ_BankGuarantee_Accrual_JavaTree}
-    ${AccruedtoDateAmt}    Compute Total Accruals for Fee    ${TotalRowCount}    ${LIQ_SBLCGuarantee_Window_Tab}    ${LIQ_BankGuarantee_Accrual_JavaTree}
-    ${AccruedtoDateAmt}    Remove Comma and Convert to Number    ${AccruedtoDateAmt}
-    Validate Accrued to Date Amount    ${AccruedtoDateAmt}    ${IssuanceFee_AccruedToDate}
+    # ${TotalRowCount}    Get Accrual Row Count    ${LIQ_BankGuarantee_Window}    ${LIQ_BankGuarantee_Accrual_JavaTree}
+    # ${AccruedtoDateAmt}    Compute Total Accruals for Fee    ${TotalRowCount}    ${LIQ_SBLCGuarantee_Window_Tab}    ${LIQ_BankGuarantee_Accrual_JavaTree}
+    # ${AccruedtoDateAmt}    Remove Comma and Convert to Number    ${AccruedtoDateAmt}
+    # Validate Accrued to Date Amount    ${AccruedtoDateAmt}    ${IssuanceFee_AccruedToDate}
+    Write Data To Excel    ComSee_SC3_Issuance    Fee_AccruedToDate    ${rowid}    ${IssuanceFee_AccruedToDate}    ${ComSeeDataSet}
+    
+    Close All Windows on LIQ
+    Logout from Loan IQ
+    
+Update SBLC Guarantee Issuance - ComSee
+    [Documentation]    This high-level keyword will cater the update of Bank Guarantee.
+    ...    @author: cfrancis    15SEP2020    Initial Create
+    [Arguments]    ${ExcelPath}
+    ###LIQ Window###
+    Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
+    
+    ###Deal Notebook###
+    ${Effective_Date}    Get System Date
+    Open Existing Deal    &{ExcelPath}[Deal_Name]
+
+    ###Outstanding Navigation###
+    Navigate to Existing SBLC Guarantee    &{ExcelPath}[OutstandingSelect_Type]    &{ExcelPath}[Deal_Name]    &{ExcelPath}[Facility_Name]    ${Alias}
+    
+    ${Fee_EffectiveDate}    ${Fee_ExpiryDate}    ${Fee_DueDate}    Get Issuance Accrual Dates
+    ${Fee_EffectiveDate}    Convert LIQ Date to Year-Month-Day Format    ${Fee_EffectiveDate}
+    ${Fee_ExpiryDate}    Convert LIQ Date to Year-Month-Day Format    ${Fee_ExpiryDate}
+    ${Fee_DueDate}    Convert LIQ Date to Year-Month-Day Format    ${Fee_DueDate}
+    Write Data To Excel    ComSee_SC3_Issuance    Fee_EffectiveDate    ${rowid}    ${Fee_EffectiveDate}    ${ComSeeDataSet}
+    Write Data To Excel    ComSee_SC3_Issuance    Fee_ExpiryDate    ${rowid}    ${Fee_ExpiryDate}    ${ComSeeDataSet}
+    Write Data To Excel    ComSee_SC3_Issuance    Fee_DueDate    ${rowid}    ${Fee_DueDate}    ${ComSeeDataSet}
+    
+    ###Accrual Tab - Get Total Accrued to Date
+    ${IssuanceFee_AccruedToDate}    Get Issuance Accrued to Date Amount
+    ${IssuanceFee_AccruedToDate}    Remove Comma and Convert to Number    ${IssuanceFee_AccruedToDate}
     Write Data To Excel    ComSee_SC3_Issuance    Fee_AccruedToDate    ${rowid}    ${IssuanceFee_AccruedToDate}    ${ComSeeDataSet}
     
     Close All Windows on LIQ
