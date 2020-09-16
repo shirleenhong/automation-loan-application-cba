@@ -834,7 +834,6 @@ Create Loan Outstanding
     Verify Window    ${LIQ_OutstandingSelect_Window}
     mx LoanIQ select    ${LIQ_OutstandingSelect_Type_Dropdown}    ${Outstanding_Type}
     mx LoanIQ enter    ${LIQ_OutstandingSelect_New_RadioButton}    ON 
-    Sleep    2
     Run Keyword And Continue On Failure    Mx LoanIQ Verify Object Exist    ${LIQ_OutstandingSelect_Type_Dropdown}    VerificationData="Yes"
     Run Keyword And Continue On Failure    Mx LoanIQ Verify Object Exist    ${LIQ_OutstandingSelect_Facility_Dropdown}    VerificationData="Yes"
     Run Keyword And Continue On Failure    Mx LoanIQ Verify Object Exist    ${LIQ_OutstandingSelect_PricingOption_Dropdown}    VerificationData="Yes"
@@ -857,10 +856,26 @@ Input General Loan Drawdown Details with Accrual End Date
     ...    @author: ritragel
     ...    @update: rtarayao    01OCT2019    - Added optional argument and action for Loan Risk Type selection
     ...                                      - This is needed when Multiple Risk types are selected in the Deal level
-    ...                                      - Added optional argument for Fixed and Loan Risk Type 
-    [Arguments]    ${Loan_RequestedAmount}    ${Loan_MaturityDate}    ${Loan_RepricingFrequency}    ${Loan_EffectiveDate}    ${Loan_RepricingDate}=None    ${Loan_RiskType}=None    ${FixedandLoanRiskType}=None
-    Mx LoanIQ Select Window Tab    ${LIQ_InitialDrawdown_Tab}    General 
-    mx LoanIQ enter    ${LIQ_InitialDrawdown_RequestedAmt_Textfield}    ${Loan_RequestedAmount} 
+    ...                                      - Added optional argument for Fixed and Loan Risk Type
+    ...    @update: ritragel    13SETP20    Added additional arguments for UAT Deals and Added Preprocessing
+    [Arguments]    ${sLoan_RequestedAmount}    ${sLoan_MaturityDate}    ${sLoan_RepricingFrequency}    ${sLoan_EffectiveDate}
+    ...    ${sLoan_RepricingDate}=None    ${sLoan_RiskType}=None    ${sFixedandLoanRiskType}=None
+    ...    ${sLoan_PaymentMode}=None    ${sLoan_Accrue}=None    ${sLoan_AccrueEndDate}=None
+
+    ### Keyword Pre-processing ###
+    ${Loan_RequestedAmount}    Acquire Argument Value    ${sLoan_RequestedAmount}
+    ${Loan_MaturityDate}    Acquire Argument Value    ${sLoan_MaturityDate}
+    ${Loan_RepricingFrequency}    Acquire Argument Value    ${sLoan_RepricingFrequency}
+    ${Loan_EffectiveDate}    Acquire Argument Value    ${sLoan_EffectiveDate}
+    ${Loan_RepricingDate}    Acquire Argument Value    ${sLoan_RepricingDate}
+    ${Loan_RiskType}    Acquire Argument Value    ${sLoan_RiskType}
+    ${FixedandLoanRiskType}    Acquire Argument Value    ${sFixedandLoanRiskType}
+    ${Loan_PaymentMode}    Acquire Argument Value    ${sLoan_PaymentMode}
+    ${Loan_Accrue}    Acquire Argument Value    ${sLoan_Accrue}
+    ${Loan_AccrueEndDate}    Acquire Argument Value    ${sLoan_AccrueEndDate}
+
+    Mx LoanIQ Select Window Tab    ${LIQ_InitialDrawdown_Tab}    General
+    mx LoanIQ enter    ${LIQ_InitialDrawdown_RequestedAmt_Textfield}    ${Loan_RequestedAmount}
     mx LoanIQ enter    ${LIQ_InitialDrawdown_EffectiveDate_Datefield}    ${Loan_EffectiveDate}
     mx LoanIQ enter    ${LIQ_InitialDrawdown_MaturityDate_Datefield}    ${Loan_MaturityDate}
     mx LoanIQ click element if present    ${LIQ_Question_Yes_Button}
@@ -869,10 +884,14 @@ Input General Loan Drawdown Details with Accrual End Date
     Run Keyword If    '${Loan_RiskType}'!='None'    Run Keyword If    '${FixedandLoanRiskType}'!='None'    Run Keywords    mx LoanIQ click    ${LIQ_InitialDrawdown_RiskType_Button}
     ...    AND    mx LoanIQ activate window    ${LIQ_InitialDrawdown_SelectRiskType_Window}
     ...    AND    Mx LoanIQ DoubleClick By InputOccurence    ${LIQ_InitialDrawdown_SelectRiskType_JavaTree}    Loan:2
-    Mx LoanIQ Select Combo Box Value    ${LIQ_InitialDrawdown_Accue_Dropdown}    to the actual due date
     mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
-    ${AdjustedDueDate}    Mx LoanIQ Get Data    ${LIQ_InitialDrawdown_AdjustedDueDate_Datefield}    value%test        
-    mx LoanIQ enter    ${LIQ_InitialDrawdown_AccrualEndDate_Datefield}    ${AdjustedDueDate}    
+    Run Keyword If    '${Loan_Accrue}'!='None'    Mx LoanIQ Select Combo Box Value    ${LIQ_InitialDrawdown_Accrue_Dropdown}    ${Loan_Accrue}
+    Run Keyword If    '${Loan_PaymentMode}'!='None'    Mx LoanIQ Select Combo Box Value    ${LIQ_InitialDrawdown_PaymentMode_Dropdown}    ${Loan_PaymentMode}
+    ${AdjustedDueDate}    Mx LoanIQ Get Data    ${LIQ_InitialDrawdown_AdjustedDueDate_Datefield}    value%test
+    Run Keyword If    '${Loan_AccrueEndDate}'=='None'    mx LoanIQ enter    ${LIQ_InitialDrawdown_AccrualEndDate_Datefield}    ${AdjustedDueDate}
+    Run Keyword If    '${Loan_AccrueEndDate}'!='None'    mx LoanIQ enter    ${LIQ_InitialDrawdown_AccrualEndDate_Datefield}    ${sLoan_AccrueEndDate}    
+    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
+    Select Menu Item    ${LIQ_InitialDrawdown_Window}    File    Save
     mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
 
 Create Repayment Schedule - Fixed Payment
@@ -2910,7 +2929,7 @@ Enter Initial Loan Drawdown General Details
     \    Exit For Loop If    ${errorDisplayed}==False
     Run Keyword If    '${Repricing_Date}'!='${EMPTY}'    Enter Date With Business Day and Non-Business Day Validations    ${LIQ_InitialDrawdown_RepricingDate_Datefield}    ${Repricing_Date}    ${NBD_Reason}
     Run Keyword If    '${IntCycleFreq}'!='${EMPTY}'    Mx LoanIQ Select Combo Box Value    ${LIQ_InitialDrawdown_IntCycleFreq_Dropdownlist}    ${IntCycleFreq}
-    Mx LoanIQ Select Combo Box Value    ${LIQ_InitialDrawdown_Accue_Dropdown}    ${Accrue}
+    Mx LoanIQ Select Combo Box Value    ${LIQ_InitialDrawdown_Accrue_Dropdown}    ${Accrue}
     mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}    
     ${Drawdown_ActualDueDate}    Mx LoanIQ Get Data    ${LIQ_InitialDrawdown_ActualDueDate_Datefield}    value%date
     mx LoanIQ enter    ${LIQ_InitialDrawdown_AccrualEndDate_Datefield}    ${Drawdown_ActualDueDate}        

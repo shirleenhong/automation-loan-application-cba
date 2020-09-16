@@ -199,3 +199,103 @@ Write Post Deal Details for ComSee
     Write Data To Excel    ComSee_SC1_FacSetup    Facility_NoOfOutstanding    ${rowid}    ${OutstandingCount}    ${ComSeeDataSet}
     
     Close All Windows on LIQ
+    
+Create Deal Setup for SBLC - ComSee
+    [Documentation]    This high level keyword creates SBLC Baseline Deal for ComSee. 
+    ...    @author: jdelacru    20AUG2019    Initial Create
+    [Arguments]    ${ExcelPath}
+    ###Date Setup###    
+    ${SystemDate}    Get System Date
+    
+    ${Deal_Name}    ${Deal_Alias}    Generate And Return Deal Name And Alias    &{ExcelPath}[Deal_NamePrefix]    &{ExcelPath}[Deal_AliasPrefix]
+    Write Data To Excel    ComSee_SC3_Deal    Deal_Name    ${rowid}    ${Deal_Name}    ${ComSeeDataSet}
+    Write Data To Excel    ComSee_SC3_FacSetup    Deal_Name    ${rowid}    ${Deal_Name}    ${ComSeeDataSet}
+    Write Data To Excel    ComSee_SC3_Issuance    Deal_Name    ${rowid}    ${Deal_Name}    ${ComSeeDataSet}
+    Write Data To Excel    ComSee_SC3_IssuanceFeePayment    Deal_Name    ${rowid}    ${Deal_Name}    ${ComSeeDataSet}
+    
+    ${Deal_Name}    Read Data From Excel    ComSee_SC3_Deal    Deal_Name    ${rowid}    ${ComSeeDataSet}        
+    ###Loan IQ Deasktop###
+    Select Actions    [Actions];Deal
+    
+    ###New Deal Screen###
+    Validate Fields on Deal Select Screen    
+    Create New Deal    ${Deal_Name}    ${Deal_Alias}    &{ExcelPath}[Deal_Currency]    &{ExcelPath}[Deal_Department]    &{ExcelPath}[Deal_SalesGroup]
+    
+    ###Deal Notebook - Summary Tab###   
+    Add Deal Borrower    &{ExcelPath}[Deal_Borrower]   
+    Select Deal Borrower Location and Servicing Group    &{ExcelPath}[Borrower_Location]    &{ExcelPath}[Borrower_SGAlias]    &{ExcelPath}[Borrower_SG_GroupMembers]    &{ExcelPath}[Borrower_SG_Method]    &{ExcelPath}[Deal_Borrower]    &{ExcelPath}[Borrower_SG_Name]
+    Select Deal Borrower Remmitance Instruction    &{ExcelPath}[Deal_Borrower]    ${Deal_Name}    &{ExcelPath}[Borrower_Location]
+	Set Deal as Sole Lender
+    Select Deal Classification    &{ExcelPath}[Deal_ClassificationCode]    &{ExcelPath}[Deal_ClassificationDesc]
+    Select Admin Agent    &{ExcelPath}[Deal_AdminAgent]    &{ExcelPath}[AdminAgent_Location]
+    Select Servicing group and Remittance Instrucion for Admin Agent    &{ExcelPath}[AdminAgent_SGAlias]    &{ExcelPath}[AdminAgent_PreferredRIMthd1]    &{ExcelPath}[AdminAgent_ServicingGroup]
+    Enter Agreement Date and Proposed Commitment Amount    ${SystemDate}    &{ExcelPath}[Deal_ProposedCmt]
+    Unrestrict Deal
+    
+    ###Deal Notebook - Personnel Tab###
+    Uncheck Early Discussion Deal Checkbox
+    # Enter Department on Personel Tab    &{ExcelPath}[DepartmentCode]    &{ExcelPath}[Department]
+    Enter Expense Code    &{ExcelPath}[Deal_ExpenseCode]
+    
+    ###Deal Notebook - Calendars Tab###
+    Delete Holiday on Calendar    &{ExcelPath}[HolidayCalendar]
+    Add Holiday on Calendar    &{ExcelPath}[HolidayCalendar]
+    
+    ###Deal Notebook - Pricing Rules Tab###
+    Add Pricing Option    &{ExcelPath}[Deal_PricingOption1]    &{ExcelPath}[InitialFractionRate_Round]    &{ExcelPath}[RoundingDecimal_Round]    &{ExcelPath}[NonBusinessDayRule]    &{ExcelPath}[PricingOption_BillNoOfDays]    &{ExcelPath}[PricingOption_MatrixChangeAppMthd]    &{ExcelPath}[PricingOption_RateChangeAppMthd]
+    Add Pricing Option    &{ExcelPath}[Deal_PricingOption2]    &{ExcelPath}[InitialFractionRate_Round]    &{ExcelPath}[RoundingDecimal_Round]    &{ExcelPath}[NonBusinessDayRule]    &{ExcelPath}[PricingOption_BillNoOfDays]    &{ExcelPath}[PricingOption_MatrixChangeAppMthd]    &{ExcelPath}[PricingOption_RateChangeAppMthd]     
+    Add Pricing Option for SBLC    &{ExcelPath}[PricingRule_LOC]    &{ExcelPath}[InitialFractionRate_Round_LOC]    &{ExcelPath}[RoundingDecimal_Round_LOC]    &{ExcelPath}[NonBusinessDayRule_LOC]    &{ExcelPath}[BillingNumberOfDays_LOC]    &{ExcelPath}[PricingOption_MatrixChangeAppMthd]    &{ExcelPath}[PricingOption_RateChangeAppMthd]
+    Add Fee Pricing Rules    &{ExcelPath}[PricingRule_Fee1]    &{ExcelPath}[PricingRule_MatrixChangeAppMthd1]    &{ExcelPath}[PricingRule_NonBussDayRule1]    &{ExcelPath}[PricingRule_BillBorrowerStatus1]    &{ExcelPath}[PricingRule_BillNoOfDays1]
+    
+    
+    ### Deal Notebook - Bank Roles Tab ###
+    Add Bank Role    SBLC/Guarantee Issuer    &{ExcelPath}[Bank_Name]    &{ExcelPath}[BankRole_SG_Alias]    &{ExcelPath}[BankRole_SG]    &{ExcelPath}[BankRole_SG_GroupMembers]
+    ...    &{ExcelPath}[BankRole_SG_Method]    &{ExcelPath}[BankRole_Portfolio]    &{ExcelPath}[BankRole_ExpenseCode]    &{ExcelPath}[BankRole_ExpenseCodeDesc]
+    
+Setup a Primary Notebook with SBLC - ComSee
+    [Documentation]    This keyword adds the lender to the Deal.
+    ...    @author: rtarayao    22AUG2019    Initial Create
+    [Arguments]    ${ExcelPath}
+    ###Circle Notebook - Facilites Tab### 
+    ${SystemDate}    Get System Date
+    Close All Windows on LIQ
+    Open Existing Deal    &{ExcelPath}[Deal_Name]
+    Add Lender and Location    &{ExcelPath}[Deal_Name]    &{ExcelPath}[Primary_Lender1]    &{ExcelPath}[Primary_LenderLoc1]    &{ExcelPath}[Primary_RiskBook]    &{ExcelPath}[Primaries_TransactionType]
+    Set Sell Amount and Percent of Deal    &{ExcelPath}[Primary_PctOfDeal1]
+    Add Pro Rate    &{ExcelPath}[Primary_BuySellPrice]
+    Add Pricing Comment    &{ExcelPath}[Primary_Comment]
+    
+    ###Circle Notebook - Contacts Tab### 
+    Add Contact in Primary    &{ExcelPath}[Primary_Contact1]
+    Delete Contact in Primary    &{ExcelPath}[Primary_Contact1]
+    Add Contact in Primary    &{ExcelPath}[Primary_Contact1]
+    Select Servicing Group on Primaries    &{ExcelPath}[Primary_Contact1]    &{ExcelPath}[AdminAgent_SGAlias]
+    Validate Delete Error on Servicing Group    &{ExcelPath}[FundReceiverDetailCustomer]
+    
+    ###Circle Notebook - Workflow Tab###    
+    Complete Portfolio Allocations Workflow    &{ExcelPath}[Primary_Portfolio]    &{ExcelPath}[Primary_PortfolioBranch]    &{ExcelPath}[Primary_PortfolioAllocation]    &{ExcelPath}[Primary_PortfolioExpiryDate]
+    Circling for Primary Workflow    ${SystemDate}
+    Close Primaries Windows
+    
+    ###Deal Notebook - Workflow Tab###
+    Send Deal to Approval
+    Close All Windows on LIQ
+    Logout from Loan IQ
+    Login to Loan IQ    ${SUPERVISOR_USERNAME}    ${SUPERVISOR_PASSWORD}
+    Open Existing Deal    &{ExcelPath}[Deal_Name]
+    Approve the Deal    ${SystemDate}
+    Mx LoanIQ Close    ${LIQ_DealNotebook_Window}
+    Logout from Loan IQ
+    Login to Loan IQ   ${MANAGER_USERNAME}    ${MANAGER_PASSWORD}
+    Open Existing Deal    &{ExcelPath}[Deal_Name]
+    Close the Deal    ${SystemDate}
+    Close All Windows on LIQ
+    
+    ###Get Borrower's External ID for ComSee
+    Navigate to Customer Notebook    &{ExcelPath}[Deal_Borrower]
+    ${CustomerExternalId}    Get Customer ID
+    Write Data To Excel    ComSee_SC3_Issuance    Customer_ExternalID    ${rowid}    ${CustomerExternalId}    ${ComSeeDataSet}   
+    Write Data To Excel    ComSee_SC3_IssuanceFeePayment    Customer_ExternalID    ${rowid}    ${CustomerExternalId}    ${ComSeeDataSet} 
+    
+    Close All Windows on LIQ
+    Logout from Loan IQ

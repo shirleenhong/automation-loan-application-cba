@@ -46,13 +46,15 @@ ${MDM_User_API}       /corporate/users
 ${Corres_API}         /custom/v1/cbanotices/status
 ${MDM_ACCESS_TOKEN}    /bfweb/rest/MisysSSOFBPService/jwt/create
 ${MDM_COMMSEE_DEALFACILITY_API}    /comrlending/dealFacility/
-${MDM_COM_API}     /custom/v1/comrlending/dealFacility/
+${MDM_COM_API_V1}     /custom/v1/comrlending/dealFacility/
+${MDM_COM_API_V2}     /custom/v2/comrlending/dealFacility/
 ${MDM_COM_API_0}   /custom/v1/comrlending/facility/
 ${MDM_COM_API_00}  /outstandings
 ${MDM_COM_API_FEES}    /fees
 ${COM_HOST}    COM_HOST
 ${MDM_PARTY_API}    /bfweb/retail/v1/party/
-${MDM_COMMSEE_API_FAC}    /custom/v1/comrlending/facility/
+${MDM_COMMSEE_API_FAC_V1}    /custom/v1/comrlending/facility/
+${MDM_COMMSEE_API_FAC_V2}    /custom/v2/comrlending/facility/
 ${MDM_DATASOURCE_PARAM}    dataSource=LOB
 ${MDM_LIMIT_PARAM}    limit
 ${MDM_OFFSET_PARAM}    offset

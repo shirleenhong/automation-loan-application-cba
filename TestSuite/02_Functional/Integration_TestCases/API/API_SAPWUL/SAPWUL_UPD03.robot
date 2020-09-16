@@ -2,8 +2,8 @@
 Resource    ../../../../../Configurations/Integration_Import_File.robot
 
 *** Variables ***
-${Facility_RowID}    14
-${SAPWULRowID}    8
+${Facility_RowID}    11
+${SAPWULRowID}    7
 
 *** Test Cases ***
 SAPWUL_UPD03

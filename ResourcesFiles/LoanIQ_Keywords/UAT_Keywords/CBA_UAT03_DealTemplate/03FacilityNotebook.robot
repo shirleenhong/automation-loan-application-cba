@@ -17,17 +17,17 @@ Setup Facility Template D00000476
     Write Data To Excel    SERV01A_LoanDrawdown    Facility_Name    &{ExcelPath}[rowid]    ${FacilityName}    ${CBAUAT_ExcelPath}
     Write Data To Excel    AMCH05_ExtendFacility    Facility_Name    &{ExcelPath}[rowid]    ${FacilityName}    ${CBAUAT_ExcelPath}
     Write Data To Excel    CRED01_UpfrontFee    Facility_Name    &{ExcelPath}[rowid]    ${FacilityName}    ${CBAUAT_ExcelPath}
-    Run Keyword If    '&{ExcelPath}[rowid]' == '4'    Write Data To Excel    SERV01A_LoanDrawdown    Facility_Name    4    ${FacilityName}    ${CBAUAT_ExcelPath}
+    Run Keyword If    '&{ExcelPath}[rowid]' == '4'    Write Data To Excel    SERV01_LoanDrawdown    Facility_Name    4    ${FacilityName}    ${CBAUAT_ExcelPath}
     Run Keyword If    '&{ExcelPath}[rowid]' == '4'    Write Data To Excel    SERV23_Paperclip    Facility_Name    1    ${FacilityName}    ${CBAUAT_ExcelPath}
     Run Keyword If    '&{ExcelPath}[rowid]' == '4'    Write Data To Excel    SERV23_Paperclip    Facility_Name    3    ${FacilityName}    ${CBAUAT_ExcelPath}
     Run Keyword If    '&{ExcelPath}[rowid]' == '3'    Write Data To Excel    SERV23_Paperclip    Facility_Name    2    ${FacilityName}    ${CBAUAT_ExcelPath}
     Run Keyword If    '&{ExcelPath}[rowid]' == '3'    Write Data To Excel    SERV40_BreakFunding    Facility_Name    2    ${FacilityName}    ${CBAUAT_ExcelPath}    
-    Run Keyword If    '&{ExcelPath}[rowid]' == '4'    Write Data To Excel    SERV01A_LoanDrawdown    Facility_Name    5    ${FacilityName}    ${CBAUAT_ExcelPath}
-    Run Keyword If    '&{ExcelPath}[rowid]' == '4'    Write Data To Excel    SERV01A_LoanDrawdown    Facility_Name    6    ${FacilityName}    ${CBAUAT_ExcelPath}
-    Run Keyword If    '&{ExcelPath}[rowid]' == '4'    Write Data To Excel    SERV01A_LoanDrawdown    Facility_Name    7    ${FacilityName}    ${CBAUAT_ExcelPath}
-    Run Keyword If    '&{ExcelPath}[rowid]' == '4'    Write Data To Excel    SERV01A_LoanDrawdown    Facility_Name    8    ${FacilityName}    ${CBAUAT_ExcelPath}
-    Run Keyword If    '&{ExcelPath}[rowid]' == '4'    Write Data To Excel    SERV01A_LoanDrawdown    Facility_Name    9    ${FacilityName}    ${CBAUAT_ExcelPath}
-    Run Keyword If    '&{ExcelPath}[rowid]' == '4'    Write Data To Excel    SERV01A_LoanDrawdown    Facility_Name    1    ${FacilityName}    ${CBAUAT_ExcelPath}
+    Run Keyword If    '&{ExcelPath}[rowid]' == '4'    Write Data To Excel    SERV01_LoanDrawdown    Facility_Name    5    ${FacilityName}    ${CBAUAT_ExcelPath}
+    Run Keyword If    '&{ExcelPath}[rowid]' == '4'    Write Data To Excel    SERV01_LoanDrawdown    Facility_Name    6    ${FacilityName}    ${CBAUAT_ExcelPath}
+    Run Keyword If    '&{ExcelPath}[rowid]' == '4'    Write Data To Excel    SERV01_LoanDrawdown    Facility_Name    7    ${FacilityName}    ${CBAUAT_ExcelPath}
+    Run Keyword If    '&{ExcelPath}[rowid]' == '4'    Write Data To Excel    SERV01_LoanDrawdown    Facility_Name    8    ${FacilityName}    ${CBAUAT_ExcelPath}
+    Run Keyword If    '&{ExcelPath}[rowid]' == '4'    Write Data To Excel    SERV01_LoanDrawdown    Facility_Name    9    ${FacilityName}    ${CBAUAT_ExcelPath}
+    Run Keyword If    '&{ExcelPath}[rowid]' == '1'    Write Data To Excel    SERV01_LoanDrawdown    Facility_Name    1    ${FacilityName}    ${CBAUAT_ExcelPath}
     Run Keyword If    '&{ExcelPath}[rowid]' == '4'    Write Data To Excel    SERV29_Payments    Facility_Name    1    ${FacilityName}    ${CBAUAT_ExcelPath}
     Run Keyword If    '&{ExcelPath}[rowid]' == '1'    Write Data To Excel    SERV05_SBLCIssuance    Facility_Name    1    ${FacilityName}    ${CBAUAT_ExcelPath}
     Run Keyword If    '&{ExcelPath}[rowid]' == '1'    Write Data To Excel    SERV05_SBLCIssuance    Facility_Name    2    ${FacilityName}    ${CBAUAT_ExcelPath}   

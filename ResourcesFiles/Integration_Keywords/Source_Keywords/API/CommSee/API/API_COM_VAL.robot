@@ -5,11 +5,12 @@ Resource    ../../../../../../Configurations/LoanIQ_Import_File.robot
 Verify Response of Deal Facility 404 Response 
     [Documentation]    This keyword is to validate GET response of 404 code. 
     ...    @author: sacuisia    15AUG2019
-    [Arguments]    ${COMID}    ${Headers}    ${sResponseFilePath}    ${sResponseJson}   
+    [Arguments]    ${COMID}    ${Headers}    ${Version}    ${sResponseFilePath}    ${sResponseJson}   
 
     Delete All Sessions
     Create Session    COMHOST    ${COM_HOST}
-    ${REQUEST_DATA}    GET Request API for Comsee Deal Facility 404 Response    COMHOST    ${MDM_COM_API}${COMID}    ${Headers}
+    ${REQUEST_DATA}    Run Keyword If    '${Version}'=='V1'    GET Request API for Comsee Deal Facility 404 Response    COMHOST    ${MDM_COM_API_V1}${COMID}    ${Headers}
+    ...    ELSE    GET Request API for Comsee Deal Facility 404 Response    COMHOST    ${MDM_COM_API_V2}${COMID}    ${Headers}
     ${JSON_File}    Set Variable    ${sResponseFilePath}${sResponseJson}.json
     Create File    ${dataset_path}${JSON_File}
     ${Content}    Convert to String    ${GET_response.content}
@@ -18,7 +19,7 @@ Verify Response of Deal Facility 404 Response
 Validation for CommSee 
     [Documentation]     This keyword is to get token and create session for CommSEE and Get Request 200 Response Ok.
     ...    @author: sacuisia
-    [Arguments]   ${COMID}    ${Headers}    ${sResponseFilePath}    ${sResponseJson}    ${dataExtracted}    ${sDealName}    ${sdealTrackingNumber}    ${sdealclosedDate}    ${sdealCurrency}    ${sdealHostBankCom}
+    [Arguments]   ${COMID}    ${Headers}    ${Version}    ${sResponseFilePath}    ${sResponseJson}    ${dataExtracted}    ${sDealName}    ${sdealTrackingNumber}    ${sdealclosedDate}    ${sdealCurrency}    ${sdealHostBankCom}
     ...    ${sdealCode}    ${sdealDesc}    ${sdealExpenseCode}    ${sdealExpenseDesc}    ${sdealNoFacilities}    ${sdealNolenders}    ${sdealNoBorrowers}
     ...    ${sdealHostClosingBankCom}    ${sdealGlobalClosing}    ${sdealGobalCurrent}    ${sdealDepartmentCode}    ${sdealDepartmentDesc}    ${sfacilityName}    ${sfacilityCN}
     ...    ${sfacilityeffectiveDate}    ${sfacilityMaturityDate}    ${sfacilityCurr}    ${sfacilityMultiCCY}    ${sfacilityType}
@@ -30,7 +31,8 @@ Validation for CommSee
     ###GET RESOPONSE###           
     Delete All Sessions
     Create Session    COMHOST    ${COM_HOST}
-    ${REQUEST_DATA}    GET Request API for Comsee Deal Facility    COMHOST    ${MDM_COM_API}${COMID}    ${Headers}        
+    ${REQUEST_DATA}    Run Keyword If    '${Version}'=='V1'    GET Request API for Comsee Deal Facility    COMHOST    ${MDM_COM_API_V1}${COMID}    ${Headers}
+    ...    ELSE    GET Request API for Comsee Deal Facility    COMHOST    ${MDM_COM_API_V2}${COMID}    ${Headers}
 
     ###FIELDS VALIDATION###
     ${Expect_dataExtract}    Run Keyword If    '${dataExtracted}'==''    Set Variable    ${EMPTY}
@@ -1128,8 +1130,10 @@ Get Fee Type and Validate Response Per Level
     ...    @author: clanding    26AUG2019    - initial create
     ...    @update: rtarayao    30AUG2019    - defined acceptable values for the validation of facility ongoing fees
     ...                                      - updated the index input value from fee_name to fee_type
-    [Arguments]    ${sOutputFilePath}    ${sOutputFile}    ${sExp_Name}    ${sExp_Fee}    ${sExp_Currency}    ${iExp_CurrentRate}
-    ...    ${sExp_EffectiveDate}    ${sExp_ExpiryDate}    ${sExp_FeeAlias}    ${sExp_Status}    ${iExp_AccruedToDate}    ${sExp_DueDate}    ${sDelimiter}
+    ...    @update: cfrancis    15SEP2020    - added passing of version values from datasheeet
+    ...                                      - added passing of accrual rules and paid to date
+    [Arguments]    ${sOutputFilePath}    ${sOutputFile}    ${sVersion}    ${sExp_Name}    ${sExp_Fee}    ${sExp_Currency}    ${iExp_CurrentRate}
+    ...    ${sExp_EffectiveDate}    ${sExp_ExpiryDate}    ${sExp_FeeAlias}    ${sExp_Status}    ${iExp_AccruedToDate}    ${iExp_PaidToDate}    ${sExp_DueDate}    ${sExp_AccrualRule}    ${sDelimiter}
     
     ${Response_Payload}    OperatingSystem.Get File    ${datasetpath}${sOutputFilePath}${sOutputFile}.${JSON}
     ${Response_Payload}    Strip String    ${Response_Payload}    mode=left    characters=[
@@ -1155,8 +1159,8 @@ Get Fee Type and Validate Response Per Level
     \    ${Actual_Fee_List}    Get Value From Json    ${Json_Object}    $..fee
     \    ${Index_Input}    Get Input Value and Return Index    ${sExp_Fee}    @{Actual_Fee_List}[0]    ${sDelimiter}
     \    
-    \    Run Keyword If    '@{Actual_Fee_List}[0]'=='Fronting Usage Fee (SFBG)' or '@{Actual_Fee_List}[0]'=='Issuance Fee (BG/LC)'    Validate Fee Response for Outstanding Level    ${Json_Object}    ${OUTSTANDING}    
-         ...    ${sExp_Name}    ${sExp_Fee}    ${sExp_Currency}    ${iExp_CurrentRate}    ${sExp_EffectiveDate}    ${sExp_ExpiryDate}    ${iExp_AccruedToDate}    ${sExp_DueDate}    ${Index_Input}    ${sDelimiter}
+    \    Run Keyword If    '@{Actual_Fee_List}[0]'=='Fronting Usage Fee (SFBG)' or '@{Actual_Fee_List}[0]'=='Issuance Fee (BG/LC)'    Validate Fee Response for Outstanding Level    ${Json_Object}    ${sVersion}    ${OUTSTANDING}    
+         ...    ${sExp_Name}    ${sExp_Fee}    ${sExp_Currency}    ${iExp_CurrentRate}    ${sExp_EffectiveDate}    ${sExp_ExpiryDate}    ${iExp_AccruedToDate}    ${iExp_PaidToDate}    ${sExp_DueDate}    ${sExp_AccrualRule}    ${Index_Input}    ${sDelimiter}
          ...    ELSE IF    '@{Actual_Fee_List}[0]'=='Commitment Fee' or '@{Actual_Fee_List}[0]'=='Fronting Commitment Fee (SFBG)'    Validate Fee Response for Facility Level    ${Json_Object}    ${FACILITY}    ${sExp_Name}    ${sExp_Fee}    ${sExp_Currency}    ${iExp_CurrentRate}    ${sExp_EffectiveDate}    
          ...    ${sExp_ExpiryDate}    ${sExp_FeeAlias}    ${sExp_Status}    ${iExp_AccruedToDate}    ${sExp_DueDate}    ${Index_Input}    ${sDelimiter}
          ...    ELSE IF    '@{Actual_Fee_List}[0]'=='Fronting Line Fee (SFBG)' or '@{Actual_Fee_List}[0]'=='Indemnity Fee - Commitment (SFBG)'    Validate Fee Response for Facility Level    ${Json_Object}    ${FACILITY}    ${sExp_Name}    ${sExp_Fee}    ${sExp_Currency}    ${iExp_CurrentRate}    ${sExp_EffectiveDate}    
@@ -1171,8 +1175,10 @@ Get Fee Type and Validate Response Per Level
 Validate Fee Response for Outstanding Level
     [Documentation]    This keyword is used to validate Fee values from response versus input dataset for Outstanding Level.
     ...    @author: clanding    26AUG2019    - initial create
-    [Arguments]    ${oJson}    ${sExp_Level}    ${sExp_Name}    ${sExp_Fee}    ${sExp_Currency}    ${iExp_CurrentRate}
-    ...    ${sExp_EffectiveDate}    ${sExp_ExpiryDate}    ${iExp_AccruedToDate}    ${sExp_DueDate}    ${iIndex_Input}    ${sDelimiter}
+    ...    @update: cfrancis    15SEP2020    - added handling of V1 and V2 Endpoints response attributes, cycleDue, cycleStartDate, cycleEndDate, paidToDate and paymentMode
+    ...                                      - added AccrualRules as value to be verified for V2
+    [Arguments]    ${oJson}    ${sVersion}    ${sExp_Level}    ${sExp_Name}    ${sExp_Fee}    ${sExp_Currency}    ${iExp_CurrentRate}
+    ...    ${sExp_EffectiveDate}    ${sExp_ExpiryDate}    ${iExp_AccruedToDate}    ${iExp_PaidToDate}    ${sExp_DueDate}    ${sExp_AccrualRule}    ${iIndex_Input}    ${sDelimiter}
 
     ### Get JSON field values ###
     Log    ${oJson}
@@ -1185,6 +1191,11 @@ Validate Fee Response for Outstanding Level
     ${Actual_ExpiryDate_List}    Get Value From Json    ${oJson}    $..expiryDate
     ${Actual_AccruedToDate_List}    Get Value From Json    ${oJson}    $..accruedToDate
     ${Actual_DueDate_List}    Get Value From Json    ${oJson}    $..dueDate
+    ${Actual_CycleStartDate_List}    Get Value From Json    ${oJson}    $..cycleStartDate
+    ${Actual_CycleEndDate_List}    Get Value From Json    ${oJson}    $..cycleEndDate
+    ${Actual_CycleDue_List}    Get Value From Json    ${oJson}    $..cycleDue
+    ${Actual_PaidToDate_List}    Get Value From Json    ${oJson}    $..paidToDate
+    ${Actual_PaymentMode_List}    Get Value From Json    ${oJson}    $..paymentMode
 
     ### Get Dataset values ###
     @{Input_Name_List}    Split String    ${sExp_Name}    ${sDelimiter}
@@ -1195,6 +1206,8 @@ Validate Fee Response for Outstanding Level
     @{Input_ExpiryDate_List}    Split String    ${sExp_ExpiryDate}    ${sDelimiter}
     @{Input_AccruedToDate_List}    Split String    ${iExp_AccruedToDate}    ${sDelimiter}
     @{Input_DueDate_List}    Split String    ${sExp_DueDate}    ${sDelimiter}
+    @{Input_PaidToDate_List}    Split String    ${iExp_PaidToDate}    ${sDelimiter}
+    @{Input_PaymentMode_List}    Split String    ${sExp_AccrualRule}    ${sDelimiter}
 
     Run Keyword And Continue On Failure    Should Be Equal As Strings    ${sExp_Level}    @{Actual_Level_List}[0]
     ${IsEqual}    Run Keyword And Return Status    Should Be Equal As Strings    ${sExp_Level}    @{Actual_Level_List}[0]
@@ -1231,10 +1244,36 @@ Validate Fee Response for Outstanding Level
     Run Keyword If    ${IsEqual}==${True}    Log    Expected and Actual are equal. @{Input_ExpiryDate_List}[${iIndex_Input}] = @{Actual_ExpiryDate_List}[0]
     ...    ELSE    Log    Expected and Actual are NOT equal. @{Input_ExpiryDate_List}[${iIndex_Input}] != @{Actual_ExpiryDate_List}[0]    level=ERROR
 
-    Run Keyword And Continue On Failure    Should Be Equal As Numbers    @{Input_AccruedToDate_List}[${iIndex_Input}]    @{Actual_AccruedToDate_List}[0]
+    Run Keyword If    '${sVersion}'=='V1'    Run Keyword And Continue On Failure    Should Be Equal As Numbers    @{Input_AccruedToDate_List}[${iIndex_Input}]    @{Actual_AccruedToDate_List}[0]
     ${IsEqual}    Run Keyword And Return Status    Should Be Equal As Numbers    @{Input_AccruedToDate_List}[${iIndex_Input}]    @{Actual_AccruedToDate_List}[0]
-    Run Keyword If    ${IsEqual}==${True}    Log    Expected and Actual are equal. @{Input_AccruedToDate_List}[${iIndex_Input}] = @{Actual_AccruedToDate_List}[0]
+    Run Keyword If    ${IsEqual}==${True} and '${sVersion}'=='V1'    Log    Expected and Actual are equal. @{Input_AccruedToDate_List}[${iIndex_Input}] = @{Actual_AccruedToDate_List}[0]
+    ...    ELSE IF    '${sVersion}'=='V2'    Log    This attribute is not present in V2 response
     ...    ELSE    Log    Expected and Actual are NOT equal. @{Input_AccruedToDate_List}[${iIndex_Input}] != @{Actual_AccruedToDate_List}[0]    level=ERROR
+    
+    Run Keyword If    '${sVersion}'=='V2'    Run Keyword And Continue On Failure    Should Be Equal As Strings    @{Input_EffectiveDate_List}[${iIndex_Input}]    @{Actual_CycleStartDate_List}[0]
+    ${IsEqual}    Run Keyword And Return Status    Should Be Equal As Strings    @{Input_EffectiveDate_List}[${iIndex_Input}]    @{Actual_CycleStartDate_List}[0]
+    Run Keyword If    ${IsEqual}==${True} and '${sVersion}'=='V2'    Log    Expected and Actual are equal. @{Input_EffectiveDate_List}[${iIndex_Input}] = @{Actual_CycleStartDate_List}[0]
+    ...    ELSE IF    '${sVersion}'=='V1'    Log    This attribute is not present in V1 response
+    ...    ELSE    Log    Expected and Actual are NOT equal. @{Input_EffectiveDate_List}[${iIndex_Input}] != @{Actual_CycleStartDate_List}[0]    level=ERROR
+    
+    Run Keyword If    '${sVersion}'=='V2'    Run Keyword And Continue On Failure    Should Be Equal As Strings    @{Input_ExpiryDate_List}[${iIndex_Input}]    @{Actual_CycleEndDate_List}[0]
+    ${IsEqual}    Run Keyword And Return Status    Should Be Equal As Strings    @{Input_ExpiryDate_List}[${iIndex_Input}]    @{Actual_CycleEndDate_List}[0]
+    Run Keyword If    ${IsEqual}==${True} and '${sVersion}'=='V2'    Log    Expected and Actual are equal. @{Input_ExpiryDate_List}[${iIndex_Input}] = @{Actual_CycleEndDate_List}[0]
+    ...    ELSE IF    '${sVersion}'=='V1'    Log    This attribute is not present in V1 response
+    ...    ELSE    Log    Expected and Actual are NOT equal. @{Input_ExpiryDate_List}[${iIndex_Input}] != @{Actual_CycleEndDate_List}[0]    level=ERROR
+    
+    ${Converted_PaidToDate}    Run Keyword If    '${sVersion}'=='V2'    Remove Comma and Convert to Number    @{Actual_PaidToDate_List}[0]
+    Run Keyword If    '${sVersion}'=='V2'    Run Keyword And Continue On Failure    Should Be Equal As Strings    @{Input_PaidToDate_List}[${iIndex_Input}]    ${Converted_PaidToDate}
+    ${IsEqual}    Run Keyword And Return Status    Should Be Equal As Strings    @{Input_PaidToDate_List}[${iIndex_Input}]    ${Converted_PaidToDate}
+    Run Keyword If    ${IsEqual}==${True} and '${sVersion}'=='V2'    Log    Expected and Actual are equal. @{Input_PaidToDate_List}[${iIndex_Input}] = @{Actual_PaidToDate_List}[0]
+    ...    ELSE IF    '${sVersion}'=='V1'    Log    This attribute is not present in V1 response
+    ...    ELSE    Log    Expected and Actual are NOT equal. @{Input_PaidToDate_List}[${iIndex_Input}] != @{Actual_PaidToDate_List}[0]    level=ERROR
+
+    Run Keyword If    '${sVersion}'=='V2'    Run Keyword And Continue On Failure    Should Be Equal As Strings    @{Input_PaymentMode_List}[${iIndex_Input}]    @{Actual_PaymentMode_List}[0]    ignore_case=True
+    ${IsEqual}    Run Keyword And Return Status    Should Be Equal As Strings    @{Input_PaymentMode_List}[${iIndex_Input}]    @{Actual_PaymentMode_List}[0]    ignore_case=True
+    Run Keyword If    ${IsEqual}==${True} and '${sVersion}'=='V2'    Log    Expected and Actual are equal. @{Input_PaymentMode_List}[${iIndex_Input}] = @{Actual_PaymentMode_List}[0]
+    ...    ELSE IF    '${sVersion}'=='V1'    Log    This attribute is not present in V1 response
+    ...    ELSE    Log    Expected and Actual are NOT equal. @{Input_PaymentMode_List}[${iIndex_Input}] != @{Actual_PaymentMode_List}[0]    level=ERROR
 
     Run Keyword And Continue On Failure    Should Be Equal As Strings    @{Input_DueDate_List}[${iIndex_Input}]    @{Actual_DueDate_List}[0]
     ${IsEqual}    Run Keyword And Return Status    Should Be Equal As Strings    @{Input_DueDate_List}[${iIndex_Input}]    @{Actual_DueDate_List}[0]
@@ -1336,7 +1375,33 @@ Verify 404 Response Code for Get API Fee Details
     
     Delete All Sessions
     Create Session    COMHOST    ${COM_HOST}
-    ${REQUEST_DATA}    GET Request API for Comsee Deal Facility 404 Response    COMHOST    ${MDM_COMMSEE_API_FAC}${sFCN}/${sExternalCtrlID}/fees    ${Headers}
+    ${REQUEST_DATA}    GET Request API for Comsee Deal Facility 404 Response    COMHOST    ${MDM_COMMSEE_API_FAC_V1}${sFCN}/${sExternalCtrlID}/fees    ${Headers}
     ${JSON_File}    Set Variable    ${sResponseFilePath}${sResponseJson}.json
     Create File    ${dataset_path}${JSON_File}
     Append To File    ${dataset_path}${JSON_File}    ${GET_response.content}
+    
+Get Request API for Outstandings
+    [Documentation]    This keyword is used to get request api for Outstandings.
+    ...    @author: clanding    20AUG2019    - initial create
+    [Arguments]    ${sOutputPath}    ${sOutputFile}    ${sFCN}    ${sExternalCtrlID}    ${sVersion}
+    
+    Delete All Sessions
+    Create Session    COMHOST    ${COM_HOST}
+    ${REQUEST_DATA}    Run Keyword If    '${sVersion}'=='V1'    GET Request API for Comsee Outstandings and Fees    COMHOST    ${MDM_COMMSEE_API_FAC_V1}${sFCN}/${sExternalCtrlID}/outstandings    ${APISESSION}
+    ...    ELSE    GET Request API for Comsee Outstandings and Fees    COMHOST    ${MDM_COMMSEE_API_FAC_V2}${sFCN}/${sExternalCtrlID}/outstandings    ${APISESSION}
+    Delete File If Exist    ${dataset_path}${sOutputPath}${sOutputFile}.json
+    ${API_RESPONSE_STRING}    Convert To String    ${GET_response.content}
+    Create file    ${dataset_path}${sOutputPath}${sOutputFile}.json    ${API_RESPONSE_STRING}
+    
+Get Request API for Fees
+    [Documentation]    This keyword is used to get request api for Fees.
+    ...    @author: clanding    26AUG2019    - initial create
+    [Arguments]    ${sOutputPath}    ${sOutputFile}    ${sFCN}    ${sExternalCtrlID}    ${sVersion}
+    
+    Delete All Sessions
+    Create Session    COMHOST    ${COM_HOST}    
+    ${REQUEST_DATA}    Run Keyword If    '${sVersion}'=='V1'    GET Request API for Comsee Outstandings and Fees    COMHOST    ${MDM_COMMSEE_API_FAC_V1}${sFCN}/${sExternalCtrlID}/fees    ${APISESSION}
+    ...    ELSE    GET Request API for Comsee Outstandings and Fees    COMHOST    ${MDM_COMMSEE_API_FAC_V2}${sFCN}/${sExternalCtrlID}/fees    ${APISESSION} 
+    Delete File If Exist    ${dataset_path}${sOutputPath}${sOutputFile}.json
+    ${API_RESPONSE_STRING}    Convert To String    ${GET_response.content}
+    Create file    ${dataset_path}${sOutputPath}${sOutputFile}.json    ${API_RESPONSE_STRING}
