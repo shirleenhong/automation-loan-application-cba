@@ -113,26 +113,11 @@ Open Unscheduled Principal Payment Notebook via WIP - Awaiting Approval
 Release Unscheduled Principal Payment
     [Documentation]    This keyword release the unscheduled interest payment
     ...    @author: mnanquilada
+    ...    @update:    dfajardo    - Removed scripts for Breakfunding confirm messages after release
     mx LoanIQ activate window    ${LIQ_Payment_Window}    
     Mx LoanIQ Select Window Tab    ${LIQ_Payment_Tab}    Workflow
     Mx LoanIQ Select Or DoubleClick In Javatree    ${LIQ_Payment_WorkflowItems}    Release%s 
     Mx LoanIQ DoubleClick    ${LIQ_Payment_WorkflowItems}    Release
-    :FOR    ${i}    IN RANGE    5
-     \    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
-     \    ${Warning_Status}    Run Keyword And Return Status    Mx LoanIQ Verify Object Exist    ${LIQ_Warning_Window}     VerificationData="Yes"
-     \    Exit For Loop If    ${Warning_Status}==False
-    Verify If Information Message is Displayed
-    ${message}    Mx LoanIQ Get Data    ${LIQ_BreakFunding_Message}    Message
-    Run Keyword And Continue On Failure    Should Contain    ${message}    This transaction would cause breakfunding. Do you want to create a breakfunding fee payment?           
-    mx LoanIQ click    ${LIQ_BreakFunding_Yes_Button}
-    mx LoanIQ activate window    ${LIQ_UnscheduledPrincipalPayment_Breakfunding_Window}    
-    Mx LoanIQ Select Combo Box Value    ${LIQ_UnscheduledPrincipalPayment_Breakfunding_ComboBox}     Borrower Decision
-    mx LoanIQ click    ${LIQ_UnscheduledPrincipalPayment_Breakfunding_OK_Button}
-    Run Keyword And Continue On Failure    Mx LoanIQ DoubleClick    ${LIQ_Payment_WorkflowItems}    Release
-    :FOR    ${i}    IN RANGE    5
-     \    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
-     \    ${Warning_Status}    Run Keyword And Return Status    Mx LoanIQ Verify Object Exist    ${LIQ_Warning_Window}     VerificationData="Yes"
-     \    Exit For Loop If    ${Warning_Status}==False
     mx LoanIQ activate window    ${LIQ_Payment_Released_Status_Window}
 
 Open Unscheduled Payment Notebook via WIP - Awaiting Generate Intent Notices
