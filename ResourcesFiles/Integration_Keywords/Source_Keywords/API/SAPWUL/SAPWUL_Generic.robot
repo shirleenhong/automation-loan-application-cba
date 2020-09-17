@@ -103,24 +103,13 @@ Clear Other Specified SAPWUL Cell Data
 Create Customer External ID List
     [Documentation]    This keyword creates an External ID list.
     ...    @author: hstone    13SEP2019    Initial create
-    ...    @update: hstone    10OCT2019    Customers Arranged by their Customer ID (Increasing Order)
-    # [Arguments]    @{sCustomerExternalIdItems}
-    # ${sCustomerExternalId_List}    Create List
-    # Append To List    ${sCustomerExternalId_List}    @{sCustomerExternalIdItems}[0]
-    # ${sCustomerExternalIdItems_Max}    Get Length    ${sCustomerExternalIdItems}
-    # :FOR    ${CustomerExternalId_Item_Num}    IN RANGE    1    ${sCustomerExternalIdItems_Max}
-    # \    Exit For Loop If    ${CustomerExternalId_Item_Num}==${sCustomerExternalIdItems_Max}
-    # \    ${sCustomerExternalId_List}    Insert to Customer External ID List    ${sCustomerExternalId_List}    @{sCustomerExternalIdItems}[${CustomerExternalId_Item_Num}]
-    # Log    (Create Customer External ID Item) sCustomerExternalId_List = ${sCustomerExternalId_List}
-    # [Return]    ${sCustomerExternalId_List}
-    
+    ...    @update: hstone    10OCT2019    Customers Arranged by their Customer ID (Increasing Order)    
     [Arguments]    @{sCustomerExternalIdItems}
     ${sCustomerExternalId_List}    Create List
     Append To List    ${sCustomerExternalId_List}    @{sCustomerExternalIdItems}[0]
     ${sCustomerExternalIdItems_Max}    Get Length    ${sCustomerExternalIdItems}
     :FOR    ${CustomerExternalId_Item_Num}    IN RANGE    1    ${sCustomerExternalIdItems_Max}
     \    Exit For Loop If    ${CustomerExternalId_Item_Num}==${sCustomerExternalIdItems_Max}
-    \    Log    @{sCustomerExternalIdItems}[${CustomerExternalId_Item_Num}]
     \    ${sCustomerExternalId_List}    Insert to Customer External ID List    ${sCustomerExternalId_List}    @{sCustomerExternalIdItems}[${CustomerExternalId_Item_Num}]
     Log    (Create Customer External ID Item) sCustomerExternalId_List = ${sCustomerExternalId_List}
     [Return]    ${sCustomerExternalId_List}

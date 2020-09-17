@@ -11,7 +11,7 @@ SAPWUL_UPD08
 	[Documentation]    Verify that user is able to Add New facility or Unscheduled Increase and payload is generated successfully
     ...    @author: ehugo
     ...    @update: amansuet    30OCT2019    - Updated values in Variables 
-    ...    @update: mcastro     16SEPT2020    Updated variables with correct values
+    ...    @update: mcastro     16SEP2020    Updated variables with correct values
     ### SAPWUL Data Clear ###
     Mx Execute Template With Multiple Data    Clear SAPWUL Data     ${SAPWUL_DATASET}    ${SAPWULRowID}    SAPWUL_Payload
     
