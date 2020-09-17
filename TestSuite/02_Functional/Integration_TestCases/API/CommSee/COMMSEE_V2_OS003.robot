@@ -2,7 +2,7 @@
 Resource    ../../../../../Configurations/LoanIQ_Import_File.robot
 
 *** Variables ***
-${rowid}    1
+${rowid}    2
 
 *** Test Cases ***
 
@@ -15,7 +15,7 @@ Create Deal for SBLC Issuance
     Mx Execute Template With Multiple Data    Setup Issuance Fee for Facility - ComSee     ${ComSeeDataSet}    ${rowid}    ComSee_SC3_FacFeeSetup
     Mx Execute Template With Multiple Data    Setup a Primary Notebook with SBLC - ComSee    ${ComSeeDataSet}    ${rowid}    ComSee_SC3_Deal
     
-Get Outstanding SBLC Guarantee using V1 Endpoint
+Get Outstanding SBLC Guarantee using V2 Endpoint
     [Documentation]   This ComSee test case is used to get and validate Customer's Outstanding Details before Issuance payment is made. 
     ...    author: rtarayao    21AUG2019    - Initial Create
     Mx Execute Template With Multiple Data    Create SBLC Guarantee Issuance - ComSee    ${ComSeeDataSet}    ${rowid}    ComSee_SC3_Issuance

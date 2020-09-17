@@ -3,15 +3,16 @@ Resource    ../../../../../Configurations/Integration_Import_File.robot
 
 *** Variables ***
 ${DealRowID}    1
-${Facility_RowID}    16
-${SAPWULRowID}    10
+${Facility_RowID}    13
+${SAPWULRowID}    9
 
 *** Test Cases ***
 SAPWUL_UPD05
     [Tags]    SAPWUL_UPD05
 	[Documentation]    Verify that user is able to Update Facility Primary Borrower or Guarantor and payload is generated successfully
     ...    @author: ehugo
-    ...    @update: amansuet    30OCT2019    - Updated values in Variables 
+    ...    @update: amansuet    30OCT2019    - Updated values in Variables
+    ...    @update: mcastro     14SEP2020    Updated variables with correct value
     ### SAPWUL Data Clear ###
     Mx Execute Template With Multiple Data    Clear SAPWUL Data     ${SAPWUL_DATASET}    ${SAPWULRowID}    SAPWUL_Payload
     

@@ -1,0 +1,10 @@
+Essence_EODControlAndStatusEnquiry_ProcessStatus_ComboBox = '//input[contains(@id,"processStatus")]'
+Essence_EODControlAndStatusEnquiry_ActiveInactiveFlag_ComboBox = '//input[contains(@id,"activeFlag")]'
+Essence_EODControlAndStatusEnquiry_ExecutionOrderOperator_ComboBox = '//input[contains(@id,"executionOrderOperator") and @type="combo"]'
+Essence_EODControlAndStatusEnquiry_ExecutionOrder_TextBox = '//input[contains(@id,"executionOrder") and @type="text"]'
+Essence_EODControlAndStatusEnquiry_MicroflowCalled_TextBox = '//input[contains(@id,"microflowName")]'
+Essence_EODControlAndStatusEnquiry_ProcessDescription_TextBox = '//input[contains(@id,"processDesc")]'
+Essence_EODControlAndStatusEnquiry_Filter_Button = '//input[contains(@name,"Filter")]'
+
+Essence_EODControlAndStatusEnquiry_TableHeader_Locator = '//div[contains(@uitype,"Table")]//div[contains(@class,"GridMasterHeader")]//th'
+Essence_EODControlAndStatusEnquiry_TableRow_Locator = '//div[contains(@uitype,"Table")]//div[contains(@class,"GridMasterView")]//tr'
