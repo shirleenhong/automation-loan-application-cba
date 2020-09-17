@@ -104,7 +104,8 @@ Verify if Status is set to Do It
     Run Keyword If    '${status}'=='True'    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/CashflowNotebook_CashflowVerification
     ...    ELSE    Log    Status is already set to Do it
     Log    Verify Status is set to do it is complete
-
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/CashflowsForLoanRepricing
+    
 Get Transaction Amount in Cashflow
     [Documentation]    This keyword will use the Customer Shortname as the index for identifying the Tran Amount inside the Cashflow
     ...    @author: ritragel
