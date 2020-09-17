@@ -2,8 +2,8 @@
 Resource    ../../../../../Configurations/Integration_Import_File.robot
 
 *** Variables ***
-${Facility_RowID}    19
-${SAPWULRowID}    13
+${Facility_RowID}    16
+${SAPWULRowID}    12
 
 *** Test Cases ***
 SAPWUL_UPD08
@@ -11,7 +11,8 @@ SAPWUL_UPD08
 	[Documentation]    Verify that user is able to Add New facility or Unscheduled Increase and payload is generated successfully
     ...    @author: ehugo
     ...    @update: amansuet    30OCT2019    - Updated values in Variables 
-    ## SAPWUL Data Clear ###
+    ...    @update: mcastro     16SEPT2020    Updated variables with correct values
+    ### SAPWUL Data Clear ###
     Mx Execute Template With Multiple Data    Clear SAPWUL Data     ${SAPWUL_DATASET}    ${SAPWULRowID}    SAPWUL_Payload
     
     ### Facility Update ###
@@ -24,3 +25,4 @@ SAPWUL_UPD08
     Mx Execute Template With Multiple Data    Create Payload Expected JSON Files     ${SAPWUL_DATASET}    ${SAPWULRowID}    SAPWUL_Payload
     Mx Execute Template With Multiple Data    Verify Deal Event XML     ${SAPWUL_DATASET}    ${Facility_RowID}    FacilityData
     Mx Execute Template With Multiple Data    Verify FFC SAPWUL Facility Payload     ${SAPWUL_DATASET}    ${SAPWULRowID}    SAPWUL_Payload
+    
