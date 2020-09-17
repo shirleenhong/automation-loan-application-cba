@@ -13,13 +13,12 @@ ${SCENARIO}    3
    
 Create Quick Party Onboarding for CBA UAT Deal 3 - PTY001
     [Tags]    01 Create Party within Essence - PTY001
-    # Mx Launch UFT    Visilibity=True    UFTAddins=Java
+    Mx Launch UFT    Visilibity=True    UFTAddins=Java
     Mx Execute Template With Multiple Data    Create Deal Borrower initial details in Quick Party Onboarding    ${CBAUAT_ExcelPath}    1    PTY001_QuickPartyOnboarding
     Mx Execute Template With Multiple Data    Populate Quick Enterprise Party with Approval    ${CBAUAT_ExcelPath}    1    PTY001_QuickPartyOnboarding   
 
 Complete Customer Profile - ORIG03
     [Tags]    02 Complete Borrower's Profile - 0RIG03
-    # Mx Launch UFT    Visiblity=True    UFTAddins=Java
     Mx Execute Template With Multiple Data    Search Customer and Complete its Borrower Profile Creation with default values for Deal Template Three    ${CBAUAT_ExcelPath}    1    ORIG03_Customer
     Mx Execute Template With Multiple Data    Add Remittance Instruction for D00000476    ${CBAUAT_ExcelPath}    1    ORIG03_Customer
     Mx Execute Template With Multiple Data    Add IMT message code for UAT Deal for D00000476    ${CBAUAT_ExcelPath}    1    ORIG03_Customer    
@@ -75,35 +74,34 @@ Setup TL API - Prerequisite
     Mx Execute Template With Multiple Data    Load Base Rate D00000476    ${CBAUAT_ExcelPath}    1    BaseRate_Fields
     Mx Execute Template With Multiple Data    Load FX Rate D00000476     ${CBAUAT_ExcelPath}    1    FXRates_Fields
 
-# ### November 28
-# Setup BaseRate for Nov 28
-    # Mx Execute Template With Multiple Data    Load Base Rate D00000476    ${CBAUAT_ExcelPath}    1    BaseRate_Fields
+### November 28
+Setup BaseRate for Nov 28
+    Mx Execute Template With Multiple Data    Load Base Rate D00000476    ${CBAUAT_ExcelPath}    1    BaseRate_Fields
     
-# Deal Template
-    # Mx Execute Template With Multiple Data    Setup Deal D00000476    ${CBAUAT_ExcelPath}    1    CRED01_DealSetup
-    # Mx Execute Template With Multiple Data    Setup Deal Bank Role    ${CBAUAT_ExcelPath}    1    CRED01_DealSetup
-    # Mx Execute Template With Multiple Data    Setup Deal Admin Fee    ${CBAUAT_ExcelPath}    1    CRED01_DealSetup
-    # Mx Execute Template With Multiple Data    Setup Deal Calendar    ${CBAUAT_ExcelPath}    1-2    CRED01_DealSetup
-    # Mx Execute Template With Multiple Data    Setup Deal Interest Pricing Options    ${CBAUAT_ExcelPath}    1-5    CRED01_DealSetup
-    # Mx Execute Template With Multiple Data    Setup Deal Fee Pricing Rules    ${CBAUAT_ExcelPath}    1    CRED01_DealSetup
-    # Mx Execute Template With Multiple Data    Setup Facility Template D00000476    ${CBAUAT_ExcelPath}    1    CRED02_FacilitySetup
-    # Mx Execute Template With Multiple Data    Setup Facility Fees D00000476    ${CBAUAT_ExcelPath}    1    CRED08_FacilityFeeSetup
-    # Mx Execute Template With Multiple Data    Setup Facility Template D00000476    ${CBAUAT_ExcelPath}    2    CRED02_FacilitySetup
-    # Mx Execute Template With Multiple Data    Setup Facility Fees D00000476    ${CBAUAT_ExcelPath}    2    CRED08_FacilityFeeSetup
-    # Mx Execute Template With Multiple Data    Setup Facility Template D00000476    ${CBAUAT_ExcelPath}    3    CRED02_FacilitySetup
-    # Mx Execute Template With Multiple Data    Setup Facility Fees D00000476    ${CBAUAT_ExcelPath}    3    CRED08_FacilityFeeSetup
-    # Mx Execute Template With Multiple Data    Setup Facility Template D00000476    ${CBAUAT_ExcelPath}    4    CRED02_FacilitySetup
-    # Mx Execute Template With Multiple Data    Setup Facility Fees D00000476    ${CBAUAT_ExcelPath}    4    CRED08_FacilityFeeSetup
-    # Mx Execute Template With Multiple Data    Setup Primaries D00000476    ${CBAUAT_ExcelPath}    1    CRED01_Primaries
-    # Mx Execute Template With Multiple Data    Setup Commitment Fee Effective Date    ${CBAUAT_ExcelPath}    1-3   CommitmentFee
-    # Mx Execute Template With Multiple Data    Approve and Close UAT Deal    ${CBAUAT_ExcelPath}    1    CRED01_DealSetup
-    # Mx Execute Template With Multiple Data    Commitment Fee Release    ${CBAUAT_ExcelPath}    1-3    SERV29_CommitmentFeePayment
+Deal Template
+    Mx Execute Template With Multiple Data    Setup Deal D00000476    ${CBAUAT_ExcelPath}    1    CRED01_DealSetup
+    Mx Execute Template With Multiple Data    Setup Deal Bank Role    ${CBAUAT_ExcelPath}    1    CRED01_DealSetup
+    Mx Execute Template With Multiple Data    Setup Deal Calendar    ${CBAUAT_ExcelPath}    1-2    CRED01_DealSetup
+    Mx Execute Template With Multiple Data    Setup Deal Interest Pricing Options    ${CBAUAT_ExcelPath}    1-5    CRED01_DealSetup
+    Mx Execute Template With Multiple Data    Setup Deal Fee Pricing Rules    ${CBAUAT_ExcelPath}    1    CRED01_DealSetup
+    Mx Execute Template With Multiple Data    Setup Facility Template D00000476    ${CBAUAT_ExcelPath}    1    CRED02_FacilitySetup
+    Mx Execute Template With Multiple Data    Setup Facility Fees D00000476    ${CBAUAT_ExcelPath}    1    CRED08_FacilityFeeSetup
+    Mx Execute Template With Multiple Data    Setup Facility Template D00000476    ${CBAUAT_ExcelPath}    2    CRED02_FacilitySetup
+    Mx Execute Template With Multiple Data    Setup Facility Fees D00000476    ${CBAUAT_ExcelPath}    2    CRED08_FacilityFeeSetup
+    Mx Execute Template With Multiple Data    Setup Facility Template D00000476    ${CBAUAT_ExcelPath}    3    CRED02_FacilitySetup
+    Mx Execute Template With Multiple Data    Setup Facility Fees D00000476    ${CBAUAT_ExcelPath}    3    CRED08_FacilityFeeSetup
+    Mx Execute Template With Multiple Data    Setup Facility Template D00000476    ${CBAUAT_ExcelPath}    4    CRED02_FacilitySetup
+    Mx Execute Template With Multiple Data    Setup Facility Fees D00000476    ${CBAUAT_ExcelPath}    4    CRED08_FacilityFeeSetup
+    Mx Execute Template With Multiple Data    Setup Ongoing Fee    ${CBAUAT_ExcelPath}    1-4   CRED08_OngoingFeeSetup
+    Mx Execute Template With Multiple Data    Setup Primaries D00000476    ${CBAUAT_ExcelPath}    1    CRED01_Primaries
+    Mx Execute Template With Multiple Data    Approve and Close UAT Deal    ${CBAUAT_ExcelPath}    1    CRED01_DealSetup
+    Mx Execute Template With Multiple Data    Commitment Fee Release    ${CBAUAT_ExcelPath}    1-3    SERV29_CommitmentFeePayment
 
-# Issue LC1 - D00000476
-    # Mx Execute Template With Multiple Data    Issue LC D00000476    ${CBAUAT_ExcelPath}    1    SERV05_SBLCIssuance
+Issue LC1 - D00000476
+    Mx Execute Template With Multiple Data    Issue LC D00000476    ${CBAUAT_ExcelPath}    1    SERV05_SBLCIssuance
     
-# Create Drawdown A B C D00000476
-    # Mx Execute Template With Multiple Data    Create Drawdown D00000476    ${CBAUAT_ExcelPath}    1-3    SERV01A_LoanDrawdown
+Create Drawdown A B C D00000476
+    Mx Execute Template With Multiple Data    Create Drawdown D00000476    ${CBAUAT_ExcelPath}    1-3    SERV01_LoanDrawdown
 
 # #### November 30 
 # Collect LC1 - D00000476

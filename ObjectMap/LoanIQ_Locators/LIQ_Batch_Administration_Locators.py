@@ -20,15 +20,15 @@ LIQ_Scheduled_Editor_Ok_Button = 'JavaWindow("title:=ScheduleEditorSchedule.*").
 
 
 ###EXECUTION JOURNAL####
-LIQ_Execution_Scheduled_ExecutionDate_ComboBox = 'JavaWindow("title:=Exec Journal for MASTER").JavaList("attached text:=Execution Date:")'
-LIQ_Execution_Scheduled_File_Purge_Menu = 'JavaWindow("title:=Exec Journal for MASTER").JavaMenu("label:=File").JavaMenu("label:=Purge...")'
-LIQ_Execution_Scheduled_File_Purge_From_Date = 'JavaWindow("title:=Exec Journal for MASTER").JavaWindow("title:=Purge...").JavaEdit("attached text:=From Date:")'
-LIQ_Execution_Scheduled_File_Purge_To_Date = 'JavaWindow("title:=Exec Journal for MASTER").JavaWindow("title:=Purge...").JavaEdit("attached text:=To Date:")'
-LIQ_Execution_Scheduled_File_Purge_Ok_Button = 'JavaWindow("title:=Exec Journal for MASTER").JavaWindow("title:=Purge...").JavaButton("attached text:=OK")'
-LIQ_Execution_Scheduled_Items_Count = 'JavaWindow("title:=Exec Journal for MASTER").JavaTree("items count:=0","attached text:=Execution Date:")'
-LIQ_Execution_Window = 'JavaWindow("title:=Exec Journal for MASTER")'
-LIQ_Execution_Scheduled_JavaTree = 'JavaWindow("title:=Exec Journal for MASTER").JavaTree("attached text:=Execution Date:")'
-LIQ_Execution_Scheduled_File_Refresh = 'JavaWindow("title:=Exec Journal for MASTER").JavaMenu("label:=File").JavaMenu("label:=Refresh")'
+LIQ_Execution_Scheduled_ExecutionDate_ComboBox = 'JavaWindow("title:=Exec Journal.*").JavaList("attached text:=Execution Date:")'
+LIQ_Execution_Scheduled_File_Purge_Menu = 'JavaWindow("title:=Exec Journal.*").JavaMenu("label:=File").JavaMenu("label:=Purge...")'
+LIQ_Execution_Scheduled_File_Purge_From_Date = 'JavaWindow("title:=Exec Journal.*").JavaWindow("title:=Purge...").JavaEdit("attached text:=From Date:")'
+LIQ_Execution_Scheduled_File_Purge_To_Date = 'JavaWindow("title:=Exec Journal.*").JavaWindow("title:=Purge...").JavaEdit("attached text:=To Date:")'
+LIQ_Execution_Scheduled_File_Purge_Ok_Button = 'JavaWindow("title:=Exec Journal.*").JavaWindow("title:=Purge...").JavaButton("attached text:=OK")'
+LIQ_Execution_Scheduled_Items_Count = 'JavaWindow("title:=Exec Journal.*").JavaTree("items count:=0","attached text:=Execution Date:")'
+LIQ_Execution_Window = 'JavaWindow("title:=Exec Journal.*")'
+LIQ_Execution_Scheduled_JavaTree = 'JavaWindow("title:=Exec Journal.*").JavaTree("attached text:=Execution Date:")'
+LIQ_Execution_Scheduled_File_Refresh = 'JavaWindow("title:=Exec Journal.*").JavaMenu("label:=File").JavaMenu("label:=Refresh")'
 LIQ_Execution_Scheduled_Location_ComboBox = 'JavaWindow("title:=.*Exec Journal.*").JavaList("attached text:=Location.*")'
 
 ###ENVIRONMENT PARAMETER###

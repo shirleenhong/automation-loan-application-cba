@@ -111,8 +111,9 @@ BUS_Set Repricing Detail Add Options
 BUS_Validate Loan Repricing New Outstanding Amount
     [Documentation]    This keyword is used to run the assigned low level keyword.
     ...    @author: sahalder    24JUN2020    - initial create
+    ...    @update: dahijara    25AUG2020    - added 1 argument
 
-    Run Keyword   Validate Loan Repricing New Outstanding Amount    ${ARGUMENT_1}    ${ARGUMENT_2}
+    Run Keyword   Validate Loan Repricing New Outstanding Amount    ${ARGUMENT_1}    ${ARGUMENT_2}    ${ARGUMENT_3}
 
 BUS_Validate Loan Repricing Effective Date
     [Documentation]    This keyword is used to run the assigned low level keyword.

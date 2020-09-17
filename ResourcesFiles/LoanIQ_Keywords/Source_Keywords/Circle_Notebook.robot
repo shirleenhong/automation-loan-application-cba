@@ -980,7 +980,7 @@ Circle Notebook Settlement Approval
 
     Navigate Transaction in WIP for Circles    Awaiting Settlement Approval    ${Lender_Type}    ${Deal_Name}
     Navigate Notebook Workflow    ${LIQ_OrigPrimaries_Window}    ${LIQ_OrigPrimaries_Tab}    ${LIQ_PrimaryCircle_Workflow_JavaTree}    Settlement Approval
-    ${OrigPrimary_Status}    Run Keyword And Return Status    Mx LoanIQ Verify Object Exist    JavaWindow("title:=.*Settlement Approved.*Orig Primary.*")    VerificationData="Yes"
+    ${OrigPrimary_Status}    Run Keyword And Return Status    Mx LoanIQ Verify Object Exist    ${LIQ_PrimaryCircle_OrigPrimary_Window}    VerificationData="Yes"
     ${OrigPrimary_Status}    Set Variable If    ${OrigPrimary_Status}==True    Settlement Approved
     Run Keyword If    '${OrigPrimary_Status}'=='Settlement Approved'    Log    Lender Status is ${OrigPrimary_Status}.
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/PrimariesWindow_Approval

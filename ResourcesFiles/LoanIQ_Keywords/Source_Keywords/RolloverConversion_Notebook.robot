@@ -267,7 +267,8 @@ Set RolloverConversion Notebook General Details
     ...                This keyword will return the 'Effective Date' and 'Loan_Alias' to be used in succeeding validations/transactions.
     ...                @author: bernchua    26AUG2019    Initial create
     ...                @update: sahalder    25JUN2020    Added keyword Pre-Processing steps
-    [Arguments]    ${sRequested_Amount}    ${sRepricing_Frequency}
+    ...    @update: dahijara    25AUG2020    Added steps for saving. Added post processing and screenshot.
+    [Arguments]    ${sRequested_Amount}    ${sRepricing_Frequency}    ${sRunVar_Effective_Date}=None    ${sRunVar_Loan_Alias}=None
     
     ### GetRuntime Keyword Pre-processing ###
     ${Requested_Amount}    Acquire Argument Value    ${sRequested_Amount}
@@ -280,12 +281,20 @@ Set RolloverConversion Notebook General Details
     Mx LoanIQ Select Combo Box Value    ${LIQ_RolloverConversion_RepricingFrequency_List}    ${Repricing_Frequency}
     ${Effective_Date}    Mx LoanIQ Get Data    ${LIQ_RolloverConversion_EffectiveDate_Textfield}    value%date
     ${Loan_Alias}    Mx LoanIQ Get Data    ${LIQ_RolloverConversion_Alias_Textfield}    value%alias
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/RolloverConversion
+
+    Save Notebook Transaction    ${LIQ_RolloverConversion_Window}    ${LIQ_RolloverConversion_Save_Menu}
+	
+    ### ConstRuntime Keyword Post-processing ###
+    Save Values of Runtime Execution on Excel File    ${sRunVar_Effective_Date}    ${Effective_Date}
+    Save Values of Runtime Execution on Excel File    ${sRunVar_Loan_Alias}    ${Loan_Alias}
     [Return]    ${Effective_Date}    ${Loan_Alias}
     
 Set RolloverConversion Notebook Rates
     [Documentation]    Low-level keyword used to go to the Rollover/Conversion Notebook - Rates Tab, set and validate the Rates.
     ...                @author: bernchua    26AUG2019    Initial create
     ...                @update: sahalder    25JUN2020    Added keyword Pre-Processing steps
+    ...    @update: dahijara    25AUG2020    Added screenshot.
     [Arguments]    ${sBorrower_BaseRate}    ${sAcceptRateFromPricing}=N
     
     ### GetRuntime Keyword Pre-processing ###
@@ -296,7 +305,9 @@ Set RolloverConversion Notebook Rates
     Mx LoanIQ Select Window Tab    ${LIQ_RolloverConversion_Tab}    Rates
     mx LoanIQ click    ${LIQ_RolloverConversion_BaseRate_Button}
     Verify If Warning Is Displayed
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/RolloverConversion_BaseRate
     Set Base Rate Details    ${Borrower_BaseRate}    ${AcceptRateFromPricing}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/RolloverConversion_BaseRate
     
 Close RolloverConversion Notebook
     [Documentation]    Low-level keyword used to save and exit the Rollover/Conversion Notebook window.
@@ -383,3 +394,20 @@ Navigate to Rollover Conversion Notebook Workflow
     ...    AND    mx LoanIQ click element if present    ${LIQ_Information_OK_Button}
     ...    ELSE IF    '${Transaction}'=='Close'    mx LoanIQ click element if present    ${LIQ_Information_OK_Button}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/${sScreenshot_Name}
+
+Set FX Rates Rollover or Conversion
+    [Documentation]    This keyword set the FX rates of USD Rollover or Conversion from workflow before Rate Approval
+    ...    @author: dahijara    27AUG2019    - Initial Keyword
+    [Arguments]    ${sCurrency}
+    ### GetRuntime Keyword Pre-processing ###
+    ${Currency}    Acquire Argument Value    ${sCurrency}
+
+    mx LoanIQ activate window    ${LIQ_LoanRepricingForDeal_Window}
+    Mx LoanIQ Select Window Tab    ${LIQ_LoanRepricingForDeal_Workflow_Tab}    Workflow   
+    Mx LoanIQ DoubleClick    ${LIQ_LoanRepricingForDeal_Workflow_JavaTree}    Set F/X Rate
+    mx LoanIQ activate window    ${LIQ_FacilityCurrency_Window}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/InitialDrawdown_Workflow
+    mx LoanIQ click    JavaWindow("title:=Facility Currency.*","displayed:=1").JavaButton("attached text:=Use Facility.*to ${sCurrency} Rate")
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/InitialDrawdown_Workflow
+    mx LoanIQ click    ${LIQ_FacilityCurrency_Facility_Rate_Ok_Button}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/InitialDrawdown_Workflow

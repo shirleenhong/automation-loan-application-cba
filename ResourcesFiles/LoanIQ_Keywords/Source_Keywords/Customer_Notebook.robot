@@ -645,7 +645,7 @@ Add Contact under Profiles Tab
     [Arguments]    ${sCustomer_Location}    ${sLIQCustomer_ShortName}    ${sContact_FirstName}    ${sContact_LastName}    ${sContact_PreferredLanguage}    ${sContact_PrimaryPhone}    ${sBorrowerContact_Phone}    ${sContact_PurposeType}    ${sContactNotice_Method}    ${sContact_Email}
     ...    ${sProductSBLC_Checkbox}    ${sProductLoan_Checkbox}    ${bBalanceType_Principal_Checkbox}    ${bBalanceType_Interest_Checkbox}    ${bBalanceType_Fees_Checkbox}    ${sAddress_Code}   
     
-    ### Keyword Pre-processing ###
+    ## Keyword Pre-processing ###
     ${Customer_Location}    Acquire Argument Value    ${sCustomer_Location}
     ${LIQCustomer_ShortName}    Acquire Argument Value    ${sLIQCustomer_ShortName}
     ${Contact_FirstName}    Acquire Argument Value    ${sContact_FirstName}
@@ -676,6 +676,7 @@ Add Contact under Profiles Tab
     Validate Contact List for 'Location' Window    ${Customer_Location}
     Mx LoanIQ Click    ${ContactListWindow_ExitButton}
     Validate 'Active Customer' Window    ${LIQCustomer_ShortName}
+    
     
 Validate Contact List for 'Location' Window
     [Documentation]    This keyword validates the Window Name of Contact List for 'Location' Window
@@ -1442,6 +1443,7 @@ Close Servicing Group Remittance Instructions Selection List Window
     Mx LoanIQ Activate    ${ServicingGroupWindow}
     Take Screenshot    ${Screenshot_Path}/Screenshots/LoanIQ/ServicingGroupsWindow
     Run Keyword If    '${LIQCustomer_ShortName}' != 'None'    Validate 'Serving Groups For:' Window    ${LIQCustomer_ShortName}
+    mx LoanIQ click    ${ServicingGroupWindow_ExitButton}
     
 Validate Added Remittance Instructions
     [Documentation]    This keyword validates the Added Remittance Instructions against from excel data  
@@ -1894,7 +1896,7 @@ Approving Remittance Instruction
     Mx LoanIQ DoubleClick    ${RemittanceList_Window_RemittanceList}    ${RemittanceInstruction_DDADescriptionAUD}
     Approve Remittance Instruction
     Take Screenshot    ${Screenshot_Path}/Screenshots/LoanIQ/RemittanceInstructionsDetailWindow
-    Mx LoanIQ Select    ${LIQ_RemittanceInstruction_Notebook_FileMenu_ExitMenu}
+    Mx LoanIQ Select    ${LIQ_RemittanceInstruction_Notebook_FileMenu_ExitMenu}    
         
 Approving DDA-AUD Remittance Instruction
     [Documentation]    This keyword approves DDA-AUD Remittance Instruction to the Details of a Contact of a Customer
@@ -2330,6 +2332,24 @@ Add IMT Message in Remittance Instruction
     Send Remittance Instruction to Approval
     mx LoanIQ select    ${LIQ_RemittanceInstruction_Notebook_FileMenu_ExitMenu} 
 
+Add IMT Message in Remittance Instruction with Default values    
+    [Documentation]    This keyword adds RTGS-AUD Remittance Instruction with default values
+    ...    @author: fmamaril    09AUG2019    
+    [Arguments]    ${sIMT_MessageCode}    ${sRI_SendersCorrespondent_Checkbox}    ${sBOC_Level}   
+    mx LoanIQ click    ${RemittanceList_Window_RemittanceInstructionsDetail_AddButton}    
+    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
+    mx LoanIQ enter   ${RemittanceList_Window_RemittanceInstructionsDetail_SelectMessageType_SearchField}    ${sIMT_MessageCode}
+    Mx Native Type    {ENTER}
+    mx LoanIQ activate window    ${RemittanceList_Window_RemittanceInstructionsDetail_IMT_Window}
+    Mx LoanIQ Check Or Uncheck    ${RemittanceList_Window_RemittanceInstructionsDetail_IMT_SendersCorrespondent_Checkbox}    ${sRI_SendersCorrespondent_Checkbox}    
+    Mx LoanIQ Select Combo Box Value    ${RemittanceList_Window_RemittanceInstructionsDetail_IMT_BankOperationCode}    ${sBOC_Level}
+    mx LoanIQ click    ${RemittanceList_Window_RemittanceInstructionsDetail_IMT_OKButton}        
+    mx LoanIQ select    ${LIQ_RemittanceInstruction_Notebook_FileMenu_SaveMenu}
+    mx LoanIQ click element if present    ${LIQ_Warning_OK_Button}
+    Send Remittance Instruction to Approval
+    mx LoanIQ select    ${LIQ_RemittanceInstruction_Notebook_FileMenu_ExitMenu}
+    mx LoanIQ click    ${RemittanceList_Window_ExitButton}
+
 Add IMT Message in Remittance Instructions Detail
     [Documentation]    This keyword adds IMT message in Remittance Instructions detail of a Customer
     ...    @author: fmamaril    19AUG2019
@@ -2470,3 +2490,21 @@ Add Location under Profiles Tab for UAT Deal
     ...    AND    Mx LoanIQ Activate    ${LIQ_BorrowerDetails_Window}
     ...    AND    Mx LoanIQ Click    ${LIQ_BorrowerDetails_OKButton}
     Take Screenshot    ${Screenshot_Path}/Screenshots/LoanIQ/LocationDetailsWindow
+
+Navigate to Customer Notebook
+    [Documentation]    This keyword searches existing customer using Customer's Enterprise Name\Legal\Short Name
+    ...    @author: rtarayao    26AUG2019    - Initial Create
+    [Arguments]    ${LIQCustomer_ShortName}         
+    Select Actions    [Actions];Customer
+    mx LoanIQ activate window    ${LIQ_CustomerSelect_Window}
+    Validate Window Title    Customer Select
+    mx LoanIQ enter    ${LIQ_CustomerSelect_Search_Inputfield}     ${LIQCustomer_ShortName}
+    mx LoanIQ click    ${LIQ_CustomerSelect_OK_Button}
+    mx LoanIQ activate window    ${LIQ_ActiveCustomer_Window}   
+    
+Get Customer ID
+    [Documentation]    This keyword returns the Customer ID. 
+    ...    @author: rtarayao    27AUG2019    - Initial Create
+    mx LoanIQ activate window    ${LIQ_ActiveCustomer_Window}        
+    ${LIQCustomer_ID}    Mx LoanIQ Get Data    ${LIQ_ActiveCustomer_Window_CustomerID}    testdata
+    [Return]    ${LIQCustomer_ID}

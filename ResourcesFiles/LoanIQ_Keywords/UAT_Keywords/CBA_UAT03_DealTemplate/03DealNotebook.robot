@@ -19,12 +19,12 @@ Setup Deal D00000476
     Write Data To Excel    CRED02_FacilitySetup    Facility_Borrower1    &{ExcelPath}[rowid]    ${Borrower_ShortName}    ${CBAUAT_ExcelPath}    multipleValue=Y
     Write Data To Excel    CRED01_Primaries    Deal_Name    &{ExcelPath}[rowid]    ${Deal_Name}    ${CBAUAT_ExcelPath}
     Write Data To Excel    SERV05_SBLCIssuance    Deal_Name    &{ExcelPath}[rowid]    ${Deal_Name}    ${CBAUAT_ExcelPath}    multipleValue=Y
-    Write Data To Excel    SERV01A_LoanDrawdown    Deal_Name    &{ExcelPath}[rowid]    ${Deal_Name}    ${CBAUAT_ExcelPath}    multipleValue=Y
+    Write Data To Excel    SERV01_LoanDrawdown    Deal_Name    &{ExcelPath}[rowid]    ${Deal_Name}    ${CBAUAT_ExcelPath}    multipleValue=Y
     Write Data To Excel    SERV08C_ComprehensiveRepricing    Deal_Name    &{ExcelPath}[rowid]    ${Deal_Name}    ${CBAUAT_ExcelPath}    multipleValue=Y
     Write Data To Excel    SERV23_Paperclip    Deal_Name    &{ExcelPath}[rowid]    ${Deal_Name}    ${CBAUAT_ExcelPath}    multipleValue=Y 
     Write Data To Excel    SERV40_BreakFunding    Deal_Name   &{ExcelPath}[rowid]    ${Deal_Name}    ${CBAUAT_ExcelPath}    multipleValue=Y
     Write Data To Excel    SERV29_CommitmentFeePayment    Deal_Name    &{ExcelPath}[rowid]    ${Deal_Name}    ${CBAUAT_ExcelPath}    multipleValue=Y
-    Write Data To Excel    CommitmentFee    Deal_Name    &{ExcelPath}[rowid]    ${Deal_Name}    ${CBAUAT_ExcelPath}    multipleValue=Y
+    Write Data To Excel    CRED08_OngoingFeeSetup    Deal_Name    &{ExcelPath}[rowid]    ${Deal_Name}    ${CBAUAT_ExcelPath}    multipleValue=Y
     Write Data To Excel    SERV18_FeeOnLenderSharesPayment    Deal_Name    &{ExcelPath}[rowid]    ${Deal_Name}    ${CBAUAT_ExcelPath}    multipleValue=Y
     Write Data To Excel    SERV29_Payments    Deal_Name    &{ExcelPath}[rowid]    ${Deal_Name}    ${CBAUAT_ExcelPath}    multipleValue=Y    
     Write Data To Excel    AMCH05_ExtendFacility    Deal_Name    &{ExcelPath}[rowid]    ${Deal_Name}    ${CBAUAT_ExcelPath}    multipleValue=Y 
@@ -132,7 +132,8 @@ Setup Primaries D00000476
     Write Data To Excel    CRED01_DealSetup    Primary_PortfolioAllocation    ${rowid}    ${SellAmount}    ${CBAUAT_ExcelPath}
     
     ####Complete Portfolio Allocations###
-    Complete Portfolio Allocations Workflow    &{ExcelPath}[Primary_Portfolio]    &{ExcelPath}[Primary_PortfolioBranch]
+    Complete Portfolio Allocations Workflow    &{ExcelPath}[Primary_Portfolio]|&{ExcelPath}[Primary_Portfolio]|&{ExcelPath}[Primary_Portfolio]|&{ExcelPath}[Primary_Portfolio]
+    ...    &{ExcelPath}[Primary_PortfolioBranch]
     ...    &{ExcelPath}[Primary_PortfolioAllocation1]|&{ExcelPath}[Primary_PortfolioAllocation2]|&{ExcelPath}[Primary_PortfolioAllocation3]|&{ExcelPath}[Primary_PortfolioAllocation4]
     ...    None|None|None|None
     ...    &{ExcelPath}[Facility_Name1]|&{ExcelPath}[Facility_Name2]|&{ExcelPath}[Facility_Name3]|&{ExcelPath}[Facility_Name4]

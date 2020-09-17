@@ -8,6 +8,8 @@ Create Repricing for Loan AA in Deal D00000963
     ...                @author: bernchua    26AUG2019    Inital create
     ...                @author: bernchua    10SEP2019    Added setting up of Repayment Schedule during Repricing
     ...                @author: bernchua    18SEP2019    Updated keyword name
+    ...                @update: aramos      28AUG2020    Update Take Screenshots
+    ...                @update: aramos      10SEP2020    Update [Validate Loan Repricing New Outstanding Amount] in order to provide separate paths for Pricing_Option and Loan_Alias
     [Arguments]    ${ExcelPath}
     
     ${Facility_Spread}    Run Keyword If    '&{ExcelPath}[rowid]'=='1'    Read Data From Excel    CRED02_FacilitySetup    Interest_SpreadValue    1    ${CBAUAT_ExcelPath} 
@@ -33,7 +35,7 @@ Create Repricing for Loan AA in Deal D00000963
     Set RolloverConversion Notebook Rates    &{ExcelPath}[Rollover_BaseRate]
     ${AllInRate}    Add Borrower Base Rate and Facility Spread    &{ExcelPath}[Rollover_BaseRate]    ${Facility_Spread}
     ${AllInRate}    Set Variable    ${AllInRate}%
-    Take Screenshot    LoanRepricing-Rates
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LoanRepricing-Rates
     Validate String Data In LIQ Object    ${LIQ_RolloverConversion_Window}    ${LIQ_RolloverConversion_AllInRate_Text}    ${AllInRate}
     
     ### Setting up of Repayment Schedule
@@ -49,14 +51,13 @@ Create Repricing for Loan AA in Deal D00000963
     Click OK in Add Items for Flexible Schedule
     
     Click OK in Flexible Schedule Window
-    Take Screenshot    LoanNotebook-RepaymentSchedule
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LoanNotebook-RepaymentSchedule
     Save and Exit Repayment Schedule For Loan
     ### End of Repayment Schedule setup script 
     
     Close RolloverConversion Notebook
     
-    ${New_Outstanding}    Set Variable    &{ExcelPath}[Pricing_Option] (${Loan_Alias})
-    Validate Loan Repricing New Outstanding Amount    ${New_Outstanding}    &{ExcelPath}[Rollover_RequestedAmount]
+    Validate Loan Repricing New Outstanding Amount    &{ExcelPath}[Pricing_Option]    ${Loan_Alias}    &{ExcelPath}[Rollover_RequestedAmount]
     Validate Loan Repricing Effective Date    ${Effective_Date}
     
     Navigate Notebook Workflow    ${LIQ_LoanRepricingForDeal_Window}    ${LIQ_LoanRepricingForDeal_Workflow_Tab}    ${LIQ_LoanRepricingForDeal_Workflow_JavaTree}    Send to Approval
@@ -65,16 +66,16 @@ Create Repricing for Loan AA in Deal D00000963
     Login to Loan IQ    ${MANAGER_USERNAME}    ${MANAGER_PASSWORD}
     Navigate Transaction in WIP    Outstandings    Awaiting Approval    Loan Repricing    &{ExcelPath}[Deal_Name]
     Navigate Notebook Workflow    ${LIQ_LoanRepricingForDeal_Window}    ${LIQ_LoanRepricingForDeal_Workflow_Tab}    ${LIQ_LoanRepricingForDeal_Workflow_JavaTree}    Approval
-    Take Screenshot    LoanRepricing-Approved
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LoanRepricing-Approved
     
     Navigate Notebook Workflow    ${LIQ_LoanRepricingForDeal_Window}    ${LIQ_LoanRepricingForDeal_Workflow_Tab}    ${LIQ_LoanRepricingForDeal_Workflow_JavaTree}    Send to Rate Approval
     Logout from Loan IQ
     Login to Loan IQ    ${SUPERVISOR_USERNAME}    ${SUPERVISOR_PASSWORD}
     Navigate Transaction in WIP    Outstandings    Awaiting Rate Approval    Loan Repricing    &{ExcelPath}[Deal_Name]
     Navigate Notebook Workflow    ${LIQ_LoanRepricingForDeal_Window}    ${LIQ_LoanRepricingForDeal_Workflow_Tab}    ${LIQ_LoanRepricingForDeal_Workflow_JavaTree}    Rate Approval
-    Take Screenshot    LoanRepricing-RateApproved
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LoanRepricing-RateApproved
     Navigate Notebook Workflow    ${LIQ_LoanRepricingForDeal_Window}    ${LIQ_LoanRepricingForDeal_Workflow_Tab}    ${LIQ_LoanRepricingForDeal_Workflow_JavaTree}    Release
-    Take Screenshot    LoanRepricing-Released
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LoanRepricing-Released
     
     Close All Windows on LIQ
     Logout from Loan IQ
@@ -86,6 +87,7 @@ Create Repricing and Partial Repayment for Loan AA
     ...                @author: bernchua    11SEP2019    Initial create
     ...                @update: bernchua    18SEP2019    Setting up of new Repayment Schedule for Repriced Loan should be done after Release of Rollover transaction, and on the new Loan
     ...                @update: bernchua    20SEP2019    Added Resynchronizing of Loan's Repayment Schedule before Repricing transaction.
+    ...                @update: aramos      14SEP2020    Updated to change Validate Loan Repricing New Outstanding Amount to Validate Loan Repricing New Outstanding Amount with Description
     [Arguments]    ${ExcelPath}
     
     ${Facility_Spread}    Run Keyword If    '&{ExcelPath}[rowid]'=='1'    Read Data From Excel    CRED02_FacilitySetup    Interest_SpreadValue    1    ${CBAUAT_ExcelPath} 
@@ -111,17 +113,16 @@ Create Repricing and Partial Repayment for Loan AA
     Select Loan Repricing for Deal    &{ExcelPath}[Loan_Alias]
     
     Select Existing Outstandings for Loan Repricing    &{ExcelPath}[Pricing_Option]    &{ExcelPath}[Loan_Alias]
-    
-    ### Scheduled Items - Principal and Interest Payments
-    ${PrincipalPayment_ScheduledItem}    Set Variable    &{ExcelPath}[Pricing_Option] Scheduled Principal Payment (&{ExcelPath}[Loan_Alias])
-    ${InterestPayment_ScheduledItem}    Set Variable    &{ExcelPath}[Pricing_Option] Scheduled Interest Payment (&{ExcelPath}[Loan_Alias])
+
+    ${PrincipalPayment_ScheduledItem}    Set Variable    Scheduled Principal Payment
+    ${InterestPayment_ScheduledItem}    Set Variable    Scheduled Interest Payment
     
     Cick Add in Loan Repricing Notebook
     Set Repricing Detail Add Options    Scheduled Items    &{ExcelPath}[Pricing_Option]    &{ExcelPath}[Facility_Name]    &{ExcelPath}[Borrower_Name]
     Verify If Warning Is Displayed
     ${Principal_Amount}    ${Interest_Amount}    ${Total_Amount}    Set Payments for Loan Details    &{ExcelPath}[ScheduledItem_PrincipalAmount]    &{ExcelPath}[ScheduledItem_InterestAmount]    &{ExcelPath}[ScheduledItem_PaymentAmount]
-    Validate Loan Repricing New Outstanding Amount    ${PrincipalPayment_ScheduledItem}    ${Principal_Amount}
-    Validate Loan Repricing New Outstanding Amount    ${InterestPayment_ScheduledItem}    ${Interest_Amount}
+    Validate Loan Repricing New Outstanding Amount with Description   &{ExcelPath}[Pricing_Option]    &{ExcelPath}[Loan_Alias]     ${PrincipalPayment_ScheduledItem}   ${Principal_Amount}
+    Validate Loan Repricing New Outstanding Amount with Description    &{ExcelPath}[Pricing_Option]    &{ExcelPath}[Loan_Alias]    ${InterestPayment_ScheduledItem}    ${Interest_Amount}
     
     ### Rollover/Conversion Transaction
     Cick Add in Loan Repricing Notebook
@@ -137,12 +138,13 @@ Create Repricing and Partial Repayment for Loan AA
     Set RolloverConversion Notebook Rates    &{ExcelPath}[Rollover_BaseRate]
     ${AllInRate}    Add Borrower Base Rate and Facility Spread    &{ExcelPath}[Rollover_BaseRate]    ${Facility_Spread}
     ${AllInRate}    Set Variable    ${AllInRate}%
-    Take Screenshot    LoanRepricing-Rates
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LoanRepricing-Rates
     Validate String Data In LIQ Object    ${LIQ_RolloverConversion_Window}    ${LIQ_RolloverConversion_AllInRate_Text}    ${AllInRate}
     Close RolloverConversion Notebook
     
-    ${New_Outstanding}    Set Variable    &{ExcelPath}[Pricing_Option] (${Loan_Alias})
-    Validate Loan Repricing New Outstanding Amount    ${New_Outstanding}    &{ExcelPath}[Rollover_RequestedAmount]
+    # ${New_Outstanding}    Set Variable    &{ExcelPath}[Pricing_Option] (${Loan_Alias})
+    # Validate Loan Repricing New Outstanding Amount    ${New_Outstanding}    &{ExcelPath}[Rollover_RequestedAmount]
+    Validate Loan Repricing New Outstanding Amount    &{ExcelPath}[Pricing_Option]    ${Loan_Alias}    &{ExcelPath}[Rollover_RequestedAmount]
     Validate Loan Repricing Effective Date    ${Effective_Date}
     
     Navigate Notebook Workflow    ${LIQ_LoanRepricingForDeal_Window}    ${LIQ_LoanRepricingForDeal_Workflow_Tab}    ${LIQ_LoanRepricingForDeal_Workflow_JavaTree}    Create Cashflows
@@ -156,21 +158,21 @@ Create Repricing and Partial Repayment for Loan AA
     Login to Loan IQ    ${MANAGER_USERNAME}    ${MANAGER_PASSWORD}
     Navigate Transaction in WIP    Outstandings    Awaiting Approval    Loan Repricing    &{ExcelPath}[Deal_Name]
     Navigate Notebook Workflow    ${LIQ_LoanRepricingForDeal_Window}    ${LIQ_LoanRepricingForDeal_Workflow_Tab}    ${LIQ_LoanRepricingForDeal_Workflow_JavaTree}    Approval
-    Take Screenshot    LoanRepricing-Approved
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LoanRepricing-Approved
     
     Navigate Notebook Workflow    ${LIQ_LoanRepricingForDeal_Window}    ${LIQ_LoanRepricingForDeal_Workflow_Tab}    ${LIQ_LoanRepricingForDeal_Workflow_JavaTree}    Send to Rate Approval
     Logout from Loan IQ
     Login to Loan IQ    ${SUPERVISOR_USERNAME}    ${SUPERVISOR_PASSWORD}
     Navigate Transaction in WIP    Outstandings    Awaiting Rate Approval    Loan Repricing    &{ExcelPath}[Deal_Name]
     Navigate Notebook Workflow    ${LIQ_LoanRepricingForDeal_Window}    ${LIQ_LoanRepricingForDeal_Workflow_Tab}    ${LIQ_LoanRepricingForDeal_Workflow_JavaTree}    Rate Approval
-    Take Screenshot    LoanRepricing-RateApproved
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LoanRepricing-RateApproved
     
     Navigate Notebook Workflow    ${LIQ_LoanRepricingForDeal_Window}    ${LIQ_LoanRepricingForDeal_Workflow_Tab}    ${LIQ_LoanRepricingForDeal_Workflow_JavaTree}    Release Cashflows 
     Cashflows Mark All To Release
     Click OK In Cashflows
     
     Navigate Notebook Workflow    ${LIQ_LoanRepricingForDeal_Window}    ${LIQ_LoanRepricingForDeal_Workflow_Tab}    ${LIQ_LoanRepricingForDeal_Workflow_JavaTree}    Release
-    Take Screenshot    LoanRepricing-Released
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LoanRepricing-Released
     Close All Windows on LIQ
     
     ### Setting up of Repayment Schedule
@@ -191,7 +193,7 @@ Create Repricing and Partial Repayment for Loan AA
     Click OK in Add Items for Flexible Schedule
     
     Click OK in Flexible Schedule Window
-    Take Screenshot    LoanNotebook-RepaymentSchedule
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LoanNotebook-RepaymentSchedule
     Save and Exit Repayment Schedule For Loan
     Close All Windows on LIQ
     ### End of Repayment Schedule setup script
@@ -203,6 +205,7 @@ Create Repricing and Partial Repayment for Loan AA
 Create Repricing for Loans in Deal D00000963
     [Documentation]    High-level keyword used to Create Repricing for Loans in Deal D00000963.
     ...                @author: bernchua    18SEP2019    Inital create
+    ...                @update: aramos      14SEP2020    Update Validate Loan Repricing New Outstanding Amount to include parameters loan_alias and pricing option
     [Arguments]    ${ExcelPath}
     
     ${Facility_Spread}    Run Keyword If    '&{ExcelPath}[rowid]'=='1'    Read Data From Excel    CRED02_FacilitySetup    Interest_SpreadValue    1    ${CBAUAT_ExcelPath} 
@@ -233,12 +236,13 @@ Create Repricing for Loans in Deal D00000963
     Set RolloverConversion Notebook Rates    &{ExcelPath}[Rollover_BaseRate]
     ${AllInRate}    Add Borrower Base Rate and Facility Spread    &{ExcelPath}[Rollover_BaseRate]    ${Facility_Spread}
     ${AllInRate}    Set Variable    ${AllInRate}%
-    Take Screenshot    LoanRepricing-Rates
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LoanRepricing-Rates
     Validate String Data In LIQ Object    ${LIQ_RolloverConversion_Window}    ${LIQ_RolloverConversion_AllInRate_Text}    ${AllInRate}
     Close RolloverConversion Notebook
     
-    ${New_Outstanding}    Set Variable    &{ExcelPath}[Pricing_Option] (${Loan_Alias})
-    Validate Loan Repricing New Outstanding Amount    ${New_Outstanding}    &{ExcelPath}[Rollover_RequestedAmount]
+    # ${New_Outstanding}    Set Variable    &{ExcelPath}[Pricing_Option] (${Loan_Alias})
+    Validate Loan Repricing New Outstanding Amount    &{ExcelPath}[Pricing_Option]    ${Loan_Alias}    &{ExcelPath}[Rollover_RequestedAmount]
+    
     Validate Loan Repricing Effective Date    ${Effective_Date}
     
     Navigate Notebook Workflow    ${LIQ_LoanRepricingForDeal_Window}    ${LIQ_LoanRepricingForDeal_Workflow_Tab}    ${LIQ_LoanRepricingForDeal_Workflow_JavaTree}    Send to Approval
@@ -247,16 +251,16 @@ Create Repricing for Loans in Deal D00000963
     Login to Loan IQ    ${MANAGER_USERNAME}    ${MANAGER_PASSWORD}
     Navigate Transaction in WIP    Outstandings    Awaiting Approval    Loan Repricing    &{ExcelPath}[Deal_Name]
     Navigate Notebook Workflow    ${LIQ_LoanRepricingForDeal_Window}    ${LIQ_LoanRepricingForDeal_Workflow_Tab}    ${LIQ_LoanRepricingForDeal_Workflow_JavaTree}    Approval
-    Take Screenshot    LoanRepricing-Approved
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LoanRepricing-Approved
     
     Navigate Notebook Workflow    ${LIQ_LoanRepricingForDeal_Window}    ${LIQ_LoanRepricingForDeal_Workflow_Tab}    ${LIQ_LoanRepricingForDeal_Workflow_JavaTree}    Send to Rate Approval
     Logout from Loan IQ
     Login to Loan IQ    ${SUPERVISOR_USERNAME}    ${SUPERVISOR_PASSWORD}
     Navigate Transaction in WIP    Outstandings    Awaiting Rate Approval    Loan Repricing    &{ExcelPath}[Deal_Name]
     Navigate Notebook Workflow    ${LIQ_LoanRepricingForDeal_Window}    ${LIQ_LoanRepricingForDeal_Workflow_Tab}    ${LIQ_LoanRepricingForDeal_Workflow_JavaTree}    Rate Approval
-    Take Screenshot    LoanRepricing-RateApproved
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LoanRepricing-RateApproved
     Navigate Notebook Workflow    ${LIQ_LoanRepricingForDeal_Window}    ${LIQ_LoanRepricingForDeal_Workflow_Tab}    ${LIQ_LoanRepricingForDeal_Workflow_JavaTree}    Release
-    Take Screenshot    LoanRepricing-Released
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LoanRepricing-Released
     
     Close All Windows on LIQ
     Logout from Loan IQ

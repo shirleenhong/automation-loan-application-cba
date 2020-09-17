@@ -1,0 +1,13 @@
+*** Variables *** 
+${MAINTAIN_EXCHANGE_RATES}    Maintain Exchange Rates
+${Essence_UserDeletedSuccessfully}    User(s) deleted successfully.
+${EOD_CONTROL_AND_STATUS_ENQUIRY}    EOD Control & Status Enquiry
+
+### Process Description ###
+${PROCESSDESCRIPTION_CLEAR_DAILY_TRANS}    Clear Daily Transactions
+${PROCESSDESCRIPTION_GL_TRANS_EXTRACT_PROCESS}    GL Transaction Extract Process
+${PROCESSDESCRIPTION_GL_TRANS_EXTRACT_BATCH_PROCESS}    GL Transaction Extract Batch Process
+
+### Table Headers ###
+${HEADER_PROCESS_DESCRIPTION}    Process Description
+${HEADER_EXECUTION_ORDER}    Execution Order

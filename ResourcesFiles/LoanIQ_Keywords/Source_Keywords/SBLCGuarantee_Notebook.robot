@@ -846,9 +846,8 @@ Get Issuance Fee Type
     ${IssuanceFeeType}    Mx LoanIQ Get Data    ${LIQ_BankGuarantee_FeeType_Dropdown}    value%Issuance Fee Type 
     Log    The Issuance fee type is ${IssuanceFeeType}
     Screenshot.Set Screenshot Directory    ${Screenshot_Path}
-    Set Test Variable    ${SCREENSHOT_FILENAME}    Fee Type
-    Take Screenshot    ${SCREENSHOT_FILENAME}
-    [Return]    ${IssuanceFeeType}     
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/SBLCIssuance_Fee_Type
+    [Return]    ${IssuanceFeeType}
 
 Get SBLC Accrual CCY
     [Documentation]    This keyword gets the Issuance Accrual CCY and returns the value.
@@ -857,8 +856,7 @@ Get SBLC Accrual CCY
     ${AccrualCCY}    Mx LoanIQ Get Data    ${LIQ_BankGuarantee_AccrualCCY_Text}    value%AccrualCCY  
     Log    The Issuance Accrual CCY is ${AccrualCCY}
     Screenshot.Set Screenshot Directory    ${Screenshot_Path}
-    Set Test Variable    ${SCREENSHOT_FILENAME}    Issaunce Accrual CCY
-    Take Screenshot    ${SCREENSHOT_FILENAME}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/SBLCIssuance_Accrual_CCY
     [Return]    ${AccrualCCY}
 
 Get Issuance Accrual Dates
@@ -870,9 +868,8 @@ Get Issuance Accrual Dates
     ${AdjustedDueDate}    Mx LoanIQ Get Data    ${LIQ_ActiveSBLC_Rates_AdjustedDueDate}    value%AdjustedDueDate  
     Log    The Issuance Accrual Dates are ${StartDate}, ${EndDate}, and ${AdjustedDueDate}  
     Screenshot.Set Screenshot Directory    ${Screenshot_Path}
-    Set Test Variable    ${SCREENSHOT_FILENAME}    Issuance Accrual Dates
-    Take Screenshot    ${SCREENSHOT_FILENAME}
-    [Return]    ${StartDate}    ${EndDate}    ${AdjustedDueDate} 
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/SBLCIssuance_Accrual_Dates
+    [Return]    ${StartDate}    ${EndDate}    ${AdjustedDueDate}
 
 Get Issuance Rate
     [Documentation]    This keyword returns the Issuance fee rate.
@@ -883,10 +880,9 @@ Get Issuance Rate
     ${IssuanceRate}    Remove String    ${IssuanceRate}    .000000%    
     Log    The Issuance Rate is ${IssuanceRate}
     Screenshot.Set Screenshot Directory    ${Screenshot_Path}
-    Set Test Variable    ${SCREENSHOT_FILENAME}    Issuance Rate
-    Take Screenshot    ${SCREENSHOT_FILENAME}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/SBLCIssuance_Rate
     [Return]    ${IssuanceRate}
-    
+
 Get Issuance Accrued to Date Amount
     [Documentation]    This keyword returns the Issuance total accrued to date amount.
     ...    @author: rtarayao    23AUG2019    - Initial Create
@@ -894,9 +890,18 @@ Get Issuance Accrued to Date Amount
     ${AccruedtodateAmount}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_BankGuarantee_Accrual_JavaTree}    TOTAL:${SPACE}%Accrued to date%Accruedtodate    
     Log    The Issuance Accrued to Date amount is ${AccruedtodateAmount} 
     Screenshot.Set Screenshot Directory    ${Screenshot_Path}
-    Set Test Variable    ${SCREENSHOT_FILENAME}    Issuance Accrual Screen
-    Take Screenshot    ${SCREENSHOT_FILENAME}
-    [Return]    ${AccruedtodateAmount}    
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/SBLCIssuance_Accrual_Screen
+    [Return]    ${AccruedtodateAmount}
+    
+Get Issuance Paid to Date Amount
+    [Documentation]    This keyword returns the Issuance total paid to date amount.
+    ...    @author: cfrancis    15SEP2020    - Initial Create
+    Mx LoanIQ Select Window Tab    ${LIQ_SBLCGuarantee_Window_Tab}    Accrual
+    ${PaidtodateAmount}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_BankGuarantee_Accrual_JavaTree}    TOTAL:${SPACE}%Paid to date%Paidtodate    
+    Log    The Issuance Paid to Date amount is ${PaidtodateAmount} 
+    Screenshot.Set Screenshot Directory    ${Screenshot_Path}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/SBLCIssuance_Paid_To_Date
+    [Return]    ${PaidtodateAmount}
 
 Get Issuance Risk Type
     [Documentation]    This keyword gets the Issuance Risk type and returns the value.
@@ -906,8 +911,7 @@ Get Issuance Risk Type
     ${IssuanceRiskType}    Mx LoanIQ Get Data    ${LIQ_ActiveSBLC_RiskType_Text}    value%Issuance Risk Type 
     Log    The Issuance fee type is ${IssuanceRiskType}
     Screenshot.Set Screenshot Directory    ${Screenshot_Path}
-    Set Test Variable    ${SCREENSHOT_FILENAME}    Issuance Risk Type
-    Take Screenshot    ${SCREENSHOT_FILENAME}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/SBLCIssuance_Risk_Type
     [Return]    ${IssuanceRiskType}
 
 Get Issuance Currency
@@ -918,8 +922,7 @@ Get Issuance Currency
     ${IssuanceCCY}    Mx LoanIQ Get Data    ${LIQ_ActiveSBLC_Currency_Text}    text%Currency  
     Log    The Issuance Currency is ${IssuanceCCY}  
     Screenshot.Set Screenshot Directory    ${Screenshot_Path}
-    Set Test Variable    ${SCREENSHOT_FILENAME}    Issuance Currency
-    Take Screenshot    ${SCREENSHOT_FILENAME}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/SBLCIssuance_Currency
     [Return]    ${IssuanceCCY}
     
 Get Issuance Effective and Maturity Expiry Dates
@@ -931,8 +934,7 @@ Get Issuance Effective and Maturity Expiry Dates
      ${IssuanceAdjustedExpiryDate}    Mx LoanIQ Get Data    ${LIQ_Active_AdjustextExpiry_Text}    text%AdjExpiryDate
     Log    The Issuance Effective and Expiry Dates are ${IssuanceEffectiveDate} and ${IssuanceAdjustedExpiryDate} respectively.  
     Screenshot.Set Screenshot Directory    ${Screenshot_Path}
-    Set Test Variable    ${SCREENSHOT_FILENAME}    Issuance Effective and Adj Expiry Date
-    Take Screenshot    ${SCREENSHOT_FILENAME}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/SBLCIssuance_Effective_and_Adj_Expiry_Date
     [Return]    ${IssuanceEffectiveDate}    ${IssuanceAdjustedExpiryDate}
 
 Get Issuance Host Bank Net and Gross Amount
@@ -944,9 +946,8 @@ Get Issuance Host Bank Net and Gross Amount
     ${HBNetAmount}    Mx LoanIQ Get Data    ${LIQ_ActiveSBLC_HostBankNet_Text}    value%HBNetAmount 
     Log    The Issuance Host Bank Gross and Net Amounts are ${HBGrossAmount} and ${HBNetAmount} respectively. 
     Screenshot.Set Screenshot Directory    ${Screenshot_Path}
-    Set Test Variable    ${SCREENSHOT_FILENAME}    Issuance HB Values
-    Take Screenshot    ${SCREENSHOT_FILENAME}
-    [Return]    ${HBGrossAmount}    ${HBNetAmount}  
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/SBLCIssuance_HB_Values
+    [Return]    ${HBGrossAmount}    ${HBNetAmount}
     
 Get Issuance Global Original and Current Amount
     [Documentation]    This keyword gets the Issuance Global Original and Current Amounts and returns the value.
@@ -956,9 +957,8 @@ Get Issuance Global Original and Current Amount
     ${GlobalCurrentAmount}    Mx LoanIQ Get Data    ${LIQ_ActiveSBLC_GlobalCurrent_Text}    value%GlobalCurrentAmount 
     Log    The Issuance Global Original and Current Amounts are ${GlobalOriginalAmount} and ${GlobalCurrentAmount} respectively. 
     Screenshot.Set Screenshot Directory    ${Screenshot_Path}
-    Set Test Variable    ${SCREENSHOT_FILENAME}    Issuance Global Values
-    Take Screenshot    ${SCREENSHOT_FILENAME}
-    [Return]    ${GlobalOriginalAmount}    ${GlobalCurrentAmount}  
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/SBLCIssuance_Global_Values
+    [Return]    ${GlobalOriginalAmount}    ${GlobalCurrentAmount}
 
 Navigate Notebook Workflow_SBLCIssuance
     [Documentation]    This keyword navigates the Workflow tab of a Notebook, and does a specific transaction.

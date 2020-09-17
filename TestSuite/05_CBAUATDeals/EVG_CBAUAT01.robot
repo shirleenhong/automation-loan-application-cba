@@ -10,8 +10,8 @@ ${rowid}    1
 
 *** Test Cases ***
 ###Pre-requisuites####
-  a. Two Lenders are created
-  b. Remittance Description for Two Lenders are updated on data set    
+#   a. Two Lenders are created
+#   b. Remittance Description for Two Lenders are updated on data set    
 
 Create Quick Party Onboarding for CBA UAT Deal 1 - PTY001 
     Mx Execute Template With Multiple Data    Create Deal Borrower initial details in Quick Party Onboarding for D00000454    ${CBAUAT_ExcelPath}    1    PTY001_QuickPartyOnboarding
@@ -23,7 +23,6 @@ Search Customer and Complete its Borrower Profile Creation - ORIG03
 
 Deal Template D00000454
     [Tags]    03 Deal Setup - CRED01
-    Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
     Mx Execute Template With Multiple Data    Setup Deal D00000454    ${CBAUAT_ExcelPath}    ${rowid}    CRED01_DealSetup
     Mx Execute Template With Multiple Data    Setup Deal D00000454 Interest Pricing Options    ${CBAUAT_ExcelPath}    1-2    CRED01_DealSetup
     Mx Execute Template With Multiple Data    Setup Deal Amortizing Admin Fee    ${CBAUAT_ExcelPath}    ${rowid}    CRED01_DealSetup
@@ -129,4 +128,4 @@ Collect Commitment Fee for Facility A - D00000454 - 28FEB2019
     Mx Execute Template With Multiple Data    Commitment Fee Payment with Split Balance for D00000454    ${CBAUAT_ExcelPath}   5    SERV29_CommitmentFeePayment
 
 Collect Line Fee for Facility B - D00000454 - 28FEB2019
-    Mx Execute Template With Multiple Data    Line Fee Payment for D00000454    ${CBAUAT_ExcelPath}   6    SERV29_CommitmentFeePayment                 
+    Mx Execute Template With Multiple Data    Line Fee Payment for D00000454    ${CBAUAT_ExcelPath}   6    SERV29_CommitmentFeePayment

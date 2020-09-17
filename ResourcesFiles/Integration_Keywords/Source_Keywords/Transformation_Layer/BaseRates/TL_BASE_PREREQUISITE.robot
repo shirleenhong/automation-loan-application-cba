@@ -236,7 +236,8 @@ Get Single Row value from CSV File and Write to Excel for Base Rate
     ...    @author: clanding    19FEB2019    - initial create
     ...    @update: clanding    20MAR2019    - added optional for Base Rate Code
     ...    @update: jdelacru    23JUL2019    - added 003W as option for converting tenor
-    [Arguments]    ${dRow}    ${irowid}    ${sZone1_Curr_Date}    ${sZone3_Curr_Date}    ${sConfigPriceType}    ${sTLPath_Transformed_Data}    ${sBaseRateCode}=None
+    ...    @update: clanding    21AUG2020    - updated Zone1 to Zone2
+    [Arguments]    ${dRow}    ${irowid}    ${sZone2_Curr_Date}    ${sZone3_Curr_Date}    ${sConfigPriceType}    ${sTLPath_Transformed_Data}    ${sBaseRateCode}=None
     
     ${InstrumentType}    Get From Dictionary    ${dRow}    GS_INSTR_TYPE
     ${BaseRateCode}    Run Keyword If    '${sBaseRateCode}'=='None'    Get From Dictionary    ${dRow}    GS_INSTR_SUB_TYPE    
@@ -293,13 +294,13 @@ Get Single Row value from CSV File and Write to Excel for Base Rate
     Write Data to Excel Using Row Index    Transformed_BaseRate    lineOfBusiness    ${irowid}    COMRLENDING    ${sTLPath_Transformed_Data}
     Write Data to Excel Using Row Index    Transformed_BaseRate    businessEntityName    ${irowid}    null    ${sTLPath_Transformed_Data}
     
-    ${sZone1_Curr_Date}    Convert Date    ${sZone1_Curr_Date}    date_format=%d-%b-%Y    result_format=datetime
+    ${sZone2_Curr_Date}    Convert Date    ${sZone2_Curr_Date}    date_format=%d-%b-%Y    result_format=datetime
     ${sZone3_Curr_Date}    Convert Date    ${sZone3_Curr_Date}    date_format=%d-%b-%Y    result_format=datetime 
     
-    ${Zone1_Input_Diff}    Subtract Date From Date    ${sZone1_Curr_Date}    ${EffectiveDate}        
+    ${Zone2_Input_Diff}    Subtract Date From Date    ${sZone2_Curr_Date}    ${EffectiveDate}        
     ${Zone3_Input_Diff}    Subtract Date From Date    ${sZone3_Curr_Date}    ${EffectiveDate}
     
-    ${Zone1_Input_Diff}    Convert To String    ${Zone1_Input_Diff}
+    ${Zone2_Input_Diff}    Convert To String    ${Zone2_Input_Diff}
     ${Zone3_Input_Diff}    Convert To String    ${Zone3_Input_Diff}      
     
     ${SubEntity_EUR_Status}    Run Keyword And Return Status    Should Contain    ${Zone2_Input_Diff}    -
@@ -517,8 +518,8 @@ Update Key Values of Input JSON file for Base Rate TL
 Create Expected TextJMS XML for Base Rate TL
     [Documentation]    This keyword is used to create expected XML for every row in the csv file and save file name with Base Rate Code, Funding Desk and Repricing Frequency.
     ...    @author: clanding    27FEB2019    - initial create
-    ...    @update: jdelacru    11AUG2020    - added new argument ${TemplateFilePath}
-    [Arguments]    ${sTransformedData_FilePath}    ${sInputFilePath}    ${sFileName}    ${TemplateFilePath}
+    ...    @update: jdelacru    11AUG2020    - added new argument ${sTemplateFilePath}
+    [Arguments]    ${sTransformedData_FilePath}    ${sInputFilePath}    ${sFileName}    ${sTemplateFilePath}
     
     Open Excel    ${dataset_path}${sTransformedData_FilePath}    
     ${Row_Count}    Get Row Count    Transformed_BaseRate
@@ -527,7 +528,7 @@ Create Expected TextJMS XML for Base Rate TL
     \    
     \    ${dTransformedData}    Create Dictionary Using Transformed Data and Return    ${dataset_path}${sTransformedData_FilePath}    ${INDEX}
     \    
-    \    Get Individual Subentity Value and Create XML for TL    ${dTransformedData}    ${sInputFilePath}    ${sFileName}    ${TemplateFilePath}
+    \    Get Individual Subentity Value and Create XML for TL    ${dTransformedData}    ${sInputFilePath}    ${sFileName}    ${sTemplateFilePath}
     \    Exit For Loop If    ${INDEX}==${Row_Count}
     
     
@@ -536,8 +537,8 @@ Get Individual Subentity Value and Create XML for TL
     ...    i.e. sample input in datasheet AUD,NY
     ...    @author: clanding    27FEB2019    - initial create
     ...    @update: clanding    03MAR2019    - added checking for inactive funding desk and create expected textjms
-    ...    @update: jdelacru    11AUG2020    - added new argument ${TemplateFilePath}
-    [Arguments]    ${dRowData}    ${sInputFilePath}    ${sFileName}    ${TemplateFilePath}
+    ...    @update: jdelacru    11AUG2020    - added new argument ${sTemplateFilePath}
+    [Arguments]    ${dRowData}    ${sInputFilePath}    ${sFileName}    ${sTemplateFilePath}
     
     ${subEntity_Val}    Get From Dictionary    ${dRowData}    subEntity
     ${SubEntityList}    Split String    ${subEntity_Val}    ,
@@ -546,7 +547,7 @@ Get Individual Subentity Value and Create XML for TL
     :FOR    ${INDEX}    IN RANGE    0    ${subentity_count}
     \    ${SubEntityVal}    Get From List    ${SubEntityList}    ${INDEX}
     \    
-    \    Create Initial wsFinalLIQDestination for Base Rate TL    ${dRowData}    ${SubEntityVal}    ${sInputFilePath}    ${sFileName}    ${TemplateFilePath}
+    \    Create Initial wsFinalLIQDestination for Base Rate TL    ${dRowData}    ${SubEntityVal}    ${sInputFilePath}    ${sFileName}    ${sTemplateFilePath}
     \    ${FundingDeskStat}    Get Funding Desk Status from Table Maintenance    ${SubEntityVal}
     \    Run Keyword If    '${FundingDeskStat}'=='I'    Create Expected XML for Inactive Funding Desk    ${SubEntityVal}    ${sInputFilePath}    ${sFileName}
          ...    ELSE    Log    Funding Desk is Active. Keyword is not applicable.
@@ -555,8 +556,8 @@ Get Individual Subentity Value and Create XML for TL
 Create Initial wsFinalLIQDestination for Base Rate TL
     [Documentation]    This keyword is used to create initial wsFinalLIQDestination for each valid Base Rate Code for TL.
     ...    @author: clanding    27FEB2019    - initial create
-    ...    @update: jdelacru    11AUG2020    - added new argument ${TemplateFilePath}
-    [Arguments]    ${dRowData}    ${sSubentityVal}    ${sInputFilePath}    ${sFileName}    ${TemplateFilePath}
+    ...    @update: jdelacru    11AUG2020    - added new argument ${sTemplateFilePath}
+    [Arguments]    ${dRowData}    ${sSubentityVal}    ${sInputFilePath}    ${sFileName}    ${sTemplateFilePath}
     
     
     ${val_RateTenor}    Strip String    &{dRowData}[rateTenor]    both    0
@@ -575,7 +576,7 @@ Create Initial wsFinalLIQDestination for Base Rate TL
     ${BaseConfig_Buy_exist}    Run Keyword And Return Status    Should Contain    ${BASERATECODEConfig}    &{dRowData}[baseRateCode].${BUYRATE}
     ${BaseCode_Buy}    Run Keyword If    ${BaseConfig_Buy_exist}==${True}    Get From Dictionary    ${BASERATECODE_Dict}    &{dRowData}[baseRateCode].${BUYRATE}
     ${expected_error}    Run Keyword If    ${BaseConfig_Buy_exist}==${True} and ${val_Buyrate}!=${NONE}    Update Expected XML Elements for wsFinalLIQDestination - Base Rate TL    ${sInputFilePath}    ${sFileName}    ${BaseCode_Buy}    &{dRowData}[currency]            
-    ...    &{dRowData}[rateEffectiveDate]    ${val_RateTenor}    ${sSubentityVal}    ${val_Buyrate}    ${TemplateFilePath}
+    ...    &{dRowData}[rateEffectiveDate]    ${val_RateTenor}    ${sSubentityVal}    ${val_Buyrate}    ${sTemplateFilePath}
     ...    ELSE IF    ${val_Buyrate}!=0    Catenate    There is no baseratecode configuration available at COMRLENDING corresponding to baseratecode-&{dRowData}[baseRateCode]  and Buyrate:${val_Buyrate}
     
     Run Keyword If    '${expected_error}'!='None'    Append To File    ${dataset_path}${sInputFilePath}${Expected_Error_Message}    ${expected_error}${\n}    
@@ -588,7 +589,7 @@ Create Initial wsFinalLIQDestination for Base Rate TL
     ${BaseConfig_Mid_exist}    Run Keyword And Return Status    Should Contain    ${BASERATECODEConfig}    &{dRowData}[baseRateCode].${MIDRATE}
     ${BaseCode_Mid}    Run Keyword If    ${BaseConfig_Mid_exist}==True    Get From Dictionary    ${BASERATECODE_Dict}    &{dRowData}[baseRateCode].${MIDRATE}
     ${expected_error}    Run Keyword If    ${BaseConfig_Mid_exist}==True and ${val_MidRate}!=${NONE}    Update Expected XML Elements for wsFinalLIQDestination - Base Rate TL    ${sInputFilePath}    ${sFileName}    ${BaseCode_Mid}    &{dRowData}[currency]            
-    ...    &{dRowData}[rateEffectiveDate]    ${val_RateTenor}    ${sSubentityVal}    ${val_MidRate}    ${TemplateFilePath}
+    ...    &{dRowData}[rateEffectiveDate]    ${val_RateTenor}    ${sSubentityVal}    ${val_MidRate}    ${sTemplateFilePath}
     ...    ELSE IF    ${val_MidRate}!=0    Catenate    There is no baseratecode configuration available at COMRLENDING corresponding to baseratecode-&{dRowData}[baseRateCode]  and Midrate:${val_MidRate}
     
     Run Keyword If    '${expected_error}'!='None'    Append To File    ${dataset_path}${sInputFilePath}${Expected_Error_Message}    ${expected_error}${\n}
@@ -601,7 +602,7 @@ Create Initial wsFinalLIQDestination for Base Rate TL
     ${BaseConfig_Sell_exist}    Run Keyword And Return Status    Should Contain    ${BASERATECODEConfig}    &{dRowData}[baseRateCode].${SELLRATE}
     ${BaseCode_Sell}    Run Keyword If    ${BaseConfig_Sell_exist}==True    Get From Dictionary    ${BASERATECODE_Dict}    &{dRowData}[baseRateCode].${SELLRATE}
     ${expected_error}    Run Keyword If    ${BaseConfig_Sell_exist}==True and ${val_Sellrate}!=${NONE}    Update Expected XML Elements for wsFinalLIQDestination - Base Rate TL    ${sInputFilePath}    ${sFileName}    ${BaseCode_Sell}    &{dRowData}[currency]            
-    ...    &{dRowData}[rateEffectiveDate]    ${val_RateTenor}    ${sSubentityVal}    ${val_Sellrate}    ${TemplateFilePath}
+    ...    &{dRowData}[rateEffectiveDate]    ${val_RateTenor}    ${sSubentityVal}    ${val_Sellrate}    ${sTemplateFilePath}
     ...    ELSE IF    ${val_Sellrate}!=0    Catenate    There is no baseratecode configuration available at COMRLENDING corresponding to baseratecode-&{dRowData}[baseRateCode]  and Sellrate:${val_Sellrate}
     
     Run Keyword If    '${expected_error}'!='None'    Append To File    ${dataset_path}${sInputFilePath}${Expected_Error_Message}    ${expected_error}${\n}
@@ -614,7 +615,7 @@ Create Initial wsFinalLIQDestination for Base Rate TL
     ${BaseConfig_Last_exist}    Run Keyword And Return Status    Should Contain    ${BASERATECODEConfig}    &{dRowData}[baseRateCode].${LASTRATE}
     ${BaseCode_Last}    Run Keyword If    ${BaseConfig_Last_exist}==True    Get From Dictionary    ${BASERATECODE_Dict}    &{dRowData}[baseRateCode].${LASTRATE}
     ${expected_error}    Run Keyword If    ${BaseConfig_Last_exist}==True and ${val_LastRate}!=${NONE}    Update Expected XML Elements for wsFinalLIQDestination - Base Rate TL    ${sInputFilePath}    ${sFileName}    ${BaseCode_Last}    &{dRowData}[currency]            
-    ...    &{dRowData}[rateEffectiveDate]    ${val_RateTenor}    ${sSubentityVal}    ${val_LastRate}    ${TemplateFilePath}
+    ...    &{dRowData}[rateEffectiveDate]    ${val_RateTenor}    ${sSubentityVal}    ${val_LastRate}    ${sTemplateFilePath}
     ...    ELSE IF    ${val_LastRate}!=0    Catenate    There is no baseratecode configuration available at COMRLENDING corresponding to baseratecode-&{dRowData}[baseRateCode]  and Lastrate:${val_LastRate}
     
     Run Keyword If    '${expected_error}'!='None'    Append To File    ${dataset_path}${sInputFilePath}${Expected_Error_Message}    ${expected_error}${\n}
@@ -623,14 +624,14 @@ Update Expected XML Elements for wsFinalLIQDestination - Base Rate TL
     [Documentation]    This keyword is used to update XML Elements using the input dictionary values for wsFinalLIQDestination for Base Rate TL
     ...    @author: clanding    27FEB2019    - initial create
     ...    @update: clanding    19MAR2019    - added handling for ${sRateTenor} if empty
-    ...    @update: jdelacru    11AUG2020    - added new argument ${TemplateFilePath}
-    [Arguments]    ${sInputFilePath}    ${sFileName}    ${sBaseCode}    ${sCurrency}    ${sRateEffDate}    ${sRateTenor}    ${sSubentityVal}    ${iRate}    ${TemplateFilePath}
+    ...    @update: jdelacru    11AUG2020    - added new argument ${sTemplateFilePath}
+    [Arguments]    ${sInputFilePath}    ${sFileName}    ${sBaseCode}    ${sCurrency}    ${sRateEffDate}    ${sRateTenor}    ${sSubentityVal}    ${iRate}    ${sTemplateFilePath}
     
     ${sRateTenor}    Run Keyword If    '${sRateTenor}'==''    Set Variable    None
     ...    ELSE    Set Variable    ${sRateTenor}    
     
     ${Expected_wsFinalLIQDestination}    Set Variable    ${dataset_path}${sInputFilePath}${sFileName}_${sBaseCode}_${sRateTenor}_${sSubentityVal}.xml
-    ${template}    Set Variable    ${dataset_path}${TemplateFilePath}template_TextJMS_baserate_tl.xml
+    ${template}    Set Variable    ${dataset_path}${sTemplateFilePath}template_TextJMS_baserate_tl.xml
     Delete File If Exist    ${Expected_wsFinalLIQDestination}
     Create File    ${Expected_wsFinalLIQDestination}    
     
@@ -659,8 +660,9 @@ Create Prerequisite for Multiple GS Files Scenario
     ...    @update: jdelacru    28AUG2019    - added index for the filename in creating expected input/output json and textjms to handle
     ...                                        processing file with the same details but different rate
     ...    @update: dahijara    20NOV2019    - updated file format from XLS to XLSX
+    ...    @update: clanding    21AUG2020    - added new argument    ${sTemplateFilePath}
     [Arguments]    ${sInputFilePath}    ${sTransformedData_FilePath}    ${sTransformedDataTemplate_FilePath}    ${sInputGSFile}    ${sInputJson}
-    ...    ${sExpected_TextJMS}    ${Delimiter}=None
+    ...    ${sExpected_TextJMS}    ${Delimiter}=None    ${sTemplateFilePath}=None
     
     @{InputGSFile_List}    Run Keyword If    '${Delimiter}'=='None'    Split String    ${sInputGSFile}    ,
     ...    ELSE    Split String    ${sInputGSFile}    ${Delimiter}
@@ -674,6 +676,7 @@ Create Prerequisite for Multiple GS Files Scenario
     \    Create Expected JSON for Base Rate TL    ${sInputFilePath}${sTransformedData_FilePath}_${Index}.${XLSX}    ${sInputFilePath}${sInputJson}_${Index}
     \    Create Individual Expected JSON for Base Rate TL    ${sInputFilePath}${sTransformedData_FilePath}_${Index}.${XLSX}    ${sInputFilePath}${sInputJson}_${Index}
     \    Create Expected TextJMS XML for Base Rate TL    ${sInputFilePath}${sTransformedData_FilePath}_${Index}.${XLSX}    ${sInputFilePath}    ${sExpected_TextJMS}_${Index}
+         ...    ${sTemplateFilePath}
     \    Append To List    ${TransformedData_List}    ${sInputFilePath}${sTransformedData_FilePath}_${Index}.${XLSX}
     \    ${InputGSFile_Count}    Evaluate    ${InputGSFile_Count}-1
     
