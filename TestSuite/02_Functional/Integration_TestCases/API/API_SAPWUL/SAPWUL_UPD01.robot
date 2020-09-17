@@ -3,8 +3,8 @@ Resource    ../../../../../Configurations/Integration_Import_File.robot
 
 *** Variables ***
 ${DealRowID}    1
-${Facility_RowID}    12
-${SAPWULRowID}    6
+${Facility_RowID}    9
+${SAPWULRowID}    5
 
 *** Test Cases ***
 SAPWUL_UPD01
@@ -12,6 +12,7 @@ SAPWUL_UPD01
 	[Documentation]    Verify that user is able to create deal with 1 Facility and payload is generated successfully
     ...    @author: hstone 
     ...    @update: amansuet    30OCT2019    - Updated values in Variables
+    ...    @update: mcastro     15SEP2020    Updated variables with correct value
     ### SAPWUL Data Clear ###
     Mx Execute Template With Multiple Data    Clear SAPWUL Data     ${SAPWUL_DATASET}    ${SAPWULRowID}    SAPWUL_Payload
     

@@ -44,6 +44,7 @@ Mx Input Text
     Wait Until Keyword Succeeds    ${retry}    ${retry_interval}    Input Text    ${locator}    ${text}
     Press Keys    ${locator}    TAB
     Wait Until Browser Ready State
+    Mx Scroll Element Into View    ${locator}
 
 Mx Input Text and Press Enter
     [Arguments]    ${locator}    ${text}
@@ -2486,10 +2487,13 @@ Compare Two Strings
     [Documentation]    This keyword compares two strings.
     ...    ${sValidationComment}: Pertains to what is being validated  e.g. Facilty Notebook Effective Date Text Validation
     ...    @author: hstone    28MAY2020      - Initial Create
+    ...    @update: clanding    10SEP2020    - added convert to string
     [Arguments]    ${sString1}    ${sString2}    ${sValidationComment}=None
 
-    ${String1}    Strip String    ${sString1}
-    ${String2}    Strip String    ${sString2}
+    ${String1}    Convert To String    ${sString1}
+    ${String2}    Convert To String    ${sString2}
+    ${String1}    Strip String    ${String1}
+    ${String2}    Strip String    ${String2}
     ${Result}    Run Keyword And Return Status    Should Be Equal As Strings    ${String1}    ${String2}
 
     Run Keyword If    '${Result}'=='True' and '${sValidationComment}'=='None'    Log    String Comparison Validation Passed.
@@ -2551,3 +2555,71 @@ Mx Execute Template With Multiple Test Case Name
     \    
     \    Set Global Variable    ${TestCase_Name}    ${DataRowNames}
     \    Mx Execute Template With Multiple Data    ${stemplateName}    ${sDataSet}    ${DataRowValue_Index}    ${sDataSheetName}
+
+Mx Select Element and Input Text Without Key Press
+    [Documentation]    This keyword is used to navigate to the web element and input desired text.
+    ...    @author: hstone    16MAR2020    Initial Create
+    [Arguments]    ${locator}    ${text}
+    Wait Until Browser Ready State
+    Wait Until Keyword Succeeds    ${retry}    ${retry_interval}    Wait Until Page Contains Element    ${locator}    1s
+    Wait Until Keyword Succeeds    ${retry}    ${retry_interval}    Wait Until Element Is Visible    ${locator}
+    Wait Until Keyword Succeeds    ${retry}    ${retry_interval}    Wait Until Element Is Enabled    ${locator}    1s
+    Wait Until Keyword Succeeds    ${retry}    ${retry_interval}    Click Element    ${locator}
+    Wait Until Browser Ready State
+    Wait Until Keyword Succeeds    ${retry}    ${retry_interval}    Clear Element Text    ${locator}
+    Wait Until Browser Ready State
+    Wait Until Keyword Succeeds    ${retry}    ${retry_interval}    Mx Activate And Input Text    ${locator}    ${text}
+    Wait Until Browser Ready State
+
+Mx Get Element Value
+    [Documentation]    This keyword is used to navigate to the web element and input desired text.
+    ...    @author: hstone    16MAR2020    Initial Create
+    [Arguments]    ${locator}
+    Wait Until Browser Ready State
+    Wait Until Keyword Succeeds    ${retry}    ${retry_interval}    Wait Until Page Contains Element    ${locator}    1s
+    Wait Until Keyword Succeeds    ${retry}    ${retry_interval}    Wait Until Element Is Visible    ${locator}
+    Wait Until Browser Ready State
+    ${value}    Get Value    ${locator}
+    Wait Until Browser Ready State
+
+    [Return]    ${value}
+
+Get LIQ System Date
+    [Documentation]    This keyword is used to get the LIQ System Date with the option to input desired date format
+    ...    @author: hstone    16MAR2020    Initial Create
+    [Arguments]    ${date_format}=%d-%b-%Y
+
+    ### Get LIQ System Date
+    ${temp}    Mx LoanIQ Get Data    ${LIQ_Window}    title%temp
+    ${SystemDate}    Fetch From Right    ${temp}    :${SPACE}    
+    log    System Date: ${SystemDate}
+
+    ### LIQ Date Conversion Routine
+    ${IsLIQDateFormat}    Run Keyword And Return Status    Should Be Equal As Strings    %d-%b-%Y    ${date_format}
+    ${LIQ_System_Date}    Run Keyword If    ${IsLIQDateFormat}==${True}    Set Variable    ${SystemDate}
+    ...    ELSE    Convert Date    ${SystemDate}    result_format=${date_format}    date_format=%d-%b-%Y
+
+    [RETURN]    ${LIQ_System_Date}
+
+Tick/Untick and Validate If Checkbox Value Is Updated
+    [Documentation]    This keyword is used to tick or untick checkbox and check if the new field value matches the old value.
+    ...    @author: dahijara    18MAY2020    - initial create. 
+    [Arguments]    ${sFieldName}    ${sNewValue}    ${sLocator}
+
+    ${sUIValue}    SeleniumLibraryExtended.Get Element Attribute    ${sLocator}    aria-checked
+    Run Keyword If    '${${sUIValue}}'!='${${sNewValue}}'    Click Element    ${sLocator}
+
+    ${isMatched}    Run Keyword And Return Status    Should Be Equal    ${${sUIValue}}    ${${sNewValue}}
+    Run Keyword If    ${isMatched}!=${True}    Log    "${sFieldName}" is UPDATED! Prev Value: ${sUIValue} | New Value: ${sUIValue}
+    ...    ELSE    Log    "${sFieldName}" is NOT UPDATED! Prev Value: ${sUIValue} | New Value: ${sUIValue}    level=WARN
+
+Populate and Validate If Field Value Is Updated
+    [Documentation]    This keyword is used to populate and check if the new field value matches the old value.
+    ...    @author: dahijara    18MAY2020    - initial create. 
+    [Arguments]    ${sFieldName}    ${sNewValue}    ${sLocator}
+
+    ${sUIValue}    Get Value    ${sLocator}
+    Mx Input Text    ${sLocator}    ${sNewValue}
+    ${isMatched}    Run Keyword And Return Status    Should Be Equal    ${sUIValue}    ${sNewValue}
+    Run Keyword If    ${isMatched}!=${True}    Log    "${sFieldName}" is UPDATED! Prev Value: ${sUIValue} | New Value: ${sUIValue}
+    ...    ELSE    Log    "${sFieldName}" is NOT UPDATED! Prev Value: ${sUIValue} | New Value: ${sUIValue}    level=WARN
