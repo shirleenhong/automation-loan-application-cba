@@ -204,6 +204,9 @@ LOAN_REPRICING_FOR_THE_DEAL = "Loan Repricing for the Deal"
 LOAN_REPRICING = "Loan Repricing"
 AWAITING_FUNDING_MEMO_STATUS = "Awaiting Funding Memo"
 CBA_EMAIL_PDF_METHOD = "CBA Email with PDF Attachment"
+AWAITING_RATE_APPROVAL_STATUS = "Awaiting Rate Approval"
+GENERATE_RATE_SETTING_NOTICES_TRANSACTION = "Generate Rate Setting Notices"
+AWAITING_RELEASE_NOTICE_STATUS = "Awaiting release"
 
 ### Bank Role ###
 REFERENCE_BANK_ROLE = "Reference Bank"

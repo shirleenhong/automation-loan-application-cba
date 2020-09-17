@@ -2249,14 +2249,22 @@ Validate the Updates on Primaries
 Get Customer Lender Legal Name Via Lender Shares In Deal Notebook
     [Documentation]    This keyword gets the Customer Lender Legal Name from the Customer Notebook via Deal Notebook - Lender Shares menu.
     ...                @author: bernchua
-    [Arguments]    ${CustomerLender_Name}
+    ...    @update: dahijara    29JUL2020    - Added pre & post processing and screenshot 
+    [Arguments]    ${sCustomerLender_Name}    ${sRunVar_CustomerLender_LegalName}=None
+    ### GetRuntime Keyword Pre-processing ###
+    ${CustomerLender_Name}    Acquire Argument Value    ${sCustomerLender_Name}
+
     mx LoanIQ activate    ${LIQ_DealNotebook_Window}    
     mx LoanIQ select    ${LIQ_DealNotebook_LenderShare}    
     Mx LoanIQ Select String    ${LIQ_SharesFor_Primaries_Tree}    ${CustomerLender_Name}    
     mx LoanIQ click    ${LIQ_SharesFor_LenderNotebook_Button}
     ${CustomerLender_LegalName}    Mx LoanIQ Get Data    ${LIQ_ActiveCustomer_Window_LegalName}    value%name
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/SharesFor_LenderNotebook
     mx LoanIQ close window    ${LIQ_ActiveCustomer_Window}
     mx LoanIQ close window    ${LIQ_SharesFor_Window}    
+    
+    ### ConstRuntime Keyword Post-processing ###
+    Save Values of Runtime Execution on Excel File    ${sRunVar_CustomerLender_LegalName}    ${CustomerLender_LegalName}
     [Return]    ${CustomerLender_LegalName}
     
 Get Customer Lender Remittance Instruction Desc Via Lender Shares In Deal Notebook
