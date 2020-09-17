@@ -39,7 +39,7 @@ Verify if Method has Remittance Instruction
     Log    ${CashflowMethod}
     Run Keyword If    '${CashflowMethod}'=='None'   mx LoanIQ click    ${LIQ_Cashflows_OK_Button}
     ...    ELSE    Run Keyword If    '${CashflowMethod}'!='${RemittanceInstruction}'    Add Remittance Instructions    ${CustomerShortName}    ${RemittanceDescription}    ${TransactionAmount}    ${Currency}
-    ...    ELSE    Log    Remittance Instruction is already correct
+    Log    Remittance Instruction is already correct
 
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/CashflowNotebook
 
