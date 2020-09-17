@@ -280,5 +280,15 @@ Enter Line Fee Details
     Select Menu Item    ${LIQ_LineFeeNotebook_Window}    File    Save
     mx LoanIQ click element if present    ${LIQ_Warning_OK_Button}
     Mx Click Element If Present    ${LIQ_Warning_Yes_Button}  
-    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/CommitmentFee_Notebook               
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LineFee_Notebook               
     Select Menu Item    ${LIQ_LineFeeNotebook_Window}    File    Exit
+    
+
+Release Line Fee
+    [Documentation]    This keyword will handle the dynamic updates in releasing Line Fee
+    ...   @author: ritragel    17SEP2020    Initial Commit
+    
+    mx LoanIQ activate window    ${LIQ_LineFeeNotebook_Window}
+    mx LoanIQ click    ${LIQ_LineFee_InquiryMode_Button}
+    Navigate Notebook Workflow    ${LIQ_LineFeeNotebook_Window}    ${LIQ_LineFeeTag_Tab}    ${LIQ_LineFeeNotebook_Workflow_JavaTree}    Release
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LineFee_Notebook     
