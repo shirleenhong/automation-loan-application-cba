@@ -5,6 +5,11 @@ Resource    ../../../../Configurations/LoanIQ_Import_File.robot
 Comprehensive Repricing Principal and Interest Payment - 2 Cashflows
     [Documentation]    This is a high-level keyword to Create Comprehensive Repricing  with principal and interest payments with 2 cashflows
     ...    @author: hstone    22AUG2019    INITIAL CREATION
+    ...    @update: AmitP     15Sept2020    Remove Extra Add Remittance Instructions and Verify if Status is set to Do It Keywords as per
+    ...    manual test and test results file.
+    ...    @update: AmitP     15Sept2020  Add flag variable value in keyword Inside "Check Limit after Rollover/Repayment" Keyword and 
+    ...    Add Borrower Base Rate and Facility Spread keyword  (Line 217)
+    ...    @update: AmitP     15Sept2020    Add variable Loan_Repricing in keyword "Release Loan Repricing" (Line 64) for extracting repricing date.     
     [Arguments]    ${ExcelPath}
     
     ### Perforn Online Accrual ###
@@ -26,12 +31,10 @@ Comprehensive Repricing Principal and Interest Payment - 2 Cashflows
     Validate Interest Payments Amount    &{ExcelPath}[Pricing_Option]    &{ExcelPath}[Loan_Alias]    &{ExcelPath}[Loan_TotalGlobalInterest]
     Navigate Notebook Workflow    ${LIQ_LoanRepricingForDeal_Window}    ${LIQ_LoanRepricingForDeal_Workflow_Tab}    ${LIQ_LoanRepricingForDeal_Workflow_JavaTree}    Create Cashflows
     
-    ### Remittance Instruction Addition per Cashflow ###
-    Add Remittance Instructions    &{ExcelPath}[Borrower_ShortName]    &{ExcelPath}[Borrower_RemittanceDescription]    ${PrincipalPayment}    &{ExcelPath}[Loan_Currency]
-    Add Remittance Instructions    &{ExcelPath}[Borrower_ShortName]    &{ExcelPath}[Borrower_RemittanceDescription]    &{ExcelPath}[Loan_TotalGlobalInterest]    &{ExcelPath}[Loan_Currency]
+    ### Remittance Instruction Addition per Cashflow ###   
+    Add Remittance Instructions    &{ExcelPath}[Borrower_ShortName]    &{ExcelPath}[Borrower_RemittanceDescription]    ${PrincipalPayment}    &{ExcelPath}[Loan_Currency]    &{ExcelPath}[Loan_TotalGlobalInterest]    
     Verify if Status is set to Do It    &{ExcelPath}[Borrower_ShortName]    &{ExcelPath}[Borrower_RemittanceInstruction]    ${PrincipalPayment}    
-    Verify if Status is set to Do It    &{ExcelPath}[Borrower_ShortName]    &{ExcelPath}[Borrower_RemittanceInstruction]    &{ExcelPath}[Loan_TotalGlobalInterest]
-    Take Screenshot    CashflowsForLoanRepricing
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/CashflowsForLoanRepricing
     
     Confirm Cashflows for Loan Repricing
     
@@ -58,7 +61,7 @@ Comprehensive Repricing Principal and Interest Payment - 2 Cashflows
     Approve Rate Setting Notice
     
     Generate Rate Setting Notices    &{ExcelPath}[Borrower_LegalName]    &{ExcelPath}[NoticeStatus]
-    Release Loan Repricing
+    Release Loan Repricing    &{ExcelPath}[Loan_RepricingDate]
     
     Close All Windows on LIQ
     
@@ -92,7 +95,7 @@ Comprehensive Repricing Principal and Interest Payment - 1 Cashflow
     ### Remittance Instruction Addition per Cashflow ###
     Add Remittance Instructions    &{ExcelPath}[Borrower_ShortName]    &{ExcelPath}[Borrower_RemittanceDescription]    &{ExcelPath}[Loan_PrincipalAndGlobalInterest]    &{ExcelPath}[Loan_Currency]
     Verify if Status is set to Do It    &{ExcelPath}[Borrower_ShortName]    &{ExcelPath}[Borrower_RemittanceInstruction]    &{ExcelPath}[Loan_PrincipalAndGlobalInterest]    
-    Take Screenshot    CashflowsForLoanRepricing
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/CashflowsForLoanRepricing
     
     Confirm Cashflows for Loan Repricing
     
@@ -157,7 +160,7 @@ Comprehensive Repricing Interest Payment
     ### Remittance Instruction Addition per Cashflow ### 
     Add Remittance Instructions    &{ExcelPath}[Borrower_ShortName]    &{ExcelPath}[Borrower_RemittanceDescription]    &{ExcelPath}[Loan_TotalGlobalInterest]    &{ExcelPath}[Loan_Currency]
     Verify if Status is set to Do It    &{ExcelPath}[Borrower_ShortName]    &{ExcelPath}[Borrower_RemittanceInstruction]    &{ExcelPath}[Loan_TotalGlobalInterest]    
-    Take Screenshot    CashflowsForLoanRepricing
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/CashflowsForLoanRepricing
     
     Confirm Cashflows for Loan Repricing
     
@@ -212,7 +215,7 @@ Check Limit after Rollover/Repayment
     Search for Existing Outstanding    &{ExcelPath}[OutstandingSelect_Type]    &{ExcelPath}[Facility_Name]
     Open Existing Loan    &{ExcelPath}[Loan_Alias]    &{ExcelPath}[Loan_NewOutstanding]    
     Navigate to Rates Tab - Loan Notebook
-    ${AllInRate}    Add Borrower Base Rate and Facility Spread    &{ExcelPath}[Base_Rate]    &{ExcelPath}[Interest_SpreadValue]
+    ${AllInRate}    Add Borrower Base Rate and Facility Spread    &{ExcelPath}[Base_Rate]    &{ExcelPath}[Interest_SpreadValue]    flag=false
     ${AllInRate}    Set Variable    ${AllInRate}%
     Validate String Data In LIQ Object    ${LIQ_Loan_Window}    ${LIQ_Loan_AllInRate}    ${AllInRate}
     Close All Windows on LIQ
