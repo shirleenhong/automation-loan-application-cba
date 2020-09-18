@@ -110,8 +110,8 @@ Setup Multiple Facility Sell Amounts for D00000454
     ...    @author: fmamaril    27AUG2019    Initial Create
     [Arguments]    ${ExcelPath}
     Log    To be updated
-    # Set Facility Sell Amounts in Primaries    &{ExcelPath}[Facility_Name1]    &{ExcelPath}[Sell_Amount1]
-    # Run Keyword If    '&{ExcelPath}[rowid]'!='3'    Set Facility Sell Amounts in Primaries    &{ExcelPath}[Facility_Name2]    &{ExcelPath}[Sell_Amount2]
+    Set Facility Sell Amounts in Primaries    &{ExcelPath}[Facility_Name1]    &{ExcelPath}[Sell_Amount1]    &{ExcelPath}[Primary_BuySellPrice]
+    Run Keyword If    '&{ExcelPath}[rowid]'!='3'    Set Facility Sell Amounts in Primaries    &{ExcelPath}[Facility_Name2]    &{ExcelPath}[Sell_Amount2]    &{ExcelPath}[Primary_BuySellPrice]
     
 Complete Primaries for D00000454
     [Documentation]    This keyword completes Primaries for Syndicated Deal-Multiple Facility.
