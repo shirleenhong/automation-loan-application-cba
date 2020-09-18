@@ -2702,8 +2702,9 @@ Validate Deal Event Start Date
 Validate Deal Amendment Event Start Date
     [Documentation]    This keyword is used to validate whether the Deal Amendment's Business Event Queue Start date is greater than, less than, or equal to Business Event Queue End Date. 
     ...    @author: rtarayao    18FEB2020    - initial create
+    ...    @update: mcastro     17SEP2020    Fixed Enter key with correct value
     [Arguments]    ${sEventName}
-    Mx Press Combination    {ENTER}
+    Mx Press Combination    Key.ENTER
     Mx LoanIQ activate    ${LIQ_AmendmentNotebookReleased_Window}    
     Mx LoanIQ Select Window Tab    ${LIQ_AmendmentNotebookReleased_Tab}    Events
     Mx LoanIQ Select String    ${LIQ_AMD_Events_JavaTree}    Released    
