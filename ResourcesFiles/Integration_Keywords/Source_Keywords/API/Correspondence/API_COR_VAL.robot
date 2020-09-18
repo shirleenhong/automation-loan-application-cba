@@ -8,13 +8,16 @@ Correspondence POST API
     ...    @author: cmartill    DDMMMYYYY    - initial create
     ...    @update: jaquitan    21MAR2019    - updated keywords, arguments, and variables
     ...    @update: jloretiz    14JUL2019    - updated keywords and arguments
-    [Arguments]    ${sInputFilePath}    ${sInputJson}    ${sOutputFilePath}    ${sActualOutput}    ${sResponseCode}   
+    [Arguments]    ${sInputFilePath}    ${sInputJson}    ${sOutputFilePath}    ${sActualOutput}    ${sExpectedOutput}    ${sResponseCode}    
 
     Delete All Sessions
     Create Session Correspondence
-    Run Keyword And Continue On Failure    Post Json File    ${sInputFilePath}    ${sInputJson}    ${Corres_API}    ${sOutputFilePath}    ${sActualOutput}
-    Delete File If Exist    ${sInputFilePath}${sActualOutput}
-    Create File    ${sInputFilePath}${sActualOutput}    ${Response_file}
+
+    Run Keyword And Continue On Failure    Post Json File    ${sInputFilePath}    ${sInputJson}     
+    ...    ${Corres_API}    ${sOutputFilePath}    ${sExpectedOutput}
+    Delete File If Exist    ${sInputFilePath}${sExpectedOutput}
+    Create File    ${sInputFilePath}${sExpectedOutput}    ${Response_file}
+    #${isJson}    Run Keyword And Return Status    Comparing Inputjson Outputjson    ${sInputFilePath}    ${sExpectedOutput}    ${Response_file}
     Verify Json Response Status Code    ${sResponseCode}
     
 Correspondence with Technical Validation Error

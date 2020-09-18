@@ -7,15 +7,15 @@ Get the Notice Details in LIQ
     ...    @author: mgaling     DDMMMYYYY    - initial create
     ...    @update: jaquitan    DDMMMYYYY    - updated arguments and variables
     ...    @update: jloretiz    13JUL2020    - fix the error on excel writing
-    [Arguments]    ${rowid}    ${sSubAddDays}    ${sDealName}    ${sNoticeType}
+    [Arguments]    ${rowid}    ${sSubAddDays}    ${sDealName}    ${sNoticeType}    ${sZeroTempPath}                        
     
     ###Get System Date###
     ${SystemDate}    Get System Date
     ${SystemDate}    Convert Date    ${SystemDate}     date_format=%d-%b-%Y
     ${FromDate}    Subtract Time From Date    ${SystemDate}    ${sSubAddDays}days
     ${ThruDate}    Add Time To Date    ${SystemDate}    ${sSubAddDays}days
-    Write Data To Excel    Correspondence    From_Date    ${rowid}     ${FromDate}    ${APIDataSet}    bTestCaseColumn=True    sColumnReference=rowid
-    Write Data To Excel    Correspondence    Thru_Date    ${rowid}    ${ThruDate}    ${APIDataSet}    bTestCaseColumn=True    sColumnReference=rowid
+    Write Data To Excel for API_Data    Correspondence    From_Date    ${rowid}    ${FromDate}
+    Write Data To Excel for API_Data   Correspondence    Thru_Date    ${rowid}    ${ThruDate}
     
     Search Existing Deal    ${sDealName}
     Get Notice ID thru Deal Notebook    ${FromDate}    ${ThruDate}    ${sNoticeType}
@@ -335,7 +335,7 @@ Validate Notice in Business Event Output Window in LIQ
     ...    @update: jaquitan    20MAR2019    - updated arguments datatype and remove write to excel
     ...    @update: ehugo       20AUG2019    - removed Return in keyword name
     ...    @update: jloretiz    14JUL2019    - added screenshot and remove rowid in arguments, updated screenshot location
-    [Arguments]    ${sCustomer_IdentifiedBy}    ${sNotice_Customer_LegalName}    ${sNotice_Identifier}    ${sPath_XMLFile}    ${sTemp_Path}    ${sField_Name}
+    [Arguments]    ${rowid}    ${sCustomer_IdentifiedBy}    ${sNotice_Customer_LegalName}    ${sNotice_Identifier}    ${sPath_XMLFile}    ${sTemp_Path}    ${sField_Name}
     
     ###Gets Current Date###  
     ${CurrentDate}    Get Current Date 
