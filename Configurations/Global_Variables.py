@@ -201,6 +201,9 @@ RATE_APPROVAL_TRANSACTION = "Rate Approval"
 LOAN_REPRICING_FOR_THE_DEAL = "Loan Repricing for the Deal"
 LOAN_REPRICING = "Loan Repricing"
 AWAITING_FUNDING_MEMO_STATUS = "Awaiting Funding Memo"
+PAPER_CLIP_TRANSACTION = "Paper Clip Transaction"
+REPAYMENT_TRANSACTION = "Repayment"
+PAPER_CLIP = "Paper Clip"
 
 ### Bank Role ###
 REFERENCE_BANK_ROLE = "Reference Bank"
