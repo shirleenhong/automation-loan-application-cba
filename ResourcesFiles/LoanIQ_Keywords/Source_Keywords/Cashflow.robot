@@ -37,9 +37,8 @@ Verify if Method has Remittance Instruction
     ${CashflowMethod2}    Run Keyword If    '${TransactionAmount}'!='None'    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_Cashflows_Tree}    ${TransactionAmount}${SPACE}${Currency}%Method%Value_Variable
     Run Keyword If    '${TransactionAmount}'!='None'    Set Global Variable    ${CashflowMethod}    ${CashflowMethod1}
     Log    ${CashflowMethod}
-    Run Keyword If    '${CashflowMethod}'=='None'   mx LoanIQ click    ${LIQ_Cashflows_OK_Button}
-    ...    ELSE    Run Keyword If    '${CashflowMethod}'!='${RemittanceInstruction}'    Add Remittance Instructions    ${CustomerShortName}    ${RemittanceDescription}    ${TransactionAmount}    ${Currency}
-    Log    Remittance Instruction is already correct
+    Run Keyword If    '${CashflowMethod}'!='${RemittanceInstruction}'    Add Remittance Instructions    ${CustomerShortName}    ${RemittanceDescription}    ${TransactionAmount}    ${Currency}
+    ...    ELSE    Log    Remittance Instruction is already correct
 
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/CashflowNotebook
 
