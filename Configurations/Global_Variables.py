@@ -207,6 +207,9 @@ CBA_EMAIL_PDF_METHOD = "CBA Email with PDF Attachment"
 AWAITING_RELEASE_CASHFLOWS_STATUS = "Awaiting Release Cashflows"
 AWAITING_RATE_APPROVAL_STATUS = "Awaiting Rate Approval"
 AWAITING_GENERATE_RATE_SETTING_NOTICES_STATUS = "Awaiting Generate Rate Setting Notices"
+#AWAITING_RATE_APPROVAL_STATUS = "Awaiting Rate Approval"
+GENERATE_RATE_SETTING_NOTICES_TRANSACTION = "Generate Rate Setting Notices"
+AWAITING_RELEASE_NOTICE_STATUS = "Awaiting release"
 
 ### Bank Role ###
 REFERENCE_BANK_ROLE = "Reference Bank"

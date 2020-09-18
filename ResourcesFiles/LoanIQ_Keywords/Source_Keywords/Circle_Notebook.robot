@@ -1308,6 +1308,7 @@ Populate Amts or Dates Tab
     ...    @author: mgaling
     ...    @update: dahijara    10AUG2020    - Removed writing and moved it to business/testcase keyword level
     ...                                      - Added screenshot.
+    ...    @update: dahijara    15SEP2020    - Removed Reading of expected close date since it is being passed on the argument.
     [Arguments]    ${sExpectedCloseDate}   
     
     ### GetRuntime Keyword Pre-processing ###
@@ -1316,7 +1317,6 @@ Populate Amts or Dates Tab
     Mx LoanIQ Select Window Tab    ${LIQ_AssignmentSell_Tab}    Amts/Dates
     
     ###Input data in Dates Section###    
-    ${ExpectedCloseDate}    Read Data From Excel    TRP002_SecondarySale    ExpectedCloseDate    ${rowid}      
     mx LoanIQ enter    ${LIQ_PendingAssignmentSell_AmtsDates_ExpectedCloseDate}    ${ExpectedCloseDate}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/PendingAssignmentSell
     mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}    

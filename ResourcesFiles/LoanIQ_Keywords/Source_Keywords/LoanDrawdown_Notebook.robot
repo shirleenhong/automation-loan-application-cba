@@ -2148,8 +2148,19 @@ Enter Loan Drawdown Details for AUD Libor Option
     [Documentation]    This keyword is used to enter Loan Drawdown Details for USD Libor Option
     ...    @author: mnanquil
     ...    <update> bernchua 11/13/2018: added click element if present for warning messages when entering dates.
-    [Arguments]    ${Loan_RequestedAmount}    ${Loan_EffectiveDate}    ${Loan_MaturityDate}    ${Loan_RepricingFrequency}    ${Repricing_Date}    ${Loan_IntCycleFrequency}    ${Loan_Accrue}    ${Warning_Message}            
-    
+    ...    @update: dahijara    29JUL2020    -  Added Keyword processing and screenshot.. Added key Tab after entering repricing date.
+    [Arguments]    ${sLoan_RequestedAmount}    ${sLoan_EffectiveDate}    ${sLoan_MaturityDate}    ${sLoan_RepricingFrequency}    ${sRepricing_Date}    ${sLoan_IntCycleFrequency}    ${sLoan_Accrue}    ${sWarning_Message}            
+
+    ### GetRuntime Keyword Pre-processing ###
+    ${Loan_RequestedAmount}    Acquire Argument Value    ${sLoan_RequestedAmount}
+    ${Loan_EffectiveDate}    Acquire Argument Value    ${sLoan_EffectiveDate}
+    ${Loan_MaturityDate}    Acquire Argument Value    ${sLoan_MaturityDate}
+    ${Loan_RepricingFrequency}    Acquire Argument Value    ${sLoan_RepricingFrequency}
+    ${Repricing_Date}    Acquire Argument Value    ${sRepricing_Date}
+    ${Loan_IntCycleFrequency}    Acquire Argument Value    ${sLoan_IntCycleFrequency}
+    ${Loan_Accrue}    Acquire Argument Value    ${sLoan_Accrue}
+    ${Warning_Message}    Acquire Argument Value    ${sWarning_Message}
+
     Mx LoanIQ Select Window Tab    ${LIQ_InitialDrawdown_Tab}    General
     
     mx LoanIQ activate    ${LIQ_InitialDrawdown_Window} 
@@ -2160,6 +2171,8 @@ Enter Loan Drawdown Details for AUD Libor Option
     mx LoanIQ click element if present    ${LIQ_Error_OK_Button}
     Mx LoanIQ Select Combo Box Value    ${LIQ_InitialDrawdown_Repricing_Dropdownlist}    ${Loan_RepricingFrequency}
     mx LoanIQ enter    ${LIQ_InitialDrawdown_RepricingDate_Datefield}    ${Repricing_Date}
+    Mx Press Combination    KEY.TAB
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/InitialDrawdown
     Validate Text of Warning Message    ${Warning_Message}
     mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
     ${IntCycleFrequency}    Mx LoanIQ Get Data    ${LIQ_InitialDrawdown_IntCycleFreq_Dropdownlist}    value%Daily    
@@ -2171,6 +2184,7 @@ Enter Loan Drawdown Details for AUD Libor Option
     mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}	    
     Mx LoanIQ Select Combo Box Value    ${LIQ_InitialDrawdown_Accrue_Dropdownlist}    ${Loan_Accrue} 
     mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/InitialDrawdown
 
 Input Loan Drawdown Rates for Term Drawdown
     [Documentation]    This keyword is used to input Loan Drawdown Base Rate within the Rates tab.
@@ -2191,8 +2205,11 @@ Accept Loan Drawdown Rates for Term Facility
     [Documentation]    This keyword will accept the base rate
     ...    @author: mnanquil
 	...	   <update> bernchua 12/3/2018: modified loop check first if warning message exits then click button if true.
-    [Arguments]    ${Borrower_BaseRate} 
-    
+    ...    @update: dahijara    29JUL2020    - Added Keyword processing and screenshot.
+    [Arguments]    ${sBorrower_BaseRate} 
+    ### GetRuntime Keyword Pre-processing ###
+    ${Borrower_BaseRate}    Acquire Argument Value    ${sBorrower_BaseRate}
+
     Mx LoanIQ Select Window Tab    ${LIQ_InitialDrawdown_Tab}    Rates
     mx LoanIQ click    ${LIQ_InitialDrawdown_BaseRate_Button}
     :FOR    ${INDEX}    IN RANGE    10
@@ -2203,6 +2220,7 @@ Accept Loan Drawdown Rates for Term Facility
     mx LoanIQ click    ${LIQ_InitialDrawdown_AcceptBaseRate}         
     ${baseRate}    Mx LoanIQ Get Data    ${LIQ_InitialDrawdown_BorrowerBaseRate_Textfield}    testData
     Should Be Equal    ${Borrower_BaseRate}    ${baseRate}     
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/InitialDrawdown_BorrowerBaseRate
     mx LoanIQ click    ${LIQ_InitialDrawdown_SetBaseRate_OK_Button}        
 
 
@@ -2210,10 +2228,15 @@ Validate Rate Set
     [Documentation]    This keyword will validate the rate set on events tab
     ...    @author: mnanquilada
     ...    10/10/2018
-    [Arguments]    ${rateSetup}
+    ...    @update: dahijara    29JUL2020    - Added Keyword processing and screenshot.
+    [Arguments]    ${sRateSetup}
+    ### GetRuntime Keyword Pre-processing ###
+    ${RateSetup}    Acquire Argument Value    ${sRateSetup}
     Mx LoanIQ Select Window Tab    ${LIQ_InitialDrawdown_Tab}    Events
-    Mx LoanIQ Select Or DoubleClick In Javatree    ${LIQ_InitialDrawdown_SetRateJavaTree}    ${rateSetup}%d
-    Log    Successfully clicked ${rateSetup}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/InitialDrawdown_SetRate
+    Mx LoanIQ Select Or DoubleClick In Javatree    ${LIQ_InitialDrawdown_SetRateJavaTree}    ${sRateSetup}%d
+    Log    Successfully clicked ${sRateSetup}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/InitialDrawdown_SetRate
 
 Add Holiday Calendar Date
     [Documentation]    This keyword will add holiday calendar date on existing loan
@@ -2877,11 +2900,20 @@ Validate Conversion Amount for the Increase in Loan Amount
 
 New Outstanding Select
     [Documentation]    This keyword creates a new Outstanding Select, where it enters and verifies the details displayed in the window.
-    ...                This keyword also returns the Alias generated.
-    ...                @author: bernchua
-    ...                @update: bernchua    23AUG2019    Added taking of screenshots
-    ...                @update: mcastro     04SEP2020    Updated screenshot path
-    [Arguments]    ${Deal_Name}    ${Facility_Name}    ${Borrower_Name}    ${Outstanding_Type}    ${Pricing_Option}    ${Outstanding_Currency}
+    ...    This keyword also returns the Alias generated.
+    ...    @author: bernchua
+    ...    @update: bernchua    23AUG2019    Added taking of screenshots
+    ...    @update: dahijara    08SEP2020    Added Pre and Post Processing and Screenshot.
+    [Arguments]    ${sDeal_Name}    ${sFacility_Name}    ${sBorrower_Name}    ${sOutstanding_Type}    ${sPricing_Option}    ${sOutstanding_Currency}    ${sRunVar_Alias}=None
+
+    ### GetRuntime Keyword Pre-processing ###
+    ${Deal_Name}    Acquire Argument Value    ${sDeal_Name}
+    ${Facility_Name}    Acquire Argument Value    ${sFacility_Name}
+    ${Borrower_Name}    Acquire Argument Value    ${sBorrower_Name}
+    ${Outstanding_Type}    Acquire Argument Value    ${sOutstanding_Type}
+    ${Pricing_Option}    Acquire Argument Value    ${sPricing_Option}
+    ${Outstanding_Currency}    Acquire Argument Value    ${sOutstanding_Currency}
+
     mx LoanIQ activate    ${LIQ_OutstandingSelect_Window}
     Mx LoanIQ Set    ${LIQ_OutstandingSelect_New_RadioButton}    ON
     Mx LoanIQ Select Combo Box Value    ${LIQ_OutstandingSelect_Type_Dropdown}    ${Outstanding_Type}    
@@ -2903,9 +2935,13 @@ New Outstanding Select
     
     ${Alias}    Mx LoanIQ Get Data    ${LIQ_OutstandingSelect_Alias_JavaEdit}    value%alias    
     
-    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/OutstandingSelect-Window
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/OutstandingSelectWindow
     mx LoanIQ click    ${LIQ_OutstandingSelect_OK_Button}
     mx LoanIQ click element if present    ${LIQ_Information_OK_Button}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/OutstandingSelectWindow
+
+    ### ConstRuntime Keyword Post-processing ###
+    Save Values of Runtime Execution on Excel File    ${sRunVar_Alias}    ${Alias}
     [Return]    ${Alias}
     
 Enter Initial Loan Drawdown General Details
