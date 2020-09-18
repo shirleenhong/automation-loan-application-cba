@@ -1160,4 +1160,5 @@ Set the Status to Send all to SPAP
     ...    @author:    sahalder    22072020    initial create
     mx LoanIQ activate window    ${LIQ_Cashflows_Window}    
     mx LoanIQ select    ${LIQ_Cashflows_Options_SendAllToSPAP}
+
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/Workflow_SendStatusToSPAP
