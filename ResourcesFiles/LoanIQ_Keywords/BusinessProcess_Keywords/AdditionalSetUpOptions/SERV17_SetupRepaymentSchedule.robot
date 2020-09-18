@@ -112,9 +112,9 @@ Create Loan Drawdown TERM and SBLC for Syndicated Deal
     ###Deal Notebook###
     Search for Deal    &{ExcelPath}[Deal_Name]
     
-    ###Creation of Initial Loan Drawdown in Loan NoteBook###
-    # ${LoanEffectiveDate}    Get System Date
-    # Write Data To Excel    SERV01A_LoanDrawdown    Loan_EffectiveDate    ${rowid}    ${LoanEffectiveDate}
+    ##Creation of Initial Loan Drawdown in Loan NoteBook###
+    ${LoanEffectiveDate}    Get System Date
+    Write Data To Excel    SERV01A_LoanDrawdown    Loan_EffectiveDate    ${rowid}    ${LoanEffectiveDate}
     Navigate to Outstanding Select Window from Deal
     ${Alias}    Create Loan Outstanding    &{ExcelPath}[Outstanding_Type]    &{ExcelPath}[Facility_Name]    &{ExcelPath}[Borrower_ShortName]    &{ExcelPath}[Loan_PricingOption]    &{ExcelPath}[Loan_Currency]  
     
