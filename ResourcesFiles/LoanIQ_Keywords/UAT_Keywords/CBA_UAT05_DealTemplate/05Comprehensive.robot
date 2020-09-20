@@ -34,7 +34,6 @@ Comprehensive Repricing Principal and Interest Payment - 2 Cashflows
     ### Remittance Instruction Addition per Cashflow ###   
     Add Remittance Instructions    &{ExcelPath}[Borrower_ShortName]    &{ExcelPath}[Borrower_RemittanceDescription]    ${PrincipalPayment}    &{ExcelPath}[Loan_Currency]    &{ExcelPath}[Loan_TotalGlobalInterest]    
     Verify if Status is set to Do It    &{ExcelPath}[Borrower_ShortName]    &{ExcelPath}[Borrower_RemittanceInstruction]    ${PrincipalPayment}    
-    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/CashflowsForLoanRepricing
     
     Confirm Cashflows for Loan Repricing
     
@@ -95,7 +94,6 @@ Comprehensive Repricing Principal and Interest Payment - 1 Cashflow
     ### Remittance Instruction Addition per Cashflow ###
     Add Remittance Instructions    &{ExcelPath}[Borrower_ShortName]    &{ExcelPath}[Borrower_RemittanceDescription]    &{ExcelPath}[Loan_PrincipalAndGlobalInterest]    &{ExcelPath}[Loan_Currency]
     Verify if Status is set to Do It    &{ExcelPath}[Borrower_ShortName]    &{ExcelPath}[Borrower_RemittanceInstruction]    &{ExcelPath}[Loan_PrincipalAndGlobalInterest]    
-    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/CashflowsForLoanRepricing
     
     Confirm Cashflows for Loan Repricing
     
@@ -160,7 +158,6 @@ Comprehensive Repricing Interest Payment
     ### Remittance Instruction Addition per Cashflow ### 
     Add Remittance Instructions    &{ExcelPath}[Borrower_ShortName]    &{ExcelPath}[Borrower_RemittanceDescription]    &{ExcelPath}[Loan_TotalGlobalInterest]    &{ExcelPath}[Loan_Currency]
     Verify if Status is set to Do It    &{ExcelPath}[Borrower_ShortName]    &{ExcelPath}[Borrower_RemittanceInstruction]    &{ExcelPath}[Loan_TotalGlobalInterest]    
-    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/CashflowsForLoanRepricing
     
     Confirm Cashflows for Loan Repricing
     
