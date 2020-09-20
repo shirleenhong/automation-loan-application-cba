@@ -99,31 +99,33 @@ Write Facility Ongoing Fee Details - Scenario 7 ComSee
     Navigate to Commitment Fee Notebook    ${LineFee}
     
     ###Write Fee Details for Comsee
-    ${LineFeeRate}    Get Line Fee Current Rate
+    ${LineFeeRate}    Get Fee Current Rate    ${LIQ_LineFee_Window}    ${LIQ_LineFee_CurrentRate_Field}
     Write Data To Excel    ComSee_SC7_FacFeeSetup    Fee_CurrentRate    ${rowid}    ${LineFeeRate}    ${ComSeeDataSet}
     
-    ${LineFeeCurrency}    Get Line Fee Currency
+    ${LineFeeCurrency}    Get Fee Currency    ${LIQ_LineFee_Window}    ${LIQ_LineFee_Currency_Text}
     Write Data To Excel    ComSee_SC7_FacFeeSetup    Fee_Currency    ${rowid}    ${LineFeeCurrency}    ${ComSeeDataSet}
 
-    ${LineFeeEffectiveDate}    ${LineFeeActualExpiryDate}    Get Line Fee Effective and Actual Expiry Date
+    ${LineFeeEffectiveDate}    ${LineFeeActualExpiryDate}    Get Fee Effective and Actual Expiry Date    ${LIQ_LineFee_Window}    ${LIQ_LineFee_Effective_Date}    ${LIQ_LineFee_ActualExpiryDate_Text}
     ${LineFeeEffectiveDate}    Convert LIQ Date to Year-Month-Day Format    ${LineFeeEffectiveDate}
     ${LineFeeActualExpiryDate}    Convert LIQ Date to Year-Month-Day Format    ${LineFeeActualExpiryDate}
     Write Data To Excel    ComSee_SC7_FacFeeSetup    Fee_EffectiveDate    ${rowid}    ${LineFeeEffectiveDate}    ${ComSeeDataSet}
     Write Data To Excel    ComSee_SC7_FacFeeSetup    Fee_ExpiryDate    ${rowid}    ${LineFeeActualExpiryDate}    ${ComSeeDataSet}
     
-    ${LineFeeAdjustedDueDate}    Get Line Fee Adjusted Due Date
+    ${LineFeeCycleStartDate}    ${LineFeeAccrualEndDate}    Get Fee Accrual Cycle Start and End Date    ${LIQ_LineFee_Window}    ${LIQ_LineFee_CycleStartDate_Text}    ${LIQ_LineFee_AccrualEnd_Date}
+    ${LineFeeCycleStartDate}    Convert LIQ Date to Year-Month-Day Format    ${LineFeeCycleStartDate}
+    ${LineFeeAccrualEndDate}    Convert LIQ Date to Year-Month-Day Format    ${LineFeeAccrualEndDate}
+    Write Data To Excel    ComSee_SC7_FacFeeSetup    Fee_CycleStartDate    ${rowid}    ${LineFeeCycleStartDate}    ${ComSeeDataSet}
+    Write Data To Excel    ComSee_SC7_FacFeeSetup    Fee_AccrualEndDate    ${rowid}    ${LineFeeAccrualEndDate}    ${ComSeeDataSet}
+    
+    ${LineFeeAdjustedDueDate}    Get Fee Adjusted Due Date    ${LIQ_LineFee_Window}    ${LIQ_LineFee_AdjustedDue_Date}
     ${LineFeeAdjustedDueDate}    Convert LIQ Date to Year-Month-Day Format    ${LineFeeAdjustedDueDate}
     Write Data To Excel    ComSee_SC7_FacFeeSetup    Fee_DueDate    ${rowid}    ${LineFeeAdjustedDueDate}    ${ComSeeDataSet}
     
-    ${LineAccruedtodateAmount}    Get Line Fee Accrued to Date Amount
+    ${LineAccruedtodateAmount}    Get Fee Accrued to Date Amount    ${LIQ_LineFee_Window}    ${LIQ_LineFee_Tab}    ${LIQ_LineFee_Accrual_Cycles_JavaTree}
     ${LineAccruedtodateAmount}    Remove Comma and Convert to Number    ${LineAccruedtodateAmount}
-    # ${TotalRowCount}    Get Accrual Row Count    ${LIQ_LineFee_Window}    ${LIQ_LineFee_Accrual_Cycles_JavaTree}
-    # ${AccruedtoDateAmt}    Compute Total Accruals for Fee    ${TotalRowCount}    ${LIQ_LineFee_Tab}    ${LIQ_LineFee_Accrual_Cycles_JavaTree}
-    # ${AccruedtoDateAmt}    Remove Comma and Convert to Number    ${AccruedtoDateAmt}
-    # Validate Accrued to Date Amount    ${AccruedtoDateAmt}    ${LineAccruedtodateAmount}
     Write Data To Excel    ComSee_SC7_FacFeeSetup    Fee_AccruedToDate    ${rowid}    ${LineAccruedtodateAmount}    ${ComSeeDataSet}
     
-    ${OngoingFee_PaidToDate}    Get Line Fee Paid to Date Amount
+    ${OngoingFee_PaidToDate}    Get Fee Paid to Date Amount    ${LIQ_LineFee_Window}    ${LIQ_LineFee_Tab}    ${LIQ_LineFee_Accrual_Cycles_JavaTree}
     ${OngoingFee_PaidToDate}    Remove Comma and Convert to Number    ${OngoingFee_PaidToDate}
     Write Data To Excel    ComSee_SC3_Issuance    Fee_PaidToDate    ${rowid}    ${OngoingFee_PaidToDate}    ${ComSeeDataSet}
     
