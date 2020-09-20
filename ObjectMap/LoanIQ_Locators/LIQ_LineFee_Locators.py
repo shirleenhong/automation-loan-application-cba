@@ -13,11 +13,13 @@ LIQ_LineFee_Effective_Date = 'JavaWindow("title:=Line Fee.*").JavaEdit("attached
 LIQ_LineFee_FloatRate_Date = 'JavaWindow("title:=Line Fee.*").JavaEdit("attached text:=Float Rate Start Date:")'
 LIQ_LineFee_ActualDue_Date = 'JavaWindow("title:=Line Fee.*").JavaEdit("attached text:=Actual Due Date:")'
 LIQ_LineFee_AdjustedDue_Date = 'JavaWindow("title:=Line Fee.*").JavaEdit("attached text:=Adjusted Due Date:")'
+LIQ_LineFee_AccrualEnd_Date = 'JavaWindow("title:=Line Fee.*").JavaEdit("attached text:=Accrual End Date:")'
 LIQ_LineFee_Cycle = 'JavaWindow("title:=Line Fee.*").JavaList("attached text:=Cycle Frequency:")' 
 LIQ_LineFee_Accrue_Dropdown = 'JavaWindow("title:=Line Fee.*").JavaList("attached text:=Accrue.*")' 
 LIQ_LineFeeReleasedNotebook_Window = 'JavaWindow("title:=Line Fee.* / Released:.*")'
 LIQ_LineFee_Currency_Text = 'JavaWindow("title:=Line Fee.*").JavaStaticText("labeled_containers_path:=Tab:General;", "x:=185", "y:=168")'
 LIQ_LineFee_ActualExpiryDate_Text = 'JavaWindow("title:=Line Fee.*").JavaStaticText("labeled_containers_path:=Tab:General;", "x:=567", "y:=152")'
+LIQ_LineFee_CycleStartDate_Text = 'JavaWindow("title:=Line Fee.*").JavaStaticText("labeled_containers_path:=Tab:General;", "x:=567", "y:=198")'
 
 ###Line Fee Notebook - Facility Ongoing Fee Capitalization Editor### 
 LIQ_LineFee_CapitalizationEditor_Window = 'JavaWindow("title:=Facility Ongoing Fee Capitalization Editor")'
