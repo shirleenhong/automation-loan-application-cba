@@ -46,13 +46,15 @@ ${MDM_User_API}       /corporate/users
 ${Corres_API}         /custom/v1/cbanotices/status
 ${MDM_ACCESS_TOKEN}    /bfweb/rest/MisysSSOFBPService/jwt/create
 ${MDM_COMMSEE_DEALFACILITY_API}    /comrlending/dealFacility/
-${MDM_COM_API}     /custom/v1/comrlending/dealFacility/
+${MDM_COM_API_V1}     /custom/v1/comrlending/dealFacility/
+${MDM_COM_API_V2}     /custom/v2/comrlending/dealFacility/
 ${MDM_COM_API_0}   /custom/v1/comrlending/facility/
 ${MDM_COM_API_00}  /outstandings
 ${MDM_COM_API_FEES}    /fees
 ${COM_HOST}    COM_HOST
 ${MDM_PARTY_API}    /bfweb/retail/v1/party/
-${MDM_COMMSEE_API_FAC}    /custom/v1/comrlending/facility/
+${MDM_COMMSEE_API_FAC_V1}    /custom/v1/comrlending/facility/
+${MDM_COMMSEE_API_FAC_V2}    /custom/v2/comrlending/facility/
 ${MDM_DATASOURCE_PARAM}    dataSource=LOB
 ${MDM_LIMIT_PARAM}    limit
 ${MDM_OFFSET_PARAM}    offset
@@ -136,22 +138,13 @@ ${ADDITIONAL_FILESTAMP}    100
 ${FFC_RESPONSE}
 ${GETTEXTJMS_SOURCENAME}    GETTextJMS
 ${TEXTJMS_SOURCENAME}    TextJMS
-${TEXTJMS_INSTANCE}    distributor_1.3.0
-${GETTEXTJMS_INSTANCE}    distributor_CCB-1.2.0.1 Dev Cut
-${OPEAPI_INSTANCE_TL}    openAPI_1.3.0
-${OPEAPI_INSTANCE}    openAPI_1.3.0
-${OPEN_API_CCB}    openAPI_CCB-1.1.0.1
 ${CBAINTERFACE_SOURCENAME}    CCBCorrespUpdateMQ_base
 ${CBAINTERFACE_INSTANCE}    CustomCBAInterface_Transformation1.1.6
 ${CBAINTERFACE_SOURCENAME_FXRATES}    CCBCorrespUpdateMQ_notf
 ${CBAPUSH_SOURCENAME}    CCBCorrespUpdateMQ_notf
-${CBAPUSH_INSTANCE}    CustomCBAPush_1.3.0
-${CUSTOM_INTERFACE}    CustomInterface_1.2.6
-${TL_BASE_ACK_MESSAGE_SOURCENAME}    tl_ack_message_splitter_base
+${TL_BASE_ACK_MESSAGE_SOURCENAME}    ccb_source_base
 ${TL_CAL_ACK_MESSAGE_SOURCENAME}    tl_ack_message_splitter_cal
-${CUSTOM_INTERFACE_INSTANCE}    CustomInterface_1.2.6
 ${RESPONSE_MECHANISM_SOURCENAME}    MessageResponseProcessor
-${RESPONSE_MECHANISM_INSTANCE}    responsemechanism_1.3.0
 
 ###FFC Summary Headers###
 ${SOURCE}    SOURCE
@@ -467,3 +460,6 @@ ${PARTY_ZONE}    AU
 ${INPUT_DATE}   0
 ${DATE_OFFSET_IN_DAYS}   1
 ${SYSTEM_DATE}   SYSTEMDATE
+
+###ENTITY###
+${SUBENTITYLIST}    AUD|EUR

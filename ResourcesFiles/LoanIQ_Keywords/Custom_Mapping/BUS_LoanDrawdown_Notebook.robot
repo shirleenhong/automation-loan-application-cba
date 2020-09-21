@@ -407,4 +407,100 @@ BUS_Compute New Facility Available to Draw Amount
     ...    @author: dahijara    30JUL2020    - initial create
 
     Run Keyword   Compute New Facility Available to Draw Amount    ${ARGUMENT_1}    ${ARGUMENT_2}    ${ARGUMENT_3}    
-       
+
+BUS_Accept Loan Drawdown Rates for Term Facility
+    [Documentation]    This keyword is used to run the assigned low level keyword.
+    ...    @author: dahijara    03SEP2020    - initial create
+
+    Run Keyword    Accept Loan Drawdown Rates for Term Facility    ${ARGUMENT_1}
+
+BUS_Validate Rate Set
+    [Documentation]    This keyword is used to run the assigned low level keyword.
+    ...    @author: dahijara    03SEP2020    - initial create
+
+    Run Keyword    Validate Rate Set    ${ARGUMENT_1}
+
+BUS_Validate Global Facility Amounts - Balanced
+    [Documentation]    This keyword is used to run the assigned low level keyword.
+    ...    @author: dahijara    03SEP2020    - initial create
+
+    Run Keyword    Validate Global Facility Amounts - Balanced    ${ARGUMENT_1}    ${ARGUMENT_2}    ${ARGUMENT_3}
+
+BUS_Enter Loan Drawdown Details for AUD Libor Option
+    [Documentation]    This keyword is used to run the assigned low level keyword.
+    ...    @author: dahijara    03SEP2020    - initial create
+
+    Run Keyword    Enter Loan Drawdown Details for AUD Libor Option    ${ARGUMENT_1}    ${ARGUMENT_2}    ${ARGUMENT_3}    ${ARGUMENT_4}    ${ARGUMENT_5}    ${ARGUMENT_6}    ${ARGUMENT_7}    ${ARGUMENT_8}
+
+BUS_New Outstanding Select
+    [Documentation]    This keyword is used to run the assigned low level keyword.
+    ...    @author: dahijara    08SEP2020    - initial create
+
+    Run Keyword    New Outstanding Select    ${ARGUMENT_1}    ${ARGUMENT_2}    ${ARGUMENT_3}    ${ARGUMENT_4}    ${ARGUMENT_5}    ${ARGUMENT_6}    ${ARGUMENT_7}
+    
+BUS_Enter Loan Drawdown Details for USD Libor Option
+    [Documentation]    This keyword is used to run the assigned low level keyword.
+    ...    @author: dahijara    24AUG2020    - initial create
+
+    Run Keyword   Enter Loan Drawdown Details for USD Libor Option    ${ARGUMENT_1}    ${ARGUMENT_2}    ${ARGUMENT_3}    ${ARGUMENT_4}    ${ARGUMENT_5}    ${ARGUMENT_6}    ${ARGUMENT_7}
+
+BUS_Input Loan Drawdown Rates for Term Facility (USD)
+    [Documentation]    This keyword is used to run the assigned low level keyword.
+    ...    @author: dahijara    24AUG2020    - initial create
+
+    Run Keyword   Input Loan Drawdown Rates for Term Facility (USD)    ${ARGUMENT_1}
+
+BUS_Create Repayment Schedule - Fixed Principal Plus Interest Due
+    [Documentation]    This keyword is used to run the assigned low level keyword.
+    ...    @author: dahijara    24AUG2020    - initial create
+
+    Run Keyword   Create Repayment Schedule - Fixed Principal Plus Interest Due
+
+BUS_Verify Fixed Principal Payment Amount
+    [Documentation]    This keyword is used to run the assigned low level keyword.
+    ...    @author: dahijara    24AUG2020    - initial create
+
+    Run Keyword   Verify Fixed Principal Payment Amount    ${ARGUMENT_1}
+    
+BUS_Validate Total Amount of the Repayment Schedule vs Current Host Bank Amount
+    [Documentation]    This keyword is used to run the assigned low level keyword.
+    ...    @author: dahijara    24AUG2020    - initial create
+
+    Run Keyword   Validate Total Amount of the Repayment Schedule vs Current Host Bank Amount    ${ARGUMENT_1}
+
+BUS_Approve Initial Loan Drawdown via WIP
+    [Documentation]    This keyword is used to run the assigned low level keyword.
+    ...    @author: dahijara    24AUG2020    - initial create
+
+    Run Keyword   Approve Initial Loan Drawdown via WIP    ${ARGUMENT_1}
+
+BUS_Set FX Rates Loan Drawdown
+    [Documentation]    This keyword is used to run the assigned low level keyword.
+    ...    @author: dahijara    24AUG2020    - initial create
+
+    Run Keyword   Set FX Rates Loan Drawdown    ${ARGUMENT_1}
+
+BUS_Send to Rate Approval Initial Loan Drawdown via WIP
+    [Documentation]    This keyword is used to run the assigned low level keyword.
+    ...    @author: dahijara    24AUG2020    - initial create
+
+    Run Keyword   Send to Rate Approval Initial Loan Drawdown via WIP    ${ARGUMENT_1}
+
+BUS_Rate Approval Initial Loan Drawdown via WIP
+    [Documentation]    This keyword is used to run the assigned low level keyword.
+    ...    @author: dahijara    24AUG2020    - initial create
+
+    Run Keyword   Rate Approval Initial Loan Drawdown via WIP    ${ARGUMENT_1}
+
+BUS_Generate Rate Setting Notices via WIP
+    [Documentation]    This keyword is used to run the assigned low level keyword.
+    ...    @author: dahijara    24AUG2020    - initial create
+
+    Run Keyword   Generate Rate Setting Notices via WIP    ${ARGUMENT_1}    ${ARGUMENT_2}    ${ARGUMENT_3}
+
+BUS_Release Initial Loan Drawdown
+    [Documentation]    This keyword is used to run the assigned low level keyword.
+    ...    @author: dahijara    24AUG2020    - initial create
+
+    Run Keyword   Release Initial Loan Drawdown    ${ARGUMENT_1}
+    

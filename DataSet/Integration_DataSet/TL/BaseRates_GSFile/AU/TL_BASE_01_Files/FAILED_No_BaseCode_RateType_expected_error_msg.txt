@@ -1,3 +1,0 @@
-There is no baseratecode configuration available at COMRLENDING corresponding to baseratecode-BANKBILL and Midrate:None
-There is no baseratecode configuration available at COMRLENDING corresponding to baseratecode-BANKBILL and Sellrate:None
-There is no baseratecode configuration available at COMRLENDING corresponding to baseratecode-BANKBILL and Lastrate:None

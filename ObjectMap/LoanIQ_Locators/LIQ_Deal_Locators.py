@@ -114,7 +114,7 @@ LIQ_DealBorrowerListByShortName_OK_Button = 'JavaWindow("title:=Borrower Select.
 LIQ_DealBorrowerListByShortName_Tree = 'JavaWindow("title:=Borrower Select.*").JavaWindow("title:=Borrower List By Short.*").JavaTree("attached text:=Search:")'    
     
 ###Deal Notebook - Deal Borrower Window###    
-LIQ_DealBorrower_Window = 'JavaWindow("title:=Deal Borrower.*")'    
+LIQ_DealBorrower_Window = 'JavaWindow("title:=Deal Borrower.*")'
 LIQ_DealBorrower_Location_List = 'JavaWindow("title:=Deal Borrower.*").JavaList("tagname:=Location:")'    
 LIQ_DealBorrower_ServicingGroup_Button = 'JavaWindow("title:=Deal Borrower.*").JavaButton("attached text:=Servicing Group")'    
 LIQ_DealBorrower_PreferredRemittanceInstructions_Button = 'JavaWindow("title:=Deal Borrower.*").JavaButton("attached text:=Preferred Remittance Instructions")'    
@@ -239,14 +239,15 @@ LIQ_AmortizingAdmin_EffectiveDate_Field = 'JavaWindow("title:=.*Amortizing Admin
 LIQ_AmortizingAdmin_BillingNumberOfDays_Field = 'JavaWindow("title:=.*Amortizing Admin.*").JavaEdit("attached text:=Billing Number of Days:*")'    
 LIQ_AdminFee_AdjustedDueDate_Datefield = 'JavaWindow("title:=.*Admin Fee.*").JavaEdit("attached text:=Adjusted Due Date:")'    
 LIQ_AdminFee_File_Save = 'JavaWindow("title:=.*Admin Fee.*").JavaMenu("label:=File").JavaMenu("label:=Save")' 
-    
-
 
 ###Deal Notebook - Amortizing Admin Fee - Distribution###
 LIQ_AmortizingAdmin_Distribution_Add_Button = 'JavaWindow("title:=.*Amortizing Admin.*").JavaButton("attached text:=Add")'    
 LIQ_AmortizingAdmin_Distribution_Remove_Button = 'JavaWindow("title:=.*Amortizing Admin.*").JavaButton("attached text:=Remove")'    
 LIQ_AmortizingAdmin_Distribution_JavaTree = 'JavaWindow("title:=.*Amortizing Admin.*").JavaTree("tagname:=Drill down to assign primary.*")'    
-LIQ_AmortizingAdmin_Exit_Menu = 'JavaWindow("title:=.*Amortizing Admin.*").JavaMenu("label:=File").JavaMenu("label:=Exit")'    
+LIQ_AmortizingAdmin_Exit_Menu = 'JavaWindow("title:=.*Amortizing Admin.*").JavaMenu("label:=File").JavaMenu("label:=Exit")'
+
+###Deal Notebook - Accruing Admin Fee - General###
+LIQ_AccruingAdmin_Window = 'JavaWindow("title:=.*Accruing Admin Fee.*")'
     
 ###Deal Notebook - Customer Select###
 LIQ_CustomerSelect_ShortName_Field = 'JavaWindow("title:=.*Customer Select.*").JavaEdit("tagname:=Text")'    

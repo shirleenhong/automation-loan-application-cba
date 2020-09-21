@@ -1437,22 +1437,48 @@ Validate Loan Repricing New Outstanding Amount
     ...                @author: bernchua    27AUG2019    Initial create
     ...                @author: bernchua    11SEP2019    Updated keyword documentation
     ...                @update: sahalder    25JUN2020    Added keyword Pre-Processing steps
-    [Arguments]    ${sDescription}    ${sNewOutstanding_Amount}
+    ...                @update: dahijara    25AUG2020    Added arguments, inserted set variable for description from test case level. Added screenshot
+    [Arguments]    ${sPricing_Option}    ${sLoan_Alias}    ${sNewOutstanding_Amount}
     
     ### GetRuntime Keyword Pre-processing ###
-    ${Description}    Acquire Argument Value    ${sDescription}
+    ${Pricing_Option}    Acquire Argument Value    ${sPricing_Option}
+    ${Loan_Alias}    Acquire Argument Value    ${sLoan_Alias}
     ${NewOutstanding_Amount}    Acquire Argument Value    ${sNewOutstanding_Amount}
+
+    ${Description}    Set Variable    ${Pricing_Option} (${Loan_Alias})
     
     mx LoanIQ activate window    ${LIQ_LoanRepricingForDeal_Window}
     ${UI_NewAmount}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_LoanRepricing_Outstanding_List}    ${Description}%Amount%amount
     ${VALIDATE_NEWAMOUNT}    Run Keyword And Return Status    Should Be Equal    ${NewOutstanding_Amount}    ${UI_NewAmount}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LoanRepricing_Outstanding
     Run Keyword If    ${VALIDATE_NEWAMOUNT}==True    Log    Amount for ${Description} successfully validated.
     ...    ELSE    Fail    Amount for ${Description} not validated successfully.     
+ 
+Validate Loan Repricing New Outstanding Amount with Description
+    [Documentation]    Low-level keyword used to validate the displayed Amounts in the Loan Repricing Notebook JavaTee with description
+    ...                @author: aramos    14SEP2020    Initial Create
+    [Arguments]    ${sPricing_Option}    ${sLoan_Alias}    ${ExtraDesc}    ${sNewOutstanding_Amount}
+    
+    ### GetRuntime Keyword Pre-processing ###
+    ${Pricing_Option}    Acquire Argument Value    ${sPricing_Option}
+    ${Loan_Alias}    Acquire Argument Value    ${sLoan_Alias}
+    ${NewOutstanding_Amount}    Acquire Argument Value    ${sNewOutstanding_Amount}
+
+    ${Description}    Set Variable    ${Pricing_Option} ${ExtraDesc} (${Loan_Alias})
+    Log    ${Description}
+
+    mx LoanIQ activate window    ${LIQ_LoanRepricingForDeal_Window}
+    ${UI_NewAmount}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_LoanRepricing_Outstanding_List}    ${Description}%Amount%amount
+    ${VALIDATE_NEWAMOUNT}    Run Keyword And Return Status    Should Be Equal    ${NewOutstanding_Amount}    ${UI_NewAmount}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LoanRepricing_Outstanding
+    Run Keyword If    ${VALIDATE_NEWAMOUNT}==True    Log    Amount for ${Description} successfully validated.
+    ...    ELSE    Fail    Amount for ${Description} not validated successfully.  
     
 Validate Loan Repricing Effective Date
     [Documentation]    Low-level keyword used to validate the displayed 'Effective Date' in the Loan Repricing Notebook - General Tab.
     ...                @author: bernchua     27AUG2019    Initial create
     ...                @update: sahalder    25JUN2020    Added keyword Pre-Processing steps
+    ...    @update: dahijara    25AUG2020    Added screenshot
     [Arguments]    ${sEffective_Date}
     
     ### GetRuntime Keyword Pre-processing ###
@@ -1461,6 +1487,7 @@ Validate Loan Repricing Effective Date
     mx LoanIQ activate window    ${LIQ_LoanRepricingForDeal_Window}
     ${UI_EffectiveDate}    Mx LoanIQ Get Data    ${LIQ_LoanRepricing_EffectiveDate_Text}    value%date
     ${VALIDATE_EFFECTIVEDATE}    Run Keyword And Return Status    Should Be Equal    ${Effective_Date}    ${UI_EffectiveDate}    
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LoanRepricing_Outstanding
     Run Keyword If    ${VALIDATE_EFFECTIVEDATE}==True    Log    Loan Repricing Effective Date successfully validated.
     ...    ELSE    Fail    Loan Repricing Effective Date not validated successfully.
     
