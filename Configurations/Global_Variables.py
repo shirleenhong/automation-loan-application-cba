@@ -143,7 +143,7 @@ LIQ7474_USER = ""
 ###Notices###
 Email_Notice_Method = ""
 Initial_Notice_Status = ""
-CBA_Email_Notice_Method = ""
+CBA_Email_Notice_Method = "CBA Email with PDF Attachment"
 
 ### Facility Interest Pricing Variables ###
 # Formula Global Variable
