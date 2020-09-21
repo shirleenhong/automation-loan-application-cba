@@ -23,7 +23,7 @@ Issue LC D00000476
     ${Alias}    Read Data From Excel    SERV05_SBLCIssuance    SBLC_Alias    &{ExcelPath}[rowid]    ${CBAUAT_ExcelPath}
     
     # ###SBLC Notebook###
-    # Verify Pricing Formula    &{ExcelPath}[Issuance_Fee]    &{ExcelPath}[Cycle_Frequency]    &{ExcelPath}[AccrualRule_PayInAdvance]
+    Verify Pricing Formula    &{ExcelPath}[Issuance_Fee]    &{ExcelPath}[Cycle_Frequency]    &{ExcelPath}[AccrualRule_PayInAdvance]
     Add Banks    &{ExcelPath}[Beneficiary_ShortName]
     Complete Workflow Items    &{ExcelPath}[Customer_Legal_Name]    &{ExcelPath}[SBLC_Status]   
     

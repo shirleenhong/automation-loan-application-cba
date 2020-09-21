@@ -186,10 +186,14 @@ Generate Rate Setting Notices
 Release Loan Repricing
     [Documentation]    This keyword is used to Release Loan Repricing
     ...    @author: ritragel
+    ...    @update:    15SEPT2020 Added Date argument for adding validation on double click on Release text.
+    [Arguments]    ${sLoan_Repricingdate}=${EMPTY}
+    Log    ${sLoan_Repricingdate}    
     mx LoanIQ activate window    ${LIQ_LoanRepricingForDeal_Window}
     Mx LoanIQ Select Window Tab    ${LIQ_LoanRepricingForDeal_Workflow_Tab}    Workflow  
-    Mx LoanIQ DoubleClick    ${LIQ_LoanRepricingForDeal_Workflow_JavaTree}    Release
-    mx LoanIQ click element if present    ${LIQ_Question_Yes_Button} 
+    Run Keyword If    '${sLoan_Repricingdate}'=='${EMPTY}'    Mx LoanIQ DoubleClick    ${LIQ_LoanRepricingForDeal_Workflow_JavaTree}    Release
+    ...    ELSE    Mx LoanIQ DoubleClick    ${LIQ_LoanRepricingForDeal_Workflow_JavaTree}    Release\t${sLoan_Repricingdate}
+    mx LoanIQ click element if present    ${LIQ_Question_Yes_Button}
     mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}    
     mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
     mx LoanIQ click element if present    ${LIQ_Information_OK_Button} 
@@ -331,13 +335,21 @@ Set Payments for Loan Details
     ...                This also returns the Principal, Interest and Total amounts
     ...                @author: bernchua    11SEP2019    Initial create
     ...                @update: bernchua    19SEP2019    Added arguments for amounts from Excel to be validated to UI amounts.
+    ...                @update: aramos      17SEP2020    Added Decimal Suppresion on Evaluating Computed_TotalAmount
     [Arguments]    ${sPrincipal_Amount}    ${sInterest_Amount}    ${sTotalPayment_Amount}
     mx LoanIQ activate window    ${LIQ_PaymentsForLoan_Window}
     ${UI_PrincipalAmount}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_PaymentsForLoan_JavaTree}    Principal%Amount Due%principal
     ${UI_InterestAmount}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_PaymentsForLoan_JavaTree}    Interest%Amount Due%interest
     ${Principal_Amount}    Remove Comma and Convert to Number    ${UI_PrincipalAmount}
     ${Interest_Amount}    Remove Comma and Convert to Number    ${UI_InterestAmount}
+    
+    Log     ${Principal_Amount}
+    Log     ${Interest_Amount}
     ${Computed_TotalAmount}    Evaluate    ${Principal_Amount}+${Interest_Amount}
+    ${StringComputed_TotalAmount}    Convert To String      ${Computed_TotalAmount}
+    ${Computed_TotalAmount}    Convert To Number    ${StringComputed_TotalAmount}    2
+    Log    ${Computed_TotalAmount}
+
     ${Computed_TotalAmount}    Convert Number With Comma Separators    ${Computed_TotalAmount}
     ${VALIDATE_PrincipalAmount}    Run Keyword And Return Status    Should Be Equal    ${UI_PrincipalAmount}    ${sPrincipal_Amount}
     ${VALIDATE_InterestAmount}    Run Keyword And Return Status    Should Be Equal    ${UI_InterestAmount}    ${sInterest_Amount}

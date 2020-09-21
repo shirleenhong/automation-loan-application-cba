@@ -53,7 +53,8 @@ ${MDM_COM_API_00}  /outstandings
 ${MDM_COM_API_FEES}    /fees
 ${COM_HOST}    COM_HOST
 ${MDM_PARTY_API}    /bfweb/retail/v1/party/
-${MDM_COMMSEE_API_FAC}    /custom/v1/comrlending/facility/
+${MDM_COMMSEE_API_FAC_V1}    /custom/v1/comrlending/facility/
+${MDM_COMMSEE_API_FAC_V2}    /custom/v2/comrlending/facility/
 ${MDM_DATASOURCE_PARAM}    dataSource=LOB
 ${MDM_LIMIT_PARAM}    limit
 ${MDM_OFFSET_PARAM}    offset

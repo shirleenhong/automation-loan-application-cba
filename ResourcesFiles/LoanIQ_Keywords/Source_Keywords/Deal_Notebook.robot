@@ -2567,7 +2567,7 @@ Get Customer ID from Active Customer Notebook Via Deal Notebook
     mx LoanIQ activate    ${LIQ_DealNotebook_Window}
     mx LoanIQ click element if present    ${LIQ_InquiryMode_Button}
     Mx LoanIQ Select Window Tab    ${LIQ_DealNotebook_Tab}    Summary
-    # Mx LoanIQ Select Or Doubleclick In Tree By Text    ${LIQ_DealSummary_BorrowersDepositors_Tree}    ${sBorrowerName}%d  
+    Mx LoanIQ Select Or Doubleclick In Tree By Text    ${LIQ_DealSummary_BorrowersDepositors_Tree}    ${sBorrowerName}%d  
     Mx LoanIQ Select Or DoubleClick In Javatree  ${LIQ_DealSummary_BorrowersDepositors_Tree}    ${sBorrowerName}%d  
     Log    (Get Customer ID from Active Customer Notebook Via Deal Notebook) sBorrowerName = ${sBorrowerName} 
     mx LoanIQ click    ${LIQ_DealBorrower_BorrowerNotebook_Button}   
@@ -2702,8 +2702,9 @@ Validate Deal Event Start Date
 Validate Deal Amendment Event Start Date
     [Documentation]    This keyword is used to validate whether the Deal Amendment's Business Event Queue Start date is greater than, less than, or equal to Business Event Queue End Date. 
     ...    @author: rtarayao    18FEB2020    - initial create
+    ...    @update: mcastro     17SEP2020    Fixed Enter key with correct value
     [Arguments]    ${sEventName}
-    Mx Press Combination    {ENTER}
+    Mx Press Combination    Key.ENTER
     Mx LoanIQ activate    ${LIQ_AmendmentNotebookReleased_Window}    
     Mx LoanIQ Select Window Tab    ${LIQ_AmendmentNotebookReleased_Tab}    Events
     Mx LoanIQ Select String    ${LIQ_AMD_Events_JavaTree}    Released    

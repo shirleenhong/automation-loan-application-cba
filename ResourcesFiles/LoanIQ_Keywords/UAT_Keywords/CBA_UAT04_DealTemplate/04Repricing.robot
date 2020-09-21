@@ -87,6 +87,7 @@ Create Repricing and Partial Repayment for Loan AA
     ...                @author: bernchua    11SEP2019    Initial create
     ...                @update: bernchua    18SEP2019    Setting up of new Repayment Schedule for Repriced Loan should be done after Release of Rollover transaction, and on the new Loan
     ...                @update: bernchua    20SEP2019    Added Resynchronizing of Loan's Repayment Schedule before Repricing transaction.
+    ...                @update: aramos      14SEP2020    Updated to change Validate Loan Repricing New Outstanding Amount to Validate Loan Repricing New Outstanding Amount with Description
     [Arguments]    ${ExcelPath}
     
     ${Facility_Spread}    Run Keyword If    '&{ExcelPath}[rowid]'=='1'    Read Data From Excel    CRED02_FacilitySetup    Interest_SpreadValue    1    ${CBAUAT_ExcelPath} 
@@ -112,17 +113,16 @@ Create Repricing and Partial Repayment for Loan AA
     Select Loan Repricing for Deal    &{ExcelPath}[Loan_Alias]
     
     Select Existing Outstandings for Loan Repricing    &{ExcelPath}[Pricing_Option]    &{ExcelPath}[Loan_Alias]
-    
-    ### Scheduled Items - Principal and Interest Payments
-    ${PrincipalPayment_ScheduledItem}    Set Variable    &{ExcelPath}[Pricing_Option] Scheduled Principal Payment (&{ExcelPath}[Loan_Alias])
-    ${InterestPayment_ScheduledItem}    Set Variable    &{ExcelPath}[Pricing_Option] Scheduled Interest Payment (&{ExcelPath}[Loan_Alias])
+
+    ${PrincipalPayment_ScheduledItem}    Set Variable    Scheduled Principal Payment
+    ${InterestPayment_ScheduledItem}    Set Variable    Scheduled Interest Payment
     
     Cick Add in Loan Repricing Notebook
     Set Repricing Detail Add Options    Scheduled Items    &{ExcelPath}[Pricing_Option]    &{ExcelPath}[Facility_Name]    &{ExcelPath}[Borrower_Name]
     Verify If Warning Is Displayed
     ${Principal_Amount}    ${Interest_Amount}    ${Total_Amount}    Set Payments for Loan Details    &{ExcelPath}[ScheduledItem_PrincipalAmount]    &{ExcelPath}[ScheduledItem_InterestAmount]    &{ExcelPath}[ScheduledItem_PaymentAmount]
-    Validate Loan Repricing New Outstanding Amount    ${PrincipalPayment_ScheduledItem}    ${Principal_Amount}
-    Validate Loan Repricing New Outstanding Amount    ${InterestPayment_ScheduledItem}    ${Interest_Amount}
+    Validate Loan Repricing New Outstanding Amount with Description   &{ExcelPath}[Pricing_Option]    &{ExcelPath}[Loan_Alias]     ${PrincipalPayment_ScheduledItem}   ${Principal_Amount}
+    Validate Loan Repricing New Outstanding Amount with Description    &{ExcelPath}[Pricing_Option]    &{ExcelPath}[Loan_Alias]    ${InterestPayment_ScheduledItem}    ${Interest_Amount}
     
     ### Rollover/Conversion Transaction
     Cick Add in Loan Repricing Notebook
@@ -142,8 +142,7 @@ Create Repricing and Partial Repayment for Loan AA
     Validate String Data In LIQ Object    ${LIQ_RolloverConversion_Window}    ${LIQ_RolloverConversion_AllInRate_Text}    ${AllInRate}
     Close RolloverConversion Notebook
     
-    ${New_Outstanding}    Set Variable    &{ExcelPath}[Pricing_Option] (${Loan_Alias})
-    Validate Loan Repricing New Outstanding Amount    ${New_Outstanding}    &{ExcelPath}[Rollover_RequestedAmount]
+    Validate Loan Repricing New Outstanding Amount    &{ExcelPath}[Pricing_Option]    ${Loan_Alias}    &{ExcelPath}[Rollover_RequestedAmount]
     Validate Loan Repricing Effective Date    ${Effective_Date}
     
     Navigate Notebook Workflow    ${LIQ_LoanRepricingForDeal_Window}    ${LIQ_LoanRepricingForDeal_Workflow_Tab}    ${LIQ_LoanRepricingForDeal_Workflow_JavaTree}    Create Cashflows
@@ -239,7 +238,6 @@ Create Repricing for Loans in Deal D00000963
     Validate String Data In LIQ Object    ${LIQ_RolloverConversion_Window}    ${LIQ_RolloverConversion_AllInRate_Text}    ${AllInRate}
     Close RolloverConversion Notebook
     
-    # ${New_Outstanding}    Set Variable    &{ExcelPath}[Pricing_Option] (${Loan_Alias})
     Validate Loan Repricing New Outstanding Amount    &{ExcelPath}[Pricing_Option]    ${Loan_Alias}    &{ExcelPath}[Rollover_RequestedAmount]
     
     Validate Loan Repricing Effective Date    ${Effective_Date}
