@@ -6,7 +6,7 @@ ${rowid}    2
 
 *** Test Cases ***
 
-Get Deal Details for Bilateral Deal with One Borrower and One Facility
+Get Fee Details for Cycle Start and Cycle End Date for Single Accrual
     [Documentation]   This CommSee test case is used to get the Customer's Ongoing Fee details that has Bilateral Deal with One Borrower and One Facility in it.
     ...    Pre-requisite test case is COMMSEE_V2_FEE01 and then run EOD to get a single accrual cycle item
     ...    @author: cfrancis    18SEP2020    - Initial Create
