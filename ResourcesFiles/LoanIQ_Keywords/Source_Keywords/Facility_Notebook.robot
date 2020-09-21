@@ -1829,7 +1829,11 @@ Validate Host Bank Share Gross Amounts
     ...    @author: mnanquilada
     ...    10/19/2018
     ...    <updated> bernchua 11/13/2018: updated computation for facilityOutstanding1 and facilityAvailToDraw1
-    [Arguments]    ${hostBankPercentageAmount}
+    ...    @update: dahijara    03AUG2020    - Added keyword processing and screenshot. Removed commented lines.
+    [Arguments]    ${sHostBankPercentageAmount}
+    ### GetRuntime Keyword Pre-processing ###
+    ${HostBankPercentageAmount}    Acquire Argument Value    ${sHostBankPercentageAmount}
+
     mx LoanIQ activate window    ${LIQ_FacilityNotebook_Window}  
     ${proposedCMTHostBank}    Mx LoanIQ Get Data    ${LIQ_FacilitySummary_HostBankProposeCmt}    testData
     ${contrGrossAmount}    Mx LoanIQ Get Data    ${LIQ_FacilitySummary_HostBankContrGross}    testData
@@ -1841,33 +1845,29 @@ Validate Host Bank Share Gross Amounts
     ###Host Bank Total Share
     ${proposedCMTHostBank}    Remove String    ${proposedCMTHostBank}    ,
     ${proposedCMTHostBank}    Convert To Number    ${proposedCMTHostBank}    
-    ${contrGrossAmtResult}    Evaluate    (${proposedCMTHostBank}*${hostBankPercentageAmount})/100
+    ${contrGrossAmtResult}    Evaluate    (${proposedCMTHostBank}*${sHostBankPercentageAmount})/100
     ${contrGrossAmtResult}     Convert To String    ${contrGrossAmtResult} 
     ${contrGrossAmtResult}    Convert Number With Comma Separators    ${contrGrossAmtResult}
-    # Should Be Equal    ${contrGrossAmtResult}    ${contrGrossAmount}
     
     ###Host Bank Total Facility Share
     ${facilityOutstanding1}    Remove String    ${facilityOutstanding}    ,
     ${facilityOutstanding1}    Convert To Number    ${facilityOutstanding1}
     
-    ${hostBankPercentageAmount}    Evaluate    ${hostBankPercentageAmount}/100    
+    ${sHostBankPercentageAmount}    Evaluate    ${sHostBankPercentageAmount}/100    
     
-    # ${hostBankPercentageAmount}    Remove String    ${hostBankPercentageAmount}    .0
-    ${facilityOutstanding1}    Evaluate    ${facilityOutstanding1}*${hostBankPercentageAmount}
+    ${facilityOutstanding1}    Evaluate    ${facilityOutstanding1}*${sHostBankPercentageAmount}
     ${facilityOutstanding1}      Convert To String    ${facilityOutstanding1}
     ${facilityOutstanding1}     Convert Number With Comma Separators    ${facilityOutstanding1}
-    # Should Be Equal    ${facilityOutstanding1}    ${outstanding}
     
     
     ###Host Bank Total Facility Share
     ${facilityAvailToDraw1}    Remove String    ${facilityAvailToDraw}    ,
     ${facilityAvailToDraw1}    Convert To Number    ${facilityAvailToDraw1}
-    # ${hostBankPercentageAmount}    Remove String    ${hostBankPercentageAmount}    .0
-    ${facilityAvailToDraw1}    Evaluate    ${facilityAvailToDraw1}*${hostBankPercentageAmount}
+    ${facilityAvailToDraw1}    Evaluate    ${facilityAvailToDraw1}*${sHostBankPercentageAmount}
     ${facilityAvailToDraw1}      Convert To String    ${facilityAvailToDraw1}
     ${facilityAvailToDraw1}     Convert Number With Comma Separators    ${facilityAvailToDraw1}
-    # Should Be Equal    ${facilityAvailToDraw1}    ${availToDraw}
     
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/FacilitySummary
     
     Log    <font size=10><b>${facilityAvailToDraw1} == ${availToDraw}</b></font>    INFO    html=True
     Log    <font size=10><b>${contrGrossAmtResult} == ${contrGrossAmount}</b></font>    INFO    html=True
