@@ -124,14 +124,13 @@ Transform Base Rate CSV Data to XLS File with Multiple SubEntities
     \    
     \    ${Counter}    Run Keyword If    ${Same_Rate_Code}==True and ${Same_Tenor}==True and ${Same_Date}==True    Evaluate    ${Counter}+1
          ...    ELSE    Set Variable    ${Counter}
-    \    
+    ###Commented below script, to be fixed when processing multiple gs file for base rate
     # \    ${New_INDEX}    Run Keyword If    ${Same_Rate_Code}==True and ${Same_Tenor}==True and ${Same_Date}==True and '${CONFIG_PRICE_TYPE}'=='MIDRATE'    Set Variable    ${INDEX_ForGrouping}    
-         # ...    ELSE IF    ${Same_Rate_Code}==True and ${Same_Tenor}==True and ${Same_Date}==True and '${CONFIG_PRICE_TYPE}'=='BUYRATE'    Set Variable    ${INDEX_ForGrouping}
-         # ...    ELSE IF    ${Same_Rate_Code}==True and ${Same_Tenor}==True and ${Same_Date}==True and '${CONFIG_PRICE_TYPE}'=='SELLRATE'    Set Variable    ${INDEX_ForGrouping}
-         # ...    ELSE IF    ${Same_Rate_Code}==True and ${Same_Tenor}==True and ${Same_Date}==True and '${CONFIG_PRICE_TYPE}'=='LASTRATE'    Set Variable    ${INDEX_ForGrouping}
-         # ...    ELSE IF    '${INDEX}'=='1'    Set Variable    ${INDEX}
-         # ...    ELSE    Evaluate    ${INDEX}-${Counter}-${Offset}
-    \    
+    # ...    ELSE IF    ${Same_Rate_Code}==True and ${Same_Tenor}==True and ${Same_Date}==True and '${CONFIG_PRICE_TYPE}'=='BUYRATE'    Set Variable    ${INDEX_ForGrouping}
+    # ...    ELSE IF    ${Same_Rate_Code}==True and ${Same_Tenor}==True and ${Same_Date}==True and '${CONFIG_PRICE_TYPE}'=='SELLRATE'    Set Variable    ${INDEX_ForGrouping}
+    # ...    ELSE IF    ${Same_Rate_Code}==True and ${Same_Tenor}==True and ${Same_Date}==True and '${CONFIG_PRICE_TYPE}'=='LASTRATE'    Set Variable    ${INDEX_ForGrouping}
+    # ...    ELSE IF    '${INDEX}'=='1'    Set Variable    ${INDEX}
+    # ...    ELSE    Evaluate    ${INDEX}-${Counter}-${Offset} 
     \    Run Keyword If    ${Same_Rate_Code}==True and ${Same_Tenor}==True and ${Same_Date}==True and '${CONFIG_PRICE_TYPE}'=='MIDRATE'    Write Data to Excel Using Row Index    Transformed_BaseRate    midRate    ${New_INDEX}    ${GS_INSTR_PRICE}    ${dataset_path}${sTransformedData_FilePath}
          ...    ELSE IF    ${Same_Rate_Code}==True and ${Same_Tenor}==True and ${Same_Date}==True and '${CONFIG_PRICE_TYPE}'=='BUYRATE'    Write Data to Excel Using Row Index    Transformed_BaseRate    buyRate    ${New_INDEX}    ${GS_INSTR_PRICE}    ${dataset_path}${sTransformedData_FilePath}
          ...    ELSE IF    ${Same_Rate_Code}==True and ${Same_Tenor}==True and ${Same_Date}==True and '${CONFIG_PRICE_TYPE}'=='SELLRATE'    Write Data to Excel Using Row Index    Transformed_BaseRate    sellRate    ${New_INDEX}    ${GS_INSTR_PRICE}    ${dataset_path}${sTransformedData_FilePath}
@@ -610,6 +609,7 @@ Create Expected XML for Inactive Funding Desk
 Create Individual Expected JSON for Base Rate TL
     [Documentation]    This keyword is used to create indeividual expected JSON payload for Base Rate Transformation Layer using the transformed data.
     ...    @author: clanding    18MAR2019    - initial create
+    ...    @update: jdelacru    21SEP2020    - added ${val_subEntity} variable to correct the filename of generated json file
     [Arguments]    ${sTransformedData_FilePath}    ${sInputJsonFile}
     
     Open Excel    ${dataset_path}${sTransformedData_FilePath}    

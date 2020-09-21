@@ -936,6 +936,7 @@ Validate Response Mechanism
     [Documentation]    This keyword is used to validate if the response details are correct from Response Mechanism.
     ...    ${sFileOfResponseJSON} includes file path and file name.
     ...    @author: cfrancis    21JUN2019    - initial create
+    ...    @update: jdelacru    21SEP2020    - additional optional variable ${sSubEntity} and use as condition for responsemech filename when saving
     [Arguments]    ${sFileOfResponseJSON}    ${sExpectedRequestID}    ${sExpectedAPIMethod}    ${sExpectedAPIName}    ${sExpectedConsolidationStatus}    ${sSubEntity}=None
     
     ${JSON_Object}    Run Keyword If    '${sSubEntity}'=='None'    Load JSON From File    ${datasetpath}${sFileOfResponseJSON}.${JSON}

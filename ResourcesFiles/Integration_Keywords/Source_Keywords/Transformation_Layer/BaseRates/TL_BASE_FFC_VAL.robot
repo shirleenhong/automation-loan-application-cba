@@ -42,16 +42,6 @@ Validate FFC for TL Base Rate Success
     Create File    ${datasetpath}${sOutputFilePath}${sResponse}.${JSON}    ${Response_UI}
     Validate Response from CBA Push Queue    ${sOutputFilePath}${sResponse}    ${REQUESTID_VALUE}    ${POSTMethod}    ${BASEINTERESTRATE_APINAME}    ${OPEARATIONSTATUS_SUCCESS}
     
-    ###CustomCBAPush###
-    Go to Dashboard and Click Source API Name    ${CBAPUSH_SOURCENAME}    ${CBAPUSH_INSTANCE}
-    ${aHeaderRefNameList}    Create List    ${JMS_CORRELATION_ID}
-    ${aExpectedRefList}    Create List    ${REQUESTID_VALUE}
-    ${ColumnIndex}    Filter by Multiple Reference Headers and Values and Return Column Index    ${aHeaderRefNameList}    ${aExpectedRefList}
-    ${Results_Row_Count}    SeleniumLibraryExtended.Get Element Count    ${Results_Row}
-    ${Response_UI}    Get Results Table Column Value by Header Title and Return    ${Results_Row_Count}    ${JMS_PAYLOAD}
-    Create File    ${datasetpath}${sOutputFilePath}${sResponse}.${JSON}    ${Response_UI}
-    Validate Response from CBA Push Queue    ${sOutputFilePath}${sResponse}    ${REQUESTID_VALUE}    ${POSTMethod}    ${BASEINTERESTRATE_APINAME}    ${OPEARATIONSTATUS_SUCCESS}
-
     ###Distributor###
     Go to Dashboard and Click Source API Name    ${TEXTJMS_SOURCENAME}    ${TEXTJMS_INSTANCE}
     ${aHeaderRefNameList}    Create List    ${HEADER_CORRELATION_ID}    ${RESULTSTABLE_STATUS}
