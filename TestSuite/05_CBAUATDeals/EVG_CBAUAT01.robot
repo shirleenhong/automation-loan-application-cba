@@ -128,4 +128,4 @@ Collect Commitment Fee for Facility A - D00000454 - 28FEB2019
     Mx Execute Template With Multiple Data    Commitment Fee Payment with Split Balance for D00000454    ${CBAUAT_ExcelPath}   5    SERV29_CommitmentFeePayment
 
 Collect Line Fee for Facility B - D00000454 - 28FEB2019
-    Mx Execute Template With Multiple Data    Line Fee Payment for D00000454    ${CBAUAT_ExcelPath}   6    SERV29_CommitmentFeePayment                 
+    Mx Execute Template With Multiple Data    Line Fee Payment for D00000454    ${CBAUAT_ExcelPath}   6    SERV29_CommitmentFeePayment

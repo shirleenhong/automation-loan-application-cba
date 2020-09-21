@@ -23,7 +23,7 @@ Initiate Issuance Fee Payment
     Validate if Element is Checked    ${LIQ_CyclesForBankGuarantee_ProjectedDue_RadioButton}    Projected Due
     :FOR    ${i}    IN RANGE    3
     \    mx LoanIQ click    ${LIQ_CyclesForBankGuarantee_OK_Button}
-    \    ${Warning_Displayed}    Run Keyword And Return Status    Mx LoanIQ Verify Object Exist    ${LIQ_Warning_Window}    VerificationData="Yes"        VerificationData="Yes"        VerificationData="Yes"
+    \    ${Warning_Displayed}    Run Keyword And Return Status    Mx LoanIQ Verify Object Exist    ${LIQ_Warning_Window}    VerificationData="Yes"
     \    Run Keyword If    ${Warning_Displayed}==True    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}        
     \    ${IssuanceFeePayment_WindowExist}    Run Keyword And Return Status    Mx LoanIQ Verify Object Exist    ${LIQ_IssuanceFeePaymentNotebook_Window}        VerificationData="Yes"
     \    Exit For Loop If    ${IssuanceFeePayment_WindowExist}==True
@@ -32,10 +32,11 @@ Initiate Issuance Fee Payment
     ${Warning_Displayed}    Run Keyword And Return Status    Mx LoanIQ Verify Object Exist    ${LIQ_Warning_Yes_Button}    VerificationData="Yes"
     Run Keyword If    ${Warning_Displayed}==True    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
     mx LoanIQ select    ${LIQ_IssuanceFeePaymentNotebook_File_Save}
-    :FOR    ${i}    IN RANGE    3
+    :FOR    ${i}    IN RANGE    5
     \    ${Warning_Displayed}    Run Keyword And Return Status    Mx LoanIQ Verify Object Exist    ${LIQ_Warning_Yes_Button}    VerificationData="Yes"
     \    Run Keyword If    ${Warning_Displayed}==True    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
     \    Exit For Loop If    ${Warning_Displayed}==False
+    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
     Validate Loan IQ Details    ${IssuanceFeePayment_EffectiveDate}    ${LIQ_IssuanceFeePaymentNotebook_EffectiveDate_Field}
 
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/IssuanceFeePaymentWindow

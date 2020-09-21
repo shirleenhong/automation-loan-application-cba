@@ -103,9 +103,9 @@ Issue LC1 - D00000476
 Create Drawdown A B C D00000476
     Mx Execute Template With Multiple Data    Create Drawdown D00000476    ${CBAUAT_ExcelPath}    1-3    SERV01_LoanDrawdown
 
-# #### November 30 
-# Collect LC1 - D00000476
-    # Mx Execute Template With Multiple Data    Initiate LC Collection D00000476    ${CBAUAT_ExcelPath}    1    SERV18_FeeOnLenderSharesPayment
+#### November 30 
+Collect LC1 - D00000476
+    Mx Execute Template With Multiple Data    Initiate LC Collection D00000476    ${CBAUAT_ExcelPath}    1    SERV18_FeeOnLenderSharesPayment
    
 # Collect LFIA1 - D00000476
     # Mx Execute Template With Multiple Data    Collect LFIA Payment D00000476    ${CBAUAT_ExcelPath}    1    SERV29_Payments

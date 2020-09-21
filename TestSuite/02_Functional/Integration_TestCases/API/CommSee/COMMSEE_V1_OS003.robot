@@ -15,8 +15,8 @@ Create Deal for SBLC Issuance
     Mx Execute Template With Multiple Data    Setup Issuance Fee for Facility - ComSee     ${ComSeeDataSet}    ${rowid}    ComSee_SC3_FacFeeSetup
     Mx Execute Template With Multiple Data    Setup a Primary Notebook with SBLC - ComSee    ${ComSeeDataSet}    ${rowid}    ComSee_SC3_Deal
     
-Get Outstanding and Fee Details Before Payment for SBLC Guarantee
-    [Documentation]   This ComSee test case is used to get and validate Customer's Outstanding and Outstanding Fee Details before Issuance payment is made. 
+Get Outstanding SBLC Guarantee using V1 Endpoint
+    [Documentation]   This ComSee test case is used to get and validate Customer's Outstanding Details before Issuance payment is made. 
     ...    author: rtarayao    21AUG2019    - Initial Create
     Mx Execute Template With Multiple Data    Create SBLC Guarantee Issuance - ComSee    ${ComSeeDataSet}    ${rowid}    ComSee_SC3_Issuance
     Mx Execute Template with Multiple Data    Get and Validate API Outstanding Response    ${ComSeeDataSet}    ${rowid}    ComSee_SC3_Issuance

@@ -48,10 +48,18 @@ Add Remittance Instructions
     ...    @update: ritragel    03MAR2019    Updated for the global of cashflow keywords
     ...    @update: rtarayao    27MAR2019    Added transaction amount and currency as optional values to cater multiple entries with same customer
     ...    @upated: dfajardo    04AUG2020    Added Run Keyword if for buttons: LIQ_Cashflows_DetailsForCashflow_SelectRI_Button and LIQ_Cashflows_DetailsForCashflow_ViewRI_Button
-    [Arguments]    ${sCustomerShortName}    ${sRemittanceDescription}    ${sTransactionAmount}=None    ${sCurrency}=None    
-    Run Keyword If    '${sTransactionAmount}'=='None'    Run Keyword If    '${sTransactionAmount}'=='None'    Mx LoanIQ Select Or DoubleClick In Javatree    ${LIQ_Cashflows_Tree}    ${sCustomerShortName}%d
-    Run Keyword If    '${sTransactionAmount}'!='None'    Run keywords    Mx LoanIQ Click Javatree Cell    ${LIQ_Cashflows_Tree}    ${sTransactionAmount}${SPACE}${sCurrency}%${sTransactionAmount}${SPACE}${sCurrency}%Original Amount/CCY
-    ...    AND    Mx Native Type    {ENTER}  
+    ...    @update: AmitP       15SEPT2020   Added  argument  for ${sLoanGlobalInterest} to add in the Transaction Amount.
+    [Arguments]    ${sCustomerShortName}    ${sRemittanceDescription}    ${sTransactionAmount}=None    ${sCurrency}=None    ${sLoanGlobalInterest}=None
+    Log    ${sLoanGlobalInterest}
+    Log    ${sTransactionAmount}
+    ${LoanGlobalInterest}    Remove String    ${sLoanGlobalInterest}    ,
+    ${TransactionAmount}    Remove String    ${sTransactionAmount}    ,     
+    ${TotalTransactionAmount}    Run Keyword If    '${sLoanGlobalInterest}'!='None'    Evaluate    ${TransactionAmount}+${LoanGlobalInterest}
+    ...    ELSE    Set Variable    ${TransactionAmount}    
+    ${TotalTransactionAmount}    Convert Number With Comma Separators    ${TotalTransactionAmount}        
+    Run Keyword If    '${sTransactionAmount}'=='None'    Mx LoanIQ Select Or DoubleClick In Javatree    ${LIQ_Cashflows_Tree}    ${sCustomerShortName}%d
+    Run Keyword If    '${sTransactionAmount}'!='None'    Run keywords    Mx LoanIQ Click Javatree Cell    ${LIQ_Cashflows_Tree}    ${TotalTransactionAmount}${SPACE}${sCurrency}%${TotalTransactionAmount}${SPACE}${sCurrency}%Original Amount/CCY
+    ...    AND    Mx Press Combination    Key.ENTER  
     mx LoanIQ activate    ${LIQ_Cashflows_DetailsForCashflow_Window}    
     Run Keyword And Continue On Failure    Mx LoanIQ Verify Object Exist    ${LIQ_Cashflows_DetailsForCashflow_Window}     VerificationData="Yes"
     ${LIQ_Cashflows_DetailsForCashflow_SelectRI_ButtonVisible}    Run Keyword And Return Status    Mx LoanIQ Verify Object Exist    ${LIQ_Cashflows_DetailsForCashflow_SelectRI_Button}    VerificationData="Yes"
@@ -96,7 +104,8 @@ Verify if Status is set to Do It
     Run Keyword If    '${status}'=='True'    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/CashflowNotebook_CashflowVerification
     ...    ELSE    Log    Status is already set to Do it
     Log    Verify Status is set to do it is complete
-
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/CashflowsForLoanRepricing
+    
 Get Transaction Amount in Cashflow
     [Documentation]    This keyword will use the Customer Shortname as the index for identifying the Tran Amount inside the Cashflow
     ...    @author: ritragel
@@ -394,18 +403,15 @@ Open Cashflows Window from Notebook Menu
 Click OK In Cashflows
     [Documentation]    This keyword clicks the OK button in the Cashflows window after all validations are complete.
     ...    @author: bernchua    03JUN2019    Initial create
-    ...    @update: aramos    11SEP2020    Update Keyword in order to know the status of LIQ_Cashflows_Window
-    ${status}    Run Keyword And Return Status    mx LoanIQ activate    ${LIQ_Cashflows_Window}
-    Run Keyword If    ${status}==True    mx LoanIQ click    ${LIQ_Cashflows_OK_Button}
-    Run Keyword If    ${status}==True    mx LoanIQ click element if present    ${LIQ_Question_Yes_Button}
+    mx LoanIQ activate    ${LIQ_Cashflows_Window}
+    mx LoanIQ click    ${LIQ_Cashflows_OK_Button}
+    mx LoanIQ click element if present    ${LIQ_Question_Yes_Button}
     
 Cashflows Mark All To Release
     [Documentation]    This keyword clicks the "Mark All To Release" menu in the Cashflows window.
     ...                @author: bernchua
-    ...                @update: aramos    11SEP2020    Update Keyword in order to know the status of LIQ_Cashflows_Window
-    ${status}    Run Keyword And Return Status    mx LoanIQ activate    ${LIQ_Cashflows_Window}
-    Run Keyword If    ${status}==True    mx LoanIQ select    ${LIQ_Cashflow_Options_MarkAllRelease}    
-    
+    mx LoanIQ activate    ${LIQ_Cashflows_Window}
+    mx LoanIQ select    ${LIQ_Cashflow_Options_MarkAllRelease}
 
 # Navigate to Payment Cashflow Window
     # [Documentation]    This keyword is used to navigate to the Payment Cashflow Window thru the Workflow action - Create Cashflow.

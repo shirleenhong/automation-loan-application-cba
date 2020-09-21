@@ -103,12 +103,13 @@ Verify Deal Event XML
 Verify Facility Event XML
     [Documentation]    This keyword verifies XML Section Details of the Facility Event
     ...                @author: hstone    18SEP2019    Initial create
+    ...                @update: mcastro   16SEP2020    updated navigate to facility business to handle selection of item that is not 1st on the list
     [Arguments]    ${FacilityDataSet}
     Close All Windows on LIQ
     ${Deal_Name}    Read Data From Excel    DealData    Deal_Name   &{FacilityDataSet}[Deal_RowID]    ${SAPWUL_DATASET}
     ${hasSapwulTrigger}    Set Variable    &{FacilityDataSet}[Sapwul_Event] 
     Navigate to Facility Notebook    ${Deal_Name}    &{FacilityDataSet}[Facility_Name]
-    Navigate to Facility Business Event    &{FacilityDataSet}[Sapwul_Event]
+    Navigate to Facility Business Event For SAPWUL    &{FacilityDataSet}[Sapwul_Event]
     
     Run Keyword If    '${hasSapwulTrigger}'=='None'    Validate NO SAPWUL Related Trigger Business Events
     ...    ELSE    Run Keywords    
@@ -139,3 +140,39 @@ Verify Deal Primaries Event XML
     ...    AND    Validate Business Event XML Section Details    ${SAPWUL_EXPECTEDJSON_PATH}    &{DealDataSet}[Test_Case]   
     
     Close All Windows on LIQ
+    
+Navigate to Facility Business Event For SAPWUL
+    [Documentation]    This keyword navigates LoanIQ to the deal's business event window.
+    ...    @create: hstone    05SEP2019    Initial create
+    ...    @update: amansuet    02OCT2019    Added screenshot
+    ...    @update: rtarayao    17FEB2020    - added logic to handle Start Date greater than End Date in the Event Queue Output window.
+    ...    @update: mcastro   10SEP2020    Updated screenshot path
+    ...    @update: mcastro   16SEP2020    Copied from facility notebook and added step to click again the correct value from the event's list
+    [Arguments]    ${sEvent}=None
+    mx LoanIQ activate window    ${LIQ_FacilityNotebook_Window}
+    Mx LoanIQ Select Window Tab    ${LIQ_FacilityNotebook_Tab}    Events
+    
+    ${sFetchedEvent}    Run Keyword If    '${sEvent}'!='None'    Select Java Tree Cell Value First Match    ${LIQ_FacilityEvents_JavaTree}    ${sEvent}    Event
+    ...    ELSE    Set Variable    None 
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/Facility_Business_Event
+    ${IsMatched}    Run Keyword And Return Status    Should Be Equal As Strings    ${sFetchedEvent}    ${sEvent}        
+    Run Keyword If    ${IsMatched}==${True}    Log    Event Verification Passed        
+    ...    ELSE    Fail    Event Verification Failed. ${sFetchedEvent} != ${sEvent}
+    
+    ${sEffectiveDate}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_FacilityEvents_JavaTree}    ${sFetchedEvent}%Effective%EffectiveDate
+    ${sEffectiveDate}    Convert Date    ${sEffectiveDate}    date_format=%d-%b-%Y    result_format=%Y-%m-%d
+    ${sEndDate}    Get Current Date    result_format=%Y-%m-%d                
+    ${diff}    Subtract Date From Date    ${sEndDate}    ${sEffectiveDate}    result_format=verbose
+    Log    ${diff}
+    ${diff}    Remove String    ${diff}    ${SPACE}    day    s
+    
+    Run Keyword If    '${sEvent}'!='None'    Select Java Tree Cell Value First Match    ${LIQ_FacilityEvents_JavaTree}    ${sEvent}    Event
+          
+    mx LoanIQ click    ${LIQ_FacilityEvents_EventsQueue_Button}    
+    
+    Run Keyword If    ${diff} == 0 or ${diff} > 0    Mx LoanIQ click element if present    ${LIQ_Information_OK_Button}
+    ...    ELSE     Run Keywords    Mx LoanIQ click element if present    ${LIQ_Error_OK_Button}
+    ...    AND    Mx LoanIQ Enter    ${LIQ_BusinessEventOutput_StartDate_Field}    ${sEndDate}
+    ...    AND    Mx LoanIQ Click    ${LIQ_BusinessEventOutput_Refresh_Button}
+    ...    AND    Mx LoanIQ click element if present    ${LIQ_Information_OK_Button}
+    

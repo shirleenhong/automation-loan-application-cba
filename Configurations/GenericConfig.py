@@ -206,6 +206,8 @@ GL_DECRYPTION_PART3 = ""
 GL_PGP_SECRET_KEY = ""
 GL_PASSPHRASE = ""
 GL_CSV_GPG_FILEEXTENSION = ""
+ESS_AUWASADMIN_SCHEMA = ""
+ESS_EUWASADMIN_SCHEMA = ""
 
 import os
 project_path = os.path.dirname(os.path.realpath(__file__)).replace("MDM_ConfigFile","")

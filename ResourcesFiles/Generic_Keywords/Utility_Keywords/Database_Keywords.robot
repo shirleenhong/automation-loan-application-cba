@@ -129,3 +129,14 @@ Get Count of Non-Unique Items from Different Tables
     Run Keyword If     ${Result_isEmpty}==False    Run Keyword And Continue On Failure    Fail    ${ColumnName_SourceTable}: Non-unique item count is not equal to 0. Current count is ${Result}.
     ...    ELSE    Log    ${ColumnName_SourceTable}: Non-unique item count is equal to ${Result}.
     
+Connect to Essence Database and Execute Query and Return List
+    [Documentation]    This keyword is used to connect to Essence and Global database and perform query and return query results as a list.
+    ...    @author: clanding    10SEP2020    - initial create
+    [Arguments]    ${sQuery}
+    
+    Connect To Database Using Custom Params    ${CX_ORACLE}    "${DBUSERNAME_ESS}/${DBPASSWORD_ESS}@${DBHOST_ESS}:${DBPORT_ESS}/${DBSERVICENAME_ESS}"
+    ${Query_Results_List}    Query    ${sQuery}
+    Log    ${Query_Results_List}
+    Disconnect From Database
+    
+    [Return]    ${Query_Results_List}
