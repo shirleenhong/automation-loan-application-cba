@@ -1441,9 +1441,12 @@ Navigate to Facility Notebook from Deal Notebook
     ...    @update: fmamaril    12MAR2019    Change Mx Active to Mx Activate Window
     ...    @update: hstone      09JUN2020    - Added Keyword Pre-processing
     ...    @update: dfajardo    22JUL2020    - Added Screenshot
+    ...    @update: cfrancis    10SEP2020    - Added Clicking an object on deal notebook summary for deal window to be placed as primary window on multiple LIQ screens
     [Arguments]    ${sFacility_Name}
 
     ### Keyword Pre-processing ###
+    Mx LoanIQ Click    ${LIQ_DealSummary_AdminAgent_Textfield}
+    
     ${Facility_Name}    Acquire Argument Value    ${sFacility_Name}
 
     ${status}    Run Keyword And Return Status    Mx LoanIQ Verify Object Exist    ${LIQ_DealNotebook_InquiryMode_Button}    VerificationData="Yes"
@@ -1454,6 +1457,7 @@ Navigate to Facility Notebook from Deal Notebook
     mx LoanIQ activate window    ${LIQ_FacilityNotebook_Window}  
     
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/DealNotebook_Options
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/Cashflow_FacilityChangeTransaction_ModifyScheduleItem
 
 Navigate to Facility Notebook from Deal Notebook in Inquiry Mode
     [Documentation]    This keyword navigates the LIQ User from the Deal Notebook to the Facility Notebook .
@@ -2544,6 +2548,7 @@ Navigate to Deal Business Event
     [Documentation]    This keyword navigates LoanIQ to the deal's business event window.
     ...    @create: hstone    05SEP2019    Initial create
     ...    @update: amansuet    02OCT2019    -added screenshot
+    ...    @update: mcastro   10SEP2020    Updated screenshot path
     [Arguments]    ${sDealName}    ${sEvent}
     Open Existing Deal    ${sDealName}
     Mx LoanIQ Select Window Tab    ${LIQ_DealNotebook_Tab}    Events
@@ -2551,7 +2556,7 @@ Navigate to Deal Business Event
     ${sFetchedEvent}    Run Keyword If    '${sEvent}'!='None'    Select Java Tree Cell Value First Match    ${LIQ_Events_Javatree}    ${sEvent}    Event 
     ...    ELSE    Set Variable    None           
     
-    Take Screenshot    Deal_Business_Event
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/Deal_Business_Event
     
     ${IsMatched}    Run Keyword And Return Status    Should Be Equal As Strings    ${sFetchedEvent}    ${sEvent}        
     Run Keyword If    ${IsMatched}==${True}    Log    Event Verification Passed        
@@ -2570,7 +2575,7 @@ Get Customer ID from Active Customer Notebook Via Deal Notebook
     mx LoanIQ activate    ${LIQ_DealNotebook_Window}
     mx LoanIQ click element if present    ${LIQ_InquiryMode_Button}
     Mx LoanIQ Select Window Tab    ${LIQ_DealNotebook_Tab}    Summary
-    # Mx LoanIQ Select Or Doubleclick In Tree By Text    ${LIQ_DealSummary_BorrowersDepositors_Tree}    ${sBorrowerName}%d  
+    Mx LoanIQ Select Or Doubleclick In Tree By Text    ${LIQ_DealSummary_BorrowersDepositors_Tree}    ${sBorrowerName}%d  
     Mx LoanIQ Select Or DoubleClick In Javatree  ${LIQ_DealSummary_BorrowersDepositors_Tree}    ${sBorrowerName}%d  
     Log    (Get Customer ID from Active Customer Notebook Via Deal Notebook) sBorrowerName = ${sBorrowerName} 
     mx LoanIQ click    ${LIQ_DealBorrower_BorrowerNotebook_Button}   
@@ -2705,8 +2710,9 @@ Validate Deal Event Start Date
 Validate Deal Amendment Event Start Date
     [Documentation]    This keyword is used to validate whether the Deal Amendment's Business Event Queue Start date is greater than, less than, or equal to Business Event Queue End Date. 
     ...    @author: rtarayao    18FEB2020    - initial create
+    ...    @update: mcastro     17SEP2020    Fixed Enter key with correct value
     [Arguments]    ${sEventName}
-    Mx Press Combination    {ENTER}
+    Mx Press Combination    Key.ENTER
     Mx LoanIQ activate    ${LIQ_AmendmentNotebookReleased_Window}    
     Mx LoanIQ Select Window Tab    ${LIQ_AmendmentNotebookReleased_Tab}    Events
     Mx LoanIQ Select String    ${LIQ_AMD_Events_JavaTree}    Released    

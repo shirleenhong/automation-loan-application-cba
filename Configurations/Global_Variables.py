@@ -207,6 +207,9 @@ CBA_EMAIL_PDF_METHOD = "CBA Email with PDF Attachment"
 AWAITING_RATE_APPROVAL_STATUS = "Awaiting Rate Approval"
 GENERATE_RATE_SETTING_NOTICES_TRANSACTION = "Generate Rate Setting Notices"
 AWAITING_RELEASE_NOTICE_STATUS = "Awaiting release"
+AWAITING_RELEASE_CASHFLOWS_STATUS = "Awaiting Release Cashflows"
+AWAITING_RATE_APPROVAL_STATUS = "Awaiting Rate Approval"
+AWAITING_GENERATE_RATE_SETTING_NOTICES_STATUS = "Awaiting Generate Rate Setting Notices"
 
 ### Bank Role ###
 REFERENCE_BANK_ROLE = "Reference Bank"
@@ -230,10 +233,12 @@ GENERAL_TAB = "General"
 RATES_TAB = "Rates"
 FACILITIES_TAB = "Facilities"
 CONTACTS_TAB = "Contacts"
+CURRENCY_TAB = "Currency"
 
 ### Payment Type ###
 FEE_PAYMENT_FROM_BORROWER_TYPE = "Fee Payment From Borrower"
 ADMIN_FEE_AMORT = "Adm Fee (Amort)"
+
 ### Amendment Tab ###
 EVENTS_TAB = "Events"
 
@@ -257,8 +262,28 @@ NEW_LOAN_ALIAS = "NewLoanAlias"
 ROLLOVER_CONVERSION_TO_NEW = "Rollover/Conversion To New"
 INTEREST_PAYMENT = "Interest Payment"
 
+### Outstanding Type ###
+LOAN_TYPE = "Loan"
+
 ### Other ###
 SHORT_NAME = "Short Name"
 HOST_BANK = "Host Bank"
 ASSIGNMENT = "Assignment"
 MATURITY_DATE = "Maturity Date"
+MULTIPLE_REFERENCE = "False"
+
+### GL Posting ###
+ZONEBRANCH_SUCCESSMESSAGE = "Zone/Branch Switched Successfully"
+LIQ_ZONEANDCODE_AU = "Australia(AU)"
+LIQ_ZONEANDCODE_EU = "Europe(EU)"
+AUUBINTERFACE_SCHEMA = "AUUBINTERFACE"
+EUUBINTERFACE_SCHEMA = "EUUBINTERFACE"
+AUWASADMIN_SCHEMA = "AUWASADMIN"
+EUWASADMIN_SCHEMA = "EUWASADMIN"
+GL_ENTITY_AU = "AU"
+GL_ENTITY_EU = "EU"
+GL_THREE_CHAR_ENTITY_CODE_SYD = "SYD"
+GL_THREE_CHAR_ENTITY_CODE_EUR = "EUR"
+MD5_URL = "http://onlinemd5.com/"
+GL_FILENAME_TRANSACTION = "_TRANSACTION_"
+CCB_ESS_GL_FILENAME = "CCB_ESS_GL_"

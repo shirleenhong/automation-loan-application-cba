@@ -23,7 +23,8 @@ Create Deal Borrower initial details in Quick Party Onboarding for UAT Deal Five
 Search Customer and Complete its Borrower Profile Creation with default values for UAT Deal Five
     [Documentation]    This keyword searches a customer and complete its Borrower Profile creation with default values
     ...    @author: gerhabal    25SEP2019    - initial create    
-    ...    @update: gerhabal    27SEP2019    - added writing for Remittance Description in multiple row    
+    ...    @update: gerhabal    27SEP2019    - added writing for Remittance Description in multiple row
+    ...    @update: AmitP    15SEPT2020      - Remove Extra Keyword Click Loan IQ Element
     [Arguments]    ${ExcelPath}
 	# Login to LoanIQ###
 	Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
@@ -92,7 +93,6 @@ Search Customer and Complete its Borrower Profile Creation with default values f
     Add Remittance Instruction to Servicing Group    &{ExcelPath}[RemittanceInstruction_RTGSDescriptionAUD]
     Add Remittance Instruction to Servicing Group    &{ExcelPath}[RemittanceInstruction_RTGSDescriptionAUD2]
     Close Servicing Group Remittance Instructions Selection List Window    &{ExcelPath}[LIQCustomer_ShortName]
-    Click Loan IQ Element    ${ServicingGroupWindow_ExitButton}
     ###Logout and Relogin in Supervisor Level
     Close All Windows on LIQ
     Logout from Loan IQ

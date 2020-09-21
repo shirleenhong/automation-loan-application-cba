@@ -1104,7 +1104,8 @@ Save Scheduled Facility Limit Change
     mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
     mx LoanIQ click    ${LIQ_FacilityChangeTransaction_AmortizationSchedule_ExitButton}      
     mx LoanIQ activate window    ${LIQ_FacilityChangeTransaction_Window}
-      
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/Cashflow_FacilityChangeTransaction_ModifyScheduleItem   
+
 Create Pending Transaction from Schedule item
     [Documentation]    This keyword is used to create pending transaction from Schedule Item
     ...    @author: ghabal
@@ -2910,13 +2911,14 @@ Navigate to Facility Business Event
     ...    @create: hstone    05SEP2019    Initial create
     ...    @update: amansuet    02OCT2019    Added screenshot
     ...    @update: rtarayao    17FEB2020    - added logic to handle Start Date greater than End Date in the Event Queue Output window.
+    ...    @update: mcastro   10SEP2020    Updated screenshot path
     [Arguments]    ${sEvent}=None
     mx LoanIQ activate window    ${LIQ_FacilityNotebook_Window}
     Mx LoanIQ Select Window Tab    ${LIQ_FacilityNotebook_Tab}    Events
     
     ${sFetchedEvent}    Run Keyword If    '${sEvent}'!='None'    Select Java Tree Cell Value First Match    ${LIQ_FacilityEvents_JavaTree}    ${sEvent}    Event
     ...    ELSE    Set Variable    None 
-    Take Screenshot    Facility_Business_Event
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/Facility_Business_Event
     ${IsMatched}    Run Keyword And Return Status    Should Be Equal As Strings    ${sFetchedEvent}    ${sEvent}        
     Run Keyword If    ${IsMatched}==${True}    Log    Event Verification Passed        
     ...    ELSE    Fail    Event Verification Failed. ${sFetchedEvent} != ${sEvent}

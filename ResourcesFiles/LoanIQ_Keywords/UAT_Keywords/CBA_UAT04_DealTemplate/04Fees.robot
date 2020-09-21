@@ -76,6 +76,7 @@ Create Payment for Ongoing Fees in Deal D00000963
     Navigate Notebook Workflow    ${LIQ_OngoingFeePayment_Window}    ${LIQ_OngoingFeePayment_Tab}    ${LIQ_OngoingFeePayment_Workflow}    Approval
     
     Navigate Notebook Workflow    ${LIQ_OngoingFeePayment_Window}    ${LIQ_OngoingFeePayment_Tab}    ${LIQ_OngoingFeePayment_Workflow}    Release Cashflows
+    
     Cashflows Mark All To Release
     Click OK In Cashflows
     
