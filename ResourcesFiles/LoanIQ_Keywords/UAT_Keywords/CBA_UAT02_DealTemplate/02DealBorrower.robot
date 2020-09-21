@@ -298,7 +298,7 @@ Search Customer and Complete its Borrower Profile Creation with default values f
     Add Remittance Instruction to Servicing Group    &{ExcelPath}[RemittanceInstruction_RTGSDescriptionAUD]
     Add Remittance Instruction to Servicing Group    &{ExcelPath}[RemittanceInstruction_RTGSDescriptionAUD2]
     Close Servicing Group Remittance Instructions Selection List Window    &{ExcelPath}[LIQCustomer_ShortName]
-    mx LoanIQ click    ${ServicingGroupWindow_ExitButton}
+    ## mx LoanIQ click    ${ServicingGroupWindow_ExitButton}
          
     ###Logout and Relogin in Supervisor Level
     Close All Windows on LIQ
