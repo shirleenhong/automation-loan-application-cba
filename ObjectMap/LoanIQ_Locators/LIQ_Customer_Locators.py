@@ -8,6 +8,7 @@ LIQ_CustomerSelect_Search_Filter = 'JavaWindow("title:=Customer Select.*").JavaL
 LIQ_CustomerSelect_Search_Inputfield = 'JavaWindow("title:=Customer Select.*").JavaEdit("tagname:=Text")'
 LIQ_CustomerSelect_Search_Button = 'JavaWindow("title:=Customer Select.*").JavaButton("attached text:=Search")'
 LIQ_CustomerSelect_OK_Button = 'JavaWindow("title:=Customer Select.*").JavaButton("attached text:=OK")'
+LIQ_CustomerSelect_Error_Window = 'JavaWindow("tagname:=Error.*").JavaStaticText("tagname:=ERROR.*")'
 
 ###Customer List By Short Name Window###
 LIQ_CustomerListByShortName_OK_Button = 'JavaWindow("title:=Customer Select.*").JavaWindow(":=Customer List By Short.*").JavaButton("attached text:=OK")'

@@ -1,5 +1,5 @@
 dataset_path = "C:\\Git_Evergreen\\evergreen_projects\\CBA_Evergreen"
-ExcelPath = "C:\\Git_Evergreen\\fms_scotia\\DataSet\\LoanIQ_DataSet\\EU Entity\\EVG_S1_EU_RPA_InternalDeal.xlsx"
+ExcelPath = "C:\\Git_Evergreen\\fms_cba\\DataSet\\Party_DataSet\\PTY_DataSet.xlsx"
 CBAUAT_ExcelPath = "C:\\Git_Evergreen\\evergreen_projects\\CBA_Evergreen\\DataSet\\CBA_UAT_DataSet\\EVG_CBAUAT01.xls"
 APIDataSet = "C:\\Git_Evergreen\\evergreen_projects\\CBA_Evergreen\\DataSet\\API_DataSet\\API_Data_Set.xlsx"
 APIDataSet_EU = "C:\\Git_Evergreen\\evergreen_projects\\CBA_Evergreen\\DataSet\\API_DataSet\\API_Data_Set_EU.xlsx"
@@ -40,23 +40,23 @@ MANAGER_USERNAME = "FJMGRAM"
 MANAGER_PASSWORD = "password"
 
 SSO_USERLINK = "mancsleverg0028"
-SSO_PORT = "8080"
+SSO_PORT = "7080"
 USER_LINK = "mancsleverg0031"
-USER_PORT = "8080"
+USER_PORT = "7080"
 PARTY_URL_SUFFIX = "/uxp/rt/html/login.html"
 DOMAIN = "http://misysroot"
 SSO_URL_LINK = "/bfweb/servlet/GetServiceTicketForUser?redirectTo=http://"
 SSO_ENABLED = "NO"
 
 SSO_SERVER = 'mancsleverg0031'
-SSO_PORT_NUMBER = '8080'
+SSO_PORT_NUMBER = '7080'
 PARTY_SSO_URL = 'http://${PARTY_HTML_CREDENTIALS}@${SSO_SERVER}:${SSO_PORT_NUMBER}/bfweb/servlet/GetServiceTicketForUser?redirectTo=http://${PARTY_SERVER}/uxp/rt/html/login.html                   '
 PARTY_HTML_USER_CREDENTIALS = 'misysroot%5Cbrad:welcome%4099'
 PARTY_HTML_APPROVER_CREDENTIALS = 'misysroot%5Csuperit:welcome%4099'
 PARTY_SUPERVISOR_USERNAME  = 'superit'
 PARTY_SUPERVISOR_PASSWORD = 'superit'
-PARTY_SERVER = 'mancsleverg0031:8080'
-PARTY_URL = 'mancsleverg0031:8080/uxp/rt/html/login.html'
+PARTY_SERVER = 'mancsleverg0031:7080'
+PARTY_URL = 'mancsleverg0031:7080/uxp/rt/html/login.html'
 
 ###Party Credential###
 PARTY_USERNAME = 'brad'

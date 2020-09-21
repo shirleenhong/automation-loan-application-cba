@@ -1,4 +1,31 @@
 *** Settings ***
+Library    ArchiveLibrary
+Library    BaselineComparator
+Library    Collections
+Library    CSVLib    
+Library    CSVLibrary    
+Library    SeleniumLibraryExtended
+Library    DatabaseLibrary
+Library    DateTime
+Library    EssenceLib
+Library    ExcelLibrary
+Library    GenericLib
+Library    HttpLibraryExtended
+Library    JSONLibraryKeywords
+Library    Keyboard
+Library    LoanIQ    exception_handling=No
+Library    OperatingSystem
+Library    Process
+Library    RequestsLibrary
+Library    Screenshot
+Library    SSHLibrary
+Library    String
+Library    UFTGeneric    Visibility=True     UFTAddins=Java
+Library    Dialogs
+Library    XML
+Library    base64
+Library    PdfToText
+Library    MathLibrary  
 
 ###Party Variable Files###
 Variables    ../ObjectMap/PTY_Locators/PTY_Global_Locators.py
@@ -22,3 +49,9 @@ Resource    ../ResourcesFiles/Party_Keywords/Source_Keywords/Party_LoanIQVal_Key
 
 ##Party Global Variables##
 Resource    ../Variables/Party_Properties.txt
+
+### Generic Resource Files - Utility ###
+Resource    ../ResourcesFiles/Generic_Keywords/Utility_Keywords/GenericKeywords.robot
+
+### LIQ Variable Files ###
+Variables    ../ObjectMap/LoanIQ_Locators/LIQ_Customer_Locators.py
