@@ -438,7 +438,7 @@ BUS_New Outstanding Select
 
     Run Keyword    New Outstanding Select    ${ARGUMENT_1}    ${ARGUMENT_2}    ${ARGUMENT_3}    ${ARGUMENT_4}    ${ARGUMENT_5}    ${ARGUMENT_6}    ${ARGUMENT_7}
     
-    BUS_Enter Loan Drawdown Details for USD Libor Option
+BUS_Enter Loan Drawdown Details for USD Libor Option
     [Documentation]    This keyword is used to run the assigned low level keyword.
     ...    @author: dahijara    24AUG2020    - initial create
 
