@@ -186,10 +186,14 @@ Generate Rate Setting Notices
 Release Loan Repricing
     [Documentation]    This keyword is used to Release Loan Repricing
     ...    @author: ritragel
+    ...    @update:    15SEPT2020 Added Date argument for adding validation on double click on Release text.
+    [Arguments]    ${sLoan_Repricingdate}=${EMPTY}
+    Log    ${sLoan_Repricingdate}    
     mx LoanIQ activate window    ${LIQ_LoanRepricingForDeal_Window}
     Mx LoanIQ Select Window Tab    ${LIQ_LoanRepricingForDeal_Workflow_Tab}    Workflow  
-    Mx LoanIQ DoubleClick    ${LIQ_LoanRepricingForDeal_Workflow_JavaTree}    Release
-    mx LoanIQ click element if present    ${LIQ_Question_Yes_Button} 
+    Run Keyword If    '${sLoan_Repricingdate}'=='${EMPTY}'    Mx LoanIQ DoubleClick    ${LIQ_LoanRepricingForDeal_Workflow_JavaTree}    Release
+    ...    ELSE    Mx LoanIQ DoubleClick    ${LIQ_LoanRepricingForDeal_Workflow_JavaTree}    Release\t${sLoan_Repricingdate}
+    mx LoanIQ click element if present    ${LIQ_Question_Yes_Button}
     mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}    
     mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
     mx LoanIQ click element if present    ${LIQ_Information_OK_Button} 

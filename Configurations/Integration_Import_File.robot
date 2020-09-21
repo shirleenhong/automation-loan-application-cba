@@ -38,6 +38,7 @@ Resource    ../Variables/FXRates_Properties.txt
 Resource    ../Variables/Correspondence_Properties.txt
 Resource    ../Variables/CommSee_Properties.txt
 Resource    ../Variables/SAPWUL_Properties.txt
+Resource    ../Variables/Essence_Variables.txt
 
 ### Configurations ###
 Resource    ../Configurations/DB_Connection.txt
@@ -51,6 +52,13 @@ Variables    ../ObjectMap/LoanIQ_Locators/LIQ_Global_Locators.py
 Variables    ../ObjectMap/LoanIQ_Locators/LIQ_TableMaintenance_Locators.py
 Variables    ../ObjectMap/LoanIQ_Locators/LIQ_TreasuryNavigation_Locators.py
 Variables    ../ObjectMap/LoanIQ_Locators/LIQ_User_Administration_Locators.py
+
+### Fusion Banking Essence - Locators ###
+Variables    ../ObjectMap/FBE_Locators/Essence_AdhocExtraction_Locators.py
+Variables    ../ObjectMap/FBE_Locators/Essence_ChangeOfBusinessDate_Locators.py
+Variables    ../ObjectMap/FBE_Locators/Essence_Dashboard_Locators.py
+Variables    ../ObjectMap/FBE_Locators/Essence_EODControlAndStatusEnquiry_Locators.py
+Variables    ../ObjectMap/FBE_Locators/Essence_ZoneBranchConfig_Locators.py
 
 ### FFC Variable Files - Locators ###
 Variables    ../ObjectMap/FFC_Locators/Dashboard_Locators.py
@@ -271,7 +279,12 @@ Resource    ../ResourcesFiles/Integration_Keywords/Source_Keywords/API/CommSee/L
 Resource    ../ResourcesFiles/Integration_Keywords/Source_Keywords/Extracts/GL/GLEssence_Extracts_Validation.robot
 
 ### Integration Resource Files - GL - Business Process Keywords ###
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/Extracts/GL_Essence/GLPOST_13.robot
 Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/Extracts/GL_Essence/GLPOST_14.robot
+
+### Integration Resource Files - Essence - Source Keywords ###
+Resource    ../ResourcesFiles/Essence_Keywords/Source_Keywords/EssenceCommon_Keywords.robot
+Resource    ../ResourcesFiles/Essence_Keywords/Source_Keywords/Essence_EODControlAndStatusEnquiry_Keywords.robot
 
 ### Integration Resource Files - SAPWUL - Business Keywords ###
 Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/SAPWUL/SAPWUL_DealSetup.robot
@@ -283,3 +296,4 @@ Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/
 Resource    ../ResourcesFiles/Integration_Keywords/Source_Keywords/API/SAPWUL/SAPWUL_EventsVal.robot
 Resource    ../ResourcesFiles/Integration_Keywords/Source_Keywords/API/SAPWUL/SAPWUL_Generic.robot
 Resource    ../ResourcesFiles/Integration_Keywords/Source_Keywords/API/SAPWUL/SAPWUL_TableMaintenance.robot
+

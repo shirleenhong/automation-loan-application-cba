@@ -103,7 +103,7 @@ Clear Other Specified SAPWUL Cell Data
 Create Customer External ID List
     [Documentation]    This keyword creates an External ID list.
     ...    @author: hstone    13SEP2019    Initial create
-    ...    @update: hstone    10OCT2019    Customers Arranged by their Customer ID (Increasing Order)
+    ...    @update: hstone    10OCT2019    Customers Arranged by their Customer ID (Increasing Order)    
     [Arguments]    @{sCustomerExternalIdItems}
     ${sCustomerExternalId_List}    Create List
     Append To List    ${sCustomerExternalId_List}    @{sCustomerExternalIdItems}[0]
