@@ -54,5 +54,7 @@ BUS_Navigate to Shared Adjustment Notebook Workflow
     ...    @author: sahalder    01JUL2020    - initial create
     Run Keyword    Navigate to Shared Adjustment Notebook Workflow    ${ARGUMENT_1}
     
-
-    
+BUS_Get Host Bank and Lender Shares
+    [Documentation]    This keyword is used to run the assigned low level keyword.
+    ...    @author: dahijara    25AUG2020    - initial create
+    Run Keyword    Get Host Bank and Lender Shares    ${ARGUMENT_1}    ${ARGUMENT_2}    ${ARGUMENT_3}    ${ARGUMENT_4}

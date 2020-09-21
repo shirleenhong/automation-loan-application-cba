@@ -152,7 +152,7 @@ Add Contact in Primary
     ${ContactName}    Acquire Argument Value    ${sContactName}  
 
     Mx LoanIQ Select Window Tab    ${LIQ_OrigPrimaries_Tab}    Contacts
-    mx LoanIQ click    ${LIQ_Contact_AddContacts_Button} 
+    mx LoanIQ click    ${LIQ_Contact_AddContacts_Button}
     Mx LoanIQ Select String    ${LIQ_CircleContacts_Available_JavaTree}    ${ContactName}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/CircleNotebook_Contacts      
     mx LoanIQ click    ${LIQ_CircleContacts_OK_Button} 
@@ -980,7 +980,7 @@ Circle Notebook Settlement Approval
 
     Navigate Transaction in WIP for Circles    Awaiting Settlement Approval    ${Lender_Type}    ${Deal_Name}
     Navigate Notebook Workflow    ${LIQ_OrigPrimaries_Window}    ${LIQ_OrigPrimaries_Tab}    ${LIQ_PrimaryCircle_Workflow_JavaTree}    Settlement Approval
-    ${OrigPrimary_Status}    Run Keyword And Return Status    Mx LoanIQ Verify Object Exist    JavaWindow("title:=.*Settlement Approved.*Orig Primary.*")    VerificationData="Yes"
+    ${OrigPrimary_Status}    Run Keyword And Return Status    Mx LoanIQ Verify Object Exist    ${LIQ_PrimaryCircle_OrigPrimary_Window}    VerificationData="Yes"
     ${OrigPrimary_Status}    Set Variable If    ${OrigPrimary_Status}==True    Settlement Approved
     Run Keyword If    '${OrigPrimary_Status}'=='Settlement Approved'    Log    Lender Status is ${OrigPrimary_Status}.
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/PrimariesWindow_Approval
@@ -1308,6 +1308,7 @@ Populate Amts or Dates Tab
     ...    @author: mgaling
     ...    @update: dahijara    10AUG2020    - Removed writing and moved it to business/testcase keyword level
     ...                                      - Added screenshot.
+    ...    @update: dahijara    15SEP2020    - Removed Reading of expected close date since it is being passed on the argument.
     [Arguments]    ${sExpectedCloseDate}   
     
     ### GetRuntime Keyword Pre-processing ###
@@ -1316,7 +1317,6 @@ Populate Amts or Dates Tab
     Mx LoanIQ Select Window Tab    ${LIQ_AssignmentSell_Tab}    Amts/Dates
     
     ###Input data in Dates Section###    
-    ${ExpectedCloseDate}    Read Data From Excel    TRP002_SecondarySale    ExpectedCloseDate    ${rowid}      
     mx LoanIQ enter    ${LIQ_PendingAssignmentSell_AmtsDates_ExpectedCloseDate}    ${ExpectedCloseDate}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/PendingAssignmentSell
     mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}    

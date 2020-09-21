@@ -11,7 +11,7 @@ Create Initial Loan Drawdown with Repayment Schedule
     ...    @update: jloretiz    15JUL2020    - Added writing of loan alias to correspondence and updated argument
     [Arguments]    ${ExcelPath}
     
-    ##Close all windows##
+    ###Close all windows###
     Close All Windows on LIQ
     Logout from Loan IQ
     Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
@@ -103,16 +103,16 @@ Create Loan Drawdown TERM and SBLC for Syndicated Deal
     ...                                      Updated release cashflow keyword to Release Cashflow Based on Remittance Instruction
     ...    @update: dfajardo    14SEP2020    Removed hard coded variables
     ...                                      Removed Repayment Schedule script
-    [Arguments]    ${ExcelPath}    
+    [Arguments]    ${ExcelPath}
 
-    ##Login to Original User##
+    ###Login to Original User###
     Logout from Loan IQ
     Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
 
     ###Deal Notebook###
     Search for Deal    &{ExcelPath}[Deal_Name]
     
-    ##Creation of Initial Loan Drawdown in Loan NoteBook###
+    ###Creation of Initial Loan Drawdown in Loan NoteBook###
     ${LoanEffectiveDate}    Get System Date
     Write Data To Excel    SERV01A_LoanDrawdown    Loan_EffectiveDate    ${rowid}    ${LoanEffectiveDate}
     Navigate to Outstanding Select Window from Deal
@@ -124,9 +124,16 @@ Create Loan Drawdown TERM and SBLC for Syndicated Deal
     Write Data To Excel    SERV29_PaymentFees    Loan_Alias    ${rowid}    ${Alias}
     Write Data To Excel    SERV21_InterestPayments    Loan_Alias    ${rowid}    ${Alias}
     ${Alias}    Read Data From Excel    SERV01A_LoanDrawdown    Loan_Alias    ${rowid}
-    Input General Loan Drawdown Details with Accrual End Date    &{ExcelPath}[Loan_RequestedAmount]    &{ExcelPath}[Loan_MaturityDate]   &{ExcelPath}[Loan_RepricingFrequency]    &{ExcelPath}[Loan_EffectiveDate]
+    Input General Loan Drawdown Details with Accrual End Date    &{ExcelPath}[Loan_RequestedAmount]    &{ExcelPath}[Loan_MaturityDate]   &{ExcelPath}[Loan_RepricingFrequency]    ${LoanEffectiveDate}
     Input Loan Drawdown Rates for Term Drawdown    &{ExcelPath}[Borrower_BaseRate]
-
+    
+    ###Creation of Repayment Schedule###
+    Create Repayment Schedule - Fixed Payment
+    Get Data from Automatic Schedule Setup
+    ${CaculatedFixedPayment}    Verify Select Fixed Payment Amount
+    
+    Write Data To Excel    SERV21_InterestPayments    Loan_CalculatedFixedPayment    ${rowid}    ${CaculatedFixedPayment}
+    ###Cashflow Notebook - Create Cashflows###
     Navigate to Drawdown Cashflow Window
     Verify if Method has Remittance Instruction    &{ExcelPath}[Borrower_ShortName]    &{ExcelPath}[Remittance_Description]    &{ExcelPath}[Remittance_Instruction]
     Verify if Method has Remittance Instruction    &{ExcelPath}[Lender1_ShortName]    &{ExcelPath}[Remittance2_Description]    &{ExcelPath}[Remittance2_Instruction]
@@ -153,7 +160,7 @@ Create Loan Drawdown TERM and SBLC for Syndicated Deal
     ${Borrower_Credit}    Get GL Entries Amount    &{ExcelPath}[Borrower_ShortName]    ${CREDIT_AMT_LABEL}
     ${UITotalCreditAmt}    Get GL Entries Amount    ${SPACE}Total For:    ${CREDIT_AMT_LABEL}
     ${UITotalDebitAmt}    Get GL Entries Amount    ${SPACE}Total For:    ${DEBIT_AMT_LABEL}
-    
+     
     Compare UIAmount versus Computed Amount    ${HostBankShare}|${Lend1TranAmount}|${Lend2TranAmount}    ${HostBank_Debit}|${Lender1_Debit}|${Lender2_Debit}
     Validate if Debit and Credit Amt is Balanced    ${HostBank_Debit}|${Lender1_Debit}|${Lender2_Debit}    ${Borrower_Credit}
     Validate if Debit and Credit Amt is equal to Transaction Amount    ${UITotalDebitAmt}    ${UITotalCreditAmt}    &{ExcelPath}[Loan_RequestedAmount]
@@ -195,6 +202,16 @@ Create Term Loan Drawdown for SYNDICATED deal in USD
     [Documentation]    This keyword is used to create Term Loan Drawdown for SYNDICATED deal in USD
     ...    @author: ghabal
     ...    @update: jdelacru    26MAR2019    - Applied coding standards
+    ...    @update: dahijara    28AUG2020    - Added keyword for getting Host bank and lender shares.
+    ...                                      - Added writing to excel for SERV10_ConversionOfInterestType-Loan_Alias
+    ...                                      - Updated arguments for Enter Loan Drawdown Details for USD Libor Option
+    ...                                      - Refactored Verify Fixed Principal Payment Amount and Validate Total Amount of the Repayment Schedule vs Current Host Bank Amount
+    ...                                      - Added writing to excel for SERV01_TermLoanDrawdowninUSD-Displayed_FixedPrincipalPaymentAmount and SERV01_TermLoanDrawdowninUSD-HostBank_Amount
+    ...                                      - Added Navigate to Loan Drawdown Workflow and Proceed With Transaction
+    ...                                      - Updated argument for Compute Lender Share Transaction Amount with ${HostBankSharePct} & ${LenderSharePct1}
+    ...                                      - Updated hard coded values.
+    ...                                      - Updated codes for Release Cashflow Based on Remittance Instruction
+    ...                                      - Updated validation to add amount conversion.
     [Arguments]    ${ExcelPath}     
     ###LIQ Window###
     Logout from Loan IQ
@@ -202,6 +219,9 @@ Create Term Loan Drawdown for SYNDICATED deal in USD
         
     ###Deal Notebook###
     Open Existing Deal    &{ExcelPath}[Deal_Name]
+
+    ###Lender Shares###
+    ${HostBankSharePct}    ${LenderSharePct1}    Get Host Bank and Lender Shares    &{ExcelPath}[HostBank_LegalName]    &{ExcelPath}[Lender1_LegalName]
     
     ###Facility Notebook###
     Navigate to Facility Notebook from Deal Notebook    &{ExcelPath}[Facility_Name]
@@ -218,18 +238,21 @@ Create Term Loan Drawdown for SYNDICATED deal in USD
     ### Initial Loan Drawdown###
     ${New_Loan_Alias}    Enter Initial Loan Drawdown Details    &{ExcelPath}[Outstanding_Type]    &{ExcelPath}[Facility_Name]    &{ExcelPath}[Borrower1_ShortName]    &{ExcelPath}[Loan_PricingOption]    &{ExcelPath}[Loan_Currency]    ${rowid}    &{ExcelPath}[Facility_Currency]
     Write Data To Excel    SERV01_TermLoanDrawdowninUSD    Loan_Alias    ${rowid}    ${New_Loan_Alias}    
+    Write Data To Excel    SERV10_ConversionOfInterestType    Loan_Alias    ${rowid}    ${New_Loan_Alias}    
     ${Loan_Alias}    Read Data From Excel    SERV01_TermLoanDrawdowninUSD   Loan_Alias    ${rowid}
     ${MaturityDate}    Read Data From Excel    SERV01_TermLoanDrawdowninUSD    Loan_MaturityDate    ${rowid}
-    Enter Loan Drawdown Details for USD Libor Option    &{ExcelPath}[Loan_RequestedAmount]    ${LoanEffectiveDate}    ${MaturityDate}    &{ExcelPath}[Loan_RepricingFrequency]    &{ExcelPath}[Loan_IntCycleFrequency]    &{ExcelPath}[Loan_Accrue]
+    Enter Loan Drawdown Details for USD Libor Option    &{ExcelPath}[Loan_RequestedAmount]    ${LoanEffectiveDate}    ${MaturityDate}    &{ExcelPath}[Loan_RepricingFrequency]    &{ExcelPath}[Loan_IntCycleFrequency]    &{ExcelPath}[Loan_Accrue]    &{ExcelPath}[Loan_RiskType]
     Input Loan Drawdown Rates for Term Facility (USD)    &{ExcelPath}[Borrower_BaseRate]
     
     ###Repayment Schedule###
     Create Repayment Schedule - Fixed Principal Plus Interest Due
-    Verify Fixed Principal Payment Amount    ${rowid}
-    Validate Total Amount of the Repayment Schedule vs Current Host Bank Amount    ${rowid}
+    ${DisplayFixedPrincipalPaymentAmount}    Verify Fixed Principal Payment Amount
+    Write Data To Excel    SERV01_TermLoanDrawdowninUSD    Displayed_FixedPrincipalPaymentAmount    ${rowid}     ${DisplayFixedPrincipalPaymentAmount}
+    ${DisplayCurrentHostBankAmount}    Validate Total Amount of the Repayment Schedule vs Current Host Bank Amount
+    Write Data To Excel    SERV01_TermLoanDrawdowninUSD    HostBank_Amount    ${rowid}    ${DisplayCurrentHostBankAmount}
       
     ##Cashflows###  
-    Navigate Notebook Workflow    ${LIQ_InitialDrawdown_Window}    ${LIQ_InitialDrawdown_Tab}    ${LIQ_InitialDrawdown_WorkflowAction}    Create Cashflows
+    Navigate to Loan Drawdown Workflow and Proceed With Transaction    ${CREATE_CASHFLOWS_TYPE}
     Verify if Method has Remittance Instruction    &{ExcelPath}[Borrower1_ShortName]    &{ExcelPath}[Borrower1_RemittanceDescription]    &{ExcelPath}[Borrower1_RemittanceInstruction]
     Verify if Method has Remittance Instruction    &{ExcelPath}[Lender1_ShortName]    &{ExcelPath}[Lender1_RemittanceDescription]    &{ExcelPath}[Lender1_RemittanceInstruction]
     Verify if Status is set to Do It    &{ExcelPath}[Borrower1_ShortName]
@@ -239,22 +262,22 @@ Create Term Loan Drawdown for SYNDICATED deal in USD
     ${BorrowerTranAmount}    Get Transaction Amount in Cashflow    &{ExcelPath}[Borrower1_ShortName]
     ${Lend1TranAmount}    Get Transaction Amount in Cashflow    &{ExcelPath}[Lender1_ShortName]
     
-    ${ComputedHBTranAmount}    Compute Lender Share Transaction Amount    &{ExcelPath}[Loan_RequestedAmount]    &{ExcelPath}[HostBankSharePct]
-    ${ComputedLend1TranAmount}    Compute Lender Share Transaction Amount    &{ExcelPath}[Loan_RequestedAmount]    &{ExcelPath}[LenderSharePct1]
+    ${ComputedHBTranAmount}    Compute Lender Share Transaction Amount    &{ExcelPath}[Loan_RequestedAmount]    ${HostBankSharePct}
+    ${ComputedLend1TranAmount}    Compute Lender Share Transaction Amount    &{ExcelPath}[Loan_RequestedAmount]    ${LenderSharePct1}
     
     Compare UIAmount versus Computed Amount    ${HostBankShare}|${Lend1TranAmount}    ${ComputedHBTranAmount}|${ComputedLend1TranAmount}
     
     ###GL Entries###
     Navigate to GL Entries
-    ${HostBank_Debit}    Get GL Entries Amount    &{ExcelPath}[Host_Bank]    Debit Amt
-    ${Lender1_Debit}    Get GL Entries Amount    &{ExcelPath}[Lender1_ShortName]    Debit Amt
-    ${Borrower_Credit}    Get GL Entries Amount    &{ExcelPath}[Borrower1_ShortName]    Credit Amt
-    ${UITotalCreditAmt}    Get GL Entries Amount    Total For:    Credit Amt
-    ${UITotalCreditAmt}    Get GL Entries Amount    Total For:    Debit Amt
+    ${HostBank_Debit}    Get GL Entries Amount    &{ExcelPath}[Host_Bank]    ${DEBIT_AMT_LABEL}
+    ${Lender1_Debit}    Get GL Entries Amount    &{ExcelPath}[Lender1_ShortName]    ${DEBIT_AMT_LABEL}
+    ${Borrower_Credit}    Get GL Entries Amount    &{ExcelPath}[Borrower1_ShortName]    ${CREDIT_AMT_LABEL}
+    ${UITotalCreditAmt}    Get GL Entries Amount    Total For:    ${CREDIT_AMT_LABEL}
+    ${UITotalDebitAmt}    Get GL Entries Amount    Total For:    ${DEBIT_AMT_LABEL}
     
     Compare UIAmount versus Computed Amount    ${HostBankShare}|${Lend1TranAmount}    ${HostBank_Debit}|${Lender1_Debit}
     Validate if Debit and Credit Amt is Balanced    ${HostBank_Debit}|${Lender1_Debit}    ${Borrower_Credit}
-    Validate if Debit and Credit Amt is equal to Transaction Amount    ${UITotalCreditAmt}    ${UITotalCreditAmt}    &{ExcelPath}[Loan_RequestedAmount]
+    Validate if Debit and Credit Amt is equal to Transaction Amount    ${UITotalCreditAmt}    ${UITotalDebitAmt}    &{ExcelPath}[Loan_RequestedAmount]
     
     ###Initial Loan Drawdown###
     Send Initial Drawdown to Approval
@@ -266,7 +289,7 @@ Create Term Loan Drawdown for SYNDICATED deal in USD
     
     ###Work in Process - Loan Notebook###
     Approve Initial Loan Drawdown via WIP    ${Loan_Alias}
-    Set FX Rates Loan Drawdown    USD
+    Set FX Rates Loan Drawdown    &{ExcelPath}[Loan_Currency]
     
     
     ###LIQ Window###
@@ -299,13 +322,10 @@ Create Term Loan Drawdown for SYNDICATED deal in USD
     Login to Loan IQ    ${MANAGER_USERNAME}    ${MANAGER_PASSWORD}
     
     ###Work in Process###
-    Navigate Transaction in WIP    Outstandings    Awaiting Release Cashflows    Loan Initial Drawdown    ${Loan_Alias}
-    
-    ###Initial Loan Drawdown Notebook###
-    Navigate Notebook Workflow     ${LIQ_InitialDrawdown_Window}    ${LIQ_InitialDrawdown_Tab}    ${LIQ_InitialDrawdown_WorkflowAction}    Release Cashflows
+    Navigate Transaction in WIP    ${OUTSTANDINGS_TRANSACTION}    ${AWAITING_RELEASE_STATUS}    ${LOAN_INITIAL_DRAWDOWN_TYPE}    ${Loan_Alias}
     
     ###Cashflow###
-    Release Cashflow    &{ExcelPath}[Borrower1_ShortName]|&{ExcelPath}[Lender1_ShortName]    release
+    Release Cashflow Based on Remittance Instruction    &{ExcelPath}[Borrower1_RemittanceInstruction]    &&{ExcelPath}[Borrower1_ShortName]|&{ExcelPath}[Lender1_ShortName]
         
     ###Initial Loan Drawdown Notebook###
     Release Initial Loan Drawdown    ${Loan_Alias}
@@ -318,28 +338,26 @@ Create Term Loan Drawdown for SYNDICATED deal in USD
     ###Deal Notebook###
     Open Existing Deal    &{ExcelPath}[Deal_Name]
     
-    ### Loan Notebook ###
-    Navigate to Outstanding Select Window from Deal
-    Navigate to Existing Loan    Loan    &{ExcelPath}[Facility_Name]    ${Loan_Alias}
-    ## ${Converted_LoanAmount}    Get Current Value in Currency Tab
-    ##Write Data To Excel    SERV01_TermLoanDrawdowninUSD    Converted_LoanAmount    ${rowid}    ${Converted_LoanAmount}    
-    ${Converted_LoanAmount}    Read Data From Excel    SERV01_TermLoanDrawdowninUSD   Converted_LoanAmount    ${rowid}
-    
     ###Facility Notebook###
     Navigate to Facility Notebook from Deal Notebook    &{ExcelPath}[Facility_Name]
     ${CurrentCmtAmt}    Get Current Commitment Amount
     ${NewGlobalOutstandings}    Get New Facility Global Outstandings
     ${Facility_CurrentGlobalOutstandings}    Read Data From Excel    SERV01_TermLoanDrawdowninUSD    Facility_CurrentGlobalOutstandings    ${rowid}
-    ${Computed_GlobalOutstandings}    Compute New Global Outstandings of the Facility    ${Facility_CurrentGlobalOutstandings}    ${Converted_LoanAmount}    
+    ${FacilityCurrency}    Read Data From Excel    CRED02_FacilitySetup    Facility_Currency    ${rowid}
+    ${NewLoanAlias}    Read Data From Excel    SERV01_TermLoanDrawdowninUSD    Loan_Alias    ${rowid}
+    ${LoanEffectiveDate}    Read Data From Excel    SERV01_TermLoanDrawdowninUSD    Loan_EffectiveDate    ${rowid}
+
+    ${ConvertedLoanRequestAmount}    Convert Loan Requested Amount Based On Currency FX Rate    ${FacilityCurrency}    &{ExcelPath}[Loan_Currency]    &{ExcelPath}[Loan_RequestedAmount]    ${NewLoanAlias}    ${LOAN_TYPE}    &{ExcelPath}[Facility_Name]    ${LoanEffectiveDate}
+
+    ${Computed_GlobalOutstandings}    Compute New Global Outstandings of the Facility    ${Facility_CurrentGlobalOutstandings}    ${ConvertedLoanRequestAmount}
     Validate Outstandings    ${NewGlobalOutstandings}    ${Computed_GlobalOutstandings}    
     ${NewAvailToDrawAmount}    Get New Facility Available to Draw Amount
     ${AvailToDrawAmount}    Read Data From Excel    SERV01_TermLoanDrawdowninUSD   Facility_CurrentAvailToDraw    ${rowid}
-    ${Computed_AvailToDrawAmt}    Compute New Facility Available to Draw Amount after Drawdown    ${AvailToDrawAmount}    ${Converted_LoanAmount}
+    ${Computed_AvailToDrawAmt}    Compute New Facility Available to Draw Amount after Drawdown    ${AvailToDrawAmount}    ${ConvertedLoanRequestAmount}
     Validate Draw Amounts    ${NewAvailToDrawAmount}    ${Computed_AvailToDrawAmt}    
     Validate Global Facility Amounts - Balanced    ${NewAvailToDrawAmount}    ${NewGlobalOutstandings}    ${CurrentCmtAmt}
     Close All Windows on LIQ
     
-
 Create Initial Loan Drawdown for Syndicated Deal with Repayment Schedule
     [Documentation]    This keyword is used to Fixed Loan Drawdown for SYNDICATED
     ...    @author: dfajardo

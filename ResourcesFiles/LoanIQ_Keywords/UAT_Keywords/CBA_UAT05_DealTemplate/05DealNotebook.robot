@@ -86,7 +86,6 @@ Setup Primaries for Deal D00001151
     ${Deal_Name}    Read Data From Excel    CRED01_DealSetup    Deal_Name    1    ${CBAUAT_ExcelPath}
     
     ### Add Host Bank Primary Lender
-
     ${ExpCode_Description}    Add Lender and Location    &{ExcelPath}[Deal_Name]    &{ExcelPath}[Primary_Lender]    &{ExcelPath}[Primary_LenderLoc]    &{ExcelPath}[Primary_RiskBookExpCode]    &{ExcelPath}[Primary_TransactionType]
     Set Sell Amount and Percent of Deal    &{ExcelPath}[Primary_PctOfDeal]
     Add Pro Rate    &{ExcelPath}[Primary_BuySellPrice]
@@ -112,6 +111,7 @@ Setup Primaries for Deal D00001151
     ### Circle Notebook Portfolio Allocation
     Open Lender Circle Notebook From Primaries List    &{ExcelPath}[Primary_Lender]
     Click Portfolio Allocations from Circle Notebook
+    
     Circle Notebook Portfolio Allocation Per Facility    ${Facility_Name1}    &{ExcelPath}[Primary_Portfolio]    &{ExcelPath}[Primary_PortfolioBranch]    ${SellAmount1}    ${Facility_Expiry1}    &{ExcelPath}[Primary_RiskBookExpCode]    ${ExpCode_Description}
     Circle Notebook Portfolio Allocation Per Facility    ${Facility_Name2}    &{ExcelPath}[Primary_Portfolio]    &{ExcelPath}[Primary_PortfolioBranch]    ${SellAmount2}    ${Facility_Expiry2}    &{ExcelPath}[Primary_RiskBookExpCode]    ${ExpCode_Description}
     Circle Notebook Portfolio Allocation Per Facility    ${Facility_Name3}    &{ExcelPath}[Primary_Portfolio]    &{ExcelPath}[Primary_PortfolioBranch]    ${SellAmount3}    ${Facility_Expiry3}    &{ExcelPath}[Primary_RiskBookExpCode]    ${ExpCode_Description}
