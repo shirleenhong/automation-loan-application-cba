@@ -41,7 +41,7 @@ Verify if Method has Remittance Instruction
     ...    ELSE    Log    Remittance Instruction is already correct
 
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/CashflowNotebook
-
+    
 Add Remittance Instructions
     [Documentation]    This keyword is used to select remittance instruction thru the Cashflow window.
     ...    @author: ritragel
@@ -49,6 +49,7 @@ Add Remittance Instructions
     ...    @update: rtarayao    27MAR2019    Added transaction amount and currency as optional values to cater multiple entries with same customer
     ...    @upated: dfajardo    04AUG2020    Added Run Keyword if for buttons: LIQ_Cashflows_DetailsForCashflow_SelectRI_Button and LIQ_Cashflows_DetailsForCashflow_ViewRI_Button
     ...    @update: AmitP       15SEPT2020   Added  argument  for ${sLoanGlobalInterest} to add in the Transaction Amount.
+    ...    @update: aramos      20SEP2020    Added conversion to 2 decimal points for Total Transaction
     [Arguments]    ${sCustomerShortName}    ${sRemittanceDescription}    ${sTransactionAmount}=None    ${sCurrency}=None    ${sLoanGlobalInterest}=None
     Log    ${sLoanGlobalInterest}
     Log    ${sTransactionAmount}
@@ -58,6 +59,17 @@ Add Remittance Instructions
     ...    ELSE    Set Variable    ${TransactionAmount}    
     ${TotalTransactionAmount}    Convert Number With Comma Separators    ${TotalTransactionAmount}        
     Run Keyword If    '${sTransactionAmount}'=='None'    Mx LoanIQ Select Or DoubleClick In Javatree    ${LIQ_Cashflows_Tree}    ${sCustomerShortName}%d
+    
+    Log    ${TotalTransactionAmount}${SPACE}${sCurrency}%${TotalTransactionAmount}${SPACE}${sCurrency}%Original Amount/CCY
+    Log    ${sTransactionAmount}
+    
+    ${TotalTransactionAmount}    Remove Comma, Negative Character and Convert to Number    ${TotalTransactionAmount}
+    ${TotalTransactionAmount}    Evaluate    "%.2f" % ${TotalTransactionAmount}
+    ${TotalTransactionAmount}    Convert Number With Comma Separators    ${TotalTransactionAmount}
+    
+    Log    ${TotalTransactionAmount}${SPACE}${sCurrency}%${TotalTransactionAmount}${SPACE}${sCurrency}%Original Amount/CCY
+    Log    ${TotalTransactionAmount}
+    
     Run Keyword If    '${sTransactionAmount}'!='None'    Run keywords    Mx LoanIQ Click Javatree Cell    ${LIQ_Cashflows_Tree}    ${TotalTransactionAmount}${SPACE}${sCurrency}%${TotalTransactionAmount}${SPACE}${sCurrency}%Original Amount/CCY
     ...    AND    Mx Press Combination    Key.ENTER  
     mx LoanIQ activate    ${LIQ_Cashflows_DetailsForCashflow_Window}    
