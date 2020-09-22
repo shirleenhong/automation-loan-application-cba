@@ -503,3 +503,9 @@ BUS_New Outstanding Select
     ...    @author: dahijara    08SEP2020    - initial create
 
     Run Keyword    New Outstanding Select    ${ARGUMENT_1}    ${ARGUMENT_2}    ${ARGUMENT_3}    ${ARGUMENT_4}    ${ARGUMENT_5}    ${ARGUMENT_6}    ${ARGUMENT_7}
+
+BUS_Validate Initial Drawdown Currency Tab Details
+    [Documentation]    This keyword is used to run the assigned low level keyword.
+    ...    @author: dahijara    22SEP2020    - initial create
+
+    Run Keyword    Validate Initial Drawdown Currency Tab Details    ${ARGUMENT_1}    ${ARGUMENT_2}    ${ARGUMENT_3}    ${ARGUMENT_4}    ${ARGUMENT_5}    ${ARGUMENT_6}    ${ARGUMENT_7}    ${ARGUMENT_8}    ${ARGUMENT_9}

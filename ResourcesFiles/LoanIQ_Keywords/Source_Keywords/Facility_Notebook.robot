@@ -2326,11 +2326,23 @@ Validate Outstanding Amount After Drawdown
 Post Validation Of Computed Amounts In Facility After Drawdown
     [Documentation]    This keyword validates the amounts shown in the Facility Notebook after an Initial Drawdown.
     ...                @author: bernchua
-    [Arguments]    ${HostBank_Share}    ${Computed_GlobalOutstanding}    ${Computed_HostBankGrossOutstanding}    ${Computed_HostBankNetOutstanding}
-    ...    ${PreOutstandingAmt_GFA}    ${PreOutstandingAmt_HBG}    ${PreOutstandingAmt_HBN}
+    ...                @update: dahijara    22SEP2020    - Added pre processing and screenshot.
+    [Arguments]    ${sHostBank_Share}    ${sComputed_GlobalOutstanding}    ${sComputed_HostBankGrossOutstanding}    ${sComputed_HostBankNetOutstanding}
+    ...    ${sPreOutstandingAmt_GFA}    ${sPreOutstandingAmt_HBG}    ${sPreOutstandingAmt_HBN}
+
+    ### GetRuntime Keyword Pre-processing ###
+    ${HostBank_Share}    Acquire Argument Value    ${sHostBank_Share}
+    ${Computed_GlobalOutstanding}    Acquire Argument Value    ${sComputed_GlobalOutstanding}
+    ${Computed_HostBankGrossOutstanding}    Acquire Argument Value    ${sComputed_HostBankGrossOutstanding}
+    ${Computed_HostBankNetOutstanding}    Acquire Argument Value    ${sComputed_HostBankNetOutstanding}
+    ${PreOutstandingAmt_GFA}    Acquire Argument Value    ${sPreOutstandingAmt_GFA}
+    ${PreOutstandingAmt_HBG}    Acquire Argument Value    ${sPreOutstandingAmt_HBG}
+    ${PreOutstandingAmt_HBN}    Acquire Argument Value    ${sPreOutstandingAmt_HBN}
+
     ${UI_GFA_CurrentCmt}    ${UI_GFA_Outstandings}    ${UI_GFA_AvailToDraw}    Get Global Facility Amounts
     ${UI_HBG_ContrGross}    ${UI_HBG_Outstandings}    ${UI_HBG_AvailToDraw}    Get Host Bank Share Gross Amounts
     ${UI_HBN_NetCmt}    ${UI_HBN_Outstandings}    ${UI_HBN_AvailToDraw}    Get Host Bank Share Net Amounts
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/FacilityNotebook
     
     ${HostBankShareGross_CommitAmt}    Compute Host Bank Share Commitment Amount    ${UI_GFA_CurrentCmt}    ${HostBank_Share}
     ${HostBankShareNet_CommitAmt}    Compute Host Bank Share Commitment Amount    ${UI_GFA_CurrentCmt}    ${HostBank_Share}
@@ -2342,7 +2354,7 @@ Post Validation Of Computed Amounts In Facility After Drawdown
     ${GFAOutstanding_Status}    Validate Outstanding Amount After Drawdown    ${PreOutstandingAmt_GFA}    ${UI_GFA_Outstandings}    ${Computed_GlobalOutstanding}
     ${HBGOutstanding_Status}    Validate Outstanding Amount After Drawdown    ${PreOutstandingAmt_HBG}    ${UI_HBG_Outstandings}    ${Computed_HostBankGrossOutstanding}
     ${HBNOutstanding_Status}    Validate Outstanding Amount After Drawdown    ${PreOutstandingAmt_HBN}    ${UI_HBN_Outstandings}    ${Computed_HostBankNetOutstanding}
-    
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/FacilityNotebook
     Run Keyword If    '${HostBankShareGross_CommitAmt}'=='${UI_HBG_ContrGross}'    Log    Host Bank Share Gross Contr. Gross Amount of ${HostBankShareGross_CommitAmt} verified.
 	Run Keyword If    '${HostBankShareNet_CommitAmt}'=='${UI_HBN_NetCmt}'    Log	Host Bank Share Net Net Cmt Amount of ${HostBankShareNet_CommitAmt} verified.
     
@@ -2358,8 +2370,17 @@ Post Validation Of Facility Summary Amounts After Drawdown
     [Documentation]    This keyword validates the Amounts shown in the Facility Notebook's Summary Tab after Drawdown.
     ...                It checks the before and after values, and verifies that the amount should not be equal.
     ...                @author: bernchua
-    [Arguments]    ${PreOutstandingAmt_GFA}    ${PreOutstandingAmt_HBG}    ${PreOutstandingAmt_HBN}
-    ...    ${PreAvailToDraw_GFA}    ${PreAvailToDraw_HBG}    ${PreAvailToDraw_HBN}
+    [Arguments]    ${sPreOutstandingAmt_GFA}    ${sPreOutstandingAmt_HBG}    ${sPreOutstandingAmt_HBN}
+    ...    ${sPreAvailToDraw_GFA}    ${sPreAvailToDraw_HBG}    ${sPreAvailToDraw_HBN}
+
+    ### GetRuntime Keyword Pre-processing ###
+    ${PreOutstandingAmt_GFA}    Acquire Argument Value    ${sPreOutstandingAmt_GFA}
+    ${PreOutstandingAmt_HBG}    Acquire Argument Value    ${sPreOutstandingAmt_HBG}
+    ${PreOutstandingAmt_HBN}    Acquire Argument Value    ${sPreOutstandingAmt_HBN}
+    ${PreAvailToDraw_GFA}    Acquire Argument Value    ${sPreAvailToDraw_GFA}
+    ${PreAvailToDraw_HBG}    Acquire Argument Value    ${sPreAvailToDraw_HBG}
+    ${PreAvailToDraw_HBN}    Acquire Argument Value    ${sPreAvailToDraw_HBN}
+
     ${UI_GFA_CurrentCmt}    ${UI_GFA_Outstandings}    ${UI_GFA_AvailToDraw}    Get Global Facility Amounts
     ${UI_HBG_ContrGross}    ${UI_HBG_Outstandings}    ${UI_HBG_AvailToDraw}    Get Host Bank Share Gross Amounts
     ${UI_HBN_NetCmt}    ${UI_HBN_Outstandings}    ${UI_HBN_AvailToDraw}    Get Host Bank Share Net Amounts
@@ -2369,6 +2390,7 @@ Post Validation Of Facility Summary Amounts After Drawdown
     Should Not Be Equal    ${PreAvailToDraw_GFA}    ${UI_GFA_AvailToDraw}
     Should Not Be Equal    ${PreAvailToDraw_HBG}    ${UI_HBG_AvailToDraw}
     Should Not Be Equal    ${UI_HBN_Outstandings}    ${UI_HBN_AvailToDraw}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/FacilityNotebook
 
 Validate the New Total Global Facility Amounts after Drawdown
     [Documentation]    This keyword validates the Facility Current Global Outstandings Amount, Current Facility Commitment Amount, And Current Facility Avail To Draw Amount. 

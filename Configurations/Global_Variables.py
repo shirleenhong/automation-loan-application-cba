@@ -210,6 +210,8 @@ AWAITING_GENERATE_RATE_SETTING_NOTICES_STATUS = "Awaiting Generate Rate Setting 
 #AWAITING_RATE_APPROVAL_STATUS = "Awaiting Rate Approval"
 GENERATE_RATE_SETTING_NOTICES_TRANSACTION = "Generate Rate Setting Notices"
 AWAITING_RELEASE_NOTICE_STATUS = "Awaiting release"
+AWAITING_SET_FX_RATE_STATUS = "Awaiting Set F/X Rate"
+SET_FX_RATE_TRANSACTION = "Set F/X Rate"
 
 ### Bank Role ###
 REFERENCE_BANK_ROLE = "Reference Bank"
@@ -244,6 +246,7 @@ EVENTS_TAB = "Events"
 
 ### Window Title ###
 ADMIN_FEE_PAYMENT_TITLE = "Admin Fee Payment"
+INITIAL_DRAWDOWN_TITLE = "Initial Drawdown"
 
 ### Workflow ###
 PAYMENT_WORKFLOW = "Payment"
