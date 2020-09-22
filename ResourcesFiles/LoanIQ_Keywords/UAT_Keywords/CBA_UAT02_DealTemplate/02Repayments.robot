@@ -8,6 +8,7 @@ Setup Repayment Schedule for Loans in Deal D00001053
     ...                @author: bernchua    21AUG2019    Added taking of screenshots
     ...                @update: gerhabal    30AUG2019    rearrange from Tick Flexible Schedule Add Item Pay Thru Maturity keyword before
     ...    Tick Flexible Schedule Add Item PI Amount     
+    ...                @update: aramos      22SEP2019    Update Screenshot
     [Arguments]    ${ExcelPath}
     
     Refresh Tables in LIQ
@@ -25,7 +26,7 @@ Setup Repayment Schedule for Loans in Deal D00001053
     Enter Flexible Schedule Add Item PI Amount    &{ExcelPath}[FlexSchedule_P&IAmount]
     Click OK in Add Items for Flexible Schedule
     Click OK in Flexible Schedule Window
-    Take Screenshot    LoanNotebook-RepaymentSchedule
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LoanNotebook-RepaymentSchedule
     Save and Exit Repayment Schedule For Loan
     
     Close All Windows on LIQ
