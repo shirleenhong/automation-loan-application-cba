@@ -246,8 +246,11 @@ Search Customer and Complete its Borrower Profile Creation for Comprehensive Dea
     ...    @author: gerhabal    17JULY2019    - commented the following scripts, when customer is created from Party. They are not editable when Customer is created from Party
     ...    Adding Classification Code Details    
     ...    Adding Province Details in the Legal Address        
+    ...    @Update: dahijara    03SEP2020    - Added writing for SERV01_LoanDrawdown
     [Arguments]    ${ExcelPath}       
 	
+    Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
+
 	# ###Generating LIQ Remittance Instruction Descriptions for Location 1 and 2
 	Generate LIQ Remittance Instruction Descriptions for Location 1 and 2    &{ExcelPath}[RemittanceInstruction_DDADescriptionAUDPrefix]    &{ExcelPath}[RemittanceInstruction_IMTDescriptionUSDPrefix]    &{ExcelPath}[RemittanceInstruction_RTGSDescriptionAUDPrefix]
 	...        &{ExcelPath}[RemittanceInstruction_DDADescriptionAUDPrefix2]    &{ExcelPath}[RemittanceInstruction_IMTDescriptionUSDPrefix2]    &{ExcelPath}[RemittanceInstruction_RTGSDescriptionAUDPrefix2]
@@ -259,6 +262,9 @@ Search Customer and Complete its Borrower Profile Creation for Comprehensive Dea
 	Write Data To Excel    ORIG03_Customer    RemittanceInstruction_IMTDescriptionUSD    ${rowid}    ${RemittanceInstruction_IMTDescriptionUSD}
 	Write Data To Excel    ORIG03_Customer    RemittanceInstruction_RTGSDescriptionAUD    ${rowid}    ${RemittanceInstruction_RTGSDescriptionAUD}
 	Write Data To Excel    MTAM01_ManualGL    Borrower1_RTGSRemittanceDescription    ${rowid}    ${RemittanceInstruction_RTGSDescriptionAUD}
+    Write Data To Excel    SERV01_LoanDrawdown    Remittance_Description    ${rowid}    ${RemittanceInstruction_DDADescriptionAUD}
+    Write Data To Excel    SERV01_LoanDrawdown    Remittance_Description    2    ${RemittanceInstruction_DDADescriptionAUD}
+    Write Data To Excel    SERV01_LoanDrawdown    Remittance_Description    3    ${RemittanceInstruction_IMTDescriptionUSD}
 	 	
 	##Generating LIQ Remittance Instruction Descriptions for Location 2
 	${RemittanceInstruction_DDADescriptionAUD2}    ${RemittanceInstruction_IMTDescriptionUSD2}    ${RemittanceInstruction_RTGSDescriptionAUD2}    Generate LIQ Remittance Instruction Descriptions    &{ExcelPath}[RemittanceInstruction_DDADescriptionAUDPrefix2]    &{ExcelPath}[RemittanceInstruction_IMTDescriptionUSDPrefix2]    &{ExcelPath}[RemittanceInstruction_RTGSDescriptionAUDPrefix2]

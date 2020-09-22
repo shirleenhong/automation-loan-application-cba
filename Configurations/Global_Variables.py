@@ -143,7 +143,7 @@ LIQ7474_USER = ""
 ###Notices###
 Email_Notice_Method = ""
 Initial_Notice_Status = ""
-CBA_Email_Notice_Method = ""
+CBA_Email_Notice_Method = "CBA Email with PDF Attachment"
 
 ### Facility Interest Pricing Variables ###
 # Formula Global Variable
@@ -204,9 +204,15 @@ LOAN_REPRICING_FOR_THE_DEAL = "Loan Repricing for the Deal"
 LOAN_REPRICING = "Loan Repricing"
 AWAITING_FUNDING_MEMO_STATUS = "Awaiting Funding Memo"
 CBA_EMAIL_PDF_METHOD = "CBA Email with PDF Attachment"
+AWAITING_RATE_APPROVAL_STATUS = "Awaiting Rate Approval"
+GENERATE_RATE_SETTING_NOTICES_TRANSACTION = "Generate Rate Setting Notices"
+AWAITING_RELEASE_NOTICE_STATUS = "Awaiting release"
 AWAITING_RELEASE_CASHFLOWS_STATUS = "Awaiting Release Cashflows"
 AWAITING_RATE_APPROVAL_STATUS = "Awaiting Rate Approval"
 AWAITING_GENERATE_RATE_SETTING_NOTICES_STATUS = "Awaiting Generate Rate Setting Notices"
+PAPER_CLIP_TRANSACTION = "Paper Clip Transaction"
+REPAYMENT_TRANSACTION = "Repayment"
+PAPER_CLIP = "Paper Clip"
 
 ### Bank Role ###
 REFERENCE_BANK_ROLE = "Reference Bank"

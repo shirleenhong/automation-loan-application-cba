@@ -437,3 +437,9 @@ BUS_Validate the Updates on Primaries
     ...    @author: sahalder    06AUG2020    - initial create
 
     Run Keyword    Validate the Updates on Primaries    ${ARGUMENT_1}    ${ARGUMENT_2}    ${ARGUMENT_3}
+
+BUS_Get Customer Lender Legal Name Via Lender Shares In Deal Notebook
+    [Documentation]    This keyword is used to run the assigned low level keyword.
+    ...    @author: dahijara    03SEP2020    - initial create
+
+    Run Keyword    Get Customer Lender Legal Name Via Lender Shares In Deal Notebook    ${ARGUMENT_1}    ${ARGUMENT_2}
