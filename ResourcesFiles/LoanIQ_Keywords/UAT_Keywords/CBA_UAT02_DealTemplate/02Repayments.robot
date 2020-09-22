@@ -36,6 +36,7 @@ Create Scheduled Repayment for Loans in Deal D00001053
     ...                @author: bernchua    09AUG2019    Initial create
     ...                @update: bernchua    21AUG2019    Rmeoved commented line
     ...                @update: gerhabal    19OCT2019    Commented scripts based on the total amount adjustment    
+    ...                @update: aramos      21SEP2020    Update Validate PaperClip Notebook Details for Interest and Principal Payment for Repayment
     [Arguments]    ${ExcelPath}
     
     Refresh Tables in LIQ
@@ -48,11 +49,11 @@ Create Scheduled Repayment for Loans in Deal D00001053
     Navigate from Loan to Repayment Schedule
     # ${Interest_Amount}    ${Principal_Amount}    ${Effective_Date}    Create Pending Transaction in Repayment Schedule    &{ExcelPath}[RepaymentSched_ItemNo]
     ${Interest_Amount}    ${Principal_Amount}    ${Effective_Date}    ${Total_Amount}    Create Pending Transaction in Repayment Schedule    &{ExcelPath}[RepaymentSched_ItemNo]
-    Validate PaperClip Notebook Details for Interest and Principal Payment    ${Interest_Amount}    ${Principal_Amount}    ${Effective_Date}    &{ExcelPath}[Pricing_Option]    Scheduledzz
+    Validate PaperClip Notebook Details for Interest and Principal Payment for Repayment    ${Interest_Amount}    ${Principal_Amount}    ${Effective_Date}    &{ExcelPath}[Pricing_Option]    Scheduledzz
        
     # ${Total_Amount}    Set Variable    40,080.14
     
-    # Navigate Notebook Workflow    ${LIQ_Repayment_Window}    ${LIQ_Repayment_Tab}    ${LIQ_Repayment_WorkflowItems}    Create Cashflows
+    Navigate Notebook Workflow    ${LIQ_Repayment_Window}    ${LIQ_Repayment_Tab}    ${LIQ_Repayment_WorkflowItems}    Create Cashflows
     Verify if Method has Remittance Instruction    &{ExcelPath}[Borrower_Name]    &{ExcelPath}[Remittance_Description]    &{ExcelPath}[Remittance_Instruction]    ${Total_Amount}    AUD
     # # Verify if Method has Remittance Instruction    &{ExcelPath}[Borrower_Name]    &{ExcelPath}[Remittance_Description]    &{ExcelPath}[Remittance_Instruction]    ${Interest_Amount}    AUD
     Verify if Status is set to Do It    &{ExcelPath}[Borrower_Name]    &{ExcelPath}[Remittance_Instruction]    ${Total_Amount}
