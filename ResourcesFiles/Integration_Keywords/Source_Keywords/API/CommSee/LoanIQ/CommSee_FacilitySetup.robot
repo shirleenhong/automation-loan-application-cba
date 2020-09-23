@@ -394,23 +394,23 @@ Write Facility Ongoing Fee Details for Syndicated Deal - ComSee
     Navigate to Commitment Fee Notebook    ${CommitmentFee}
     
     ###Write Fee Details for Comsee
-    ${CommitmentFeeRate}    Get Commitment Fee Current Rate
+    ${CommitmentFeeRate}    Get Fee Current Rate     ${LIQ_CommitmentFee_Window}    ${LIQ_CommitmentFee_CurrentRate_Field}
     Write Data To Excel    ComSee_SC2_Deal    Fee_CurrentRate    ${rowid}    ${IndemnityFeeRate},${CommitmentFeeRate}    ${ComSeeDataSet}
     
-    ${CommitmentFeeCurrency}    Get Commitment Fee Currency
+    ${CommitmentFeeCurrency}    Get Fee Currency    ${LIQ_CommitmentFee_Window}    ${LIQ_CommitmentFee_Currency_Text}
     Write Data To Excel    ComSee_SC2_Deal    Fee_Currency    ${rowid}    ${IndemnityFeeCurrency},${CommitmentFeeCurrency}    ${ComSeeDataSet}
 
-    ${CommitmentFeeEffectiveDate}    ${CommitmentFeeActualExpiryDate}    Get Commitment Fee Effective and Actual Expiry Date
+    ${CommitmentFeeEffectiveDate}    ${CommitmentFeeActualExpiryDate}    Get Fee Effective and Actual Expiry Date    ${LIQ_CommitmentFee_Window}    ${LIQ_CommitmentFee_EffectiveDate_Field}    ${LIQ_CommitmentFee_ActualExpiryDate_Text}    
     ${CommitmentFeeEffectiveDate}    Convert LIQ Date to Year-Month-Day Format    ${CommitmentFeeEffectiveDate}
     ${CommitmentFeeActualExpiryDate}    Convert LIQ Date to Year-Month-Day Format    ${CommitmentFeeActualExpiryDate}
     Write Data To Excel    ComSee_SC2_Deal    Fee_EffectiveDate    ${rowid}    ${IndemnityFeeEffectiveDate},${CommitmentFeeEffectiveDate}    ${ComSeeDataSet}
     Write Data To Excel    ComSee_SC2_Deal    Fee_ExpiryDate    ${rowid}    ${IndemnityFeeActualExpiryDate},${CommitmentFeeActualExpiryDate}    ${ComSeeDataSet}
     
-    ${CommitmentFeeAdjustedDueDate}    Get Commitment Fee Adjusted Due Date
+    ${CommitmentFeeAdjustedDueDate}    Get Fee Adjusted Due Date    ${LIQ_CommitmentFee_Window}    ${LIQ_CommitmentFee_AdjustedDueDate}
     ${CommitmentFeeAdjustedDueDate}    Convert LIQ Date to Year-Month-Day Format    ${CommitmentFeeAdjustedDueDate}
     Write Data To Excel    ComSee_SC2_Deal    Fee_DueDate    ${rowid}    ${IndemnityFeeAdjustedDueDate},${CommitmentFeeAdjustedDueDate}    ${ComSeeDataSet}
     
-    ${CommitmentAccruedtodateAmount}    Get Commitment Accrued to Date Amount
+    ${CommitmentAccruedtodateAmount}    Get Fee Accrued to Date Amount    ${LIQ_CommitmentFee_Window}    ${LIQ_CommitmentFee_Tab}    ${LIQ_CommitmentFee_Acrual_JavaTree}
     ${CommitmentAccruedtodateAmount}    Remove Comma and Convert to Number    ${CommitmentAccruedtodateAmount}
     ${TotalRowCount}    Get Accrual Row Count    ${LIQ_CommitmentFee_Window}    ${LIQ_CommitmentFee_Acrual_JavaTree}
     ${AccruedtoDateAmt}    Compute Total Accruals for Fee    ${TotalRowCount}    ${LIQ_CommitmentFee_Tab}    ${LIQ_CommitmentFee_Acrual_JavaTree}
