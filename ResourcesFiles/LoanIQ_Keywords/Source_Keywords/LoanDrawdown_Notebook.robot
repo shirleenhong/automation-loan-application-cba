@@ -3305,7 +3305,8 @@ Add Borrower Base Rate and Facility Spread
     ...                @update: sahalder    25JUN2020    Added keyword Pre-Processing steps
     ...                @update: dahijara    25AUG2020    Inserted validation for all in rate (from test case level.)
     ...                @update: mcastro     07SEP2020    Added condition to handle latest inserted validation
-    [Arguments]    ${sBorrowerBaseRate}    ${sFacitliySpread}
+    ...                @update: AmitP       15SEP2020    Added flag variable in a condition which is always true by default for adding condition for Validate String Data In LIQ Object
+    [Arguments]    ${sBorrowerBaseRate}    ${sFacitliySpread}    ${flag}=true
     
     ### GetRuntime Keyword Pre-processing ###
     ${BorrowerBaseRate}    Acquire Argument Value    ${sBorrowerBaseRate}
@@ -3316,7 +3317,7 @@ Add Borrower Base Rate and Facility Spread
     ${Loan_AllInRate}    Evaluate    ${BorrowerBaseRate}+${FacitliySpread}
     ${Loan_AllInRate}    Evaluate    "%.6f" % ${Loan_AllInRate}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LoanRepricing-Rates
-    ${STATUS}    Run Keyword And Return Status    Mx LoanIQ Verify Object Exist    ${LIQ_InitialDrawdown_Window}    VerificationData="Yes"       
+    ${STATUS}    Run Keyword And Return Status    Run Keyword If    '${flag}'=='true'    Mx LoanIQ Verify Object Exist    ${LIQ_InitialDrawdown_Window}    VerificationData="Yes"       
     Run Keyword If    ${STATUS}==False    Validate String Data In LIQ Object    ${LIQ_RolloverConversion_Window}    ${LIQ_RolloverConversion_AllInRate_Text}    ${Loan_AllInRate}%
     [Return]    ${Loan_AllInRate}
 

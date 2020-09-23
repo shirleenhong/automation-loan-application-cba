@@ -96,4 +96,5 @@ Get and Validate API Fee Response
     
     Get Fee Type and Validate Response Per Level    &{ComSeeDataSet}[OutputFilePath]    &{ComSeeDataSet}[ResponseJson]_FEE    &{ComSeeDataSet}[Version]    &{ComSeeDataSet}[Fee_Name]    &{ComSeeDataSet}[Fee_Type]    
     ...    &{ComSeeDataSet}[Fee_Currency]    &{ComSeeDataSet}[Fee_CurrentRate]    &{ComSeeDataSet}[Fee_EffectiveDate]    &{ComSeeDataSet}[Fee_ExpiryDate]    &{ComSeeDataSet}[Fee_FeeAlias]
-    ...    &{ComSeeDataSet}[Fee_Status]    &{ComSeeDataSet}[Fee_AccruedToDate]    &{ComSeeDataSet}[Fee_PaidToDate]    &{ComSeeDataSet}[Fee_DueDate]    &{ComSeeDataSet}[AccrualRule_PayInAdvance]    ,    
+    ...    &{ComSeeDataSet}[Fee_Status]    &{ComSeeDataSet}[Fee_AccruedToDate]    &{ComSeeDataSet}[Fee_PaidToDate]    &{ComSeeDataSet}[Fee_DueDate]    &{ComSeeDataSet}[AccrualRule_PayInAdvance]
+    ...    &{ComSeeDataSet}[Fee_CycleStartDate]    &{ComSeeDataSet}[Fee_AccrualEndDate]    ,    
