@@ -1375,7 +1375,62 @@ Navigate to Ongoing Fee Payment Notebook from Commitment Fee Notebook
     Mx LoanIQ Select Window Tab    ${LIQ_CommitmentFee_Tab}    Events
     Mx LoanIQ Select Or DoubleClick In Javatree    ${LIQ_CommitmentFee_Events_Javatree}    Fee Payment Released%d    
     mx LoanIQ activate window    ${LIQ_Payment_Window}
+Get Commitment Fee Current Rate
+    [Documentation]    This keyword gets the Commitment Fee Rate and returns the value.
+    ...    author: rtarayao    30AUG2019    - Initial Create
+    mx LoanIQ activate window    ${LIQ_CommitmentFee_Window}
+    ${Rate}    Mx LoanIQ Get Data    ${LIQ_CommitmentFee_CurrentRate_Field}    value%Rate
+    ${Rate}    Convert To String    ${Rate}
+    ${Rate}    Remove String    ${Rate}    .000000%    
+    Log    The Commitment Rate is ${Rate}
+    Screenshot.Set Screenshot Directory    ${Screenshot_Path}
+    Set Test Variable    ${SCREENSHOT_FILENAME}    Commitment Rate
+    Take Screenshot    ${SCREENSHOT_FILENAME}
+    [Return]    ${Rate}
+Get Commitment Accrued to Date Amount
+    [Documentation]    This keyword returns the Commitment Fee accrued to date total amount.
+    ...    @author: rtarayao    23AUG2019    - Initial Create
+    mx LoanIQ activate window    ${LIQ_CommitmentFee_Window}
+    Mx LoanIQ Select Window Tab    ${LIQ_CommitmentFee_Tab}    Accrual
+    ${AccruedtodateAmount}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_CommitmentFee_Acrual_JavaTree}    TOTAL:${SPACE}%Accrued to date%Accruedtodate    
+    Log    The CommitmentFee Accrued to Date amount is ${AccruedtodateAmount} 
+    Screenshot.Set Screenshot Directory    ${Screenshot_Path}
+    Set Test Variable    ${SCREENSHOT_FILENAME}    Commitment Fee Accrual Screen
+    Take Screenshot    ${SCREENSHOT_FILENAME}
+    [Return]    ${AccruedtodateAmount} 
 
+Get Commitment Fee Effective and Actual Expiry Date
+    [Documentation]    This keyword returns the Commitment Fee Effective and Expiry Date value.
+    ...    author: rtarayao    30AUG2019    - Initial Create
+    mx LoanIQ activate window    ${LIQ_CommitmentFee_Window}
+    ${FeeEffectiveDate}    Mx LoanIQ Get Data    ${LIQ_CommitmentFee_EffectiveDate_Field}    value%EffectiveDate
+    ${FeeActualExpiryDate}    Mx LoanIQ Get Data    ${LIQ_CommitmentFee_ActualExpiryDate_Text}    value%ActualExpiryDate
+    Log    The Commitment Fee Effective Date is ${FeeEffectiveDate}
+    Log    The Commitment Fee Actual Expiry Date is ${FeeActualExpiryDate}
+    Screenshot.Set Screenshot Directory    ${Screenshot_Path}
+    Set Test Variable    ${SCREENSHOT_FILENAME}    Commitment Fee Effective and Expiry Dates
+    Take Screenshot    ${SCREENSHOT_FILENAME}
+    [Return]    ${FeeEffectiveDate}    ${FeeActualExpiryDate}    
+Get Commitment Fee Adjusted Due Date
+    [Documentation]    This keyword returns the Commitment Fee Adjusted Due Date value.
+    ...    author: rtarayao    30AUG2019    - Initial Create
+    mx LoanIQ activate window    ${LIQ_CommitmentFee_Window}
+    ${FeeAdjustedDueDate}    Mx LoanIQ Get Data    ${LIQ_CommitmentFee_AdjustedDueDate}    value%AdjDueDate
+    Log    The Commitment Fee Adjusted Due Date is ${FeeAdjustedDueDate}
+    Screenshot.Set Screenshot Directory    ${Screenshot_Path}
+    Set Test Variable    ${SCREENSHOT_FILENAME}    Commitment Fee Adj Due Date
+    Take Screenshot    ${SCREENSHOT_FILENAME}
+    [Return]    ${FeeAdjustedDueDate}
+Get Commitment Fee Currency
+    [Documentation]    This keyword gets the Commitment Fee Currency and returns the value.
+    ...    author: rtarayao    30AUG2019    - Initial Create
+    mx LoanIQ activate window    ${LIQ_CommitmentFee_Window}
+    ${FeeCurrency}    Mx LoanIQ Get Data    ${LIQ_CommitmentFee_Currency_Text}    value%Currency
+    Log    The Commitment Fee Currency is ${FeeCurrency}
+    Screenshot.Set Screenshot Directory    ${Screenshot_Path}
+    Set Test Variable    ${SCREENSHOT_FILENAME}    Commitment Currency
+    Take Screenshot    ${SCREENSHOT_FILENAME}
+    
 Get Commitment Fee Payment Information for Reversal Validation
     [Documentation]    This keyword returns the Date, Time, User, Comment, and Effective Date of the commitment fee transaction that will be used for fee payment reversal validation.
     ...    Date = The exact date the fee payment was completed.
