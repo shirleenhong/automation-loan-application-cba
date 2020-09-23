@@ -1375,6 +1375,7 @@ Navigate to Ongoing Fee Payment Notebook from Commitment Fee Notebook
     Mx LoanIQ Select Window Tab    ${LIQ_CommitmentFee_Tab}    Events
     Mx LoanIQ Select Or DoubleClick In Javatree    ${LIQ_CommitmentFee_Events_Javatree}    Fee Payment Released%d    
     mx LoanIQ activate window    ${LIQ_Payment_Window}
+    
 
 Get Commitment Fee Payment Information for Reversal Validation
     [Documentation]    This keyword returns the Date, Time, User, Comment, and Effective Date of the commitment fee transaction that will be used for fee payment reversal validation.
