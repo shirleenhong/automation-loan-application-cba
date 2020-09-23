@@ -177,9 +177,11 @@ Get Message TextArea Value and Save to File
     ...    @update: clanding    12JUN2019    - added \ on index for element, this is an update for robot to consider it as a string not an index of
     ...    @update: ehugo    16JUN2020    - added 'Wait Until Loading Indicator Is Not Visible' to properly get the value of textarea
     ...    @update: ehugo    18JUN2020    - updated screenshot location
+    ...    @update: mcastro    22SEP2020    added Scroll to element before double click
     [Arguments]    ${sOutputFilePath}    ${iRowRef}    ${iColRef}    ${sFileExtension}
     
     :FOR    ${Index}    IN RANGE    5
+    \    Mx Scroll Element Into View    ${Results_Row}\[${iRowRef}]${PerColumnValue}\[${iColRef}]${TextValue}
     \    Double Click Element    ${Results_Row}\[${iRowRef}]${PerColumnValue}\[${iColRef}]${TextValue}
     \    Wait Until Loading Indicator Is Not Visible
     \    ${status}    Run Keyword And Return Status    Wait Until Element Is Visible    ${Textarea}
@@ -446,7 +448,7 @@ Get Results Header Index and Filter Using Value
     
     ${ResultsHeaderColIndex_After}    Evaluate    ${ResultsHeaderColIndex}+1
     ${ResultsHeaderColIndex}    Evaluate    ${ResultsHeaderColIndex}-1
-    ${ResultsHeaderColIndex_After_Exist}    Run Keyword And Return Status    Page Should Contain Element    ${ResultsHeaderColIndex_After}    
+    ${ResultsHeaderColIndex_After_Exist}    Run Keyword And Return Status    Page Should Contain Element    ${ResultsHeaderColIndex_After}   
     Run Keyword If    ${ResultsHeaderColIndex_After_Exist}==${True}    Mx Scroll Element Into View    ${Results_FilterPanel}\[${ResultsHeaderColIndex_After}]
     ...    ELSE    Mx Scroll Element Into View    ${Results_FilterPanel}\[${ResultsHeaderColIndex}]
     
