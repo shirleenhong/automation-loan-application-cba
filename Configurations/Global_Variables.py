@@ -143,7 +143,7 @@ LIQ7474_USER = ""
 ###Notices###
 Email_Notice_Method = ""
 Initial_Notice_Status = ""
-CBA_Email_Notice_Method = ""
+CBA_Email_Notice_Method = "CBA Email with PDF Attachment"
 
 ### Facility Interest Pricing Variables ###
 # Formula Global Variable
@@ -209,9 +209,6 @@ AWAITING_RATE_APPROVAL_STATUS = "Awaiting Rate Approval"
 AWAITING_GENERATE_RATE_SETTING_NOTICES_STATUS = "Awaiting Generate Rate Setting Notices"
 GENERATE_RATE_SETTING_NOTICES_TRANSACTION = "Generate Rate Setting Notices"
 AWAITING_RELEASE_NOTICE_STATUS = "Awaiting release"
-AWAITING_RELEASE_CASHFLOWS_STATUS = "Awaiting Release Cashflows"
-AWAITING_RATE_APPROVAL_STATUS = "Awaiting Rate Approval"
-AWAITING_GENERATE_RATE_SETTING_NOTICES_STATUS = "Awaiting Generate Rate Setting Notices"
 PAPER_CLIP_TRANSACTION = "Paper Clip Transaction"
 REPAYMENT_TRANSACTION = "Repayment"
 PAPER_CLIP = "Paper Clip"
