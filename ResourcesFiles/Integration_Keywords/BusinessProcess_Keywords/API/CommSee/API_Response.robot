@@ -74,6 +74,7 @@ Get and Validate API Outstanding Response
     ...    This is used for all positive Comsee Get API response validation for Outstandings.
     ...    @author: clanding    20AUG2019    - Initial create
     ...    @update: rtarayao    27AUG2019    - Updated the Documentation
+    ...    @update: jdelacru    24SEP2020    - deleted ... in the last line of the keyword, it gives warning in execution
     [Arguments]    ${ComSeeDataSet}
 
  
@@ -84,7 +85,7 @@ Get and Validate API Outstanding Response
     ...    &{ComSeeDataSet}[Outstanding_Favouree]    &{ComSeeDataSet}[Outstanding_HBGrossAmount]    &{ComSeeDataSet}[Outstanding_GlobalOriginalAmount]    &{ComSeeDataSet}[Outstanding_GlobalCurrentAmount]    &{ComSeeDataSet}[Outstanding_RepricingFrequency]    
     ...    &{ComSeeDataSet}[Outstanding_RepricingDate]    &{ComSeeDataSet}[Outstanding_PaymentMode]    &{ComSeeDataSet}[Outstanding_IntCycleFrequency]
     ...    &{ComSeeDataSet}[Outstanding_PricingOption]    &{ComSeeDataSet}[Outstanding_Margin]    &{ComSeeDataSet}[Outstanding_AllInRate]    &{ComSeeDataSet}[Outstanding_AccruedInterest]    &{ComSeeDataSet}[Outstanding_cycleDue]    &{ComSeeDataSet}[Outstanding_paidToDate]    ,
-    ...     
+   
 Get and Validate API Fee Response
     [Documentation]    This keyword is used to validate Fee details based on the GET API Response.
     ...    Response are being validated with the Data Set values.
