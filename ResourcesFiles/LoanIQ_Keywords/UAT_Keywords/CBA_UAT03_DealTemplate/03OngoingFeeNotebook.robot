@@ -69,7 +69,7 @@ Commitment Fee Payment
     Validate release of Ongoing Fee Payment
     Close All Windows on LIQ   
 
-Setup Ongoing Fee
+Setup Ongoing Fee D00000476
     [Documentation]    This keyword will update the Setup the Ongoing Fees in the Deal
     ...    @author:    ritragel    09SEP2020    Addded selection of Due Date
     [Arguments]    ${ExcelPath}
@@ -80,7 +80,29 @@ Setup Ongoing Fee
     ### Enter Details
     Run Keyword If    '&{ExcelPath}[rowid]' != '4'    Enter Commitment Fee Details    &{ExcelPath}[Effective_Date]    &{ExcelPath}[Actual_DueDate]    &{ExcelPath}[Adjusted_DueDate]    &{ExcelPath}[Cycle_Frequency]    &{ExcelPath}[Accrue]
     Run Keyword If    '&{ExcelPath}[rowid]' == '4'    Enter Line Fee Details    &{ExcelPath}[Effective_Date]    &{ExcelPath}[Actual_DueDate]    &{ExcelPath}[Adjusted_DueDate]    &{ExcelPath}[Cycle_Frequency]    &{ExcelPath}[Accrue]
+    Run Keyword If    '&{ExcelPath}[rowid]' == '4'    Refresh Tables in LIQ
+
+
+Release Ongoing Fee D00000476
+    [Documentation]    This keyword will release the set ongoing Fee for UAT Deal3
+    ...    @author: ritragel    17SEP2020    Initial Commit
+    [Arguments]    ${ExcelPath}
     
+    ##LIQ Window###
+    Logout from Loan IQ
+    Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
+    
+    ###Deal Notebook###
+    Open Existing Deal    &{ExcelPath}[Deal_Name]
+
+    ### Navigate to Commitment Fee Notebook ###
+    Open Ongoing Fee from Deal Notebook    &{ExcelPath}[Facility_Name]    &{ExcelPath}[Fee_Type]
+    
+    ### Enter Details
+    Run Keyword If    '&{ExcelPath}[rowid]' != '4'    Release Commitment Fee
+    Run Keyword If    '&{ExcelPath}[rowid]' == '4'    Release Line Fee
+    Refresh Tables in LIQ
+
 Commitment Fee Release
     [Documentation]    This keyword validates the status of commitment fee notebook of the facility.
     ...    @author:mgaling    31July2019    Intial Create
@@ -90,7 +112,7 @@ Commitment Fee Release
     Search Existing Deal    &{ExcelPath}[Deal_Name]    
     # Navigate Directly to Commitment Fee Notebook from Deal Notebook    &{ExcelPath}[Facility_Name]
     
-    ### Workflow Tab ###
+    # ### Workflow Tab ###
     # Validate Commitment Fee Notebook Status
     
 
