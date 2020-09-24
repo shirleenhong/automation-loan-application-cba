@@ -2267,7 +2267,7 @@ Get Customer Lender Legal Name Via Lender Shares In Deal Notebook
     mx LoanIQ close window    ${LIQ_SharesFor_Window}    
     
     ### ConstRuntime Keyword Post-processing ###
-    Save Values of Runtime Execution on Excel File    ${sRunVar_CustomerLender_LegalName}
+    Save Values of Runtime Execution on Excel File    ${sRunVar_CustomerLender_LegalName}    ${CustomerLender_LegalName}
     [Return]    ${CustomerLender_LegalName}
     
 Get Customer Lender Remittance Instruction Desc Via Lender Shares In Deal Notebook
