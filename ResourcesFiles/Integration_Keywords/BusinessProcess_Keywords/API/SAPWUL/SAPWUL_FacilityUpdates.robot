@@ -627,6 +627,8 @@ Delete Guarantor Then Approve and Release the Facility Change Transaction
 Add New facility or Unscheduled Increase
     [Documentation]    This keyword Adds New facility or Unscheduled Increase and payload is generated successfully
     ...    @author: ehugo    25SEP2019    Initial create
+    ...    @update: mcastro      17SEP2020    Update arguments for Create Customer External ID List and Set SAPWUL Test Data
+    ...                                       Added Convert LIQ Date to Payload Date keyword
     [Arguments]    ${FacilityDataSet}
     ${sDealName}    Read Data From Excel    DealData    Deal_Name   &{FacilityDataSet}[Deal_RowID]    ${SAPWUL_DATASET}
     ${sFacilityRowID}    Read Data From Excel    DealData    Deal_FacilityRowID1   &{FacilityDataSet}[Deal_RowID]    ${SAPWUL_DATASET}
@@ -676,6 +678,7 @@ Add New facility or Unscheduled Increase
     
     Navigate to Facility Notebook    ${sDealName}    ${sNew_FacilityName}
     ${sEffective_Date}    Get Facility Effective Date
+    ${sEffectiveDate}    Convert LIQ Date to Payload Date    ${sEffective_Date}    y-m-d
     ${sFacilityControlNumber}    Get Facility Control Number
     ${sCustomerProfileType}    ${bPrimaryBorrower}    Get Borrower Details From Facility Notebook    &{FacilityDataSet}[Facility_Borrower]
     ${sKey_List}    Create List    Payload_effectiveDate
@@ -687,14 +690,14 @@ Add New facility or Unscheduled Increase
     
     ${sCustomerID}    Get Customer ID from Active Customer Notebook Via Deal Notebook    &{FacilityDataSet}[Facility_Borrower]
     Close All Windows on LIQ
-    
+
     ### Create Customer External ID Item and Customer External ID List ###
     ${sCustomerExternalIdItem}    Create List    ${sCustomerProfileType}    ${bPrimaryBorrower}    ${sCustomerID}   
-    ${sCustomerExternalIdItem_List}    Create Customer External ID List    ${sCustomerExternalIdItem}    ${sKey_List}    ${sVal_List}
-       
+    ${sCustomerExternalIdItem_List}    Create Customer External ID List    ${sCustomerExternalIdItem}
+   
     ### SAPWUL Data Save ###
-    Set SAPWUL Test Data    ${Sapwul_Event}    &{FacilityDataSet}[Sapwul_RowId]    ${sNew_FacilityName}    ${sFacilityID}    
-    ...    ${sFacilityControlNumber}    ${SUPERVISOR_USERNAME}    ${sCustomerExternalIdItem_List}
+    Set SAPWUL Test Data    &{FacilityDataSet}[Sapwul_Event]    &{FacilityDataSet}[Sapwul_RowId]    ${sNew_FacilityName}    ${sFacilityID}    
+    ...    ${sFacilityControlNumber}    ${SUPERVISOR_USERNAME}    ${sCustomerExternalIdItem_List}    ${sKey_List}    ${sVal_List} 
 
 Replace Guarantor Then Approve and Release the Facility Change Transaction
     [Documentation]    This keyword deletes a Guarantor then Approve and Release the transaction

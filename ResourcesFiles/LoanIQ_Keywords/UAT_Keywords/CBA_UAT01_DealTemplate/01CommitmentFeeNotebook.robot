@@ -14,7 +14,7 @@ Commitment Fee Payment for D00000454
     
     ### Navigate to Commitment Fee Notebook ###
     Search Existing Deal    &{ExcelPath}[Deal_Name]    
-    # Navigate Directly to Commitment Fee Notebook from Deal Notebook    &{ExcelPath}[Facility_Name]
+    Navigate Directly to Commitment Fee Notebook from Deal Notebook    &{ExcelPath}[Facility_Name]
     
     ### Commitment Fee Notebook - General Tab ###  
     ${Rate}    ${BalanceAmount}    ${RateBasis}    Get Data in General Tab
@@ -27,8 +27,8 @@ Commitment Fee Payment for D00000454
     Write Data To Excel    SERV29_CommitmentFeePayment    Computed_CycleDue    ${rowid}    ${ProjectedCycleDue}    ${CBAUAT_ExcelPath}
 
     ### Ongoing Fee Payment ###
-    # Select Cycle Due Fee Payment 
-    # Enter Effective Date for Ongoing Fee-Cycle Due Payment    ${Date}
+    Select Cycle Due Fee Payment 
+    Enter Effective Date for Ongoing Fee-Cycle Due Payment    ${Date}
     
     ### Ongoing Fee Payment - Cashflow Validation ###
     Navigate to Cashflow - Ongoing Fee
@@ -257,8 +257,8 @@ Commitment Fee Payment with Split Balance for D00000454
     Write Data To Excel    SERV29_CommitmentFeePayment    Computed_CycleDue    ${rowid}    ${ProjectedCycleDue}    ${CBAUAT_ExcelPath}
     
     ### Ongoing Fee Payment ###
-    # Select Cycle Due Fee Payment 
-    # Enter Effective Date for Ongoing Fee-Cycle Due Payment    ${Date}
+    Select Cycle Due Fee Payment 
+    Enter Effective Date for Ongoing Fee-Cycle Due Payment    ${Date}
     
     ### Ongoing Fee Payment - Cashflow Validation ###
     Navigate to Cashflow - Ongoing Fee
