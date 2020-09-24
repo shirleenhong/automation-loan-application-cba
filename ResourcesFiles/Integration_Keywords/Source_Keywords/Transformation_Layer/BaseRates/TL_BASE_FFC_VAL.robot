@@ -364,3 +364,54 @@ Validate FFC for TL Base Rate Success with Multiple SubEntities
     Logout to MCH UI and Close Browser
     
     
+
+
+# Validate FFC for TL Base Rate Success
+    # [Documentation]    This keyword is used to validate OpenAPI, Distributor and CustomCBAInterface in MCH FFC UI.
+    # [Arguments]    ${sInputFilePath}    ${sInputFileName}    ${sInputXML}    ${sOutputFilePath}    ${sOutputFileName}    ${sOutputXML}    ${sResponse}    ${sResponseMechanism}
+    
+    # Login to MCH UI
+    
+    # ###Base Splitter###
+    # Wait Until Element Is Visible    ${FFC_Dashboard}    30s
+    # ${aHeaderRefNameList}    Create List    ${REQUESTS_ID}
+    # ${aExpectedRefList}    Create List    ${GSFILENAME_WITHTIMESTAMP}   
+    # Go to Dashboard and Click Source API Name    ${TL_BASE_ACK_MESSAGE_SOURCENAME}    sOutputType=${TLSUCCESS_OUTPUT_TYPE}
+    # ${ColumnIndex}    Filter by Multiple Reference Headers and Values and Return Column Index    ${aHeaderRefNameList}    ${aExpectedRefList}
+    # ${Results_Row_Count}    SeleniumLibraryExtended.Get Element Count    ${Results_Row}
+    # ${RequestID_UI}    Get Results Table Column Value by Header Title and Return    ${Results_Row_Count}    ${REQUESTS_ID}
+    # ${REQUESTID_VALUE}    Split Request ID From Splitter Queue for TL and Return Final Request ID    ${RequestID_UI}    |
+    
+    # ###OpenAPI###
+    # Go to Dashboard and Click Source API Name    ${BASE_SOURCENAME}    ${OPEAPI_INSTANCE_TL}
+    # ${ResultsRowList}    Filter by Reference Header and Save Message TextArea and Return Results Row List Value    ${X_REQUEST_ID}    ${REQUESTID_VALUE}    ${sOutputFilePath}${sOutputFileName}    
+    # ...    ${JSON}    ${RESULTSTABLE_STATUS}    ${CONTENT_TYPE}    ${HTTP_OPERATION}
+    # Validate Results Row Values Using Expected Value List    ${ResultsRowList}    ${MESSAGESTATUS_SUCCESSFUL}    ${CONTENT_TYPE_VALUE}    ${POSTMethod}
+    # Compare Multiple Input and Output JSON for Base Rate    ${sInputFilePath}    ${sInputFileName}  
+      
+    # ###CustomCBAPush###
+    # Go to Dashboard and Click Source API Name    ${CBAPUSH_SOURCENAME}    ${CBAPUSH_INSTANCE}
+    # ${aHeaderRefNameList}    Create List    ${JMS_CORRELATION_ID}
+    # ${aExpectedRefList}    Create List    ${REQUESTID_VALUE}
+    # ${ColumnIndex}    Filter by Multiple Reference Headers and Values and Return Column Index    ${aHeaderRefNameList}    ${aExpectedRefList}
+    # ${Results_Row_Count}    SeleniumLibraryExtended.Get Element Count    ${Results_Row}
+    # ${Response_UI}    Get Results Table Column Value by Header Title and Return    ${Results_Row_Count}    ${JMS_PAYLOAD}
+    # Create File    ${datasetpath}${sOutputFilePath}${sResponse}.${JSON}    ${Response_UI}
+    # Validate Response from CBA Push Queue    ${sOutputFilePath}${sResponse}    ${REQUESTID_VALUE}    ${POSTMethod}    ${BASEINTERESTRATE_APINAME}    ${OPEARATIONSTATUS_SUCCESS}
+    
+    # ###Distributor###
+    # Go to Dashboard and Click Source API Name    ${TEXTJMS_SOURCENAME}    ${TEXTJMS_INSTANCE}
+    # ${aHeaderRefNameList}    Create List    ${HEADER_CORRELATION_ID}    ${RESULTSTABLE_STATUS}
+    # ${aExpectedRefList}    Create List    ${REQUESTID_VALUE}    ${SENT}
+    # ${ColumnIndex}    Filter by Multiple Reference Headers and Values and Return Column Index    ${aHeaderRefNameList}    ${aExpectedRefList}
+    # ${ResultsRowList}    Save Message TextArea and Return Results Row List Value    ${ColumnIndex}    ${sOutputFilePath}${sOutputXML}    ${XML}    ${ROUTEROPERATION}    ${HEADER_CATEGORY}    ${HEADER_OPERATION}    
+    # Validate Results Row Values Using Expected Value List    ${ResultsRowList}    ${BASE_ROUTEROPTION}    ${BASE_CATEGORY}    ${POSTMethod}
+    # Compare Expected and Actual TextJMS for Base Rate TL    ${sInputFilePath}${sInputXML}    ${sOutputFilePath}${sOutputXML}
+    
+    # ###Response Mechanism###
+    # Go to Dashboard and Click Source API Name    ${RESPONSE_MECHANISM_SOURCENAME}    ${RESPONSE_MECHANISM_INSTANCE}
+     # ${ResultsRowList}    Filter by Reference Header and Save Message TextArea for Specified File and Return Results Row List Value    ${DESTINATION}    ${DESTINATION_BR}    ${REQUESTID_VALUE}    ${sOutputFilePath}${sResponseMechanism}
+    # ...    ${JSON}    ${RESULTSTABLE_STATUS}
+    # Validate Response Mechanism    ${sOutputFilePath}${sResponseMechanism}    ${REQUESTID_VALUE}    ${POSTMethod}    ${BASEINTERESTRATE_APINAME}    ${OPEARATIONSTATUS_SUCCESS}
+    
+    # Logout to MCH UI and Close Browser
