@@ -1,1 +1,0 @@
-{"apiName":"BASEINTERESTRATE","requestId":"SY_G1_BASE18_1600944293577_1","responses":[{"responseDetails":[{"dateTime":"2020-09-24T10:46:53.769Z","responseDescription":"ROW 2: GS_VENDOR_PUBLISH_DATE field value date format is invalid. valid format - [yyyy-MM-dd].","messageId":"FILE_VALIDATION","responseStatus":"FAILURE"}]}],"consolidationStatus":"FAILURE"}
