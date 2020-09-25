@@ -24,7 +24,7 @@ LIQ_ActiveCustomer_Window_FileMenu_SaveMenu = 'JavaWindow("title:=Active Custome
 
 ###Active Customer Window_GST ID##
 LIQ_ActiveCustomer_Window_GST_CheckBox = 'JavaWindow("title:=Active Customer.*").JavaCheckBox("attached text:=Subject to GST")'
-LIQ_ActiveCustomer_Window_GSTID_InputField = 'JavaWindow("title:=Active Customer.*").JavaEdit("attached text:=GST ID:")'
+LIQ_ActiveCustomer_Window_GSTID_Textbox = 'JavaWindow("title:=Active Customer.*").JavaEdit("attached text:=GST ID:")'
 
 ###Active Customer Window_General Tab Validation###
 LIQ_ActiveCustomer_Window_CustomerID = 'JavaWindow("title:=Active Customer.*").JavaEdit("attached text:=Customer ID:")'

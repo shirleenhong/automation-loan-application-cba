@@ -4,6 +4,7 @@ Resource    ../../../Configurations/Party_Import_File.robot
 *** Variables ***
 ${rowid}    1
 ${SCENARIO}    0
+${PTY_DATASET}
 
 *** Keywords ***
 Create Party in Quick Party Onboarding
@@ -34,12 +35,21 @@ Create Party in Quick Party Onboarding
 
     Search Process in Party    &{ExcelPath}[Selected_Module]
 
-    ${Entity}    ${Assigned_Branch}    Populate Party Onboarding    &{ExcelPath}[Locality]    &{ExcelPath}[Party_Type]    &{ExcelPath}[Party_Sub_Type]    &{ExcelPath}[Party_Category]    &{ExcelPath}[Branch_Code]
+    ${Entity}    ${Assigned_Branch}    Populate Party Onboarding and Return Values    &{ExcelPath}[Locality]    &{ExcelPath}[Party_Type]    &{ExcelPath}[Party_Sub_Type]    &{ExcelPath}[Party_Category]    &{ExcelPath}[Branch_Code]
     
     Validate Pre-Existence Check Page Values and Field State    &{ExcelPath}[Locality]    ${Entity}    ${Assigned_Branch}    &{ExcelPath}[Party_Type]    &{ExcelPath}[Party_Sub_Type]    &{ExcelPath}[Party_Category]
     ${Enterprise_Name}    ${Party_ID}    Populate Pre-Existence Check    &{ExcelPath}[Enterprise_Prefix]
     ${Short_Name}    Get Short Name Value and Return    &{ExcelPath}[Short_Name_Prefix]    ${Party_ID}
-    Run Keyword If    '${SCENARIO}'=='0'    Write Data To Excel    QuickPartyOnboarding    Party_ID    1    ${Party_ID}
+    Run Keyword If    '${SCENARIO}'=='0'    Run Keywords    Write Data To Excel    QuickPartyOnboarding    Party_ID    PTY001_QuickPartyOnboarding    ${Party_ID}    ${PTY_DATASET}        bTestCaseColumn=True
+    ...    AND    Write Data To Excel    QuickPartyOnboarding    Party_ID    PTY002_UpdatePartyDetails    ${Party_ID}    ${PTY_DATASET}    bTestCaseColumn=True
+    ...    AND    Write Data To Excel    QuickPartyOnboarding    Entity    PTY001_QuickPartyOnboarding    ${Entity}    ${PTY_DATASET}        bTestCaseColumn=True
+    ...    AND    Write Data To Excel    QuickPartyOnboarding    Entity    PTY002_UpdatePartyDetails    ${Entity}    ${PTY_DATASET}        bTestCaseColumn=True
+    ...    AND    Write Data To Excel    QuickPartyOnboarding    Assigned_Branch    PTY001_QuickPartyOnboarding    ${Assigned_Branch}    ${PTY_DATASET}        bTestCaseColumn=True
+    ...    AND    Write Data To Excel    QuickPartyOnboarding    Assigned_Branch    PTY002_UpdatePartyDetails    ${Assigned_Branch}    ${PTY_DATASET}        bTestCaseColumn=True    
+    ...    AND    Write Data To Excel    QuickPartyOnboarding    Enterprise_Name    PTY001_QuickPartyOnboarding    ${Enterprise_Name}    ${PTY_DATASET}        bTestCaseColumn=True
+    ...    AND    Write Data To Excel    QuickPartyOnboarding    Enterprise_Name    PTY002_UpdatePartyDetails    ${Enterprise_Name}    ${PTY_DATASET}        bTestCaseColumn=True   
+    ...    AND    Write Data To Excel    QuickPartyOnboarding    Short_Name    PTY001_QuickPartyOnboarding    ${Short_Name}    ${PTY_DATASET}        bTestCaseColumn=True
+    ...    AND    Write Data To Excel    QuickPartyOnboarding    Short_Name    PTY002_UpdatePartyDetails    ${Short_Name}    ${PTY_DATASET}        bTestCaseColumn=True   
 
     Populate Quick Enterprise Party    ${Party_ID}    &{ExcelPath}[Country_of_Tax_Domicile]    &{ExcelPath}[Country_of_Registration]
     ...    &{ExcelPath}[Address_Type]    &{ExcelPath}[Country_Region]    &{ExcelPath}[Post_Code]    &{ExcelPath}[Document_Collection_Status]

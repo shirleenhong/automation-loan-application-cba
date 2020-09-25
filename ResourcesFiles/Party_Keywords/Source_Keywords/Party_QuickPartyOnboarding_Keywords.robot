@@ -3,12 +3,13 @@ Resource    ../../../Configurations/Party_Import_File.robot
 
 *** Keywords ***
 
-Populate Party Onboarding
+Populate Party Onboarding and Return Values
     [Documentation]    This keyword populates required fields in Party Onboarding.
     ...    @author: jcdelacruz
     ...    @update: amansuet    17MAR2020    - updated based on automation standard guidelines
     ...    @update: dahijara    30APR2020    - Updated logic for populating fields. 
     ...    @update: dahijara    09JUN2020    - Updated Next button locator and Get Element Attribute keyword
+    ...    @update: javinzon    25SEP2020    - Added "and Return Values" in keyword name
     [Arguments]    ${sLocality}    ${sParty_Type}    ${sParty_Sub_Type}    ${sParty_Category}    ${iBranch_Code}    ${bMultiEntity_Enabled}=False
 
     Mx Input Text    ${Party_PartyOnboarding_Locality_Dropdown}    ${sLocality}
@@ -105,6 +106,7 @@ Populate Pre-Existence Check
     Validate Page Screen is Displayed    ${PARTY_QUICKENTERPRISEPARTY_PAGETITLE}
     
     [Return]    ${Enterprise_Name}    ${Party_ID}
+   
 
 Select Referral Using Reference ID
     [Documentation]    This keyword is used to select referral row on Open referrals section based on the reference ID and Return referral Task ID

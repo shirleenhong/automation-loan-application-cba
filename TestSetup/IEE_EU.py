@@ -1,5 +1,5 @@
 dataset_path = "C:\\Git_Evergreen\\evergreen_projects\\CBA_Evergreen"
-ExcelPath = "C:\\Git_Evergreen\\fms_cba\\DataSet\\Party_DataSet\\PTY_DataSet.xlsx"
+ExcelPath = "C:\\Git_Evergreen\\fms_cba\\DataSet\\Party_DataSet\\PTY_DataSet_EU.xlsx"
 CBAUAT_ExcelPath = "C:\\Git_Evergreen\\evergreen_projects\\CBA_Evergreen\\DataSet\\CBA_UAT_DataSet\\EVG_CBAUAT01.xls"
 APIDataSet = "C:\\Git_Evergreen\\evergreen_projects\\CBA_Evergreen\\DataSet\\API_DataSet\\API_Data_Set.xlsx"
 APIDataSet_EU = "C:\\Git_Evergreen\\evergreen_projects\\CBA_Evergreen\\DataSet\\API_DataSet\\API_Data_Set_EU.xlsx"
@@ -8,7 +8,7 @@ TL_DATASET = "C:\\Git_Evergreen\\evergreen_projects\\CBA_Evergreen\\DataSet\\TL_
 SAPWUL_DATASET = "C:\\Git_evergreen\\evergreen_projects\\CBA_Evergreen\\DataSet\\Downstream_DataSet\\SAPWUL\\SAPWUL_Data_Set.xlsx"
 ComSeeDataSet = 'C:\\Git_Evergreen\\evergreen_projects\\CBA_Evergreen\\DataSet\\Downstream_DataSet\\ComSee\\COMSEE_Data_Set.xls'
 GLExcelPath = 'C:\\Git_Evergreen\\fms_cba\\DataSet\\Integration_DataSet\Extracts\\GL\\EVG_GL_TestData_EU.xlsx'
-PTY_DATASET = "C:\\Git_Evergreen\\evergreen_projects\\CBA_Evergreen\\DataSet\\PTY_DataSet\\PTY_DataSet.xlsx"
+PTY_DATASET = "C:\\Git_Evergreen\\fms_cba\\DataSet\\Party_DataSet\\PTY_DataSet_EU.xlsx"
 
 SERVER = "http://mancsleverg0007"
 PORT = "9090"
@@ -59,8 +59,8 @@ PARTY_SERVER = 'mancsleverg0031:7080'
 PARTY_URL = 'mancsleverg0031:7080/uxp/rt/html/login.html'
 
 ###Party Credential###
-PARTY_USERNAME = 'brad'
-PARTY_PASSWORD = 'brad'
+PARTY_USERNAME = 'amipac'
+PARTY_PASSWORD = 'password'
 
 TL_SERVICE_HOST = "mancsleverg0007"
 TL_SERVICE_PORT = "22"

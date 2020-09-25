@@ -23,14 +23,14 @@ Navigate to Customer Notebook via Customer ID
 Return Customer Details from Active Customer General Tab
     [Documentation]    This keyword searches customer in Customer notebook using Customer/PartyID
     ...    @author: dahijara    06MAY2020    - Initial Create
-    ...    @update: javinzon    18SEP2020    - Updated keyword Capture Screenshot to Take Screenshot. Updated name of ${LIQ_ActiveCustomer_Window_GSTID_InputField}.
+    ...    @update: javinzon    18SEP2020    - Updated keyword Capture Screenshot to Take Screenshot. Updated name of ${LIQ_ActiveCustomer_Window_GSTID_Textbox}.
 
     Take Screenshot    ${screenshot_path}/Screenshots/Party/PartyLIQActiveCustomerGeneralTabPage 
     ${CustomerID}    Mx LoanIQ Get Data    ${LIQ_ActiveCustomer_Window_CustomerID}    text
     ${ShortName}    Mx LoanIQ Get Data    ${LIQ_ActiveCustomer_Window_ShortName}    text
     ${LegalName}    Mx LoanIQ Get Data    ${LIQ_ActiveCustomer_Window_LegalName}    text
     # ${Classification}    Mx LoanIQ Get Data    ${LIQ_ActiveCustomer_Window_CustomerID}    text
-    ${GSTID}    Mx LoanIQ Get Data    ${LIQ_ActiveCustomer_Window_GSTID_InputField}    text
+    ${GSTID}    Mx LoanIQ Get Data    ${LIQ_ActiveCustomer_Window_GSTID_Textbox}    text
 
     [Return]    ${CustomerID}    ${ShortName}    ${LegalName}    ${GSTID}
 
@@ -103,30 +103,30 @@ Validate Party Details in Loan IQ
     \    ${Error}    Mx LoanIQ Get Data    ${LIQ_CustomerSelect_Error_Window}    displayed%${Error}
     \    Exit For Loop If    '${Error}'=='0'
     
-    # Get LIQ Values
+    ### Get LIQ Values ###
     ${LIQ_CustomerID}    ${LIQ_ShortName}    ${LIQ_LegalName}    ${LIQ_GSTID}    Return Customer Details from Active Customer General Tab
 
-    # Party ID Validation
+    ### Party ID Validation ###
     ${isMatched}    Run Keyword And Return Status    Should Be Equal    ${sPartyID}    ${LIQ_CustomerID}
     Run Keyword If    ${isMatched}==${True}    Log    Party ID: '${sPartyID}' matched Customer ID: '${LIQ_CustomerID}' in Loan IQ
     ...    ELSE    Run Keyword And Continue On Failure    Fail    Party ID: '${sPartyID}' does NOT match Customer ID: '${LIQ_CustomerID}' in Loan IQ
 
-    # Short Name Validation
+    ### Short Name Validation ###
     ${isMatched}    Run Keyword And Return Status    Should Be Equal    ${sShortName.upper()}    ${LIQ_ShortName}
     Run Keyword If    ${isMatched}==${True}    Log    Shortname: '${sShortName}' matched Shortname: '${LIQ_ShortName}' in Loan IQ
     ...    ELSE    Run Keyword And Continue On Failure    Fail    Shortname: '${sShortName}' does NOT match Shortname: '${LIQ_ShortName}' in Loan IQ
 
-    # Enterprise Name Validation
+    ### Enterprise Name Validation ###
     ${isMatched}    Run Keyword And Return Status    Should Be Equal    ${sEnterpriseName}    ${LIQ_LegalName}
     Run Keyword If    ${isMatched}==${True}    Log    Enterprise Name: '${sEnterpriseName}' matched Legal Name: '${LIQ_LegalName}' in Loan IQ
     ...    ELSE    Run Keyword And Continue On Failure    Fail    Enterprise Name: '${sEnterpriseName}' does NOT match Legal Name: '${LIQ_LegalName}' in Loan IQ
 
-    # GST ID Validation
+    ### GST ID Validation ###
     ${isMatched}    Run Keyword And Return Status    Should Be Equal    ${sGSTID}    ${LIQ_GSTID}
     Run Keyword If    ${isMatched}==${True}    Log    GST ID: '${sGSTID}' matched GST ID: '${LIQ_GSTID}' in Loan IQ
     ...    ELSE    Run Keyword And Continue On Failure    Fail    GST ID: '${sGSTID}' does NOT match GST ID: '${LIQ_GSTID}' in Loan IQ    
 
-    # Party Subtype Validation
+    ### Party Subtype Validation ###
     Verify If Value Exists in Loan IQ    PARTY SUBTYPE    ${sPartySubType}    Active Customer    Textbox
 
     Validate Customer SIC    ${sPartyBusinessActivity}    ${sBusinessCountry}

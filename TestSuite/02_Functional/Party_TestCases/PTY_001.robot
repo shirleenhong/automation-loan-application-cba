@@ -10,4 +10,4 @@ PTY_001_EU
    
     Set Global Variable    ${TestCase_Name}    PTY001_QuickPartyOnboarding
     Set Global Variable    ${SCENARIO}    0
-    Mx Execute Template With Specific Test Case Name    Create Party in Quick Party Onboarding    ${ExcelPath}    Test_Case    PTY001_QuickPartyOnboarding    QuickPartyOnboarding
+    Mx Execute Template With Specific Test Case Name    Create Party in Quick Party Onboarding    ${PTY_DATASET}    Test_Case    ${TestCase_Name}    QuickPartyOnboarding
