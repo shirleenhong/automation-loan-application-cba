@@ -127,6 +127,6 @@ Write Facility Ongoing Fee Details - Scenario 7 ComSee
     
     ${OngoingFee_PaidToDate}    Get Fee Paid to Date Amount    ${LIQ_LineFee_Window}    ${LIQ_LineFee_Tab}    ${LIQ_LineFee_Accrual_Cycles_JavaTree}
     ${OngoingFee_PaidToDate}    Remove Comma and Convert to Number    ${OngoingFee_PaidToDate}
-    Write Data To Excel    ComSee_SC3_Issuance    Fee_PaidToDate    ${rowid}    ${OngoingFee_PaidToDate}    ${ComSeeDataSet}
+    Write Data To Excel    ComSee_SC7_FacFeeSetup    Fee_PaidToDate    ${rowid}    ${OngoingFee_PaidToDate}    ${ComSeeDataSet}
     
     Close All Windows on LIQ  
