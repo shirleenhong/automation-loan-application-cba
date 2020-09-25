@@ -43,5 +43,3 @@ Initiate Runbook Transactions
     Pause Execution    ### eod to 04-Feb-2019
     Mx Execute Template With Multiple Data    Unscheduled Full Prepayment for Loans in Deal D00001053    ${CBAUAT_ExcelPath}    2    UAT02_Runbook
     
-
-    

@@ -117,7 +117,15 @@ Setup Deal Fee Pricing Rules
 Setup Primaries D00000476
     [Documentation]    This keyword adds Primary Lender for Deal 3 Deal Template
     ...    @author: ritragel
+    ...    @update: ritragel    17SEP2020    Added Login and Deal Navigation
     [Arguments]    ${ExcelPath}
+
+    ##LIQ Window###
+    Logout from Loan IQ
+    Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
+    
+    ###Deal Notebook###
+    Open Existing Deal    &{ExcelPath}[Deal_Name]
 
     ###Primary Lender - Host Bank###
     Add Lender and Location    &{ExcelPath}[Deal_Name]    &{ExcelPath}[Primary_Lender]    &{ExcelPath}[Primary_LenderLoc]    &{ExcelPath}[Primary_RiskBook]    &{ExcelPath}[Primaries_TransactionType]
