@@ -6,8 +6,8 @@ ${rowid}    2
 
 *** Test Cases ***
    
-Get Outstanding and Fee Details Before Payment for SBLC Guarantee
-    [Documentation]   This ComSee test case is used to get and validate Customer's Outstanding and Outstanding Fee Details before Issuance payment is made. 
+Get Fee Details for SBLC Guarantee using V2 Endpoint
+    [Documentation]   This ComSee test case is used to get and validate Customer's Outstanding Fee Details before Issuance payment is made. 
     ...    Pre-requisite test case needed is COMMSEE_V2_OS003 and then EOD to be performed if you want accrual amount to be non zero
     ...    author: cfrancis   15SEP2020    - Initial Create
     Mx Execute Template With Multiple Data    Update SBLC Guarantee Issuance - ComSee    ${ComSeeDataSet}    ${rowid}    ComSee_SC3_Issuance

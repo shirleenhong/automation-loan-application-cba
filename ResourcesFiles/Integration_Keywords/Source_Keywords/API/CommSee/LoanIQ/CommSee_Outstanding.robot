@@ -135,6 +135,8 @@ Update SBLC Guarantee Issuance - ComSee
     Write Data To Excel    ComSee_SC3_Issuance    Fee_EffectiveDate    ${rowid}    ${Fee_EffectiveDate}    ${ComSeeDataSet}
     Write Data To Excel    ComSee_SC3_Issuance    Fee_ExpiryDate    ${rowid}    ${Fee_ExpiryDate}    ${ComSeeDataSet}
     Write Data To Excel    ComSee_SC3_Issuance    Fee_DueDate    ${rowid}    ${Fee_DueDate}    ${ComSeeDataSet}
+    Write Data To Excel    ComSee_SC3_Issuance    Fee_CycleStartDate    ${rowid}    ${Fee_EffectiveDate}    ${ComSeeDataSet}
+    Write Data To Excel    ComSee_SC3_Issuance    Fee_AccrualEndDate    ${rowid}    ${Fee_ExpiryDate}    ${ComSeeDataSet}
     
     ###Accrual Tab - Get Total Accrued to Date
     ${IssuanceFee_AccruedToDate}    Get Issuance Accrued to Date Amount

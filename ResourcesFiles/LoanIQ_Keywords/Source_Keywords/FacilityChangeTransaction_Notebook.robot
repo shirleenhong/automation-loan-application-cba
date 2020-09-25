@@ -318,19 +318,22 @@ Update Facility Processing Area in Facility Change Transaction
     [Documentation]    This keyword updates the Facility Processing Area of the Facility
     ...    @author: ehugo    23SEP2019    Initial create
     ...    @update: amansuet    02OCT2019    Added screenshot
+    ...    @update: mcastro     10SEP2020    Updated screenshot path; Updated the CB022 branch to activate the Non-Agency Australia
     [Arguments]    ${sNew_ProcessingArea}    
         
     mx LoanIQ activate    ${LIQ_FacilityChangeTransaction_Window}    
     Mx LoanIQ DoubleClick    ${LIQ_FacilityChangeTransaction_FieldName_List}    Branch/Processing Area
     mx LoanIQ activate    ${LIQ_FacilityNotebook_ChangeBranchProcArea_Window}
+    
     Mx LoanIQ Optional Select    ${LIQ_FacilityNotebook_ChangeBranchProcArea_ProcessingArea_Field}    ${sNew_ProcessingArea}
     mx LoanIQ click    ${LIQ_FacilityNotebook_ChangeBranchProcArea_OK_Button}
-    Take Screenshot    Updated_FacilityProcessingArea_FacilityChangeTransaction
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/Updated_FacilityProcessingArea_FacilityChangeTransaction
     
 Update Facility Effective Date in Facility Change Transaction
     [Documentation]    This keyword updates the Facility Effective Date (in %d-%b-%Y format, e.g. 01-Jan-2019) of the Facility
     ...    @author: ehugo    23SEP2019    Initial create
     ...    @update: amansuet    02OCT2019    Added screenshot
+    ...    @update: mcastro     14SEP2020    Updated screenshot path
     [Arguments]    ${sNew_EffectiveDate}    
         
     mx LoanIQ activate    ${LIQ_FacilityChangeTransaction_Window}    
@@ -339,7 +342,7 @@ Update Facility Effective Date in Facility Change Transaction
     mx LoanIQ enter    ${LIQ_EnterEffectiveDate_Datefield}    ${sNew_EffectiveDate}    
     mx LoanIQ click    ${LIQ_EnterEffectiveDate_OK_Button}
     mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}     
-    Take Screenshot    Updated_FacilityEffectiveDate_FacilityChangeTransaction
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/Updated_FacilityEffectiveDate_FacilityChangeTransaction
     
 Update Multiple Fields of Facility in Facility Change Transaction
     [Documentation]    This keyword updates multiple fields (Facility Type, Owning Branch, Processing Area) of the Facility

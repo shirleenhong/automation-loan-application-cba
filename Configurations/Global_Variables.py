@@ -143,7 +143,7 @@ LIQ7474_USER = ""
 ###Notices###
 Email_Notice_Method = ""
 Initial_Notice_Status = ""
-CBA_Email_Notice_Method = ""
+CBA_Email_Notice_Method = "CBA Email with PDF Attachment"
 
 ### Facility Interest Pricing Variables ###
 # Formula Global Variable
@@ -207,6 +207,13 @@ CBA_EMAIL_PDF_METHOD = "CBA Email with PDF Attachment"
 AWAITING_RELEASE_CASHFLOWS_STATUS = "Awaiting Release Cashflows"
 AWAITING_RATE_APPROVAL_STATUS = "Awaiting Rate Approval"
 AWAITING_GENERATE_RATE_SETTING_NOTICES_STATUS = "Awaiting Generate Rate Setting Notices"
+GENERATE_RATE_SETTING_NOTICES_TRANSACTION = "Generate Rate Setting Notices"
+AWAITING_RELEASE_NOTICE_STATUS = "Awaiting release"
+PAPER_CLIP_TRANSACTION = "Paper Clip Transaction"
+REPAYMENT_TRANSACTION = "Repayment"
+PAPER_CLIP = "Paper Clip"
+AWAITING_SET_FX_RATE_STATUS = "Awaiting Set F/X Rate"
+SET_FX_RATE_TRANSACTION = "Set F/X Rate"
 
 ### Bank Role ###
 REFERENCE_BANK_ROLE = "Reference Bank"
@@ -241,6 +248,7 @@ EVENTS_TAB = "Events"
 
 ### Window Title ###
 ADMIN_FEE_PAYMENT_TITLE = "Admin Fee Payment"
+INITIAL_DRAWDOWN_TITLE = "Initial Drawdown"
 
 ### Workflow ###
 PAYMENT_WORKFLOW = "Payment"
