@@ -72,4 +72,6 @@ Servicing Transactions - Initial Drawdown, Repricing & Partial Repayments
     Pause Execution    ### EOD 28-Feb-2019
     Mx Execute Template With Multiple Data    Create Repricing and Partial Repayment for Loan AA    ${CBAUAT_ExcelPath}    4    UAT04_Runbook
     Mx Execute Template With Multiple Data    Create Full Repayment for Loans in Deal D00000963    ${CBAUAT_ExcelPath}    10    UAT04_Runbook
+    ##END##
+
     
