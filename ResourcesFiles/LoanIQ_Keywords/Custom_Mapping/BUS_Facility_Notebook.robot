@@ -507,3 +507,21 @@ BUS_Validate the Updates on Facility Lender Shares
     ...    @author: sahalder    06AUG2020    - initial create
 
     Run Keyword    Validate the Updates on Facility Lender Shares    ${ARGUMENT_1}    ${ARGUMENT_2}    ${ARGUMENT_3}    ${ARGUMENT_4}    ${ARGUMENT_5}    ${ARGUMENT_6}    ${ARGUMENT_7}    ${ARGUMENT_8}    ${ARGUMENT_9}    
+
+BUS_Validate Host Bank Share Gross Amounts
+    [Documentation]    This keyword is used to run the assigned low level keyword.
+    ...    @author: dahijara    03SEP2020    - initial create
+
+    Run Keyword    Validate Host Bank Share Gross Amounts    ${ARGUMENT_1}
+
+BUS_Post Validation Of Computed Amounts In Facility After Drawdown
+    [Documentation]    This keyword is used to run the assigned low level keyword.
+    ...    @author: dahijara    22SEP2020    - initial create
+
+    Run Keyword    Post Validation Of Computed Amounts In Facility After Drawdown    ${ARGUMENT_1}    ${ARGUMENT_2}    ${ARGUMENT_3}    ${ARGUMENT_4}    ${ARGUMENT_5}    ${ARGUMENT_6}    ${ARGUMENT_7}
+
+BUS_Post Validation Of Facility Summary Amounts After Drawdown
+    [Documentation]    This keyword is used to run the assigned low level keyword.
+    ...    @author: dahijara    22SEP2020    - initial create
+
+    Run Keyword    Post Validation Of Facility Summary Amounts After Drawdown    ${ARGUMENT_1}    ${ARGUMENT_2}    ${ARGUMENT_3}    ${ARGUMENT_4}    ${ARGUMENT_5}    ${ARGUMENT_6}

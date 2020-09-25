@@ -18,6 +18,7 @@ Initiate LC Collection D00000476
 
     ###Cycles for Bank Guarantee Window###    
     ${ProjectedCycleDue}    Compute SBLC Issuance Fee Amount Per Cycle    &{ExcelPath}[CycleNumber]    &{ExcelPath}[SBLC_DueDate]
+    ...    None    &{ExcelPath}[Accrual_Rule]
     Write Data To Excel    SERV18_FeeOnLenderSharesPayment    Computed_ProjectedCycleDue    &{ExcelPath}[rowid]    ${ProjectedCycleDue}    ${CBAUAT_ExcelPath}
     
     ###SBLC Guarantee Window###
@@ -30,7 +31,7 @@ Initiate LC Collection D00000476
     Verify if Method has Remittance Instruction    &{ExcelPath}[Borrower_ShortName]    &{ExcelPath}[RemittanceInstruction_RTGSDescriptionAUD]    &{ExcelPath}[Remittance_Instruction]
     Verify if Status is set to Do It    &{ExcelPath}[Borrower_ShortName]  
     
-    #Get Transaction Amount for Cashflow###
+    ###Get Transaction Amount for Cashflow###
     ${HostBankShare}    Get Host Bank Cash in Cashflow
     ${BorrowerTranAmount}    Get Transaction Amount in Cashflow    &{ExcelPath}[Borrower_ShortName]
     ${ComputedHBTranAmount}    Compute Lender Share Transaction Amount    &{ExcelPath}[Computed_ProjectedCycleDue]    &{ExcelPath}[HostBankSharePct]

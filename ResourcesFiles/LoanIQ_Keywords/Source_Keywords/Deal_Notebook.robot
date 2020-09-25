@@ -2253,14 +2253,21 @@ Validate the Updates on Primaries
 Get Customer Lender Legal Name Via Lender Shares In Deal Notebook
     [Documentation]    This keyword gets the Customer Lender Legal Name from the Customer Notebook via Deal Notebook - Lender Shares menu.
     ...                @author: bernchua
-    [Arguments]    ${CustomerLender_Name}
+    ...    @update: dahijara    29JUL2020    - Added pre & post processing and screenshot 
+    [Arguments]    ${sCustomerLender_Name}    ${sRunVar_CustomerLender_LegalName}=None
+    ### GetRuntime Keyword Pre-processing ###
+    ${CustomerLender_Name}    Acquire Argument Value    ${sCustomerLender_Name}
     mx LoanIQ activate    ${LIQ_DealNotebook_Window}    
     mx LoanIQ select    ${LIQ_DealNotebook_LenderShare}    
     Mx LoanIQ Select String    ${LIQ_SharesFor_Primaries_Tree}    ${CustomerLender_Name}    
     mx LoanIQ click    ${LIQ_SharesFor_LenderNotebook_Button}
     ${CustomerLender_LegalName}    Mx LoanIQ Get Data    ${LIQ_ActiveCustomer_Window_LegalName}    value%name
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/SharesFor_LenderNotebook
     mx LoanIQ close window    ${LIQ_ActiveCustomer_Window}
     mx LoanIQ close window    ${LIQ_SharesFor_Window}    
+    
+    ### ConstRuntime Keyword Post-processing ###
+    Save Values of Runtime Execution on Excel File    ${sRunVar_CustomerLender_LegalName}    ${CustomerLender_LegalName}
     [Return]    ${CustomerLender_LegalName}
     
 Get Customer Lender Remittance Instruction Desc Via Lender Shares In Deal Notebook
@@ -2567,7 +2574,7 @@ Get Customer ID from Active Customer Notebook Via Deal Notebook
     mx LoanIQ activate    ${LIQ_DealNotebook_Window}
     mx LoanIQ click element if present    ${LIQ_InquiryMode_Button}
     Mx LoanIQ Select Window Tab    ${LIQ_DealNotebook_Tab}    Summary
-    # Mx LoanIQ Select Or Doubleclick In Tree By Text    ${LIQ_DealSummary_BorrowersDepositors_Tree}    ${sBorrowerName}%d  
+    Mx LoanIQ Select Or Doubleclick In Tree By Text    ${LIQ_DealSummary_BorrowersDepositors_Tree}    ${sBorrowerName}%d  
     Mx LoanIQ Select Or DoubleClick In Javatree  ${LIQ_DealSummary_BorrowersDepositors_Tree}    ${sBorrowerName}%d  
     Log    (Get Customer ID from Active Customer Notebook Via Deal Notebook) sBorrowerName = ${sBorrowerName} 
     mx LoanIQ click    ${LIQ_DealBorrower_BorrowerNotebook_Button}   
@@ -2702,8 +2709,9 @@ Validate Deal Event Start Date
 Validate Deal Amendment Event Start Date
     [Documentation]    This keyword is used to validate whether the Deal Amendment's Business Event Queue Start date is greater than, less than, or equal to Business Event Queue End Date. 
     ...    @author: rtarayao    18FEB2020    - initial create
+    ...    @update: mcastro     17SEP2020    Fixed Enter key with correct value
     [Arguments]    ${sEventName}
-    Mx Press Combination    {ENTER}
+    Mx Press Combination    Key.ENTER
     Mx LoanIQ activate    ${LIQ_AmendmentNotebookReleased_Window}    
     Mx LoanIQ Select Window Tab    ${LIQ_AmendmentNotebookReleased_Tab}    Events
     Mx LoanIQ Select String    ${LIQ_AMD_Events_JavaTree}    Released    

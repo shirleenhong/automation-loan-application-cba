@@ -129,10 +129,132 @@ Pay SBLC Issuance - ComSee
     ###Accrual Tab - Get Total Accrued to Date
     ${IssuanceFee_AccruedToDate}    Get Issuance Accrued to Date Amount
     ${IssuanceFee_AccruedToDate}    Remove Comma and Convert to Number    ${IssuanceFee_AccruedToDate}
-    ${TotalRowCount}    Get Accrual Row Count    ${LIQ_BankGuarantee_Window}    ${LIQ_BankGuarantee_Accrual_JavaTree}
-    ${AccruedtoDateAmt}    Compute Total Accruals for Fee    ${TotalRowCount}    ${LIQ_SBLCGuarantee_Window_Tab}    ${LIQ_BankGuarantee_Accrual_JavaTree}
-    ${AccruedtoDateAmt}    Remove Comma and Convert to Number    ${AccruedtoDateAmt}
-    Validate Accrued to Date Amount    ${AccruedtoDateAmt}    ${IssuanceFee_AccruedToDate}
+    # ${TotalRowCount}    Get Accrual Row Count    ${LIQ_BankGuarantee_Window}    ${LIQ_BankGuarantee_Accrual_JavaTree}
+    # ${AccruedtoDateAmt}    Compute Total Accruals for Fee    ${TotalRowCount}    ${LIQ_SBLCGuarantee_Window_Tab}    ${LIQ_BankGuarantee_Accrual_JavaTree}
+    # ${AccruedtoDateAmt}    Remove Comma and Convert to Number    ${AccruedtoDateAmt}
+    # Validate Accrued to Date Amount    ${AccruedtoDateAmt}    ${IssuanceFee_AccruedToDate}
     Write Data To Excel    ComSee_SC3_IssuanceFeePayment    Fee_AccruedToDate    ${rowid}    ${IssuanceFee_AccruedToDate}    ${ComSeeDataSet}
     
+    ${IssuanceFee_PaidToDate}    Get Issuance Paid to Date Amount
+    ${IssuanceFee_PaidToDate}    Remove Comma and Convert to Number    ${IssuanceFee_PaidToDate}
+    Write Data To Excel    ComSee_SC3_IssuanceFeePayment    Fee_PaidToDate    ${rowid}    ${IssuanceFee_PaidToDate}    ${ComSeeDataSet}
+    
+    Logout from Loan IQ
+    
+Update Line Fee Cycle - Scenario 7 ComSee
+    [Documentation]    This keyword will update the existing commitment fee cycle in the created deal
+    ...    @author: rtarayao    12SEP2019    - Duplicate from scenario 7 for Comsee use
+    [Arguments]    ${ExcelPath}
+    ###LoanIQ Window###
+    Logout from Loan IQ
+    Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
+    
+    ###Loan IQ Desktop###
+    ${SystemDate}    Get System Date
+    Open Existing Deal    &{ExcelPath}[Deal_Name]
+    
+    ###Deal Notebook - Summary Tab###  
+    ${Fee_Alias}    Open Ongoing Fee from Deal Notebook    &{ExcelPath}[Facility_Name]    &{ExcelPath}[Fee_Type1]
+    
+    ###Commitment Fee Notebook - General Tab###  
+    ${AdjustedDueDate}    Update Cycle on Line Fee   &{ExcelPath}[Fee_Cycle]
+    
+    ${ScheduleActivity_FromDate}    Subtract Days to Date    ${AdjustedDueDate}    30
+    ${ScheduledActivity_ThruDate}    Add Days to Date    ${AdjustedDueDate}    30
+    Write Data To Excel    ComSee_SC7_OngoingFeePayment    ScheduleActivity_FromDate    ${rowid}    ${ScheduleActivity_FromDate}    ${ComSeeDataSet}    
+    Write Data To Excel    ComSee_SC7_OngoingFeePayment    ScheduledActivity_ThruDate    ${rowid}    ${ScheduledActivity_ThruDate}    ${ComSeeDataSet}
+    Write Data To Excel    ComSee_SC7_OngoingFeePayment    ScheduledActivityReport_Date    ${rowid}    ${AdjustedDueDate}    ${ComSeeDataSet}
+    Write Data To Excel    ComSee_SC7_OngoingFeePayment    FeePayment_EffectiveDate    ${rowid}    ${SystemDate}    ${ComSeeDataSet}
+    # Run Online Acrual to Line Fee
+    
+    ###Loan IQ Desktop###
+    Close All Windows on LIQ
+    Logout from Loan IQ
+    Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
+    
+Pay Line Fee Amount - Scenario 7 ComSee
+    [Documentation]    This keyword will pay Commitment Fee Amount on a deal
+    ...    @author: rtarayao    13SEP2019    - Duplicate high level keyword from Scenario 7 to be used for Comsee
+    [Arguments]    ${ComSeeDataSet}    
+    ###Return to Scheduled Activity Fiter###
+    ${SystemDate}    Get System Date
+    Set Global Variable    ${SystemDate}        
+    Navigate to Scheduled Activity Filter
+
+    ###Scheduled Activity Filter###
+    Set Scheduled Activity Filter    &{ComSeeDataSet}[ScheduleActivity_FromDate]    &{ComSeeDataSet}[ScheduledActivity_ThruDate]    &{ComSeeDataSet}[ScheduledActivity_Department]    &{ComSeeDataSet}[ScheduledActivity_Branch]    &{ComSeeDataSet}[Deal_Name]
+
+    ###Scheduled Activity Report Window###
+    Select Fee Due    &{ComSeeDataSet}[ScheduledActivityReport_FeeType]    &{ComSeeDataSet}[ScheduledActivityReport_Date]    &{ComSeeDataSet}[Facility_Name]
+    
+    ###Line Fee Notebook - General Tab###  
+    # ${ProjectedCycleDue}    Compute Line Fee Amount Per Cycle    &{ComSeeDataSet}[PrincipalAmount]    &{ComSeeDataSet}[RateBasis]    &{ComSeeDataSet}[CycleNumber]    ${SystemDate}
+    ${ProjectedCycleDue}    ${Rate}    ${RateBasis}    ${BalanceAmount}    Compute Line Fee Amount Per Cycle    &{ComSeeDataSet}[CycleNumber]    ${SystemDate}
+    
+    ###Cycles for Line Fee###
+    # Select Cycle Fee Payment
+    Select Cycle Due Line Fee Payment
+    
+    ###Ongoing Fee Payment Notebook - General Tab### 
+    Enter Effective Date for Ongoing Fee Payment    ${SystemDate}    ${ProjectedCycleDue}
+    
+    ###Cashflow Notebook - Create Cashflows###
+    Navigate to Cashflow - Ongoing Fee
+    Verify if Method has Remittance Instruction    &{ComSeeDataSet}[Borrower1_ShortName]    &{ComSeeDataSet}[Borrower1_RTGSRemittanceDescription]    &{ComSeeDataSet}[Borrower1_RTGSRemittanceInstruction]
+    Verify if Status is set to Do It    &{ComSeeDataSet}[Borrower1_ShortName]  
+    
+    ###Get Transaction Amount for Cashflow###
+    ${HostBankShare}    Get Host Bank Cash in Cashflow
+    ${BorrowerTranAmount}    Get Transaction Amount in Cashflow    &{ComSeeDataSet}[Borrower1_ShortName]
+    ${ComputedHBTranAmount}    Compute Lender Share Transaction Amount    ${ProjectedCycleDue}    &{ComSeeDataSet}[HostBankSharePct]
+    
+    Compare UIAmount versus Computed Amount    ${HostBankShare}    ${ComputedHBTranAmount}
+     
+    ###GL Entries###
+    Navigate to GL Entries
+    ${HostBank_Credit}    Get GL Entries Amount    &{ComSeeDataSet}[Host_Bank]    Credit Amt
+    ${Borrower_Debit}    Get GL Entries Amount    &{ComSeeDataSet}[Borrower1_ShortName]    Debit Amt
+    ${UITotalCreditAmt}    Get GL Entries Amount    Total For:    Credit Amt
+    ${UITotalDebitAmt}    Get GL Entries Amount    Total For:    Debit Amt
+    
+    Compare UIAmount versus Computed Amount    ${HostBankShare}    ${HostBank_Credit}
+    Validate if Debit and Credit Amt is Balanced    ${Borrower_Debit}    ${HostBank_Credit}
+    Validate if Debit and Credit Amt is equal to Transaction Amount    ${UITotalCreditAmt}    ${UITotalDebitAmt}    ${ProjectedCycleDue}
+    Send Ongoing Fee Payment to Approval
+    
+    ###Loan IQ Desktop###
+    Close All Windows on LIQ
+    Logout from Loan IQ
+    Login to Loan IQ    ${SUPERVISOR_USERNAME}    ${SUPERVISOR_PASSWORD}
+
+    #Work In Process Window###
+    Select Item in Work in Process    Payments    Awaiting Approval    Ongoing Fee Payment     &{ComSeeDataSet}[Facility_Name]
+
+    ###Ongoing Fee Payment Notebook - Workflow Tab### 
+    Approve Ongoing Fee Payment
+    
+    ###Loan IQ Desktop###
+    Close All Windows on LIQ
+    Logout from Loan IQ
+    Login to Loan IQ    ${MANAGER_USERNAME}    ${MANAGER_PASSWORD}
+
+    ###Generation of Intent Notice is skipped - Customer Notice Method must be updated###
+    Select Item in Work in Process    Payments    Release Cashflows    Ongoing Fee Payment     &{ComSeeDataSet}[Facility_Name]
+    Navigate Notebook Workflow    ${LIQ_Payment_Window}    ${LIQ_Payment_Tab}    ${LIQ_Payment_WorkflowItems}    Release Cashflows    
+    Release Cashflow    &{ComSeeDataSet}[Borrower1_ShortName]    release           
+    Release Ongoing Fee Payment
+    
+    ###Loan IQ Desktop###
+    Close All Windows on LIQ
+    Open Existing Deal    &{ComSeeDataSet}[Deal_Name]
+
+    ###Deal Notebook - Summary Tab### 
+    Open Ongoing Fee from Deal Notebook    &{ComSeeDataSet}[Facility_Name]    &{ComSeeDataSet}[Fee_Type1]
+    
+    ###Commitment Fee Notebook - Acrual Tab###   
+    Validate Details on Acrual Tab - Line Fee    ${ProjectedCycleDue}    &{ComSeeDataSet}[CycleNumber]
+    Validate Release of Ongoing Line Fee Payment
+    Validate GL Entries for Ongoing Line Fee Payment - Bilateral Deal    &{ComSeeDataSet}[Host_Bank]    &{ComSeeDataSet}[Borrower1_ShortName]    ${ProjectedCycleDue}    
+    
+    Close All Windows on LIQ
     Logout from Loan IQ

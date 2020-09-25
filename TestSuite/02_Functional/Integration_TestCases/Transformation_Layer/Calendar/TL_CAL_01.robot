@@ -10,4 +10,3 @@ TL_CAL_01
 
     Set Global Variable    ${rowid}    1
     Mx Execute Template With Multiple Data    Send Valid Copp Clark Files    ${ExcelPath}    ${rowid}    Calendar_Fields
-    

@@ -110,9 +110,9 @@ ${CALENDARID_FILE2_LIST_NO_DUPLICATE}
 ${CALENDARID_MISC_LIST_NO_DUPLICATE}
 ${CALENDARID_CHECKBOX_STATUS_ON}    ON
 ${CALENDARID_CHECKBOX_STATUS_OFF}    OFF
-${TEMPLATE_JSON_CAL}    C:\\fms_scotia\\DataSet\\Integration_DataSet\\TL\\Calendar_GSFile\\template_JSON_Calendar.json
-${TEMPLATE_UPDATE_XML_CAL}    C:\\Git_Evergreen\\evergreen_projects\\CBA_Evergreen\\DataSet\\TL_DataSet\\Calendar_GSFile\\template_liqUpdateCalendarDateDestination.xml
-${TEMPLATE_CREATE_XML_CAL}    C:\\Git_Evergreen\\evergreen_projects\\CBA_Evergreen\\DataSet\\TL_DataSet\\Calendar_GSFile\\template_wsFinalLIQDestination.xml
+${TEMPLATE_JSON_CAL}    C:\\Git_Evergreen\\fms_cba\\DataSet\\Integration_DataSet\\TL\\Calendar_GSFile\\template_JSON_Calendar.json
+${TEMPLATE_UPDATE_XML_CAL}    C:\\Git_Evergreen\\fms_cba\\DataSet\\Integration_DataSet\\TL\\Calendar_GSFile\\template_liqUpdateCalendarDateDestination.xml
+${TEMPLATE_CREATE_XML_CAL}    C:\\Git_Evergreen\\fms_cba\\DataSet\\Integration_DataSet\\TL\\Calendar_GSFile\\template_wsFinalLIQDestination.xml
 ${File_1}    File_1
 ${File_2}    File_2
 ${Misc_File}    Misc

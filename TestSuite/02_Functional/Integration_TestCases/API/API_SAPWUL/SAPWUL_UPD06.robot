@@ -2,8 +2,8 @@
 Resource    ../../../../../Configurations/Integration_Import_File.robot
 
 *** Variables ***
-${Facility_RowID}    17
-${SAPWULRowID}    11
+${Facility_RowID}    14
+${SAPWULRowID}    10
 
 *** Test Cases ***
 SAPWUL_UPD06
@@ -11,10 +11,11 @@ SAPWUL_UPD06
 	[Documentation]    Verify that user is able to Update Facility Effective date and payload is generated successfully
     ...    @author: ehugo
     ...    @update: amansuet    30OCT2019    - Updated values in Variables 
+    ...    @update: mcastro     14SEP2020    Updated variables with correct value
     ### SAPWUL Data Clear ###
     Mx Execute Template With Multiple Data    Clear SAPWUL Data     ${SAPWUL_DATASET}    ${SAPWULRowID}    SAPWUL_Payload
     
-    ### Facility Update ###
+    ## Facility Update ###
     Mx Execute Template With Multiple Data    Update Facility Effective Date Then Approve and Release the Facility Change Transaction    ${SAPWUL_DATASET}    ${Facility_RowID}    FacilityData
     
     ### Map Payload Values in Reference to Table Maintenance ###
