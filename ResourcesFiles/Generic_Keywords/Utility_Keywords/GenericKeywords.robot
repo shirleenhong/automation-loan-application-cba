@@ -1182,14 +1182,22 @@ Compute for Percentage of an Amount and Return with Comma Separator
     [Documentation]    This keyword will compute the percentage value of a certain amount
     ...    @author: mnanquil
     ...    10/25/2018
-    [Arguments]    ${amount}    ${percentage}
-    Log    ${amount}
-    Log    ${percentage}
-    ${percentage}    Convert To Number    ${percentage}    
-    ${percentage}    Evaluate    ${percentage}/100
-    ${percentageAmount}    Evaluate    ${amount}*${percentage}
+    ...    @update: dahijara    23SEP2020    Add pre and post processing keywords
+    [Arguments]    ${sAmount}    ${sPercentage}    ${sRunVar_PercentageAmount}=None
+    ### GetRuntime Keyword Pre-processing ###
+    ${Amount}    Acquire Argument Value    ${sAmount}
+    ${Percentage}    Acquire Argument Value    ${sPercentage}
+
+    Log    ${Amount}
+    Log    ${Percentage}
+    ${Percentage}    Convert To Number    ${Percentage}    
+    ${Percentage}    Evaluate    ${Percentage}/100
+    ${percentageAmount}    Evaluate    ${Amount}*${Percentage}
     ${percentageAmount}    Convert To String    ${percentageAmount}
     ${percentageAmount}    Convert Number With Comma Separators    ${percentageAmount}
+	
+    ### ConstRuntime Keyword Post-processing ###
+    Save Values of Runtime Execution on Excel File    ${sRunVar_PercentageAmount}    ${percentageAmount}
     [Return]    ${percentageAmount}    
 
 Click OK In Notices Window

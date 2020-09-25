@@ -1715,6 +1715,9 @@ Validate Commitment Amount
 Get Original Amount on Summary Tab of Facility Notebook
     [Documentation]    This keyword will get the original amount under Summary Tab.
     ...    @author:mgaling
+    ...    @update: dahijara    24SEP2020    Added post processing keywords and optional arguments and screenshot.
+    [Arguments]    ${sRunVar_Orig_FacilityCurrentCmt}=None    ${sRunVar_Orig_FacilityAvailableToDraw}=None    ${sRunVar_Orig_FacilityHBContrGross}=None    ${sRunVar_Orig_FacilityHBOutstandings}=None    ${sRunVar_Orig_FacilityHBAvailToDraw}=None
+    ...    ${sRunVar_Orig_FacilityNetCmt}=None    ${sRunVar_Orig_FacilityHBNetFundableCmt}=None    ${sRunVar_Orig_FacilityHBNetOutstandings_Funded}=None    ${sRunVar_Orig_FacilityHBNetAvailToDraw_Fundable}=None    ${sRunVar_Orig_FacilityHBNetAvailToDraw}=None
     
     mx LoanIQ activate window    ${LIQ_FacilityNotebook_Window}
     Mx LoanIQ Select Window Tab    ${LIQ_FacilityNotebook_Tab}    Summary
@@ -1758,7 +1761,22 @@ Get Original Amount on Summary Tab of Facility Notebook
     ${Orig_FacilityHBNetAvailToDraw}    Remove String    ${Orig_FacilityHBNetAvailToDraw}    ,
     ${Orig_FacilityHBNetAvailToDraw}    Convert To Number    ${Orig_FacilityHBNetAvailToDraw}    2  
     
-    [Return]    ${Orig_FacilityCurrentCmt}    ${Orig_FacilityAvailableToDraw}    ${Orig_FacilityHBContrGross}    ${Orig_FacilityHBOutstandings}    ${Orig_FacilityHBAvailToDraw}    ${Orig_FacilityNetCmt}    ${Orig_FacilityHBNetFundableCmt}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/FacilityNotebook_SummaryTab
+	
+    ### ConstRuntime Keyword Post-processing ###
+    Save Values of Runtime Execution on Excel File    ${sRunVar_Orig_FacilityCurrentCmt}    ${Orig_FacilityCurrentCmt}
+    Save Values of Runtime Execution on Excel File    ${sRunVar_Orig_FacilityAvailableToDraw}    ${Orig_FacilityAvailableToDraw}
+    Save Values of Runtime Execution on Excel File    ${sRunVar_Orig_FacilityHBContrGross}    ${Orig_FacilityHBContrGross}
+    Save Values of Runtime Execution on Excel File    ${sRunVar_Orig_FacilityHBOutstandings}    ${Orig_FacilityHBOutstandings}
+    Save Values of Runtime Execution on Excel File    ${sRunVar_Orig_FacilityHBAvailToDraw}    ${Orig_FacilityHBAvailToDraw}
+    Save Values of Runtime Execution on Excel File    ${sRunVar_Orig_FacilityNetCmt}    ${Orig_FacilityNetCmt}
+    Save Values of Runtime Execution on Excel File    ${sRunVar_Orig_FacilityHBNetFundableCmt}    ${Orig_FacilityHBNetFundableCmt}
+    Save Values of Runtime Execution on Excel File    ${sRunVar_Orig_FacilityHBNetOutstandings_Funded}    ${Orig_FacilityHBNetOutstandings_Funded}
+    Save Values of Runtime Execution on Excel File    ${sRunVar_Orig_FacilityHBNetAvailToDraw_Fundable}    ${Orig_FacilityHBNetAvailToDraw_Fundable}
+    Save Values of Runtime Execution on Excel File    ${sRunVar_Orig_FacilityHBNetAvailToDraw}    ${Orig_FacilityHBNetAvailToDraw}
+
+    [Return]    ${Orig_FacilityCurrentCmt}    ${Orig_FacilityAvailableToDraw}    ${Orig_FacilityHBContrGross}    ${Orig_FacilityHBOutstandings}
+    ...    ${Orig_FacilityHBAvailToDraw}    ${Orig_FacilityNetCmt}    ${Orig_FacilityHBNetFundableCmt}
     ...    ${Orig_FacilityHBNetOutstandings_Funded}    ${Orig_FacilityHBNetAvailToDraw_Fundable}    ${Orig_FacilityHBNetAvailToDraw} 
     
     

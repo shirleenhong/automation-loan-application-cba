@@ -93,17 +93,30 @@ Set Currency FX Rate
     [Documentation]    This keyword will set the currency fx rate
     ...    @author: mnanquil
     ...    10/23/2018
-    [Arguments]    ${currency}    ${facilityCurrency}    ${facilityCurrencyRate}    ${excelRate}    
+    ...    @update: dahijara    23SEP2020    Added pre and post processing keywords and Screenshot.
+    [Arguments]    ${sCurrency}    ${sFacilityCurrency}    ${sFacilityCurrencyRate}    ${sExcelRate}    ${sRunVar_Rate}=None
+    ### GetRuntime Keyword Pre-processing ###
+    ${Currency}    Acquire Argument Value    ${sCurrency}
+    ${FacilityCurrency}    Acquire Argument Value    ${sFacilityCurrency}
+    ${FacilityCurrencyRate}    Acquire Argument Value    ${sFacilityCurrencyRate}
+    ${ExcelRate}    Acquire Argument Value    ${sExcelRate}
+
     Mx LoanIQ Select Window Tab    ${LIQ_PendingRollover_Tab}    Currency
-    Mx LoanIQ Verify Object Exist    JavaWindow("title:=.* Rollover/Conversion.*").JavaStaticText("attached text:=${currency}")    VerificationData="Yes"
-    Mx LoanIQ Verify Object Exist    JavaWindow("title:=.* Rollover/Conversion.*").JavaStaticText("attached text:=${facilityCurrency}")       VerificationData="Yes"
+    Mx LoanIQ Verify Object Exist    JavaWindow("title:=.* Rollover/Conversion.*").JavaStaticText("attached text:=${Currency}")    VerificationData="Yes"
+    Mx LoanIQ Verify Object Exist    JavaWindow("title:=.* Rollover/Conversion.*").JavaStaticText("attached text:=${FacilityCurrency}")       VerificationData="Yes"
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/Rollover_Conversion_CurrencyTab
     mx LoanIQ click    ${LIQ_Rollover_Currency_FXRate_Button}
     mx LoanIQ activate window    ${LIQ_Rollover_Currency_Window}
-    mx LoanIQ click    JavaWindow("title:=Facility Currency.*").JavaButton("attached text:=${facilityCurrencyRate}.*")
+    mx LoanIQ click    JavaWindow("title:=Facility Currency.*").JavaButton("attached text:=${FacilityCurrencyRate}.*")
     ${rate}    Mx LoanIQ Get Data    ${LIQ_Rollover_AUD_USD_Currency}    Rate    
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/Rollover_Conversion_CurrencyWindow
     mx LoanIQ click    ${LIQ_Rollover_Currency_Ok_Button}
     mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
-    Should Be Equal    ${excelRate}    ${rate}        
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/Rollover_Conversion_CurrencyTab
+    Should Be Equal    ${ExcelRate}    ${rate}        
+	
+    ### ConstRuntime Keyword Post-processing ###
+    Save Values of Runtime Execution on Excel File    ${sRunVar_Rate}    ${rate}
     [Return]    ${rate}
             
 Send Loan Repricing for Approval
@@ -204,26 +217,42 @@ Compute F/X Rate and Percentage of Loan
     ...    10/23/2018
     ...    @update: bernchua    28MAR2019    Update to divide by 100 the percentageOfFacility
     ...    @update: fmamaril    16MAY2019    L
-    [Arguments]    ${facilityAmount}    ${fxRate}        ${percentageOfFacility}
-    ${percentageOfFacility}    Evaluate    ${percentageOfFacility}/100
-    ${fxRate}    Convert To Number    ${fxRate}
-    ${facilityAmount}    Convert To Number   ${facilityAmount}
-    ${totalFacilityAmount}    Evaluate    ${facilityAmount}/${fxRate}
+    ...    @update: dahijara    23SEP2020    Added pre and post processing keywords and Screenshot.
+    [Arguments]    ${sFacilityAmount}    ${sFxRate}    ${sPercentageOfFacility}    ${sRunVar_TotalFacilityAmount}=None    ${sRunVar_TotalPercentageFacility}=None
+    ### GetRuntime Keyword Pre-processing ###
+    ${FacilityAmount}    Acquire Argument Value    ${sFacilityAmount}
+    ${FxRate}    Acquire Argument Value    ${sFxRate}
+    ${PercentageOfFacility}    Acquire Argument Value    ${sPercentageOfFacility}
+
+    ${PercentageOfFacility}    Evaluate    ${PercentageOfFacility}/100
+    ${FxRate}    Convert To Number    ${FxRate}
+    ${FacilityAmount}    Convert To Number   ${FacilityAmount}
+    ${totalFacilityAmount}    Evaluate    ${FacilityAmount}/${FxRate}
     ${totalFacilityAmount}    Evaluate    "%.2f" % ${totalFacilityAmount}
-    ${totalPercentageFacility}    Evaluate    ${totalFacilityAmount}*${percentageOfFacility} 
+    ${totalPercentageFacility}    Evaluate    ${totalFacilityAmount}*${PercentageOfFacility} 
     ${totalPercentageFacility}    Evaluate    "%.2f" % ${totalPercentageFacility}
     ${totalFacilityAmount}    Convert Number With Comma Separators    ${totalFacilityAmount}
     ${totalPercentageFacility}    Convert Number With Comma Separators    ${totalPercentageFacility}
+	
+    ### ConstRuntime Keyword Post-processing ###
+    Save Values of Runtime Execution on Excel File    ${sRunVar_TotalFacilityAmount}    ${totalFacilityAmount}
+    Save Values of Runtime Execution on Excel File    ${sRunVar_TotalPercentageFacility}    ${totalPercentageFacility}
     [Return]    ${totalFacilityAmount}    ${totalPercentageFacility}
 
 Validate Amounts in Facility Currency
     [Documentation]    This keyword will validate the values in facility currency section of currency tab
     ...    @author: mnanquil
     ...    10/23/2018
-    [Arguments]    ${currentAmount}    ${hostBankGross}
-    Mx LoanIQ Verify Object Exist    JavaWindow("title:=.* Rollover/Conversion.*").JavaStaticText("attached text:=${currentAmount}")    VerificationData="Yes"
-    # Mx LoanIQ Verify Object Exist    JavaWindow("title:=.* Rollover/Conversion.*").JavaStaticText("attached text:=${hostBankGross}", "height:=131")
+    ...    @update: dahijara    23SEP2020    Added pre processing keywords and Screenshot.
+    [Arguments]    ${sCurrentAmount}    ${sHostBankGross}
+    ### GetRuntime Keyword Pre-processing ###
+    ${CurrentAmount}    Acquire Argument Value    ${sCurrentAmount}
+    ${HostBankGross}    Acquire Argument Value    ${sHostBankGross}
+    Mx LoanIQ Verify Object Exist    JavaWindow("title:=.* Rollover/Conversion.*").JavaStaticText("attached text:=${CurrentAmount}")    VerificationData="Yes"
+    # Mx LoanIQ Verify Object Exist    JavaWindow("title:=.* Rollover/Conversion.*").JavaStaticText("attached text:=${HostBankGross}", "height:=131")
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/Rollover_ConversionWindow
     mx LoanIQ select    ${LIQ_PendingRollover_Exit_Submenu}                      
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/Rollover_ConversionWindow
     
 Create Repayment Schedule - Loan Repricing
     [Documentation]    This keyword is used to input Loan Drawdown details in the General tab including Accrual End Date

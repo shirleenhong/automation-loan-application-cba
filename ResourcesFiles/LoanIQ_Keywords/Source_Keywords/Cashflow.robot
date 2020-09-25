@@ -1167,3 +1167,10 @@ Set the Status to Send all to SPAP
     mx LoanIQ activate window    ${LIQ_Cashflows_Window}    
     mx LoanIQ select    ${LIQ_Cashflows_Options_SendAllToSPAP}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/Workflow_SendStatusToSPAP
+
+Open Cashflow Window from Loan Repricing Menu
+    [Documentation]    This keyword opens the Cashflow window from Loan Repricing Notebook's menu
+    ...    @author: dahijara    23SEP2020    initial create
+
+    Open Cashflows Window from Notebook Menu    ${LIQ_LoanRepricing_Window}    ${LIQ_LoanRepricing_CashFlows_Menu}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LoanRepricing_CashFlowWindow
