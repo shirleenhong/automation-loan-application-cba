@@ -8,6 +8,7 @@ LIQ_CustomerSelect_Search_Filter = 'JavaWindow("title:=Customer Select.*").JavaL
 LIQ_CustomerSelect_Search_Inputfield = 'JavaWindow("title:=Customer Select.*").JavaEdit("tagname:=Text")'
 LIQ_CustomerSelect_Search_Button = 'JavaWindow("title:=Customer Select.*").JavaButton("attached text:=Search")'
 LIQ_CustomerSelect_OK_Button = 'JavaWindow("title:=Customer Select.*").JavaButton("attached text:=OK")'
+LIQ_CustomerSelect_Error_Window = 'JavaWindow("tagname:=Error.*").JavaStaticText("tagname:=ERROR.*")'
 
 ###Customer List By Short Name Window###
 LIQ_CustomerListByShortName_OK_Button = 'JavaWindow("title:=Customer Select.*").JavaWindow(":=Customer List By Short.*").JavaButton("attached text:=OK")'
@@ -23,7 +24,7 @@ LIQ_ActiveCustomer_Window_FileMenu_SaveMenu = 'JavaWindow("title:=Active Custome
 
 ###Active Customer Window_GST ID##
 LIQ_ActiveCustomer_Window_GST_CheckBox = 'JavaWindow("title:=Active Customer.*").JavaCheckBox("attached text:=Subject to GST")'
-LIQ_ActiveCustomer_Window_GSTID_InputField = 'JavaWindow("title:=Active Customer.*").JavaEdit("attached text:=GST ID:")'
+LIQ_ActiveCustomer_Window_GSTID_Textbox = 'JavaWindow("title:=Active Customer.*").JavaEdit("attached text:=GST ID:")'
 
 ###Active Customer Window_General Tab Validation###
 LIQ_ActiveCustomer_Window_CustomerID = 'JavaWindow("title:=Active Customer.*").JavaEdit("attached text:=Customer ID:")'

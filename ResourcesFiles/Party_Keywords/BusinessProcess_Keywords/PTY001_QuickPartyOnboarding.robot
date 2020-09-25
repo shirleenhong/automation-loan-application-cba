@@ -3,7 +3,6 @@ Resource    ../../../Configurations/Party_Import_File.robot
 
 *** Variables ***
 ${rowid}    1
-${SCENARIO}    0
 
 *** Keywords ***
 Create Party in Quick Party Onboarding
@@ -21,29 +20,41 @@ Create Party in Quick Party Onboarding
     ...    @update: amansuet    18MAR2020    - updated based on automation standard guidelines and moved keyword to the correct robot file.
     ...    @update: dahijara    27APR2020    - refactored entire script.
     ...    @update: dahijara    09JUN2020    - Added code to update Zone and Branch
+    ...    @update: javinzon    16SEP2020    - Updated DataSet location, added Address 3 and 4 arguments in Populate Quick Enterprise Party,
+    ...										   added UserZone and UserBranch arguments in Accept Approved Party and Validate Details in 
+    ...										   Enterprise Summary Details Screen, added return keyword for Scenario 0, added Pause execution to 
+    ...										   skip blocked test steps
     [Arguments]    ${ExcelPath}
     
     ### INPUTTER ###
-
     Login User to Party    ${PARTY_USERNAME}    ${PARTY_PASSWORD}    ${USER_LINK}    ${USER_PORT}    ${PARTY_URL_SUFFIX}    ${PARTY_HTML_USER_CREDENTIALS}    ${SSO_ENABLED}    ${PARTY_URL} 
 
     Configure Zone and Branch    &{ExcelPath}[UserZone]    &{ExcelPath}[UserBranch]
 
     Search Process in Party    &{ExcelPath}[Selected_Module]
 
-    ${Entity}    ${Assigned_Branch}    Populate Party Onboarding    &{ExcelPath}[Locality]    &{ExcelPath}[Party_Type]    &{ExcelPath}[Party_Sub_Type]    &{ExcelPath}[Party_Category]    &{ExcelPath}[Branch_Code]
+    ${Entity}    ${Assigned_Branch}    Populate Party Onboarding and Return Values    &{ExcelPath}[Locality]    &{ExcelPath}[Party_Type]    &{ExcelPath}[Party_Sub_Type]    &{ExcelPath}[Party_Category]    &{ExcelPath}[Branch_Code]
     
     Validate Pre-Existence Check Page Values and Field State    &{ExcelPath}[Locality]    ${Entity}    ${Assigned_Branch}    &{ExcelPath}[Party_Type]    &{ExcelPath}[Party_Sub_Type]    &{ExcelPath}[Party_Category]
     ${Enterprise_Name}    ${Party_ID}    Populate Pre-Existence Check    &{ExcelPath}[Enterprise_Prefix]
     ${Short_Name}    Get Short Name Value and Return    &{ExcelPath}[Short_Name_Prefix]    ${Party_ID}
-    Run Keyword If    '${SCENARIO}'=='0'    Write Data To Excel    Party_Dataset    Party_ID    ${rowid}    ${Party_ID}
+    Run Keyword If    '${SCENARIO}'=='0'    Run Keywords    Write Data To Excel    QuickPartyOnboarding    Party_ID    PTY001_QuickPartyOnboarding    ${Party_ID}    ${PTY_DATASET}        bTestCaseColumn=True
+    ...    AND    Write Data To Excel    QuickPartyOnboarding    Party_ID    PTY002_UpdatePartyDetails    ${Party_ID}    ${PTY_DATASET}    bTestCaseColumn=True
+    ...    AND    Write Data To Excel    QuickPartyOnboarding    Entity    PTY001_QuickPartyOnboarding    ${Entity}    ${PTY_DATASET}        bTestCaseColumn=True
+    ...    AND    Write Data To Excel    QuickPartyOnboarding    Entity    PTY002_UpdatePartyDetails    ${Entity}    ${PTY_DATASET}        bTestCaseColumn=True
+    ...    AND    Write Data To Excel    QuickPartyOnboarding    Assigned_Branch    PTY001_QuickPartyOnboarding    ${Assigned_Branch}    ${PTY_DATASET}        bTestCaseColumn=True
+    ...    AND    Write Data To Excel    QuickPartyOnboarding    Assigned_Branch    PTY002_UpdatePartyDetails    ${Assigned_Branch}    ${PTY_DATASET}        bTestCaseColumn=True    
+    ...    AND    Write Data To Excel    QuickPartyOnboarding    Enterprise_Name    PTY001_QuickPartyOnboarding    ${Enterprise_Name}    ${PTY_DATASET}        bTestCaseColumn=True
+    ...    AND    Write Data To Excel    QuickPartyOnboarding    Enterprise_Name    PTY002_UpdatePartyDetails    ${Enterprise_Name}    ${PTY_DATASET}        bTestCaseColumn=True   
+    ...    AND    Write Data To Excel    QuickPartyOnboarding    Short_Name    PTY001_QuickPartyOnboarding    ${Short_Name}    ${PTY_DATASET}        bTestCaseColumn=True
+    ...    AND    Write Data To Excel    QuickPartyOnboarding    Short_Name    PTY002_UpdatePartyDetails    ${Short_Name}    ${PTY_DATASET}        bTestCaseColumn=True   
 
     Populate Quick Enterprise Party    ${Party_ID}    &{ExcelPath}[Country_of_Tax_Domicile]    &{ExcelPath}[Country_of_Registration]
     ...    &{ExcelPath}[Address_Type]    &{ExcelPath}[Country_Region]    &{ExcelPath}[Post_Code]    &{ExcelPath}[Document_Collection_Status]
     ...    &{ExcelPath}[Industry_Sector]    &{ExcelPath}[Business_Activity]    &{ExcelPath}[Is_Main_Activity]
-    ...    &{ExcelPath}[GST_Number]    &{ExcelPath}[Address_Line_1]    &{ExcelPath}[Address_Line_2]    &{ExcelPath}[Town_City]    
-    ...    &{ExcelPath}[State_Province]    &{ExcelPath}[Business_Country]    &{ExcelPath}[Is_Primary_Activity]    &{ExcelPath}[Registered_Number]    ${Short_Name}    
-    ...    &{ExcelPath}[Address_Line_3]    &{ExcelPath}[Address_Line_4]
+    ...    &{ExcelPath}[GST_Number]    &{ExcelPath}[Address_Line_1]    &{ExcelPath}[Address_Line_2]    &{ExcelPath}[Address_Line_3]    &{ExcelPath}[Address_Line_4]
+    ...    &{ExcelPath}[Town_City]    &{ExcelPath}[State_Province]    &{ExcelPath}[Business_Country]    &{ExcelPath}[Is_Primary_Activity]    &{ExcelPath}[Registered_Number]    ${Short_Name}    
+   
 
     Run Keyword If    '${SSO_ENABLED}'=='NO'    Logout User on Party
     Close Browser
@@ -55,12 +66,15 @@ Create Party in Quick Party Onboarding
     Accept Approved Party and Validate Details in Enterprise Summary Details Screen    ${Task_ID_From_Supervisor}    ${Party_ID}    &{ExcelPath}[Locality]    ${Entity}    ${Assigned_Branch}    &{ExcelPath}[Party_Type]    &{ExcelPath}[Party_Sub_Type]
     ...    &{ExcelPath}[Party_Category]    ${Enterprise_Name}    &{ExcelPath}[Registered_Number]    &{ExcelPath}[Country_of_Registration]    &{ExcelPath}[Country_of_Tax_Domicile]    ${Short_Name}    
     ...    &{ExcelPath}[Business_Country]    &{ExcelPath}[Industry_Sector]    &{ExcelPath}[Business_Activity]    &{ExcelPath}[Is_Main_Activity]    &{ExcelPath}[Is_Primary_Activity]    &{ExcelPath}[GST_Number]
-    ...    &{ExcelPath}[UserZone]    &{ExcelPath}[UserBranch]
+    ...    &{ExcelPath}[UserZone]    &{ExcelPath}[UserBranch]    
 
+    Pause Execution    Pausing the rest of the script due to a blocker in LIQ connection
     Validate Party Details in Loan IQ    ${Party_ID}    ${Short_Name}    ${Enterprise_Name}    &{ExcelPath}[GST_Number]    &{ExcelPath}[Party_Sub_Type]    &{ExcelPath}[Business_Activity]    &{ExcelPath}[Business_Country]
-    ...    &{ExcelPath}[Address_Type]    &{ExcelPath}[Address_Line_1]    &{ExcelPath}[Address_Line_2]    &{ExcelPath}[Town_City]    &{ExcelPath}[Country_of_Registration]
-    ...    &{ExcelPath}[Country_of_Tax_Domicile]    &{ExcelPath}[Post_Code]
+    ...    &{ExcelPath}[Address_Type]    &{ExcelPath}[Address_Line_1]    &{ExcelPath}[Address_Line_2]    &{ExcelPath}[Address_Line_3]    &{ExcelPath}[Address_Line_4]    
+    ...    &{ExcelPath}[Town_City]    &{ExcelPath}[Country_of_Registration]    &{ExcelPath}[Country_of_Tax_Domicile]    &{ExcelPath}[Post_Code]
 
+    Return From Keyword If    '${SCENARIO}'=='0'  
+    
 ##################################################################################################################
 ####################################### DATA WRITING FOR SCENARIO SCRIPTS ########################################
 ##################################################################################################################
