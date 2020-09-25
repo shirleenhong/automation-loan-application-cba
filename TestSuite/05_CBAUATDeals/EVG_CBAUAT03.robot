@@ -119,8 +119,8 @@ Issue LC2 - D00000476
     # Mx Execute Template With Multiple Data    Load Base Rate D00000476    ${CBAUAT_ExcelPath}    2    BaseRate_Fields
     # Mx Execute Template With Multiple Data    Load FX Rate D00000476     ${CBAUAT_ExcelPath}    1    FXRates_Fields
 
-# Collect LFIA2 - D00000476
-    # Mx Execute Template With Multiple Data    Collect LFIA Payment D00000476    ${CBAUAT_ExcelPath}    2    SERV29_Payments
+Collect LFIA2 - D00000476
+    Mx Execute Template With Multiple Data    Collect LFIA Payment D00000476    ${CBAUAT_ExcelPath}    2    SERV29_Payments
 
 # Create Drawdown D1 and D2 D00000476
     # Mx Execute Template With Multiple Data    Create Drawdown D00000476    ${CBAUAT_ExcelPath}    5    SERV01A_LoanDrawdown
