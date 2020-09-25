@@ -95,9 +95,9 @@ Enter Effective Date for Ongoing Fee Payment
 
     mx LoanIQ activate window    ${LIQ_OngoingFeePayment_Window}
     mx LoanIQ enter    ${LIQ_OngoingFeePayment_EffectiveDate_Field}    ${FeePayment_EffectiveDate}
-    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}    
+    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
     Run Keyword If    "${ProjectedCycleDue}" != "null"    mx LoanIQ enter    ${LIQ_Payment_RequestedAmount_Textfield}    ${ProjectedCycleDue}     
-
+    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/OngoingFeePaymentWindow_EffectiveDate
 
 Send Ongoing Fee Payment to Approval
@@ -1458,6 +1458,16 @@ Enter Commitment Fee Details
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/CommitmentFee_Notebook               
     Select Menu Item    ${LIQ_CommitmentFee_Window}    File    Exit
     
+Release Commitment Fee
+    [Documentation]    This keyword will handle the dynamic updates in releasing Commitment Fe
+    ...   @author: ritragel    17SEP2020    Initial Commit
+    
+    mx LoanIQ activate window    ${LIQ_CommitmentFee_Window}
+    mx LoanIQ click    ${LIQ_CommitmentFee_InquiryMode_Button}
+    Navigate Notebook Workflow    ${LIQ_CommitmentFee_Window}    ${LIQ_CommitmentFee_Tab}    ${LIQ_CommitmentFeeNotebook_Workflow_JavaTree}    Release
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/CommitmentFee_Notebook     
+    
+
 Close Commitment Fee and Fee List Windows
     [Documentation]    This keyword exits the Commitment Fee List and Commitment Fee Notebook.
     ...    author: rtarayao    19AUG2019    - Initial Create

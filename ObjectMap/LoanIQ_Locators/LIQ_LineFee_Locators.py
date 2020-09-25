@@ -33,7 +33,7 @@ LIQ_LineFee_CapitalizationEditor_ToLoan_DropdownList = 'JavaWindow("title:=Facil
 LIQ_LineFee_CapitalizationEditor_OK_Button = 'JavaWindow("title:=Facility Ongoing Fee Capitalization Editor").JavaButton("attached text:=OK")'
 
 ###Line Fee Notebook - Accrual Tab###
-LIQ_LineFee_Tab = 'JavaWindow("title:=Line Fee.*").JavaTab("attached text:=Current Cycle Start Date:")'
+LIQ_LineFee_Tab = 'JavaWindow("title:=Line Fee.*").JavaTab("tagname:=TabFolder")'
 LIQ_LineFee_Accrual_Cycles_JavaTree = 'JavaWindow("title:=Line Fee.*").JavaTree("attached text:=Cycles:")'
 LIQ_LineFee_General_OptionsPayment_Menu = 'JavaWindow("title:=Line Fee.*","displayed:=1").JavaMenu("label:=Options").JavaMenu("label:=Payment")'
 LIQ_LineFee_EffectiveDate_Field = 'JavaWindow("title:=Line Fee.*").JavaEdit("attached text:=Effective Date:.*")'
@@ -49,3 +49,9 @@ LIQ_LineFee_Cycles_Window = 'JavaWindow("title:=Cycles for Line Fee.*")'
 LIQ_LineFee_Cycles_List = 'JavaWindow("title:=Cycles for Line Fee.*").JavaTree("attached text:=Choose a cycle to make a payment against")'
 LIQ_LineFee_Cycles_OKButton = 'JavaWindow("title:=Cycles for Line Fee.*").JavaButton("label:=OK")'
 LIQ_LineFee_Cycles_CancelButton = 'JavaWindow("title:=Cycles for Line Fee.*")JavaButton("label:=Cancel")'
+
+###Line Fee - Events###   
+LIQ_LineFee_Events_Javatree = 'JavaWindow("title:=Line Fee.*").JavaTree("tagname:=Select event to view details")' 
+
+###Line Fee - GL Entries###
+LIQ_LineFee_Queries_GLEntries = 'JavaWindow("title:=Line Fee Ongoing Fee Payment.*").JavaMenu("label:=Queries").JavaMenu("label:=GL Entries")'  
