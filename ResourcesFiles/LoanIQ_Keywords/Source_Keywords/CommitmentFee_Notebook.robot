@@ -95,9 +95,9 @@ Enter Effective Date for Ongoing Fee Payment
 
     mx LoanIQ activate window    ${LIQ_OngoingFeePayment_Window}
     mx LoanIQ enter    ${LIQ_OngoingFeePayment_EffectiveDate_Field}    ${FeePayment_EffectiveDate}
-    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}    
+    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
     Run Keyword If    "${ProjectedCycleDue}" != "null"    mx LoanIQ enter    ${LIQ_Payment_RequestedAmount_Textfield}    ${ProjectedCycleDue}     
-
+    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/OngoingFeePaymentWindow_EffectiveDate
 
 Send Ongoing Fee Payment to Approval
