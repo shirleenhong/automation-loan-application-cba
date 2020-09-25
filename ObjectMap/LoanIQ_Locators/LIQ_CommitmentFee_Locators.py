@@ -117,7 +117,6 @@ LIQ_CommitmentFee_Events_Javatree = 'JavaWindow("title:=Commitment Fee.*").JavaT
 
 ###Commitment Fee - GL Entries###
 LIQ_CommitmentFee_Queries_GLEntries = 'JavaWindow("title:=Commitment Fee Ongoing Fee Payment.*").JavaMenu("label:=Queries").JavaMenu("label:=GL Entries")'
-LIQ_LineFee_Queries_GLEntries = 'JavaWindow("title:=Line Fee Ongoing Fee Payment.*").JavaMenu("label:=Queries").JavaMenu("label:=GL Entries")'
 LIQ_OngoingFeePayment_GLEntries_Window = 'JavaWindow("title:=GL Entries For Ongoing Fee Payment")'
 LIQ_OngoingFeePayment_GLEntries_Table = 'JavaWindow("title:=GL Entries For Ongoing Fee Payment").JavaTree("attached text:=Drill down to view details")'
 LIQ_OngoingFeePayment_GLEntries_Exit_Button = 'JavaWindow("title:=GL Entries For Ongoing Fee Payment").JavaButton("attached text:=Exit")'   

@@ -95,10 +95,15 @@ Create First Term Facility Loan Drawdown
     ...    @update: bernchua    06MAR2019    Updated with standard Cashflow keywords.
     ...    @update: bernchua    07MAR2019    Updated keywords for Workflow navigation to use "Navigate Notebook Workflow"
     ...    @update: bernchua    11APR2019    Added getting of amounts from Facility Notebook to be used in "Validate Global Facility Amounts - Balanced"
+    ...    @update: dahijara    03SEP2020    Updated Get Base Rate from Funding Rate Details
+    ...                                      Updated workflow navigation
+    ...                                      Updated arguments for Verify notices flow.
+    ...                                      Uncomment necessary steps.
+    ...    @update: dahijara    10SEP2020    Updated hard coded values with variables.
     [Arguments]    ${ExcelPath}
     
-    ### Get Base Rate data generated from TL-API Base Rate test case.
-    ${BaseRatePercentage}    Wait Until Keyword Succeeds    5x    5s    Get Base Rate from Funding Rate Details    BBSY    &{ExcelPath}[Loan_RepricingFrequency]    &{ExcelPath}[Loan_Currency]
+    ### Get Base Rate data generated from TL-API Base Rate test case. ###
+    ${BaseRatePercentage}    Get Base Rate from Funding Rate Details    BBSY    &{ExcelPath}[Loan_RepricingFrequency]    &{ExcelPath}[Loan_Currency]
     
     ${Loan_RepricingDate}    Read Data From Excel    API_HolidayCalendar    NonBusinessDay_Date    &{ExcelPath}[rowid]
     ${Holiday_Reason}    Read Data From Excel    API_HolidayCalendar    NonBusinessDay_Reason    &{ExcelPath}[rowid]
@@ -117,7 +122,7 @@ Create First Term Facility Loan Drawdown
     ${Portfolio_ExpenseCode}    Read Data From Excel    CRED01_DealSetup    Primary_RiskBook    &{ExcelPath}[rowid]
     ${HostBank_CustomerPortfolio}    Set Variable    CB001/${Portfolio_Name}/${Portfolio_ExpenseCode}
     
-    ###...Searching a Deal
+    ### Searching a Deal ###
     Navigate to Facility Notebook    &{ExcelPath}[Deal_Name]    &{ExcelPath}[Facility_Name]  
     ${sNewAvailToDrawAmount}    Get New Facility Available to Draw Amount
     ${sNewGlobalOutstandings}    Get New Facility Global Outstandings
@@ -131,7 +136,7 @@ Create First Term Facility Loan Drawdown
     ${Lender1_LegalName}    Get Customer Lender Legal Name Via Lender Shares In Deal Notebook    ${Lender1_ShortName}
     ${Lender2_LegalName}    Get Customer Lender Legal Name Via Lender Shares In Deal Notebook    ${Lender2_ShortName}
     
-    ###...Navigating a Facility
+    ### Navigating a Facility ###
     Navigate to Facility Notebook from Deal Notebook    &{ExcelPath}[Facility_Name]
     
     ${AvailToDrawAmount}    Get Facility Global Available to Draw Amount
@@ -139,10 +144,10 @@ Create First Term Facility Loan Drawdown
     Write Data To Excel    SERV01_LoanDrawdown   Facility_CurrentAvailToDraw    &{ExcelPath}[rowid]    ${AvailToDrawAmount}
     Write Data To Excel    SERV01_LoanDrawdown   Facility_CurrentGlobalOutstandings    &{ExcelPath}[rowid]    ${GlobalOutstandings}
     
-    ###...Outstanding Select Window###
+    ### Outstanding Select Window ###
     Navigate to Outstanding Select Window
     
-    ### ...Create Initial Loan Drawdown Details
+    ### Create Initial Loan Drawdown Details ###
     ${Drawdown_Alias}    New Outstanding Select    &{ExcelPath}[Deal_Name]    &{ExcelPath}[Facility_Name]    ${Borrower_ShortName}    &{ExcelPath}[Outstanding_Type]    &{ExcelPath}[Loan_PricingOption]    &{ExcelPath}[Loan_Currency]
     Write Data To Excel    SERV01_LoanDrawdown    Loan_Alias    &{ExcelPath}[rowid]    ${Drawdown_Alias}
     Write Data To Excel    COMPR06_LoanMerge    Alias_Loan1    &{ExcelPath}[rowid]    ${Drawdown_Alias}
@@ -159,8 +164,8 @@ Create First Term Facility Loan Drawdown
     
     Validate Rate Set    &{ExcelPath}[BaseRate_Description]
     
-    ### Cashflow Notebook - Create Cashflows
-    Navigate Notebook Workflow    ${LIQ_InitialDrawdown_Window}    ${LIQ_InitialDrawdown_Tab}    ${LIQ_InitialDrawdown_WorkflowAction}    Create Cashflows
+    ### Cashflow Notebook - Create Cashflows ###
+    Navigate to Loan Drawdown Workflow and Proceed With Transaction    ${CREATE_CASHFLOWS_TYPE}
     Verify if Method has Remittance Instruction    ${Borrower_ShortName}    &{ExcelPath}[Remittance_Description]    &{ExcelPath}[Remittance_Instruction]
     Verify if Method has Remittance Instruction    ${Lender1_ShortName}    &{ExcelPath}[Remittance2_Description]    &{ExcelPath}[Remittance2_Instruction]
     Verify if Method has Remittance Instruction    ${Lender2_ShortName}    &{ExcelPath}[Remittance3_Description]    &{ExcelPath}[Remittance3_Instruction]
@@ -168,7 +173,7 @@ Create First Term Facility Loan Drawdown
     Verify if Status is set to Do It    ${Lender1_ShortName}
     Verify if Status is set to Do It    ${Lender2_ShortName}
     
-    ### Get Transaction Amount for Cashflow
+    ### Get Transaction Amount for Cashflow ###
     ${HostBankShare}    Get Host Bank Cash in Cashflow
     ${BorrowerTranAmount}    Get Transaction Amount in Cashflow    ${Borrower_ShortName}
     ${Lend1TranAmount}    Get Transaction Amount in Cashflow    ${Lender1_ShortName}
@@ -178,44 +183,44 @@ Create First Term Facility Loan Drawdown
     ${ComputedLend2TranAmount}    Compute Lender Share Transaction Amount    &{ExcelPath}[Loan_RequestedAmount]    ${Lender2_Share}
     Compare UIAmount versus Computed Amount    ${HostBankShare}|${Lend1TranAmount}|${Lend2TranAmount}    ${ComputedHBTranAmount}|${ComputedLend1TranAmount}|${ComputedLend2TranAmount}
     
-    ### GL Entries
+    ### GL Entries ###
     Navigate to GL Entries
-    ${HostBank_Debit}    Get GL Entries Amount    ${HostBank_CustomerPortfolio}    Debit Amt
-    ${Lender1_Debit}    Get GL Entries Amount    ${Lender1_ShortName}    Debit Amt
-    ${Lender2_Debit}    Get GL Entries Amount    ${Lender2_ShortName}    Debit Amt
-    ${Borrower_Credit}    Get GL Entries Amount    ${Borrower_ShortName}    Credit Amt
-    ${UITotalCreditAmt}    Get GL Entries Amount    Total For:    Credit Amt
-    ${UITotalCreditAmt}    Get GL Entries Amount    Total For:    Debit Amt
+    ${HostBank_Debit}    Get GL Entries Amount    ${HostBank_CustomerPortfolio}    ${DEBIT_AMT_LABEL}
+    ${Lender1_Debit}    Get GL Entries Amount    ${Lender1_ShortName}    ${DEBIT_AMT_LABEL}
+    ${Lender2_Debit}    Get GL Entries Amount    ${Lender2_ShortName}    ${DEBIT_AMT_LABEL}
+    ${Borrower_Credit}    Get GL Entries Amount    ${Borrower_ShortName}    ${CREDIT_AMT_LABEL}
+    ${UITotalCreditAmt}    Get GL Entries Amount    Total For:    ${CREDIT_AMT_LABEL}
+    ${UITotalCreditAmt}    Get GL Entries Amount    Total For:    ${DEBIT_AMT_LABEL}
     Compare UIAmount versus Computed Amount    ${HostBankShare}|${Lend1TranAmount}|${Lend2TranAmount}    ${HostBank_Debit}|${Lender1_Debit}|${Lender2_Debit}
     Validate if Debit and Credit Amt is Balanced    ${HostBank_Debit}|${Lender1_Debit}|${Lender2_Debit}    ${Borrower_Credit}
     Validate if Debit and Credit Amt is equal to Transaction Amount    ${UITotalCreditAmt}    ${UITotalCreditAmt}    &{ExcelPath}[Loan_RequestedAmount]
     
     
-    Navigate Notebook Workflow    ${LIQ_InitialDrawdown_Window}    ${LIQ_InitialDrawdown_Tab}    ${LIQ_InitialDrawdown_WorkflowAction}    Send to Approval
+    Navigate to Loan Drawdown Workflow and Proceed With Transaction    ${SEND_TO_APPROVAL_STATUS}
     Logout from Loan IQ
     Login to Loan IQ    ${MANAGER_USERNAME}    ${MANAGER_PASSWORD}
-    Navigate Transaction in WIP    Outstandings    Awaiting Approval    Loan Initial Drawdown    ${Drawdown_Alias}
-    Navigate Notebook Workflow    ${LIQ_InitialDrawdown_Window}    ${LIQ_InitialDrawdown_Tab}    ${LIQ_InitialDrawdown_WorkflowAction}    Approval
+    Navigate Transaction in WIP    ${OUTSTANDINGS_TRANSACTION}    ${AWAITING_APPROVAL_STATUS}    ${LOAN_INITIAL_DRAWDOWN_TYPE}    ${Drawdown_Alias}
+    Navigate to Loan Drawdown Workflow and Proceed With Transaction    ${APPROVAL_STATUS}
     
-    Navigate Notebook Workflow    ${LIQ_InitialDrawdown_Window}    ${LIQ_InitialDrawdown_Tab}    ${LIQ_InitialDrawdown_WorkflowAction}    Send to Rate Approval
+    Navigate to Loan Drawdown Workflow and Proceed With Transaction    ${SEND_TO_RATE_APPROVAL_STATUS}
     Logout from Loan IQ
     Login to Loan IQ    ${SUPERVISOR_USERNAME}    ${SUPERVISOR_PASSWORD}
-    Navigate Transaction in WIP    Outstandings    Awaiting Rate Approval    Loan Initial Drawdown    ${Drawdown_Alias}
-    Navigate Notebook Workflow    ${LIQ_InitialDrawdown_Window}    ${LIQ_InitialDrawdown_Tab}    ${LIQ_InitialDrawdown_WorkflowAction}    Rate Approval
+    Navigate Transaction in WIP    ${OUTSTANDINGS_TRANSACTION}    ${AWAITING_RATE_APPROVAL_STATUS}    ${LOAN_INITIAL_DRAWDOWN_TYPE}    ${Drawdown_Alias}
+    Navigate to Loan Drawdown Workflow and Proceed With Transaction    ${RATE_APPROVAL_TRANSACTION}
     
     ${Customer_LegalName}    Read Data From Excel    ORIG03_Customer    LIQCustomer_LegalName    &{ExcelPath}[rowid]
-    Navigate Notebook Workflow    ${LIQ_InitialDrawdown_Window}    ${LIQ_InitialDrawdown_Tab}    ${LIQ_InitialDrawdown_WorkflowAction}    Generate Rate Setting Notices
+    Navigate to Loan Drawdown Workflow and Proceed With Transaction    ${GENERATE_RATE_SETTING_NOTICES_TRANSACTION}
     Click OK In Notices Window
-    Verify Customer Notice Method    ${Customer_LegalName}    &{ExcelPath}[Notice_ContactPerson]    Awaiting release    ${SUPERVISOR_USERNAME}    &{ExcelPath}[Notice_Method]    &{ExcelPath}[Contact_Email]
-    Verify Customer Notice Method    ${Lender1_LegalName}    &{ExcelPath}[Notice_ContactPerson]    Awaiting release    ${SUPERVISOR_USERNAME}    &{ExcelPath}[Notice_Method]    &{ExcelPath}[Contact_Email]
-    Verify Customer Notice Method    ${Lender2_LegalName}    &{ExcelPath}[Notice_ContactPerson]    Awaiting release    ${SUPERVISOR_USERNAME}    &{ExcelPath}[Notice_Method]    &{ExcelPath}[Contact_Email]
+    Verify Customer Notice Method    ${Customer_LegalName}    &{ExcelPath}[Notice_BorrowerContactPerson]    ${AWAITING_RELEASE_NOTICE_STATUS}    ${SUPERVISOR_USERNAME}    &{ExcelPath}[Notice_BorrowerMethod]    &{ExcelPath}[BorrowerContact_Email]
+    Verify Customer Notice Method    ${Lender1_LegalName}    &{ExcelPath}[Notice_Lender1ContactPerson]    ${AWAITING_RELEASE_NOTICE_STATUS}    ${SUPERVISOR_USERNAME}    &{ExcelPath}[Notice_Lender1Method]    &{ExcelPath}[Lender1Contact_Email]
+    Verify Customer Notice Method    ${Lender2_LegalName}    &{ExcelPath}[Notice_Lender2ContactPerson]    ${AWAITING_RELEASE_NOTICE_STATUS}    ${SUPERVISOR_USERNAME}    &{ExcelPath}[Notice_Lender2Method]    &{ExcelPath}[Lender2Contact_Email]
     Close Notice Group Window
     
-    # Close All Windows on LIQ    ### added in IEE testing
-    # Navigate Transaction in WIP    Outstandings    Awaiting Release    Loan Initial Drawdown    ${Drawdown_Alias}    ### added in IEE testing
-    Navigate Notebook Workflow    ${LIQ_InitialDrawdown_Window}    ${LIQ_InitialDrawdown_Tab}    ${LIQ_InitialDrawdown_WorkflowAction}    Release
+    Close All Windows on LIQ
+    Navigate Transaction in WIP    ${OUTSTANDINGS_TRANSACTION}    ${AWAITING_RELEASE_STATUS}    ${LOAN_INITIAL_DRAWDOWN_TYPE}    ${Drawdown_Alias}
+    Navigate to Loan Drawdown Workflow and Proceed With Transaction    ${RELEASE_STATUS}
     
-    # Validate Rate Set    Released    ### commented out in IEE testing
+    Validate Rate Set    ${RELEASED_STATUS}
     
     Close All Windows on LIQ
     Navigate to Facility Notebook    &{ExcelPath}[Deal_Name]    &{ExcelPath}[Facility_Name]  
@@ -231,10 +236,16 @@ Create Revolver Facility Drawdown
     [Documentation]    This high-level keyword for creating an initial Loan Drawdown from a Revolver Facility with Different Currency, and API validation.
     ...                @author: bernchua
     ...                @update: bernhcua    08MAR2019    Cashflows/GL Entries keyword updates
+    ...    @update: dahijara    18SEP2020    Updated Get Base Rate from Funding Rate Details
+    ...                                      Updated workflow navigation
+    ...                                      Updated arguments for Verify notices flow.
+    ...                                      Uncomment necessary steps.
+    ...                                      Updated hard coded values with variables.
+    ...                                      Replaced logic for releasing of cashflow to make it more dynamic.
     [Arguments]    ${ExcelPath}
     
-    ${BaseRatePercentage}    Wait Until Keyword Succeeds    5x    5s    Get Base Rate from Funding Rate Details    LIBOR    &{ExcelPath}[Loan_RepricingFrequency]    &{ExcelPath}[Loan_Currency]
-    ${ExchangeRate}    Wait Until Keyword Succeeds    5x    5s    Get Currency Exchange Rate from Treasury Navigation    &{ExcelPath}[CurrencyExchange]
+    ${BaseRatePercentage}    Get Base Rate from Funding Rate Details    LIBOR    &{ExcelPath}[Loan_RepricingFrequency]    &{ExcelPath}[Loan_Currency]
+    ${ExchangeRate}    Get Currency Exchange Rate from Treasury Navigation    &{ExcelPath}[CurrencyExchange]
     
     ### Get data from Secondary Sale test case ###
     ${Borrower_ShortName}    Read Data From Excel    CRED01_DealSetup    Borrower_ShortName    1
@@ -248,7 +259,7 @@ Create Revolver Facility Drawdown
     ${Portfolio_ExpenseCode}    Fetch From Left    ${Portfolio_ExpenseCode}    -
     ${HostBank_CustomerPortfolio}    Set Variable    CB001/${Portfolio_Name}/${Portfolio_ExpenseCode}
     
-    ### Open existing Deal and go to Facility Notebook
+    ### Open existing Deal and go to Facility Notebook ###
     Open Existing Deal    &{ExcelPath}[Deal_Name]
     
 	### GET CUSTOMER LENDER LEGAL NAME TO BE USED IN INTENT NOTICE VALIDATION ###
@@ -265,25 +276,25 @@ Create Revolver Facility Drawdown
     ${PreAvailToDraw_HBG}         Get Data From LoanIQ    ${LIQ_FacilityNotebook_Window}    ${LIQ_FacilityNotebook_Tab}    Summary    ${LIQ_FacilitySummary_GlobalFacAmt_AvailToDraw_Amount}
     ${PreAvailToDraw_HBN}         Get Data From LoanIQ    ${LIQ_FacilityNotebook_Window}    ${LIQ_FacilityNotebook_Tab}    Summary    ${LIQ_FacilitySummary_HostBankNet_AvailToDrawNet}
     
-    ### Go to Outstanding Select and create new Loan Drawdown
+    ### Go to Outstanding Select and create new Loan Drawdown ###
     Navigate to Outstanding Select Window
     ${Loan_Alias}    New Outstanding Select    &{ExcelPath}[Deal_Name]    &{ExcelPath}[Facility_Name]    ${Borrower_ShortName}    &{ExcelPath}[Outstanding_Type]    &{ExcelPath}[Loan_PricingOption]    &{ExcelPath}[Loan_Currency]
     Write Data To Excel    SERV01_LoanDrawdown    Loan_Alias    &{ExcelPath}[rowid]    ${Loan_Alias}
     Write Data To Excel    SERV12_LoanSplit    Loan_Alias    1    ${Loan_Alias}
     
-    ### Set General tab details in the Initial Loan Drawdown Notebook.
+    ### Set General tab details in the Initial Loan Drawdown Notebook ###
     ${API_NBD_Date}    Read Data From Excel    API_HolidayCalendar    NonBusinessDay_Date    1
     ${Current_Date}    Get System Date
     Enter Initial Loan Drawdown General Details    &{ExcelPath}[Loan_RequestedAmount]    ${Current_Date}    ${Facility_Expiry}    &{ExcelPath}[Loan_Accrue]    &{ExcelPath}[Loan_Currency]    &{ExcelPath}[Loan_RepricingFrequency]    ${API_NBD_Date}
     
-    ### Set Rates in Initial Drawdown notebook
+    ### Set Rates in Initial Drawdown notebook ###
     Set Base Rate In Drawdown Notebook With API Validations    ${BaseRatePercentage}
     
-    ### Verify info in Events Tab of Drawdown Notebook.
+    ### Verify info in Events Tab of Drawdown Notebook ###
     Validate Drawdown Rate Change Event    ${BaseRatePercentage}
     
-    ### Cashflow Notebook - Create Cashflows
-    Navigate Notebook Workflow    ${LIQ_InitialDrawdown_Window}    ${LIQ_InitialDrawdown_Tab}    ${LIQ_InitialDrawdown_WorkflowAction}    Create Cashflows
+    ### Cashflow Notebook - Create Cashflows ###
+    Navigate to Loan Drawdown Workflow and Proceed With Transaction    ${CREATE_CASHFLOWS_TYPE}
     Verify if Method has Remittance Instruction    ${Borrower_ShortName}    &{ExcelPath}[Remittance_Description]    &{ExcelPath}[Remittance_Instruction]
     Verify if Method has Remittance Instruction    ${Lender1_ShortName}    &{ExcelPath}[Remittance2_Description]    &{ExcelPath}[Remittance2_Instruction]
     Verify if Method has Remittance Instruction    ${Lender2_ShortName}    &{ExcelPath}[Remittance3_Description]    &{ExcelPath}[Remittance3_Instruction]
@@ -291,7 +302,7 @@ Create Revolver Facility Drawdown
     Verify if Status is set to Do It    ${Lender1_ShortName}
     Verify if Status is set to Do It    ${Lender2_ShortName}
     
-    ### Get Transaction Amount for Cashflow
+    ### Get Transaction Amount for Cashflow ###
     ${HostBankShare}    Get Host Bank Cash in Cashflow    &{ExcelPath}[Loan_Currency]
     ${BorrowerTranAmount}    Get Transaction Amount in Cashflow    ${Borrower_ShortName}
     ${Lend1TranAmount}    Get Transaction Amount in Cashflow    ${Lender1_ShortName}
@@ -301,81 +312,80 @@ Create Revolver Facility Drawdown
     ${ComputedLend2TranAmount}    Compute Lender Share Transaction Amount    &{ExcelPath}[Loan_RequestedAmount]    ${Lender2_Share}
     Compare UIAmount versus Computed Amount    ${HostBankShare}|${Lend1TranAmount}|${Lend2TranAmount}    ${ComputedHBTranAmount}|${ComputedLend1TranAmount}|${ComputedLend2TranAmount}
     
-    ### GL Entries
+    ### GL Entries ###
     Navigate to GL Entries
-    ${HostBank_Debit}    Get GL Entries Amount    ${HostBank_CustomerPortfolio}    Debit Amt
-    ${Lender1_Debit}    Get GL Entries Amount    ${Lender1_ShortName}    Debit Amt
-    ${Lender2_Debit}    Get GL Entries Amount    ${Lender2_ShortName}    Debit Amt
-    ${Borrower_Credit}    Get GL Entries Amount    ${Borrower_ShortName}    Credit Amt
-    ${UITotalCreditAmt}    Get GL Entries Amount    Total For:    Credit Amt
-    ${UITotalCreditAmt}    Get GL Entries Amount    Total For:    Debit Amt
+    ${HostBank_Debit}    Get GL Entries Amount    ${HostBank_CustomerPortfolio}    ${DEBIT_AMT_LABEL}
+    ${Lender1_Debit}    Get GL Entries Amount    ${Lender1_ShortName}    ${DEBIT_AMT_LABEL}
+    ${Lender2_Debit}    Get GL Entries Amount    ${Lender2_ShortName}    ${DEBIT_AMT_LABEL}
+    ${Borrower_Credit}    Get GL Entries Amount    ${Borrower_ShortName}    ${CREDIT_AMT_LABEL}
+    ${UITotalCreditAmt}    Get GL Entries Amount    Total For:    ${CREDIT_AMT_LABEL}
+    ${UITotalCreditAmt}    Get GL Entries Amount    Total For:    ${DEBIT_AMT_LABEL}
     Compare UIAmount versus Computed Amount    ${HostBankShare}|${Lend1TranAmount}|${Lend2TranAmount}    ${HostBank_Debit}|${Lender1_Debit}|${Lender2_Debit}
     Validate if Debit and Credit Amt is Balanced    ${HostBank_Debit}|${Lender1_Debit}|${Lender2_Debit}    ${Borrower_Credit}
     Validate if Debit and Credit Amt is equal to Transaction Amount    ${UITotalCreditAmt}    ${UITotalCreditAmt}    &{ExcelPath}[Loan_RequestedAmount]
     
     
-    ### Send to Approval
-    Navigate Notebook Workflow    ${LIQ_InitialDrawdown_Window}    ${LIQ_InitialDrawdown_Tab}    ${LIQ_InitialDrawdown_WorkflowAction}    Send to Approval
-    Validate Window Title Status    Initial Drawdown    Awaiting Approval
+    ### Send to Approval ###
+    Navigate to Loan Drawdown Workflow and Proceed With Transaction    ${SEND_TO_APPROVAL_STATUS}
+    Validate Window Title Status    ${INITIAL_DRAWDOWN_TITLE}    ${AWAITING_APPROVAL_STATUS}
     Logout from Loan IQ
     Login to Loan IQ    ${MANAGER_USERNAME}    ${MANAGER_PASSWORD}
-    Navigate Transaction in WIP    Outstandings    Awaiting Approval    Loan Initial Drawdown    ${Loan_Alias}
-    Navigate Notebook Workflow    ${LIQ_InitialDrawdown_Window}    ${LIQ_InitialDrawdown_Tab}    ${LIQ_InitialDrawdown_WorkflowAction}    Approval
-    Validate Window Title Status    Initial Drawdown    Awaiting Send to Rate Approval
+    Navigate Transaction in WIP    ${OUTSTANDINGS_TRANSACTION}    ${AWAITING_APPROVAL_STATUS}    ${LOAN_INITIAL_DRAWDOWN_TYPE}    ${Loan_Alias}
+    Navigate to Loan Drawdown Workflow and Proceed With Transaction    ${APPROVAL_STATUS}
+    Validate Window Title Status    ${INITIAL_DRAWDOWN_TITLE}    ${AWAITING_SEND_TO_RATE_APPROVAL_STATUS}
     
-    ### Go back to original user
+    ### Go back to original user ###
     Logout from Loan IQ
     Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
     
-    ### Set FX Rates
-    Navigate Transaction in WIP    Outstandings    Awaiting Set F/X Rate    Loan Initial Drawdown    ${Loan_Alias}    ### commented out in IEE testing
-    Navigate Notebook Workflow    ${LIQ_InitialDrawdown_Window}    ${LIQ_InitialDrawdown_Tab}    ${LIQ_InitialDrawdown_WorkflowAction}    Set F/X Rate
+    ### Set FX Rates ###
+    Navigate Transaction in WIP    ${OUTSTANDINGS_TRANSACTION}    ${AWAITING_SET_FX_RATE_STATUS}    ${LOAN_INITIAL_DRAWDOWN_TYPE}    ${Loan_Alias}    ### commented out in IEE testing
+    Navigate to Loan Drawdown Workflow and Proceed With Transaction    ${SET_FX_RATE_TRANSACTION}
     Set Initial Drawdown Spot FX Rate    &{ExcelPath}[CurrencyExchange]    ${ExchangeRate}
     
-    ### Send to Rate Approval
-    Navigate Notebook Workflow    ${LIQ_InitialDrawdown_Window}    ${LIQ_InitialDrawdown_Tab}    ${LIQ_InitialDrawdown_WorkflowAction}    Send to Rate Approval
-    Validate Window Title Status    Initial Drawdown    Awaiting Rate Approval
+    ### Send to Rate Approval ###
+    Navigate to Loan Drawdown Workflow and Proceed With Transaction    ${SEND_TO_RATE_APPROVAL_STATUS}
+    Validate Window Title Status    ${INITIAL_DRAWDOWN_TITLE}    ${AWAITING_RATE_APPROVAL_STATUS}
     Logout from Loan IQ
     Login to Loan IQ    ${MANAGER_USERNAME}    ${MANAGER_PASSWORD}
-    Navigate Transaction in WIP    Outstandings    Awaiting Rate Approval    Loan Initial Drawdown    ${Loan_Alias}
-    Navigate Notebook Workflow    ${LIQ_InitialDrawdown_Window}    ${LIQ_InitialDrawdown_Tab}    ${LIQ_InitialDrawdown_WorkflowAction}    Rate Approval
-    Validate Window Title Status    Initial Drawdown    Awaiting Release
+    Navigate Transaction in WIP    ${OUTSTANDINGS_TRANSACTION}    ${AWAITING_RATE_APPROVAL_STATUS}    ${LOAN_INITIAL_DRAWDOWN_TYPE}    ${Loan_Alias}
+    Navigate to Loan Drawdown Workflow and Proceed With Transaction    ${RATE_APPROVAL_TRANSACTION}
+    Validate Window Title Status    ${INITIAL_DRAWDOWN_TITLE}    ${AWAITING_RELEASE_STATUS}
     
-    ### Generate Intent Notices
+    ### Generate Intent Notices ###
     ${Customer_LegalName}    Read Data From Excel    ORIG03_Customer    LIQCustomer_LegalName    1
-    Navigate Notebook Workflow    ${LIQ_InitialDrawdown_Window}    ${LIQ_InitialDrawdown_Tab}    ${LIQ_InitialDrawdown_WorkflowAction}    Generate Rate Setting Notices
+    Navigate to Loan Drawdown Workflow and Proceed With Transaction    ${GENERATE_RATE_SETTING_NOTICES_TRANSACTION}
     Click OK In Notices Window
-    Verify Customer Notice Method    ${Customer_LegalName}    &{ExcelPath}[Notice_ContactPerson]    Awaiting release    ${MANAGER_USERNAME}    &{ExcelPath}[Notice_Method]    &{ExcelPath}[Contact_Email]
-    Verify Customer Notice Method    ${Lender1_LegalName}    &{ExcelPath}[Notice_ContactPerson]    Awaiting release    ${MANAGER_USERNAME}    &{ExcelPath}[Notice_Method]    &{ExcelPath}[Contact_Email]
-    Verify Customer Notice Method    ${Lender2_LegalName}    &{ExcelPath}[Notice_ContactPerson]    Awaiting release    ${MANAGER_USERNAME}    &{ExcelPath}[Notice_Method]    &{ExcelPath}[Contact_Email]
+    Verify Customer Notice Method    ${Customer_LegalName}    &{ExcelPath}[Notice_BorrowerContactPerson]    ${AWAITING_RELEASE_NOTICE_STATUS}    ${MANAGER_USERNAME}    &{ExcelPath}[Notice_BorrowerMethod]    &{ExcelPath}[BorrowerContact_Email]
+    Verify Customer Notice Method    ${Lender1_LegalName}    &{ExcelPath}[Notice_Lender1ContactPerson]    ${AWAITING_RELEASE_NOTICE_STATUS}    ${MANAGER_USERNAME}    &{ExcelPath}[Notice_Lender1Method]    &{ExcelPath}[Lender1Contact_Email]
+    Verify Customer Notice Method    ${Lender2_LegalName}    &{ExcelPath}[Notice_Lender2ContactPerson]    ${AWAITING_RELEASE_NOTICE_STATUS}    ${MANAGER_USERNAME}    &{ExcelPath}[Notice_Lender2Method]    &{ExcelPath}[Lender2Contact_Email]
     Close Notice Group Window
     
-    ### Release Cashflows
-    Navigate Notebook Workflow    ${LIQ_InitialDrawdown_Window}    ${LIQ_InitialDrawdown_Tab}    ${LIQ_InitialDrawdown_WorkflowAction}    Release Cashflows
-    Release Cashflow    ${Borrower_ShortName}|${Lender1_LegalName}|${Lender2_LegalName}
-    Click OK In Cashflows
+    ### Release Cashflows ###
+    Release Cashflow Based on Remittance Instruction    &{ExcelPath}[Remittance_Instruction]    &{ExcelPath}[Borrower_ShortName]
+    Release Cashflow Based on Remittance Instruction    &{ExcelPath}[Remittance2_Instruction]    &{ExcelPath}[Lender1_ShortName]
     
-    ### Release
-    # Close All Windows on LIQ    ### added in IEE testing
-    # Navigate Transaction in WIP    Outstandings    Awaiting Release    Loan Initial Drawdown    ${Loan_Alias}    ### added in IEE testing
-    Navigate Notebook Workflow    ${LIQ_InitialDrawdown_Window}    ${LIQ_InitialDrawdown_Tab}    ${LIQ_InitialDrawdown_WorkflowAction}    Release
-    Validate Window Title Status    Initial Drawdown    Released
+    ### Release ###
+    Close All Windows on LIQ
+    Navigate Transaction in WIP    ${OUTSTANDINGS_TRANSACTION}    ${AWAITING_RELEASE_STATUS}    ${LOAN_INITIAL_DRAWDOWN_TYPE}    ${Loan_Alias}
+    Navigate to Loan Drawdown Workflow and Proceed With Transaction    ${RELEASE_STATUS}
+    Validate Window Title Status    ${INITIAL_DRAWDOWN_TITLE}    ${RELEASED_STATUS}
     
-    ### Validate details in Currency tab.
+    ### Validate details in Currency tab ###
     ${Computed_Current}    ${Computed_HostBankGross}    ${Computed_HostBanknet}    Validate Initial Drawdown Currency Tab Details    &{ExcelPath}[Loan_Currency]    ${Facililty_Currency}    &{ExcelPath}[CurrencyExchange]
     ...    ${ExchangeRate}    &{ExcelPath}[Loan_RequestedAmount]    ${HostBankLender_Share}  
     
-    ### Validate Drawdown Released Event
-    Validate Initial Drawdown Events Tab    Released
+    ### Validate Drawdown Released Event ###
+    Validate Initial Drawdown Events Tab    ${RELEASED_STATUS}
     
-    ### Post Validations in Facility Notebook
+    ### Post Validations in Facility Notebook ###
     Go To Facility From Initial Drawdown Notebook
     Post Validation Of Computed Amounts In Facility After Drawdown    ${HostBankLender_Share}    ${Computed_Current}    ${Computed_HostBankGross}    ${Computed_HostBanknet}
     ...    ${PreOutstandingAmt_GFA}    ${PreOutstandingAmt_HBG}    ${PreOutstandingAmt_HBN}
     Post Validation Of Facility Summary Amounts After Drawdown    ${PreOutstandingAmt_GFA}    ${PreOutstandingAmt_HBG}    ${PreOutstandingAmt_HBN}
     ...    ${PreAvailToDraw_GFA}    ${PreAvailToDraw_HBG}    ${PreAvailToDraw_HBN}
     
-    ### Close all windows and go back to original user.
+    ### Close all windows and go back to original user ###
     Close All Windows on LIQ
     Logout from Loan IQ
     Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
@@ -385,16 +395,24 @@ Create Second Term Facility Loan Drawdown
     ...    @author: mnanquil
     ...    @update: bernchua    08NOV2018    Get and use Borrower/Lender names/shares from Deal and Secondary Sale Excel data for integrated scenario.
     ...    @update: bernchua    04MAR2019    Removed old API automation script to be replaced by Transformation Layer scripts
+    ...    @update: dahijara    03SEP2020    Removed wait keyword in test case level
+    ...                                      Added reading for API_HolidayCalendar - NonBusinessDay_Date to get Loan_RepricingDate
+    ...                                      Added writing for Loan_RepricingDate
+    ...                                      Aupdated arguments for verify notices.
+    ...                                      Uncomment necessary steps.
+    ...    @update: dahijara    10SEP2020    Updated hard coded values with variables.
     [Arguments]    ${ExcelPath}
     
     Logout from Loan IQ
     Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
     
-    ${BaseRatePercentage}    Wait Until Keyword Succeeds    5x    5s    Get Base Rate from Funding Rate Details    BBSY    &{ExcelPath}[Loan_RepricingFrequency]    &{ExcelPath}[Loan_Currency]
+    ${BaseRatePercentage}    Get Base Rate from Funding Rate Details    BBSY    &{ExcelPath}[Loan_RepricingFrequency]    &{ExcelPath}[Loan_Currency]
     
+    ${Loan_RepricingDate}    Read Data From Excel    API_HolidayCalendar    NonBusinessDay_Date    1
     ${Holiday_Reason}    Read Data From Excel    API_HolidayCalendar    NonBusinessDay_Reason    1
     Log    ${Holiday_Reason}
     
+    Write Data To Excel    SERV01_LoanDrawdown    Loan_RepricingDate    &{ExcelPath}[rowid]    ${Loan_RepricingDate}
     ${Borrower_ShortName}    Read Data From Excel    CRED01_DealSetup    Borrower_ShortName    1
     ${Lender1_ShortName}    Read Data From Excel    TRP002_SecondarySale    Buyer_Lender    1
     ${Lender2_ShortName}    Read Data From Excel    TRP002_SecondarySale    Buyer_Lender_2    1
@@ -405,7 +423,7 @@ Create Second Term Facility Loan Drawdown
     ${Portfolio_ExpenseCode}    Read Data From Excel    CRED01_DealSetup    Primary_RiskBook    1
     ${HostBank_CustomerPortfolio}    Set Variable    CB001/${Portfolio_Name}/${Portfolio_ExpenseCode}
     
-    ###...Searching a Deal
+    ### Searching a Deal ###
     Navigate to Facility Notebook    &{ExcelPath}[Deal_Name]    &{ExcelPath}[Facility_Name]  
     ${sNewAvailToDrawAmount}    Get New Facility Available to Draw Amount
     ${sNewGlobalOutstandings}    Get New Facility Global Outstandings
@@ -419,14 +437,14 @@ Create Second Term Facility Loan Drawdown
     ${Lender1_LegalName}    Get Customer Lender Legal Name Via Lender Shares In Deal Notebook    ${Lender1_ShortName}
     ${Lender2_LegalName}    Get Customer Lender Legal Name Via Lender Shares In Deal Notebook    ${Lender2_ShortName}
     
-    ###...Navigating a Facility
+    ### Navigating a Facility ###
     Navigate to Facility Notebook from Deal Notebook    &{ExcelPath}[Facility_Name]
 
-    ###...Outstanding Select Window###
+    ### Outstanding Select Window ###
     Navigate to Outstanding Select Window
     
        
-    ###...Create Initial Loan Drawdown Details
+    ### Create Initial Loan Drawdown Details ###
     ${Drawdown_Alias}    New Outstanding Select    &{ExcelPath}[Deal_Name]    &{ExcelPath}[Facility_Name]    ${Borrower_ShortName}    &{ExcelPath}[Outstanding_Type]    &{ExcelPath}[Loan_PricingOption]    &{ExcelPath}[Loan_Currency]
     Write Data To Excel    SERV01_LoanDrawdown    Loan_Alias    &{ExcelPath}[rowid]    ${Drawdown_Alias}
     Write Data To Excel    COMPR06_LoanMerge    Alias_Loan2    1    ${Drawdown_Alias}
@@ -444,8 +462,8 @@ Create Second Term Facility Loan Drawdown
     Validate Rate Set    &{ExcelPath}[BaseRate_Description]
     
     
-    ### Cashflow Notebook - Create Cashflows
-    Navigate Notebook Workflow    ${LIQ_InitialDrawdown_Window}    ${LIQ_InitialDrawdown_Tab}    ${LIQ_InitialDrawdown_WorkflowAction}    Create Cashflows
+    ### Cashflow Notebook - Create Cashflows ###
+    Navigate to Loan Drawdown Workflow and Proceed With Transaction    ${CREATE_CASHFLOWS_TYPE}
     Verify if Method has Remittance Instruction    ${Borrower_ShortName}    &{ExcelPath}[Remittance_Description]    &{ExcelPath}[Remittance_Instruction]
     Verify if Method has Remittance Instruction    ${Lender1_ShortName}    &{ExcelPath}[Remittance2_Description]    &{ExcelPath}[Remittance2_Instruction]
     Verify if Method has Remittance Instruction    ${Lender2_ShortName}    &{ExcelPath}[Remittance3_Description]    &{ExcelPath}[Remittance3_Instruction]
@@ -453,7 +471,7 @@ Create Second Term Facility Loan Drawdown
     Verify if Status is set to Do It    ${Lender1_ShortName}
     Verify if Status is set to Do It    ${Lender2_ShortName}
     
-    ### Get Transaction Amount for Cashflow
+    ### Get Transaction Amount for Cashflow ###
     ${HostBankShare}    Get Host Bank Cash in Cashflow
     ${BorrowerTranAmount}    Get Transaction Amount in Cashflow    ${Borrower_ShortName}
     ${Lend1TranAmount}    Get Transaction Amount in Cashflow    ${Lender1_ShortName}
@@ -463,46 +481,46 @@ Create Second Term Facility Loan Drawdown
     ${ComputedLend2TranAmount}    Compute Lender Share Transaction Amount    &{ExcelPath}[Loan_RequestedAmount]    ${Lender2_Share}
     Compare UIAmount versus Computed Amount    ${HostBankShare}|${Lend1TranAmount}|${Lend2TranAmount}    ${ComputedHBTranAmount}|${ComputedLend1TranAmount}|${ComputedLend2TranAmount}
     
-    ### GL Entries
+    ### GL Entries ###
     Navigate to GL Entries
-    ${HostBank_Debit}    Get GL Entries Amount    ${HostBank_CustomerPortfolio}    Debit Amt
-    ${Lender1_Debit}    Get GL Entries Amount    ${Lender1_ShortName}    Debit Amt
-    ${Lender2_Debit}    Get GL Entries Amount    ${Lender2_ShortName}    Debit Amt
-    ${Borrower_Credit}    Get GL Entries Amount    ${Borrower_ShortName}    Credit Amt
-    ${UITotalCreditAmt}    Get GL Entries Amount    Total For:    Credit Amt
-    ${UITotalCreditAmt}    Get GL Entries Amount    Total For:    Debit Amt
+    ${HostBank_Debit}    Get GL Entries Amount    ${HostBank_CustomerPortfolio}    ${DEBIT_AMT_LABEL}
+    ${Lender1_Debit}    Get GL Entries Amount    ${Lender1_ShortName}    ${DEBIT_AMT_LABEL}
+    ${Lender2_Debit}    Get GL Entries Amount    ${Lender2_ShortName}    ${DEBIT_AMT_LABEL}
+    ${Borrower_Credit}    Get GL Entries Amount    ${Borrower_ShortName}    ${CREDIT_AMT_LABEL}
+    ${UITotalCreditAmt}    Get GL Entries Amount    Total For:    ${CREDIT_AMT_LABEL}
+    ${UITotalCreditAmt}    Get GL Entries Amount    Total For:    ${DEBIT_AMT_LABEL}
     Compare UIAmount versus Computed Amount    ${HostBankShare}|${Lend1TranAmount}|${Lend2TranAmount}    ${HostBank_Debit}|${Lender1_Debit}|${Lender2_Debit}
     Validate if Debit and Credit Amt is Balanced    ${HostBank_Debit}|${Lender1_Debit}|${Lender2_Debit}    ${Borrower_Credit}
     Validate if Debit and Credit Amt is equal to Transaction Amount    ${UITotalCreditAmt}    ${UITotalCreditAmt}    &{ExcelPath}[Loan_RequestedAmount]
     
     
-    Navigate Notebook Workflow    ${LIQ_InitialDrawdown_Window}    ${LIQ_InitialDrawdown_Tab}    ${LIQ_InitialDrawdown_WorkflowAction}    Send to Approval
+    Navigate to Loan Drawdown Workflow and Proceed With Transaction    ${SEND_TO_APPROVAL_STATUS}
     
     Logout from Loan IQ
     Login to Loan IQ    ${MANAGER_USERNAME}    ${MANAGER_PASSWORD}
-    Navigate Transaction in WIP    Outstandings    Awaiting Approval    Loan Initial Drawdown    ${Drawdown_Alias}
-    Navigate Notebook Workflow    ${LIQ_InitialDrawdown_Window}    ${LIQ_InitialDrawdown_Tab}    ${LIQ_InitialDrawdown_WorkflowAction}    Approval
+    Navigate Transaction in WIP    ${OUTSTANDINGS_TRANSACTION}    ${AWAITING_APPROVAL_STATUS}    ${LOAN_INITIAL_DRAWDOWN_TYPE}    ${Drawdown_Alias}
+    Navigate to Loan Drawdown Workflow and Proceed With Transaction    ${APPROVAL_STATUS}
     
-    Navigate Notebook Workflow    ${LIQ_InitialDrawdown_Window}    ${LIQ_InitialDrawdown_Tab}    ${LIQ_InitialDrawdown_WorkflowAction}    Send to Rate Approval
+    Navigate to Loan Drawdown Workflow and Proceed With Transaction    ${SEND_TO_RATE_APPROVAL_STATUS}
     
     Logout from Loan IQ
     Login to Loan IQ    ${SUPERVISOR_USERNAME}    ${SUPERVISOR_PASSWORD}
-    Navigate Transaction in WIP    Outstandings    Awaiting Rate Approval    Loan Initial Drawdown    ${Drawdown_Alias}
-    Navigate Notebook Workflow    ${LIQ_InitialDrawdown_Window}    ${LIQ_InitialDrawdown_Tab}    ${LIQ_InitialDrawdown_WorkflowAction}    Rate Approval
+    Navigate Transaction in WIP    ${OUTSTANDINGS_TRANSACTION}    ${AWAITING_RATE_APPROVAL_STATUS}    ${LOAN_INITIAL_DRAWDOWN_TYPE}    ${Drawdown_Alias}
+    Navigate to Loan Drawdown Workflow and Proceed With Transaction    ${RATE_APPROVAL_TRANSACTION}
     
     ${Customer_LegalName}    Read Data From Excel    ORIG03_Customer    LIQCustomer_LegalName    1
-    Navigate Notebook Workflow    ${LIQ_InitialDrawdown_Window}    ${LIQ_InitialDrawdown_Tab}    ${LIQ_InitialDrawdown_WorkflowAction}    Generate Rate Setting Notices
+    Navigate to Loan Drawdown Workflow and Proceed With Transaction    ${GENERATE_RATE_SETTING_NOTICES_TRANSACTION}
     Click OK In Notices Window
-    Verify Customer Notice Method    ${Customer_LegalName}    &{ExcelPath}[Notice_ContactPerson]    Awaiting release    ${SUPERVISOR_USERNAME}    &{ExcelPath}[Notice_Method]    &{ExcelPath}[Contact_Email]
-    Verify Customer Notice Method    ${Lender1_LegalName}    &{ExcelPath}[Notice_ContactPerson]    Awaiting release    ${SUPERVISOR_USERNAME}    &{ExcelPath}[Notice_Method]    &{ExcelPath}[Contact_Email]
-    Verify Customer Notice Method    ${Lender2_LegalName}    &{ExcelPath}[Notice_ContactPerson]    Awaiting release    ${SUPERVISOR_USERNAME}    &{ExcelPath}[Notice_Method]    &{ExcelPath}[Contact_Email]
+    Verify Customer Notice Method    ${Customer_LegalName}    &{ExcelPath}[Notice_BorrowerContactPerson]    ${AWAITING_RELEASE_NOTICE_STATUS}    ${SUPERVISOR_USERNAME}    &{ExcelPath}[Notice_BorrowerMethod]    &{ExcelPath}[BorrowerContact_Email]
+    Verify Customer Notice Method    ${Lender1_LegalName}    &{ExcelPath}[Notice_Lender1ContactPerson]    ${AWAITING_RELEASE_NOTICE_STATUS}    ${SUPERVISOR_USERNAME}    &{ExcelPath}[Notice_Lender1Method]    &{ExcelPath}[Lender1Contact_Email]
+    Verify Customer Notice Method    ${Lender2_LegalName}    &{ExcelPath}[Notice_Lender2ContactPerson]    ${AWAITING_RELEASE_NOTICE_STATUS}    ${SUPERVISOR_USERNAME}    &{ExcelPath}[Notice_Lender2Method]    &{ExcelPath}[Lender2Contact_Email]
     Close Notice Group Window
     
-    # Close All Windows on LIQ    ### added in IEE testing
-    # Navigate Transaction in WIP    Outstandings    Awaiting Release    Loan Initial Drawdown    ${Drawdown_Alias}    ### added in IEE testing
-    Navigate Notebook Workflow    ${LIQ_InitialDrawdown_Window}    ${LIQ_InitialDrawdown_Tab}    ${LIQ_InitialDrawdown_WorkflowAction}    Release
-    
-    # Validate Rate Set    Released    ### commented out in IEE testing
+    Close All Windows on LIQ
+    Navigate Transaction in WIP    ${OUTSTANDINGS_TRANSACTION}    ${AWAITING_RELEASE_STATUS}    ${LOAN_INITIAL_DRAWDOWN_TYPE}    ${Drawdown_Alias}    ### added in IEE testing
+    Navigate to Loan Drawdown Workflow and Proceed With Transaction    ${RELEASE_STATUS}
+
+    Validate Rate Set    ${RELEASED_STATUS}
     
     Close All Windows on LIQ
     Navigate to Facility Notebook    &{ExcelPath}[Deal_Name]    &{ExcelPath}[Facility_Name]  
@@ -512,7 +530,5 @@ Create Second Term Facility Loan Drawdown
     Validate Global Facility Amounts - Balanced    ${sNewAvailToDrawAmount}    ${sNewGlobalOutstandings}    ${sCurrentCmtAmt}
     Validate Host Bank Share Gross Amounts    ${HostBankLender_Share}
     
-    
-    ### @update: bernchua    03DEC2018    Go back to original user
     Logout from Loan IQ
     Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}       
