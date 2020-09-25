@@ -3,8 +3,6 @@ Resource    ../../../Configurations/Party_Import_File.robot
 
 *** Variables ***
 ${rowid}    1
-${SCENARIO}    0
-${PTY_DATASET}
 
 *** Keywords ***
 Create Party in Quick Party Onboarding
