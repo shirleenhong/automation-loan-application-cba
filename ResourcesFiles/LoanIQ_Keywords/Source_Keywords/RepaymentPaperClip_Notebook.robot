@@ -1058,7 +1058,16 @@ Validate PaperClip Notebook Details for Interest and Principal Payment
     
     ${Computed_Amount}    Evaluate    ${Converted_InterestAmt}+${Converted_PrincipalAmt}
     ${Computed_Amount}    Convert To String    ${Computed_Amount}
+    ${Computed_Amount}    Convert To Number    ${Computed_Amount}     2
+    ${Computed_Amount}    Convert To String    ${Computed_Amount}
     ${Computed_Amount}    Convert Number With Comma Separators    ${Computed_Amount}
+    
+    ${sInterest_Amount}   Convert To String    ${sInterest_Amount}
+    ${sInterest_Amount}   Convert Number with Comma Separators     ${sInterest_Amount}
+    
+    ${sPrincipal_Amount}   Convert To String    ${sPrincipal_Amount}
+    ${sPrincipal_Amount}   Convert Number with Comma Separators     ${sPrincipal_Amount}
+    
     
     ${VALIDTE_TOTALAMOUNT}    Run Keyword And Return Status    Should Be Equal    ${UI_TotalAmount}    ${Computed_Amount}        
     ${VALIDATE_EFFECTIVEDATE}    Run Keyword And Return Status    Should Be Equal    ${UI_EffectiveDate}    ${sEffective_Date}
@@ -1140,6 +1149,9 @@ Validate Principal Payment Notebook Details
     ${UI_RequestedAmount}    Mx LoanIQ Get Data    ${LIQ_PrincipalPayment_Requested_Amount}    value%amount
     ${UI_EffectiveDate}    Mx LoanIQ Get Data    ${LIQ_PrincipalPayment_EffectiveDate_Field}    value%amount
     ${UI_PrepaymentStatus}    Mx LoanIQ Get Data    ${LIQ_PrincipalPayment_Prepayment_Checkbox}    enabled%status
+    
+    ${sRequested_Amount}   Convert To String    ${sRequested_Amount}
+    ${sRequested_Amount}   Convert Number with Comma Separators     ${sRequested_Amount}
     
     ${VALIDATE_REQUESTEDAMOUNT}    Run Keyword And Return Status    Should Be Equal    ${UI_RequestedAmount}    ${sRequested_Amount}        
     ${VALIDATE_EFFECTIVEDATE}    Run Keyword And Return Status    Should Be Equal    ${UI_EffectiveDate}    ${sEffectiveDate}

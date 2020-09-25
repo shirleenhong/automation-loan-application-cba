@@ -106,7 +106,7 @@ ${FXRATES_APINAME_FAILED}    FXRATE
 ${FXRATES_ESSENCE_QUEUENAME}    essenceFXRateDestinationQueue
 ${FXRATES_LIQ_QUEUENAME}    wsFinalLIQFxRateDestination 
 ${FXRATES_ERROR_LOG_QUEUE}    errorLogQueue     
-${FXRATES_ACK_MESSAGE_SPLITTER}    tl_ack_message_splitter_fx
+${FXRATES_ACK_MESSAGE_SPLITTER}    ccb_source_fx
 #== JSON INPUT TECHNICAL FAILURE REQUESTS ==#
 ${API_PUT_MANDATORY_FXRates}    MandatoryLength_FXRates.json
 ${FXRATE_APINAME}    FXRATE
