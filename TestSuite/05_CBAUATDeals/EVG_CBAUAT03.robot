@@ -122,8 +122,8 @@ Issue LC2 - D00000476
 Collect LFIA2 - D00000476
     Mx Execute Template With Multiple Data    Collect LFIA Payment D00000476    ${CBAUAT_ExcelPath}    2    SERV29_Payments
 
-# Create Drawdown D1 and D2 D00000476
-    # Mx Execute Template With Multiple Data    Create Drawdown D00000476    ${CBAUAT_ExcelPath}    5    SERV01A_LoanDrawdown
+Create Drawdown D1 and D2 D00000476
+    Mx Execute Template With Multiple Data    Create Drawdown D00000476    ${CBAUAT_ExcelPath}    5    SERV01_LoanDrawdown
     
 # ### December 31
 # Collect Commitment Fee - D00000476
