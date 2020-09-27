@@ -47,36 +47,13 @@ Add Remittance Instructions
     ...    @author: ritragel
     ...    @update: ritragel    03MAR2019    Updated for the global of cashflow keywords
     ...    @update: rtarayao    27MAR2019    Added transaction amount and currency as optional values to cater multiple entries with same customer
-    ...    @upated: dfajardo    04AUG2020    Added Run Keyword if for buttons: LIQ_Cashflows_DetailsForCashflow_SelectRI_Button and LIQ_Cashflows_DetailsForCashflow_ViewRI_Button
-    ...    @update: AmitP       15SEPT2020   Added  argument  for ${sLoanGlobalInterest} to add in the Transaction Amount.
-    ...    @update: aramos      20SEP2020    Added conversion to 2 decimal points for Total Transaction
-    [Arguments]    ${sCustomerShortName}    ${sRemittanceDescription}    ${sTransactionAmount}=None    ${sCurrency}=None    ${sLoanGlobalInterest}=None
-    Log    ${sLoanGlobalInterest}
-    Log    ${sTransactionAmount}
-    ${LoanGlobalInterest}    Remove String    ${sLoanGlobalInterest}    ,
-    ${TransactionAmount}    Remove String    ${sTransactionAmount}    ,     
-    ${TotalTransactionAmount}    Run Keyword If    '${sLoanGlobalInterest}'!='None'    Evaluate    ${TransactionAmount}+${LoanGlobalInterest}
-    ...    ELSE    Set Variable    ${TransactionAmount}    
-    ${TotalTransactionAmount}    Convert Number With Comma Separators    ${TotalTransactionAmount}        
-    Run Keyword If    '${sTransactionAmount}'=='None'    Mx LoanIQ Select Or DoubleClick In Javatree    ${LIQ_Cashflows_Tree}    ${sCustomerShortName}%d
-    
-    Log    ${TotalTransactionAmount}${SPACE}${sCurrency}%${TotalTransactionAmount}${SPACE}${sCurrency}%Original Amount/CCY
-    Log    ${sTransactionAmount}
-    
-    ${TotalTransactionAmount}    Remove Comma, Negative Character and Convert to Number    ${TotalTransactionAmount}
-    ${TotalTransactionAmount}    Evaluate    "%.2f" % ${TotalTransactionAmount}
-    ${TotalTransactionAmount}    Convert Number With Comma Separators    ${TotalTransactionAmount}
-    
-    Log    ${TotalTransactionAmount}${SPACE}${sCurrency}%${TotalTransactionAmount}${SPACE}${sCurrency}%Original Amount/CCY
-    Log    ${TotalTransactionAmount}
-    
-    Run Keyword If    '${sTransactionAmount}'!='None'    Run keywords    Mx LoanIQ Click Javatree Cell    ${LIQ_Cashflows_Tree}    ${TotalTransactionAmount}${SPACE}${sCurrency}%${TotalTransactionAmount}${SPACE}${sCurrency}%Original Amount/CCY
-    ...    AND    Mx Press Combination    Key.ENTER  
+    [Arguments]    ${sCustomerShortName}    ${sRemittanceDescription}    ${sTransactionAmount}=None    ${sCurrency}=None    
+    Run Keyword If    '${sTransactionAmount}'=='None'    Run Keyword If    '${sTransactionAmount}'=='None'    Mx LoanIQ Select Or DoubleClick In Javatree    ${LIQ_Cashflows_Tree}    ${sCustomerShortName}%d
+    Run Keyword If    '${sTransactionAmount}'!='None'    Run keywords    Mx LoanIQ Click Javatree Cell    ${LIQ_Cashflows_Tree}    ${sTransactionAmount}${SPACE}${sCurrency}%${sTransactionAmount}${SPACE}${sCurrency}%Original Amount/CCY
+    ...    AND    Mx Native Type    {ENTER}  
     mx LoanIQ activate    ${LIQ_Cashflows_DetailsForCashflow_Window}    
     Run Keyword And Continue On Failure    Mx LoanIQ Verify Object Exist    ${LIQ_Cashflows_DetailsForCashflow_Window}     VerificationData="Yes"
-    ${LIQ_Cashflows_DetailsForCashflow_SelectRI_ButtonVisible}    Run Keyword And Return Status    Mx LoanIQ Verify Object Exist    ${LIQ_Cashflows_DetailsForCashflow_SelectRI_Button}    VerificationData="Yes"
-    Run Keyword If    ${LIQ_Cashflows_DetailsForCashflow_SelectRI_ButtonVisible}==True    mx LoanIQ click    ${LIQ_Cashflows_DetailsForCashflow_SelectRI_Button} 
-    ...    ELSE      mx LoanIQ click    ${LIQ_Cashflows_DetailsForCashflow_ViewRI_Button} 
+    mx LoanIQ click    ${LIQ_Cashflows_DetailsForCashflow_SelectRI_Button}  
     mx LoanIQ activate    ${LIQ_Cashflows_ChooseRemittanceInstructions_Window}
     Mx LoanIQ Select Or DoubleClick In Javatree    ${LIQ_Cashflows_ChooseRemittanceInstructions_Tree}    ${sRemittanceDescription}%s 
     mx LoanIQ click    ${LIQ_Cashflows_ChooseRemittanceInstructions_OK_Button}
