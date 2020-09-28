@@ -226,7 +226,7 @@ Commitment Fee Release for D00000454
     ### Navigate to Commitment Fee Notebook ###
     Search Existing Deal    &{ExcelPath}[Deal_Name]    
     Navigate Directly to Commitment Fee Notebook from Deal Notebook    &{ExcelPath}[Facility_Name]
-    Check if Commitment Fee is already released
+    #Check if Commitment Fee is already released
     
 Line Fee Release for D00000454 
     [Documentation]    This keyword releases the line fee of the facility
