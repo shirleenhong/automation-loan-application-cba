@@ -173,7 +173,7 @@ Line Fee Payment for D00000454
     ${ComputedLend1TranAmount}    Compute Lender Share Transaction Amount with exact percentage    ${ComputedCycleDue}    &{ExcelPath}[LenderSharePct1]
     
     Compare UIAmount versus Computed Amount    ${HostBankShare}|${Lend1TranAmount}    ${ComputedHBTranAmount}|${ComputedLend1TranAmount}
- 
+
     ###GL Entries###
     Navigate to GL Entries
     ${Borrower_Debit}    Get GL Entries Amount    &{ExcelPath}[Borrower_ShortName]    Debit Amt
@@ -225,8 +225,8 @@ Commitment Fee Release for D00000454
     
     ### Navigate to Commitment Fee Notebook ###
     Search Existing Deal    &{ExcelPath}[Deal_Name]    
-    # Navigate Directly to Commitment Fee Notebook from Deal Notebook    &{ExcelPath}[Facility_Name]
-    # Check if Commitment Fee is already released
+    Navigate Directly to Commitment Fee Notebook from Deal Notebook    &{ExcelPath}[Facility_Name]
+    Check if Commitment Fee is already released
     
 Line Fee Release for D00000454 
     [Documentation]    This keyword releases the line fee of the facility
@@ -247,7 +247,7 @@ Commitment Fee Payment with Split Balance for D00000454
     
     ### Navigate to Commitment Fee Notebook ###
     Search Existing Deal    &{ExcelPath}[Deal_Name]    
-    # Navigate Directly to Commitment Fee Notebook from Deal Notebook    &{ExcelPath}[Facility_Name]
+    Navigate Directly to Commitment Fee Notebook from Deal Notebook    &{ExcelPath}[Facility_Name]
     
     ### Commitment Fee Notebook - General Tab ###  
     ${Rate}    ${BalanceAmount}    ${RateBasis}    Get Data in General Tab
@@ -347,7 +347,7 @@ Run Online Accrual for Commitment Fee
     ...    @author:fmamaril    12SEP2019    Intial Create
     [Arguments]    ${ExcelPath}
     Search Existing Deal    &{ExcelPath}[Deal_Name]    
-    # Navigate Directly to Commitment Fee Notebook from Deal Notebook    &{ExcelPath}[Facility_Name]
+    Navigate Directly to Commitment Fee Notebook from Deal Notebook    &{ExcelPath}[Facility_Name]
     Run Online Acrual to Commitment Fee
     
 Run Online Accrual for Line Fee
