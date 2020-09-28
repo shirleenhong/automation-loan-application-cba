@@ -2,7 +2,7 @@
 Resource    ../../../../../Configurations/Integration_Import_File.robot
 
 *** Variables ***
-${rowid}    2
+${rowid}    1
 
 *** Keywords ***
 Validate VLS_FACILITY_TYPE Extract

@@ -127,13 +127,13 @@ Create Drawdown D1 and D2 D00000476
     
 ### December 31
 Collect Commitment Fee for MOF, FCAF, SCAF - D00000476
-    Mx Execute Template With Multiple Data    Collect Commitment Fee Payment    ${CBAUAT_ExcelPath}   3    SERV29_CommitmentFeePayment     
+    Mx Execute Template With Multiple Data    Collect Commitment Fee Payment    ${CBAUAT_ExcelPath}   1-3    SERV29_CommitmentFeePayment     
 
-# Collect LC2 - D00000476
-    # Mx Execute Template With Multiple Data    Initiate LC Collection D00000476    ${CBAUAT_ExcelPath}    2    SERV18_FeeOnLenderSharesPayment
+Collect LC2 - D00000476
+    Mx Execute Template With Multiple Data    Initiate LC Collection D00000476    ${CBAUAT_ExcelPath}    2    SERV18_FeeOnLenderSharesPayment
     
-# Collect LC1 Advance - D00000476
-    # Mx Execute Template With Multiple Data    Initiate LC Collection D00000476    ${CBAUAT_ExcelPath}    3    SERV18_FeeOnLenderSharesPayment
+Collect LC1 Advance - D00000476
+    Mx Execute Template With Multiple Data    Initiate LC Collection D00000476    ${CBAUAT_ExcelPath}    3    SERV18_FeeOnLenderSharesPayment
 
 # ### January 4
 # Setup BaseRate for Jan 4
