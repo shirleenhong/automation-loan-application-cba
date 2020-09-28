@@ -1,5 +1,5 @@
 dataset_path = "C:\\Git_Evergreen\\evergreen_projects\\CBA_Evergreen"
-ExcelPath = "C:\\Git_Evergreen\\fms_scotia\\DataSet\\LoanIQ_DataSet\\EU Entity\\EVG_S1_EU_RPA_InternalDeal.xlsx"
+ExcelPath = "C:\\Git_Evergreen\\fms_cba\\DataSet\\Party_DataSet\\PTY_DataSet_EU.xlsx"
 CBAUAT_ExcelPath = "C:\\Git_Evergreen\\evergreen_projects\\CBA_Evergreen\\DataSet\\CBA_UAT_DataSet\\EVG_CBAUAT01.xls"
 APIDataSet = "C:\\Git_Evergreen\\evergreen_projects\\CBA_Evergreen\\DataSet\\API_DataSet\\API_Data_Set.xlsx"
 APIDataSet_EU = "C:\\Git_Evergreen\\evergreen_projects\\CBA_Evergreen\\DataSet\\API_DataSet\\API_Data_Set_EU.xlsx"
@@ -8,7 +8,7 @@ TL_DATASET = "C:\\Git_Evergreen\\evergreen_projects\\CBA_Evergreen\\DataSet\\TL_
 SAPWUL_DATASET = "C:\\Git_evergreen\\evergreen_projects\\CBA_Evergreen\\DataSet\\Downstream_DataSet\\SAPWUL\\SAPWUL_Data_Set.xlsx"
 ComSeeDataSet = 'C:\\Git_Evergreen\\evergreen_projects\\CBA_Evergreen\\DataSet\\Downstream_DataSet\\ComSee\\COMSEE_Data_Set.xls'
 GLExcelPath = 'C:\\Git_Evergreen\\fms_cba\\DataSet\\Integration_DataSet\Extracts\\GL\\EVG_GL_TestData_EU.xlsx'
-PTY_DATASET = "C:\\Git_Evergreen\\evergreen_projects\\CBA_Evergreen\\DataSet\\PTY_DataSet\\PTY_DataSet.xlsx"
+PTY_DATASET = "C:\\Git_Evergreen\\fms_cba\\DataSet\\Party_DataSet\\PTY_DataSet_EU.xlsx"
 
 SERVER = "http://mancsleverg0007"
 PORT = "9090"
@@ -40,27 +40,27 @@ MANAGER_USERNAME = "FJMGRAM"
 MANAGER_PASSWORD = "password"
 
 SSO_USERLINK = "mancsleverg0028"
-SSO_PORT = "8080"
+SSO_PORT = "7080"
 USER_LINK = "mancsleverg0031"
-USER_PORT = "8080"
+USER_PORT = "7080"
 PARTY_URL_SUFFIX = "/uxp/rt/html/login.html"
 DOMAIN = "http://misysroot"
 SSO_URL_LINK = "/bfweb/servlet/GetServiceTicketForUser?redirectTo=http://"
 SSO_ENABLED = "NO"
 
 SSO_SERVER = 'mancsleverg0031'
-SSO_PORT_NUMBER = '8080'
+SSO_PORT_NUMBER = '7080'
 PARTY_SSO_URL = 'http://${PARTY_HTML_CREDENTIALS}@${SSO_SERVER}:${SSO_PORT_NUMBER}/bfweb/servlet/GetServiceTicketForUser?redirectTo=http://${PARTY_SERVER}/uxp/rt/html/login.html                   '
 PARTY_HTML_USER_CREDENTIALS = 'misysroot%5Cbrad:welcome%4099'
 PARTY_HTML_APPROVER_CREDENTIALS = 'misysroot%5Csuperit:welcome%4099'
 PARTY_SUPERVISOR_USERNAME  = 'superit'
 PARTY_SUPERVISOR_PASSWORD = 'superit'
-PARTY_SERVER = 'mancsleverg0031:8080'
-PARTY_URL = 'mancsleverg0031:8080/uxp/rt/html/login.html'
+PARTY_SERVER = 'mancsleverg0031:7080'
+PARTY_URL = 'mancsleverg0031:7080/uxp/rt/html/login.html'
 
 ###Party Credential###
-PARTY_USERNAME = 'brad'
-PARTY_PASSWORD = 'brad'
+PARTY_USERNAME = 'amipac'
+PARTY_PASSWORD = 'password'
 
 TL_SERVICE_HOST = "mancsleverg0007"
 TL_SERVICE_PORT = "22"

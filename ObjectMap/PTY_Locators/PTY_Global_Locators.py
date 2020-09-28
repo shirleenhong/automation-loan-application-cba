@@ -22,6 +22,7 @@ Party_Footer_Next_Button = '//div[contains(@class,"Visible")]//child::input[cont
 Party_RaisedMessage_Notification = '//div[@class="message" and contains(text(),"Referral raised")]'
 Party_Approve_Button = '//input[contains(@id, "Approve")]'
 Party_Reject_Button = '//input[contains(@id, "Reject")]'
+Party_Refer_Button = '//input[contains(@id, "Refer")]'
 Party_Zone_Button = '//div[@title="Bank, Zone, Branch information"]//span//strong[contains(text(),"Zone")]'
 
 ### Generic Locator ###
