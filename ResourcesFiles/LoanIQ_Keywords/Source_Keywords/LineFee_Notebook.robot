@@ -52,7 +52,7 @@ Save and Exit Line Fee Notebook
     mx LoanIQ click element if present    ${LIQ_Warning_OK_Button}
     mx LoanIQ select    ${LIQ_LineFee_Exit_Menu} 
     
-Navigate to Line Fee Notebook
+Navigate to Existing Ongoing Fee Notebook
     [Documentation]    This keyword is used for navigating to Line Fee Notebook
     ...    @author:ritragel    8AUG2019
     [Arguments]    ${sOngoingFee_Type}    
