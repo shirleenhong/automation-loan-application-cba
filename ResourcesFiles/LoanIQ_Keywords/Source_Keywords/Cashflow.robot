@@ -50,6 +50,7 @@ Add Remittance Instructions
     ...    @upated: dfajardo    04AUG2020    Added Run Keyword if for buttons: LIQ_Cashflows_DetailsForCashflow_SelectRI_Button and LIQ_Cashflows_DetailsForCashflow_ViewRI_Button
     ...    @update: AmitP       15SEPT2020   Added  argument  for ${sLoanGlobalInterest} to add in the Transaction Amount.
     ...    @update: aramos      20SEP2020    Added conversion to 2 decimal points for Total Transaction
+    ...    @update: cfrancis    25SEP2020    Added logic to skip 2 decimal points conversion if TransactionAmount is None
     [Arguments]    ${sCustomerShortName}    ${sRemittanceDescription}    ${sTransactionAmount}=None    ${sCurrency}=None    ${sLoanGlobalInterest}=None
     Log    ${sLoanGlobalInterest}
     Log    ${sTransactionAmount}
@@ -63,9 +64,12 @@ Add Remittance Instructions
     Log    ${TotalTransactionAmount}${SPACE}${sCurrency}%${TotalTransactionAmount}${SPACE}${sCurrency}%Original Amount/CCY
     Log    ${sTransactionAmount}
     
-    ${TotalTransactionAmount}    Remove Comma, Negative Character and Convert to Number    ${TotalTransactionAmount}
-    ${TotalTransactionAmount}    Evaluate    "%.2f" % ${TotalTransactionAmount}
-    ${TotalTransactionAmount}    Convert Number With Comma Separators    ${TotalTransactionAmount}
+    ${TotalTransactionAmount}    Run Keyword If    '${sTransactionAmount}'!='None'    Remove Comma, Negative Character and Convert to Number    ${TotalTransactionAmount}
+    ...    ELSE    Set Variable    ${TotalTransactionAmount}
+    ${TotalTransactionAmount}    Run Keyword If    '${sTransactionAmount}'!='None'    Evaluate    "%.2f" % ${TotalTransactionAmount}
+    ...    ELSE    Set Variable    ${TotalTransactionAmount}
+    ${TotalTransactionAmount}    Run Keyword If    '${sTransactionAmount}'!='None'    Convert Number With Comma Separators    ${TotalTransactionAmount}
+    ...    ELSE    Set Variable    ${TotalTransactionAmount}
     
     Log    ${TotalTransactionAmount}${SPACE}${sCurrency}%${TotalTransactionAmount}${SPACE}${sCurrency}%Original Amount/CCY
     Log    ${TotalTransactionAmount}
