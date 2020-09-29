@@ -124,8 +124,9 @@ BUS_Validate Loan Repricing Effective Date
 BUS_Navigate to Existing Outstanding
     [Documentation]    This keyword is used to run the assigned low level keyword.
     ...    @author: amansuet    09JUL2020    - initial create
+    ...    @update: dahijara    28SEP2020    - removed 1 argument
 
-    Run Keyword    Navigate to Existing Outstanding    ${ARGUMENT_1}    ${ARGUMENT_2}    ${ARGUMENT_3}
+    Run Keyword    Navigate to Existing Outstanding    ${ARGUMENT_1}    ${ARGUMENT_2}
     
 BUS_Select Multiple Loan to Merge
     [Documentation]    This keyword is used to run the assigned low level keyword.

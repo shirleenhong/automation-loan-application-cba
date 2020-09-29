@@ -1006,6 +1006,8 @@ Validate Base Rate in Rollover/Conversion to BBSY
     ...    @author: chanario
     ...    @update: bernchua    05JUN2019    removed validation of 'Send to Approval' status
     ...    @update: sahalder    16JUL2020    Added step for screenshots
+    ...    @updated:dahijara    28SEP2020    Corrected path for screenshot
+    ...                                      Updated action from Click to Select for Exiting Rollover/Conversion window.
     [Arguments]    ${Base_Rate}    ${Alias_LoanMerge}    ${RequestedAmount_Expected}
     
     mx LoanIQ activate window    ${LIQ_RolloverConversion_Window}
@@ -1023,7 +1025,7 @@ Validate Base Rate in Rollover/Conversion to BBSY
     Verify If Warning Is Displayed
     
     ## Validate initial Values of Set Base Rate Window ##
-    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/Loan_Rollover/Conversion
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/Loan_RolloverConversion
     ${BaseRateFromPricing}    Mx LoanIQ Get Data    ${LIQ_SetBaseRate_BaseRateFromPricing_Textfield}    BaseRateFromPricing
     Should Be Equal    ${BaseRateFromPricing}    ${Base_Rate}
         
@@ -1037,13 +1039,14 @@ Validate Base Rate in Rollover/Conversion to BBSY
     Should Be Equal    ${BorrowerBaseRate}    ${Base_Rate}
     
     mx LoanIQ click    ${LIQ_RolloverConversion_BaseRate_OKButton}
-    mx LoanIQ click element if present    ${LIQ_RolloverConversion_FileExit_Menu}
+    mx LoanIQ select    ${LIQ_RolloverConversion_FileExit_Menu}
     
     ## Validate combined Loan amount after merge on the Loan Repricing Notebook ##
     
     mx LoanIQ activate window    ${LIQ_LoanRepricingForDeal_Window}
     ${NewOutstadingAmount}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_LoanRepricingForDealAdd_JavaTree}    BBSY - Bid (${Alias_LoanMerge})%Amount%NewOutstadingAmount        
     Should Be Equal    ${NewOutstadingAmount}    ${RequestedAmount_Expected}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/Loan_RolloverConversion
     
 Validation on the Loan Repricing Notebook After Loan Merge
     
@@ -1705,15 +1708,17 @@ Get Calculated Cycle Due Amount and Validate
 Navigate to Existing Outstanding
     [Documentation]    This keyword is for navigating to the existing outstanding inside the facility notebook
     ...    @author: sahalder    09JUL2020    - initial create
-	[Arguments]    ${sFacilityNotebook_Options_DealNotebook}    ${sOutstandingSelect_Type}    ${sFacility_Name}
+    ...    @update: dahijara    28SEP2020    - Removed locator as part of argument. Directly passed the locator to Mx LoanIQ Select keyword
+    ...                                      - Added Screenshot
+	[Arguments]    ${sOutstandingSelect_Type}    ${sFacility_Name}
 
     ### Keyword Pre-processing ###
-    ${FacilityNotebook_Options_DealNotebook}    Acquire Argument Value    ${sFacilityNotebook_Options_DealNotebook}
     ${OutstandingSelect_Type}    Acquire Argument Value    ${sOutstandingSelect_Type}
     ${Facility_Name}    Acquire Argument Value    ${sFacility_Name}
     
-    mx LoanIQ select    ${FacilityNotebook_Options_DealNotebook}
+    mx LoanIQ select    ${LIQ_FacilityNotebook_Options_DealNotebook}
     Search for Existing Outstanding    ${OutstandingSelect_Type}    ${Facility_Name}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/OutstandingSelectWindow
     
 Navigate to Loan Repricing Notebook Workflow
     [Documentation]    This keyword navigates the Workflow tab of a Loan Repricing Notebook, and does a specific transaction.

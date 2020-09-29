@@ -525,3 +525,9 @@ BUS_Post Validation Of Facility Summary Amounts After Drawdown
     ...    @author: dahijara    22SEP2020    - initial create
 
     Run Keyword    Post Validation Of Facility Summary Amounts After Drawdown    ${ARGUMENT_1}    ${ARGUMENT_2}    ${ARGUMENT_3}    ${ARGUMENT_4}    ${ARGUMENT_5}    ${ARGUMENT_6}
+
+BUS_Retrieve Facility Notebook Amounts prior to Loan Merge
+    [Documentation]    This keyword is used to run the assigned low level keyword.
+    ...    @author: dahijara    28SEP2020    - initial create
+
+    Run Keyword    Retrieve Facility Notebook Amounts prior to Loan Merge    ${ARGUMENT_1}    ${ARGUMENT_2}    ${ARGUMENT_3}    ${ARGUMENT_4}    ${ARGUMENT_5}    ${ARGUMENT_6}    ${ARGUMENT_7}    ${ARGUMENT_8}
