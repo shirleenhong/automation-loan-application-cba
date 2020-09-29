@@ -38,7 +38,7 @@ Resource    ../Variables/Party_Properties.txt
 ###Party Resource Files - Business Process Keywords###
 Resource    ../ResourcesFiles/Party_Keywords/BusinessProcess_Keywords/PTY001_QuickPartyOnboarding.robot
 Resource    ../ResourcesFiles/Party_Keywords/BusinessProcess_Keywords/PTY002_UpdatePartyDetails.robot
-Resource    ../ResourcesFiles/Party_Keywords/BusinessProcess_Keywords/PTY004_PartyDetailsEnquiry(SEARCH).robot
+Resource    ../ResourcesFiles/Party_Keywords/BusinessProcess_Keywords/PTY004_PartyDetailsEnquiry.robot
 Resource    ../ResourcesFiles/Party_Keywords/BusinessProcess_Keywords/PTY005_QuickPartyOnboarding_Reject.robot
 
 ###Party Resource Files - Sourcel###

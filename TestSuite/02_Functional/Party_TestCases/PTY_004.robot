@@ -2,7 +2,7 @@
 Resource    ../../../Configurations/Party_Import_File.robot
 
 *** Test Cases ***   
-PTY_004_AU
+PTY_004
     [Documentation]    This test case is used to perform Search and Validation in Party Details Enquiry Page
     ...    @author:gagregado    21SEP2020    -initial create
     

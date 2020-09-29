@@ -71,18 +71,18 @@ Validate Enquire Enterprise Party Details
     Compare Two Arguments    ${sCountry_of_Registration}    ${Party_EnquireEnterpriseParty_CountryOfRegistration_Text}  
     
 Select Row That Contains Text
-    [Arguments]    ${field_to_verify}    ${table_name}    ${element_to_be_clicked}    ${contains_cell_text}    ${element_to_activate}
+    [Arguments]    ${sField_to_verify}    ${sTable_name}    ${sElement_to_be_clicked}    ${sContains_cell_text}    ${sElement_to_activate}
 
-    ${table_length}    SeleniumLibraryExtended.Get Element Count    ${table_name}
-    :FOR   ${i}    IN RANGE    1   ${table_length}+1
+    ${iTable_length}    SeleniumLibraryExtended.Get Element Count    ${sTable_name}
+    :FOR   ${i}    IN RANGE    1   ${iTable_length}+1
     \    ${index}    Set Variable    [${i}]
     \    log    ${index}
-    \    Mx Click Element    ${element_to_be_clicked}${index}
-    \    Log     Field to verify is ${field_to_verify}
-    \    ${status}    Run Keyword And Return Status    Wait Until Page Contains    ${field_to_verify}
-    \    Exit For Loop If    '${status}'=='True'
-    Mx Click Element    ${element_to_activate}
-    ${cell_text}    Get Text    ${contains_cell_text}
+    \    Mx Click Element    ${sElement_to_be_clicked}${index}
+    \    Log     Field to verify is ${sField_to_verify}
+    \    ${sStatus}    Run Keyword And Return Status    Wait Until Page Contains    ${sField_to_verify}
+    \    Exit For Loop If    '${sStatus}'=='True'
+    Mx Click Element    ${sElement_to_activate}
+    ${cell_text}    Get Text    ${sContains_cell_text}
     [Return]    ${cell_text}
 
 Auto Generate Only 7 Numeric Test Data
@@ -125,42 +125,15 @@ Get Table Value Containing Row Value in Party Detail Search Dialog
 	${RowValue}    Get Text    ${Party_Search_Dialog_SearchResultTableRow}//td\[contains(text(),"${sReferenceRowValue}")]/parent::tr/td\[${HeaderIndex}]
     
     [Return]    ${RowValue} 
-    
-   
-    
-Party Detail Enquiry Search by Dialog
-    [Documentation]    This keyword is to perform search in dialog
-    ...    @author: gagregado    28SEP2020    - initial create
-    
-    [Arguments]    ${eInputLocator}    ${sInputVal}
-
-    Mx Input Text    ${eInputLocator}    ${sInputVal}
-    Mx Click Element    ${Party_Search_Dialog_Search_Button}
-    Wait Until Element Is Visible    ${Party_Search_Dialog_RowSelectedResult}
-    Capture Page Screenshot    ${screenshot_path}/Screenshots/Party/PartyDetailsEnquiry-{index}.png
-
-
-
-Verify Party Detail Enquiry Search Row Value
-    [Documentation]    This keyword is used get row value of and compare with the know value from dataset
-    ...    @author: gagregado    28SEP2020    - initial create
-    
-    [Arguments]    ${sHeaderName}    ${rowKnownValue}    ${keyReferenceValue}    ${keyReferenceHeader}
-
-    
-    ${verifiedRowValue}    Get Table Value Containing Row Value in Party Detail Search Dialog     ${keyReferenceHeader}    ${keyReferenceValue}      ${sHeaderName}
-    
-    Compare Two Strings    ${verifiedRowValue}    ${rowKnownValue}
-    
 
 Get Text From Row and Compare
     [Documentation]    This keyword is used get text from element and perform comparison
     ...    @author: gagregado    29SEP2020    - initial create
     
-    [Arguments]    ${sKnownValue}    ${locator}
+    [Arguments]    ${sKnownValue}    ${sLocator}
     
-    ${RowValue}    Get Text    ${locator}
-    Compare Two Strings    ${RowValue}    ${sKnownValue}
+    ${sRowValue}    Get Text    ${sLocator}
+    Compare Two Strings    ${sRowValue}    ${sKnownValue}
    
     
 
