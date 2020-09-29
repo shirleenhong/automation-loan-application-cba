@@ -1,0 +1,4 @@
+﻿CenterID,ISOCurrencyCode,ISOCountryCode,FinancialCentre,CentreCode,EventYear,EventDate,EventDayOfWeek,EventName,FileType
+385,AED,GI,Dubai,TUX,2021,20211005,Sat,Test Future 2021 B,B
+385,AED,GI,Dubai,TUX,2021,20210505,Thu,Sample Test Holiday,B
+385,AED,GI,Dubai,TUX,2020,20200810,Fri,Another Holiday,B

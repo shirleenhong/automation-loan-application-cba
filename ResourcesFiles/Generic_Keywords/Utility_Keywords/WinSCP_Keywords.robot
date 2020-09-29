@@ -120,6 +120,7 @@ Validate File If Moved to File Validation Failed Folder
     ...    @update: jloretiz    22JAN2020    - added additional validation for invalid date format
     ...    @update: dahijara    04FEB2020    - added ELSE condition for getting ${FileTimestamp} & ${FileTimestamp_curr} to set 0 value when if condition is not met.
     ...    @update: dahijara    07FEB2020    - added else condition for getting ${GSFileName_RequestID} (invalid date format)
+    ...    @udpate: jdelacru    25SEP2020    - deleted the condition in naming file with invalid file format
     [Arguments]    ${sFileValFailedFolder}    ${sGSFileName}    ${sFileExtension}=None    ${sErrorDesc}=None
     
     @{Files}    SSHLibrary.List Directory    ${sFileValFailedFolder}
@@ -162,8 +163,8 @@ Validate File If Moved to File Validation Failed Folder
     ${GSFileName_RequestID}    Remove String    ${GSFileName_RequestID}    ROUP
 
     ###INVALID DATE FORMAT###
-    ${GSFileName_RequestID}    Run Keyword If    '${sErrorDesc}'=='${INVALIDDATEFORMAT}' or '${sErrorDesc}'=='${INVALIDFILEFORMAT}'    Get Substring    ${sGSFileName_NoCSV}_${FileTimestamp_latest}_${ADDITIONAL_FILESTAMP}   16
-    ...    ELSE    Set Variable    ${GSFileName_RequestID}    
+    ${GSFileName_RequestID}    Run Keyword If    '${sErrorDesc}'=='${INVALIDDATEFORMAT}'    Get Substring    ${sGSFileName_NoCSV}_${FileTimestamp_latest}_${ADDITIONAL_FILESTAMP}   16
+    ...    ELSE    Set Variable    ${GSFileName_RequestID}     
 
     ###INVALID FILE NAME###
     ${SubstringFileName}    Run Keyword If    '${sErrorDesc}'=='${INVALIDFILENAME}' or '${sErrorDesc}'=='${SMALLCASESFILENAME}'    Get Substring    ${sGSFileName_NoCSV}    0    16

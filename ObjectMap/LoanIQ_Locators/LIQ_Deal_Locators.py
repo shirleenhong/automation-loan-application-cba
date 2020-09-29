@@ -706,7 +706,8 @@ LIQ_DealNotebook_LenderQuery_Exit_Button = 'JavaWindow("title:=Lender Query.*").
 ### Remittance Instruction Selection List ###
 LIQ_RISelectionList_Window = 'JavaWindow("title:=.*Remittance Instructions.*Selection List.*")'
 LIQ_RISelectionList_Search_Textbox = 'JavaWindow("title:=.*Remittance Instructions.*Selection List.*").JavaObject("tagname:=Group","Text:=Search").JavaEdit("tagname:=Text")'
-LIQ_RISelectionList_MarkAll_Checkbox = 'JavaWindow("title:=.*Remittance Instructions.*Selection List.*").JavaCheckBox("attached text:=Servicing Group Remittance Instructions")'
+#LIQ_RISelectionList_MarkAll_Checkbox = 'JavaWindow("title:=.*Remittance Instructions.*Selection List.*").JavaCheckBox("attached text:=Servicing Group Remittance Instructions")'
+LIQ_RISelectionList_MarkAll_Checkbox = 'JavaWindow("title:=.*Remittance Instructions.*Selection List.*").JavaCheckBox("Index:=1")'
 LIQ_RISelectionList_RemittanceInstructions_JavaTree = 'JavaWindow("title:=.*Remittance Instructions.*Selection List.*").JavaTree("attached text:=Servicing Group Remittance Instructions")'
 LIQ_RISelectionList_OK_Button = 'JavaWindow("title:=.*Remittance Instructions.*Selection List.*").JavaButton("label:=OK")'
 LIQ_RISelectionList_Cancel_Button = 'JavaWindow("title:=.*Remittance Instructions.*Selection List.*").JavaButton("label:=Cancel")'

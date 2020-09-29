@@ -158,3 +158,9 @@ BUS_Clear Interest Pricing Current Values
     ...    @author: clanding    11AUG2020    - initial create
 
     Run Keyword   Clear Interest Pricing Current Values
+
+BUS_Add After Option Item - Third
+    [Documentation]    This keyword is used to run the assigned low level keyword.
+    ...    @author: dahijara    22SEP2020    - initial create
+
+    Run Keyword    Add After Option Item - Third    ${ARGUMENT_1}    ${ARGUMENT_2}    ${ARGUMENT_3}
