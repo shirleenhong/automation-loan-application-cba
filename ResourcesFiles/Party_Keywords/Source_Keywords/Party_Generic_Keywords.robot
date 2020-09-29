@@ -133,7 +133,7 @@ Configure Zone and Branch
 Enquire Party Details Search
     [Documentation]    This keyword is used input party ID to start SEARCH
     ...    @author: gagregado    
-    [Arguments]    ${sParty_id}    ${sBranch}    ${sParty_Type}    ${sParty_Sub_Type}    ${sParty_Category}    ${line_of_business}
+    [Arguments]    ${sParty_id}    ${sBranch}    ${sParty_Type}    ${sParty_Sub_Type}    ${sParty_Category}    ${line_of_business}    ${Alternate_Party_ID}    ${Party_Name}    ${Date_Formed}    ${National_ID}    ${Tax_ID_GST_Number}        
  
     Input Text    ${Party_HomePage_Process_TextBox}    Party Details Enquiry
     Press Keys    ${Party_HomePage_Process_TextBox}    RETURN
@@ -147,98 +147,26 @@ Enquire Party Details Search
     
 
     Wait Until Element Is Visible    ${Party_Search_Dialog}
+
+    Party Detail Enquiry Search by Dialog    ${Party_Search_Dialog_PatyID}    ${sParty_id}
+    Party Detail Enquiry Search by Dialog    ${Party_Search_Dialog_Branch}    ${sBranch}
+    Party Detail Enquiry Search by Dialog    ${Party_Search_Dialog_PartyType}    ${sParty_Type}
+    Party Detail Enquiry Search by Dialog    ${Party_Search_Dialog_PartyCategory}    ${sParty_Category}
+    Party Detail Enquiry Search by Dialog    ${Party_Search_Dialog_LineOfBusiness}    ${line_of_business}
     
-    Sleep    3
+    Verify Party Detail Enquiry Search Row Value    Alternate Party ID   ${Alternate_Party_ID}    ${sParty_id}    Party ID 
+    Verify Party Detail Enquiry Search Row Value    Party Name   ${Party_Name}    ${sParty_id}    Party ID 
+    Verify Party Detail Enquiry Search Row Value    DOB / Date Formed   ${Date_Formed}    ${sParty_id}    Party ID 
+    Verify Party Detail Enquiry Search Row Value    National ID / Reg No.   ${National_ID}    ${sParty_id}    Party ID 
+    Verify Party Detail Enquiry Search Row Value    Tax ID / GST Number   ${Tax_ID_GST_Number}    ${sParty_id}    Party ID 
+    Capture Page Screenshot    ${screenshot_path}/Screenshots/Party/PartyDetailsEnquiry-{index}.png
 
-    Input Text    ${Party_Search_Dialog_Branch}    ${sBranch}
-    
-    Mx Click Element    ${Party_Search_Dialog_searchButton}
-
-    Wait Until Element Is Visible    ${Party_Search_Dialog_rowSelectedResult}
-    
-
-    Input Text    ${Party_Search_Dialog_PatyID}    ${sParty_id}
-    
-    Mx Click Element    ${Party_Search_Dialog_searchButton}
-
-    Wait Until Element Is Visible    ${Party_Search_Dialog_rowSelectedResult}
-    
-
-    Input Text    ${Party_Search_Dialog_PartyType}    ${sParty_Type}
-    
-    Mx Click Element    ${Party_Search_Dialog_searchButton}
-
-    Wait Until Element Is Visible    ${Party_Search_Dialog_rowSelectedResult}
-    
-
-    # Input Text    ${Party_Search_Dialog_PartySubType}    ${sParty_Sub_Type}
-    
-    # Mx Click Element    ${Party_Search_Dialog_searchButton}
-
-    # Wait Until Element Is Visible    ${Party_Search_Dialog_rowSelectedResult}
-    
-
-
-    
-
-    Input Text    ${Party_Search_Dialog_PartyCategory}    ${sParty_Category}
-    
-    Mx Click Element    ${Party_Search_Dialog_searchButton}
-
-    Wait Until Element Is Visible    ${Party_Search_Dialog_rowSelectedResult}
-    
-
-
-    
-
-    Input Text    ${Party_Search_Dialog_LineOfBusiness}    ${line_of_business}
-    
-    Mx Click Element    ${Party_Search_Dialog_searchButton}
-
-    Wait Until Element Is Visible    ${Party_Search_Dialog_rowSelectedResult}
-
-
+       
+   
     Mx Click Element    ${Party_CloseDialog_Button}
 
 
 
-Enquire Party Details in Party Enquiry Page
-    [Documentation]    This keyword is used input party details
-    ...    @author: gagregado    
-    [Arguments]    ${sParty_Type}    ${sParty_Sub_Type}    ${sParty_Category}
-
-    #Mx Input Text    ${Party_PartyOnboarding_Locality_Dropdown}    ${sLocality}
-
-    Mx Input Text    ${Party_PartyOnboarding_PartyType_Dropdown}    ${sParty_Type}
-
-    Wait Until Loading Page Is Not Visible    ${PARTY_TIMEOUT}
-
-    # Run Keyword If    '${sParty_Type}'=='Enterprise'    Wait Until Element Is Visible    ${Party_PartyOnboarding_LineOfBusiness_Table}    15s
-    # ...    ELSE    Run Keyword And Continue On Failure    Element Should Not Be Visible    ${Party_PartyOnboarding_LineOfBusiness_Table}
-
-    # #Validate if Commercial Lending is selected by default
-    # ${RowCount}    SeleniumLibraryExtended.Get Element Count    ${Party_PartyOnboarding_LineOfBusiness_Rows}
-    # :FOR    ${INDEX}    IN RANGE    1    ${RowCount} + 1
-    # \    
-    # \    ${LineOfBusiness_Name}    Get Text    ${Party_PartyOnboarding_LineOfBusiness_Rows}\[${INDEX}]${Party_PartyOnboarding_LOBName_TableRow}
-    # \    ${isLOBSelected}    Run Keyword If    '${LineOfBusiness_Name}'=='Commercial Lending'    SeleniumLibraryExtended.Get Element Attribute    ${Party_PartyOnboarding_LineOfBusiness_Rows}\[${INDEX}]${Party_PartyOnboarding_LOB_CheckBox}    aria-checked
-    # \    Run Keyword If    ${${isLOBSelected}}==${False}    Mx Click Element    ${Party_PartyOnboarding_LineOfBusiness_Rows}\[${INDEX}]${Party_PartyOnboarding_LOB_CheckBox}
-    # \    Exit For Loop If    '${LineOfBusiness_Name}'=='Commercial Lending'
-
-    Mx Input Text    ${Party_PartyOnboarding_PartySubType_Dropdown}    ${sParty_Sub_Type}
-    Mx Input Text    ${Party_PartyOnboarding_PartyCategory_Dropdown}    ${sParty_Category}
-
-    # ${Entity}    Get Value    ${Party_PartyOnboarding_Entity_Textbox}
-    # ${Assigned_Branch}    Get Value    ${Party_PartyOnboarding_AssignedBranch_Dropdown}
-
-    Capture Page Screenshot    ${screenshot_path}/Screenshots/Party/PartyOnboarding-{index}.png
-
-    Mx Click Element    ${Party_Footer_Next_Button}
-
-    Wait Until Loading Page Is Not Visible    ${PARTY_TIMEOUT}
-    Validate Page Screen is Displayed    ${PARTY_PREEXISTENCECHECK_PAGETITLE}
-
-    # [Return]    ${Entity}    ${Assigned_Branch}
 
 
 

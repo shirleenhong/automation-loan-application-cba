@@ -20,7 +20,8 @@ Party_Search_Dialog_LineOfBusiness = '//input[contains(@id,"LineOfBusiness")][@t
 Party_Search_Dialog_PartyCategory = '//input[contains(@id,"partyCategory")][@type="combo"]'
 Party_Search_Dialog_AccountType = '//input[contains(@id,"Account")][@type="combo"]'
 
-
+Party_Search_Dialog_SearchResultTableHeader = '//span[contains(@class,"Dialog")][text()="Party Search"]/ancestor::div//div[contains(@uitype,"Table")]//div[contains(@class,"GridMasterHeader")]//th'
+Party_Search_Dialog_SearchResultTableRow = '//span[contains(@class,"Dialog")][text()="Party Search"]/ancestor::div//div[contains(@uitype,"Table")]//div[contains(@class,"GridMasterView")]//tr'
 
 
 ### Party Home Page ###

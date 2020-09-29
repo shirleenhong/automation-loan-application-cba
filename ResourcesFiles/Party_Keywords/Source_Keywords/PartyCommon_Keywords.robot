@@ -97,6 +97,72 @@ Auto Generate Only 7 Numeric Test Data
     ...    ELSE IF    '${sName_Prefix}'=='None'    Set Variable    ${Result_Value}
 
     [Return]    ${Generated_Value}
+    
+Get Table Value Containing Row Value in Party Detail Search Dialog
+    [Documentation]    This keyword is used get row value of column sHeaderName using sReferenceRowValue from column sReferenceHeaderValue
+    ...    @author: clanding    10SEP2020    - initial create
+    ...    @author: gagregado    28SEP2020   - created from essence and restructure for Party Details Enquiry search dialog table
+    [Arguments]    ${sReferenceHeaderValue}    ${sReferenceRowValue}    ${sHeaderName}    
+    
+    ### Get Header Index of the Reference Value ###
+    ${HeaderCount}    SeleniumLibraryExtended.Get Element Count    ${Party_Search_Dialog_SearchResultTableHeader}
+    ${HeaderCount}    Evaluate    ${HeaderCount}+1
+    :FOR    ${ReferenceHeaderIndex}    IN RANGE    1    ${HeaderCount}
+    \    ${ReferenceHeaderValue}    Get Text    ${Party_Search_Dialog_SearchResultTableHeader}\[${ReferenceHeaderIndex}]//div
+    \    Exit For Loop If    '${ReferenceHeaderValue}'=='${sReferenceHeaderValue}'
+    
+    ### Get Header Index of the Actual Value to be get ###
+    ${HeaderCount}    SeleniumLibraryExtended.Get Element Count    ${Party_Search_Dialog_SearchResultTableHeader}
+    ${HeaderCount}    Evaluate    ${HeaderCount}+1
+    :FOR    ${HeaderIndex}    IN RANGE    1    ${HeaderCount}
+    \    ${HeaderValue}    Get Text    ${Party_Search_Dialog_SearchResultTableHeader}\[${HeaderIndex}]//div
+    \    Exit For Loop If    '${HeaderValue}'=='${sHeaderName}'
+	
+                                                                                            
+    ${RefRowValueCount}    SeleniumLibraryExtended.Get Element Count    ${Party_Search_Dialog_SearchResultTableRow}//td\[contains(text(),"${sReferenceRowValue}")]/parent::tr/td\[${HeaderIndex}]
+	Run Keyword If    ${RefRowValueCount}==0    Run Keyword And Continue On Failure    FAIL    Reference Row Value '${sReferenceRowValue}' not found.
+	Return From Keyword If    ${RefRowValueCount}==0    REFNOTFOUND
+	${RowValue}    Get Text    ${Party_Search_Dialog_SearchResultTableRow}//td\[contains(text(),"${sReferenceRowValue}")]/parent::tr/td\[${HeaderIndex}]
+    
+    [Return]    ${RowValue} 
+    
+   
+    
+Party Detail Enquiry Search by Dialog
+    [Documentation]    This keyword is to perform search in dialog
+    ...    @author: gagregado    28SEP2020    - initial create
+    
+    [Arguments]    ${eInputLocator}    ${sInputVal}
+
+    Mx Input Text    ${eInputLocator}    ${sInputVal}
+    Mx Click Element    ${Party_Search_Dialog_searchButton}
+    Wait Until Element Is Visible    ${Party_Search_Dialog_rowSelectedResult}
+    Capture Page Screenshot    ${screenshot_path}/Screenshots/Party/PartyDetailsEnquiry-{index}.png
+
+
+
+Verify Party Detail Enquiry Search Row Value
+    [Documentation]    This keyword is used get row value of and compare with the know value from dataset
+    ...    @author: gagregado    28SEP2020    - initial create
+    
+    [Arguments]    ${sHeaderName}    ${rowKnownValue}    ${keyReferenceValue}    ${keyReferenceHeader}
+
+    
+    ${verifiedRowValue}    Get Table Value Containing Row Value in Party Detail Search Dialog     ${keyReferenceHeader}    ${keyReferenceValue}      ${sHeaderName}
+    
+    Compare Two Strings    ${verifiedRowValue}    ${rowKnownValue}
+    
+
+Get Text From Row and Compare
+    [Documentation]    This keyword is used get text from element and perform comparison
+    ...    @author: gagregado    29SEP2020    - initial create
+    
+    [Arguments]    ${sKnownValue}    ${locator}
+    
+    ${RowValue}    Get Text    ${locator}
+    Compare Two Strings    ${RowValue}    ${sKnownValue}
+   
+    
 
 ###Updated Party Status Test Case
     
