@@ -264,3 +264,4 @@ screenshot_path = os.path.dirname(os.path.abspath('.//Results'))
 apidataset_path = os.path.dirname(os.path.abspath('.//API_DataSet'))
 
 retry = "30x"
+retry_interval = "3s" 
