@@ -8,10 +8,13 @@ Validate Future Date Record in Holding Table for TL Base Rate
     [Documentation]    This keyword is used to validate future date record if existing in the Base Rate holding tables.
     ...    @author: clanding    07MAR2019    - initial create
     ...    @update: jdelacru    03JUL2019    - deleted validation in comparing number of record in gsfile and database
+    ...    @update: jdelacru    29SEP2020    - validated EUR instead of NY in comparing the data on hold
+    ...                                      - moved the closing of excel due to conflicting excel sessions
     [Arguments]    ${aQueryList}    ${sTransformedData_FilePath}
 
     Open Excel    ${dataset_path}${sTransformedData_FilePath} 
     ${Row_Count}    Get Row Count    Transformed_BaseRate
+    Close Current Excel Document
     :FOR    ${INDEX}    IN RANGE    1    ${Row_Count}
     \    
     \    ${dTransformedData}    Create Dictionary Using Transformed Data and Return    ${dataset_path}${sTransformedData_FilePath}    ${INDEX}
@@ -24,45 +27,44 @@ Validate Future Date Record in Holding Table for TL Base Rate
     \    Run Keyword If    '&{dTransformedData}[subEntity]'=='null' and '${PriceType_Last}'=='Last'    Run Keywords    Compare Expected Data on Hold and Actual Data on Hold    ${aQueryList}    
          ...    ${dTransformedData}    ${PriceType_Last}    AUD
          ...    AND    Compare Expected Data on Hold and Actual Data on Hold    ${aQueryList}    
-         ...    ${dTransformedData}    ${PriceType_Last}    NY
+         ...    ${dTransformedData}    ${PriceType_Last}    EUR
          ...    ELSE IF    '&{dTransformedData}[subEntity]'=='AUD' and '${PriceType_Last}'=='Last'    Compare Expected Data on Hold and Actual Data on Hold    ${aQueryList}    
-         ...    ${dTransformedData}    ${PriceType_Last}    NY
-         ...    ELSE IF    '&{dTransformedData}[subEntity]'=='NY' and '${PriceType_Last}'=='Last'    Compare Expected Data on Hold and Actual Data on Hold    ${aQueryList}    
+         ...    ${dTransformedData}    ${PriceType_Last}    EUR
+         ...    ELSE IF    '&{dTransformedData}[subEntity]'=='EUR' and '${PriceType_Last}'=='Last'    Compare Expected Data on Hold and Actual Data on Hold    ${aQueryList}    
          ...    ${dTransformedData}    ${PriceType_Last}    AUD
          ...    ELSE    Log    lastRate value is null.
     \    
     \    Run Keyword If    '&{dTransformedData}[subEntity]'=='null' and '${PriceType_Bid}'=='Bid'    Run Keywords    Compare Expected Data on Hold and Actual Data on Hold    ${aQueryList}    
          ...    ${dTransformedData}    ${PriceType_Bid}    AUD
          ...    AND    Compare Expected Data on Hold and Actual Data on Hold    ${aQueryList}    
-         ...    ${dTransformedData}    ${PriceType_Bid}    NY
+         ...    ${dTransformedData}    ${PriceType_Bid}    EUR
          ...    ELSE IF    '&{dTransformedData}[subEntity]'=='AUD' and '${PriceType_Bid}'=='Bid'    Compare Expected Data on Hold and Actual Data on Hold    ${aQueryList}    
-         ...    ${dTransformedData}    ${PriceType_Bid}    NY
-         ...    ELSE IF    '&{dTransformedData}[subEntity]'=='NY' and '${PriceType_Bid}'=='Bid'    Compare Expected Data on Hold and Actual Data on Hold    ${aQueryList}    
+         ...    ${dTransformedData}    ${PriceType_Bid}    EUR
+         ...    ELSE IF    '&{dTransformedData}[subEntity]'=='EUR' and '${PriceType_Bid}'=='Bid'    Compare Expected Data on Hold and Actual Data on Hold    ${aQueryList}    
          ...    ${dTransformedData}    ${PriceType_Bid}    AUD
          ...    ELSE    Log    buyRate value is null.
     \    
     \    Run Keyword If    '&{dTransformedData}[subEntity]'=='null' and '${PriceType_Mid}'=='Mid'    Run Keywords    Compare Expected Data on Hold and Actual Data on Hold    ${aQueryList}    
          ...    ${dTransformedData}    ${PriceType_Mid}    AUD
          ...    AND    Compare Expected Data on Hold and Actual Data on Hold    ${aQueryList}    
-         ...    ${dTransformedData}    ${PriceType_Mid}    NY
+         ...    ${dTransformedData}    ${PriceType_Mid}    EUR
          ...    ELSE IF    '&{dTransformedData}[subEntity]'=='AUD' and '${PriceType_Mid}'=='Mid'    Compare Expected Data on Hold and Actual Data on Hold    ${aQueryList}    
-         ...    ${dTransformedData}    ${PriceType_Mid}    NY
-         ...    ELSE IF    '&{dTransformedData}[subEntity]'=='NY' and '${PriceType_Mid}'=='Mid'    Compare Expected Data on Hold and Actual Data on Hold    ${aQueryList}    
+         ...    ${dTransformedData}    ${PriceType_Mid}    EUR
+         ...    ELSE IF    '&{dTransformedData}[subEntity]'=='EUR' and '${PriceType_Mid}'=='Mid'    Compare Expected Data on Hold and Actual Data on Hold    ${aQueryList}    
          ...    ${dTransformedData}    ${PriceType_Mid}    AUD
          ...    ELSE    Log    midRate value is null.
     \    
     \    Run Keyword If    '&{dTransformedData}[subEntity]'=='null' and '${PriceType_Ask}'=='Ask'    Run Keywords    Compare Expected Data on Hold and Actual Data on Hold    ${aQueryList}    
          ...    ${dTransformedData}    ${PriceType_Ask}    AUD
          ...    AND    Compare Expected Data on Hold and Actual Data on Hold    ${aQueryList}    
-         ...    ${dTransformedData}    ${PriceType_Ask}    NY
+         ...    ${dTransformedData}    ${PriceType_Ask}    EUR
          ...    ELSE IF    '&{dTransformedData}[subEntity]'=='AUD' and '${PriceType_Ask}'=='Ask'    Compare Expected Data on Hold and Actual Data on Hold    ${aQueryList}    
-         ...    ${dTransformedData}    ${PriceType_Ask}    NY
-         ...    ELSE IF    '&{dTransformedData}[subEntity]'=='NY' and '${PriceType_Ask}'=='Ask'    Compare Expected Data on Hold and Actual Data on Hold    ${aQueryList}    
+         ...    ${dTransformedData}    ${PriceType_Ask}    EUR
+         ...    ELSE IF    '&{dTransformedData}[subEntity]'=='EUR' and '${PriceType_Ask}'=='Ask'    Compare Expected Data on Hold and Actual Data on Hold    ${aQueryList}    
          ...    ${dTransformedData}    ${PriceType_Ask}    AUD
          ...    ELSE    Log    sellRate value is null.
     \    
     \    Exit For Loop If    ${INDEX}==${Row_Count}
-    Close Current Excel Document
     
 Compare Expected Data on Hold and Actual Data on Hold
     [Documentation]    This keyword is used to compare expexted data on hold from the input file and actual data on hold from the query.
@@ -170,6 +172,7 @@ Get Future Date Record in Holding Table for Multiple Files for TL Base Rate
     ...    @update: jdelacru    02JUL2019    - used 'LIKE' instead of '=' for the query
     ...    @update: clanding    31JUL2019    - updated keyword name to 'Connect to MCH Oracle Database and Execute Query'
     ...    @update: jdelacru    12AUG2019    - removed ${sTransformedData_FilePath} as argument
+    ...    @update: jdelacru    29SEP2020    - change the variable ${FILE_NAME} to ${FILE_NAME_QUERY}
     [Arguments]    ${sFilename}
     ${List_for_Query_Temp}    Create List
     ${InputGSFile_Count}    Get Length    ${sFilename}
@@ -186,9 +189,9 @@ Get Future Date Record in Holding Table for Multiple Files for TL Base Rate
          ...    ${FROM_Q}    ${GS_BASE_RATE_TABLE}
          ...    ${INNERJOIN_Q}    ${MASTER_MAPPING_TABLE}
          ...    ${ON_Q}    ${GS_BASE_RATE_TABLE}.${MAP_ID}    =    ${MASTER_MAPPING_TABLE}.${MAP_ID}
-         ...    ${WHERE_Q}    ${FILE_NAME}    LIKE    '%${InputGSFile}%'
-    \    ${Query_Results_List}    Connect to MCH Oracle Database and Execute Query    ${QUERY_BASE_HOLDING}
+         ...    ${WHERE_Q}    ${FILE_NAME_QUERY}    LIKE    '%${InputGSFile}%'
     \    Log    ${QUERY_BASE_HOLDING}
+    \    ${Query_Results_List}    Connect to MCH Oracle Database and Execute Query    ${QUERY_BASE_HOLDING}
     \    Log    ${Query_Results_List}
     \    ${QueryResult_Count}    Get Length    ${Query_Results_List} 
     \    ${List_for_Query_Res}    Create Multi Query List for Base Rate    ${Query_Results_List}    ${QueryResult_Count}    
