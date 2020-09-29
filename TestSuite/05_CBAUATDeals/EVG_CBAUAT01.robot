@@ -8,6 +8,7 @@ Resource    ../../Configurations/LoanIQ_Import_File.robot
 *** Variables ***
 ${rowid}    1
 
+
 *** Test Cases ***
 ###Pre-requisuites####
 #   a. Two Lenders are created
