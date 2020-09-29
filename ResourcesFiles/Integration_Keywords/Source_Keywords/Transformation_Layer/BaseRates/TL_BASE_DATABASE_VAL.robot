@@ -65,7 +65,6 @@ Validate Future Date Record in Holding Table for TL Base Rate
          ...    ELSE    Log    sellRate value is null.
     \    
     \    Exit For Loop If    ${INDEX}==${Row_Count}
-    # Close Current Excel Document
     
 Compare Expected Data on Hold and Actual Data on Hold
     [Documentation]    This keyword is used to compare expexted data on hold from the input file and actual data on hold from the query.
