@@ -1064,6 +1064,7 @@ Compare Multiple Input and Output JSON for TL Calendar
 Navigate Splitter through Instance Name
     [Documentation]    This keyword is use to navigate splitter if the given argument is Instance Name
     ...    @author: jdelacru    26JUL2019    - initial create
+    ...    @update: mcastro     28SEP2020    Added scroll into view of ${OpenAPI_Source_Parent_Row} and ${OpenAPI_Source_Child_Row_Instance}
     [Arguments]    ${sSourceName}    ${sInstance}
     
     ${OpenAPI_Source_Parent_Row}    Replace Variables    ${OpenAPI_Source_Parent_Row}
@@ -1074,6 +1075,7 @@ Navigate Splitter through Instance Name
     :FOR    ${INDEX}    IN RANGE    10
     \    
     \    Wait Until Element Is Visible     ${OpenAPI_Source_Parent_Row}
+    \    Mx Scroll Element Into View    ${OpenAPI_Source_Parent_Row}
     \    Double Click Element    ${OpenAPI_Source_Parent_Row}
     \    Sleep    2s
     \    ${status}    Run Keyword And Return Status    Wait Until Element Is Visible     ${OpenAPI_Source_Child_Row_Instance}
@@ -1084,7 +1086,8 @@ Navigate Splitter through Instance Name
     \    
     \    ${IsVisible}    Run Keyword If    '${sInstance}'!='None'    Run Keyword And Return Status    Wait Until Element Is Visible     ${OpenAPI_Source_Child_Row_Instance}
     \    
-    \    Run Keyword If    ${IsVisible}==${True}    Double Click Element    ${OpenAPI_Source_Child_Row_Instance}
+    \    Run Keyword If    ${IsVisible}==${True}    Run Keywords    Mx Scroll Element Into View    ${OpenAPI_Source_Child_Row_Instance}
+         ...    AND    Double Click Element    ${OpenAPI_Source_Child_Row_Instance}
          ...    ELSE    Run Keywords    Double Click Element    ${OpenAPI_Source_Parent_Row}
          ...    AND    Wait Until Element Is Visible     ${OpenAPI_Source_Child_Row_Instance}
          ...    AND    Double Click Element    ${OpenAPI_Source_Child_Row_Instance}
