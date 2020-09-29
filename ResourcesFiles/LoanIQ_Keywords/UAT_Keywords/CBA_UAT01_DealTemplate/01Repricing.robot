@@ -1,12 +1,6 @@
 *** Settings ***
 Resource    ../../../../Configurations/LoanIQ_Import_File.robot
 
-*** Variables ***
-${HostBankShare}    21661.16
-${Lend1TranAmount}    1188.16
-${ComputedHBTranAmount}    21661.16
-${ComputedLend1TranAmount}    1188.16
-
 *** Keywords ***
 Loan Merge in Deal D00000454
     [Documentation]    This is a high-level keyword to execute loan merge of A1 and A2 outstanding.
