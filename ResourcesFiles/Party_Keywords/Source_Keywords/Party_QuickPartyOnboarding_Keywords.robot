@@ -560,3 +560,29 @@ Validate Address Details
     Compare Two Arguments    ${sState_Province}    ${Party_QuickEnterpriseParty_AddressDetails_StateProvince_Dropdown}
     Capture Page Screenshot    ${screenshot_path}/Screenshots/Party/PartyAddressDetailsPage-{index}.png
     Mx Click Element    ${Party_QuickEnterpriseParty_AddressDetails_Next_Button}
+    
+Populate Pre-Existence Check and Validate the Duplicate Enterprise Name
+   [Documentation]    This keyword populates pre-existence with Duplicate Enterprise Name, checks if Action required is Reject and view the existing Party details 
+    ...    @author: javinzon    28SEP2020    -initial create
+    [Arguments]    ${sEnterprise_Name}
+
+    Mx Click Element     ${Party_PreExistenceCheck_EnterpriseName_TextBox} 
+    Set Focus To Element    ${Party_PreExistenceCheck_EnterpriseName_TextBox}
+    Mx Activate And Input Text    ${Party_PreExistenceCheck_EnterpriseName_TextBox}    ${sEnterprise_Name}  
+    Capture Page Screenshot    ${screenshot_path}/Screenshots/Party/DuplicateEnterpriseName-{index}.png 
+    Mx Click Element    ${Party_Footer_Next_Button}
+
+    Wait Until Element Is Not Visible    ${PARTY_PREEXISTENCECHECKRESULTFOUND_PAGETITLE}    ${PARTY_TIMEOUT} 
+    ${Party_Name}    Get Text    ${Party_PreExistenceCheck_PartyName_Cell}
+    ${Action}    Get Text    ${Party_PreExistenceCheck_Action_Cell}
+    ${isMatched}    Run Keyword And Return Status    Should Be Equal    ${sEnterprise_Name}    ${Party_Name}
+    Run Keyword If    ${isMatched}==${True}    Log    There is a Duplicate Enterprise Name     ELSE    Fail    No duplicate found for Enterprise Name
+    Run Keyword If    '${Action}'=='Reject'    Run Keywords      Capture Page Screenshot    ${screenshot_path}/Screenshots/Party/DuplicateEnterpriseName-{index}.png 
+    ...    AND    Mx Click Element    ${Party_PreExistenceCheck_View_Button}     ELSE    Fail    No duplicate found for Enterprise Name
+    
+    Wait Until Page Contains   ${PARTY_ENQUIREENTERPRISEPARTY_PAGETITLE}
+    Capture Page ScreenShot    ${screenshot_path}/Screenshots/Party/DuplicateEnterpriseName-{index}.png
+    ${Existing_EnterpriseName}    Get Value    ${Party_EnquirePartyDetails_EnterpriseName_TextBox}
+    Log    ${Existing_EnterpriseName}
+    ${isMatched}    Run Keyword And Return Status    Should Be Equal    ${Existing_EnterpriseName}    ${Party_Name}
+    Run Keyword If    ${isMatched}==${True}    Logout User on Party    ELSE    Fail    Party details displayed are not for Party:${Party_Name}
