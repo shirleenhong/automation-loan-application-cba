@@ -7,14 +7,14 @@ Party_Search = '//input[@name="Search..."]'
 
 
 #Party Dialog Search
-Party_Search_Dialog_searchButton = '//span[contains(@class,"Dialog")][text()="Party Search"]/ancestor::div/descendant::input[@uitype="Button"][@name="Search"]'
+Party_Search_Dialog_Search_Button = '//span[contains(@class,"Dialog")][text()="Party Search"]/ancestor::div/descendant::input[@uitype="Button"][@name="Search"]'
 Party_Search_Dialog = '//span[contains(@class,"Dialog")][text()="Party Search"]'
 Party_Search_Dialog_Branch = '//input[contains(@id,"Branch")][@type="combo"]'
 Party_Search_Dialog_PatyID = '//div[@role="dialog"]/descendant::*[text()="Party ID"][@uitype="Label"]/../following-sibling::td/following-sibling::td/following-sibling::td/descendant::input[contains(@name,"partyId")]'
 Party_Search_Dialog_PartyName='//div[@role="dialog"]/descendant::input[contains(@name,"partySearchKey")][contains(@name,"name")][not(contains(@name,"nameType"))]'
 Party_Search_Dialog_PartyType = '//input[contains(@id,"partyType")][@type="combo"]' 
 Party_Search_Dialog_PartySubType = '//input[contains(@id,"partySubType")][@type="combo"]'
-Party_Search_Dialog_rowSelectedResult = '//div[contains(@class,"dojoxGridRow")][contains(@class,"dojoxGridRowSelected")]'
+Party_Search_Dialog_RowSelectedResult = '//div[contains(@class,"GridRow")][contains(@class,"GridRowSelected")]'
 
 Party_Search_Dialog_LineOfBusiness = '//input[contains(@id,"LineOfBusiness")][@type="combo"]'
 Party_Search_Dialog_PartyCategory = '//input[contains(@id,"partyCategory")][@type="combo"]'

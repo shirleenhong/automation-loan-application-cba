@@ -130,45 +130,5 @@ Configure Zone and Branch
 
 
 
-Enquire Party Details Search
-    [Documentation]    This keyword is used input party ID to start SEARCH
-    ...    @author: gagregado    
-    [Arguments]    ${sParty_id}    ${sBranch}    ${sParty_Type}    ${sParty_Sub_Type}    ${sParty_Category}    ${line_of_business}    ${Alternate_Party_ID}    ${Party_Name}    ${Date_Formed}    ${National_ID}    ${Tax_ID_GST_Number}        
- 
-    Input Text    ${Party_HomePage_Process_TextBox}    Party Details Enquiry
-    Press Keys    ${Party_HomePage_Process_TextBox}    RETURN
-    Mx Input Text    ${Party_EnquireEnterpriseParty_PartyId_Text}     ${sParty_id}
-    Wait Until Browser Ready State
-    
-    Wait Until Element Is Visible    ${Party_Search}
-    Wait Until Element Is Enabled    ${Party_Search}   
-    
-    Mx Click Element    ${Party_Search}
-    
-
-    Wait Until Element Is Visible    ${Party_Search_Dialog}
-
-    Party Detail Enquiry Search by Dialog    ${Party_Search_Dialog_PatyID}    ${sParty_id}
-    Party Detail Enquiry Search by Dialog    ${Party_Search_Dialog_Branch}    ${sBranch}
-    Party Detail Enquiry Search by Dialog    ${Party_Search_Dialog_PartyType}    ${sParty_Type}
-    Party Detail Enquiry Search by Dialog    ${Party_Search_Dialog_PartyCategory}    ${sParty_Category}
-    Party Detail Enquiry Search by Dialog    ${Party_Search_Dialog_LineOfBusiness}    ${line_of_business}
-    
-    Verify Party Detail Enquiry Search Row Value    Alternate Party ID   ${Alternate_Party_ID}    ${sParty_id}    Party ID 
-    Verify Party Detail Enquiry Search Row Value    Party Name   ${Party_Name}    ${sParty_id}    Party ID 
-    Verify Party Detail Enquiry Search Row Value    DOB / Date Formed   ${Date_Formed}    ${sParty_id}    Party ID 
-    Verify Party Detail Enquiry Search Row Value    National ID / Reg No.   ${National_ID}    ${sParty_id}    Party ID 
-    Verify Party Detail Enquiry Search Row Value    Tax ID / GST Number   ${Tax_ID_GST_Number}    ${sParty_id}    Party ID 
-    Capture Page Screenshot    ${screenshot_path}/Screenshots/Party/PartyDetailsEnquiry-{index}.png
-
-       
-   
-    Mx Click Element    ${Party_CloseDialog_Button}
-
-
-
-
-
-
 
 

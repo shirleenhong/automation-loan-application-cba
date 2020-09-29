@@ -135,8 +135,8 @@ Party Detail Enquiry Search by Dialog
     [Arguments]    ${eInputLocator}    ${sInputVal}
 
     Mx Input Text    ${eInputLocator}    ${sInputVal}
-    Mx Click Element    ${Party_Search_Dialog_searchButton}
-    Wait Until Element Is Visible    ${Party_Search_Dialog_rowSelectedResult}
+    Mx Click Element    ${Party_Search_Dialog_Search_Button}
+    Wait Until Element Is Visible    ${Party_Search_Dialog_RowSelectedResult}
     Capture Page Screenshot    ${screenshot_path}/Screenshots/Party/PartyDetailsEnquiry-{index}.png
 
 
