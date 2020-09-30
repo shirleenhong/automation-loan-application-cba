@@ -165,7 +165,7 @@ Update Line Fee Cycle - Scenario 7 ComSee
     Write Data To Excel    ComSee_SC7_OngoingFeePayment    ScheduledActivity_ThruDate    ${rowid}    ${ScheduledActivity_ThruDate}    ${ComSeeDataSet}
     Write Data To Excel    ComSee_SC7_OngoingFeePayment    ScheduledActivityReport_Date    ${rowid}    ${AdjustedDueDate}    ${ComSeeDataSet}
     Write Data To Excel    ComSee_SC7_OngoingFeePayment    FeePayment_EffectiveDate    ${rowid}    ${SystemDate}    ${ComSeeDataSet}
-    # Run Online Acrual to Line Fee
+    Run Online Acrual to Line Fee
     
     ###Loan IQ Desktop###
     Close All Windows on LIQ
@@ -193,7 +193,7 @@ Pay Line Fee Amount - Scenario 7 ComSee
     
     ###Cycles for Line Fee###
     # Select Cycle Fee Payment
-    Select Cycle Due Line Fee Payment
+    Select Latest Cycle Due Line Fee Payment
     
     ###Ongoing Fee Payment Notebook - General Tab### 
     Enter Effective Date for Ongoing Fee Payment    ${SystemDate}    ${ProjectedCycleDue}

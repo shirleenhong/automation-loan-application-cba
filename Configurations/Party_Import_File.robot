@@ -38,8 +38,8 @@ Resource    ../Variables/Party_Properties.txt
 ###Party Resource Files - Business Process Keywords###
 Resource    ../ResourcesFiles/Party_Keywords/BusinessProcess_Keywords/PTY001_QuickPartyOnboarding.robot
 Resource    ../ResourcesFiles/Party_Keywords/BusinessProcess_Keywords/PTY002_UpdatePartyDetails.robot
-Resource    ../ResourcesFiles/Party_Keywords/BusinessProcess_Keywords/PTY003_QuickPartyOnboarding_Enquiry.robot
-Resource    ../ResourcesFiles/Party_Keywords/BusinessProcess_Keywords/PTY004_QuickPartyOnboarding_Reject.robot
+Resource    ../ResourcesFiles/Party_Keywords/BusinessProcess_Keywords/PTY004_PartyDetailsEnquiry.robot
+Resource    ../ResourcesFiles/Party_Keywords/BusinessProcess_Keywords/PTY005_QuickPartyOnboarding_Reject.robot
 Resource    ../ResourcesFiles/Party_Keywords/BusinessProcess_Keywords/PTY007_DuplicateEnterpriseName.robot
 
 ###Party Resource Files - Sourcel###
@@ -47,6 +47,7 @@ Resource    ../ResourcesFiles/Party_Keywords/Source_Keywords/PartyCommon_Keyword
 Resource    ../ResourcesFiles/Party_Keywords/Source_Keywords/Party_Generic_Keywords.robot
 Resource    ../ResourcesFiles/Party_Keywords/Source_Keywords/Party_QuickPartyOnboarding_Keywords.robot
 Resource    ../ResourcesFiles/Party_Keywords/Source_Keywords/Party_LoanIQVal_Keywords.robot
+Resource    ../ResourcesFiles/Party_Keywords/Source_Keywords/Party_EnquirePartyDetails_Keywords.robot
 
 ##Party Global Variables##
 Resource    ../Variables/Party_Properties.txt

@@ -573,16 +573,18 @@ Populate Pre-Existence Check and Validate the Duplicate Enterprise Name
     Mx Click Element    ${Party_Footer_Next_Button}
 
     Wait Until Element Is Not Visible    ${PARTY_PREEXISTENCECHECKRESULTFOUND_PAGETITLE}    ${PARTY_TIMEOUT} 
-    ${Party_Name}    Get Text    ${Party_PreExistenceCheck_PartyName_Cell}
-    ${Action}    Get Text    ${Party_PreExistenceCheck_Action_Cell}
+    ${Party_Name}    Get Table Value Containing Row Value in Party    ${Party_PreExistenceCheck_SearchResultTableHeader}    ${Party_PreExistenceCheck_SearchResultTableRow}    Party ID    1414849    Party Name  
+    ${Action}    Get Table Value Containing Row Value in Party    ${Party_PreExistenceCheck_SearchResultTableHeader}    ${Party_PreExistenceCheck_SearchResultTableRow}    Party ID    1414849    Action  
+    
     ${isMatched}    Run Keyword And Return Status    Should Be Equal    ${sEnterprise_Name}    ${Party_Name}
-    Run Keyword If    ${isMatched}==${True}    Log    There is a Duplicate Enterprise Name     ELSE    Fail    No duplicate found for Enterprise Name
+    Run Keyword If    ${isMatched}==${True}    Log    There is a Duplicate Enterprise Name  
+    ...   ELSE    Run Keyword and Continue on Failure    Fail    There is no Duplicate Enterprise Name   
     Run Keyword If    '${Action}'=='Reject'    Run Keywords      Capture Page Screenshot    ${screenshot_path}/Screenshots/Party/DuplicateEnterpriseName-{index}.png 
-    ...    AND    Mx Click Element    ${Party_PreExistenceCheck_View_Button}     ELSE    Fail    No duplicate found for Enterprise Name
+    ...    AND    Mx Click Element    ${Party_PreExistenceCheck_View_Button}     ELSE    Run Keyword and Continue on Failure    Fail    No duplicate found for Enterprise Name
     
     Wait Until Page Contains   ${PARTY_ENQUIREENTERPRISEPARTY_PAGETITLE}
     Capture Page ScreenShot    ${screenshot_path}/Screenshots/Party/DuplicateEnterpriseName-{index}.png
     ${Existing_EnterpriseName}    Get Value    ${Party_EnquirePartyDetails_EnterpriseName_TextBox}
     Log    ${Existing_EnterpriseName}
     ${isMatched}    Run Keyword And Return Status    Should Be Equal    ${Existing_EnterpriseName}    ${Party_Name}
-    Run Keyword If    ${isMatched}==${True}    Logout User on Party    ELSE    Fail    Party details displayed are not for Party:${Party_Name}
+    Run Keyword If    ${isMatched}==${True}    Logout User on Party    ELSE    Run Keyword and Continue on Failure    Fail    Party details displayed are not for Party:${Party_Name}

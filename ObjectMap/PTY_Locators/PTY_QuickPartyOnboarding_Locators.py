@@ -1,5 +1,5 @@
 ### Party Onboarding Page ###
-Party_PartyOnboarding_Locality_Dropdown = '//input[contains(@id,"Locality")]'
+Party_PartyOnboarding_Locality_Dropdown = '//input[contains(@id,"Locality") and contains(@type, "combo")]'
 Party_PartyOnboarding_Entity_Textbox = '//input[contains(@id,"countryDetail")]'
 Party_PartyOnboarding_AssignedBranch_Dropdown ='//input[contains(@id,"assignedBranch")]'
 Party_PartyOnboarding_PartyType_Dropdown = '//input[contains(@id,"partyType")]'
@@ -24,10 +24,9 @@ Party_PreExistenceCheck_EnterpriseName_TextBox = '//td[preceding-sibling::td[con
 Party_PreExistenceCheck_Locality_Dropdown = '//input[contains(@id,"locality") and not(contains(@id, "OffScreen"))]'
 Party_PreExistenceCheck_Entity_Dropdown = '//input[contains(@id,"Location")]'
 Party_PreExistenceCheck_Park_Button = '//input[contains (@id, "Park")]'
-Party_PreExistenceCheck_PartyName_Cell = '//div[contains(@id,"PtyDedupOutput") and @role="grid"]//div[@class="dojoxGridMasterView"]//table[1]//td[3]'
-Party_PreExistenceCheck_Action_Cell ='//div[contains(@id,"PtyDedupOutput") and @role="grid"]//div[@class="dojoxGridMasterView"]//table[1]//td[4]'
+Party_PreExistenceCheck_SearchResultTableHeader = '//div[contains(@class, "GridMasterHeader")]//table[contains(@class, "GridRowTable")]//th'
+Party_PreExistenceCheck_SearchResultTableRow ='//div[contains(@class, "GridMasterView")]//table[contains(@class, "GridRowTable")]//tr'
 Party_PreExistenceCheck_View_Button = '//input[contains(@id, "View")]'
-
 
 ### Quick Enterprise Party Page ###
 Party_QuickEnterpriseParty_PartyId_TextBox = '//input[contains(@id,"partyId") and not(contains(@id, "OffScreen"))]'

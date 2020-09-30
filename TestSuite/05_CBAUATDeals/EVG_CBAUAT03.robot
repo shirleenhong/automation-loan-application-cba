@@ -108,7 +108,7 @@ Collect LC1 - D00000476
     Mx Execute Template With Multiple Data    Initiate LC Collection D00000476    ${CBAUAT_ExcelPath}    1    SERV18_FeeOnLenderSharesPayment
    
 Collect LFIA1 - D00000476
-    Mx Execute Template With Multiple Data    Collect LFIA Payment D00000476    ${CBAUAT_ExcelPath}    1    SERV29_Payments
+    Mx Execute Template With Multiple Data    Collect LFIA Payment D00000476    ${CBAUAT_ExcelPath}    1    SERV29_LineFeePayment
 
 ###December 19
 Issue LC2 - D00000476
@@ -120,30 +120,31 @@ Issue LC2 - D00000476
     # Mx Execute Template With Multiple Data    Load FX Rate D00000476     ${CBAUAT_ExcelPath}    1    FXRates_Fields
 
 Collect LFIA2 - D00000476
-    Mx Execute Template With Multiple Data    Collect LFIA Payment D00000476    ${CBAUAT_ExcelPath}    2    SERV29_Payments
+    Mx Execute Template With Multiple Data    Collect LFIA Payment D00000476    ${CBAUAT_ExcelPath}    2    SERV29_LineFeePayment
 
 Create Drawdown D1 and D2 D00000476
+    # Mx Execute Template With Multiple Data    Create Drawdown D00000476    ${CBAUAT_ExcelPath}    4-5    SERV01_LoanDrawdown
     Mx Execute Template With Multiple Data    Create Drawdown D00000476    ${CBAUAT_ExcelPath}    5    SERV01_LoanDrawdown
     
-# ### December 31
-# Collect Commitment Fee - D00000476
-    # Mx Execute Template With Multiple Data    Commitment Fee Payment    ${CBAUAT_ExcelPath}   1-3    SERV29_CommitmentFeePayment     
+### December 31
+Collect Commitment Fee for MOF, FCAF, SCAF - D00000476
+    Mx Execute Template With Multiple Data    Collect Commitment Fee Payment    ${CBAUAT_ExcelPath}   1-3    SERV29_CommitmentFeePayment     
 
-# Collect LC2 - D00000476
-    # Mx Execute Template With Multiple Data    Initiate LC Collection D00000476    ${CBAUAT_ExcelPath}    2    SERV18_FeeOnLenderSharesPayment
+Collect LC2 - D00000476
+    Mx Execute Template With Multiple Data    Initiate LC Collection D00000476    ${CBAUAT_ExcelPath}    2    SERV18_FeeOnLenderSharesPayment
     
-# Collect LC1 Advance - D00000476
-    # Mx Execute Template With Multiple Data    Initiate LC Collection D00000476    ${CBAUAT_ExcelPath}    3    SERV18_FeeOnLenderSharesPayment
+Collect LC1 Advance - D00000476
+    Mx Execute Template With Multiple Data    Initiate LC Collection D00000476    ${CBAUAT_ExcelPath}    3    SERV18_FeeOnLenderSharesPayment
 
 # ### January 4
 # Setup BaseRate for Jan 4
     # Mx Execute Template With Multiple Data    Load Base Rate D00000476    ${CBAUAT_ExcelPath}    3    BaseRate_Fields
     
-# Collect Early Prepayment for D1 - D00000476
-    # Mx Execute Template With Multiple Data    Collect Early Prepayment via Paper Clip D00000476    ${CBAUAT_ExcelPath}    1    SERV23_Paperclip
+Collect Early Prepayment for D1 - D00000476
+    Mx Execute Template With Multiple Data    Collect Early Prepayment via Paper Clip D00000476    ${CBAUAT_ExcelPath}    1    SERV23_Paperclip
     
-# Charge Breakcost Fee for D1 - D00000476
-    # Mx Execute Template With Multiple Data    Collect Break Cost Fee for Early Prepayment D00000476    ${CBAUAT_ExcelPath}    1    SERV40_BreakFunding
+Charge Breakcost Fee for D1 - D00000476
+    Mx Execute Template With Multiple Data    Collect Break Cost Fee for Early Prepayment D00000476    ${CBAUAT_ExcelPath}    1    SERV40_BreakFunding
 
 # Initiate First Rollover for Drawdown A B C - D00000476
     # Mx Execute Template With Multiple Data    Initiate Comprehensive Repricing - D00000476    ${CBAUAT_ExcelPath}   1-3    SERV08C_ComprehensiveRepricing
