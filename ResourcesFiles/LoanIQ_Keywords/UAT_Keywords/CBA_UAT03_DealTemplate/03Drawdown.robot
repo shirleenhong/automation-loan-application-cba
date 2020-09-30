@@ -29,6 +29,7 @@ Create Drawdown D00000476
     ...    None    None    &{ExcelPath}[Loan_PaymentMode]    &{ExcelPath}[Loan_Accrue]    &{ExcelPath}[Loan_AccrueEndDate]
   
     ###Accept Loan Drawdown Rates for Term Facility    &{ExcelPath}[Borrower_BaseRate]
+    Mx Click Element If Present    ${LIQ_Warning_Yes_Button}    
     Input Loan Drawdown Rates    &{ExcelPath}[Borrower_BaseRate]    &{ExcelPath}[Facility_Spread]
     Set Outstanding Servicing Group Details    &{ExcelPath}[Borrower_ShortName]    &{ExcelPath}[Remittance_Instruction]
 
