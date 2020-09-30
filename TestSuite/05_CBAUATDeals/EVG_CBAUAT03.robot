@@ -123,8 +123,7 @@ Collect LFIA2 - D00000476
     Mx Execute Template With Multiple Data    Collect LFIA Payment D00000476    ${CBAUAT_ExcelPath}    2    SERV29_LineFeePayment
 
 Create Drawdown D1 and D2 D00000476
-    # Mx Execute Template With Multiple Data    Create Drawdown D00000476    ${CBAUAT_ExcelPath}    4-5    SERV01_LoanDrawdown
-    Mx Execute Template With Multiple Data    Create Drawdown D00000476    ${CBAUAT_ExcelPath}    5    SERV01_LoanDrawdown
+   Mx Execute Template With Multiple Data    Create Drawdown D00000476    ${CBAUAT_ExcelPath}    4-5    SERV01_LoanDrawdown
     
 ### December 31
 Collect Commitment Fee for MOF, FCAF, SCAF - D00000476
