@@ -258,3 +258,43 @@ Pay Line Fee Amount - Scenario 7 ComSee
     
     Close All Windows on LIQ
     Logout from Loan IQ
+    
+Create Cycle Share Adjustment for Fee Accrual - Scenario 7 ComSee
+    [Documentation]    This keyword is for creating cycle share adjustment for Bilateral Deal (MTAM06B).
+    ...    @author: cfrancis    28SEP2020    - Initial create
+    [Arguments]    ${ExcelPath}
+   
+    ###Launch Facility Notebook###
+    ${SystemDate}    Get System Date
+    ${FacilityName}    Read Data From Excel    ComSee_SC7_FacFeeSetup    Facility_Name    ${rowid}    ${ComSeeDataSet}
+    ${DealName}    Read Data From Excel    ComSee_SC7_Deal    Deal_Name    ${rowid}    ${ComSeeDataSet} 
+    Launch Existing Facility    ${DealName}    ${FacilityName}
+    
+    ###Navigate to Line Fee Notebook
+    ${LineFee}    Read Data From Excel    ComSee_SC7_FacFeeSetup    OngoingFee_Type1    ${rowid}    ${ComSeeDataSet}
+    Navigate to Commitment Fee Notebook    ${LineFee}
+    
+    ${StartDate}    ${EndDate}    ${DueDate}    ${CycleDue}    ${ProjectedCycleDue}    ${Orig_TotalCycleDue}    ${Orig_TotalManualAdjustment}    ${Orig_TotalProjectedEOCAccrual}    Navigate Line Fee and Verify Accrual Tab    ${rowid}    1    # &{ExcelPath}[CycleNo]
+    
+    ###Accrual Share Adjustment Notebook###
+    Navigate Line Fee and Verify Accrual Share Adjustment Notebook    ${StartDate}    ${DealName}    ${FacilityName}    ${LineFee}    ${CycleDue}    ${ProjectedCycleDue}
+    ${RequestedAmount}    Evaluate    ${CycleDue} - 10
+    Input Requested Amount, Effective Date, and Comment    ${RequestedAmount}    ${StartDate}     Adjustment
+    Save the Requested Amount, Effective Date, and Comment    ${RequestedAmount}    ${StartDate}     Adjustment
+    
+    ###Accrual Share Adjustment Notebook - Workflow Items (INPUTTER)###
+    Send Adjustment to Approval
+    Logout from Loan IQ
+    
+    ###Accrual Share Adjustment Notebook - Workflow Items (APPROVER)###
+    Login to Loan IQ    ${SUPERVISOR_USERNAME}    ${SUPERVISOR_PASSWORD}
+    Select Item in Work in Process    Facilities    Awaiting Approval    Fee Accrual Shares Adjustment     ${FacilityName}
+    Approve Fee Accrual Shares Adjustment
+    Logout from Loan IQ
+    
+    ###Accrual Share Adjustment Notebook - Workflow Items (APPROVER2)###
+    Login to Loan IQ    ${MANAGER_USERNAME}    ${MANAGER_PASSWORD}
+    Select Item in Work in Process    Facilities    Awaiting Release    Fee Accrual Shares Adjustment     ${FacilityName}
+    Release Fee Accrual Shares Adjustment
+    Close Accrual Shares Adjustment Window
+    Logout from Loan IQ
