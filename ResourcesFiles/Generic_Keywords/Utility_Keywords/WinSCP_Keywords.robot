@@ -181,12 +181,13 @@ Send Multiple Files to SFTP and Validate If Files are Processed for Holiday
     ...    @author: clanding    17JUL2019    - initial create
     ...    @update: jloretiz    26NOV2019    - add the convertion of file from XLSX to XLS before dropping in TL server
     ...    @update: clanding    29SEP2020    - commented Start TL Service and Stop TL Service since there is a restriction to new server user 'sftpuser'
-    [Arguments]    ${sInputFilePath}    ${sFilePathDestinaton}    ${sInputGSFile}    ${sArchiveFolder}    ${sDelimiter}=None    ${iPollingTime}=None
+    ...    @update: mcastro     30SEP2020    - added ${sXLS_Exists} argument to handle scenario that already has existing xls files in the path
+    [Arguments]    ${sInputFilePath}    ${sFilePathDestinaton}    ${sInputGSFile}    ${sArchiveFolder}    ${sDelimiter}=None    ${iPollingTime}=None    ${sXLS_Exists}=None
     
     ###Convert to XLS the XLSX###
-    Convert Excel XLSX to XLS    ${sInputFilePath}    ${sInputGSFile}    ${File_1}
-    Convert Excel XLSX to XLS    ${sInputFilePath}    ${sInputGSFile}    ${File_2}
-    Convert Excel XLSX to XLS    ${sInputFilePath}    ${sInputGSFile}    ${Misc_File}  
+    Run Keyword if   '${sXLS_Exists}'=='None'    Convert Excel XLSX to XLS    ${sInputFilePath}    ${sInputGSFile}    ${File_1}
+    Run Keyword if   '${sXLS_Exists}'=='None'    Convert Excel XLSX to XLS    ${sInputFilePath}    ${sInputGSFile}    ${File_2}
+    Run Keyword if   '${sXLS_Exists}'=='None'    Convert Excel XLSX to XLS    ${sInputFilePath}    ${sInputGSFile}    ${Misc_File}  
 
     @{InputGSFile_List}    Run Keyword If    '${sDelimiter}'=='None'    Split String    ${sInputGSFile}    ,
     ...    ELSE    Split String    ${sInputGSFile}    ${sDelimiter}
