@@ -137,7 +137,6 @@ Transform Base Rate CSV Data to XLS File Readable for JSON Creation
     
     ${TL_BASE_TOTALROW}    Set Variable    ${New_INDEX}
     Set Global Variable    ${TL_BASE_TOTALROW} 
-      
     
 Get Single Row value from CSV File and Write to Excel for Base Rate
     [Documentation]    sTLPath_Transformed_Data have the corresponding key fields for Bae Rate JSON file. This keyword will get row value from CSV File and write it to sTLPath_Transformed_Data.
@@ -620,15 +619,14 @@ Create Individual Expected JSON for Base Rate TL
     \    ${val_rateTenor}    Get From Dictionary    ${dTransformedData}    rateTenor
     \    ${val_rateTenor}    Run Keyword If    '${val_rateTenor}'==''    Set Variable    None
          ...    ELSE    Set Variable    ${val_rateTenor}
-    \    ${val_subEntity}    Get From Dictionary    ${dTransformedData}    subEntity    
     \
     \    ${New_JSON}    Update Key Values of Input JSON file for Base Rate TL	${dTransformedData}
     \    Log    ${New_JSON}
     \    ${converted_json}    Evaluate    json.dumps(${New_JSON})        json
     \    Log    ${converted_json}
     \    
-    \    Delete File If Exist    ${dataset_path}${sInputJsonFile}_${val_baseRateCode}_${val_rateTenor}_${val_subEntity}.json
-    \    Create File    ${dataset_path}${sInputJsonFile}_${val_baseRateCode}_${val_rateTenor}_${val_subEntity}.json    ${converted_json}
+    \    Delete File If Exist    ${dataset_path}${sInputJsonFile}_${val_baseRateCode}_${val_rateTenor}.json
+    \    Create File    ${dataset_path}${sInputJsonFile}_${val_baseRateCode}_${val_rateTenor}.json    ${converted_json}
     \    
     \    Exit For Loop If    ${INDEX}==${Row_Count}
     
