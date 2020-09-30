@@ -31,8 +31,6 @@ Wait Until Browser Ready State
     \    Sleep    1s      
             
 Mx Input Text
-    [Documentation]    This keyword is use to type a text in a given locator
-    ...    @update: jdelacru    21SEP2020    - Use Press Keys keyword to enter text instead of Input Text
     [Arguments]    ${locator}    ${text}
     Wait Until Browser Ready State
     Wait Until Keyword Succeeds    ${retry}    ${retry_interval}    Wait Until Page Contains Element    ${locator}    1s

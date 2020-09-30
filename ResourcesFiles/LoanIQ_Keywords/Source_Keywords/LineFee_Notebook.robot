@@ -52,7 +52,7 @@ Save and Exit Line Fee Notebook
     mx LoanIQ click element if present    ${LIQ_Warning_OK_Button}
     mx LoanIQ select    ${LIQ_LineFee_Exit_Menu} 
     
-Navigate to Line Fee Notebook
+Navigate to Existing Ongoing Fee Notebook
     [Documentation]    This keyword is used for navigating to Line Fee Notebook
     ...    @author:ritragel    8AUG2019
     [Arguments]    ${sOngoingFee_Type}    
@@ -207,6 +207,24 @@ Select Cycle Due Line Fee Payment
     mx LoanIQ enter    ${LIQ_CommitmentFee_Cycles_CycleDue_RadioButton}    ON   
     mx LoanIQ click    ${LIQ_CommitmentFee_Cycles_OK_Button}
     Take Screenshot    CycleDueAmount
+    
+Select Latest Cycle Due Line Fee Payment 
+    [Documentation]    This keyword selects a cycle fee payment for Cycle Due amount.
+    ...    @author: cfrancis    25SEP2020    Initial Create 
+    
+    mx LoanIQ activate window    ${LIQ_LineFee_Window}    
+    mx LoanIQ select    ${LIQ_LineFee_General_OptionsPayment_Menu}
+    mx LoanIQ enter    ${LIQ_ChoosePayment_Fee_RadioButton}    ON
+    mx LoanIQ click    ${LIQ_ChoosePayment_OK_Button}
+    mx LoanIQ enter    ${LIQ_CommitmentFee_Cycles_CycleDue_RadioButton}    ON   
+    ${rowcount}    Mx LoanIQ Get Data    ${LIQ_LineFee_Cycles_List}    input=items count%value
+    Log    The total rowcount is ${rowcount}
+    Write Data To Excel    ComSee_SC7_OngoingFeePayment    CycleNumber    ${rowid}    ${rowcount}    ${ComSeeDataSet}
+    ${Due_Date}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_LineFee_Cycles_List}    ${rowcount}%Due Date%amount
+    Mx LoanIQ Select String    ${LIQ_LineFee_Cycles_List}    ${Due_Date}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/CycleDue_Row
+    mx LoanIQ click    ${LIQ_CommitmentFee_Cycles_OK_Button}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/CycleDue
     
 Enter Effective Date for Line Fee-Cycle Due Payment
     [Documentation]    This keywod populates the effective date for ongoing fee-cycle dues payment.
