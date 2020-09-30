@@ -619,7 +619,6 @@ Create Individual Expected JSON for Base Rate TL
     \    ${val_rateTenor}    Get From Dictionary    ${dTransformedData}    rateTenor
     \    ${val_rateTenor}    Run Keyword If    '${val_rateTenor}'==''    Set Variable    None
          ...    ELSE    Set Variable    ${val_rateTenor}
-    # \    ${val_subEntity}    Get From Dictionary    ${dTransformedData}    subEntity    
     \
     \    ${New_JSON}    Update Key Values of Input JSON file for Base Rate TL	${dTransformedData}
     \    Log    ${New_JSON}
