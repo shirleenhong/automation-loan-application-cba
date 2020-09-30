@@ -12,7 +12,6 @@ Send a Valid GS File
     ...    @update: clanding    11APR2019    - added Login to Loan IQ
     ...    @update: clanding    31MAY2019    - added new argument for Validate FFC for TL Base Rate Success
     ...    @update: jdelacru    11AUG2020    - changed the location of templates items for Base Rate by adding variable TemplateFilePath
-    ...    @update: jdelacru    21SEP2020    - changed the keyword in validating FFC with multiple sub-entities
     [Arguments]    ${ExcelPath}
     
     ###PREREQUISITE###
