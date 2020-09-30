@@ -72,7 +72,7 @@ Validate Enquire Enterprise Party Details
     
 Select Row That Contains Text
     [Documentation]    This keyword concatenates current date as a unique 7 numeric test data
-    ...    @update: gbagregado    - add documentation  
+    ...    @update: gbagregado    30SEPT2020    - add documentation  
     [Arguments]    ${sField_to_verify}    ${sTable_name}    ${sElement_to_be_clicked}    ${sContains_cell_text}    ${sElement_to_activate}
 
     ${iTable_length}    SeleniumLibraryExtended.Get Element Count    ${sTable_name}
