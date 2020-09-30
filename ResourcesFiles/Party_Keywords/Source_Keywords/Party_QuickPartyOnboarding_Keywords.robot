@@ -21,7 +21,7 @@ Populate Party Onboarding and Return Values
     Run Keyword If    '${sParty_Type}'=='Enterprise'    Wait Until Element Is Visible    ${Party_PartyOnboarding_LineOfBusiness_Table}    15s
     ...    ELSE    Run Keyword And Continue On Failure    Element Should Not Be Visible    ${Party_PartyOnboarding_LineOfBusiness_Table}
 
-    #Validate if Commercial Lending is selected by default
+    ### Validate if Commercial Lending is selected by default ###
     ${RowCount}    SeleniumLibraryExtended.Get Element Count    ${Party_PartyOnboarding_LineOfBusiness_Rows}
     :FOR    ${INDEX}    IN RANGE    1    ${RowCount} + 1
     \    
@@ -580,11 +580,13 @@ Populate Pre-Existence Check and Validate the Duplicate Enterprise Name
     Run Keyword If    ${isMatched}==${True}    Log    There is a Duplicate Enterprise Name  
     ...   ELSE    Run Keyword and Continue on Failure    Fail    There is no Duplicate Enterprise Name   
     Run Keyword If    '${Action}'=='Reject'    Run Keywords      Capture Page Screenshot    ${screenshot_path}/Screenshots/Party/DuplicateEnterpriseName-{index}.png 
-    ...    AND    Mx Click Element    ${Party_PreExistenceCheck_View_Button}     ELSE    Run Keyword and Continue on Failure    Fail    No duplicate found for Enterprise Name
+    ...    AND    Mx Click Element    ${Party_PreExistenceCheck_View_Button}     
+    ...    ELSE    Run Keyword and Continue on Failure    Fail    No duplicate found for Enterprise Name
     
     Wait Until Page Contains   ${PARTY_ENQUIREENTERPRISEPARTY_PAGETITLE}
     Capture Page ScreenShot    ${screenshot_path}/Screenshots/Party/DuplicateEnterpriseName-{index}.png
     ${Existing_EnterpriseName}    Get Value    ${Party_EnquirePartyDetails_EnterpriseName_TextBox}
     Log    ${Existing_EnterpriseName}
     ${isMatched}    Run Keyword And Return Status    Should Be Equal    ${Existing_EnterpriseName}    ${Party_Name}
-    Run Keyword If    ${isMatched}==${True}    Logout User on Party    ELSE    Run Keyword and Continue on Failure    Fail    Party details displayed are not for Party:${Party_Name}
+    Run Keyword If    ${isMatched}==${True}    Logout User on Party    
+    ...    ELSE    Run Keyword and Continue on Failure    Fail    Party details displayed are not for Party:${Party_Name}
