@@ -396,3 +396,41 @@ Release Line Fee
     mx LoanIQ click    ${LIQ_LineFee_InquiryMode_Button}
     Navigate Notebook Workflow    ${LIQ_LineFeeNotebook_Window}    ${LIQ_LineFeeTag_Tab}    ${LIQ_LineFeeNotebook_Workflow_JavaTree}    Release
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LineFee_Notebook
+    
+Navigate Line Fee and Verify Accrual Tab
+    [Documentation]    This keyword is used for navigating and verifies data in Accrual Tab.
+    ...    @author: cfrancis    - 30SEP2020
+    [Arguments]    ${sRowid}    ${sCycleNo}    ${sRunVar_StartDate}=None    ${sRunVar_EndDate}=None    ${sRunVar_DueDate}=None    ${sRunVar_CycleDue}=None    ${sRunVar_ProjectedCycleDue}=None
+    ...    ${sRunVar_Orig_TotalCycleDue}=None    ${sRunVar_Orig_TotalManualAdjustment}=None    ${sRunVar_Orig_TotalProjectedEOCAccrual}=None
+    ### GetRuntime Keyword Pre-processing ###
+    ${rowid}    Acquire Argument Value    ${sRowid}
+    ${CycleNo}    Acquire Argument Value    ${sCycleNo}
+    
+    Mx LoanIQ Select Window Tab    ${LIQ_LineFee_Tab}    Accrual
+    Run Keyword And Continue On Failure    Mx LoanIQ Verify Object Exist    ${LIQ_LineFee_Accrual_Cycles_JavaTree}            VerificationData="Yes"
+    
+    ${StartDate}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_LineFee_Accrual_Cycles_JavaTree}    ${CycleNo}%Start Date%value    
+    ${EndDate}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_LineFee_Accrual_Cycles_JavaTree}    ${CycleNo}%End Date%value
+    ${DueDate}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_LineFee_Accrual_Cycles_JavaTree}    ${CycleNo}%Due Date%value
+    ${CycleDue}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_LineFee_Accrual_Cycles_JavaTree}    ${CycleNo}%Cycle Due%value
+    ${ProjectedCycleDue}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_LineFee_Accrual_Cycles_JavaTree}    ${CycleNo}%Projected EOC due%value
+    ${Orig_TotalCycleDue}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_LineFee_Accrual_Cycles_JavaTree}    TOTAL: %Cycle Due%value       
+    ${Orig_TotalManualAdjustment}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_LineFee_Accrual_Cycles_JavaTree}    TOTAL: %Manual adjustmt%value
+    ${Orig_TotalProjectedEOCAccrual}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_LineFee_Accrual_Cycles_JavaTree}    TOTAL: %Projected EOC accrual%value
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LineFee_AccrualTab
+	
+    [Return]    ${StartDate}    ${EndDate}    ${DueDate}    ${CycleDue}    ${ProjectedCycleDue}    ${Orig_TotalCycleDue}    ${Orig_TotalManualAdjustment}    ${Orig_TotalProjectedEOCAccrual}
+    
+Navigate Line Fee and Verify Accrual Share Adjustment Notebook
+    [Documentation]    This keyword is used for navigating Accrual Share Adjustment Notebook from Commitment Notebook.
+    ...    @author: cfrancis    - 30SEP2020
+    [Arguments]    ${StartDate}    ${Deal_Name}    ${Facility_Name}    ${OngoingFee_Type}    ${CurrentCycleDue_Value}    ${ProjectedCycleDue_Value}           
+       
+    Mx LoanIQ Select Window Tab    ${LIQ_LineFee_Tab}    Accrual 
+    Mx LoanIQ Select String    ${LIQ_LineFee_Accrual_Cycles_JavaTree}    ${StartDate}
+    mx LoanIQ click    ${LIQ_LineFeeNotebook_CycleShareAdjustment_Button}
+    mx LoanIQ activate window    ${LIQ_AccrualSharesAdjustment_Window} 
+    
+    Run Keyword And Continue On Failure    Mx LoanIQ Verify Object Exist    JavaWindow("title:=Accrual Shares Adjustment -.*").JavaStaticText("attached text:=${Deal_Name}")      VerificationData="Yes"
+    Run Keyword And Continue On Failure    Mx LoanIQ Verify Object Exist    JavaWindow("title:=Accrual Shares Adjustment -.*").JavaStaticText("attached text:=${Facility_Name}")    VerificationData="Yes"
+    Run Keyword And Continue On Failure    Mx LoanIQ Verify Object Exist    JavaWindow("title:=Accrual Shares Adjustment -.*").JavaStaticText("attached text:=${OngoingFee_Type}")    VerificationData="Yes"
