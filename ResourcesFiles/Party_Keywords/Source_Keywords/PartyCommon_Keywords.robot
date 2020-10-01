@@ -28,8 +28,7 @@ Navigate Party Details Enquiry
     Input Text    ${Party_HomePage_Process_TextBox}    Party Details Enquiry
     Press Keys    ${Party_HomePage_Process_TextBox}    RETURN
     Wait Until Browser Ready State
-    Sleep    3
-    Mx Input Text    ${Party_EnquireEnterpriseParty_PartyId_Text}     ${sParty_id}
+    Wait Until Keyword Succeeds    10x    2s     Mx Input Text    ${Party_EnquireEnterpriseParty_PartyId_Text}     ${sParty_id}
     Wait Until Browser Ready State
     Wait Until Element Is Visible    ${Party_EnquireEnterpriseParty_Next_Button}
     Wait Until Element Is Enabled    ${Party_EnquireEnterpriseParty_Next_Button}       
