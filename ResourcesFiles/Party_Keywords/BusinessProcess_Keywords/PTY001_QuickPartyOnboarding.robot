@@ -24,6 +24,7 @@ Create Party in Quick Party Onboarding
     ...										   added UserZone and UserBranch arguments in Accept Approved Party and Validate Details in 
     ...										   Enterprise Summary Details Screen, added return keyword for Scenario 0, added Pause execution to 
     ...										   skip blocked test steps
+    ...	   @update: javinzon	01OCT2020	 - Added argument State_Province in LIQ Validation keyword
     [Arguments]    ${ExcelPath}
     
     ### INPUTTER ###
@@ -68,11 +69,11 @@ Create Party in Quick Party Onboarding
     ...    &{ExcelPath}[Party_Category]    ${Enterprise_Name}    &{ExcelPath}[Registered_Number]    &{ExcelPath}[Country_of_Registration]    &{ExcelPath}[Country_of_Tax_Domicile]    ${Short_Name}    
     ...    &{ExcelPath}[Business_Country]    &{ExcelPath}[Industry_Sector]    &{ExcelPath}[Business_Activity]    &{ExcelPath}[Is_Main_Activity]    &{ExcelPath}[Is_Primary_Activity]    &{ExcelPath}[GST_Number]
     ...    &{ExcelPath}[UserZone]    &{ExcelPath}[UserBranch]    
-
+    
     Pause Execution    Pausing the rest of the script due to a blocker in LIQ connection
     Validate Party Details in Loan IQ    ${Party_ID}    ${Short_Name}    ${Enterprise_Name}    &{ExcelPath}[GST_Number]    &{ExcelPath}[Party_Sub_Type]    &{ExcelPath}[Business_Activity]    &{ExcelPath}[Business_Country]
     ...    &{ExcelPath}[Address_Type]    &{ExcelPath}[Address_Line_1]    &{ExcelPath}[Address_Line_2]    &{ExcelPath}[Address_Line_3]    &{ExcelPath}[Address_Line_4]    
-    ...    &{ExcelPath}[Town_City]    &{ExcelPath}[Country_of_Registration]    &{ExcelPath}[Country_of_Tax_Domicile]    &{ExcelPath}[Post_Code]
+    ...    &{ExcelPath}[Town_City]    &{ExcelPath}[Country_of_Registration]    &{ExcelPath}[Country_of_Tax_Domicile]    &{ExcelPath}[State_Province]    &{ExcelPath}[Post_Code]
 
     Return From Keyword If    '${SCENARIO}'=='0'  
     
