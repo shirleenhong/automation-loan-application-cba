@@ -9,3 +9,4 @@ TL_BASE_09
     
     Set Global Variable    ${rowid}    9
     Mx Execute Template With Multiple Data    Send Golden Source File with Inactive Funding Desk    ${ExcelPath}    ${rowid}    BaseRate_Fields
+    
