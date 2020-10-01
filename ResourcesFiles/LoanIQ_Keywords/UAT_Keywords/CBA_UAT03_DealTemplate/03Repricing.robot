@@ -23,7 +23,8 @@ Initiate Comprehensive Repricing - D00000476
     Select Loan Repricing for Deal    &{ExcelPath}[Loan_Alias]
     
     ### Rollover/Conversion Notebook###
-    ${NewLoanAlias}    Add New Outstandings    &{ExcelPath}[Pricing_Option]    &{ExcelPath}[Base_Rate]    &{ExcelPath}[Loan_NewOutstanding]    &{ExcelPath}[Repricing_Frequency]
+    ${NewLoanAlias}    Add New Outstandings    &{ExcelPath}[Pricing_Option]    &{ExcelPath}[Base_Rate]    
+    ...    &{ExcelPath}[Loan_NewOutstanding]    &{ExcelPath}[Repricing_Frequency]    None    &{ExcelPath}[Repricing_Date]
     Write Data To Excel    SERV08C_ComprehensiveRepricing    Loan_Alias    &{ExcelPath}[rowid]    ${NewLoanAlias}    ${CBAUAT_ExcelPath}
     Run Keyword If    '&{ExcelPath}[rowid]'=='3'    Write Data To Excel    SERV08C_ComprehensiveRepricing    Loan_Alias    1    ${NewLoanAlias}    ${CBAUAT_ExcelPath}
     Run Keyword If    '&{ExcelPath}[rowid]'=='3'    Write Data To Excel    SERV08C_ComprehensiveRepricing    Loan_Alias    3    ${NewLoanAlias}    ${CBAUAT_ExcelPath}
