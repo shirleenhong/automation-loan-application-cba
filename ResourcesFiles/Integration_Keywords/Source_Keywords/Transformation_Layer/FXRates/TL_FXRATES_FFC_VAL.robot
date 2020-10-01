@@ -58,7 +58,7 @@ Validate FFC for TL FXRates Failed
     ...    @author: mnanquil    19MAR2019    - initial create
     ...    @update: cfrancis    21AUG2019    - Changed value to be validated from ${FAILED} to ${MESSAGESTATUS_SUCCESSFUL}    
     ...    @update: clanding    01OCT2020    - removed X-Request-ID= in filtering GSFILENAME_WITHTIMESTAMP
-    ...                                      - uncomment last Verify Expected Value in the Given JSON File for FXRates TL
+    ...                                      - moved last Verify Expected Value in the Given JSON File for FXRates TL to ELSE FOR isMultipleExpectedResponse condition
     [Arguments]    ${sOutputFilePath}    ${sOutputFileName}    ${sExpectedErrorMsg}    ${isMultipleExpectedResponse}=None
     Login to MCH UI
     Wait Until Element Is Visible    ${FFC_Dashboard}    30s
@@ -71,7 +71,6 @@ Validate FFC for TL FXRates Failed
     Verify Expected Value in the Given JSON File for FXRates TL    ${sOutputFilePath}${sOutputFileName}    ${APINAME}    ${FXRATES_APINAME_FAILED}
     Verify Expected Value in the Given JSON File for FXRates TL    ${sOutputFilePath}${sOutputFileName}    ${CONSOLIDATED_STATUS}    ${MESSAGESTATUS_FAILURE}
     Verify Expected Value in the Given JSON File for FXRates TL    ${sOutputFilePath}${sOutputFileName}    ${RESPONSES}    ${FILE_VALIDATION}    ${RESPONSE_DETAILS}    ${MESSAGE_ID}
-    Verify Expected Value in the Given JSON File for FXRates TL    ${sOutputFilePath}${sOutputFileName}    ${RESPONSES}    ${sExpectedErrorMsg}    ${RESPONSE_DETAILS}    ${RESPONSE_DESC}
     Run Keyword If    ${isMultipleExpectedResponse}==${True}    Verify Multiple Expected Value in the Given JSON File for FXRates TL    ${sOutputFilePath}${sOutputFileName}    ${RESPONSES}    ${sExpectedErrorMsg}    ${RESPONSE_DETAILS}    ${RESPONSE_DESC}
     ...    ELSE    Verify Expected Value in the Given JSON File for FXRates TL    ${sOutputFilePath}${sOutputFileName}    ${RESPONSES}    ${sExpectedErrorMsg}    ${RESPONSE_DETAILS}    ${RESPONSE_DESC}
     Verify Expected Value in the Given JSON File for FXRates TL    ${sOutputFilePath}${sOutputFileName}    ${RESPONSES}    ${MESSAGESTATUS_FAILURE}    ${RESPONSE_DETAILS}    ${RESPONSE_STAT}
