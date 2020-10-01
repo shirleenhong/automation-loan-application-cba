@@ -39,6 +39,7 @@ Download Compressed File from GL Extraction Area
 Decrypt Compressed File for GL Extract
     [Documentation]    This keyword is used to perform decryption process for GL extract (.gpg) files.
     ...    @author: clanding    07SEP2020    - initial create
+    ...    @update: clanding    30SEP2020    - added max loop in the for loop
     [Arguments]    ${sExtract_Path}    ${sGPG_File}    ${sCSV_File}
 
     Delete File If Exist    ${sExtract_Path}${sCSV_File}
@@ -65,7 +66,7 @@ Decrypt Compressed File for GL Extract
 
     ### Check if CSV File is fully downloaded in Extract Path ###
     ${CSV_File_Size}    Get File Size    ${sExtract_Path}${sCSV_File}
-    :FOR    ${Index}    IN RANGE    5
+    :FOR    ${Index}    IN RANGE    25
     \    ${CSV_File_Size}    Get File Size    ${sExtract_Path}${sCSV_File}
     \    Exit For Loop If    ${CSV_File_Size}!=0
     Run Keyword If    ${CSV_File_Size}!=0    Run Keywords    Log To Console    '${sCSV_File}' is decrypted successfully'
