@@ -475,10 +475,10 @@ Return Base Rate Frequency Status
     mx LoanIQ activate window    ${LIQ_BaseRateFrequency_Window}
     Mx LoanIQ DoubleClick    ${LIQ_BaseRateFrequency_Tree}    ${sRepFreq_From_JSON}     
     mx LoanIQ activate window    ${LIQ_BaseRateFrequencyUpd_Window}
-    ${BaseRateFrequency_Status}    Get LIQ Checkbox Status    ${LIQ_BaseRateFrequencyUpd_Active_Checkbox}
-    mx LoanIQ click    ${LIQ_BaseRateFrequencyUpd_Cancel_Button}
-    mx LoanIQ close window    ${LIQ_BaseRateFrequency_Window}
-    mx LoanIQ close window    ${LIQ_TableMaintenance_Window}    
+    ${BaseRateFrequency_Status}    Wait Until Keyword Succeeds    5x    5s    Get LIQ Checkbox Status    ${LIQ_BaseRateFrequencyUpd_Active_Checkbox}
+    # mx LoanIQ click    ${LIQ_BaseRateFrequencyUpd_Cancel_Button}
+    # mx LoanIQ close window    ${LIQ_BaseRateFrequency_Window}
+    # mx LoanIQ close window    ${LIQ_TableMaintenance_Window}    
     Close All Windows on LIQ
     [Return]    ${BaseRateFrequency_Status}
 

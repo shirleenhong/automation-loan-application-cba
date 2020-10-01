@@ -78,7 +78,7 @@ Validate Base Rate is Reflected in LIQ
     \    ${RoundOff_Rate_with_0}    ${Val_Buyrate}    Run Keyword If    ${Count}>8    Round Off on the Nth Decimal Place    &{dRowData}[buyRate]    6
          ...    ELSE    Set Variable    &{dRowData}[buyRate]    &{dRowData}[buyRate]
     \    ${Val_Buyrate}    Run Keyword If    ${Stat_BuyRate}==${True}    Set Variable    ${NONE}
-         ...    ELSE    Evaluate    ${Val_Buyrate}*0.01
+         ...    ELSE    Evaluate    ${Val_Buyrate}/100
     \    ${BUYRATE}    Run Keyword If    ${Val_Buyrate}==${NONE}    Set Variable    ${NONE}
          ...    ELSE    Set Variable    BUYRATE
     \    ${BaseConfig_Buy_exist}    Run Keyword And Return Status    Should Contain    ${BASERATECODEConfig}    &{dRowData}[baseRateCode].${BUYRATE}
@@ -96,7 +96,7 @@ Validate Base Rate is Reflected in LIQ
     \    ${RoundOff_Rate_with_0}    ${Val_MidRate}    Run Keyword If    ${Count}>8    Round Off on the Nth Decimal Place    &{dRowData}[midRate]    6
          ...    ELSE    Set Variable    &{dRowData}[midRate]    &{dRowData}[midRate]
     \    ${Val_MidRate}    Run Keyword If    ${Stat_MidRate}==${True}    Set Variable    ${NONE}
-         ...    ELSE    Evaluate    ${Val_MidRate}*0.01
+         ...    ELSE    Evaluate    ${Val_MidRate}/100
     \    ${MIDRATE}    Run Keyword If    ${Val_MidRate}==${NONE}    Set Variable    ${NONE}
          ...    ELSE    Set Variable    MIDRATE
     \    ${BaseConfig_Mid_exist}    Run Keyword And Return Status    Should Contain    ${BASERATECODEConfig}    &{dRowData}[baseRateCode].${MIDRATE}
@@ -114,7 +114,7 @@ Validate Base Rate is Reflected in LIQ
     \    ${RoundOff_Rate_with_0}    ${Val_SellRate}    Run Keyword If    ${Count}>8    Round Off on the Nth Decimal Place    &{dRowData}[sellRate]    6
          ...    ELSE    Set Variable    &{dRowData}[sellRate]    &{dRowData}[sellRate]
     \    ${Val_SellRate}    Run Keyword If    ${Stat_SellRate}==${True}    Set Variable    ${NONE}
-         ...    ELSE    Evaluate    ${Val_SellRate}*0.01
+         ...    ELSE    Evaluate    ${Val_SellRate}/100
     \    ${SELLRATE}    Run Keyword If    ${Val_SellRate}==${NONE}    Set Variable    ${NONE}
          ...    ELSE    Set Variable    SELLRATE
     \    ${BaseConfig_Sell_exist}    Run Keyword And Return Status    Should Contain    ${BASERATECODEConfig}    &{dRowData}[baseRateCode].${SELLRATE}
@@ -132,7 +132,7 @@ Validate Base Rate is Reflected in LIQ
     \    ${RoundOff_Rate_with_0}    ${Val_LastRate}    Run Keyword If    ${Count}>8    Round Off on the Nth Decimal Place    &{dRowData}[lastRate]    6
          ...    ELSE    Set Variable    &{dRowData}[lastRate]    &{dRowData}[lastRate]
     \    ${Val_LastRate}    Run Keyword If    ${Stat_LastRate}==${True}    Set Variable    ${NONE}
-         ...    ELSE    Evaluate    ${Val_LastRate}*0.01
+         ...    ELSE    Evaluate    ${Val_LastRate}/100
     \    ${LASTRATE}    Run Keyword If    ${Val_LastRate}==${NONE}    Set Variable    ${NONE}
          ...    ELSE    Set Variable    LASTRATE
     \    ${BaseConfig_Last_exist}    Run Keyword And Return Status    Should Contain    ${BASERATECODEConfig}    &{dRowData}[baseRateCode].${LASTRATE}

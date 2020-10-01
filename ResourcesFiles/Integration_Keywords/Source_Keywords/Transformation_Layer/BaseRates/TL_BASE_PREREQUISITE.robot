@@ -568,7 +568,7 @@ Create Prerequisite for Multiple GS Files Scenario
     ...    @update: jdelacru    28AUG2019    - added index for the filename in creating expected input/output json and textjms to handle
     ...                                        processing file with the same details but different rate
     ...    @update: dahijara    20NOV2019    - updated file format from XLS to XLSX
-    ...    @update: clanding    21AUG2020    - added new argument    ${sTemplateFilePath}
+    ...    @update: jdelacru    21AUG2020    - added new argument ${sTemplateFilePath}
     [Arguments]    ${sInputFilePath}    ${sTransformedData_FilePath}    ${sTransformedDataTemplate_FilePath}    ${sInputGSFile}    ${sInputJson}
     ...    ${sExpected_TextJMS}    ${Delimiter}=None    ${sTemplateFilePath}=None
     

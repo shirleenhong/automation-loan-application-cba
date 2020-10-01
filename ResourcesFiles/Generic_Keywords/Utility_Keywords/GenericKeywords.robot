@@ -42,7 +42,7 @@ Mx Input Text
     Press Keys    ${locator}    ${text}
     Press Keys    ${locator}    TAB
     Wait Until Browser Ready State
-    Mx Scroll Element Into View    ${locator}
+    # Mx Scroll Element Into View    ${locator}
 
 Mx Input Text and Press Enter
     [Arguments]    ${locator}    ${text}
