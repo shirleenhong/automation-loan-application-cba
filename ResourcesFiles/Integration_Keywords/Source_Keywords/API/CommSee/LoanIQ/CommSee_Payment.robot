@@ -175,6 +175,7 @@ Update Line Fee Cycle - Scenario 7 ComSee
 Pay Line Fee Amount - Scenario 7 ComSee
     [Documentation]    This keyword will pay Commitment Fee Amount on a deal
     ...    @author: rtarayao    13SEP2019    - Duplicate high level keyword from Scenario 7 to be used for Comsee
+    ...    @update: cfrancis    01OCT2020    - Added getting overpayment field for computing projected cycle due
     [Arguments]    ${ComSeeDataSet}    
     ###Return to Scheduled Activity Fiter###
     ${SystemDate}    Get System Date
@@ -195,7 +196,8 @@ Pay Line Fee Amount - Scenario 7 ComSee
     # Select Cycle Fee Payment
     Select Latest Cycle Due Line Fee Payment
     
-    ###Ongoing Fee Payment Notebook - General Tab### 
+    ###Ongoing Fee Payment Notebook - General Tab###
+    ${ProjectedCycleDue}    Evaluate    ${ProjectedCycleDue} + &{ComSeeDataSet}[OverPayment]
     Enter Effective Date for Ongoing Fee Payment    ${SystemDate}    ${ProjectedCycleDue}
     
     ###Cashflow Notebook - Create Cashflows###
@@ -251,8 +253,8 @@ Pay Line Fee Amount - Scenario 7 ComSee
     ###Deal Notebook - Summary Tab### 
     Open Ongoing Fee from Deal Notebook    &{ComSeeDataSet}[Facility_Name]    &{ComSeeDataSet}[Fee_Type1]
     
-    ###Commitment Fee Notebook - Acrual Tab###   
-    Validate Details on Acrual Tab - Line Fee    ${ProjectedCycleDue}    &{ComSeeDataSet}[CycleNumber]
+    ###Line Fee Notebook - Acrual Tab###   
+    # Validate Details on Acrual Tab - Line Fee    ${ProjectedCycleDue}    &{ComSeeDataSet}[CycleNumber]
     Validate Release of Ongoing Line Fee Payment
     Validate GL Entries for Ongoing Line Fee Payment - Bilateral Deal    &{ComSeeDataSet}[Host_Bank]    &{ComSeeDataSet}[Borrower1_ShortName]    ${ProjectedCycleDue}    
     
