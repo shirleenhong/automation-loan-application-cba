@@ -463,6 +463,7 @@ Validate File If Not Moved to Archive Folder For Holiday
 Send Multiple Files to SFTP and Validate If Files are Not Processed for Holiday With Missing File
     [Documentation]    This keyword is used to send Less than 5 Copp Clark files then validate if files are not processed and not moved to any folder.
     ...    @author: dahijara    2FEB2020    - initial create
+    ...    @update: clanding    30SEP2020    - commented Start TL Service and Stop TL Service since there is a restriction to new server user 'sftpuser'
     [Arguments]    ${sInputFilePath}    ${sFilePathDestinaton}    ${sInputGSFile}    ${sFolderPath}    ${sDelimiter}=None    ${iPollingTime}=None
 
     @{InputGSFile_List}    Run Keyword If    '${sDelimiter}'=='None'    Split String    ${sInputGSFile}    ,
@@ -482,7 +483,7 @@ Send Multiple Files to SFTP and Validate If Files are Not Processed for Holiday 
     \    Run Keyword If    ${Contains_CSV}==${True}    Append To List    ${InputGSFile_CSVList}    ${CSVFile}
          ...    ELSE    Append To List    ${InputGSFile_CSVList}
     
-    Stop TL Service
+    # Stop TL Service
     Open Connection and Login    ${SFTP_HOST}    ${SFTP_PORT}    ${SFTP_USER}    ${SFTP_PASSWORD}
     :FOR    ${GSFileName_XLS}    IN    @{InputGSFile_XLSList}
     \    Put File    ${dataset_path}${sInputFilePath}${GSFileName_XLS}    ${sFilePathDestinaton}
@@ -490,9 +491,10 @@ Send Multiple Files to SFTP and Validate If Files are Not Processed for Holiday 
     :FOR    ${GSFileName_CSV}    IN    @{InputGSFile_CSVList}
     \    Put File    ${dataset_path}${sInputFilePath}${GSFileName_CSV}    ${sFilePathDestinaton}
 
-    Start TL Service
-    Open Connection and Login    ${SFTP_HOST}    ${SFTP_PORT}    ${SFTP_USER}    ${SFTP_PASSWORD}
-    Run Keyword If    '${iPollingTime}'=='None'    Sleep    2m    ###The processing time for GS File for Base Rate and FX Rate is every 2 minutes
+    # Start TL Service
+    # Open Connection and Login    ${SFTP_HOST}    ${SFTP_PORT}    ${SFTP_USER}    ${SFTP_PASSWORD}
+    Log To Console    The processing time for GS File for Calendar is every 5 minutes.
+    Run Keyword If    '${iPollingTime}'=='None'    Sleep    6m    ###The processing time for GS File for Calendar is every 5 minutes.
     ...    ELSE    Sleep    ${iPollingTime}
     
     ### Validate CSV Files ###
