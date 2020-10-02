@@ -563,8 +563,9 @@ Validate Address Details
     
 Populate Pre-Existence Check and Validate the Duplicate Enterprise Name
    [Documentation]    This keyword populates pre-existence with Duplicate Enterprise Name, checks if Action required is Reject and view the existing Party details 
-    ...    @author: javinzon    28SEP2020    -initial create
-    [Arguments]    ${sEnterprise_Name}
+    ...    @author: javinzon    28SEP2020    - initial create
+    ...	   @update: javinzon	02OCT2020	 - added Party ID argument
+    [Arguments]    ${sEnterprise_Name}    ${sParty_ID}
 
     Mx Click Element     ${Party_PreExistenceCheck_EnterpriseName_TextBox} 
     Set Focus To Element    ${Party_PreExistenceCheck_EnterpriseName_TextBox}
@@ -573,8 +574,8 @@ Populate Pre-Existence Check and Validate the Duplicate Enterprise Name
     Mx Click Element    ${Party_Footer_Next_Button}
 
     Wait Until Element Is Not Visible    ${PARTY_PREEXISTENCECHECKRESULTFOUND_PAGETITLE}    ${PARTY_TIMEOUT} 
-    ${Party_Name}    Get Table Value Containing Row Value in Party    ${Party_PreExistenceCheck_SearchResultTableHeader}    ${Party_PreExistenceCheck_SearchResultTableRow}    Party ID    1414849    Party Name  
-    ${Action}    Get Table Value Containing Row Value in Party    ${Party_PreExistenceCheck_SearchResultTableHeader}    ${Party_PreExistenceCheck_SearchResultTableRow}    Party ID    1414849    Action  
+    ${Party_Name}    Get Table Value Containing Row Value in Party    ${Party_PreExistenceCheck_SearchResultTableHeader}    ${Party_PreExistenceCheck_SearchResultTableRow}    Party ID    ${sParty_ID}    Party Name  
+    ${Action}    Get Table Value Containing Row Value in Party    ${Party_PreExistenceCheck_SearchResultTableHeader}    ${Party_PreExistenceCheck_SearchResultTableRow}    Party ID    ${sParty_ID}    Action  
     
     ${isMatched}    Run Keyword And Return Status    Should Be Equal    ${sEnterprise_Name}    ${Party_Name}
     Run Keyword If    ${isMatched}==${True}    Log    There is a Duplicate Enterprise Name  

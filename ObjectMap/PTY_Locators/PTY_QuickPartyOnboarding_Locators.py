@@ -9,7 +9,7 @@ Party_PartyOnboarding_PartyCategory_Dropdown = '//input[contains(@id,"partyCateg
 Party_PartyOnboarding_Search_Button = '//input[contains(@id,"Button") and @name="Search"]'
 Party_PartyOnboarding_ComrLending_Display = '//td[contains(text(),"Commercial Lending")]'
 Party_PartyOnboarding_LineOfBusiness_Table = '//div[contains(@id,"PartyLineOfBusinessDetail") and @role="grid"]'
-Party_PartyOnboarding_LineOfBusiness_Rows = '//div[contains(@id,"PartyLineOfBusinessDetail") and @role="grid"]//table[contains(@class, "GridRowTable")]//td[@role="gridcell" and @idx="1"]'
+Party_PartyOnboarding_LineOfBusiness_Rows = '//div[contains(@id,"PartyLineOfBusinessDetail") and @role="grid"]//table[contains(@class, "GridRowTable")]'
 Party_PartyOnboarding_LOBName_TableRow = '//td[@role="gridcell" and @idx="1"]'
 Party_PartyOnboarding_LOB_CheckBox = '//td[@role="gridcell" and @idx="0"]//div[@role="checkbox"]'
 
