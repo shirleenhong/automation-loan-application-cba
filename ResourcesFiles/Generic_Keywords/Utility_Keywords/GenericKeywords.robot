@@ -44,7 +44,7 @@ Mx Input Text
     Press Keys    ${locator}    ${text}
     Press Keys    ${locator}    TAB
     Wait Until Browser Ready State
-     Run Keyword If    '${bScrollToElement}'=='True'    Mx Scroll Element Into View    ${locator}
+    Run Keyword If    '${bScrollToElement}'=='True'    Mx Scroll Element Into View    ${locator}
     ...    ELSE    Log    Skip Scroll element
 
 Mx Input Text and Press Enter
