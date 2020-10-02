@@ -31,7 +31,9 @@ Wait Until Browser Ready State
     \    Sleep    1s      
             
 Mx Input Text
-    [Arguments]    ${locator}    ${text}
+    [Documentation]    This keyword is used to input text in elements
+    ...    @update:    javinzon    - added condition for Mx Scroll Element due to failure in scripts
+    [Arguments]    ${locator}    ${text}    ${bScrollToElement}=False
     Wait Until Browser Ready State
     Wait Until Keyword Succeeds    ${retry}    ${retry_interval}    Wait Until Page Contains Element    ${locator}    1s
     Wait Until Keyword Succeeds    ${retry}    ${retry_interval}    Wait Until Element Is Visible    ${locator}
@@ -42,7 +44,8 @@ Mx Input Text
     Press Keys    ${locator}    ${text}
     Press Keys    ${locator}    TAB
     Wait Until Browser Ready State
-    Mx Scroll Element Into View    ${locator}
+    Run Keyword If    '${bScrollToElement}'=='True'    Mx Scroll Element Into View    ${locator}
+    ...    ELSE    Log    Skip Scroll element
 
 Mx Input Text and Press Enter
     [Arguments]    ${locator}    ${text}
