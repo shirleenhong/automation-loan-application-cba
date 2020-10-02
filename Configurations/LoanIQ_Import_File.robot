@@ -367,18 +367,23 @@ Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/CBA_UAT02_DealTemplat
 
 ### UAT Deal 3 ###
 Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/CBA_UAT03_DealTemplate/03DealBorrower.robot
-Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/CBA_UAT03_DealTemplate/03OngoingFeeNotebook.robot
-Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/CBA_UAT03_DealTemplate/03DealNotebook.robot
+Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/CBA_UAT03_DealTemplate/03OngoingFee.robot
+Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/CBA_UAT03_DealTemplate/03Deal.robot
 Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/CBA_UAT03_DealTemplate/03Drawdown.robot
 # Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/CBA_UAT03_DealTemplate/03ExtendFacility.robot
-Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/CBA_UAT03_DealTemplate/03FacilityNotebook.robot
+Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/CBA_UAT03_DealTemplate/03Facility.robot
 Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/CBA_UAT03_DealTemplate/03FeePayment.robot
 Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/CBA_UAT03_DealTemplate/03LCCollection.robot
 Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/CBA_UAT03_DealTemplate/03LCIssuance.robot
 Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/CBA_UAT03_DealTemplate/03LoadRates.robot
 # Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/CBA_UAT03_DealTemplate/03LoanMerge.robot
+<<<<<<< HEAD
 # Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/CBA_UAT03_DealTemplate/03Paperclip.robot
 Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/CBA_UAT03_DealTemplate/03Repricing.robot
+=======
+Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/CBA_UAT03_DealTemplate/03Paperclip.robot
+# Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/CBA_UAT03_DealTemplate/03Repricing.robot
+>>>>>>> 9164e9b8c7fc210b46a49b59a55ad98a38008e7b
 
 ### UAT Deal 4 ###
 Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/CBA_UAT04_DealTemplate/04DealBorrower.robot

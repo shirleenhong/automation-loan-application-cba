@@ -43,6 +43,7 @@ LIQ_LineFee_OnlineAcrual_Menu = 'JavaWindow("title:=Line Fee.*").JavaMenu("label
 LIQ_LineFeeNotebook_Pending_Window = 'JavaWindow("title:=Line Fee.*/ Pending:.*")'
 LIQ_LineFeeTag_Tab = 'JavaWindow("title:=Line Fee.*").JavaTab("tagname:=TabFolder")'
 LIQ_LineFeeNotebook_Workflow_JavaTree = 'JavaWindow("title:=Line Fee.*").JavaTree("tagname:=Drill down to perform.*","index:=0")'
+LIQ_LineFeeNotebook_CycleShareAdjustment_Button = 'JavaWindow("title:=Line Fee.*").JavaButton("attached text:=Cycle Shares Adjustment")'
 
 ### Line Fee Payment - Cycles for Line Fee ###
 LIQ_LineFee_Cycles_Window = 'JavaWindow("title:=Cycles for Line Fee.*")'

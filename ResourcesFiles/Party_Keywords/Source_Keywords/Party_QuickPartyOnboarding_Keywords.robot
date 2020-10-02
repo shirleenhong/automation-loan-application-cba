@@ -3,12 +3,13 @@ Resource    ../../../Configurations/Party_Import_File.robot
 
 *** Keywords ***
 
-Populate Party Onboarding
+Populate Party Onboarding and Return Values
     [Documentation]    This keyword populates required fields in Party Onboarding.
     ...    @author: jcdelacruz
     ...    @update: amansuet    17MAR2020    - updated based on automation standard guidelines
     ...    @update: dahijara    30APR2020    - Updated logic for populating fields. 
     ...    @update: dahijara    09JUN2020    - Updated Next button locator and Get Element Attribute keyword
+    ...    @update: javinzon    25SEP2020    - Added "and Return Values" in keyword name
     [Arguments]    ${sLocality}    ${sParty_Type}    ${sParty_Sub_Type}    ${sParty_Category}    ${iBranch_Code}    ${bMultiEntity_Enabled}=False
 
     Mx Input Text    ${Party_PartyOnboarding_Locality_Dropdown}    ${sLocality}
@@ -20,7 +21,7 @@ Populate Party Onboarding
     Run Keyword If    '${sParty_Type}'=='Enterprise'    Wait Until Element Is Visible    ${Party_PartyOnboarding_LineOfBusiness_Table}    15s
     ...    ELSE    Run Keyword And Continue On Failure    Element Should Not Be Visible    ${Party_PartyOnboarding_LineOfBusiness_Table}
 
-    #Validate if Commercial Lending is selected by default
+    ### Validate if Commercial Lending is selected by default ###
     ${RowCount}    SeleniumLibraryExtended.Get Element Count    ${Party_PartyOnboarding_LineOfBusiness_Rows}
     :FOR    ${INDEX}    IN RANGE    1    ${RowCount} + 1
     \    
@@ -48,6 +49,7 @@ Validate Pre-Existence Check Page Fields if Correct
 	[Documentation]    This keyword is used to validate if all field values are correct.
     ...    @author: amansuet    20MAR2020    - initial create
     ...    @update: dahijara    30APR2020    - Updated locators for locality and entity field
+    ...    @update: javinzon    16SEP2020    - Updated parameter from ${sAssignedBranch} to ${sAssigned_Branch}
     [Arguments]    ${sLocality}    ${sEntity}    ${sAssigned_Branch}    ${sParty_Type}    ${sParty_Sub_Type}    ${sParty_Category}
     
     Run Keyword If    '${sLocality}'!=''    Run Keyword And Continue On Failure    Textfield Value Should Be    ${Party_PreExistenceCheck_Locality_Dropdown}    ${sLocality}
@@ -104,6 +106,7 @@ Populate Pre-Existence Check
     Validate Page Screen is Displayed    ${PARTY_QUICKENTERPRISEPARTY_PAGETITLE}
     
     [Return]    ${Enterprise_Name}    ${Party_ID}
+   
 
 Select Referral Using Reference ID
     [Documentation]    This keyword is used to select referral row on Open referrals section based on the reference ID and Return referral Task ID
@@ -164,10 +167,12 @@ Populate Quick Enterprise Party
     ...    @update: amansuet    18MAR2020    - updated based on automation standard guidelines and added optional argument for address 3 and 4
     ...    @update: dahijara    30APR2020    - used Mx Input text for inputing fields
     ...    @update: dahijara    09JUN2020    - Updated Next button locator
+    ...    @update: javinzon    17SEP2020    - Updated arguments for Address 3 and 4 to be mandatory
     [Arguments]    ${sParty_ID}    ${sCountry_of_Tax_Domicile}    ${sCountry_of_Registration}    ${sAddress_Type}    ${sCountry_Region}    ${iPost_Code}
     ...    ${sDocument_Collection_Status}    ${sIndustry_Sector}    ${sBusiness_Activity}    ${bIs_Main_Activity}    ${iGST_Number}
-    ...    ${sAddress_Line_1}    ${sAddress_Line_2}    ${sTown_City}    ${sState_Province}    ${sBusiness_Country}    ${bIs_Primary_Activity}    ${iRegistered_Number}    ${sShort_Name}
-    ...    ${sAddress_Line_3}=None    ${sAddress_Line_4}=None
+    ...    ${sAddress_Line_1}    ${sAddress_Line_2}    ${sAddress_Line_3}    ${sAddress_Line_4}    ${sTown_City}    ${sState_Province}    
+    ...    ${sBusiness_Country}    ${bIs_Primary_Activity}    ${iRegistered_Number}    ${sShort_Name}
+    
 
     Mx Input Text    ${Party_QuickEnterpriseParty_PartyId_TextBox}    ${sParty_ID}
     Mx Input Text    ${Party_QuickEnterpriseParty_RegisteredNumber_TextBox}    ${iRegistered_Number}
@@ -239,14 +244,15 @@ Populate Address Details
     [Documentation]    This keyword populates address details modal.
     ...    @author: jcdelacruz
     ...    @update: amansuet    18MAR2020    - updated keyword and added conditional argument address 3 and 4
-    [Arguments]    ${sAddress_Line_1}    ${sAddress_Line_2}    ${sTown_City}    ${sState_Province}    ${sAddress_Line_3}=None    ${sAddress_Line_4}=None
+    ...    @author: javinzon    17SEP2020    - - Updated arguments for Address 3 and 4 to be mandatory
+    [Arguments]    ${sAddress_Line_1}    ${sAddress_Line_2}    ${sTown_City}    ${sState_Province}    ${sAddress_Line_3}    ${sAddress_Line_4}
 
     Mx Click Element    ${Party_QuickEnterpriseParty_RecordAddress_Button}   
     Wait Until Loading Page Is Not Visible    ${PARTY_TIMEOUT} 
-    Mx Input Text    ${Party_QuickEnterpriseParty_AddressDetails_AddressLineOne_TextBox}    ${sAddress_Line_1}
+    Mx Input Text    ${Party_QuickEnterpriseParty_AddressDetails_AddressLineOne_TextBox}     ${sAddress_Line_1}
     Mx Input Text    ${Party_QuickEnterpriseParty_AddressDetails_AddressLineTwo_TextBox}     ${sAddress_Line_2}
-    Run Keyword If    '${sAddress_Line_3}'!='None' or '${sAddress_Line_3}'!='${EMPTY}'    Mx Input Text    ${Party_QuickEnterpriseParty_AddressDetails_AddressLineThree_TextBox}     ${sAddress_Line_3}
-    Run Keyword If    '${sAddress_Line_4}'!='None' or '${sAddress_Line_4}'!='${EMPTY}'    Mx Input Text    ${Party_QuickEnterpriseParty_AddressDetails_AddressLineFour_TextBox}     ${sAddress_Line_4}
+    Mx Input Text    ${Party_QuickEnterpriseParty_AddressDetails_AddressLineThree_TextBox}     ${sAddress_Line_3}
+    Mx Input Text    ${Party_QuickEnterpriseParty_AddressDetails_AddressLineFour_TextBox}     ${sAddress_Line_4}
     Mx Input Text    ${Party_QuickEnterpriseParty_AddressDetails_TownCity_TextBox}   ${sTown_City}
     Mx Input Text    ${Party_QuickEnterpriseParty_AddressDetails_StateProvince_Dropdown}    ${sState_Province}
     Mx Click Element    ${Party_QuickEnterpriseParty_AddressDetails_Next_Button}
@@ -278,6 +284,7 @@ Accept Approved Party
     ...    @update: dahijara    05MAY2020    - Updated logic for validation points and wait keywords.
     ...    @update: dahijara    09JUN2020    - Updated Next button locator and Get Element Attribute Keyword
     ...    @update: ritragel    13AUG2020    - Removed validation of title page
+    ...	   @update: javinzon	17SEP2020	 - Updated Approval radio button locator name
     [Arguments]    ${sTask_ID_From_Supervisor}    ${sPartyID}
 
     Mx Click Element    ${Party_HomePage_Notification_Icon}    
@@ -312,14 +319,15 @@ Accept Approved Party
     ${isMatched}    Run Keyword And Return Status    Should Be Equal    ${sPartyID}    ${EnterprisePartyID}
     Run Keyword If    ${isMatched}==${True}    Log    Party ID value is correct! Party ID:${EnterprisePartyID}    level=INFO
     ...    ELSE    Run Keyword And Continue On Failure    Fail    Party ID value is incorrect! Party ID:${EnterprisePartyID}, Expected Party ID:${sPartyID}       
-    Click Element    ${Party_EnterpriseRelatedPartyStatus_RadioButton}
+    Click Element    ${Party_EnterpriseRelatedPartyStatus_Accept_RadioButton}
     Capture Page Screenshot    ${screenshot_path}/Screenshots/Party/PartyEnterpriseRelatedPartyStatusPage-{index}.png
     Mx Click Element    ${Party_Footer_Next_Button}
 
 Validate Enterprise Summary Details
     [Documentation]    This keyword validates the Party details from Enterprise summary details page.
     ...    @author: dahijara    05MAY2020     - initial create
-    [Arguments]    ${sLocality}    ${sEntity}    ${sAssignedBranch}    ${sParty_Type}    ${sParty_Sub_Type}    ${sParty_Category}    ${sParty_ID}    
+    ...    @update: javinzon    16SEP2020     - changed parameter from ${sAssignedBranch} to ${sUserBranch}
+    [Arguments]    ${sLocality}    ${sEntity}    ${sUserBranch}    ${sParty_Type}    ${sParty_Sub_Type}    ${sParty_Category}    ${sParty_ID}    
     ...    ${sEnterprise_Name}    ${sRegistered_Number}    ${sCountryOfRegistration}    ${sCountryOfTaxDomicile}    ${sShortName}    ${sGTS_Number}
 
     Wait Until Loading Page Is Not Visible    ${PARTY_TIMEOUT}
@@ -327,7 +335,7 @@ Validate Enterprise Summary Details
 
     Compare Two Arguments    ${sLocality}    ${Party_PreExistenceCheck_Locality_Dropdown}
     Compare Two Arguments    ${sEntity}    ${Party_QuickEnterpriseParty_Entity_Dropdown}
-    Compare Two Arguments    ${sAssignedBranch}    ${Party_PartyOnboarding_AssignedBranch_Dropdown}
+    Compare Two Arguments    ${sUserBranch}    ${Party_PartyOnboarding_AssignedBranch_Dropdown}
     Compare Two Arguments    ${sParty_Type}    ${Party_QuickEnterpriseParty_PartyType_Dropdown}
     Compare Two Arguments    ${sParty_Sub_Type}    ${Party_QuickEnterpriseParty_PartySubType_Dropdown}
     Compare Two Arguments    ${sParty_Category}    ${Party_QuickEnterpriseParty_PartyCategory_Dropdown}
@@ -365,14 +373,33 @@ Validate Enterprise Business Activity Details
     Compare Two Arguments    ${sCountry}    ${Party_QuickEnterpriseParty_EnterpriseBusinessActivity_Country_Dropdown}
     Compare Two Arguments    ${sIndustrySector}    ${Party_QuickEnterpriseParty_EnterpriseBusinessActivity_IndustrySector_Dropdown}
     Compare Two Arguments    ${sBusinessActivity}    ${Party_QuickEnterpriseParty_EnterpriseBusinessActivity_BusinessActivity_Dropdown}    
+    
+Validate Enquire Enterprise Business Activity Details
+    [Documentation]    This keyword validates the Enterprise Business Activity Details from Enterprise summary details page.
+    ...    @author: javinzon    17SEP2020     - initial create
+    [Arguments]    ${sCountry}    ${sIndustrySector}    ${sBusinessActivity}    ${bIsMainActivity}    ${bIsPrimaryActivity}
 
+    Click Button    ${Party_EnterPrisePartySummaryDetails_BusinessActivity_View_Button}
+    Wait Until Page Contains    Enquire Enterprise Business Activity
+    
+    Compare Two Arguments    ${sCountry}    ${Party_QuickEnterpriseParty_EnterpriseBusinessActivity_Country_Dropdown}
+    Compare Two Arguments    ${sIndustrySector}    ${Party_QuickEnterpriseParty_EnterpriseBusinessActivity_IndustrySector_Dropdown}
+    Compare Two Arguments    ${sBusinessActivity}    ${Party_QuickEnterpriseParty_EnterpriseBusinessActivity_BusinessActivity_Dropdown} 
+    Compare Two Arguments    ${sCountry}    ${Party_QuickEnterpriseParty_EnterpriseBusinessActivity_Country_Dropdown}
+    Compare Two Arguments    ${sIndustrySector}    ${Party_QuickEnterpriseParty_EnterpriseBusinessActivity_IndustrySector_Dropdown}
+    Compare Two Arguments    ${sBusinessActivity}    ${Party_QuickEnterpriseParty_EnterpriseBusinessActivity_BusinessActivity_Dropdown}   
+    
+    
 Accept Approved Party and Validate Details in Enterprise Summary Details Screen
     [Documentation]    This keyword validates the Enterprise Business Activity Details from Enterprise summary details page.
     ...    @author: dahijara    05MAY2020     - initial create
-    ...    @update: dahijara    09JUN2020    - added keyword to update zone and branch
-    [Arguments]    ${sTask_ID_From_Supervisor}    ${sPartyID}    ${sLocality}    ${sEntity}    ${sAssignedBranch}    ${sParty_Type}    ${sParty_Sub_Type}    ${sParty_Category}    
+    ...    @update: dahijara    09JUN2020     - added keyword to update zone and branch
+    ...	   @update: javinzon	17SEP2020	  - updated argument ${sAssignedBranch} to ${sAssigned_Branch}, 
+    ...											updated argument ${sAssignedBranch} to ${sUserBranch}
+    ...											added keyword Validate Enquire Enterprise Business Activity Details
+    [Arguments]    ${sTask_ID_From_Supervisor}    ${sPartyID}    ${sLocality}    ${sEntity}    ${sAssigned_Branch}    ${sParty_Type}    ${sParty_Sub_Type}    ${sParty_Category}    
     ...    ${sEnterprise_Name}    ${sRegistered_Number}    ${sCountryOfRegistration}    ${sCountryOfTaxDomicile}    ${sShortName}    ${sCountry}    ${sIndustrySector}    ${sBusinessActivity}    ${bIsMainActivity}    ${bIsPrimaryActivity}
-    ...    ${sGTS_Number}    ${sUserZone}    ${sUserBranch}
+    ...    ${sGTS_Number}    ${sUserZone}    ${sUserBranch}    
 
 
     Login User to Party    ${PARTY_USERNAME}    ${PARTY_PASSWORD}    ${USER_LINK}    ${USER_PORT}    ${PARTY_URL_SUFFIX}    ${PARTY_HTML_USER_CREDENTIALS}    ${SSO_ENABLED}    ${PARTY_URL}   
@@ -381,9 +408,11 @@ Accept Approved Party and Validate Details in Enterprise Summary Details Screen
 
     Accept Approved Party    ${sTask_ID_From_Supervisor}    ${sPartyID}
 
-    Validate Enterprise Summary Details    ${sLocality}    ${sEntity}    ${sAssignedBranch}    ${sParty_Type}    ${sParty_Sub_Type}    ${sParty_Category}    ${sParty_ID}    
-    ...    ${sEnterprise_Name}    ${sRegistered_Number}    ${sCountryOfRegistration}    ${sCountryOfTaxDomicile}    ${sShortName}    ${sGTS_Number}
-
+    Validate Enterprise Summary Details    ${sLocality}    ${sEntity}    ${sUserBranch}    ${sParty_Type}    ${sParty_Sub_Type}    ${sParty_Category}    ${sParty_ID}    
+    ...    ${sEnterprise_Name}    ${sRegistered_Number}    ${sCountryOfRegistration}    ${sCountryOfTaxDomicile}    ${sShortName}    ${sGTS_Number}  
+    
+    Validate Enquire Enterprise Business Activity Details    ${sCountry}    ${sIndustrySector}    ${sBusinessActivity}    ${bIsMainActivity}    ${bIsPrimaryActivity}
+    
     Run Keyword If    '${SSO_ENABLED}'=='NO'    Logout User on Party
     Close Browser
 
@@ -519,7 +548,7 @@ Validate Enterprise Business Activity
 Validate Address Details
     [Documentation]    This keyword validates address details modal.
     ...    @author: dahijara    11MAY2020    - initial create
-    [Arguments]    ${sAddress_Line_1}    ${sAddress_Line_2}    ${sTown_City}    ${sState_Province}    ${sAddress_Line_3}=None    ${sAddress_Line_4}=None
+	[Arguments]    ${sAddress_Line_1}    ${sAddress_Line_2}    ${sTown_City}    ${sState_Province}    ${sAddress_Line_3}=None    ${sAddress_Line_4}=None
 
     Mx Click Element    ${Party_QuickEnterpriseParty_RecordAddress_Button}    
     Wait Until Loading Page Is Not Visible    ${PARTY_TIMEOUT}
@@ -531,3 +560,33 @@ Validate Address Details
     Compare Two Arguments    ${sState_Province}    ${Party_QuickEnterpriseParty_AddressDetails_StateProvince_Dropdown}
     Capture Page Screenshot    ${screenshot_path}/Screenshots/Party/PartyAddressDetailsPage-{index}.png
     Mx Click Element    ${Party_QuickEnterpriseParty_AddressDetails_Next_Button}
+    
+Populate Pre-Existence Check and Validate the Duplicate Enterprise Name
+   [Documentation]    This keyword populates pre-existence with Duplicate Enterprise Name, checks if Action required is Reject and view the existing Party details 
+    ...    @author: javinzon    28SEP2020    -initial create
+    [Arguments]    ${sEnterprise_Name}
+
+    Mx Click Element     ${Party_PreExistenceCheck_EnterpriseName_TextBox} 
+    Set Focus To Element    ${Party_PreExistenceCheck_EnterpriseName_TextBox}
+    Mx Activate And Input Text    ${Party_PreExistenceCheck_EnterpriseName_TextBox}    ${sEnterprise_Name}  
+    Capture Page Screenshot    ${screenshot_path}/Screenshots/Party/DuplicateEnterpriseName-{index}.png 
+    Mx Click Element    ${Party_Footer_Next_Button}
+
+    Wait Until Element Is Not Visible    ${PARTY_PREEXISTENCECHECKRESULTFOUND_PAGETITLE}    ${PARTY_TIMEOUT} 
+    ${Party_Name}    Get Table Value Containing Row Value in Party    ${Party_PreExistenceCheck_SearchResultTableHeader}    ${Party_PreExistenceCheck_SearchResultTableRow}    Party ID    1414849    Party Name  
+    ${Action}    Get Table Value Containing Row Value in Party    ${Party_PreExistenceCheck_SearchResultTableHeader}    ${Party_PreExistenceCheck_SearchResultTableRow}    Party ID    1414849    Action  
+    
+    ${isMatched}    Run Keyword And Return Status    Should Be Equal    ${sEnterprise_Name}    ${Party_Name}
+    Run Keyword If    ${isMatched}==${True}    Log    There is a Duplicate Enterprise Name  
+    ...   ELSE    Run Keyword and Continue on Failure    Fail    There is no Duplicate Enterprise Name   
+    Run Keyword If    '${Action}'=='Reject'    Run Keywords      Capture Page Screenshot    ${screenshot_path}/Screenshots/Party/DuplicateEnterpriseName-{index}.png 
+    ...    AND    Mx Click Element    ${Party_PreExistenceCheck_View_Button}     
+    ...    ELSE    Run Keyword and Continue on Failure    Fail    No duplicate found for Enterprise Name
+    
+    Wait Until Page Contains   ${PARTY_ENQUIREENTERPRISEPARTY_PAGETITLE}
+    Capture Page ScreenShot    ${screenshot_path}/Screenshots/Party/DuplicateEnterpriseName-{index}.png
+    ${Existing_EnterpriseName}    Get Value    ${Party_EnquirePartyDetails_EnterpriseName_TextBox}
+    Log    ${Existing_EnterpriseName}
+    ${isMatched}    Run Keyword And Return Status    Should Be Equal    ${Existing_EnterpriseName}    ${Party_Name}
+    Run Keyword If    ${isMatched}==${True}    Logout User on Party    
+    ...    ELSE    Run Keyword and Continue on Failure    Fail    Party details displayed are not for Party:${Party_Name}

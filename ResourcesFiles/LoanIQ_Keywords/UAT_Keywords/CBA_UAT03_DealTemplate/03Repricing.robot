@@ -40,6 +40,9 @@ Initiate Comprehensive Repricing - D00000476
     ## Remittance Instruction Addition per Cashflow ###
     Run Keyword if    '&{ExcelPath}[rowid]'!='7'    Run Keywords    Add Remittance Instructions    &{ExcelPath}[Borrower_ShortName]    &{ExcelPath}[Borrower_RemittanceDescription]    
     ...    AND    Create Cashflow    &{ExcelPath}[Borrower_ShortName]    release     
+    Add Remittance Instructions    &{ExcelPath}[Borrower_ShortName]    &{ExcelPath}[Borrower_RemittanceDescription]
+    Run Keyword If    '&{ExcelPath}[rowid]'!='3'    Create Cashflow    &{ExcelPath}[Borrower_ShortName]    release
+    Run Keyword If    '&{ExcelPath}[rowid]'=='3'    Create Cashflow    &{ExcelPath}[Loan_Increase]|${CycleAmount}    release     
     
     Navigate Notebook Workflow    ${LIQ_LoanRepricingForDeal_Window}    ${LIQ_LoanRepricingForDeal_Workflow_Tab}    ${LIQ_LoanRepricingForDeal_Workflow_JavaTree}    Send to Approval
     
