@@ -422,7 +422,7 @@ Navigate Line Fee and Verify Accrual Tab
     [Return]    ${StartDate}    ${EndDate}    ${DueDate}    ${CycleDue}    ${ProjectedCycleDue}    ${Orig_TotalCycleDue}    ${Orig_TotalManualAdjustment}    ${Orig_TotalProjectedEOCAccrual}
     
 Navigate Line Fee and Verify Accrual Share Adjustment Notebook
-    [Documentation]    This keyword is used for navigating Accrual Share Adjustment Notebook from Commitment Notebook.
+    [Documentation]    This keyword is used for navigating Accrual Share Adjustment Notebook from Line Fee Notebook.
     ...    @author: cfrancis    - 30SEP2020    - initial create
     [Arguments]    ${StartDate}    ${Deal_Name}    ${Facility_Name}    ${OngoingFee_Type}    ${CurrentCycleDue_Value}    ${ProjectedCycleDue_Value}           
        
