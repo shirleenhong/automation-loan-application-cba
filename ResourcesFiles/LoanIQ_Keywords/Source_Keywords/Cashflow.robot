@@ -47,10 +47,30 @@ Add Remittance Instructions
     ...    @author: ritragel
     ...    @update: ritragel    03MAR2019    Updated for the global of cashflow keywords
     ...    @update: rtarayao    27MAR2019    Added transaction amount and currency as optional values to cater multiple entries with same customer
-    [Arguments]    ${sCustomerShortName}    ${sRemittanceDescription}    ${sTransactionAmount}=None    ${sCurrency}=None    
-    Run Keyword If    '${sTransactionAmount}'=='None'    Run Keyword If    '${sTransactionAmount}'=='None'    Mx LoanIQ Select Or DoubleClick In Javatree    ${LIQ_Cashflows_Tree}    ${sCustomerShortName}%d
-    Run Keyword If    '${sTransactionAmount}'!='None'    Run keywords    Mx LoanIQ Click Javatree Cell    ${LIQ_Cashflows_Tree}    ${sTransactionAmount}${SPACE}${sCurrency}%${sTransactionAmount}${SPACE}${sCurrency}%Original Amount/CCY
-    ...    AND    Mx Native Type    {ENTER}  
+    ...    @upated: dfajardo    04AUG2020    Added Run Keyword if for buttons: LIQ_Cashflows_DetailsForCashflow_SelectRI_Button and LIQ_Cashflows_DetailsForCashflow_ViewRI_Button
+    ...    @update: AmitP       15SEPT2020   Added  argument  for ${sLoanGlobalInterest} to add in the Transaction Amount.
+    ...    @update: aramos      20SEP2020    Added conversion to 2 decimal points for Total Transaction
+    ...    @update: aramos      02OCT2020    Added Run If to 2 decimal points suppression
+    [Arguments]    ${sCustomerShortName}    ${sRemittanceDescription}    ${sTransactionAmount}=None    ${sCurrency}=None    ${sLoanGlobalInterest}=None
+    Log    ${sLoanGlobalInterest}
+    Log    ${sTransactionAmount}
+    ${LoanGlobalInterest}    Remove String    ${sLoanGlobalInterest}    ,
+    ${TransactionAmount}    Remove String    ${sTransactionAmount}    ,     
+    ${TotalTransactionAmount}    Run Keyword If    '${sLoanGlobalInterest}'!='None'    Evaluate    ${TransactionAmount}+${LoanGlobalInterest}
+    ...    ELSE    Set Variable    ${TransactionAmount}    
+    ${TotalTransactionAmount}    Convert Number With Comma Separators    ${TotalTransactionAmount}        
+    Run Keyword If    '${sTransactionAmount}'=='None'    Mx LoanIQ Select Or DoubleClick In Javatree    ${LIQ_Cashflows_Tree}    ${sCustomerShortName}%d
+    
+    Run Keyword If    '${sTransactionAmount}'!='None'    Run Keywords    Log    ${TotalTransactionAmount}${SPACE}${sCurrency}%${TotalTransactionAmount}${SPACE}${sCurrency}%Original Amount/CCY
+    ...    AND    Log    ${sTransactionAmount}
+    ...    AND    ${TotalTransactionAmount}    Remove Comma, Negative Character and Convert to Number    ${TotalTransactionAmount}
+    ...    AND    ${TotalTransactionAmount}    Evaluate    "%.2f" % ${TotalTransactionAmount}
+    ...    AND    ${TotalTransactionAmount}    Convert Number With Comma Separators    ${TotalTransactionAmount}
+    ...    AND    Log    ${TotalTransactionAmount}${SPACE}${sCurrency}%${TotalTransactionAmount}${SPACE}${sCurrency}%Original Amount/CCY
+    ...    AND    Log    ${TotalTransactionAmount}
+    
+    Run Keyword If    '${sTransactionAmount}'!='None'    Run keywords    Mx LoanIQ Click Javatree Cell    ${LIQ_Cashflows_Tree}    ${TotalTransactionAmount}${SPACE}${sCurrency}%${TotalTransactionAmount}${SPACE}${sCurrency}%Original Amount/CCY
+    ...    AND    Mx Press Combination    Key.ENTER  
     mx LoanIQ activate    ${LIQ_Cashflows_DetailsForCashflow_Window}    
     Run Keyword And Continue On Failure    Mx LoanIQ Verify Object Exist    ${LIQ_Cashflows_DetailsForCashflow_Window}     VerificationData="Yes"
     mx LoanIQ click    ${LIQ_Cashflows_DetailsForCashflow_SelectRI_Button}  
