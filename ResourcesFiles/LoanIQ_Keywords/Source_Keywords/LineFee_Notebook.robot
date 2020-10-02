@@ -399,7 +399,7 @@ Release Line Fee
     
 Navigate Line Fee and Verify Accrual Tab
     [Documentation]    This keyword is used for navigating and verifies data in Accrual Tab.
-    ...    @author: cfrancis    - 30SEP2020
+    ...    @author: cfrancis    - 30SEP2020    - initial create
     [Arguments]    ${sRowid}    ${sCycleNo}    ${sRunVar_StartDate}=None    ${sRunVar_EndDate}=None    ${sRunVar_DueDate}=None    ${sRunVar_CycleDue}=None    ${sRunVar_ProjectedCycleDue}=None
     ...    ${sRunVar_Orig_TotalCycleDue}=None    ${sRunVar_Orig_TotalManualAdjustment}=None    ${sRunVar_Orig_TotalProjectedEOCAccrual}=None
     ### GetRuntime Keyword Pre-processing ###
@@ -422,8 +422,8 @@ Navigate Line Fee and Verify Accrual Tab
     [Return]    ${StartDate}    ${EndDate}    ${DueDate}    ${CycleDue}    ${ProjectedCycleDue}    ${Orig_TotalCycleDue}    ${Orig_TotalManualAdjustment}    ${Orig_TotalProjectedEOCAccrual}
     
 Navigate Line Fee and Verify Accrual Share Adjustment Notebook
-    [Documentation]    This keyword is used for navigating Accrual Share Adjustment Notebook from Commitment Notebook.
-    ...    @author: cfrancis    - 30SEP2020
+    [Documentation]    This keyword is used for navigating Accrual Share Adjustment Notebook from Line Fee Notebook.
+    ...    @author: cfrancis    - 30SEP2020    - initial create
     [Arguments]    ${StartDate}    ${Deal_Name}    ${Facility_Name}    ${OngoingFee_Type}    ${CurrentCycleDue_Value}    ${ProjectedCycleDue_Value}           
        
     Mx LoanIQ Select Window Tab    ${LIQ_LineFee_Tab}    Accrual 
@@ -434,3 +434,71 @@ Navigate Line Fee and Verify Accrual Share Adjustment Notebook
     Run Keyword And Continue On Failure    Mx LoanIQ Verify Object Exist    JavaWindow("title:=Accrual Shares Adjustment -.*").JavaStaticText("attached text:=${Deal_Name}")      VerificationData="Yes"
     Run Keyword And Continue On Failure    Mx LoanIQ Verify Object Exist    JavaWindow("title:=Accrual Shares Adjustment -.*").JavaStaticText("attached text:=${Facility_Name}")    VerificationData="Yes"
     Run Keyword And Continue On Failure    Mx LoanIQ Verify Object Exist    JavaWindow("title:=Accrual Shares Adjustment -.*").JavaStaticText("attached text:=${OngoingFee_Type}")    VerificationData="Yes"
+    
+Create Line Fee Payment Reversal
+    [Documentation]    This keyword is used for creating Payment Reversal
+    ...    @author: cfrancis    - 01OCT2020    - initial create
+    
+    Mx LoanIQ Select Window Tab    ${LIQ_LineFee_Tab}    Events
+    Mx LoanIQ Select Or DoubleClick In Javatree   ${LIQ_LineFee_Events_Javatree}    Fee Payment Released%d
+    mx LoanIQ activate window    ${LIQ_OngoingFeePaymentNotebook_Window}  
+    Mx LoanIQ Select    ${LIQ_LineFee_ReversePayment}
+    Verify If Warning Is Displayed  
+    mx LoanIQ activate window    ${LIQ_ReverseFee_Window}
+    
+    ${CurrentCycleDue}    Mx LoanIQ Get Data    ${LIQ_LineFee_ReversePayment_CurrentCycleDue}    Amount
+    ${CurrentCycleDue}    Remove String    ${CurrentCycleDue}    -
+    ${CurrentCycleDue}    Remove Comma, Negative Character and Convert to Number    ${CurrentCycleDue}
+    mx LoanIQ enter    ${LIQ_LineFee_ReversePayment_RequestedAmount}    ${CurrentCycleDue}
+    
+    [Return]    ${CurrentCycleDue}
+    
+Navigate to Cashflow - Reverse Fee
+    [Documentation]    This keyword creates cashflow for the breakfunding
+    ...    @author: cfrancis    - 01OCT2020    - initial create
+    
+    mx LoanIQ activate window    ${LIQ_ReverseFee_Window}
+    Mx LoanIQ Select Window Tab    ${LIQ_LineFee_ReversePayment_Tab}    Workflow
+    Run Keyword And Continue On Failure     Mx LoanIQ Click Button On Window    .* Line Fee.*;Warning;Yes    strProcessingObj="JavaWindow(\"title:=Processing.*\")"    WaitForProcessing=500
+    Mx LoanIQ DoubleClick    ${LIQ_LineFee_ReversePayment__WorkflowItems}    Create Cashflows
+    Run Keyword And Continue On Failure     Mx LoanIQ Click Button On Window    .* Line Fee.*;Warning;Yes    strProcessingObj="JavaWindow(\"title:=Processing.*\")"    WaitForProcessing=500
+    mx LoanIQ activate window    ${LIQ_LineFee_ReversePayment_Cashflows_Window}                 
+    Run Keyword And Continue On Failure    Mx LoanIQ Verify Object Exist    ${LIQ_LineFee_ReversePayment_Cashflows_Window}    VerificationData="Yes"
+    
+Send Reverse Fee Payment to Approval
+    [Documentation]    This keywod sends the reverse fee payment to approval.
+    ...    @author: cfrancis    - 01OCT2020    - initial create
+
+    mx LoanIQ click element if present     ${LIQ_LineFee_ReversePayment_Cashflow_OK_Button} 
+    mx LoanIQ activate window    ${LIQ_ReverseFee_Window}
+    Mx LoanIQ Select Or DoubleClick In Javatree    ${LIQ_LineFee_ReversePayment__WorkflowItems}    Send to Approval%d
+    mx LoanIQ click element if present    ${LIQ_Question_Yes_Button}
+    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
+    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
+
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LineFeeReverseWindow_SendToApproval
+    
+Approve Reverse Fee Payment
+    [Documentation]    This keyword approves the Ongoing Fee Payment from LIQ.
+    ...    @author: cfrancis    - 01OCT2020    - initial create
+
+    mx LoanIQ activate window    ${LIQ_ReverseFee_Window}
+    Mx LoanIQ Select Window Tab    ${LIQ_LineFee_ReversePayment_Tab}    Workflow
+    Run Keyword And Continue On Failure    mx LoanIQ click element if present    ${LIQ_InquiryMode_Button}
+    Mx LoanIQ Select Or DoubleClick In Javatree    ${LIQ_LineFee_ReversePayment__WorkflowItems}    Approval%d
+    Run Keyword And Continue On Failure     Mx LoanIQ Click Button On Window    Commitment Fee.*;Question;Yes    strProcessingObj="JavaWindow(\"title:=Processing.*\")"    WaitForProcessing=500
+    Run Keyword And Continue On Failure     Mx LoanIQ Click Button On Window    Commitment Fee.*;Warning;Yes    strProcessingObj="JavaWindow(\"title:=Processing.*\")"    WaitForProcessing=500
+
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LineFeeReverseWindow_WorkflowTab_Approval
+    
+Release Reverse Fee Payment
+    [Documentation]    This keyword releases the Ongoing Fee Payment from LIQ.
+    ...    @author: cfrancis    - 01OCT2020    - initial create
+
+    mx LoanIQ activate window    ${LIQ_ReverseFee_Window}
+    Mx LoanIQ Select Window Tab    ${LIQ_LineFee_ReversePayment_Tab}    Workflow
+    Run Keyword And Continue On Failure    mx LoanIQ click element if present    ${LIQ_InquiryMode_Button}
+    Mx LoanIQ Select Or DoubleClick In Javatree    ${LIQ_LineFee_ReversePayment__WorkflowItems}    Release%d
+    Validate if Question or Warning Message is Displayed
+
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LineFeeReverseWindow_WorkflowTab_Release
