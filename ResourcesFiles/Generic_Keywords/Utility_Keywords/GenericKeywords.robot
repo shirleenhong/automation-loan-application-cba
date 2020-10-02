@@ -31,8 +31,6 @@ Wait Until Browser Ready State
     \    Sleep    1s      
             
 Mx Input Text
-    [Documentation]    This keyword is use to type a text in a given locator
-    ...    @update: jdelacru    21SEP2020    - Use Press Keys keyword to enter text instead of Input Text
     [Arguments]    ${locator}    ${text}
     Wait Until Browser Ready State
     Wait Until Keyword Succeeds    ${retry}    ${retry_interval}    Wait Until Page Contains Element    ${locator}    1s
@@ -724,6 +722,7 @@ Navigate Notebook Workflow
     ...    @update: Archana     11June20     Added Pre-processing keyword
     ...    @update: dahijara    03JUL2020    Added keyword for screenshot
     ...    @update: clanding    05AUG2020    Updated hard coded values to global variable
+    ...    @update: aramos      30SEP2020    Updated mx LOANIQ click element if present LIQ_Breakfunding_Yes_Button
     [Arguments]    ${sNotebook_Locator}    ${sNotebookTab_Locator}    ${sNotebookWorkflow_Locator}    ${sTransaction}    
 
     ###Pre-processing Keyword##
@@ -739,7 +738,7 @@ Navigate Notebook Workflow
     Mx LoanIQ Select Or DoubleClick In Javatree    ${NotebookWorkflow_Locator}    ${Transaction}%d
     Validate if Question or Warning Message is Displayed
     Run Keyword If    '${Transaction}'=='Release'    Run Keywords
-    ...    Repeat Keyword    2 times    mx LoanIQ click element if present    ${LIQ_BreakFunding_No_Button}
+    ...    Repeat Keyword    2 times    mx LoanIQ click element if present    ${LIQ_BreakFunding_Yes_Button}
     ...    AND    mx LoanIQ click element if present    ${LIQ_Information_OK_Button}
     ...    ELSE IF    '${Transaction}'=='Close'    mx LoanIQ click element if present    ${LIQ_Information_OK_Button}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/NotebookWorkflow
