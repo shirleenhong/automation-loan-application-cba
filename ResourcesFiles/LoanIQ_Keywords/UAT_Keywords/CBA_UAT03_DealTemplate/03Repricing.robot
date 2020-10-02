@@ -30,13 +30,16 @@ Initiate Comprehensive Repricing - D00000476
     Run Keyword If    '&{ExcelPath}[rowid]'=='3'    Write Data To Excel    SERV08C_ComprehensiveRepricing    Loan_Alias    3    ${NewLoanAlias}    ${CBAUAT_ExcelPath}
     Run Keyword If    '&{ExcelPath}[rowid]'=='2'    Write Data To Excel    SERV08C_ComprehensiveRepricing    Loan_Alias    2    ${NewLoanAlias}    ${CBAUAT_ExcelPath}
     Run Keyword If    '&{ExcelPath}[rowid]'=='8'    Write Data To Excel    SERV23_Paperclip    Loan_Alias    3    ${NewLoanAlias}    ${CBAUAT_ExcelPath}
-    Add Repricing Details    Interest Payment    
-    ${CycleAmount}    Select Cycles for Loan Item    Projected Due    &{ExcelPath}[Cycle]
-    Verify Interest Payment    ${CycleAmount}     &{ExcelPath}[Payment_Effective_Date]
+    ${CycleAmount}    Set Variable    0
+    Run Keyword if    '&{ExcelPath}[rowid]'!='7'    Run Keywords    Add Repricing Details    Interest Payment    
+    ...    AND    ${CycleAmount}    Select Cycles for Loan Item    Projected Due    &{ExcelPath}[Cycle]
+    ...    AND    Verify Interest Payment    ${CycleAmount}     &{ExcelPath}[Payment_Effective_Date]
   
     Navigate Notebook Workflow    ${LIQ_LoanRepricingForDeal_Window}    ${LIQ_LoanRepricingForDeal_Workflow_Tab}    ${LIQ_LoanRepricingForDeal_Workflow_JavaTree}    Create Cashflows
     
     ## Remittance Instruction Addition per Cashflow ###
+    Run Keyword if    '&{ExcelPath}[rowid]'!='7'    Run Keywords    Add Remittance Instructions    &{ExcelPath}[Borrower_ShortName]    &{ExcelPath}[Borrower_RemittanceDescription]    
+    ...    AND    Create Cashflow    &{ExcelPath}[Borrower_ShortName]    release     
     Add Remittance Instructions    &{ExcelPath}[Borrower_ShortName]    &{ExcelPath}[Borrower_RemittanceDescription]
     Run Keyword If    '&{ExcelPath}[rowid]'!='3'    Create Cashflow    &{ExcelPath}[Borrower_ShortName]    release
     Run Keyword If    '&{ExcelPath}[rowid]'=='3'    Create Cashflow    &{ExcelPath}[Loan_Increase]|${CycleAmount}    release     
