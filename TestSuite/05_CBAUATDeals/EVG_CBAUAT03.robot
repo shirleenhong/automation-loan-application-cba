@@ -141,6 +141,8 @@ Collect LC1 Advance - D00000476
     
 Collect Early Prepayment for D1 - D00000476
     Mx Execute Template With Multiple Data    Collect Early Prepayment via Paper Clip D00000476    ${CBAUAT_ExcelPath}    1    SERV23_Paperclip
+    Mx Execute Template With Multiple Data    Initiate Comprehensive Repricing - D00000476    ${CBAUAT_ExcelPath}   7    SERV08C_ComprehensiveRepricing
+
     
 Charge Breakcost Fee for D1 - D00000476
     Mx Execute Template With Multiple Data    Collect Break Cost Fee for Early Prepayment D00000476    ${CBAUAT_ExcelPath}    1    SERV40_BreakFunding
