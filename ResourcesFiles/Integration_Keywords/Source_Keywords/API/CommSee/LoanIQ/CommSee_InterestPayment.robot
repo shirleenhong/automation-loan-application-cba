@@ -34,27 +34,7 @@ Generate Intent Notices of an Interest Payment-CommSee
     Log    ${NoticeStatus}
     Mx LoanIQ Select Or Doubleclick In Tree By Text    ${LIQ_Notice_Information_Table}    ${LIQCustomer_ShortName}%s 
     
-    # mx LoanIQ click    ${LIQ_Notice_EditHighlightedNotice_Button}
-    # mx LoanIQ activate window    ${LIQ_Notice_IntentNotice_Window}   
-    # ${ContactEmail}    Mx LoanIQ Get Data    ${LIQ_Notice_IntentNotice_Email}    value%test
-    # Log    ${ContactEmail}
-    # Should Be Equal    ${Contact_Email}    ${ContactEmail}          
-    # mx LoanIQ activate window    ${LIQ_Notice_IntentNotice_Window}
-    
-    # ${Verified_Customer}    Mx LoanIQ Get Data    JavaWindow("title:=Interest Payment Notice created.*","displayed:=1").JavaEdit("text:=${Lender_LegalName}")    Verified_Customer    
-    # Should Be Equal As Strings    ${Lender_LegalName}    ${Verified_Customer}
-    # Log    ${Verified_Customer}    
-    # ${Verified_Status}    Mx LoanIQ Get Data    JavaWindow("title:=Interest Payment Notice created.*","displayed:=1").JavaObject("tagname:=Group","text:=Status").JavaStaticText("text:=${InterestPaymentNotice_Status}")    Verified_Status    
-    # Should Be Equal As Strings    ${InterestPaymentNotice_Status}    ${Verified_Status}
-    # Log    ${Verified_Status} - Status is correct!
-        
-    # mx LoanIQ select    ${LIQ_InterestPayment_Notice_FileMenu_PreviewMenu}
-    # Sleep    3s        
-    # Take Screenshot
-    # Sleep    3s
-    # mx LoanIQ select    ${LIQ_SBLC_NoticePreview_FileMenu_ExitMenu}
-        
-    # mx LoanIQ close window    ${LIQ_InterestPayment_Notice_Email_Window}
+
     mx LoanIQ click    ${LIQ_InterestPayment_Notice_Exit_Button}
 
 Release Interest Payment

@@ -74,7 +74,7 @@ Create Loan Drawdown for Syndicated Deal - ComSee
     Select Item in Work in Process    Outstandings    Awaiting Send to Rate Approval    Loan Initial Drawdown     ${Alias}
     Send Initial Drawdown to Rate Approval
         
-    #Rate Approval###
+    ###Rate Approval###
     Logout from Loan IQ
     Login to Loan IQ    ${MANAGER_USERNAME}    ${MANAGER_PASSWORD}
     Select Item in Work in Process    Outstandings    Awaiting Rate Approval    Loan Initial Drawdown     ${Alias}
