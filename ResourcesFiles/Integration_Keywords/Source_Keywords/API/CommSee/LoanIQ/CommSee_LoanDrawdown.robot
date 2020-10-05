@@ -7,33 +7,33 @@ Create Loan Drawdown for Syndicated Deal - ComSee
     ...    @author: rtarayao    16SEP2019    - Duplicate high level keyword from Functional Scenario 2.
     [Arguments]    ${ExcelPath}
 
-    #Login to Original User###
+    ##Login to Original User###
     # Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
 
     ###Deal Notebook###
     Search for Deal    &{ExcelPath}[Deal_Name]
     
-    # Creation of Initial Loan Drawdown in Loan NoteBook###
+    ###Creation of Initial Loan Drawdown in Loan NoteBook###
     ${LoanEffectiveDate}    Get System Date
     Write Data To Excel    ComSee_SC2_Loan    Outstanding_EffectiveDate    ${rowid}    ${LoanEffectiveDate}    ${ComSeeDataSet}
     Navigate to Outstanding Select Window from Deal
     ${Alias}    Create Loan Outstanding    &{ExcelPath}[Outstanding_Type]    &{ExcelPath}[Facility_Name]    &{ExcelPath}[Borrower_ShortName]    &{ExcelPath}[Loan_PricingOption]    &{ExcelPath}[Loan_Currency]  
     
-    # Write Data to Other TestCases###
+    ###Write Data to Other TestCases###
     Write Data To Excel    ComSee_SC2_Loan    Outstanding_Alias    ${rowid}    ${Alias}    ${ComSeeDataSet}
     Write Data To Excel    ComSee_SC2_LoanRepricing    Outstanding_Alias    ${rowid}    ${Alias}    ${ComSeeDataSet}
     ${Alias}    Read Data From Excel    ComSee_SC2_Loan    Outstanding_Alias    ${rowid}    ${ComSeeDataSet}
     Input General Loan Drawdown Details with Accrual End Date    &{ExcelPath}[Loan_RequestedAmount]    &{ExcelPath}[Loan_MaturityDate]   &{ExcelPath}[Loan_RepricingFrequency]    ${LoanEffectiveDate}
     Input Loan Drawdown Rates for Term Drawdown    &{ExcelPath}[Borrower_BaseRate]
     
-    #Cashflow Notebook - Create Cashflows###
+    ###Cashflow Notebook - Create Cashflows###
     Navigate to Drawdown Cashflow Window
     Verify if Method has Remittance Instruction    &{ExcelPath}[Borrower_ShortName]    &{ExcelPath}[Remittance_Description]    &{ExcelPath}[Remittance_Instruction]
     Verify if Method has Remittance Instruction    &{ExcelPath}[Lender1_ShortName]    &{ExcelPath}[Remittance2_Description]    &{ExcelPath}[Remittance2_Instruction]
     Verify if Status is set to Do It    &{ExcelPath}[Borrower_ShortName]  
     Verify if Status is set to Do It    &{ExcelPath}[Lender1_ShortName]
     
-    #Get Transaction Amount for Cashflow###
+    ##Get Transaction Amount for Cashflow###
     ${HostBankShare}    Get Host Bank Cash in Cashflow
     ${BorrowerTranAmount}    Get Transaction Amount in Cashflow    &{ExcelPath}[Borrower_ShortName]
     ${Lend1TranAmount}    Get Transaction Amount in Cashflow    &{ExcelPath}[Lender1_ShortName]
@@ -46,7 +46,7 @@ Create Loan Drawdown for Syndicated Deal - ComSee
     Compare UIAmount versus Computed Amount    ${HostBankShare}|${Lend1TranAmount}    ${ComputedHBTranAmount}|${ComputedLend1TranAmount}
     Compare UIAmount versus Computed Amount    ${HostBankShare}|${Lend1TranAmount}|${Lend2TranAmount}    ${ComputedHBTranAmount}|${ComputedLend1TranAmount}|${ComputedLend2TranAmount}
  
-    #GL Entries###
+    ###GL Entries###
     Navigate to GL Entries
     ${HostBank_Debit}    Get GL Entries Amount    &{ExcelPath}[Host_Bank]    Debit Amt
     ${Lender1_Debit}    Get GL Entries Amount    &{ExcelPath}[Lender1_ShortName]    Debit Amt
@@ -61,14 +61,14 @@ Create Loan Drawdown for Syndicated Deal - ComSee
     Validate if Debit and Credit Amt is Balanced    ${HostBank_Debit}|${Lender1_Debit}    ${Borrower_Credit}
     Validate if Debit and Credit Amt is equal to Transaction Amount    ${UITotalDebitAmt}    ${UITotalCreditAmt}    &{ExcelPath}[Loan_RequestedAmount]
 
-    #Approval of Loan###
+    ###Approval of Loan###
     Send Initial Drawdown to Approval
     Logout from Loan IQ
     Login to Loan IQ    ${MANAGER_USERNAME}    ${MANAGER_PASSWORD}
     Select Item in Work in Process    Outstandings    Awaiting Approval    Loan Initial Drawdown     ${Alias}
     Approve Initial Drawdown
     
-    #Rate Setting###
+    ###Rate Setting###
     Logout from Loan IQ
     Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
     Select Item in Work in Process    Outstandings    Awaiting Send to Rate Approval    Loan Initial Drawdown     ${Alias}
@@ -80,7 +80,7 @@ Create Loan Drawdown for Syndicated Deal - ComSee
     Select Item in Work in Process    Outstandings    Awaiting Rate Approval    Loan Initial Drawdown     ${Alias}
     Approve Initial Drawdown Rate
     
-    #Cashflow Notebook - Release Cashflows###
+    ##Cashflow Notebook - Release Cashflows###
     Navigate Notebook Workflow    ${LIQ_InitialDrawdown_Window}    ${LIQ_InitialDrawdown_Tab}    ${LIQ_Drawdown_WorkflowItems}    Release 
     Release Cashflow Based on Remittance Instruction    &{ExcelPath}[Remittance_Instruction]    &{ExcelPath}[Borrower_ShortName]|&{ExcelPath}[Lender1_ShortName]|&{ExcelPath}[Lender2_ShortName]
     # # Release Cashflow    &{ExcelPath}[Borrower_ShortName]|&{ExcelPath}[Lender1_ShortName]
