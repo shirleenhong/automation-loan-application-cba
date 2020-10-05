@@ -10,6 +10,15 @@ Create User Profile
     [Tags]    01 Create User Profile
     Mx Execute Template With Multiple Data    Create User for Single LOB with ACTIVE Status and UNLOCKED    ${ExcelPath}    ${rowid}    Users_Fields
 
+Create Quick Party Onboarding - PTY001
+    [Documentation]    This test case creates customer details through Quick Party Onboarding module of Fusion Party Application, 
+    ...    Accepts newly created customer and validates successfully created customer in LoanIQ Application
+    ...    @author:mcampomanes    02OCT2020    -initial create
+    [Tags]    01 Create Party within Essence - PTY001
+    Mx Launch UFT    Visibility=True    UFTAddins=Java    Processtimeout=300
+    Mx LoanIQ Launch    Processtimeout=300
+    Mx Execute Template With Multiple Data    Create Party in Quick Party Onboarding    ${ExcelPath}    ${rowid}    PTY001_QuickPartyOnboarding
+    
 Create Customer within Loan IQ - ORIG02
     [Documentation]    This keyword creates Customer within LoanIQ
     ...    when using this, the following keywords(validations) should be disabled in the succeeding keyword 'Search Customer and Complete its Borrower Profile Creation - ORIG03'
@@ -34,7 +43,7 @@ Ongoing Fee Setup - CRED08
     Mx Execute Template With Multiple Data    Ongoing Fee Setup     ${ExcelPath}    ${rowid}    CRED08_OngoingFeeSetup
     
 Primary Allocation - SYND02
-    Mx Execute Template With Multiple Data    Setup a Primary Notebook    ${ExcelPath}    ${rowid}    SYND02_PrimaryAllocation
+    Mx Execute Template With Multiple Data    Setup a Primary Notebook    ${ExcelPath}    ${rowid}    SYND02_Prim    aryAllocation
 
 Create Initial Loan Drawdown - SERV01
     [Tags]    04 Create Initial Loan Drawdown - SERV01
