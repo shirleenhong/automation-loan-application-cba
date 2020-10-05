@@ -31,7 +31,9 @@ Wait Until Browser Ready State
     \    Sleep    1s      
             
 Mx Input Text
-    [Arguments]    ${locator}    ${text}
+    [Documentation]    This keyword is used to input text in elements
+    ...    @update:    javinzon    - added condition for Mx Scroll Element due to failure in scripts
+    [Arguments]    ${locator}    ${text}    ${bScrollToElement}=False
     Wait Until Browser Ready State
     Wait Until Keyword Succeeds    ${retry}    ${retry_interval}    Wait Until Page Contains Element    ${locator}    1s
     Wait Until Keyword Succeeds    ${retry}    ${retry_interval}    Wait Until Element Is Visible    ${locator}
@@ -42,7 +44,8 @@ Mx Input Text
     Press Keys    ${locator}    ${text}
     Press Keys    ${locator}    TAB
     Wait Until Browser Ready State
-    Mx Scroll Element Into View    ${locator}
+    Run Keyword If    '${bScrollToElement}'=='True'    Mx Scroll Element Into View    ${locator}
+    ...    ELSE    Log    Skip Scroll element
 
 Mx Input Text and Press Enter
     [Arguments]    ${locator}    ${text}
@@ -722,6 +725,7 @@ Navigate Notebook Workflow
     ...    @update: Archana     11June20     Added Pre-processing keyword
     ...    @update: dahijara    03JUL2020    Added keyword for screenshot
     ...    @update: clanding    05AUG2020    Updated hard coded values to global variable
+    ...    @update: aramos      30SEP2020    Updated mx LOANIQ click element if present LIQ_Breakfunding_Yes_Button
     [Arguments]    ${sNotebook_Locator}    ${sNotebookTab_Locator}    ${sNotebookWorkflow_Locator}    ${sTransaction}    
 
     ###Pre-processing Keyword##
@@ -737,7 +741,7 @@ Navigate Notebook Workflow
     Mx LoanIQ Select Or DoubleClick In Javatree    ${NotebookWorkflow_Locator}    ${Transaction}%d
     Validate if Question or Warning Message is Displayed
     Run Keyword If    '${Transaction}'=='Release'    Run Keywords
-    ...    Repeat Keyword    2 times    mx LoanIQ click element if present    ${LIQ_BreakFunding_No_Button}
+    ...    Repeat Keyword    2 times    mx LoanIQ click element if present    ${LIQ_BreakFunding_Yes_Button}
     ...    AND    mx LoanIQ click element if present    ${LIQ_Information_OK_Button}
     ...    ELSE IF    '${Transaction}'=='Close'    mx LoanIQ click element if present    ${LIQ_Information_OK_Button}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/NotebookWorkflow
@@ -1180,14 +1184,22 @@ Compute for Percentage of an Amount and Return with Comma Separator
     [Documentation]    This keyword will compute the percentage value of a certain amount
     ...    @author: mnanquil
     ...    10/25/2018
-    [Arguments]    ${amount}    ${percentage}
-    Log    ${amount}
-    Log    ${percentage}
-    ${percentage}    Convert To Number    ${percentage}    
-    ${percentage}    Evaluate    ${percentage}/100
-    ${percentageAmount}    Evaluate    ${amount}*${percentage}
+    ...    @update: dahijara    23SEP2020    Add pre and post processing keywords
+    [Arguments]    ${sAmount}    ${sPercentage}    ${sRunVar_PercentageAmount}=None
+    ### GetRuntime Keyword Pre-processing ###
+    ${Amount}    Acquire Argument Value    ${sAmount}
+    ${Percentage}    Acquire Argument Value    ${sPercentage}
+
+    Log    ${Amount}
+    Log    ${Percentage}
+    ${Percentage}    Convert To Number    ${Percentage}    
+    ${Percentage}    Evaluate    ${Percentage}/100
+    ${percentageAmount}    Evaluate    ${Amount}*${Percentage}
     ${percentageAmount}    Convert To String    ${percentageAmount}
     ${percentageAmount}    Convert Number With Comma Separators    ${percentageAmount}
+	
+    ### ConstRuntime Keyword Post-processing ###
+    Save Values of Runtime Execution on Excel File    ${sRunVar_PercentageAmount}    ${percentageAmount}
     [Return]    ${percentageAmount}    
 
 Click OK In Notices Window

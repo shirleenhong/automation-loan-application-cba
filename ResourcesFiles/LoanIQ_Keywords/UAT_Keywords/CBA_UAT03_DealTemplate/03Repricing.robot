@@ -23,21 +23,26 @@ Initiate Comprehensive Repricing - D00000476
     Select Loan Repricing for Deal    &{ExcelPath}[Loan_Alias]
     
     ### Rollover/Conversion Notebook###
-    ${NewLoanAlias}    Add New Outstandings    &{ExcelPath}[Pricing_Option]    &{ExcelPath}[Base_Rate]    &{ExcelPath}[Loan_NewOutstanding]    &{ExcelPath}[Repricing_Frequency]
+    ${NewLoanAlias}    Add New Outstandings    &{ExcelPath}[Pricing_Option]    &{ExcelPath}[Base_Rate]    
+    ...    &{ExcelPath}[Loan_NewOutstanding]    &{ExcelPath}[Repricing_Frequency]    None    &{ExcelPath}[Repricing_Date]
     Write Data To Excel    SERV08C_ComprehensiveRepricing    Loan_Alias    &{ExcelPath}[rowid]    ${NewLoanAlias}    ${CBAUAT_ExcelPath}
     Run Keyword If    '&{ExcelPath}[rowid]'=='3'    Write Data To Excel    SERV08C_ComprehensiveRepricing    Loan_Alias    1    ${NewLoanAlias}    ${CBAUAT_ExcelPath}
     Run Keyword If    '&{ExcelPath}[rowid]'=='3'    Write Data To Excel    SERV08C_ComprehensiveRepricing    Loan_Alias    3    ${NewLoanAlias}    ${CBAUAT_ExcelPath}
     Run Keyword If    '&{ExcelPath}[rowid]'=='2'    Write Data To Excel    SERV08C_ComprehensiveRepricing    Loan_Alias    2    ${NewLoanAlias}    ${CBAUAT_ExcelPath}
     Run Keyword If    '&{ExcelPath}[rowid]'=='8'    Write Data To Excel    SERV23_Paperclip    Loan_Alias    3    ${NewLoanAlias}    ${CBAUAT_ExcelPath}
-    Add Repricing Details    Interest Payment    
-    ${CycleAmount}    Select Cycles for Loan Item    Projected Due    &{ExcelPath}[Cycle]
-    Verify Interest Payment    ${CycleAmount}     &{ExcelPath}[Payment_Effective_Date]
+    ${CycleAmount}    Set Variable    0
+    Run Keyword if    '&{ExcelPath}[rowid]'!='7'    Run Keywords    Add Repricing Details    Interest Payment    
+    ...    AND    ${CycleAmount}    Select Cycles for Loan Item    Projected Due    &{ExcelPath}[Cycle]
+    ...    AND    Verify Interest Payment    ${CycleAmount}     &{ExcelPath}[Payment_Effective_Date]
   
     Navigate Notebook Workflow    ${LIQ_LoanRepricingForDeal_Window}    ${LIQ_LoanRepricingForDeal_Workflow_Tab}    ${LIQ_LoanRepricingForDeal_Workflow_JavaTree}    Create Cashflows
     
     ## Remittance Instruction Addition per Cashflow ###
-    Add Remittance Instructions    &{ExcelPath}[Borrower_ShortName]    &{ExcelPath}[Borrower_RemittanceDescription]    
-    Create Cashflow    &{ExcelPath}[Borrower_ShortName]    release     
+    Run Keyword if    '&{ExcelPath}[rowid]'!='7'    Run Keywords    Add Remittance Instructions    &{ExcelPath}[Borrower_ShortName]    &{ExcelPath}[Borrower_RemittanceDescription]    
+    ...    AND    Create Cashflow    &{ExcelPath}[Borrower_ShortName]    release     
+    Add Remittance Instructions    &{ExcelPath}[Borrower_ShortName]    &{ExcelPath}[Borrower_RemittanceDescription]
+    Run Keyword If    '&{ExcelPath}[rowid]'!='3'    Create Cashflow    &{ExcelPath}[Borrower_ShortName]    release
+    Run Keyword If    '&{ExcelPath}[rowid]'=='3'    Create Cashflow    &{ExcelPath}[Loan_Increase]|${CycleAmount}    release     
     
     Navigate Notebook Workflow    ${LIQ_LoanRepricingForDeal_Window}    ${LIQ_LoanRepricingForDeal_Workflow_Tab}    ${LIQ_LoanRepricingForDeal_Workflow_JavaTree}    Send to Approval
     

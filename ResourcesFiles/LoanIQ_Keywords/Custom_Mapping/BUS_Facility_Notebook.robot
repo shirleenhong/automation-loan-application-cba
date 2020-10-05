@@ -481,8 +481,9 @@ BUS_Get Effective and Expiry Date from Summary Tab in Facility Notebook
 BUS_Get Original Amount on Summary Tab of Facility Notebook
     [Documentation]    This keyword is used to run the assigned low level keyword.
     ...    @author: sahalder    06AUG2020    - initial create
+    ...    @update: dahijara    24SEP2020    - added arguments.
 
-    Run Keyword    Get Original Amount on Summary Tab of Facility Notebook
+    Run Keyword    Get Original Amount on Summary Tab of Facility Notebook    ${ARGUMENT_1}    ${ARGUMENT_2}    ${ARGUMENT_3}    ${ARGUMENT_4}    ${ARGUMENT_5}    ${ARGUMENT_6}    ${ARGUMENT_7}    ${ARGUMENT_8}    ${ARGUMENT_9}    ${ARGUMENT_10}
     
 BUS_Get Original Amount on Facility Lender Shares
     [Documentation]    This keyword is used to run the assigned low level keyword.

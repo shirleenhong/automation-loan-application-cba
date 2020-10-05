@@ -163,3 +163,15 @@ BUS_Get Cycle Due Date for Loan Repricing
     ...    @author: clanding    14AUG2020    - initial create
 
     Run Keyword    Get Cycle Due Date for Loan Repricing    ${ARGUMENT_1}    ${ARGUMENT_2}
+
+BUS_Validate Loan Amounts in General Tab
+    [Documentation]    This keyword is used to run the assigned low level keyword.
+    ...    @author: dahijara    24SEP2020    - initial create
+
+    Run Keyword    Validate Loan Amounts in General Tab    ${ARGUMENT_1}    ${ARGUMENT_2}
+
+BUS_Validate GL Entries After Release
+    [Documentation]    This keyword is used to run the assigned low level keyword.
+    ...    @author: dahijara    24SEP2020    - initial create
+
+    Run Keyword    Validate GL Entries After Release    ${ARGUMENT_1}    ${ARGUMENT_2}    ${ARGUMENT_3}

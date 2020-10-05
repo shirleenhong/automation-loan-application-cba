@@ -1,5 +1,5 @@
 ### Party Onboarding Page ###
-Party_PartyOnboarding_Locality_Dropdown = '//input[contains(@id,"Locality")]'
+Party_PartyOnboarding_Locality_Dropdown = '//input[contains(@id,"Locality") and contains(@type, "combo")]'
 Party_PartyOnboarding_Entity_Textbox = '//input[contains(@id,"countryDetail")]'
 Party_PartyOnboarding_AssignedBranch_Dropdown ='//input[contains(@id,"assignedBranch")]'
 Party_PartyOnboarding_PartyType_Dropdown = '//input[contains(@id,"partyType")]'
@@ -9,7 +9,7 @@ Party_PartyOnboarding_PartyCategory_Dropdown = '//input[contains(@id,"partyCateg
 Party_PartyOnboarding_Search_Button = '//input[contains(@id,"Button") and @name="Search"]'
 Party_PartyOnboarding_ComrLending_Display = '//td[contains(text(),"Commercial Lending")]'
 Party_PartyOnboarding_LineOfBusiness_Table = '//div[contains(@id,"PartyLineOfBusinessDetail") and @role="grid"]'
-Party_PartyOnboarding_LineOfBusiness_Rows = '//div[contains(@id,"PartyLineOfBusinessDetail") and @role="grid"]//div[@class="dojoxGridMasterView"]//div[@role="row"]'
+Party_PartyOnboarding_LineOfBusiness_Rows = '//div[contains(@id,"PartyLineOfBusinessDetail") and @role="grid"]//table[contains(@class, "GridRowTable")]'
 Party_PartyOnboarding_LOBName_TableRow = '//td[@role="gridcell" and @idx="1"]'
 Party_PartyOnboarding_LOB_CheckBox = '//td[@role="gridcell" and @idx="0"]//div[@role="checkbox"]'
 
@@ -24,6 +24,9 @@ Party_PreExistenceCheck_EnterpriseName_TextBox = '//td[preceding-sibling::td[con
 Party_PreExistenceCheck_Locality_Dropdown = '//input[contains(@id,"locality") and not(contains(@id, "OffScreen"))]'
 Party_PreExistenceCheck_Entity_Dropdown = '//input[contains(@id,"Location")]'
 Party_PreExistenceCheck_Park_Button = '//input[contains (@id, "Park")]'
+Party_PreExistenceCheck_SearchResultTableHeader = '//div[contains(@class, "GridMasterHeader")]//table[contains(@class, "GridRowTable")]//th'
+Party_PreExistenceCheck_SearchResultTableRow ='//div[contains(@class, "GridMasterView")]//table[contains(@class, "GridRowTable")]//tr'
+Party_PreExistenceCheck_View_Button = '//input[contains(@id, "View")]'
 
 ### Quick Enterprise Party Page ###
 Party_QuickEnterpriseParty_PartyId_TextBox = '//input[contains(@id,"partyId") and not(contains(@id, "OffScreen"))]'
