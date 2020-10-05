@@ -5,8 +5,6 @@ Resource    ../../../../Configurations/LoanIQ_Import_File.robot
 Collect Early Prepayment via Paper Clip D00000454
     [Documentation]    This Keyword creates a partial early payment via paperclip
     ...    @author: fmamaril    17SEP2019
-    ...    @author: rjuarez    05Oct2020    Commented selection of remittance, remittance already been displayed and selected in  borrower&lender
-    ...    @author: rjuarez    05Oct2020    Commented select breakfunding step, reason for breakfunding did not show for selection upon release workflow
     [Arguments]    ${ExcelPath}
     Logout from Loan IQ
 	Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
@@ -17,9 +15,9 @@ Collect Early Prepayment via Paper Clip D00000454
     Search for Existing Outstanding    Loan    &{ExcelPath}[Facility_Name]
     Select Existing loan for Facility    &{ExcelPath}[Loan_Alias]
     mx LoanIQ activate window    ${LIQ_Loan_Window}
-    # Set Outstanding Servicing Group Details    &{ExcelPath}[Borrower_ShortName]    &{ExcelPath}[Remittance_Instruction]
-    # Set Outstanding Servicing Group Details    &{ExcelPath}[Lender1_ShortName]    &{ExcelPath}[Lender_RemittanceInstruction]
-    # Set Outstanding Servicing Group Details    &{ExcelPath}[Lender2_ShortName]    &{ExcelPath}[Lender2_RemittanceInstruction]
+    Set Outstanding Servicing Group Details    &{ExcelPath}[Borrower_ShortName]    &{ExcelPath}[Remittance_Instruction]
+    Set Outstanding Servicing Group Details    &{ExcelPath}[Lender1_ShortName]    &{ExcelPath}[Lender_RemittanceInstruction]
+    Set Outstanding Servicing Group Details    &{ExcelPath}[Lender2_ShortName]    &{ExcelPath}[Lender2_RemittanceInstruction]
     Initiate Paperclip payment via Outstanding Select    &{ExcelPath}[Loan_Alias]
     
     ### Initiate Paperclip Payment
@@ -72,7 +70,7 @@ Collect Early Prepayment via Paper Clip D00000454
     Release Cashflow    &{ExcelPath}[Lender1_ShortName]
     Release Cashflow    &{ExcelPath}[Lender2_ShortName]    release    
     Navigate Notebook Workflow    ${LIQ_PendingPaperClip_Window}    ${LIQ_PaperClip_Tabs}    ${LIQ_PaperClip_Workflow_Tab}    Release
-    # Select Breakfunding Reason    Repricing Date Changed 
+    Select Breakfunding Reason    Repricing Date Changed 
     Close All Windows on LIQ
     
 Collect Full Payment via Paper Clip Outstanding B1 D00000454
