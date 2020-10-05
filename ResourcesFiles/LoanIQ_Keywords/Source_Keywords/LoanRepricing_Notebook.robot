@@ -343,13 +343,17 @@ Add New Outstandings
     ...    @update: hstone      28MAY2020    - Added Keyword Pre-processing
     ...                                      - Added Optional Argument: ${sRunTimeVar_NewLoanAlias}
     ...                                      - Added Keyword Post-processing
-    [Arguments]    ${sPricing_Option}    ${sBorrower_Base_Rate}    ${sNewRequestedAmt}=None    ${sRepricingFrequency}=None    ${sRunTimeVar_NewLoanAlias}=None
+    ...    @update: shirhong    01OCT2020    Added Repricing Date
+    ...                                      - Added Warning Confirmation when saving Rollover Conversion
+    ...                                      - Added Question Confirmation when clicking Base Rate button 
+    [Arguments]    ${sPricing_Option}    ${sBorrower_Base_Rate}    ${sNewRequestedAmt}=None    ${sRepricingFrequency}=None    ${sRunTimeVar_NewLoanAlias}=None    ${sRepricingDate}=None
 
     ### Keyword Pre-processing ###
     ${Pricing_Option}    Acquire Argument Value    ${sPricing_Option}
     ${Borrower_Base_Rate}    Acquire Argument Value    ${sBorrower_Base_Rate}
     ${NewRequestedAmt}    Acquire Argument Value    ${sNewRequestedAmt}
     ${RepricingFrequency}    Acquire Argument Value    ${sRepricingFrequency}
+    ${RepricingDate}    Acquire Argument Value    ${sRepricingDate}
 
     mx LoanIQ activate window    ${LIQ_LoanRepricing_Window}
     Take Screenshot    ${Screenshot_path}/Screenshots/LoanIQ/ComprehensiveRepricing_LoanRepricing
@@ -364,9 +368,10 @@ Add New Outstandings
     ${NewLoanAlias}    Mx LoanIQ Get Data    ${LIQ_RolloverConversion_Alias_Textfield}    NewLoanAlias
     Run Keyword If    '${NewRequestedAmt}'!='None'    mx LoanIQ enter    ${LIQ_RolloverConversion_RequestedAmt_TextField}    ${NewRequestedAmt}
     Run Keyword If    '${RepricingFrequency}'!='None'    mx LoanIQ select list    ${LIQ_PendingRollover_RepricingFrequency_Dropdown}    ${RepricingFrequency}
+    Run Keyword If    '${RepricingDate}'!='None'    mx LoanIQ enter    ${LIQ_PendingRollover_RepricingDate}    ${RepricingDate}
     Take Screenshot    ${Screenshot_path}/Screenshots/LoanIQ/ComprehensiveRepricing_PendingRolloverConversion_GeneralTab
-    mx LoanIQ select    ${LIQ_RolloverConversion_Save_Menu}     
-    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
+    mx LoanIQ select    ${LIQ_RolloverConversion_Save_Menu}
+    Run Keyword If    '${RepricingDate}'!='None'    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
     Mx LoanIQ Select Window Tab    ${LIQ_RolloverConversion_Tab}    Rates
     mx LoanIQ click    ${LIQ_RolloverConversion_BaseRate_Button}
     mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
@@ -374,6 +379,7 @@ Add New Outstandings
     # Mx Click Element If Present    ${LIQ_RolloverConversion_BaseRate_Button}
     # Mx Click Element If Present    ${LIQ_Warning_Yes_Button}
     # Mx Click Element If Present    ${LIQ_Warning_Yes_Button}
+    Run Keyword If    '${RepricingDate}'!='None'    mx LoanIQ click element if present    ${LIQ_Question_No_Button}  
     mx LoanIQ enter    ${LIQ_SetBaseRate_BorrowerBaseRate_Textfield}    ${Borrower_Base_Rate}
     Take Screenshot    ${Screenshot_path}/Screenshots/LoanIQ/ComprehensiveRepricing_PendingRolloverConversion_RatesTab 
     mx LoanIQ click    ${LIQ_SetBaseRate_Ok_Button}

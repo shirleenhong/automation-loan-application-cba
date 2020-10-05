@@ -106,12 +106,11 @@ Unscheduled Full Prepayment for Loans in Deal D00001053
     Log    ${Total_Amount}
        
     Navigate Notebook Workflow    ${LIQ_Repayment_Window}    ${LIQ_Repayment_Tab}    ${LIQ_Repayment_WorkflowItems}    Create Cashflows
-    ###Verify if Method has Remittance Instruction    &{ExcelPath}[Borrower_Name]    &{ExcelPath}[Remittance_Description]    &{ExcelPath}[Remittance_Instruction]    ${Current_Amount}    AUD
+
     Verify if Method has Remittance Instruction    &{ExcelPath}[Borrower_Name]    &{ExcelPath}[Remittance_Description]    &{ExcelPath}[Remittance_Instruction]    ${Total_Amount}    AUD
-    ###Verify if Method has Remittance Instruction    &{ExcelPath}[Borrower_Name]    &{ExcelPath}[Remittance_Description]    &{ExcelPath}[Remittance_Instruction]    ${CycleDue_Amount}    AUD
+   
     Verify if Status is set to Do It    &{ExcelPath}[Borrower_Name]    &{ExcelPath}[Remittance_Instruction]    ${Total_Amount}
-    ###Verify if Status is set to Do It    &{ExcelPath}[Borrower_Name]    &{ExcelPath}[Remittance_Instruction]    ${Current_Amount}
-    ###Verify if Status is set to Do It    &{ExcelPath}[Borrower_Name]    &{ExcelPath}[Remittance_Instruction]    ${CycleDue_Amount}
+
     Click OK In Cashflows
     
     Navigate Notebook Workflow    ${LIQ_Repayment_Window}    ${LIQ_Repayment_Tab}    ${LIQ_Repayment_WorkflowItems}    Send to Approval        

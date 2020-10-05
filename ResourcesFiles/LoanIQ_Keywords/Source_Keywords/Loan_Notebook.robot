@@ -483,7 +483,35 @@ Get Loan Spread and All In Rates
     Set Test Variable    ${SCREENSHOT_FILENAME}    Loan Rates
     Take Screenshot    ${SCREENSHOT_FILENAME}
     [Return]    ${SpreadRate}    ${AllInRate}
-
+    
+Navigate to Share Accrual Cycle
+    [Documentation]    Navigate in Share Accrual Loan Outstanding Non Zero Cycle Cycle Due Value
+    ...    @author: sacuisia    30SEPT2020    -inital create
+    [Arguments]    ${sPrimary_Lender}
+    
+   ${Primary_Lender}    Acquire Argument Value    ${sPrimary_Lender}
+    
+    mx LoanIQ activate window    ${LIQ_Loan_Window}
+    Mx LoanIQ Select Window Tab    ${LIQ_Loan_Tab}    Accrual
+    mx LoanIQ click    ${LIQ_Accrual_CycleDueOverview_Button}
+    Mx LoanIQ DoubleClick    ${LIQ_SharesFor_Primaries_Tree}    ${Primary_Lender}
+    Log    ${Primary_Lender}
+    
+Get Cycle Due Amount
+    [Documentation]    This keyword returns value for Loan Outstanding Non Zero Cycle Cycle Due Value
+    ...    @author: sacuisia    30SEPT2020    -inital create
+    
+    mx LoanIQ activate window    ${LIQ_ServicingGroup_AccrualCycle}
+    ${CycleData}    Mx LoanIQ Get Data    ${LIQ_ServicingGroup_CycleDue}    value%CycleData
+    [Return]    ${CycleData}
+   
+Get PaidToDate
+    [Documentation]    This keyword returns value for Loan Outstanding Non Zero Cycle Cycle Due Value
+    ...    @author: sacuisia    30SEPT2020    -inital create
+    
+    ${PaidData}    Mx LoanIQ Get Data    ${LIQ_ServicingGroup_Paid}    value%PaidData
+    [Return]    ${PaidData}
+    
 Get Loan Accrued to Date Amount
     [Documentation]    This keyword returns the Issuance fee rate.
     ...    @author: rtarayao    23AUG2019    - Initial Create

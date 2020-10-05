@@ -111,45 +111,50 @@ Create Interest Pricing Change via Facility Notebook
 Facility Interest Pricing Change for Comprehensive Deal
     [Documentation]    Create Interest Pricing Change Transaction via Facility Notebook.
     ...    @author: mnanquilada
+    ...    @update: dahijara    22SEP2020    - removed Mx keywords
+    ...                                      - updated selection of Financial Ratio in Interest Pricing List
+    ...                                      - added Clearing of Interest Pricing current values before adding to matrix
+    ...                                      - removed duplicated getting of current date.
+    ...                                      - Updated navigation for Pricing Change Transaction
     [Arguments]    ${ExcelPath}
+
     ${TransactionNo}    Auto Generate Only 4 Numeric Test Data    &{ExcelPath}[TransactionNo_Prefix]
     ${CurrentDate}    Get System Date
     Write Data To Excel    AMCH06_PricingChangeTransaction    PricingChange_TransactionNo    ${rowid}    ${TransactionNo}
     Write Data To Excel    AMCH06_PricingChangeTransaction    PricingChange_EffectiveDate    ${rowid}    ${CurrentDate}
     
-    ###Launch Pricing Change Transasction Notebook###  
+    ### Launch Pricing Change Transasction Notebook ###  
     Search Existing Deal    &{ExcelPath}[Deal_Name]
     Open Facility Notebook  &{ExcelPath}[Facility_Name]
-    Select Pricing Change Transaction Menu    &{ExcelPath}[Pricing_Status]             
+    Navigate to Pricing Change Transaction Menu
     
-    ####Pricing Change Transaction Notebook- General Tab###
-    ${CurrentDate}    Get System Date
+    #### Pricing Change Transaction Notebook- General Tab ###
     Populate Pricing Change Notebook General Tab    ${TransactionNo}    ${CurrentDate}    &{ExcelPath}[PricingChange_Desc]    
     
-    ###Pricing Change Transaction Notebook- Pricing Tab###
+    ### Pricing Change Transaction Notebook- Pricing Tab ###
     Navigate to Pricing Tab - Modify Interest Pricing        
-        ##First Item
+
+    ### First Item ###
+    Clear Interest Pricing Current Values
     Add Matrix Item    &{ExcelPath}[PCT_InterestPricing_MatrixItem]    &{ExcelPath}[PCT_InterestPricing_FRType]    &{ExcelPath}[PCT_FinancialRatioType]    &{ExcelPath}[MinimumValue_1]    &{ExcelPath}[MaximumValue_1]
     Add After Option Item - First    &{ExcelPath}[PCT_InterestPricing_OptionItem]    &{ExcelPath}[OptionName1]    &{ExcelPath}[OptionName1]    &{ExcelPath}[RateBasisInterestPricing]    &{ExcelPath}[Spread1]
 	Add After Option Item - Second    &{ExcelPath}[OptionName2]    &{ExcelPath}[RateBasisInterestPricing]    &{ExcelPath}[Spread1]
 	Add After Option Item - Third    &{ExcelPath}[OptionName3]    &{ExcelPath}[RateBasisInterestPricing]    &{ExcelPath}[Spread1]		
-	    ##Second Item
-    mx LoanIQ activate    ${LIQ_Facility_InterestPricing_Window}
-	Mx LoanIQ Select Or DoubleClick In Javatree    ${LIQ_PCT_InterestPricing_List}    &{ExcelPath}[PCT_FinancialRatioType]%s  
+
+	### Second Item ###
+    Select Financial Ratio in Interest Pricing List    &{ExcelPath}[PCT_FinancialRatioType]
 	Add Matrix Item    &{ExcelPath}[PCT_InterestPricing_MatrixItem]    &{ExcelPath}[PCT_InterestPricing_FRType]    &{ExcelPath}[PCT_FinancialRatioType]    &{ExcelPath}[MinimumValue_2]    &{ExcelPath}[MaximumValue_2]
     Add After Option Item - First    &{ExcelPath}[PCT_InterestPricing_OptionItem]    &{ExcelPath}[OptionName1]    &{ExcelPath}[OptionName1]    &{ExcelPath}[RateBasisInterestPricing]    &{ExcelPath}[Spread2]
 	Add After Option Item - Second    &{ExcelPath}[OptionName2]    &{ExcelPath}[RateBasisInterestPricing]    &{ExcelPath}[Spread2]
 	Add After Option Item - Third    &{ExcelPath}[OptionName3]    &{ExcelPath}[RateBasisInterestPricing]    &{ExcelPath}[Spread2]		
-	    ##Third Item
-    mx LoanIQ activate    ${LIQ_Facility_InterestPricing_Window}
-	Mx LoanIQ Select Or DoubleClick In Javatree    ${LIQ_PCT_InterestPricing_List}    &{ExcelPath}[PCT_FinancialRatioType]%s  
+	### Third Item ###
+    Select Financial Ratio in Interest Pricing List    &{ExcelPath}[PCT_FinancialRatioType]
 	Add Matrix Item    &{ExcelPath}[PCT_InterestPricing_MatrixItem]    &{ExcelPath}[PCT_InterestPricing_FRType]    &{ExcelPath}[PCT_FinancialRatioType]    &{ExcelPath}[MinimumValue_3]    &{ExcelPath}[MaximumValue_3]
     Add After Option Item - First    &{ExcelPath}[PCT_InterestPricing_OptionItem]    &{ExcelPath}[OptionName1]    &{ExcelPath}[OptionName1]    &{ExcelPath}[RateBasisInterestPricing]    &{ExcelPath}[Spread3]
 	Add After Option Item - Second    &{ExcelPath}[OptionName2]    &{ExcelPath}[RateBasisInterestPricing]    &{ExcelPath}[Spread3]
 	Add After Option Item - Third    &{ExcelPath}[OptionName3]    &{ExcelPath}[RateBasisInterestPricing]    &{ExcelPath}[Spread3]		
-	    ##Fourth Item
-    mx LoanIQ activate    ${LIQ_Facility_InterestPricing_Window}
-	Mx LoanIQ Select Or DoubleClick In Javatree    ${LIQ_PCT_InterestPricing_List}    &{ExcelPath}[PCT_FinancialRatioType]%s 
+	### Fourth Item ###
+    Select Financial Ratio in Interest Pricing List    &{ExcelPath}[PCT_FinancialRatioType]
 	Add Matrix Item - Mnemonic    &{ExcelPath}[PCT_InterestPricing_MatrixItem]    &{ExcelPath}[PCT_InterestPricing_FRType]    &{ExcelPath}[PCT_FinancialRatioType]    &{ExcelPath}[MaximumValue_3]    &{ExcelPath}[Mnemonic_Value]    
 	Add After Option Item - First    &{ExcelPath}[PCT_InterestPricing_OptionItem]    &{ExcelPath}[OptionName1]    &{ExcelPath}[OptionName1]    &{ExcelPath}[RateBasisInterestPricing]    &{ExcelPath}[Spread4]
 	Add After Option Item - Second    &{ExcelPath}[OptionName2]    &{ExcelPath}[RateBasisInterestPricing]    &{ExcelPath}[Spread4]
@@ -157,19 +162,19 @@ Facility Interest Pricing Change for Comprehensive Deal
 	
 	Validate the Interest Pricing Values with Matrix Item
 	
-	###Pricing Change Transaction Notebook- Workflow Tab###
+	### Pricing Change Transaction Notebook- Workflow Tab ###
     Pricing Change Transaction Send to Approval
 	
-	###Pricing Change Transaction Notebook- Workflow Tab###
+	### Pricing Change Transaction Notebook- Workflow Tab ###
 	Logout from Loan IQ
     Login to Loan IQ    ${MANAGER_USERNAME}    ${MANAGER_PASSWORD}
 	Pricing Change Transaction Approval   &{ExcelPath}[WIPTransaction_Type]    &{ExcelPath}[Transaction_Status_AwaitingApproval]    &{ExcelPath}[FacilityTransaction_Type]    &{ExcelPath}[Deal_Name]
 	
-	###Pricing Change Transaction Notebook- Workflow Tab###
+	### Pricing Change Transaction Notebook- Workflow Tab ###
 	Logout from Loan IQ
     Login to Loan IQ    ${SUPERVISOR_USERNAME}    ${SUPERVISOR_PASSWORD} 
 	Pricing Change Transaction Release    &{ExcelPath}[WIPTransaction_Type]    &{ExcelPath}[Transaction_Status_AwaitingRelease]    &{ExcelPath}[FacilityTransaction_Type]    &{ExcelPath}[Deal_Name] 
-    
-    ### <update> bernchua 12/5/2018: Scenario 8 integration go back to original user
+
+    Close All Windows on LIQ
     Logout from Loan IQ
     Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}

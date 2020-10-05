@@ -2278,7 +2278,6 @@ Get Customer Lender Legal Name Via Lender Shares In Deal Notebook
     [Arguments]    ${sCustomerLender_Name}    ${sRunVar_CustomerLender_LegalName}=None
     ### GetRuntime Keyword Pre-processing ###
     ${CustomerLender_Name}    Acquire Argument Value    ${sCustomerLender_Name}
-
     mx LoanIQ activate    ${LIQ_DealNotebook_Window}    
     mx LoanIQ select    ${LIQ_DealNotebook_LenderShare}    
     Mx LoanIQ Select String    ${LIQ_SharesFor_Primaries_Tree}    ${CustomerLender_Name}    

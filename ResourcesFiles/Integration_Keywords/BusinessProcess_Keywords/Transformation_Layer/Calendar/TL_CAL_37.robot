@@ -9,6 +9,7 @@ Send Copp Clark Files with Multiple Rows and Same Date
     ...    Then validate if Copp Clark files are processed and moved to Archive folder.
     ...    Then validate FFC and validate in LoanIQ if Holiday Calendar Dates are reflected.
     ...    @author: jloretiz    14AUG2019    - initial create
+    ...    @update: clanding    29SEP2020    - added iPollingTime in SFTP validation
     [Arguments]    ${ExcelPath}
     
     ###PREREQUISITE###
@@ -31,7 +32,7 @@ Send Copp Clark Files with Multiple Rows and Same Date
     ###END OF PREREQUISITE###
     
     Send Multiple Files to SFTP and Validate If Files are Processed for Holiday    &{ExcelPath}[InputFilePath]    ${TL_CALENDAR_FOLDER}    &{ExcelPath}[InputCoppClarkFiles]    
-    ...    ${TL_CALENDAR_ARCHIVE_FOLDER}
+    ...    ${TL_CALENDAR_ARCHIVE_FOLDER}    iPollingTime=7m
     Log    ${ARCHIVE_GSFILENAME_LIST}
     Get File Name From Archive List    ${ARCHIVE_GSFILENAME_LIST}    ${File_1}
     Run Keyword And Continue On Failure    Validate FFC for TL Calendar Success    &{ExcelPath}[InputFilePath]    &{ExcelPath}[InputJson]    &{ExcelPath}[Expected_wsFinalLIQDestination]    &{ExcelPath}[OutputFilePath]    

@@ -2,13 +2,13 @@
 APIDataSet = "C:\\Git_Evergreen\\fms_cba\DataSet\\Integration_DataSet\\API\\API_Data_Set.xlsx"
 ExcelPath = "C:\\Git_Evergreen\\fms_cba\DataSet\\LoanIQ_DataSet\\EVG_PTYLIQ01_BaselineBilateralCustomer.xlsx"
 dataset_path = "C:\\Git_Evergreen\\fms_cba"
-CBAUAT_ExcelPath = "C:\\Git_Evergreen\\fms_cba\\DataSet\\CBAUATDeal_DataSet\\EVG_CBAUAT05.xlsx"
-TL_DATASET = "C:\\Git_Evergreen\\evergreen_projects\\CBA_Evergreen\\DataSet\\TL_DataSet\\TL_Data_Set.xls"
+CBAUAT_ExcelPath = "C:\\Git_Evergreen\\fms_cba\\DataSet\\CBAUATDeal_DataSet\\EVG_CBAUAT03.xlsx"
+TL_DATASET = "C:\\Git_Evergreen\\fms_cba\\DataSet\\Integration_DataSet\\TL\\TL_Data_Set_AU.xlsx"
 SAPWUL_DATASET = "C:\\Git_evergreen\\evergreen_projects\\CBA_Evergreen\\DataSet\\Downstream_DataSet\\SAPWUL\\SAPWUL_Data_Set.xlsx"
 ComSeeDataSet = "C:\\Git_Evergreen\\fms_cba\DataSet\\Integration_DataSet\\CommSee\\COMMSEE_Data_Set.xlsx"
 GLExcelPath = "C:\\Git_Evergreen\\evergreen_projects\\CBA_Evergreen\\DataSet\\Extract_DataSet\\GL\\EVG_GL_TestData.xls"
 GLExcelPath = 'C:\\Git_Evergreen\\fms_cba\\DataSet\\Integration_DataSet\Extracts\\GL\\EVG_GL_TestData.xlsx'
-PTY_DATASET = "C:\\Git_Evergreen\\evergreen_projects\\CBA_Evergreen\\DataSet\\PTY_DataSet\\PTY_DataSet.xlsx"
+PTY_DATASET = "C:\\Git_Evergreen\\fms_cba\\DataSet\\Party_DataSet\\PTY_DataSet.xlsx"
 DWELIQFunc_Dataset = "C:\\Git_Evergreen\\fms_cba\\DataSet\\Integration_DataSet\\Extracts\\DWE_LIQ\\DWELIQ_Functional_TestData.xlsx"
 
 SERVER = "http://mancsleverg0007"
@@ -17,16 +17,8 @@ MDM_FFC_URL="/mch-ui"
 
 SFTP_HOST = "mancsleverg0005"
 SFTP_PORT = "22"
-SFTP_USER = "micloud"
-SFTP_PASSWORD = "misys123"
-
-OPEAPI_INSTANCE_TL = "openAPI_1.3.0"
-OPEAPI_INSTANCE = "openAPI_1.3.0"
-TEXTJMS_INSTANCE = "distributor_1.3.0"
-CBAINTERFACE_INSTANCE = "CustomInterface_v1.3.2"
-CBAPUSH_INSTANCE = "CustomCBAPush_v1.3.2"
-CUSTOM_INTERFACE_INSTANCE = "CustomInterface_v1.3.2"
-RESPONSE_MECHANISM_INSTANCE = "responsemechanism_1.3.0"
+SFTP_USER = "sftpuser"
+SFTP_PASSWORD = "t3stOnly?"
 
 DBServiceName = "MLFFC1.misys.global.ad"
 DBUsername = "MCH"
@@ -47,11 +39,11 @@ MDM_FFC_Password = 'admin'
 ### TL Credentials ###
 TL_USERNAME = "JCUSR01"
 TL_PASSWORD = "password"
-INPUTTER_USERNAME = "CFRANCIS"
-INPUTTER_PASSWORD = "password01"
-SUPERVISOR_USERNAME = "SUPAMT01"
+INPUTTER_USERNAME = "USERINP"
+INPUTTER_PASSWORD = "password"
+SUPERVISOR_USERNAME = "wbayers"
 SUPERVISOR_PASSWORD = "password"
-MANAGER_USERNAME = "MGRAMT01"
+MANAGER_USERNAME = "mwheeler"
 MANAGER_PASSWORD = "password"
 
 SSO_USERLINK = "mancsleverg0028"
@@ -79,8 +71,8 @@ PARTY_PASSWORD = 'password'
 
 TL_SERVICE_HOST = "mancsleverg0007"
 TL_SERVICE_PORT = "22"
-TL_SERVER_USER = "micloud"
-TL_SERVER_PASSWORD = "misys123"
+TL_SERVER_USER = "sftpuser"
+TL_SERVER_PASSWORD = "t3stOnly?"
 TL_SERVICE_DIR = "/evgdata/FFC/mch-2.1.3.3.0-6162/config/Transformation_129/"
 
 ###Screenshots###
@@ -117,12 +109,12 @@ ESS_PASSWORD = "brad"
 
 ### IEE LIQ SERVER ###
 DBSERVICENAME_LIQ = 'MLLIQ.misys.global.ad'
-DBUSERNAME_LIQ = 'LIQ747E3'
+DBUSERNAME_LIQ = 'LIQ7512UPG'
 DBPASSWORD_LIQ = 'password'
 DBHOST_LIQ = 'MANCSLEVERG0023'
 DBPORT_LIQ = '1539'
 DBUR_LIQ = 'jdbc:oracle:thin:@//mancsleverg0023:1539/MLLIQ.misys.global.ad'
-LIQ7474_USER = 'LIQ747E3'
+LIQ7474_USER = 'LIQ7512UPG'
 
 ###AU User###
 BFBANKFUSION_USER = 'AUBANKFUSION'
@@ -171,14 +163,14 @@ MDM_FFC_Username ='admin'
 MDM_FFC_Password = 'admin'
 
 ###FFC Instance###
-OPEAPI_INSTANCE_TL = "openAPI_1.3.0"
-OPEAPI_INSTANCE = "openAPI_1.3.0"
-TEXTJMS_INSTANCE = "distributor_1.3.0"
-GETTEXTJMS_INSTANCE = "distributor_1.3.0"
-CBAINTERFACE_INSTANCE = "CustomInterface_1.3.0"
-CBAPUSH_INSTANCE = "CustomCBAPush_1.3.0"
-CUSTOM_INTERFACE_INSTANCE = "CustomInterface_1.3.0"
-RESPONSE_MECHANISM_INSTANCE = "responsemechanism_1.3.0"
+OPEAPI_INSTANCE_TL = "openAPI_1.4.1.1"
+OPEAPI_INSTANCE = "openAPI_1.4.1.1"
+TEXTJMS_INSTANCE = "distributor_1.4.1.1"
+GETTEXTJMS_INSTANCE = "distributor_1.4.1.1"
+CBAINTERFACE_INSTANCE = "CustomInterface_v1.3.3"
+CBAPUSH_INSTANCE = "CustomCBAPush_v1.3.2"
+CUSTOM_INTERFACE_INSTANCE = "CustomInterface_v1.3.3"
+RESPONSE_MECHANISM_INSTANCE = "responsemechanism_1.4.1.0"
 DWE_NOTIFICATION_INSTANCE = "dwe_notification_1.3.0"
 SAPWUL_INSTANCE = 'CustomCBAPush_1.3.0'
 
@@ -223,6 +215,8 @@ GL_PGP_SECRET_KEY = 'secret.skr'
 GL_PASSPHRASE = 'password'
 GL_CSV_GPG_FILEEXTENSION = '.csv.gpg'
 ESS_AUWASADMIN_SCHEMA = "AUWASADMIN"
+GL_VALIDATION_TOOL_PATH = 'C:\\Git_Evergreen\\fms_cba\\DataSet\\Integration_DataSet\Extracts\\GL\\Validation_Tool'
+GL_VALIDATION_TOOL_JAR = 'gpgCheck-1.0.3-jar-with-dependencies.jar'
 
 ### TI ###
 FBTIDataset = 'C:\\Git_Evergreen\\evergreen_projects\\CBA_Evergreen\\DataSet\\FBTI_DataSet\\FBTI_User_Data_Set.xlsx'

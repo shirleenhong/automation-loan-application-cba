@@ -875,9 +875,9 @@ Input General Loan Drawdown Details with Accrual End Date
     ${Loan_AccrueEndDate}    Acquire Argument Value    ${sLoan_AccrueEndDate}
 
     Mx LoanIQ Select Window Tab    ${LIQ_InitialDrawdown_Tab}    General
-    mx LoanIQ enter    ${LIQ_InitialDrawdown_RequestedAmt_Textfield}    ${Loan_RequestedAmount}
-    mx LoanIQ enter    ${LIQ_InitialDrawdown_EffectiveDate_Datefield}    ${Loan_EffectiveDate}
-    mx LoanIQ enter    ${LIQ_InitialDrawdown_MaturityDate_Datefield}    ${Loan_MaturityDate}
+    Mx LoanIQ Enter    ${LIQ_InitialDrawdown_RequestedAmt_Textfield}    ${Loan_RequestedAmount}
+    Mx LoanIQ Enter    ${LIQ_InitialDrawdown_EffectiveDate_Datefield}    ${Loan_EffectiveDate}
+    Mx LoanIQ Enter    ${LIQ_InitialDrawdown_MaturityDate_Datefield}    ${Loan_MaturityDate}
     mx LoanIQ click element if present    ${LIQ_Question_Yes_Button}
     Mx LoanIQ Select Combo Box Value    ${LIQ_InitialDrawdown_Repricing_Dropdownlist}    ${Loan_RepricingFrequency}
     Run Keyword If    '${Loan_RepricingDate}'!='None'    mx LoanIQ enter    ${LIQ_InitialDrawdown_RepricingDate_Datefield}    ${Loan_RepricingDate}
@@ -3081,7 +3081,16 @@ Add Calendar In Inital Drawdown Notebook
 Validate Initial Drawdown Currency Tab Details
     [Documentation]    This keyword validates the details in the Currency Tab of the Initial Drawdown Notebook.
     ...                @author: bernchua
-    [Arguments]    ${Drawdown_Currency}    ${Facility_Currency}    ${FXRate_Currency}    ${FXRate_ExchangeRate}    ${Drawdown_Amount}    ${HostBankShare}
+    ...                @update: dahijara    22SEP2020    - Added pre and post processing keyword and screenshot.
+    [Arguments]    ${sDrawdown_Currency}    ${sFacility_Currency}    ${sFXRate_Currency}    ${sFXRate_ExchangeRate}    ${sDrawdown_Amount}    ${sHostBankShare}    ${sRunVar_Computed_Current}=None    ${sRunVar_Computed_HostBankGross}=None    ${sRunVar_Computed_HostBanknet}=None
+    ### GetRuntime Keyword Pre-processing ###
+    ${Drawdown_Currency}    Acquire Argument Value    ${sDrawdown_Currency}
+    ${Facility_Currency}    Acquire Argument Value    ${sFacility_Currency}
+    ${FXRate_Currency}    Acquire Argument Value    ${sFXRate_Currency}
+    ${FXRate_ExchangeRate}    Acquire Argument Value    ${sFXRate_ExchangeRate}
+    ${Drawdown_Amount}    Acquire Argument Value    ${sDrawdown_Amount}
+    ${HostBankShare}    Acquire Argument Value    ${sHostBankShare}
+
     mx LoanIQ activate    ${LIQ_InitialDrawdown_Window}
     Mx LoanIQ Select Window Tab    ${LIQ_InitialDrawdown_Tab}    Currency    
     ${Currency_UI}    Mx LoanIQ Get Data    ${LIQ_DrawdownCurrencyTab_Currency_StaticText}    value%ccy    
@@ -3092,7 +3101,7 @@ Validate Initial Drawdown Currency Tab Details
     ${HostBankNet_UI}    Mx LoanIQ Get Data    ${LIQ_DrawdownCurrencyTab_HostBankNext_StaticText}    value%net
     ${FXRate_ExchangeRate}    Convert To Number    ${FXRate_ExchangeRate}
     ${FXRate_ExchangeRate}    Convert To String    ${FXRate_ExchangeRate}
-    
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/DrawdownCurrencyTab
     ${Computed_Current}    ${Computed_HostBankGross}    ${Computed_HostBanknet}    Compute 'Amounts in Facility Currency' In Initial Drawdown Notebook    ${FXRate_ExchangeRate}
     ...    ${Drawdown_Amount}    ${HostBankShare}
     ${Validate_FXRateCurrency}    Run Keyword And Return Status    Should Contain    ${FXRate_UI}    ${FXRate_Currency}
@@ -3111,7 +3120,11 @@ Validate Initial Drawdown Currency Tab Details
     ...    ELSE    Fail    Host Bank Gross amount not verified.
     Run Keyword If    '${Computed_HostBanknet}'=='${HostBankNet_UI}'    Log    Host Bank Net with the amount of ${Computed_HostBanknet} is verified.
     ...    ELSE    Fail    Host Bank Net amount not verified.
-    
+
+    ### ConstRuntime Keyword Post-processing ###
+    Save Values of Runtime Execution on Excel File    ${sRunVar_Computed_Current}    ${Computed_Current}
+    Save Values of Runtime Execution on Excel File    ${sRunVar_Computed_HostBankGross}    ${Computed_HostBankGross}
+    Save Values of Runtime Execution on Excel File    ${sRunVar_Computed_HostBanknet}    ${Computed_HostBanknet}
     [Return]    ${Computed_Current}    ${Computed_HostBankGross}    ${Computed_HostBanknet}
     
 Compute 'Amounts in Facility Currency' In Initial Drawdown Notebook

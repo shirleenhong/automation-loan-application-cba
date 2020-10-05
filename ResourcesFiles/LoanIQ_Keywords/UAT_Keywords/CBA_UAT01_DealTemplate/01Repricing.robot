@@ -1,7 +1,6 @@
 *** Settings ***
 Resource    ../../../../Configurations/LoanIQ_Import_File.robot
 
-
 *** Keywords ***
 Loan Merge in Deal D00000454
     [Documentation]    This is a high-level keyword to execute loan merge of A1 and A2 outstanding.
@@ -157,10 +156,10 @@ Comprehensive Repricing Interest Payment with Multiple Lenders in Deal D00000454
     Select Item in Work in Process    Outstandings    Awaiting Generate Rate Setting Notices    Loan Repricing    &{ExcelPath}[Deal_Name]
     
     Approve Rate Setting Notice
-    Navigate Notebook Workflow    ${LIQ_LoanRepricingForDeal_Window}    ${LIQ_LoanRepricingForDeal_Workflow_Tab}    ${LIQ_LoanRepricingForDeal_Workflow_JavaTree}    Release Cashflows
-    Release Cashflow    &{ExcelPath}[Borrower_ShortName]
-    Release Cashflow    &{ExcelPath}[Lender1_ShortName]    
-    Release Cashflow    &{ExcelPath}[Lender2_ShortName]    release    
+    # Navigate Notebook Workflow    ${LIQ_LoanRepricingForDeal_Window}    ${LIQ_LoanRepricingForDeal_Workflow_Tab}    ${LIQ_LoanRepricingForDeal_Workflow_JavaTree}    Release
+    # Release Cashflow    &{ExcelPath}[Borrower_ShortName]
+    # Release Cashflow    &{ExcelPath}[Lender1_ShortName]    
+    # Release Cashflow    &{ExcelPath}[Lender2_ShortName]    release    
     Navigate Notebook Workflow    ${LIQ_LoanRepricingForDeal_Window}    ${LIQ_LoanRepricingForDeal_Workflow_Tab}    ${LIQ_LoanRepricingForDeal_Workflow_JavaTree}    Release
     Take Screenshot    LoanRepricing-Released
     
@@ -171,6 +170,7 @@ Comprehensive Repricing Interest Payment with Multiple Lenders in Deal D00000454
 Comprehensive Repricing Interest Payment in Deal D00000454
     [Documentation]    This is a high-level keyword to Create Comprehensive Repricing with interest payment only with additional 1 lender
     ...    @author: fmamaril    19SEP2019    INITIAL CREATION
+    ...    @author: rjuarez    29SEP2020    commented step for release cashflow, workflow only process directly for release
     [Arguments]    ${ExcelPath}  
     ### Perforn Online Accrual ###
     Search for Deal    &{ExcelPath}[Deal_Name]
@@ -228,9 +228,9 @@ Comprehensive Repricing Interest Payment in Deal D00000454
     Select Item in Work in Process    Outstandings    Awaiting Generate Rate Setting Notices    Loan Repricing    &{ExcelPath}[Deal_Name]
     
     Approve Rate Setting Notice
-    Navigate Notebook Workflow    ${LIQ_LoanRepricingForDeal_Window}    ${LIQ_LoanRepricingForDeal_Workflow_Tab}    ${LIQ_LoanRepricingForDeal_Workflow_JavaTree}    Release Cashflows
-    Release Cashflow    &{ExcelPath}[Borrower_ShortName]
-    Release Cashflow    &{ExcelPath}[Lender1_ShortName]    release    
+    # Navigate Notebook Workflow    ${LIQ_LoanRepricingForDeal_Window}    ${LIQ_LoanRepricingForDeal_Workflow_Tab}    ${LIQ_LoanRepricingForDeal_Workflow_JavaTree}    Release Cashflows
+    # Release Cashflow    &{ExcelPath}[Borrower_ShortName]
+    # Release Cashflow    &{ExcelPath}[Lender1_ShortName]    release    
     Navigate Notebook Workflow    ${LIQ_LoanRepricingForDeal_Window}    ${LIQ_LoanRepricingForDeal_Workflow_Tab}    ${LIQ_LoanRepricingForDeal_Workflow_JavaTree}    Release
     Take Screenshot    LoanRepricing-Released
     
