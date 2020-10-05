@@ -795,11 +795,17 @@ Validate Loan Amounts in General Tab
     ...    @author: mnanquil
     ...    10/24/2018
     ...    <update> bernchua 12/5/2018: added code to go to General Tab
-    [Arguments]    ${amount}    ${facility}
+    ...    @update: dahijara    23SEP2020    Added pre processing keywords and Screenshot.
+    [Arguments]    ${sAmount}    ${sFacility}
+    ### GetRuntime Keyword Pre-processing ###
+    ${Amount}    Acquire Argument Value    ${sAmount}
+    ${Facility}    Acquire Argument Value    ${sFacility}
+
     mx LoanIQ activate window    ${LIQ_LoanRepricingForDeal_Window}
     Mx LoanIQ Select Window Tab    ${LIQ_LoanRepricingForDeal_Workflow_Tab}    General    
-    Mx LoanIQ Select String   ${LIQ_LoanRepricingForDeal_Workflow_JavaTree}    ${amount}\t${facility}
-    Log    Successfully validated amount of ${amount} with facility ${facility}    
+    Mx LoanIQ Select String   ${LIQ_LoanRepricingForDeal_Workflow_JavaTree}    ${Amount}\t${Facility}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LoanRepricingWindow
+    Log    Successfully validated amount of ${Amount} with facility ${Facility}    
 
 Change Effective Date for Loan Repricing
     [Documentation]    This keyword will change the Effective Date in the Loan Repricing Notebook
@@ -858,12 +864,19 @@ Validate GL Entries After Release
     [Documentation]    This keyword will validate the gl entries for scenario 8
     ...    @author: mnanquil
     ...    @author: bernchua    08MAR2019    Updated keyword name
-    [Arguments]    ${debitAmt1}    ${debitAmt2}    ${creditAmt}
+    ...    @update: dahijara    24SEP2020    Added pre processing keywords and screenshot.
+    [Arguments]    ${sDebitAmt1}    ${sDebitAmt2}    ${sCreditAmt}
+    ### GetRuntime Keyword Pre-processing ###
+    ${DebitAmt1}    Acquire Argument Value    ${sDebitAmt1}
+    ${DebitAmt2}    Acquire Argument Value    ${sDebitAmt2}
+    ${CreditAmt}    Acquire Argument Value    ${sCreditAmt}
+
     mx LoanIQ activate window   ${LIQ_LoanRepricing_Window}
     mx LoanIQ select    ${LIQ_LoanRepricing_GLEntries_Menu}
-    Mx LoanIQ Click Javatree Cell   ${LIQ_GL_Entries_JavaTree}    ${debitAmt1}%${debitAmt1}%Debit Amt
-    Mx LoanIQ Click Javatree Cell   ${LIQ_GL_Entries_JavaTree}    ${debitAmt2}%${debitAmt2}%Debit Amt    
-    Mx LoanIQ Click Javatree Cell    ${LIQ_GL_Entries_JavaTree}    ${creditAmt}%${creditAmt}%Credit Amt
+    Mx LoanIQ Click Javatree Cell   ${LIQ_GL_Entries_JavaTree}    ${DebitAmt1}%${DebitAmt1}%Debit Amt
+    Mx LoanIQ Click Javatree Cell   ${LIQ_GL_Entries_JavaTree}    ${DebitAmt2}%${DebitAmt2}%Debit Amt    
+    Mx LoanIQ Click Javatree Cell    ${LIQ_GL_Entries_JavaTree}    ${CreditAmt}%${CreditAmt}%Credit Amt
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LoanRepricing_GLEntriesWindow
     mx LoanIQ click    ${LIQ_GL_Entries_Exit_Button}
     
 Validate Events Tab
