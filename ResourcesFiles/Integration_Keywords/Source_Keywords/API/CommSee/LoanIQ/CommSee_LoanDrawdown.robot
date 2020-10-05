@@ -7,33 +7,33 @@ Create Loan Drawdown for Syndicated Deal - ComSee
     ...    @author: rtarayao    16SEP2019    - Duplicate high level keyword from Functional Scenario 2.
     [Arguments]    ${ExcelPath}
 
-    ##Login to Original User###
+    #Login to Original User###
     # Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
 
     ###Deal Notebook###
     Search for Deal    &{ExcelPath}[Deal_Name]
     
-    ###Creation of Initial Loan Drawdown in Loan NoteBook###
+    # Creation of Initial Loan Drawdown in Loan NoteBook###
     ${LoanEffectiveDate}    Get System Date
     Write Data To Excel    ComSee_SC2_Loan    Outstanding_EffectiveDate    ${rowid}    ${LoanEffectiveDate}    ${ComSeeDataSet}
     Navigate to Outstanding Select Window from Deal
     ${Alias}    Create Loan Outstanding    &{ExcelPath}[Outstanding_Type]    &{ExcelPath}[Facility_Name]    &{ExcelPath}[Borrower_ShortName]    &{ExcelPath}[Loan_PricingOption]    &{ExcelPath}[Loan_Currency]  
     
-    ###Write Data to Other TestCases###
+    # Write Data to Other TestCases###
     Write Data To Excel    ComSee_SC2_Loan    Outstanding_Alias    ${rowid}    ${Alias}    ${ComSeeDataSet}
     Write Data To Excel    ComSee_SC2_LoanRepricing    Outstanding_Alias    ${rowid}    ${Alias}    ${ComSeeDataSet}
     ${Alias}    Read Data From Excel    ComSee_SC2_Loan    Outstanding_Alias    ${rowid}    ${ComSeeDataSet}
     Input General Loan Drawdown Details with Accrual End Date    &{ExcelPath}[Loan_RequestedAmount]    &{ExcelPath}[Loan_MaturityDate]   &{ExcelPath}[Loan_RepricingFrequency]    ${LoanEffectiveDate}
     Input Loan Drawdown Rates for Term Drawdown    &{ExcelPath}[Borrower_BaseRate]
     
-    ###Cashflow Notebook - Create Cashflows###
+    #Cashflow Notebook - Create Cashflows###
     Navigate to Drawdown Cashflow Window
     Verify if Method has Remittance Instruction    &{ExcelPath}[Borrower_ShortName]    &{ExcelPath}[Remittance_Description]    &{ExcelPath}[Remittance_Instruction]
     Verify if Method has Remittance Instruction    &{ExcelPath}[Lender1_ShortName]    &{ExcelPath}[Remittance2_Description]    &{ExcelPath}[Remittance2_Instruction]
     Verify if Status is set to Do It    &{ExcelPath}[Borrower_ShortName]  
     Verify if Status is set to Do It    &{ExcelPath}[Lender1_ShortName]
     
-    ##Get Transaction Amount for Cashflow###
+    #Get Transaction Amount for Cashflow###
     ${HostBankShare}    Get Host Bank Cash in Cashflow
     ${BorrowerTranAmount}    Get Transaction Amount in Cashflow    &{ExcelPath}[Borrower_ShortName]
     ${Lend1TranAmount}    Get Transaction Amount in Cashflow    &{ExcelPath}[Lender1_ShortName]
@@ -46,7 +46,7 @@ Create Loan Drawdown for Syndicated Deal - ComSee
     Compare UIAmount versus Computed Amount    ${HostBankShare}|${Lend1TranAmount}    ${ComputedHBTranAmount}|${ComputedLend1TranAmount}
     Compare UIAmount versus Computed Amount    ${HostBankShare}|${Lend1TranAmount}|${Lend2TranAmount}    ${ComputedHBTranAmount}|${ComputedLend1TranAmount}|${ComputedLend2TranAmount}
  
-    ###GL Entries###
+    #GL Entries###
     Navigate to GL Entries
     ${HostBank_Debit}    Get GL Entries Amount    &{ExcelPath}[Host_Bank]    Debit Amt
     ${Lender1_Debit}    Get GL Entries Amount    &{ExcelPath}[Lender1_ShortName]    Debit Amt
@@ -61,26 +61,26 @@ Create Loan Drawdown for Syndicated Deal - ComSee
     Validate if Debit and Credit Amt is Balanced    ${HostBank_Debit}|${Lender1_Debit}    ${Borrower_Credit}
     Validate if Debit and Credit Amt is equal to Transaction Amount    ${UITotalDebitAmt}    ${UITotalCreditAmt}    &{ExcelPath}[Loan_RequestedAmount]
 
-    ###Approval of Loan###
+    #Approval of Loan###
     Send Initial Drawdown to Approval
     Logout from Loan IQ
     Login to Loan IQ    ${MANAGER_USERNAME}    ${MANAGER_PASSWORD}
     Select Item in Work in Process    Outstandings    Awaiting Approval    Loan Initial Drawdown     ${Alias}
     Approve Initial Drawdown
     
-    ###Rate Setting###
+    #Rate Setting###
     Logout from Loan IQ
     Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
     Select Item in Work in Process    Outstandings    Awaiting Send to Rate Approval    Loan Initial Drawdown     ${Alias}
     Send Initial Drawdown to Rate Approval
         
-    ###Rate Approval###
+    #Rate Approval###
     Logout from Loan IQ
     Login to Loan IQ    ${MANAGER_USERNAME}    ${MANAGER_PASSWORD}
     Select Item in Work in Process    Outstandings    Awaiting Rate Approval    Loan Initial Drawdown     ${Alias}
     Approve Initial Drawdown Rate
     
-    ##Cashflow Notebook - Release Cashflows###
+    #Cashflow Notebook - Release Cashflows###
     Navigate Notebook Workflow    ${LIQ_InitialDrawdown_Window}    ${LIQ_InitialDrawdown_Tab}    ${LIQ_Drawdown_WorkflowItems}    Release 
     Release Cashflow Based on Remittance Instruction    &{ExcelPath}[Remittance_Instruction]    &{ExcelPath}[Borrower_ShortName]|&{ExcelPath}[Lender1_ShortName]|&{ExcelPath}[Lender2_ShortName]
     # # Release Cashflow    &{ExcelPath}[Borrower_ShortName]|&{ExcelPath}[Lender1_ShortName]
@@ -98,6 +98,70 @@ Create Loan Drawdown for Syndicated Deal - ComSee
     Close All Windows on LIQ
     Logout from Loan IQ
     
+Write Loan Outstanding Accrual Zero Cycle Due
+    [Documentation]    This keyword update the PaidToDate value after Payment transaction has been made. 
+    ...    @author: sacuisia 02OCT2020    -initialCreate
+    [Arguments]    ${ExcelPath}
+    
+    Launch Loan Notebook    &{ExcelPath}[Deal_Name]    &{ExcelPath}[Facility_Name]    &{ExcelPath}[Outstanding_Alias]
+    
+    mx LoanIQ activate window    ${LIQ_Loan_Window}
+    Mx LoanIQ select    ${LIQ_Loan_Options_Payment}
+    mx LoanIQ activate window    ${LIQ_Loan_ChoosePayment_Window} 
+    Mx LoanIQ Set    ${LIQ_Loan_ChoosePayment_InterestPayment_RadioButton}    ON
+    mx LoanIQ click    ${LIQ_Loan_ChoosePayment_OK_Button}
+    
+    mx LoanIQ activate window    ${LIQ_Loan_CyclesforLoan_Window}   
+    mx LoanIQ enter    ${LIQ_Loan_CyclesforLoan_ProjectedDue_RadioButton}    ON
+    mx LoanIQ click    ${LIQ_Loan_CyclesforLoan_OK_Button} 
+    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
+    
+    ${requestAmount}    Get Requested Amount
+    Write Data To Excel    ComSee_SC2_Loan    Outstanding_paidToDate    ${rowid}    ${requestAmount}    ${ComSeeDataSet}    
+    
+    ${SysDate}    Get System Date
+    mx LoanIQ enter    ${LIQ_InterestPayment_EffectiveDate_Textfield}    ${SysDate}
+     
+    Mx LoanIQ select    ${LIQ_InterestPayment_FileSave_Menu}
+    Mx LoanIQ Click Element If Present    ${LIQ_Warning_Yes_Button}
+    
+    Generate Intent Notices of an Interest Payment-CommSee    ${ExcelPath}[Borrower_ShortName]
+    
+    Send Loan Payment to Approval
+    
+    Close All Windows on LIQ
+    
+    Logout from Loan IQ
+    Login to Loan IQ    ${MANAGER_USERNAME}    ${MANAGER_PASSWORD}
+    
+    Navigate Transaction in WIP    Payments    Awaiting Approval    Interest Payment    &{ExcelPath}[Deal_Name]
+    
+    Approve Interest Payment
+    
+    Release Payment
+    
+    Release Interest Payment
+    
+    Launch Loan Notebook    &{ExcelPath}[Deal_Name]    &{ExcelPath}[Facility_Name]    &{ExcelPath}[Outstanding_Alias]
+    
+    ##Acrued Amount after EOD
+    ${LoanAccruedtodateAmount}    Get Loan Accrued to Date Amount
+    ${LoanAccruedtodateAmount}    Remove Comma and Convert to Number    ${LoanAccruedtodateAmount}
+    ${TotalRowCount}    Get Accrual Row Count    ${LIQ_Loan_Window}    ${LIQ_Loan_AccrualTab_Cycles_Table}
+    ${AccruedtoDateAmt}    Compute Total Accruals for Fee    ${TotalRowCount}    ${LIQ_Loan_Tab}    ${LIQ_Loan_AccrualTab_Cycles_Table}
+    ${AccruedtoDateAmt}    Remove Comma and Convert to Number    ${AccruedtoDateAmt}
+    Write Data To Excel    ComSee_SC2_Loan    Outstanding_AccruedInterest    ${rowid}    ${LoanAccruedtodateAmount}    ${ComSeeDataSet}
+    
+    Navigate to Share Accrual Cycle    &{ExcelPath}[Host_Bank]
+    
+    ${LoanCycleDueAmount}    Get Cycle Due Amount
+    Write Data To Excel    ComSee_SC2_Loan    Outstanding_cycleDue    ${rowid}    ${LoanCycleDueAmount}    ${ComSeeDataSet}
+    
+    ${LoanPaidDueAmount}   Get PaidToDate   
+    Write Data To Excel    ComSee_SC2_Loan   Outstanding_paidToDate    ${rowid}    ${LoanPaidDueAmount}    ${ComSeeDataSet}
+    
+ 
+  
 Write Loan Outstanding Accrual Non Zero Cycle
     [Documentation]    This test case writes the updated Loan Outstanding details after EOD for comsee use.
     ...    @author:    sacuisia    29SEPT2020    -InitialCreate
