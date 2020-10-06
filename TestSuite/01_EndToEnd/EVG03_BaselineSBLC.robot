@@ -24,7 +24,7 @@ Deal Setup - CRED01
     [Tags]    03 Deal Setup - CRED01
     Mx Execute Template With Multiple Data    Create Deal - Baseline SBLC    ${ExcelPath}    ${rowid}    CRED01_DealSetup
     Mx Execute Template With Multiple Data    Setup Multi-Currency SBLC Facility    ${ExcelPath}    ${rowid}    CRED02_FacilitySetup
-
+ 
     Mx Execute Template With Multiple Data    Setup Fees for SBLC Facility     ${ExcelPath}    ${rowid}    CRED08_OngoingFeeSetup
     Mx Execute Template With Multiple Data    Setup a Primary Notebook - SBLC    ${ExcelPath}    ${rowid}    CRED01_DealSetup
 
@@ -42,14 +42,14 @@ Create Cashflow
     [Tags]    06 Create Cashflow
     Mx Execute Template With Multiple Data    Create Issuance Payment Cashflow    ${ExcelPath}    ${rowid}    SERV24_CreateCashflow
     
-Fee on Lender Payment
-    [Tags]    07 Fee on Lender Shares
-    Mx Execute Template With Multiple Data    Workflow Navigation For Fee On Lender Shares Payment     ${ExcelPath}    ${rowid}    SERV18_FeeOnLenderSharesPayment
+# Fee on Lender Payment
+    # [Tags]    07 Fee on Lender Shares
+    # Mx Execute Template With Multiple Data    Workflow Navigation For Fee On Lender Shares Payment     ${ExcelPath}    ${rowid}    SERV18_FeeOnLenderSharesPayment
 
-Cycle Share Adjustment Setup - MTAM05A
-    [Tags]    08 SBLC Fee on Lender - CRE10
-    Mx Execute Template With Multiple Data    Create Cycle Share Adjustment    ${ExcelPath}    ${rowid}    MTAM05A_CycleShareAdjustment  
+# Cycle Share Adjustment Setup - MTAM05A
+    # [Tags]    08 SBLC Fee on Lender - CRE10
+    # Mx Execute Template With Multiple Data    Create Cycle Share Adjustment    ${ExcelPath}    ${rowid}    MTAM05A_CycleShareAdjustment  
 
-Set Up SBLC Decrease - SERV05
-    [Tags]    09 SBLC Decrease
-    Mx Execute Template With Multiple Data    Set Up SLBC Decrease    ${ExcelPath}    ${rowid}    SERV05_SBLCDecrease
+# Set Up SBLC Decrease - SERV05
+    # [Tags]    09 SBLC Decrease
+    # Mx Execute Template With Multiple Data    Set Up SLBC Decrease    ${ExcelPath}    ${rowid}    SERV05_SBLCDecrease

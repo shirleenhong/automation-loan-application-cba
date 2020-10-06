@@ -11,7 +11,8 @@ Compute SBLC Issuance Fee Amount Per Cycle
     ...    @update: ritragel    02SEP2019    Updated documentation
     ...    @update: ehugo    02JUN2020    - added keyword pre-processing and post-processing; added optional runtime argument; added screenshot
     ...    @update: clanding    21JUL2020    - removed commented codes for Evaluate Issuance Fee for Quarterly Cycle
-    [Arguments]    ${sCycleNumber}    ${sSystemDate}    ${sRunTimeVar_ProjectedCycleDue}=None    ${sAccrualRule}=None
+    ...    @update: rmendoza    10OCT2020    Modify default value of ${sAccrualRule} parameter from 'None' to 'Pay in Arrears
+    [Arguments]    ${sCycleNumber}    ${sSystemDate}    ${sRunTimeVar_ProjectedCycleDue}=None    ${sAccrualRule}=Pay in Arrears
 
     ### GetRuntime Keyword Pre-processing ###
     ${CycleNumber}    Acquire Argument Value    ${sCycleNumber}
@@ -59,10 +60,13 @@ Evaluate Issuance Fee
     ...    @update: ritragel    02SEP2019    Updated documentation
     ...    @update: ritragel    17SEP2020    Setting Default value as Due Date then adding an Option for End Date
     [Arguments]    ${iGlobalOriginal}    ${Rate}    ${RateBasis}    ${CycleNumber}    ${SystemDate}    ${sAccrualRule}=Pay in Arrears
+    
+    ${AccrualRule}    Acquire Argument Value    ${sAccrualRule}    
+
     Mx LoanIQ Select Window Tab    ${LIQ_SBLCGuarantee_Tab}    Accrual
     ${StartDate}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_BankGuarantee_Accrual_JavaTree}    ${CycleNumber}%Start Date%startdate
-    ${AccrualRuleDate}    Run Keyword If    '${sAccrualRule}'=='Pay in Arrears'    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_BankGuarantee_Accrual_JavaTree}    ${CycleNumber}%Due Date%duedate
-    ${AccrualRuleDate}    Run Keyword If    '${sAccrualRule}'=='Pay in Advance'    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_BankGuarantee_Accrual_JavaTree}    ${CycleNumber}%End Date%enddate
+    ${AccrualRuleDate}    Run Keyword If    '${AccrualRule}'=='Pay in Arrears'    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_BankGuarantee_Accrual_JavaTree}    ${CycleNumber}%Due Date%duedate
+    ...    ELSE IF    '${AccrualRule}'=='Pay in Advance'    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_BankGuarantee_Accrual_JavaTree}    ${CycleNumber}%End Date%enddate
     Log    ${StartDate}
     Log    ${AccrualRuleDate}
     ${SystemDate}    Convert Date    ${SystemDate}     date_format=%d-%b-%Y
@@ -216,7 +220,7 @@ Create New Outstanding Select - SBLC
     ...    @update: clanding    20JUL2020    - removed '${LIQmx LoanIQ enter'; updated mx LoanIQ select to mx LoanIQ enter for inputting Effective_Date
     ...                                      - added selecting of Facility_Name; updated Sleep to FOR Loop checking of the next object if present
     ...                                      - re-arrange codes based from actual input
-    [Arguments]    ${sOutstandingSelect_Type}    ${sFacility_Name}    ${sAmount_Requested}    ${sEffective_Date}    ${sPricing_Option}    ${sExpiry_Date}    ${sRunTimevarAlias}=None
+    [Arguments]    ${sOutstandingSelect_Type}    ${sFacility_Name}    ${sAmount_Requested}    ${sEffective_Date}    ${sPricing_Option}    ${sExpiry_Date}    ${sDealName}    ${sRunTimevarAlias}=None
 
     ####Pre-Processing Keywords####
     ${OutstandingSelect_Type}    Acquire Argument Value    ${sOutstandingSelect_Type}
@@ -225,8 +229,15 @@ Create New Outstanding Select - SBLC
     ${Effective_Date}    Acquire Argument Value    ${sEffective_Date}
     ${Pricing_Option}    Acquire Argument Value    ${sPricing_Option}
     ${Expiry_Date}    Acquire Argument Value    ${sExpiry_Date}
+    ${Deal__Name}    Acquire Argument Value    ${sDealName}
+    
+    Refresh Tables in LIQ
+    Open Existing Deal    ${Deal__Name}
 
-    mx LoanIQ select    ${LIQ_OutstandingSelect_Submenu}
+	mx LoanIQ activate window    ${LIQ_DealNotebook_Window}
+	
+    Select Menu Item    ${LIQ_DealNotebook_Window}    Queries    Outstanding Select...
+	
     mx LoanIQ activate window    ${LIQ_OutstandingSelect_Window}
     Verify Window    ${LIQ_OutstandingSelect_Window}
     mx LoanIQ select    ${LIQ_OutstandingSelect_Type_Dropdown}    ${OutstandingSelect_Type}

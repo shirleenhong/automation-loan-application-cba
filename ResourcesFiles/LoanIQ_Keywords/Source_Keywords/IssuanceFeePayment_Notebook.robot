@@ -41,6 +41,8 @@ Initiate Issuance Fee Payment
 
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/IssuanceFeePaymentWindow
     
+    Mx LoanIQ Click Element If Present    ${LIQ_Warning_OK_Button}    
+    
 Validate Issuance Fee Payment Notebook Details
     [Documentation]    This keyword validates the details in the Issuance Fee Payment Notebook.
     ...    @author: bernchua
