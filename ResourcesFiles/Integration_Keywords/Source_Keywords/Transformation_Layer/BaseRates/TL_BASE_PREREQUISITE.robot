@@ -464,10 +464,11 @@ Create Initial wsFinalLIQDestination for Base Rate TL
     [Documentation]    This keyword is used to create initial wsFinalLIQDestination for each valid Base Rate Code for TL.
     ...    @author: clanding    27FEB2019    - initial create
     ...    @update: jdelacru    11AUG2020    - added new argument ${sTemplateFilePath}
+    ...    @update: mcastro     05OCT2020    - added handling when rateTenor is Empty
     [Arguments]    ${dRowData}    ${sSubentityVal}    ${sInputFilePath}    ${sFileName}    ${sTemplateFilePath}
     
-    
-    ${val_RateTenor}    Strip String    &{dRowData}[rateTenor]    both    0
+    ${val_RateTenor}    Run Keyword If    '&{dRowData}[rateTenor]'=='None'    Set Variable    None
+    ...    ELSE    Strip String    &{dRowData}[rateTenor]    both    0     
     
     ${BASERATECODEConfig}    OperatingSystem.Get File    ${BASERATECODE_Config}
     ${BASERATECODE_Dict}    Convert Base Rate Config to Dictionary

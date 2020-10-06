@@ -57,6 +57,7 @@ Validate Base Rate is Reflected in LIQ
     ...    @author: clanding    28FEB2019    - initial create
     ...    @update: clanding    18MAR2019    - added checking for ${FundingDeskStat}
     ...    @update: bernchua    01APR2019    - Renamed funding desk status variable
+    ...    @update: mcastro     05OCT2020    - added handling when {dRowData}[rateTenor] is Empty
     [Arguments]    ${dRowData}    ${Delimiter}=None
     
     ${SubentityList}    Run Keyword If    ${Delimiter}==${NONE}    Split String    &{dRowData}[subEntity]    ,
@@ -66,7 +67,8 @@ Validate Base Rate is Reflected in LIQ
     ${BASERATECODEConfig}    OperatingSystem.Get File    ${BASERATECODE_Config}
     ${BASERATECODE_Dict}    Convert Base Rate Config to Dictionary
     
-    ${Val_RateTenor}    Strip String    &{dRowData}[rateTenor]    both    0
+    ${Val_RateTenor}    Run Keyword If    '&{dRowData}[rateTenor]'=='None'    Set Variable    None
+    ...    ELSE    Strip String    &{dRowData}[rateTenor]    both    0
     ${Val_RateEffDate}    Set Variable    &{dRowData}[rateEffectiveDate]
     
     :FOR    ${Index}    IN RANGE    0    ${SubentityCount}
@@ -232,6 +234,7 @@ Validate Funding Rates in Table Maintenance is Reflected
     ...    @update: clanding    19MAR2019    - update when ${sRepricingFreq} is empty
     ...    @update: clanding    25MAR2019    - updated '${sRepricingFreq}'=='UNKN'
     ...    @update: jdelacru    14FEB2020    - removed additional number arguments for select string
+    ...    @update: mcastro     05OCT2020    - added handling when ${sRepricingFreq} is empty
     [Arguments]    ${sBaseRateCode}    ${sRepricingFreq}    ${iRate}    ${sFundingDesk}    ${sEffDate}    ${sCurrency}
     
     ${NewRatePercent_5Dec}    ${NewRate}    Compute Rate Percentage to N Decimal Values and Return    ${iRate}    5
@@ -249,13 +252,13 @@ Validate Funding Rates in Table Maintenance is Reflected
     
     ###OPTION NAME AND BASE RATE ASSOCIATION###
     ${OptionNameDesc}    ${OptionName}    Get Option Name from Option Name and Base Rate Association    ${sBaseRateCode.upper()}
-    ${BaseRateFrequencyStat}    Get Base Rate Frequency Status from Table Maintenance    ${sRepricingFreq.upper()}
+    ${BaseRateFrequencyStat}    Run Keyword If    '${sRepricingFreq}'!='None'    Get Base Rate Frequency Status from Table Maintenance    ${sRepricingFreq.upper()}   
     ${RepricingFreq_Text}    Run Keyword If    ${BaseRateFrequencyStat}==${False}    Set Variable    ${EMPTY}
     ...    ELSE    Set Variable    ${RepricingFreq_Text}
 
     ###FUNDING DESK###
     mx LoanIQ click    ${LIQ_TableMaintenance_Button}
-    ${BaseRate_Desc}    ${BaseRate_Status}    Get Base Rate Description from Table Maintenance    ${sBaseRateCode.upper()}
+    ${BaseRate_Desc}    ${BaseRate_Status}    Run Keyword If    '${sRepricingFreq}'!='None'    Get Base Rate Description from Table Maintenance    ${sBaseRateCode.upper()}
     ${FundingDeskStat}    Get Funding Desk Status from Table Maintenance    ${sFundingDesk}
     ${FundingDesk_Desc}    ${FundingDesk_Currency}    Run Keyword If    '${sFundingDesk}'!='None'    Run Keyword And Continue On Failure    
     ...    Get Funding Desk Details from Table Maintenance    ${sFundingDesk}    ${FundingDeskStat}
@@ -348,7 +351,7 @@ Validate Funding Rates in Table Maintenance is Reflected
     
     ###TABLE MAINTENANCE VALIDATION > FUNDING RATES WINDOW > FUNDING RATES UPDATES WINDOW###
     Run Keyword And Continue On Failure    Validate if Element is Checked    ${LIQ_FundingRatesUpdate_Active_Checkbox}    Active
-    Run Keyword And Continue On Failure    Validate Rate Code in Funding Rates Updates    JavaWindow("title:=Funding Rates Update.*").JavaList("text:=${BaseRate_Desc}.*")    ${BaseRate_Desc}
+    Run Keyword If    '${sRepricingFreq}'!='None'    Run Keyword And Continue On Failure    Validate Rate Code in Funding Rates Updates    JavaWindow("title:=Funding Rates Update.*").JavaList("text:=${BaseRate_Desc}.*")    ${BaseRate_Desc}
     Run Keyword If    '${sFundingDesk}'!='None'    Run Keyword And Continue On Failure    Validate Funding Desk in Funding Rates Updates    ${LIQ_FundingRatesUpdate_FundingDesk_List}    ${FundingDesk_Desc}
     ...    ELSE    Log    Cluster / Funding Desk is Empty.
 
