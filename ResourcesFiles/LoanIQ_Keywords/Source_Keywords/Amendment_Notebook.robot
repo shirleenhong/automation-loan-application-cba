@@ -609,7 +609,9 @@ Populate General Tab in Amendment Notebook
     [Documentation]    This keyword populates fields under General Tab.
     ...    @author:mgaling
     ...    <Update>    Removed the Read and Write Codes
-    [Arguments]    ${sAmendmentNumber_Prefix}    ${sAMD_EffectiveDate}    ${sComment}	${AmendmentNo}=None
+    ...    @update: dahijara    24SEP2020    - Corrected post processing keyword. Added screenshot.
+    ...                                      - Added Tab press after entering amendment date.
+    [Arguments]    ${sAmendmentNumber_Prefix}    ${sAMD_EffectiveDate}    ${sComment}	${sRunVar_AmendmentNo}=None
     
    ####Pre-processing Keywords####
    ${AmendmentNumber_Prefix}    Acquire Argument Value    ${sAmendmentNumber_Prefix}
@@ -628,23 +630,26 @@ Populate General Tab in Amendment Notebook
     Run Keyword and Continue on Failure    Mx LoanIQ Verify Object Exist    ${LIQ_AMD_AmendmentTrans_Section}    VerificationData="Yes"
     Run Keyword and Continue on Failure    Mx LoanIQ Verify Object Exist    ${LIQ_AMD_General_Add_Button}    VerificationData="Yes"
     Run Keyword and Continue on Failure    Mx LoanIQ Verify Object Exist    ${LIQ_AMD_General_Delete_Button}    VerificationData="Yes"
-   
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/AmendmentNotebook_GeneralTab
     mx LoanIQ enter    ${LIQ_AMD_EffectiveDate}    ${sAMD_EffectiveDate}  
+    Mx Press Combination    KEY.TAB
     mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}  
          
     mx LoanIQ enter    ${LIQ_AMD_AmendmentNo}    ${AmendmentNo}
     mx LoanIQ enter    ${LIQ_AMD_Comment}    ${Comment}
     Mx Press Combination    KEY.BACKSPACE 
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/AmendmentNotebook_GeneralTab
    
     
 ### Keyword Post-processing ###
-    Save Values of Runtime Execution on Excel File    ${AmendmentNumber_Prefix}    ${AmendmentNo} 
+    Save Values of Runtime Execution on Excel File    ${sRunVar_AmendmentNo}    ${AmendmentNo} 
     [Return]    ${AmendmentNo}
     
 Populate Add Transaction Window for the Facility Increase
     [Documentation]    This keyword populate the Add Transaction Type.
     ...    @author: mgaling
     ...    @update: sahalder    06AUG2020    Added keyword pre-processing steps and Screenshot steps
+    ...    @update: dahijara    24SEP2020    Added Tab action after entering transaction amount.
     [Arguments]    ${sNewTran_Amount}    ${sAMD_EffectiveDate}
     
     ### GetRuntime Keyword Pre-processing ###
@@ -661,10 +666,11 @@ Populate Add Transaction Window for the Facility Increase
     Run Keyword and Continue on Failure    Mx LoanIQ Verify Object Exist    ${LIQ_AddTran_EffectiveDate_Field}    VerificationData="Yes"
     Run Keyword and Continue on Failure    Mx LoanIQ Verify Object Exist    ${LIQ_AddTran_OK_Button}    VerificationData="Yes"
     Run Keyword and Continue on Failure    Mx LoanIQ Verify Object Exist    ${LIQ_AddTran_Cancel_Button}    VerificationData="Yes"
-    mx LoanIQ enter    ${LIQ_AddTran_Amount_Field}    ${NewTran_Amount}
+    Mx LoanIQ Enter    ${LIQ_AddTran_Amount_Field}    ${NewTran_Amount}
+    Mx Press Combination    Key.TAB
     Validate Loan IQ Details    ${AMD_EffectiveDate}    ${LIQ_AddTran_EffectiveDate_Field}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/FacIncr_AddTransaction       
-    mx LoanIQ click    ${LIQ_AddTran_OK_Button}
+    Mx LoanIQ Click    ${LIQ_AddTran_OK_Button}
     
     :FOR    ${i}    IN RANGE    3
     \    ${Warning_Displayed}    Run Keyword And Return Status    Mx LoanIQ Verify Object Exist    ${LIQ_Warning_Yes_Button}    VerificationData="Yes"
@@ -729,29 +735,32 @@ Create Notices for Unscheduled Item
 Equalize Amounts under Current Schedule Section
     [Documentation]    This keyword is for equalizing amounts under Current Schedule Section.
     ...    @author:mgaling
+    ...    @update: dahijara    24SEP2020    Added screenshot
     
     mx LoanIQ activate window    ${LIQ_AMD_AmortizationSchedforFacility_Window}
-    
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/AmortizationSchedforFacility
     ${status}    Run Keyword And Return Status    Mx LoanIQ Select String    ${AmortizationSchedforFacility_CurrentSchedule}    U*         
     Run Keyword If    ${status}==True    Mx LoanIQ Select Or DoubleClick In Javatree    ${AmortizationSchedforFacility_CurrentSchedule}    U*%s
     Run Keyword If    ${status}==False    Log    Fail    Unscheduled is not available
-    
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/AmortizationSchedforFacility
     mx LoanIQ click    ${LIQ_AMD_AmortSched_EqualizeAmounts_Button}
     mx LoanIQ activate window    ${LIQ_EqualizingAmounts_PleaseConfirm_Window}    
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/AmortizationSchedforFacility
     mx LoanIQ click    ${LIQ_EqualizingAmounts_PleaseConfirm_Yes_Button} 
-    
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/AmortizationSchedforFacility
     mx LoanIQ activate window    ${LIQ_AMD_AmortizationSchedforFacility_Window}
-    
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/AmortizationSchedforFacility
     ${status}    Run Keyword And Return Status    Mx LoanIQ Select String    ${AmortizationSchedforFacility_CurrentSchedule}    Scheduled         
     Run Keyword If    ${status}==True    Mx LoanIQ Select Or DoubleClick In Javatree    ${AmortizationSchedforFacility_CurrentSchedule}    Scheduled%s 
     Run Keyword If    ${status}==False    Log    Fail    Scheduled Item is not available
-    
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/AmortizationSchedforFacility
     ${Sched_RemainingAmt}    Mx LoanIQ Store TableCell To Clipboard    ${AmortizationSchedforFacility_CurrentSchedule}    Scheduled%Remaining Amount%value
     Log    ${Sched_RemainingAmt}
     
     Should Be Equal    ${Sched_RemainingAmt}    0.00  
     
     mx LoanIQ click    ${LIQ_AMD_AmortSched_Exit_Button}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/AmortizationSchedforFacility
     
 Create New Transaction for Amendment to Add New facility or Unscheduled Increase
     [Documentation]    This keyword creates new transaction for amendment to Add New facility or Unscheduled Increase
