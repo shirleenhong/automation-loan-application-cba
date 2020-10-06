@@ -21,10 +21,12 @@ Validate Base Rate Code in LoanIQ for TL Base Success
 Validate Base Rate Code in LoanIQ for TL Base Success for Future Date
     [Documentation]    This keyword is used to convert Transformed Data into dictionary and validate in LoanIQ every record including the future date.
     ...    @author: clanding    11MAR2019    - initial create
+    ...    @update: jdelacru    01OCT2020    - move the closing of excel due to conflicting excel session
     [Arguments]    ${sTransformedData_FilePath}
     
     Open Excel    ${dataset_path}${sTransformedData_FilePath}    
     ${Row_Count}    Get Row Count    Transformed_BaseRate
+    Close Current Excel Document
     :FOR    ${Index}    IN RANGE    1    ${Row_Count}
     \    ${dTransformedData}    Create Dictionary Using Transformed Data and Return    ${dataset_path}${sTransformedData_FilePath}    ${Index}
     \    
@@ -34,7 +36,6 @@ Validate Base Rate Code in LoanIQ for TL Base Success for Future Date
          ...    ELSE IF    '&{dTransformedData}[subEntity]'=='NY'    Run Keywords    Validate Base Rate is Reflected in LIQ    ${dTransformedData}
          ...    AND    Validate Base Rate Code is Not Reflected in LIQ    ${dTransformedData}    AUD
          ...    ELSE IF    '&{dTransformedData}[subEntity]'=='null'    Validate Base Rate Code is Not Reflected in LIQ    ${dTransformedData}    AUD,NY
-    Close Current Excel Document
     
 Validate Base Rate Code in LoanIQ for TL Base Failed
     [Documentation]    This keyword is used to convert Transformed Data into dictionary and validate in LoanIQ every record is NOT reflected.
