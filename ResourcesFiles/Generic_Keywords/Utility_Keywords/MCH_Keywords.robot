@@ -330,6 +330,7 @@ Filter by Reference Header and Save Header Value and Return Results Row List Val
     ...    Then gets the row values using array of Header Names. Then gets the value of the given Header and save to output file.
     ...    @author: clanding    12MAR2019    - initial create
     ...    @update: clanding    12JUN2019    - added \ on index for element, this is an update for robot to consider it as a string not an index of
+    ...    @update: clanding    06OCT2020    - added optional argument ${True} in Mx Input Text for sExpectedRefValue
     [Arguments]    ${sHeaderRefName}    ${sExpectedRefValue}    ${sOutputFilePath}    ${sFileExtension}    ${sGetHeaderValue}    @{aHeaderNames}
     
     ${Results_Column_Count}    SeleniumLibraryExtended.Get Element Count    ${Results_Header}
@@ -347,7 +348,7 @@ Filter by Reference Header and Save Header Value and Return Results Row List Val
     ${ResultsHeaderColIndex_After_Exist}    Run Keyword And Return Status    Page Should Contain Element    ${ResultsHeaderColIndex_After}    
     Run Keyword If    ${ResultsHeaderColIndex_After_Exist}==${True}    Mx Scroll Element Into View    ${Results_FilterPanel}\[${ResultsHeaderColIndex_After}]
     ...    ELSE    Mx Scroll Element Into View    ${Results_FilterPanel}\[${ResultsHeaderColIndex}]
-    Mx Input Text    ${Results_FilterPanel}\[${ResultsHeaderColIndex}]    ${sExpectedRefValue}
+    Mx Input Text    ${Results_FilterPanel}\[${ResultsHeaderColIndex}]    ${sExpectedRefValue}    ${True}
     Wait Until Element Is Visible    ${Results_Row}    
     
     ${Multiple_List}    Create List    

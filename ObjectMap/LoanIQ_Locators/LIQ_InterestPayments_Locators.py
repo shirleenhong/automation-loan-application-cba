@@ -50,7 +50,8 @@ LIQ_InterestPayment_FileSave_Menu = 'JavaWindow("title:=.* Interest Payment.*").
 LIQ_InterestPayment_CurrentCycDue_Text = 'JavaWindow("title:=.* Interest Payment.*").JavaEdit("x:=231","y:=51")'
 LIQ_InterestPayment_RequestedAmount_Textfield = 'JavaWindow("title:=.* Interest Payment.*").JavaEdit("labeled_containers_path:=.*Amounts.*","Index:=0")'
 LIQ_InterestPayment_CycleDueDate_Text = 'JavaWindow("title:=.* Interest Payment.*").JavaStaticText("labeled_containers_path:=.*Cycle.*","Index:=5")'
-
+##Interest Payment-- FROM CIELO###
+LIQ_InterestPayment_RequestedAmount_field = 'JavaWindow("title:=.* Interest Payment.*").JavaEdit("labeled_containers_path:=Tab:General;Group: Amounts ;","index:=0")'
 ###GL Entries####
 LIQ_Payment_GLEntries_Table = 'JavaWindow("title:=GL Entries.*").JavaTree("attached text:=Drill down to view details")'
 LIQ_Payment_GLEntries_Window = 'JavaWindow("title:=GL Entries.*")'
@@ -63,3 +64,5 @@ LIQ_ScheduledActivityReport_Tree = 'JavaWindow("title:=.*Scheduled Activity Repo
 LIQ_ScheduledActivityReport_Form = 'JavaWindow("title:=.*Scheduled Activity Report.*","index:=1").JavaList("attached text:=View By.*")'
 LIQ_ScheduledActivityReport_ViewBy_Dropdown = 'JavaWindow("title:=Scheduled Activity Report.*").JavaList("attached text:=View By:")'
 LIQ_ScheduledActivityReport_CollapseAll_Button = 'JavaWindow("title:=Scheduled Activity Report.*").JavaButton("attached text:=Collapse All")'
+
+LIQ_InterestPayment_WorkflowItems = 'JavaWindow("title:=.*Interest Payment.*").JavaTree("attached text:=Drill down to perform Workflow item")'
