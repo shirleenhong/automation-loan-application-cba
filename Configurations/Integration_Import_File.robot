@@ -276,6 +276,7 @@ Resource    ../ResourcesFiles/Integration_Keywords/Source_Keywords/API/CommSee/L
 Resource    ../ResourcesFiles/Integration_Keywords/Source_Keywords/API/CommSee/LoanIQ/CommSee_Payment.robot
 Resource    ../ResourcesFiles/Integration_Keywords/Source_Keywords/API/CommSee/LoanIQ/CommSee_AdminFeeSetup.robot
 Resource    ../ResourcesFiles/Integration_Keywords/Source_Keywords/API/CommSee/LoanIQ/CommSee_LoanDrawdown.robot
+Resource    ../ResourcesFiles/Integration_Keywords/Source_Keywords/API/CommSee/LoanIQ/CommSee_InterestPayment.robot
 ### Integration Resource Files - GL Extracts - Source Keywords ###
 Resource    ../ResourcesFiles/Integration_Keywords/Source_Keywords/Extracts/GL/GLEssence_Extracts_Validation.robot
 

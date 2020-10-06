@@ -2578,14 +2578,21 @@ Validate Global Facility Amounts - Loan Split
     ...    @update: fmamaril    20MAY2019    Update Validation from Should be equal to Should be equal as string
     ...    @update: bernchua    03JUN2019    Added line to evaluate variable '${Computed_CurrentCmtAmt}' to have 2 decimal places
     ...                                      Used 'Should Be Equal' instead of 'Should Be Equal As Strings' in comparing numbers 
-    [Arguments]    ${totalOutstanding}    
+    ...    @update: dahijara    24SEP2020    Added pre processing keywords. 
+    ...                                      Updated number formatter for Total outstanding
+    ...                                      Added screenshots.
+    [Arguments]    ${sTotalOutstanding}    
+    ### GetRuntime Keyword Pre-processing ###
+    ${TotalOutstanding}    Acquire Argument Value    ${sTotalOutstanding}
+
     ${NewAvailToDrawAmount}    Get New Facility Available to Draw Amount
     ${NewGlobalOutstandings}    Get New Facility Global Outstandings
-     ${totalOutstanding}    Remove String     ${totalOutstanding}    ,
-    ${totalOutstanding}    Convert to Number    ${totalOutstanding}    
-    Should Be Equal As Strings    ${totalOutstanding}    ${NewGlobalOutstandings}
-    Log    Total Computed Outstanding ${totalOutstanding} is equal to Facility Outstanding ${NewGlobalOutstandings}          
+    ${TotalOutstanding}    Remove Comma and Convert to Number    ${TotalOutstanding}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/FacilityNotebook
+    Should Be Equal As Strings    ${TotalOutstanding}    ${NewGlobalOutstandings}
+    Log    Total Computed Outstanding ${TotalOutstanding} is equal to Facility Outstanding ${NewGlobalOutstandings}          
     ${CurrentCmtAmt}    Get Current Commitment Amount
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/FacilityNotebook
     
     ${Computed_CurrentCmtAmt}    Evaluate    ${NewAvailToDrawAmount}+${NewGlobalOutstandings}
     ${Computed_CurrentCmtAmt}    Evaluate    "%.2f" % ${Computed_CurrentCmtAmt}
@@ -2598,6 +2605,7 @@ Validate Global Facility Amounts - Loan Split
     ${DiffAmount}    Evaluate    ${SumTotal}-${CurrentCmtAmt}
     ${DiffAmount}    Convert to String    ${DiffAmount}        
     Should Be Equal    ${DiffAmount}    0.0
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/FacilityNotebook
 
 Get Original Data on Loan Amounts Section 
     [Documentation]    This keyword is for getting the original data under Loan Amounts Section.
