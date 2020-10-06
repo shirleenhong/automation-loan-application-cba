@@ -1103,6 +1103,7 @@ Navigate Splitter through Instance Name
 Navigate Splitter through Output Type
     [Documentation]    This keyword is use to navigate splitter if the given argument is Output Type
     ...    @author: jdelacru    26JUL2019    - initial create
+    ...    @update: mcastro     06OCT2019    - Added scroll element into view for ${OpenAPI_Source_Parent_Row}
     [Arguments]    ${sSourceName}    ${sOutputType}
     
     ${OpenAPI_Source_Parent_Row}    Replace Variables    ${OpenAPI_Source_Parent_Row}
@@ -1113,6 +1114,7 @@ Navigate Splitter through Output Type
     :FOR    ${INDEX}    IN RANGE    10
     \    
     \    Wait Until Element Is Visible     ${OpenAPI_Source_Parent_Row}
+    \    Mx Scroll Element Into View    ${OpenAPI_Source_Parent_Row}
     \    Double Click Element    ${OpenAPI_Source_Parent_Row}
     \    Sleep    2s
     \    ${status}    Run Keyword And Return Status    Wait Until Element Is Visible     ${OpenAPI_Source_Child_Row_Success_Instance}
