@@ -155,8 +155,9 @@ Charge Breakcost Fee for D1 - D00000476
     # Mx Execute Template With Multiple Data    Load Base Rate D00000476    ${CBAUAT_ExcelPath}    4    BaseRate_Fields
     # Mx Execute Template With Multiple Data    Load FX Rate D00000476     ${CBAUAT_ExcelPath}    2    FXRates_Fields
     
-# Create Drawdown D4 D5 D6 - D00000476
-    # Mx Execute Template With Multiple Data    Create Drawdown D00000476    ${CBAUAT_ExcelPath}    7-9    SERV01A_LoanDrawdown
+Create Drawdown D4 D5 D6 - D00000476
+    Mx Execute Template With Multiple Data    Create Drawdown D00000476    ${CBAUAT_ExcelPath}    7-9    SERV01_LoanDrawdown
+ 
 
 # ### January 29
 # Collect LFIA3 - D00000476

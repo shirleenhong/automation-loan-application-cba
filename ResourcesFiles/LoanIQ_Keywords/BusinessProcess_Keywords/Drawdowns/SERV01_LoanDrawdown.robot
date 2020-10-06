@@ -100,6 +100,7 @@ Create First Term Facility Loan Drawdown
     ...                                      Updated arguments for Verify notices flow.
     ...                                      Uncomment necessary steps.
     ...    @update: dahijara    10SEP2020    Updated hard coded values with variables.
+    ...    @update: dahijara    28SEP2020    - Updated sheet name for Loan Merge from COMPR06_LoanMerge to SERV11_Loan Amalgamation
     [Arguments]    ${ExcelPath}
     
     ### Get Base Rate data generated from TL-API Base Rate test case. ###
@@ -150,7 +151,7 @@ Create First Term Facility Loan Drawdown
     ### Create Initial Loan Drawdown Details ###
     ${Drawdown_Alias}    New Outstanding Select    &{ExcelPath}[Deal_Name]    &{ExcelPath}[Facility_Name]    ${Borrower_ShortName}    &{ExcelPath}[Outstanding_Type]    &{ExcelPath}[Loan_PricingOption]    &{ExcelPath}[Loan_Currency]
     Write Data To Excel    SERV01_LoanDrawdown    Loan_Alias    &{ExcelPath}[rowid]    ${Drawdown_Alias}
-    Write Data To Excel    COMPR06_LoanMerge    Alias_Loan1    &{ExcelPath}[rowid]    ${Drawdown_Alias}
+    Write Data To Excel    SERV11_Loan Amalgamation    Alias_Loan1    &{ExcelPath}[rowid]    ${Drawdown_Alias}
     
     ${Current_Date}    Get System Date
     ${Loan_MaturityDate}    Read Data From Excel    CRED02_FacilitySetup    Facility_ExpiryDate    &{ExcelPath}[rowid]
@@ -158,7 +159,7 @@ Create First Term Facility Loan Drawdown
     Enter Loan Drawdown Details for AUD Libor Option    &{ExcelPath}[Loan_RequestedAmount]    ${Current_Date}    ${Loan_MaturityDate}
     ...    &{ExcelPath}[Loan_RepricingFrequency]    ${Loan_RepricingDate}    &{ExcelPath}[Loan_IntCycleFrequency]    &{ExcelPath}[Loan_Accrue]    ${Holiday_Reason} 
     
-    Write Data To Excel    COMPR06_LoanMerge    Outstandings_Loan1    &{ExcelPath}[rowid]    &{ExcelPath}[Loan_RequestedAmount]
+    Write Data To Excel    SERV11_Loan Amalgamation    Outstandings_Loan1    &{ExcelPath}[rowid]    &{ExcelPath}[Loan_RequestedAmount]
     
     Accept Loan Drawdown Rates for Term Facility    ${BaseRatePercentage}
     
@@ -401,6 +402,7 @@ Create Second Term Facility Loan Drawdown
     ...                                      Aupdated arguments for verify notices.
     ...                                      Uncomment necessary steps.
     ...    @update: dahijara    10SEP2020    Updated hard coded values with variables.
+    ...    @update: dahijara    28SEP2020    - Updated sheet name for Loan Merge from COMPR06_LoanMerge to SERV11_Loan Amalgamation
     [Arguments]    ${ExcelPath}
     
     Logout from Loan IQ
@@ -447,7 +449,7 @@ Create Second Term Facility Loan Drawdown
     ### Create Initial Loan Drawdown Details ###
     ${Drawdown_Alias}    New Outstanding Select    &{ExcelPath}[Deal_Name]    &{ExcelPath}[Facility_Name]    ${Borrower_ShortName}    &{ExcelPath}[Outstanding_Type]    &{ExcelPath}[Loan_PricingOption]    &{ExcelPath}[Loan_Currency]
     Write Data To Excel    SERV01_LoanDrawdown    Loan_Alias    &{ExcelPath}[rowid]    ${Drawdown_Alias}
-    Write Data To Excel    COMPR06_LoanMerge    Alias_Loan2    1    ${Drawdown_Alias}
+    Write Data To Excel    SERV11_Loan Amalgamation    Alias_Loan2    1    ${Drawdown_Alias}
     
     ${Current_Date}    Get System Date
     ${Loan_MaturityDate}    Read Data From Excel    CRED02_FacilitySetup    Facility_ExpiryDate    1
@@ -455,7 +457,7 @@ Create Second Term Facility Loan Drawdown
     Enter Loan Drawdown Details for AUD Libor Option    &{ExcelPath}[Loan_RequestedAmount]    ${Current_Date}    ${Loan_MaturityDate}
     ...    &{ExcelPath}[Loan_RepricingFrequency]    &{ExcelPath}[Loan_RepricingDate]    &{ExcelPath}[Loan_IntCycleFrequency]    &{ExcelPath}[Loan_Accrue]    ${Holiday_Reason}
     
-    Write Data To Excel    COMPR06_LoanMerge    Outstandings_Loan2    1    &{ExcelPath}[Loan_RequestedAmount]
+    Write Data To Excel    SERV11_Loan Amalgamation    Outstandings_Loan2    1    &{ExcelPath}[Loan_RequestedAmount]
         
     Accept Loan Drawdown Rates for Term Facility    ${BaseRatePercentage}
     

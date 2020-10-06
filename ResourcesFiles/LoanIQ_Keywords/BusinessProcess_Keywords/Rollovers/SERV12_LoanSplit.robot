@@ -8,6 +8,12 @@ Create Loan Split
     ...                @update: bernchua    08MAR2019    Delete old API scripts to be updated with new Transformation Layer automated scripts
     ...                @update: bernchua    12MAR2019    Updated keyword for changing the Effective Date of the Loan Repricing
     ...                @update: bernchua    12MAR2019    Updated keywords used for Workflow & WIP navigation with "Navigate Notebook Workflow" & "Navigate Transaction in WIP".
+    ...                @update: dahijara    23SEP2020    Removed wait keywords when getting BaseRatePercentage & ExchangeRate
+    ...                                                  Added keywords to get Lender legal names via Lender shares for intent notice validation
+    ...                                                  Replaced hard coded values with global variables
+    ...                                                  Replaced navigation to Loan Repricing workflow window
+    ...                                                  Updated data being passed for Verify Customer Notice Method (Borrower, lender1 and Lender2 information)
+    ...                                                  Updated navigation for Open Cashflow Window from Loan Repricing Menu
     [Arguments]    ${ExcelPath}
 	
 	${CurrentDate}    Get System Date
@@ -19,29 +25,33 @@ Create Loan Split
     ${Lender2_Share}    Read Data From Excel    TRP002_SecondarySale    PctofDeal2    1
     ${HostBankLender_Share}    Evaluate    100-(${Lender1_Share}+${Lender2_Share})
     
-    ${BaseRatePercentage}    Wait Until Keyword Succeeds    5x    5s    Get Base Rate from Funding Rate Details    LIBOR    &{ExcelPath}[Repricing_Frequency]    &{ExcelPath}[Currency1]
-    ${ExchangeRate}    Wait Until Keyword Succeeds    5x    5s    Get Currency Exchange Rate from Treasury Navigation    AUD to USD        
+    ${BaseRatePercentage}    Get Base Rate from Funding Rate Details    LIBOR    &{ExcelPath}[Repricing_Frequency]    &{ExcelPath}[Currency1]
+    ${ExchangeRate}    Get Currency Exchange Rate from Treasury Navigation    ${AUD_TO_USD}        
 	${baseRateCode}    Read Data From Excel    CRED01_DealSetup    Deal_PricingOption3    1        
                
     ###LIQ Window
     Search Existing Deal    &{ExcelPath}[Deal_Name]
     
+	### GET CUSTOMER LENDER LEGAL NAME TO BE USED IN INTENT NOTICE VALIDATION ###
+    ${Lender1_LegalName}    Get Customer Lender Legal Name Via Lender Shares In Deal Notebook    ${Lender1_ShortName}
+    ${Lender2_LegalName}    Get Customer Lender Legal Name Via Lender Shares In Deal Notebook    ${Lender2_ShortName}
+    
     ###Deal Notebook
-    Search Loan   &{ExcelPath}[OutstandingSelect_Type]    Deal/Facility    &{ExcelPath}[Facility_Name]    OFF
+    Search Loan   &{ExcelPath}[OutstandingSelect_Type]    ${DEAL_FACILITY_OPTION}    &{ExcelPath}[Facility_Name]    ${OFF}
     
     ###Selection of loan to reprice###
     Select Loan to Reprice    &{ExcelPath}[Loan_Alias]
-    Select Repricing Type    Comprehensive Repricing  
+    Select Repricing Type    ${COMPREHENSIVE_REPRICING}  
     Select Loan Repricing for Deal    &{ExcelPath}[Loan_Alias]
     
     
     ### Setup for Repricing for 10MM ###  
-    ${Loan_Alias}    Setup Repricing    &{ExcelPath}[Repricing_Add_Option_Setup]    ${BaseRatePercentage}    ${baseRateCode}    &{ExcelPath}[LoanAmount_1]    &{ExcelPath}[Repricing_Frequency]    Y    Add    
+    ${Loan_Alias}    Setup Repricing    &{ExcelPath}[Repricing_Add_Option_Setup]    ${BaseRatePercentage}    ${baseRateCode}    &{ExcelPath}[LoanAmount_1]    &{ExcelPath}[Repricing_Frequency]    ${Y}    ${ADD_LOAN_REPRICING}    
     
     Write Data To Excel    CAP02_InterestCapitalRule    Loan_Alias    &{ExcelPath}[rowid]    ${Loan_Alias}
     Write Data To Excel    CAP03_InterestPayment    Loan_Alias    &{ExcelPath}[rowid]    ${Loan_Alias}
     
-    ${rate}    Set Currency FX Rate    &{ExcelPath}[Currency1]    &{ExcelPath}[Currency2]    Use Spot AUD to USD Rate    ${ExchangeRate}
+    ${rate}    Set Currency FX Rate    &{ExcelPath}[Currency1]    &{ExcelPath}[Currency2]    ${USE_SPOT_AUD_TO_USD_RATE}    ${ExchangeRate}
     
     ${totalFacilityAmount1}    ${totalPercentageFacility}    Compute F/X Rate and Percentage of Loan    &{ExcelPath}[LoanAmount_1]   ${rate}    ${HostBankLender_Share}
     
@@ -52,9 +62,9 @@ Create Loan Split
     Validate Loan Amounts in General Tab    ${hostBankAmount1}    &{ExcelPath}[Facility_Name]
             
     ### Setup for Repricing for 5MM ###
-    Setup Repricing    &{ExcelPath}[Repricing_Add_Option_Setup]    ${BaseRatePercentage}    ${baseRateCode}    &{ExcelPath}[LoanAmount_2]    &{ExcelPath}[Repricing_Frequency]    Y    Add
+    Setup Repricing    &{ExcelPath}[Repricing_Add_Option_Setup]    ${BaseRatePercentage}    ${baseRateCode}    &{ExcelPath}[LoanAmount_2]    &{ExcelPath}[Repricing_Frequency]    ${Y}    ${ADD_LOAN_REPRICING}
         
-    ${rate}    Set Currency FX Rate    &{ExcelPath}[Currency1]    &{ExcelPath}[Currency2]    Use Spot AUD to USD Rate    ${ExchangeRate}
+    ${rate}    Set Currency FX Rate    &{ExcelPath}[Currency1]    &{ExcelPath}[Currency2]    ${USE_SPOT_AUD_TO_USD_RATE}    ${ExchangeRate}
     
     ${totalFacilityAmount2}    ${totalPercentageFacility}    Compute F/X Rate and Percentage of Loan    &{ExcelPath}[LoanAmount_2]    ${rate}    ${HostBankLender_Share}
     
@@ -67,36 +77,36 @@ Create Loan Split
     Change Effective Date for Loan Repricing    ${CurrentDate}
     
     ###Sending the transaction to approval###
-    Navigate Notebook Workflow    ${LIQ_LoanRepricing_Window}    ${LIQ_LoanRepricing_Tab}    ${LIQ_LoanRepricing_WorkflowItems}    Send to Approval
-    
+    Navigate to Loan Repricing Workflow and Proceed With Transaction    ${SEND_TO_APPROVAL_STATUS}
+
     Logout from Loan IQ
     Login to Loan IQ    ${MANAGER_USERNAME}    ${MANAGER_PASSWORD}
     
     ###Approve the transaction###
     Navigate Transaction in WIP    Outstandings    Awaiting Approval    Loan Repricing    &{ExcelPath}[Deal_Name]
-    Navigate Notebook Workflow    ${LIQ_LoanRepricing_Window}    ${LIQ_LoanRepricing_Tab}    ${LIQ_LoanRepricing_WorkflowItems}    Approval
+    Navigate to Loan Repricing Workflow and Proceed With Transaction    ${APPROVAL_STATUS}
     
     Logout from Loan IQ
     Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
     
     ###Sending loan to rates approval###
     Navigate Transaction in WIP    Outstandings    Awaiting Send to Rate Approval    Loan Repricing    &{ExcelPath}[Deal_Name]
-    Navigate Notebook Workflow    ${LIQ_LoanRepricing_Window}    ${LIQ_LoanRepricing_Tab}    ${LIQ_LoanRepricing_WorkflowItems}    Send to Rate Approval
+    Navigate to Loan Repricing Workflow and Proceed With Transaction    ${SEND_TO_RATE_APPROVAL_STATUS}
     
     Logout from Loan IQ
     Login to Loan IQ    ${MANAGER_USERNAME}    ${MANAGER_PASSWORD}
     
     ###Approve Rates###
     Navigate Transaction in WIP    Outstandings    Awaiting Rate Approval    Loan Repricing    &{ExcelPath}[Deal_Name]
-    Navigate Notebook Workflow    ${LIQ_LoanRepricing_Window}    ${LIQ_LoanRepricing_Tab}    ${LIQ_LoanRepricing_WorkflowItems}    Rate Approval
+    Navigate to Loan Repricing Workflow and Proceed With Transaction    ${RATE_APPROVAL_STATUS}
     
     ###Generate Intent Notices###
     ${Customer_LegalName}    Read Data From Excel    ORIG03_Customer    LIQCustomer_LegalName    1
-    Navigate Notebook Workflow    ${LIQ_LoanRepricing_Window}    ${LIQ_LoanRepricing_Tab}    ${LIQ_LoanRepricing_WorkflowItems}    Generate Rate Setting Notices
+    Navigate to Loan Repricing Workflow and Proceed With Transaction    ${GENERATE_RATE_SETTING_NOTICES_TRANSACTION}
     Click OK In Notices Window
-    Verify Customer Notice Method    ${Customer_LegalName}    &{ExcelPath}[Notice_ContactPerson]    Awaiting release    ${MANAGER_USERNAME}    &{ExcelPath}[Notice_Method]    &{ExcelPath}[Contact_Email]
-    Verify Customer Notice Method    ${Lender1_ShortName}    &{ExcelPath}[Notice_ContactPerson]    Awaiting release    ${MANAGER_USERNAME}    &{ExcelPath}[Notice_Method]    &{ExcelPath}[Contact_Email]
-    Verify Customer Notice Method    ${Lender2_ShortName}    &{ExcelPath}[Notice_ContactPerson]    Awaiting release    ${MANAGER_USERNAME}    &{ExcelPath}[Notice_Method]    &{ExcelPath}[Contact_Email]
+    Verify Customer Notice Method    ${Customer_LegalName}    &{ExcelPath}[Notice_BorrowerContactPerson]    ${AWAITING_RELEASE_NOTICE_STATUS}    ${MANAGER_USERNAME}    &{ExcelPath}[Notice_BorrowerMethod]    &{ExcelPath}[BorrowerContact_Email]
+    Verify Customer Notice Method    ${Lender1_LegalName}    &{ExcelPath}[Notice_Lender1ContactPerson]    ${AWAITING_RELEASE_NOTICE_STATUS}    ${MANAGER_USERNAME}    &{ExcelPath}[Notice_Lender1Method]    &{ExcelPath}[Lender1Contact_Email]
+    Verify Customer Notice Method    ${Lender2_LegalName}    &{ExcelPath}[Notice_Lender2ContactPerson]    ${AWAITING_RELEASE_NOTICE_STATUS}    ${MANAGER_USERNAME}    &{ExcelPath}[Notice_Lender2Method]    &{ExcelPath}[Lender2Contact_Email]
     Close Notice Group Window
     
     Logout from Loan IQ
@@ -104,11 +114,11 @@ Create Loan Split
     
     ###Release Loan repricing###
     Navigate Transaction in WIP    Outstandings    Awaiting Release    Loan Repricing    &{ExcelPath}[Deal_Name]   
-    Navigate Notebook Workflow    ${LIQ_LoanRepricing_Window}    ${LIQ_LoanRepricing_Tab}    ${LIQ_LoanRepricing_WorkflowItems}    Release
+    Navigate to Loan Repricing Workflow and Proceed With Transaction    ${RELEASE_STATUS}
     
     
     ###Validate cashflow to encounter an error message###
-    Open Cashflows Window from Notebook Menu    ${LIQ_LoanRepricing_Window}    ${LIQ_LoanRepricing_CashFlows_Menu}
+    Open Cashflow Window from Loan Repricing Menu
     
     ###Compute the percentage amount of host bank###
     ${loanAmount1}    Compute for Percentage of an Amount and Return with Comma Separator    &{ExcelPath}[LoanAmount_1]    &{ExcelPath}[HostBank_Share]
@@ -128,7 +138,7 @@ Create Loan Split
     
     Search Existing Deal    &{ExcelPath}[Deal_Name]
     
-    Search Loan   &{ExcelPath}[OutstandingSelect_Type]    Deal/Facility    &{ExcelPath}[Facility_Name]    OFF
+    Search Loan   &{ExcelPath}[OutstandingSelect_Type]    ${DEAL_FACILITY_OPTION}    &{ExcelPath}[Facility_Name]    ${OFF}
     
     ###Validate loan current amount
     Validate Loan Current Amount    &{ExcelPath}[Remaining_LoanAmount]    ${hostBankAmount1}    ${hostBankAmount2}
@@ -140,5 +150,4 @@ Create Loan Split
     ${totalOutstanding}    Add Two Values and Convert to Comma Separators    ${totalFacilityAmount1}    ${totalFacilityAmount2}
     Validate Global Facility Amounts - Loan Split     ${totalOutstanding}  
     
-    ### @update: bernchua    05DEC2018    Close all windows
     Close All Windows on LIQ

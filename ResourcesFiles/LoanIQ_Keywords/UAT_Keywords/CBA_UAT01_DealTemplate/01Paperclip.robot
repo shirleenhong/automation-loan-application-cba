@@ -17,12 +17,13 @@ Collect Early Prepayment via Paper Clip D00000454
     mx LoanIQ activate window    ${LIQ_Loan_Window}
     Set Outstanding Servicing Group Details    &{ExcelPath}[Borrower_ShortName]    &{ExcelPath}[Remittance_Instruction]
     Set Outstanding Servicing Group Details    &{ExcelPath}[Lender1_ShortName]    &{ExcelPath}[Lender_RemittanceInstruction]
-    Set Outstanding Servicing Group Details    &{ExcelPath}[Lender1_ShortName]    &{ExcelPath}[Lender2_RemittanceInstruction]
+    Set Outstanding Servicing Group Details    &{ExcelPath}[Lender2_ShortName]    &{ExcelPath}[Lender2_RemittanceInstruction]
     Initiate Paperclip payment via Outstanding Select    &{ExcelPath}[Loan_Alias]
     
     ### Initiate Paperclip Payment
     Select Payment in Choose a Payment Window    Paper Clip Payment
     Add Transaction to Pending Paperclip    ${Date}    $20M Early Prepayment
+    Pause Execution
     Select Outstanding Item    &{ExcelPath}[Principal_Amount]
     Add Transaction Type    Principal    &{ExcelPath}[Loan_Alias]
     Add Transaction Type    Interest    null
