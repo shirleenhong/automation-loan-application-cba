@@ -255,7 +255,7 @@ Validate Funding Rates in Table Maintenance is Reflected
     
     ###OPTION NAME AND BASE RATE ASSOCIATION###
     ${OptionNameDesc}    ${OptionName}    Get Option Name from Option Name and Base Rate Association    ${sBaseRateCode.upper()}
-    ${BaseRateFrequencyStat}    Run Keyword If    '${sRepricingFreq}'!='None'    Get Base Rate Frequency Status from Table Maintenance    ${sRepricingFreq.upper()}  
+    ${BaseRateFrequencyStat}    Run Keyword If    '${sRepricingFreq}'!='None'    Get Base Rate Frequency Status from Table Maintenance    ${sRepricingFreq.upper()}
     ${RepricingFreq_Text}    Run Keyword If    ${BaseRateFrequencyStat}==${False}    Set Variable    ${EMPTY}
     ...    ELSE    Set Variable    ${RepricingFreq_Text}
 

@@ -463,7 +463,7 @@ Get Individual Subentity Value and Create XML for TL
 Create Initial wsFinalLIQDestination for Base Rate TL
     [Documentation]    This keyword is used to create initial wsFinalLIQDestination for each valid Base Rate Code for TL.
     ...    @author: clanding    27FEB2019    - initial create
-    ...    @update: jdelacru    11AUG2020    - added new argument ${sTemplateFilePath}   
+    ...    @update: jdelacru    11AUG2020    - added new argument ${sTemplateFilePath}
     ...    @update: jdelacru    06OCT2020    - used conditional statement in assigning the value of ${val_RateTenor}
     [Arguments]    ${dRowData}    ${sSubentityVal}    ${sInputFilePath}    ${sFileName}    ${sTemplateFilePath}
     
