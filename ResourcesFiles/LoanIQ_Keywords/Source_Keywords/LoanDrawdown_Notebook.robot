@@ -891,7 +891,9 @@ Input General Loan Drawdown Details with Accrual End Date
     Run Keyword If    '${Loan_AccrueEndDate}'=='None'    mx LoanIQ enter    ${LIQ_InitialDrawdown_AccrualEndDate_Datefield}    ${AdjustedDueDate}
     Run Keyword If    '${Loan_AccrueEndDate}'!='None'    mx LoanIQ enter    ${LIQ_InitialDrawdown_AccrualEndDate_Datefield}    ${sLoan_AccrueEndDate}    
     mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/InitialDrawdown_General
     Select Menu Item    ${LIQ_InitialDrawdown_Window}    File    Save
+    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
     mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
 
 Create Repayment Schedule - Fixed Payment
@@ -970,7 +972,7 @@ Approve Initial Drawdown
     mx LoanIQ click element if present    ${LIQ_Question_Yes_Button}   
     mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}     
     mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
-
+    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
 
 Send Initial Drawdown to Rate Approval
     [Documentation]    This keyword will sent the loan to Rate Approval
@@ -3241,7 +3243,8 @@ Set FX Rates Loan Drawdown
     ...    @author: jdelacru    26MAR2019    - Initial Keyword
     ...    @update: ritragel    19SEP2019    Update for dynamic keyword
     ...    @update: dahijara    25AUG2020    Added pre processing keyword and screenshot.
-    [Arguments]    ${sCurrency}
+    ...    @update: shirhong    06OCT2020    Added condition for Set FX Rate "Use Spot"
+    [Arguments]    ${sCurrency}    ${FxRate_Origin}=None
     ### GetRuntime Keyword Pre-processing ###
     ${Currency}    Acquire Argument Value    ${sCurrency}
 
@@ -3250,15 +3253,17 @@ Set FX Rates Loan Drawdown
     Mx LoanIQ DoubleClick    ${LIQ_InitialDrawdown_WorkflowAction}    Set F/X Rate
     mx LoanIQ activate window    ${LIQ_FacilityCurrency_Window}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/InitialDrawdown_Workflow
-    mx LoanIQ click    JavaWindow("title:=Facility Currency.*","displayed:=1").JavaButton("attached text:=Use Facility.*to ${sCurrency} Rate")
+    Run Keyword If    '${FxRate_Origin}' == 'Spot'    mx LoanIQ click    JavaWindow("title:=Facility Currency.*","displayed:=1").JavaButton("attached text:=Use Spot.*to ${sCurrency} Rate")
+    ...    ELSE    mx LoanIQ click    JavaWindow("title:=Facility Currency.*","displayed:=1").JavaButton("attached text:=Use Facility.*to ${sCurrency} Rate")
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/InitialDrawdown_Workflow
     mx LoanIQ click    ${LIQ_FacilityCurrency_Facility_Rate_Ok_Button}
+    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/InitialDrawdown_Workflow
 
 Set FX Rates Loan Repricing
     [Documentation]    This keyword set the FX rates of any currency repricing from workflow before Rate Approval
     ...    @author: xmiranda    27SEP2019    - initial draft
-    [Arguments]    ${sCurrency}
+    [Arguments]    ${sCurrency}    
     mx LoanIQ activate window    ${LIQ_LoanRepricingForDeal_Window}
     Mx LoanIQ Select Window Tab    ${LIQ_LoanRepricingForDeal_Tab}    Workflow
     Mx LoanIQ DoubleClick    ${LIQ_LoanRepricingForDeal_WorkFlowAction}    Set F/X Rate
