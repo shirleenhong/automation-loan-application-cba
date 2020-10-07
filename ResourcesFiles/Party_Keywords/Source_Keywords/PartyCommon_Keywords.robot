@@ -23,9 +23,12 @@ Navigate Party Details Enquiry
     ...    @update: gerhabal    16SEP2019    - added "Wait Until Browser Ready State" upon click of Next buttona nd increase 10s to 20s     
     ...    @update: amansuet    17MAR2020    - updated based on automation standard guidelines
     ...    @update: ritragel    13AUG2020    - added Press Keys since Press Key is now deprecated
+    ...    @update: gbagregado  01OCT2020    - added "Wait Until Browser Ready State"  while party id field is waiting to be editable(need to wait blinking cursor to appear)
     [Arguments]    ${sParty_id}
     Input Text    ${Party_HomePage_Process_TextBox}    Party Details Enquiry
     Press Keys    ${Party_HomePage_Process_TextBox}    RETURN
+    Wait Until Browser Ready State
+    Sleep    5
     Mx Input Text    ${Party_EnquireEnterpriseParty_PartyId_Text}     ${sParty_id}
     Wait Until Browser Ready State
     Wait Until Element Is Visible    ${Party_EnquireEnterpriseParty_Next_Button}
