@@ -114,6 +114,7 @@ Initiate Repayment Paper Clip for Bilateral Deal
 Create Paperclip Transaction including SBLC and Facing Fee
     [Documentation]   This keyword will creae Paperclip Transaction including SBLC and Facing Fee
     ...    @author: ritragel
+    ...    update:    dfajardo    - update create cashflow and removed hard coded variables
     [Arguments]    ${ExcelPath}
     
     ###Deal Notebook###
@@ -121,8 +122,8 @@ Create Paperclip Transaction including SBLC and Facing Fee
     
     ###Paperclip Notebook###
     ${SysDate}    Get System Date
-    Select Menu Item    ${LIQ_DealNotebook_Window}    Payments    Paper Clip Transaction
-    Add Transaction to Pending Paperclip    ${SysDate}    Repayment  
+    Select Menu Item    ${LIQ_DealNotebook_Window}    ${PAYMENTS_TRANSACTION}    ${PAPER_CLIP_TRANSACTION}
+    Add Transaction to Pending Paperclip    ${SysDate}    ${REPAYMENT_TRANSACTION}  
     Select Outstanding Item    &{ExcelPath}[SBLC_Alias]
     Add Transaction Type    &{ExcelPath}[SBLC_Transaction_Type]
     Select Cycle for Payment    &{ExcelPath}[SBLC_CycleNumber]    &{ExcelPath}[SBLC_ProrateWith]
@@ -137,21 +138,20 @@ Create Paperclip Transaction including SBLC and Facing Fee
 
     ###Cashflows for Paperclip###
     Navigate to Create Cashflow for Paperclip
-    Add Remittance Instuctions for Customer    ${SBLC_Amount}    &{ExcelPath}[Fee_Requested_Amount]    &{ExcelPath}[Borrower_ShortName]    &{ExcelPath}[LenderSharePct1]
-    ...    &{ExcelPath}[LenderSharePct2]    &{ExcelPath}[HostBankSharePct]    &{ExcelPath}[Remittance_Description]    &{ExcelPath}[Remittance_Instruction]    &{ExcelPath}[Remittance_Status]
-    Get Transaction Amount and Validate GL Entries - Paperclip - Scenario 2    &{ExcelPath}[Borrower_ShortName]    &{ExcelPath}[Lender1_ShortName]    &{ExcelPath}[Lender2_ShortName]    &{ExcelPath}[LenderSharePct1]
-    ...    &{ExcelPath}[LenderSharePct2]    &{ExcelPath}[HostBankSharePct]    &{ExcelPath}[Host_Bank]    ${TotalBorrowerPayment}    &{ExcelPath}[SBLC_Amount]    &{ExcelPath}[Fee_Requested_Amount]
+    Verify if Method has Remittance Instruction    &{ExcelPath}[Borrower_ShortName]    &{ExcelPath}[Remittance_Description]    &{ExcelPath}[Remittance_Instruction]
+    Verify if Method has Remittance Instruction    &{ExcelPath}[Lender1_ShortName]    &{ExcelPath}[Remittance1_Description]    &{ExcelPath}[Remittance1_Instruction]
+    Verify if Status is set to Do It    &{ExcelPath}[Borrower_ShortName]
+    Verify if Status is set to Do It    &{ExcelPath}[Lender1_ShortName]
+
+    Navigate to GL Entries
+    Close GL Entries and Cashflow Window
     
-    ###Approval###
+    ##Approval###
     Send Paperclip Payment for Approval
     Logout from Loan IQ
     Login to Loan IQ    ${SUPERVISOR_USERNAME}    ${SUPERVISOR_PASSWORD}
-    Select Item in Work in Process    Payments    Awaiting Approval    Paper Clip    &{ExcelPath}[Deal_Name]
+    Select Item in Work in Process    ${PAYMENTS_TRANSACTION}    ${AWAITING_APPROVAL_STATUS}    ${PAPER_CLIP}    &{ExcelPath}[Deal_Name]
     Approve Paperclip
-    
-    ###Release Cashflows###
-    Release Cashflows for Paperclip    &{ExcelPath}[SBLC_Amount]    &{ExcelPath}[Fee_Requested_Amount]    &{ExcelPath}[Borrower_ShortName]    &{ExcelPath}[LenderSharePct1]
-    ...    &{ExcelPath}[LenderSharePct2]    &{ExcelPath}[HostBankSharePct]
     
     ###Generate Intent Notice Validation####
     Generate Intent Notices for Paper Clip    &{ExcelPath}[Customer_Legal_Name]    &{ExcelPath}[NoticeStatus]
@@ -159,6 +159,10 @@ Create Paperclip Transaction including SBLC and Facing Fee
     ###Release Paperclip Transaction###
     Logout from Loan IQ
     Login to Loan IQ    ${MANAGER_USERNAME}    ${MANAGER_PASSWORD}
-    Select Item in Work in Process    Payments    Awaiting Release    Paper Clip    &{ExcelPath}[Deal_Name]
+    Select Item in Work in Process    ${PAYMENTS_TRANSACTION}    ${AWAITING_RELEASE_STATUS}    ${PAPER_CLIP}    &{ExcelPath}[Deal_Name]
+    
+    ###Release Cashflows###
+    Release Cashflow Based on Remittance Instruction    &{ExcelPath}[Remittance_Instruction]    &{ExcelPath}[Borrower_ShortName]    sNavigateToWorkflow=${PAYMENT_TRANSACTION}
+    
     Release Paperclip Transaction
     Close All Windows on LIQ

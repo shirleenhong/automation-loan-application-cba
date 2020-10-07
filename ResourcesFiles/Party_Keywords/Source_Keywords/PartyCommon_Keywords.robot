@@ -23,10 +23,12 @@ Navigate Party Details Enquiry
     ...    @update: gerhabal    16SEP2019    - added "Wait Until Browser Ready State" upon click of Next buttona nd increase 10s to 20s     
     ...    @update: amansuet    17MAR2020    - updated based on automation standard guidelines
     ...    @update: ritragel    13AUG2020    - added Press Keys since Press Key is now deprecated
+    ...    @update: gabgrgado   01OCT2020    - added waits while waiting for party id field to be editable
     [Arguments]    ${sParty_id}
     Input Text    ${Party_HomePage_Process_TextBox}    Party Details Enquiry
     Press Keys    ${Party_HomePage_Process_TextBox}    RETURN
-    Mx Input Text    ${Party_EnquireEnterpriseParty_PartyId_Text}     ${sParty_id}
+    Wait Until Browser Ready State
+    Wait Until Keyword Succeeds    10x    2s     Mx Input Text    ${Party_EnquireEnterpriseParty_PartyId_Text}     ${sParty_id}
     Wait Until Browser Ready State
     Wait Until Element Is Visible    ${Party_EnquireEnterpriseParty_Next_Button}
     Wait Until Element Is Enabled    ${Party_EnquireEnterpriseParty_Next_Button}       
@@ -71,18 +73,20 @@ Validate Enquire Enterprise Party Details
     Compare Two Arguments    ${sCountry_of_Registration}    ${Party_EnquireEnterpriseParty_CountryOfRegistration_Text}  
     
 Select Row That Contains Text
-    [Arguments]    ${field_to_verify}    ${table_name}    ${element_to_be_clicked}    ${contains_cell_text}    ${element_to_activate}
+    [Documentation]    This keyword concatenates current date as a unique 7 numeric test data
+    ...    @update: gbagregado    30SEPT2020    - add documentation  
+    [Arguments]    ${sField_to_verify}    ${sTable_name}    ${sElement_to_be_clicked}    ${sContains_cell_text}    ${sElement_to_activate}
 
-    ${table_length}    SeleniumLibraryExtended.Get Element Count    ${table_name}
-    :FOR   ${i}    IN RANGE    1   ${table_length}+1
+    ${iTable_length}    SeleniumLibraryExtended.Get Element Count    ${sTable_name}
+    :FOR   ${i}    IN RANGE    1   ${iTable_length}+1
     \    ${index}    Set Variable    [${i}]
     \    log    ${index}
-    \    Mx Click Element    ${element_to_be_clicked}${index}
-    \    Log     Field to verify is ${field_to_verify}
-    \    ${status}    Run Keyword And Return Status    Wait Until Page Contains    ${field_to_verify}
-    \    Exit For Loop If    '${status}'=='True'
-    Mx Click Element    ${element_to_activate}
-    ${cell_text}    Get Text    ${contains_cell_text}
+    \    Mx Click Element    ${sElement_to_be_clicked}${index}
+    \    Log     Field to verify is ${sField_to_verify}
+    \    ${sStatus}    Run Keyword And Return Status    Wait Until Page Contains    ${sField_to_verify}
+    \    Exit For Loop If    '${sStatus}'=='True'
+    Mx Click Element    ${sElement_to_activate}
+    ${cell_text}    Get Text    ${sContains_cell_text}
     [Return]    ${cell_text}
 
 Auto Generate Only 7 Numeric Test Data
@@ -97,6 +101,45 @@ Auto Generate Only 7 Numeric Test Data
     ...    ELSE IF    '${sName_Prefix}'=='None'    Set Variable    ${Result_Value}
 
     [Return]    ${Generated_Value}
+    
+Get Table Value Containing Row Value in Party Detail Search Dialog
+    [Documentation]    This keyword is used get row value of column sHeaderName using sReferenceRowValue from column sReferenceHeaderValue
+    ...    @author: clanding    10SEP2020    - initial create
+    ...    @author: gagregado    28SEP2020   - created from essence and restructure for Party Details Enquiry search dialog table
+    [Arguments]    ${sReferenceHeaderValue}    ${sReferenceRowValue}    ${sHeaderName}    
+    
+    ### Get Header Index of the Reference Value ###
+    ${HeaderCount}    SeleniumLibraryExtended.Get Element Count    ${Party_Search_Dialog_SearchResultTableHeader}
+    ${HeaderCount}    Evaluate    ${HeaderCount}+1
+    :FOR    ${ReferenceHeaderIndex}    IN RANGE    1    ${HeaderCount}
+    \    ${ReferenceHeaderValue}    Get Text    ${Party_Search_Dialog_SearchResultTableHeader}\[${ReferenceHeaderIndex}]//div
+    \    Exit For Loop If    '${ReferenceHeaderValue}'=='${sReferenceHeaderValue}'
+    
+    ### Get Header Index of the Actual Value to be get ###
+    ${HeaderCount}    SeleniumLibraryExtended.Get Element Count    ${Party_Search_Dialog_SearchResultTableHeader}
+    ${HeaderCount}    Evaluate    ${HeaderCount}+1
+    :FOR    ${HeaderIndex}    IN RANGE    1    ${HeaderCount}
+    \    ${HeaderValue}    Get Text    ${Party_Search_Dialog_SearchResultTableHeader}\[${HeaderIndex}]//div
+    \    Exit For Loop If    '${HeaderValue}'=='${sHeaderName}'
+	
+                                                                                            
+    ${RefRowValueCount}    SeleniumLibraryExtended.Get Element Count    ${Party_Search_Dialog_SearchResultTableRow}//td\[contains(text(),"${sReferenceRowValue}")]/parent::tr/td\[${HeaderIndex}]
+	Run Keyword If    ${RefRowValueCount}==0    Run Keyword And Continue On Failure    FAIL    Reference Row Value '${sReferenceRowValue}' not found.
+	Return From Keyword If    ${RefRowValueCount}==0    REFNOTFOUND
+	${RowValue}    Get Text    ${Party_Search_Dialog_SearchResultTableRow}//td\[contains(text(),"${sReferenceRowValue}")]/parent::tr/td\[${HeaderIndex}]
+    
+    [Return]    ${RowValue} 
+
+Get Text From Row and Compare
+    [Documentation]    This keyword is used get text from element and perform comparison
+    ...    @author: gagregado    29SEP2020    - initial create
+    
+    [Arguments]    ${sKnownValue}    ${sLocator}
+    
+    ${sRowValue}    Get Text    ${sLocator}
+    Compare Two Strings    ${sRowValue}    ${sKnownValue}
+   
+    
 
 ###Updated Party Status Test Case
     
@@ -785,3 +828,29 @@ Verify if Value is Existing then Get Table Row Value
     ${Row_Value}    Get Text    ${eElement_To_Clicked}\[${Index}]//td\[${HeaderIndex}]
     
     [Return]    ${Row_Value}
+    
+Get Table Value Containing Row Value in Party
+    [Documentation]    This keyword is used get row value of column sHeaderName using sReferenceRowValue from column sReferenceHeaderValue
+    ...    @author: javinzon    30SEP2020    - initial create
+    [Arguments]    ${eTableHeaderLocator}    ${eTableRowLocator}    ${sReferenceHeaderValue}    ${sReferenceRowValue}    ${sHeaderName}    
+    
+    ### Get Header Index of the Reference Value ###
+    ${HeaderCount}    SeleniumLibraryExtended.Get Element Count    ${eTableHeaderLocator}
+    ${HeaderCount}    Evaluate    ${HeaderCount}+1
+    :FOR    ${ReferenceHeaderIndex}    IN RANGE    1    ${HeaderCount}
+    \    ${ReferenceHeaderValue}    Get Text    ${eTableHeaderLocator}\[${ReferenceHeaderIndex}]//div
+    \    Exit For Loop If    '${ReferenceHeaderValue}'=='${sReferenceHeaderValue}'
+    
+    ### Get Header Index of the Actual Value to be get ###
+    ${HeaderCount}    SeleniumLibraryExtended.Get Element Count    ${eTableHeaderLocator}
+    ${HeaderCount}    Evaluate    ${HeaderCount}+1
+    :FOR    ${HeaderIndex}    IN RANGE    1    ${HeaderCount}
+    \    ${HeaderValue}    Get Text    ${eTableHeaderLocator}\[${HeaderIndex}]//div
+    \    Exit For Loop If    '${HeaderValue}'=='${sHeaderName}'
+	
+    ${RefRowValueCount}    SeleniumLibraryExtended.Get Element Count    ${eTableRowLocator}//td\[contains(text(),"${sReferenceRowValue}")]/parent::tr/td\[${HeaderIndex}]
+	Run Keyword If    ${RefRowValueCount}==0    Run Keyword And Continue On Failure    FAIL    Reference Row Value '${sReferenceRowValue}' not found.
+	Return From Keyword If    ${RefRowValueCount}==0    REFNOTFOUND
+	${RowValue}    Get Text    ${eTableRowLocator}//td\[contains(text(),"${sReferenceRowValue}")]/parent::tr/td\[${HeaderIndex}]
+    
+    [Return]    ${RowValue}    

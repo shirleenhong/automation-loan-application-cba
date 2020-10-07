@@ -57,19 +57,20 @@ Validate FFC for TL FXRates Failed
     [Documentation]    This keyword is used to validate CustomCBAPush in MCH FFC UI.
     ...    @author: mnanquil    19MAR2019    - initial create
     ...    @update: cfrancis    21AUG2019    - Changed value to be validated from ${FAILED} to ${MESSAGESTATUS_SUCCESSFUL}    
+    ...    @update: clanding    01OCT2020    - removed X-Request-ID= in filtering GSFILENAME_WITHTIMESTAMP
+    ...                                      - moved last Verify Expected Value in the Given JSON File for FXRates TL to ELSE FOR isMultipleExpectedResponse condition
     [Arguments]    ${sOutputFilePath}    ${sOutputFileName}    ${sExpectedErrorMsg}    ${isMultipleExpectedResponse}=None
     Login to MCH UI
     Wait Until Element Is Visible    ${FFC_Dashboard}    30s
     ###CustomInterface###
     Go to Dashboard and Click Source API Name    ${CBAPUSH_SOURCENAME}    ${CBAPUSH_INSTANCE}
-    ${ResultsRowList}    Filter by Reference Header and Save Header Value and Return Results Row List Value    ${JMS_HEADERS}    X-Request-ID=${GSFILENAME_WITHTIMESTAMP}    ${sOutputFilePath}${sOutputFileName}    
+    ${ResultsRowList}    Filter by Reference Header and Save Header Value and Return Results Row List Value    ${JMS_HEADERS}    ${GSFILENAME_WITHTIMESTAMP}    ${sOutputFilePath}${sOutputFileName}    
     ...    ${JSON}    ${JMS_PAYLOAD}    ${RESULTSTABLE_STATUS}    ${JMS_INBOUND_QUEUE}    
     Validate Results Row Values Using Expected Value List    ${ResultsRowList}    ${MESSAGESTATUS_SUCCESSFUL}    ${TL_NOTIF_OUT}    
     Verify Expected Value in the Given JSON File for FXRates TL    ${sOutputFilePath}${sOutputFileName}    ${REQUEST_ID}    ${GSFILENAME_WITHTIMESTAMP}
     Verify Expected Value in the Given JSON File for FXRates TL    ${sOutputFilePath}${sOutputFileName}    ${APINAME}    ${FXRATES_APINAME_FAILED}
     Verify Expected Value in the Given JSON File for FXRates TL    ${sOutputFilePath}${sOutputFileName}    ${CONSOLIDATED_STATUS}    ${MESSAGESTATUS_FAILURE}
     Verify Expected Value in the Given JSON File for FXRates TL    ${sOutputFilePath}${sOutputFileName}    ${RESPONSES}    ${FILE_VALIDATION}    ${RESPONSE_DETAILS}    ${MESSAGE_ID}
-    # Verify Expected Value in the Given JSON File for FXRates TL    ${sOutputFilePath}${sOutputFileName}    ${RESPONSES}    ${sExpectedErrorMsg}    ${RESPONSE_DETAILS}    ${RESPONSE_DESC}
     Run Keyword If    ${isMultipleExpectedResponse}==${True}    Verify Multiple Expected Value in the Given JSON File for FXRates TL    ${sOutputFilePath}${sOutputFileName}    ${RESPONSES}    ${sExpectedErrorMsg}    ${RESPONSE_DETAILS}    ${RESPONSE_DESC}
     ...    ELSE    Verify Expected Value in the Given JSON File for FXRates TL    ${sOutputFilePath}${sOutputFileName}    ${RESPONSES}    ${sExpectedErrorMsg}    ${RESPONSE_DETAILS}    ${RESPONSE_DESC}
     Verify Expected Value in the Given JSON File for FXRates TL    ${sOutputFilePath}${sOutputFileName}    ${RESPONSES}    ${MESSAGESTATUS_FAILURE}    ${RESPONSE_DETAILS}    ${RESPONSE_STAT}

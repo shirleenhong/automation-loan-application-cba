@@ -82,3 +82,20 @@ BUS_Set FX Rates Rollover or Conversion
 
     Run Keyword   Set FX Rates Rollover or Conversion    ${ARGUMENT_1}
     
+BUS_Set Currency FX Rate
+    [Documentation]    This keyword is used to run the assigned low level keyword.
+    ...    @author: dahijara    23SEP2020    - initial create
+
+    Run Keyword    Set Currency FX Rate    ${ARGUMENT_1}    ${ARGUMENT_2}    ${ARGUMENT_3}    ${ARGUMENT_4}    ${ARGUMENT_5}
+
+BUS_Compute F/X Rate and Percentage of Loan
+    [Documentation]    This keyword is used to run the assigned low level keyword.
+    ...    @author: dahijara    23SEP2020    - initial create
+
+    Run Keyword    Compute F/X Rate and Percentage of Loan    ${ARGUMENT_1}    ${ARGUMENT_2}    ${ARGUMENT_3}    ${ARGUMENT_4}    ${ARGUMENT_5}
+
+BUS_Validate Amounts in Facility Currency
+    [Documentation]    This keyword is used to run the assigned low level keyword.
+    ...    @author: dahijara    23SEP2020    - initial create
+
+    Run Keyword    Validate Amounts in Facility Currency    ${ARGUMENT_1}    ${ARGUMENT_2}
