@@ -90,6 +90,7 @@ Add Interest Pricing Matrix Facility D00000454
 Setup Facility Template D00000454-1
     [Documentation]    High Level Keyword for Facility Template Creation
     ...    @author: fmamaril    26AUG2019    Initial Create
+    ...    @update: kduenas     10OCT2020    Added writing of facility name to corro apidataset 
     [Arguments]    ${ExcelPath}
     
     ###Name Generation###
@@ -107,6 +108,7 @@ Setup Facility Template D00000454-1
     ...    AND    Write Data To Excel    SERV08C_ComprehensiveRepricing    Facility_Name    2    ${FacilityName}    ${CBAUAT_ExcelPath}
     ...    AND    Write Data To Excel    SERV40_BreakFunding    Facility_Name    1    ${FacilityName}    ${CBAUAT_ExcelPath}
     ...    AND    Write Data To Excel    COMPR06_LoanMerge    Facility_Name    1    ${FacilityName}    ${CBAUAT_ExcelPath}
+    ...    AND    Write Data To Excel    Correspondence    Facility_Name    2    ${Facility_Name}    ${APIDataSet}    bTestCaseColumn=True    sColumnReference=rowid
     Run Keyword If    &{ExcelPath}[rowid] == 2    Run Keywords    Write Data To Excel    CRED01_Primaries    Facility_Name2    ${rowid}    ${FacilityName}    ${CBAUAT_ExcelPath}    Y
     ...    AND    Write Data To Excel    SERV29_CommitmentFeePayment    Facility_Name    2    ${FacilityName}    ${CBAUAT_ExcelPath}    
     ...    AND    Write Data To Excel    SERV29_CommitmentFeePayment    Facility_Name    4    ${FacilityName}    ${CBAUAT_ExcelPath} 	
