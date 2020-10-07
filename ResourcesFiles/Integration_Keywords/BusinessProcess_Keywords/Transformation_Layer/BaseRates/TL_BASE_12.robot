@@ -7,6 +7,7 @@ Send GS Group 4 File
     [Documentation]    Used to send a valid Group 4 Golden Source file to SFTP site, validate if GS file is processed and moved to Archive folder,
     ...    validate FFC if file is sent to CCB OpenAPI, distributor and CustomCBAPush then validate in LoanIQ if Base Rate Code is updated correctly.
     ...    @author: jdelacru    10JUL2019    - initial create
+    ...    @update: jdelacru    07OCT2020    - changed the location of templates items for Base Rate by adding variable TemplateFilePath
     [Arguments]    ${ExcelPath}
     
     ###PREREQUISITE###
