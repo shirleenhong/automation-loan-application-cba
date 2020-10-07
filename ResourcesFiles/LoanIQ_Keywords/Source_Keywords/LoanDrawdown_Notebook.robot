@@ -3252,6 +3252,7 @@ Set FX Rates Loan Drawdown
     ...    @author: jdelacru    26MAR2019    - Initial Keyword
     ...    @update: ritragel    19SEP2019    Update for dynamic keyword
     ...    @update: dahijara    25AUG2020    Added pre processing keyword and screenshot.
+    ...    @update: aramos      05OCT2020    Add click warning button. 
     ...    @update: shirhong    06OCT2020    Added condition for Set FX Rate "Use Spot"
     [Arguments]    ${sCurrency}    ${FxRate_Origin}=None
     ### GetRuntime Keyword Pre-processing ###
