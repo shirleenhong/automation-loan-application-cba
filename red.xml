@@ -3,14 +3,6 @@
     <configVersion>2</configVersion>
     <relativeTo>WORKSPACE</relativeTo>
     <variable name="${Root}" value="C:/Git_Evergreen/evergreen_projects/CBA_Evergreen"/>
-    <referencedLibrary type="PYTHON" name="GenericLib" path="UnifiedTestFramework/Libraries/Common/GenericLib.py"/>
-    <referencedLibrary type="PYTHON" name="Keyboard" path="UnifiedTestFramework/Libraries/Common/Keyboard/Keyboard.py"/>
-    <referencedLibrary type="PYTHON" name="UFTGeneric" path="UnifiedTestFramework/Libraries/UFT/UFTGeneric.py"/>
-    <referencedLibrary type="PYTHON" name="HttpLibraryExtended" path="UnifiedTestFramework/Libraries/REST/HttpLibraryExtended/HttpLibraryExtended.py"/>
-    <referencedLibrary type="PYTHON" name="EssenceLib" path="UnifiedTestFramework/Libraries/Selenium/ProductSpecific/EssenceLib.py"/>
-    <referencedLibrary type="PYTHON" name="BaselineComparator" path="UnifiedTestFramework/Libraries/Common/BaselineComparator/__init__.py"/>
-    <referencedLibrary type="PYTHON" name="LoanIQ" path="UnifiedTestFramework/Libraries/UFT/ProductSpecific/LoanIQ.py"/>
-    <referencedLibrary type="PYTHON" name="SeleniumLibraryExtended" path="UnifiedTestFramework/Libraries/Selenium/SeleniumLibraryExtended/__init__.py"/>
     <referencedLibrary type="PYTHON" name="CSVLib" path="C:/Python37/Lib/site-packages/CSVLib/__init__.py"/>
     <referencedLibrary type="PYTHON" name="CSVLibrary" path="C:/Python37/Lib/site-packages/CSVLibrary/__init__.py"/>
     <referencedLibrary type="PYTHON" name="DatabaseLibrary" path="C:/Python37/Lib/site-packages/DatabaseLibrary/__init__.py"/>
@@ -23,7 +15,15 @@
     <referencedLibrary type="PYTHON" name="RequestsLibrary" path="C:/Python37/Lib/site-packages/RequestsLibrary/__init__.py"/>
     <referencedLibrary type="PYTHON" name="PdfToText" path="C:/Python37/Lib/site-packages/Pdf2TextLibrary/PdfToText.py"/>
     <referencedLibrary type="PYTHON" name="keyboard" path="C:/Python37/Lib/site-packages/keyboard/__init__.py"/>
-    <referencedLibrary type="PYTHON" name="ArchiveLibrary" path="UnifiedTestFramework/Libraries/Common/ArchiveLibrary/__init__.py"/>
+    <referencedLibrary type="PYTHON" name="GenericLib" path="C:/UTF/UnifiedTestFramework/Libraries/Common/GenericLib.py"/>
+    <referencedLibrary type="PYTHON" name="BaselineComparator" path="C:/UTF/UnifiedTestFramework/Libraries/Common/BaselineComparator/__init__.py"/>
+    <referencedLibrary type="PYTHON" name="EssenceLib" path="C:/UTF/UnifiedTestFramework/Libraries/Selenium/ProductSpecific/EssenceLib.py"/>
+    <referencedLibrary type="PYTHON" name="ArchiveLibrary" path="C:/UTF/UnifiedTestFramework/Libraries/Common/ArchiveLibrary/__init__.py"/>
+    <referencedLibrary type="PYTHON" name="HttpLibraryExtended" path="C:/UTF/UnifiedTestFramework/Libraries/REST/HttpLibraryExtended/HttpLibraryExtended.py"/>
+    <referencedLibrary type="PYTHON" name="Keyboard" path="C:/UTF/UnifiedTestFramework/Libraries/Common/Keyboard/Keyboard.py"/>
+    <referencedLibrary type="PYTHON" name="LoanIQ" path="C:/UTF/UnifiedTestFramework/Libraries/UFT/ProductSpecific/LoanIQ.py"/>
+    <referencedLibrary type="PYTHON" name="SeleniumLibraryExtended" path="C:/UTF/UnifiedTestFramework/Libraries/Selenium/SeleniumLibraryExtended/__init__.py"/>
+    <referencedLibrary type="PYTHON" name="UFTGeneric" path="C:/UTF/UnifiedTestFramework/Libraries/UFT/UFTGeneric.py"/>
     <pythonpath>
         <path location="C:\Python37\Lib\site-packages"/>
         <path location="C:\UTF\UnifiedTestFramework"/>

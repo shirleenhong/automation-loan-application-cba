@@ -767,7 +767,7 @@ Select Address in the Contact Details under Profile Tab
     [Arguments]    ${sAddress_Code}=None
 
     Mx LoanIQ Select Window Tab    ${LIQ_Active_ContactDetail_TabSelection}    Addresses
-    Run Keyword If    '${sAddress_Code}' != 'None'    Mx LoanIQ Select Combo Box Value    ${LIQ_Active_ContactDetail_MailingAddress_DropdownField}    ${sAddress_Code}
+    Run Keyword If    '${sAddress_Code}' != 'None'   Mx LoanIQ Select Combo Box Value    ${LIQ_Active_ContactDetail_MailingAddress_DropdownField}    ${sAddress_Code}
     
 Select Notification Method in the Contact Details under Profile Tab
     [Documentation]    This keyword adds Notification Method to the Details of a Contact of a Customer

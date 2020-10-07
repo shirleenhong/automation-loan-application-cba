@@ -6,7 +6,7 @@ ${rowid}    1
 ${SCENARIO}    1
 
 *** Test Cases ***
-Create Customer within Loan IQ - ORIG02
+ Create Customer within Loan IQ - ORIG02
     [Documentation]    This keyword creates Customer within LoanIQ
     ...    when using this, the following keywords(validations) should be disabled in the succeeding keyword 'Search Customer and Complete its Borrower Profile Creation - ORIG03'
     ...    -> Read Excel Data and Validate Customer ID, Short Name and Legal Name fields

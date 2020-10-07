@@ -20,6 +20,23 @@
 		<nature>org.robotframework.ide.eclipse.main.plugin.robotNature</nature>
 		<nature>org.python.pydev.pythonNature</nature>
 	</natures>
+	<linkedResources>
+		<link>
+			<name>libspecs/GenericLib.py</name>
+			<type>1</type>
+			<location>C:/UTF/UnifiedTestFramework/Libraries/Common/GenericLib.py</location>
+		</link>
+		<link>
+			<name>libspecs/LoanIQ.py</name>
+			<type>1</type>
+			<location>C:/UTF/UnifiedTestFramework/Libraries/UFT/ProductSpecific/LoanIQ.py</location>
+		</link>
+		<link>
+			<name>libspecs/UFTGeneric.py</name>
+			<type>1</type>
+			<location>C:/UTF/UnifiedTestFramework/Libraries/UFT/UFTGeneric.py</location>
+		</link>
+	</linkedResources>
 	<filteredResources>
 		<filter>
 			<id>0</id>
