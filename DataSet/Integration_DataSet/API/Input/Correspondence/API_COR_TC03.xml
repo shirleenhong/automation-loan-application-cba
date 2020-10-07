@@ -1,0 +1,38 @@
+<liqInfo>
+{"event_schema_id":"2148","event":{"header":{"correlationId":"LIQ-PZDJY89P-PZDJY87L-2","processPath":{"array":[{"source":"FINASTRA_CCB","timestamp":"2018-12-21T18:21:49.085+08:00"}]}},"sourceSystem":{"string":"FINASTRA_CCB"},"ttl":{"au.com.cba.avro.customermanagement.noticesnotify.ttl":{"ttlDuration":"300","ttlSourceTime":"2018-12-21T18:21:49.085+08:00"}},"cifIds":{"array":[{"string":"18"}]},"documentInfo":{"documentPackage":{"businessChannel":"LOANIQ","name":null,"version":null,"templateId":null,"fileType":null,"content":"<FinastraApplication>
+        <StandardNotice>
+            <ProcessingArea>AUSNA</ProcessingArea>
+            <Address>
+                <line>Date: 21-Dec-2018</line>
+                <line>TO  : BDOLEND44121</line>
+                <line>ADD : </line>
+                <line>ATTN: John Bloggs</line>
+                <line>Re  : S2SYN_04122018171527 S2TERM04122018173018</line>
+            </Address>
+            <BodyContent>
+                <section>
+                    <line>           Description: BBSW - Mid Principal Payment</line>
+                </section>
+                <section>
+                    <line>Effective 27-Jul-2020 ESPS21615015 has elected to prepay</line>
+                    <line>under the BBSW - Mid a total of AUD 1,702.77.</line>
+                    <line>Please see details below.</line>
+                    <line/>
+                    <line>This loan was effective 20-Jul-2020 and is scheduled</line>
+                    <line>to reprice on 20-Aug-2020.</line>
+                </section>
+                <section>
+                    <line>Your share of the AUD 1,702.77 BBSW - Mid payment is:</line>
+                    <line>AUD 340.56.</line>
+                </section>
+                <section>
+                    <line>We will credit your nominated account for an amount of AUD 340.56 on the effective date.</line>
+                </section>
+                <section>
+                    <line/>
+                    <line/>
+                </section>
+            </BodyContent>
+        </StandardNotice>
+    </FinastraApplication>"},"documentStorage":{"status":null,"fileName":null,"inputSource":null,"inputSourceDetail":null,"scanDate":null,"departmentId":{"string":"012689"},"retrievalId":null,"documentumType":null,"applicationNumber":null,"purgeDate":null,"boxLocation":null,"recordManager":null,"description":null,"processes":{"array":[{"string":"PZDJY87L"}]},"services":{"array":[{"string":"721"}]},"accountNumbers":{"array":[{"source":{"string":"LOANIQ"},"productCode":{"string":"OST"},"number":{"string":"ESPS21615000002"}}]},"processFlags":{"array":[{"name":null,"value":null}]}}},"emailSecureMessageDetails":{"subject":"S2SYN_04122018171527 S2TERM04122018173018","senderEmail":"NON-AGENCY@CBA.AU.COM","toRecipientEmail":"john.blogg@abc.com","ccRecipientEmail":{"string":"JOHN.DOE_1@CBA.AU.COM"},"mimeType":null,"messageID":"LIQ-PZDJY89P-PZDJY87L-2","body":null,"attachment":null,"inBandAttachment":null,"deliveredToEmail":null,"undeliveredToEmail":null,"systemCode":null,"systemName":null,"identifier":{"string":"AUSNA"},"digitalSignature":null}}}
+</liqInfo>
