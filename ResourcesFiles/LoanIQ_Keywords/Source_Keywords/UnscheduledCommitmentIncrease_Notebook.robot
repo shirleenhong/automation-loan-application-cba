@@ -6,11 +6,13 @@ Resource    ../../../Configurations/LoanIQ_Import_File.robot
 Navigate to View/Update Lender Share via Unscheduled Commitment Increase Notebook
     [Documentation]    This keyword is for navigating Lender Shares Window
     ...    @author:mgaling
+    ...    @update: dahijara    24SEP2020    - Added screenshot
     
     mx LoanIQ activate window    ${LIQ_UnscheduledCommitmentIncrease_Window}
     mx LoanIQ select    ${LIQ_UnscheduledCommitmentIncrease_Options_ViewUpdateLenderShares}
     mx LoanIQ activate window    ${LIQ_UnscheduledCommitmentIncrease_Shares_Window} 
     Run Keyword And Continue On Failure    Mx LoanIQ Verify Object Exist    ${LIQ_UnscheduledCommitmentIncrease_Shares_Window}            VerificationData="Yes"
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/UnscheduledCommitmentIncrease_SharesWindow
 
 Validate PrimariesAssginees Section
     [Documentation]    This keyword is for validating values under Primaries/Assignees Section.
@@ -149,6 +151,7 @@ Validate Actual Net All Total Amount under Host Bank Shares Section
     [Documentation]    This keyword is for validating Actual Net All Total under Host Bank Shares Section.
     ...    @author:mgaling
     ...    @update: sahalder    06AUG2020    Added keyword pre-processing steps
+    ...    @update: dahijara    24SEP2020    Added screenshot
     [Arguments]    ${sHBShares_UIActualAmount} 
     
     ### GetRuntime Keyword Pre-processing ###
@@ -159,32 +162,38 @@ Validate Actual Net All Total Amount under Host Bank Shares Section
     ${UI_ActualNetAllTotal}    Mx LoanIQ Get Data    ${LIQ_UnscheduledCommitmentIncrease_Shares_ActualNetAllTotal}    value%Total
     ${UI_ActualNetAllTotal}    Remove String    ${UI_ActualNetAllTotal}    ,
     ${UI_ActualNetAllTotal}    Convert To Number    ${UI_ActualNetAllTotal}    2    
-    
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/UnscheduledCommitmentIncrease_Shares
     Should Be Equal    ${HBShares_UIActualAmount}    ${UI_ActualNetAllTotal}
     Log    ${HBShares_UIActualAmount}=${UI_ActualNetAllTotal}        
     mx LoanIQ click    ${LIQ_UnscheduledCommitmentIncrease_Shares_OK_Button}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/UnscheduledCommitmentIncrease_Shares
     
 Generate Intent Notices in Unscheduled Commitment Increase Notebook
     [Documentation]    This keyword is for generating Intent Notices under Work flow Tab.
     ...    @author:mgaling 
+    ...    @update: dahijara    24SEP2020    Added screenshot
     
     mx LoanIQ activate window    ${LIQ_UnscheduledCommitmentIncrease_Window}
     Mx LoanIQ Select Window Tab    ${LIQ_UnscheduledCommitmentIncrease_Tab}    Workflow
-    
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/UnscheduledCommitmentIncrease_Workflow
     ${status}    Run Keyword And Return Status    Mx LoanIQ Select String    ${LIQ_UnscheduledCommitmentIncrease_WorkflowTab_JavaTree}    Generate Intent Notices         
     Run Keyword If    ${status}==True    Mx LoanIQ Select Or DoubleClick In Javatree    ${LIQ_UnscheduledCommitmentIncrease_WorkflowTab_JavaTree}    Generate Intent Notices%d   
     Run Keyword If    ${status}==False    Log    Fail    Generate Intent Notices is not available    
     
     mx LoanIQ activate window    ${LIQ_Notices_Window}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/UnscheduledCommitmentIncrease_Workflow
     mx LoanIQ click    ${LIQ_Notices_OK_Button}
     
     mx LoanIQ activate window    ${LIQ_CommitmentChangeGroup_Window}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/UnscheduledCommitmentIncrease_Workflow
     mx LoanIQ click    ${LIQ_CommitmentChangeGroup_Exit_Button}
     
     mx LoanIQ activate window    ${LIQ_UnscheduledCommitmentIncrease_Window}
     Mx LoanIQ Select Window Tab    ${LIQ_UnscheduledCommitmentIncrease_Tab}    Workflow
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/UnscheduledCommitmentIncrease_Workflow
     Mx LoanIQ Verify Runtime Property    ${LIQ_UnscheduledCommitmentIncrease_WorkflowTab_JavaTree}    items count%0  
     mx LoanIQ close window    ${LIQ_UnscheduledCommitmentIncrease_Window}      
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/UnscheduledCommitmentIncrease_Workflow
     
 Navigate To Amendment Notebook Workflow
     [Documentation]    This keyword navigates the Workflow tab of a Notebook, and does a specific transaction.
