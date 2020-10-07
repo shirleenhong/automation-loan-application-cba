@@ -7,20 +7,22 @@ Send GS File with Future Date and Existing Base Rate Record in Holding Table
     ...    Then validate if GS file is processed and moved to Archive folder. Then validate FFC if file is sent to CCB OpenAPI, 
     ...    distributor and CustomCBAPush. After one day EOD in LIQ, validate if Base Rate Code is updated correctly.
     ...    @author: jdelacru    07AUG2019    - initial create
+    ...    @update: jdelacru    07OCT2020    - changed the location of templates items for Base Rate by adding variable TemplateFilePath
     [Arguments]    ${ExcelPath}
     
     ##PREREQUISITE###
-    Login to Loan IQ    ${TL_USERNAME}    ${TL_PASSWORD}
+    # Login to Loan IQ    ${TL_USERNAME}    ${TL_PASSWORD}
     ${TransformedDataFile_BaseRate}    Set Variable    &{ExcelPath}[InputFilePath]${TL_Transformed_Data_BaseRate}
-    ${TransformedDataFile_Template_BaseRate}    Set Variable    &{ExcelPath}[InputFilePath]${TL_Transformed_Data_template_BaseRate}
+    ${TransformedDataFile_Template_BaseRate}    Set Variable    &{ExcelPath}[TemplateFilePath]${TL_Transformed_Data_template_BaseRate}
     Create Prerequisite for Multiple GS Files Scenario    &{ExcelPath}[InputFilePath]    ${TL_Transformed_Data_BaseRate}    ${TransformedDataFile_Template_BaseRate}
-    ...    &{ExcelPath}[InputGSFile]    &{ExcelPath}[InputJson]     &{ExcelPath}[Expected_wsFinalLIQDestination]
+    ...    &{ExcelPath}[InputGSFile]    &{ExcelPath}[InputJson]     &{ExcelPath}[Expected_wsFinalLIQDestination]    sTemplateFilePath=&{ExcelPath}[TemplateFilePath]
     ###END OF PREREQUISITE###
     
     Send Multiple Files to SFTP and Validate If Files are Processed    &{ExcelPath}[InputFilePath]    ${TL_Base_Folder}    &{ExcelPath}[InputGSFile]    ${TL_BASE_ARCHIVE_FOLDER}    iDelayTime=5s
     ${QueryList}    Get Future Date Record in Holding Table for Multiple Files for TL Base Rate    ${ARCHIVE_GSFILENAME_LIST}
     Run Keyword And Continue On Failure    Validate Future Date Record in Holding Table for TL Base Rate for Multiple Files    ${QueryList}
 
+    Pause Execution
     # Run Keyword and Continue on Failure    Execute EOD - Daily
     
     ### SAMPLE TEST DATA ###
