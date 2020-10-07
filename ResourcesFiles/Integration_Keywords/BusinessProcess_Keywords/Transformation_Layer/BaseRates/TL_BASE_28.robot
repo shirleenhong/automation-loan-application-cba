@@ -20,7 +20,6 @@ Send Update GS file (Any group)
     ###END OF PREREQUISITE###
     
     Send Multiple Files to SFTP and Validate If Files are Processed    &{ExcelPath}[InputFilePath]    ${TL_Base_Folder}    &{ExcelPath}[InputGSFile]    ${TL_BASE_ARCHIVE_FOLDER}    iDelayTime=10s
-    Pause Execution
     Run Keyword And Continue On Failure    Validate FFC for TL Base Rate Success with Multiple Files    &{ExcelPath}[InputFilePath]    &{ExcelPath}[InputJson]    &{ExcelPath}[Expected_wsFinalLIQDestination]
     ...    &{ExcelPath}[OutputFilePath]    &{ExcelPath}[OutputFFCResponse]    &{ExcelPath}[Actual_wsFinalLIQDestination]    &{ExcelPath}[Actual_CustomCBAPush_Response]    &{ExcelPath}[Actual_ResponseMechanism]
     Run Keyword And Continue On Failure    Validate Base Rate Code in LoanIQ for TL Base Success for Last Index
