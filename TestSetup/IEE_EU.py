@@ -179,4 +179,4 @@ GL_PASSPHRASE = 'oracle'
 GL_CSV_GPG_FILEEXTENSION = '.csv.gpg'
 ESS_EUWASADMIN_SCHEMA = "EUWASADMIN"
 GL_VALIDATION_TOOL_PATH = 'C:\\Git_Evergreen\\fms_cba\\DataSet\\Integration_DataSet\Extracts\\GL\\Validation_Tool'
-GL_VALIDATION_TOOL_JAR = 'gpgCheck-1.0.3-jar-with-dependencies-EU.jar'
+GL_VALIDATION_TOOL_JAR_EU = 'gpgCheck-1.0.3-jar-with-dependencies-EU.jar'
