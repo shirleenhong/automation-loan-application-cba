@@ -8,12 +8,17 @@ Send Single File to SFTP and Validate If File is Processed
     ...    if file is removed from sFilePathDestinaton for processing.
     ...    @author: clanding    26FEB2019    - initial create
     ...    @update: mnanquil    06MAR2019    - updated for loop condition to use hard wait instead of continous loop.
-    [Arguments]    ${sFilePathSource}    ${sGSFileName}    ${sFilePathDestinaton}
+    ...    @update: clanding    06OCT2020    - added ${iPollingTime} as optional argument
+    [Arguments]    ${sFilePathSource}    ${sGSFileName}    ${sFilePathDestinaton}    ${iPollingTime}=None
     
     Open Connection and Login    ${SFTP_HOST}    ${SFTP_PORT}    ${SFTP_USER}    ${SFTP_PASSWORD}
     Put File    ${dataset_path}${sFilePathSource}${sGSFileName}    ${sFilePathDestinaton}
     Log    Waiting for 2 mins 30 secs to finished to wait until file is consume in ${sFilePathDestinaton} folder.
-    Sleep    150s
+    Run Keyword If    '${iPollingTime}'=='None'    Log To Console    Waiting for 2 mins 30 secs to finished to wait until file is consume in ${sFilePathDestinaton} folder.
+    ...    ELSE    Log To Console    Waiting for ${iPollingTime} to finished to wait until file is consume in ${sFilePathDestinaton} folder.
+    Run Keyword If    '${iPollingTime}'=='None'    Sleep    2.5m    ###The processing time for GS File for Base Rate and FX Rate is every 2 minutes
+    ...    ELSE    Sleep    ${iPollingTime}
+
     :FOR    ${INDEX}    IN RANGE    5
     \    ${FileIsProcessed}    Run Keyword And Return Status    SSHLibrary.File Should Not Exist    ${sFilePathDestinaton}/${sGSFileName}  
     \    Run Keyword If    ${FileIsProcessed}==${True}    Log    ${sGSFileName} was picked up by the batch for processing.
