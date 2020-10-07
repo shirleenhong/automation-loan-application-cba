@@ -875,9 +875,9 @@ Input General Loan Drawdown Details with Accrual End Date
     ${Loan_AccrueEndDate}    Acquire Argument Value    ${sLoan_AccrueEndDate}
 
     Mx LoanIQ Select Window Tab    ${LIQ_InitialDrawdown_Tab}    General
-    mx LoanIQ enter    ${LIQ_InitialDrawdown_RequestedAmt_Textfield}    ${Loan_RequestedAmount}
-    mx LoanIQ enter    ${LIQ_InitialDrawdown_EffectiveDate_Datefield}    ${Loan_EffectiveDate}
-    mx LoanIQ enter    ${LIQ_InitialDrawdown_MaturityDate_Datefield}    ${Loan_MaturityDate}
+    Mx LoanIQ Enter    ${LIQ_InitialDrawdown_RequestedAmt_Textfield}    ${Loan_RequestedAmount}
+    Mx LoanIQ Enter    ${LIQ_InitialDrawdown_EffectiveDate_Datefield}    ${Loan_EffectiveDate}
+    Mx LoanIQ Enter    ${LIQ_InitialDrawdown_MaturityDate_Datefield}    ${Loan_MaturityDate}
     mx LoanIQ click element if present    ${LIQ_Question_Yes_Button}
     Mx LoanIQ Select Combo Box Value    ${LIQ_InitialDrawdown_Repricing_Dropdownlist}    ${Loan_RepricingFrequency}
     Run Keyword If    '${Loan_RepricingDate}'!='None'    mx LoanIQ enter    ${LIQ_InitialDrawdown_RepricingDate_Datefield}    ${Loan_RepricingDate}
@@ -965,6 +965,7 @@ Approve Initial Drawdown
     [Documentation]    This keyword will approve the Loan awaiting for approval
     ...    @author: ritragel
     ...    @update: ritragel    06MAR19    Added Additional Verification for Question Message
+    ...    @update: aramos      05OCT20    Added Additional Verification for Appriving GBP Libor Option 
     mx LoanIQ activate window    ${LIQ_InitialDrawdown_Window}
     Mx LoanIQ Select Window Tab    ${LIQ_InitialDrawdown_Tab}    Workflow   
     Mx LoanIQ DoubleClick    ${LIQ_InitialDrawdown_WorkflowAction}    Approval  
@@ -2580,14 +2581,21 @@ Validate Global Facility Amounts - Loan Split
     ...    @update: fmamaril    20MAY2019    Update Validation from Should be equal to Should be equal as string
     ...    @update: bernchua    03JUN2019    Added line to evaluate variable '${Computed_CurrentCmtAmt}' to have 2 decimal places
     ...                                      Used 'Should Be Equal' instead of 'Should Be Equal As Strings' in comparing numbers 
-    [Arguments]    ${totalOutstanding}    
+    ...    @update: dahijara    24SEP2020    Added pre processing keywords. 
+    ...                                      Updated number formatter for Total outstanding
+    ...                                      Added screenshots.
+    [Arguments]    ${sTotalOutstanding}    
+    ### GetRuntime Keyword Pre-processing ###
+    ${TotalOutstanding}    Acquire Argument Value    ${sTotalOutstanding}
+
     ${NewAvailToDrawAmount}    Get New Facility Available to Draw Amount
     ${NewGlobalOutstandings}    Get New Facility Global Outstandings
-     ${totalOutstanding}    Remove String     ${totalOutstanding}    ,
-    ${totalOutstanding}    Convert to Number    ${totalOutstanding}    
-    Should Be Equal As Strings    ${totalOutstanding}    ${NewGlobalOutstandings}
-    Log    Total Computed Outstanding ${totalOutstanding} is equal to Facility Outstanding ${NewGlobalOutstandings}          
+    ${TotalOutstanding}    Remove Comma and Convert to Number    ${TotalOutstanding}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/FacilityNotebook
+    Should Be Equal As Strings    ${TotalOutstanding}    ${NewGlobalOutstandings}
+    Log    Total Computed Outstanding ${TotalOutstanding} is equal to Facility Outstanding ${NewGlobalOutstandings}          
     ${CurrentCmtAmt}    Get Current Commitment Amount
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/FacilityNotebook
     
     ${Computed_CurrentCmtAmt}    Evaluate    ${NewAvailToDrawAmount}+${NewGlobalOutstandings}
     ${Computed_CurrentCmtAmt}    Evaluate    "%.2f" % ${Computed_CurrentCmtAmt}
@@ -2600,6 +2608,7 @@ Validate Global Facility Amounts - Loan Split
     ${DiffAmount}    Evaluate    ${SumTotal}-${CurrentCmtAmt}
     ${DiffAmount}    Convert to String    ${DiffAmount}        
     Should Be Equal    ${DiffAmount}    0.0
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/FacilityNotebook
 
 Get Original Data on Loan Amounts Section 
     [Documentation]    This keyword is for getting the original data under Loan Amounts Section.

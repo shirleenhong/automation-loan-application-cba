@@ -212,6 +212,8 @@ AWAITING_RELEASE_NOTICE_STATUS = "Awaiting release"
 PAPER_CLIP_TRANSACTION = "Paper Clip Transaction"
 REPAYMENT_TRANSACTION = "Repayment"
 PAPER_CLIP = "Paper Clip"
+DEALS_CATEGORY = "Deals"
+DEAL_AMENDMENT_TRANSACTION = "Deal Amendment"
 AWAITING_SET_FX_RATE_STATUS = "Awaiting Set F/X Rate"
 SET_FX_RATE_TRANSACTION = "Set F/X Rate"
 
@@ -266,6 +268,8 @@ INTEREST_PAYMENT_REQUESTED_AMOUNT = "InterestPaymentRequestedAmount"
 NEW_LOAN_ALIAS = "NewLoanAlias"
 ROLLOVER_CONVERSION_TO_NEW = "Rollover/Conversion To New"
 INTEREST_PAYMENT = "Interest Payment"
+COMPREHENSIVE_REPRICING = "Comprehensive Repricing"
+ADD_LOAN_REPRICING = "Add"
 
 ### Outstanding Type ###
 LOAN_TYPE = "Loan"
@@ -292,3 +296,16 @@ GL_THREE_CHAR_ENTITY_CODE_EUR = "EUR"
 MD5_URL = "http://onlinemd5.com/"
 GL_FILENAME_TRANSACTION = "_TRANSACTION_"
 CCB_ESS_GL_FILENAME = "CCB_ESS_GL_"
+GL_VALTOOL_COLUMNS = "ValidationTool_Columns.txt"
+
+
+### FX CURRENCY RATE ###
+AUD_TO_USD = "AUD to USD"
+USE_SPOT_AUD_TO_USD_RATE = "Use Spot AUD to USD Rate"
+
+### LOAN SEARCH BY OPTIONS ###
+DEAL_FACILITY_OPTION = "Deal/Facility"
+
+### Y/N ###
+Y = "Y"
+N = "N"

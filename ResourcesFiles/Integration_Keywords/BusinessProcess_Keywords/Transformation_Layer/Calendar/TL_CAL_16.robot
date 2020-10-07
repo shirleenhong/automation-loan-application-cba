@@ -44,6 +44,7 @@ Send Valid Copp Clark Files without Validation
     [Documentation]    This keyword is used to send a valid Copp Clark files to SFTP site and validate if moved to Archive folder.
     ...    This keyword has no other validation. Please see keyword 'Send Valid Copp Clark Files' for sending Copp Clark files with validation in FFC and LIQ.
     ...    @author: clanding    01AUG2019    - initial create
+    ...    @update: mcastro    29SEP2020    Update Logout from LIQ to updated keyword and comment the step
     [Arguments]    ${ExcelPath}
     
     ###PREREQUISITE###
@@ -62,4 +63,4 @@ Send Valid Copp Clark Files without Validation
     Send Multiple Files to SFTP and Validate If Files are Processed for Holiday    &{ExcelPath}[InputFilePath]    ${TL_CALENDAR_FOLDER}    &{ExcelPath}[InputCoppClarkFiles]    
     ...    ${TL_CALENDAR_ARCHIVE_FOLDER}
     Log    ${ARCHIVE_GSFILENAME_LIST}
-    Logout from LIQ
+    # Logout from Loan IQ

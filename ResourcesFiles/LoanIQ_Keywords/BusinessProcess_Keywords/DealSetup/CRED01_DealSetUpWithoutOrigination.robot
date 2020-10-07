@@ -956,6 +956,7 @@ Setup Comprehensive Deal
     ...    @update: amansueto    15APR2020    - merged select actions and validate field keywords to Create New Deal
     ...    @update: ehugo    22JUN2020    - updated 'Borrower_Name' to 'Borrower_ShortName' for COMPR06_LoanMerge
     ...    @update: dahijara    22JUL2020    - added excel writing for SYND04_TickingFeePayment-Deal_Name
+    ...    @update: dahijara    28SEP2020    - Updated sheet name for Loan Merge from COMPR06_LoanMerge to SERV11_Loan Amalgamation
     [Arguments]    ${ExcelPath}
 
     ${Deal_Name}    ${Deal_Alias}    Generate And Return Deal Name And Alias    &{ExcelPath}[Deal_NamePrefix]    &{ExcelPath}[Deal_AliasPrefix]
@@ -978,7 +979,7 @@ Setup Comprehensive Deal
     Write Data To Excel    AMCH06_PricingChangeTransaction    Deal_Name    &{ExcelPath}[rowid]    ${Deal_Name}
     Write Data To Excel    SERV12_LoanSplit    Deal_Name    &{ExcelPath}[rowid]    ${Deal_Name}
     Write Data To Excel    AMCH03_UnschedFacilityIncrease    Deal_Name    &{ExcelPath}[rowid]    ${Deal_Name}
-    Write Data To Excel    COMPR06_LoanMerge    Deal_Name    &{ExcelPath}[rowid]    ${Deal_Name}
+    Write Data To Excel    SERV11_Loan Amalgamation    Deal_Name    &{ExcelPath}[rowid]    ${Deal_Name}
     Write Data To Excel    CAP02_InterestCapitalRule    Deal_Name    &{ExcelPath}[rowid]    ${Deal_Name}
     Write Data To Excel    CAP03_InterestPayment    Deal_Name    &{ExcelPath}[rowid]    ${Deal_Name}
     Write Data To Excel    CAP03_OngoingFeeCapitalization    Deal_Name    &{ExcelPath}[rowid]    ${Deal_Name}
@@ -1001,7 +1002,7 @@ Setup Comprehensive Deal
     Write Data To Excel    SYND04_TickingFeePayment    Borrower_ShortName    &{ExcelPath}[rowid]    ${Borrower_ShortName}
     Write Data To Excel    SERV01_LoanDrawdown    Borrower_ShortName    &{ExcelPath}[rowid]    ${Borrower_ShortName}    multipleValue=Y
     Write Data To Excel    SERV12_LoanSplit    Borrower_Name    &{ExcelPath}[rowid]    ${Borrower_ShortName}
-    Write Data To Excel    COMPR06_LoanMerge    Borrower_ShortName    &{ExcelPath}[rowid]    ${Borrower_ShortName}
+    Write Data To Excel    SERV11_Loan Amalgamation    Borrower_ShortName    &{ExcelPath}[rowid]    ${Borrower_ShortName}
     Write Data To Excel    CAP03_InterestPayment    Loan_Borrower    &{ExcelPath}[rowid]    ${Borrower_ShortName}
     Write Data To Excel    CAP02_CapitalizedFeePayment    Borrower_ShortName    &{ExcelPath}[rowid]    ${Borrower_ShortName}
     Write Data To Excel    MTAM01_ManualGL    Borrower1_ShortName    &{ExcelPath}[rowid]    ${Borrower_ShortName}
@@ -1055,6 +1056,7 @@ Setup Term Facility for Comprehensive Deal
     ...    @update: ehugo    30JUN2020    - update sheet name from 'CRED08_OngoingFeeSetup' to 'CRED08_FacilityFeeSetup'
     ...                                   - used 'Enter Facility Dates With Business Day and Non-Business Day Validations for Term Facility' instead of 'Enter Date With Business Day and Non-Business Day Validations'
     ...    @update: clanding    16JUL2020    - updated sheet name from CRED08_FacilityFeeSetup to CRED08_OngoingFeeSetup
+    ...    @update: dahijara    28SEP2020    - Updated sheet name for Loan Merge from COMPR06_LoanMerge to SERV11_Loan Amalgamation
     [Arguments]    ${ExcelPath}
     ### Data Generation
     ${Facility_Name}    Generate Name Test Data    &{ExcelPath}[Facility_NamePrefix]
@@ -1069,7 +1071,7 @@ Setup Term Facility for Comprehensive Deal
     Write Data To Excel    SERV01_LoanDrawdown    Facility_Name    &{ExcelPath}[rowid]    ${Facility_Name}    multipleValue=Y
     Write Data To Excel    SERV01_LoanDrawdown    Loan_FacilityName    &{ExcelPath}[rowid]    ${Facility_Name}    multipleValue=Y
     Write Data To Excel    AMCH03_UnschedFacilityIncrease    Facility_Name    &{ExcelPath}[rowid]    ${Facility_Name}
-    Write Data To Excel    COMPR06_LoanMerge    Facility_Name    &{ExcelPath}[rowid]    ${Facility_Name}
+    Write Data To Excel    SERV11_Loan Amalgamation    Facility_Name    &{ExcelPath}[rowid]    ${Facility_Name}
     Write Data To Excel    CAP03_OngoingFeeCapitalization    Facility_Name    &{ExcelPath}[rowid]    ${Facility_Name}
     Write Data To Excel    CAP02_CapitalizedFeePayment    Facility_Name    &{ExcelPath}[rowid]    ${Facility_Name}
     Write Data To Excel    SERV18_Payments    Facility_Name    &{ExcelPath}[rowid]    ${Facility_Name}

@@ -330,6 +330,7 @@ Filter by Reference Header and Save Header Value and Return Results Row List Val
     ...    Then gets the row values using array of Header Names. Then gets the value of the given Header and save to output file.
     ...    @author: clanding    12MAR2019    - initial create
     ...    @update: clanding    12JUN2019    - added \ on index for element, this is an update for robot to consider it as a string not an index of
+    ...    @update: clanding    06OCT2020    - added optional argument ${True} in Mx Input Text for sExpectedRefValue
     [Arguments]    ${sHeaderRefName}    ${sExpectedRefValue}    ${sOutputFilePath}    ${sFileExtension}    ${sGetHeaderValue}    @{aHeaderNames}
     
     ${Results_Column_Count}    SeleniumLibraryExtended.Get Element Count    ${Results_Header}
@@ -347,7 +348,7 @@ Filter by Reference Header and Save Header Value and Return Results Row List Val
     ${ResultsHeaderColIndex_After_Exist}    Run Keyword And Return Status    Page Should Contain Element    ${ResultsHeaderColIndex_After}    
     Run Keyword If    ${ResultsHeaderColIndex_After_Exist}==${True}    Mx Scroll Element Into View    ${Results_FilterPanel}\[${ResultsHeaderColIndex_After}]
     ...    ELSE    Mx Scroll Element Into View    ${Results_FilterPanel}\[${ResultsHeaderColIndex}]
-    Mx Input Text    ${Results_FilterPanel}\[${ResultsHeaderColIndex}]    ${sExpectedRefValue}
+    Mx Input Text    ${Results_FilterPanel}\[${ResultsHeaderColIndex}]    ${sExpectedRefValue}    ${True}
     Wait Until Element Is Visible    ${Results_Row}    
     
     ${Multiple_List}    Create List    
@@ -493,7 +494,8 @@ Compare Multiple Input and Output JSON for Base Rate
     [Documentation]    This keyword is used to compare multiple json for input and out files.
     ...    @author: clanding    18MAR2019    - initial create
     ...    @update: jdelacru    21SEP2020    - added new argument ${sSubEntity} and change the file name of the file being read
-    [Arguments]    ${sInputFilePath}    ${sFileName}    ${sSubEntity}
+    ...    @update: jdelacru    29SEP2020    - deleted argument ${sSubEntity}, not needed in OpenAPI generated response
+    [Arguments]    ${sInputFilePath}    ${sFileName}
     
     ${InputJSON}    OperatingSystem.Get File    ${dataset_path}${sInputFilePath}${sFileName}.json
     ${FFC_RESPONSE}    Strip String    ${FFC_RESPONSE}    mode=left    characters=[
@@ -519,8 +521,7 @@ Compare Multiple Input and Output JSON for Base Rate
     \    ${Val_baseRateCode}    Get From List    ${Val_baseRateCode}    0
     \    ${Val_rateTenor}    Get Value From Json    ${JSON_Value}    $..rateTenor
     \    ${Val_rateTenor}    Get From List    ${Val_rateTenor}    0
-    \    ${InputJSON}    OperatingSystem.Get File    ${dataset_path}${sInputFilePath}${sFileName}_${Val_baseRateCode}_${Val_rateTenor}_${sSubEntity}.json
-    \    
+    \    ${InputJSON}    OperatingSystem.Get File    ${dataset_path}${sInputFilePath}${sFileName}_${Val_baseRateCode}_${Val_rateTenor}.json
     \    ${JSON_Value}    Evaluate    json.dumps(${JSON_Value})    json
     \    Run Keyword And Continue On Failure    Mx Compare Json Data    ${InputJSON}     ${JSON_Value}
     \    ${Stat}    Run Keyword And Return Status    Mx Compare Json Data    ${InputJSON}     ${JSON_Value}
@@ -1064,6 +1065,7 @@ Compare Multiple Input and Output JSON for TL Calendar
 Navigate Splitter through Instance Name
     [Documentation]    This keyword is use to navigate splitter if the given argument is Instance Name
     ...    @author: jdelacru    26JUL2019    - initial create
+    ...    @update: mcastro     28SEP2020    Added scroll into view of ${OpenAPI_Source_Parent_Row} and ${OpenAPI_Source_Child_Row_Instance}
     [Arguments]    ${sSourceName}    ${sInstance}
     
     ${OpenAPI_Source_Parent_Row}    Replace Variables    ${OpenAPI_Source_Parent_Row}
@@ -1074,6 +1076,7 @@ Navigate Splitter through Instance Name
     :FOR    ${INDEX}    IN RANGE    10
     \    
     \    Wait Until Element Is Visible     ${OpenAPI_Source_Parent_Row}
+    \    Mx Scroll Element Into View    ${OpenAPI_Source_Parent_Row}
     \    Double Click Element    ${OpenAPI_Source_Parent_Row}
     \    Sleep    2s
     \    ${status}    Run Keyword And Return Status    Wait Until Element Is Visible     ${OpenAPI_Source_Child_Row_Instance}
@@ -1084,7 +1087,8 @@ Navigate Splitter through Instance Name
     \    
     \    ${IsVisible}    Run Keyword If    '${sInstance}'!='None'    Run Keyword And Return Status    Wait Until Element Is Visible     ${OpenAPI_Source_Child_Row_Instance}
     \    
-    \    Run Keyword If    ${IsVisible}==${True}    Double Click Element    ${OpenAPI_Source_Child_Row_Instance}
+    \    Run Keyword If    ${IsVisible}==${True}    Run Keywords    Mx Scroll Element Into View    ${OpenAPI_Source_Child_Row_Instance}
+         ...    AND    Double Click Element    ${OpenAPI_Source_Child_Row_Instance}
          ...    ELSE    Run Keywords    Double Click Element    ${OpenAPI_Source_Parent_Row}
          ...    AND    Wait Until Element Is Visible     ${OpenAPI_Source_Child_Row_Instance}
          ...    AND    Double Click Element    ${OpenAPI_Source_Child_Row_Instance}

@@ -3,6 +3,26 @@ Party_LoginPage_Form = '//form[@id="loginForm"]'
 Party_Username_Textbox = '//input[@id="username"]'
 Party_Password_Textbox = '//input[@id="password"]'
 Party_SignIn_Button = '//input[@id="login"]'
+Party_Search = '//input[@name="Search..."]'
+
+
+#Party Dialog Search
+Party_Search_Dialog_Search_Button = '//span[contains(@class,"Dialog")][text()="Party Search"]/ancestor::div/descendant::input[@uitype="Button"][@name="Search"]'
+Party_Search_Dialog = '//span[contains(@class,"Dialog")][text()="Party Search"]'
+Party_Search_Dialog_Branch = '//input[contains(@id,"Branch")][@type="combo"]'
+Party_Search_Dialog_PatyID = '//div[@role="dialog"]/descendant::*[text()="Party ID"][@uitype="Label"]/../following-sibling::td/following-sibling::td/following-sibling::td/descendant::input[contains(@name,"partyId")]'
+Party_Search_Dialog_PartyName='//div[@role="dialog"]/descendant::input[contains(@name,"partySearchKey")][contains(@name,"name")][not(contains(@name,"nameType"))]'
+Party_Search_Dialog_PartyType = '//input[contains(@id,"partyType")][@type="combo"]' 
+Party_Search_Dialog_PartySubType = '//input[contains(@id,"partySubType")][@type="combo"]'
+Party_Search_Dialog_RowSelectedResult = '//div[contains(@class,"GridRow")][contains(@class,"GridRowSelected")]'
+
+Party_Search_Dialog_LineOfBusiness = '//input[contains(@id,"LineOfBusiness")][@type="combo"]'
+Party_Search_Dialog_PartyCategory = '//input[contains(@id,"partyCategory")][@type="combo"]'
+Party_Search_Dialog_AccountType = '//input[contains(@id,"Account")][@type="combo"]'
+
+Party_Search_Dialog_SearchResultTableHeader = '//span[contains(@class,"Dialog")][text()="Party Search"]/ancestor::div//div[contains(@uitype,"Table")]//div[contains(@class,"GridMasterHeader")]//th'
+Party_Search_Dialog_SearchResultTableRow = '//span[contains(@class,"Dialog")][text()="Party Search"]/ancestor::div//div[contains(@uitype,"Table")]//div[contains(@class,"GridMasterView")]//tr'
+
 
 ### Party Home Page ###
 Party_HomePage_Process_TextBox = '//input[@id="uxpMenuSearch"]'
@@ -22,6 +42,7 @@ Party_Footer_Next_Button = '//div[contains(@class,"Visible")]//child::input[cont
 Party_RaisedMessage_Notification = '//div[@class="message" and contains(text(),"Referral raised")]'
 Party_Approve_Button = '//input[contains(@id, "Approve")]'
 Party_Reject_Button = '//input[contains(@id, "Reject")]'
+Party_Refer_Button = '//input[contains(@id, "Refer")]'
 Party_Zone_Button = '//div[@title="Bank, Zone, Branch information"]//span//strong[contains(text(),"Zone")]'
 
 ### Generic Locator ###

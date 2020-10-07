@@ -31,9 +31,9 @@ Wait Until Browser Ready State
     \    Sleep    1s      
             
 Mx Input Text
-    [Documentation]    This keyword is use to type a text in a given locator
-    ...    @update: jdelacru    21SEP2020    - Use Press Keys keyword to enter text instead of Input Text
-    [Arguments]    ${locator}    ${text}
+    [Documentation]    This keyword is used to input text in elements
+    ...    @update:    javinzon    - added condition for Mx Scroll Element due to failure in scripts
+    [Arguments]    ${locator}    ${text}    ${bScrollToElement}=False
     Wait Until Browser Ready State
     Wait Until Keyword Succeeds    ${retry}    ${retry_interval}    Wait Until Page Contains Element    ${locator}    1s
     Wait Until Keyword Succeeds    ${retry}    ${retry_interval}    Wait Until Element Is Visible    ${locator}
@@ -44,7 +44,8 @@ Mx Input Text
     Press Keys    ${locator}    ${text}
     Press Keys    ${locator}    TAB
     Wait Until Browser Ready State
-    Mx Scroll Element Into View    ${locator}
+    Run Keyword If    '${bScrollToElement}'=='True'    Mx Scroll Element Into View    ${locator}
+    ...    ELSE    Log    Skip Scroll element
 
 Mx Input Text and Press Enter
     [Arguments]    ${locator}    ${text}
@@ -724,6 +725,8 @@ Navigate Notebook Workflow
     ...    @update: Archana     11June20     Added Pre-processing keyword
     ...    @update: dahijara    03JUL2020    Added keyword for screenshot
     ...    @update: clanding    05AUG2020    Updated hard coded values to global variable
+    ...    @update: aramos      30SEP2020    Updated mx LOANIQ click element if present LIQ_Breakfunding_Yes_Button
+    ...    @update: aramos      05OCT2020    Updated to insert new code for Transaction - Release Cashflows
     [Arguments]    ${sNotebook_Locator}    ${sNotebookTab_Locator}    ${sNotebookWorkflow_Locator}    ${sTransaction}    
 
     ###Pre-processing Keyword##
@@ -738,8 +741,12 @@ Navigate Notebook Workflow
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/NotebookWorkflow
     Mx LoanIQ Select Or DoubleClick In Javatree    ${NotebookWorkflow_Locator}    ${Transaction}%d
     Validate if Question or Warning Message is Displayed
+    
+    Run Keyword if     '${Transaction}'=='Release Cashflows'    Run Keywords    Mx Click    ${LIQ_Cashflows_MarkSelectedItemForRelease_Button}
+    ...   AND    Mx Click    ${LIQ_Cashflows_OK_Button}
+    ...   AND     mx LoanIQ click element if present    ${LIQ_Question_Yes_Button}
     Run Keyword If    '${Transaction}'=='Release'    Run Keywords
-    ...    Repeat Keyword    2 times    mx LoanIQ click element if present    ${LIQ_BreakFunding_No_Button}
+    ...    Repeat Keyword    2 times    mx LoanIQ click element if present    ${LIQ_BreakFunding_Yes_Button}
     ...    AND    mx LoanIQ click element if present    ${LIQ_Information_OK_Button}
     ...    ELSE IF    '${Transaction}'=='Close'    mx LoanIQ click element if present    ${LIQ_Information_OK_Button}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/NotebookWorkflow
