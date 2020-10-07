@@ -507,3 +507,17 @@ Release Reverse Fee Payment
     Validate if Question or Warning Message is Displayed
 
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LineFeeReverseWindow_WorkflowTab_Release
+    
+Change Expiry Date of Line Fee
+    [Documentation]    This keyword changes the expiry date of the Line Fee from LIQ
+    ...    @author: cfrancis    -06OCT2020    - initial create
+    [Arguments]    ${sExpiryDate}
+    
+    mx LoanIQ activate window    ${LIQ_LineFee_Window}
+    Mx LoanIQ Select    ${LIQ_LineFee_Update_Menu}
+    Mx LoanIQ Select    ${LIQ_LineFee_ChangeExpiryDate_Menu}
+    mx LoanIQ enter    ${LIQ_LineFee_ExpiryDate}    ${sExpiryDate}
+    mx LoanIQ click    ${LIQ_LineFee_ExpiryDate_OK_Button}
+    mx LoanIQ click element if present    ${LIQ_LineFee_ExpiryDate_OK_Button}
+    
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LineFeeWindow_ChangeExpiryDate
