@@ -726,6 +726,7 @@ Navigate Notebook Workflow
     ...    @update: dahijara    03JUL2020    Added keyword for screenshot
     ...    @update: clanding    05AUG2020    Updated hard coded values to global variable
     ...    @update: aramos      30SEP2020    Updated mx LOANIQ click element if present LIQ_Breakfunding_Yes_Button
+    ...    @update: aramos      05OCT2020    Updated to insert new code for Transaction - Release Cashflows
     [Arguments]    ${sNotebook_Locator}    ${sNotebookTab_Locator}    ${sNotebookWorkflow_Locator}    ${sTransaction}    
 
     ###Pre-processing Keyword##
@@ -740,6 +741,10 @@ Navigate Notebook Workflow
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/NotebookWorkflow
     Mx LoanIQ Select Or DoubleClick In Javatree    ${NotebookWorkflow_Locator}    ${Transaction}%d
     Validate if Question or Warning Message is Displayed
+    
+    Run Keyword if     '${Transaction}'=='Release Cashflows'    Run Keywords    Mx Click    ${LIQ_Cashflows_MarkSelectedItemForRelease_Button}
+    ...   AND    Mx Click    ${LIQ_Cashflows_OK_Button}
+    ...   AND     mx LoanIQ click element if present    ${LIQ_Question_Yes_Button}
     Run Keyword If    '${Transaction}'=='Release'    Run Keywords
     ...    Repeat Keyword    2 times    mx LoanIQ click element if present    ${LIQ_BreakFunding_Yes_Button}
     ...    AND    mx LoanIQ click element if present    ${LIQ_Information_OK_Button}
@@ -1184,22 +1189,14 @@ Compute for Percentage of an Amount and Return with Comma Separator
     [Documentation]    This keyword will compute the percentage value of a certain amount
     ...    @author: mnanquil
     ...    10/25/2018
-    ...    @update: dahijara    23SEP2020    Add pre and post processing keywords
-    [Arguments]    ${sAmount}    ${sPercentage}    ${sRunVar_PercentageAmount}=None
-    ### GetRuntime Keyword Pre-processing ###
-    ${Amount}    Acquire Argument Value    ${sAmount}
-    ${Percentage}    Acquire Argument Value    ${sPercentage}
-
-    Log    ${Amount}
-    Log    ${Percentage}
-    ${Percentage}    Convert To Number    ${Percentage}    
-    ${Percentage}    Evaluate    ${Percentage}/100
-    ${percentageAmount}    Evaluate    ${Amount}*${Percentage}
+    [Arguments]    ${amount}    ${percentage}
+    Log    ${amount}
+    Log    ${percentage}
+    ${percentage}    Convert To Number    ${percentage}    
+    ${percentage}    Evaluate    ${percentage}/100
+    ${percentageAmount}    Evaluate    ${amount}*${percentage}
     ${percentageAmount}    Convert To String    ${percentageAmount}
     ${percentageAmount}    Convert Number With Comma Separators    ${percentageAmount}
-	
-    ### ConstRuntime Keyword Post-processing ###
-    Save Values of Runtime Execution on Excel File    ${sRunVar_PercentageAmount}    ${percentageAmount}
     [Return]    ${percentageAmount}    
 
 Click OK In Notices Window

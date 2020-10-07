@@ -3731,3 +3731,34 @@ Get Effective and Expiry Date from Summary Tab in Facility Notebook
     Save Values of Runtime Execution on Excel File    ${sRunTimeVar_ExpiryDate}    ${ExpiryDate}
     [Return]    ${EffectiveDate}    ${ExpiryDate}
 
+Retrieve Facility Notebook Amounts prior to Loan Merge
+    [Documentation]    This keyword is used to get Facility Notebook Amounts for Loan Merge
+    ...    @author: dahijara    28SEP2020    - initial create
+    [Arguments]    ${sRunVar_GlobalFacility_ProposedCmtBeforeMerge}=None    ${sRunVar_GlobalFacility_CurrentCmtBeforeMerge}=None    ${sRunVar_GlobalFacility_OutstandingsBeforeMerge}=None
+    ...    ${sRunVar_GlobalFacility_AvailToDrawBeforeMerge}=None    ${sRunVar_HostBank_ProposedCmtBeforeMerge}=None    ${sRunVar_HostBank_ContrGrossBeforeMerge}=None
+    ...    ${sRunVar_HostBank_OutstandingsBeforeMerge}=None    ${sRunVar_HostBank_AvailToDrawBeforeMerge}=None
+
+    ${GlobalFacility_ProposedCmtBeforeMerge}    Mx LoanIQ Get Data    ${LIQ_FacilitySummary_ProposedCmt_Textfield}    input=GlobalFacility_ProposedCmtBeforeMerge        
+    ${GlobalFacility_CurrentCmtBeforeMerge}    Mx LoanIQ Get Data    ${LIQ_FacilitySummary_GlobalFacAmt_CurrentCmt_Amount}    input=GlobalFacility_CurrentCmtBeforeMerge        
+    ${GlobalFacility_OutstandingsBeforeMerge}    Mx LoanIQ Get Data    ${LIQ_FacilitySummary_GlobalFacAmt_Outstandings_Amount}    input=GlobalFacility_OutstandingsBeforeMerge        
+    ${GlobalFacility_AvailToDrawBeforeMerge}    Mx LoanIQ Get Data    ${LIQ_FacilitySummary_GlobalFacAmt_AvailToDraw_Amount}    input=GlobalFacility_AvailToDrawBeforeMerge 
+    
+    ${HostBank_ProposedCmtBeforeMerge}    Mx LoanIQ Get Data    ${LIQ_FacilitySummary_HostBankProposeCmt}    input=HostBank_ProposedCmtBeforeMerge        
+    ${HostBank_ContrGrossBeforeMerge}    Mx LoanIQ Get Data    ${LIQ_FacilitySummary_HostBankContrGross}    input=HostBank_ContrGrossBeforeMerge        
+    ${HostBank_OutstandingsBeforeMerge}    Mx LoanIQ Get Data    ${LIQ_FacilitySummary_HostBankOutstanding}    input=HostBank_OutstandingsBeforeMerge        
+    ${HostBank_AvailToDrawBeforeMerge}    Mx LoanIQ Get Data    ${LIQ_FacilitySummary_HostBankAvailToDraw}    input=HostBank_AvailToDrawBeforeMerge 
+	
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/FacilityNotebook_FacilityAmounts
+
+    ### ConstRuntime Keyword Post-processing ###
+    Save Values of Runtime Execution on Excel File    ${sRunVar_GlobalFacility_ProposedCmtBeforeMerge}    ${GlobalFacility_ProposedCmtBeforeMerge}
+    Save Values of Runtime Execution on Excel File    ${sRunVar_GlobalFacility_CurrentCmtBeforeMerge}    ${GlobalFacility_CurrentCmtBeforeMerge}
+    Save Values of Runtime Execution on Excel File    ${sRunVar_GlobalFacility_OutstandingsBeforeMerge}    ${GlobalFacility_OutstandingsBeforeMerge}
+    Save Values of Runtime Execution on Excel File    ${sRunVar_GlobalFacility_AvailToDrawBeforeMerge}    ${GlobalFacility_AvailToDrawBeforeMerge}
+    Save Values of Runtime Execution on Excel File    ${sRunVar_HostBank_ProposedCmtBeforeMerge}    ${HostBank_ProposedCmtBeforeMerge}
+    Save Values of Runtime Execution on Excel File    ${sRunVar_HostBank_ContrGrossBeforeMerge}    ${HostBank_ContrGrossBeforeMerge}
+    Save Values of Runtime Execution on Excel File    ${sRunVar_HostBank_OutstandingsBeforeMerge}    ${HostBank_OutstandingsBeforeMerge}
+    Save Values of Runtime Execution on Excel File    ${sRunVar_HostBank_AvailToDrawBeforeMerge}    ${HostBank_AvailToDrawBeforeMerge}
+
+    [Return]    ${GlobalFacility_ProposedCmtBeforeMerge}    ${GlobalFacility_CurrentCmtBeforeMerge}    ${GlobalFacility_OutstandingsBeforeMerge}    ${GlobalFacility_AvailToDrawBeforeMerge}
+    ...    ${HostBank_ProposedCmtBeforeMerge}    ${HostBank_ContrGrossBeforeMerge}    ${HostBank_OutstandingsBeforeMerge}    ${HostBank_AvailToDrawBeforeMerge}
