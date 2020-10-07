@@ -33,9 +33,11 @@ Create Initial Loan Drawdown with Repayment Schedule
     Run Keyword If    '${SCENARIO}'=='2'    Write Data To Excel    SERV18_Payments   Loan_Alias    ${rowid}    ${Loan_Alias}
         
     ###Initial Loan Drawdown###
+    ${SysDate}    Get System Date
+    ${MaturityDate}    Add Days to Date    ${SysDate}    365
     Run Keyword If    '${SCENARIO}'=='7'    Write Data To Excel    SERV35_Terminate_FacilityDeal    Loan_Alias    7    ${Loan_Alias}
     Validate Initial Loan Dradown Details    &{ExcelPath}[Facility_Name]    &{ExcelPath}[Borrower1_ShortName]    &{ExcelPath}[Loan_Currency]
-    ${AdjustedDueDate}    Input General Loan Drawdown Details    &{ExcelPath}[Loan_RequestedAmount]    &{ExcelPath}[Loan_EffectiveDate]    &{ExcelPath}[Loan_MaturityDate]    None    &{ExcelPath}[Loan_IntCycleFrequency]    &{ExcelPath}[Loan_Accrue]
+    ${AdjustedDueDate}    Input General Loan Drawdown Details    &{ExcelPath}[Loan_RequestedAmount]    ${SysDate}    ${MaturityDate}    None    &{ExcelPath}[Loan_IntCycleFrequency]    &{ExcelPath}[Loan_Accrue]
     Write Data To Excel    SERV21_InterestPayments    ScheduledActivityReport_Date    ${rowid}    ${AdjustedDueDate}
     Input Loan Drawdown Rates    &{ExcelPath}[Borrower_BaseRate]    &{ExcelPath}[Facility_Spread]
     
@@ -71,7 +73,7 @@ Create Initial Loan Drawdown with Repayment Schedule
     Logout from Loan IQ
     Login to Loan IQ    ${SUPERVISOR_USERNAME}    ${SUPERVISOR_PASSWORD}
     Select Item in Work in Process    Outstandings    Awaiting Generate Rate Setting Notices    Loan Initial Drawdown     ${Loan_Alias}
-    Approve Initial Drawdown
+     Approve Initial Drawdown
     
     ###Rate Setting###
     Logout from Loan IQ
