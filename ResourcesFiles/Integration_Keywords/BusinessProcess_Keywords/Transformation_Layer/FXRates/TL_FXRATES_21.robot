@@ -9,6 +9,7 @@ Send FXRates GS Group 1 File with more than 8 decimal places
     ...    Code is updated correctly. Only difference is the rates in the file should contain more than 8 decimal places
     ...    @author: cfrancis    06AUG2019    - intial create
     ...    @update: clanding    06OCT2020    - updated InputFilePath for templates to TemplateFilePath; added TemplateFilePath to Create Expected TextJMS XML for FXRates TL
+    ...                                      - added 8m wait in sending of files since data is not reflected immediately in FFC. Please change accordingly if waiting time is not needed anymore
     [Arguments]    ${ExcelPath}
     ###PREREQUISITE###
     Login to Loan IQ    ${TL_USERNAME}    ${TL_PASSWORD}
