@@ -1,5 +1,5 @@
 dataset_path = "C:\\Git_Evergreen\\evergreen_projects\\CBA_Evergreen"
-ExcelPath = "C:\\Git_Evergreen\\fms_cba\\DataSet\\LoanIQ_DataSet\\EU_Entity\\EVG_PTYLIQ04_EU_BaselineNonAgentSyndication.xlsx"
+ExcelPath = "C:\\Git_Evergreen\\fms_cba\\DataSet\\Party_DataSet\\PTY_DataSet_EU.xlsx"
 CBAUAT_ExcelPath = "C:\\Git_Evergreen\\evergreen_projects\\CBA_Evergreen\\DataSet\\CBA_UAT_DataSet\\EVG_CBAUAT01.xls"
 APIDataSet = "C:\\Git_Evergreen\\evergreen_projects\\CBA_Evergreen\\DataSet\\API_DataSet\\API_Data_Set.xlsx"
 APIDataSet_EU = "C:\\Git_Evergreen\\evergreen_projects\\CBA_Evergreen\\DataSet\\API_DataSet\\API_Data_Set_EU.xlsx"
@@ -32,11 +32,11 @@ MDM_User_API = "/corporate/v1/users"
 
 TL_USERNAME = "DONATELO"
 TL_PASSWORD = "password"
-INPUTTER_USERNAME = "CESSINP1"
+INPUTTER_USERNAME = "FJUSRAM"
 INPUTTER_PASSWORD = "password"
-SUPERVISOR_USERNAME = "CESSSUP1"
+SUPERVISOR_USERNAME = "FJSUPAM"
 SUPERVISOR_PASSWORD = "password"
-MANAGER_USERNAME = "CESSMNG1"
+MANAGER_USERNAME = "FJMGRAM"
 MANAGER_PASSWORD = "password"
 
 SSO_USERLINK = "mancsleverg0028"
@@ -59,8 +59,8 @@ PARTY_SERVER = 'mancsleverg0031:7080'
 PARTY_URL = 'mancsleverg0031:7080/uxp/rt/html/login.html'
 
 ###Party Credential###
-PARTY_USERNAME = 'amipac'
-PARTY_PASSWORD = 'password'
+PARTY_USERNAME = 'brad'
+PARTY_PASSWORD = 'brad'
 
 TL_SERVICE_HOST = "mancsleverg0007"
 TL_SERVICE_PORT = "22"
@@ -179,4 +179,4 @@ GL_PASSPHRASE = 'oracle'
 GL_CSV_GPG_FILEEXTENSION = '.csv.gpg'
 ESS_EUWASADMIN_SCHEMA = "EUWASADMIN"
 GL_VALIDATION_TOOL_PATH = 'C:\\Git_Evergreen\\fms_cba\\DataSet\\Integration_DataSet\Extracts\\GL\\Validation_Tool'
-GL_VALIDATION_TOOL_JAR = 'gpgCheck-1.0.3-jar-with-dependencies-EU.jar'
+GL_VALIDATION_TOOL_JAR_EU = 'gpgCheck-1.0.3-jar-with-dependencies-EU.jar'
