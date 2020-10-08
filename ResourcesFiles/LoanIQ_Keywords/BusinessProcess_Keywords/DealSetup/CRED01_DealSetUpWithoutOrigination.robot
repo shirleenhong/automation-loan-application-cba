@@ -13,6 +13,7 @@ Setup a Bilateral Deal
     ...    @update: jloretiz     15JUN2020    - added writing of deal name for API_COR_TC01, removed the reading from excel to shorten runtime
     ...    @update: kduenas      23SEP2020    - added writing of deal name to corro api dataset for API_COR_TC03
     ...    @UPDATE: kduenas      08OCT2020    - added writing of deal name to corro api dataset for API_COR_TC05
+    ...    @UPDATE: kduenas      08OCT2020    - added writing of deal name to corro api dataset for API_COR_TC06
     [Arguments]    ${ExcelPath}
 
     ###Set Dates for transactions###
@@ -60,6 +61,7 @@ Setup a Bilateral Deal
     Run Keyword If    '${SCENARIO}'=='1'    Write Data To Excel    Correspondence    Deal_Name    ${rowid}    ${Deal_Name}    ${APIDataSet}    bTestCaseColumn=True    sColumnReference=rowid
     ...    AND    Write Data To Excel    Correspondence    Deal_Name    3    ${Deal_Name}    ${APIDataSet}    bTestCaseColumn=True    sColumnReference=rowid
     ...    AND    Write Data To Excel    Correspondence    Deal_Name    5    ${Deal_Name}    ${APIDataSet}    bTestCaseColumn=True    sColumnReference=rowid
+    ...    AND    Write Data To Excel    Correspondence    Deal_Name    6    ${Deal_Name}    ${APIDataSet}    bTestCaseColumn=True    sColumnReference=rowid
     
     ###For Scenario 7###
     Run Keyword If    '${SCENARIO}'=='7'    Run Keywords    Write Data To Excel    SERV35_Terminate_FacilityDeal    Deal_Name    ${rowid}    ${Deal_Name}
@@ -112,6 +114,7 @@ Create Facility
     ...    @update: jloretiz     15JUN2020    - added writing of deal name, loan alias and facility name for API_COR_TC01, removed the reading from excel to shorten runtime
     ...    @update: kduenas      23SEP2020    - added writing of facility name to corro api dataset for API_COR_TC03
     ...    @update: kduenas      08OCT2020    - added writing of facility name to corro api dataset for API_COR_TC05
+    ...    @update: kduenas      08OCT2020    - added writing of facility name to corro api dataset for API_COR_TC06
     [Arguments]    ${ExcelPath}
     
     ###Data Generation###
@@ -130,6 +133,7 @@ Create Facility
     Write Data To Excel    Correspondence    Facility_Name    ${rowid}    ${Facility_Name}    ${APIDataSet}    bTestCaseColumn=True    sColumnReference=rowid
     Write Data To Excel    Correspondence    Facility_Name    3    ${Facility_Name}    ${APIDataSet}    bTestCaseColumn=True    sColumnReference=rowid
     Write Data To Excel    Correspondence    Facility_Name    5    ${Facility_Name}    ${APIDataSet}    bTestCaseColumn=True    sColumnReference=rowid
+    Write Data To Excel    Correspondence    Facility_Name    6    ${Facility_Name}    ${APIDataSet}    bTestCaseColumn=True    sColumnReference=rowid
 
 
     ###For Scenario 4###
