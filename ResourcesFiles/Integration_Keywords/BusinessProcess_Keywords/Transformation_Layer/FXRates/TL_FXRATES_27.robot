@@ -7,7 +7,7 @@ Send FXRates GS Group 1 File with Empty Rows
     ...    Then validate FFC if file is sent to CCB OpenAPI, distributor and CustomCBAInterface. Then validate in LoanIQ if Base Rate
     ...    Code is updated correctly.
     ...    @author: cfrancis    06AUG2019    - initial create
-    ...    @update: ccarriedo   08OCT2020    - updated InputFilePath for templates to TemplateFilePath; added TemplateFilePath to Create Expected TextJMS XML for FXRates TL
+    ...    @update: ccarriedo   08OCT2020    - added TemplateFilePath to Create Expected TextJMS XML for FXRates TL
     [Arguments]    ${ExcelPath}
     ###PREREQUISITE###
     Login to Loan IQ    ${TL_USERNAME}    ${TL_PASSWORD}
