@@ -419,6 +419,7 @@ Accept Approved Party and Validate Details in Enterprise Summary Details Screen
 Reject Party via Supervisor Account
    [Documentation]    This keyword is used to reject created party via Quick Party Onboarding
     ...    @author: dahijara    07MAY2020    - initial create
+    ...    @author: gagregado   8OCT2020     - changed Party URL suffix to SSO
     [Arguments]    ${sPartyID}
 
     Login User to Party    ${PARTY_SUPERVISOR_USERNAME}    ${PARTY_SUPERVISOR_PASSWORD}    ${USER_LINK}    ${USER_PORT}    ${PARTY_SSO_URL_SUFFIX}    ${PARTY_HTML_APPROVER_CREDENTIALS}    ${SSO_ENABLED}    ${PARTY_URL}
@@ -434,7 +435,6 @@ Reject Registered Party
     [Documentation]    This Keyword rejects the created party from Quick Party Onboarding using supervisor account.
     ...    @author: dahijara    05MAY2020    - initial create
     [Arguments]    ${Party_ID}
-
     Mx Click Element    ${Party_HomePage_Notification_Icon}
     Wait Until Loading Page Is Not Visible    ${PARTY_TIMEOUT}
     Validate Page Screen is Displayed    ${PARTY_NOTIFICATIONTYPES_PAGETITLE}
@@ -455,6 +455,7 @@ Reject Registered Party
 Accept Rejected Party and Validate Details in Quick Enterprise Details Screen
     [Documentation]    This keyword validates the Enterprise Business Activity Details from Enterprise summary details page.
     ...    @author: dahijara    07MAY2020     - initial create
+    ...    @author: gagregado   8OCT2020     - changed Party URL suffix to SSO    
     [Arguments]    ${sTask_ID_From_Supervisor}    ${sParty_ID}    ${sCountry_of_Tax_Domicile}    ${sCountry_of_Registration}    ${sAddress_Type}    ${sCountry_Region}    ${iPost_Code}
     ...    ${sDocument_Collection_Status}    ${sIndustry_Sector}    ${sBusiness_Activity}    ${bIs_Main_Activity}    ${iGST_Number}
     ...    ${sAddress_Line_1}    ${sAddress_Line_2}    ${sTown_City}    ${sState_Province}    ${sBusiness_Country}    ${bIs_Primary_Activity}    ${iRegistered_Number}    ${sShort_Name}
