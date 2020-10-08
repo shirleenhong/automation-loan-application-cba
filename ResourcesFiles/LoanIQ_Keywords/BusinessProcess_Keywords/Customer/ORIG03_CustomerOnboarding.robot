@@ -246,8 +246,11 @@ Search Customer and Complete its Borrower Profile Creation for Comprehensive Dea
     ...    @author: gerhabal    17JULY2019    - commented the following scripts, when customer is created from Party. They are not editable when Customer is created from Party
     ...    Adding Classification Code Details    
     ...    Adding Province Details in the Legal Address        
+    ...    @Update: dahijara    03SEP2020    - Added writing for SERV01_LoanDrawdown
     [Arguments]    ${ExcelPath}       
 	
+    Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
+
 	# ###Generating LIQ Remittance Instruction Descriptions for Location 1 and 2
 	Generate LIQ Remittance Instruction Descriptions for Location 1 and 2    &{ExcelPath}[RemittanceInstruction_DDADescriptionAUDPrefix]    &{ExcelPath}[RemittanceInstruction_IMTDescriptionUSDPrefix]    &{ExcelPath}[RemittanceInstruction_RTGSDescriptionAUDPrefix]
 	...        &{ExcelPath}[RemittanceInstruction_DDADescriptionAUDPrefix2]    &{ExcelPath}[RemittanceInstruction_IMTDescriptionUSDPrefix2]    &{ExcelPath}[RemittanceInstruction_RTGSDescriptionAUDPrefix2]
@@ -259,6 +262,9 @@ Search Customer and Complete its Borrower Profile Creation for Comprehensive Dea
 	Write Data To Excel    ORIG03_Customer    RemittanceInstruction_IMTDescriptionUSD    ${rowid}    ${RemittanceInstruction_IMTDescriptionUSD}
 	Write Data To Excel    ORIG03_Customer    RemittanceInstruction_RTGSDescriptionAUD    ${rowid}    ${RemittanceInstruction_RTGSDescriptionAUD}
 	Write Data To Excel    MTAM01_ManualGL    Borrower1_RTGSRemittanceDescription    ${rowid}    ${RemittanceInstruction_RTGSDescriptionAUD}
+    Write Data To Excel    SERV01_LoanDrawdown    Remittance_Description    ${rowid}    ${RemittanceInstruction_DDADescriptionAUD}
+    Write Data To Excel    SERV01_LoanDrawdown    Remittance_Description    2    ${RemittanceInstruction_DDADescriptionAUD}
+    Write Data To Excel    SERV01_LoanDrawdown    Remittance_Description    3    ${RemittanceInstruction_IMTDescriptionUSD}
 	 	
 	##Generating LIQ Remittance Instruction Descriptions for Location 2
 	${RemittanceInstruction_DDADescriptionAUD2}    ${RemittanceInstruction_IMTDescriptionUSD2}    ${RemittanceInstruction_RTGSDescriptionAUD2}    Generate LIQ Remittance Instruction Descriptions    &{ExcelPath}[RemittanceInstruction_DDADescriptionAUDPrefix2]    &{ExcelPath}[RemittanceInstruction_IMTDescriptionUSDPrefix2]    &{ExcelPath}[RemittanceInstruction_RTGSDescriptionAUDPrefix2]
@@ -455,9 +461,11 @@ Search Customer and Complete its Borrower Profile Creation for Comprehensive Dea
 Search Customer and Complete its Borrower Profile Creation with default values
     [Documentation]    This keyword searches a customer and complete its Borrower Profile creation with default values
     ...    @author: fmamaril
-    ...    @update: hstone     04MAY2020    - Updated 'Add Classification Code Details under General tab' Arguments to take Excel Data Values
+    ...    @update: hstone      04MAY2020    - Updated 'Add Classification Code Details under General tab' Arguments to take Excel Data Values
     ...    @update: dahijara    07JUL2020    - added writing in SERV23_LoanPaperClip for Borrower1_RTGSRemittanceDescription
     ...    @update: dahijara    08JUL2020    - added writing for scenario 6 - SERV29_PaymentFees-Borrower1_ContactEmail
+    ...    @update: makcamps    10OCT2020    - Deleted click ServicingGroupWindow_ExitButton before Validate Active Window Customer method because
+    ...                                        Servicing Group Window is closed in Close Servicing Group Remittance Instructions Selection List Window method
     [Arguments]    ${ExcelPath}
 	
 	## Login to LoanIQ###
@@ -645,8 +653,7 @@ Search Customer and Complete its Borrower Profile Creation with default values
     Add Remittance Instruction to Servicing Group    ${RemittanceInstruction_RTGSDescriptionAUD}
     
     Close Servicing Group Remittance Instructions Selection List Window    &{ExcelPath}[LIQCustomer_ShortName]
-     
-    mx LoanIQ click    ${ServicingGroupWindow_ExitButton}
+
     Validate 'Active Customer' Window    &{ExcelPath}[LIQCustomer_ShortName] 
         
     ###Saving Customer Details

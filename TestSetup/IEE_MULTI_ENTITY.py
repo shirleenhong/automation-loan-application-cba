@@ -9,7 +9,7 @@ MDM_FFC_URL="/mch-ui"
 
 SFTP_HOST = "mancsleverg0006"
 SFTP_PORT = "22"
-SFTP_USER = "micloud"
+SFTP_USER = "sftpuser"
 
 DBServiceName = "MLFFC1.misys.global.ad"
 DBUsername = "MCH"
@@ -79,6 +79,14 @@ DBHOST_ESS_AU = 'MANCSLEVERG0023'
 DBPORT_ESS_AU = '1521'
 DBUR_ESS_AU = 'jdbc:oracle:thin:@//mancsleverg0023:1521/AUGLBPDB'
 
+### ESSENCE SERVER ###
+DBSERVICENAME_ESS = 'FBE203R'
+DBUSERNAME_ESS = 'audbusr'
+DBPASSWORD_ESS = 'password'
+DBHOST_ESS = 'MANCSLEVERG0023'
+DBPORT_ESS = '1521'
+DBUR_ESS = 'jdbc:oracle:thin:@//mancsleverg0023:1521/FBE203R'
+
 ### IEE PARTY SERVER ###
 DBSERVICENAME_PTY = 'AUPTYPDB'
 DBUSERNAME_PTY = 'bfdbusr'
@@ -90,7 +98,7 @@ DBUR_PTY = 'jdbc:oracle:thin:@//MANCSLEVERG0023:1521/AUPTYPDB'
 
 ###SFTP HOST/CREDENTIALS###
 SFTP_HOST_GL = "mancsleverg0007"
-SFTP_PASSWORD = "misys123"
+SFTP_PASSWORD = "t3stOnly?"
 
 ###FFC MCH DB DETAILS###
 DBHost = 'mancsleverg0023'
@@ -124,8 +132,13 @@ GL_DECRYPTION_PART1 = 'C:/Git_Evergreen/fms_cba/DataSet/Integration_DataSet/Extr
 GL_DECRYPTION_PART2 = 'C:/Git_Evergreen/fms_cba/DataSet/Integration_DataSet/Extracts/GL/Decryptor_Tool/GL_DECRYPTION_PART2.vbs'
 GL_DECRYPTION_PART3 = 'C:/Git_Evergreen/fms_cba/DataSet/Integration_DataSet/Extracts/GL/Decryptor_Tool/GL_DECRYPTION_PART3.vbs'
 GL_PGP_SECRET_KEY = 'secret.skr'
-GL_PASSPHRASE = 'password'
+GL_PASSPHRASE = 'oracle'
 GL_CSV_GPG_FILEEXTENSION = '.csv.gpg'
+ESS_AUWASADMIN_SCHEMA = "AUWASADMIN"
+ESS_EUWASADMIN_SCHEMA = "EUWASADMIN"
+GL_VALIDATION_TOOL_PATH = 'C:\\Git_Evergreen\\fms_cba\\DataSet\\Integration_DataSet\Extracts\\GL\\Validation_Tool'
+GL_VALIDATION_TOOL_JAR_AU = 'gpgCheck-1.0.3-jar-with-dependencies.jar'
+GL_VALIDATION_TOOL_JAR_EU = 'gpgCheck-1.0.3-jar-with-dependencies-EU.jar'
 
 ###Screenshots###
 screenshot_path = "C:\\Git_Evergreen\\fms_cba\\Results"

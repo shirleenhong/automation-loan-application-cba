@@ -6,6 +6,7 @@ Facility Drawdown
     [Documentation]    This high-level keyword is used to make a loan drawdown on a facility.
     ...                @author: hstone    21AUG2019    Initial create
     ...                @update: mcastro   03SEP2020    Replaced incorrect argument variable for ${sLoan_RepricingFrequency} on Input General Loan Drawdown Details keyword; Updated screenshot path
+    ...                @update: AmitP     15SEP2020    Add keyword Write Data To Excel to update Loan Repricing date in SERV08C_ComprehensiveRepricing Loan_repricing column (Line 38) 
     [Arguments]    ${ExcelPath}
      
     ${Portfolio_Name}    Read Data From Excel    CRED01_DealSetup    Primary_Portfolio    1    ${CBAUAT_ExcelPath}
@@ -34,8 +35,10 @@ Facility Drawdown
     
     ${RepricingFrequency}    Set Variable    &{ExcelPath}[Loan_RepricingFrequency]
     ${RepricingDate}    Set Variable    &{ExcelPath}[Loan_RepricingDate]
+    Write Data To Excel    SERV08C_ComprehensiveRepricing    Loan_RepricingDate    &{ExcelPath}[rowid]    ${RepricingDate}    ${CBAUAT_ExcelPath}
     Input General Loan Drawdown Details    &{ExcelPath}[Loan_RequestedAmount]    &{ExcelPath}[Loan_EffectiveDate]    &{ExcelPath}[Loan_MaturityDate]
     ...    ${RepricingFrequency}    sRepricing_Date=${RepricingDate}
+   
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/CreateOutstandings_Input General Loan Details    
     
     ### Outstanding Servicing Group Details Setup ###

@@ -11,6 +11,7 @@ Setup a Bilateral Deal
     ...    @update: amansueto    15APR2020    - merged select actions and validate field keywords to Create New Deal
     ...    @update: hstone       04MAY2020    - Deleted SAPWUL Related Write Data To Excel
     ...    @update: jloretiz     15JUN2020    - added writing of deal name for API_COR_TC01, removed the reading from excel to shorten runtime
+    ...    @update: kduenas      23SEP2020    - added writing of deal name to corro api dataset for API_COR_TC03
     [Arguments]    ${ExcelPath}
 
     ###Set Dates for transactions###
@@ -56,6 +57,7 @@ Setup a Bilateral Deal
     Write Data To Excel    CRED01_DealSetup    Deal_Alias    ${rowid}    ${Deal_Alias}
     
     Run Keyword If    '${SCENARIO}'=='1'    Write Data To Excel    Correspondence    Deal_Name    ${rowid}    ${Deal_Name}    ${APIDataSet}    bTestCaseColumn=True    sColumnReference=rowid
+    ...    AND    Write Data To Excel    Correspondence    Deal_Name    3    ${Deal_Name}    ${APIDataSet}    bTestCaseColumn=True    sColumnReference=rowid
     
     ###For Scenario 7###
     Run Keyword If    '${SCENARIO}'=='7'    Run Keywords    Write Data To Excel    SERV35_Terminate_FacilityDeal    Deal_Name    ${rowid}    ${Deal_Name}
@@ -106,6 +108,7 @@ Create Facility
     ...    @update: hstone       04MAY2020    - Used 'Add Time from From Date and Returns Weekday' for ${Facility_ExpiryDate} and ${Facility_MaturityDate}
     ...    @update: dahijara     15JUN2020    - Changed value being passed to Loan_MaturityDate for SERV01. From ${Facility_ExpiryDate} to ${Facility_MaturityDate}.
     ...    @update: jloretiz     15JUN2020    - added writing of deal name, loan alias and facility name for API_COR_TC01, removed the reading from excel to shorten runtime
+    ...    @update: kduenas      23SEP2020    - added writing of facility name to corro api dataset for API_COR_TC03
     [Arguments]    ${ExcelPath}
     
     ###Data Generation###
@@ -122,6 +125,7 @@ Create Facility
     Write Data To Excel    SERV21_InterestPayments    Facility_Name    ${rowid}    ${Facility_Name}
     Write Data To Excel    SYND02_PrimaryAllocation    Facility_Name    ${rowid}    ${Facility_Name}
     Write Data To Excel    Correspondence    Facility_Name    ${rowid}    ${Facility_Name}    ${APIDataSet}    bTestCaseColumn=True    sColumnReference=rowid
+    Write Data To Excel    Correspondence    Facility_Name    3    ${Facility_Name}    ${APIDataSet}    bTestCaseColumn=True    sColumnReference=rowid
 
     ###For Scenario 4###
     Run Keyword If    '${rowid}'=='4'    Run Keywords    Write Data To Excel    AMCH02_LenderShareAdjustment    Facility_Name    ${rowid}    ${Facility_Name}        
@@ -958,6 +962,7 @@ Setup Comprehensive Deal
     ...    @update: amansueto    15APR2020    - merged select actions and validate field keywords to Create New Deal
     ...    @update: ehugo    22JUN2020    - updated 'Borrower_Name' to 'Borrower_ShortName' for COMPR06_LoanMerge
     ...    @update: dahijara    22JUL2020    - added excel writing for SYND04_TickingFeePayment-Deal_Name
+    ...    @update: dahijara    28SEP2020    - Updated sheet name for Loan Merge from COMPR06_LoanMerge to SERV11_Loan Amalgamation
     [Arguments]    ${ExcelPath}
 
     ${Deal_Name}    ${Deal_Alias}    Generate And Return Deal Name And Alias    &{ExcelPath}[Deal_NamePrefix]    &{ExcelPath}[Deal_AliasPrefix]
@@ -980,7 +985,7 @@ Setup Comprehensive Deal
     Write Data To Excel    AMCH06_PricingChangeTransaction    Deal_Name    &{ExcelPath}[rowid]    ${Deal_Name}
     Write Data To Excel    SERV12_LoanSplit    Deal_Name    &{ExcelPath}[rowid]    ${Deal_Name}
     Write Data To Excel    AMCH03_UnschedFacilityIncrease    Deal_Name    &{ExcelPath}[rowid]    ${Deal_Name}
-    Write Data To Excel    COMPR06_LoanMerge    Deal_Name    &{ExcelPath}[rowid]    ${Deal_Name}
+    Write Data To Excel    SERV11_Loan Amalgamation    Deal_Name    &{ExcelPath}[rowid]    ${Deal_Name}
     Write Data To Excel    CAP02_InterestCapitalRule    Deal_Name    &{ExcelPath}[rowid]    ${Deal_Name}
     Write Data To Excel    CAP03_InterestPayment    Deal_Name    &{ExcelPath}[rowid]    ${Deal_Name}
     Write Data To Excel    CAP03_OngoingFeeCapitalization    Deal_Name    &{ExcelPath}[rowid]    ${Deal_Name}
@@ -1003,7 +1008,7 @@ Setup Comprehensive Deal
     Write Data To Excel    SYND04_TickingFeePayment    Borrower_ShortName    &{ExcelPath}[rowid]    ${Borrower_ShortName}
     Write Data To Excel    SERV01_LoanDrawdown    Borrower_ShortName    &{ExcelPath}[rowid]    ${Borrower_ShortName}    multipleValue=Y
     Write Data To Excel    SERV12_LoanSplit    Borrower_Name    &{ExcelPath}[rowid]    ${Borrower_ShortName}
-    Write Data To Excel    COMPR06_LoanMerge    Borrower_ShortName    &{ExcelPath}[rowid]    ${Borrower_ShortName}
+    Write Data To Excel    SERV11_Loan Amalgamation    Borrower_ShortName    &{ExcelPath}[rowid]    ${Borrower_ShortName}
     Write Data To Excel    CAP03_InterestPayment    Loan_Borrower    &{ExcelPath}[rowid]    ${Borrower_ShortName}
     Write Data To Excel    CAP02_CapitalizedFeePayment    Borrower_ShortName    &{ExcelPath}[rowid]    ${Borrower_ShortName}
     Write Data To Excel    MTAM01_ManualGL    Borrower1_ShortName    &{ExcelPath}[rowid]    ${Borrower_ShortName}
@@ -1057,6 +1062,7 @@ Setup Term Facility for Comprehensive Deal
     ...    @update: ehugo    30JUN2020    - update sheet name from 'CRED08_OngoingFeeSetup' to 'CRED08_FacilityFeeSetup'
     ...                                   - used 'Enter Facility Dates With Business Day and Non-Business Day Validations for Term Facility' instead of 'Enter Date With Business Day and Non-Business Day Validations'
     ...    @update: clanding    16JUL2020    - updated sheet name from CRED08_FacilityFeeSetup to CRED08_OngoingFeeSetup
+    ...    @update: dahijara    28SEP2020    - Updated sheet name for Loan Merge from COMPR06_LoanMerge to SERV11_Loan Amalgamation
     [Arguments]    ${ExcelPath}
     ### Data Generation
     ${Facility_Name}    Generate Name Test Data    &{ExcelPath}[Facility_NamePrefix]
@@ -1071,7 +1077,7 @@ Setup Term Facility for Comprehensive Deal
     Write Data To Excel    SERV01_LoanDrawdown    Facility_Name    &{ExcelPath}[rowid]    ${Facility_Name}    multipleValue=Y
     Write Data To Excel    SERV01_LoanDrawdown    Loan_FacilityName    &{ExcelPath}[rowid]    ${Facility_Name}    multipleValue=Y
     Write Data To Excel    AMCH03_UnschedFacilityIncrease    Facility_Name    &{ExcelPath}[rowid]    ${Facility_Name}
-    Write Data To Excel    COMPR06_LoanMerge    Facility_Name    &{ExcelPath}[rowid]    ${Facility_Name}
+    Write Data To Excel    SERV11_Loan Amalgamation    Facility_Name    &{ExcelPath}[rowid]    ${Facility_Name}
     Write Data To Excel    CAP03_OngoingFeeCapitalization    Facility_Name    &{ExcelPath}[rowid]    ${Facility_Name}
     Write Data To Excel    CAP02_CapitalizedFeePayment    Facility_Name    &{ExcelPath}[rowid]    ${Facility_Name}
     Write Data To Excel    SERV18_Payments    Facility_Name    &{ExcelPath}[rowid]    ${Facility_Name}

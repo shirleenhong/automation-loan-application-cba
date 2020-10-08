@@ -10,6 +10,9 @@ Create Unscheduled Facility Increase
     ...    @author    mgaling
     ...    @update: clanding    04AUG2020    - refactor keyword 'Validate the entered values in Amendment Notebook - General Tab'
     ...    @update    sahalder    05AUG2020    added screenshots and modified as per the BNS framework
+    ...    @update: dahijara    24SEP2020    Removed redundant reading for HB lender, lender 1 and lender 2
+    ...                                      Replaced hardcoded values with global variables
+    ...                                      Added reading of excel data on the validation part of the transaction after release.
     [Arguments]    ${ExcelPath}
     
     Logout from Loan IQ
@@ -21,10 +24,6 @@ Create Unscheduled Facility Increase
     Write Data To Excel    AMCH03_UnschedFacilityIncrease    Contr_Gross    &{ExcelPath}[rowid]    ${Contr_Gross}
     Write Data To Excel    AMCH03_UnschedFacilityIncrease    Net_Cmt    &{ExcelPath}[rowid]    ${Net_Cmt}
     
-    ## @update: bernchua    05DEC2018    Get Lender names and share percentage from Secondary Sale Excel data
-    ${HostBank_Lender}    Read Data From Excel    AMCH03_UnschedFacilityIncrease    HostBank_Lender    &{ExcelPath}[rowid]
-    ${Lender1}    Read Data From Excel    AMCH03_UnschedFacilityIncrease    Lender1    &{ExcelPath}[rowid]
-    ${Lender2}    Read Data From Excel    AMCH03_UnschedFacilityIncrease    Lender2    &{ExcelPath}[rowid]
     ${HostBank_Lender}    Read Data From Excel    TRP002_SecondarySale    Seller_LegalEntity    &{ExcelPath}[rowid]
     ${Lender1}    Read Data From Excel    TRP002_SecondarySale    Buyer_Lender    &{ExcelPath}[rowid]
     ${Lender2}    Read Data From Excel    TRP002_SecondarySale    Buyer_Lender_2    &{ExcelPath}[rowid]
@@ -109,36 +108,59 @@ Create Unscheduled Facility Increase
     Equalize Amounts under Current Schedule Section
     
     ###Step 10-11:Amendment Notebook- Workflow Tab - (INPPUTER)###
-    Navigate To Amendment Notebook Workflow    Send to Approval
+    Navigate To Amendment Notebook Workflow    ${SEND_TO_APPROVAL_STATUS}
 	Logout from Loan IQ
 	
 	###Step 12:Amendment Notebook- Workflow Tab (SUPERVISOR)###
 	Login to Loan IQ    ${SUPERVISOR_USERNAME}    ${SUPERVISOR_PASSWORD}
-	Amendment Approval    Deals    Awaiting Approval    Deal Amendment    &{ExcelPath}[Deal_Name]
+	Amendment Approval    ${DEALS_CATEGORY}    ${AWAITING_APPROVAL_STATUS}    ${DEAL_AMENDMENT_TRANSACTION}    &{ExcelPath}[Deal_Name]
 	Logout from Loan IQ
 	
 	###Step 13:Amendment Notebook- Workflow Tab (MANAGER)###
     Login to Loan IQ    ${MANAGER_USERNAME}    ${MANAGER_PASSWORD} 
-	Amendment Release    Deals    Awaiting Release    Deal Amendment    &{ExcelPath}[Deal_Name] 
+	Amendment Release    ${DEALS_CATEGORY}    ${AWAITING_RELEASE_STATUS}    ${DEAL_AMENDMENT_TRANSACTION}    &{ExcelPath}[Deal_Name] 
     Logout from Loan IQ
     
     ##Step 14-15:Validation under Deal Notebook and Lendershares after Facility Commitment Increase (INPUTTER)###
     Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
     Open Existing Deal    &{ExcelPath}[Deal_Name]
-    
+    ${Current_Cmt}    Read Data From Excel    AMCH03_UnschedFacilityIncrease    Current_Cmt    &{ExcelPath}[rowid]
+    ${Contr_Gross}     Read Data From Excel    AMCH03_UnschedFacilityIncrease    Contr_Gross    &{ExcelPath}[rowid]
+    ${Computed_HBActualAmount}    Read Data From Excel    AMCH03_UnschedFacilityIncrease    Computed_HBActualAmount    &{ExcelPath}[rowid]
+    ${Net_Cmt}    Read Data From Excel    AMCH03_UnschedFacilityIncrease    Net_Cmt    &{ExcelPath}[rowid]
+    ${AmendmentNo}    Read Data From Excel    AMCH03_UnschedFacilityIncrease    AmendmentNo    &{ExcelPath}[rowid]
     Validate the Updates on Deal Notebook    &{ExcelPath}[Increase_Amount]    ${Current_Cmt}     ${Contr_Gross}     ${Computed_HBActualAmount}    ${Net_Cmt}    ${AmendmentNo}   &{ExcelPath}[Facility_Name]
     
+    ${HostBank_Lender}    Read Data From Excel    TRP002_SecondarySale    Seller_LegalEntity    &{ExcelPath}[rowid]
+    ${Lender1}    Read Data From Excel    TRP002_SecondarySale    Buyer_Lender    &{ExcelPath}[rowid]
+    ${Lender2}    Read Data From Excel    TRP002_SecondarySale    Buyer_Lender_2    &{ExcelPath}[rowid]
+    ${Original_UIHBActualAmount}    Read Data From Excel    AMCH03_UnschedFacilityIncrease    Original_UIHBActualAmount    &{ExcelPath}[rowid]
+    ${Original_UILender1ActualAmount}    Read Data From Excel    AMCH03_UnschedFacilityIncrease    Original_UILender1ActualAmount    &{ExcelPath}[rowid]
+    ${Computed_Lender1ActualAmount}    Read Data From Excel    AMCH03_UnschedFacilityIncrease    Computed_Lender1ActualAmount    &{ExcelPath}[rowid]
+    ${Original_UILender2ActualAmount}    Read Data From Excel    AMCH03_UnschedFacilityIncrease    Original_UILender2ActualAmount    &{ExcelPath}[rowid]
+    ${Computed_Lender2ActualAmount}    Read Data From Excel    AMCH03_UnschedFacilityIncrease    Computed_Lender2ActualAmount    &{ExcelPath}[rowid]
     Validate the Updates on Lender Shares    ${HostBank_Lender}    ${Lender1}    ${Lender2}    ${Original_UIHBActualAmount}    ${Computed_HBActualAmount}    ${Original_UILender1ActualAmount}    ${Computed_Lender1ActualAmount}
     ...    ${Original_UILender2ActualAmount}    ${Computed_Lender2ActualAmount}                     
    
     ###Step 17-18:Validation under Facility Notebook and Lendershares after Facility Commitment Increase (INPUTTER)###
     Open Facility Notebook    &{ExcelPath}[Facility_Name]
+    ${Orig_FacilityCurrentCmt}    Read Data From Excel    AMCH03_UnschedFacilityIncrease    Orig_FacilityCurrentCmt    &{ExcelPath}[rowid]
+    ${Orig_FacilityAvailableToDraw}    Read Data From Excel    AMCH03_UnschedFacilityIncrease    Orig_FacilityAvailableToDraw    &{ExcelPath}[rowid]
+    ${Orig_FacilityHBContrGross}    Read Data From Excel    AMCH03_UnschedFacilityIncrease    Orig_FacilityHBContrGross    &{ExcelPath}[rowid]
+    ${Orig_FacilityHBOutstandings}    Read Data From Excel    AMCH03_UnschedFacilityIncrease    Orig_FacilityHBOutstandings    &{ExcelPath}[rowid]
+    ${Orig_FacilityHBAvailToDraw}     Read Data From Excel    AMCH03_UnschedFacilityIncrease    Orig_FacilityHBAvailToDraw    &{ExcelPath}[rowid]
+    ${Orig_FacilityHBNetOutstandings_Funded}    Read Data From Excel    AMCH03_UnschedFacilityIncrease    Orig_FacilityHBNetOutstandings_Funded    &{ExcelPath}[rowid]
+    ${Orig_FacilityHBNetAvailToDraw_Fundable}    Read Data From Excel    AMCH03_UnschedFacilityIncrease    Orig_FacilityHBNetAvailToDraw_Fundable    &{ExcelPath}[rowid]
+    ${Orig_FacilityHBNetAvailToDraw}    Read Data From Excel    AMCH03_UnschedFacilityIncrease    Orig_FacilityHBNetAvailToDraw    &{ExcelPath}[rowid]
     ${Updated_UIFaciltyCurrentCmt}    Validate the Updates on Facility Notebook Summary Tab    &{ExcelPath}[Increase_Amount]    ${Orig_FacilityCurrentCmt}    ${Orig_FacilityAvailableToDraw}    ${Orig_FacilityHBContrGross}    ${Computed_HBActualAmount}    ${Orig_FacilityHBOutstandings}    ${Orig_FacilityHBAvailToDraw}     
     ...    ${Orig_FacilityHBNetOutstandings_Funded}    ${Orig_FacilityHBNetAvailToDraw_Fundable}    ${Orig_FacilityHBNetAvailToDraw}    
     Write Data To Excel    AMCH03_UnschedFacilityIncrease    Updated_UIFaciltyCurrentCmt    &{ExcelPath}[rowid]    ${Updated_UIFaciltyCurrentCmt}
         
     Validate Restrictions and Events Tab    ${Updated_UIFaciltyCurrentCmt}
     
+    ${Original_UIFacHBActualAmount}    Read Data From Excel    AMCH03_UnschedFacilityIncrease    Original_UIFacHBActualAmount    &{ExcelPath}[rowid]
+    ${Original_UIFacLender1ActualAmount}    Read Data From Excel    AMCH03_UnschedFacilityIncrease    Original_UIFacLender1ActualAmount    &{ExcelPath}[rowid]
+    ${Original_UIFacLender2ActualAmount}    Read Data From Excel    AMCH03_UnschedFacilityIncrease    Original_UIFacLender2ActualAmount    &{ExcelPath}[rowid]
     Validate the Updates on Facility Lender Shares    ${HostBank_Lender}    ${Lender1}    ${Lender2}    ${Computed_HBActualAmount}    ${Original_UIFacHBActualAmount}    ${Computed_Lender1ActualAmount}    ${Original_UIFacLender1ActualAmount}
     ...    ${Computed_Lender2ActualAmount}    ${Original_UIFacLender2ActualAmount} 
     

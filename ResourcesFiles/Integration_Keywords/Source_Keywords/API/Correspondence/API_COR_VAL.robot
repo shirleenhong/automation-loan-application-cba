@@ -8,11 +8,11 @@ Correspondence POST API
     ...    @author: cmartill    DDMMMYYYY    - initial create
     ...    @update: jaquitan    21MAR2019    - updated keywords, arguments, and variables
     ...    @update: jloretiz    14JUL2019    - updated keywords and arguments
-    [Arguments]    ${sInputFilePath}    ${sInputJson}    ${sOutputFilePath}    ${sActualOutput}    ${sExpectedOutput}    ${sResponseCode}    
+    ...    @update: kduenas     09SEP2020    - updated keywords and arguments
+    [Arguments]    ${sInputFilePath}    ${sInputJson}    ${sOutputFilePath}    ${sActualOutput}    ${sExpectedOutput}    ${sResponseCode}
 
     Delete All Sessions
     Create Session Correspondence
-
     Run Keyword And Continue On Failure    Post Json File    ${sInputFilePath}    ${sInputJson}     
     ...    ${Corres_API}    ${sOutputFilePath}    ${sExpectedOutput}
     Delete File If Exist    ${sInputFilePath}${sExpectedOutput}

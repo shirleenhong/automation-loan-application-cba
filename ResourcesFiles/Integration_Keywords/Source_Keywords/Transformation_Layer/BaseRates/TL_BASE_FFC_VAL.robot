@@ -30,8 +30,8 @@ Validate FFC for TL Base Rate Success
     ${ResultsRowList}    Filter by Reference Header and Save Message TextArea and Return Results Row List Value    ${X_REQUEST_ID}    ${REQUESTID_VALUE}    ${sOutputFilePath}${sOutputFileName}    
     ...    ${JSON}    ${RESULTSTABLE_STATUS}    ${CONTENT_TYPE}    ${HTTP_OPERATION}
     Validate Results Row Values Using Expected Value List    ${ResultsRowList}    ${MESSAGESTATUS_SUCCESSFUL}    ${CONTENT_TYPE_VALUE}    ${POSTMethod}
-    # Compare Multiple Input and Output JSON for Base Rate    ${sInputFilePath}    ${sInputFileName}
-    
+    Compare Multiple Input and Output JSON for Base Rate    ${sInputFilePath}    ${sInputFileName}  
+      
     ###CustomCBAPush###
     Go to Dashboard and Click Source API Name    ${CBAPUSH_SOURCENAME}    ${CBAPUSH_INSTANCE}
     ${aHeaderRefNameList}    Create List    ${JMS_CORRELATION_ID}
@@ -49,9 +49,9 @@ Validate FFC for TL Base Rate Success
     ${ColumnIndex}    Filter by Multiple Reference Headers and Values and Return Column Index    ${aHeaderRefNameList}    ${aExpectedRefList}
     ${ResultsRowList}    Save Message TextArea and Return Results Row List Value    ${ColumnIndex}    ${sOutputFilePath}${sOutputXML}    ${XML}    ${ROUTEROPERATION}    ${HEADER_CATEGORY}    ${HEADER_OPERATION}    
     Validate Results Row Values Using Expected Value List    ${ResultsRowList}    ${BASE_ROUTEROPTION}    ${BASE_CATEGORY}    ${POSTMethod}
-    # Compare Expected and Actual TextJMS for Base Rate TL    ${sInputFilePath}${sInputXML}    ${sOutputFilePath}${sOutputXML}
+    Compare Expected and Actual TextJMS for Base Rate TL    ${sInputFilePath}${sInputXML}    ${sOutputFilePath}${sOutputXML}
     
-     ###Response Mechanism###
+    ###Response Mechanism###
     Go to Dashboard and Click Source API Name    ${RESPONSE_MECHANISM_SOURCENAME}    ${RESPONSE_MECHANISM_INSTANCE}
      ${ResultsRowList}    Filter by Reference Header and Save Message TextArea for Specified File and Return Results Row List Value    ${DESTINATION}    ${DESTINATION_BR}    ${REQUESTID_VALUE}    ${sOutputFilePath}${sResponseMechanism}
     ...    ${JSON}    ${RESULTSTABLE_STATUS}
@@ -288,3 +288,4 @@ Validate FFC for TL Base Rate Error in Distributor
     Compare Expected and Actual TextJMS for Base Rate TL    ${sInputFilePath}${sInputXML}    ${sOutputFilePath}${sOutputXML}
     
     Logout to MCH UI and Close Browser
+    
