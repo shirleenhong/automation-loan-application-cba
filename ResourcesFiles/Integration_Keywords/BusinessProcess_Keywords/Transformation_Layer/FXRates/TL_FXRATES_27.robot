@@ -7,14 +7,15 @@ Send FXRates GS Group 1 File with Empty Rows
     ...    Then validate FFC if file is sent to CCB OpenAPI, distributor and CustomCBAInterface. Then validate in LoanIQ if Base Rate
     ...    Code is updated correctly.
     ...    @author: cfrancis    06AUG2019    - initial create
+    ...    @update: ccarriedo   08OCT2020    - updated InputFilePath for templates to TemplateFilePath; added TemplateFilePath to Create Expected TextJMS XML for FXRates TL
     [Arguments]    ${ExcelPath}
     ###PREREQUISITE###
-    # Login to Loan IQ    ${TL_USERNAME}    ${TL_PASSWORD}
+    Login to Loan IQ    ${TL_USERNAME}    ${TL_PASSWORD}
     ${fundingDeskStatus}    Get Funding Desk Status from Table Maintenance    &{ExcelPath}[FundingDesk_1]
     ${CSVFile}    Set Variable    &{ExcelPath}[InputFilePath]&{ExcelPath}[InputGSFile]
-    ${TransformedDataFile_FXRates}    Set Variable    &{ExcelPath}[InputFilePath]${TL_Transformed_Data_FXRates}
-    ${TransformedDataFileXML_FXRates}    Set Variable    &{ExcelPath}[InputFilePath]${TL_Transformed_Data_XMLFXRates}
-    ${TransformedDataFile_Template_FXRates}    Set Variable    &{ExcelPath}[InputFilePath]${TL_Transformed_Data_template_FXRates}
+    ${TransformedDataFile_FXRates}    Set Variable    &{ExcelPath}[TemplateFilePath]${TL_Transformed_Data_FXRates}
+    ${TransformedDataFileXML_FXRates}    Set Variable    &{ExcelPath}[TemplateFilePath]${TL_Transformed_Data_XMLFXRates}
+    ${TransformedDataFile_Template_FXRates}    Set Variable    &{ExcelPath}[TemplateFilePath]${TL_Transformed_Data_template_FXRates}
     ${row}    Generate Single Random Number and Return    1    19
     Transform FXRates CSV Data to XLS File Readable for JSON Creation    ${CSVFile}    ${TransformedDataFile_FXRates}    ${TransformedDataFile_Template_FXRates}    ${TransformedDataFileXML_FXRates}    &{ExcelPath}[FundingDesk_1]
     Create Expected JSON for FXRates TL    ${TransformedDataFile_FXRates}    &{ExcelPath}[InputFilePath]&{ExcelPath}[InputJson]    ${dataset_path}${TransformedDataFile_FXRates}    ${dataset_path}${TransformedDataFileXML_FXRates}    
