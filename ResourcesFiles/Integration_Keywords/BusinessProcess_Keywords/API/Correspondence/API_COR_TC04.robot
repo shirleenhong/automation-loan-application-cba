@@ -28,7 +28,7 @@ Send a FAIL callback in NOTICE via WIP
     ${CorrelationID}    Read Data From Excel for API_Data    Correspondence    Correlation_ID    ${rowid}
     
     ###Step 8: FFC Validation CBACorrespUpdateMQ###
-    #Validate FFC CBACorrespUpdateMQ API    ${CorrelationID}    &{APIDataSet}[OutputFilePath]    ${TEMPLATE_TEXTFILE}
+    Validate FFC CBACorrespUpdateMQ API    ${CorrelationID}    &{APIDataSet}[OutputFilePath]    ${TEMPLATE_TEXTFILE}
     
     ###Step 9: Send Call Back thru Postman###
     
@@ -42,7 +42,7 @@ Send a FAIL callback in NOTICE via WIP
     ...    &{APIDataSet}[ExpectedJson]    ${RESPONSECODE_200}
     
     ###Step 10: Exception Queue Validation###
-    #Validate Failed Notice in Logged Exception List Window in LIQ    &{APIDataSet}[Deal_Name]    ${NoticeIdentifier}    &{APIDataSet}[WIP_ExceptionQueueDescription]    
+    Validate Failed Notice in Logged Exception List Window in LIQ    &{APIDataSet}[Deal_Name]    ${NoticeIdentifier}    &{APIDataSet}[WIP_ExceptionQueueDescription]    
     
     ###Step 12: FFC Validation FFC1CMUpdateSourceMQ### 
     Validate FFC FFC1CMUpdateSourceMQ    ${dataset_path}&{APIDataSet}[OutputFilePath]&{APIDataSet}[OutputAPIResponse].json    ${CorrelationID}    &{APIDataSet}[OutputFilePath]    ${TEMPLATE_TEXTFILE}  

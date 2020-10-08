@@ -17,7 +17,6 @@ Correspondence POST API
     ...    ${Corres_API}    ${sOutputFilePath}    ${sExpectedOutput}
     Delete File If Exist    ${sInputFilePath}${sExpectedOutput}
     Create File    ${sInputFilePath}${sExpectedOutput}    ${Response_file}
-    #${isJson}    Run Keyword And Return Status    Comparing Inputjson Outputjson    ${sInputFilePath}    ${sExpectedOutput}    ${Response_file}
     Verify Json Response Status Code    ${sResponseCode}
     
 Correspondence with Technical Validation Error
