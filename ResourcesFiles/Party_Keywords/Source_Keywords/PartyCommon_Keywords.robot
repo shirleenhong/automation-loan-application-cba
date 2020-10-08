@@ -139,7 +139,31 @@ Get Text From Row and Compare
     ${sRowValue}    Get Text    ${sLocator}
     Compare Two Strings    ${sRowValue}    ${sKnownValue}
    
+Get Table Value Containing Row Value in Party
+    [Documentation]    This keyword is used get row value of column sHeaderName using sReferenceRowValue from column sReferenceHeaderValue
+    ...    @author: javinzon    30SEP2020    - initial create
+    [Arguments]    ${eTableHeaderLocator}    ${eTableRowLocator}    ${sReferenceHeaderValue}    ${sReferenceRowValue}    ${sHeaderName}    
     
+    ### Get Header Index of the Reference Value ###
+    ${HeaderCount}    SeleniumLibraryExtended.Get Element Count    ${eTableHeaderLocator}
+    ${HeaderCount}    Evaluate    ${HeaderCount}+1
+    :FOR    ${ReferenceHeaderIndex}    IN RANGE    1    ${HeaderCount}
+    \    ${ReferenceHeaderValue}    Get Text    ${eTableHeaderLocator}\[${ReferenceHeaderIndex}]//div
+    \    Exit For Loop If    '${ReferenceHeaderValue}'=='${sReferenceHeaderValue}'
+    
+    ### Get Header Index of the Actual Value to be get ###
+    ${HeaderCount}    SeleniumLibraryExtended.Get Element Count    ${eTableHeaderLocator}
+    ${HeaderCount}    Evaluate    ${HeaderCount}+1
+    :FOR    ${HeaderIndex}    IN RANGE    1    ${HeaderCount}
+    \    ${HeaderValue}    Get Text    ${eTableHeaderLocator}\[${HeaderIndex}]//div
+    \    Exit For Loop If    '${HeaderValue}'=='${sHeaderName}'
+	
+    ${RefRowValueCount}    SeleniumLibraryExtended.Get Element Count    ${eTableRowLocator}//td\[contains(text(),"${sReferenceRowValue}")]/parent::tr/td\[${HeaderIndex}]
+	Run Keyword If    ${RefRowValueCount}==0    Run Keyword And Continue On Failure    FAIL    Reference Row Value '${sReferenceRowValue}' not found.
+	Return From Keyword If    ${RefRowValueCount}==0    REFNOTFOUND
+	${RowValue}    Get Text    ${eTableRowLocator}//td\[contains(text(),"${sReferenceRowValue}")]/parent::tr/td\[${HeaderIndex}]
+    
+    [Return]    ${RowValue}    
 
 ###Updated Party Status Test Case
     
