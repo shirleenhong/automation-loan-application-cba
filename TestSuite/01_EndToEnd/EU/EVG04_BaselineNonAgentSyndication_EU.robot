@@ -13,5 +13,6 @@ Create Quick Party Onboarding - PTY001
 
 Search Customer and Complete its Borrower Profile Creation - ORIG03         
     [Documentation]    This keyword searches a customer and complete its Borrower Profile creation
+    ...    @author: fjluberio    10OCT2020    -initial create
     [Tags]    02 Complete Borrower's Profile - 0RIG03
     Mx Execute Template With Multiple Data    Search Customer and Complete its Borrower Profile Creation with default values    ${ExcelPath}    ${rowid}    ORIG03_Customer

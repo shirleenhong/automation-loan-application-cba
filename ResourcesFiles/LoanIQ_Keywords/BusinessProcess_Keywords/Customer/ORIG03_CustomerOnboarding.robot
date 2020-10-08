@@ -652,7 +652,6 @@ Search Customer and Complete its Borrower Profile Creation with default values
     
     Close Servicing Group Remittance Instructions Selection List Window    &{ExcelPath}[LIQCustomer_ShortName]
      
-    #mx LoanIQ click    ${ServicingGroupWindow_ExitButton} - For Approval
     Validate 'Active Customer' Window    &{ExcelPath}[LIQCustomer_ShortName] 
         
     ###Saving Customer Details
