@@ -404,6 +404,7 @@ ${POSTAPIRESPONSE}
 
 ### Riskbook ###
 ${TL_Transformed_Data_BaseRate}    TL_Transformed_Data_BaseRate.xlsx
+${TL_Transformed_Data_BaseRate_2}    TL_Transformed_Data_BaseRate_2.xlsx
 ${TL_Transformed_Data_template_BaseRate}    TL_Transformed_Data_template_BaseRate.xlsx
 
 ${TL_Transformed_Data_FXRates}    TL_Transformed_Data_FXRates.xlsx
