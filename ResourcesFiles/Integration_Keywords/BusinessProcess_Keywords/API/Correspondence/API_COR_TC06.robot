@@ -24,7 +24,7 @@ NO error for SENT CALL BACK when MESSAGE is missing
     ${NoticeCustomerLegalName}    Read Data From Excel for API_Data    Correspondence    Notice_Customer_LegalName    ${rowid}  
     
     ###Validate and Sent Notice###
-     ###Step 1-3: Validate and Sent Notice###
+    ###Step 1-3: Validate and Sent Notice###
     Send Notice via WIP in LIQ    ${NoticeIdentifier}    ${NoticeCustomerLegalName}    &{APIDataSet}[Notice_Method]    Awaiting release         
     
     ###Step 1-3: Validate Event Management Queue###
@@ -49,7 +49,7 @@ NO error for SENT CALL BACK when MESSAGE is missing
     ...    &{APIDataSet}[ExpectedJson]    ${RESPONSECODE_400}
     
     ###Step 5: FFC Validation CBACorrespUpdateMQ###
-    #Validate FFC CBACorrespUpdateMQ API    ${CorrelationID}    &{APIDataSet}[OutputFilePath]    ${TEMPLATE_TEXTFILE}
+    Validate FFC CBACorrespUpdateMQ API    ${CorrelationID}    &{APIDataSet}[OutputFilePath]    ${TEMPLATE_TEXTFILE}
     
     ###Step 6-7: Exception Queue Validation###
     Validate Failed Notice in Logged Exception List Window in LIQ    &{APIDataSet}[Deal_Name]    ${NoticeIdentifier}    &{APIDataSet}[WIP_ExceptionQueueDescription]
