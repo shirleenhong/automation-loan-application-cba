@@ -213,11 +213,12 @@ GL_DECRYPTION_PART1 = 'C:/Git_Evergreen/fms_cba/DataSet/Integration_DataSet/Extr
 GL_DECRYPTION_PART2 = 'C:/Git_Evergreen/fms_cba/DataSet/Integration_DataSet/Extracts/GL/Decryptor_Tool/GL_DECRYPTION_PART2.vbs'
 GL_DECRYPTION_PART3 = 'C:/Git_Evergreen/fms_cba/DataSet/Integration_DataSet/Extracts/GL/Decryptor_Tool/GL_DECRYPTION_PART3.vbs'
 GL_PGP_SECRET_KEY = 'secret.skr'
-GL_PASSPHRASE = 'password'
+GL_PASSPHRASE = 'oracle'
 GL_CSV_GPG_FILEEXTENSION = '.csv.gpg'
 ESS_AUWASADMIN_SCHEMA = "AUWASADMIN"
 GL_VALIDATION_TOOL_PATH = 'C:\\Git_Evergreen\\fms_cba\\DataSet\\Integration_DataSet\Extracts\\GL\\Validation_Tool'
 GL_VALIDATION_TOOL_JAR = 'gpgCheck-1.0.3-jar-with-dependencies.jar'
+GL_VALIDATION_TOOL_JAR_AU = 'gpgCheck-1.0.3-jar-with-dependencies.jar'
 
 ### TI ###
 FBTIDataset = 'C:\\Git_Evergreen\\evergreen_projects\\CBA_Evergreen\\DataSet\\FBTI_DataSet\\FBTI_User_Data_Set.xlsx'
