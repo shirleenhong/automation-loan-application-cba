@@ -44,7 +44,7 @@ Send a SENT Callback for Notice for BILATERAL Deal via WIP
     ${CorrelationID}    Read Data From Excel for API_Data    Correspondence    Correlation_ID    ${rowid}
     
     ###Step 8: FFC Validation CBACorrespUpdateMQ###
-    #Validate FFC CBACorrespUpdateMQ API    ${CorrelationID}    &{APIDataSet}[OutputFilePath]    ${TEMPLATE_TEXTFILE}
+    Validate FFC CBACorrespUpdateMQ API    ${CorrelationID}    &{APIDataSet}[OutputFilePath]    ${TEMPLATE_TEXTFILE}
     
     ###Step 9: Send Call Back thru Postman###
     ${CorrelationIdByte}    Encode String To Bytes    ${CorrelationID}     UTF-8
