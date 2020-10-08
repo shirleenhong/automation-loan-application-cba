@@ -52,8 +52,6 @@ Send a Drawdown Intent Notice via Notice Application
 
     Update Key Values of input JSON file for Correspondence API    ${MessageIdDecode}    &{APIDataSet}[CallBack_Status]    &{APIDataSet}[errorMessage]    
     ...    &{APIDataSet}[InputFilePath]&{APIDataSet}[InputJson].json
-     
-    # Correspondence POST API    ${dataset_path}&{APIDataSet}[InputFilePath]    &{APIDataSet}[InputJson].json    ${dataset_path}&{APIDataSet}[OutputFilePath]    &{APIDataSet}[OutputAPIResponse].json    &{APIDataSet}[ExpectedJson].json
     
     Correspondence POST API    &{APIDataSet}[InputFilePath]    &{APIDataSet}[InputJson]    &{APIDataSet}[OutputFilePath]    &{APIDataSet}[OutputAPIResponse]    
     ...    &{APIDataSet}[ExpectedJson]    ${RESPONSECODE_200}
