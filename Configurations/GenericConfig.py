@@ -5,6 +5,7 @@ BROWSER = "chrome"
 SCENARIO = ""
 rowid = ""
 TestCase_Name = ""
+TestCase_Name_ValTool = ""
 ExcelPath_API = ""
 Test_Case = ""
 
@@ -48,6 +49,7 @@ USER_LINK = ""
 USER_PORT = ""
 PARTY_URL_SUFFIX = ""
 DOMAIN = ""
+PTY_DATASET =""
 
 ###ESSENCE###
 ESSENCE_URL = ""
@@ -208,6 +210,11 @@ GL_PASSPHRASE = ""
 GL_CSV_GPG_FILEEXTENSION = ""
 ESS_AUWASADMIN_SCHEMA = ""
 ESS_EUWASADMIN_SCHEMA = ""
+GL_VALIDATION_TOOL_PATH = ""
+GL_VALIDATION_TOOL_JAR = ""
+GL_VALIDATION_TOOL_JAR_AU = ""
+GL_VALIDATION_TOOL_JAR_EU = ""
+DATAROW_INDEX = ""
 
 import os
 project_path = os.path.dirname(os.path.realpath(__file__)).replace("MDM_ConfigFile","")

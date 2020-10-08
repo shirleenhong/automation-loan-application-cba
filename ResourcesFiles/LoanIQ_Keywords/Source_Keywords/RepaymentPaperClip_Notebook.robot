@@ -1058,7 +1058,16 @@ Validate PaperClip Notebook Details for Interest and Principal Payment
     
     ${Computed_Amount}    Evaluate    ${Converted_InterestAmt}+${Converted_PrincipalAmt}
     ${Computed_Amount}    Convert To String    ${Computed_Amount}
+    ${Computed_Amount}    Convert To Number    ${Computed_Amount}     2
+    ${Computed_Amount}    Convert To String    ${Computed_Amount}
     ${Computed_Amount}    Convert Number With Comma Separators    ${Computed_Amount}
+    
+    ${sInterest_Amount}   Convert To String    ${sInterest_Amount}
+    ${sInterest_Amount}   Convert Number with Comma Separators     ${sInterest_Amount}
+    
+    ${sPrincipal_Amount}   Convert To String    ${sPrincipal_Amount}
+    ${sPrincipal_Amount}   Convert Number with Comma Separators     ${sPrincipal_Amount}
+    
     
     ${VALIDTE_TOTALAMOUNT}    Run Keyword And Return Status    Should Be Equal    ${UI_TotalAmount}    ${Computed_Amount}        
     ${VALIDATE_EFFECTIVEDATE}    Run Keyword And Return Status    Should Be Equal    ${UI_EffectiveDate}    ${sEffective_Date}
@@ -1074,7 +1083,50 @@ Validate PaperClip Notebook Details for Interest and Principal Payment
     Run Keyword If    ${VALIDATE_PRINCIPAL}==True    Log    Principal amount successfully verified.
     ...    ELSE    Fail    Principal amount validation not successful.
     
-    Take Screenshot    RepaymentPaperclip-General
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/RepaymentPaperclip-General
+    
+Validate PaperClip Notebook Details for Interest and Principal Payment for Repayment
+    [Documentation]    This keyword will validate the Interest Amount, Principal Amount, Effective Date, and the Total Amount in the Repayment Paperclip Notebook.
+    ...                @author: bernchua    22Sep2020      Initial Create
+    [Arguments]    ${sInterest_Amount}    ${sPrincipal_Amount}    ${sEffective_Date}    ${sPricing_Option}    ${sTransaction_Type}
+    mx LoanIQ activate    ${LIQ_Repayment_Window}
+    
+    ${InterestPayment_Desc}    Set Variable    ${sPricing_Option} ${sTransaction_Type} Interest Payment
+    ${PrincipalPayment_Desc}    Set Variable    ${sPricing_Option} ${sTransaction_Type} Principal Payment
+    ${UI_TotalAmount}    Mx LoanIQ Get Data    ${LIQ_Repayment_Amount}    value%totalamount
+    ${UI_EffectiveDate}    Mx LoanIQ Get Data    ${LIQ_Repayment_EffectiveDate_Textfield}    value%effectivedate
+    ${UI_InterestAmount}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_Repayment_Transactions_JavaTree}    ${InterestPayment_Desc}%Amount%interest
+    ${UI_PrincipalAmount}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_Repayment_Transactions_JavaTree}    ${PrincipalPayment_Desc}%Amount%principal
+    
+    ${Converted_InterestAmt}    Remove Comma, Negative Character and Convert to Number    ${sInterest_Amount}
+    ${Converted_PrincipalAmt}    Remove Comma, Negative Character and Convert to Number    ${sPrincipal_Amount}
+    ${sPrincipal_Amount}    Remove String    ${sPrincipal_Amount}    -
+    
+    ${Computed_Amount}    Evaluate    ${Converted_InterestAmt}+${Converted_PrincipalAmt}
+    ${Computed_Amount}    Convert To String    ${Computed_Amount}
+    ${Computed_Amount}    Convert To Number    ${Computed_Amount}     2
+    ${Computed_Amount}    Convert To String    ${Computed_Amount}
+    ${Computed_Amount}    Convert Number With Comma Separators    ${Computed_Amount}
+    
+    ${UI_PrincipalAmount}     Remove Comma, Negative Character and Convert to Number     ${UI_PrincipalAmount}
+    ${UI_PrincipalAmount}     Convert To String     ${UI_PrincipalAmount}
+    ${UI_PrincipalAmount}     Convert Number with Comma Separators     ${UI_PrincipalAmount}
+    
+    ${VALIDTE_TOTALAMOUNT}    Run Keyword And Return Status    Should Be Equal    ${UI_TotalAmount}    ${Computed_Amount}        
+    ${VALIDATE_EFFECTIVEDATE}    Run Keyword And Return Status    Should Be Equal    ${UI_EffectiveDate}    ${sEffective_Date}
+    ${VALIDATE_INTEREST}    Run Keyword And Return Status    Should Be Equal    ${UI_InterestAmount}    ${sInterest_Amount}
+    ${VALIDATE_PRINCIPAL}    Run Keyword And Return Status    Should Be Equal    ${UI_PrincipalAmount}    ${sPrincipal_Amount}
+    
+    Run Keyword If    ${VALIDTE_TOTALAMOUNT}==True    Log    Total amount successfully verified.
+    ...    ELSE    Fail    Total amount validation not successful.    
+    Run Keyword If    ${VALIDATE_EFFECTIVEDATE}==True    Log    Effective date successfully verified.
+    ...    ELSE    Fail    Effective date validation not successful.
+    Run Keyword If    ${VALIDATE_INTEREST}==True    Log    Interest amount successfully verified.
+    ...    ELSE    Fail    Interest amount validation not successful.
+    Run Keyword If    ${VALIDATE_PRINCIPAL}==True    Log    Principal amount successfully verified.
+    ...    ELSE    Fail    Principal amount validation not successful.
+    
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/RepaymentPaperclip-General
     
 Validate Principal Payment Notebook Details
     [Documentation]    This keyword will open the Principal Payment transaction from the Paperclip notebook,
@@ -1097,6 +1149,9 @@ Validate Principal Payment Notebook Details
     ${UI_RequestedAmount}    Mx LoanIQ Get Data    ${LIQ_PrincipalPayment_Requested_Amount}    value%amount
     ${UI_EffectiveDate}    Mx LoanIQ Get Data    ${LIQ_PrincipalPayment_EffectiveDate_Field}    value%amount
     ${UI_PrepaymentStatus}    Mx LoanIQ Get Data    ${LIQ_PrincipalPayment_Prepayment_Checkbox}    enabled%status
+    
+    ${sRequested_Amount}   Convert To String    ${sRequested_Amount}
+    ${sRequested_Amount}   Convert Number with Comma Separators     ${sRequested_Amount}
     
     ${VALIDATE_REQUESTEDAMOUNT}    Run Keyword And Return Status    Should Be Equal    ${UI_RequestedAmount}    ${sRequested_Amount}        
     ${VALIDATE_EFFECTIVEDATE}    Run Keyword And Return Status    Should Be Equal    ${UI_EffectiveDate}    ${sEffectiveDate}

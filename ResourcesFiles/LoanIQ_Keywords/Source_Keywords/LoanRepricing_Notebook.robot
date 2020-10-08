@@ -343,13 +343,17 @@ Add New Outstandings
     ...    @update: hstone      28MAY2020    - Added Keyword Pre-processing
     ...                                      - Added Optional Argument: ${sRunTimeVar_NewLoanAlias}
     ...                                      - Added Keyword Post-processing
-    [Arguments]    ${sPricing_Option}    ${sBorrower_Base_Rate}    ${sNewRequestedAmt}=None    ${sRepricingFrequency}=None    ${sRunTimeVar_NewLoanAlias}=None
+    ...    @update: shirhong    01OCT2020    Added Repricing Date
+    ...                                      - Added Warning Confirmation when saving Rollover Conversion
+    ...                                      - Added Question Confirmation when clicking Base Rate button 
+    [Arguments]    ${sPricing_Option}    ${sBorrower_Base_Rate}    ${sNewRequestedAmt}=None    ${sRepricingFrequency}=None    ${sRunTimeVar_NewLoanAlias}=None    ${sRepricingDate}=None
 
     ### Keyword Pre-processing ###
     ${Pricing_Option}    Acquire Argument Value    ${sPricing_Option}
     ${Borrower_Base_Rate}    Acquire Argument Value    ${sBorrower_Base_Rate}
     ${NewRequestedAmt}    Acquire Argument Value    ${sNewRequestedAmt}
     ${RepricingFrequency}    Acquire Argument Value    ${sRepricingFrequency}
+    ${RepricingDate}    Acquire Argument Value    ${sRepricingDate}
 
     mx LoanIQ activate window    ${LIQ_LoanRepricing_Window}
     Take Screenshot    ${Screenshot_path}/Screenshots/LoanIQ/ComprehensiveRepricing_LoanRepricing
@@ -364,9 +368,10 @@ Add New Outstandings
     ${NewLoanAlias}    Mx LoanIQ Get Data    ${LIQ_RolloverConversion_Alias_Textfield}    NewLoanAlias
     Run Keyword If    '${NewRequestedAmt}'!='None'    mx LoanIQ enter    ${LIQ_RolloverConversion_RequestedAmt_TextField}    ${NewRequestedAmt}
     Run Keyword If    '${RepricingFrequency}'!='None'    mx LoanIQ select list    ${LIQ_PendingRollover_RepricingFrequency_Dropdown}    ${RepricingFrequency}
+    Run Keyword If    '${RepricingDate}'!='None'    mx LoanIQ enter    ${LIQ_PendingRollover_RepricingDate}    ${RepricingDate}
     Take Screenshot    ${Screenshot_path}/Screenshots/LoanIQ/ComprehensiveRepricing_PendingRolloverConversion_GeneralTab
-    mx LoanIQ select    ${LIQ_RolloverConversion_Save_Menu}     
-    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
+    mx LoanIQ select    ${LIQ_RolloverConversion_Save_Menu}
+    Run Keyword If    '${RepricingDate}'!='None'    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
     Mx LoanIQ Select Window Tab    ${LIQ_RolloverConversion_Tab}    Rates
     mx LoanIQ click    ${LIQ_RolloverConversion_BaseRate_Button}
     mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
@@ -374,6 +379,7 @@ Add New Outstandings
     # Mx Click Element If Present    ${LIQ_RolloverConversion_BaseRate_Button}
     # Mx Click Element If Present    ${LIQ_Warning_Yes_Button}
     # Mx Click Element If Present    ${LIQ_Warning_Yes_Button}
+    Run Keyword If    '${RepricingDate}'!='None'    mx LoanIQ click element if present    ${LIQ_Question_No_Button}  
     mx LoanIQ enter    ${LIQ_SetBaseRate_BorrowerBaseRate_Textfield}    ${Borrower_Base_Rate}
     Take Screenshot    ${Screenshot_path}/Screenshots/LoanIQ/ComprehensiveRepricing_PendingRolloverConversion_RatesTab 
     mx LoanIQ click    ${LIQ_SetBaseRate_Ok_Button}
@@ -789,11 +795,17 @@ Validate Loan Amounts in General Tab
     ...    @author: mnanquil
     ...    10/24/2018
     ...    <update> bernchua 12/5/2018: added code to go to General Tab
-    [Arguments]    ${amount}    ${facility}
+    ...    @update: dahijara    23SEP2020    Added pre processing keywords and Screenshot.
+    [Arguments]    ${sAmount}    ${sFacility}
+    ### GetRuntime Keyword Pre-processing ###
+    ${Amount}    Acquire Argument Value    ${sAmount}
+    ${Facility}    Acquire Argument Value    ${sFacility}
+
     mx LoanIQ activate window    ${LIQ_LoanRepricingForDeal_Window}
     Mx LoanIQ Select Window Tab    ${LIQ_LoanRepricingForDeal_Workflow_Tab}    General    
-    Mx LoanIQ Select String   ${LIQ_LoanRepricingForDeal_Workflow_JavaTree}    ${amount}\t${facility}
-    Log    Successfully validated amount of ${amount} with facility ${facility}    
+    Mx LoanIQ Select String   ${LIQ_LoanRepricingForDeal_Workflow_JavaTree}    ${Amount}\t${Facility}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LoanRepricingWindow
+    Log    Successfully validated amount of ${Amount} with facility ${Facility}    
 
 Change Effective Date for Loan Repricing
     [Documentation]    This keyword will change the Effective Date in the Loan Repricing Notebook
@@ -852,12 +864,19 @@ Validate GL Entries After Release
     [Documentation]    This keyword will validate the gl entries for scenario 8
     ...    @author: mnanquil
     ...    @author: bernchua    08MAR2019    Updated keyword name
-    [Arguments]    ${debitAmt1}    ${debitAmt2}    ${creditAmt}
+    ...    @update: dahijara    24SEP2020    Added pre processing keywords and screenshot.
+    [Arguments]    ${sDebitAmt1}    ${sDebitAmt2}    ${sCreditAmt}
+    ### GetRuntime Keyword Pre-processing ###
+    ${DebitAmt1}    Acquire Argument Value    ${sDebitAmt1}
+    ${DebitAmt2}    Acquire Argument Value    ${sDebitAmt2}
+    ${CreditAmt}    Acquire Argument Value    ${sCreditAmt}
+
     mx LoanIQ activate window   ${LIQ_LoanRepricing_Window}
     mx LoanIQ select    ${LIQ_LoanRepricing_GLEntries_Menu}
-    Mx LoanIQ Click Javatree Cell   ${LIQ_GL_Entries_JavaTree}    ${debitAmt1}%${debitAmt1}%Debit Amt
-    Mx LoanIQ Click Javatree Cell   ${LIQ_GL_Entries_JavaTree}    ${debitAmt2}%${debitAmt2}%Debit Amt    
-    Mx LoanIQ Click Javatree Cell    ${LIQ_GL_Entries_JavaTree}    ${creditAmt}%${creditAmt}%Credit Amt
+    Mx LoanIQ Click Javatree Cell   ${LIQ_GL_Entries_JavaTree}    ${DebitAmt1}%${DebitAmt1}%Debit Amt
+    Mx LoanIQ Click Javatree Cell   ${LIQ_GL_Entries_JavaTree}    ${DebitAmt2}%${DebitAmt2}%Debit Amt    
+    Mx LoanIQ Click Javatree Cell    ${LIQ_GL_Entries_JavaTree}    ${CreditAmt}%${CreditAmt}%Credit Amt
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LoanRepricing_GLEntriesWindow
     mx LoanIQ click    ${LIQ_GL_Entries_Exit_Button}
     
 Validate Events Tab
@@ -1006,6 +1025,8 @@ Validate Base Rate in Rollover/Conversion to BBSY
     ...    @author: chanario
     ...    @update: bernchua    05JUN2019    removed validation of 'Send to Approval' status
     ...    @update: sahalder    16JUL2020    Added step for screenshots
+    ...    @updated:dahijara    28SEP2020    Corrected path for screenshot
+    ...                                      Updated action from Click to Select for Exiting Rollover/Conversion window.
     [Arguments]    ${Base_Rate}    ${Alias_LoanMerge}    ${RequestedAmount_Expected}
     
     mx LoanIQ activate window    ${LIQ_RolloverConversion_Window}
@@ -1023,7 +1044,7 @@ Validate Base Rate in Rollover/Conversion to BBSY
     Verify If Warning Is Displayed
     
     ## Validate initial Values of Set Base Rate Window ##
-    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/Loan_Rollover/Conversion
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/Loan_RolloverConversion
     ${BaseRateFromPricing}    Mx LoanIQ Get Data    ${LIQ_SetBaseRate_BaseRateFromPricing_Textfield}    BaseRateFromPricing
     Should Be Equal    ${BaseRateFromPricing}    ${Base_Rate}
         
@@ -1037,13 +1058,14 @@ Validate Base Rate in Rollover/Conversion to BBSY
     Should Be Equal    ${BorrowerBaseRate}    ${Base_Rate}
     
     mx LoanIQ click    ${LIQ_RolloverConversion_BaseRate_OKButton}
-    mx LoanIQ click element if present    ${LIQ_RolloverConversion_FileExit_Menu}
+    mx LoanIQ select    ${LIQ_RolloverConversion_FileExit_Menu}
     
     ## Validate combined Loan amount after merge on the Loan Repricing Notebook ##
     
     mx LoanIQ activate window    ${LIQ_LoanRepricingForDeal_Window}
     ${NewOutstadingAmount}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_LoanRepricingForDealAdd_JavaTree}    BBSY - Bid (${Alias_LoanMerge})%Amount%NewOutstadingAmount        
     Should Be Equal    ${NewOutstadingAmount}    ${RequestedAmount_Expected}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/Loan_RolloverConversion
     
 Validation on the Loan Repricing Notebook After Loan Merge
     
@@ -1705,15 +1727,17 @@ Get Calculated Cycle Due Amount and Validate
 Navigate to Existing Outstanding
     [Documentation]    This keyword is for navigating to the existing outstanding inside the facility notebook
     ...    @author: sahalder    09JUL2020    - initial create
-	[Arguments]    ${sFacilityNotebook_Options_DealNotebook}    ${sOutstandingSelect_Type}    ${sFacility_Name}
+    ...    @update: dahijara    28SEP2020    - Removed locator as part of argument. Directly passed the locator to Mx LoanIQ Select keyword
+    ...                                      - Added Screenshot
+	[Arguments]    ${sOutstandingSelect_Type}    ${sFacility_Name}
 
     ### Keyword Pre-processing ###
-    ${FacilityNotebook_Options_DealNotebook}    Acquire Argument Value    ${sFacilityNotebook_Options_DealNotebook}
     ${OutstandingSelect_Type}    Acquire Argument Value    ${sOutstandingSelect_Type}
     ${Facility_Name}    Acquire Argument Value    ${sFacility_Name}
     
-    mx LoanIQ select    ${FacilityNotebook_Options_DealNotebook}
+    mx LoanIQ select    ${LIQ_FacilityNotebook_Options_DealNotebook}
     Search for Existing Outstanding    ${OutstandingSelect_Type}    ${Facility_Name}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/OutstandingSelectWindow
     
 Navigate to Loan Repricing Notebook Workflow
     [Documentation]    This keyword navigates the Workflow tab of a Loan Repricing Notebook, and does a specific transaction.
