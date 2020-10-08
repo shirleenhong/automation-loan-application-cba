@@ -48,7 +48,7 @@ NO error for SENT CALL BACK when MESSAGE is NULL
     ...    &{APIDataSet}[OutputAPIResponse]    &{APIDataSet}[ExpectedJson]    ${RESPONSECODE_400}
 
     ###Step 5: FFC Validation CBACorrespUpdateMQ###
-    #Validate FFC CBACorrespUpdateMQ API    ${CorrelationID}    &{APIDataSet}[OutputFilePath]    ${TEMPLATE_TEXTFILE}
+    Validate FFC CBACorrespUpdateMQ API    ${CorrelationID}    &{APIDataSet}[OutputFilePath]    ${TEMPLATE_TEXTFILE}
     
     ###Step 6-7: Exception Queue Validation###
     Validate Failed Notice in Logged Exception List Window in LIQ    &{APIDataSet}[Deal_Name]    ${NoticeIdentifier}    &{APIDataSet}[WIP_ExceptionQueueDescription]

@@ -191,6 +191,7 @@ Setup Syndicated Deal
     ...    Primarily entering data in multiple tabs of the Deal Notebook and adding Pricing Options.
     ...    @author: bernchua
     ...    @update: amansueto    15APR2020    - merged select actions and validate field keywords to Create New Deal
+    ...    @update: kduenas    08OCT2020    - added writing of deal name to corro api dataset for API_CORRO_TC07
     [Arguments]    ${ExcelPath}
 
     ###Data Generation###
@@ -215,6 +216,7 @@ Setup Syndicated Deal
     Write Data To Excel    AMCH10_ChangeAgencyFee    Deal_Alias    ${rowid}    ${Deal_Name}
     Write Data To Excel    SERV20_UnschedPrincipalPayments    Deal_Name    ${rowid}    ${Deal_Name}
     Write Data To Excel    SYND02_PrimaryAllocation    Deal_Name    ${rowid}    ${Deal_Name}
+    Write Data To Excel    Correspondence    Deal_Name    7    ${Deal_Name}    ${APIDataSet}    bTestCaseColumn=True    sColumnReference=rowid
       
     ###Deal Select Window###
     Create New Deal    ${Deal_Name}    ${Deal_Alias}    &{ExcelPath}[Deal_Currency]    &{ExcelPath}[Deal_Department]    &{ExcelPath}[Deal_SalesGroup]
@@ -296,6 +298,7 @@ Setup Term Facility for Syndicated Deal
     ...    @update: ritragel    21FEB2019    Updated Writing and dataSet
     ...    @update: dahijara    24JUL2020    Added scenario 5 condition for writing Facility_Name in SYND02_PrimaryAllocation
     ...    @update: dahijara    25 AUG2020    Added writing for scenario 5 Facility name - SERV10_ConversionOfInterestType
+    ...    @update: kduenas     08OCT2020    Added writing of facility name to corro apidataset for API_CORRO_TC07
     [Arguments]    ${ExcelPath}
     
     ###Data Generation###
@@ -316,6 +319,8 @@ Setup Term Facility for Syndicated Deal
     ...    AND    Write Data To Excel    SERV40_BreakFunding    Facility_Name    ${rowid}    ${Facility_Name}
     ...    AND    Write Data To Excel    SERV23_PaperclipTransaction    Facility_Name    ${rowid}    ${Facility_Name}
     ...    AND    Write Data To Excel    SERV05_SBLCIssuance    Facility_Name    ${rowid}    ${Facility_Name}
+    ...    AND    Write Data To Excel    Correspondence    Facility_Name    7    ${Facility_Name}    ${APIDataSet}    bTestCaseColumn=True    sColumnReference=rowid
+
     
     Run Keyword If    '${SCENARIO}'=='5'    Run Keywords    Write Data To Excel    SERV13_InterestCapitalization    Loan_FacilityName    ${rowid}    ${Facility_Name}
     ...    AND    Write Data To Excel    SERV01A_TermAndSBLC    Facility_Name    ${rowid}    ${Facility_Name}
