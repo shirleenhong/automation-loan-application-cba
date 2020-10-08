@@ -12,6 +12,8 @@ Setup a Bilateral Deal
     ...    @update: hstone       04MAY2020    - Deleted SAPWUL Related Write Data To Excel
     ...    @update: jloretiz     15JUN2020    - added writing of deal name for API_COR_TC01, removed the reading from excel to shorten runtime
     ...    @update: kduenas      23SEP2020    - added writing of deal name to corro api dataset for API_COR_TC03
+    ...    @UPDATE: kduenas      08OCT2020    - added writing of deal name to corro api dataset for API_COR_TC05
+    ...    @UPDATE: kduenas      08OCT2020    - added writing of deal name to corro api dataset for API_COR_TC06
     [Arguments]    ${ExcelPath}
 
     ###Set Dates for transactions###
@@ -58,6 +60,8 @@ Setup a Bilateral Deal
     
     Run Keyword If    '${SCENARIO}'=='1'    Write Data To Excel    Correspondence    Deal_Name    ${rowid}    ${Deal_Name}    ${APIDataSet}    bTestCaseColumn=True    sColumnReference=rowid
     ...    AND    Write Data To Excel    Correspondence    Deal_Name    3    ${Deal_Name}    ${APIDataSet}    bTestCaseColumn=True    sColumnReference=rowid
+    ...    AND    Write Data To Excel    Correspondence    Deal_Name    5    ${Deal_Name}    ${APIDataSet}    bTestCaseColumn=True    sColumnReference=rowid
+    ...    AND    Write Data To Excel    Correspondence    Deal_Name    6    ${Deal_Name}    ${APIDataSet}    bTestCaseColumn=True    sColumnReference=rowid
     
     ###For Scenario 7###
     Run Keyword If    '${SCENARIO}'=='7'    Run Keywords    Write Data To Excel    SERV35_Terminate_FacilityDeal    Deal_Name    ${rowid}    ${Deal_Name}
@@ -109,6 +113,8 @@ Create Facility
     ...    @update: dahijara     15JUN2020    - Changed value being passed to Loan_MaturityDate for SERV01. From ${Facility_ExpiryDate} to ${Facility_MaturityDate}.
     ...    @update: jloretiz     15JUN2020    - added writing of deal name, loan alias and facility name for API_COR_TC01, removed the reading from excel to shorten runtime
     ...    @update: kduenas      23SEP2020    - added writing of facility name to corro api dataset for API_COR_TC03
+    ...    @update: kduenas      08OCT2020    - added writing of facility name to corro api dataset for API_COR_TC05
+    ...    @update: kduenas      08OCT2020    - added writing of facility name to corro api dataset for API_COR_TC06
     [Arguments]    ${ExcelPath}
     
     ###Data Generation###
@@ -126,6 +132,9 @@ Create Facility
     Write Data To Excel    SYND02_PrimaryAllocation    Facility_Name    ${rowid}    ${Facility_Name}
     Write Data To Excel    Correspondence    Facility_Name    ${rowid}    ${Facility_Name}    ${APIDataSet}    bTestCaseColumn=True    sColumnReference=rowid
     Write Data To Excel    Correspondence    Facility_Name    3    ${Facility_Name}    ${APIDataSet}    bTestCaseColumn=True    sColumnReference=rowid
+    Write Data To Excel    Correspondence    Facility_Name    5    ${Facility_Name}    ${APIDataSet}    bTestCaseColumn=True    sColumnReference=rowid
+    Write Data To Excel    Correspondence    Facility_Name    6    ${Facility_Name}    ${APIDataSet}    bTestCaseColumn=True    sColumnReference=rowid
+
 
     ###For Scenario 4###
     Run Keyword If    '${rowid}'=='4'    Run Keywords    Write Data To Excel    AMCH02_LenderShareAdjustment    Facility_Name    ${rowid}    ${Facility_Name}        
@@ -664,6 +673,7 @@ Setup Syndicated Deal For Secondary Sale
     ...    @update: bernchua    28JUN2019    Removed 1 argument in Create New Deal keyword
     ...    @update: amansueto    15APR2020    - merged select actions and validate field keywords to Create New Deal
     ...    @update: dahijara    25 AUG2020    Added writing for scenario 5 Deal name - SERV10_ConversionOfInterestType
+    ...    @update: kduenas     07OCT2020    - Added writing of deal name to corro api dataset for API_CORRO_TC04
     [Arguments]    ${ExcelPath}
     ###Data Generation###
     ${Deal_Name}    ${Deal_Alias}    Generate Deal Name and Alias    &{ExcelPath}[Deal_NamePrefix]    &{ExcelPath}[Deal_AliasPrefix]    &{ExcelPath}[rowid]
@@ -683,7 +693,8 @@ Setup Syndicated Deal For Secondary Sale
     Write Data To Excel    SERV29_PaymentFees    ScheduledActivity_DealName    ${rowid}    ${Deal_Name}
     Write Data To Excel    SERV30_AdminFeePayment    Deal_Name    ${rowid}    ${Deal_Name}
     Write Data To Excel    TRP002_SecondarySale    Deal_Name    ${rowid}    ${Deal_Name}
-    Write Data To Excel    CRED01_DealSetup    Deal_Alias    ${rowid}    ${Deal_Alias}      
+    Write Data To Excel    Correspondence    Deal_Name    4    ${Deal_Name}    ${APIDataSet}    bTestCaseColumn=True    sColumnReference=rowid
+    Write Data To Excel    CRED01_DealSetup    Deal_Alias    ${rowid}    ${Deal_Alias}
     
     ${Deal_Name}    Read Data From Excel    CRED01_DealSetup    Deal_Name    &{ExcelPath}[rowid]
     ${Deal_Alias}    Read Data From Excel    CRED01_DealSetup    Deal_Alias    &{ExcelPath}[rowid]
