@@ -438,6 +438,7 @@ Navigate Line Fee and Verify Accrual Share Adjustment Notebook
 Create Line Fee Payment Reversal
     [Documentation]    This keyword is used for creating Payment Reversal
     ...    @author: cfrancis    - 01OCT2020    - initial create
+    ...    @update: cfrancis    - 05OCT2020    - added logic of getting requested amount if current cycle due is 0.0
     
     Mx LoanIQ Select Window Tab    ${LIQ_LineFee_Tab}    Events
     Mx LoanIQ Select Or DoubleClick In Javatree   ${LIQ_LineFee_Events_Javatree}    Fee Payment Released%d
@@ -449,6 +450,10 @@ Create Line Fee Payment Reversal
     ${CurrentCycleDue}    Mx LoanIQ Get Data    ${LIQ_LineFee_ReversePayment_CurrentCycleDue}    Amount
     ${CurrentCycleDue}    Remove String    ${CurrentCycleDue}    -
     ${CurrentCycleDue}    Remove Comma, Negative Character and Convert to Number    ${CurrentCycleDue}
+    
+    ${CurrentCycleDue}    Run Keyword If    '${CurrentCycleDue}'=='0.0'    Mx LoanIQ Get Data    ${LIQ_LineFee_ReversePayment_RequestedAmount}    Amount
+    ...    ELSE    Set Variable    ${CurrentCycleDue}
+    
     mx LoanIQ enter    ${LIQ_LineFee_ReversePayment_RequestedAmount}    ${CurrentCycleDue}
     
     [Return]    ${CurrentCycleDue}
@@ -502,3 +507,17 @@ Release Reverse Fee Payment
     Validate if Question or Warning Message is Displayed
 
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LineFeeReverseWindow_WorkflowTab_Release
+    
+Change Expiry Date of Line Fee
+    [Documentation]    This keyword changes the expiry date of the Line Fee from LIQ
+    ...    @author: cfrancis    -06OCT2020    - initial create
+    [Arguments]    ${sExpiryDate}
+    
+    mx LoanIQ activate window    ${LIQ_LineFee_Window}
+    Mx LoanIQ Select    ${LIQ_LineFee_Update_Menu}
+    Mx LoanIQ Select    ${LIQ_LineFee_ChangeExpiryDate_Menu}
+    mx LoanIQ enter    ${LIQ_LineFee_ExpiryDate}    ${sExpiryDate}
+    mx LoanIQ click    ${LIQ_LineFee_ExpiryDate_OK_Button}
+    mx LoanIQ click element if present    ${LIQ_LineFee_ExpiryDate_OK_Button}
+    
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LineFeeWindow_ChangeExpiryDate

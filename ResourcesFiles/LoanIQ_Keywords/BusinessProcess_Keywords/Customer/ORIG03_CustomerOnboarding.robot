@@ -464,6 +464,8 @@ Search Customer and Complete its Borrower Profile Creation with default values
     ...    @update: hstone     04MAY2020    - Updated 'Add Classification Code Details under General tab' Arguments to take Excel Data Values
     ...    @update: dahijara    07JUL2020    - added writing in SERV23_LoanPaperClip for Borrower1_RTGSRemittanceDescription
     ...    @update: dahijara    08JUL2020    - added writing for scenario 6 - SERV29_PaymentFees-Borrower1_ContactEmail
+    ...    @update: makcamps    10OCT2020    - Deleted click ServicingGroupWindow_ExitButton before Validate Active Window Customer method because
+    ...                                        Servicing Group Window is closed in Close Servicing Group Remittance Instructions Selection List Window method
     ...    @update: fjluberio    10OCT2020    -added Entity conditions for EU when adding remittance instruction
     [Arguments]    ${ExcelPath}
 	
