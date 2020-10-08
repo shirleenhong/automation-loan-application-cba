@@ -1715,6 +1715,9 @@ Validate Commitment Amount
 Get Original Amount on Summary Tab of Facility Notebook
     [Documentation]    This keyword will get the original amount under Summary Tab.
     ...    @author:mgaling
+    ...    @update: dahijara    24SEP2020    Added post processing keywords and optional arguments and screenshot.
+    [Arguments]    ${sRunVar_Orig_FacilityCurrentCmt}=None    ${sRunVar_Orig_FacilityAvailableToDraw}=None    ${sRunVar_Orig_FacilityHBContrGross}=None    ${sRunVar_Orig_FacilityHBOutstandings}=None    ${sRunVar_Orig_FacilityHBAvailToDraw}=None
+    ...    ${sRunVar_Orig_FacilityNetCmt}=None    ${sRunVar_Orig_FacilityHBNetFundableCmt}=None    ${sRunVar_Orig_FacilityHBNetOutstandings_Funded}=None    ${sRunVar_Orig_FacilityHBNetAvailToDraw_Fundable}=None    ${sRunVar_Orig_FacilityHBNetAvailToDraw}=None
     
     mx LoanIQ activate window    ${LIQ_FacilityNotebook_Window}
     Mx LoanIQ Select Window Tab    ${LIQ_FacilityNotebook_Tab}    Summary
@@ -1758,7 +1761,22 @@ Get Original Amount on Summary Tab of Facility Notebook
     ${Orig_FacilityHBNetAvailToDraw}    Remove String    ${Orig_FacilityHBNetAvailToDraw}    ,
     ${Orig_FacilityHBNetAvailToDraw}    Convert To Number    ${Orig_FacilityHBNetAvailToDraw}    2  
     
-    [Return]    ${Orig_FacilityCurrentCmt}    ${Orig_FacilityAvailableToDraw}    ${Orig_FacilityHBContrGross}    ${Orig_FacilityHBOutstandings}    ${Orig_FacilityHBAvailToDraw}    ${Orig_FacilityNetCmt}    ${Orig_FacilityHBNetFundableCmt}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/FacilityNotebook_SummaryTab
+	
+    ### ConstRuntime Keyword Post-processing ###
+    Save Values of Runtime Execution on Excel File    ${sRunVar_Orig_FacilityCurrentCmt}    ${Orig_FacilityCurrentCmt}
+    Save Values of Runtime Execution on Excel File    ${sRunVar_Orig_FacilityAvailableToDraw}    ${Orig_FacilityAvailableToDraw}
+    Save Values of Runtime Execution on Excel File    ${sRunVar_Orig_FacilityHBContrGross}    ${Orig_FacilityHBContrGross}
+    Save Values of Runtime Execution on Excel File    ${sRunVar_Orig_FacilityHBOutstandings}    ${Orig_FacilityHBOutstandings}
+    Save Values of Runtime Execution on Excel File    ${sRunVar_Orig_FacilityHBAvailToDraw}    ${Orig_FacilityHBAvailToDraw}
+    Save Values of Runtime Execution on Excel File    ${sRunVar_Orig_FacilityNetCmt}    ${Orig_FacilityNetCmt}
+    Save Values of Runtime Execution on Excel File    ${sRunVar_Orig_FacilityHBNetFundableCmt}    ${Orig_FacilityHBNetFundableCmt}
+    Save Values of Runtime Execution on Excel File    ${sRunVar_Orig_FacilityHBNetOutstandings_Funded}    ${Orig_FacilityHBNetOutstandings_Funded}
+    Save Values of Runtime Execution on Excel File    ${sRunVar_Orig_FacilityHBNetAvailToDraw_Fundable}    ${Orig_FacilityHBNetAvailToDraw_Fundable}
+    Save Values of Runtime Execution on Excel File    ${sRunVar_Orig_FacilityHBNetAvailToDraw}    ${Orig_FacilityHBNetAvailToDraw}
+
+    [Return]    ${Orig_FacilityCurrentCmt}    ${Orig_FacilityAvailableToDraw}    ${Orig_FacilityHBContrGross}    ${Orig_FacilityHBOutstandings}
+    ...    ${Orig_FacilityHBAvailToDraw}    ${Orig_FacilityNetCmt}    ${Orig_FacilityHBNetFundableCmt}
     ...    ${Orig_FacilityHBNetOutstandings_Funded}    ${Orig_FacilityHBNetAvailToDraw_Fundable}    ${Orig_FacilityHBNetAvailToDraw} 
     
     
@@ -2326,11 +2344,23 @@ Validate Outstanding Amount After Drawdown
 Post Validation Of Computed Amounts In Facility After Drawdown
     [Documentation]    This keyword validates the amounts shown in the Facility Notebook after an Initial Drawdown.
     ...                @author: bernchua
-    [Arguments]    ${HostBank_Share}    ${Computed_GlobalOutstanding}    ${Computed_HostBankGrossOutstanding}    ${Computed_HostBankNetOutstanding}
-    ...    ${PreOutstandingAmt_GFA}    ${PreOutstandingAmt_HBG}    ${PreOutstandingAmt_HBN}
+    ...                @update: dahijara    22SEP2020    - Added pre processing and screenshot.
+    [Arguments]    ${sHostBank_Share}    ${sComputed_GlobalOutstanding}    ${sComputed_HostBankGrossOutstanding}    ${sComputed_HostBankNetOutstanding}
+    ...    ${sPreOutstandingAmt_GFA}    ${sPreOutstandingAmt_HBG}    ${sPreOutstandingAmt_HBN}
+
+    ### GetRuntime Keyword Pre-processing ###
+    ${HostBank_Share}    Acquire Argument Value    ${sHostBank_Share}
+    ${Computed_GlobalOutstanding}    Acquire Argument Value    ${sComputed_GlobalOutstanding}
+    ${Computed_HostBankGrossOutstanding}    Acquire Argument Value    ${sComputed_HostBankGrossOutstanding}
+    ${Computed_HostBankNetOutstanding}    Acquire Argument Value    ${sComputed_HostBankNetOutstanding}
+    ${PreOutstandingAmt_GFA}    Acquire Argument Value    ${sPreOutstandingAmt_GFA}
+    ${PreOutstandingAmt_HBG}    Acquire Argument Value    ${sPreOutstandingAmt_HBG}
+    ${PreOutstandingAmt_HBN}    Acquire Argument Value    ${sPreOutstandingAmt_HBN}
+
     ${UI_GFA_CurrentCmt}    ${UI_GFA_Outstandings}    ${UI_GFA_AvailToDraw}    Get Global Facility Amounts
     ${UI_HBG_ContrGross}    ${UI_HBG_Outstandings}    ${UI_HBG_AvailToDraw}    Get Host Bank Share Gross Amounts
     ${UI_HBN_NetCmt}    ${UI_HBN_Outstandings}    ${UI_HBN_AvailToDraw}    Get Host Bank Share Net Amounts
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/FacilityNotebook
     
     ${HostBankShareGross_CommitAmt}    Compute Host Bank Share Commitment Amount    ${UI_GFA_CurrentCmt}    ${HostBank_Share}
     ${HostBankShareNet_CommitAmt}    Compute Host Bank Share Commitment Amount    ${UI_GFA_CurrentCmt}    ${HostBank_Share}
@@ -2342,7 +2372,7 @@ Post Validation Of Computed Amounts In Facility After Drawdown
     ${GFAOutstanding_Status}    Validate Outstanding Amount After Drawdown    ${PreOutstandingAmt_GFA}    ${UI_GFA_Outstandings}    ${Computed_GlobalOutstanding}
     ${HBGOutstanding_Status}    Validate Outstanding Amount After Drawdown    ${PreOutstandingAmt_HBG}    ${UI_HBG_Outstandings}    ${Computed_HostBankGrossOutstanding}
     ${HBNOutstanding_Status}    Validate Outstanding Amount After Drawdown    ${PreOutstandingAmt_HBN}    ${UI_HBN_Outstandings}    ${Computed_HostBankNetOutstanding}
-    
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/FacilityNotebook
     Run Keyword If    '${HostBankShareGross_CommitAmt}'=='${UI_HBG_ContrGross}'    Log    Host Bank Share Gross Contr. Gross Amount of ${HostBankShareGross_CommitAmt} verified.
 	Run Keyword If    '${HostBankShareNet_CommitAmt}'=='${UI_HBN_NetCmt}'    Log	Host Bank Share Net Net Cmt Amount of ${HostBankShareNet_CommitAmt} verified.
     
@@ -2358,8 +2388,17 @@ Post Validation Of Facility Summary Amounts After Drawdown
     [Documentation]    This keyword validates the Amounts shown in the Facility Notebook's Summary Tab after Drawdown.
     ...                It checks the before and after values, and verifies that the amount should not be equal.
     ...                @author: bernchua
-    [Arguments]    ${PreOutstandingAmt_GFA}    ${PreOutstandingAmt_HBG}    ${PreOutstandingAmt_HBN}
-    ...    ${PreAvailToDraw_GFA}    ${PreAvailToDraw_HBG}    ${PreAvailToDraw_HBN}
+    [Arguments]    ${sPreOutstandingAmt_GFA}    ${sPreOutstandingAmt_HBG}    ${sPreOutstandingAmt_HBN}
+    ...    ${sPreAvailToDraw_GFA}    ${sPreAvailToDraw_HBG}    ${sPreAvailToDraw_HBN}
+
+    ### GetRuntime Keyword Pre-processing ###
+    ${PreOutstandingAmt_GFA}    Acquire Argument Value    ${sPreOutstandingAmt_GFA}
+    ${PreOutstandingAmt_HBG}    Acquire Argument Value    ${sPreOutstandingAmt_HBG}
+    ${PreOutstandingAmt_HBN}    Acquire Argument Value    ${sPreOutstandingAmt_HBN}
+    ${PreAvailToDraw_GFA}    Acquire Argument Value    ${sPreAvailToDraw_GFA}
+    ${PreAvailToDraw_HBG}    Acquire Argument Value    ${sPreAvailToDraw_HBG}
+    ${PreAvailToDraw_HBN}    Acquire Argument Value    ${sPreAvailToDraw_HBN}
+
     ${UI_GFA_CurrentCmt}    ${UI_GFA_Outstandings}    ${UI_GFA_AvailToDraw}    Get Global Facility Amounts
     ${UI_HBG_ContrGross}    ${UI_HBG_Outstandings}    ${UI_HBG_AvailToDraw}    Get Host Bank Share Gross Amounts
     ${UI_HBN_NetCmt}    ${UI_HBN_Outstandings}    ${UI_HBN_AvailToDraw}    Get Host Bank Share Net Amounts
@@ -2369,6 +2408,7 @@ Post Validation Of Facility Summary Amounts After Drawdown
     Should Not Be Equal    ${PreAvailToDraw_GFA}    ${UI_GFA_AvailToDraw}
     Should Not Be Equal    ${PreAvailToDraw_HBG}    ${UI_HBG_AvailToDraw}
     Should Not Be Equal    ${UI_HBN_Outstandings}    ${UI_HBN_AvailToDraw}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/FacilityNotebook
 
 Validate the New Total Global Facility Amounts after Drawdown
     [Documentation]    This keyword validates the Facility Current Global Outstandings Amount, Current Facility Commitment Amount, And Current Facility Avail To Draw Amount. 
@@ -3691,3 +3731,34 @@ Get Effective and Expiry Date from Summary Tab in Facility Notebook
     Save Values of Runtime Execution on Excel File    ${sRunTimeVar_ExpiryDate}    ${ExpiryDate}
     [Return]    ${EffectiveDate}    ${ExpiryDate}
 
+Retrieve Facility Notebook Amounts prior to Loan Merge
+    [Documentation]    This keyword is used to get Facility Notebook Amounts for Loan Merge
+    ...    @author: dahijara    28SEP2020    - initial create
+    [Arguments]    ${sRunVar_GlobalFacility_ProposedCmtBeforeMerge}=None    ${sRunVar_GlobalFacility_CurrentCmtBeforeMerge}=None    ${sRunVar_GlobalFacility_OutstandingsBeforeMerge}=None
+    ...    ${sRunVar_GlobalFacility_AvailToDrawBeforeMerge}=None    ${sRunVar_HostBank_ProposedCmtBeforeMerge}=None    ${sRunVar_HostBank_ContrGrossBeforeMerge}=None
+    ...    ${sRunVar_HostBank_OutstandingsBeforeMerge}=None    ${sRunVar_HostBank_AvailToDrawBeforeMerge}=None
+
+    ${GlobalFacility_ProposedCmtBeforeMerge}    Mx LoanIQ Get Data    ${LIQ_FacilitySummary_ProposedCmt_Textfield}    input=GlobalFacility_ProposedCmtBeforeMerge        
+    ${GlobalFacility_CurrentCmtBeforeMerge}    Mx LoanIQ Get Data    ${LIQ_FacilitySummary_GlobalFacAmt_CurrentCmt_Amount}    input=GlobalFacility_CurrentCmtBeforeMerge        
+    ${GlobalFacility_OutstandingsBeforeMerge}    Mx LoanIQ Get Data    ${LIQ_FacilitySummary_GlobalFacAmt_Outstandings_Amount}    input=GlobalFacility_OutstandingsBeforeMerge        
+    ${GlobalFacility_AvailToDrawBeforeMerge}    Mx LoanIQ Get Data    ${LIQ_FacilitySummary_GlobalFacAmt_AvailToDraw_Amount}    input=GlobalFacility_AvailToDrawBeforeMerge 
+    
+    ${HostBank_ProposedCmtBeforeMerge}    Mx LoanIQ Get Data    ${LIQ_FacilitySummary_HostBankProposeCmt}    input=HostBank_ProposedCmtBeforeMerge        
+    ${HostBank_ContrGrossBeforeMerge}    Mx LoanIQ Get Data    ${LIQ_FacilitySummary_HostBankContrGross}    input=HostBank_ContrGrossBeforeMerge        
+    ${HostBank_OutstandingsBeforeMerge}    Mx LoanIQ Get Data    ${LIQ_FacilitySummary_HostBankOutstanding}    input=HostBank_OutstandingsBeforeMerge        
+    ${HostBank_AvailToDrawBeforeMerge}    Mx LoanIQ Get Data    ${LIQ_FacilitySummary_HostBankAvailToDraw}    input=HostBank_AvailToDrawBeforeMerge 
+	
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/FacilityNotebook_FacilityAmounts
+
+    ### ConstRuntime Keyword Post-processing ###
+    Save Values of Runtime Execution on Excel File    ${sRunVar_GlobalFacility_ProposedCmtBeforeMerge}    ${GlobalFacility_ProposedCmtBeforeMerge}
+    Save Values of Runtime Execution on Excel File    ${sRunVar_GlobalFacility_CurrentCmtBeforeMerge}    ${GlobalFacility_CurrentCmtBeforeMerge}
+    Save Values of Runtime Execution on Excel File    ${sRunVar_GlobalFacility_OutstandingsBeforeMerge}    ${GlobalFacility_OutstandingsBeforeMerge}
+    Save Values of Runtime Execution on Excel File    ${sRunVar_GlobalFacility_AvailToDrawBeforeMerge}    ${GlobalFacility_AvailToDrawBeforeMerge}
+    Save Values of Runtime Execution on Excel File    ${sRunVar_HostBank_ProposedCmtBeforeMerge}    ${HostBank_ProposedCmtBeforeMerge}
+    Save Values of Runtime Execution on Excel File    ${sRunVar_HostBank_ContrGrossBeforeMerge}    ${HostBank_ContrGrossBeforeMerge}
+    Save Values of Runtime Execution on Excel File    ${sRunVar_HostBank_OutstandingsBeforeMerge}    ${HostBank_OutstandingsBeforeMerge}
+    Save Values of Runtime Execution on Excel File    ${sRunVar_HostBank_AvailToDrawBeforeMerge}    ${HostBank_AvailToDrawBeforeMerge}
+
+    [Return]    ${GlobalFacility_ProposedCmtBeforeMerge}    ${GlobalFacility_CurrentCmtBeforeMerge}    ${GlobalFacility_OutstandingsBeforeMerge}    ${GlobalFacility_AvailToDrawBeforeMerge}
+    ...    ${HostBank_ProposedCmtBeforeMerge}    ${HostBank_ContrGrossBeforeMerge}    ${HostBank_OutstandingsBeforeMerge}    ${HostBank_AvailToDrawBeforeMerge}

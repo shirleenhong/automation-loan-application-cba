@@ -39,6 +39,7 @@ LIQ_PendingRollover_Save_Submenu = 'JavaWindow("title:=.*Rollover/Conversion.*")
 LIQ_PendingRollover_Exit_Submenu = 'JavaWindow("title:=.*Rollover/Conversion.*").JavaMenu("label:=File").JavaMenu("label:=Exit")'
 LIQ_PendingRollover_RequestedAmt_JavaEdit = 'JavaWindow("title:=.*Rollover/Conversion.*").JavaObject("tagname:=Group","text:=Amounts").JavaEdit("attached text:=Requested Amt:")'
 LIQ_PendingRollover_RepricingFrequency_Dropdown = 'JavaWindow("title:=.* Rollover/Conversion.*").JavaList("attached text:=Repricing Frequency:")'
+LIQ_PendingRollover_RepricingDate = 'JavaWindow("title:=.* Rollover/Conversion.*").JavaEdit("attached text:=Repricing Date:")'
 
 LIQ_SetBaseRate_Window = 'JavaWindow("title:=.*Set Base Rate.*")'
 LIQ_SetBaseRate_BorrowerBaseRate_TextField = 'JavaWindow("title:=.*Set Base Rate.*").JavaEdit("attached text:=Borrower Base Rate:")'
