@@ -218,6 +218,7 @@ Resource    ../ResourcesFiles/LoanIQ_Keywords/BusinessProcess_Keywords/Syndicati
 Resource    ../ResourcesFiles/LoanIQ_Keywords/BusinessProcess_Keywords/Syndication/SYND06_Distribute Upfront Fee Payment.robot
 
 ## Resource Files - Correspondence Files - Business Process Keywords
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Correspondence/API_COR_TC04.robot
 Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Correspondence/API_COR_TC01.robot
 Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Correspondence/API_COR_TC02.robot
 Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Correspondence/API_COR_TC03.robot

@@ -1,0 +1,57 @@
+<liqInfo>
+    {"event_schema_id":"2148","event":{"header":{"correlationId":"LIQ-(EEGV5GG-(EEGV59L-7","processPath":{"array":[{"source":"FINASTRA_CCB","timestamp":"2020-09-22T12:02:30.821+08:00"}]}},"sourceSystem":{"string":"FINASTRA_CCB"},"ttl":{"au.com.cba.avro.customermanagement.noticesnotify.ttl":{"ttlDuration":"300","ttlSourceTime":"2020-09-22T12:02:30.818+08:00"}},"cifIds":{"array":[{"string":"35"}]},"documentInfo":{"documentPackage":{"businessChannel":"LOANIQ","name":null,"version":null,"templateId":null,"fileType":null,"content":"
+    <FinastraApplication>
+        <StandardNotice>
+            <ProcessingArea>AUSAG</ProcessingArea>
+            <Address>
+                <line>Date: 22-Sep-2020</line>
+                <line>TO  : CUSTLEGAL43149</line>
+                <line>ATTN: John Bloggs</line>
+                <line>Re  : BNS1_02082020233238KWT S102082020234102UOQ</line>
+            </Address>
+            <BodyContent>
+                <section>
+                    <line>                                *** FEE INVOICE ***</line>
+                    <line/>
+                    <line>Description: Commitment Fee                   </line>
+                    <line/>
+                    <line>In accordance with the facility agreement, we advise the following.</line>
+                    <line/>
+                    <line>Effective 27-Nov-2020, the following Commitment Fee totalling AUD 874.52 for CUSTLEGAL43149 becomes due.</line>
+                </section>
+                <section>
+                    <line>Calculated as follows:</line>
+                    <line/>
+                    <line>Rate Basis:  Actual/365</line>
+                    <line/>
+                    <line>Start       End         Days CCY Amount     All        Amount</line>
+                    <line>                                            In Rate          </line>
+                    <line>___________ ___________ ____ ___ __________ __________ ______</line>
+                    <line/>
+                    <line>02-Jun-2020 02-Jul-2020 31   AUD 100,000.00 4.000000%  339.73</line>
+                    <line>03-Jul-2020 01-Sep-2020 61   AUD 80,000.00  4.000000%  534.79</line>
+                </section>
+                <section>
+                    <line>We will debit your nominated account for an amount of AUD 874.52 on the effective date.</line>
+                </section>
+                <section>
+                    <line>For: CUSTLEGAL43149</line>
+                </section>
+                <section>
+                    <line>Account Number:   </line>
+                    <line>1020188515</line>
+                    <line>Account Name:  </line>
+                    <line>CBA Domestic Account</line>
+                    <line>Routing Number:</line>
+                    <line/>
+                    <line>Reference: AUSAG1000347</line>
+                </section>
+                <section>
+                    <line/>
+                </section>
+            </BodyContent>
+        </StandardNotice>
+    </FinastraApplication>
+    "},"documentStorage":{"status":null,"fileName":null,"inputSource":null,"inputSourceDetail":null,"scanDate":null,"departmentId":{"string":"BP_CML"},"retrievalId":null,"documentumType":null,"applicationNumber":null,"purgeDate":null,"boxLocation":null,"recordManager":null,"description":null,"processes":{"array":[{"string":"(EEGV59L"}]},"services":{"array":[{"string":"1000347"}]},"accountNumbers":{"array":[{"source":{"string":"LOANIQ"},"productCode":{"string":"FAC"},"number":{"string":"3000337"}}]},"processFlags":{"array":[{"name":null,"value":null}]}}},"emailSecureMessageDetails":{"subject":"1000347 BNS1_02082020233238KWT","senderEmail":"AGENCY@CBA.AU.COM","toRecipientEmail":"{BACKSPACE}john.blogg@abc.com","ccRecipientEmail":{"string":"JOHN.DOE@CBA.AU.COM"},"mimeType":null,"messageID":"LIQ-(EEGV5GG-(EEGV59L-7","body":null,"attachment":null,"inBandAttachment":null,"deliveredToEmail":null,"undeliveredToEmail":null,"systemCode":null,"systemName":null,"identifier":{"string":"AUSAG"},"digitalSignature":null}}}
+
+</liqInfo>
