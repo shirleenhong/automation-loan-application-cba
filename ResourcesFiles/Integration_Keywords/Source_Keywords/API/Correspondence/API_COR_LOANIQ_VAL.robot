@@ -15,8 +15,8 @@ Get the Notice Details in LIQ
     ${SystemDate}    Convert Date    ${SystemDate}     date_format=%d-%b-%Y
     ${FromDate}    Subtract Time From Date    ${SystemDate}    ${sSubAddDays}days
     ${ThruDate}    Add Time To Date    ${SystemDate}    ${sSubAddDays}days
-    Write Data To Excel    Correspondence    From_Date    ${rowid}     ${FromDate}    ${APIDataSet}    bTestCaseColumn=True    sColumnReference=rowid
-    Write Data To Excel    Correspondence    Thru_Date    ${rowid}    ${ThruDate}    ${APIDataSet}    bTestCaseColumn=True    sColumnReference=rowid
+    Write Data To Excel for API_Data    Correspondence    From_Date    ${rowid}    ${FromDate}
+    Write Data To Excel for API_Data   Correspondence    Thru_Date    ${rowid}    ${ThruDate}
     
     Search Existing Deal    ${sDealName}
     Get Notice ID thru Deal Notebook    ${FromDate}    ${ThruDate}    ${sNoticeType}
