@@ -4,8 +4,8 @@ Resource    ../../../Configurations/Party_Import_File.robot
 *** Variables ***
 
 *** Keywords ***
-Validate Disabled Fields in Quick Party Onboarding
-    [Documentation]    This test case is used to validate disabled fields in Quick Party Onboarding
+Create Party ID and Validate Disabled Fields in Quick Enterprise Party Page
+    [Documentation]    This test case is used to validate disabled fields in Pre-existence Page and Quick Enterprise Party Page
     ...    @author: javinzon    08OCT2020    - initial create
     [Arguments]    ${ExcelPath}
     

@@ -593,7 +593,7 @@ Populate Pre-Existence Check and Validate the Duplicate Enterprise Name
     ...    ELSE    Run Keyword and Continue on Failure    Fail    Party details displayed are not for Party:${Party_Name}
 
 Validate Disabled Fields in Quick Enterprise Party Page
-    [Documentation]    This keyword validates disabled fields in Quick Enterprise Party page
+    [Documentation]    This keyword validates disabled fields in Quick Enterprise Party page and Address details dialog
     ...    @author: javinzon    08OCT2020    - initial create
     [Arguments]    ${sCountry_Region}
     
