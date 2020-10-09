@@ -51,7 +51,7 @@ Verify If Value Exists in Loan IQ
     ...    @author: dahijara    06MAY2020    - initial create    
     ...    @update: javinzon    18SEP2020    - updated keyword "Set List Text with 1 word to Locator" to  "Set List Text with 2 words to Locator"
     ...    @update: javinzon    01OCT2020    - updated keyword "Set List Text with 2 words to Locator" to  "Set List Text with 1 word to Locator",
-    ...                                        added ${bWildCard} argument
+    ...                                        added ${bWildCard} argument, updated ELSE condition to remove "Set List Text with 1 word to Locator"
     
     [Arguments]    ${sFieldName}    ${sFieldValue}    ${sLIQWindowName}    ${sFieldType}    ${bWildCard}=True
 
@@ -95,12 +95,7 @@ Validate Customer Legal Address Details in Textbox
     Verify If Value Exists in Loan IQ    Line3    ${sAddressLine3}    View Address    Textbox
     Verify If Value Exists in Loan IQ    Line4    ${sAddressLine4}    View Address    Textbox
     Verify If Value Exists in Loan IQ    City    ${sCity}    View Address    Textbox    False
-    #Verify If Value Exists in Loan IQ    Country    ${sCountry}    View Address    Listbox    
-    #Verify If Value Exists in Loan IQ    Treasury Reporting Area    ${sCountryOfTaxDomicile}    View Address    Listbox    
-    #Verify If Value Exists in Loan IQ    Province    ${sProvince}    View Address    Listbox
     Verify If Value Exists in Loan IQ    Postal Code    ${sPostalCode}    View Address    Textbox
-    #Run Keyword If    '${sAddressLine3}'!='${EMPTY}' and '${sAddressLine3}'!='${None}'    Verify If Value Exists in Loan IQ    Address Line 3    ${sAddressLine3}    View Address    Textbox
-    #Run Keyword If    '${sAddressLine4}'!='${EMPTY}' and '${sAddressLine4}'!='${None}'    Verify If Value Exists in Loan IQ    Address Line 4    ${sAddressLine4}    View Address    Textbox
     Mx LoanIQ Click    ${LIQ_ViewAddress_Ok_CancelButton}
     #${LIQ_Active_Customer_Notebook_ViewAddressWindow_CancelButton}     
   
@@ -111,16 +106,13 @@ Validate Party Details in Loan IQ
     ...    @update: javinzon    17SEP2020    - Added arguments for Address 3 and 4
     ...    @update: javinzon    01OCT2020    - Added validation for Country, CountryOfTaxDomicile, Country
     ...                                        Added Return Customer Address Details from Active Customer Listbox fields
-    										   Updated label from PARTY SUBTYPE to Classification
+    ...										   Updated label from PARTY SUBTYPE to Classification
+    ...	   @update: javinzon	09OCT2020	 - Added comments for SIC, Country of Tax Domicile, and Province Validation
     [Arguments]    ${sPartyID}    ${sShortName}    ${sEnterpriseName}    ${sGSTID}    ${sPartySubType}    ${sPartyBusinessActivity}    ${sBusinessCountry}    
     ...    ${sAddressCode}    ${sAddressLine1}    ${sAddressLine2}    ${sAddressLine3}    ${sAddressLine4}    ${sCity}    ${sCountry}    ${sCountryOfTaxDomicile}    ${sProvince}    ${sPostalCode}
     
     Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
     Navigate to Customer Notebook via Customer ID    ${sPartyID}
-    # :FOR    ${index}    IN RANGE    50
-    # \    Navigate to Customer Notebook via Customer ID        ${sPartyID}
-    # \    ${Error}    Mx LoanIQ Get Data    ${LIQ_CustomerSelect_Error_Window}    displayed%${Error}
-    # \    Exit For Loop If    '${Error}'=='0'
     
     ### Get LIQ Values ###
     ${LIQ_CustomerID}    ${LIQ_ShortName}    ${LIQ_LegalName}    ${LIQ_GSTID}    Return Customer Details from Active Customer General Tab
@@ -148,6 +140,7 @@ Validate Party Details in Loan IQ
     ### Party Subtype Validation ###
     Verify If Value Exists in Loan IQ    Classification    ${sPartySubType}    Active Customer    Textbox
 
+    ### Customer SIC Validation ###
     Validate Customer SIC    ${sPartyBusinessActivity}    ${sBusinessCountry}
     
     ### Get Address details that are in Listbox ###
@@ -159,17 +152,16 @@ Validate Party Details in Loan IQ
     Run Keyword If    ${isMatched}==${True}    Log    Country: '${sCountry}' matched Country: '${Country}' in Loan IQ
     ...    ELSE    Run Keyword And Continue On Failure    Fail    Country: '${sCountry}' does NOT match Country: '${Country}' in Loan IQ   
     
-    ### Country Validation ###
+    ### Country of Tax Domicile Validation ###
     ${isMatched}    Run Keyword And Return Status    Should Be Equal    ${sCountryOfTaxDomicile}    ${CountryOfTaxDomicile}
     Run Keyword If    ${isMatched}==${True}    Log    CountryOfTaxDomicile: '${sCountryOfTaxDomicile}' matched CountryOfTaxDomicile: '${CountryOfTaxDomicile}' in Loan IQ
     ...    ELSE    Run Keyword And Continue On Failure    Fail    CountryOfTaxDomicile: '${sCountryOfTaxDomicile}' does NOT match CountryOfTaxDomicile: '${CountryOfTaxDomicile}' in Loan IQ   
     
-    ### Country Validation ###
+    ### Province Validation ###
     ${isMatched}    Run Keyword And Return Status    Should Be Equal    ${sProvince}    ${Province}
     Run Keyword If    ${isMatched}==${True}    Log    Province: '${sProvince}' matched Province: '${Province}' in Loan IQ
     ...    ELSE    Run Keyword And Continue On Failure    Fail    Province: '${sProvince}' does NOT match Province: '${Province}' in Loan IQ   
         
     Validate Customer Legal Address Details in Textbox    ${sEnterpriseName}    ${sAddressCode}    ${sAddressLine1}    ${sAddressLine2}    ${sAddressLine3}    ${sAddressLine4}    ${sCity}    ${sPostalCode}
-    
     
     Mx LoanIQ close window    ${LIQ_ActiveCustomer_Window}    
