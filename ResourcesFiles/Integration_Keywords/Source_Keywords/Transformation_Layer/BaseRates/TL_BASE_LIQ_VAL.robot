@@ -705,13 +705,15 @@ Validate Inactive Tenor Code Cannot be Used for Pricing Option in LoanIQ
     mx LoanIQ click    ${LIQ_PricingRules_AddOption_Button}
     Open Excel    ${dataset_path}${sTransformedData_FilePath}
     ${Row_Count}    Get Row Count    Transformed_BaseRate
+    Close Current Excel Document
     :FOR    ${Index}    IN RANGE    1    ${Row_Count}
     \    ${dTransformedData}    Create Dictionary Using Transformed Data and Return    ${dataset_path}${sTransformedData_FilePath}    ${Index}
     \    ${PricingOption}    Run Keyword and Continue on Failure    Convert Pricing Option from Base Rate Code and Available Rate    &{dTransformedData}[baseRateCode]
          ...    &{dTransformedData}[buyRate]    &{dTransformedData}[midRate]    &{dTransformedData}[sellRate]    &{dTransformedData}[lastRate]
     \    ${RateTenor}    Run Keyword and Continue on Failure   Trim Leading 0 from Rate Tenor    &{dTransformedData}[rateTenor] 
     \    Run Keyword and Continue on Failure    Verify Pricing Option Frequency is not Available    ${PricingOption}    ${RateTenor}
-    Close Current Excel Document
+    # Close Current Excel Document
+    
 Verify Pricing Option Frequency is not Available
     [Documentation]    This keyword verifies the pricing option is not present
     ...    @author: cfrancis    10SEP2019    - initial create
@@ -721,7 +723,8 @@ Verify Pricing Option Frequency is not Available
     Mx LoanIQ Select Combo Box Value    ${LIQ_InterestPricingOption_Dropdown}    ${sPricingOption}
     Take Screenshot    PricingOption_Selected
     mx LoanIQ click    ${LIQ_InterestPricingOption_Frequency_Button}
-    ${Status}    Run Keyword and Return Status    Mx LoanIQ Select Or Doubleclick In Tree By Text    ${LIQ_FrequencySelectionList_Available_JavaTree}    ${sRateTenor}%s
+    # ${Status}    Run Keyword and Return Status    Mx LoanIQ Select Or Doubleclick In Tree By Text    ${LIQ_FrequencySelectionList_Available_JavaTree}    ${sRateTenor}%s
+    ${Status}    Run Keyword and Return Status    Mx LoanIQ Select String    ${LIQ_FrequencySelectionList_Available_JavaTree}    ${sRateTenor}
     Log    ${Status}
     Run Keyword If    ${Status}==${False} and '${sPricingOption}' != 'Default'    Log    Correct!! Base Rate Code ${sPricingOption} with ${sRateTenor} Tenor is not existing in Pricing Option.
     ...    ELSE IF    ${Status}==${True}    Run Keyword and Continue on Failure    Fail    Incorrect!! Base Rate Code ${sPricingOption} with ${sRateTenor} Tenor is existing in Pricing Option.
