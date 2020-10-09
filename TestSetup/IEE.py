@@ -88,7 +88,7 @@ LIQ_ADMIN_PASSWORD = "password"
 
 ###CORRESPONDENCE###
 CORRES_SERVER = 'http://mancsleverg0007'
-CORRES_PORT = '8480'
+CORRES_PORT = '9090'
 API_CORRES_HOST = 'http://mancsleverg0007:9150'
 
 ###COMSEE###
