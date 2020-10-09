@@ -219,7 +219,7 @@ Initiate Fee On Lender Shares Payment
     Navigate Existing Standby Letters of Credit    &{ExcelPath}[SBLC_Alias]
         
     ###Cycles for Bank Guarantee Window###    
-    ${ComputedCycleDue}    Compute SBLC Issuance Fee Amount Per Cycle    &{ExcelPath}[CycleNumber]    ${SystemDate}
+    ${ComputedCycleDue}    Compute SBLC Issuance Fee Amount Per Cycle    &{ExcelPath}[CycleNumber]    ${SystemDate}    None    &{ExcelPath}[AccrualRule_PayInAdvance]
     Write Data To Excel    SERV18_FeeOnLenderSharesPayment    Computed_ProjectedCycleDue    &{ExcelPath}[rowid]    ${ComputedCycleDue}
     Write Data To Excel    SERV24_CreateCashflow    Computed_ProjectedCycleDue    &{ExcelPath}[rowid]    ${ComputedCycleDue}
     
@@ -227,6 +227,7 @@ Initiate Fee On Lender Shares Payment
     Navigate To Fees On Lender Shares
     Initiate Issuance Fee Payment    &{ExcelPath}[SBLC_Alias]    ${SystemDate}
     ...    &{ExcelPath}[Deal_Name]    &{ExcelPath}[Facility_Name]    &{ExcelPath}[Borrower1_ShortName]    ${ComputedCycleDue}
+
     
 Workflow Navigation For Fee On Lender Shares Payment
     [Documentation]    This high-level keyword will cater the workflow navigation of Fee on Lender Shares Payment
