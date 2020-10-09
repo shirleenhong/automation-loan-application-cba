@@ -67,6 +67,7 @@ Validate CUS_CID_CUST_ID and CUS_XID_CUST_ID in LIQ for VLS_Customer
     [Documentation]    This keyword validates CUS_CID_CUST_ID and CUS_XID_CUST_ID in LIQ for VLS_Customer
     ...    @author: ehugo    29AUG2019
     ...    updated: mgaling    10Feb2020    Added on the loop function to handle UNKNOWN data
+    ...    updated: mgaling    07Oct2020    Created separate keyword for CUS_XID_CUST_ID validation  
     [Arguments]    ${sCustomer_CSVFileName}    
     
     ${Customer_CSV_Content}    Read Csv File To List    ${sCustomer_CSVFileName}    |
@@ -80,19 +81,9 @@ Validate CUS_CID_CUST_ID and CUS_XID_CUST_ID in LIQ for VLS_Customer
     \    ${CUS_XID_CUST_ID_Value}    Get the Column Value using Row Number and Column Index    ${sCustomer_CSV_FileName}    ${i}    ${CUS_XID_CUST_ID_Index}
     \    
     \    Continue For Loop If    '${CUS_CID_CUST_ID_Value.strip()}'=='NONE' or '${CUS_CID_CUST_ID_Value.strip()}'=='UNKNOWN' 
-    \       
-    \    ###Select By RID###
-    \    Select By RID    Customer    ${CUS_CID_CUST_ID_Value.strip()} 
-    \
-    \    ###Customer Notebook Window###
-    \    mx LoanIQ activate window    ${LIQ_ActiveCustomer_Window}
-    \    ${CustomerID}    Mx LoanIQ Get Data    ${LIQ_ActiveCustomer_Window_CustomerID}    text%CustomerID
-    \
-    \    ###Validate Customer ID###
-    \    ${status}    Run Keyword And Return Status    Should Be Equal As Strings    ${CustomerID.strip()}    ${CUS_XID_CUST_ID_Value.strip()}
-    \    Take Screenshot    CustomerID
-    \    Run Keyword If    ${status}==False    Run Keyword And Continue On Failure    Fail    Customer ID is not the same.
-    \    mx LoanIQ close window    ${LIQ_ActiveCustomer_Window}
+    \        
+    \    Run Keyword And Continue On Failure    Validate CUS_XID_CUST_ID in Customer Notebook    ${CUS_CID_CUST_ID_Value.strip()}    ${CUS_XID_CUST_ID_Value.strip()}
+    \    Close All Windows on LIQ       
 
 Validate BSG_CDE_CURRENCY in LIQ for VLS_Bal_Subledger
     [Documentation]    This keyword validates BSG_CDE_CURRENCY in LIQ for VLS_Bal_Subledger
@@ -2534,5 +2525,24 @@ Validate CSV Values in Facility Notebook Purpose Tab
     mx LoanIQ select    ${LIQ_FacilityNotebook_Tab}    Types/Purpose
     mx LoanIQ click    ${LIQ_FacilityNotebook_InquiryMode_Button}       
     Take Screenshot    Loan_Purpose
-    Run Keyword And Continue On Failure    Mx LoanIQ Verify Text In Javatree    ${LIQ_FacilityTypesPurpose_LoanPurpose_JavaTree}    ${sLoanPurpose_Desc}          
+    Run Keyword And Continue On Failure    Mx LoanIQ Verify Text In Javatree    ${LIQ_FacilityTypesPurpose_LoanPurpose_JavaTree}    ${sLoanPurpose_Desc}  
+
+Validate CUS_XID_CUST_ID in Customer Notebook
+	[Documentation]    This keyword validates CUS_XID_CUST_ID value in LIQ Customer Notebook
+    ...    @author: mgaling    07Oct2020
+    [Arguments]    ${CUS_CID_CUST_ID_Value}    ${CUS_XID_CUST_ID_Value}
+
+    ###Select By RID###
+    Select By RID    Customer    ${CUS_CID_CUST_ID_Value}
+
+    ###Customer Notebook###
+
+    mx LoanIQ activate window    ${LIQ_ActiveCustomer_Window}    120  
+    ${CustomerID}    Mx LoanIQ Get Data    ${LIQ_ActiveCustomer_Window_CustomerID}    value%CustomerID
+    
+	###Validate Customer ID###
+	${status}    Run Keyword And Return Status    Should Be Equal As Strings    ${CustomerID.strip()}    ${CUS_XID_CUST_ID_Value}
+    Take Screenshot    CustomerID_${CUS_XID_CUST_ID_Value}
+    Run Keyword If    ${status}==False    Run Keyword And Continue On Failure    Fail    Customer ID is not the same.
+    mx LoanIQ close window    ${LIQ_ActiveCustomer_Window}        
            
