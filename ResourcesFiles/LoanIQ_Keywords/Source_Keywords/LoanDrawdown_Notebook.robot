@@ -1000,11 +1000,13 @@ Release Loan Drawdown
     [Documentation]    This keyword will release the Loan Drawdown
     ...    @author: ritragel
     ...    @update: ritragel    06MAR19    Added handling of closing Cashflows window
+    ...    @update: cfrancis    08OCT2020    - Added another Warning Yes for Generate Rate Setting Notices
     mx LoanIQ click element if present    ${LIQ_Cashflows_OK_Button}
     mx LoanIQ click element if present    ${LIQ_Question_Yes_Button}   
     mx LoanIQ activate window    ${LIQ_InitialDrawdown_Window}
     Mx LoanIQ Select Window Tab    ${LIQ_InitialDrawdown_Tab}    Workflow   
     Mx LoanIQ DoubleClick    ${LIQ_InitialDrawdown_WorkflowAction}    Release 
+    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
     mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
     mx LoanIQ click element if present    ${LIQ_Question_Yes_Button} 
     
