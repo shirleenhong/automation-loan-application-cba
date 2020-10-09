@@ -50,6 +50,7 @@ Transform Base Rate CSV Data to XLS File Readable for JSON Creation
     ...    @update: cfrancis    04SEP2019    - added checking for emtpy rows and will be ignored on loop and variable to subtract empty rows from ${New_INDEX}
     ...    @update: jdelacru    21SEP2020    - added new logic and separated the actual transformation of CSV to XLS to cater multiple sub-entities
     ...    @update: jdelacru    29SEP2020    - revert to the original steps in transforming csv to xls
+    ...    @update: mcastro     09OCT2020    - added condition for Empty ${Row_Val_List}
     [Arguments]    ${sCSV_FilePath}    ${sTransformedData_FilePath}    ${sTransformedDataTemplate_FilePath}    
     
     ${CSV_Content_List}    Read Csv As List    ${dataset_path}${sCSVFilePath}
@@ -119,7 +120,7 @@ Transform Base Rate CSV Data to XLS File Readable for JSON Creation
          ...    ELSE IF    ${Same_Rate_Code}==True and ${Same_Tenor}==True and ${Same_Date}==True and '${CONFIG_PRICE_TYPE}'=='BUYRATE'    Write Data to Excel Using Row Index    Transformed_BaseRate    buyRate    ${New_INDEX}    ${GS_INSTR_PRICE}    ${dataset_path}${sTransformedData_FilePath}
          ...    ELSE IF    ${Same_Rate_Code}==True and ${Same_Tenor}==True and ${Same_Date}==True and '${CONFIG_PRICE_TYPE}'=='SELLRATE'    Write Data to Excel Using Row Index    Transformed_BaseRate    sellRate    ${New_INDEX}    ${GS_INSTR_PRICE}    ${dataset_path}${sTransformedData_FilePath}
          ...    ELSE IF    ${Same_Rate_Code}==True and ${Same_Tenor}==True and ${Same_Date}==True and '${CONFIG_PRICE_TYPE}'=='LASTRATE'    Write Data to Excel Using Row Index    Transformed_BaseRate    lastRate    ${New_INDEX}    ${GS_INSTR_PRICE}    ${dataset_path}${sTransformedData_FilePath}
-         ...    ELSE    Get Single Row value from CSV File and Write to Excel for Base Rate    ${ROW_${INDEX}}    ${New_INDEX}    ${Zone2_Curr_Date}    ${Zone3_Curr_Date}    ${CONFIG_PRICE_TYPE}    ${dataset_path}${sTransformedData_FilePath}
+         ...    ELSE IF    ${Row_Val_List} != [',,,,,,,,,,']   Get Single Row value from CSV File and Write to Excel for Base Rate    ${ROW_${INDEX}}    ${New_INDEX}    ${Zone2_Curr_Date}    ${Zone3_Curr_Date}    ${CONFIG_PRICE_TYPE}    ${dataset_path}${sTransformedData_FilePath}
     \    
     \    ${Index_LMIR}    Evaluate    ${New_INDEX}+1
     \    
