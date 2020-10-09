@@ -309,7 +309,8 @@ Setup Facility - Scenario 7 ComSee
     Write Data To Excel    ComSee_SC7_FacSetup    Facility_MultiCCY    ${rowid}    ${MulitCCYStatus}    ${ComSeeDataSet} 
     Write Data To Excel    ComSee_SC7_Deal    COM_ID    ${rowid}    ${FacilityControlNumber}    ${ComSeeDataSet}
     Write Data To Excel    ComSee_SC7_FacSetup    Facility_ControlNumber    ${rowid}    ${FacilityControlNumber}    ${ComSeeDataSet}  
-    Write Data To Excel    ComSee_SC7_FacFeeSetup    COM_ID    ${rowid}    ${FacilityControlNumber}    ${ComSeeDataSet} 
+    Write Data To Excel    ComSee_SC7_FacFeeSetup    COM_ID    ${rowid}    ${FacilityControlNumber}    ${ComSeeDataSet}
+    Write Data To Excel    ComSee_SC7_Loan    COM_ID    ${rowid}    ${FacilityControlNumber}    ${ComSeeDataSet}
     
     # ###Facility Notebook - Codes Tab###
     ${FundingDeskDesc}    Get Facility Funding Desk Description
