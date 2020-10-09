@@ -1,0 +1,57 @@
+<liqInfo>
+    {"event_schema_id":"2148","event":{"header":{"correlationId":"LIQ-.9EGB5MK-.9EGB5KD-43","processPath":{"array":[{"source":"FINASTRA_CCB","timestamp":"2020-09-18T16:56:03.742+08:00"}]}},"sourceSystem":{"string":"FINASTRA_CCB"},"ttl":{"au.com.cba.avro.customermanagement.noticesnotify.ttl":{"ttlDuration":"300","ttlSourceTime":"2020-09-18T16:56:03.742+08:00"}},"cifIds":{"array":[{"string":"35"}]},"documentInfo":{"documentPackage":{"businessChannel":"LOANIQ","name":null,"version":null,"templateId":null,"fileType":null,"content":"
+    <FinastraApplication>
+        <StandardNotice>
+            <ProcessingArea>AUSAG</ProcessingArea>
+            <Address>
+                <line>Date: 18-Sep-2020</line>
+                <line>TO  : CUSTLEGAL43149</line>
+                <line>ATTN: John Bloggs</line>
+                <line>Re  : BNS1_28072020211931IFJ S128072020212706BMO</line>
+            </Address>
+            <BodyContent>
+                <section>
+                    <line>                                *** FEE INVOICE ***</line>
+                    <line/>
+                    <line>Description: Line Fee                   </line>
+                    <line/>
+                    <line>In accordance with the facility agreement, we advise the following.</line>
+                    <line/>
+                    <line>Effective 15-Oct-2020, the following Line Fee totalling AUD 1,008.22 for CUSTLEGAL43149 becomes due.</line>
+                </section>
+                <section>
+                    <line>Calculated as follows:</line>
+                    <line/>
+                    <line>Rate Basis:  Actual/365</line>
+                    <line/>
+                    <line>Start       End         Days CCY Amount     All        Amount</line>
+                    <line>                                            In Rate          </line>
+                    <line>___________ ___________ ____ ___ __________ __________ ______</line>
+                    <line/>
+                    <line>15-Oct-2020 31-Dec-2020 78   AUD 100,000.00 4.000000%  854.79</line>
+                    <line>01-Jan-2021 14-Jan-2021 14   AUD 100,000.00 4.000000%  153.43</line>
+                </section>
+                <section>
+                    <line>We will debit your nominated account for an amount of AUD 1,008.22 on the effective date.</line>
+                </section>
+                <section>
+                    <line>For: CUSTLEGAL43149</line>
+                </section>
+                <section>
+                    <line>Account Number:   </line>
+                    <line>1020188515</line>
+                    <line>Account Name:  </line>
+                    <line>CBA Domestic Account</line>
+                    <line>Routing Number:</line>
+                    <line/>
+                    <line>Reference: AUSAG1000324</line>
+                </section>
+                <section>
+                    <line/>
+                </section>
+            </BodyContent>
+        </StandardNotice>
+    </FinastraApplication>
+    "},"documentStorage":{"status":null,"fileName":null,"inputSource":null,"inputSourceDetail":null,"scanDate":null,"departmentId":{"string":"BP_CML"},"retrievalId":null,"documentumType":null,"applicationNumber":null,"purgeDate":null,"boxLocation":null,"recordManager":null,"description":null,"processes":{"array":[{"string":".9EGB5KD"}]},"services":{"array":[{"string":"1000324"}]},"accountNumbers":{"array":[{"source":{"string":"LOANIQ"},"productCode":{"string":"FAC"},"number":{"string":"3000311"}}]},"processFlags":{"array":[{"name":null,"value":null}]}}},"emailSecureMessageDetails":{"subject":"1000324 BNS1_28072020211931IFJ","senderEmail":"AGENCY@CBA.AU.COM","toRecipientEmail":"{BACKSPACE}john.blogg@abc.com","ccRecipientEmail":{"string":"JOHN.DOE@CBA.AU.COM"},"mimeType":null,"messageID":"LIQ-.9EGB5MK-.9EGB5KD-43","body":null,"attachment":null,"inBandAttachment":null,"deliveredToEmail":null,"undeliveredToEmail":null,"systemCode":null,"systemName":null,"identifier":{"string":"AUSAG"},"digitalSignature":null}}}
+
+</liqInfo>
