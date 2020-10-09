@@ -7,6 +7,7 @@ Validate FXRate in LoanIQ
     [Documentation]    This keyword is used to validate FX Rates in LoanIQ
     ...    @author: mnanquil    18MAR19    initial draft
     ...    @update: cfrancis    18JUL19    added logic to run Validate Currency Pairs only if Funding Desk Currency is AUD
+    ...    @update: nbautist    08OCT20    replaced loan iq activation keyword to remove dependency on visibility while running test
     [Arguments]    ${From_Currency}    ${To_Currency}    ${subEntity}    ${Mid_Rate}    ${Effective_Date}
     ###START OF PRE-REQUISITES###
     ${Exchange_Currency}    Run Keyword If    '${subEntity}'=='AUD'    Catenate    ${From_Currency}    to    ${To_Currency}
@@ -25,9 +26,9 @@ Validate FXRate in LoanIQ
     ${Effective_Date_Global}    Set Variable    ${Conv_Eff_Date_With_0}
     Set Global Variable    ${Effective_Date_Global}    
     # refresh table
-    mx LoanIQ activate    ${LIQ_Window}    
-    mx LoanIQ select    ${LIQ_Options_RefreshAllCodeTables}
-    mx LoanIQ click    ${LIQ_Warning_Yes_Button}
+    Mx LoanIQ Activate Window    ${LIQ_Window}
+    Mx LoanIQ Select    ${LIQ_Options_RefreshAllCodeTables}
+    Mx LoanIQ Click    ${LIQ_Warning_Yes_Button}
     # get funding details in LIQ
     ${Funding_Desk_Desc}    ${Funding_Desk_Currency}    Get Funding Desk Details from Table Maintenance    ${subEntity}
     # validate currency pair if existing
