@@ -51,7 +51,8 @@ Collect Break Cost Fee for Early Prepayment D00000476
 
 Collect Extension Fee for D00000476
     [Documentation]    This keyword creates an Upfront Fee for a deal.
-    ...    @author: ritragel    25SEP2019    Initial Create       
+    ...    @author: ritragel    25SEP2019    Initial Create     
+    ...    @Update: aramos      10OCT2020    Update to Release Cashflows  
     [Arguments]    ${ExcelPath}
     
     ### Approve and Release Breakfunding Fee
@@ -75,4 +76,5 @@ Collect Extension Fee for D00000476
     Login to Loan IQ    ${SUPERVISOR_USERNAME}   ${SUPERVISOR_PASSWORD}
     Navigate to Payment Notebook via WIP    Payments    Awaiting Approval    Fee Payment From Borrower    &{ExcelPath}[Deal_Name]    
     Approve Upfront Fee Payment
+    Navigate Notebook Workflow    ${LIQ_InitialDrawdown_Window}    ${LIQ_UpfrontFeePayment_Tab}    ${LIQ_UpfrontFeePayment_WorkflowItems}    Release Cashflows
     Navigate Notebook Workflow    ${LIQ_InitialDrawdown_Window}    ${LIQ_UpfrontFeePayment_Tab}    ${LIQ_UpfrontFeePayment_WorkflowItems}    Release

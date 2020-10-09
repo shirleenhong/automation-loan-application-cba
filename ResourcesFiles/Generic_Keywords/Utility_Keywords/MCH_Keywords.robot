@@ -869,7 +869,8 @@ Filter by Reference Header and Save Message TextArea for Specified File and Retu
     ...    @update: jdelacru    15JUL2019    - Added Exit For Loop so the code will not go through all the records in MessageResponseProcessor 
     ...    @update: ehugo       18JUN2020    - updated screenshot location
     ...    @update: jdelacru    21SEP2020    - added ${sSubEntity} and ${sRequestId} variables to handle multiple sub-entities
-    [Arguments]    ${sHeaderRefName}    ${sExpectedRefValue}    ${sInputFileName}    ${sOutputFilePath}    ${sFileExtension}    @{aHeaderNames}    ${sSubEntity}=None    ${sRequestId}=None
+    ...    @update: jdelacru    07OCT2020    - deleted ${sSubEntity} and ${sRequestId} arguments
+    [Arguments]    ${sHeaderRefName}    ${sExpectedRefValue}    ${sInputFileName}    ${sOutputFilePath}    ${sFileExtension}    @{aHeaderNames}
     
     ${Results_Column_Count}    SeleniumLibraryExtended.Get Element Count    ${Results_Header}
     ${Results_Row_Count}    SeleniumLibraryExtended.Get Element Count    ${Results_Row}
@@ -899,7 +900,7 @@ Filter by Reference Header and Save Message TextArea for Specified File and Retu
     :FOR    ${ResultsRowIndex_Ref}    IN RANGE    1    ${Results_Row_Count_With_Ref}+1
     \    @{ResultsRowList}    Get Results Table Column Value by Header List and Return    ${ResultsRowIndex_Ref}    @{aHeaderNames}
     \    Append To List    ${Multiple_List}    ${ResultsRowList}    
-    \    ${fileName}    ${Status}    Get Message TextArea Value and Verify then Save to File    ${sInputFileName}    ${sOutputFilePath}    ${ResultsRowIndex_Ref}    ${ResultsHeaderColIndex}    ${sFileExtension}    ${sSubEntity}    ${sRequestId}
+    \    ${fileName}    ${Status}    Get Message TextArea Value and Verify then Save to File    ${sInputFileName}    ${sOutputFilePath}    ${ResultsRowIndex_Ref}    ${ResultsHeaderColIndex}    ${sFileExtension}
     \    Log    ${Multiple_List}
     \    Exit For Loop If    ${Status}==${True}
     [Return]    ${Multiple_List}
@@ -911,11 +912,13 @@ Get Message TextArea Value and Verify then Save to File
     ...    @update: ehugo       18JUN2020    - updated screenshot location
     ...    @update: jdelacru    19SEP2020    - added ${sSubEntity} and ${sRequestId} variables to handle multiple sub-entities
     ...    @update: jdelacru    21SEP2020    - added new keyword Scroll Into Specific Row And Validate Text
-    [Arguments]    ${sInputFileName}    ${sOutputFilePath}    ${iRowRef}    ${iColRef}    ${sFileExtension}    ${sSubEntity}=None    ${sRequestId}=None
+    ...    @update: jdelacru    07OCT2020    - deleted ${sSubEntity} and ${sRequestId} arguments and removed condition in setting the value of ${filename}
+    ...                                      - added wait until browser ready state after double clicking the item in list
+    [Arguments]    ${sInputFileName}    ${sOutputFilePath}    ${iRowRef}    ${iColRef}    ${sFileExtension}
     
     :FOR    ${Index}    IN RANGE    5
     \    Double Click Element    ${Results_Row}\[${iRowRef}]${PerColumnValue}\[${iColRef}]${TextValue}
-    \    Run Keyword If    '${sRequestId}'!='None'   Scroll Into Specific Row And Validate Text     ${sRequestId}
+    \    Wait Until Browser Ready State
     \    ${status}    Run Keyword And Return Status    Wait Until Element Is Visible    ${Textarea}
     \    Exit For Loop If    ${status}==${True}
 
@@ -925,13 +928,8 @@ Get Message TextArea Value and Verify then Save to File
     Log    ${sInputFileName}
     Take Screenshot    ${screenshot_path}/Screenshots/Integration/MessageTextArea_${iRowRef}
     Set Global Variable    ${FFC_RESPONSE}
-    
-    ${fileName}    Run Keyword If    '${sSubEntity}'=='None'    Set Variable    ${dataset_path}${sOutputFilePath}.${sFileExtension}
-    ...    ELSE    Set Variable    ${dataset_path}${sOutputFilePath}_${sSubEntity}.${sFileExtension}
-    
+    ${fileName}    Set Variable    ${dataset_path}${sOutputFilePath}.${sFileExtension}
     Delete File If Exist    ${dataset_path}${sOutputFilePath}.${sFileExtension}
-    Delete File If Exist    ${dataset_path}${sOutputFilePath}_${sSubEntity}.${sFileExtension}
-    
     Run Keyword If    ${Status}==${True}    Create File    ${fileName}    ${FFC_Response}
     [Return]    ${fileName}    ${Status}
     
@@ -1103,6 +1101,7 @@ Navigate Splitter through Instance Name
 Navigate Splitter through Output Type
     [Documentation]    This keyword is use to navigate splitter if the given argument is Output Type
     ...    @author: jdelacru    26JUL2019    - initial create
+    ...    @update: mcastro     06OCT2019    - Added scroll element into view for ${OpenAPI_Source_Parent_Row}
     [Arguments]    ${sSourceName}    ${sOutputType}
     
     ${OpenAPI_Source_Parent_Row}    Replace Variables    ${OpenAPI_Source_Parent_Row}
@@ -1113,6 +1112,7 @@ Navigate Splitter through Output Type
     :FOR    ${INDEX}    IN RANGE    10
     \    
     \    Wait Until Element Is Visible     ${OpenAPI_Source_Parent_Row}
+    \    Mx Scroll Element Into View    ${OpenAPI_Source_Parent_Row}
     \    Double Click Element    ${OpenAPI_Source_Parent_Row}
     \    Sleep    2s
     \    ${status}    Run Keyword And Return Status    Wait Until Element Is Visible     ${OpenAPI_Source_Child_Row_Success_Instance}
