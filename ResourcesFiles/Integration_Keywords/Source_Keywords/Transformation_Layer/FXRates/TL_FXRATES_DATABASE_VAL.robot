@@ -32,12 +32,12 @@ Get Future Date Record in Holding Table for TL FXRates
     ...    @update: clanding    31JUL2019    - updated keyword name to 'Connect to MCH Oracle Database and Execute Query'
     ...    @update: cfrancis    07AUG2019    - updated query to only use filename for AUD funding desk for Group 1 file
     ...    @update: cfrancis    08AUG2019    - updated query where paramater to select both files but refer to AUD funding desk for Group 1 file
-    ...    @update: clanding    09OCT2020    - updated global variables for ${GS_INSTR_PRC_TYPE} and ${FILE_NAME} since many declaration in the global variables
+    ...    @update: clanding    09OCT2020    - updated global variable for ${FILE_NAME} to ${FILE_NAME_QUERY}
     [Arguments]    ${sFilename}    ${sTransformedData_FilePath}
     
     ${QUERY_BASE_HOLDING}    Catenate    ${SELECT_Q}    
     ...    ${GS_FX_RATE_TABLE}.${GS_BASE_CCY},
-    ...    ${GS_FX_RATE_TABLE}.GS_INSTR_PRC_TYPE,
+    ...    ${GS_FX_RATE_TABLE}.${GS_INSTR_PRC_TYPE},
     ...    ${GS_FX_RATE_TABLE}.${GS_INSTR_PRICE},
     ...    ${GS_FX_RATE_TABLE}.${GS_INSTR_TYPE},
     ...    ${GS_FX_RATE_TABLE}.${GS_PROCESSING_DATE},
@@ -45,7 +45,7 @@ Get Future Date Record in Holding Table for TL FXRates
     ...    ${FROM_Q}    ${GS_FX_RATE_TABLE}
     ...    ${INNERJOIN_Q}    ${MASTER_MAPPING_TABLE}
     ...    ${ON_Q}    ${GS_FX_RATE_TABLE}.${MAP_ID}    =    ${MASTER_MAPPING_TABLE}.${MAP_ID}
-    ...    ${WHERE_Q}    FILE_NAME    IN    ('${sFilename}_0','${sFilename}_1')    AND    ${MASTER_MAPPING_TABLE}.${SUB_ENTITY_NAME}    =    'AUD'
+    ...    ${WHERE_Q}    ${FILE_NAME_QUERY}    IN    ('${sFilename}_0','${sFilename}_1')    AND    ${MASTER_MAPPING_TABLE}.${SUB_ENTITY_NAME}    =    'AUD'
     ${Query_Results_List}    Connect to MCH Oracle Database and Execute Query    ${QUERY_BASE_HOLDING}
     ${List_for_Query}    Create List    
     ${QueryResult_Count}    Get Length    ${Query_Results_List}
@@ -83,6 +83,7 @@ Get Future Date Record in Holding Table for TL FXRates of Multiple Files
     ...    INSTR_SUB_TYPE | INSTR_CCY | INSTR_PRC_TYPE | INSTR_PRICE | VENDOR_PUBLISH_DATE | INSTR_TENOR | SUB_ENTITY_NAME
     ...    CIBOR | DKK | Last | -0.36 | 2018-07-12 | 001MNTH | NY
     ...    @author: cfrancis    08AUG2019    - initial create
+    ...    @update: clanding    09OCT2020    - updated global variable for ${FILE_NAME} to ${FILE_NAME_QUERY}
     [Arguments]    ${sFilename}    ${sTransformedData_FilePath}    ${Delimiter}=None
     Log    ${sFilename}
     ${InputGSFile_Count}    Get Length    ${sFilename}
@@ -98,7 +99,7 @@ Get Future Date Record in Holding Table for TL FXRates of Multiple Files
          ...    ${FROM_Q}    ${GS_FX_RATE_TABLE}
          ...    ${INNERJOIN_Q}    ${MASTER_MAPPING_TABLE}
          ...    ${ON_Q}    ${GS_FX_RATE_TABLE}.${MAP_ID}    =    ${MASTER_MAPPING_TABLE}.${MAP_ID}
-         ...    ${WHERE_Q}    ${FILE_NAME}    IN    ('${InputGSFile}_0','${InputGSFile}_1')    AND    ${MASTER_MAPPING_TABLE}.${SUB_ENTITY_NAME}    =    'AUD'
+         ...    ${WHERE_Q}    ${FILE_NAME_QUERY}    IN    ('${InputGSFile}_0','${InputGSFile}_1')    AND    ${MASTER_MAPPING_TABLE}.${SUB_ENTITY_NAME}    =    'AUD'
     \    ${Query_Results_List}    Connect to MCH Oracle Database and Execute Query    ${QUERY_BASE_HOLDING}
     \    Log    ${QUERY_BASE_HOLDING}
     \    LOG    ${Query_Results_List}
