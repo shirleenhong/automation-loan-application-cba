@@ -1,7 +1,7 @@
 ### Dataset Locations ###
-APIDataSet = "C:\\Git_Evergreen\\GDE-TC12\\DataSet\\Integration_DataSet\\API\\API_Data_Set.xlsx"
-ExcelPath_API_temp = 'C:\\Git_Evergreen\\GDE-TC12\\DataSet\\Integration_DataSet\\API\\temp.xlsx'
-ExcelPath = "C:\\Git_Evergreen\\GDE-TC12\DataSet\\LoanIQ_DataSet\\EVG_PTYLIQ01_BaselineBilateralCustomer.xlsx"
+APIDataSet = "C:\\Git_Evergreen\\fms_cba\\DataSet\\Integration_DataSet\\API\\API_Data_Set.xlsx"
+ExcelPath_API_temp = 'C:\\Git_Evergreen\\fms_cba\\DataSet\\Integration_DataSet\\API\\temp.xlsx'
+ExcelPath = "C:\\Git_Evergreen\\fms_cba\DataSet\\LoanIQ_DataSet\\EVG_PTYLIQ01_BaselineBilateralCustomer.xlsx"
 dataset_path = "C:\\Git_Evergreen\\fms_cba"
 CBAUAT_ExcelPath = "C:\\Git_Evergreen\\fms_cba\\DataSet\\CBAUATDeal_DataSet\\EVG_CBAUAT03.xlsx"
 TL_DATASET = "C:\\Git_Evergreen\\fms_cba\\DataSet\\Integration_DataSet\\TL\\TL_Data_Set_AU.xlsx"
