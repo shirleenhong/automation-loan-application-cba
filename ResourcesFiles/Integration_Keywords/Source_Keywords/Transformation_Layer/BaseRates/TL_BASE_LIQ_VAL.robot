@@ -14,7 +14,7 @@ Validate Base Rate Code in LoanIQ for TL Base Success
     :FOR    ${Index}    IN RANGE    1    ${Row_Count}
     \    ${dTransformedData}    Create Dictionary Using Transformed Data and Return    ${dataset_path}${sTransformedData_FilePath}    ${Index}
     \    Log     Transformed data is ${dTransformedData}
-    \    Run Keyword If    '&{dTransformedData}[subEntity]'!='null'    Validate Base Rate is Reflected in LIQ    ${dTransformedData}
+    \    Run Keyword If    '&{dTransformedData}[subEntity]'!='null' and '&{dTransformedData}[subEntity]'!='None'  Validate Base Rate is Reflected in LIQ    ${dTransformedData}
          ...    ELSE IF    '&{dTransformedData}[subEntity]'=='null'    Log    All subentities have future dates!!! Please change Effective Date to less than or equal to LIQ Business Date.    level=WARN
     
     
