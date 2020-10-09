@@ -488,14 +488,12 @@ Search Customer and Complete its Borrower Profile Creation with default values
 	Write Data To Excel    ORIG03_Customer    RemittanceInstruction_IMTDescriptionUSD    ${rowid}    ${RemittanceInstruction_IMTDescriptionUSD}
 	Write Data To Excel    ORIG03_Customer    RemittanceInstruction_RTGSDescriptionAUD    ${rowid}    ${RemittanceInstruction_RTGSDescriptionAUD}
 	
-    Write Data To Excel    ORIG03_Customer    LIQCustomer_ShortName    ${rowid}    &{ExcelPath}[Short_Name_Prefix] AND &{ExcelPath}[LIQCustomer_ID]
-    Write Data To Excel    ORIG03_Customer    LIQCustomer_LegalName    ${rowid}    &{ExcelPath}[Enterprise_Prefix] AND &{ExcelPath}[LIQCustomer_ID]
-    Write Data To Excel    ORIG03_Customer    Borrower_SG_GroupMembers    ${rowid}    &{ExcelPath}[Contact_FullName]
-    Write Data To Excel    ORIG03_Customer    Borrower_SG_Alias    ${rowid}    &{ExcelPath}[Contact_Initials]
-    Write Data To Excel    ORIG03_Customer    Borrower_SG_Name    ${rowid}    &{ExcelPath}[Group_Contact.upper()]
-    Write Data To Excel    ORIG03_Customer    Borrower1_ShortName    ${rowid}   &{ExcelPath}[LIQCustomer_ShortName.upper()]
-    Write Data To Excel    ORIG03_Customer    Facility_Borrower    ${rowid}    &{ExcelPath}[LIQCustomer_ShortName.upper()]
-    Write Data To Excel    ORIG03_Customer    Facility_BorrowerSGName    ${rowid}    &{ExcelPath}[Group_Contact.upper()]
+    Write Data To Excel    CRED01_DealSetup    Borrower_SG_GroupMembers    ${rowid}    &{ExcelPath}[Contact_FullName]
+    Write Data To Excel    CRED01_DealSetup    Borrower_SG_Alias    ${rowid}    &{ExcelPath}[Contact_Initials]
+    Write Data To Excel    CRED01_DealSetup    Borrower_SG_Name    ${rowid}    &{ExcelPath}[Group_Contact]
+    Write Data To Excel    CRED01_DealSetup    Borrower1_ShortName    ${rowid}   &{ExcelPath}[LIQCustomer_ShortName]
+    Write Data To Excel    CRED02_FacilitySetup    Facility_Borrower    ${rowid}    &{ExcelPath}[LIQCustomer_ShortName]
+    Write Data To Excel    CRED02_FacilitySetup    Facility_BorrowerSGName    ${rowid}    &{ExcelPath}[Group_Contact]
 	
 	Write Remittance Description    ${SCENARIO}    &{ExcelPath}[Remittance_Instruction]    ${RemittanceInstruction_DDADescriptionAUD}    ${RemittanceInstruction_IMTDescriptionUSD}    ${RemittanceInstruction_RTGSDescriptionAUD}
 
