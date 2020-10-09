@@ -29,6 +29,7 @@ Setup Deal D00000454
     Write Data To Excel    COMPR06_LoanMerge    Deal_Name    &{ExcelPath}[rowid]    ${Deal_Name}    ${CBAUAT_ExcelPath}
     Write Data To Excel    Correspondence    Deal_Name    &{ExcelPath}[2]    ${Deal_Name}    ${APIDataSet}    bTestCaseColumn=True    sColumnReference=rowid
     Write Data To Excel    Correspondence    Deal_Name    &{ExcelPath}[10]    ${Deal_Name}    ${APIDataSet}    bTestCaseColumn=True    sColumnReference=rowid
+    Write Data To Excel    Correspondence    Deal_Name    &{ExcelPath}[11]    ${Deal_Name}    ${APIDataSet}    bTestCaseColumn=True    sColumnReference=rowid
     Select Actions    [Actions];Deal
     Create New Deal    ${Deal_Name}    ${Deal_Alias}    &{ExcelPath}[Deal_Currency]    &{ExcelPath}[Deal_Department]    &{ExcelPath}[Deal_SalesGroup]
     Unrestrict Deal
