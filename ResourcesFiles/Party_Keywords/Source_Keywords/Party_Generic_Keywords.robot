@@ -116,11 +116,13 @@ Configure Zone and Branch
     Mx Click Element    ${Party_Zone_Button}
     Wait Until Loading Page Is Not Visible    ${PARTY_TIMEOUT}
     Validate Page Screen is Displayed    ${PARTY_ZONEANDBRANCHSELECTION_PAGETITLE}
+    
+
     Mx Input Text    ${Party_ZoneBranchSelectionPage_Zone_TextBox}    ${sZone}
     Mx Input Text    ${Party_ZoneBranchSelectionPage_Branch_TextBox}    ${sBranchName}
     
     Capture Page Screenshot    ${screenshot_path}/Screenshots/Party/ZoneAndBranchSelectionPage-{index}.png
-    Mx Click Element    ${Party_Footer_Next_Button}
+    Wait Until Keyword Succeeds    10x    2s    Mx Click Element    ${Party_Footer_Next_Button}
 
     Wait Until Loading Page Is Not Visible    ${PARTY_TIMEOUT}
     Validate Page Screen is Displayed    ${PARTY_MESSAGE_PAGETITLE}

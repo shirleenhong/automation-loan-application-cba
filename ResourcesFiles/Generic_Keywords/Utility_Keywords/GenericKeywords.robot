@@ -32,9 +32,8 @@ Wait Until Browser Ready State
             
 Mx Input Text
     [Documentation]    This keyword is used to input text in elements
-    ...    @update:    javinzon    - added condition for mx scroll due to failure in scripts
+    ...    @update:    javinzon    - added condition for Mx Scroll Element due to failure in scripts
     [Arguments]    ${locator}    ${text}    ${bScrollToElement}=False
-    
     Wait Until Browser Ready State
     Wait Until Keyword Succeeds    ${retry}    ${retry_interval}    Wait Until Page Contains Element    ${locator}    1s
     Wait Until Keyword Succeeds    ${retry}    ${retry_interval}    Wait Until Element Is Visible    ${locator}
@@ -727,6 +726,7 @@ Navigate Notebook Workflow
     ...    @update: dahijara    03JUL2020    Added keyword for screenshot
     ...    @update: clanding    05AUG2020    Updated hard coded values to global variable
     ...    @update: aramos      30SEP2020    Updated mx LOANIQ click element if present LIQ_Breakfunding_Yes_Button
+    ...    @update: aramos      05OCT2020    Updated to insert new code for Transaction - Release Cashflows
     [Arguments]    ${sNotebook_Locator}    ${sNotebookTab_Locator}    ${sNotebookWorkflow_Locator}    ${sTransaction}    
 
     ###Pre-processing Keyword##
@@ -741,6 +741,10 @@ Navigate Notebook Workflow
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/NotebookWorkflow
     Mx LoanIQ Select Or DoubleClick In Javatree    ${NotebookWorkflow_Locator}    ${Transaction}%d
     Validate if Question or Warning Message is Displayed
+    
+    Run Keyword if     '${Transaction}'=='Release Cashflows'    Run Keywords    Mx Click    ${LIQ_Cashflows_MarkSelectedItemForRelease_Button}
+    ...   AND    Mx Click    ${LIQ_Cashflows_OK_Button}
+    ...   AND     mx LoanIQ click element if present    ${LIQ_Question_Yes_Button}
     Run Keyword If    '${Transaction}'=='Release'    Run Keywords
     ...    Repeat Keyword    2 times    mx LoanIQ click element if present    ${LIQ_BreakFunding_Yes_Button}
     ...    AND    mx LoanIQ click element if present    ${LIQ_Information_OK_Button}
@@ -2527,12 +2531,15 @@ Enter Text on Java Tree Text Field
 Mx Execute Template With Multiple Test Case Name
     [Documentation]    This keyword will execute the template using the rowname instead of rowid and multiple row names are allowed.
     ...    @author: clanding    27AUG2020    - initial create
+    ...    @update: clanding    07OCT2020    - changed FOR loop to use index; set global the index in the FOR loop
     [Arguments]    ${stemplateName}    ${sDataSet}    ${sDataColumnName}    ${sDataRowNames}    ${sDataSheetName}    ${sDelimiter}=None
 
     ${DataRowNames_List}    Run Keyword If    '${sDelimiter}'=='None'    Split String    ${sDataRowNames}    |
     ...    ELSE    Split String    ${sDataRowNames}    ${sDelimiter}
     
-    :FOR    ${DataRowNames}    IN    @{DataRowNames_List}
+    ${DataRowNames_Count}    Get Length    ${DataRowNames_List}
+    :FOR    ${Index}    IN RANGE    ${DataRowNames_Count}
+    \    ${DataRowNames}    Get From List    ${DataRowNames_List}    ${Index}
     \    Open Excel    ${sDataSet}
     \    Log    Data Set Open: '${sDataSet}'
     \
@@ -2555,7 +2562,7 @@ Mx Execute Template With Multiple Test Case Name
     \    ${rowid_Column_Index}    Get Index From List    ${DataColumn_List}    rowid
     \    Put String To Cell    ${sDataSheetName}    ${rowid_Column_Index}    ${DataRowValue_Index}   ${DataRowValue_Index}
     \    Close Current Excel Document
-    \    
+    \    Set Global Variable    ${DATAROW_INDEX}    ${Index}
     \    Set Global Variable    ${TestCase_Name}    ${DataRowNames}
     \    Mx Execute Template With Multiple Data    ${stemplateName}    ${sDataSet}    ${DataRowValue_Index}    ${sDataSheetName}
 

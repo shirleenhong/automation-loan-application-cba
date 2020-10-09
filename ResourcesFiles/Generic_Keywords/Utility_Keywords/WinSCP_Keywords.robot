@@ -8,12 +8,17 @@ Send Single File to SFTP and Validate If File is Processed
     ...    if file is removed from sFilePathDestinaton for processing.
     ...    @author: clanding    26FEB2019    - initial create
     ...    @update: mnanquil    06MAR2019    - updated for loop condition to use hard wait instead of continous loop.
-    [Arguments]    ${sFilePathSource}    ${sGSFileName}    ${sFilePathDestinaton}
+    ...    @update: clanding    06OCT2020    - added ${iPollingTime} as optional argument
+    [Arguments]    ${sFilePathSource}    ${sGSFileName}    ${sFilePathDestinaton}    ${iPollingTime}=None
     
     Open Connection and Login    ${SFTP_HOST}    ${SFTP_PORT}    ${SFTP_USER}    ${SFTP_PASSWORD}
     Put File    ${dataset_path}${sFilePathSource}${sGSFileName}    ${sFilePathDestinaton}
     Log    Waiting for 2 mins 30 secs to finished to wait until file is consume in ${sFilePathDestinaton} folder.
-    Sleep    150s
+    Run Keyword If    '${iPollingTime}'=='None'    Log To Console    Waiting for 2 mins 30 secs to finished to wait until file is consume in ${sFilePathDestinaton} folder.
+    ...    ELSE    Log To Console    Waiting for ${iPollingTime} to finished to wait until file is consume in ${sFilePathDestinaton} folder.
+    Run Keyword If    '${iPollingTime}'=='None'    Sleep    2.5m    ###The processing time for GS File for Base Rate and FX Rate is every 2 minutes
+    ...    ELSE    Sleep    ${iPollingTime}
+
     :FOR    ${INDEX}    IN RANGE    5
     \    ${FileIsProcessed}    Run Keyword And Return Status    SSHLibrary.File Should Not Exist    ${sFilePathDestinaton}/${sGSFileName}  
     \    Run Keyword If    ${FileIsProcessed}==${True}    Log    ${sGSFileName} was picked up by the batch for processing.
@@ -463,6 +468,7 @@ Validate File If Not Moved to Archive Folder For Holiday
 Send Multiple Files to SFTP and Validate If Files are Not Processed for Holiday With Missing File
     [Documentation]    This keyword is used to send Less than 5 Copp Clark files then validate if files are not processed and not moved to any folder.
     ...    @author: dahijara    2FEB2020    - initial create
+    ...    @update: clanding    30SEP2020    - commented Start TL Service and Stop TL Service since there is a restriction to new server user 'sftpuser'
     [Arguments]    ${sInputFilePath}    ${sFilePathDestinaton}    ${sInputGSFile}    ${sFolderPath}    ${sDelimiter}=None    ${iPollingTime}=None
 
     @{InputGSFile_List}    Run Keyword If    '${sDelimiter}'=='None'    Split String    ${sInputGSFile}    ,
@@ -482,7 +488,7 @@ Send Multiple Files to SFTP and Validate If Files are Not Processed for Holiday 
     \    Run Keyword If    ${Contains_CSV}==${True}    Append To List    ${InputGSFile_CSVList}    ${CSVFile}
          ...    ELSE    Append To List    ${InputGSFile_CSVList}
     
-    Stop TL Service
+    # Stop TL Service
     Open Connection and Login    ${SFTP_HOST}    ${SFTP_PORT}    ${SFTP_USER}    ${SFTP_PASSWORD}
     :FOR    ${GSFileName_XLS}    IN    @{InputGSFile_XLSList}
     \    Put File    ${dataset_path}${sInputFilePath}${GSFileName_XLS}    ${sFilePathDestinaton}
@@ -490,9 +496,10 @@ Send Multiple Files to SFTP and Validate If Files are Not Processed for Holiday 
     :FOR    ${GSFileName_CSV}    IN    @{InputGSFile_CSVList}
     \    Put File    ${dataset_path}${sInputFilePath}${GSFileName_CSV}    ${sFilePathDestinaton}
 
-    Start TL Service
-    Open Connection and Login    ${SFTP_HOST}    ${SFTP_PORT}    ${SFTP_USER}    ${SFTP_PASSWORD}
-    Run Keyword If    '${iPollingTime}'=='None'    Sleep    2m    ###The processing time for GS File for Base Rate and FX Rate is every 2 minutes
+    # Start TL Service
+    # Open Connection and Login    ${SFTP_HOST}    ${SFTP_PORT}    ${SFTP_USER}    ${SFTP_PASSWORD}
+    Log To Console    The processing time for GS File for Calendar is every 5 minutes.
+    Run Keyword If    '${iPollingTime}'=='None'    Sleep    6m    ###The processing time for GS File for Calendar is every 5 minutes.
     ...    ELSE    Sleep    ${iPollingTime}
     
     ### Validate CSV Files ###

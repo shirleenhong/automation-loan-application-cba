@@ -1936,6 +1936,8 @@ Get the Original Amount on Summary Tab of Deal Notebook
     [Documentation]    This keyword validates the status of Deal Notebook and gets the needed data.
     ...    @author:mgaling
     ...    @update: sahalder    06AUG2020    Added screenshots steps
+    ...    @update: dahijara    24SEP2020    Added post processing keywords and optional arguments for runtime variables
+    [Arguments]    ${sRunVar_Current_Cmt}=None    ${sRunVar_Contr_Gross}=None    ${sRunVar_Net_Cmt}=None
     
     mx LoanIQ activate window    ${LIQ_DealNotebook_Window}
     mx LoanIQ select    ${LIQ_DealNotebook_Tab}    Summary
@@ -1952,16 +1954,24 @@ Get the Original Amount on Summary Tab of Deal Notebook
     Mx LoanIQ Select String    ${LIQ_Events_Javatree}    Closed  
     
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/Deal_Summary
+	
+    ### ConstRuntime Keyword Post-processing ###
+    Save Values of Runtime Execution on Excel File    ${sRunVar_Current_Cmt}    ${Current_Cmt}
+    Save Values of Runtime Execution on Excel File    ${sRunVar_Contr_Gross}    ${Contr_Gross}
+    Save Values of Runtime Execution on Excel File    ${sRunVar_Net_Cmt}    ${Net_Cmt}
+
     [Return]    ${Current_Cmt}    ${Contr_Gross}    ${Net_Cmt}
 
 Create Amendment via Deal Notebook
     [Documentation]    This creates amendment via Deal Notebook.
     ...    @author: mgaling
+    ...    @update: dahijara    24SEP2020    Added screenshot
     
     mx LoanIQ activate window    ${LIQ_DealNotebook_Window}
     mx LoanIQ select    ${LIQ_DealNotebook_Options_CreateAmendment} 
     mx LoanIQ activate window    ${LIQ_AmendmentNotebookPending_Window}   
     Run Keyword And Continue On Failure    Mx LoanIQ Verify Object Exist    ${LIQ_AmendmentNotebookPending_Window}       VerificationData="Yes"
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/AmmendmentNoteBook
 
 Verify Admin Fee Status
     [Documentation]    This keyword will verify the Admin Fee Status in Deal Notebook > Admin/Event Fees
@@ -1993,7 +2003,9 @@ Get Original Amount on Deal Lender Shares
     [Documentation]    This keyword is for getting the original value on Deal Lender Shares.
     ...    @author:mgaling
     ...    @update    sahalder    06AUG2020    Added keyword pre-processing steps and screenshots
-    [Arguments]    ${sHostBank_Lender}    ${sLender1}    ${sLender2}
+    ...    @update: dahijara    24SEP2020    Added post processing keyword and optional arguments
+    [Arguments]    ${sHostBank_Lender}    ${sLender1}    ${sLender2}    ${sRunVar_Original_UIHBActualAmount}=None    ${sRunVar_Original_UILender1ActualAmount}=None    ${sRunVar_Original_UILender2ActualAmount}=None    ${sRunVar_Orig_PrimariesAssignees_ActualTotal}=None
+    ...    ${sRunVar_Original_UIHBSharesActualAmount}=None    ${sRunVar_Orig_HostBankShares_ActualNetAllTotal}=None
     
     ### GetRuntime Keyword Pre-processing ###
 	${HostBank_Lender}    Acquire Argument Value    ${sHostBank_Lender}
@@ -2036,7 +2048,14 @@ Get Original Amount on Deal Lender Shares
     ${Orig_HostBankShares_ActualNetAllTotal}    Convert To Number    ${Orig_HostBankShares_ActualNetAllTotal}   
     
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/Primaries_Details
-    
+	
+    ### ConstRuntime Keyword Post-processing ###
+    Save Values of Runtime Execution on Excel File    ${sRunVar_Original_UIHBActualAmount}    ${Original_UIHBActualAmount}
+    Save Values of Runtime Execution on Excel File    ${sRunVar_Original_UILender1ActualAmount}    ${Original_UILender1ActualAmount}
+    Save Values of Runtime Execution on Excel File    ${sRunVar_Original_UILender2ActualAmount}    ${Original_UILender2ActualAmount}
+    Save Values of Runtime Execution on Excel File    ${sRunVar_Orig_PrimariesAssignees_ActualTotal}    ${Orig_PrimariesAssignees_ActualTotal}
+    Save Values of Runtime Execution on Excel File    ${sRunVar_Original_UIHBSharesActualAmount}    ${Original_UIHBSharesActualAmount}
+    Save Values of Runtime Execution on Excel File    ${sRunVar_Orig_HostBankShares_ActualNetAllTotal}    ${Orig_HostBankShares_ActualNetAllTotal}
     [Return]    ${Original_UIHBActualAmount}    ${Original_UILender1ActualAmount}    ${Original_UILender2ActualAmount}    ${Orig_PrimariesAssignees_ActualTotal}    ${Original_UIHBSharesActualAmount}    ${Orig_HostBankShares_ActualNetAllTotal} 
     
     mx LoanIQ close window    ${LIQ_LenderShares_Window}    
@@ -2045,6 +2064,7 @@ Validate the Updates on Deal Notebook
     [Documentation]    This keyword is for validating the Deal Notebook after the Facility Commitment Increase Transaction.
     ...    @author:mgaling
     ...    @update: sahalder    06AUG2020    Added keyword pre-processing steps and Screenshot steps
+    ...    @update: dahijara    25SEP2020    Added conversion of increase amount to with comma format for validation.
     [Arguments]    ${sIncrease_Amount}    ${sCurrent_Cmt}    ${sContr_Gross}    ${sComputed_HBActualAmount}    ${sNet_Cmt}    ${sAmendmentNo}    ${sFacility_Name}
     
     ### GetRuntime Keyword Pre-processing ###
@@ -2122,8 +2142,9 @@ Validate the Updates on Deal Notebook
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/DealNotebook_EventsTab
        
     ${UIComment}    Mx LoanIQ Get Data    ${LIQ_Events_Comment_Field}    value%Comment
-    
-    Should Be Equal As Strings    ${UIComment}    Unscheduled increase of ${Increase_Amount} under amendment number ${AmendmentNo} for facility named ${Facility_Name}.       
+    ### Convert Increase amount to with comma format with 2 decimal places for comment ###
+    ${Increase_Amount}    Convert Number With Comma Separators    ${Increase_Amount}
+    Should Be Equal As Strings    ${UIComment}    Unscheduled increase of ${Increase_Amount}, under amendment number ${AmendmentNo} for facility named ${Facility_Name}.       
     
 Validate the Updates on Lender Shares
     [Documentation]    This keyword is for validating the Lender Shares after the Facility Commitment Increase Transaction.

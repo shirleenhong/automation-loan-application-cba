@@ -419,9 +419,10 @@ Accept Approved Party and Validate Details in Enterprise Summary Details Screen
 Reject Party via Supervisor Account
    [Documentation]    This keyword is used to reject created party via Quick Party Onboarding
     ...    @author: dahijara    07MAY2020    - initial create
+    ...    @author: gagregado   8OCT2020     - changed Party URL suffix to SSO
     [Arguments]    ${sPartyID}
 
-    Login User to Party    ${PARTY_SUPERVISOR_USERNAME}    ${PARTY_SUPERVISOR_PASSWORD}    ${USER_LINK}    ${USER_PORT}    ${PARTY_URL_SUFFIX}    ${PARTY_HTML_APPROVER_CREDENTIALS}    ${SSO_ENABLED}    ${PARTY_URL}
+    Login User to Party    ${PARTY_SUPERVISOR_USERNAME}    ${PARTY_SUPERVISOR_PASSWORD}    ${USER_LINK}    ${USER_PORT}    ${PARTY_SSO_URL_SUFFIX}    ${PARTY_HTML_APPROVER_CREDENTIALS}    ${SSO_ENABLED}    ${PARTY_URL}
     
     ${Task_ID_From_Supervisor}    Reject Registered Party    ${sPartyID}
     
@@ -434,7 +435,6 @@ Reject Registered Party
     [Documentation]    This Keyword rejects the created party from Quick Party Onboarding using supervisor account.
     ...    @author: dahijara    05MAY2020    - initial create
     [Arguments]    ${Party_ID}
-
     Mx Click Element    ${Party_HomePage_Notification_Icon}
     Wait Until Loading Page Is Not Visible    ${PARTY_TIMEOUT}
     Validate Page Screen is Displayed    ${PARTY_NOTIFICATIONTYPES_PAGETITLE}
@@ -455,12 +455,13 @@ Reject Registered Party
 Accept Rejected Party and Validate Details in Quick Enterprise Details Screen
     [Documentation]    This keyword validates the Enterprise Business Activity Details from Enterprise summary details page.
     ...    @author: dahijara    07MAY2020     - initial create
+    ...    @author: gagregado   8OCT2020     - changed Party URL suffix to SSO    
     [Arguments]    ${sTask_ID_From_Supervisor}    ${sParty_ID}    ${sCountry_of_Tax_Domicile}    ${sCountry_of_Registration}    ${sAddress_Type}    ${sCountry_Region}    ${iPost_Code}
     ...    ${sDocument_Collection_Status}    ${sIndustry_Sector}    ${sBusiness_Activity}    ${bIs_Main_Activity}    ${iGST_Number}
     ...    ${sAddress_Line_1}    ${sAddress_Line_2}    ${sTown_City}    ${sState_Province}    ${sBusiness_Country}    ${bIs_Primary_Activity}    ${iRegistered_Number}    ${sShort_Name}
     ...    ${sAddress_Line_3}=None    ${sAddress_Line_4}=None
 
-    Login User to Party    ${PARTY_USERNAME}    ${PARTY_PASSWORD}    ${USER_LINK}    ${USER_PORT}    ${PARTY_URL_SUFFIX}    ${PARTY_HTML_USER_CREDENTIALS}    ${SSO_ENABLED}    ${PARTY_URL}   
+    Login User to Party    ${PARTY_USERNAME}    ${PARTY_PASSWORD}    ${USER_LINK}    ${USER_PORT}    ${PARTY_SSO_URL_SUFFIX}    ${PARTY_HTML_USER_CREDENTIALS}    ${SSO_ENABLED}    ${PARTY_URL}   
     
     Accept Rejected Party    ${sTask_ID_From_Supervisor}    ${sPartyID}
 
@@ -563,8 +564,9 @@ Validate Address Details
     
 Populate Pre-Existence Check and Validate the Duplicate Enterprise Name
    [Documentation]    This keyword populates pre-existence with Duplicate Enterprise Name, checks if Action required is Reject and view the existing Party details 
-    ...    @author: javinzon    28SEP2020    -initial create
-    [Arguments]    ${sEnterprise_Name}
+    ...    @author: javinzon    28SEP2020    - initial create
+    ...	   @update: javinzon	02OCT2020	 - added Party ID argument
+    [Arguments]    ${sEnterprise_Name}    ${sParty_ID}
 
     Mx Click Element     ${Party_PreExistenceCheck_EnterpriseName_TextBox} 
     Set Focus To Element    ${Party_PreExistenceCheck_EnterpriseName_TextBox}
@@ -573,8 +575,8 @@ Populate Pre-Existence Check and Validate the Duplicate Enterprise Name
     Mx Click Element    ${Party_Footer_Next_Button}
 
     Wait Until Element Is Not Visible    ${PARTY_PREEXISTENCECHECKRESULTFOUND_PAGETITLE}    ${PARTY_TIMEOUT} 
-    ${Party_Name}    Get Table Value Containing Row Value in Party    ${Party_PreExistenceCheck_SearchResultTableHeader}    ${Party_PreExistenceCheck_SearchResultTableRow}    Party ID    1414849    Party Name  
-    ${Action}    Get Table Value Containing Row Value in Party    ${Party_PreExistenceCheck_SearchResultTableHeader}    ${Party_PreExistenceCheck_SearchResultTableRow}    Party ID    1414849    Action  
+    ${Party_Name}    Get Table Value Containing Row Value in Party    ${Party_PreExistenceCheck_SearchResultTableHeader}    ${Party_PreExistenceCheck_SearchResultTableRow}    Party ID    ${sParty_ID}    Party Name  
+    ${Action}    Get Table Value Containing Row Value in Party    ${Party_PreExistenceCheck_SearchResultTableHeader}    ${Party_PreExistenceCheck_SearchResultTableRow}    Party ID    ${sParty_ID}    Action  
     
     ${isMatched}    Run Keyword And Return Status    Should Be Equal    ${sEnterprise_Name}    ${Party_Name}
     Run Keyword If    ${isMatched}==${True}    Log    There is a Duplicate Enterprise Name  
@@ -590,3 +592,55 @@ Populate Pre-Existence Check and Validate the Duplicate Enterprise Name
     ${isMatched}    Run Keyword And Return Status    Should Be Equal    ${Existing_EnterpriseName}    ${Party_Name}
     Run Keyword If    ${isMatched}==${True}    Logout User on Party    
     ...    ELSE    Run Keyword and Continue on Failure    Fail    Party details displayed are not for Party:${Party_Name}
+
+Validate Disabled Fields in Quick Enterprise Party Page
+    [Documentation]    This keyword validates disabled fields in Quick Enterprise Party page and Address details dialog
+    ...    @author: javinzon    08OCT2020    - initial create
+    [Arguments]    ${sCountry_Region}
+    
+    Run Keyword And Continue On Failure    Element Should Be Disabled    ${Party_PreExistenceCheck_Locality_Dropdown}
+    Run Keyword And Continue On Failure    Element Should Be Disabled    ${Party_PartyOnboarding_AssignedBranch_Dropdown}
+	Run Keyword And Continue On Failure    Element Should Be Disabled    ${Party_PreExistenceCheck_Entity_Dropdown}
+	Run Keyword And Continue On Failure    Element Should Be Disabled    ${Party_PartyOnboarding_PartyType_Dropdown}
+	Run Keyword And Continue On Failure    Element Should Be Disabled    ${Party_PartyOnboarding_PartySubType_Dropdown}
+	Run Keyword And Continue On Failure    Element Should Be Disabled    ${Party_PartyOnboarding_PartyCategory_Dropdown}
+	
+    Run Keyword And Continue On Failure    Element Should Be Disabled    ${Party_QuickEnterpriseParty_AlternativePartyId_TextBox}
+    Run Keyword And Continue On Failure    Element Should Be Disabled    ${Party_QuickEnterpriseParty_Internet_Checkbox}
+    Run Keyword And Continue On Failure    Element Should Be Disabled    ${Party_QuickEnterpriseParty_Mobile_Checkbox}
+    
+    Run Keyword And Continue On Failure    Element Should Be Disabled    ${Party_QuickEnterpriseParty_EnterpriseName_Textbox}
+    Run Keyword And Continue On Failure    Element Should Be Disabled    ${Party_QuickEnterpriseParty_StateOfRegistration_Dropdown}
+    Run Keyword And Continue On Failure    Element Should Be Disabled    ${Party_QuickEnterpriseParty_NonResidentLicensePermit_Textbox}
+    Run Keyword And Continue On Failure    Element Should Be Disabled    ${Party_QuickEnterpriseParty_DateFormed_Textbox}
+    Run Keyword And Continue On Failure    Element Should Be Disabled    ${Party_QuickEnterpriseParty_BusinessActivity_Textbox}
+    Run Keyword And Continue On Failure    Element Should Be Disabled    ${Party_QuickEnterpriseParty_EnterpiseStatus_Dropdown}
+    Run Keyword And Continue On Failure    Element Should Be Disabled    ${Party_QuickEnterpriseParty_WithholdingTaxLiable_CheckBox}
+    Run Keyword And Continue On Failure    Element Should Be Disabled    ${Party_QuickEnterpriseParty_TaxExemptionReason_Dropdown}
+    Run Keyword And Continue On Failure    Element Should Be Disabled    ${Party_QuickEnterpriseParty_GoodsAndServiceTaxNumber_TextBox}
+    
+    ### Validate Disabled fields in Address Section ###
+    Run Keyword And Continue On Failure    Element Should Be Disabled    ${Party_QuickEnterpriseParty_Address_TextBox}
+    Run Keyword And Continue On Failure    Element Should Be Disabled    ${Party_QuickEnterpriseParty_CopyAddress_Button}
+    Run Keyword And Continue On Failure    Element Should Be Disabled    ${Party_QuickEnterpriseParty_AddressLookUp_Button}
+    
+    ### Validate Disabled fields in Email Section ###
+    Run Keyword And Continue On Failure    Element Should Be Disabled    ${Party_QuickEnterpriseParty_Email_ContactType_Dropdown}
+    Run Keyword And Continue On Failure    Element Should Be Disabled    ${Party_QuickEnterpriseParty_Email_Email_TextBox}
+    Run Keyword And Continue On Failure    Element Should Be Disabled    ${Party_QuickEnterpriseParty_Email_ConfirmEmail_TextBox}
+    
+    ### Validate Disabled fields in Mobile Section ###
+    Run Keyword And Continue On Failure    Element Should Be Disabled    ${Party_QuickEnterpriseParty_Mobile_ContactType_Dropdown}
+    Run Keyword And Continue On Failure    Element Should Be Disabled    ${Party_QuickEnterpriseParty_Mpbile_MobileNumber_CountryCode_TextBox}
+    Run Keyword And Continue On Failure    Element Should Be Disabled    ${Party_QuickEnterpriseParty_Mpbile_MobileNumber_Number_TextBox}
+    Capture Page ScreenShot    ${screenshot_path}/Screenshots/Party/QuickPartyOnboarding_DisabledFields-{index}.png
+    
+    ### Validate Disabled fields in Address Details Dialog ###
+    Mx Input Text    ${Party_QuickEnterpriseParty_CountryRegion_Dropdown}    ${sCountry_Region}
+    Mx Click Element    ${Party_QuickEnterpriseParty_RecordAddress_Button}
+    Wait Until Page Contains    ${PARTY_ADDRESSDETAILS_PAGETITLE}
+    Capture Page ScreenShot    ${screenshot_path}/Screenshots/Party/QuickPartyOnboarding_DisabledFields-{index}.png
+    Run Keyword And Continue On Failure    Element Should Be Disabled    ${Party_QuickEnterpriseParty_AddressDetails_Name_TextBox}
+    Run Keyword And Continue On Failure    Element Should Be Disabled    ${Party_QuickEnterpriseParty_AddressDetails_PostCode_TextBox}
+    Run Keyword And Continue On Failure    Element Should Be Disabled    ${Party_QuickEnterpriseParty_AddressDetails_Country_TextBox}
+    Mx Click Element    ${Party_CloseDialog_Button}

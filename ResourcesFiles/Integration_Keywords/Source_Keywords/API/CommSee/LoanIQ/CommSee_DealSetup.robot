@@ -509,6 +509,79 @@ Write Post Deal Details for Scenario 7 ComSee
     Close All Windows on LIQ
     Logout from Loan IQ
     
+Write Post Deal Details after Loan Creation for Scenario 7 ComSee
+    [Documentation]    This keyword is used to write all the Post Deal Details needed for Commsee fields.    
+    ...    @author: rtaryao    12AUG2019    - Initial Create
+    [Arguments]    ${ExcelPath}
+    
+    ###Deal Notebook - Global and Host Bank's Current and Closing Cmt Amt Validation###
+    Open Existing Deal    &{ExcelPath}[Deal_Name]
+    ${GlobalClosingCmt}    ${GlobalCurrentCmt}    Get Deal Global Current and Closing Cmt Amounts 
+    ${HBClosingCmt}    ${HBNetCmt}    Get Deal Host Bank Net and Closing Cmt Amounts
+    ${GlobalClosingCmt}    Remove Comma and Convert to Number    ${GlobalClosingCmt} 
+    ${GlobalCurrentCmt}    Remove Comma and Convert to Number    ${GlobalCurrentCmt}
+    ${HBClosingCmt}    Remove Comma and Convert to Number    ${HBClosingCmt}
+    ${HBNetCmt}    Remove Comma and Convert to Number    ${HBNetCmt}
+    
+    Write Data To Excel    ComSee_SC7_Deal    Deal_GlobalDealClosingCommitment    ${rowid}    ${GlobalClosingCmt}    ${ComSeeDataSet}
+    Write Data To Excel    ComSee_SC7_Deal    Deal_GlobalDealCurrentCommitment    ${rowid}    ${GlobalCurrentCmt}    ${ComSeeDataSet}
+    Write Data To Excel    ComSee_SC7_Deal    Deal_HostBankClosingCommitment    ${rowid}    ${HBClosingCmt}    ${ComSeeDataSet}
+    Write Data To Excel    ComSee_SC7_Deal    Deal_HostBankNetCommitment    ${rowid}    ${HBNetCmt}    ${ComSeeDataSet}
+    
+    ###Get Facility Amount###
+    Navigate to Facility Notebook from Deal Notebook    &{ExcelPath}[Facility_Name]
+    ${FacHBNetCmtAmt}    ${FacHBFundableCmtAmt}    Get Facility Host Bank Net and Fundable Cmt Amount
+    ${FacHBOutstandingNetAmt}    ${FacHBNetAvailToDrawAmt}    Get Facility Host Bank Outstanding Net and Avail to Draw Amount
+    ${FacGlobalCurrentCmtAmt}    ${FacGlobalClosingCmtAmt}    Get Facility Global Closing and Current Cmt Amount
+    ${FacGlobalOutstandingAmt}    ${FacGlobalAvailtoDrawAmt}    Get Facility Global Outstanding and Available to Draw Amount
+    ${FacHBNetCmtAmt}    Remove Comma and Convert to Number    ${FacHBNetCmtAmt}
+    ${FacHBFundableCmtAmt}    Remove Comma and Convert to Number    ${FacHBFundableCmtAmt}
+    ${FacHBOutstandingNetAmt}    Remove Comma and Convert to Number    ${FacHBOutstandingNetAmt}
+    ${FacHBNetAvailToDrawAmt}    Remove Comma and Convert to Number    ${FacHBNetAvailToDrawAmt}
+    ${FacGlobalCurrentCmtAmt}    Remove Comma and Convert to Number    ${FacGlobalCurrentCmtAmt}
+    ${FacGlobalClosingCmtAmt}    Remove Comma and Convert to Number    ${FacGlobalClosingCmtAmt}
+    ${FacGlobalOutstandingAmt}    Remove Comma and Convert to Number    ${FacGlobalOutstandingAmt}
+    ${FacGlobalAvailtoDrawAmt}    Remove Comma and Convert to Number    ${FacGlobalAvailtoDrawAmt}
+    
+    Write Data To Excel    ComSee_SC7_FacSetup    Facility_HostBankNetCommitment    ${rowid}    ${FacHBNetCmtAmt}    ${ComSeeDataSet}
+    Write Data To Excel    ComSee_SC7_FacSetup    Facility_HostBankFundableCommitment    ${rowid}    ${FacHBFundableCmtAmt}    ${ComSeeDataSet} 
+    Write Data To Excel    ComSee_SC7_FacSetup    Facility_HostBankNetOutstandings    ${rowid}    ${FacHBOutstandingNetAmt}    ${ComSeeDataSet}
+    Write Data To Excel    ComSee_SC7_FacSetup    Facility_HostBankNetAvailableToDraw    ${rowid}    ${FacHBNetAvailToDrawAmt}    ${ComSeeDataSet}
+    Write Data To Excel    ComSee_SC7_FacSetup    Facility_GlobalCurrentCommitment    ${rowid}    ${FacGlobalCurrentCmtAmt}    ${ComSeeDataSet}
+    Write Data To Excel    ComSee_SC7_FacSetup    Facility_GlobalClosingCommitment    ${rowid}    ${FacGlobalClosingCmtAmt}    ${ComSeeDataSet}
+    Write Data To Excel    ComSee_SC7_FacSetup    Facility_GlobalOutstandings    ${rowid}    ${FacGlobalOutstandingAmt}    ${ComSeeDataSet}
+    Write Data To Excel    ComSee_SC7_FacSetup    Facility_GlobalAvailableToDraw    ${rowid}    ${FacGlobalAvailtoDrawAmt}    ${ComSeeDataSet}
+  
+    ###Expense Code Writing###
+    ${ExpenseCodeDesc}    Get Expense Description from Table Maintenance    &{ExcelPath}[Primary_RiskBook]   
+    ${FacExpenseCode}    Get Facility Expense Code and Description Combined    &{ExcelPath}[Primary_RiskBook]    ${ExpenseCodeDesc}
+    Write Data To Excel    ComSee_SC7_FacSetup    Facility_ExpenseCode    ${rowid}    ${FacExpenseCode}    ${ComSeeDataSet}        
+    
+    ##Portfolio Code Writing###
+    ${PortfolioCode}    Get Portfolio Code from Table Maintenance    &{ExcelPath}[Primary_Portfolio]
+    Write Data To Excel    ComSee_SC7_FacSetup    Facility_PortfolioCode    ${rowid}    ${PortfolioCode}    ${ComSeeDataSet}
+    
+    ###Funding Desk Code Writing###
+    ${FundingDeskCode}    Get Funding Desk Code from Table Maintenance    &{ExcelPath}[Primary_PortfolioBranch]
+    Write Data To Excel    ComSee_SC7_FacSetup    Facility_FundingDeskCode    ${rowid}    ${FundingDeskCode}    ${ComSeeDataSet}  
+    
+    ###Lender, Facility, Borrower, and Facility Outstanding Count Writing###
+    ${LoanALias}    Read Data From Excel    ComSee_SC7_Loan   Loan_Alias    ${rowid}    ${ComSeeDataSet}    
+    ${LenderCount}    Get Lender Count    &{ExcelPath}[Primary_Lender1]    ,
+    ${FacilityCount}    Get Facility Count    &{ExcelPath}[Facility_Name]    ${EMPTY}
+    ${BorrowerCount}    Get Borrower Count    &{ExcelPath}[Borrower1_ShortName]    ${EMPTY}
+    ${OutstandingCount}    Get Facility Outstanding Count    ${LoanALias}    ${EMPTY}
+    
+    Write Data To Excel    ComSee_SC7_Deal    Deal_NoOfLenders    ${rowid}    ${LenderCount}    ${ComSeeDataSet}
+    Write Data To Excel    ComSee_SC7_FacSetup    Facility_NoOfLenders    ${rowid}    ${LenderCount}    ${ComSeeDataSet}
+    Write Data To Excel    ComSee_SC7_Deal    Deal_NoOfFacitlities    ${rowid}    ${FacilityCount}    ${ComSeeDataSet}
+    Write Data To Excel    ComSee_SC7_Deal    Deal_NoOfBorrowers    ${rowid}    ${BorrowerCount}    ${ComSeeDataSet}
+    Write Data To Excel    ComSee_SC7_FacSetup    Facility_NoOfBorrowers    ${rowid}    ${BorrowerCount}    ${ComSeeDataSet}
+    Write Data To Excel    ComSee_SC7_FacSetup    Facility_NoOfOutstanding    ${rowid}    ${OutstandingCount}    ${ComSeeDataSet}
+    
+    Close All Windows on LIQ
+    Logout from Loan IQ
+    
 Setup Primaries for Syndicated Deal - ComSee
     [Documentation]    This keyword adds Lenders in a Syndicated Deal. Specifically, 1 Host Bank and 2 Non-Host Banks.
     ...    @author: rtarayao    23AUG2019    - initial create

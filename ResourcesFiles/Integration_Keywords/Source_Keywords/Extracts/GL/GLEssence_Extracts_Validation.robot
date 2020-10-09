@@ -39,6 +39,7 @@ Download Compressed File from GL Extraction Area
 Decrypt Compressed File for GL Extract
     [Documentation]    This keyword is used to perform decryption process for GL extract (.gpg) files.
     ...    @author: clanding    07SEP2020    - initial create
+    ...    @update: clanding    30SEP2020    - added max loop in the for loop
     [Arguments]    ${sExtract_Path}    ${sGPG_File}    ${sCSV_File}
 
     Delete File If Exist    ${sExtract_Path}${sCSV_File}
@@ -65,7 +66,7 @@ Decrypt Compressed File for GL Extract
 
     ### Check if CSV File is fully downloaded in Extract Path ###
     ${CSV_File_Size}    Get File Size    ${sExtract_Path}${sCSV_File}
-    :FOR    ${Index}    IN RANGE    5
+    :FOR    ${Index}    IN RANGE    25
     \    ${CSV_File_Size}    Get File Size    ${sExtract_Path}${sCSV_File}
     \    Exit For Loop If    ${CSV_File_Size}!=0
     Run Keyword If    ${CSV_File_Size}!=0    Run Keywords    Log To Console    '${sCSV_File}' is decrypted successfully'
@@ -75,7 +76,8 @@ Decrypt Compressed File for GL Extract
 Run GL Validation Tool
     [Documentation]    This keyword is used to delete any existing output file and then run GL Validation Tool in command line.
     ...    @author: clanding    11SEP2020    - initial create
-    [Arguments]    ${sExtract_Path}    ${sCSV_File}
+    ...    @update: clanding    07OCT2020    - added handling for multiple zone; added argument for sZoneAndCode
+    [Arguments]    ${sExtract_Path}    ${sCSV_File}    ${sZoneAndCode}
     
     @{Output_Files}    OperatingSystem.List Directory    ${GL_VALIDATION_TOOL_PATH}
     :FOR    ${File}    IN    @{Output_Files}
@@ -87,6 +89,10 @@ Run GL Validation Tool
     Run Keyword If    ${Contains_Output}==${True}    Run Keywords    Log To Console    No more output files. Ready to validate.
     ...    AND    Log    No more output files. Ready to validate.
     ...    ELSE    FAIL    Not all output files are deleted. Please check. Files: '${Output_Files}'
+
+    ${GL_VALIDATION_TOOL_JAR}    Run Keyword If    '${sZoneAndCode}'=='Australia(AU)'    Set Variable    ${GL_VALIDATION_TOOL_JAR_AU}
+    ...    ELSE IF    '${sZoneAndCode}'=='Europe(EU)'    Set Variable    ${GL_VALIDATION_TOOL_JAR_EU}
+    ...    ELSE    Set Variable    ${GL_VALIDATION_TOOL_JAR}
 
     Run    ${GL_DECRYPTION_PART1} ${GL_VALIDATION_TOOL_PATH}
     Run    ${GL_DECRYPTION_PART2} ${GL_VALIDATION_TOOL_JAR}

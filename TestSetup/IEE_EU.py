@@ -16,7 +16,7 @@ MDM_FFC_URL="/mch-ui"
 
 SFTP_HOST = "mancsleverg0006"
 SFTP_PORT = "22"
-SFTP_USER = "micloud"
+SFTP_USER = "sftpuser"
 
 DBServiceName = "MLFFC1.misys.global.ad"
 DBUsername = "MCH"
@@ -93,12 +93,12 @@ ESS_PASSWORD = "brad"
 
 ### IEE LIQ SERVER ###
 DBSERVICENAME_LIQ = 'MLLIQ.misys.global.ad'
-DBUSERNAME_LIQ = 'LIQ747E3'
+DBUSERNAME_LIQ = 'LIQ7512UPG'
 DBPASSWORD_LIQ = 'password'
 DBHOST_LIQ = 'MANCSLEVERG0023'
 DBPORT_LIQ = '1539'
 DBUR_LIQ = 'jdbc:oracle:thin:@//mancsleverg0023:1539/MLLIQ.misys.global.ad'
-LIQ7474_USER = 'LIQ747E3'
+LIQ7474_USER = 'LIQ7512UPG'
 
 ###EU User###
 BFBANKFUSION_USER = 'EUBANKFUSION'
@@ -134,7 +134,7 @@ DBUR_PTY = 'jdbc:oracle:thin:@//MANCSLEVERG0023:1521/AUPTYPDB'
 
 ###SFTP HOST/CREDENTIALS###
 SFTP_HOST_GL = "mancsleverg0005"
-SFTP_PASSWORD = "misys123"
+SFTP_PASSWORD = "t3stOnly?"
 
 ###FFC MCH DB DETAILS###
 DBHost = 'mancsleverg0023'
@@ -175,6 +175,8 @@ GL_DECRYPTION_PART1 = 'C:/Git_Evergreen/fms_cba/DataSet/Integration_DataSet/Extr
 GL_DECRYPTION_PART2 = 'C:/Git_Evergreen/fms_cba/DataSet/Integration_DataSet/Extracts/GL/Decryptor_Tool/GL_DECRYPTION_PART2.vbs'
 GL_DECRYPTION_PART3 = 'C:/Git_Evergreen/fms_cba/DataSet/Integration_DataSet/Extracts/GL/Decryptor_Tool/GL_DECRYPTION_PART3.vbs'
 GL_PGP_SECRET_KEY = 'secret.skr'
-GL_PASSPHRASE = 'password'
+GL_PASSPHRASE = 'oracle'
 GL_CSV_GPG_FILEEXTENSION = '.csv.gpg'
 ESS_EUWASADMIN_SCHEMA = "EUWASADMIN"
+GL_VALIDATION_TOOL_PATH = 'C:\\Git_Evergreen\\fms_cba\\DataSet\\Integration_DataSet\Extracts\\GL\\Validation_Tool'
+GL_VALIDATION_TOOL_JAR_EU = 'gpgCheck-1.0.3-jar-with-dependencies-EU.jar'

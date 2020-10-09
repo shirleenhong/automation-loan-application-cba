@@ -309,6 +309,74 @@ Setup Facility - Scenario 7 ComSee
     Write Data To Excel    ComSee_SC7_FacSetup    Facility_MultiCCY    ${rowid}    ${MulitCCYStatus}    ${ComSeeDataSet} 
     Write Data To Excel    ComSee_SC7_Deal    COM_ID    ${rowid}    ${FacilityControlNumber}    ${ComSeeDataSet}
     Write Data To Excel    ComSee_SC7_FacSetup    Facility_ControlNumber    ${rowid}    ${FacilityControlNumber}    ${ComSeeDataSet}  
+    Write Data To Excel    ComSee_SC7_FacFeeSetup    COM_ID    ${rowid}    ${FacilityControlNumber}    ${ComSeeDataSet}
+    Write Data To Excel    ComSee_SC7_Loan    COM_ID    ${rowid}    ${FacilityControlNumber}    ${ComSeeDataSet}
+    
+    # ###Facility Notebook - Codes Tab###
+    ${FundingDeskDesc}    Get Facility Funding Desk Description
+    Write Data To Excel    ComSee_SC7_FacSetup    Facility_FundingDeskDescription    ${rowid}    ${FundingDeskDesc}    ${ComSeeDataSet}
+        
+    
+    # ###Facility Notebook - Types/Purpose Tab###
+    Add Risk Type    &{ExcelPath}[Facility_RiskType]    &{ExcelPath}[Facility_RiskTypeLimit]   &{ExcelPath}[Facility_Currency]
+    Add Loan Purpose Type    &{ExcelPath}[Facility_LoanPurposeType]
+    
+    ##Facility Notebook - Restrictions Tab###
+    Add Currency Limit    &{ExcelPath}[Facility_Currency]    &{ExcelPath}[Facility_GlobalLimit]   &{ExcelPath}[Facility_CustomerServicingGroup]    &{ExcelPath}[Facility_SGLocation]
+    
+    ###Facility Notebook - Sublimit/Cust Tab###
+    Add Borrower    &{ExcelPath}[Facility_Currency]    &{ExcelPath}[Facility_BorrowerSGName]    &{ExcelPath}[Facility_BorrowerPercent]    &{ExcelPath}[Facility_Borrower]
+    ...    &{ExcelPath}[Facility_GlobalLimit]    &{ExcelPath}[Facility_BorrowerMaturity]    ${Facility_EffectiveDate}
+    
+    ${Facility_EffectiveDate}    Convert LIQ Date to Year-Month-Day Format    ${Facility_EffectiveDate}
+    ${Facility_ExpiryDate}    Convert LIQ Date to Year-Month-Day Format    ${Facility_ExpiryDate}
+    ${Facility_MaturityDate}    Convert LIQ Date to Year-Month-Day Format    ${Facility_MaturityDate}
+    
+    Write Data To Excel    ComSee_SC7_FacSetup    Facility_EffectiveDate    ${rowid}    ${Facility_EffectiveDate}    ${ComSeeDataSet}
+    Write Data To Excel    ComSee_SC7_FacSetup    Facility_ExpiryDate    ${rowid}    ${Facility_ExpiryDate}    ${ComSeeDataSet}
+    Write Data To Excel    ComSee_SC7_FacSetup    Facility_FinalMaturityDate    ${rowid}    ${Facility_MaturityDate}    ${ComSeeDataSet}
+    
+Setup Expired Facility - Scenario 7 ComSee
+    [Documentation]    This keyword is used to create a facility.
+    ...    @author: cfrancis    06OCT2020    - Initial Create
+    [Arguments]    ${ExcelPath}
+    ###Log In to LIQ###
+    Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
+    
+    ##Search Deal###
+    Open Existing Deal    &{ExcelPath}[Deal_Name]
+    
+    ###Data Generation###
+    ${Facility_Name}    Generate Name Test Data    &{ExcelPath}[Facility_NamePrefix]
+    Write Data To Excel    ComSee_SC7_Deal    Facility_Name    ${rowid}    ${Facility_Name}    ${ComSeeDataSet}
+    Write Data To Excel    ComSee_SC7_FacSetup    Facility_Name    ${rowid}    ${Facility_Name}    ${ComSeeDataSet}
+    Write Data To Excel    ComSee_SC7_FacFeeSetup    Facility_Name    ${rowid}    ${Facility_Name}    ${ComSeeDataSet}
+    Write Data To Excel    ComSee_SC7_Loan    Facility_Name    ${rowid}    ${Facility_Name}    ${ComSeeDataSet}
+    # Write Data To Excel    ComSee_SC7_Loan    Loan_FacilityName    ${rowid}    ${Facility_Name}    ${ComSeeDataSet}
+    Write Data To Excel    ComSee_SC7_PrincipalLoanPayment    Facility_Name    ${rowid}    ${Facility_Name}    ${ComSeeDataSet}
+    Write Data To Excel    ComSee_SC7_LoanInterestPayment    Facility_Name    ${rowid}    ${Facility_Name}    ${ComSeeDataSet}
+    # Write Data To Excel    ComSee_SC7_LoanInterestPayment    Loan_FacilityName    ${rowid}    ${Facility_Name}    ${ComSeeDataSet} 
+    Write Data To Excel    ComSee_SC7_OngoingFeePayment    Facility_Name    ${rowid}    ${Facility_Name}    ${ComSeeDataSet}
+    
+    ###New Facility Screen###
+    New Facility Select    &{ExcelPath}[Deal_Name]    ${FacilityName}    &{ExcelPath}[Facility_Type]    &{ExcelPath}[Facility_ProposedCmtAmt]    &{ExcelPath}[Facility_Currency]
+    
+    ###Facility Notebook - Summary Tab###
+    ${Facility_AgreementDate}    Get System Date
+    ${Facility_EffectiveDate}    Get System Date
+    ${Facility_ExpiryDate}    Add Days to Date    ${Facility_EffectiveDate}    1
+    ${Facility_MaturityDate}    Add Days to Date    ${Facility_EffectiveDate}    31
+    
+    Write Data To Excel    ComSee_SC7_Deal    Primary_PortfolioExpiryDate    ${rowid}     ${Facility_ExpiryDate}    ${ComSeeDataSet}
+    Write Data To Excel    ComSee_SC7_Loan    Loan_MaturityDate    ${rowid}     ${Facility_MaturityDate}    ${ComSeeDataSet}
+    
+    Enter Dates on Facility Summary    ${Facility_AgreementDate}    ${Facility_EffectiveDate}    ${Facility_ExpiryDate}    ${Facility_MaturityDate}
+    Verify Main SG Details    &{ExcelPath}[Facility_ServicingGroup]    &{ExcelPath}[Facility_Customer]    &{ExcelPath}[Facility_SGLocation]
+    ${FacilityControlNumber}    Get Facility Control Number
+    ${MulitCCYStatus}    Get Facility Multi CCY Status
+    Write Data To Excel    ComSee_SC7_FacSetup    Facility_MultiCCY    ${rowid}    ${MulitCCYStatus}    ${ComSeeDataSet} 
+    Write Data To Excel    ComSee_SC7_Deal    COM_ID    ${rowid}    ${FacilityControlNumber}    ${ComSeeDataSet}
+    Write Data To Excel    ComSee_SC7_FacSetup    Facility_ControlNumber    ${rowid}    ${FacilityControlNumber}    ${ComSeeDataSet}  
     Write Data To Excel    ComSee_SC7_FacFeeSetup    COM_ID    ${rowid}    ${FacilityControlNumber}    ${ComSeeDataSet} 
     
     # ###Facility Notebook - Codes Tab###

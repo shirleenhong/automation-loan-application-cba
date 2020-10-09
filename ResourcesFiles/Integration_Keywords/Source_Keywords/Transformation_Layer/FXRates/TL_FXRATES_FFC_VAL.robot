@@ -57,19 +57,20 @@ Validate FFC for TL FXRates Failed
     [Documentation]    This keyword is used to validate CustomCBAPush in MCH FFC UI.
     ...    @author: mnanquil    19MAR2019    - initial create
     ...    @update: cfrancis    21AUG2019    - Changed value to be validated from ${FAILED} to ${MESSAGESTATUS_SUCCESSFUL}    
+    ...    @update: clanding    01OCT2020    - removed X-Request-ID= in filtering GSFILENAME_WITHTIMESTAMP
+    ...                                      - moved last Verify Expected Value in the Given JSON File for FXRates TL to ELSE FOR isMultipleExpectedResponse condition
     [Arguments]    ${sOutputFilePath}    ${sOutputFileName}    ${sExpectedErrorMsg}    ${isMultipleExpectedResponse}=None
     Login to MCH UI
     Wait Until Element Is Visible    ${FFC_Dashboard}    30s
     ###CustomInterface###
     Go to Dashboard and Click Source API Name    ${CBAPUSH_SOURCENAME}    ${CBAPUSH_INSTANCE}
-    ${ResultsRowList}    Filter by Reference Header and Save Header Value and Return Results Row List Value    ${JMS_HEADERS}    X-Request-ID=${GSFILENAME_WITHTIMESTAMP}    ${sOutputFilePath}${sOutputFileName}    
+    ${ResultsRowList}    Filter by Reference Header and Save Header Value and Return Results Row List Value    ${JMS_HEADERS}    ${GSFILENAME_WITHTIMESTAMP}    ${sOutputFilePath}${sOutputFileName}    
     ...    ${JSON}    ${JMS_PAYLOAD}    ${RESULTSTABLE_STATUS}    ${JMS_INBOUND_QUEUE}    
     Validate Results Row Values Using Expected Value List    ${ResultsRowList}    ${MESSAGESTATUS_SUCCESSFUL}    ${TL_NOTIF_OUT}    
     Verify Expected Value in the Given JSON File for FXRates TL    ${sOutputFilePath}${sOutputFileName}    ${REQUEST_ID}    ${GSFILENAME_WITHTIMESTAMP}
     Verify Expected Value in the Given JSON File for FXRates TL    ${sOutputFilePath}${sOutputFileName}    ${APINAME}    ${FXRATES_APINAME_FAILED}
     Verify Expected Value in the Given JSON File for FXRates TL    ${sOutputFilePath}${sOutputFileName}    ${CONSOLIDATED_STATUS}    ${MESSAGESTATUS_FAILURE}
     Verify Expected Value in the Given JSON File for FXRates TL    ${sOutputFilePath}${sOutputFileName}    ${RESPONSES}    ${FILE_VALIDATION}    ${RESPONSE_DETAILS}    ${MESSAGE_ID}
-    # Verify Expected Value in the Given JSON File for FXRates TL    ${sOutputFilePath}${sOutputFileName}    ${RESPONSES}    ${sExpectedErrorMsg}    ${RESPONSE_DETAILS}    ${RESPONSE_DESC}
     Run Keyword If    ${isMultipleExpectedResponse}==${True}    Verify Multiple Expected Value in the Given JSON File for FXRates TL    ${sOutputFilePath}${sOutputFileName}    ${RESPONSES}    ${sExpectedErrorMsg}    ${RESPONSE_DETAILS}    ${RESPONSE_DESC}
     ...    ELSE    Verify Expected Value in the Given JSON File for FXRates TL    ${sOutputFilePath}${sOutputFileName}    ${RESPONSES}    ${sExpectedErrorMsg}    ${RESPONSE_DETAILS}    ${RESPONSE_DESC}
     Verify Expected Value in the Given JSON File for FXRates TL    ${sOutputFilePath}${sOutputFileName}    ${RESPONSES}    ${MESSAGESTATUS_FAILURE}    ${RESPONSE_DETAILS}    ${RESPONSE_STAT}
@@ -154,8 +155,9 @@ TL FXRates Filter by Reference Header and Save Message TextArea
 Validate FFC for TL FX Rate Success with Multiple Files
     [Documentation]    This keyword is used to validate OpenAPI and Distributor in MCH FFC UI.
     ...    @author: cfrancis    01AUG2019    - initial create
+    ...    @update: nbautist    07OCT2020    - new argument to replace incorrect input parameter; removed incorrect index; updated file extension
     [Arguments]    ${sInputFilePath}    ${sInputFileName}    ${sInputXML}    ${sOutputFilePath}    ${sOutputFileName}    ${sOutputXML}
-    ...    ${sXMLExcelFile}    ${sfundingDeskStatus}    ${sResponse}    ${sResponseMechanism}    ${iIndex}    ${sInputGSFile}    ${sFundingDesk}=NY    ${Delimiter}=None
+    ...    ${sXMLExcelFile}    ${sfundingDeskStatus}    ${sResponse}    ${sResponseMechanism}    ${iIndex}    ${sInputGSFile}    ${GSFilename}    ${sFundingDesk}=NY    ${Delimiter}=None
     Login to MCH UI
     
     ###FX Rate Splitter###
@@ -164,14 +166,14 @@ Validate FFC for TL FX Rate Success with Multiple Files
     ${InputGSFile_Count}    Get Length    ${InputGSFile_List}
     Wait Until Element Is Visible    ${FFC_Dashboard}    30s
     ${aHeaderRefNameList}    Create List    ${REQUESTS_ID}
-    ${aExpectedRefList}    Create List    ${GSFILENAME_WITHTIMESTAMP}
+    ${aExpectedRefList}    Create List    ${GSFilename}
     Go to Dashboard and Click Source API Name    ${FXRATES_ACK_MESSAGE_SPLITTER}    ${CUSTOM_INTERFACE_INSTANCE}
     ${ColumnIndex}    Filter by Multiple Reference Headers and Values and Return Column Index    ${aHeaderRefNameList}    ${aExpectedRefList}
     ${Results_Row_Count}    SeleniumLibraryExtended.Get Element Count    ${Results_Row}
     ${Row_Count_Diff}    Evaluate    ${Results_Row_Count} - ${InputGSFile_Count}
     ${Results_Row_Count_Temp}    Evaluate    ${Results_Row_Count} - ${Row_Count_Diff}
-    ${Results_Row_Count}    Set Variable If    ${Results_Row_Count} > ${InputGSFile_Count}    ${Results_Row_Count_Temp}    ${Results_Row_Count}
-    ${Results_Row_Count}    Evaluate    ${Results_Row_Count} - ${iIndex}    
+    ${Results_Row_Count}    Set Variable If    ${Results_Row_Count} > ${InputGSFile_Count}    ${Results_Row_Count_Temp}    ${Results_Row_Count}  
+
     ${RequestID_UI}    Get Results Table Column Value by Header Title and Return    ${Results_Row_Count}    ${REQUESTS_ID}
     ${REQUESTID_VALUE}    Split Request ID From Splitter Queue for TL and Return Final Request ID    ${RequestID_UI}    |   
       
@@ -210,6 +212,7 @@ Validate FFC for TL FX Rate Success with Multiple Files
 Validate Multiple Files for Success on TL FX Rates in FFC
     [Documentation]    This keyword is used to validate multiple FX Rates files in FFC
     ...    @author: cfrancis    01AUG2019    - initial create
+    ...    @update: nbautist    08OCT2020    - updated extension
     [Arguments]    ${sInputFilePath}    ${sInputFileName}    ${sInputXML}    ${sOutputFilePath}    ${sOutputFileName}    ${sOutputXML}
     ...    ${sXMLExcelFile}    ${sfundingDeskStatus}    ${sResponse}    ${sResponseMechanism}    ${sInputGSFile}    ${sFundingDesk}    ${Delimiter}=None
     @{InputGSFile_List}    Run Keyword If    '${Delimiter}'=='None'    Split String    ${sInputGSFile}    ,
@@ -219,7 +222,7 @@ Validate Multiple Files for Success on TL FX Rates in FFC
     ${sXMLExcelFile_NoExt}    Set Variable    @{XMLExcelFile_NoExt}[0]
     :FOR    ${Index}    IN RANGE    ${InputGSFile_Count}
     \    Validate FFC for TL FX Rate Success with Multiple Files    ${sInputFilePath}    ${sInputFileName}_${Index}    ${sInputXML}_${Index}    ${sOutputFilePath}    ${sOutputFileName}_${Index}    ${sOutputXML}_${Index}
-         ...    ${sXMLExcelFile_NoExt}${Index}.xls    ${fundingDeskStatus}    ${sResponse}_${Index}    ${sResponseMechanism}_${Index}    ${Index}    ${sInputGSFile}    ${sFundingDesk}
+         ...    ${sXMLExcelFile_NoExt}${Index}.${XLSX}    ${fundingDeskStatus}    ${sResponse}_${Index}    ${sResponseMechanism}_${Index}    ${Index}    ${sInputGSFile}    @{ARCHIVE_GSFILENAME_LIST}[${Index}]    ${sFundingDesk}
     Set Global Variable    ${COUNTER}    ${Index}
 
 Verify Multiple Expected Value in the Given JSON File for FXRates TL

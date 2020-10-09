@@ -138,12 +138,13 @@ Validate Rate History table
     [Documentation]    This keyword is used to validate Exchange Rate History table
     ...    @author: clanding
     ...    @update: clanding    26MAR2019    - refactor according to CBA Evergreen Automation Checklist and PointSheet v1.0.1
+    ...    @update: clanding    07OCT2020    - removed process timeout for Mx LoanIQ Select String
     [Arguments]    ${sConvertedDate_With_0}    ${iExpectedRate}
     
     mx LoanIQ click    ${LIQ_ExchangeRate_History_Button}
     mx LoanIQ activate window    ${LIQ_CrossCurrency_Hist_Window}
     Log    ${sConvertedDate_With_0}\t${iExpectedRate}
-    Run Keyword And Continue On Failure    Mx LoanIQ Select String    ${LIQ_CrossCurrency_Hist_Tree}    ${sConvertedDate_With_0}\t\t${iExpectedRate}    5                
+    Run Keyword And Continue On Failure    Mx LoanIQ Select String    ${LIQ_CrossCurrency_Hist_Tree}    ${sConvertedDate_With_0}\t\t${iExpectedRate}                
 
 Validate Rate History table for 400
     [Documentation]    This keyword is used to validate Exchange Rate History table
@@ -284,12 +285,13 @@ Validate Rate Events List
     [Documentation]    This keyword is used to validate Event list row value
     ...    @author: clanding
     ...    @update: clanding    26MAR2019    - refactor according to CBA Evergreen Automation Checklist and PointSheet v1.0.1
+    ...    @update: clanding    07OCT2020    - removed process timeout for Mx LoanIQ Select String
     [Arguments]    ${sConv_Date_With_0}    ${iExpectedRate}
     
     mx LoanIQ click    ${LIQ_ExchangeRate_Events_Button}
     mx LoanIQ activate window    ${LIQ_CurrencyExchangeRate_Event_Window}     
     ${Comment_Msg}    Catenate    Exchange Rate changed to    ${iExpectedRate}    beginning    ${sConv_Date_With_0}.       
-    Run Keyword And Continue On Failure    Mx LoanIQ Select String    ${LIQ_CurrencyExchangeRate_Event_Tree}    ${sConv_Date_With_0}\t${Comment_Msg}    5      
+    Run Keyword And Continue On Failure    Mx LoanIQ Select String    ${LIQ_CurrencyExchangeRate_Event_Tree}    ${sConv_Date_With_0}\t${Comment_Msg}
     mx LoanIQ click    ${LIQ_CurrencyExchangeRate_Event_Exit_Button}
 
 Get Total Events Record
@@ -397,6 +399,7 @@ Validate Currency Exchange Rate List is displayed
     ...    @author: clanding
     ...    @update: clanding    26MAR2019    - refactor according to CBA Evergreen Automation Checklist and PointSheet v1.0.1
     ...    @update: cfrancis    18JUL2019    - added logic to change funding desk for NY FX rates    
+    ...    @update: clanding    07OCT2020    - removed process timeout for Mx LoanIQ Select String
     [Arguments]    ${sExchangeCurrency}    ${sToCurrency}    ${sFundingDesk_Desc}    ${sFundingDesk_Currency}    ${iFXRate_WholeNum}    ${iFXRate_DecNum}
 
     mx LoanIQ activate window    ${LIQ_CurrencyExchangeRate_Window}
@@ -404,7 +407,7 @@ Validate Currency Exchange Rate List is displayed
     Run Keyword And Continue On Failure    Validate Loan IQ Details    ${sFundingDesk_Desc}    ${LIQ_ExchangeRate_FundingDesk_List}
     Run Keyword And Continue On Failure    Mx LoanIQ Verify Object Exist    JavaWindow("title:=Currency Exchange Rates.*").JavaStaticText("label:=${sFundingDesk_Currency}")            VerificationData="Yes"
     Log    ${sExchangeCurrency}\t${iFXRate_WholeNum}\t${iFXRate_DecNum}
-    ${ExchangeCurr_Exist}    Run Keyword And Return Status    Mx LoanIQ Select String    ${LIQ_CurrencyExchangeRate_Tree}    ${sExchangeCurrency}\t${iFXRate_WholeNum}\t${iFXRate_DecNum}    5
+    ${ExchangeCurr_Exist}    Run Keyword And Return Status    Mx LoanIQ Select String    ${LIQ_CurrencyExchangeRate_Tree}    ${sExchangeCurrency}\t${iFXRate_WholeNum}\t${iFXRate_DecNum}
     Run Keyword If    ${ExchangeCurr_Exist}==${True}    Log    ${sExchangeCurrency} and ${iFXRate_WholeNum}${iFXRate_DecNum} combination exist.
     ...    ELSE    Log    ${sExchangeCurrency} and ${iFXRate_WholeNum}${iFXRate_DecNum} combination does DOES NOT EXIST.    level=ERROR
     
