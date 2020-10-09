@@ -30,19 +30,19 @@ Initiate Comprehensive Repricing - D00000476
     Run Keyword If    '&{ExcelPath}[rowid]'=='3'    Write Data To Excel    SERV08C_ComprehensiveRepricing    Loan_Alias    3    ${NewLoanAlias}    ${CBAUAT_ExcelPath}
     Run Keyword If    '&{ExcelPath}[rowid]'=='2'    Write Data To Excel    SERV08C_ComprehensiveRepricing    Loan_Alias    2    ${NewLoanAlias}    ${CBAUAT_ExcelPath}
     Run Keyword If    '&{ExcelPath}[rowid]'=='8'    Write Data To Excel    SERV23_Paperclip    Loan_Alias    3    ${NewLoanAlias}    ${CBAUAT_ExcelPath}
-    ${CycleAmount}    Set Variable    0
-    Run Keyword if    '&{ExcelPath}[rowid]'!='7'    Run Keywords    Add Repricing Details    Interest Payment    
-    ...    AND    ${CycleAmount}    Select Cycles for Loan Item    Projected Due    &{ExcelPath}[Cycle]
-    ...    AND    Verify Interest Payment    ${CycleAmount}     &{ExcelPath}[Payment_Effective_Date]
+
+    Run Keyword if    '&{ExcelPath}[rowid]'!='7'    Add Repricing Details    Interest Payment
+    ${CycleAmount}    Run Keyword if    '&{ExcelPath}[rowid]'!='7'    Select Cycles for Loan Item    Projected Due    &{ExcelPath}[Cycle]
+    Run Keyword if    '&{ExcelPath}[rowid]'!='7'    Verify Interest Payment    ${CycleAmount}    &{ExcelPath}[Payment_Effective_Date]
   
     Navigate Notebook Workflow    ${LIQ_LoanRepricingForDeal_Window}    ${LIQ_LoanRepricingForDeal_Workflow_Tab}    ${LIQ_LoanRepricingForDeal_Workflow_JavaTree}    Create Cashflows
-    
+
     ## Remittance Instruction Addition per Cashflow ###
-    Run Keyword if    '&{ExcelPath}[rowid]'!='7'    Run Keywords    Add Remittance Instructions    &{ExcelPath}[Borrower_ShortName]    &{ExcelPath}[Borrower_RemittanceDescription]    
-    ...    AND    Create Cashflow    &{ExcelPath}[Borrower_ShortName]    release     
-    Add Remittance Instructions    &{ExcelPath}[Borrower_ShortName]    &{ExcelPath}[Borrower_RemittanceDescription]
-    Run Keyword If    '&{ExcelPath}[rowid]'!='3'    Create Cashflow    &{ExcelPath}[Borrower_ShortName]    release
-    Run Keyword If    '&{ExcelPath}[rowid]'=='3'    Create Cashflow    &{ExcelPath}[Loan_Increase]|${CycleAmount}    release     
+    Run Keyword If    '&{ExcelPath}[rowid]'!='3' and '&{ExcelPath}[rowid]'!='7'    Add Remittance Instructions    &{ExcelPath}[Borrower_ShortName]    &{ExcelPath}[Borrower_RemittanceDescription]
+    Run Keyword If    '&{ExcelPath}[rowid]'=='3'    Add Remittance Instructions    None    &{ExcelPath}[Borrower_RemittanceDescription]    ${CycleAmount}    &{ExcelPath}[Loan_Currency]
+    Run Keyword If    '&{ExcelPath}[rowid]'=='3'    Add Remittance Instructions    None    &{ExcelPath}[Borrower_RemittanceDescription_2]    &{ExcelPath}[Loan_Increase]    &{ExcelPath}[Loan_Currency]
+    Run Keyword If    '&{ExcelPath}[rowid]'!='3' and '&{ExcelPath}[rowid]'!='7'    Create Cashflow    &{ExcelPath}[Borrower_ShortName]    release
+    Run Keyword If    '&{ExcelPath}[rowid]'=='3'    Create Cashflow    &{ExcelPath}[Loan_Increase]|${CycleAmount}    release   
     
     Navigate Notebook Workflow    ${LIQ_LoanRepricingForDeal_Window}    ${LIQ_LoanRepricingForDeal_Workflow_Tab}    ${LIQ_LoanRepricingForDeal_Workflow_JavaTree}    Send to Approval
     
@@ -63,7 +63,7 @@ Initiate Comprehensive Repricing - D00000476
     Select Item in Work in Process    Outstandings    Awaiting Rate Approval    Loan Repricing    &{ExcelPath}[Facility_Name]
     Navigate Notebook Workflow    ${LIQ_LoanRepricingForDeal_Window}    ${LIQ_LoanRepricingForDeal_Workflow_Tab}    ${LIQ_LoanRepricingForDeal_Workflow_JavaTree}    Rate Approval
     Navigate Notebook Workflow    ${LIQ_LoanRepricingForDeal_Window}    ${LIQ_LoanRepricingForDeal_Workflow_Tab}    ${LIQ_LoanRepricingForDeal_Workflow_JavaTree}    Release Cashflows
-    Release Cashflow    &{ExcelPath}[Borrower_ShortName]    release    
+    # Release Cashflow    &{ExcelPath}[Borrower_ShortName]    release    
     
     Logout from Loan IQ
     Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
