@@ -31,7 +31,6 @@ Initiate Comprehensive Repricing - D00000476
     Run Keyword If    '&{ExcelPath}[rowid]'=='2'    Write Data To Excel    SERV08C_ComprehensiveRepricing    Loan_Alias    2    ${NewLoanAlias}    ${CBAUAT_ExcelPath}
     Run Keyword If    '&{ExcelPath}[rowid]'=='8'    Write Data To Excel    SERV23_Paperclip    Loan_Alias    3    ${NewLoanAlias}    ${CBAUAT_ExcelPath}
 
-    ${CycleAmount}    Set Variable    0
     Run Keyword if    '&{ExcelPath}[rowid]'!='7'    Add Repricing Details    Interest Payment
     ${CycleAmount}    Run Keyword if    '&{ExcelPath}[rowid]'!='7'    Select Cycles for Loan Item    Projected Due    &{ExcelPath}[Cycle]
     Run Keyword if    '&{ExcelPath}[rowid]'!='7'    Verify Interest Payment    ${CycleAmount}    &{ExcelPath}[Payment_Effective_Date]
@@ -64,7 +63,7 @@ Initiate Comprehensive Repricing - D00000476
     Select Item in Work in Process    Outstandings    Awaiting Rate Approval    Loan Repricing    &{ExcelPath}[Facility_Name]
     Navigate Notebook Workflow    ${LIQ_LoanRepricingForDeal_Window}    ${LIQ_LoanRepricingForDeal_Workflow_Tab}    ${LIQ_LoanRepricingForDeal_Workflow_JavaTree}    Rate Approval
     Navigate Notebook Workflow    ${LIQ_LoanRepricingForDeal_Window}    ${LIQ_LoanRepricingForDeal_Workflow_Tab}    ${LIQ_LoanRepricingForDeal_Workflow_JavaTree}    Release Cashflows
-    Release Cashflow    &{ExcelPath}[Borrower_ShortName]    release    
+    # Release Cashflow    &{ExcelPath}[Borrower_ShortName]    release    
     
     Logout from Loan IQ
     Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
