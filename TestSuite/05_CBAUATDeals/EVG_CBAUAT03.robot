@@ -171,13 +171,13 @@ Create Drawdown D4 D5 D6 - D00000476
     # Mx Execute Template With Multiple Data    Initiate Comprehensive Repricing - D00000476    ${CBAUAT_ExcelPath}    4-6    SERV08C_ComprehensiveRepricing  
 
 # ### February 1
-# Extend Facility MOF - D00000476
-    # Mx Execute Template With Multiple Data    Extend Maturity and Limit for MOD    ${CBAUAT_ExcelPath}    1    AMCH05_ExtendFacility
+Extend Facility MOF - D00000476
+        Mx Execute Template With Multiple Data    Extend Maturity and Limit for MOF    ${CBAUAT_ExcelPath}    1    AMCH05_ExtendFacility
 
 # Extend Facility FCAF and SCAF - D00000476
     # Mx Execute Template With Multiple Data    Extend Maturity and Limit for FCAF    ${CBAUAT_ExcelPath}    1-3    AMCH05_ExtendFacility
 
-# Collect Extenstion Fee for MOF
+Collect Extenstion Fee for MOF
     # Mx Execute Template With Multiple Data    Collect Extension Fee for D00000476     ${CBAUAT_ExcelPath}    1-3    CRED01_UpfrontFee
 
 # ###February 21
