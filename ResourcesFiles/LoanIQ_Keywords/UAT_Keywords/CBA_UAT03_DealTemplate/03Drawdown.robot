@@ -44,25 +44,21 @@ Create Drawdown D00000476
     Compare UIAmount versus Computed Amount    ${HostBankShare}   ${ComputedHBTranAmount}
     Create Cashflow     &{ExcelPath}[Borrower_ShortName]    release
     
-    ###Set FX Rates in Workflow Tab - For USD and GBP Drawdown###
-    Run Keyword If    '&{ExcelPath}[Loan_Currency]' == 'USD'    Set FX Rates Loan Drawdown    &{ExcelPath}[Loan_Currency]    Spot
-    Run Keyword If    '&{ExcelPath}[Loan_Currency]' == 'GBP'    Set FX Rates Loan Drawdown    &{ExcelPath}[Loan_Currency]    Spot
-    
     ###Approval of Loan###
     Send Initial Drawdown to Approval
     Logout from Loan IQ
     Login to Loan IQ    ${MANAGER_USERNAME}    ${MANAGER_PASSWORD}
     Select Item in Work in Process    Outstandings    Awaiting Approval    Loan Initial Drawdown     ${Loan_Alias}
     Approve Initial Drawdown
-    # Run Keyword If    '&{ExcelPath}[Loan_Currency]' == 'USD'    Set FX Rates Loan Drawdown    &{ExcelPath}[Loan_Currency]
-    # Run Keyword If    '&{ExcelPath}[Loan_Currency]' == 'GBP'    Set FX Rates Loan Drawdown    &{ExcelPath}[Loan_Currency]
+    Run Keyword If    '&{ExcelPath}[Loan_Currency]' == 'USD'    Set FX Rates Loan Drawdown    &{ExcelPath}[Loan_Currency]    Spot
+    Run Keyword If    '&{ExcelPath}[Loan_Currency]' == 'GBP'    Set FX Rates Loan Drawdown    &{ExcelPath}[Loan_Currency]    Spot
     Navigate Notebook Workflow    ${LIQ_InitialDrawdown_Window}    ${LIQ_InitialDrawdown_Tab}    ${LIQ_InitialDrawdown_WorkflowAction}    Send to Rate Approval
     Logout from Loan IQ
     Login to Loan IQ    ${SUPERVISOR_USERNAME}    ${SUPERVISOR_PASSWORD}
     Navigate Transaction in WIP    Outstandings    Awaiting Rate Approval    Loan Initial Drawdown    ${Loan_Alias}
     Navigate Notebook Workflow    ${LIQ_InitialDrawdown_Window}    ${LIQ_InitialDrawdown_Tab}    ${LIQ_InitialDrawdown_WorkflowAction}    Rate Approval
     Navigate Notebook Workflow    ${LIQ_InitialDrawdown_Window}    ${LIQ_InitialDrawdown_Tab}    ${LIQ_InitialDrawdown_WorkflowAction}    Release Cashflows
-    Release Cashflow    &{ExcelPath}[Borrower_ShortName]    release
+    # Release Cashflow    &{ExcelPath}[Borrower_ShortName]    release
     
     ###Release Drawdown###
     Navigate Notebook Workflow    ${LIQ_InitialDrawdown_Window}    ${LIQ_InitialDrawdown_Tab}    ${LIQ_InitialDrawdown_WorkflowAction}    Release

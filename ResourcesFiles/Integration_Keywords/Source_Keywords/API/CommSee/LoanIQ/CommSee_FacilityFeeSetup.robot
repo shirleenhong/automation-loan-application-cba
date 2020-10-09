@@ -159,4 +159,4 @@ Write Facility Ongoing Fee Details - Scenario 7 ComSee
     ${OngoingFee_PaidToDate}    Remove Comma and Convert to Number    ${OngoingFee_PaidToDate}
     Write Data To Excel    ComSee_SC7_FacFeeSetup    Fee_PaidToDate    ${rowid}    ${OngoingFee_PaidToDate}    ${ComSeeDataSet}
     
-    Close All Windows on LIQ  
+    Close All Windows on LIQ

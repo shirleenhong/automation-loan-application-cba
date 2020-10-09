@@ -59,8 +59,8 @@ PARTY_SERVER = 'mancsleverg0031:7080'
 PARTY_URL = 'mancsleverg0031:7080/uxp/rt/html/login.html'
 
 ###Party Credential###
-PARTY_USERNAME = 'brad'
-PARTY_PASSWORD = 'brad'
+PARTY_USERNAME = 'amipac'
+PARTY_PASSWORD = 'password'
 
 TL_SERVICE_HOST = "mancsleverg0007"
 TL_SERVICE_PORT = "22"
