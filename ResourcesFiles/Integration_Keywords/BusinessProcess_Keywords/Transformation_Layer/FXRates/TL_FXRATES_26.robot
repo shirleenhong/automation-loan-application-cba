@@ -8,7 +8,7 @@ Send FXRates GS Group 1 File and Verify Triangulation
     ...    Then validate FFC if file is sent to CCB OpenAPI, distributor and CustomCBAInterface. Then validate in LoanIQ if FX Rate
     ...    Code is updated correctly and triangulation is computed correctly.
     ...    @author: cfrancis    13AUG2019    - initial create
-    ...    @update: ccarriedo   08OCT2020    - added TemplateFilePath to Create Expected TextJMS XML for FXRates TL and updated InputFilePath for templates to TemplateFilePath in TransformedDataFile_Template_FXRates line
+    ...    @update: ccarriedo   09OCT2020    - added TemplateFilePath to Create Expected TextJMS XML for FXRates TL and updated InputFilePath for templates to TemplateFilePath in TransformedDataFile_Template_FXRates line
     [Arguments]    ${ExcelPath}
     ###START OF PREREQUISITE###
     Login to Loan IQ    ${TL_USERNAME}    ${TL_PASSWORD}
