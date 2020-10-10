@@ -7,15 +7,16 @@ Get the Notice Details in LIQ
     ...    @author: mgaling     DDMMMYYYY    - initial create
     ...    @update: jaquitan    DDMMMYYYY    - updated arguments and variables
     ...    @update: jloretiz    13JUL2020    - fix the error on excel writing
-    [Arguments]    ${rowid}    ${sSubAddDays}    ${sDealName}    ${sNoticeType}
+    ...    @update: kduenas     09SEP2020    - updated arguments and variables
+    [Arguments]    ${rowid}    ${sSubAddDays}    ${sDealName}    ${sNoticeType}    ${sZeroTempPath}
     
     ###Get System Date###
     ${SystemDate}    Get System Date
     ${SystemDate}    Convert Date    ${SystemDate}     date_format=%d-%b-%Y
     ${FromDate}    Subtract Time From Date    ${SystemDate}    ${sSubAddDays}days
     ${ThruDate}    Add Time To Date    ${SystemDate}    ${sSubAddDays}days
-    Write Data To Excel    Correspondence    From_Date    ${rowid}     ${FromDate}    ${APIDataSet}    bTestCaseColumn=True    sColumnReference=rowid
-    Write Data To Excel    Correspondence    Thru_Date    ${rowid}    ${ThruDate}    ${APIDataSet}    bTestCaseColumn=True    sColumnReference=rowid
+    Write Data To Excel for API_Data    Correspondence    From_Date    ${rowid}    ${FromDate}
+    Write Data To Excel for API_Data   Correspondence    Thru_Date    ${rowid}    ${ThruDate}
     
     Search Existing Deal    ${sDealName}
     Get Notice ID thru Deal Notebook    ${FromDate}    ${ThruDate}    ${sNoticeType}
@@ -24,6 +25,7 @@ Get Notice Details for Fee Payment Notice Line Fee in LIQ
     [Documentation]    Get Notice Details (All In Rate, Balance, Amount and Rate Basis) for Fee Payment Notice - Line Fee in LIQ
     ...    @author: ehugo    08162019
     ...    @update: ehugo    08192019    Added retrieving of Balance Amount and Rate Basis
+    ...    @update: kduenas  09122020    Added removal of negative character on Cycle Due
     [Arguments]    ${rowid}    ${sFacilityName}    ${sDealName}    ${sOngoingFee_Type}
     
     ###Deal Notebook Window###
@@ -47,7 +49,8 @@ Get Notice Details for Fee Payment Notice Line Fee in LIQ
     
     ###Line Fee Window - Accrual Tab###
     Mx LoanIQ Select Window Tab    ${LIQ_LineFee_Tab}    Accrual
-    ${Cycle_Due}    Mx LoanIQ Store TableCell To Clipboard   ${LIQ_LineFee_Accrual_Cycles_JavaTree}    1%Cycle Due%var    Processtimeout=180    
+    ${Cycle_Due}    Mx LoanIQ Store TableCell To Clipboard   ${LIQ_LineFee_Accrual_Cycles_JavaTree}    1%Cycle Due%var    Processtimeout=180
+    ${Cycle_Due}    Remove String    ${Cycle_Due}    - 
     
     Write Data To Excel for API_Data    Correspondence    Notice_AllInRate    ${rowid}    ${Notice_AllIn_Rate}
     Write Data To Excel for API_Data    Correspondence    Notice_Amount    ${rowid}    ${Cycle_Due}
@@ -335,7 +338,8 @@ Validate Notice in Business Event Output Window in LIQ
     ...    @update: jaquitan    20MAR2019    - updated arguments datatype and remove write to excel
     ...    @update: ehugo       20AUG2019    - removed Return in keyword name
     ...    @update: jloretiz    14JUL2019    - added screenshot and remove rowid in arguments, updated screenshot location
-    [Arguments]    ${sCustomer_IdentifiedBy}    ${sNotice_Customer_LegalName}    ${sNotice_Identifier}    ${sPath_XMLFile}    ${sTemp_Path}    ${sField_Name}
+    ...    @update: kduenas     07OCT2020    - updated arguments
+    [Arguments]    ${rowid}    ${sCustomer_IdentifiedBy}    ${sNotice_Customer_LegalName}    ${sNotice_Identifier}    ${sPath_XMLFile}    ${sTemp_Path}    ${sField_Name}
     
     ###Gets Current Date###  
     ${CurrentDate}    Get Current Date 

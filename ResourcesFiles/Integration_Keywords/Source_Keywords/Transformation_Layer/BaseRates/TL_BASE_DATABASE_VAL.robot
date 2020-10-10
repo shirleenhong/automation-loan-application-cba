@@ -115,6 +115,7 @@ Get Future Date Record in Holding Table for TL Base Rate
     ...    @author: clanding    06MAR2019    - initial create
     ...    @update: jdelacru    02JUL2019    - used 'LIKE' instead of '=' for the query
     ...    @update: clanding    31JUL2019    - updated keyword name to 'Connect to MCH Oracle Database and Execute Query'
+    ...    @update: jdelacru    01OCT2020    - change the variable ${FILE_NAME} to ${FILE_NAME_QUERY}
     [Arguments]    ${sFilename}    ${sTransformedData_FilePath}
     
     ${QUERY_BASE_HOLDING}    Catenate    ${SELECT_Q}    
@@ -128,7 +129,7 @@ Get Future Date Record in Holding Table for TL Base Rate
     ...    ${FROM_Q}    ${GS_BASE_RATE_TABLE}
     ...    ${INNERJOIN_Q}    ${MASTER_MAPPING_TABLE}
     ...    ${ON_Q}    ${GS_BASE_RATE_TABLE}.${MAP_ID}    =    ${MASTER_MAPPING_TABLE}.${MAP_ID}
-    ...    ${WHERE_Q}    ${FILE_NAME}    LIKE    '%${sFilename}%'
+    ...    ${WHERE_Q}    ${FILE_NAME_QUERY}    LIKE    '%${sFilename}%'
     
     ${Query_Results_List}    Connect to MCH Oracle Database and Execute Query    ${QUERY_BASE_HOLDING}
     
