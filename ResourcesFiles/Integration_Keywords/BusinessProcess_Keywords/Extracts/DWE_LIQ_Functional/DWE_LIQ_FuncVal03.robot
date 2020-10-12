@@ -8,7 +8,7 @@ Validate VLS_DEAL Extract
     ...    update: mgaling    09Oct2020    - updated data set variable
     [Arguments]    ${DWELIQFunc_Dataset}        
     
-    ${CSV_Content}    Read Csv File To List    &{DWELIQFunc_Dataset}[CSV_FilePath]&{DWELIQFunc_Dataset}[DEAL_CSV_FileName]&{DWELIQFunc_Dataset}[Business_Date].csv    |
+    ${CSV_Content}    Read Csv File To List    &{DWELIQFunc_Dataset}[CSV_FilePath]&{DWELIQFunc_Dataset}[Business_Date]\\&{DWELIQFunc_Dataset}[DEAL_CSV_FileName]&{DWELIQFunc_Dataset}[Business_Date].csv    |
     Log List    ${CSV_Content}
                         
     ${header}    Get From List    ${CSV_Content}    0
