@@ -26,9 +26,10 @@ Create Party in Quick Party Onboarding
     ...										   skip blocked test steps
     ...    @update: javinzon    02OCT2020    - Added Write Data To Excel keyword for Party ID of PTY_007_DuplicateEnterpriseName
     ...    @update: makcamps    05OCT2020    - Added Write Data To Excel keyword for Party ID of Scenario 1
+    ...    @update: javinzon    12OCT2020    - Added State_Province argument in Validate Party details in LIQ     
     [Arguments]    ${ExcelPath}
     
-    ### INPUTTER ###
+    ## INPUTTER ###
     Login User to Party    ${PARTY_USERNAME}    ${PARTY_PASSWORD}    ${USER_LINK}    ${USER_PORT}    ${PARTY_URL_SUFFIX}    ${PARTY_HTML_USER_CREDENTIALS}    ${SSO_ENABLED}    ${PARTY_URL} 
 
     Configure Zone and Branch    &{ExcelPath}[UserZone]    &{ExcelPath}[UserBranch]
@@ -72,10 +73,10 @@ Create Party in Quick Party Onboarding
     ...    &{ExcelPath}[Business_Country]    &{ExcelPath}[Industry_Sector]    &{ExcelPath}[Business_Activity]    &{ExcelPath}[Is_Main_Activity]    &{ExcelPath}[Is_Primary_Activity]    &{ExcelPath}[GST_Number]
     ...    &{ExcelPath}[UserZone]    &{ExcelPath}[UserBranch]    
 
-    Pause Execution    Pausing the rest of the script due to a blocker in LIQ connection
+    #Pause Execution    Pausing the rest of the script due to a blocker in LIQ connection
     Validate Party Details in Loan IQ    ${Party_ID}    ${Short_Name}    ${Enterprise_Name}    &{ExcelPath}[GST_Number]    &{ExcelPath}[Party_Sub_Type]    &{ExcelPath}[Business_Activity]    &{ExcelPath}[Business_Country]
     ...    &{ExcelPath}[Address_Type]    &{ExcelPath}[Address_Line_1]    &{ExcelPath}[Address_Line_2]    &{ExcelPath}[Address_Line_3]    &{ExcelPath}[Address_Line_4]    
-    ...    &{ExcelPath}[Town_City]    &{ExcelPath}[Country_of_Registration]    &{ExcelPath}[Country_of_Tax_Domicile]    &{ExcelPath}[Post_Code]
+    ...    &{ExcelPath}[Town_City]    &{ExcelPath}[Country_of_Registration]    &{ExcelPath}[Country_of_Tax_Domicile]    &{ExcelPath}[State_Province]    &{ExcelPath}[Post_Code]
 
     Return From Keyword If    '${SCENARIO}'=='0'  
     
