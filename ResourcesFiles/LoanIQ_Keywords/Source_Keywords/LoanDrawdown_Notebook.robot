@@ -3752,4 +3752,34 @@ Get Loan FX Rate
 	
     ### ConstRuntime Keyword Post-processing ###
     Save Values of Runtime Execution on Excel File    ${sRunVar_FXRate}    ${FXRate}
-    [Return]    ${FXRate}   
+    [Return]    ${FXRate}
+    
+Get Loan Cycle Due Amount
+    [Documentation]    This keyword returns the Fee total paid to date amount.
+    ...    @author: cfrancis    09OCT2020    - Initial Create
+
+    mx LoanIQ activate window    ${LIQ_Loan_Window}
+    Mx LoanIQ Select Window Tab    ${LIQ_Loan_Tab}    Accrual
+    ${rowcount}    Mx LoanIQ Get Data    ${LIQ_Loan_AccrualTab_Cycles_Table}    input=items count%value
+    ${rowcount}    Evaluate    ${rowcount} - 2
+    Log    The total rowcount is ${rowcount}
+    ${CycleDueAmount}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_Loan_AccrualTab_Cycles_Table}    TOTAL:${SPACE}%Cycle Due%amount
+    Log    The Fee Paid to Date amount is ${CycleDueAmount}
+    Screenshot.Set Screenshot Directory    ${Screenshot_Path}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/Loan_Cycle_Due
+    [Return]    ${CycleDueAmount}
+
+Get Loan Paid to Date Amount
+    [Documentation]    This keyword returns the Fee total paid to date amount.
+    ...    @author: cfrancis    09OCT2020    - Initial Create
+
+    mx LoanIQ activate window    ${LIQ_Loan_Window}
+    Mx LoanIQ Select Window Tab    ${LIQ_Loan_Tab}    Accrual
+    ${rowcount}    Mx LoanIQ Get Data    ${LIQ_Loan_AccrualTab_Cycles_Table}    input=items count%value
+    ${rowcount}    Evaluate    ${rowcount} - 2
+    Log    The total rowcount is ${rowcount}
+    ${PaidtodateAmount}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_Loan_AccrualTab_Cycles_Table}    ${rowcount}%Paid to date%amount  
+    Log    The Fee Paid to Date amount is ${PaidtodateAmount}
+    Screenshot.Set Screenshot Directory    ${Screenshot_Path}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/Loan_Paid_To_Date
+    [Return]    ${PaidtodateAmount}
