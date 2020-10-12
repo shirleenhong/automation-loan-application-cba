@@ -223,7 +223,7 @@ Get Option Name from Option Name and Base Rate Association
     
     mx LoanIQ click    ${LIQ_TableMaintenance_Button}
     Search in Table Maintenance    Option Name And Base Rate Association
-    mx LoanIQ activate    ${LIQ_OptionNameBaseRateAssoc_Window}
+    Mx LoanIQ Activate Window    ${LIQ_OptionNameBaseRateAssoc_Window}
     Mx LoanIQ Set    ${LIQ_OptionNameBaseRateAssoc_ShowAll_RadioBtn}    ON
     ${BaseRateName}    Wait Until Keyword Succeeds    5x    3s    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_OptionNameBaseRateAssoc_Tree}    ${sBaseRateCode_From_JSON}%Base Rate%BaseRateName
     ${BaseRate_Length}    Get Length    ${BaseRateName}

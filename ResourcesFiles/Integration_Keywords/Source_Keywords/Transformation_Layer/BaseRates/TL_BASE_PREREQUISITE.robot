@@ -50,6 +50,7 @@ Transform Base Rate CSV Data to XLS File Readable for JSON Creation
     ...    @update: cfrancis    04SEP2019    - added checking for emtpy rows and will be ignored on loop and variable to subtract empty rows from ${New_INDEX}
     ...    @update: jdelacru    21SEP2020    - added new logic and separated the actual transformation of CSV to XLS to cater multiple sub-entities
     ...    @update: jdelacru    29SEP2020    - revert to the original steps in transforming csv to xls
+    ...    @update: mcastro     09OCT2020    - added condition for Empty ${Row_Val_List}
     [Arguments]    ${sCSV_FilePath}    ${sTransformedData_FilePath}    ${sTransformedDataTemplate_FilePath}    
     
     ${CSV_Content_List}    Read Csv As List    ${dataset_path}${sCSVFilePath}
@@ -119,7 +120,7 @@ Transform Base Rate CSV Data to XLS File Readable for JSON Creation
          ...    ELSE IF    ${Same_Rate_Code}==True and ${Same_Tenor}==True and ${Same_Date}==True and '${CONFIG_PRICE_TYPE}'=='BUYRATE'    Write Data to Excel Using Row Index    Transformed_BaseRate    buyRate    ${New_INDEX}    ${GS_INSTR_PRICE}    ${dataset_path}${sTransformedData_FilePath}
          ...    ELSE IF    ${Same_Rate_Code}==True and ${Same_Tenor}==True and ${Same_Date}==True and '${CONFIG_PRICE_TYPE}'=='SELLRATE'    Write Data to Excel Using Row Index    Transformed_BaseRate    sellRate    ${New_INDEX}    ${GS_INSTR_PRICE}    ${dataset_path}${sTransformedData_FilePath}
          ...    ELSE IF    ${Same_Rate_Code}==True and ${Same_Tenor}==True and ${Same_Date}==True and '${CONFIG_PRICE_TYPE}'=='LASTRATE'    Write Data to Excel Using Row Index    Transformed_BaseRate    lastRate    ${New_INDEX}    ${GS_INSTR_PRICE}    ${dataset_path}${sTransformedData_FilePath}
-         ...    ELSE    Get Single Row value from CSV File and Write to Excel for Base Rate    ${ROW_${INDEX}}    ${New_INDEX}    ${Zone2_Curr_Date}    ${Zone3_Curr_Date}    ${CONFIG_PRICE_TYPE}    ${dataset_path}${sTransformedData_FilePath}
+         ...    ELSE IF    ${Row_Val_List} != [',,,,,,,,,,']   Get Single Row value from CSV File and Write to Excel for Base Rate    ${ROW_${INDEX}}    ${New_INDEX}    ${Zone2_Curr_Date}    ${Zone3_Curr_Date}    ${CONFIG_PRICE_TYPE}    ${dataset_path}${sTransformedData_FilePath}
     \    
     \    ${Index_LMIR}    Evaluate    ${New_INDEX}+1
     \    
@@ -464,10 +465,11 @@ Create Initial wsFinalLIQDestination for Base Rate TL
     [Documentation]    This keyword is used to create initial wsFinalLIQDestination for each valid Base Rate Code for TL.
     ...    @author: clanding    27FEB2019    - initial create
     ...    @update: jdelacru    11AUG2020    - added new argument ${sTemplateFilePath}
+    ...    @update: jdelacru    06OCT2020    - used conditional statement in assigning the value of ${val_RateTenor}
     [Arguments]    ${dRowData}    ${sSubentityVal}    ${sInputFilePath}    ${sFileName}    ${sTemplateFilePath}
     
-    
-    ${val_RateTenor}    Strip String    &{dRowData}[rateTenor]    both    0
+    ${val_RateTenor}    Run Keyword If    '&{dRowData}[rateTenor]'=='None'    Set Variable    ${EMPTY}
+    ...    ELSE    Strip String    &{dRowData}[rateTenor]    both    0
     
     ${BASERATECODEConfig}    OperatingSystem.Get File    ${BASERATECODE_Config}
     ${BASERATECODE_Dict}    Convert Base Rate Config to Dictionary
@@ -533,6 +535,7 @@ Update Expected XML Elements for wsFinalLIQDestination - Base Rate TL
     ...    @update: clanding    19MAR2019    - added handling for ${sRateTenor} if empty
     ...    @update: jdelacru    11AUG2020    - added new argument ${sTemplateFilePath}
     ...    @update: jdelacru    21SEP2020    - using division method in evaluating the iRate instead of multiplying it to 0.01
+    ...    @update: jdelacru    06OCT2020    - used the keyword Multiply Two Values With Exact Precision to get the actual value of rates
     [Arguments]    ${sInputFilePath}    ${sFileName}    ${sBaseCode}    ${sCurrency}    ${sRateEffDate}    ${sRateTenor}    ${sSubentityVal}    ${iRate}    ${sTemplateFilePath}
     
     ${sRateTenor}    Run Keyword If    '${sRateTenor}'==''    Set Variable    None
@@ -546,7 +549,7 @@ Update Expected XML Elements for wsFinalLIQDestination - Base Rate TL
     ${xpath}    Set Variable    UpdateFundingRate
     ${val_RateEffDate}    Convert Date    ${sRateEffDate}    result_format=%d-%b-%Y
     ${RoundOff_Rate_with_0}    ${iRate}    Round Off on the Nth Decimal Place    ${iRate}    6
-    ${val_Rate}    Evaluate    ${iRate}/100
+    ${val_Rate}    Multiply Two Values With Exact Precision    ${iRate}    0.01
     ${val_Rate}    Convert To String    ${val_Rate}  
     
     ${Updated_template}    Set Element Attribute    ${template}    baseRate    ${sBaseCode}    xpath=${xpath}
