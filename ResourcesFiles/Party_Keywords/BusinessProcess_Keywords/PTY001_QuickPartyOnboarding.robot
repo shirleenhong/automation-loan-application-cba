@@ -26,7 +26,7 @@ Create Party in Quick Party Onboarding
     ...										   skip blocked test steps
     ...    @update: javinzon    02OCT2020    - Added Write Data To Excel keyword for Party ID of PTY_007_DuplicateEnterpriseName
     ...    @update: makcamps    05OCT2020    - Added Write Data To Excel keyword for Party ID of Scenario 1
-    ...    @update: javinzon    12OCT2020    - Added State_Province argument in Validate Party details in LIQ     
+    ...    @update: javinzon    12OCT2020    - Added State_Province argument in Validate Party details in LIQ. Removed Pause Execution keyword.    
     [Arguments]    ${ExcelPath}
     
     ### INPUTTER ###
