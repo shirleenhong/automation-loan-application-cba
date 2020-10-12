@@ -176,7 +176,6 @@ Pay Line Fee Amount - Scenario 7 ComSee
     [Documentation]    This keyword will pay Commitment Fee Amount on a deal
     ...    @author: rtarayao    13SEP2019    - Duplicate high level keyword from Scenario 7 to be used for Comsee
     ...    @update: cfrancis    01OCT2020    - Added getting overpayment field for computing projected cycle due
-    ...    @update: cfrancis    05OCT2020    - Added handling when overpayment field is empty in the dataset
     [Arguments]    ${ComSeeDataSet}    
     ###Return to Scheduled Activity Fiter###
     ${SystemDate}    Get System Date
@@ -198,8 +197,7 @@ Pay Line Fee Amount - Scenario 7 ComSee
     Select Latest Cycle Due Line Fee Payment
     
     ###Ongoing Fee Payment Notebook - General Tab###
-    ${ProjectedCycleDue}    Run Keyword If    '&{ComSeeDataSet}[OverPayment]'!='${EMPTY}'    Evaluate    ${ProjectedCycleDue} + &{ComSeeDataSet}[OverPayment]
-    ...    ELSE    Set Variable    ${ProjectedCycleDue}
+    ${ProjectedCycleDue}    Evaluate    ${ProjectedCycleDue} + &{ComSeeDataSet}[OverPayment]
     Enter Effective Date for Ongoing Fee Payment    ${SystemDate}    ${ProjectedCycleDue}
     
     ###Cashflow Notebook - Create Cashflows###
@@ -364,10 +362,8 @@ Create Payment Reversal - Scenario 7 ComSee
     Logout from Loan IQ
     Login to Loan IQ    ${MANAGER_USERNAME}    ${MANAGER_PASSWORD}
 
-    ###Release Reverse Fee Payment###       
-    Select Item in Work in Process    Payments    Awaiting Release Cashflows   Reverse Fee Payment     ${FacilityName}
-    Navigate Notebook Workflow    ${LIQ_ReverseFee_Window}    ${LIQ_LineFee_ReversePayment_Tab}    ${LIQ_LineFee_ReversePayment__WorkflowItems}    Release Cashflows   
-    Release Cashflow    ${Borrower}    release    
+    ###Release Reverse Fee Payment###
+    Select Item in Work in Process    Payments    Awaiting Release    Reverse Fee Payment     ${FacilityName}
     Release Reverse Fee Payment
     Close All Windows on LIQ
     Logout from Loan IQ
