@@ -6,9 +6,9 @@ Validate VLS_DEAL Extract
     [Documentation]    This keyword is used to validate values from VLS_DEAL CSV in LIQ Screen
     ...    @author: mgaling    10Sep2019    - initial create
     ...    update: mgaling    09Oct2020    - updated data set variable
-    [Arguments]    ${DWELIQFunc_Dataset}        
+    [Arguments]    ${ExcelPath}        
     
-    ${CSV_Content}    Read Csv File To List    &{DWELIQFunc_Dataset}[CSV_FilePath]&{DWELIQFunc_Dataset}[Business_Date]\\&{DWELIQFunc_Dataset}[DEAL_CSV_FileName]&{DWELIQFunc_Dataset}[Business_Date].csv    |
+    ${CSV_Content}    Read Csv File To List    &{ExcelPath}[CSV_FilePath]&{ExcelPath}[Business_Date]\\&{ExcelPath}[DEAL_CSV_FileName]&{ExcelPath}[Business_Date].csv    |
     Log List    ${CSV_Content}
                         
     ${header}    Get From List    ${CSV_Content}    0
