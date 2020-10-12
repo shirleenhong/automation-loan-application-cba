@@ -1578,6 +1578,21 @@ Get Fee Accrued to Date Amount
     Screenshot.Set Screenshot Directory    ${Screenshot_Path}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/Fee_Accrual_Screen
     [Return]    ${AccruedtodateAmount}
+
+Get Fee Cycle Due Amount
+    [Documentation]    This keyword returns the Fee total paid to date amount.
+    ...    @author: cfrancis    09OCT2020    - Initial Create
+    [Arguments]    ${sLIQ_Fee_Window}    ${sLIQ_Fee_Tab_Locator}    ${sLIQ_Fee_Accrual_Cycles_JavaTree_Locator}
+    mx LoanIQ activate window    ${sLIQ_Fee_Window}
+    # Mx LoanIQ Select Window Tab    ${sLIQ_Fee_Tab_Locator}    Accrual
+    ${rowcount}    Mx LoanIQ Get Data    ${sLIQ_Fee_Accrual_Cycles_JavaTree_Locator}    input=items count%value
+    ${rowcount}    Evaluate    ${rowcount} - 2
+    Log    The total rowcount is ${rowcount}
+    ${CycleDueAmount}    Mx LoanIQ Store TableCell To Clipboard    ${sLIQ_Fee_Accrual_Cycles_JavaTree_Locator}    ${rowcount}%Cycle Due%amount
+    Log    The Fee Cycle Due amount is ${CycleDueAmount} 
+    Screenshot.Set Screenshot Directory    ${Screenshot_Path}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/Fee_Cycle_Due
+    [Return]    ${CycleDueAmount}
     
 Get Fee Paid to Date Amount
     [Documentation]    This keyword returns the Fee total paid to date amount.
@@ -1589,7 +1604,6 @@ Get Fee Paid to Date Amount
     ${rowcount}    Evaluate    ${rowcount} - 2
     Log    The total rowcount is ${rowcount}
     ${PaidtodateAmount}    Mx LoanIQ Store TableCell To Clipboard    ${sLIQ_Fee_Accrual_Cycles_JavaTree_Locator}    ${rowcount}%Paid to date%amount
-    # ${PaidtodateAmount}    Mx LoanIQ Store TableCell To Clipboard    ${sLIQ_Fee_Accrual_Cycles_JavaTree_Locator}    TOTAL:${SPACE}%Paid to date%Paidtodate    
     Log    The Fee Paid to Date amount is ${PaidtodateAmount} 
     Screenshot.Set Screenshot Directory    ${Screenshot_Path}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/Fee_Paid_To_Date

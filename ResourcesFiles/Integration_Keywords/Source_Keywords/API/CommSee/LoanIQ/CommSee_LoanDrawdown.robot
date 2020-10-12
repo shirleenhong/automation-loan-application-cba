@@ -425,14 +425,10 @@ Write Loan Details for ComSee - Scenario 7
     Write Data To Excel    ComSee_SC7_Loan    Outstanding_Currency    ${rowid}    ${LoanCCY}    ${ComSeeDataSet}
     
     ${LoanEffectiveDate}    ${LoanMaturityDate}    Get Loan Effective and Maturity Expiry Dates
-    # ${RepricngFrequency}    ${RepricingDate}    Get Loan Repricing Frequency and Date
     ${LoanEffectiveDate}    Convert LIQ Date to Year-Month-Day Format    ${LoanEffectiveDate}
     ${LoanMaturityDate}    Convert LIQ Date to Year-Month-Day Format    ${LoanMaturityDate}
-    # ${RepricingDate}    Convert LIQ Date to Year-Month-Day Format    ${RepricingDate}
     Write Data To Excel    ComSee_SC7_Loan    Outstanding_EffectiveDate    ${rowid}    ${LoanEffectiveDate}    ${ComSeeDataSet}
     Write Data To Excel    ComSee_SC7_Loan    Outstanding_MaturityExpiryDate    ${rowid}    ${LoanMaturityDate}    ${ComSeeDataSet}
-    # Write Data To Excel    ComSee_SC7_Loan    Outstanding_RepricingFrequency    ${rowid}    ${RepricngFrequency}    ${ComSeeDataSet}
-    # Write Data To Excel    ComSee_SC7_Loan    Outstanding_RepricingDate    ${rowid}    ${RepricingDate}    ${ComSeeDataSet}
     
     ${HBGrossAmount}    ${HBNetAmount}    Get Loan Host Bank Net and Gross Amount
     ${HBGrossAmount}    Remove Comma and Convert to Number    ${HBGrossAmount}
@@ -461,6 +457,14 @@ Write Loan Details for ComSee - Scenario 7
     ${LoanAccruedtodateAmount}    Get Loan Accrued to Date Amount
     ${LoanAccruedtodateAmount}    Remove Comma and Convert to Number    ${LoanAccruedtodateAmount}
     Write Data To Excel    ComSee_SC7_Loan    Outstanding_AccruedInterest    ${rowid}    ${LoanAccruedtodateAmount}    ${ComSeeDataSet}
+    
+    ${LoanCycleDueAmount}    Get Loan Cycle Due Amount
+    ${LoanCycleDueAmount}    Remove Comma and Convert to Number    ${LoanCycleDueAmount}
+    Write Data To Excel    ComSee_SC7_Loan   Outstanding_cycleDue    ${rowid}    ${LoanCycleDueAmount}    ${ComSeeDataSet}
+
+    ${LoanPaidDueAmount}   Get Loan Paid to Date Amount
+    ${LoanPaidDueAmount}    Remove Comma and Convert to Number    ${LoanPaidDueAmount}
+    Write Data To Excel    ComSee_SC7_Loan   Outstanding_paidToDate    ${rowid}    ${LoanPaidDueAmount}    ${ComSeeDataSet}
 
     ###Get and Write Accrual Tab Details for Comsee
     ${PricingOptionCode}    Get Loan Pricing Option Code
