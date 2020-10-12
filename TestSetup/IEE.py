@@ -88,7 +88,7 @@ LIQ_ADMIN_PASSWORD = "password"
 
 ###CORRESPONDENCE###
 CORRES_SERVER = 'http://mancsleverg0007'
-CORRES_PORT = '8480'
+CORRES_PORT = '9090'
 API_CORRES_HOST = 'http://mancsleverg0007:9150'
 
 ###COMSEE###
@@ -204,6 +204,7 @@ DWE_PASSPHRASE = '0mn1@d@v'
 DWE_TAR_GZ_EXT = '.tar.gz'
 DWE_TAR_GZ_GPG_EXT = '.tar.gz.gpg'
 DWE_CCB_LIQ_ZONE_FILENAME = 'CCB_LIQ_SYD_'
+DWE_LIQ_BusinessDate = '20200709'
 
 ### GL Postings/Extracts###
 GL_LIQ_USER = 'RPTINP01'

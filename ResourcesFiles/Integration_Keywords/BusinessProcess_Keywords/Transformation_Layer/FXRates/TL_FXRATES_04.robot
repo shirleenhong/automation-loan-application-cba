@@ -11,6 +11,7 @@ Send FXRates GS Group Multiple Files
     ...    @update: mnanquil    11APR2019    - added Login to LoanIQ keyword.
     ...    @update: cfrancis    01AUG2019    - updated to fit test case for sending multiple files
     ...    @update: cfrancis    06AUG2019    - changed row validation to get a random number
+    ...    @update: nbautist    07OCT2020    - added argument to prerequisite;updated file paths and extension
     [Arguments]    ${ExcelPath}
     ###START OF PREREQUISITE###
     # Login to Loan IQ    ${TL_USERNAME}    ${TL_PASSWORD}
@@ -18,19 +19,19 @@ Send FXRates GS Group Multiple Files
     ${CSVFile}    Set Variable    &{ExcelPath}[InputGSFile]
     ${TransformedDataFile_FXRates}    Set Variable    &{ExcelPath}[InputFilePath]${TL_Transformed_Data_FXRates}
     ${TransformedDataFileXML_FXRates}    Set Variable    &{ExcelPath}[InputFilePath]${TL_Transformed_Data_XMLFXRates}
-    ${TransformedDataFile_Template_FXRates}    Set Variable    &{ExcelPath}[InputFilePath]${TL_Transformed_Data_template_FXRates}
+    ${TransformedDataFile_Template_FXRates}    Set Variable    &{ExcelPath}[TemplateFilePath]${TL_Transformed_Data_template_FXRates}
     ${fundingDesk}    Set Variable    &{ExcelPath}[FundingDesk_1]
     ${InputJSON}    Set Variable    &{ExcelPath}[InputFilePath]&{ExcelPath}[InputJson]
     ${InputFilePath}    Set Variable    &{ExcelPath}[InputFilePath]
     ${FinalLIQDestination}    Set Variable    &{ExcelPath}[Expected_wsFinalLIQDestination]
     ${row}    Generate Single Random Number and Return    1    19
     Create Prerequisite for Multiple FX Files Scenario    ${CSVFile}    ${TransformedDataFile_FXRates}    ${TransformedDataFileXML_FXRates}    ${TransformedDataFile_Template_FXRates}    ${fundingDesk}
-    ...    ${InputJSON}    ${InputFilePath}    ${FinalLIQDestination}
+    ...    ${InputJSON}    ${InputFilePath}    ${FinalLIQDestination}    &{ExcelPath}[TemplateFilePath]
     ###END OF PREREQUISITE###
     
-    Run Keyword And Continue On Failure    Send Multiple Files to SFTP and Validate If Files are Processed    &{ExcelPath}[InputFilePath]    ${TL_FX_FOLDER}    &{ExcelPath}[InputGSFile]    ${TL_FX_ARCHIVE_FOLDER}    iDelayTime=5s
+    Run Keyword And Continue On Failure    Send Multiple Files to SFTP and Validate If Files are Processed    &{ExcelPath}[InputFilePath]    ${TL_FX_FOLDER}    &{ExcelPath}[InputGSFile]    ${TL_FX_ARCHIVE_FOLDER}    sDelimiter=,    iPollingTime=600s    iDelayTime=60s
     Run Keyword And Continue On Failure    Validate Multiple Files for Success on TL FX Rates in FFC    &{ExcelPath}[InputFilePath]    &{ExcelPath}[InputJson]    &{ExcelPath}[Expected_wsFinalLIQDestination]    &{ExcelPath}[OutputFilePath]    &{ExcelPath}[OutputFFCResponse]    &{ExcelPath}[Actual_wsFinalLIQDestination]
-    ...    ${dataset_path}&{ExcelPath}[InputFilePath]TL_Transformed_Data_XMLFXRates.xls    ${fundingDeskStatus}    &{ExcelPath}[Actual_CustomCBAPush_Response]    &{ExcelPath}[Actual_ResponseMechanism]    &{ExcelPath}[InputGSFile]    &{ExcelPath}[FundingDesk_1]
+    ...    ${dataset_path}&{ExcelPath}[InputFilePath]TL_Transformed_Data_XMLFXRates.${XLSX}   ${fundingDeskStatus}    &{ExcelPath}[Actual_CustomCBAPush_Response]    &{ExcelPath}[Actual_ResponseMechanism]    &{ExcelPath}[InputGSFile]    &{ExcelPath}[FundingDesk_1]
     ${From_Currency}    Read Data From Excel    Transformed_FXRates    fromCurrency    ${row}   ${dataset_path}&{ExcelPath}[InputFilePath]TL_Transformed_Data_XMLFXRates${COUNTER}.${XLSX}
     ${To_Currency}    Read Data From Excel    Transformed_FXRates    toCurrency    ${row}   ${dataset_path}&{ExcelPath}[InputFilePath]TL_Transformed_Data_XMLFXRates${COUNTER}.${XLSX}
     ${subEntity}    Read Data From Excel    Transformed_FXRates    subEntity    ${row}   ${dataset_path}&{ExcelPath}[InputFilePath]TL_Transformed_Data_XMLFXRates${COUNTER}.${XLSX}
