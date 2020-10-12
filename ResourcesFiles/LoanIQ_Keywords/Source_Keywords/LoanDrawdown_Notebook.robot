@@ -834,7 +834,6 @@ Create Loan Outstanding
     Verify Window    ${LIQ_OutstandingSelect_Window}
     mx LoanIQ select    ${LIQ_OutstandingSelect_Type_Dropdown}    ${Outstanding_Type}
     mx LoanIQ enter    ${LIQ_OutstandingSelect_New_RadioButton}    ON 
-    Sleep    2
     Run Keyword And Continue On Failure    Mx LoanIQ Verify Object Exist    ${LIQ_OutstandingSelect_Type_Dropdown}    VerificationData="Yes"
     Run Keyword And Continue On Failure    Mx LoanIQ Verify Object Exist    ${LIQ_OutstandingSelect_Facility_Dropdown}    VerificationData="Yes"
     Run Keyword And Continue On Failure    Mx LoanIQ Verify Object Exist    ${LIQ_OutstandingSelect_PricingOption_Dropdown}    VerificationData="Yes"
@@ -857,22 +856,44 @@ Input General Loan Drawdown Details with Accrual End Date
     ...    @author: ritragel
     ...    @update: rtarayao    01OCT2019    - Added optional argument and action for Loan Risk Type selection
     ...                                      - This is needed when Multiple Risk types are selected in the Deal level
-    ...                                      - Added optional argument for Fixed and Loan Risk Type 
-    [Arguments]    ${Loan_RequestedAmount}    ${Loan_MaturityDate}    ${Loan_RepricingFrequency}    ${Loan_EffectiveDate}    ${Loan_RepricingDate}=None    ${Loan_RiskType}=None    ${FixedandLoanRiskType}=None
-    Mx LoanIQ Select Window Tab    ${LIQ_InitialDrawdown_Tab}    General 
-    mx LoanIQ enter    ${LIQ_InitialDrawdown_RequestedAmt_Textfield}    ${Loan_RequestedAmount} 
-    mx LoanIQ enter    ${LIQ_InitialDrawdown_EffectiveDate_Datefield}    ${Loan_EffectiveDate}
-    mx LoanIQ enter    ${LIQ_InitialDrawdown_MaturityDate_Datefield}    ${Loan_MaturityDate}
+    ...                                      - Added optional argument for Fixed and Loan Risk Type
+    ...    @update: ritragel    13SETP20    Added additional arguments for UAT Deals and Added Preprocessing
+    [Arguments]    ${sLoan_RequestedAmount}    ${sLoan_MaturityDate}    ${sLoan_RepricingFrequency}    ${sLoan_EffectiveDate}
+    ...    ${sLoan_RepricingDate}=None    ${sLoan_RiskType}=None    ${sFixedandLoanRiskType}=None
+    ...    ${sLoan_PaymentMode}=None    ${sLoan_Accrue}=None    ${sLoan_AccrueEndDate}=None
+
+    ### Keyword Pre-processing ###
+    ${Loan_RequestedAmount}    Acquire Argument Value    ${sLoan_RequestedAmount}
+    ${Loan_MaturityDate}    Acquire Argument Value    ${sLoan_MaturityDate}
+    ${Loan_RepricingFrequency}    Acquire Argument Value    ${sLoan_RepricingFrequency}
+    ${Loan_EffectiveDate}    Acquire Argument Value    ${sLoan_EffectiveDate}
+    ${Loan_RepricingDate}    Acquire Argument Value    ${sLoan_RepricingDate}
+    ${Loan_RiskType}    Acquire Argument Value    ${sLoan_RiskType}
+    ${FixedandLoanRiskType}    Acquire Argument Value    ${sFixedandLoanRiskType}
+    ${Loan_PaymentMode}    Acquire Argument Value    ${sLoan_PaymentMode}
+    ${Loan_Accrue}    Acquire Argument Value    ${sLoan_Accrue}
+    ${Loan_AccrueEndDate}    Acquire Argument Value    ${sLoan_AccrueEndDate}
+
+    Mx LoanIQ Select Window Tab    ${LIQ_InitialDrawdown_Tab}    General
+    Mx LoanIQ Enter    ${LIQ_InitialDrawdown_RequestedAmt_Textfield}    ${Loan_RequestedAmount}
+    Mx LoanIQ Enter    ${LIQ_InitialDrawdown_EffectiveDate_Datefield}    ${Loan_EffectiveDate}
+    Mx LoanIQ Enter    ${LIQ_InitialDrawdown_MaturityDate_Datefield}    ${Loan_MaturityDate}
     mx LoanIQ click element if present    ${LIQ_Question_Yes_Button}
     Mx LoanIQ Select Combo Box Value    ${LIQ_InitialDrawdown_Repricing_Dropdownlist}    ${Loan_RepricingFrequency}
     Run Keyword If    '${Loan_RepricingDate}'!='None'    mx LoanIQ enter    ${LIQ_InitialDrawdown_RepricingDate_Datefield}    ${Loan_RepricingDate}
     Run Keyword If    '${Loan_RiskType}'!='None'    Run Keyword If    '${FixedandLoanRiskType}'!='None'    Run Keywords    mx LoanIQ click    ${LIQ_InitialDrawdown_RiskType_Button}
     ...    AND    mx LoanIQ activate window    ${LIQ_InitialDrawdown_SelectRiskType_Window}
     ...    AND    Mx LoanIQ DoubleClick By InputOccurence    ${LIQ_InitialDrawdown_SelectRiskType_JavaTree}    Loan:2
-    Mx LoanIQ Select Combo Box Value    ${LIQ_InitialDrawdown_Accue_Dropdown}    to the actual due date
     mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
-    ${AdjustedDueDate}    Mx LoanIQ Get Data    ${LIQ_InitialDrawdown_AdjustedDueDate_Datefield}    value%test        
-    mx LoanIQ enter    ${LIQ_InitialDrawdown_AccrualEndDate_Datefield}    ${AdjustedDueDate}    
+    Run Keyword If    '${Loan_Accrue}'!='None'    Mx LoanIQ Select Combo Box Value    ${LIQ_InitialDrawdown_Accrue_Dropdown}    ${Loan_Accrue}
+    Run Keyword If    '${Loan_PaymentMode}'!='None'    Mx LoanIQ Select Combo Box Value    ${LIQ_InitialDrawdown_PaymentMode_Dropdown}    ${Loan_PaymentMode}
+    ${AdjustedDueDate}    Mx LoanIQ Get Data    ${LIQ_InitialDrawdown_AdjustedDueDate_Datefield}    value%test
+    Run Keyword If    '${Loan_AccrueEndDate}'=='None'    mx LoanIQ enter    ${LIQ_InitialDrawdown_AccrualEndDate_Datefield}    ${AdjustedDueDate}
+    Run Keyword If    '${Loan_AccrueEndDate}'!='None'    mx LoanIQ enter    ${LIQ_InitialDrawdown_AccrualEndDate_Datefield}    ${sLoan_AccrueEndDate}    
+    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/InitialDrawdown_General
+    Select Menu Item    ${LIQ_InitialDrawdown_Window}    File    Save
+    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
     mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
 
 Create Repayment Schedule - Fixed Payment
@@ -944,6 +965,7 @@ Approve Initial Drawdown
     [Documentation]    This keyword will approve the Loan awaiting for approval
     ...    @author: ritragel
     ...    @update: ritragel    06MAR19    Added Additional Verification for Question Message
+    ...    @update: aramos      05OCT20    Added Additional Verification for Appriving GBP Libor Option 
     mx LoanIQ activate window    ${LIQ_InitialDrawdown_Window}
     Mx LoanIQ Select Window Tab    ${LIQ_InitialDrawdown_Tab}    Workflow   
     Mx LoanIQ DoubleClick    ${LIQ_InitialDrawdown_WorkflowAction}    Approval  
@@ -951,7 +973,7 @@ Approve Initial Drawdown
     mx LoanIQ click element if present    ${LIQ_Question_Yes_Button}   
     mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}     
     mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
-
+    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
 
 Send Initial Drawdown to Rate Approval
     [Documentation]    This keyword will sent the loan to Rate Approval
@@ -978,11 +1000,13 @@ Release Loan Drawdown
     [Documentation]    This keyword will release the Loan Drawdown
     ...    @author: ritragel
     ...    @update: ritragel    06MAR19    Added handling of closing Cashflows window
+    ...    @update: cfrancis    08OCT2020    - Added another Warning Yes for Generate Rate Setting Notices
     mx LoanIQ click element if present    ${LIQ_Cashflows_OK_Button}
     mx LoanIQ click element if present    ${LIQ_Question_Yes_Button}   
     mx LoanIQ activate window    ${LIQ_InitialDrawdown_Window}
     Mx LoanIQ Select Window Tab    ${LIQ_InitialDrawdown_Tab}    Workflow   
     Mx LoanIQ DoubleClick    ${LIQ_InitialDrawdown_WorkflowAction}    Release 
+    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
     mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
     mx LoanIQ click element if present    ${LIQ_Question_Yes_Button} 
     
@@ -2129,8 +2153,19 @@ Enter Loan Drawdown Details for AUD Libor Option
     [Documentation]    This keyword is used to enter Loan Drawdown Details for USD Libor Option
     ...    @author: mnanquil
     ...    <update> bernchua 11/13/2018: added click element if present for warning messages when entering dates.
-    [Arguments]    ${Loan_RequestedAmount}    ${Loan_EffectiveDate}    ${Loan_MaturityDate}    ${Loan_RepricingFrequency}    ${Repricing_Date}    ${Loan_IntCycleFrequency}    ${Loan_Accrue}    ${Warning_Message}            
-    
+    ...    @update: dahijara    29JUL2020    -  Added Keyword processing and screenshot.. Added key Tab after entering repricing date.
+    [Arguments]    ${sLoan_RequestedAmount}    ${sLoan_EffectiveDate}    ${sLoan_MaturityDate}    ${sLoan_RepricingFrequency}    ${sRepricing_Date}    ${sLoan_IntCycleFrequency}    ${sLoan_Accrue}    ${sWarning_Message}            
+
+    ### GetRuntime Keyword Pre-processing ###
+    ${Loan_RequestedAmount}    Acquire Argument Value    ${sLoan_RequestedAmount}
+    ${Loan_EffectiveDate}    Acquire Argument Value    ${sLoan_EffectiveDate}
+    ${Loan_MaturityDate}    Acquire Argument Value    ${sLoan_MaturityDate}
+    ${Loan_RepricingFrequency}    Acquire Argument Value    ${sLoan_RepricingFrequency}
+    ${Repricing_Date}    Acquire Argument Value    ${sRepricing_Date}
+    ${Loan_IntCycleFrequency}    Acquire Argument Value    ${sLoan_IntCycleFrequency}
+    ${Loan_Accrue}    Acquire Argument Value    ${sLoan_Accrue}
+    ${Warning_Message}    Acquire Argument Value    ${sWarning_Message}
+
     Mx LoanIQ Select Window Tab    ${LIQ_InitialDrawdown_Tab}    General
     
     mx LoanIQ activate    ${LIQ_InitialDrawdown_Window} 
@@ -2141,6 +2176,8 @@ Enter Loan Drawdown Details for AUD Libor Option
     mx LoanIQ click element if present    ${LIQ_Error_OK_Button}
     Mx LoanIQ Select Combo Box Value    ${LIQ_InitialDrawdown_Repricing_Dropdownlist}    ${Loan_RepricingFrequency}
     mx LoanIQ enter    ${LIQ_InitialDrawdown_RepricingDate_Datefield}    ${Repricing_Date}
+    Mx Press Combination    KEY.TAB
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/InitialDrawdown
     Validate Text of Warning Message    ${Warning_Message}
     mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
     ${IntCycleFrequency}    Mx LoanIQ Get Data    ${LIQ_InitialDrawdown_IntCycleFreq_Dropdownlist}    value%Daily    
@@ -2152,6 +2189,7 @@ Enter Loan Drawdown Details for AUD Libor Option
     mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}	    
     Mx LoanIQ Select Combo Box Value    ${LIQ_InitialDrawdown_Accrue_Dropdownlist}    ${Loan_Accrue} 
     mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/InitialDrawdown
 
 Input Loan Drawdown Rates for Term Drawdown
     [Documentation]    This keyword is used to input Loan Drawdown Base Rate within the Rates tab.
@@ -2172,8 +2210,11 @@ Accept Loan Drawdown Rates for Term Facility
     [Documentation]    This keyword will accept the base rate
     ...    @author: mnanquil
 	...	   <update> bernchua 12/3/2018: modified loop check first if warning message exits then click button if true.
-    [Arguments]    ${Borrower_BaseRate} 
-    
+    ...    @update: dahijara    29JUL2020    - Added Keyword processing and screenshot.
+    [Arguments]    ${sBorrower_BaseRate} 
+    ### GetRuntime Keyword Pre-processing ###
+    ${Borrower_BaseRate}    Acquire Argument Value    ${sBorrower_BaseRate}
+
     Mx LoanIQ Select Window Tab    ${LIQ_InitialDrawdown_Tab}    Rates
     mx LoanIQ click    ${LIQ_InitialDrawdown_BaseRate_Button}
     :FOR    ${INDEX}    IN RANGE    10
@@ -2184,6 +2225,7 @@ Accept Loan Drawdown Rates for Term Facility
     mx LoanIQ click    ${LIQ_InitialDrawdown_AcceptBaseRate}         
     ${baseRate}    Mx LoanIQ Get Data    ${LIQ_InitialDrawdown_BorrowerBaseRate_Textfield}    testData
     Should Be Equal    ${Borrower_BaseRate}    ${baseRate}     
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/InitialDrawdown_BorrowerBaseRate
     mx LoanIQ click    ${LIQ_InitialDrawdown_SetBaseRate_OK_Button}        
 
 
@@ -2191,10 +2233,15 @@ Validate Rate Set
     [Documentation]    This keyword will validate the rate set on events tab
     ...    @author: mnanquilada
     ...    10/10/2018
-    [Arguments]    ${rateSetup}
+    ...    @update: dahijara    29JUL2020    - Added Keyword processing and screenshot.
+    [Arguments]    ${sRateSetup}
+    ### GetRuntime Keyword Pre-processing ###
+    ${RateSetup}    Acquire Argument Value    ${sRateSetup}
     Mx LoanIQ Select Window Tab    ${LIQ_InitialDrawdown_Tab}    Events
-    Mx LoanIQ Select Or DoubleClick In Javatree    ${LIQ_InitialDrawdown_SetRateJavaTree}    ${rateSetup}%d
-    Log    Successfully clicked ${rateSetup}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/InitialDrawdown_SetRate
+    Mx LoanIQ Select Or DoubleClick In Javatree    ${LIQ_InitialDrawdown_SetRateJavaTree}    ${sRateSetup}%d
+    Log    Successfully clicked ${sRateSetup}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/InitialDrawdown_SetRate
 
 Add Holiday Calendar Date
     [Documentation]    This keyword will add holiday calendar date on existing loan
@@ -2536,14 +2583,21 @@ Validate Global Facility Amounts - Loan Split
     ...    @update: fmamaril    20MAY2019    Update Validation from Should be equal to Should be equal as string
     ...    @update: bernchua    03JUN2019    Added line to evaluate variable '${Computed_CurrentCmtAmt}' to have 2 decimal places
     ...                                      Used 'Should Be Equal' instead of 'Should Be Equal As Strings' in comparing numbers 
-    [Arguments]    ${totalOutstanding}    
+    ...    @update: dahijara    24SEP2020    Added pre processing keywords. 
+    ...                                      Updated number formatter for Total outstanding
+    ...                                      Added screenshots.
+    [Arguments]    ${sTotalOutstanding}    
+    ### GetRuntime Keyword Pre-processing ###
+    ${TotalOutstanding}    Acquire Argument Value    ${sTotalOutstanding}
+
     ${NewAvailToDrawAmount}    Get New Facility Available to Draw Amount
     ${NewGlobalOutstandings}    Get New Facility Global Outstandings
-     ${totalOutstanding}    Remove String     ${totalOutstanding}    ,
-    ${totalOutstanding}    Convert to Number    ${totalOutstanding}    
-    Should Be Equal As Strings    ${totalOutstanding}    ${NewGlobalOutstandings}
-    Log    Total Computed Outstanding ${totalOutstanding} is equal to Facility Outstanding ${NewGlobalOutstandings}          
+    ${TotalOutstanding}    Remove Comma and Convert to Number    ${TotalOutstanding}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/FacilityNotebook
+    Should Be Equal As Strings    ${TotalOutstanding}    ${NewGlobalOutstandings}
+    Log    Total Computed Outstanding ${TotalOutstanding} is equal to Facility Outstanding ${NewGlobalOutstandings}          
     ${CurrentCmtAmt}    Get Current Commitment Amount
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/FacilityNotebook
     
     ${Computed_CurrentCmtAmt}    Evaluate    ${NewAvailToDrawAmount}+${NewGlobalOutstandings}
     ${Computed_CurrentCmtAmt}    Evaluate    "%.2f" % ${Computed_CurrentCmtAmt}
@@ -2556,6 +2610,7 @@ Validate Global Facility Amounts - Loan Split
     ${DiffAmount}    Evaluate    ${SumTotal}-${CurrentCmtAmt}
     ${DiffAmount}    Convert to String    ${DiffAmount}        
     Should Be Equal    ${DiffAmount}    0.0
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/FacilityNotebook
 
 Get Original Data on Loan Amounts Section 
     [Documentation]    This keyword is for getting the original data under Loan Amounts Section.
@@ -2858,10 +2913,20 @@ Validate Conversion Amount for the Increase in Loan Amount
 
 New Outstanding Select
     [Documentation]    This keyword creates a new Outstanding Select, where it enters and verifies the details displayed in the window.
-    ...                This keyword also returns the Alias generated.
-    ...                @author: bernchua
-    ...                @update: bernchua    23AUG2019    Added taking of screenshots
-    [Arguments]    ${Deal_Name}    ${Facility_Name}    ${Borrower_Name}    ${Outstanding_Type}    ${Pricing_Option}    ${Outstanding_Currency}
+    ...    This keyword also returns the Alias generated.
+    ...    @author: bernchua
+    ...    @update: bernchua    23AUG2019    Added taking of screenshots
+    ...    @update: dahijara    08SEP2020    Added Pre and Post Processing and Screenshot.
+    [Arguments]    ${sDeal_Name}    ${sFacility_Name}    ${sBorrower_Name}    ${sOutstanding_Type}    ${sPricing_Option}    ${sOutstanding_Currency}    ${sRunVar_Alias}=None
+
+    ### GetRuntime Keyword Pre-processing ###
+    ${Deal_Name}    Acquire Argument Value    ${sDeal_Name}
+    ${Facility_Name}    Acquire Argument Value    ${sFacility_Name}
+    ${Borrower_Name}    Acquire Argument Value    ${sBorrower_Name}
+    ${Outstanding_Type}    Acquire Argument Value    ${sOutstanding_Type}
+    ${Pricing_Option}    Acquire Argument Value    ${sPricing_Option}
+    ${Outstanding_Currency}    Acquire Argument Value    ${sOutstanding_Currency}
+
     mx LoanIQ activate    ${LIQ_OutstandingSelect_Window}
     Mx LoanIQ Set    ${LIQ_OutstandingSelect_New_RadioButton}    ON
     Mx LoanIQ Select Combo Box Value    ${LIQ_OutstandingSelect_Type_Dropdown}    ${Outstanding_Type}    
@@ -2883,9 +2948,13 @@ New Outstanding Select
     
     ${Alias}    Mx LoanIQ Get Data    ${LIQ_OutstandingSelect_Alias_JavaEdit}    value%alias    
     
-    Take Screenshot    OutstandingSelect-Window
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/OutstandingSelectWindow
     mx LoanIQ click    ${LIQ_OutstandingSelect_OK_Button}
     mx LoanIQ click element if present    ${LIQ_Information_OK_Button}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/OutstandingSelectWindow
+
+    ### ConstRuntime Keyword Post-processing ###
+    Save Values of Runtime Execution on Excel File    ${sRunVar_Alias}    ${Alias}
     [Return]    ${Alias}
     
 Enter Initial Loan Drawdown General Details
@@ -2909,7 +2978,7 @@ Enter Initial Loan Drawdown General Details
     \    Exit For Loop If    ${errorDisplayed}==False
     Run Keyword If    '${Repricing_Date}'!='${EMPTY}'    Enter Date With Business Day and Non-Business Day Validations    ${LIQ_InitialDrawdown_RepricingDate_Datefield}    ${Repricing_Date}    ${NBD_Reason}
     Run Keyword If    '${IntCycleFreq}'!='${EMPTY}'    Mx LoanIQ Select Combo Box Value    ${LIQ_InitialDrawdown_IntCycleFreq_Dropdownlist}    ${IntCycleFreq}
-    Mx LoanIQ Select Combo Box Value    ${LIQ_InitialDrawdown_Accue_Dropdown}    ${Accrue}
+    Mx LoanIQ Select Combo Box Value    ${LIQ_InitialDrawdown_Accrue_Dropdown}    ${Accrue}
     mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}    
     ${Drawdown_ActualDueDate}    Mx LoanIQ Get Data    ${LIQ_InitialDrawdown_ActualDueDate_Datefield}    value%date
     mx LoanIQ enter    ${LIQ_InitialDrawdown_AccrualEndDate_Datefield}    ${Drawdown_ActualDueDate}        
@@ -3017,7 +3086,16 @@ Add Calendar In Inital Drawdown Notebook
 Validate Initial Drawdown Currency Tab Details
     [Documentation]    This keyword validates the details in the Currency Tab of the Initial Drawdown Notebook.
     ...                @author: bernchua
-    [Arguments]    ${Drawdown_Currency}    ${Facility_Currency}    ${FXRate_Currency}    ${FXRate_ExchangeRate}    ${Drawdown_Amount}    ${HostBankShare}
+    ...                @update: dahijara    22SEP2020    - Added pre and post processing keyword and screenshot.
+    [Arguments]    ${sDrawdown_Currency}    ${sFacility_Currency}    ${sFXRate_Currency}    ${sFXRate_ExchangeRate}    ${sDrawdown_Amount}    ${sHostBankShare}    ${sRunVar_Computed_Current}=None    ${sRunVar_Computed_HostBankGross}=None    ${sRunVar_Computed_HostBanknet}=None
+    ### GetRuntime Keyword Pre-processing ###
+    ${Drawdown_Currency}    Acquire Argument Value    ${sDrawdown_Currency}
+    ${Facility_Currency}    Acquire Argument Value    ${sFacility_Currency}
+    ${FXRate_Currency}    Acquire Argument Value    ${sFXRate_Currency}
+    ${FXRate_ExchangeRate}    Acquire Argument Value    ${sFXRate_ExchangeRate}
+    ${Drawdown_Amount}    Acquire Argument Value    ${sDrawdown_Amount}
+    ${HostBankShare}    Acquire Argument Value    ${sHostBankShare}
+
     mx LoanIQ activate    ${LIQ_InitialDrawdown_Window}
     Mx LoanIQ Select Window Tab    ${LIQ_InitialDrawdown_Tab}    Currency    
     ${Currency_UI}    Mx LoanIQ Get Data    ${LIQ_DrawdownCurrencyTab_Currency_StaticText}    value%ccy    
@@ -3028,7 +3106,7 @@ Validate Initial Drawdown Currency Tab Details
     ${HostBankNet_UI}    Mx LoanIQ Get Data    ${LIQ_DrawdownCurrencyTab_HostBankNext_StaticText}    value%net
     ${FXRate_ExchangeRate}    Convert To Number    ${FXRate_ExchangeRate}
     ${FXRate_ExchangeRate}    Convert To String    ${FXRate_ExchangeRate}
-    
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/DrawdownCurrencyTab
     ${Computed_Current}    ${Computed_HostBankGross}    ${Computed_HostBanknet}    Compute 'Amounts in Facility Currency' In Initial Drawdown Notebook    ${FXRate_ExchangeRate}
     ...    ${Drawdown_Amount}    ${HostBankShare}
     ${Validate_FXRateCurrency}    Run Keyword And Return Status    Should Contain    ${FXRate_UI}    ${FXRate_Currency}
@@ -3047,7 +3125,11 @@ Validate Initial Drawdown Currency Tab Details
     ...    ELSE    Fail    Host Bank Gross amount not verified.
     Run Keyword If    '${Computed_HostBanknet}'=='${HostBankNet_UI}'    Log    Host Bank Net with the amount of ${Computed_HostBanknet} is verified.
     ...    ELSE    Fail    Host Bank Net amount not verified.
-    
+
+    ### ConstRuntime Keyword Post-processing ###
+    Save Values of Runtime Execution on Excel File    ${sRunVar_Computed_Current}    ${Computed_Current}
+    Save Values of Runtime Execution on Excel File    ${sRunVar_Computed_HostBankGross}    ${Computed_HostBankGross}
+    Save Values of Runtime Execution on Excel File    ${sRunVar_Computed_HostBanknet}    ${Computed_HostBanknet}
     [Return]    ${Computed_Current}    ${Computed_HostBankGross}    ${Computed_HostBanknet}
     
 Compute 'Amounts in Facility Currency' In Initial Drawdown Notebook
@@ -3172,7 +3254,9 @@ Set FX Rates Loan Drawdown
     ...    @author: jdelacru    26MAR2019    - Initial Keyword
     ...    @update: ritragel    19SEP2019    Update for dynamic keyword
     ...    @update: dahijara    25AUG2020    Added pre processing keyword and screenshot.
-    [Arguments]    ${sCurrency}
+    ...    @update: aramos      05OCT2020    Add click warning button. 
+    ...    @update: shirhong    06OCT2020    Added condition for Set FX Rate "Use Spot"
+    [Arguments]    ${sCurrency}    ${FxRate_Origin}=None
     ### GetRuntime Keyword Pre-processing ###
     ${Currency}    Acquire Argument Value    ${sCurrency}
 
@@ -3181,15 +3265,17 @@ Set FX Rates Loan Drawdown
     Mx LoanIQ DoubleClick    ${LIQ_InitialDrawdown_WorkflowAction}    Set F/X Rate
     mx LoanIQ activate window    ${LIQ_FacilityCurrency_Window}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/InitialDrawdown_Workflow
-    mx LoanIQ click    JavaWindow("title:=Facility Currency.*","displayed:=1").JavaButton("attached text:=Use Facility.*to ${sCurrency} Rate")
+    Run Keyword If    '${FxRate_Origin}' == 'Spot'    mx LoanIQ click    JavaWindow("title:=Facility Currency.*","displayed:=1").JavaButton("attached text:=Use Spot.*to ${sCurrency} Rate")
+    ...    ELSE    mx LoanIQ click    JavaWindow("title:=Facility Currency.*","displayed:=1").JavaButton("attached text:=Use Facility.*to ${sCurrency} Rate")
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/InitialDrawdown_Workflow
     mx LoanIQ click    ${LIQ_FacilityCurrency_Facility_Rate_Ok_Button}
+    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/InitialDrawdown_Workflow
 
 Set FX Rates Loan Repricing
     [Documentation]    This keyword set the FX rates of any currency repricing from workflow before Rate Approval
     ...    @author: xmiranda    27SEP2019    - initial draft
-    [Arguments]    ${sCurrency}
+    [Arguments]    ${sCurrency}    
     mx LoanIQ activate window    ${LIQ_LoanRepricingForDeal_Window}
     Mx LoanIQ Select Window Tab    ${LIQ_LoanRepricingForDeal_Tab}    Workflow
     Mx LoanIQ DoubleClick    ${LIQ_LoanRepricingForDeal_WorkFlowAction}    Set F/X Rate
@@ -3211,6 +3297,7 @@ Set Base Rate Details
     ...                @update: bernchua    23AUG2019    Added taking of screenshots
     ...                @update: hstone      05SEP2019    Added Question Window Confirmation
     ...                @update: hstone      18JUN2020    Added Keyword Pre-processing
+    ...                @update: mcastro     03SEP2020    Updated screenshot path
     [Arguments]    ${sBorrowerBaseRate}    ${sAcceptRateFromPricing}=N
 
     ### Keyword Pre-processing ###
@@ -3224,7 +3311,7 @@ Set Base Rate Details
     mx LoanIQ click element if present    ${LIQ_Question_Yes_Button}
     Run Keyword If    '${AcceptRateFromPricing}'=='N'    mx LoanIQ enter    ${LIQ_InitialDrawdown_BorrowerBaseRate_Field}    ${BorrowerBaseRate}
     ...    ELSE IF    '${AcceptRateFromPricing}'=='Y'    mx LoanIQ click    ${LIQ_InitialDrawdown_AcceptBaseRate}
-    Take Screenshot    BaseRate-Window
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/BaseRate-Window
     mx LoanIQ click    ${LIQ_InitialDrawdown_SetBaseRate_OK_Button}
     Verify If Warning Is Displayed
 
@@ -3233,8 +3320,10 @@ Add Borrower Base Rate and Facility Spread
     ...                @author: bernchua    08AUG2019    Initial create
     ...                @author: bernchua    22AUG2019    Added line to evaluate and return value with 6 decimal places
     ...                @update: sahalder    25JUN2020    Added keyword Pre-Processing steps
-    ...    @update: dahijara    25AUG2020    Inserted validation for all in rate (from test case level.)
-    [Arguments]    ${sBorrowerBaseRate}    ${sFacitliySpread}
+    ...                @update: dahijara    25AUG2020    Inserted validation for all in rate (from test case level.)
+    ...                @update: mcastro     07SEP2020    Added condition to handle latest inserted validation
+    ...                @update: AmitP       15SEP2020    Added flag variable in a condition which is always true by default for adding condition for Validate String Data In LIQ Object
+    [Arguments]    ${sBorrowerBaseRate}    ${sFacitliySpread}    ${flag}=true
     
     ### GetRuntime Keyword Pre-processing ###
     ${BorrowerBaseRate}    Acquire Argument Value    ${sBorrowerBaseRate}
@@ -3245,8 +3334,8 @@ Add Borrower Base Rate and Facility Spread
     ${Loan_AllInRate}    Evaluate    ${BorrowerBaseRate}+${FacitliySpread}
     ${Loan_AllInRate}    Evaluate    "%.6f" % ${Loan_AllInRate}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LoanRepricing-Rates
-    Validate String Data In LIQ Object    ${LIQ_RolloverConversion_Window}    ${LIQ_RolloverConversion_AllInRate_Text}    ${Loan_AllInRate}%
-    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LoanRepricing-Rates
+    ${STATUS}    Run Keyword And Return Status    Run Keyword If    '${flag}'=='true'    Mx LoanIQ Verify Object Exist    ${LIQ_InitialDrawdown_Window}    VerificationData="Yes"       
+    Run Keyword If    ${STATUS}==False    Validate String Data In LIQ Object    ${LIQ_RolloverConversion_Window}    ${LIQ_RolloverConversion_AllInRate_Text}    ${Loan_AllInRate}%
     [Return]    ${Loan_AllInRate}
 
 Set Outstanding Servicing Group Details
@@ -3664,4 +3753,33 @@ Get Loan FX Rate
     ### ConstRuntime Keyword Post-processing ###
     Save Values of Runtime Execution on Excel File    ${sRunVar_FXRate}    ${FXRate}
     [Return]    ${FXRate}
+    
+Get Loan Cycle Due Amount
+    [Documentation]    This keyword returns the Fee total paid to date amount.
+    ...    @author: cfrancis    09OCT2020    - Initial Create
 
+    mx LoanIQ activate window    ${LIQ_Loan_Window}
+    Mx LoanIQ Select Window Tab    ${LIQ_Loan_Tab}    Accrual
+    ${rowcount}    Mx LoanIQ Get Data    ${LIQ_Loan_AccrualTab_Cycles_Table}    input=items count%value
+    ${rowcount}    Evaluate    ${rowcount} - 2
+    Log    The total rowcount is ${rowcount}
+    ${CycleDueAmount}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_Loan_AccrualTab_Cycles_Table}    TOTAL:${SPACE}%Cycle Due%amount
+    Log    The Fee Paid to Date amount is ${CycleDueAmount}
+    Screenshot.Set Screenshot Directory    ${Screenshot_Path}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/Loan_Cycle_Due
+    [Return]    ${CycleDueAmount}
+
+Get Loan Paid to Date Amount
+    [Documentation]    This keyword returns the Fee total paid to date amount.
+    ...    @author: cfrancis    09OCT2020    - Initial Create
+
+    mx LoanIQ activate window    ${LIQ_Loan_Window}
+    Mx LoanIQ Select Window Tab    ${LIQ_Loan_Tab}    Accrual
+    ${rowcount}    Mx LoanIQ Get Data    ${LIQ_Loan_AccrualTab_Cycles_Table}    input=items count%value
+    ${rowcount}    Evaluate    ${rowcount} - 2
+    Log    The total rowcount is ${rowcount}
+    ${PaidtodateAmount}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_Loan_AccrualTab_Cycles_Table}    ${rowcount}%Paid to date%amount  
+    Log    The Fee Paid to Date amount is ${PaidtodateAmount}
+    Screenshot.Set Screenshot Directory    ${Screenshot_Path}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/Loan_Paid_To_Date
+    [Return]    ${PaidtodateAmount}

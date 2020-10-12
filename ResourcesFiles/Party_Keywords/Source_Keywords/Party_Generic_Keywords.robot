@@ -65,6 +65,7 @@ Search Process in Party
     Display Message    Successfully searched ${sProcess_Name}
     Capture Page Screenshot
 
+
 Validate Page Screen is Displayed
     [Documentation]    This keyword is used to validate page screen if successfully displayed.
     ...    @author: amansuet    20MAR2020    - initial create
@@ -115,14 +116,21 @@ Configure Zone and Branch
     Mx Click Element    ${Party_Zone_Button}
     Wait Until Loading Page Is Not Visible    ${PARTY_TIMEOUT}
     Validate Page Screen is Displayed    ${PARTY_ZONEANDBRANCHSELECTION_PAGETITLE}
+    
+
     Mx Input Text    ${Party_ZoneBranchSelectionPage_Zone_TextBox}    ${sZone}
     Mx Input Text    ${Party_ZoneBranchSelectionPage_Branch_TextBox}    ${sBranchName}
     
     Capture Page Screenshot    ${screenshot_path}/Screenshots/Party/ZoneAndBranchSelectionPage-{index}.png
-    Mx Click Element    ${Party_Footer_Next_Button}
+    Wait Until Keyword Succeeds    10x    2s    Mx Click Element    ${Party_Footer_Next_Button}
 
     Wait Until Loading Page Is Not Visible    ${PARTY_TIMEOUT}
     Validate Page Screen is Displayed    ${PARTY_MESSAGE_PAGETITLE}
     Wait Until Page Contains Element    ${Party_ZoneBranchSelectionPage_SuccessMessage_Label}
     Capture Page Screenshot    ${screenshot_path}/Screenshots/Party/MessagePage-{index}.png
     Mx Click Element    ${Party_ZoneBranchSelectionPage_CloseTab_Button}
+
+
+
+
+

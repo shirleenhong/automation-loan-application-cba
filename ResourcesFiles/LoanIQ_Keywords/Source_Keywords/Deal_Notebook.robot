@@ -1441,9 +1441,12 @@ Navigate to Facility Notebook from Deal Notebook
     ...    @update: fmamaril    12MAR2019    Change Mx Active to Mx Activate Window
     ...    @update: hstone      09JUN2020    - Added Keyword Pre-processing
     ...    @update: dfajardo    22JUL2020    - Added Screenshot
+    ...    @update: cfrancis    10SEP2020    - Added Clicking an object on deal notebook summary for deal window to be placed as primary window on multiple LIQ screens
     [Arguments]    ${sFacility_Name}
 
     ### Keyword Pre-processing ###
+    Mx LoanIQ Click    ${LIQ_DealSummary_AdminAgent_Textfield}
+    
     ${Facility_Name}    Acquire Argument Value    ${sFacility_Name}
 
     ${status}    Run Keyword And Return Status    Mx LoanIQ Verify Object Exist    ${LIQ_DealNotebook_InquiryMode_Button}    VerificationData="Yes"
@@ -1454,6 +1457,7 @@ Navigate to Facility Notebook from Deal Notebook
     mx LoanIQ activate window    ${LIQ_FacilityNotebook_Window}  
     
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/DealNotebook_Options
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/Cashflow_FacilityChangeTransaction_ModifyScheduleItem
 
 Navigate to Facility Notebook from Deal Notebook in Inquiry Mode
     [Documentation]    This keyword navigates the LIQ User from the Deal Notebook to the Facility Notebook .
@@ -1932,6 +1936,8 @@ Get the Original Amount on Summary Tab of Deal Notebook
     [Documentation]    This keyword validates the status of Deal Notebook and gets the needed data.
     ...    @author:mgaling
     ...    @update: sahalder    06AUG2020    Added screenshots steps
+    ...    @update: dahijara    24SEP2020    Added post processing keywords and optional arguments for runtime variables
+    [Arguments]    ${sRunVar_Current_Cmt}=None    ${sRunVar_Contr_Gross}=None    ${sRunVar_Net_Cmt}=None
     
     mx LoanIQ activate window    ${LIQ_DealNotebook_Window}
     mx LoanIQ select    ${LIQ_DealNotebook_Tab}    Summary
@@ -1948,16 +1954,24 @@ Get the Original Amount on Summary Tab of Deal Notebook
     Mx LoanIQ Select String    ${LIQ_Events_Javatree}    Closed  
     
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/Deal_Summary
+	
+    ### ConstRuntime Keyword Post-processing ###
+    Save Values of Runtime Execution on Excel File    ${sRunVar_Current_Cmt}    ${Current_Cmt}
+    Save Values of Runtime Execution on Excel File    ${sRunVar_Contr_Gross}    ${Contr_Gross}
+    Save Values of Runtime Execution on Excel File    ${sRunVar_Net_Cmt}    ${Net_Cmt}
+
     [Return]    ${Current_Cmt}    ${Contr_Gross}    ${Net_Cmt}
 
 Create Amendment via Deal Notebook
     [Documentation]    This creates amendment via Deal Notebook.
     ...    @author: mgaling
+    ...    @update: dahijara    24SEP2020    Added screenshot
     
     mx LoanIQ activate window    ${LIQ_DealNotebook_Window}
     mx LoanIQ select    ${LIQ_DealNotebook_Options_CreateAmendment} 
     mx LoanIQ activate window    ${LIQ_AmendmentNotebookPending_Window}   
     Run Keyword And Continue On Failure    Mx LoanIQ Verify Object Exist    ${LIQ_AmendmentNotebookPending_Window}       VerificationData="Yes"
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/AmmendmentNoteBook
 
 Verify Admin Fee Status
     [Documentation]    This keyword will verify the Admin Fee Status in Deal Notebook > Admin/Event Fees
@@ -1989,7 +2003,9 @@ Get Original Amount on Deal Lender Shares
     [Documentation]    This keyword is for getting the original value on Deal Lender Shares.
     ...    @author:mgaling
     ...    @update    sahalder    06AUG2020    Added keyword pre-processing steps and screenshots
-    [Arguments]    ${sHostBank_Lender}    ${sLender1}    ${sLender2}
+    ...    @update: dahijara    24SEP2020    Added post processing keyword and optional arguments
+    [Arguments]    ${sHostBank_Lender}    ${sLender1}    ${sLender2}    ${sRunVar_Original_UIHBActualAmount}=None    ${sRunVar_Original_UILender1ActualAmount}=None    ${sRunVar_Original_UILender2ActualAmount}=None    ${sRunVar_Orig_PrimariesAssignees_ActualTotal}=None
+    ...    ${sRunVar_Original_UIHBSharesActualAmount}=None    ${sRunVar_Orig_HostBankShares_ActualNetAllTotal}=None
     
     ### GetRuntime Keyword Pre-processing ###
 	${HostBank_Lender}    Acquire Argument Value    ${sHostBank_Lender}
@@ -2032,7 +2048,14 @@ Get Original Amount on Deal Lender Shares
     ${Orig_HostBankShares_ActualNetAllTotal}    Convert To Number    ${Orig_HostBankShares_ActualNetAllTotal}   
     
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/Primaries_Details
-    
+	
+    ### ConstRuntime Keyword Post-processing ###
+    Save Values of Runtime Execution on Excel File    ${sRunVar_Original_UIHBActualAmount}    ${Original_UIHBActualAmount}
+    Save Values of Runtime Execution on Excel File    ${sRunVar_Original_UILender1ActualAmount}    ${Original_UILender1ActualAmount}
+    Save Values of Runtime Execution on Excel File    ${sRunVar_Original_UILender2ActualAmount}    ${Original_UILender2ActualAmount}
+    Save Values of Runtime Execution on Excel File    ${sRunVar_Orig_PrimariesAssignees_ActualTotal}    ${Orig_PrimariesAssignees_ActualTotal}
+    Save Values of Runtime Execution on Excel File    ${sRunVar_Original_UIHBSharesActualAmount}    ${Original_UIHBSharesActualAmount}
+    Save Values of Runtime Execution on Excel File    ${sRunVar_Orig_HostBankShares_ActualNetAllTotal}    ${Orig_HostBankShares_ActualNetAllTotal}
     [Return]    ${Original_UIHBActualAmount}    ${Original_UILender1ActualAmount}    ${Original_UILender2ActualAmount}    ${Orig_PrimariesAssignees_ActualTotal}    ${Original_UIHBSharesActualAmount}    ${Orig_HostBankShares_ActualNetAllTotal} 
     
     mx LoanIQ close window    ${LIQ_LenderShares_Window}    
@@ -2041,6 +2064,7 @@ Validate the Updates on Deal Notebook
     [Documentation]    This keyword is for validating the Deal Notebook after the Facility Commitment Increase Transaction.
     ...    @author:mgaling
     ...    @update: sahalder    06AUG2020    Added keyword pre-processing steps and Screenshot steps
+    ...    @update: dahijara    25SEP2020    Added conversion of increase amount to with comma format for validation.
     [Arguments]    ${sIncrease_Amount}    ${sCurrent_Cmt}    ${sContr_Gross}    ${sComputed_HBActualAmount}    ${sNet_Cmt}    ${sAmendmentNo}    ${sFacility_Name}
     
     ### GetRuntime Keyword Pre-processing ###
@@ -2118,8 +2142,9 @@ Validate the Updates on Deal Notebook
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/DealNotebook_EventsTab
        
     ${UIComment}    Mx LoanIQ Get Data    ${LIQ_Events_Comment_Field}    value%Comment
-    
-    Should Be Equal As Strings    ${UIComment}    Unscheduled increase of ${Increase_Amount} under amendment number ${AmendmentNo} for facility named ${Facility_Name}.       
+    ### Convert Increase amount to with comma format with 2 decimal places for comment ###
+    ${Increase_Amount}    Convert Number With Comma Separators    ${Increase_Amount}
+    Should Be Equal As Strings    ${UIComment}    Unscheduled increase of ${Increase_Amount}, under amendment number ${AmendmentNo} for facility named ${Facility_Name}.       
     
 Validate the Updates on Lender Shares
     [Documentation]    This keyword is for validating the Lender Shares after the Facility Commitment Increase Transaction.
@@ -2249,14 +2274,21 @@ Validate the Updates on Primaries
 Get Customer Lender Legal Name Via Lender Shares In Deal Notebook
     [Documentation]    This keyword gets the Customer Lender Legal Name from the Customer Notebook via Deal Notebook - Lender Shares menu.
     ...                @author: bernchua
-    [Arguments]    ${CustomerLender_Name}
+    ...    @update: dahijara    29JUL2020    - Added pre & post processing and screenshot 
+    [Arguments]    ${sCustomerLender_Name}    ${sRunVar_CustomerLender_LegalName}=None
+    ### GetRuntime Keyword Pre-processing ###
+    ${CustomerLender_Name}    Acquire Argument Value    ${sCustomerLender_Name}
     mx LoanIQ activate    ${LIQ_DealNotebook_Window}    
     mx LoanIQ select    ${LIQ_DealNotebook_LenderShare}    
     Mx LoanIQ Select String    ${LIQ_SharesFor_Primaries_Tree}    ${CustomerLender_Name}    
     mx LoanIQ click    ${LIQ_SharesFor_LenderNotebook_Button}
     ${CustomerLender_LegalName}    Mx LoanIQ Get Data    ${LIQ_ActiveCustomer_Window_LegalName}    value%name
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/SharesFor_LenderNotebook
     mx LoanIQ close window    ${LIQ_ActiveCustomer_Window}
     mx LoanIQ close window    ${LIQ_SharesFor_Window}    
+    
+    ### ConstRuntime Keyword Post-processing ###
+    Save Values of Runtime Execution on Excel File    ${sRunVar_CustomerLender_LegalName}    ${CustomerLender_LegalName}
     [Return]    ${CustomerLender_LegalName}
     
 Get Customer Lender Remittance Instruction Desc Via Lender Shares In Deal Notebook
@@ -2536,6 +2568,7 @@ Navigate to Deal Business Event
     [Documentation]    This keyword navigates LoanIQ to the deal's business event window.
     ...    @create: hstone    05SEP2019    Initial create
     ...    @update: amansuet    02OCT2019    -added screenshot
+    ...    @update: mcastro   10SEP2020    Updated screenshot path
     [Arguments]    ${sDealName}    ${sEvent}
     Open Existing Deal    ${sDealName}
     Mx LoanIQ Select Window Tab    ${LIQ_DealNotebook_Tab}    Events
@@ -2543,7 +2576,7 @@ Navigate to Deal Business Event
     ${sFetchedEvent}    Run Keyword If    '${sEvent}'!='None'    Select Java Tree Cell Value First Match    ${LIQ_Events_Javatree}    ${sEvent}    Event 
     ...    ELSE    Set Variable    None           
     
-    Take Screenshot    Deal_Business_Event
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/Deal_Business_Event
     
     ${IsMatched}    Run Keyword And Return Status    Should Be Equal As Strings    ${sFetchedEvent}    ${sEvent}        
     Run Keyword If    ${IsMatched}==${True}    Log    Event Verification Passed        
@@ -2562,7 +2595,7 @@ Get Customer ID from Active Customer Notebook Via Deal Notebook
     mx LoanIQ activate    ${LIQ_DealNotebook_Window}
     mx LoanIQ click element if present    ${LIQ_InquiryMode_Button}
     Mx LoanIQ Select Window Tab    ${LIQ_DealNotebook_Tab}    Summary
-    # Mx LoanIQ Select Or Doubleclick In Tree By Text    ${LIQ_DealSummary_BorrowersDepositors_Tree}    ${sBorrowerName}%d  
+    Mx LoanIQ Select Or Doubleclick In Tree By Text    ${LIQ_DealSummary_BorrowersDepositors_Tree}    ${sBorrowerName}%d  
     Mx LoanIQ Select Or DoubleClick In Javatree  ${LIQ_DealSummary_BorrowersDepositors_Tree}    ${sBorrowerName}%d  
     Log    (Get Customer ID from Active Customer Notebook Via Deal Notebook) sBorrowerName = ${sBorrowerName} 
     mx LoanIQ click    ${LIQ_DealBorrower_BorrowerNotebook_Button}   
@@ -2697,8 +2730,9 @@ Validate Deal Event Start Date
 Validate Deal Amendment Event Start Date
     [Documentation]    This keyword is used to validate whether the Deal Amendment's Business Event Queue Start date is greater than, less than, or equal to Business Event Queue End Date. 
     ...    @author: rtarayao    18FEB2020    - initial create
+    ...    @update: mcastro     17SEP2020    Fixed Enter key with correct value
     [Arguments]    ${sEventName}
-    Mx Press Combination    {ENTER}
+    Mx Press Combination    Key.ENTER
     Mx LoanIQ activate    ${LIQ_AmendmentNotebookReleased_Window}    
     Mx LoanIQ Select Window Tab    ${LIQ_AmendmentNotebookReleased_Tab}    Events
     Mx LoanIQ Select String    ${LIQ_AMD_Events_JavaTree}    Released    

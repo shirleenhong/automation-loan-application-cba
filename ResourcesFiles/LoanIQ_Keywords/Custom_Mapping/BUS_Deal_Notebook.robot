@@ -405,14 +405,16 @@ BUS_Get Financial Ratio Type Effective Date and Return
 BUS_Get the Original Amount on Summary Tab of Deal Notebook
     [Documentation]    This keyword is used to run the assigned low level keyword.
     ...    @author: sahalder    06AUG2020    - initial create
+    ...    @update: dahijara    24SEP2020    - added arguments
 
-    Run Keyword    Get the Original Amount on Summary Tab of Deal Notebook
+    Run Keyword    Get the Original Amount on Summary Tab of Deal Notebook    ${ARGUMENT_1}    ${ARGUMENT_2}    ${ARGUMENT_3}
     
 BUS_Get Original Amount on Deal Lender Shares
     [Documentation]    This keyword is used to run the assigned low level keyword.
     ...    @author: sahalder    06AUG2020    - initial create
+    ...    @update: dahijara    24SEP2020    - added arguments
 
-    Run Keyword    Get Original Amount on Deal Lender Shares    ${ARGUMENT_1}    ${ARGUMENT_2}    ${ARGUMENT_3}
+    Run Keyword    Get Original Amount on Deal Lender Shares    ${ARGUMENT_1}    ${ARGUMENT_2}    ${ARGUMENT_3}    ${ARGUMENT_4}    ${ARGUMENT_5}    ${ARGUMENT_6}    ${ARGUMENT_7}    ${ARGUMENT_8}    ${ARGUMENT_9}
     
 BUS_Create Amendment via Deal Notebook
     [Documentation]    This keyword is used to run the assigned low level keyword.
@@ -437,3 +439,9 @@ BUS_Validate the Updates on Primaries
     ...    @author: sahalder    06AUG2020    - initial create
 
     Run Keyword    Validate the Updates on Primaries    ${ARGUMENT_1}    ${ARGUMENT_2}    ${ARGUMENT_3}
+
+BUS_Get Customer Lender Legal Name Via Lender Shares In Deal Notebook
+    [Documentation]    This keyword is used to run the assigned low level keyword.
+    ...    @author: dahijara    03SEP2020    - initial create
+
+    Run Keyword    Get Customer Lender Legal Name Via Lender Shares In Deal Notebook    ${ARGUMENT_1}    ${ARGUMENT_2}

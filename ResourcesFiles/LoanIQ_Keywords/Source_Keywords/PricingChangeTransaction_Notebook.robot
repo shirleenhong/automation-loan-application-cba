@@ -178,16 +178,22 @@ Add After Option Item - Second
 Add After Option Item - Third
     [Documentation]    Select the value for the Third Option.
     ...    @author: mnanquilada
-    [Arguments]    ${OptionName}    ${RateBasisInterestPricing}    ${Spread}
+    [Arguments]    ${sOptionName}    ${sRateBasisInterestPricing}    ${sSpread}
+    ### Keyword Pre-processing ###
+    ${OptionName}    Acquire Argument Value    ${sOptionName}
+    ${RateBasisInterestPricing}    Acquire Argument Value    ${sRateBasisInterestPricing}
+    ${Spread}    Acquire Argument Value    ${sSpread}
     mx LoanIQ activate    ${LIQ_FacilityPricing_Interest_OptionCondition_Window}    
     Mx LoanIQ Select Combo Box Value    ${LIQ_OptionCondition_OptionName_List}    ${OptionName}
     Mx LoanIQ Select Combo Box Value    ${LIQ_OptionCondition_RateBasis_List}    ${RateBasisInterestPricing}
     mx LoanIQ click    ${LIQ_Facility_InterestPricing_OptionCondition_OK_Button}
     mx LoanIQ enter    ${LIQ_Facility_InterestPricing_FormulaCategory_Percent_Radiobutton}    ON
     mx LoanIQ enter    ${LIQ_Facility_InterestPricing_FormulaCategory_Percent_Textfield}    ${Spread}
+    Take Screenshot    ${Screenshot_Path}/Screenshots/LoanIQ/FacilityInterestPricingWindow
     mx LoanIQ click    ${LIQ_Facility_InterestPricing_FormulaCategory_OK_Button} 
     mx LoanIQ click element if present    ${LIQ_PleaseConfirm_Yes_Button} 
- 
+    Take Screenshot    ${Screenshot_Path}/Screenshots/LoanIQ/FacilityInterestPricingWindow
+    
 Validate the Interest Pricing Values with Matrix Item
     [Documentation]    This keyword validates the values.
     ...    @author: mgaling

@@ -31,7 +31,8 @@ LIQ_InitialDrawdown_ActualDueDate_Datefield  = 'JavaWindow("title:=.*Initial Dra
 LIQ_InitialDrawdown_RepricingDate_Datefield  = 'JavaWindow("title:=.*Initial Drawdown.*").JavaEdit("attached text:=Repricing Date:")'
 LIQ_InitialDrawdown_AccrualEndDate_Datefield = 'JavaWindow("title:=.*Initial Drawdown.*").JavaEdit("attached text:=Accrual End Date:")'
 LIQ_InitialDrawdown_AdjustedDueDate_Datefield = 'JavaWindow("title:=.*Initial Drawdown.*").JavaEdit("attached text:=Adjusted Due Date:")'
-LIQ_InitialDrawdown_Accue_Dropdown = 'JavaWindow("title:=.*Initial Drawdown.*").JavaList("attached text:=Accrue:")'
+LIQ_InitialDrawdown_Accrue_Dropdown = 'JavaWindow("title:=.*Initial Drawdown.*").JavaList("attached text:=Accrue:")'
+LIQ_InitialDrawdown_PaymentMode_Dropdown = 'JavaWindow("title:=.*Initial Drawdown.*").JavaList("attached text:=Payment Mode:")'
 LIQ_InitialDrawdown_RequestedCCY_StaticDropdown = 'JavaWindow("title:=.*Initial Drawdown .*").JavaList("attached text:=Requested CCY:")'
 LIQ_InitialDrawdown_ActualCCY_StaticText = 'JavaWindow("title:=.*Initial Drawdown .*").JavaObject("tagname:=Group","text:=Amounts").JavaStaticText("index:=4")'
 LIQ_InitialDrawdown_IntCycleFreq_Dropdownlist  = 'JavaWindow("title:=.*Initial Drawdown.*").JavaList("attached text:=Int. Cycle Freq:")'
@@ -161,7 +162,10 @@ LIQ_Loan_AccrualTab_Cycles_Table = 'JavaWindow("title:=.*Loan.*Active").JavaTree
 LIQ_Loan_GlobalCurrent_Amount = 'JavaWindow("title:=.*Loan.*Active").JavaEdit("attached text:=Global Current:")'
 LIQ_Loan_HostBankGross_Amount = 'JavaWindow("title:=.*Loan.*Active").JavaEdit("attached text:=Host Bank Gross:")'
 LIQ_Loan_HostBankNet_Amount = 'JavaWindow("title:=.*Loan.*Active").JavaEdit("attached text:=Host Bank Net:")'
-
+LIQ_Accrual_CycleDueOverview_Button = 'JavaWindow("title:=.*Loan.*Active").JavaButton("attached_text:=Cycle Shares Overview")'
+LIQ_ServicingGroup_AccrualCycle = 'JavaWindow("title:=Servicing Group Accrual Cycle Detail")'
+LIQ_ServicingGroup_CycleDue = 'JavaWindow("title:=Servicing Group Accrual Cycle Detail").JavaEdit("attached text:=Cycle due:")'
+LIQ_ServicingGroup_Paid = 'JavaWindow("title:=Servicing Group Accrual Cycle Detail").JavaEdit("attached text:=Paid to date:")'
 ####Interest Payment Notebook####
 LIQ_Payment_Window = 'JavaWindow("title:=.* Payment.*")'
 LIQ_Payment_Options_Payment = 'JavaWindow("title:=.* Payment.*").JavaMenu("label:=Queries").JavaMenu("label:=GL Entries")'

@@ -6,19 +6,6 @@ ${rowid}    1
 ${SCENARIO}    1
 
 *** Test Cases ***
-Create User Profile
-    [Tags]    01 Create User Profile
-    Mx Execute Template With Multiple Data    Create User for Single LOB with ACTIVE Status and UNLOCKED    ${ExcelPath}    ${rowid}    Users_Fields
-
-Create Customer within Loan IQ - ORIG02
-    [Documentation]    This keyword creates Customer within LoanIQ
-    ...    when using this, the following keywords(validations) should be disabled in the succeeding keyword 'Search Customer and Complete its Borrower Profile Creation - ORIG03'
-    ...    -> Read Excel Data and Validate Customer ID, Short Name and Legal Name fields
-    ...    -> Check Legal Address Details Under Profiles Tab
-    ...    @author: ghabal
-    [Tags]    01 Create Customer within Loan IQ - ORIG03
-    Mx Execute Template With Multiple Data    Create Customer within Loan IQ    ${ExcelPath}    ${rowid}    ORIG03_Customer
-    
 Search Customer and Complete its Borrower Profile Creation - ORIG03
     [Documentation]    This keyword searches a customer and complete its Borrower Profile creation
     ...    @author: ghabal

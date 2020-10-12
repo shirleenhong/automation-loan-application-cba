@@ -1,5 +1,5 @@
 *** Settings ***
-Resource    ../../../Configurations/LoanIQ_Import_File.robot
+Resource    ../../../Configurations/Integration_Import_File.robot
 
 
 *** Keywords ***
@@ -177,9 +177,11 @@ Get Message TextArea Value and Save to File
     ...    @update: clanding    12JUN2019    - added \ on index for element, this is an update for robot to consider it as a string not an index of
     ...    @update: ehugo    16JUN2020    - added 'Wait Until Loading Indicator Is Not Visible' to properly get the value of textarea
     ...    @update: ehugo    18JUN2020    - updated screenshot location
+    ...    @update: mcastro    22SEP2020    added Scroll to element before double click
     [Arguments]    ${sOutputFilePath}    ${iRowRef}    ${iColRef}    ${sFileExtension}
     
     :FOR    ${Index}    IN RANGE    5
+    \    Mx Scroll Element Into View    ${Results_Row}\[${iRowRef}]${PerColumnValue}\[${iColRef}]${TextValue}
     \    Double Click Element    ${Results_Row}\[${iRowRef}]${PerColumnValue}\[${iColRef}]${TextValue}
     \    Wait Until Loading Indicator Is Not Visible
     \    ${status}    Run Keyword And Return Status    Wait Until Element Is Visible    ${Textarea}
@@ -328,6 +330,7 @@ Filter by Reference Header and Save Header Value and Return Results Row List Val
     ...    Then gets the row values using array of Header Names. Then gets the value of the given Header and save to output file.
     ...    @author: clanding    12MAR2019    - initial create
     ...    @update: clanding    12JUN2019    - added \ on index for element, this is an update for robot to consider it as a string not an index of
+    ...    @update: clanding    06OCT2020    - added optional argument ${True} in Mx Input Text for sExpectedRefValue
     [Arguments]    ${sHeaderRefName}    ${sExpectedRefValue}    ${sOutputFilePath}    ${sFileExtension}    ${sGetHeaderValue}    @{aHeaderNames}
     
     ${Results_Column_Count}    SeleniumLibraryExtended.Get Element Count    ${Results_Header}
@@ -345,7 +348,7 @@ Filter by Reference Header and Save Header Value and Return Results Row List Val
     ${ResultsHeaderColIndex_After_Exist}    Run Keyword And Return Status    Page Should Contain Element    ${ResultsHeaderColIndex_After}    
     Run Keyword If    ${ResultsHeaderColIndex_After_Exist}==${True}    Mx Scroll Element Into View    ${Results_FilterPanel}\[${ResultsHeaderColIndex_After}]
     ...    ELSE    Mx Scroll Element Into View    ${Results_FilterPanel}\[${ResultsHeaderColIndex}]
-    Mx Input Text    ${Results_FilterPanel}\[${ResultsHeaderColIndex}]    ${sExpectedRefValue}
+    Mx Input Text    ${Results_FilterPanel}\[${ResultsHeaderColIndex}]    ${sExpectedRefValue}    ${True}
     Wait Until Element Is Visible    ${Results_Row}    
     
     ${Multiple_List}    Create List    
@@ -446,11 +449,12 @@ Get Results Header Index and Filter Using Value
     
     ${ResultsHeaderColIndex_After}    Evaluate    ${ResultsHeaderColIndex}+1
     ${ResultsHeaderColIndex}    Evaluate    ${ResultsHeaderColIndex}-1
-    ${ResultsHeaderColIndex_After_Exist}    Run Keyword And Return Status    Page Should Contain Element    ${ResultsHeaderColIndex_After}    
+    ${ResultsHeaderColIndex_After_Exist}    Run Keyword And Return Status    Page Should Contain Element    ${ResultsHeaderColIndex_After}   
     Run Keyword If    ${ResultsHeaderColIndex_After_Exist}==${True}    Mx Scroll Element Into View    ${Results_FilterPanel}\[${ResultsHeaderColIndex_After}]
     ...    ELSE    Mx Scroll Element Into View    ${Results_FilterPanel}\[${ResultsHeaderColIndex}]
-    Mx Input Text    ${Results_FilterPanel}\[${ResultsHeaderColIndex}]    ${sValue}
     
+    Mx Input Text    ${Results_FilterPanel}\[${ResultsHeaderColIndex}]    ${sValue}
+
     ###Wait to properly load the results pane###
     Wait Until Loading Indicator Is Not Visible
 
@@ -473,6 +477,7 @@ Wait Until Loading Indicator Is Not Visible
 Save Message TextArea and Return Results Row List Value
     [Documentation]    This keyword is used to get the Message Text after clicking results row and return results row list value.
     ...    @author: clanding    18MAR2019    - initial create
+    ...    @update: jdelacru    21SEP2020    - added global declaration of variable ${ROUTEROPERATION}
     [Arguments]    ${iResultsHeaderColIndex}    ${sOutputFilePath}    ${sFileExtension}    @{aHeaderNames}
     
     ${Multiple_List}    Create List    
@@ -482,11 +487,14 @@ Save Message TextArea and Return Results Row List Value
     \    @{ResultsRowList}    Get Results Table Column Value by Header List and Return    ${ResultsRowIndex_Ref}    @{aHeaderNames}
     \    Append To List    ${Multiple_List}    ${ResultsRowList}    
     \    Get Message TextArea Value and Save to File    ${sOutputFilePath}    ${ResultsRowIndex_Ref}    ${iResultsHeaderColIndex}    ${sFileExtension}
+    Set Global Variable    ${ROUTEROPERATION}    ROUTEROPERATION
     [Return]    ${Multiple_List}
 
 Compare Multiple Input and Output JSON for Base Rate
     [Documentation]    This keyword is used to compare multiple json for input and out files.
     ...    @author: clanding    18MAR2019    - initial create
+    ...    @update: jdelacru    21SEP2020    - added new argument ${sSubEntity} and change the file name of the file being read
+    ...    @update: jdelacru    29SEP2020    - deleted argument ${sSubEntity}, not needed in OpenAPI generated response
     [Arguments]    ${sInputFilePath}    ${sFileName}
     
     ${InputJSON}    OperatingSystem.Get File    ${dataset_path}${sInputFilePath}${sFileName}.json
@@ -514,7 +522,6 @@ Compare Multiple Input and Output JSON for Base Rate
     \    ${Val_rateTenor}    Get Value From Json    ${JSON_Value}    $..rateTenor
     \    ${Val_rateTenor}    Get From List    ${Val_rateTenor}    0
     \    ${InputJSON}    OperatingSystem.Get File    ${dataset_path}${sInputFilePath}${sFileName}_${Val_baseRateCode}_${Val_rateTenor}.json
-    \    
     \    ${JSON_Value}    Evaluate    json.dumps(${JSON_Value})    json
     \    Run Keyword And Continue On Failure    Mx Compare Json Data    ${InputJSON}     ${JSON_Value}
     \    ${Stat}    Run Keyword And Return Status    Mx Compare Json Data    ${InputJSON}     ${JSON_Value}
@@ -860,7 +867,9 @@ Filter by Reference Header and Save Message TextArea for Specified File and Retu
     ...    Then gets the row values using array of Header Names. Then gets the Message Text for the specified file.
     ...    @author: cfrancis    20JUN2019    - initial create
     ...    @update: jdelacru    15JUL2019    - Added Exit For Loop so the code will not go through all the records in MessageResponseProcessor 
-    ...    @update: ehugo    18JUN2020    - updated screenshot location
+    ...    @update: ehugo       18JUN2020    - updated screenshot location
+    ...    @update: jdelacru    21SEP2020    - added ${sSubEntity} and ${sRequestId} variables to handle multiple sub-entities
+    ...    @update: jdelacru    07OCT2020    - deleted ${sSubEntity} and ${sRequestId} arguments
     [Arguments]    ${sHeaderRefName}    ${sExpectedRefValue}    ${sInputFileName}    ${sOutputFilePath}    ${sFileExtension}    @{aHeaderNames}
     
     ${Results_Column_Count}    SeleniumLibraryExtended.Get Element Count    ${Results_Header}
@@ -900,14 +909,19 @@ Get Message TextArea Value and Verify then Save to File
     [Documentation]    This keyword is used to get Message Textarea value and save to Output File. sOutputFilePath includes file path and file name.
     ...    @author: cfrancis    20JUN2019    - initial create
     ...    @update: jdelacru    15JUL2019    - added ${Status} as return value for validating requestID in MessageResponseProcessor
-    ...    @update: ehugo    18JUN2020    - updated screenshot location
+    ...    @update: ehugo       18JUN2020    - updated screenshot location
+    ...    @update: jdelacru    19SEP2020    - added ${sSubEntity} and ${sRequestId} variables to handle multiple sub-entities
+    ...    @update: jdelacru    21SEP2020    - added new keyword Scroll Into Specific Row And Validate Text
+    ...    @update: jdelacru    07OCT2020    - deleted ${sSubEntity} and ${sRequestId} arguments and removed condition in setting the value of ${filename}
+    ...                                      - added wait until browser ready state after double clicking the item in list
     [Arguments]    ${sInputFileName}    ${sOutputFilePath}    ${iRowRef}    ${iColRef}    ${sFileExtension}
     
     :FOR    ${Index}    IN RANGE    5
     \    Double Click Element    ${Results_Row}\[${iRowRef}]${PerColumnValue}\[${iColRef}]${TextValue}
+    \    Wait Until Browser Ready State
     \    ${status}    Run Keyword And Return Status    Wait Until Element Is Visible    ${Textarea}
     \    Exit For Loop If    ${status}==${True}
-    
+
     Mx Scroll Element Into View    ${Textarea}
     ${FFC_RESPONSE}    Get Value   ${Textarea}
     ${Status}    Run Keyword and Return Status    Should Contain    ${FFC_RESPONSE}    ${sInputFileName}
@@ -923,9 +937,11 @@ Validate Response Mechanism
     [Documentation]    This keyword is used to validate if the response details are correct from Response Mechanism.
     ...    ${sFileOfResponseJSON} includes file path and file name.
     ...    @author: cfrancis    21JUN2019    - initial create
-    [Arguments]    ${sFileOfResponseJSON}    ${sExpectedRequestID}    ${sExpectedAPIMethod}    ${sExpectedAPIName}    ${sExpectedConsolidationStatus}
+    ...    @update: jdelacru    21SEP2020    - additional optional variable ${sSubEntity} and use as condition for responsemech filename when saving
+    [Arguments]    ${sFileOfResponseJSON}    ${sExpectedRequestID}    ${sExpectedAPIMethod}    ${sExpectedAPIName}    ${sExpectedConsolidationStatus}    ${sSubEntity}=None
     
-    ${JSON_Object}    Load JSON From File    ${datasetpath}${sFileOfResponseJSON}.${JSON}
+    ${JSON_Object}    Run Keyword If    '${sSubEntity}'=='None'    Load JSON From File    ${datasetpath}${sFileOfResponseJSON}.${JSON}
+    ...    ELSE    Load JSON From File    ${datasetpath}${sFileOfResponseJSON}_${sSubEntity}.${JSON}
     ${RequestID_JSONList}    Get Value From Json    ${JSON_Object}    requestId
     ${RequestID_JSON}    Get From List    ${RequestID_JSONList}    0
     ${APIMethod_JSONList}    Get Value From Json    ${JSON_Object}    apiMethod
@@ -1047,6 +1063,7 @@ Compare Multiple Input and Output JSON for TL Calendar
 Navigate Splitter through Instance Name
     [Documentation]    This keyword is use to navigate splitter if the given argument is Instance Name
     ...    @author: jdelacru    26JUL2019    - initial create
+    ...    @update: mcastro     28SEP2020    Added scroll into view of ${OpenAPI_Source_Parent_Row} and ${OpenAPI_Source_Child_Row_Instance}
     [Arguments]    ${sSourceName}    ${sInstance}
     
     ${OpenAPI_Source_Parent_Row}    Replace Variables    ${OpenAPI_Source_Parent_Row}
@@ -1057,6 +1074,7 @@ Navigate Splitter through Instance Name
     :FOR    ${INDEX}    IN RANGE    10
     \    
     \    Wait Until Element Is Visible     ${OpenAPI_Source_Parent_Row}
+    \    Mx Scroll Element Into View    ${OpenAPI_Source_Parent_Row}
     \    Double Click Element    ${OpenAPI_Source_Parent_Row}
     \    Sleep    2s
     \    ${status}    Run Keyword And Return Status    Wait Until Element Is Visible     ${OpenAPI_Source_Child_Row_Instance}
@@ -1067,7 +1085,8 @@ Navigate Splitter through Instance Name
     \    
     \    ${IsVisible}    Run Keyword If    '${sInstance}'!='None'    Run Keyword And Return Status    Wait Until Element Is Visible     ${OpenAPI_Source_Child_Row_Instance}
     \    
-    \    Run Keyword If    ${IsVisible}==${True}    Double Click Element    ${OpenAPI_Source_Child_Row_Instance}
+    \    Run Keyword If    ${IsVisible}==${True}    Run Keywords    Mx Scroll Element Into View    ${OpenAPI_Source_Child_Row_Instance}
+         ...    AND    Double Click Element    ${OpenAPI_Source_Child_Row_Instance}
          ...    ELSE    Run Keywords    Double Click Element    ${OpenAPI_Source_Parent_Row}
          ...    AND    Wait Until Element Is Visible     ${OpenAPI_Source_Child_Row_Instance}
          ...    AND    Double Click Element    ${OpenAPI_Source_Child_Row_Instance}
@@ -1082,6 +1101,7 @@ Navigate Splitter through Instance Name
 Navigate Splitter through Output Type
     [Documentation]    This keyword is use to navigate splitter if the given argument is Output Type
     ...    @author: jdelacru    26JUL2019    - initial create
+    ...    @update: mcastro     06OCT2019    - Added scroll element into view for ${OpenAPI_Source_Parent_Row}
     [Arguments]    ${sSourceName}    ${sOutputType}
     
     ${OpenAPI_Source_Parent_Row}    Replace Variables    ${OpenAPI_Source_Parent_Row}
@@ -1092,6 +1112,7 @@ Navigate Splitter through Output Type
     :FOR    ${INDEX}    IN RANGE    10
     \    
     \    Wait Until Element Is Visible     ${OpenAPI_Source_Parent_Row}
+    \    Mx Scroll Element Into View    ${OpenAPI_Source_Parent_Row}
     \    Double Click Element    ${OpenAPI_Source_Parent_Row}
     \    Sleep    2s
     \    ${status}    Run Keyword And Return Status    Wait Until Element Is Visible     ${OpenAPI_Source_Child_Row_Success_Instance}
@@ -1147,4 +1168,18 @@ Compare Security Details in Output XML for User API
     Run Keyword If    ${IsExisting}==${True}    Log    ${sXMLAttributeName} '${Input_Value}' is existing in the output XML: ${Output_XML}
     ...    ELSE IF    ${IsExisting}==${False}    Log    ${sXMLAttributeName} '${Input_Value}' is NOT existing in the output XML: ${Output_XML}
 
-    
+Scroll Into Specific Row And Validate Text
+    [Documentation]    This keywords will go through the result row in ffc and validate if the given text is present in message text area
+    ...    @author: jdelacru    21SEP2020    - initial create
+    [Arguments]    ${sTextToValidate}
+    ${Results_Row_Count}    SeleniumLibraryExtended.Get Element Count    ${Results_Row}
+    : FOR    ${Row_Index}    IN RANGE    1    ${Results_Row_Count}+1
+    \    Double Click Element    ${Results_Row}\[${Row_Index}]${PerColumnValue}\[23]${TextValue}
+    \    Wait Until Browser Ready State
+    \    Mx Scroll Element Into View    ${Textarea}
+    \    ${Value}    Get Value   ${Textarea}
+    \    Log    Message text area value is ${Value}
+    \    ${TextToValidate}    Set Variable    "requestId":"${sTextToValidate}"
+    \    ${Status}    Run Keyword And Return Status    Should Contain    ${Value}    ${TextToValidate}
+    \    Exit For Loop If    ${Status}==${True}
+    \    ${Row_Index}    Evaluate    ${Row_Index}+1

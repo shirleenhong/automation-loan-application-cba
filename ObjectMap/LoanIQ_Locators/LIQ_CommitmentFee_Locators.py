@@ -1,4 +1,5 @@
 ###Commitment Fee Notebook - General Tab### 
+LIQ_CommitmentFee_ActualDueDate_Field = 'JavaWindow("title:=Commitment Fee.*").JavaEdit("attached text:=Actual Due Date:.*")'
 LIQ_CommitmentFeeNotebook_Window = 'JavaWindow("title:=Commitment Fee Fee / Released:.*")'   
 LIQ_CommitmentFee_General_OptionsPayment_Menu = 'JavaWindow("title:=Commitment Fee.*","displayed:=1").JavaMenu("label:=Options").JavaMenu("label:=Payment")'
 LIQ_CommitmentFee_Tab = 'JavaWindow("title:=Commitment Fee.*").JavaTab("tagname:=TabFolder")' 
@@ -75,6 +76,10 @@ LIQ_CommitmentFee_InquiryMode_Button = 'JavaWindow("title:=Commitment Fee.*").Ja
 ###Commitment Fee - General###   
 LIQ_CommitmentFee_InquiryMode_Button = 'JavaWindow("title:=Commitment Fee.*").JavaButton("attached text:=Notebook in Inquiry Mode - F7")'
 LIQ_CommitmentFee_EffectiveDate_Field = 'JavaWindow("title:=Commitment Fee.*").JavaEdit("attached text:=Effective Date:.*")'
+LIQ_CommitmentFee_ActualDueDate_Field = 'JavaWindow("title:=Commitment Fee.*").JavaEdit("attached text:=Actual Due Date:.*")'
+LIQ_CommitmentFee_Accrue_Dropdown = 'JavaWindow("title:=Commitment Fee.*").JavaList("attached text:=Accrue.*")'
+LIQ_CommitmentFee_Cycle_Frequency_Dropdown = 'JavaWindow("title:=Commitment Fee.*").JavaList("attached text:=Cycle Frequency.*")'
+LIQ_CommitmentFee_EffectiveDate_Field = 'JavaWindow("title:=Commitment Fee.*").JavaEdit("attached text:=Effective Date:.*")'
 LIQ_CommitmentFee_AccrualEndDate_Field = 'JavaWindow("title:=Commitment Fee.*").JavaEdit("attached text:=Accrual End Date:.*")'
 LIQ_CommitmentFee_RequestedDate_Field = 'JavaWindow("title:=Commitment Fee Ongoing Fee Payment.*").JavaEdit("tagname:=Text","x:=231","y:=117")'
 LIQ_CommitmentFee_FloatRateStartDate_Field = 'JavaWindow("title:=Commitment Fee.*").JavaEdit("attached text:=Float Rate Start Date:.*")'
@@ -112,7 +117,6 @@ LIQ_CommitmentFee_Events_Javatree = 'JavaWindow("title:=Commitment Fee.*").JavaT
 
 ###Commitment Fee - GL Entries###
 LIQ_CommitmentFee_Queries_GLEntries = 'JavaWindow("title:=Commitment Fee Ongoing Fee Payment.*").JavaMenu("label:=Queries").JavaMenu("label:=GL Entries")'
-LIQ_LineFee_Queries_GLEntries = 'JavaWindow("title:=Line Fee Ongoing Fee Payment.*").JavaMenu("label:=Queries").JavaMenu("label:=GL Entries")'
 LIQ_OngoingFeePayment_GLEntries_Window = 'JavaWindow("title:=GL Entries For Ongoing Fee Payment")'
 LIQ_OngoingFeePayment_GLEntries_Table = 'JavaWindow("title:=GL Entries For Ongoing Fee Payment").JavaTree("attached text:=Drill down to view details")'
 LIQ_OngoingFeePayment_GLEntries_Exit_Button = 'JavaWindow("title:=GL Entries For Ongoing Fee Payment").JavaButton("attached text:=Exit")'   

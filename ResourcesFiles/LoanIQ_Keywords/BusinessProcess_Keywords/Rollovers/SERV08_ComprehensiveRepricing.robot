@@ -6,7 +6,10 @@ Create Comprehensive Repricing for Syndicated Deal
     [Documentation]    This is a high-level keyword to Create Comprehensive Repricing for Syndicated deal using Auto-Gen Repricing
     ...    @author: ritragel
     ...    @update: jdelacru    - 05MAR2019    - Deleted high level for Comprehensive Repricing for Scenario 5
-    ...    @udpate: dfajardo    - 21AUG2020    - Updated Repricing testscripts includes only Principal Payments     
+    ...    @update: dfajardo    - 21AUG2020    - Updated Repricing testscripts includes only Principal Payments 
+    ...    @update: dfajardo    - 14SEP2020    - Removed Hard coded variables
+    ...                                        - Added release cashflow and remove creation fo repricing schedule
+    ...                                        - Added interest payment on repricing     
     [Arguments]    ${ExcelPath}
 
     ###Login to Original User###
@@ -36,13 +39,8 @@ Create Comprehensive Repricing for Syndicated Deal
     Write Data To Excel    SERV20_UnschedPrincipalPayments    NewLoanAlias    ${rowid}    ${NewLoanAlias}
 
     Add Repricing Detail    &{ExcelPath}[Repricing_Add_Option]    ${rowid}    &{ExcelPath}[Pricing_Option]
+    Add Interest Payment for Loan Repricing
     
-    ###Creation of Repricing Schedule###
-    Create Repayment Schedule - Loan Repricing
-    Get Data from Automatic Schedule Setup
-    Verify Select Fixed Payment Amount
-    Navigate to Workflow and Review Repayment Schedule
-
     ###Cashflows - Create Cashflows###
     Navigate to Create Cashflow for Loan Repricing
     Verify if Method has Remittance Instruction    &{ExcelPath}[Borrower_ShortName]    &{ExcelPath}[Remittance_Description]    &{ExcelPath}[Remittance_Instruction]
@@ -86,7 +84,7 @@ Create Comprehensive Repricing for Syndicated Deal
     Login to Loan IQ    ${SUPERVISOR_USERNAME}    ${SUPERVISOR_PASSWORD}
     
     ### Work in process notebook ###
-    Select Item in Work in Process    Outstandings    Awaiting Generate Rate Setting Notices    Loan Repricing    &{ExcelPath}[Deal_Name]
+    Select Item in Work in Process    ${OUTSTANDINGS_TRANSACTION}    ${AWAITING_GENERATE_RATE_SETTING_NOTICES_STATUS}    ${LOAN_REPRICING}    &{ExcelPath}[Deal_Name]
    
     ### Rate Approval ###
     Approve Loan Repricing
@@ -97,11 +95,19 @@ Create Comprehensive Repricing for Syndicated Deal
     Login to Loan IQ    ${MANAGER_USERNAME}    ${MANAGER_PASSWORD}
     
     ###Work in process notebook###
-    Select Item in Work in Process    Outstandings    Awaiting Generate Rate Setting Notices    Loan Repricing    &{ExcelPath}[Deal_Name]
+    Select Item in Work in Process    ${OUTSTANDINGS_TRANSACTION}    ${AWAITING_GENERATE_RATE_SETTING_NOTICES_STATUS}    ${LOAN_REPRICING}    &{ExcelPath}[Deal_Name]
     Navigate to Loan Repricing Workflow and Proceed With Transaction    ${RATE_APPROVAL_STATUS}
+    
+    ##Cashflow Notebook - Release Cashflows###
+    Release Cashflow Based on Remittance Instruction    &{ExcelPath}[Remittance_Instruction]    &{ExcelPath}[Borrower_ShortName]    &{ExcelPath}[Cashflow_DataType]    ${LOAN_REPRICING}
+    Release Cashflow Based on Remittance Instruction    &{ExcelPath}[Remittance_Instruction]    &{ExcelPath}[Lender1_ShortName]    &{ExcelPath}[Cashflow_DataType]    ${LOAN_REPRICING}
+    Release Cashflow Based on Remittance Instruction    &{ExcelPath}[Remittance_Instruction]    &{ExcelPath}[Lender2_ShortName]    &{ExcelPath}[Cashflow_DataType]    ${LOAN_REPRICING}
+
     
     # ###Approve Rate Setting Notice###
     Navigate to Loan Repricing Workflow and Proceed With Transaction    ${RELEASE_STATUS}
+    
+    
     
     Close All Windows on LIQ
     Logout from Loan IQ

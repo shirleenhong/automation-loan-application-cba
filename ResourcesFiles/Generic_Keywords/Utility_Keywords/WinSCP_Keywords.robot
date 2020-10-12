@@ -8,12 +8,17 @@ Send Single File to SFTP and Validate If File is Processed
     ...    if file is removed from sFilePathDestinaton for processing.
     ...    @author: clanding    26FEB2019    - initial create
     ...    @update: mnanquil    06MAR2019    - updated for loop condition to use hard wait instead of continous loop.
-    [Arguments]    ${sFilePathSource}    ${sGSFileName}    ${sFilePathDestinaton}
+    ...    @update: clanding    06OCT2020    - added ${iPollingTime} as optional argument
+    [Arguments]    ${sFilePathSource}    ${sGSFileName}    ${sFilePathDestinaton}    ${iPollingTime}=None
     
     Open Connection and Login    ${SFTP_HOST}    ${SFTP_PORT}    ${SFTP_USER}    ${SFTP_PASSWORD}
     Put File    ${dataset_path}${sFilePathSource}${sGSFileName}    ${sFilePathDestinaton}
     Log    Waiting for 2 mins 30 secs to finished to wait until file is consume in ${sFilePathDestinaton} folder.
-    Sleep    150s
+    Run Keyword If    '${iPollingTime}'=='None'    Log To Console    Waiting for 2 mins 30 secs to finished to wait until file is consume in ${sFilePathDestinaton} folder.
+    ...    ELSE    Log To Console    Waiting for ${iPollingTime} to finished to wait until file is consume in ${sFilePathDestinaton} folder.
+    Run Keyword If    '${iPollingTime}'=='None'    Sleep    2.5m    ###The processing time for GS File for Base Rate and FX Rate is every 2 minutes
+    ...    ELSE    Sleep    ${iPollingTime}
+
     :FOR    ${INDEX}    IN RANGE    5
     \    ${FileIsProcessed}    Run Keyword And Return Status    SSHLibrary.File Should Not Exist    ${sFilePathDestinaton}/${sGSFileName}  
     \    Run Keyword If    ${FileIsProcessed}==${True}    Log    ${sGSFileName} was picked up by the batch for processing.
@@ -120,6 +125,7 @@ Validate File If Moved to File Validation Failed Folder
     ...    @update: jloretiz    22JAN2020    - added additional validation for invalid date format
     ...    @update: dahijara    04FEB2020    - added ELSE condition for getting ${FileTimestamp} & ${FileTimestamp_curr} to set 0 value when if condition is not met.
     ...    @update: dahijara    07FEB2020    - added else condition for getting ${GSFileName_RequestID} (invalid date format)
+    ...    @udpate: jdelacru    25SEP2020    - deleted the condition in naming file with invalid file format
     [Arguments]    ${sFileValFailedFolder}    ${sGSFileName}    ${sFileExtension}=None    ${sErrorDesc}=None
     
     @{Files}    SSHLibrary.List Directory    ${sFileValFailedFolder}
@@ -162,8 +168,8 @@ Validate File If Moved to File Validation Failed Folder
     ${GSFileName_RequestID}    Remove String    ${GSFileName_RequestID}    ROUP
 
     ###INVALID DATE FORMAT###
-    ${GSFileName_RequestID}    Run Keyword If    '${sErrorDesc}'=='${INVALIDDATEFORMAT}' or '${sErrorDesc}'=='${INVALIDFILEFORMAT}'    Get Substring    ${sGSFileName_NoCSV}_${FileTimestamp_latest}_${ADDITIONAL_FILESTAMP}   16
-    ...    ELSE    Set Variable    ${GSFileName_RequestID}    
+    ${GSFileName_RequestID}    Run Keyword If    '${sErrorDesc}'=='${INVALIDDATEFORMAT}'    Get Substring    ${sGSFileName_NoCSV}_${FileTimestamp_latest}_${ADDITIONAL_FILESTAMP}   16
+    ...    ELSE    Set Variable    ${GSFileName_RequestID}     
 
     ###INVALID FILE NAME###
     ${SubstringFileName}    Run Keyword If    '${sErrorDesc}'=='${INVALIDFILENAME}' or '${sErrorDesc}'=='${SMALLCASESFILENAME}'    Get Substring    ${sGSFileName_NoCSV}    0    16
@@ -179,12 +185,14 @@ Send Multiple Files to SFTP and Validate If Files are Processed for Holiday
     [Documentation]    This keyword is used to send 5 Copp Clark files then validate if files are processed and moved to Archive folder.
     ...    @author: clanding    17JUL2019    - initial create
     ...    @update: jloretiz    26NOV2019    - add the convertion of file from XLSX to XLS before dropping in TL server
-    [Arguments]    ${sInputFilePath}    ${sFilePathDestinaton}    ${sInputGSFile}    ${sArchiveFolder}    ${sDelimiter}=None    ${iPollingTime}=None
+    ...    @update: clanding    29SEP2020    - commented Start TL Service and Stop TL Service since there is a restriction to new server user 'sftpuser'
+    ...    @update: mcastro     30SEP2020    - added ${sXLS_Exists} argument to handle scenario that already has existing xls files in the path
+    [Arguments]    ${sInputFilePath}    ${sFilePathDestinaton}    ${sInputGSFile}    ${sArchiveFolder}    ${sDelimiter}=None    ${iPollingTime}=None    ${sXLS_Exists}=None
     
     ###Convert to XLS the XLSX###
-    Convert Excel XLSX to XLS    ${sInputFilePath}    ${sInputGSFile}    ${File_1}
-    Convert Excel XLSX to XLS    ${sInputFilePath}    ${sInputGSFile}    ${File_2}
-    Convert Excel XLSX to XLS    ${sInputFilePath}    ${sInputGSFile}    ${Misc_File}  
+    Run Keyword if   '${sXLS_Exists}'=='None'    Convert Excel XLSX to XLS    ${sInputFilePath}    ${sInputGSFile}    ${File_1}
+    Run Keyword if   '${sXLS_Exists}'=='None'    Convert Excel XLSX to XLS    ${sInputFilePath}    ${sInputGSFile}    ${File_2}
+    Run Keyword if   '${sXLS_Exists}'=='None'    Convert Excel XLSX to XLS    ${sInputFilePath}    ${sInputGSFile}    ${Misc_File}  
 
     @{InputGSFile_List}    Run Keyword If    '${sDelimiter}'=='None'    Split String    ${sInputGSFile}    ,
     ...    ELSE    Split String    ${sInputGSFile}    ${sDelimiter}
@@ -205,7 +213,7 @@ Send Multiple Files to SFTP and Validate If Files are Processed for Holiday
     \    Run Keyword If    ${Contains_CSV}==${True}    Append To List    ${InputGSFile_CSVList}    ${CSVFile}
          ...    ELSE    Append To List    ${InputGSFile_CSVList}
     
-    Stop TL Service
+    # Stop TL Service
     Open Connection and Login    ${SFTP_HOST}    ${SFTP_PORT}    ${SFTP_USER}    ${SFTP_PASSWORD}
     :FOR    ${GSFileName_XLS}    IN    @{InputGSFile_XLSList}
     \    Put File    ${dataset_path}${sInputFilePath}${GSFileName_XLS}    ${sFilePathDestinaton}
@@ -213,11 +221,12 @@ Send Multiple Files to SFTP and Validate If Files are Processed for Holiday
     :FOR    ${GSFileName_CSV}    IN    @{InputGSFile_CSVList}
     \    Put File    ${dataset_path}${sInputFilePath}${GSFileName_CSV}    ${sFilePathDestinaton}
 
-    Start TL Service
-    Open Connection and Login    ${SFTP_HOST}    ${SFTP_PORT}    ${SFTP_USER}    ${SFTP_PASSWORD}
-    Run Keyword If    '${iPollingTime}'=='None'    Sleep    2m    ###The processing time for GS File for Base Rate and FX Rate is every 2 minutes
+    # Start TL Service
+    # Open Connection and Login    ${SFTP_HOST}    ${SFTP_PORT}    ${SFTP_USER}    ${SFTP_PASSWORD}
+    Log To Console    The processing time for GS File for Calendar is every 5 minutes. Polling Time: ${iPollingTime}
+    Run Keyword If    '${iPollingTime}'=='None'    Sleep    6m    ###The processing time for GS File for Calendar is every 5 minutes.
     ...    ELSE    Sleep    ${iPollingTime}
-    
+
     ### Validate CSV Files ###
     :FOR    ${GSFileName_CSV}    IN    @{InputGSFile_CSVList}
     \    ${FileIsProcessed}    Run Keyword And Return Status    SSHLibrary.File Should Not Exist    ${sFilePathDestinaton}/${GSFileName_CSV}
@@ -459,6 +468,7 @@ Validate File If Not Moved to Archive Folder For Holiday
 Send Multiple Files to SFTP and Validate If Files are Not Processed for Holiday With Missing File
     [Documentation]    This keyword is used to send Less than 5 Copp Clark files then validate if files are not processed and not moved to any folder.
     ...    @author: dahijara    2FEB2020    - initial create
+    ...    @update: clanding    30SEP2020    - commented Start TL Service and Stop TL Service since there is a restriction to new server user 'sftpuser'
     [Arguments]    ${sInputFilePath}    ${sFilePathDestinaton}    ${sInputGSFile}    ${sFolderPath}    ${sDelimiter}=None    ${iPollingTime}=None
 
     @{InputGSFile_List}    Run Keyword If    '${sDelimiter}'=='None'    Split String    ${sInputGSFile}    ,
@@ -478,7 +488,7 @@ Send Multiple Files to SFTP and Validate If Files are Not Processed for Holiday 
     \    Run Keyword If    ${Contains_CSV}==${True}    Append To List    ${InputGSFile_CSVList}    ${CSVFile}
          ...    ELSE    Append To List    ${InputGSFile_CSVList}
     
-    Stop TL Service
+    # Stop TL Service
     Open Connection and Login    ${SFTP_HOST}    ${SFTP_PORT}    ${SFTP_USER}    ${SFTP_PASSWORD}
     :FOR    ${GSFileName_XLS}    IN    @{InputGSFile_XLSList}
     \    Put File    ${dataset_path}${sInputFilePath}${GSFileName_XLS}    ${sFilePathDestinaton}
@@ -486,9 +496,10 @@ Send Multiple Files to SFTP and Validate If Files are Not Processed for Holiday 
     :FOR    ${GSFileName_CSV}    IN    @{InputGSFile_CSVList}
     \    Put File    ${dataset_path}${sInputFilePath}${GSFileName_CSV}    ${sFilePathDestinaton}
 
-    Start TL Service
-    Open Connection and Login    ${SFTP_HOST}    ${SFTP_PORT}    ${SFTP_USER}    ${SFTP_PASSWORD}
-    Run Keyword If    '${iPollingTime}'=='None'    Sleep    2m    ###The processing time for GS File for Base Rate and FX Rate is every 2 minutes
+    # Start TL Service
+    # Open Connection and Login    ${SFTP_HOST}    ${SFTP_PORT}    ${SFTP_USER}    ${SFTP_PASSWORD}
+    Log To Console    The processing time for GS File for Calendar is every 5 minutes.
+    Run Keyword If    '${iPollingTime}'=='None'    Sleep    6m    ###The processing time for GS File for Calendar is every 5 minutes.
     ...    ELSE    Sleep    ${iPollingTime}
     
     ### Validate CSV Files ###

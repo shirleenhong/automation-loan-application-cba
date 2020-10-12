@@ -481,8 +481,9 @@ BUS_Get Effective and Expiry Date from Summary Tab in Facility Notebook
 BUS_Get Original Amount on Summary Tab of Facility Notebook
     [Documentation]    This keyword is used to run the assigned low level keyword.
     ...    @author: sahalder    06AUG2020    - initial create
+    ...    @update: dahijara    24SEP2020    - added arguments.
 
-    Run Keyword    Get Original Amount on Summary Tab of Facility Notebook
+    Run Keyword    Get Original Amount on Summary Tab of Facility Notebook    ${ARGUMENT_1}    ${ARGUMENT_2}    ${ARGUMENT_3}    ${ARGUMENT_4}    ${ARGUMENT_5}    ${ARGUMENT_6}    ${ARGUMENT_7}    ${ARGUMENT_8}    ${ARGUMENT_9}    ${ARGUMENT_10}
     
 BUS_Get Original Amount on Facility Lender Shares
     [Documentation]    This keyword is used to run the assigned low level keyword.
@@ -507,3 +508,27 @@ BUS_Validate the Updates on Facility Lender Shares
     ...    @author: sahalder    06AUG2020    - initial create
 
     Run Keyword    Validate the Updates on Facility Lender Shares    ${ARGUMENT_1}    ${ARGUMENT_2}    ${ARGUMENT_3}    ${ARGUMENT_4}    ${ARGUMENT_5}    ${ARGUMENT_6}    ${ARGUMENT_7}    ${ARGUMENT_8}    ${ARGUMENT_9}    
+
+BUS_Validate Host Bank Share Gross Amounts
+    [Documentation]    This keyword is used to run the assigned low level keyword.
+    ...    @author: dahijara    03SEP2020    - initial create
+
+    Run Keyword    Validate Host Bank Share Gross Amounts    ${ARGUMENT_1}
+
+BUS_Post Validation Of Computed Amounts In Facility After Drawdown
+    [Documentation]    This keyword is used to run the assigned low level keyword.
+    ...    @author: dahijara    22SEP2020    - initial create
+
+    Run Keyword    Post Validation Of Computed Amounts In Facility After Drawdown    ${ARGUMENT_1}    ${ARGUMENT_2}    ${ARGUMENT_3}    ${ARGUMENT_4}    ${ARGUMENT_5}    ${ARGUMENT_6}    ${ARGUMENT_7}
+
+BUS_Post Validation Of Facility Summary Amounts After Drawdown
+    [Documentation]    This keyword is used to run the assigned low level keyword.
+    ...    @author: dahijara    22SEP2020    - initial create
+
+    Run Keyword    Post Validation Of Facility Summary Amounts After Drawdown    ${ARGUMENT_1}    ${ARGUMENT_2}    ${ARGUMENT_3}    ${ARGUMENT_4}    ${ARGUMENT_5}    ${ARGUMENT_6}
+
+BUS_Retrieve Facility Notebook Amounts prior to Loan Merge
+    [Documentation]    This keyword is used to run the assigned low level keyword.
+    ...    @author: dahijara    28SEP2020    - initial create
+
+    Run Keyword    Retrieve Facility Notebook Amounts prior to Loan Merge    ${ARGUMENT_1}    ${ARGUMENT_2}    ${ARGUMENT_3}    ${ARGUMENT_4}    ${ARGUMENT_5}    ${ARGUMENT_6}    ${ARGUMENT_7}    ${ARGUMENT_8}

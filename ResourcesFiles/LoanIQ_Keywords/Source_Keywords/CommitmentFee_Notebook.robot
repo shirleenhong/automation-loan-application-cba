@@ -95,9 +95,9 @@ Enter Effective Date for Ongoing Fee Payment
 
     mx LoanIQ activate window    ${LIQ_OngoingFeePayment_Window}
     mx LoanIQ enter    ${LIQ_OngoingFeePayment_EffectiveDate_Field}    ${FeePayment_EffectiveDate}
-    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}    
+    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
     Run Keyword If    "${ProjectedCycleDue}" != "null"    mx LoanIQ enter    ${LIQ_Payment_RequestedAmount_Textfield}    ${ProjectedCycleDue}     
-
+    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/OngoingFeePaymentWindow_EffectiveDate
 
 Send Ongoing Fee Payment to Approval
@@ -244,7 +244,7 @@ Validate Details on Acrual Tab - Commitment Fee
     Should Be Equal As Strings    ${PaidToDate}    ${Computed_ProjectedCycleDue}  
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/FeeWindow_AccrualTab_CommitmentFeeAccruals 
     
-Validate Details of Ongoing Fee on Accruals Tab 
+Validate Details of Ongoing Fee on Accruals Tab
     [Documentation]    This keyword validates the details on Acrual Tab.
     ...    @author: fmamaril/ghabal
     [Arguments]    ${Computed_ProjectedCycleDue}    ${CycleNumber}     
@@ -364,7 +364,7 @@ Evaluate Commitment Fee
     ${ProjectedCycleDue}    Convert To Number    ${ProjectedCycleDue}    2
     [Return]    ${ProjectedCycleDue} 
     
-Validate GL Entries for Ongoing Fee Payment 
+Validate GL Entries for Ongoing Fee Payment
     [Documentation]    This keyword validates the GL Entries of the Ongoing Fee Payment.
     ...    @author: fmamaril
     ...    @update: dahijara    16JUL2020    - Fix warnings - too many variables assigned in Mx LoanIQ Click Button On Window
@@ -419,7 +419,7 @@ Navigate to Cashflow - Ongoing Fee
 
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/PaymentCashflowsWindow
 
-Validate GL Entries for Ongoing Fee Payment on Secondary Sale 
+Validate GL Entries for Ongoing Fee Payment on Secondary Sale
     [Documentation]    This keyword validates the GL Entries of the Ongoing Fee Payment.
     ...    @author: fmamaril
     ...    @update: jdelacru    21MAR2019    - Applied standard GL Entries validation keywords
@@ -493,7 +493,7 @@ Validate Ongoing Fee List
     Validate Details of Ongoing Fee on Accruals Tab    ${ProjectedCycleDue}    ${CycleNumber}    
     Validate release of Ongoing Fee Payment
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/CommitmentFeeNotebook_OngoingFee
-    Close All Windows on LIQ 
+    Close All Windows on LIQ
     mx LoanIQ maximize    ${LIQ_Window}
     
 Generate Intent Notices for Ongoing Fee Payment
@@ -606,7 +606,7 @@ Navigate and Verify Accrual Share Adjustment Notebook
        
     Mx LoanIQ Select Window Tab    ${LIQ_CommitmentFee_Tab}    Accrual 
     Mx LoanIQ Select String    ${LIQ_CommitmentFeeNotebook_Accrual_JavaTree}    ${StartDate}  
-    # Mx Native Type    {DOWN 1}                 
+    # Mx Native Type    {DOWN 1}
     mx LoanIQ click    ${LIQ_CommitmentFeeNotebook_CycleShareAdjustment_Button}
     mx LoanIQ activate window    ${LIQ_AccrualSharesAdjustment_Window} 
     
@@ -653,7 +653,7 @@ Validate Cycle Due New Value
     ${CycleDue_OriginalValue}    Remove String    ${CycleDue}    ,
     ${CycleDue_OriginalValue}    Convert To Number    ${CycleDue_OriginalValue}    2 
     
-    ###Calculate the New Cycle Due based on the adjustment###  
+    ###Calculate the New Cycle Due based on the adjustment###
     ${Requested_Amount}    Remove String    ${Requested_Amount}    ,
     ${Requested_Amount}    Convert To Number    ${Requested_Amount}    2 
     
@@ -682,7 +682,7 @@ Validate Projected EOC Due New Value
     ${PEOCDue_OriginalValue}    Remove String    ${ProjectedCycleDue}    ,
     ${PEOCDue_OriginalValue}    Convert To Number    ${PEOCDue_OriginalValue}    2 
     
-    ###Calculate the New Cycle Due based on the adjustment###  
+    ###Calculate the New Cycle Due based on the adjustment###
     ${Requested_Amount}    Remove String    ${Requested_Amount}    ,
     ${Requested_Amount}    Convert To Number    ${Requested_Amount}    2 
     
@@ -720,7 +720,7 @@ Validate Manual Adjustment Total Value
     Log    ${New_TotalManualAdjustment}=${Calculated_TotalCycleDue}        
     
     
-Validate Cycle Due Total Value    
+Validate Cycle Due Total Value
     [Documentation]    This keyword is used for checking the Total Amount.
     ...    @author:mgaling
     ...    @update: dahijara    15JUL2020    - Added pre processing and screenshot
@@ -747,7 +747,7 @@ Validate Cycle Due Total Value
     Should Be Equal    ${New_TotalCycleDue}    ${Calculated_TotalCycleDue}
     Log    ${New_TotalCycleDue}=${Calculated_TotalCycleDue}     
 
-Validate Projected EOC Due Total Value    
+Validate Projected EOC Due Total Value
     [Documentation]    This keyword is used for checking the Total Amount.
     ...    @author:mgaling
     [Arguments]    ${rowid}    ${Requested_Amount} 
@@ -788,10 +788,10 @@ Create Payment Reversal
 
     mx LoanIQ activate window    ${LIQ_OngoingFeePaymentNotebook_Window}  
     mx LoanIQ select    ${LIQ_CommitmentFee_ReversePayment}
-    Verify If Warning Is Displayed    
+    Verify If Warning Is Displayed
     mx LoanIQ activate window    ${LIQ_ReverseFee_Window}
     
-    ###Verify Window Status after Reverse Payment creation is initiated- now Pending###    
+    ###Verify Window Status after Reverse Payment creation is initiated- now Pending###
     Validate Window Title Status    ${Window}    Pending
     
     ###Verify if effective date is matched with the Fee payment Effective Date and not editable###
@@ -803,7 +803,7 @@ Create Payment Reversal
     Run Keyword If    ${EffectiveDateReversal_status}==True    Log    Effective Date of Fee Payment and Reversal matched.
     ...    ELSE    Log    Discrepancy in Fee payment effective date and reversal payment date.    level=Error          
             
-    ###Verify if Requested Reversal amount is matched with the Fee payment Amount and not editable###    
+    ###Verify if Requested Reversal amount is matched with the Fee payment Amount and not editable###
     ${RequestedAmount_Reversal}    Mx LoanIQ Get Data    ${LIQ_ReversePayment_Amount}    value%test
     
     ${FeePaymentAmount}    Remove comma and convert to number    ${FeePaymentAmount}
@@ -849,7 +849,7 @@ Validate Payment Reversal in Accrual Tab
     ${Paidtodate_Expected}    Remove comma and convert to number    ${Paidtodate_Expected}
     ${CycleDue_Expected}    Remove comma and convert to number    ${CycleDue_Expected}
          
-    ###Validate that Cycle Due is now set back with the amount Requested for reversal###  
+    ###Validate that Cycle Due is now set back with the amount Requested for reversal###
     ${CycleDue_Value}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_CommitmentFeeNotebook_Accrual_JavaTree}    ${CycleNo}%Cycle Due%value    
     ${CycleDue_Value}    Convert To String    ${CycleDue_Value}
     ${CycleDue_Value}    Remove comma and convert to number    ${CycleDue_Value}
@@ -892,7 +892,7 @@ Validate Payment Reversal in Events Tab
     Mx LoanIQ Select Window Tab    ${LIQ_CommitmentFee_Tab}    Events
     Run Keyword and Continue on Failure    Mx LoanIQ Select String    ${LIQ_CommitmentFee_Events_Javatree}   Reverse Payment Released
     
-    ###Copy latest log for Payment Fee Reversal###    
+    ###Copy latest log for Payment Fee Reversal###
     ${Comment_EventLog}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_CommitmentFee_Events_Javatree}    ${Event}%Comment%Comment_EventLog
             
     ###Generate expected Comment###
@@ -906,7 +906,7 @@ Validate Payment Reversal in Events Tab
     
     ${Reversepayment_Alias_Thousands}    Run Keyword If    ${length} >= 7    Convert Number With Comma Separators    ${Reversepayment_Alias_Hundreds}
             
-    ###Access Reverse Fee Window###                        
+    ###Access Reverse Fee Window###
     ${ExpectedComment_AfterReversal}    Run Keyword If    '${Reversepayment_Alias_Thousands}'=='None'    Set Variable    Reverse Fee of ${Reversepayment_Alias_Hundreds} has been applied.
     ...    ELSE    Set Variable    Reverse Fee of ${Reversepayment_Alias_Thousands} has been applied.
  
@@ -1041,7 +1041,7 @@ Retrieve Intial Amounts in Accrual Tab and Evaluate Expected Values for Reversal
     mx LoanIQ activate window    ${LIQ_CommitmentFee_Window}
     Mx LoanIQ Select Window Tab    ${LIQ_CommitmentFee_Tab}    Accrual
 
-    ###Retrieve Cycle Due before Payment Reversal###  
+    ###Retrieve Cycle Due before Payment Reversal###
     ${CycleDue_beforeReversal}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_CommitmentFeeNotebook_Accrual_JavaTree}    ${CycleNo}%Cycle Due%value              
     ${CycleDue_beforeReversal}    Remove comma and convert to number    ${CycleDue_beforeReversal}
     
@@ -1143,7 +1143,7 @@ Initiate Ongoing Fee Payment
     
     mx LoanIQ activate window    ${LIQ_Payment_Window}
     mx LoanIQ click element if present    ${LIQ_CommitmentFee_InquiryMode_Button} 
-    # Mx Click Element If Present    ${LIQ_Question_OK_Button}   
+    # Mx Click Element If Present    ${LIQ_Question_OK_Button}
     ${SystemDate}    Get System Date
     mx LoanIQ enter    ${LIQ_OngoingFeePayment_EffectiveDate_DateField}    ${SystemDate} 
     mx LoanIQ enter    ${LIQ_OngoingFeePayment_RequestedAmount_Textfield}    ${CycleDueAmount}
@@ -1261,7 +1261,7 @@ Validate Capitalized Ongoing Fee (Amounts) Cashflow Details
     Should Be Equal As Numbers    ${UILender1TranAmount}    ${Lender1Share}
     Should Be Equal As Numbers    ${UILender2TranAmount}    ${Lender2Share}
                            
-Compute Capitalized - Ongoing Fee    
+Compute Capitalized - Ongoing Fee
     [Documentation]    This keyword is used to compute for the uncapitalized ongoing fee amount.
     ...    @author: rtarayao
     [Arguments]    ${Capitalization_RemainingFeePercentage}    ${CycleDue}
@@ -1428,3 +1428,215 @@ Navigate to Reverse Fee Workflow and Proceed With Transaction
 
     Navigate Notebook Workflow    ${LIQ_ReverseFee_Window}    ${LIQ_ReversePayment_Tab}    ${LIQ_ReversePayment_WorkflowItems_Tree}    ${Transaction}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/ReverseFeeWindow_WorkflowTab
+      
+Enter Commitment Fee Details
+    [Documentation]    This keyword will handle the dynamic updates in setting Commitment Fee days
+    ...   @author: ritragel    06SEP2020
+    [Arguments]    ${sEffectiveDate}    ${sActual_DueDate}    ${sAdjusted_DueDate}    ${sCycle_Frequency}    ${sAccrue}
+    
+    ### Keyword Pre-processing ###
+    ${EffectiveDate}    Acquire Argument Value    ${sEffectiveDate}
+    ${Actual_DueDate}    Acquire Argument Value    ${sActual_DueDate}
+    ${Cycle_Frequency}    Acquire Argument Value    ${sCycle_Frequency}
+    ${Adjusted_DueDate}    Acquire Argument Value    ${sAdjusted_DueDate}
+    ${Accrue}    Acquire Argument Value    ${sAccrue}
+
+    mx LoanIQ activate window    ${LIQ_CommitmentFee_Window}
+    mx LoanIQ click    ${LIQ_CommitmentFee_InquiryMode_Button}
+    mx LoanIQ enter    ${LIQ_CommitmentFee_EffectiveDate_Field}    ${EffectiveDate} 
+    Mx Press Combination    Key.ENTER
+    Mx Click Element If Present    ${LIQ_Warning_OK_Button}    
+    mx LoanIQ enter    ${LIQ_CommitmentFee_ActualDueDate_Field}    ${Actual_DueDate} 
+    Mx Click Element If Present    ${LIQ_Warning_OK_Button}   
+    mx LoanIQ enter    ${LIQ_CommitmentFee_AdjustedDueDate}    ${Adjusted_DueDate}  
+    Mx Click Element If Present    ${LIQ_Warning_OK_Button}   
+    mx LoanIQ Select Combo Box Value    ${LIQ_CommitmentFee_Cycle_Frequency_Dropdown}    ${Cycle_Frequency}
+    mx LoanIQ Select Combo Box Value    ${LIQ_CommitmentFee_Accrue_Dropdown}    ${Accrue}
+    Select Menu Item    ${LIQ_CommitmentFee_Window}    File    Save
+    mx LoanIQ click element if present    ${LIQ_Warning_OK_Button}
+    Mx Click Element If Present    ${LIQ_Warning_Yes_Button}  
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/CommitmentFee_Notebook               
+    Select Menu Item    ${LIQ_CommitmentFee_Window}    File    Exit
+    
+Release Commitment Fee
+    [Documentation]    This keyword will handle the dynamic updates in releasing Commitment Fe
+    ...   @author: ritragel    17SEP2020    Initial Commit
+    
+    mx LoanIQ activate window    ${LIQ_CommitmentFee_Window}
+    mx LoanIQ click    ${LIQ_CommitmentFee_InquiryMode_Button}
+    Navigate Notebook Workflow    ${LIQ_CommitmentFee_Window}    ${LIQ_CommitmentFee_Tab}    ${LIQ_CommitmentFeeNotebook_Workflow_JavaTree}    Release
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/CommitmentFee_Notebook     
+    
+
+Close Commitment Fee and Fee List Windows
+    [Documentation]    This keyword exits the Commitment Fee List and Commitment Fee Notebook.
+    ...    author: rtarayao    19AUG2019    - Initial Create
+    mx LoanIQ activate window    ${LIQ_CommitmentFee_Window} 
+    mx LoanIQ close window    ${LIQ_CommitmentFee_Window}
+    mx LoanIQ close window    ${LIQ_Facility_FeeList}
+    
+Close Line Fee and Fee List Windows
+    [Documentation]    This keyword exits the Line Fee List and Line Fee Notebook.
+    ...    author: cfrancis    18SEP2020    - Initial Create
+    mx LoanIQ activate window    ${LIQ_LineFee_Window} 
+    mx LoanIQ close window    ${LIQ_LineFee_Window}
+    mx LoanIQ close window    ${LIQ_Facility_FeeList}
+    
+Compute Total Accruals for Fee
+    [Documentation]    This keyword returns the total Accrued to date value of a Fee.
+    ...    @author: rtarayao    04SEP2019    - Initial Create
+    [Arguments]    ${iRowCount}    ${sTab_Locator}    ${sAccrualCycle_Locator}
+    Mx LoanIQ Select Window Tab    ${sTab_Locator}    Accrual
+    ${iRowCount}    Evaluate    ${iRowCount}+1    
+    ${TotalAmount}    Set Variable    0
+    :FOR    ${Index}    IN RANGE    1    ${iRowCount}
+    \    ${AccruedtodateAmount}    Mx LoanIQ Store TableCell To Clipboard    ${sAccrualCycle_Locator}    ${Index}%Accrued to date%Amount
+    \    ${AccruedtodateAmount}    Remove Comma and Convert to Number    ${AccruedtodateAmount}
+    \    ${TotalAmount}    Evaluate    ${TotalAmount}+${AccruedtodateAmount}
+    \    Log    ${TotalAmount}
+    \    Exit For Loop If    ${Index}==${iRowCount}
+    [Return]    ${TotalAmount}
+        
+Validate Accrued to Date Amount
+    [Documentation]    This keyword validate that the computed total value for the accrued to date is the same as the one displayed in LIQ.
+    ...    @author: rtarayao    05SEP2019    - Initial Create
+    [Arguments]    ${iComputedValue}    ${iUIValue}
+    Run Keyword And Continue On Failure    Should Be Equal As Numbers    ${iComputedValue}    ${iUIValue}    
+    ${Computation_status}    Run Keyword And Return Status    Should Be Equal As Numbers    ${iComputedValue}    ${iUIValue}    
+    Run Keyword If    '${Computation_status}' == 'True'    Log    Correct!! Computed Sum is the same as the total displayed value in LIQ.
+    ...    ELSE    Log    Incorrect!! Computed Sum is different from the total displayed value in LIQ.    level=ERROR
+   
+Get Fee Current Rate
+    [Documentation]    This keyword gets the Fee Rate and returns the value.
+    ...    @author: cfrancis    18SEP2020    - Initial Create
+    [Arguments]    ${sLIQ_Fee_Window}    ${sLIQ_Fee_CurrentRate_Locator}
+    mx LoanIQ activate window    ${sLIQ_Fee_Window}
+    ${Rate}    Mx LoanIQ Get Data    ${sLIQ_Fee_CurrentRate_Locator}    value%Rate
+    ${Rate}    Convert To String    ${Rate}
+    ${Rate}    Remove String    ${Rate}    .000000%    
+    Log    The Line Fee Rate is ${Rate}
+    Screenshot.Set Screenshot Directory    ${Screenshot_Path}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/Fee_Rate
+    [Return]    ${Rate}
+        
+Get Fee Currency
+    [Documentation]    This keyword gets the Fee Currency and returns the value.
+    ...    @author: cfrancis    18SEP2020    - Initial Create
+    [Arguments]    ${sLIQ_Fee_Window}    ${sLIQ_Fee_Currency_Locator}
+    mx LoanIQ activate window    ${sLIQ_Fee_Window}
+    ${FeeCurrency}    Mx LoanIQ Get Data    ${sLIQ_Fee_Currency_Locator}    value%Currency
+    Log    The Fee Currency is ${FeeCurrency}
+    Screenshot.Set Screenshot Directory    ${Screenshot_Path}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/Fee_Currency
+    [Return]    ${FeeCurrency}
+    
+Get Fee Effective and Actual Expiry Date
+    [Documentation]    This keyword returns the Fee Effective and Expiry Date value.
+    ...    @author: cfrancis    18SEP2020    - Initial Create
+    [Arguments]    ${sLIQ_Fee_Window}    ${sLIQ_Fee_EffectiveDate_Locator}    ${sLIQ_Fee_ActualExpiryDate_Locator}
+    mx LoanIQ activate window    ${sLIQ_Fee_Window}
+    ${FeeEffectiveDate}    Mx LoanIQ Get Data    ${sLIQ_Fee_EffectiveDate_Locator}    value%EffectiveDate
+    ${FeeActualExpiryDate}    Mx LoanIQ Get Data    ${sLIQ_Fee_ActualExpiryDate_Locator}    value%ActualExpiryDate
+    Log    The Fee Effective Date is ${FeeEffectiveDate}
+    Log    The Fee Actual Expiry Date is ${FeeActualExpiryDate}
+    Screenshot.Set Screenshot Directory    ${Screenshot_Path}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/Fee_Effective_and_Expiry_Dates
+    [Return]    ${FeeEffectiveDate}    ${FeeActualExpiryDate}
+    
+Get Fee Accrual Cycle Start and End Date
+    [Documentation]    This keyword returns the Fee Effective and Expiry Date value.
+    ...    @author: cfrancis    18SEP2020    - Initial Create
+    [Arguments]    ${sLIQ_Fee_Window}    ${sLIQ_Fee_CycleStartDate_Locator}    ${sLIQ_Fee_CycleEndDate_Locator}
+    mx LoanIQ activate window    ${sLIQ_Fee_Window}
+    ${FeeCycleStartDate}    Mx LoanIQ Get Data    ${sLIQ_Fee_CycleStartDate_Locator}    value%CurrentCycleStartDate
+    ${FeeCycleEndDate}    Mx LoanIQ Get Data    ${sLIQ_Fee_CycleEndDate_Locator}    value%AccrualEndDate
+    Log    The Fee Cycle Start Date is ${FeeCycleStartDate}
+    Log    The Fee Accrual End Date is ${FeeCycleEndDate}
+    Screenshot.Set Screenshot Directory    ${Screenshot_Path}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/Fee_CycleStart_and_CycleDue_Dates
+    [Return]    ${FeeCycleStartDate}    ${FeeCycleEndDate}
+    
+Get Fee Adjusted Due Date
+    [Documentation]    This keyword returns the Fee Adjusted Due Date value.
+    ...    @author: cfrancis    18SEP2020    - Initial Create
+    [Arguments]    ${sLIQ_Fee_Window}    ${sLIQ_Fee_AdjustedDueDate_Locator}
+    mx LoanIQ activate window    ${sLIQ_Fee_Window}
+    ${FeeAdjustedDueDate}    Mx LoanIQ Get Data    ${sLIQ_Fee_AdjustedDueDate_Locator}    value%AdjDueDate
+    Log    The Fee Adjusted Due Date is ${FeeAdjustedDueDate}
+    Screenshot.Set Screenshot Directory    ${Screenshot_Path}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/Fee_Adj_Due_Date
+    [Return]    ${FeeAdjustedDueDate}
+    
+Get Fee Accrued to Date Amount
+    [Documentation]    This keyword returns the Fee accrued to date total amount.
+    ...    @author: cfrancis    18SEP2020    - Initial Create
+    [Arguments]    ${sLIQ_Fee_Window}    ${sLIQ_Fee_Tab_Locator}    ${sLIQ_Fee_Accrual_Cycles_JavaTree_Locator}
+    mx LoanIQ activate window    ${sLIQ_Fee_Window}
+    Mx LoanIQ Select Window Tab    ${sLIQ_Fee_Tab_Locator}    Accrual
+    ${AccruedtodateAmount}    Mx LoanIQ Store TableCell To Clipboard    ${sLIQ_Fee_Accrual_Cycles_JavaTree_Locator}    TOTAL:${SPACE}%Accrued to date%Accruedtodate    
+    Log    The Accrued to Date amount is ${AccruedtodateAmount} 
+    Screenshot.Set Screenshot Directory    ${Screenshot_Path}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/Fee_Accrual_Screen
+    [Return]    ${AccruedtodateAmount}
+
+Get Fee Cycle Due Amount
+    [Documentation]    This keyword returns the Fee total paid to date amount.
+    ...    @author: cfrancis    09OCT2020    - Initial Create
+    [Arguments]    ${sLIQ_Fee_Window}    ${sLIQ_Fee_Tab_Locator}    ${sLIQ_Fee_Accrual_Cycles_JavaTree_Locator}
+    mx LoanIQ activate window    ${sLIQ_Fee_Window}
+    # Mx LoanIQ Select Window Tab    ${sLIQ_Fee_Tab_Locator}    Accrual
+    ${rowcount}    Mx LoanIQ Get Data    ${sLIQ_Fee_Accrual_Cycles_JavaTree_Locator}    input=items count%value
+    ${rowcount}    Evaluate    ${rowcount} - 2
+    Log    The total rowcount is ${rowcount}
+    ${CycleDueAmount}    Mx LoanIQ Store TableCell To Clipboard    ${sLIQ_Fee_Accrual_Cycles_JavaTree_Locator}    TOTAL:${SPACE}%Cycle Due%amount
+    Log    The Fee Cycle Due amount is ${CycleDueAmount} 
+    Screenshot.Set Screenshot Directory    ${Screenshot_Path}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/Fee_Cycle_Due
+    [Return]    ${CycleDueAmount}
+    
+Get Fee Paid to Date Amount
+    [Documentation]    This keyword returns the Fee total paid to date amount.
+    ...    @author: cfrancis    18SEP2020    - Initial Create
+    [Arguments]    ${sLIQ_Fee_Window}    ${sLIQ_Fee_Tab_Locator}    ${sLIQ_Fee_Accrual_Cycles_JavaTree_Locator}
+    mx LoanIQ activate window    ${sLIQ_Fee_Window}
+    # Mx LoanIQ Select Window Tab    ${sLIQ_Fee_Tab_Locator}    Accrual
+    ${rowcount}    Mx LoanIQ Get Data    ${sLIQ_Fee_Accrual_Cycles_JavaTree_Locator}    input=items count%value
+    ${rowcount}    Evaluate    ${rowcount} - 2
+    Log    The total rowcount is ${rowcount}
+    ${PaidtodateAmount}    Mx LoanIQ Store TableCell To Clipboard    ${sLIQ_Fee_Accrual_Cycles_JavaTree_Locator}    ${rowcount}%Paid to date%amount
+    Log    The Fee Paid to Date amount is ${PaidtodateAmount} 
+    Screenshot.Set Screenshot Directory    ${Screenshot_Path}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/Fee_Paid_To_Date
+    [Return]    ${PaidtodateAmount}
+
+Navigate Directly to Commitment Fee Notebook from Deal Notebook
+    [Documentation]    This keyword navigates directly the LIQ User to the Commitment Fee Notebook from Deal Notebook.
+    ...    @author: rtarayao    
+    [Arguments]    ${Facility_Name}
+    
+    mx LoanIQ activate window    ${LIQ_DealNotebook_Window}   
+    mx LoanIQ select    ${LIQ_DealNotebook_Options_OngoingFeeList_Menu}
+    mx LoanIQ activate window    ${LIQ_DealNotebook_FeeList_Window}
+    Mx LoanIQ Select Or DoubleClick In Javatree    ${LIQ_FeeList_JavaTree}    ${Facility_Name}%d
+    mx LoanIQ activate window    ${LIQ_CommitmentFee_Window} 
+    
+Select Cycle Due Fee Payment 
+    [Documentation]    This keyword selects a cycle fee payment for Cycle Due amount.
+    ...    @author: mgaling   
+    
+    mx LoanIQ activate window    ${LIQ_CommitmentFee_Window}    
+    mx LoanIQ select    ${LIQ_CommitmentFee_General_OptionsPayment_Menu}
+    mx LoanIQ enter    ${LIQ_ChoosePayment_Fee_RadioButton}    ON
+    mx LoanIQ click    ${LIQ_ChoosePayment_OK_Button} 
+    mx LoanIQ enter    ${LIQ_CommitmentFee_Cycles_CycleDue_RadioButton}    ON   
+    mx LoanIQ click    ${LIQ_CommitmentFee_Cycles_OK_Button}
+    Take Screenshot    CycleDueAmount
+    
+Enter Effective Date for Ongoing Fee-Cycle Due Payment
+    [Documentation]    This keywod populates the effective date for ongoing fee-cycle dues payment.
+    ...    @author: mgaling 
+    [Arguments]    ${sFeePayment_EffectiveDate}
+    mx LoanIQ activate window    ${LIQ_OngoingFeePayment_Window}
+    mx LoanIQ enter    ${LIQ_OngoingFeePayment_EffectiveDate_Field}    ${sFeePayment_EffectiveDate}
+    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
+    Take Screenshot    EffectiveDate

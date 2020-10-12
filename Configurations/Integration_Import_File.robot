@@ -36,6 +36,9 @@ Resource    ../Variables/Users_Properties.txt
 Resource    ../Variables/BaseRatesInterest_Properties.txt
 Resource    ../Variables/FXRates_Properties.txt
 Resource    ../Variables/Correspondence_Properties.txt
+Resource    ../Variables/CommSee_Properties.txt
+Resource    ../Variables/SAPWUL_Properties.txt
+Resource    ../Variables/Essence_Variables.txt
 
 ### Configurations ###
 Resource    ../Configurations/DB_Connection.txt
@@ -49,6 +52,13 @@ Variables    ../ObjectMap/LoanIQ_Locators/LIQ_Global_Locators.py
 Variables    ../ObjectMap/LoanIQ_Locators/LIQ_TableMaintenance_Locators.py
 Variables    ../ObjectMap/LoanIQ_Locators/LIQ_TreasuryNavigation_Locators.py
 Variables    ../ObjectMap/LoanIQ_Locators/LIQ_User_Administration_Locators.py
+
+### Fusion Banking Essence - Locators ###
+Variables    ../ObjectMap/FBE_Locators/Essence_AdhocExtraction_Locators.py
+Variables    ../ObjectMap/FBE_Locators/Essence_ChangeOfBusinessDate_Locators.py
+Variables    ../ObjectMap/FBE_Locators/Essence_Dashboard_Locators.py
+Variables    ../ObjectMap/FBE_Locators/Essence_EODControlAndStatusEnquiry_Locators.py
+Variables    ../ObjectMap/FBE_Locators/Essence_ZoneBranchConfig_Locators.py
 
 ### FFC Variable Files - Locators ###
 Variables    ../ObjectMap/FFC_Locators/Dashboard_Locators.py
@@ -253,3 +263,40 @@ Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/Extr
 ### Integration Resource Files - DWE LIQ Extracts - Business Process Keywords ###
 Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/Extracts/DWE_LIQ_Extracts/DWE_LIQ_E2E.robot
 Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/Extracts/DWE_LIQ_Extracts/DWE_LIQ_EV.robot
+
+### Integration Resource Files - CommSee - Business Keywords ###
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/CommSee/API_Response.robot
+
+### Integration Resource Files - CommSee - Source Keywords ###
+Resource    ../ResourcesFiles/Integration_Keywords/Source_Keywords/API/CommSee/API/API_COM_VAL.robot
+Resource    ../ResourcesFiles/Integration_Keywords/Source_Keywords/API/CommSee/LoanIQ/CommSee_DealSetup.robot
+Resource    ../ResourcesFiles/Integration_Keywords/Source_Keywords/API/CommSee/LoanIQ/CommSee_FacilityFeeSetup.robot
+Resource    ../ResourcesFiles/Integration_Keywords/Source_Keywords/API/CommSee/LoanIQ/CommSee_FacilitySetup.robot
+Resource    ../ResourcesFiles/Integration_Keywords/Source_Keywords/API/CommSee/LoanIQ/CommSee_Outstanding.robot
+Resource    ../ResourcesFiles/Integration_Keywords/Source_Keywords/API/CommSee/LoanIQ/CommSee_Payment.robot
+Resource    ../ResourcesFiles/Integration_Keywords/Source_Keywords/API/CommSee/LoanIQ/CommSee_AdminFeeSetup.robot
+Resource    ../ResourcesFiles/Integration_Keywords/Source_Keywords/API/CommSee/LoanIQ/CommSee_LoanDrawdown.robot
+Resource    ../ResourcesFiles/Integration_Keywords/Source_Keywords/API/CommSee/LoanIQ/CommSee_InterestPayment.robot
+### Integration Resource Files - GL Extracts - Source Keywords ###
+Resource    ../ResourcesFiles/Integration_Keywords/Source_Keywords/Extracts/GL/GLEssence_Extracts_Validation.robot
+
+### Integration Resource Files - GL - Business Process Keywords ###
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/Extracts/GL_Essence/GLPOST_13.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/Extracts/GL_Essence/GLPOST_14.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/Extracts/GL_Essence/GLPOST_15.robot
+
+### Integration Resource Files - Essence - Source Keywords ###
+Resource    ../ResourcesFiles/Essence_Keywords/Source_Keywords/EssenceCommon_Keywords.robot
+Resource    ../ResourcesFiles/Essence_Keywords/Source_Keywords/Essence_EODControlAndStatusEnquiry_Keywords.robot
+
+### Integration Resource Files - SAPWUL - Business Keywords ###
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/SAPWUL/SAPWUL_DealSetup.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/SAPWUL/SAPWUL_EventsVerify.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/SAPWUL/SAPWUL_FacilityUpdates.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/SAPWUL/SAPWUL_LIQVerify.robot
+
+### Integration Resource Files - SAPWUL - Source Keywords ###
+Resource    ../ResourcesFiles/Integration_Keywords/Source_Keywords/API/SAPWUL/SAPWUL_EventsVal.robot
+Resource    ../ResourcesFiles/Integration_Keywords/Source_Keywords/API/SAPWUL/SAPWUL_Generic.robot
+Resource    ../ResourcesFiles/Integration_Keywords/Source_Keywords/API/SAPWUL/SAPWUL_TableMaintenance.robot
+

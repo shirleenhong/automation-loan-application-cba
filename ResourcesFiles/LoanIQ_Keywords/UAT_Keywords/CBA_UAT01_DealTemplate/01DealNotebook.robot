@@ -7,6 +7,10 @@ Setup Deal D00000454
     [Documentation]    This keyword is the template for setting up UAT Deal 1
     ...                @author: fmamaril    20AUG2019    Initial create
     ...                @update: fmamaril    03SEP2019    Add writing of deal name to SERV29
+    ...                @update: kduenas     06OCT2020    Added writing of deal name to corro api dataset for API_CORRO_TC02
+    ...                @update: kduenas     08OCT2020    Added writing of deal name to corro api dataset for API_CORRO_TC10
+    ...                @update: kduenas     09OCT2020    Added writing of deal name to corro api dataset for API_CORRO_TC11
+    ...                @update: kduenas     09OCT2020    Added writing of deal name to corro api dataset for API_CORRO_TC12
     [Arguments]    ${ExcelPath}
     ${Deal_Name}    ${Deal_Alias}    Generate And Return Deal Name And Alias    &{ExcelPath}[Deal_NamePrefix]    &{ExcelPath}[Deal_AliasPrefix]
     ${Borrower_ShortName}    Read Data From Excel    ORIG03_Customer    LIQCustomer_ShortName    &{ExcelPath}[rowid]    ${CBAUAT_ExcelPath}   
@@ -25,6 +29,10 @@ Setup Deal D00000454
     Write Data To Excel    SERV40_BreakFunding    Deal_Name    &{ExcelPath}[rowid]    ${Deal_Name}    ${CBAUAT_ExcelPath}
     Write Data To Excel    SERV23_Paperclip    Deal_Name    &{ExcelPath}[rowid]    ${Deal_Name}    ${CBAUAT_ExcelPath}    Y
     Write Data To Excel    COMPR06_LoanMerge    Deal_Name    &{ExcelPath}[rowid]    ${Deal_Name}    ${CBAUAT_ExcelPath}
+    Write Data To Excel    Correspondence    Deal_Name    &{ExcelPath}[2]    ${Deal_Name}    ${APIDataSet}    bTestCaseColumn=True    sColumnReference=rowid
+    Write Data To Excel    Correspondence    Deal_Name    &{ExcelPath}[10]    ${Deal_Name}    ${APIDataSet}    bTestCaseColumn=True    sColumnReference=rowid
+    Write Data To Excel    Correspondence    Deal_Name    &{ExcelPath}[11]    ${Deal_Name}    ${APIDataSet}    bTestCaseColumn=True    sColumnReference=rowid
+    Write Data To Excel    Correspondence    Deal_Name    &{ExcelPath}[12]    ${Deal_Name}    ${APIDataSet}    bTestCaseColumn=True    sColumnReference=rowid
     Select Actions    [Actions];Deal
     Create New Deal    ${Deal_Name}    ${Deal_Alias}    &{ExcelPath}[Deal_Currency]    &{ExcelPath}[Deal_Department]    &{ExcelPath}[Deal_SalesGroup]
     Unrestrict Deal
@@ -110,8 +118,8 @@ Setup Multiple Facility Sell Amounts for D00000454
     ...    @author: fmamaril    27AUG2019    Initial Create
     [Arguments]    ${ExcelPath}
     Log    To be updated
-    # Set Facility Sell Amounts in Primaries    &{ExcelPath}[Facility_Name1]    &{ExcelPath}[Sell_Amount1]
-    # Run Keyword If    '&{ExcelPath}[rowid]'!='3'    Set Facility Sell Amounts in Primaries    &{ExcelPath}[Facility_Name2]    &{ExcelPath}[Sell_Amount2]
+    Set Facility Sell Amounts in Primaries    &{ExcelPath}[Facility_Name1]    &{ExcelPath}[Sell_Amount1]    ${ExcelPath}[Primary_BuySellPrice]
+    Run Keyword If    '&{ExcelPath}[rowid]'!='3'    Set Facility Sell Amounts in Primaries    &{ExcelPath}[Facility_Name2]    &{ExcelPath}[Sell_Amount2]    ${ExcelPath}[Primary_BuySellPrice]
     
 Complete Primaries for D00000454
     [Documentation]    This keyword completes Primaries for Syndicated Deal-Multiple Facility.
@@ -175,5 +183,3 @@ Create Upfront Fee for D00000454
     Navigate to Payment Notebook via WIP    Payments    Awaiting Approval    Fee Payment From Borrower    &{ExcelPath}[Deal_Name]    
     Approve Upfront Fee Payment
     Navigate Notebook Workflow    ${LIQ_InitialDrawdown_Window}    ${LIQ_UpfrontFeePayment_Tab}    ${LIQ_UpfrontFeePayment_WorkflowItems}    Release
-
-                 

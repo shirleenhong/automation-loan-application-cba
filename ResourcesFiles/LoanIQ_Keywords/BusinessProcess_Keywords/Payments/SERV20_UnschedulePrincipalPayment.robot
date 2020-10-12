@@ -5,9 +5,12 @@ Resource    ../../../../Configurations/LoanIQ_Import_File.robot
 Initiate Unscheduled Principal Payment
     [Documentation]    This keyword is used to initiate an UNSCHEDULED Principal Payment from the Deal facility notebook
     ...    @update: sahalder    03JUL2020    updated as per new BNS framework
+    ...    @update: dfajardo    27AUG2020    Removed Hard coded values
     [Arguments]    ${ExcelPath}
     
     ###Facility Notebook###
+    Logout from Loan IQ
+    Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
     Navigate to Facility Notebook    &{ExcelPath}[Deal_Name]    &{ExcelPath}[Facility_Name]
     ${GlobalFacCommitmentAmount}    ${GlobalFacOutstandingAmount}    ${GlobalFacAvailtoDrawAmount}    Get Current Facility Outstandings, Avail to Draw, Commitment Amount
     Navigate to Outstanding Select Window
@@ -49,7 +52,7 @@ Initiate Unscheduled Principal Payment
     Navigate to Unscheduled Principal Payment Notebook    &{ExcelPath}[UnscheduledPrincipal_PrincipalAmt]
     
     ###Cashflows###
-    Navigate to Principal Payment Notebook Workflow    Create Cashflows
+    Navigate to Principal Payment Notebook Workflow    ${CREATE_CASHFLOWS_TYPE}
     Verify if Method has Remittance Instruction    &{ExcelPath}[Borrower_ShortName]    &{ExcelPath}[Remittance_Description]    &{ExcelPath}[Remittance_Instruction]    
     Verify if Method has Remittance Instruction    &{ExcelPath}[Lender1_ShortName]    &{ExcelPath}[Remittance_Description]    &{ExcelPath}[Remittance_Instruction]
     Verify if Method has Remittance Instruction    &{ExcelPath}[Lender2_ShortName]    &{ExcelPath}[Remittance_Description]    &{ExcelPath}[Remittance_Instruction]   
@@ -67,16 +70,15 @@ Initiate Unscheduled Principal Payment
     
     ###Loan IQ Desktop###
     Logout from Loan IQ
-    Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
+    Login to Loan IQ    ${MANAGER_USERNAME}    ${MANAGER_PASSWORD}
     
     ###Workflow Tab - Releasing of Cashflows/Payment###
-    Navigate Transaction in WIP    &{ExcelPath}[WIP_TransactionType]    &{ExcelPath}[WIP_AwaitingRelease]    &{ExcelPath}[WIP_PaymentType]    &{ExcelPath}[Loan_Alias]    
-    Navigate to Payment Workflow Tab
-    ${ReleaseCashflow_Status}    Run Keyword And Return Status    Mx LoanIQ Select Or DoubleClick In Javatree    ${LIQ_Payment_WorkflowItems}    Release Cashflows%s 
-    Run Keyword If    ${ReleaseCashflow_Status}==True    Run Keywords    Open Payment Notebook via WIP - Awaiting Release Cashflow    &{ExcelPath}[WIP_TransactionType]    &{ExcelPath}[WIP_AwaitingReleaseCashflowsStatus]    &{ExcelPath}[WIP_PaymentType]    &{ExcelPath}[Loan_Alias]
-    ...    AND    Release Payment Cashflows with Three Lenders    &{ExcelPath}[Borrower_ShortName]    &{ExcelPath}[Lender1_ShortName]    &{ExcelPath}[Lender2_ShortName]    &{ExcelPath}[Remittance_Description]   &{ExcelPath}[Remittance_Instruction]
-    ...    AND    Open Unscheduled Payment Notebook via WIP - Awaiting Release    &{ExcelPath}[WIP_TransactionType]    &{ExcelPath}[WIP_AwaitingRelease]    &{ExcelPath}[WIP_PaymentType]    &{ExcelPath}[Loan_Alias]
+    Open Interest Payment Notebook via WIP - Awaiting Release    &{ExcelPath}[WIP_TransactionType]    &{ExcelPath}[WIP_AwaitingReleaseCashflowsStatus]    &{ExcelPath}[WIP_PaymentType]    &{ExcelPath}[Loan_Alias]
     
+    ###Cashflow Notebook - Release Cashflows###
+    Release Cashflow Based on Remittance Instruction    &{ExcelPath}[Remittance_Instruction]    &{ExcelPath}[Borrower_ShortName]    &{ExcelPath}[Cashflow_DataType]    ${PAYMENT_WORKFLOW}
+    Release Cashflow Based on Remittance Instruction    &{ExcelPath}[Remittance1_Instruction]    &{ExcelPath}[Lender1_ShortName]    &{ExcelPath}[Cashflow_DataType]    ${PAYMENT_WORKFLOW}
+    Release Cashflow Based on Remittance Instruction    &{ExcelPath}[Remittance2_Instruction]    &{ExcelPath}[Lender2_ShortName]    &{ExcelPath}[Cashflow_DataType]    ${PAYMENT_WORKFLOW}
     Release Unscheduled Principal Payment
     Close All Windows on LIQ 
         
