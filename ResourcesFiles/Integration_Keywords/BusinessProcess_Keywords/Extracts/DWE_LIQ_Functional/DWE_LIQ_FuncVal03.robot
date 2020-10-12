@@ -4,10 +4,11 @@ Resource    ../../../../../Configurations/Integration_Import_File.robot
 *** Keywords ***
 Validate VLS_DEAL Extract
     [Documentation]    This keyword is used to validate values from VLS_DEAL CSV in LIQ Screen
-    ...    @author: mgaling    10Sep2019    - Initial create
-    [Arguments]    ${ExcelPath}        
+    ...    @author: mgaling    10Sep2019    - initial create
+    ...    update: mgaling    09Oct2020    - updated data set variable
+    [Arguments]    ${DWELIQFunc_Dataset}        
     
-    ${CSV_Content}    Read Csv File To List    ${dataset_path}&{ExcelPath}[CSV_FilePath]&{ExcelPath}[DEAL_CSV_FileName].csv    |
+    ${CSV_Content}    Read Csv File To List    &{DWELIQFunc_Dataset}[CSV_FilePath]&{DWELIQFunc_Dataset}[DEAL_CSV_FileName]&{DWELIQFunc_Dataset}[Business_Date].csv    |
     Log List    ${CSV_Content}
                         
     ${header}    Get From List    ${CSV_Content}    0
@@ -28,4 +29,4 @@ Validate VLS_DEAL Extract
 
     Validate CSV values in LIQ for VLS_Deal    ${CSV_Content}    ${DEA_PID_DEAL_Index}    ${DEA_DTE_APPROVED_Index}    ${DEA_DTE_TERM_EFF_Index}    ${DEA_DTE_CANCEL_EFF_Index}    ${DEA_CDE_ORIG_CCY_Index}
     ...    ${DEA_IND_ACTIVE_Index}    ${DEA_IND_SOLE_LENDR_Index}    ${DEA_CDE_EXPENSE_Index}    ${DEA_DTE_DEAL_CLSD_Index}    ${DEA_DTE_AGREEMENT_Index}
-    ...    ${DEA_CDE_DEAL_STAT_Index}    ${DEA_CDE_DEAL_CLASS_Index}    ${DEA_CDE_BRANCH_Index} 
+    ...    ${DEA_CDE_DEAL_STAT_Index}    ${DEA_CDE_DEAL_CLASS_Index}    ${DEA_CDE_BRANCH_Index}

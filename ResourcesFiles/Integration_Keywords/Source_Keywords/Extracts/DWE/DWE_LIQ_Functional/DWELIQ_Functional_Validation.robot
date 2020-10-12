@@ -1058,12 +1058,12 @@ Validate CSV values in LIQ for VLS_Deal
     \    ${BRANCH}    Remove String    @{Table_NameList}[${DEA_CDE_BRANCH_Index}]    "
     \    
     \    ### Get Class Classification Code Description in Table Maintenance ###
-    \    Run Keyword If    "${CLASS.strip()}"!="Empty"    Run Keywords    Select Actions    [Actions];Table Maintenance
+    \    Run Keyword If    "${CLASS.strip()}"!="${Empty}"    Run Keywords    Select Actions    [Actions];Table Maintenance
          ...    AND    Search in Table Maintenance    Deal Classification
-    \    ${Class_Desc}    Run Keyword If    "${CLASS.strip()}"!="Empty"    Get Single Description from Table Maintanance    ${CLASS.strip()}    ${LIQ_BrowseDealClassification_Window}    ${LIQ_BrowseDealClassification_JavaTree}    ${LIQ_BrowseDealClassification_ShowAll_Button}    ${LIQ_BrowseDealClassification_Exit_Button}    
+    \    ${Class_Desc}    Run Keyword If    "${CLASS.strip()}"!="${Empty}"    Get Single Description from Table Maintanance    ${CLASS.strip()}    ${LIQ_BrowseDealClassification_Window}    ${LIQ_BrowseDealClassification_JavaTree}    ${LIQ_BrowseDealClassification_ShowAll_Button}    ${LIQ_BrowseDealClassification_Exit_Button}    
     \    Close All Windows on LIQ
     \    ### Launch Deal thru RID ###
-    \    ${RID_IsExist}    Run Keyword And Return Status    Navigate to Notebook Window thru RID    Deal    ${RID_Deal}
+    \    ${RID_IsExist}    Run Keyword And Return Status    Navigate to Notebook Window thru RID    Deal    ${RID_Deal.strip()}
     \    Run Keyword If    "${RID_IsExist}"=="${False}"    Run Keyword And Continue On Failure    Fail    ${RID_Deal} does not exist!        
     \    ### Events Tab Validation ###
     \    Run Keyword If    "${DTE_APPROVED}"!="${Empty}" and "${RID_IsExist}"=="${True}"     Run Keyword And Continue On Failure    Validate CSV Date values in LIQ Events Tab    ${DTE_APPROVED}    Approved    DEA_DTE_APPROVED
@@ -1073,14 +1073,14 @@ Validate CSV values in LIQ for VLS_Deal
     \    ### Summary Tab Validation ###
     \    ${DTE_AGRMNT_Converted}    Run Keyword If    "${DTE_AGRMNT}"!="${Empty}" and "${RID_IsExist}"=="${True}"    Run Keyword    Convert Date With Zero    ${DTE_AGRMNT}
     \    
-    \    Run Keyword If    "${CURRENCY}"!="${Empty}" and "${RID_IsExist}"=="${True}"    Run Keyword And Continue On Failure    Validate CSV Values in LIQ Summary Tab    DEA_CDE_ORIG_CCY    ${CURRENCY}
-    \    Run Keyword If    "${IND_SOLE_LENDR}"!="${Empty}" and "${RID_IsExist}"=="${True}"    Run Keyword And Continue On Failure    Validate CSV Values in LIQ Summary Tab    DEA_IND_SOLE_LENDR    None    ${IND_SOLE_LENDR}
+    \    Run Keyword If    "${CURRENCY.strip()}"!="${Empty}" and "${RID_IsExist}"=="${True}"    Run Keyword And Continue On Failure    Validate CSV Values in LIQ Summary Tab    DEA_CDE_ORIG_CCY    ${CURRENCY.strip()}
+    \    Run Keyword If    "${IND_SOLE_LENDR.strip()}"!="${Empty}" and "${RID_IsExist}"=="${True}"    Run Keyword And Continue On Failure    Validate CSV Values in LIQ Summary Tab    DEA_IND_SOLE_LENDR    None    ${IND_SOLE_LENDR.strip()}
     \    Run Keyword If    "${DTE_AGRMNT}"!="${Empty}" and "${RID_IsExist}"=="${True}"    Run Keyword And Continue On Failure    Validate CSV Values in LIQ Summary Tab    DEA_DTE_AGREEMENT    None    None    ${DTE_AGRMNT_Converted}
-    \    Run Keyword If    "${CLASS}"!="${Empty}" and "${RID_IsExist}"=="${True}"    Run Keyword And Continue On Failure    Validate CSV Values in LIQ Summary Tab    DEA_CDE_DEAL_CLASS    None    None    None    ${CLASS.strip()}    ${Class_Desc}
+    \    Run Keyword If    "${CLASS.strip()}"!="${Empty}" and "${RID_IsExist}"=="${True}"    Run Keyword And Continue On Failure    Validate CSV Values in LIQ Summary Tab    DEA_CDE_DEAL_CLASS    None    None    None    ${CLASS.strip()}    ${Class_Desc}
     \    ### PERSONNEL Tab Validation ###
-    \    Run Keyword If    "${EXPENSE_CODE}"!="${Empty}" and "${RID_IsExist}"=="${True}"    Run Keyword And Continue On Failure    Validate CSV Values in LIQ Personnel Tab    DEA_CDE_EXPENSE    ${EXPENSE_CODE}
+    \    Run Keyword If    "${EXPENSE_CODE.strip()}"!="${Empty}" and "${RID_IsExist}"=="${True}"    Run Keyword And Continue On Failure    Validate CSV Values in LIQ Personnel Tab    DEA_CDE_EXPENSE    ${EXPENSE_CODE.strip()}
     \    ### Deal Status Validation ###
-    \    Run Keyword If    "${IND_ACTIVE}"!="${Empty}" and "${STATUS}"!="${Empty}" and "${RID_IsExist}"=="${True}"    Run Keyword And Continue On Failure    Validate CSV Values in LIQ Deal Notebook Status    ${IND_ACTIVE}    ${STATUS}    ${BRANCH}
+    \    Run Keyword If    "${IND_ACTIVE.strip()}"!="${Empty}" and "${STATUS.strip()}"!="${Empty}" and "${RID_IsExist}"=="${True}"    Run Keyword And Continue On Failure    Validate CSV Values in LIQ Deal Notebook Status    ${IND_ACTIVE.strip()}    ${STATUS.strip()}    ${BRANCH.strip()}
     \    
     \    Close All Windows on LIQ
     \    Refresh Tables in LIQ
@@ -2544,5 +2544,17 @@ Validate CUS_XID_CUST_ID in Customer Notebook
 	${status}    Run Keyword And Return Status    Should Be Equal As Strings    ${CustomerID.strip()}    ${CUS_XID_CUST_ID_Value}
     Take Screenshot    CustomerID_${CUS_XID_CUST_ID_Value}
     Run Keyword If    ${status}==False    Run Keyword And Continue On Failure    Fail    Customer ID is not the same.
-    mx LoanIQ close window    ${LIQ_ActiveCustomer_Window}        
-           
+    mx LoanIQ close window    ${LIQ_ActiveCustomer_Window}
+
+Get Business Date of Decrypted Files
+    [Documentation]    This keyword is used to get the business date of the decrypted files from EVG_DWE_LIQEXTRACT_TestData - DWELIQ_Multi_E2E test cases.
+    ...    @author: mgaling    10OCT2020    - initial create
+    [Arguments]    ${ExcelPath}
+    
+    Log    ${ExcelPath}
+    Log    &{ExcelPath}[Business_Date]
+    ${Business_Date}    Convert Date    &{ExcelPath}[Business_Date]    result_format=%Y%m%d    date_format=%Y-%m-%d 
+    Log    ${Business_Date}        
+
+    ${TestCase_Name_FuncVal03_List}    Split String    ${TestCase_Name_FuncVal03}    |
+    Write Data to Excel    ${DWELIQFunc_Dataset_SheetName}    Business_Date    @{TestCase_Name_FuncVal03_List}[${DATAROW_INDEX}]    ${Business_Date}    ${DWELIQFunc_Dataset}    bTestCaseColumn=True
