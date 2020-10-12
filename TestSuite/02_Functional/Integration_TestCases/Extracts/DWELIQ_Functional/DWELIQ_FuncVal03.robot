@@ -9,9 +9,9 @@ DWELIQ_FuncVal03
     ...    @update: mgaling    09Oct2020    - updated keyword to handle multi entity test case
         
     Set Global Variable    ${TestCase_Name}    DWELIQ_Multi_E2E_001|DWELIQ_Multi_E2E_002
-    Set Global Variable    ${TestCase_Name_FuncVal}    DWELIQ_FuncVal02_Z3|DWELIQ_FuncVal02_Z2
+    Set Global Variable    ${TestCase_Name_FuncVal}    DWELIQ_FuncVal03_Z3|DWELIQ_FuncVal03_Z2
     Set Global Variable    ${DWELIQFunc_Dataset_SheetName}  FuncVal03
     Mx Execute Template With Multiple Test Case Name    Get Business Date of Decrypted Files    ${DWE_DATASET}    Test_Case    ${TestCase_Name}    DWE
     
-    Set Global Variable    ${TestCase_Name}    DWELIQ_FuncVal02_Z2|DWELIQ_FuncVal02_Z3
+    Set Global Variable    ${TestCase_Name}    DWELIQ_FuncVal03_Z3|DWELIQ_FuncVal03_Z2
     Mx Execute Template With Multiple Test Case Name    Validate VLS_DEAL Extract     ${DWELIQFunc_Dataset}    Test_Case    ${TestCase_Name}    FuncVal03
