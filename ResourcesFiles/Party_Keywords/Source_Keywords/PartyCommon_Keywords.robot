@@ -618,7 +618,7 @@ Validate LoanIQ Party FBE Enterprise
    
     #get data from loaniq
     ${liq_partyId}    Mx LoanIQ Get Data    ${LIQ_ActiveCustomer_Window_CustomerID}    input=liq_partyId
-    ${liq_shortName}    Mx LoanIQ Get Data    ${LIQ_ActiveCustomer_Window_ShortName}    input=liq_shortNam    
+    ${liq_shortName}    Mx LoanIQ Get Data    ${LIQ_ActiveCustomer_Window_ShortName}    input=liq_shortName    
     ${liq_legalName}    Mx LoanIQ Get Data    ${LIQ_ActiveCustomer_Window_LegalName}    input=liq_legalName
     ${liq_branch}    Mx LoanIQ Get Data    ${LIQ_ActiveCustomer_Window_Branch}    input=liq_branch
     
