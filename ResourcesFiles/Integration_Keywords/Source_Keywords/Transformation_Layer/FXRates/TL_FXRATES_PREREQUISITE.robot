@@ -132,6 +132,7 @@ Create Expected JSON for FXRates TL
     [Documentation]    This keyword is used to create expected JSON payload for FXRates Transformation Layer using the transformed data.
     ...    @author: mnanquil    04MAR2019    - initial create
     ...    @update: dahijara    21NOV2019    - Added keyword to close opened excel file
+    ...    @update: nbautist    09OCT2020    - removed commented exit condition
     [Arguments]    ${sTransformedData_FilePath}    ${sInputJsonFile}    ${dConvertedCSVFile}    ${sTransformedDataXML_FilePath}      
     Open Excel    ${dataset_path}${sTransformedData_FilePath}    
     ${Row_Count}    Get Row Count    Transformed_FXRates
@@ -143,7 +144,7 @@ Create Expected JSON for FXRates TL
     \    ${dTransformedData}    ${rowCount}    Create Dictionary Using Transformed Data and Return FXRates    ${dataset_path}${sTransformedData_FilePath}    ${INDEX}
     \    ${New_JSON}    Update Key Values of input JSON file for FXRates TL    ${dTransformedData}    ${dataset_path}${jsonfile}    ${rowCount}    ${dConvertedCSVFile}     ${sTransformedDataXML_FilePath} 
     \    Log    ${New_JSON}
-    # \    Exit For Loop If    ${INDEX}==${Row_Count}
+    
     ${file}    OperatingSystem.Get File    ${dataset_path}${jsonfile}
     ${converted_file}    Catenate    SEPARATOR=    [    ${file}    ]
     Create File    ${dataset_path}${jsonfile}    ${converted_file}
@@ -558,8 +559,9 @@ Filter by Reference Header and Save Message TextArea and Return Results Row List
 Create Prerequisite for Multiple FX Files Scenario
     [Documentation]    This keyword is used to get the number of input GS files in the dataset and transformed the last CSV file to XLS file.
     ...    @author: cfrancis    23JUL2019    - intial create
+    ...    @update: nbautist    08OCT2020    - updated arguments; removed comments on prerequisite generation
     [Arguments]    ${sInputGSFile}    ${sTransformedDataFile_FXRates}    ${sTransformedDataFileXML_FXRates}    ${sTransformedDataFile_Template_FXRates}    ${sfundingDesk}
-    ...    ${sInputJSON}    ${sInputFilePath}    ${sFinalLIQDestination}    ${Delimiter}=None
+    ...    ${sInputJSON}    ${sInputFilePath}    ${sFinalLIQDestination}    ${sTemplateFilePath}    ${Delimiter}=None
     @{InputGSFile_List}    Run Keyword If    '${Delimiter}'=='None'    Split String    ${sInputGSFile}    ,
     ...    ELSE    Split String    ${sInputGSFile}    ${Delimiter}
     ${InputGSFile_Count}    Get Length    ${InputGSFile_List}
@@ -571,11 +573,11 @@ Create Prerequisite for Multiple FX Files Scenario
     :FOR    ${Index}    IN RANGE    ${InputGSFile_Count}
     \    Set Global Variable    ${COUNTER}    0    
     \    ${InputGSFile}    Get From List    ${InputGSFile_List}    ${Index}
-    # \    Transform FXRates CSV Data to XLS File Readable for JSON Creation    ${sInputFilePath}${InputGSFile}    ${sTransformedDataFile_FXRates_NoExt}${Index}.${XLSX}    ${sTransformedDataFile_Template_FXRates}    ${sTransformedDataFileXML_FXRates_NoExt}${Index}.${XLSX}    ${sfundingDesk}
+    \    Transform FXRates CSV Data to XLS File Readable for JSON Creation    ${sInputFilePath}${InputGSFile}    ${sTransformedDataFile_FXRates_NoExt}${Index}.${XLSX}    ${sTransformedDataFile_Template_FXRates}    ${sTransformedDataFileXML_FXRates_NoExt}${Index}.${XLSX}    ${sfundingDesk}
     \    Create Expected JSON for FXRates TL    ${sTransformedDataFile_FXRates_NoExt}${Index}.${XLSX}    ${sInputJSON}_${Index}    ${dataset_path}${sTransformedDataFile_FXRates_NoExt}${Index}.${XLSX}    ${dataset_path}${sTransformedDataFileXML_FXRates_NoExt}${Index}.${XLSX}
-    \    Create Expected TextJMS XML for FXRates TL    ${sTransformedDataFileXML_FXRates_NoExt}${Index}.${XLSX}    ${sInputFilePath}    ${sFinalLIQDestination}_${Index}
-    #\    Append To List    ${TransformedData_List}    ${sTransformedDataFileXML_FXRates_NoExt}${Index}.xls
-    #\    ${InputGSFile_Count}    Evaluate    ${InputGSFile_Count}-1    
+    \    Create Expected TextJMS XML for FXRates TL    ${sTransformedDataFileXML_FXRates_NoExt}${Index}.${XLSX}    ${sInputFilePath}    ${sFinalLIQDestination}_${Index}    ${sTemplateFilePath}
+    \    Append To List    ${TransformedData_List}    ${sTransformedDataFileXML_FXRates_NoExt}${Index}.${XLSX}
+    \    ${InputGSFile_Count}    Evaluate    ${InputGSFile_Count}-1    
     Set Global Variable    ${TRANSFORMEDDATA_LIST}    ${TransformedData_List}
     
 Check for Duplicate Currency Pair

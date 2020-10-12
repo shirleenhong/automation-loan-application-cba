@@ -147,8 +147,8 @@ Collect Early Prepayment for D1 - D00000476
 Charge Breakcost Fee for D1 - D00000476
     Mx Execute Template With Multiple Data    Collect Break Cost Fee for Early Prepayment D00000476    ${CBAUAT_ExcelPath}    1    SERV40_BreakFunding
 
-# Initiate First Rollover for Drawdown A B C - D00000476
-    # Mx Execute Template With Multiple Data    Initiate Comprehensive Repricing - D00000476    ${CBAUAT_ExcelPath}   1-3    SERV08C_ComprehensiveRepricing
+Initiate First Rollover for Drawdown A B C - D00000476
+    Mx Execute Template With Multiple Data    Initiate Comprehensive Repricing - D00000476    ${CBAUAT_ExcelPath}   1-3    SERV08C_ComprehensiveRepricing
 
 # ### January 21
 # Setup BaseRate and FX Rate for Jan 21    
