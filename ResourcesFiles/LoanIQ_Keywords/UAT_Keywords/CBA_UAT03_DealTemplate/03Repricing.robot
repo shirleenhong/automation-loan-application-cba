@@ -30,18 +30,10 @@ Initiate Comprehensive Repricing - D00000476
     Run Keyword If    '&{ExcelPath}[rowid]'=='3'    Write Data To Excel    SERV08C_ComprehensiveRepricing    Loan_Alias    3    ${NewLoanAlias}    ${CBAUAT_ExcelPath}
     Run Keyword If    '&{ExcelPath}[rowid]'=='2'    Write Data To Excel    SERV08C_ComprehensiveRepricing    Loan_Alias    2    ${NewLoanAlias}    ${CBAUAT_ExcelPath}
     Run Keyword If    '&{ExcelPath}[rowid]'=='8'    Write Data To Excel    SERV23_Paperclip    Loan_Alias    3    ${NewLoanAlias}    ${CBAUAT_ExcelPath}
-<<<<<<< HEAD
-    
-    # ${CycleAmount}    Set Variable    0
-    Run Keyword if    '&{ExcelPath}[rowid]'!='7'    Run Keywords    Add Repricing Details    Interest Payment    
-    ...    AND    ${CycleAmount}    Select Cycles for Loan Item    Projected Due    &{ExcelPath}[Cycle]
-    ...    AND    Verify Interest Payment    ${CycleAmount}     &{ExcelPath}[Payment_Effective_Date]
-=======
 
     Run Keyword if    '&{ExcelPath}[rowid]'!='7'    Add Repricing Details    Interest Payment
     ${CycleAmount}    Run Keyword if    '&{ExcelPath}[rowid]'!='7'    Select Cycles for Loan Item    Projected Due    &{ExcelPath}[Cycle]
     Run Keyword if    '&{ExcelPath}[rowid]'!='7'    Verify Interest Payment    ${CycleAmount}    &{ExcelPath}[Payment_Effective_Date]
->>>>>>> 11c42f780d81282b67dab04b7cf831d346fbe3ac
   
     Navigate Notebook Workflow    ${LIQ_LoanRepricingForDeal_Window}    ${LIQ_LoanRepricingForDeal_Workflow_Tab}    ${LIQ_LoanRepricingForDeal_Workflow_JavaTree}    Create Cashflows
 
