@@ -97,6 +97,7 @@ Write Facility Ongoing Fee Details - Scenario 7 ComSee
     [Documentation]    This test case writes the test ongoing fee details for NonAgent Host Bank Deal.
     ...    Fee details are written for ComSee use.
     ...    @author: rtarayao    02SEP2019    - Initial create
+    ...    @update: cfrancis    09OCT2020    - Added Logic on getting cycle due amount
     [Arguments]    ${ExcelPath}
     
     ###LIQ Login
@@ -155,6 +156,10 @@ Write Facility Ongoing Fee Details - Scenario 7 ComSee
     ${LineAccruedtodateAmount}    Remove Comma and Convert to Number    ${LineAccruedtodateAmount}
     Write Data To Excel    ComSee_SC7_FacFeeSetup    Fee_AccruedToDate    ${rowid}    ${LineAccruedtodateAmount}    ${ComSeeDataSet}
     
+    ${OngoingFee_CycleDue}    Get Fee Cycle Due Amount    ${LIQ_LineFee_Window}    ${LIQ_LineFee_Tab}    ${LIQ_LineFee_Accrual_Cycles_JavaTree}
+    ${OngoingFee_CycleDue}    Remove Comma and Convert to Number    ${OngoingFee_CycleDue}
+    Write Data To Excel    ComSee_SC7_FacFeeSetup    Fee_CycleDue    ${rowid}    ${OngoingFee_CycleDue}    ${ComSeeDataSet}
+
     ${OngoingFee_PaidToDate}    Get Fee Paid to Date Amount    ${LIQ_LineFee_Window}    ${LIQ_LineFee_Tab}    ${LIQ_LineFee_Accrual_Cycles_JavaTree}
     ${OngoingFee_PaidToDate}    Remove Comma and Convert to Number    ${OngoingFee_PaidToDate}
     Write Data To Excel    ComSee_SC7_FacFeeSetup    Fee_PaidToDate    ${rowid}    ${OngoingFee_PaidToDate}    ${ComSeeDataSet}
