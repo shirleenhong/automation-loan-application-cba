@@ -17,7 +17,7 @@ ${CBACorrespUpdateMQ_Instance}    CustomCBAPush_v1.3.2
 ${RESULTTABLEHEADERS}    Headers
 ${RESULTTABLECORELATIONID}    CorelationId
 ${FFC1CMUPDATESOURCEMQ_SOURCENAME}    FFC1CMUpdateSourceMQ
-${FFC1CMUpdateSourceMQ_Instance}    CustomInterface_v1.3.2
+${FFC1CMUpdateSourceMQ_Instance}    CustomInterface_v1.3.3
 
 ### Notice ###
 ${Initial_Notice_Status}    Awaiting release

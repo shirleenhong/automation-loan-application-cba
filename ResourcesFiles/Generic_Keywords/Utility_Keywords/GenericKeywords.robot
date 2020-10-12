@@ -2532,12 +2532,15 @@ Enter Text on Java Tree Text Field
 Mx Execute Template With Multiple Test Case Name
     [Documentation]    This keyword will execute the template using the rowname instead of rowid and multiple row names are allowed.
     ...    @author: clanding    27AUG2020    - initial create
+    ...    @update: clanding    07OCT2020    - changed FOR loop to use index; set global the index in the FOR loop
     [Arguments]    ${stemplateName}    ${sDataSet}    ${sDataColumnName}    ${sDataRowNames}    ${sDataSheetName}    ${sDelimiter}=None
 
     ${DataRowNames_List}    Run Keyword If    '${sDelimiter}'=='None'    Split String    ${sDataRowNames}    |
     ...    ELSE    Split String    ${sDataRowNames}    ${sDelimiter}
     
-    :FOR    ${DataRowNames}    IN    @{DataRowNames_List}
+    ${DataRowNames_Count}    Get Length    ${DataRowNames_List}
+    :FOR    ${Index}    IN RANGE    ${DataRowNames_Count}
+    \    ${DataRowNames}    Get From List    ${DataRowNames_List}    ${Index}
     \    Open Excel    ${sDataSet}
     \    Log    Data Set Open: '${sDataSet}'
     \
@@ -2560,7 +2563,7 @@ Mx Execute Template With Multiple Test Case Name
     \    ${rowid_Column_Index}    Get Index From List    ${DataColumn_List}    rowid
     \    Put String To Cell    ${sDataSheetName}    ${rowid_Column_Index}    ${DataRowValue_Index}   ${DataRowValue_Index}
     \    Close Current Excel Document
-    \    
+    \    Set Global Variable    ${DATAROW_INDEX}    ${Index}
     \    Set Global Variable    ${TestCase_Name}    ${DataRowNames}
     \    Mx Execute Template With Multiple Data    ${stemplateName}    ${sDataSet}    ${DataRowValue_Index}    ${sDataSheetName}
 

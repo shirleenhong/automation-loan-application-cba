@@ -574,3 +574,12 @@ Open Cashflow Window from Loan Repricing Menu
 
     Open Cashflows Window from Notebook Menu    ${LIQ_LoanRepricing_Window}    ${LIQ_LoanRepricing_CashFlows_Menu}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LoanRepricing_CashFlowWindow
+
+Set All Items to Do It
+    [Documentation]    This keyword will handle the behavior of the cashflow window where the Java Tree is not updating in realtine. Cashflow window must be saved an re-opened again for the
+    ...    changes to  take effect
+    ...    @author: ritargel    10/10/2020    initial create
+    Mx LoanIQ Activate    ${LIQ_Cashflows_Window}
+    Select Menu Item    ${LIQ_Cashflows_Window}    Options    Set All To 'Do It'
+    Mx LoanIQ click    ${LIQ_Cashflows_OK_Button}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/CashflowVerification
