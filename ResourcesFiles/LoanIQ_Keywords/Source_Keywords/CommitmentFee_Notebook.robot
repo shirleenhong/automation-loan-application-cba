@@ -1588,7 +1588,7 @@ Get Fee Cycle Due Amount
     ${rowcount}    Mx LoanIQ Get Data    ${sLIQ_Fee_Accrual_Cycles_JavaTree_Locator}    input=items count%value
     ${rowcount}    Evaluate    ${rowcount} - 2
     Log    The total rowcount is ${rowcount}
-    ${CycleDueAmount}    Mx LoanIQ Store TableCell To Clipboard    ${sLIQ_Fee_Accrual_Cycles_JavaTree_Locator}    ${rowcount}%Cycle Due%amount
+    ${CycleDueAmount}    Mx LoanIQ Store TableCell To Clipboard    ${sLIQ_Fee_Accrual_Cycles_JavaTree_Locator}    TOTAL:${SPACE}%Cycle Due%amount
     Log    The Fee Cycle Due amount is ${CycleDueAmount} 
     Screenshot.Set Screenshot Directory    ${Screenshot_Path}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/Fee_Cycle_Due
