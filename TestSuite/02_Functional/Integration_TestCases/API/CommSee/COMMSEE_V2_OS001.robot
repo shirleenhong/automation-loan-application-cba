@@ -3,7 +3,7 @@ Resource    ../../../../../Configurations/LoanIQ_Import_File.robot
 
 
 *** Variables ***
-${rowid}    5
+${rowid}    6
 
 *** Test Cases ***
 
@@ -21,8 +21,7 @@ Create Initial Loan Drawdown with no Repayment Schedule and Update Commitment Fe
     [Documentation]   This test case creates a Fixed Rate Loan Drawdown. 
     ...    @author: cfrancis    07OCT2020    - Initial Create
     Mx Execute Template With Multiple Data    Create Initial Loan Drawdown with no Repayment Schedule - Scenario 7 ComSee    ${ComSeeDataSet}    ${rowid}    ComSee_SC7_Loan
-    Mx Execute Template With Multiple Data    Update Line Fee Cycle - Scenario 7 ComSee    ${ComSeeDataSet}    ${rowid}    ComSee_SC7_OngoingFeePayment 
-    Mx Execute Template With Multiple Data    Write Post Deal Details after Loan Creation for Scenario 7 ComSee    ${ComSeeDataSet}    ${rowid}    ComSee_SC7_Deal  
+    Mx Execute Template With Multiple Data    Update Line Fee Cycle - Scenario 7 ComSee    ${ComSeeDataSet}    ${rowid}    ComSee_SC7_OngoingFeePayment
+    Mx Execute Template With Multiple Data    Write Post Deal Details after Loan Creation for Scenario 7 ComSee    ${ComSeeDataSet}    ${rowid}    ComSee_SC7_Deal
     Mx Execute Template With Multiple Data    Write Loan Details for ComSee - Scenario 7    ${ComSeeDataSet}    ${rowid}    ComSee_SC7_Loan
     Mx Execute Template With Multiple Data    Get and Validate API Outstanding Response    ${ComSeeDataSet}    ${rowid}    ComSee_SC7_Loan
-    
