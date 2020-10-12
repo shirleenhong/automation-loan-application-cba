@@ -42,8 +42,8 @@ Initiate Comprehensive Repricing - D00000476
     Run Keyword If    '&{ExcelPath}[rowid]'=='3'    Add Remittance Instructions    None    &{ExcelPath}[Borrower_RemittanceDescription]    ${CycleAmount}    &{ExcelPath}[Loan_Currency]
     Run Keyword If    '&{ExcelPath}[rowid]'=='3'    Add Remittance Instructions    None    &{ExcelPath}[Borrower_RemittanceDescription_2]    &{ExcelPath}[Loan_Increase]    &{ExcelPath}[Loan_Currency]
     Run Keyword If    '&{ExcelPath}[rowid]'!='3' and '&{ExcelPath}[rowid]'!='7'    Create Cashflow    &{ExcelPath}[Borrower_ShortName]    release
-    Run Keyword If    '&{ExcelPath}[rowid]'=='3'    Create Cashflow    &{ExcelPath}[Loan_Increase]|${CycleAmount}    release   
-    
+    Run Keyword If    '&{ExcelPath}[rowid]'=='3'    Set All Items to Do It   
+
     Navigate Notebook Workflow    ${LIQ_LoanRepricingForDeal_Window}    ${LIQ_LoanRepricingForDeal_Workflow_Tab}    ${LIQ_LoanRepricingForDeal_Workflow_JavaTree}    Send to Approval
     
     ### LIQ Window ###
@@ -63,8 +63,9 @@ Initiate Comprehensive Repricing - D00000476
     Select Item in Work in Process    Outstandings    Awaiting Rate Approval    Loan Repricing    &{ExcelPath}[Facility_Name]
     Navigate Notebook Workflow    ${LIQ_LoanRepricingForDeal_Window}    ${LIQ_LoanRepricingForDeal_Workflow_Tab}    ${LIQ_LoanRepricingForDeal_Workflow_JavaTree}    Rate Approval
     Navigate Notebook Workflow    ${LIQ_LoanRepricingForDeal_Window}    ${LIQ_LoanRepricingForDeal_Workflow_Tab}    ${LIQ_LoanRepricingForDeal_Workflow_JavaTree}    Release Cashflows
-    # Release Cashflow    &{ExcelPath}[Borrower_ShortName]    release    
-    
+    Run Keyword If    '&{ExcelPath}[rowid]'!='3'    Release Cashflow    &{ExcelPath}[Borrower_ShortName]    release
+    Run Keyword If    '&{ExcelPath}[rowid]'=='3'    Release Cashflow    &{ExcelPath}[Loan_Increase]|${CycleAmount}    release    int
+
     Logout from Loan IQ
     Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
     Select Item in Work in Process    Outstandings    Awaiting Release    Loan Repricing    &{ExcelPath}[Facility_Name]
