@@ -3763,7 +3763,7 @@ Get Loan Cycle Due Amount
     ${rowcount}    Mx LoanIQ Get Data    ${LIQ_Loan_AccrualTab_Cycles_Table}    input=items count%value
     ${rowcount}    Evaluate    ${rowcount} - 2
     Log    The total rowcount is ${rowcount}
-    ${CycleDueAmount}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_Loan_AccrualTab_Cycles_Table}    ${rowcount}%Cycle Due%amount  
+    ${CycleDueAmount}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_Loan_AccrualTab_Cycles_Table}    TOTAL:${SPACE}%Cycle Due%amount
     Log    The Fee Paid to Date amount is ${CycleDueAmount}
     Screenshot.Set Screenshot Directory    ${Screenshot_Path}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/Loan_Cycle_Due

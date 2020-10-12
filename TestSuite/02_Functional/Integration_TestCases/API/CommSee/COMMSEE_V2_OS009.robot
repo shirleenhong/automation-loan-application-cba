@@ -7,9 +7,9 @@ ${rowid}    6
 
 *** Test Cases ***
 
-Loan Drawdown and Non Zero Cycle Due
+Loan Drawdown and Non Zero Cycle Due for Multiple Accrual
     [Documentation]   This test case creates a Fixed Rate Loan Drawdown. With Single Line Accrual and Non Zero Cycle Due
-    ...    Pre-requisite test case is COMMSEE_V2_OS001 and 1 day EOD
+    ...    Pre-requisite test case is COMMSEE_V2_OS001 and 1 month EOD for multiple accrual cycle
     ...    @author: cfrancis    12OCT2020    - Initial Create
     
     Mx Execute Template With Multiple Data    Write Loan Details for ComSee - Scenario 7    ${ComSeeDataSet}    ${rowid}    ComSee_SC7_Loan
