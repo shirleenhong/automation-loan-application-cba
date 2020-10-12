@@ -23,7 +23,8 @@ Add Lender and Location
     ${LenderLocation}    Acquire Argument Value    ${sLenderLocation}
     ${RiskBook_ExpenseCode}    Acquire Argument Value    ${sRiskBook_ExpenseCode}
     ${Primaries_TransactionType}    Acquire Argument Value    ${sPrimaries_TransactionType}
-
+    
+    Open Existing Deal    &{ExcelPath}[Deal_Name]
     mx LoanIQ activate window    ${LIQ_DealNotebook_Window}
     mx LoanIQ click element if present    ${LIQ_InquiryMode_Button}
     mx LoanIQ select    ${LIQ_DealNotebook_DistributionPrimaries_Menu}
