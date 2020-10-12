@@ -172,13 +172,18 @@ Create Drawdown D4 D5 D6 - D00000476
 
 # ### February 1
 Extend Facility MOF - D00000476
-        Mx Execute Template With Multiple Data    Extend Maturity and Limit for MOF    ${CBAUAT_ExcelPath}    1    AMCH05_ExtendFacility
+    Mx Execute Template With Multiple Data    Extend Maturity and Limit for MOF    ${CBAUAT_ExcelPath}    1    AMCH05_ExtendFacility
 
-# Extend Facility FCAF and SCAF - D00000476
-    # Mx Execute Template With Multiple Data    Extend Maturity and Limit for FCAF    ${CBAUAT_ExcelPath}    1-3    AMCH05_ExtendFacility
-
+Extend Facility FCAF and TCAF - D00000476
+    Mx Execute Template With Multiple Data    Extend Maturity and Limit for FCAF    ${CBAUAT_ExcelPath}    2    AMCH05_ExtendFacility    
+    Mx Execute Template With Multiple Data    Extend Maturity and Limit for FCAF    ${CBAUAT_ExcelPath}    4    AMCH05_ExtendFacility
+    
 Collect Extenstion Fee for MOF
-    Mx Execute Template With Multiple Data    Collect Extension Fee for D00000476     ${CBAUAT_ExcelPath}    1-3    CRED01_UpfrontFee
+    Mx Execute Template With Multiple Data    Collect Extension Fee for D00000476     ${CBAUAT_ExcelPath}    1    CRED01_UpfrontFee
+    
+Collect Extenstion Fee for FCAF SCAF TCAF
+    # Mx Execute Template With Multiple Data    Collect Extension Fee for D00000476     ${CBAUAT_ExcelPath}    2-4    CRED01_UpfrontFee
+    Mx Execute Template With Multiple Data    Collect Extension Fee for D00000476     ${CBAUAT_ExcelPath}    2    CRED01_UpfrontFee
 
 # ###February 21
 # Setup BaseRate and FX Rate Feb 21

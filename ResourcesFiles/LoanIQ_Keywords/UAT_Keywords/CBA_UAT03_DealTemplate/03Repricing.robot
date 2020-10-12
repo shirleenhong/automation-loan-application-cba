@@ -30,7 +30,8 @@ Initiate Comprehensive Repricing - D00000476
     Run Keyword If    '&{ExcelPath}[rowid]'=='3'    Write Data To Excel    SERV08C_ComprehensiveRepricing    Loan_Alias    3    ${NewLoanAlias}    ${CBAUAT_ExcelPath}
     Run Keyword If    '&{ExcelPath}[rowid]'=='2'    Write Data To Excel    SERV08C_ComprehensiveRepricing    Loan_Alias    2    ${NewLoanAlias}    ${CBAUAT_ExcelPath}
     Run Keyword If    '&{ExcelPath}[rowid]'=='8'    Write Data To Excel    SERV23_Paperclip    Loan_Alias    3    ${NewLoanAlias}    ${CBAUAT_ExcelPath}
-    ${CycleAmount}    Set Variable    0
+    
+    # ${CycleAmount}    Set Variable    0
     Run Keyword if    '&{ExcelPath}[rowid]'!='7'    Run Keywords    Add Repricing Details    Interest Payment    
     ...    AND    ${CycleAmount}    Select Cycles for Loan Item    Projected Due    &{ExcelPath}[Cycle]
     ...    AND    Verify Interest Payment    ${CycleAmount}     &{ExcelPath}[Payment_Effective_Date]
