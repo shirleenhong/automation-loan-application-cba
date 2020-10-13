@@ -62,7 +62,7 @@ PARTY_URL = 'mancsleverg0031:7080/uxp/rt/html/login.html'
 PARTY_USERNAME = 'amipac'
 PARTY_PASSWORD = 'password'
 
-TL_SERVICE_HOST = "mancsleverg0007"
+TL_SERVICE_HOST = "mancsleverg0005"
 TL_SERVICE_PORT = "22"
 TL_SERVER_USER = "sftpuser"
 TL_SERVER_PASSWORD = "t3stOnly?"
