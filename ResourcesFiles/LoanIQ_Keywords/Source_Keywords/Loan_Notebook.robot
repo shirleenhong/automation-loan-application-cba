@@ -186,6 +186,20 @@ Get Interest Actual Due Date on Loan Notebook
 
     [Return]    ${InterestActualDueDate}
     
+Get Interest Adjusted Due Date on Loan Notebook
+    [Documentation]    This keyword will get the interest adjusted due date to be used on Scheduled Activity for Interest Payment.
+    ...    @author: cfrancis    - inital create
+    [Arguments]    ${sRuntime_Variable}=None
+
+    Mx LoanIQ Activate Window    ${LIQ_Loan_Window}
+    ${InterestAdjustedDueDate}    Mx LoanIQ Get Data    ${LIQ_Loan_AdjustedDueDate_Textfield}    value%Date
+    Take Screenshot    ${Screenshot_Path}/Screenshots/LoanIQ/LoanWindow
+
+    ### ConstRuntime Keyword Post-processing ###
+    Save Values of Runtime Execution on Excel File    ${sRuntime_Variable}    ${InterestAdjustedDueDate}
+
+    [Return]    ${InterestAdjustedDueDate}
+    
 Select Type of Schedule
     [Documentation]    This keyword selects a Schedule Type for a new Repayment Schedule
     ...                @author: bernchua    09AUG2019    Initial create
@@ -395,14 +409,13 @@ Get Loan Currency
 Get Loan Effective and Maturity Expiry Dates
     [Documentation]    This keyword gets the Loan Effective Date and returns the value.
     ...    @author: rtarayao    26AUG2019    - Initial Create
+    ...    @update: cfrancis    13OCT2020    - Updated screenshot path
     mx LoanIQ activate window    ${LIQ_Loan_Window}
     Mx LoanIQ Select Window Tab    ${LIQ_Loan_Tab}    General
     ${LoanEffectiveDate}    Mx LoanIQ Get Data    ${LIQ_Loan_EffectiveDate_Text}    text%EffectiveDate 
      ${LoanMaturityDate}    Mx LoanIQ Get Data    ${LIQ_Loan_MaturityDate_Text}    text%MaturityDate
     Log    The Loan Effective and Maturity Dates are ${LoanEffectiveDate} and ${LoanMaturityDate} respectively.  
-    Screenshot.Set Screenshot Directory    ${Screenshot_Path}
-    Set Test Variable    ${SCREENSHOT_FILENAME}    Loan Effective and Maturity Date
-    Take Screenshot    ${SCREENSHOT_FILENAME}
+    Take Screenshot    ${Screenshot_Path}/Screenshots/LoanIQ/Loan_Effective_and_Maturity_Date
     [Return]    ${LoanEffectiveDate}    ${LoanMaturityDate}
 
 Get Loan Host Bank Net and Gross Amount
