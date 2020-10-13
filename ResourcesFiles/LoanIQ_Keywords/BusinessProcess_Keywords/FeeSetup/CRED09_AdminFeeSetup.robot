@@ -89,6 +89,7 @@ Setup Deal Agency Fee
 Setup Line Fee Capitalization
     [Documentation]    This keyword is used to setup Ongoing Fee Capitalization - Fee Level.
     ...    @author: rtarayao    
+    ...    @update: dahijara    07OCT2020    Updated argument passed for Pricing option in 'Validate Capitalized Line Fee details'
     [Arguments]    ${ExcelPath}
     ###Test Data Prep - Set varible first the base rate code to BBSY - Bid (For update once TL scripts is completed)###
     ${BaseRate_Code}    Read Data From Excel    CRED08_OngoingFeeSetup    Interest_BaseRateCode1    2    
@@ -109,7 +110,7 @@ Setup Line Fee Capitalization
     Write Data To Excel    CAP03_OngoingFeeCapitalization    Capitalization_FromDate    ${rowid}    ${Current_Date}
     Write Data To Excel    CAP03_OngoingFeeCapitalization    Capitalization_ToDate    ${rowid}    ${Future_Date}
     Create Line Fee Capitalization Rule    &{ExcelPath}[Capitalization_PctofPayment]    &{ExcelPath}[Facility_Name]    &{ExcelPath}[PricingOption]    &{ExcelPath}[Loan_Alias]    ${Current_Date}    ${Future_Date}
-    Validate Capitalized Line Fee details    ${Current_Date}    ${Future_Date}    &{ExcelPath}[Capitalization_PctofPayment]    ${BaseRate_Code}    &{ExcelPath}[Loan_Alias]
+    Validate Capitalized Line Fee details    ${Current_Date}    ${Future_Date}    &{ExcelPath}[Capitalization_PctofPayment]    &{ExcelPath}[PricingOption]    &{ExcelPath}[Loan_Alias]
     
     ###Save and Exit Line Fee Notebook####        
     Save and Exit Line Fee Notebook
