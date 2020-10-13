@@ -66,7 +66,7 @@ Validate Records for RPE_CDE_RISK_BOOK exist in LIQ
 Validate CUS_CID_CUST_ID and CUS_XID_CUST_ID in LIQ for VLS_Customer
     [Documentation]    This keyword validates CUS_CID_CUST_ID and CUS_XID_CUST_ID in LIQ for VLS_Customer
     ...    @author: ehugo    29AUG2019
-    ...    updated: mgaling    10OCT2020    Added on the loop function to handle UNKNOWN data
+    ...    updated: mgaling    10FEB2020    Added on the loop function to handle UNKNOWN data
     ...    updated: mgaling    07OCT2020    Created separate keyword for CUS_XID_CUST_ID validation  
     [Arguments]    ${sCustomer_CSVFileName}    
     
