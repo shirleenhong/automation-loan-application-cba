@@ -42,7 +42,8 @@ Enter Capitalize Interest Details
     ...    @author: ghabal
     ...    @update: fmamaril    07MAY2019    Remove writing on low level keyword
     ...    @update: sahalder    28MAY2020    Removed sleep and added page synchronization keyword, Added Take Screenshot
-    [Arguments]        ${s_LoanCapitalization_FromDate}    ${s_LoanCapitalization_ToDate}    ${s_PercentofPayment}
+    ...    @update: dahijara    07OCT2020    Added Post processing keyword
+    [Arguments]        ${s_LoanCapitalization_FromDate}    ${s_LoanCapitalization_ToDate}    ${s_PercentofPayment}    ${sRunVar_CapitalizeFrom_Value}=None
     
     ### GetRuntime Keyword Pre-processing ###
     ${LoanCapitalization_FromDate}    Acquire Argument Value    ${s_LoanCapitalization_FromDate}
@@ -62,6 +63,9 @@ Enter Capitalize Interest Details
     Mx LoanIQ Select Combo Box Value    ${LIQ_InterestCapitalization_ToLoan_DropdownList}    ${CapitalizeFrom_Value}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LoanInterest_Capitalization_details2
     Wait Until Keyword Succeeds    10    5    mx LoanIQ click    ${LIQ_InterestCapitalization_OKButton}
+	
+    ### Keyword Post-processing ###
+    Save Values of Runtime Execution on Excel File    ${sRunVar_CapitalizeFrom_Value}    ${CapitalizeFrom_Value}
     [RETURN]    ${CapitalizeFrom_Value}        
     
 Validate Capitalize Interest Details
@@ -69,6 +73,7 @@ Validate Capitalize Interest Details
     ...    @author: ghabal
     ...    @update: fmamaril    07MAY2019    Remove unnecessary spaces
     ...    @update: sahalder    28MAY2019    Added Runtime Keyword Pre-processing steps, Added Take Screenshot
+    ...    @update: dahijara    07OCT2020    Added screenshot.
     [Arguments]    ${s_LoanCapitalization_FromDate}    ${s_LoanCapitalization_ToDate}    ${s_PercentofPayment}    ${s_CapitalizeFromToLoan_Value}
     
     ### GetRuntime Keyword Pre-processing ###
@@ -82,6 +87,7 @@ Validate Capitalize Interest Details
     mx LoanIQ select    ${LIQ_InitialDrawdown_Options_CapitalizeInterest}
     mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
     Validate if Element is Checked    ${LIQ_InterestCapitalization_ActiveInterestCapitalization_Checkbox}    Activate Interest Capitalization
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LoanInterest_Capitalization_Validate
     Validate Loan IQ Details    ${LoanCapitalization_FromDate}    ${LIQ_InterestCapitalization_FromDate_DateField}
     Validate Loan IQ Details    ${LoanCapitalization_ToDate}    ${LIQ_InterestCapitalization_ToDate_DateField}
     ${LIQ_InterestCapitalization_PercentofPayment_InputField}    Mx LoanIQ Get Data    ${LIQ_InterestCapitalization_PercentofPayment_InputField}    textdata
