@@ -221,6 +221,7 @@ Get Single Row value from CSV File and Write to Excel for Base Rate
 Create Expected JSON for Base Rate TL
     [Documentation]    This keyword is used to create expected JSON payload for Base Rate Transformation Layer using the transformed data.
     ...    @author: clanding    20FEB2019    - initial create
+    ...    @update: mcastro     09OCT2020    - added condition for empty row in file
     [Arguments]    ${sTransformedData_FilePath}    ${sInputJsonFile}
     
     Open Excel    ${dataset_path}${sTransformedData_FilePath}    
@@ -236,13 +237,13 @@ Create Expected JSON for Base Rate TL
     \    
     \    ${dTransformedData}    Create Dictionary Using Transformed Data and Return    ${dataset_path}${sTransformedData_FilePath}    ${INDEX}
     \    ${val_subEntity}    Get From Dictionary    ${dTransformedData}    subEntity
-    \    ${New_JSON}    Update Key Values of Input JSON file for Base Rate TL	${dTransformedData}
+    \    ${New_JSON}    Run Keyword If    '${val_subEntity}'!='None'    Update Key Values of Input JSON file for Base Rate TL	${dTransformedData}
     \    Log    ${New_JSON}
     \    ${converted_json}    Evaluate    json.dumps(${New_JSON})    json
     \    Log    ${converted_json}
-    \    Run Keyword If    ${INDEX}==1 and '${val_subEntity}'!='null'    Append To File    ${dataset_path}${jsonfile}    ${converted_json}
-         ...    ELSE IF    ${INDEX}!=1 and ${File_Empty}==${True} and '${val_subEntity}'!='null'    Append To File    ${dataset_path}${jsonfile}    ${converted_json}
-         ...    ELSE IF    ${INDEX}!=1 and ${File_Empty}==${False} and '${val_subEntity}'!='null'    Append To File    ${dataset_path}${jsonfile}    ,${converted_json}
+    \    Run Keyword If    ${INDEX}==1 and '${val_subEntity}'!='null' and '${val_subEntity}'!='None'    Append To File    ${dataset_path}${jsonfile}    ${converted_json}
+         ...    ELSE IF    ${INDEX}!=1 and ${File_Empty}==${True} and '${val_subEntity}'!='null' and '${val_subEntity}'!='None'    Append To File    ${dataset_path}${jsonfile}    ${converted_json}
+         ...    ELSE IF    ${INDEX}!=1 and ${File_Empty}==${False} and '${val_subEntity}'!='null' and '${val_subEntity}'!='None'   Append To File    ${dataset_path}${jsonfile}    ,${converted_json}
     \    
     \    Exit For Loop If    ${INDEX}==${Row_Count}
 
@@ -427,6 +428,7 @@ Create Expected TextJMS XML for Base Rate TL
     [Documentation]    This keyword is used to create expected XML for every row in the csv file and save file name with Base Rate Code, Funding Desk and Repricing Frequency.
     ...    @author: clanding    27FEB2019    - initial create
     ...    @update: jdelacru    11AUG2020    - added new argument ${sTemplateFilePath}
+    ...    @update: mcastro     09OCT2020    - added condition for empty row in TransformedDataFile_BaseRate
     [Arguments]    ${sTransformedData_FilePath}    ${sInputFilePath}    ${sFileName}    ${sTemplateFilePath}
     
     Open Excel    ${dataset_path}${sTransformedData_FilePath}    
@@ -436,7 +438,9 @@ Create Expected TextJMS XML for Base Rate TL
     \    
     \    ${dTransformedData}    Create Dictionary Using Transformed Data and Return    ${dataset_path}${sTransformedData_FilePath}    ${INDEX}
     \    
-    \    Get Individual Subentity Value and Create XML for TL    ${dTransformedData}    ${sInputFilePath}    ${sFileName}    ${sTemplateFilePath}
+    \    ${subEntity_Val}    Get From Dictionary    ${dTransformedData}    subEntity
+    \    
+    \    Run Keyword If    '${subEntity_Val}'!='None'    Get Individual Subentity Value and Create XML for TL    ${dTransformedData}    ${sInputFilePath}    ${sFileName}    ${sTemplateFilePath}
     \    Exit For Loop If    ${INDEX}==${Row_Count}
     
     
@@ -610,6 +614,7 @@ Create Individual Expected JSON for Base Rate TL
     [Documentation]    This keyword is used to create indeividual expected JSON payload for Base Rate Transformation Layer using the transformed data.
     ...    @author: clanding    18MAR2019    - initial create
     ...    @update: jdelacru    21SEP2020    - added ${val_subEntity} variable to correct the filename of generated json file
+    ...    @update: mcastro     09OCT2020    - added condition for empty row on TransformedDataFile_BaseRate
     [Arguments]    ${sTransformedData_FilePath}    ${sInputJsonFile}
     
     Open Excel    ${dataset_path}${sTransformedData_FilePath}    
@@ -623,13 +628,13 @@ Create Individual Expected JSON for Base Rate TL
     \    ${val_rateTenor}    Run Keyword If    '${val_rateTenor}'==''    Set Variable    None
          ...    ELSE    Set Variable    ${val_rateTenor}
     \
-    \    ${New_JSON}    Update Key Values of Input JSON file for Base Rate TL	${dTransformedData}
+    \    ${New_JSON}    Run Keyword If    '${val_baseRateCode}'!='None' and '${val_rateTenor}'!='None'    Update Key Values of Input JSON file for Base Rate TL    ${dTransformedData}
     \    Log    ${New_JSON}
-    \    ${converted_json}    Evaluate    json.dumps(${New_JSON})        json
+    \    ${converted_json}    Run Keyword If    '${val_baseRateCode}'!='None' and '${val_rateTenor}'!='None'    Evaluate    json.dumps(${New_JSON})        json
     \    Log    ${converted_json}
     \    
     \    Delete File If Exist    ${dataset_path}${sInputJsonFile}_${val_baseRateCode}_${val_rateTenor}.json
-    \    Create File    ${dataset_path}${sInputJsonFile}_${val_baseRateCode}_${val_rateTenor}.json    ${converted_json}
+    \    Run Keyword If    '${val_baseRateCode}'!='None' and '${val_rateTenor}'!='None'    Create File    ${dataset_path}${sInputJsonFile}_${val_baseRateCode}_${val_rateTenor}.json    ${converted_json}
     \    
     \    Exit For Loop If    ${INDEX}==${Row_Count}
     
