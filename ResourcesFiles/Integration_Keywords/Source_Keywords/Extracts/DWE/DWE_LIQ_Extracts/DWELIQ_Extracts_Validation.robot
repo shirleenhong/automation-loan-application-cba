@@ -154,10 +154,15 @@ Validate DWH Folder from Landing Area
 Download Compressed and JSON File from Extraction Area
     [Documentation]    This keyword is used to go to Extraction Area and download compressed file (GPG) and json file.
     ...    @author: clanding    10JUL2020    - initial create
+    ...    @update: clanding    12OCT2020    - added condition of extract file name per zone
     [Arguments]    ${sZone}    ${sExtract_Path}    ${sBus_Date}
 
     @{ExtractionArea_Files}    SSHLibrary.List Directory    ${DWE_EXTRACTION_AREA_PATH}${sZone}
     ${Bus_Date_Converted}    Remove String    ${sBus_Date}    -
+    
+    ${DWE_CCB_LIQ_ZONE_FILENAME}    Run Keyword If    '${sZone}'=='ZONE3'    Set Variable    ${DWE_CCB_LIQ_ZONE_FILENAME}SYD_
+    ...    ELSE IF    '${sZone}'=='ZONE2'    Set Variable    ${DWE_CCB_LIQ_ZONE_FILENAME}EUR_
+
     :FOR    ${File}    IN    @{ExtractionArea_Files}
     \    ${File_To_Download_GPG}    Run Keyword And Return Status    Should Be Equal    ${File}    ${DWE_CCB_LIQ_ZONE_FILENAME}${Bus_Date_Converted}${DWE_TAR_GZ_GPG_EXT}
     \    ${File_To_Download_JSON}    Run Keyword And Return Status    Should Be Equal    ${File}    ${DWE_CCB_LIQ_ZONE_FILENAME}${Bus_Date_Converted}.json

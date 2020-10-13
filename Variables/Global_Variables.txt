@@ -262,7 +262,7 @@ ${INVALID_CURRENCYPAIR}    Currency pair should include [USD] as one of the curr
 
 ${INVALID_GS_VENDOR_PUBLISH_DATE}    GS_VENDOR_PUBLISH_DATE field value date format is invalid. valid format - [yyyy-MM-dd]
 ${INVALID_BASE_GS_INSTR_PRICE}    GS_INSTR_PRICE field value should be a number
-${GS_INSTR_PRC_TYPE}    GS_INSTR_PRC_TYPE field value is not a valid Base Rate Price Type value
+${INVALIDBASE_GS_INSTR_PRC_TYPE}    GS_INSTR_PRC_TYPE field value is not a valid Base Rate Price Type value
 ${GS_INSTR_TENOR}    GS_INSTR_TENOR field value not a valid rate tenor. valid format - nnn(DAYS|MNTH|YEAR|WEEK)
 
 ${INVALIDFILEFORMAT}    INVALIDFILEFORMAT
@@ -404,6 +404,7 @@ ${POSTAPIRESPONSE}
 
 ### Riskbook ###
 ${TL_Transformed_Data_BaseRate}    TL_Transformed_Data_BaseRate.xlsx
+${TL_Transformed_Data_BaseRate_2}    TL_Transformed_Data_BaseRate_2.xlsx
 ${TL_Transformed_Data_template_BaseRate}    TL_Transformed_Data_template_BaseRate.xlsx
 
 ${TL_Transformed_Data_FXRates}    TL_Transformed_Data_FXRates.xlsx

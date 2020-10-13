@@ -25,6 +25,8 @@ Create Party in Quick Party Onboarding
     ...										   Enterprise Summary Details Screen, added return keyword for Scenario 0, added Pause execution to 
     ...										   skip blocked test steps
     ...    @update: javinzon    02OCT2020    - Added Write Data To Excel keyword for Party ID of PTY_007_DuplicateEnterpriseName
+    ...    @update: makcamps    05OCT2020    - Added Write Data To Excel keyword for Party ID of Scenario 1
+    ...    @update: javinzon    12OCT2020    - Added State_Province argument in Validate Party details in LIQ. Removed Pause Execution keyword.    
     [Arguments]    ${ExcelPath}
     
     ### INPUTTER ###
@@ -71,10 +73,9 @@ Create Party in Quick Party Onboarding
     ...    &{ExcelPath}[Business_Country]    &{ExcelPath}[Industry_Sector]    &{ExcelPath}[Business_Activity]    &{ExcelPath}[Is_Main_Activity]    &{ExcelPath}[Is_Primary_Activity]    &{ExcelPath}[GST_Number]
     ...    &{ExcelPath}[UserZone]    &{ExcelPath}[UserBranch]    
 
-    Pause Execution    Pausing the rest of the script due to a blocker in LIQ connection
     Validate Party Details in Loan IQ    ${Party_ID}    ${Short_Name}    ${Enterprise_Name}    &{ExcelPath}[GST_Number]    &{ExcelPath}[Party_Sub_Type]    &{ExcelPath}[Business_Activity]    &{ExcelPath}[Business_Country]
     ...    &{ExcelPath}[Address_Type]    &{ExcelPath}[Address_Line_1]    &{ExcelPath}[Address_Line_2]    &{ExcelPath}[Address_Line_3]    &{ExcelPath}[Address_Line_4]    
-    ...    &{ExcelPath}[Town_City]    &{ExcelPath}[Country_of_Registration]    &{ExcelPath}[Country_of_Tax_Domicile]    &{ExcelPath}[Post_Code]
+    ...    &{ExcelPath}[Town_City]    &{ExcelPath}[Country_of_Registration]    &{ExcelPath}[Country_of_Tax_Domicile]    &{ExcelPath}[State_Province]    &{ExcelPath}[Post_Code]
 
     Return From Keyword If    '${SCENARIO}'=='0'  
     
@@ -86,7 +87,9 @@ Create Party in Quick Party Onboarding
     ...    AND    Write Data To Excel    CRED02_FacilitySetup    Facility_Borrower    ${rowid}    ${Enterprise_Name}
     ...    AND    Write Data To Excel    ORIG03_Customer    LIQCustomer_ShortName    ${rowid}    ${Enterprise_Name}
     ...    AND    Write Data To Excel    ORIG03_Customer    LIQCustomer_LegalName    ${rowid}    ${Enterprise_Name}
+    ...    AND    Write Data To Excel    ORIG03_Customer    LIQCustomer_ID    ${rowid}    ${Party_ID}
     ...    AND    Write Data To Excel    PTY001_QuickPartyOnboarding    Enterprise_Name    ${rowid}    ${Enterprise_Name}
+    ...    AND    Write Data To Excel    PTY001_QuickPartyOnboarding    Party_ID    ${rowid}    ${Party_ID}
     ...    AND    Write Data To Excel    SERV01_LoanDrawdown    Borrower1_ShortName    ${rowid}    ${Enterprise_Name}
     ...    AND    Write Data To Excel    SERV01_LoanDrawdown    LIQCustomer_ShortName    ${rowid}    ${Enterprise_Name}
     ...    AND    Write Data To Excel    SERV18_Payments    Borrower1_ShortName    ${rowid}    ${Enterprise_Name}

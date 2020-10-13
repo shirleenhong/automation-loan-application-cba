@@ -4,6 +4,10 @@ LIQ_LineFee_InquiryMode_Button = 'JavaWindow("title:=Line Fee.*").JavaButton("at
 LIQ_LineFee_Capitalization_Menu = 'JavaWindow("title:=Line Fee.*").JavaMenu("label:=Options").JavaMenu("label:=Capitalization")'
 LIQ_LineFee_Save_Menu = 'JavaWindow("title:=Line Fee.*").JavaMenu("label:=File").JavaMenu("label:=Save")'
 LIQ_LineFee_Exit_Menu = 'JavaWindow("title:=Line Fee.*").JavaMenu("label:=File").JavaMenu("label:=Exit")'
+LIQ_LineFee_Update_Menu = 'JavaWindow("title:=Line Fee.*").JavaMenu("label:=Options").JavaMenu("label:=Update")'
+LIQ_LineFee_ChangeExpiryDate_Menu = 'JavaWindow("title:=Line Fee.*").JavaMenu("label:=Options").JavaMenu("label:=Change Expiry Date")'
+LIQ_LineFee_ExpiryDate = 'JavaWindow("title:=Fee Expiry Date.*").JavaEdit("attached text:=Expiry Date.*")'
+LIQ_LineFee_ExpiryDate_OK_Button = 'JavaWindow("title:=Fee Expiry Date.*").JavaButton("attached text:=OK")'
 # LIQ_LineFee_CurrentRate_Field = 'JavaWindow("title:=Line Fee .*Released:.*").JavaEdit("attached text:=Current Rate:")'
 LIQ_LineFee_CurrentRate_Field = 'JavaWindow("title:=Line Fee.*").JavaEdit("attached text:=Current Rate:")'
 LIQ_LineFee_BalanceAmount_Field = 'JavaWindow("title:=Line Fee .*Released:.*").JavaEdit("attached text:=Balance Amount:")'
@@ -29,7 +33,8 @@ LIQ_LineFee_CapitalizationEditor_ToDate_Textfield = 'JavaWindow("title:=Facility
 LIQ_LineFee_CapitalizationEditor_PctofPayment_RadioButton = 'JavaWindow("title:=Facility Ongoing Fee Capitalization Editor").JavaRadioButton("attached text:=Percent of Payment")'
 LIQ_LineFee_CapitalizationEditor_PctofPayment_Textfield = 'JavaWindow("title:=Facility Ongoing Fee Capitalization Editor").JavaEdit("attached text:=To Date", "index:=2")'
 LIQ_LineFee_CapitalizationEditor_ToFacility_DropdownList = 'JavaWindow("title:=Facility Ongoing Fee Capitalization Editor").JavaList("attached text:=To Facility")'
-LIQ_LineFee_CapitalizationEditor_ToLoan_DropdownList = 'JavaWindow("title:=Facility Ongoing Fee Capitalization Editor").JavaList("attached text:=To Loan")'
+# LIQ_LineFee_CapitalizationEditor_ToLoan_DropdownList = 'JavaWindow("title:=Facility Ongoing Fee Capitalization Editor").JavaList("attached text:=To Loan")'
+LIQ_LineFee_CapitalizationEditor_ToLoan_DropdownList = 'JavaWindow("title:=Facility Ongoing Fee Capitalization Editor").JavaList("attached text:=Currency.*")' ### attached text value was updated (LIQ 7.5.1.2 HF2 version)
 LIQ_LineFee_CapitalizationEditor_OK_Button = 'JavaWindow("title:=Facility Ongoing Fee Capitalization Editor").JavaButton("attached text:=OK")'
 
 ###Line Fee Notebook - Accrual Tab###

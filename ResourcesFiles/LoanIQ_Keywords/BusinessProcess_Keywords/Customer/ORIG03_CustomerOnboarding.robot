@@ -464,6 +464,10 @@ Search Customer and Complete its Borrower Profile Creation with default values
     ...    @update: hstone     04MAY2020    - Updated 'Add Classification Code Details under General tab' Arguments to take Excel Data Values
     ...    @update: dahijara    07JUL2020    - added writing in SERV23_LoanPaperClip for Borrower1_RTGSRemittanceDescription
     ...    @update: dahijara    08JUL2020    - added writing for scenario 6 - SERV29_PaymentFees-Borrower1_ContactEmail
+    ...    @update: makcamps    08OCT2020    - Deleted click ServicingGroupWindow_ExitButton before Validate Active Window Customer method because
+    ...                                        Servicing Group Window is closed in Close Servicing Group Remittance Instructions Selection List Window method
+    ...    @update: fjluberio    10OCT2020    -added Entity conditions for EU when adding remittance instruction
+    ...    @update: makcamps    09OCT2020    - Added write data to excel method for Deal and Facility Setup data
     [Arguments]    ${ExcelPath}
 	
 	## Login to LoanIQ###
@@ -483,6 +487,13 @@ Search Customer and Complete its Borrower Profile Creation with default values
 	Write Data To Excel    ORIG03_Customer    RemittanceInstruction_DDADescriptionAUD    ${rowid}    ${RemittanceInstruction_DDADescriptionAUD}
 	Write Data To Excel    ORIG03_Customer    RemittanceInstruction_IMTDescriptionUSD    ${rowid}    ${RemittanceInstruction_IMTDescriptionUSD}
 	Write Data To Excel    ORIG03_Customer    RemittanceInstruction_RTGSDescriptionAUD    ${rowid}    ${RemittanceInstruction_RTGSDescriptionAUD}
+	
+    Write Data To Excel    CRED01_DealSetup    Borrower_SG_GroupMembers    ${rowid}    &{ExcelPath}[Contact_FullName]
+    Write Data To Excel    CRED01_DealSetup    Borrower_SG_Alias    ${rowid}    &{ExcelPath}[Contact_Initials]
+    Write Data To Excel    CRED01_DealSetup    Borrower_SG_Name    ${rowid}    &{ExcelPath}[Group_Contact]
+    Write Data To Excel    CRED01_DealSetup    Borrower1_ShortName    ${rowid}   &{ExcelPath}[LIQCustomer_ShortName]
+    Write Data To Excel    CRED02_FacilitySetup    Facility_Borrower    ${rowid}    &{ExcelPath}[LIQCustomer_ShortName]
+    Write Data To Excel    CRED02_FacilitySetup    Facility_BorrowerSGName    ${rowid}    &{ExcelPath}[Group_Contact]
 	
 	Write Remittance Description    ${SCENARIO}    &{ExcelPath}[Remittance_Instruction]    ${RemittanceInstruction_DDADescriptionAUD}    ${RemittanceInstruction_IMTDescriptionUSD}    ${RemittanceInstruction_RTGSDescriptionAUD}
 
@@ -567,15 +578,16 @@ Search Customer and Complete its Borrower Profile Creation with default values
     Sleep    4s
     mx LoanIQ click    ${RemittanceInstructions_Button} 
     
-    Add DDA Remittance Instruction    &{ExcelPath}[Customer_Location]    &{ExcelPath}[RemittanceInstruction_DDAMethod]    ${RemittanceInstruction_DDADescriptionAUD}    &{ExcelPath}[RemittanceInstruction_DDAAccountName]    &{ExcelPath}[RemittanceInstruction_DDAAccountNumber] 
+    Run Keyword If    '&{ExcelPath}[Entity]' == 'AU'    Run Keywords    Add DDA Remittance Instruction    &{ExcelPath}[Customer_Location]    &{ExcelPath}[RemittanceInstruction_DDAMethod]    ${RemittanceInstruction_DDADescriptionAUD}    &{ExcelPath}[RemittanceInstruction_DDAAccountName]    &{ExcelPath}[RemittanceInstruction_DDAAccountNumber] 
     ...    &{ExcelPath}[RemittanceInstruction_DDACurrencyAUD]    &{ExcelPath}[RI_ProductLoan_Checkbox]    &{ExcelPath}[RI_ProductSBLC_Checkbox]    &{ExcelPath}[RI_FromCust_Checkbox]    &{ExcelPath}[RI_ToCust_Checkbox]    &{ExcelPath}[RI_BalanceType_Principal_Checkbox]    
     ...    &{ExcelPath}[RI_BalanceType_Interest_Checkbox]    &{ExcelPath}[RI_BalanceType_Fees_Checkbox]    &{ExcelPath}[RI_AutoDoIt_Checkbox]   
-    
-    Add IMT Remittance Instruction    &{ExcelPath}[Customer_Location]    &{ExcelPath}[RemittanceInstruction_IMTMethod]    ${RemittanceInstruction_IMTDescriptionUSD}    &{ExcelPath}[RemittanceInstruction_IMTCurrencyUSD]
+    ...    AND    Add IMT Remittance Instruction    &{ExcelPath}[Customer_Location]    &{ExcelPath}[RemittanceInstruction_IMTMethod]    ${RemittanceInstruction_IMTDescriptionUSD}    &{ExcelPath}[RemittanceInstruction_IMTCurrencyUSD]
     ...    &{ExcelPath}[RemittanceInstruction_DirectionSelected]    &{ExcelPath}[IMT_MessageCode]    &{ExcelPath}[BOC_Level]    
     ...    &{ExcelPath}[RI_FromCust_Checkbox]    &{ExcelPath}[RI_AutoDoIt_Checkbox]    &{ExcelPath}[RI_SendersCorrespondent_Checkbox]
-        
-    Add RTGS Remittance Instruction    &{ExcelPath}[Customer_Location]    &{ExcelPath}[RemittanceInstruction_RTGSMethod]    ${RemittanceInstruction_RTGSDescriptionAUD}    &{ExcelPath}[RemittanceInstruction_RTGSCurrencyAUD]
+    ...    AND    Add RTGS Remittance Instruction    &{ExcelPath}[Customer_Location]    &{ExcelPath}[RemittanceInstruction_RTGSMethod]    ${RemittanceInstruction_RTGSDescriptionAUD}    &{ExcelPath}[RemittanceInstruction_RTGSCurrencyAUD]
+    ...    &{ExcelPath}[RemittanceInstruction_DirectionSelected]    &{ExcelPath}[IMT_MessageCode]    &{ExcelPath}[BOC_Level]    
+    ...    &{ExcelPath}[RI_FromCust_Checkbox]    &{ExcelPath}[RI_AutoDoIt_Checkbox]    &{ExcelPath}[RI_SendersCorrespondent_Checkbox]
+    ...    ELSE IF    '&{ExcelPath}[Entity]' == 'EU'    Add IMT Remittance Instruction    &{ExcelPath}[Customer_Location]    &{ExcelPath}[RemittanceInstruction_IMTMethod]    ${RemittanceInstruction_IMTDescriptionUSD}    &{ExcelPath}[RemittanceInstruction_IMTCurrencyUSD]
     ...    &{ExcelPath}[RemittanceInstruction_DirectionSelected]    &{ExcelPath}[IMT_MessageCode]    &{ExcelPath}[BOC_Level]    
     ...    &{ExcelPath}[RI_FromCust_Checkbox]    &{ExcelPath}[RI_AutoDoIt_Checkbox]    &{ExcelPath}[RI_SendersCorrespondent_Checkbox]
         
@@ -594,9 +606,11 @@ Search Customer and Complete its Borrower Profile Creation with default values
     
     ###Approving Added Remittance Instructions - First Approval   
     Access Remittance List upon Login    &{ExcelPath}[Profile_Type]    &{ExcelPath}[Customer_Location]
-    Approving Remittance Instruction    ${RemittanceInstruction_DDADescriptionAUD}   &{ExcelPath}[Customer_Location]
-    Approving Remittance Instruction    ${RemittanceInstruction_IMTDescriptionUSD}   &{ExcelPath}[Customer_Location]
-    Approving Remittance Instruction    ${RemittanceInstruction_RTGSDescriptionAUD}    &{ExcelPath}[Customer_Location]
+    Run Keyword If    '&{ExcelPath}[Entity]' == 'AU'    Run Keywords    Approving Remittance Instruction    ${RemittanceInstruction_DDADescriptionAUD}   &{ExcelPath}[Customer_Location]
+    ...    AND    Approving Remittance Instruction    ${RemittanceInstruction_IMTDescriptionUSD}   &{ExcelPath}[Customer_Location]
+    ...    AND    Approving Remittance Instruction    ${RemittanceInstruction_RTGSDescriptionAUD}    &{ExcelPath}[Customer_Location]
+ 
+    Run Keyword If    '&{ExcelPath}[Entity]' == 'EU'    Approving Remittance Instruction    ${RemittanceInstruction_IMTDescriptionUSD}   &{ExcelPath}[Customer_Location]
                 
     mx LoanIQ click    ${RemittanceList_Window_ExitButton}
     Sleep    4s
@@ -613,14 +627,16 @@ Search Customer and Complete its Borrower Profile Creation with default values
     
     ###Approving Added Remittance Instructions - Second Approval   
     Access Remittance List upon Login    &{ExcelPath}[Profile_Type]    &{ExcelPath}[Customer_Location]
-    Approving Remittance Instruction    ${RemittanceInstruction_DDADescriptionAUD}   &{ExcelPath}[Customer_Location]
-    Approving Remittance Instruction    ${RemittanceInstruction_IMTDescriptionUSD}   &{ExcelPath}[Customer_Location]
-    Approving Remittance Instruction    ${RemittanceInstruction_RTGSDescriptionAUD}    &{ExcelPath}[Customer_Location]
+    Run Keyword If    '&{ExcelPath}[Entity]' == 'AU'    Run Keywords    Approving Remittance Instruction    ${RemittanceInstruction_DDADescriptionAUD}   &{ExcelPath}[Customer_Location]
+    ...    AND    Approving Remittance Instruction    ${RemittanceInstruction_IMTDescriptionUSD}   &{ExcelPath}[Customer_Location]
+    ...    AND    Approving Remittance Instruction    ${RemittanceInstruction_RTGSDescriptionAUD}    &{ExcelPath}[Customer_Location]
+    ...    ELSE IF    '&{ExcelPath}[Entity]' == 'EU'    Approving Remittance Instruction    ${RemittanceInstruction_IMTDescriptionUSD}   &{ExcelPath}[Customer_Location]
     
     ###Releasing Added Remittance Instructions
-    Releasing Remittance Instruction    ${RemittanceInstruction_DDADescriptionAUD}    &{ExcelPath}[Customer_Location]
-    Releasing Remittance Instruction    ${RemittanceInstruction_IMTDescriptionUSD}    &{ExcelPath}[Customer_Location]
-    Releasing Remittance Instruction    ${RemittanceInstruction_RTGSDescriptionAUD}    &{ExcelPath}[Customer_Location]
+    Run Keyword If    '&{ExcelPath}[Entity]' == 'AU'    Run Keywords    Releasing Remittance Instruction    ${RemittanceInstruction_DDADescriptionAUD}    &{ExcelPath}[Customer_Location]
+    ...    AND    Releasing Remittance Instruction    ${RemittanceInstruction_IMTDescriptionUSD}    &{ExcelPath}[Customer_Location]
+    ...    AND    Releasing Remittance Instruction    ${RemittanceInstruction_RTGSDescriptionAUD}    &{ExcelPath}[Customer_Location]
+    ...    ELSE IF    '&{ExcelPath}[Entity]' == 'EU'    Releasing Remittance Instruction    ${RemittanceInstruction_IMTDescriptionUSD}    &{ExcelPath}[Customer_Location]
                   
     mx LoanIQ click    ${RemittanceList_Window_ExitButton}
     Sleep    4s
@@ -639,20 +655,21 @@ Search Customer and Complete its Borrower Profile Creation with default values
     Access Remittance List upon Login    &{ExcelPath}[Profile_Type]    &{ExcelPath}[Customer_Location]
     
     ###Rechecked Added Remittance Instructions for Location if they are in 'Approved' status
-    Read Excel Data and Validate Remittance Instructions Data Added in the Remittance List Window    ${RemittanceInstruction_DDADescriptionAUD}    &{ExcelPath}[Customer_Location]
-    Read Excel Data and Validate Remittance Instructions Data Added in the Remittance List Window    ${RemittanceInstruction_IMTDescriptionUSD}    &{ExcelPath}[Customer_Location]
-    Read Excel Data and Validate Remittance Instructions Data Added in the Remittance List Window    ${RemittanceInstruction_RTGSDescriptionAUD}    &{ExcelPath}[Customer_Location]
+    Run Keyword If    '&{ExcelPath}[Entity]' == 'AU'    Run Keywords    Read Excel Data and Validate Remittance Instructions Data Added in the Remittance List Window    ${RemittanceInstruction_DDADescriptionAUD}    &{ExcelPath}[Customer_Location]
+    ...    AND    Read Excel Data and Validate Remittance Instructions Data Added in the Remittance List Window    ${RemittanceInstruction_IMTDescriptionUSD}    &{ExcelPath}[Customer_Location]
+    ...    AND    Read Excel Data and Validate Remittance Instructions Data Added in the Remittance List Window    ${RemittanceInstruction_RTGSDescriptionAUD}    &{ExcelPath}[Customer_Location]
+    ...    ELSE IF    '&{ExcelPath}[Entity]' == 'EU'     Read Excel Data and Validate Remittance Instructions Data Added in the Remittance List Window    ${RemittanceInstruction_IMTDescriptionUSD}    &{ExcelPath}[Customer_Location]
     mx LoanIQ click    ${RemittanceList_Window_ExitButton}
         
     Add Servicing Groups Details    &{ExcelPath}[LIQCustomer_ShortName]    &{ExcelPath}[Group_Contact]   &{ExcelPath}[Contact_LastName]
     
-    Add Remittance Instruction to Servicing Group    ${RemittanceInstruction_DDADescriptionAUD}    
-    Add Remittance Instruction to Servicing Group    ${RemittanceInstruction_IMTDescriptionUSD}
-    Add Remittance Instruction to Servicing Group    ${RemittanceInstruction_RTGSDescriptionAUD}
+    Run Keyword If    '&{ExcelPath}[Entity]' == 'AU'    Run Keywords    Add Remittance Instruction to Servicing Group    ${RemittanceInstruction_DDADescriptionAUD}   
+    ...    AND    Add Remittance Instruction to Servicing Group    ${RemittanceInstruction_IMTDescriptionUSD}
+    ...    AND    Add Remittance Instruction to Servicing Group    ${RemittanceInstruction_RTGSDescriptionAUD}
+    ...    ELSE IF    '&{ExcelPath}[Entity]' == 'EU'     Add Remittance Instruction to Servicing Group    ${RemittanceInstruction_IMTDescriptionUSD}
     
     Close Servicing Group Remittance Instructions Selection List Window    &{ExcelPath}[LIQCustomer_ShortName]
      
-    mx LoanIQ click    ${ServicingGroupWindow_ExitButton}
     Validate 'Active Customer' Window    &{ExcelPath}[LIQCustomer_ShortName] 
         
     ###Saving Customer Details

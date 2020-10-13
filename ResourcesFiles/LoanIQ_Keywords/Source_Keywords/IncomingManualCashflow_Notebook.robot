@@ -82,6 +82,7 @@ Add Credit Offset in Incoming Manual Cashflow Notebook
     ...    @author: mgaling
     ...    @update: hstone     03JUL2020     - Added Keyword Pre-processing
     ...                        07JUL2020     - Added Portfolio Code Input Handling
+    ...    @update: dahijara    09OCT2020    - Updated keyword for selecting in combobox. From "mx LoanIQ select list" to "Mx LoanIQ Select Combo Box Value"
     [Arguments]    ${sUpfrontFee_Amount}    ${sGL_ShortName}    ${sPortfolioCode}=None
     
     ### Keyword Pre-processing ###
@@ -95,7 +96,7 @@ Add Credit Offset in Incoming Manual Cashflow Notebook
     mx LoanIQ activate window    ${LIQ_CreditGLOffsetDetails_Window}
     Mx LoanIQ Set    ${LIQ_CreditGLOffsetDetails_NewWIP_RadioButton}    ON
     mx LoanIQ enter    ${LIQ_CreditGLOffsetDetails_Amount_Field}    ${UpfrontFee_Amount}
-    mx LoanIQ select list    ${LIQ_CreditGLOffsetDetails_GLShortName_List}    ${GL_ShortName}
+    Mx LoanIQ Select Combo Box Value    ${LIQ_CreditGLOffsetDetails_GLShortName_List}    ${GL_ShortName}
     Run Keyword If    '${sPortfolioCode}'!='None'    Run Keywords    mx LoanIQ click    ${LIQ_CreditGLOffsetDetails_Portfolio_Button}
     ...    AND    mx LoanIQ activate window    ${LIQ_SelectPortfolioCode_Window}
     ...    AND    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/SelectPortfolioCode

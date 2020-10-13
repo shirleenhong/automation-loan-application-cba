@@ -12,8 +12,8 @@ Send FXRates GS Group 1 File with Duplicate Records
     Login to Loan IQ    ${TL_USERNAME}    ${TL_PASSWORD}
     ${fundingDeskStatus}    Get Funding Desk Status from Table Maintenance    &{ExcelPath}[FundingDesk_1]
     ${CSVFile}    Set Variable    &{ExcelPath}[InputFilePath]&{ExcelPath}[InputGSFile]
-    ${TransformedDataFile_FXRates}    Set Variable    &{ExcelPath}[TemplateFilePath]${TL_Transformed_Data_FXRates}
-    ${TransformedDataFileXML_FXRates}    Set Variable    &{ExcelPath}[TemplateFilePath]${TL_Transformed_Data_XMLFXRates}
+    ${TransformedDataFile_FXRates}    Set Variable    &{ExcelPath}[InputFilePath]${TL_Transformed_Data_FXRates}
+    ${TransformedDataFileXML_FXRates}    Set Variable    &{ExcelPath}[InputFilePath]${TL_Transformed_Data_XMLFXRates}
     ${TransformedDataFile_Template_FXRates}    Set Variable    &{ExcelPath}[TemplateFilePath]${TL_Transformed_Data_template_FXRates}
     ${row}    Generate Single Random Number and Return    1    19
     Transform FXRates CSV Data to XLS File Readable for JSON Creation    ${CSVFile}    ${TransformedDataFile_FXRates}    ${TransformedDataFile_Template_FXRates}    ${TransformedDataFileXML_FXRates}    &{ExcelPath}[FundingDesk_1]

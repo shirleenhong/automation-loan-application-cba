@@ -195,6 +195,8 @@ DWE_PASSPHRASE = ""
 DWE_TAR_GZ_EXT = ""
 DWE_TAR_GZ_GPG_EXT = ""
 DWE_CCB_LIQ_ZONE_FILENAME = ""
+TestCase_Name_FuncVal = ""
+DWELIQFunc_Dataset_SheetName = ""
 
 ### GL ###
 GL_LIQ_USER = ""
@@ -212,6 +214,9 @@ ESS_AUWASADMIN_SCHEMA = ""
 ESS_EUWASADMIN_SCHEMA = ""
 GL_VALIDATION_TOOL_PATH = ""
 GL_VALIDATION_TOOL_JAR = ""
+GL_VALIDATION_TOOL_JAR_AU = ""
+GL_VALIDATION_TOOL_JAR_EU = ""
+DATAROW_INDEX = ""
 
 import os
 project_path = os.path.dirname(os.path.realpath(__file__)).replace("MDM_ConfigFile","")
