@@ -195,6 +195,8 @@ DWE_PASSPHRASE = ""
 DWE_TAR_GZ_EXT = ""
 DWE_TAR_GZ_GPG_EXT = ""
 DWE_CCB_LIQ_ZONE_FILENAME = ""
+TestCase_Name_FuncVal = ""
+DWELIQFunc_Dataset_SheetName = ""
 
 ### GL ###
 GL_LIQ_USER = ""

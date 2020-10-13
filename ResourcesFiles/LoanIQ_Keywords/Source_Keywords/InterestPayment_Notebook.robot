@@ -815,12 +815,14 @@ Initiate Loan Interest Payment Details from Loan Notebook
 Release Payment
     [Documentation]    This keyword is used to Release the Payment made.
     ...    @author: rtarayao
+    ...    @update: cfrancis    - added clicking question button for confirming release
    
     mx LoanIQ activate    ${LIQ_Payment_Window}
     Mx LoanIQ Verify Text In Javatree    ${LIQ_Payment_WorkflowItems}    Release%yes
     Mx LoanIQ DoubleClick    ${LIQ_Payment_WorkflowItems}    Release
     mx LoanIQ click element if present    ${LIQ_Question_Yes_Button}
     Run Keyword And Ignore Error    Repeat Keyword    3    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}  
+    mx LoanIQ click element if present    ${LIQ_Question_Yes_Button}
     Run Keyword And Continue On Failure    Verify Window    ${LIQ_Payment_Released_Status_Window} 
     Run Keyword And Continue On Failure    Mx LoanIQ Verify Object Exist    ${LIQ_Payment_WorkflowItem_Null}        VerificationData="Yes"
     

@@ -66,8 +66,8 @@ Validate Records for RPE_CDE_RISK_BOOK exist in LIQ
 Validate CUS_CID_CUST_ID and CUS_XID_CUST_ID in LIQ for VLS_Customer
     [Documentation]    This keyword validates CUS_CID_CUST_ID and CUS_XID_CUST_ID in LIQ for VLS_Customer
     ...    @author: ehugo    29AUG2019
-    ...    updated: mgaling    10Feb2020    Added on the loop function to handle UNKNOWN data
-    ...    updated: mgaling    07Oct2020    Created separate keyword for CUS_XID_CUST_ID validation  
+    ...    updated: mgaling    10FEB2020    Added on the loop function to handle UNKNOWN data
+    ...    updated: mgaling    07OCT2020    Created separate keyword for CUS_XID_CUST_ID validation  
     [Arguments]    ${sCustomer_CSVFileName}    
     
     ${Customer_CSV_Content}    Read Csv File To List    ${sCustomer_CSVFileName}    |
@@ -1032,8 +1032,9 @@ Validate OTR_CDE_TYPE records exist in LIQ for VLS_OST_TRAN
 
 Validate CSV values in LIQ for VLS_Deal
     [Documentation]    This keyword is used to validate the Deal CSV values from CSV to LIQ Screen - Deal Notebook
-    ...    @author: mgaling    10Sep2019    Initial Create
-    ...    @update: mgaling    17Feb2020    Added strip for Class and condition for Deal Notebook status validation
+    ...    @author: mgaling    10Sep2019    - initial Create
+    ...    @update: mgaling    17Feb2020    - Added strip for Class and condition for Deal Notebook status validation
+
     [Arguments]    ${aTable_NameList}    ${DEA_PID_DEAL_Index}    ${DEA_DTE_APPROVED_Index}    ${DEA_DTE_TERM_EFF_Index}    ${DEA_DTE_CANCEL_EFF_Index}    ${DEA_CDE_ORIG_CCY_Index}
     ...    ${DEA_IND_ACTIVE_Index}    ${DEA_IND_SOLE_LENDR_Index}    ${DEA_CDE_EXPENSE_Index}    ${DEA_DTE_DEAL_CLSD_Index}                
     ...    ${DEA_DTE_AGREEMENT_Index}    ${DEA_CDE_DEAL_STAT_Index}    ${DEA_CDE_DEAL_CLASS_Index}    ${DEA_CDE_BRANCH_Index}
@@ -1058,29 +1059,29 @@ Validate CSV values in LIQ for VLS_Deal
     \    ${BRANCH}    Remove String    @{Table_NameList}[${DEA_CDE_BRANCH_Index}]    "
     \    
     \    ### Get Class Classification Code Description in Table Maintenance ###
-    \    Run Keyword If    "${CLASS.strip()}"!="Empty"    Run Keywords    Select Actions    [Actions];Table Maintenance
+    \    Run Keyword If    "${CLASS.strip()}"!="${EMPTY}"    Run Keywords    Select Actions    [Actions];Table Maintenance
          ...    AND    Search in Table Maintenance    Deal Classification
-    \    ${Class_Desc}    Run Keyword If    "${CLASS.strip()}"!="Empty"    Get Single Description from Table Maintanance    ${CLASS.strip()}    ${LIQ_BrowseDealClassification_Window}    ${LIQ_BrowseDealClassification_JavaTree}    ${LIQ_BrowseDealClassification_ShowAll_Button}    ${LIQ_BrowseDealClassification_Exit_Button}    
+    \    ${Class_Desc}    Run Keyword If    "${CLASS.strip()}"!="${EMPTY}"    Get Single Description from Table Maintanance    ${CLASS.strip()}    ${LIQ_BrowseDealClassification_Window}    ${LIQ_BrowseDealClassification_JavaTree}    ${LIQ_BrowseDealClassification_ShowAll_Button}    ${LIQ_BrowseDealClassification_Exit_Button}    
     \    Close All Windows on LIQ
     \    ### Launch Deal thru RID ###
-    \    ${RID_IsExist}    Run Keyword And Return Status    Navigate to Notebook Window thru RID    Deal    ${RID_Deal}
+    \    ${RID_IsExist}    Run Keyword And Return Status    Navigate to Notebook Window thru RID    Deal    ${RID_Deal.strip()}
     \    Run Keyword If    "${RID_IsExist}"=="${False}"    Run Keyword And Continue On Failure    Fail    ${RID_Deal} does not exist!        
     \    ### Events Tab Validation ###
-    \    Run Keyword If    "${DTE_APPROVED}"!="${Empty}" and "${RID_IsExist}"=="${True}"     Run Keyword And Continue On Failure    Validate CSV Date values in LIQ Events Tab    ${DTE_APPROVED}    Approved    DEA_DTE_APPROVED
-    \    Run Keyword If    "${DTE_TERM}"!="${Empty}" and "${RID_IsExist}"=="${True}"    Run Keyword And Continue On Failure    Validate CSV Date values in LIQ Events Tab    ${DTE_TERM}    Terminated    DEA_DTE_TERM_EFF      
-    \    Run Keyword If    "${DTE_CANCEL}"!="${Empty}" and "${RID_IsExist}"=="${True}"    Run Keyword And Continue On Failure    Validate CSV Date values in LIQ Events Tab    ${DTE_CANCEL}    Cancelled    DEA_DTE_CANCEL_EFF
-    \    Run Keyword If    "${DTE_CLSD}"!="${Empty}" and "${RID_IsExist}"=="${True}"    Run Keyword And Continue On Failure    Validate CSV Date values in LIQ Events Tab    ${DTE_CLSD}    Closed    DEA_DTE_DEAL_CLSD
+    \    Run Keyword If    "${DTE_APPROVED}"!="${EMPTY}" and "${RID_IsExist}"=="${True}"     Run Keyword And Continue On Failure    Validate CSV Date values in LIQ Events Tab    ${DTE_APPROVED}    Approved    DEA_DTE_APPROVED
+    \    Run Keyword If    "${DTE_TERM}"!="${EMPTY}" and "${RID_IsExist}"=="${True}"    Run Keyword And Continue On Failure    Validate CSV Date values in LIQ Events Tab    ${DTE_TERM}    Terminated    DEA_DTE_TERM_EFF      
+    \    Run Keyword If    "${DTE_CANCEL}"!="${EMPTY}" and "${RID_IsExist}"=="${True}"    Run Keyword And Continue On Failure    Validate CSV Date values in LIQ Events Tab    ${DTE_CANCEL}    Cancelled    DEA_DTE_CANCEL_EFF
+    \    Run Keyword If    "${DTE_CLSD}"!="${EMPTY}" and "${RID_IsExist}"=="${True}"    Run Keyword And Continue On Failure    Validate CSV Date values in LIQ Events Tab    ${DTE_CLSD}    Closed    DEA_DTE_DEAL_CLSD
     \    ### Summary Tab Validation ###
-    \    ${DTE_AGRMNT_Converted}    Run Keyword If    "${DTE_AGRMNT}"!="${Empty}" and "${RID_IsExist}"=="${True}"    Run Keyword    Convert Date With Zero    ${DTE_AGRMNT}
+    \    ${DTE_AGRMNT_Converted}    Run Keyword If    "${DTE_AGRMNT}"!="${EMPTY}" and "${RID_IsExist}"=="${True}"    Run Keyword    Convert Date With Zero    ${DTE_AGRMNT}
     \    
-    \    Run Keyword If    "${CURRENCY}"!="${Empty}" and "${RID_IsExist}"=="${True}"    Run Keyword And Continue On Failure    Validate CSV Values in LIQ Summary Tab    DEA_CDE_ORIG_CCY    ${CURRENCY}
-    \    Run Keyword If    "${IND_SOLE_LENDR}"!="${Empty}" and "${RID_IsExist}"=="${True}"    Run Keyword And Continue On Failure    Validate CSV Values in LIQ Summary Tab    DEA_IND_SOLE_LENDR    None    ${IND_SOLE_LENDR}
-    \    Run Keyword If    "${DTE_AGRMNT}"!="${Empty}" and "${RID_IsExist}"=="${True}"    Run Keyword And Continue On Failure    Validate CSV Values in LIQ Summary Tab    DEA_DTE_AGREEMENT    None    None    ${DTE_AGRMNT_Converted}
-    \    Run Keyword If    "${CLASS}"!="${Empty}" and "${RID_IsExist}"=="${True}"    Run Keyword And Continue On Failure    Validate CSV Values in LIQ Summary Tab    DEA_CDE_DEAL_CLASS    None    None    None    ${CLASS.strip()}    ${Class_Desc}
+    \    Run Keyword If    "${CURRENCY.strip()}"!="${EMPTY}" and "${RID_IsExist}"=="${True}"    Run Keyword And Continue On Failure    Validate CSV Values in LIQ Summary Tab    DEA_CDE_ORIG_CCY    ${CURRENCY.strip()}
+    \    Run Keyword If    "${IND_SOLE_LENDR.strip()}"!="${EMPTY}" and "${RID_IsExist}"=="${True}"    Run Keyword And Continue On Failure    Validate CSV Values in LIQ Summary Tab    DEA_IND_SOLE_LENDR    None    ${IND_SOLE_LENDR.strip()}
+    \    Run Keyword If    "${DTE_AGRMNT}"!="${EMPTY}" and "${RID_IsExist}"=="${True}"    Run Keyword And Continue On Failure    Validate CSV Values in LIQ Summary Tab    DEA_DTE_AGREEMENT    None    None    ${DTE_AGRMNT_Converted}
+    \    Run Keyword If    "${CLASS.strip()}"!="${EMPTY}" and "${RID_IsExist}"=="${True}"    Run Keyword And Continue On Failure    Validate CSV Values in LIQ Summary Tab    DEA_CDE_DEAL_CLASS    None    None    None    ${CLASS.strip()}    ${Class_Desc}
     \    ### PERSONNEL Tab Validation ###
-    \    Run Keyword If    "${EXPENSE_CODE}"!="${Empty}" and "${RID_IsExist}"=="${True}"    Run Keyword And Continue On Failure    Validate CSV Values in LIQ Personnel Tab    DEA_CDE_EXPENSE    ${EXPENSE_CODE}
+    \    Run Keyword If    "${EXPENSE_CODE.strip()}"!="${EMPTY}" and "${RID_IsExist}"=="${True}"    Run Keyword And Continue On Failure    Validate CSV Values in LIQ Personnel Tab    DEA_CDE_EXPENSE    ${EXPENSE_CODE.strip()}
     \    ### Deal Status Validation ###
-    \    Run Keyword If    "${IND_ACTIVE}"!="${Empty}" and "${STATUS}"!="${Empty}" and "${RID_IsExist}"=="${True}"    Run Keyword And Continue On Failure    Validate CSV Values in LIQ Deal Notebook Status    ${IND_ACTIVE}    ${STATUS}    ${BRANCH}
+    \    Run Keyword If    "${IND_ACTIVE.strip()}"!="${EMPTY}" and "${STATUS.strip()}"!="${EMPTY}" and "${RID_IsExist}"=="${True}"    Run Keyword And Continue On Failure    Validate CSV Values in LIQ Deal Notebook Status    ${IND_ACTIVE.strip()}    ${STATUS.strip()}    ${BRANCH.strip()}
     \    
     \    Close All Windows on LIQ
     \    Refresh Tables in LIQ
@@ -1808,7 +1809,7 @@ Validate CSV values in LIQ for VLS_CURRENCY
     \    ${DSC_CURRENCY}    Remove String    @{Table_NameList}[${sCCY_DSC_CURRENCY_Index}]    "
     \    ${IND_ACTIVE}    Remove String    @{Table_NameList}[${sCCY_IND_ACTIVE_Index}]    "
     \    
-    \    Run Keyword If    "${DSC_CURRENCY.strip()}"!="${Empty}"    Run Keyword And Continue On Failure    Check Currency Description from CSV to LIQ    ${CDE_CURRENCY.strip()}    ${DSC_CURRENCY.strip()}    ${IND_ACTIVE.strip()}      
+    \    Run Keyword If    "${DSC_CURRENCY.strip()}"!="${EMPTY}"    Run Keyword And Continue On Failure    Check Currency Description from CSV to LIQ    ${CDE_CURRENCY.strip()}    ${DSC_CURRENCY.strip()}    ${IND_ACTIVE.strip()}      
     
     Close All Windows on LIQ
 
@@ -1857,7 +1858,7 @@ Validate CSV Values in LIQ for VLS_FUNDING_DESK
     \    ${FDE_IND_ACTIVE}    Remove String    @{Table_NameList}[${sFDE_IND_ACTIVE_Index}]    "
     \    ${FDE_DSC_FUND_DESK}    Remove String    @{Table_NameList}[${sFDE_DSC_FUND_DESK_Index}]    "
     \    ${FDE_CDE_FUND_DESK}    Remove String    @{Table_NameList}[${sFDE_CDE_FUND_DESK_Index}]    "
-    \    Run Keyword If    "${FDE_DSC_FUND_DESK.strip()}"!="${Empty}"    Run Keyword And Continue On Failure    Check Funding Desk Description from CSV to LIQ     ${FDE_CDE_FUND_DESK.strip()}    ${FDE_DSC_FUND_DESK.strip()}    ${FDE_IND_ACTIVE.strip()}      
+    \    Run Keyword If    "${FDE_DSC_FUND_DESK.strip()}"!="${EMPTY}"    Run Keyword And Continue On Failure    Check Funding Desk Description from CSV to LIQ     ${FDE_CDE_FUND_DESK.strip()}    ${FDE_DSC_FUND_DESK.strip()}    ${FDE_IND_ACTIVE.strip()}      
 
     Close All Windows on LIQ
     
@@ -1903,11 +1904,11 @@ Validate CSV values in LIQ for VLS_PROD_POS_CUR
     \    ${AMT_GLOBAL_CMT}    Remove String    @{Table_NameList}[${iPDC_AMT_GLOBAL_CMT_Index}]    "
     \    ${AMT_BNK_GR_CMT}    Remove String    @{Table_NameList}[${iPDC_AMT_BNK_GR_CMT_Index}]    "
     \    
-    \    ${DealRID_IsExist}    Run Keyword If    "${PID_PRODUCT_ID}"!="${Empty}" and "${CDE_PROD_TYPE.strip()}"=="DEA"     Run Keyword And Return Status     Navigate to Notebook Window thru RID    Deal    ${PID_PRODUCT_ID.strip()}
+    \    ${DealRID_IsExist}    Run Keyword If    "${PID_PRODUCT_ID}"!="${EMPTY}" and "${CDE_PROD_TYPE.strip()}"=="DEA"     Run Keyword And Return Status     Navigate to Notebook Window thru RID    Deal    ${PID_PRODUCT_ID.strip()}
     \    Run Keyword If    "${DealRID_IsExist}"=="${True}" and "${CDE_PROD_TYPE.strip()}"=="DEA"    Run Keyword And Continue On Failure    Check VLS_PROD_POS_CUR values in Deal Notebook    ${AMT_GLOBAL_CMT.strip()}    ${AMT_BNK_GR_CMT.strip()}    
          ...    ELSE IF    "${DealRID_IsExist}"=="${False}" and "${CDE_PROD_TYPE.strip()}"=="DEA"    Run Keyword And Continue On Failure    Fail    Deal RID ${PID_PRODUCT_ID} does not exist!        
     \     
-    \    ${FacilityRID_IsExist}    Run Keyword If    "${PID_PRODUCT_ID}"!="${Empty}" and "${CDE_PROD_TYPE.strip()}"=="FAC"     Run Keyword And Return Status     Navigate to Notebook Window thru RID    Facility    ${PID_PRODUCT_ID.strip()}
+    \    ${FacilityRID_IsExist}    Run Keyword If    "${PID_PRODUCT_ID}"!="${EMPTY}" and "${CDE_PROD_TYPE.strip()}"=="FAC"     Run Keyword And Return Status     Navigate to Notebook Window thru RID    Facility    ${PID_PRODUCT_ID.strip()}
     \    Run Keyword If    "${FacilityRID_IsExist}"=="${True}" and "${CDE_PROD_TYPE.strip()}"=="FAC"    Run Keyword And Continue On Failure    Check VLS_PROD_POS_CUR values in Facility Notebook    ${AMT_BNK_NT_CMT.strip()}    ${AMT_BNK_NT_OUT.strip()}    ${AMT_BNK_GR_OUT.strip()}    
          ...    ELSE IF    "${FacilityRID_IsExist}"=="${False}" and "${CDE_PROD_TYPE.strip()}"=="FAC"    Run Keyword And Continue On Failure    Fail    Facility RID ${PID_PRODUCT_ID} does not exist!
     
@@ -2276,10 +2277,10 @@ Validate CSV values in LIQ for VLS_SCHEDULE
     \    ### SCH_AMT_RESIDUAL Field Validation ###
     \    Run Keyword And Continue On Failure    Should Be Equal    ${AMT_RESIDUAL.strip()}    0
     \    ### SCH_CDE_BAL_TYPE Field Validation ###
-    \    ${OutstandingRID_IsExist}    Run Keyword If    "${RID_OWNER}"!="${Empty}" and "${CDE_BAL_TYPE.strip()}"=="PRIN"    Run Keyword And Return Status     Navigate to Notebook Window thru RID    Outstanding    ${RID_OWNER.strip()}    
-         ...    ELSE IF    "${RID_OWNER}"!="${Empty}" and "${CDE_BAL_TYPE.strip()}"=="PRINB"    Run Keyword And Return Status     Navigate to Notebook Window thru RID    Outstanding    ${RID_OWNER.strip()}
-         ...    ELSE IF    "${RID_OWNER}"!="${Empty}" and "${CDE_BAL_TYPE.strip()}"=="PRINI"    Run Keyword And Return Status     Navigate to Notebook Window thru RID    Outstanding    ${RID_OWNER.strip()}
-         ...    ELSE IF    "${RID_OWNER}"!="${Empty}" and "${CDE_BAL_TYPE.strip()}"=="FIXED"    Run Keyword And Return Status     Navigate to Notebook Window thru RID    Outstanding    ${RID_OWNER.strip()}
+    \    ${OutstandingRID_IsExist}    Run Keyword If    "${RID_OWNER}"!="${EMPTY}" and "${CDE_BAL_TYPE.strip()}"=="PRIN"    Run Keyword And Return Status     Navigate to Notebook Window thru RID    Outstanding    ${RID_OWNER.strip()}    
+         ...    ELSE IF    "${RID_OWNER}"!="${EMPTY}" and "${CDE_BAL_TYPE.strip()}"=="PRINB"    Run Keyword And Return Status     Navigate to Notebook Window thru RID    Outstanding    ${RID_OWNER.strip()}
+         ...    ELSE IF    "${RID_OWNER}"!="${EMPTY}" and "${CDE_BAL_TYPE.strip()}"=="PRINI"    Run Keyword And Return Status     Navigate to Notebook Window thru RID    Outstanding    ${RID_OWNER.strip()}
+         ...    ELSE IF    "${RID_OWNER}"!="${EMPTY}" and "${CDE_BAL_TYPE.strip()}"=="FIXED"    Run Keyword And Return Status     Navigate to Notebook Window thru RID    Outstanding    ${RID_OWNER.strip()}
     \    Run Keyword If    "${OutstandingRID_IsExist}"=="${True}"    Run Keyword And Continue On Failure    Check CSV Values in Repayment Schedule    ${CDE_BAL_TYPE.strip()}   
          ...    ELSE IF    "${OutstandingRID_IsExist}"=="${False}"    Run Keyword And Continue On Failure    Fail    Oustanding RID ${RID_OWNER} does not exist! 
          ...    ELSE IF    "${OutstandingRID_IsExist}"=="None"    Log    Oustanding RID ${RID_OWNER} is not a Bullet or Fixed Transaction.
@@ -2346,40 +2347,40 @@ Validate CSV values in LIQ for VLS_Outstanding
     \    ${LOAN_PURP}    Remove String    @{Table_NameList}[${OST_CDE_LOAN_PURP_Index}]    "
     \    ${RTE_FC_RATE}    Remove String    @{Table_NameList}[${OST_RTE_FC_RATE_Index}]    "
     \    ###    Get Frequency Code Description    ###
-    \    Run Keyword If    "${REPR_FREQ}"!="${Empty}"    Run Keywords    Select Actions    [Actions];Table Maintenance
+    \    Run Keyword If    "${REPR_FREQ}"!="${EMPTY}"    Run Keywords    Select Actions    [Actions];Table Maintenance
          ...    AND    Search in Table Maintenance    Base Rate Frequency
-    \    ${Freq_Desc}    Run Keyword If    "${REPR_FREQ}"!="${Empty}"    Get Single Description from Table Maintanance    ${REPR_FREQ.strip()}    ${LIQ_BaseRateFrequency_Window}    ${LIQ_BaseRateFrequency_Tree}    ${LIQ_BaseRateFrequency_ShowAll_RadioBtn}    ${LIQ_BaseRateFrequency_Exit_Button}
+    \    ${Freq_Desc}    Run Keyword If    "${REPR_FREQ}"!="${EMPTY}"    Get Single Description from Table Maintanance    ${REPR_FREQ.strip()}    ${LIQ_BaseRateFrequency_Window}    ${LIQ_BaseRateFrequency_Tree}    ${LIQ_BaseRateFrequency_ShowAll_RadioBtn}    ${LIQ_BaseRateFrequency_Exit_Button}
     \    Refresh Tables in LIQ
     \    ###    Get Accrual Period Code Description    ###
-    \    Run Keyword If    "${ACR_PERIOD}"!="${Empty}"    Run Keywords    Select Actions    [Actions];Table Maintenance
+    \    Run Keyword If    "${ACR_PERIOD}"!="${EMPTY}"    Run Keywords    Select Actions    [Actions];Table Maintenance
          ...    AND    Search in Table Maintenance    Accrual Period
-    \    ${Period_Desc}    Run Keyword If    "${ACR_PERIOD}"!="${Empty}"    Get Single Description from Table Maintanance    ${ACR_PERIOD.strip()}    ${LIQ_BrowseAccrualPeriod_Window}    ${LIQ_BrowseAccrualPeriod_JavaTree}    ${LIQ_BrowseAccrualPeriod_ShowAll_Button}    ${LIQ_BrowseAccrualPeriod_Exit_Button}
+    \    ${Period_Desc}    Run Keyword If    "${ACR_PERIOD}"!="${EMPTY}"    Get Single Description from Table Maintanance    ${ACR_PERIOD.strip()}    ${LIQ_BrowseAccrualPeriod_Window}    ${LIQ_BrowseAccrualPeriod_JavaTree}    ${LIQ_BrowseAccrualPeriod_ShowAll_Button}    ${LIQ_BrowseAccrualPeriod_Exit_Button}
     \    Refresh Tables in LIQ
     \    ###    Get Risk Code Description    ###
-    \    Run Keyword If    "${RISK_TYPE}"!="${Empty}"    Run Keywords    Select Actions    [Actions];Table Maintenance
+    \    Run Keyword If    "${RISK_TYPE}"!="${EMPTY}"    Run Keywords    Select Actions    [Actions];Table Maintenance
          ...    AND    Search in Table Maintenance    Risk Type
-    \    ${RiskType_Desc}    Run Keyword If    "${RISK_TYPE}"!="${Empty}"    Get Single Description from Table Maintanance    ${RISK_TYPE.strip()}    ${LIQ_BrowseRiskType_Window}    ${LIQ_BrowseRiskType_JavaTree}    ${LIQ_BrowseRiskType_ShowAll_Button}    ${LIQ_BrowseRiskType_Exit_Button}
+    \    ${RiskType_Desc}    Run Keyword If    "${RISK_TYPE}"!="${EMPTY}"    Get Single Description from Table Maintanance    ${RISK_TYPE.strip()}    ${LIQ_BrowseRiskType_Window}    ${LIQ_BrowseRiskType_JavaTree}    ${LIQ_BrowseRiskType_ShowAll_Button}    ${LIQ_BrowseRiskType_Exit_Button}
     \    Refresh Tables in LIQ
     \    ###    Get Purpose Description ###
-    \    Run Keyword If    "${LOAN_PURP}"!="${Empty}"    Run Keywords    Select Actions    [Actions];Table Maintenance
+    \    Run Keyword If    "${LOAN_PURP}"!="${EMPTY}"    Run Keywords    Select Actions    [Actions];Table Maintenance
          ...    AND    Search in Table Maintenance    Loan Purpose
-    \    ${LoanPurpose_Desc}    Run Keyword If    "${LOAN_PURP}"!="${Empty}"    Get Single Description from Table Maintanance    ${LOAN_PURP.strip()}    ${LIQ_BrowseLoanPurpose_Window}    ${LIQ_BrowseLoanPurpose_JavaTree}    ${LIQ_BrowseLoanPurpose_ShowAll_Button}    ${LIQ_BrowseLoanPurpose_Exit_Button}
+    \    ${LoanPurpose_Desc}    Run Keyword If    "${LOAN_PURP}"!="${EMPTY}"    Get Single Description from Table Maintanance    ${LOAN_PURP.strip()}    ${LIQ_BrowseLoanPurpose_Window}    ${LIQ_BrowseLoanPurpose_JavaTree}    ${LIQ_BrowseLoanPurpose_ShowAll_Button}    ${LIQ_BrowseLoanPurpose_Exit_Button}
     \    Refresh Tables in LIQ
     \    ###    Get Customer Short Name ###
     \    ${Cust_ShortName}    Run Keyword If    "${RID_BORROWER.strip()}"!="NONE"     Run Keyword And Continue On Failure    Get and Return Customer Short Name Using Customer RID    ${RID_BORROWER.strip()}    
     \    Refresh Tables in LIQ
     \    
     \    ### Launch Outstanding Notebook thru RID ###
-    \    ${RID_IsExist}    Run Keyword If   "${RID_Outstanding}"!="${Empty}" and "${RID_Outstanding}"!="NONE"    Run Keyword And Return Status    Navigate to Notebook Window thru RID    Outstanding    ${RID_Outstanding.strip()}
+    \    ${RID_IsExist}    Run Keyword If   "${RID_Outstanding}"!="${EMPTY}" and "${RID_Outstanding}"!="NONE"    Run Keyword And Return Status    Navigate to Notebook Window thru RID    Outstanding    ${RID_Outstanding.strip()}
     \     
-    \    Run Keyword If    "${RID_IsExist}"=="${True}" and "${OB_ST_CTG}"!="${Empty}" and "${OBJ_STATE}"!="${Empty}" and "${OBJ_STATE}"!="${PRICE_OPT}"    Run Keyword And Continue On Failure    Validate Loan Notebook Status    ${OB_ST_CTG.strip()}    ${OBJ_STATE.strip()}
+    \    Run Keyword If    "${RID_IsExist}"=="${True}" and "${OB_ST_CTG}"!="${EMPTY}" and "${OBJ_STATE}"!="${EMPTY}" and "${OBJ_STATE}"!="${PRICE_OPT}"    Run Keyword And Continue On Failure    Validate Loan Notebook Status    ${OB_ST_CTG.strip()}    ${OBJ_STATE.strip()}
     \    Run Keyword If    "${RID_IsExist}"=="${True}"    Run Keyword And Continue On Failure    Validate CSV Values in Outstanding Notebook General Tab    ${OBJ_STATE.strip()}    ${DTE_EXPIRY.strip()}    ${DTE_REPRICING.strip()}    ${Freq_Desc}    ${IND_FLOAT_RATE}    ${RISK_TYPE.strip()}    ${DTE_EFFECTIVE}    ${Period_Desc}    ${PRICE_OPT}    ${DTE_EXPIRY_Adj}    ${CURRENCY}
          ...    ${AMT_BANK_NET}    ${RiskType_Desc}    ${Cust_ShortName}
     \    
-    \    Run Keyword If    "${RID_IsExist}"=="${True}" and "${CURRENCY}"!="${Empty}" and "${AMT_FC_CURRENT}"!="${Empty}"    Run Keyword And Continue On Failure     Validate CSV Values in Outstanding Notebook Currency Tab    ${AMT_FC_CURRENT}    None    ${CURRENCY}    ${OBJ_STATE.strip()} 
-    \    Run Keyword If    "${RID_IsExist}"=="${True}" and "${CURRENCY}"!="${Empty}" and "${RTE_FC_RATE}"!="${Empty}"    Run Keyword And Continue On Failure     Validate CSV Values in Outstanding Notebook Currency Tab    None    ${RTE_FC_RATE}    ${CURRENCY}    ${OBJ_STATE.strip()}                
-    \    Run Keyword If    "${RID_IsExist}"=="${True}" and "${PERF_STAT}"!="${Empty}" and "${OB_ST_CTG}"=="ACTUA"    Run Keyword And Continue On Failure    Check Loan Performing Status    ${PERF_STAT.strip()}    ${OBJ_STATE.strip()}
-    \    Run Keyword If    "${RID_IsExist}"=="${True}" and "${LOAN_PURP}"!="${Empty}"    Run Keyword And Continue On Failure    Validate CSV Values in Facility Notebook Purpose Tab    ${OBJ_STATE.strip()}    ${LoanPurpose_Desc.strip()}
+    \    Run Keyword If    "${RID_IsExist}"=="${True}" and "${CURRENCY}"!="${EMPTY}" and "${AMT_FC_CURRENT}"!="${EMPTY}"    Run Keyword And Continue On Failure     Validate CSV Values in Outstanding Notebook Currency Tab    ${AMT_FC_CURRENT}    None    ${CURRENCY}    ${OBJ_STATE.strip()} 
+    \    Run Keyword If    "${RID_IsExist}"=="${True}" and "${CURRENCY}"!="${EMPTY}" and "${RTE_FC_RATE}"!="${EMPTY}"    Run Keyword And Continue On Failure     Validate CSV Values in Outstanding Notebook Currency Tab    None    ${RTE_FC_RATE}    ${CURRENCY}    ${OBJ_STATE.strip()}                
+    \    Run Keyword If    "${RID_IsExist}"=="${True}" and "${PERF_STAT}"!="${EMPTY}" and "${OB_ST_CTG}"=="ACTUA"    Run Keyword And Continue On Failure    Check Loan Performing Status    ${PERF_STAT.strip()}    ${OBJ_STATE.strip()}
+    \    Run Keyword If    "${RID_IsExist}"=="${True}" and "${LOAN_PURP}"!="${EMPTY}"    Run Keyword And Continue On Failure    Validate CSV Values in Facility Notebook Purpose Tab    ${OBJ_STATE.strip()}    ${LoanPurpose_Desc.strip()}
     \    Run Keyword If    "${RID_IsExist}"=="${False}"    Run Keyword And Continue On Failure    Fail    ${RID_Outstanding.strip()} does not exist!
     \    
     \    Close All Windows on LIQ
@@ -2406,15 +2407,15 @@ Validate CSV Values in Outstanding Notebook General Tab
     Take Screenshot    Outstanding_NB
     
     ### OST_DTE_EXPIRY_ENT field value vs LIQ - Maturity Date Field ###
-    ${dDTE_EXPIRY}    Run Keyword If    "${dDTE_EXPIRY}"!="${Empty}"    Convert Date With Zero     ${dDTE_EXPIRY} 
-    Run Keyword If    "${dDTE_EXPIRY}"!="${Empty}" and "${dDTE_EXPIRY}"!="None"     Run Keyword And Continue On Failure    Mx LoanIQ Verify Object Exist     JavaWindow("title:=.* ${${sOBJ_STATE}_Window}").JavaEdit("labeled_containers_path:=Tab:General;","index:=0","text:=${dDTE_EXPIRY}")                VerificationData="Yes"
+    ${dDTE_EXPIRY}    Run Keyword If    "${dDTE_EXPIRY}"!="${EMPTY}"    Convert Date With Zero     ${dDTE_EXPIRY} 
+    Run Keyword If    "${dDTE_EXPIRY}"!="${EMPTY}" and "${dDTE_EXPIRY}"!="None"     Run Keyword And Continue On Failure    Mx LoanIQ Verify Object Exist     JavaWindow("title:=.* ${${sOBJ_STATE}_Window}").JavaEdit("labeled_containers_path:=Tab:General;","index:=0","text:=${dDTE_EXPIRY}")                VerificationData="Yes"
     
     ### OST_DTE_REPRICING field value vs LIQ - Repricing Date Field ###    
-    ${dDTE_REPRICING}    Run Keyword If    "${dDTE_REPRICING}"!="${Empty}"    Convert Date With Zero     ${dDTE_REPRICING}
-    Run Keyword If    "${dDTE_REPRICING}"!="${Empty}" and "${dDTE_REPRICING}"!="None"     Run Keyword And Continue On Failure    Mx LoanIQ Verify Object Exist     JavaWindow("title:=.* ${${sOBJ_STATE}_Window}").JavaStaticText("labeled_containers_path:=Tab:General;","attached text:=${dDTE_REPRICING}")    VerificationData="Yes"
+    ${dDTE_REPRICING}    Run Keyword If    "${dDTE_REPRICING}"!="${EMPTY}"    Convert Date With Zero     ${dDTE_REPRICING}
+    Run Keyword If    "${dDTE_REPRICING}"!="${EMPTY}" and "${dDTE_REPRICING}"!="None"     Run Keyword And Continue On Failure    Mx LoanIQ Verify Object Exist     JavaWindow("title:=.* ${${sOBJ_STATE}_Window}").JavaStaticText("labeled_containers_path:=Tab:General;","attached text:=${dDTE_REPRICING}")    VerificationData="Yes"
     
     ### OST_CDE_REPR_FREQ field value vs LIQ - Repricing Frequency Field ###
-    Run Keyword If    "${sFreq_Desc}"!="${Empty}" and "${sFreq_Desc}"!="None"   Run Keyword And Continue On Failure    Mx LoanIQ Verify Object Exist     JavaWindow("title:=.* ${${sOBJ_STATE}_Window}").JavaList("attached text:=Repricing Frequency:","value:=${sFreq_Desc}")    VerificationData="Yes"
+    Run Keyword If    "${sFreq_Desc}"!="${EMPTY}" and "${sFreq_Desc}"!="None"   Run Keyword And Continue On Failure    Mx LoanIQ Verify Object Exist     JavaWindow("title:=.* ${${sOBJ_STATE}_Window}").JavaList("attached text:=Repricing Frequency:","value:=${sFreq_Desc}")    VerificationData="Yes"
     
     ### OST_IND_FLOAT_RATE field value vs LIQ - Repricing Date Field Validation ###
     ${IsExist}    Run Keyword And Return Status    Mx LoanIQ Verify Object Exist     JavaWindow("title:=.* ${${sOBJ_STATE}_Window}").JavaStaticText("attached text:=Repricing Date:")    VerificationData="Yes"
@@ -2425,32 +2426,32 @@ Validate CSV Values in Outstanding Notebook General Tab
     
     ### OST_DTE_EFFECTIVE field value vs LIQ - Effective Date Field ###
     ${dDTE_EFFECTIVE}    Run Keyword If    "${dDTE_EFFECTIVE}"!="Empty"    Convert Date With Zero     ${dDTE_EFFECTIVE}
-    Run Keyword If    "${dDTE_EFFECTIVE}"!="${Empty}" and "${dDTE_EFFECTIVE}"!="None"    Run Keyword And Continue On Failure    Mx LoanIQ Verify Object Exist     JavaWindow("title:=.* ${${sOBJ_STATE}_Window}").JavaStaticText("labeled_containers_path:=Tab:General;", "attached text:=${dDTE_EFFECTIVE}")    VerificationData="Yes"
+    Run Keyword If    "${dDTE_EFFECTIVE}"!="${EMPTY}" and "${dDTE_EFFECTIVE}"!="None"    Run Keyword And Continue On Failure    Mx LoanIQ Verify Object Exist     JavaWindow("title:=.* ${${sOBJ_STATE}_Window}").JavaStaticText("labeled_containers_path:=Tab:General;", "attached text:=${dDTE_EFFECTIVE}")    VerificationData="Yes"
     
     ### OST_CDE_ACR_PERIOD field value vs LIQ - Int. Cycle Freq Field ###
-    Run Keyword If    "${sPeriod_Desc}"!="${Empty}" and "${sPeriod_Desc}"!="None"    Run Keyword And Continue On Failure    Mx LoanIQ Verify Object Exist     JavaWindow("title:=.* ${${sOBJ_STATE}_Window}").JavaList("attached text:=Int\. Cycle Freq:","value:=${sPeriod_Desc}")    VerificationData="Yes"
+    Run Keyword If    "${sPeriod_Desc}"!="${EMPTY}" and "${sPeriod_Desc}"!="None"    Run Keyword And Continue On Failure    Mx LoanIQ Verify Object Exist     JavaWindow("title:=.* ${${sOBJ_STATE}_Window}").JavaList("attached text:=Int\. Cycle Freq:","value:=${sPeriod_Desc}")    VerificationData="Yes"
     
     ### OST_CDE_PRICE_OPT field value vs LIQ - Pricing Option Field ###
-    Run Keyword If    "${sPRICE_OPT}"!="${Empty}" and "${sPRICE_OPT}"!="None"    Run Keyword And Continue On Failure    Mx LoanIQ Verify Object Exist     JavaWindow("title:=.* ${${sOBJ_STATE}_Window}").JavaStaticText("labeled_containers_path:=Tab:General;","attached text:=${sPRICE_OPT}")        VerificationData="Yes"
+    Run Keyword If    "${sPRICE_OPT}"!="${EMPTY}" and "${sPRICE_OPT}"!="None"    Run Keyword And Continue On Failure    Mx LoanIQ Verify Object Exist     JavaWindow("title:=.* ${${sOBJ_STATE}_Window}").JavaStaticText("labeled_containers_path:=Tab:General;","attached text:=${sPRICE_OPT}")        VerificationData="Yes"
     
     ### OST_DTE_EXPIRY_CLC value vs LIQ - Adjusted Field ###
-    ${dDTE_EXPIRY_Adj}    Run Keyword If    "${dDTE_EXPIRY_Adj}"!="${Empty}"    Convert Date With Zero     ${dDTE_EXPIRY_Adj}
-    Run Keyword If    "${dDTE_EXPIRY_Adj}"!="${Empty}" and "${dDTE_EXPIRY_Adj}"!="None"    Run Keyword And Continue On Failure    Mx LoanIQ Verify Object Exist    JavaWindow("title:=.* ${${sOBJ_STATE}_Window}").JavaEdit("attached text:=Adjusted Expiry:","value:=${dDTE_EXPIRY_Adj}")    VerificationData="Yes"
+    ${dDTE_EXPIRY_Adj}    Run Keyword If    "${dDTE_EXPIRY_Adj}"!="${EMPTY}"    Convert Date With Zero     ${dDTE_EXPIRY_Adj}
+    Run Keyword If    "${dDTE_EXPIRY_Adj}"!="${EMPTY}" and "${dDTE_EXPIRY_Adj}"!="None"    Run Keyword And Continue On Failure    Mx LoanIQ Verify Object Exist    JavaWindow("title:=.* ${${sOBJ_STATE}_Window}").JavaEdit("attached text:=Adjusted Expiry:","value:=${dDTE_EXPIRY_Adj}")    VerificationData="Yes"
     
     ### OST_CDE_CURRENCY field value vs LIQ - Currency Field ###
-    Run Keyword If    "${sCURRENCY}"!="${Empty}"    Run Keyword And Continue On Failure    Mx LoanIQ Verify Object Exist    JavaWindow("title:=.* ${${sOBJ_STATE}_Window}").JavaStaticText("labeled_containers_path:=Tab:General;Group:Loan Amounts;","attached text:=${sCURRENCY}")    VerificationData="Yes"
+    Run Keyword If    "${sCURRENCY}"!="${EMPTY}"    Run Keyword And Continue On Failure    Mx LoanIQ Verify Object Exist    JavaWindow("title:=.* ${${sOBJ_STATE}_Window}").JavaStaticText("labeled_containers_path:=Tab:General;Group:Loan Amounts;","attached text:=${sCURRENCY}")    VerificationData="Yes"
     
     ### OST_AMT_BANK_NET field value vs LIQ - Host Bank Net Field ###
     ${iAMT_BANK_NET}    Convert To Number    ${iAMT_BANK_NET}        
     ${UI_AMT_BANK_NET}    Mx LoanIQ Get Data    JavaWindow("title:=.* ${${sOBJ_STATE}_Window}").JavaEdit("attached text:=Host Bank Net:")    value
     ${UI_AMT_BANK_NET}    Remove Comma and Convert to Number    ${UI_AMT_BANK_NET}  
-    Run Keyword If    "${iAMT_BANK_NET}"!="${Empty}"    Run Keyword And Continue On Failure    Should Be Equal As Numbers    ${iAMT_BANK_NET}    ${UI_AMT_BANK_NET}    
+    Run Keyword If    "${iAMT_BANK_NET}"!="${EMPTY}"    Run Keyword And Continue On Failure    Should Be Equal As Numbers    ${iAMT_BANK_NET}    ${UI_AMT_BANK_NET}    
     
     ### OST_CDE_RISK_TYPE field value vs LIQ - Risk Type Field ### 
-    Run Keyword If    "${sRiskType_Desc}"!="${Empty}"    Run Keyword And Continue On Failure    Mx LoanIQ Verify Object Exist    JavaWindow("title:=.* ${${sOBJ_STATE}_Window}").JavaStaticText("labeled_containers_path:=Tab:General;","attached text:=${sRiskType_Desc}")        VerificationData="Yes"
+    Run Keyword If    "${sRiskType_Desc}"!="${EMPTY}"    Run Keyword And Continue On Failure    Mx LoanIQ Verify Object Exist    JavaWindow("title:=.* ${${sOBJ_STATE}_Window}").JavaStaticText("labeled_containers_path:=Tab:General;","attached text:=${sRiskType_Desc}")        VerificationData="Yes"
     
     ### OST_CID_BORROWER  field value vs LIQ - Borrower Field ### 
-    Run Keyword If    "${sCust_ShortName}"!="${Empty}"    Run Keyword And Continue On Failure    Mx LoanIQ Verify Object Exist    JavaWindow("title:=.* ${${sOBJ_STATE}_Window}").JavaStaticText("labeled_containers_path:=Tab:General;","attached text:=${sCust_ShortName}")     VerificationData="Yes"
+    Run Keyword If    "${sCust_ShortName}"!="${EMPTY}"    Run Keyword And Continue On Failure    Mx LoanIQ Verify Object Exist    JavaWindow("title:=.* ${${sOBJ_STATE}_Window}").JavaStaticText("labeled_containers_path:=Tab:General;","attached text:=${sCust_ShortName}")     VerificationData="Yes"
 
 Get and Return Customer Short Name Using Customer RID
     [Documentation]    This keyword is used to navigate on Deal noteboook and get the Customer Short Name.
@@ -2529,7 +2530,7 @@ Validate CSV Values in Facility Notebook Purpose Tab
 
 Validate CUS_XID_CUST_ID in Customer Notebook
 	[Documentation]    This keyword validates CUS_XID_CUST_ID value in LIQ Customer Notebook
-    ...    @author: mgaling    07Oct2020
+    ...    @author: mgaling    07OCT2020    - initial create
     [Arguments]    ${CUS_CID_CUST_ID_Value}    ${CUS_XID_CUST_ID_Value}
 
     ###Select By RID###
@@ -2544,5 +2545,17 @@ Validate CUS_XID_CUST_ID in Customer Notebook
 	${status}    Run Keyword And Return Status    Should Be Equal As Strings    ${CustomerID.strip()}    ${CUS_XID_CUST_ID_Value}
     Take Screenshot    CustomerID_${CUS_XID_CUST_ID_Value}
     Run Keyword If    ${status}==False    Run Keyword And Continue On Failure    Fail    Customer ID is not the same.
-    mx LoanIQ close window    ${LIQ_ActiveCustomer_Window}        
-           
+    mx LoanIQ close window    ${LIQ_ActiveCustomer_Window}
+
+Get Business Date of Decrypted Files
+    [Documentation]    This keyword is used to get the business date of the decrypted files.
+    ...    @author: mgaling    10OCT2020    - initial create
+    [Arguments]    ${ExcelPath}
+    
+    Log    ${ExcelPath}
+    Log    &{ExcelPath}[Business_Date]
+    ${Business_Date}    Convert Date    &{ExcelPath}[Business_Date]    result_format=%Y%m%d    date_format=%Y-%m-%d 
+    Log    ${Business_Date}        
+
+    ${TestCase_Name_FuncVal_List}    Split String    ${TestCase_Name_FuncVal}    |
+    Write Data to Excel    ${DWELIQFunc_Dataset_SheetName}    Business_Date    @{TestCase_Name_FuncVal_List}[${DATAROW_INDEX}]    ${Business_Date}    ${DWELIQFunc_Dataset}    bTestCaseColumn=True

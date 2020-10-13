@@ -260,6 +260,7 @@ Resource    ../ResourcesFiles/LoanIQ_Keywords/Custom_Mapping/BUS_IncomingManualC
 Resource    ../ResourcesFiles/LoanIQ_Keywords/Custom_Mapping/BUS_InterestCapitalization_Notebook.robot
 Resource    ../ResourcesFiles/LoanIQ_Keywords/Custom_Mapping/BUS_InterestPayment_Notebook.robot
 Resource    ../ResourcesFiles/LoanIQ_Keywords/Custom_Mapping/BUS_IssuanceFeePayment_Notebook.robot
+Resource    ../ResourcesFiles/LoanIQ_Keywords/Custom_Mapping/BUS_LineFee_Notebook.robot
 Resource    ../ResourcesFiles/LoanIQ_Keywords/Custom_Mapping/BUS_Loan_Notebook.robot
 Resource    ../ResourcesFiles/LoanIQ_Keywords/Custom_Mapping/BUS_LoanDrawdown_Notebook.robot
 Resource    ../ResourcesFiles/LoanIQ_Keywords/Custom_Mapping/BUS_LoanRepricing_Notebook.robot

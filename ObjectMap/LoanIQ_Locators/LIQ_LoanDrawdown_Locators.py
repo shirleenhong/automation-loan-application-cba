@@ -153,6 +153,7 @@ LIQ_Loan_CyclesforLoan_List = 'JavaWindow("title:=Cycles for Loan.*").JavaTree("
 LIQ_Loan_CyclesforLoan_OK_Button = 'JavaWindow("title:=Cycles for Loan.*", "displayed:=1").JavaButton("attached text:=OK")'
 LIQ_Loan_Events_List = 'JavaWindow("title:=.*Loan.*Active").JavaTree("attached text:=Select event to view details")'
 LIQ_Loan_ActualDueDate_Textfield = 'JavaWindow("title:=.*Loan.*Active").JavaEdit("attached text:=Actual Due Date:")'
+LIQ_Loan_AdjustedDueDate_Textfield = 'JavaWindow("title:=.*Loan.*Active").JavaEdit("attached text:=Adjusted Due Date:")'
 LIQ_LoanInquire_Button = 'JavaWindow("title:=.*Loan.*Active").JavaButton("attached text:=Notebook in Inquiry Mode - F7.*")'
 LIQ_Loan_GlobalOriginal_Amount = 'JavaWindow("title:=.*Loan.*Active").JavaEdit("attached text:=Global Original:")'
 LIQ_Loan_IntCycleFreq_Dropdownlist = 'JavaWindow("title:=.*Loan.*Active").JavaList("attached text:=Int. Cycle Freq:")'
