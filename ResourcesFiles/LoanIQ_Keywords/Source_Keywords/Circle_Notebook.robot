@@ -81,11 +81,12 @@ Set Sell Amount and Percent of Deal
     Mx LoanIQ Select Window Tab    ${LIQ_OrigPrimaries_Tab}    Facilities
     mx LoanIQ activate window    ${LIQ_OrigPrimaries_Window}    
     mx LoanIQ enter    ${LIQ_OrigPrimaries_PctOfDeal_Textfield}    ${PercentOfDeal}
-    Mx Press Combination    Key.Tab    
+    Mx Press Combination    Key.Tab   
 
     ${CurrentDealAmount}    Mx LoanIQ Get Data    ${LIQ_OrigPrimaries_CurrentDealAmount_Textfield}    value%amount
     ${CurrentDealAmount}    Remove String    ${CurrentDealAmount}    ,
     ${CurrentDealAmount}    Convert To Number    ${CurrentDealAmount}
+    Mx LoanIQ Click    ${LIQ_OrigPrimaries_SellAmount_Textfield}    
     ${SellAmountUI}    Mx LoanIQ Get Data    ${LIQ_OrigPrimaries_SellAmount_Textfield}    value%amount
     
     ${PercentOfDeal}    Remove Comma and Convert to Number    ${PercentOfDeal}
