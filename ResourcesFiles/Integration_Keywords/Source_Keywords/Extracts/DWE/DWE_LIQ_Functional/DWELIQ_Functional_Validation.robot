@@ -2530,7 +2530,8 @@ Validate CSV Values in Facility Notebook Purpose Tab
 
 Validate CUS_XID_CUST_ID in Customer Notebook
 	[Documentation]    This keyword validates CUS_XID_CUST_ID value in LIQ Customer Notebook
-    ...    @author: mgaling    07Oct2020
+    ...    @author: mgaling    07Oct2020    - initial create
+ 
     [Arguments]    ${CUS_CID_CUST_ID_Value}    ${CUS_XID_CUST_ID_Value}
 
     ###Select By RID###

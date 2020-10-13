@@ -5,7 +5,7 @@ Resource    ../../../../../Configurations/Integration_Import_File.robot
 DWELIQ_FuncVal02
     [Tags]    VLS_CUSTOMER
 	[Documentation]    This keyword is used to validate CUS_XID_CUST_ID and CUS_CID_CUST_ID in CSV vs LIQ screen
-    ...    @author: ehugo    28AUG2019
+    ...    @author: ehugo    28AUG2019    - initial create
     ...    @update: mgaling    12Oct2020    - updated keyword to handle multi entity test case
     
     Set Global Variable    ${TestCase_Name}    DWELIQ_Multi_E2E_001|DWELIQ_Multi_E2E_002

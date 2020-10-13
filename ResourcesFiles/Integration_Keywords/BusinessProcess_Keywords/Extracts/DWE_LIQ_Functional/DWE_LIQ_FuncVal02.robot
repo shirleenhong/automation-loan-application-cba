@@ -5,6 +5,7 @@ Resource    ../../../../../Configurations/Integration_Import_File.robot
 Validate VLS_CUSTOMER Extract
     [Documentation]    This keyword is used to validate CUS_XID_CUST_ID and CUS_CID_CUST_ID
     ...    @author: ehugo    28AUG2019    - initial create
+    ...    @update: mgaling    13Oct20    - updated extract path
     [Arguments]    ${ExcelPath}        
     
     ###Validate CUS_CID_CUST_ID and CUS_XID_CUST_ID in LIQ###
