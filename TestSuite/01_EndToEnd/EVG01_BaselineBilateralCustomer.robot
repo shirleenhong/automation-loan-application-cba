@@ -32,29 +32,29 @@ Ongoing Fee Setup - CRED08
 Primary Allocation - SYND02
     Mx Execute Template With Multiple Data    Setup a Primary Notebook    ${ExcelPath}    ${rowid}    SYND02_PrimaryAllocation
 
-Create Initial Loan Drawdown - SERV01
-    [Tags]    04 Create Initial Loan Drawdown - SERV01
-    Mx Execute Template With Multiple Data    Create Initial Loan Drawdown with Repayment Schedule    ${ExcelPath}    ${rowid}    SERV01_LoanDrawdown
+# Create Initial Loan Drawdown - SERV01
+    # [Tags]    04 Create Initial Loan Drawdown - SERV01
+    # Mx Execute Template With Multiple Data    Create Initial Loan Drawdown with Repayment Schedule    ${ExcelPath}    ${rowid}    SERV01_LoanDrawdown
     
-Initiate Ongoing Fee Payment - SERV29
-    [Tags]    05 Initiate Ongoing Fee Payment - SERV29
-    Mx Execute Template With Multiple Data    Update Commitment Fee Cycle    ${ExcelPath}    ${rowid}    SERV29_PaymentFees   
-    Log to Console    Pause Execution - Run Daily EOD
-    Pause Execution
-    Mx Execute Template With Multiple Data    Pay Commitment Fee Amount    ${ExcelPath}    ${rowid}    SERV29_PaymentFees 
+# Initiate Ongoing Fee Payment - SERV29
+    # [Tags]    05 Initiate Ongoing Fee Payment - SERV29
+    # Mx Execute Template With Multiple Data    Update Commitment Fee Cycle    ${ExcelPath}    ${rowid}    SERV29_PaymentFees   
+    # Log to Console    Pause Execution - Run Daily EOD
+    # Pause Execution
+    # Mx Execute Template With Multiple Data    Pay Commitment Fee Amount    ${ExcelPath}    ${rowid}    SERV29_PaymentFees 
     
-Create Pricing Change Transaction - AMCH06
-    [Tags]    06 Create Pricing Change Transaction - AMCH06
-    Mx Execute Template With Multiple Data    Create Pricing Change Transaction    ${ExcelPath}    ${rowid}    AMCH06_PricingChangeTransaction
+# Create Pricing Change Transaction - AMCH06
+    # [Tags]    06 Create Pricing Change Transaction - AMCH06
+    # Mx Execute Template With Multiple Data    Create Pricing Change Transaction    ${ExcelPath}    ${rowid}    AMCH06_PricingChangeTransaction
     
-Initiate Loan Interest Payment - SERV21
-    [Tags]    07 Initiate Loan Interest Payment - SERV21
-    Mx Execute Template With Multiple Data    Initiate Interest Payment    ${ExcelPath}    ${rowid}    SERV21_InterestPayments
+# Initiate Loan Interest Payment - SERV21
+    # [Tags]    07 Initiate Loan Interest Payment - SERV21
+    # Mx Execute Template With Multiple Data    Initiate Interest Payment    ${ExcelPath}    ${rowid}    SERV21_InterestPayments
     
-Manual Scheduled Principal Payment - SERV18
-    [Tags]    08 Manual Scheduled Principal Payment - SERV18
-    Mx Execute Template With Multiple Data    Manual Schedule Principal Payment    ${ExcelPath}    ${rowid}    SERV18_Payments    
+# Manual Scheduled Principal Payment - SERV18
+    # [Tags]    08 Manual Scheduled Principal Payment - SERV18
+    # Mx Execute Template With Multiple Data    Manual Schedule Principal Payment    ${ExcelPath}    ${rowid}    SERV18_Payments    
     
-Deal Change Transaction - AMCH04
-    [Tags]    09 Deal Change Transaction - AMCH04
-    Mx Execute Template With Multiple Data    Deal Change Transaction on Financial Ratio    ${ExcelPath}    ${rowid}    AMCH04_DealChangeTransaction   
+# Deal Change Transaction - AMCH04
+    # [Tags]    09 Deal Change Transaction - AMCH04
+    # Mx Execute Template With Multiple Data    Deal Change Transaction on Financial Ratio    ${ExcelPath}    ${rowid}    AMCH04_DealChangeTransaction   
