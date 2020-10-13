@@ -1202,6 +1202,7 @@ Setup Revolver Facility for Comprehensive Deal
 Setup RPA Internal Deal
     [Documentation]    Create a RPA Internal Deal with no Origination System
     ...    @author: fmamaril
+    ...    @update: mcastro    12OCT2020    - added writing to TRPO12_PortfolioSettledDisc 
     [Arguments]    ${ExcelPath}
     ###Set Dates for transactions###
     ${SystemDate}    Get System Date
@@ -1232,6 +1233,7 @@ Setup RPA Internal Deal
     Write Data To Excel    SERV29_PaymentFees    Deal_Name    ${rowid}    ${Deal_Name}    
     Write Data To Excel    SERV29_PaymentFees    ScheduledActivity_DealName    ${rowid}    ${Deal_Name}
     Write Data To Excel    CRED01_DealSetup    Deal_Alias    ${rowid}    ${Deal_Alias}    multipleValue=Y
+    Write Data To Excel    TRPO12_PortfolioSettledDisc    Deal_Name    ${rowid}    ${Deal_Name}
           
     ###New Deal Screen###   
     Create New Deal    ${Deal_Name}    ${Deal_Alias}    &{ExcelPath}[Deal_Currency]    &{ExcelPath}[Deal_Department]    &{ExcelPath}[Deal_SalesGroup]
@@ -1271,6 +1273,7 @@ Setup RPA Internal Deal
 Create Facility for RPA Deal
     [Documentation]    This keyword is used to create a Facility for RPA Deal.
     ...    @author: fmamaril
+    ...    @update: mcastro    12OCT2020    - added writing to TRPO12_PortfolioSettledDisc 
     [Arguments]    ${ExcelPath}
     Log    ${rowid}       
     ###Data Generation###
@@ -1279,7 +1282,10 @@ Create Facility for RPA Deal
 
     Write Data To Excel    CRED02_FacilitySetup    Facility_Name    ${rowid}    ${Facility_Name}    bTestCaseColumn=True    sColumnReference=rowid
     Write Data To Excel    CRED08_OngoingFeeSetup    Facility_Name    ${rowid}    ${Facility_Name}    bTestCaseColumn=True    sColumnReference=rowid
-    Write Data To Excel    SYND02_PrimaryAllocation    Facility_Name    ${rowid}    ${Facility_Name}    bTestCaseColumn=True    sColumnReference=rowid     
+    Write Data To Excel    SYND02_PrimaryAllocation    Facility_Name    ${rowid}    ${Facility_Name}    bTestCaseColumn=True    sColumnReference=rowid
+    Write Data To Excel    TRPO12_PortfolioSettledDisc    Facility_Name    ${rowid}    ${Facility_Name}    bTestCaseColumn=True    sColumnReference=rowid 
+    Write Data To Excel    TRPO12_PortfolioSettledDisc    Portfolio_Position    ${rowid}    ${Facility_Name}    bTestCaseColumn=True    sColumnReference=rowid
+       
     ###New Facility Screen###
     ${Facility_ProposedCmtAmt}    New Facility Select    &{ExcelPath}[Deal_Name]    ${FacilityName}    &{ExcelPath}[Facility_Type]    &{ExcelPath}[Facility_ProposedCmtAmt]    &{ExcelPath}[Facility_Currency]
     
