@@ -66,8 +66,8 @@ Validate Records for RPE_CDE_RISK_BOOK exist in LIQ
 Validate CUS_CID_CUST_ID and CUS_XID_CUST_ID in LIQ for VLS_Customer
     [Documentation]    This keyword validates CUS_CID_CUST_ID and CUS_XID_CUST_ID in LIQ for VLS_Customer
     ...    @author: ehugo    29AUG2019
-    ...    updated: mgaling    10Feb2020    Added on the loop function to handle UNKNOWN data
-    ...    updated: mgaling    07Oct2020    Created separate keyword for CUS_XID_CUST_ID validation  
+    ...    updated: mgaling    10OCT2020    Added on the loop function to handle UNKNOWN data
+    ...    updated: mgaling    07OCT2020    Created separate keyword for CUS_XID_CUST_ID validation  
     [Arguments]    ${sCustomer_CSVFileName}    
     
     ${Customer_CSV_Content}    Read Csv File To List    ${sCustomer_CSVFileName}    |
@@ -2530,8 +2530,7 @@ Validate CSV Values in Facility Notebook Purpose Tab
 
 Validate CUS_XID_CUST_ID in Customer Notebook
 	[Documentation]    This keyword validates CUS_XID_CUST_ID value in LIQ Customer Notebook
-    ...    @author: mgaling    07Oct2020    - initial create
- 
+    ...    @author: mgaling    07OCT2020    - initial create
     [Arguments]    ${CUS_CID_CUST_ID_Value}    ${CUS_XID_CUST_ID_Value}
 
     ###Select By RID###
