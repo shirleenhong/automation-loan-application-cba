@@ -21,16 +21,16 @@ ${SCENARIO}    1
     # [Tags]    01 Create Customer within Loan IQ - ORIG03
     # Mx Execute Template With Multiple Data    Search Customer and Complete its Borrower Profile Creation with default values    ${ExcelPath}    ${rowid}    ORIG03_Customer
      
-Deal Setup - CRED01
-    [Tags]    03 Deal Setup - CRED01
-    Mx Execute Template With Multiple Data    Setup a Bilateral Deal    ${ExcelPath}    ${rowid}    CRED01_DealSetup
-    Mx Execute Template With Multiple Data    Create Facility    ${ExcelPath}    ${rowid}    CRED02_FacilitySetup
+# Deal Setup - CRED01
+    # [Tags]    03 Deal Setup - CRED01
+    # Mx Execute Template With Multiple Data    Setup a Bilateral Deal    ${ExcelPath}    ${rowid}    CRED01_DealSetup
+    # Mx Execute Template With Multiple Data    Create Facility    ${ExcelPath}    ${rowid}    CRED02_FacilitySetup
 
-Ongoing Fee Setup - CRED08
-    Mx Execute Template With Multiple Data    Ongoing Fee Setup     ${ExcelPath}    ${rowid}    CRED08_OngoingFeeSetup
+# Ongoing Fee Setup - CRED08
+    # Mx Execute Template With Multiple Data    Ongoing Fee Setup     ${ExcelPath}    ${rowid}    CRED08_OngoingFeeSetup
     
-Primary Allocation - SYND02
-    Mx Execute Template With Multiple Data    Setup a Primary Notebook    ${ExcelPath}    ${rowid}    SYND02_PrimaryAllocation
+# Primary Allocation - SYND02
+    # Mx Execute Template With Multiple Data    Setup a Primary Notebook    ${ExcelPath}    ${rowid}    SYND02_PrimaryAllocation
 
 Create Initial Loan Drawdown - SERV01
     [Tags]    04 Create Initial Loan Drawdown - SERV01
@@ -40,7 +40,7 @@ Initiate Ongoing Fee Payment - SERV29
     [Tags]    05 Initiate Ongoing Fee Payment - SERV29
     Mx Execute Template With Multiple Data    Update Commitment Fee Cycle    ${ExcelPath}    ${rowid}    SERV29_PaymentFees   
     Log to Console    Pause Execution - Run Daily EOD
-    Pause Execution
+    #Pause Execution
     Mx Execute Template With Multiple Data    Pay Commitment Fee Amount    ${ExcelPath}    ${rowid}    SERV29_PaymentFees 
     
 Create Pricing Change Transaction - AMCH06
