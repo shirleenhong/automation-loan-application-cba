@@ -188,8 +188,7 @@ Collect Extenstion Fee for MOF
     Mx Execute Template With Multiple Data    Collect Extension Fee for D00000476     ${CBAUAT_ExcelPath}    1    CRED01_UpfrontFee
     
 Collect Extenstion Fee for FCAF SCAF TCAF
-    # Mx Execute Template With Multiple Data    Collect Extension Fee for D00000476     ${CBAUAT_ExcelPath}    2-4    CRED01_UpfrontFee
-    Mx Execute Template With Multiple Data    Collect Extension Fee for D00000476     ${CBAUAT_ExcelPath}    4    CRED01_UpfrontFee
+    Mx Execute Template With Multiple Data    Collect Extension Fee for D00000476     ${CBAUAT_ExcelPath}    2-4    CRED01_UpfrontFee
 
 # ###February 21
 # Setup BaseRate and FX Rate Feb 21
