@@ -650,7 +650,7 @@ Validate Disabled Fields in Quick Enterprise Party Page
 Validate Branch in Party Onboarding Page
     [Documentation]    This test case is used to validate Branches in Branch List Dialog of Party Onboarding Page
     ...    @author: javinzon    13OCT2020    - initial create
-    [Arguments]    ${sAssigned_Branch}    ${iBranch_Code}    ${sBranch_Name}    ${sBank_Name}    ${iCountry_Code}
+    [Arguments]    ${sAssigned_Branch}    ${iBranch_Code}    ${sBranch_Name}    ${sBank_Name}    ${iCountry_Code}    ${iAssigned_Branch_Code}
     
     Mx Click Element    ${Party_PartyOnboarding_Search_Button}
     Wait Until Page Contains    ${PARTY_BRANCHLIST_PAGETITLE}
@@ -677,7 +677,7 @@ Validate Branch in Party Onboarding Page
     ### Validate results when a parameter was given ###
     Mx Input Text    ${Party_PartyOnboarding_BranchList_BranchName_TextBox}    ${sAssigned_Branch}
     Mx Click Element    ${Party_PartyOnboarding_BranchList_Search_Button}
-    ${Branch_Name}    Get Table Value Containing Row Value in Party    ${Party_PartyOnboarding_BranchList_SearchResultTableHeader}    ${Party_PartyOnboarding_BranchList_SearchResultTableRow}    Branch Code    00000001    Branch Name
+    ${Branch_Name}    Get Table Value Containing Row Value in Party    ${Party_PartyOnboarding_BranchList_SearchResultTableHeader}    ${Party_PartyOnboarding_BranchList_SearchResultTableRow}    Branch Code    ${iAssigned_Branch_Code}    Branch Name
     Capture Page Screenshot    ${screenshot_path}/Screenshots/Party/QuickPartyOnboarding_BranchField-{index}.png
     Mx Click Element    ${Party_CloseDialog_Button}
     

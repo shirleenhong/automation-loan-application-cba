@@ -13,6 +13,6 @@ Navigate to Quick Party Onboarding and Validate Branch in Party Onboarding Page
    
     Search Process in Party    &{ExcelPath}[Selected_Module]
     
-    Validate Branch in Party Onboarding Page    &{ExcelPath}[UserBranch]    &{ExcelPath}[Branch_Code]    &{ExcelPath}[Branch_Name]    &{ExcelPath}[Bank_Name]    &{ExcelPath}[Country_Code]
+    Validate Branch in Party Onboarding Page    &{ExcelPath}[UserBranch]    &{ExcelPath}[Branch_Code]    &{ExcelPath}[Branch_Name]    &{ExcelPath}[Bank_Name]    &{ExcelPath}[Country_Code]    &{ExcelPath}[Assigned_Branch_Code]
     
     Logout User on Party
