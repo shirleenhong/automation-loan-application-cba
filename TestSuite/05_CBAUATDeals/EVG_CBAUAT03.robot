@@ -194,11 +194,11 @@ Collect Extenstion Fee for FCAF SCAF TCAF
 # Setup BaseRate and FX Rate Feb 21
     # Mx Execute Template With Multiple Data    Load Base Rate D00000476    ${CBAUAT_ExcelPath}    5    BaseRate_Fields
     
-# Collect Early Prepayment for C - D00000476
-    # Mx Execute Template With Multiple Data    Collect Early Prepayment via Paper Clip D00000476    ${CBAUAT_ExcelPath}    2    SERV23_Paperclip
+Collect Early Prepayment for C - D00000476
+    Mx Execute Template With Multiple Data    Collect Early Prepayment via Paper Clip D00000476    ${CBAUAT_ExcelPath}    2    SERV23_Paperclip
     
-# Charge Breakcost Fee for C - D00000476
-    # Mx Execute Template With Multiple Data    Collect Break Cost Fee for Early Prepayment D00000476    ${CBAUAT_ExcelPath}    2    SERV40_BreakFunding
+Charge Breakcost Fee for C - D00000476
+    Mx Execute Template With Multiple Data    Collect Break Cost Fee for Early Prepayment D00000476    ${CBAUAT_ExcelPath}    2    SERV40_BreakFunding
     
 # Initiate Loan Merge D1 and D2 - D00000476    
     # Mx Execute Template With Multiple Data    Initiate Loan Merge and Conversion - D00000454    ${CBAUAT_ExcelPath}    1    COM06_LoanMerge
