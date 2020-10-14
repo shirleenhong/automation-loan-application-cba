@@ -1,4 +1,4 @@
-dataset_path = "C:\\Git_Evergreen\\evergreen_projects\\CBA_Evergreen"
+dataset_path = "C:\\Git_Evergreen\\fms_cba"
 ExcelPath = "C:\\Git_Evergreen\\fms_cba\\DataSet\\Party_DataSet\\PTY_DataSet_EU.xlsx"
 CBAUAT_ExcelPath = "C:\\Git_Evergreen\\evergreen_projects\\CBA_Evergreen\\DataSet\\CBA_UAT_DataSet\\EVG_CBAUAT01.xls"
 APIDataSet = "C:\\Git_Evergreen\\fms_cba\\DataSet\\Integration_DataSet\\API\\API_Data_Set.xlsx"
@@ -13,10 +13,6 @@ PTY_DATASET = "C:\\Git_Evergreen\\fms_cba\\DataSet\\Party_DataSet\\PTY_DataSet_E
 SERVER = "http://mancsleverg0007"
 PORT = "9090"
 MDM_FFC_URL="/mch-ui"
-
-SFTP_HOST = "mancsleverg0006"
-SFTP_PORT = "22"
-SFTP_USER = "sftpuser"
 
 DBServiceName = "MLFFC1.misys.global.ad"
 DBUsername = "MCH"
@@ -62,12 +58,19 @@ PARTY_URL = 'mancsleverg0031:7080/uxp/rt/html/login.html'
 PARTY_USERNAME = 'amipac'
 PARTY_PASSWORD = 'password'
 
-TL_SERVICE_HOST = "mancsleverg0005"
+###Transformation Layer###
+TL_SERVICE_HOST = "mancsleverg0007"
 TL_SERVICE_PORT = "22"
 TL_SERVER_USER = "sftpuser"
 TL_SERVER_PASSWORD = "t3stOnly?"
 TL_SERVICE_DIR = "/evgdata/FFC/mch-2.1.3.3.0-6162/config/Transformation_129/"
 TL_SERVICE_LOGS_DIR = "/evgdata/FFC/mch-2.2.0.0.0-6534/config/Transformation_129/logs/"
+
+###SFTP###
+SFTP_HOST = "mancsleverg0005"
+SFTP_PORT = "22"
+SFTP_USER = "sftpuser"
+SFTP_PASSWORD = "t3stOnly?"
 
 ###LIQ ADMIN CREDENTIALS###
 LIQ_ADMIN_USERNAME = "ADMIN1"
@@ -153,7 +156,7 @@ OPEAPI_INSTANCE = "openAPI_1.4.1.1"
 TEXTJMS_INSTANCE = "distributor_1.4.1.1"
 GETTEXTJMS_INSTANCE = "distributor_1.4.1.1"
 CBAINTERFACE_INSTANCE = "CustomInterface_v1.3.3"
-CBAPUSH_INSTANCE = "CustomCBAPush_v1.3.2"
+CBAPUSH_INSTANCE = "CustomCBAPush_v1.4.0"
 CUSTOM_INTERFACE_INSTANCE = "CustomInterface_v1.3.3"
 RESPONSE_MECHANISM_INSTANCE = "responsemechanism_1.4.1.0"
 DWE_NOTIFICATION_INSTANCE = "dwe_notification_1.3.0"
