@@ -4,7 +4,6 @@ Resource    ../../../../../Configurations/Integration_Import_File.robot
 
 *** Test Cases ***
 DWELIQ_FuncVal01
-    [Tags]    Zone2_VLS_BAL_SUBLEDGER
 	[Documentation]    This keyword is used to validate BSG_CDE_GL_ACCOUNT, BSG_CDE_GL_SHTNAME, BSG_CDE_BRANCH, BSG_CDE_EXPENSE, BSG_CDE_PORTFOLIO, BSG_CDE_CURRENCY for VLS_BAL_SUBLEDGER.
     ...    @author: ehugo    29AUG2019    - initial create
     ...    @update: mgaling    13OCT2020    - added keyword to handle multi entity test case 
