@@ -107,7 +107,7 @@ Validate BSG_CDE_CURRENCY in LIQ for VLS_Bal_Subledger
     \    mx LoanIQ activate window    ${LIQ_DealNotebook_Window}
     \    ${Currency_Field}    Set Variable    JavaWindow("title:=Deal Notebook -.*","displayed:=1").JavaStaticText("attached text:=${BSG_CDE_CURRENCY_Value.strip()}")
     \    ${CorrectCurrency_IsDisplayed}    Run Keyword And Return Status    Mx LoanIQ Verify Object Exist    ${Currency_Field}    VerificationData="Yes"
-    \    Run Keyword If     ${CorrectCurrency_IsDisplayed}==False    Run Keyword And Continue On Failure    FAIL   ${BSG_CDE_CURRENCY_Value.strip()} currency is not displayed.
+    \    Run Keyword If     ${CorrectCurrency_IsDisplayed}==${False}    Run Keyword And Continue On Failure    FAIL   ${BSG_CDE_CURRENCY_Value.strip()} currency is not displayed.
          ...    ELSE    Log    ${BSG_CDE_CURRENCY_Value.strip()} is displayed.
     \    Take Screenshot    ${screenshot_path}/Screenshots/DWE/Currency
     \    
@@ -1550,7 +1550,8 @@ Validate Customer Description for FAC_CDE_BRANCH in VLS_FACILITY
 
 Validate Branch Description for FAC_CDE_BRANCH in VLS_FACILITY
     [Documentation]    This keyword validates branch description for FAC_CDE_BRANCH for VLS_Facility
-    ...    @author: ehugo    19SEP2019
+    ...    @author: ehugo    19SEP2019    - initial create
+    ...    @update: mgaling    14OCT2020    - updated Mx Native Type    {ENTER} keyword into Mx Press Combination    KEY.ENTER 
     [Arguments]    ${sBranch_Code}    ${sExpected_Branch_Description}    ${sFacilityID}    
     
     Mx LoanIQ Select String    ${LIQ_Branch_Tree}    ${sBranch_Code.strip()}
@@ -1742,7 +1743,8 @@ Validate CSV values in LIQ for VLS_CROSS_CURRENCY
       
 Compare FX Rates from CSV to LIQ
     [Documentation]    This keyword is used to compare FX Rates for AUD Funding Desk values from CSV to LIQ Screen.
-    ...    @author: mgaling    20Sep2019    Initial Create
+    ...    @author: mgaling    20SEP2019    - initial Create
+    ...    @update: mgaling    14OCT2020    - updated Mx Native Type    {ENTER} keyword into Mx Press Combination    KEY.ENTER
     [Arguments]    ${sFUND_DESK}    ${sCURRENCY}    ${iComputed_FXRateValue}   
     
     mx LoanIQ activate window    ${LIQ_CurrencyExchangeRate_Window}
@@ -1795,8 +1797,9 @@ Validate CSV values in LIQ for VLS_CURRENCY
 
 Check Currency Description from CSV to LIQ
     [Documentation]    This keyword is used to check the Currency Description and Active Indicator values from CSV to LIQ Screen.
-    ...    @author: mgaling    20Sep2019    Initial Create
-    ...    @update: mgaling    19Feb2020    Added ${sIND_ACTIVE} on select string keyword
+    ...    @author: mgaling    20SEP2019    - initial create
+    ...    @update: mgaling    19FEB2020    - Added ${sIND_ACTIVE} on select string keyword
+    ...    @update: mgaling    14OCT2020    - updated Mx Native Type    {ENTER} keyword into Mx Press Combination    KEY.ENTER
     [Arguments]    ${sCDE_CURRENCY}    ${sDSC_CURRENCY}    ${sIND_ACTIVE}   
     
     mx LoanIQ activate window    ${LIQ_BrowseCurrency_Window}
@@ -1844,7 +1847,8 @@ Validate CSV Values in LIQ for VLS_FUNDING_DESK
     
 Check Funding Desk Description from CSV to LIQ
     [Documentation]    This keyword is used to check the Funding Desk Description and Active Indicator values from CSV to LIQ Screen.
-    ...    @author: amansuet    20Sep2019    Initial Create
+    ...    @author: amansuet    20SEP2020    - initial create
+    ...    @update: mgaling    14OCT2020    - updated Mx Native Type    {ENTER} keyword into Mx Press Combination    KEY.ENTER
     [Arguments]    ${sFDE_CDE_FUND_DESK}    ${sFDE_DSC_FUND_DESK}    ${sFDE_IND_ACTIVE}   
     
     mx LoanIQ activate window    ${LIQ_BrowseFundingDesk_Window}
