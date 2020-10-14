@@ -374,7 +374,8 @@ Validate BSG_CDE_EXPENSE in LIQ for VLS_Bal_Subledger
 
 Validate BSG_CDE_PORTFOLIO in LIQ for VLS_Bal_Subledger
     [Documentation]    This keyword validates BSG_CDE_PORTFOLIO in LIQ for VLS_Bal_Subledger
-    ...    @author: ehugo    30AUG2019
+    ...    @author: ehugo    30AUG2019    - initial create
+    ...    @update: mgaling    14OCT2020    - created a separate keyword for Portfolio Update Window validation
     [Arguments]    ${sBal_Subledger_CSV_Filename}    ${sPortfolio_CSV_Filename}
     
     ${CSV_Content}    Read Csv File To List    ${sBal_Subledger_CSV_Filename}    |
@@ -395,29 +396,9 @@ Validate BSG_CDE_PORTFOLIO in LIQ for VLS_Bal_Subledger
     \    Continue For Loop If    ${count}>0   
     \    ${Description}    Get Reference Column Value using Source Column Value - Single Reference    ${sPortfolio_CSV_Filename}    PTF_CDE_PORTFOLIO    ${BSG_CDE_PORTFOLIO_Value.strip()}    PTF_DSC_PORTFOLIO
     \
-    \    ###Search for the Portfolio###
-    \    mx LoanIQ activate window    ${LIQ_Portfolio_Window}
-    \    ${Portfolio_List}    Mx LoanIQ Store Java Tree Items To Array    ${LIQ_Portfolio_Tree}    Portfolio_List    Processtimeout=180
-    \    ${Portfolio_IsExist}    Run Keyword And Return Status    Should Contain    ${Portfolio_List}    ${BSG_CDE_PORTFOLIO_Value.strip()}    
-    \    Run Keyword If    ${Portfolio_IsExist}==False    Fail    ${BSG_CDE_PORTFOLIO_Value.strip()} is not displayed in LIQ.
-         ...    ELSE    Log    ${BSG_CDE_PORTFOLIO_Value.strip()} is displayed in LIQ.
-    \
-    \    Mx LoanIQ Select String    ${LIQ_Portfolio_Tree}    ${BSG_CDE_PORTFOLIO_Value.strip()}\t${Description.strip()}
-    \    Mx Native Type    {ENTER}
-    \
-    \    ###Portfolio Update Window###
-    \    mx LoanIQ activate window    ${LIQ_BrowsePortfolio_Update_Window}
-    \    ${Code}    Mx LoanIQ Get Data    ${LIQ_BrowsePortfolio_Update_Code_Field}    Code    
-    \    Log    Expected: ${BSG_CDE_PORTFOLIO_Value.strip()}
-    \    Log    Actual: ${Code}
-    \    ${Verify_Equal}    Run Keyword And Return Status    Should Be Equal As Strings    ${BSG_CDE_PORTFOLIO_Value.strip()}    ${Code.strip()}    
-    \    Take Screenshot    Portfolio
-    \    Run Keyword If    ${Verify_Equal}==False    Run Keyword And Continue On Failure    Fail    Incorrect Portfolio value '${Code}' is displayed in LIQ.
-         ...    ELSE    Log    Correct Portfolio value '${Code}' is displayed in LIQ.
-    \    
-    \    mx LoanIQ close window    ${LIQ_BrowsePortfolio_Update_Window}
-    
-    Close All Windows on LIQ
+    \    Run Keyword if    '${BSG_CDE_PORTFOLIO_Value.strip()}'!='${EMPTY}' and '${BSG_CDE_PORTFOLIO_Value.strip()}'!='NONE'    Run Keyword And Continue On Failure    Validate BSG_CDE_PORTFOLIO_Value in Portfolio Update Window    ${BSG_CDE_PORTFOLIO_Value.strip()}    ${Description.strip()}
+	
+	Close All Windows on LIQ
     
 Validate RPE_CDE_RISK_BOOK records exist in LIQ for VLS_RISK_PORT_EXP
     [Documentation]    This keyword validates RPE_CDE_RISK_BOOK records exist in LIQ for VLS_RISK_PORT_EXP
@@ -2559,3 +2540,31 @@ Get Business Date of Decrypted Files
 
     ${TestCase_Name_FuncVal_List}    Split String    ${TestCase_Name_FuncVal}    |
     Write Data to Excel    ${DWELIQFunc_Dataset_SheetName}    Business_Date    @{TestCase_Name_FuncVal_List}[${DATAROW_INDEX}]    ${Business_Date}    ${DWELIQFunc_Dataset}    bTestCaseColumn=True
+
+Validate BSG_CDE_PORTFOLIO_Value in Portfolio Update Window
+	[Documentation]    This keyword validates BSG_CDE_PORTFOLIO in LIQ - Portfolio Update Window
+	...    @author: mgaling    14OCT2020    - initial create
+    [Arguments]    ${BSG_CDE_PORTFOLIO_Value}    ${Description}    
+	
+	###Search for the Portfolio###
+    mx LoanIQ activate window    ${LIQ_Portfolio_Window}
+    ${Portfolio_List}    Mx LoanIQ Store Java Tree Items To Array    ${LIQ_Portfolio_Tree}    Portfolio_List    Processtimeout=180
+    Log    ${Portfolio_List}            
+    ${Portfolio_IsExist}    Run Keyword And Return Status    Should Contain    ${Portfolio_List}    ${BSG_CDE_PORTFOLIO_Value}    
+    Run Keyword If    ${Portfolio_IsExist}==False    Fail    ${BSG_CDE_PORTFOLIO_Value} is not displayed in LIQ.
+    ...    ELSE    Log    ${BSG_CDE_PORTFOLIO_Value} is displayed in LIQ.
+  
+    Mx LoanIQ Select String    ${LIQ_Portfolio_Tree}    ${BSG_CDE_PORTFOLIO_Value}\t${Description}
+    Mx Native Type    {ENTER}
+    
+	###Portfolio Update Window###
+    mx LoanIQ activate window    ${LIQ_BrowsePortfolio_Update_Window}
+    ${Code}    Mx LoanIQ Get Data    ${LIQ_BrowsePortfolio_Update_Code_Field}    Code    
+    Log    Expected: ${BSG_CDE_PORTFOLIO_Value}
+    Log    Actual: ${Code}
+    ${Verify_Equal}    Run Keyword And Return Status    Should Be Equal As Strings    ${BSG_CDE_PORTFOLIO_Value}    ${Code.strip()}    
+    Take Screenshot    Portfolio
+    Run Keyword If    ${Verify_Equal}==False    Run Keyword And Continue On Failure    Fail    Incorrect Portfolio value '${Code}' is displayed in LIQ.
+    ...    ELSE    Log    Correct Portfolio value '${Code}' is displayed in LIQ.
+   
+    mx LoanIQ close window    ${LIQ_BrowsePortfolio_Update_Window}
