@@ -154,34 +154,81 @@ NonAgent-HostBank Syndicated Deal - Setup Revolver Facility Fees and Interest
     
     #### Interest Pricing ###
     Click Modify Interest Pricing Button
-    Add Interest Pricing Financial Ratio
-    Set Financial Ratio    &{ExcelPath}[Interest_FinancialRatioType1]    ${OFF}    &{ExcelPath}[Greater_Than]    &{ExcelPath}[Less_Than]    &{ExcelPath}[FinancialRatio_Minimum1]    &{ExcelPath}[FinancialRatio_Maximum1]
-    Add Facility Interest    &{ExcelPath}[Interest_AddItem]    &{ExcelPath}[Interest_OptionName1]    &{ExcelPath}[Interest_RateBasis]
+    
+    Run Keyword If    '&{ExcelPath}[Entity]' == 'AU'    Run Keywords
+    ...    Add Interest Pricing Financial Ratio
+    ...    AND    Set Financial Ratio    &{ExcelPath}[Interest_FinancialRatioType1]    ${OFF}    &{ExcelPath}[Greater_Than]    &{ExcelPath}[Less_Than]    &{ExcelPath}[FinancialRatio_Minimum1]    &{ExcelPath}[FinancialRatio_Maximum1]
+    ...    AND    Add Facility Interest    &{ExcelPath}[Interest_AddItem]    &{ExcelPath}[Interest_OptionName1]    &{ExcelPath}[Interest_RateBasis]
     ...    &{ExcelPath}[Interest_SpreadType1]    &{ExcelPath}[Interest_SpreadValue1]    &{ExcelPath}[Interest_BaseRateCode1]
-    Add Facility Interest    &{ExcelPath}[Interest_AddItem]    &{ExcelPath}[Interest_OptionName2]    &{ExcelPath}[Interest_RateBasis]
+    ...    AND    Add Facility Interest    &{ExcelPath}[Interest_AddItem]    &{ExcelPath}[Interest_OptionName2]    &{ExcelPath}[Interest_RateBasis]
     ...    &{ExcelPath}[Interest_SpreadType1]    &{ExcelPath}[Interest_SpreadValue1]    &{ExcelPath}[Interest_BaseRateCode2]
     
-    Add Interest Pricing Financial Ratio
-    Set Financial Ratio    &{ExcelPath}[Interest_FinancialRatioType1]    ${OFF}    &{ExcelPath}[Greater_Than]    &{ExcelPath}[Less_Than]    &{ExcelPath}[FinancialRatio_Minimum2]    &{ExcelPath}[FinancialRatio_Maximum2]
-    Add Facility Interest    &{ExcelPath}[Interest_AddItem]    &{ExcelPath}[Interest_OptionName1]    &{ExcelPath}[Interest_RateBasis]
+    ...    AND    Add Interest Pricing Financial Ratio
+    ...    AND    Set Financial Ratio    &{ExcelPath}[Interest_FinancialRatioType1]    ${OFF}    &{ExcelPath}[Greater_Than]    &{ExcelPath}[Less_Than]    &{ExcelPath}[FinancialRatio_Minimum2]    &{ExcelPath}[FinancialRatio_Maximum2]
+    ...    AND    Add Facility Interest    &{ExcelPath}[Interest_AddItem]    &{ExcelPath}[Interest_OptionName1]    &{ExcelPath}[Interest_RateBasis]
     ...    &{ExcelPath}[Interest_SpreadType1]    &{ExcelPath}[Interest_SpreadValue2]    &{ExcelPath}[Interest_BaseRateCode1]
-    Add Facility Interest    &{ExcelPath}[Interest_AddItem]    &{ExcelPath}[Interest_OptionName2]    &{ExcelPath}[Interest_RateBasis]
+    ...    AND    Add Facility Interest    &{ExcelPath}[Interest_AddItem]    &{ExcelPath}[Interest_OptionName2]    &{ExcelPath}[Interest_RateBasis]
     ...    &{ExcelPath}[Interest_SpreadType1]    &{ExcelPath}[Interest_SpreadValue2]    &{ExcelPath}[Interest_BaseRateCode2]
     
-    Add Interest Pricing Financial Ratio
-    Set Financial Ratio    &{ExcelPath}[Interest_FinancialRatioType1]    ${OFF}    &{ExcelPath}[Greater_Than]    &{ExcelPath}[Less_Than]    &{ExcelPath}[FinancialRatio_Minimum3]    &{ExcelPath}[FinancialRatio_Maximum3]
-    Add Facility Interest    &{ExcelPath}[Interest_AddItem]    &{ExcelPath}[Interest_OptionName1]    &{ExcelPath}[Interest_RateBasis]
+    ...    AND    Add Interest Pricing Financial Ratio
+    ...    AND    Set Financial Ratio    &{ExcelPath}[Interest_FinancialRatioType1]    ${OFF}    &{ExcelPath}[Greater_Than]    &{ExcelPath}[Less_Than]    &{ExcelPath}[FinancialRatio_Minimum3]    &{ExcelPath}[FinancialRatio_Maximum3]
+    ...    AND    Add Facility Interest    &{ExcelPath}[Interest_AddItem]    &{ExcelPath}[Interest_OptionName1]    &{ExcelPath}[Interest_RateBasis]
     ...    &{ExcelPath}[Interest_SpreadType1]    &{ExcelPath}[Interest_SpreadValue3]    &{ExcelPath}[Interest_BaseRateCode1]
-    Add Facility Interest    &{ExcelPath}[Interest_AddItem]    &{ExcelPath}[Interest_OptionName2]    &{ExcelPath}[Interest_RateBasis]
+    ...    AND    Add Facility Interest    &{ExcelPath}[Interest_AddItem]    &{ExcelPath}[Interest_OptionName2]    &{ExcelPath}[Interest_RateBasis]
     ...    &{ExcelPath}[Interest_SpreadType1]    &{ExcelPath}[Interest_SpreadValue3]    &{ExcelPath}[Interest_BaseRateCode2]
     
-    Add Interest Pricing Financial Ratio
-    Set Financial Ratio    &{ExcelPath}[Interest_FinancialRatioType1]    ${ON}    &{ExcelPath}[Greater_Than]    &{ExcelPath}[Less_Than]    &{ExcelPath}[FinancialRatio_Minimum4]
-    Add Facility Interest    &{ExcelPath}[Interest_AddItem]    &{ExcelPath}[Interest_OptionName1]    &{ExcelPath}[Interest_RateBasis]
+    ...    AND    Add Interest Pricing Financial Ratio
+    ...    AND    Set Financial Ratio    &{ExcelPath}[Interest_FinancialRatioType1]    ${ON}    &{ExcelPath}[Greater_Than]    &{ExcelPath}[Less_Than]    &{ExcelPath}[FinancialRatio_Minimum4]
+    ...    AND    Add Facility Interest    &{ExcelPath}[Interest_AddItem]    &{ExcelPath}[Interest_OptionName1]    &{ExcelPath}[Interest_RateBasis]
     ...    &{ExcelPath}[Interest_SpreadType1]    &{ExcelPath}[Interest_SpreadValue4]    &{ExcelPath}[Interest_BaseRateCode1]
-    Add Facility Interest    &{ExcelPath}[Interest_AddItem]    &{ExcelPath}[Interest_OptionName2]    &{ExcelPath}[Interest_RateBasis]
+    ...    AND    Add Facility Interest    &{ExcelPath}[Interest_AddItem]    &{ExcelPath}[Interest_OptionName2]    &{ExcelPath}[Interest_RateBasis]
     ...    &{ExcelPath}[Interest_SpreadType1]    &{ExcelPath}[Interest_SpreadValue4]    &{ExcelPath}[Interest_BaseRateCode2]
     
+    ...    ELSE IF    '&{ExcelPath}[Entity]' == 'EU'    Run Keywords
+    ...    Add Interest Pricing Financial Ratio
+    ...    AND    Set Financial Ratio    &{ExcelPath}[Interest_FinancialRatioType1]    ${OFF}    &{ExcelPath}[Greater_Than]    &{ExcelPath}[Less_Than]    &{ExcelPath}[FinancialRatio_Minimum1]    &{ExcelPath}[FinancialRatio_Maximum1]
+    ...    AND    Add Facility Interest    &{ExcelPath}[Interest_AddItem]    &{ExcelPath}[Interest_OptionName1]    &{ExcelPath}[Interest_RateBasis]
+    ...    &{ExcelPath}[Interest_SpreadType1]    &{ExcelPath}[Interest_SpreadValue1]    &{ExcelPath}[Interest_BaseRateCode1]
+    ...    AND    Add Facility Interest    &{ExcelPath}[Interest_AddItem]    &{ExcelPath}[Interest_OptionName2]    &{ExcelPath}[Interest_RateBasis]
+    ...    &{ExcelPath}[Interest_SpreadType1]    &{ExcelPath}[Interest_SpreadValue1]    &{ExcelPath}[Interest_BaseRateCode2]
+    ...    AND    Add Facility Interest    &{ExcelPath}[Interest_AddItem]    &{ExcelPath}[Interest_OptionName3]    &{ExcelPath}[Interest_RateBasis]
+    ...    &{ExcelPath}[Interest_SpreadType1]    &{ExcelPath}[Interest_SpreadValue1]    &{ExcelPath}[Interest_BaseRateCode3]
+    ...    AND    Add Facility Interest    &{ExcelPath}[Interest_AddItem]    &{ExcelPath}[Interest_OptionName4]    &{ExcelPath}[Interest_RateBasis]
+    ...    &{ExcelPath}[Interest_SpreadType1]    &{ExcelPath}[Interest_SpreadValue1]    &{ExcelPath}[Interest_BaseRateCode4]
+    
+    ...    AND    Add Interest Pricing Financial Ratio
+    ...    AND    Set Financial Ratio    &{ExcelPath}[Interest_FinancialRatioType1]    ${OFF}    &{ExcelPath}[Greater_Than]    &{ExcelPath}[Less_Than]    &{ExcelPath}[FinancialRatio_Minimum2]    &{ExcelPath}[FinancialRatio_Maximum2]
+    ...    AND    Add Facility Interest    &{ExcelPath}[Interest_AddItem]    &{ExcelPath}[Interest_OptionName1]    &{ExcelPath}[Interest_RateBasis]
+    ...    &{ExcelPath}[Interest_SpreadType1]    &{ExcelPath}[Interest_SpreadValue2]    &{ExcelPath}[Interest_BaseRateCode1]
+    ...    AND    Add Facility Interest    &{ExcelPath}[Interest_AddItem]    &{ExcelPath}[Interest_OptionName2]    &{ExcelPath}[Interest_RateBasis]
+    ...    &{ExcelPath}[Interest_SpreadType1]    &{ExcelPath}[Interest_SpreadValue2]    &{ExcelPath}[Interest_BaseRateCode2]
+    ...    AND    Add Facility Interest    &{ExcelPath}[Interest_AddItem]    &{ExcelPath}[Interest_OptionName3]    &{ExcelPath}[Interest_RateBasis]
+    ...    &{ExcelPath}[Interest_SpreadType1]    &{ExcelPath}[Interest_SpreadValue2]    &{ExcelPath}[Interest_BaseRateCode3]
+    ...    AND    Add Facility Interest    &{ExcelPath}[Interest_AddItem]    &{ExcelPath}[Interest_OptionName4]    &{ExcelPath}[Interest_RateBasis]
+    ...    &{ExcelPath}[Interest_SpreadType1]    &{ExcelPath}[Interest_SpreadValue2]    &{ExcelPath}[Interest_BaseRateCode4]
+    
+    ...    AND    Add Interest Pricing Financial Ratio
+    ...    AND    Set Financial Ratio    &{ExcelPath}[Interest_FinancialRatioType1]    ${OFF}    &{ExcelPath}[Greater_Than]    &{ExcelPath}[Less_Than]    &{ExcelPath}[FinancialRatio_Minimum3]    &{ExcelPath}[FinancialRatio_Maximum3]
+    ...    AND    Add Facility Interest    &{ExcelPath}[Interest_AddItem]    &{ExcelPath}[Interest_OptionName1]    &{ExcelPath}[Interest_RateBasis]
+    ...    &{ExcelPath}[Interest_SpreadType1]    &{ExcelPath}[Interest_SpreadValue3]    &{ExcelPath}[Interest_BaseRateCode1]
+    ...    AND    Add Facility Interest    &{ExcelPath}[Interest_AddItem]    &{ExcelPath}[Interest_OptionName2]    &{ExcelPath}[Interest_RateBasis]
+    ...    &{ExcelPath}[Interest_SpreadType1]    &{ExcelPath}[Interest_SpreadValue3]    &{ExcelPath}[Interest_BaseRateCode2]
+    ...    AND    Add Facility Interest    &{ExcelPath}[Interest_AddItem]    &{ExcelPath}[Interest_OptionName3]    &{ExcelPath}[Interest_RateBasis]
+    ...    &{ExcelPath}[Interest_SpreadType1]    &{ExcelPath}[Interest_SpreadValue3]    &{ExcelPath}[Interest_BaseRateCode3]
+    ...    AND    Add Facility Interest    &{ExcelPath}[Interest_AddItem]    &{ExcelPath}[Interest_OptionName4]    &{ExcelPath}[Interest_RateBasis]
+    ...    &{ExcelPath}[Interest_SpreadType1]    &{ExcelPath}[Interest_SpreadValue3]    &{ExcelPath}[Interest_BaseRateCode4]
+    
+    ...    AND    Add Interest Pricing Financial Ratio
+    ...    AND    Set Financial Ratio    &{ExcelPath}[Interest_FinancialRatioType1]    ${ON}    &{ExcelPath}[Greater_Than]    &{ExcelPath}[Less_Than]    &{ExcelPath}[FinancialRatio_Minimum4]
+    ...    AND    Add Facility Interest    &{ExcelPath}[Interest_AddItem]    &{ExcelPath}[Interest_OptionName1]    &{ExcelPath}[Interest_RateBasis]
+    ...    &{ExcelPath}[Interest_SpreadType1]    &{ExcelPath}[Interest_SpreadValue4]    &{ExcelPath}[Interest_BaseRateCode1]
+    ...    AND    Add Facility Interest    &{ExcelPath}[Interest_AddItem]    &{ExcelPath}[Interest_OptionName2]    &{ExcelPath}[Interest_RateBasis]
+    ...    &{ExcelPath}[Interest_SpreadType1]    &{ExcelPath}[Interest_SpreadValue4]    &{ExcelPath}[Interest_BaseRateCode2]
+    ...    AND    Add Facility Interest    &{ExcelPath}[Interest_AddItem]    &{ExcelPath}[Interest_OptionName3]    &{ExcelPath}[Interest_RateBasis]
+    ...    &{ExcelPath}[Interest_SpreadType1]    &{ExcelPath}[Interest_SpreadValue4]    &{ExcelPath}[Interest_BaseRateCode3]
+    ...    AND    Add Facility Interest    &{ExcelPath}[Interest_AddItem]    &{ExcelPath}[Interest_OptionName4]    &{ExcelPath}[Interest_RateBasis]
+    ...    &{ExcelPath}[Interest_SpreadType1]    &{ExcelPath}[Interest_SpreadValue4]    &{ExcelPath}[Interest_BaseRateCode4]
+
     Validate Ongoing Fee or Interest
     
     Validate Facility Pricing Rule Items    &{ExcelPath}[Facility_PricingRuleOption1]

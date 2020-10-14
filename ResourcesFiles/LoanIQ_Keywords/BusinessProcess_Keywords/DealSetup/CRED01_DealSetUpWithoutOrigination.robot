@@ -540,8 +540,8 @@ Setup Syndicated Deal for Non-Agent and Host Bank
     [Arguments]    ${ExcelPath}
     
 	###Switch to Original User###
-	Logout from Loan IQ
-	Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
+	#Logout from Loan IQ
+	#Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
     
     ###Data Generation###
     ${Deal_Name}    Auto Generate Name Test Data    &{ExcelPath}[Deal_NamePrefix]
