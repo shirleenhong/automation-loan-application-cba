@@ -72,7 +72,8 @@ Create Initial Loan Drawdown with Repayment Schedule
     # Send Initial Drawdown to Approval
     Logout from Loan IQ
     Login to Loan IQ    ${SUPERVISOR_USERNAME}    ${SUPERVISOR_PASSWORD}
-    Refresh Tables in LIQ
+    Set Test Variable    ${Loan_Alias}    60001209 
+    Refresh Tables in LIQ    
     Select Item in Work in Process    Outstandings    Awaiting Generate Rate Setting Notices    Loan Initial Drawdown     ${Loan_Alias}
     Approve Initial Drawdown
     
