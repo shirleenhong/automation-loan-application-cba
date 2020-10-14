@@ -15,9 +15,14 @@ Party_PartyOnboarding_LOB_CheckBox = '//td[@role="gridcell" and @idx="0"]//div[@
 
 ### Party Onboarding Page - Branch List Dialog ###
 Party_PartyOnboarding_BranchList_DialogTitle = '//span[text()="Branch List"]'
+Party_PartyOnboarding_BranchList_BranchName_TextBox = '//div[contains(@class, "DialogPaneContent")]//input[contains(@id, "branchCode")]'
 Party_PartyOnboarding_BranchList_Search_Button = '//form[@name="PT_PFN_SearchBranch_SCF"]//input[@name="Search"]'
 Party_PartyOnboarding_BranchList_Next_Button = '//div[@role="dialog"]//input[@name="Next"]'
 Party_PartyOnboarding_BranchList_RadioButton_Col = '//td[following-sibling::td[contains(.,"${iBranch_Code}")]]'
+Party_PartyOnboarding_BranchList_SearchResultTableHeader = '//div[contains(@id, "SearchBranch")]//table[contains(@class, "GridRowTable")]//th'
+Party_PartyOnboarding_BranchList_SearchResultTableRow ='//div[contains(@class, "GridContent")]//table[contains(@class, "GridRowTable")]//tr'
+Party_PartyOnboarding_BranchList_SearchResultRowSelected ='//div[contains(@class, "GridRowSelected")]//table[contains(@class, "GridRowTable")]//tr'
+Party_PartyOnboarding_BranchList_GridCell = '//td[@role="gridcell"]'
 
 ### Pre Existence Check Page ###
 Party_PreExistenceCheck_EnterpriseName_TextBox = '//td[preceding-sibling::td[contains(.,"Enterprise name")]]'

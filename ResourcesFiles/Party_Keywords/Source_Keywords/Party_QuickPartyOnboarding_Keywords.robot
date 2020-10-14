@@ -586,7 +586,7 @@ Populate Pre-Existence Check and Validate the Duplicate Enterprise Name
     ...    ELSE    Run Keyword and Continue on Failure    Fail    No duplicate found for Enterprise Name
     
     Wait Until Page Contains   ${PARTY_ENQUIREENTERPRISEPARTY_PAGETITLE}
-    Capture Page ScreenShot    ${screenshot_path}/Screenshots/Party/DuplicateEnterpriseName-{index}.png
+    Capture Page Screenshot    ${screenshot_path}/Screenshots/Party/DuplicateEnterpriseName-{index}.png
     ${Existing_EnterpriseName}    Get Value    ${Party_EnquirePartyDetails_EnterpriseName_TextBox}
     Log    ${Existing_EnterpriseName}
     ${isMatched}    Run Keyword And Return Status    Should Be Equal    ${Existing_EnterpriseName}    ${Party_Name}
@@ -633,14 +633,51 @@ Validate Disabled Fields in Quick Enterprise Party Page
     Run Keyword And Continue On Failure    Element Should Be Disabled    ${Party_QuickEnterpriseParty_Mobile_ContactType_Dropdown}
     Run Keyword And Continue On Failure    Element Should Be Disabled    ${Party_QuickEnterpriseParty_Mpbile_MobileNumber_CountryCode_TextBox}
     Run Keyword And Continue On Failure    Element Should Be Disabled    ${Party_QuickEnterpriseParty_Mpbile_MobileNumber_Number_TextBox}
-    Capture Page ScreenShot    ${screenshot_path}/Screenshots/Party/QuickPartyOnboarding_DisabledFields-{index}.png
+    Capture Page Screenshot    ${screenshot_path}/Screenshots/Party/QuickPartyOnboarding_DisabledFields-{index}.png
     
     ### Validate Disabled fields in Address Details Dialog ###
     Mx Input Text    ${Party_QuickEnterpriseParty_CountryRegion_Dropdown}    ${sCountry_Region}
     Mx Click Element    ${Party_QuickEnterpriseParty_RecordAddress_Button}
     Wait Until Page Contains    ${PARTY_ADDRESSDETAILS_PAGETITLE}
-    Capture Page ScreenShot    ${screenshot_path}/Screenshots/Party/QuickPartyOnboarding_DisabledFields-{index}.png
+    Capture Page Screenshot    ${screenshot_path}/Screenshots/Party/QuickPartyOnboarding_DisabledFields-{index}.png
     Run Keyword And Continue On Failure    Element Should Be Disabled    ${Party_QuickEnterpriseParty_AddressDetails_Name_TextBox}
     Run Keyword And Continue On Failure    Element Should Be Disabled    ${Party_QuickEnterpriseParty_AddressDetails_PostCode_TextBox}
     Run Keyword And Continue On Failure    Element Should Be Disabled    ${Party_QuickEnterpriseParty_AddressDetails_Country_TextBox}
     Mx Click Element    ${Party_CloseDialog_Button}
+
+Validate Branch in Party Onboarding Page
+    [Documentation]    This test case is used to validate Branches in Branch List Dialog of Party Onboarding Page
+    ...    @author: javinzon    13OCT2020    - initial create
+    [Arguments]    ${sAssigned_Branch}    ${iBranch_Code}
+    
+    Mx Click Element    ${Party_PartyOnboarding_Search_Button}
+    Wait Until Page Contains    ${PARTY_BRANCHLIST_PAGETITLE}
+    
+    ### Validate results when no parameter was given ###
+    ${Branch_List_Content}    OperatingSystem.Get File    ${BRANCHNAME_LIST}
+    ${Expected_Branch}    Replace String    ${Branch_List_Content}    ;    ${SPACE}
+    
+    Mx Click Element    ${Party_PartyOnboarding_BranchList_Search_Button}
+    ${RowCount}    SeleniumLibraryExtended.Get Element Count    ${Party_PartyOnboarding_BranchList_SearchResultTableRow}
+    ${Selected_Row}    Set Variable    1
+    :FOR    ${Index}    IN RANGE    ${RowCount}
+    \    ${Branch_List_Line_Content}    Get Line    ${Expected_Branch}    ${Index}
+    \    ${New_Index}    Evaluate    ${Index}+1
+    \    Mx Click Element    ${Party_PartyOnboarding_BranchList_GridCell}//div[contains(@aria-label, "Row ${New_Index}")]
+    \    ${Branch_Row_Content}    Get Text    ${Party_PartyOnboarding_BranchList_SearchResultRowSelected}\[${Selected_Row}]
+    \    Run Keyword And Continue On Failure    Should Be Equal    ${Branch_List_Line_Content}    ${Branch_Row_Content}
+    \    ${isMatched}    Run Keyword And Return Status    Should Be Equal    ${Branch_List_Line_Content}    ${Branch_Row_Content}
+    \    Capture Page Screenshot    ${screenshot_path}/Screenshots/Party/QuickPartyOnboarding_BranchField-{index}.png
+    \    Run Keyword If    ${isMatched}==${True}    Log    Result is correct.
+    \    ...    ELSE    Run Keyword and Continue on Failure    Fail    Result is incorrect. Expected Value: ${Branch_List_Line_Content} | Actual Value: ${Branch_Row_Content} 
+
+    ### Validate results when a parameter was given ###
+    Mx Input Text    ${Party_PartyOnboarding_BranchList_BranchName_TextBox}    ${sAssigned_Branch}
+    Mx Click Element    ${Party_PartyOnboarding_BranchList_Search_Button}
+    ${Branch_Name}    Get Table Value Containing Row Value in Party    ${Party_PartyOnboarding_BranchList_SearchResultTableHeader}    ${Party_PartyOnboarding_BranchList_SearchResultTableRow}    Branch Code    ${iBranch_Code}    Branch Name
+    Capture Page Screenshot    ${screenshot_path}/Screenshots/Party/QuickPartyOnboarding_BranchField-{index}.png
+    Mx Click Element    ${Party_CloseDialog_Button}
+    
+    ${isMatched}    Run Keyword And Return Status    Should Be Equal    ${sAssigned_Branch}    ${Branch_Name}
+    Run Keyword If    ${isMatched}==${True}    Log    Result is correct.
+    ...   ELSE    Run Keyword and Continue on Failure    Fail    Result is incorrect. Expected Value: '${sAssigned_Branch}' | Actual Value: ${Branch_Name}   
