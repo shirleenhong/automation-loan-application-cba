@@ -8,7 +8,7 @@ ${rowid}    501
 *** Test Case ***
 
 
-Verify Loan Outstanding for Zero Cycle Due - Accrual Share Adjustment
+Verify Loan Outstanding for Zero Cycle Due - Accrual Adjustment
      [Documentation]    This ComSee test case verify accrual cycle due share adjustment after Payment transaction. 
      ...    Pre-requisite: COMMSEE_V2_OS004 and  validates GET API for the updated values. 
      ...    author: sacuisia    02OCT2020
