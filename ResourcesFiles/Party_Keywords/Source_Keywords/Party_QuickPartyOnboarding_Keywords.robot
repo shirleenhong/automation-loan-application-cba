@@ -566,6 +566,7 @@ Populate Pre-Existence Check and Validate the Duplicate Enterprise Name
    [Documentation]    This keyword populates pre-existence with Duplicate Enterprise Name, checks if Action required is Reject and view the existing Party details 
     ...    @author: javinzon    28SEP2020    - initial create
     ...	   @update: javinzon	02OCT2020	 - added Party ID argument
+    ...    @update: javinzon    14OCT2020    - updated keyword 'Capture Page ScreenShot' to 'Capture Page Screenshot' 
     [Arguments]    ${sEnterprise_Name}    ${sParty_ID}
 
     Mx Click Element     ${Party_PreExistenceCheck_EnterpriseName_TextBox} 
@@ -596,6 +597,7 @@ Populate Pre-Existence Check and Validate the Duplicate Enterprise Name
 Validate Disabled Fields in Quick Enterprise Party Page
     [Documentation]    This keyword validates disabled fields in Quick Enterprise Party page and Address details dialog
     ...    @author: javinzon    08OCT2020    - initial create
+    ...    @update: javinzon    14OCT2020    - updated keyword 'Capture Page ScreenShot' to 'Capture Page Screenshot' 
     [Arguments]    ${sCountry_Region}
     
     Run Keyword And Continue On Failure    Element Should Be Disabled    ${Party_PreExistenceCheck_Locality_Dropdown}
@@ -648,33 +650,34 @@ Validate Disabled Fields in Quick Enterprise Party Page
 Validate Branch in Party Onboarding Page
     [Documentation]    This test case is used to validate Branches in Branch List Dialog of Party Onboarding Page
     ...    @author: javinzon    13OCT2020    - initial create
-    [Arguments]    ${sAssigned_Branch}    ${iBranch_Code}
+    [Arguments]    ${sAssigned_Branch}    ${iBranch_Code}    ${sBranch_Name}    ${sBank_Name}    ${iCountry_Code}
     
     Mx Click Element    ${Party_PartyOnboarding_Search_Button}
     Wait Until Page Contains    ${PARTY_BRANCHLIST_PAGETITLE}
     
     ### Validate results when no parameter was given ###
-    ${Branch_List_Content}    OperatingSystem.Get File    ${BRANCHNAME_LIST}
-    ${Expected_Branch}    Replace String    ${Branch_List_Content}    ;    ${SPACE}
+    ${Branch_Code_List}    Split String    ${iBranch_Code}    |    
+    ${Branch_Name_List}    Split String    ${sBranch_Name}    |
+    ${Bank_Name_List}    Split String    ${sBank_Name}    |
+    ${Country_Code_List}    Split String    ${iCountry_Code}    |
     
     Mx Click Element    ${Party_PartyOnboarding_BranchList_Search_Button}
     ${RowCount}    SeleniumLibraryExtended.Get Element Count    ${Party_PartyOnboarding_BranchList_SearchResultTableRow}
-    ${Selected_Row}    Set Variable    1
+    
     :FOR    ${Index}    IN RANGE    ${RowCount}
-    \    ${Branch_List_Line_Content}    Get Line    ${Expected_Branch}    ${Index}
-    \    ${New_Index}    Evaluate    ${Index}+1
-    \    Mx Click Element    ${Party_PartyOnboarding_BranchList_GridCell}//div[contains(@aria-label, "Row ${New_Index}")]
-    \    ${Branch_Row_Content}    Get Text    ${Party_PartyOnboarding_BranchList_SearchResultRowSelected}\[${Selected_Row}]
-    \    Run Keyword And Continue On Failure    Should Be Equal    ${Branch_List_Line_Content}    ${Branch_Row_Content}
-    \    ${isMatched}    Run Keyword And Return Status    Should Be Equal    ${Branch_List_Line_Content}    ${Branch_Row_Content}
-    \    Capture Page Screenshot    ${screenshot_path}/Screenshots/Party/QuickPartyOnboarding_BranchField-{index}.png
-    \    Run Keyword If    ${isMatched}==${True}    Log    Result is correct.
-    \    ...    ELSE    Run Keyword and Continue on Failure    Fail    Result is incorrect. Expected Value: ${Branch_List_Line_Content} | Actual Value: ${Branch_Row_Content} 
+    \    ${Branch_Code}    Get From List    ${Branch_Code_List}    ${Index}
+    \    ${Actual_Branch_Name}    Get Table Value Containing Row Value in Party    ${Party_PartyOnboarding_BranchList_SearchResultTableHeader}    ${Party_PartyOnboarding_BranchList_SearchResultTableRow}    Branch Code    ${Branch_Code}    Branch Name
+    \    ${Actual_Bank_Name}    Get Table Value Containing Row Value in Party    ${Party_PartyOnboarding_BranchList_SearchResultTableHeader}    ${Party_PartyOnboarding_BranchList_SearchResultTableRow}    Branch Code    ${Branch_Code}    Bank Name
+    \    ${Actual_Country_Code}    Get Table Value Containing Row Value in Party    ${Party_PartyOnboarding_BranchList_SearchResultTableHeader}    ${Party_PartyOnboarding_BranchList_SearchResultTableRow}    Branch Code    ${Branch_Code}    Country Code
+    \    Compare Two Strings    @{Branch_Name_List}[${Index}]    ${Actual_Branch_Name}
+    \    Compare Two Strings    @{Bank_Name_List}[${Index}]    ${Actual_Bank_Name}
+    \    Compare Two Strings    @{Country_Code_List}[${Index}]    ${Actual_Country_Code}    
+    Capture Page Screenshot    ${screenshot_path}/Screenshots/Party/QuickPartyOnboarding_BranchField-{index}.png
 
     ### Validate results when a parameter was given ###
     Mx Input Text    ${Party_PartyOnboarding_BranchList_BranchName_TextBox}    ${sAssigned_Branch}
     Mx Click Element    ${Party_PartyOnboarding_BranchList_Search_Button}
-    ${Branch_Name}    Get Table Value Containing Row Value in Party    ${Party_PartyOnboarding_BranchList_SearchResultTableHeader}    ${Party_PartyOnboarding_BranchList_SearchResultTableRow}    Branch Code    ${iBranch_Code}    Branch Name
+    ${Branch_Name}    Get Table Value Containing Row Value in Party    ${Party_PartyOnboarding_BranchList_SearchResultTableHeader}    ${Party_PartyOnboarding_BranchList_SearchResultTableRow}    Branch Code    00000001    Branch Name
     Capture Page Screenshot    ${screenshot_path}/Screenshots/Party/QuickPartyOnboarding_BranchField-{index}.png
     Mx Click Element    ${Party_CloseDialog_Button}
     

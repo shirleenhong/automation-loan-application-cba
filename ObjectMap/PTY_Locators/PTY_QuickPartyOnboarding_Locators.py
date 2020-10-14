@@ -21,8 +21,6 @@ Party_PartyOnboarding_BranchList_Next_Button = '//div[@role="dialog"]//input[@na
 Party_PartyOnboarding_BranchList_RadioButton_Col = '//td[following-sibling::td[contains(.,"${iBranch_Code}")]]'
 Party_PartyOnboarding_BranchList_SearchResultTableHeader = '//div[contains(@id, "SearchBranch")]//table[contains(@class, "GridRowTable")]//th'
 Party_PartyOnboarding_BranchList_SearchResultTableRow ='//div[contains(@class, "GridContent")]//table[contains(@class, "GridRowTable")]//tr'
-Party_PartyOnboarding_BranchList_SearchResultRowSelected ='//div[contains(@class, "GridRowSelected")]//table[contains(@class, "GridRowTable")]//tr'
-Party_PartyOnboarding_BranchList_GridCell = '//td[@role="gridcell"]'
 
 ### Pre Existence Check Page ###
 Party_PreExistenceCheck_EnterpriseName_TextBox = '//td[preceding-sibling::td[contains(.,"Enterprise name")]]'
