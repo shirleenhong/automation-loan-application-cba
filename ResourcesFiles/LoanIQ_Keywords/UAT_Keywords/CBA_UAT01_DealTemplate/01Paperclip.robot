@@ -94,7 +94,7 @@ Collect Full Payment via Paper Clip Outstanding B1 D00000454
     Select Outstanding Item    &{ExcelPath}[Loan_Alias]
     Add Transaction Type    Principal    &{ExcelPath}[Loan_RequestedAmount]
     Add Transaction Type    Interest    null
-    Select Cycles for Loan Item    Pro Rate Shares based on Partial Principal Prepayment    1
+    Select Cycles for Loan Item    Projected Due    1
     Verify Added Paperclip Payments    &{ExcelPath}[Pricing_Option]${SPACE}(&{ExcelPath}[Loan_Alias])Principal|&{ExcelPath}[Pricing_Option]${SPACE}(&{ExcelPath}[Loan_Alias])Interest
 
     
