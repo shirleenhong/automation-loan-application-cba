@@ -107,13 +107,12 @@ Validate BSG_CDE_CURRENCY in LIQ for VLS_Bal_Subledger
     \    mx LoanIQ activate window    ${LIQ_DealNotebook_Window}
     \    ${Currency_Field}    Set Variable    JavaWindow("title:=Deal Notebook -.*","displayed:=1").JavaStaticText("attached text:=${BSG_CDE_CURRENCY_Value.strip()}")
     \    ${CorrectCurrency_IsDisplayed}    Run Keyword And Return Status    Mx LoanIQ Verify Object Exist    ${Currency_Field}    VerificationData="Yes"
-    \    Take Screenshot    Currency
-    \    Run Keyword If     ${CorrectCurrency_IsDisplayed}==False    Run Keyword And Continue On Failure    Fail   ${BSG_CDE_CURRENCY_Value.strip()} currency is not displayed.
+    \    Run Keyword If     ${CorrectCurrency_IsDisplayed}==False    Run Keyword And Continue On Failure    FAIL   ${BSG_CDE_CURRENCY_Value.strip()} currency is not displayed.
          ...    ELSE    Log    ${BSG_CDE_CURRENCY_Value.strip()} is displayed.
+    \    Take Screenshot    ${screenshot_path}/Screenshots/DWE/Currency
     \    
     \    mx LoanIQ close window    ${LIQ_DealNotebook_Window}
-    
-    
+       
 Validate BSG_CDE_GL_ACCOUNT in LIQ for VLS_Bal_Subledger
     [Documentation]    This keyword validates BSG_CDE_GL_ACCOUNT in LIQ for VLS_Bal_Subledger
     ...    @author: ehugo    30AUG2019
@@ -141,19 +140,19 @@ Validate BSG_CDE_GL_ACCOUNT in LIQ for VLS_Bal_Subledger
     \    mx LoanIQ activate window    ${LIQ_BrowseGLAccountNumber_Window}
     \    ${GL_Account_Number_List}    Mx LoanIQ Store Java Tree Items To Array    ${LIQ_BrowseGLAccountNumber_Tables_JavaTree}    GL_Account_Number_List    Processtimeout=180
     \    ${GL_Account_Number_IsExist}    Run Keyword And Return Status    Should Contain    ${GL_Account_Number_List}    ${BSG_CDE_GL_ACCOUNT_Value.strip()}    
-    \    Run Keyword If    ${GL_Account_Number_IsExist}==False    Run Keyword And Continue On Failure    Fail    ${BSG_CDE_GL_ACCOUNT_Value.strip()} is not displayed in LIQ.
+    \    Run Keyword If    ${GL_Account_Number_IsExist}==${False}    Run Keyword And Continue On Failure    FAIL    ${BSG_CDE_GL_ACCOUNT_Value.strip()} is not displayed in LIQ.
          ...    ELSE    Log    ${BSG_CDE_GL_ACCOUNT_Value.strip()} is displayed in LIQ.
     \
     \    Mx LoanIQ Select String    ${LIQ_BrowseGLAccountNumber_Tables_JavaTree}    ${BSG_CDE_GL_ACCOUNT_Value.strip()}\t${Description.strip()}
-    \    Mx Native Type    {ENTER}
+    \    Mx Press Combination    KEY.ENTER
     \
     \    Run Keyword And Ignore Error    Mx LoanIQ Click Button On Window    .*Account Number.*;Warning.*;Yes        strProcessingObj="JavaWindow(\"title:=Processing.*\")"         WaitForProcessing=500
     \
     \    ###G/L Account Number Update Window###
     \    mx LoanIQ activate window    ${LIQ_BrowseGLAccountNumber_Update_Window}
     \    ${AccountNumber_IsExist}    Run Keyword And Return Status    Mx LoanIQ Verify Object Exist    JavaWindow("title:=G/L Account Number Update").JavaEdit("text:=${BSG_CDE_GL_ACCOUNT_Value.strip()}")        VerificationData="Yes"
-    \    Take Screenshot    GL_AccountNumber
-    \    Run Keyword If    ${AccountNumber_IsExist}==False    Run Keyword And Continue On Failure    Fail    Incorrect GL_AccountNumber value is displayed in LIQ. Expected: ${BSG_CDE_GL_ACCOUNT_Value.strip()}
+    \    Take Screenshot    ${screenshot_path}/Screenshots/DWE/GL_AccountNumber
+    \    Run Keyword If    ${AccountNumber_IsExist}==${False}    Run Keyword And Continue On Failure    FAIL    Incorrect GL_AccountNumber value is displayed in LIQ. Expected: ${BSG_CDE_GL_ACCOUNT_Value.strip()}
          ...    ELSE    Log    Correct GL_AccountNumber value is displayed in LIQ.
     \    
     \    mx LoanIQ close window    ${LIQ_BrowseGLAccountNumber_Update_Window}    
@@ -187,11 +186,11 @@ Validate BSG_CDE_GL_SHTNAME in LIQ for VLS_Bal_Subledger
     \    mx LoanIQ activate window    ${LIQ_BrowseGLShortName_Window}
     \    ${GL_ShortName_List}    Mx LoanIQ Store Java Tree Items To Array    ${LIQ_BrowseGLShortName_JavaTree}    GL_ShortName_List    Processtimeout=180
     \    ${GL_ShortName_IsExist}    Run Keyword And Return Status    Should Contain    ${GL_ShortName_List}    ${BSG_CDE_GL_SHTNAME_Value.strip()}    
-    \    Run Keyword If    ${GL_ShortName_IsExist}==False    Run Keyword And Continue On Failure    Fail    ${BSG_CDE_GL_SHTNAME_Value.strip()} is not displayed in LIQ.
+    \    Run Keyword If    ${GL_ShortName_IsExist}==${False}    Run Keyword And Continue On Failure    FAIL    ${BSG_CDE_GL_SHTNAME_Value.strip()} is not displayed in LIQ.
          ...    ELSE    Log    ${BSG_CDE_GL_SHTNAME_Value.strip()} is displayed in LIQ.
     \
     \    Mx LoanIQ Select String    ${LIQ_BrowseGLShortName_JavaTree}    ${BSG_CDE_GL_SHTNAME_Value.strip()}\t${Description.strip()}
-    \    Mx Native Type    {ENTER}
+    \    Mx Press Combination    KEY.ENTER
     \
     \    Run Keyword And Ignore Error    Mx LoanIQ Click Button On Window    .*Short Name.*;Warning.*;Yes        strProcessingObj="JavaWindow(\"title:=Processing.*\")"         WaitForProcessing=500        strProcessingObj="JavaWindow(\"title:=Processing.*\")"         WaitForProcessing=500        strProcessingObj="JavaWindow(\"title:=Processing.*\")"         WaitForProcessing=500
     \
@@ -201,8 +200,8 @@ Validate BSG_CDE_GL_SHTNAME in LIQ for VLS_Bal_Subledger
     \    Log    Expected: ${BSG_CDE_GL_SHTNAME_Value.strip()}
     \    Log    Actual: ${Code}
     \    ${Verify_Equal}    Run Keyword And Return Status    Should Be Equal As Strings    ${BSG_CDE_GL_SHTNAME_Value.strip()}    ${Code.strip()}    
-    \    Take Screenshot    GL_ShortName
-    \    Run Keyword If    ${Verify_Equal}==False    Run Keyword And Continue On Failure    Fail    Incorrect GL_ShortName value '${Code}' is displayed in LIQ.
+    \    Take Screenshot    ${screenshot_path}/Screenshots/DWE/GL_ShortName
+    \    Run Keyword If    ${Verify_Equal}==${False}    Run Keyword And Continue On Failure    FAIL    Incorrect GL_ShortName value '${Code}' is displayed in LIQ.
          ...    ELSE    Log    Correct GL_ShortName value '${Code}' is displayed in LIQ.
     \    
     \    mx LoanIQ close window    ${LIQ_BrowseGLShortName_Update_Window}
@@ -299,11 +298,11 @@ Validate BSG_CDE_BRANCH in LIQ for VLS_Bal_Subledger
     \    mx LoanIQ activate window    ${LIQ_Branch_Window}
     \    ${Branch_List}    Mx LoanIQ Store Java Tree Items To Array    ${LIQ_Branch_Tree}    Branch_List    Processtimeout=180
     \    ${Branch_IsExist}    Run Keyword And Return Status    Should Contain    ${Branch_List}    ${BSG_CDE_BRANCH_Value.strip()}    
-    \    Run Keyword If    ${Branch_IsExist}==False    Fail    ${BSG_CDE_BRANCH_Value.strip()} is not displayed in LIQ.
+    \    Run Keyword If    ${Branch_IsExist}==False    FAIL    ${BSG_CDE_BRANCH_Value.strip()} is not displayed in LIQ.
          ...    ELSE    Log    ${BSG_CDE_BRANCH_Value.strip()} is displayed in LIQ.
     \
     \    Mx LoanIQ Select String    ${LIQ_Branch_Tree}    ${BSG_CDE_BRANCH_Value.strip()}\t${Bank.strip()}\t${Description.strip()}
-    \    Mx Native Type    {ENTER}
+    \    Mx Press Combination    KEY.ENTER
     \    Mx LoanIQ Click Button On Window    .*Branch.*;Informational Message.*;OK        strProcessingObj="JavaWindow(\"title:=Processing.*\")"         WaitForProcessing=500        strProcessingObj="JavaWindow(\"title:=Processing.*\")"         WaitForProcessing=500        strProcessingObj="JavaWindow(\"title:=Processing.*\")"         WaitForProcessing=500
     \    
     \    ###Branch Update Window###
@@ -312,8 +311,8 @@ Validate BSG_CDE_BRANCH in LIQ for VLS_Bal_Subledger
     \    Log    Expected: ${BSG_CDE_BRANCH_Value.strip()}
     \    Log    Actual: ${Code}
     \    ${Verify_Equal}    Run Keyword And Return Status    Should Be Equal As Strings    ${BSG_CDE_BRANCH_Value.strip()}    ${Code.strip()}    
-    \    Take Screenshot    Branch
-    \    Run Keyword If    ${Verify_Equal}==False    Run Keyword And Continue On Failure    Fail    Incorrect Branch value '${Code}' is displayed in LIQ.
+    \    Take Screenshot    ${screenshot_path}/Screenshots/DWE/Branch
+    \    Run Keyword If    ${Verify_Equal}==False    Run Keyword And Continue On Failure    FAIL    Incorrect Branch value '${Code}' is displayed in LIQ.
          ...    ELSE    Log    Correct Branch value '${Code}' is displayed in LIQ.
     \    
     \    mx LoanIQ close window    ${LIQ_Branch_Update_Window}
@@ -350,11 +349,11 @@ Validate BSG_CDE_EXPENSE in LIQ for VLS_Bal_Subledger
     \    mx LoanIQ activate window    ${LIQ_Expense_Window}
     \    ${Expense_List}    Mx LoanIQ Store Java Tree Items To Array    ${LIQ_Expense_JavaTree}    Expense_List    Processtimeout=180
     \    ${Expense_IsExist}    Run Keyword And Return Status    Should Contain    ${Expense_List}    ${BSG_CDE_EXPENSE_Value.strip()}    
-    \    Run Keyword If    ${Expense_IsExist}==False    Fail    ${BSG_CDE_EXPENSE_Value.strip()} is not displayed in LIQ.
+    \    Run Keyword If    ${Expense_IsExist}==False    FAIL    ${BSG_CDE_EXPENSE_Value.strip()} is not displayed in LIQ.
          ...    ELSE    Log    ${BSG_CDE_EXPENSE_Value.strip()} is displayed in LIQ.
     \
     \    Mx LoanIQ Select String    ${LIQ_Expense_JavaTree}    ${BSG_CDE_EXPENSE_Value.strip()}\t${Parent.strip()}\t${Recap.strip()}\t${Description.strip()}
-    \    Mx Native Type    {ENTER}
+    \    Mx Press Combination    KEY.ENTER
     \
     \    Run Keyword And Ignore Error    Mx LoanIQ Click Button On Window    .*Expense.*;Warning.*;Yes        strProcessingObj="JavaWindow(\"title:=Processing.*\")"         WaitForProcessing=500        strProcessingObj="JavaWindow(\"title:=Processing.*\")"         WaitForProcessing=500        strProcessingObj="JavaWindow(\"title:=Processing.*\")"         WaitForProcessing=500
     \
@@ -364,10 +363,10 @@ Validate BSG_CDE_EXPENSE in LIQ for VLS_Bal_Subledger
     \    Log    Expected: ${BSG_CDE_EXPENSE_Value.strip()}
     \    Log    Actual: ${Code}
     \    ${Verify_Equal}    Run Keyword And Return Status    Should Be Equal As Strings    ${BSG_CDE_EXPENSE_Value.strip()}    ${Code.strip()}    
-    \    Take Screenshot    Expense
-    \    Run Keyword If    ${Verify_Equal}==False    Run Keyword And Continue On Failure    Fail    Incorrect Expense value '${Code}' is displayed in LIQ.
-         ...    ELSE    Log    Correct Expense value '${Code}' is displayed in LIQ.
     \    
+    \    Run Keyword If    ${Verify_Equal}==False    Run Keyword And Continue On Failure    FAIL    Incorrect Expense value '${Code}' is displayed in LIQ.
+         ...    ELSE    Log    Correct Expense value '${Code}' is displayed in LIQ.
+    \    Take Screenshot    ${screenshot_path}/Screenshots/DWE/Expense
     \    mx LoanIQ close window    ${LIQ_Expense_Update_Window}
     
     Close All Windows on LIQ
@@ -563,7 +562,7 @@ Validate GB2_TID_TABLE_ID in LIQ for VLS_FAM_GLOBAL2
     \    ${Current_Code}    Set Variable    ${aDistinct_List}[${i}]
     \    ${Code_List}    Mx LoanIQ Store Java Tree Items To Array    ${LIQ_BrowseCodeTables_JavaTree}    Code_List    Processtimeout=180
     \    ${Code_IsExist}    Run Keyword And Return Status    Should Contain    ${Code_List}    \t${Current_Code.strip()}\t    
-    \    Run Keyword If    ${Code_IsExist}==False    Run Keyword And Ignore Error    Fail    ${Current_Code.strip()} is not displayed in LIQ.
+    \    Run Keyword If    ${Code_IsExist}==${False}    Run Keyword And Ignore Error    FAIL    ${Current_Code.strip()} is not displayed in LIQ.
          ...    ELSE    Validate Code Tables in LIQ    ${Current_Code}
     
     Close All Windows on LIQ
@@ -588,7 +587,7 @@ Navigate to Notebook Window thru RID
     
     ${status}    Run Keyword And Return Status    Mx LoanIQ Verify Object Exist    ${LIQ_Error_Window}            VerificationData="Yes"
     Run Keyword If    "${status}"=="${False}"    Log    RID Code ${sRID_Value} is Available in LIQ.
-    ...    ELSE    Run Keywords    Run Keyword And Continue On Failure    Fail    RID Code ${sRID_Value} is not Available.
+    ...    ELSE    Run Keywords    Run Keyword And Continue On Failure    FAIL    RID Code ${sRID_Value} is not Available.
     ...    AND    Take Screenshot    Error_Window
     ...    AND    mx LoanIQ click    ${LIQ_Error_OK_Button}    
     ...    AND    Close All Windows on LIQ                    
@@ -629,7 +628,7 @@ Validate Loans in VLS_ACCRUAL_CYCLE Table
     ${Result_isEmpty}    Run Keyword And Return Status    Should Be Empty    ${Result}
     
     Run Keyword If    ${Result_isEmpty}==True    Log    No Orphan Records.
-    ...    ELSE    Run Keyword And Continue On Failure    Fail    Record count is not equal to 0. Current record count is ${Result}. Source Table has orphan records.
+    ...    ELSE    Run Keyword And Continue On Failure    FAIL    Record count is not equal to 0. Current record count is ${Result}. Source Table has orphan records.
 
 Validate Accrual Cycles from CSV and LIQ Screen
     [Documentation]    This keyword is used to validate the accrual cycles from CSV to LIQ Screen - Accrual Tab
@@ -697,7 +696,7 @@ Validate Accrual Fields from Extract in LIQ Accrual Tab
     ...    AND    Mx LoanIQ Verify Object Exist    ${LIQ_Loan_Pending_Accrual_JavaTree}            VerificationData="Yes"
     ...    AND    Take Screenshot    Accrual Tab
     ...    AND    Mx LoanIQ Select String    ${LIQ_Loan_Pending_Accrual_JavaTree}    ${ACC_DTE_CYCLE_STRT_Value}\t${ACC_DTE_CYCLE_END_Value}
-    ...    AND    Mx Native Type    {ENTER}
+    ...    AND    Mx Press Combination    KEY.ENTER
       
     Run Keyword If    ${status}==${False}    Run Keywords    Log    Loan Notebook is in Active Status
     ...    AND    mx LoanIQ activate window    ${LIQ_Loan_Window}   
@@ -705,7 +704,7 @@ Validate Accrual Fields from Extract in LIQ Accrual Tab
     ...    AND    Mx LoanIQ Verify Object Exist    ${LIQ_Loan_AccrualTab_Cycles_Table}     VerificationData="Yes"
     ...    AND    Take Screenshot    Accrual Tab
     ...    AND    Mx LoanIQ Select String    ${LIQ_Loan_AccrualTab_Cycles_Table}    ${ACC_DTE_CYCLE_STRT_Value}\t${ACC_DTE_CYCLE_END_Value}
-    ...    AND    Mx Native Type    {ENTER} 
+    ...    AND    Mx Press Combination    KEY.ENTER 
     
     ### Accrual Cycle Detail Window Validation ###
     mx LoanIQ activate window    ${LIQ_AccrualCycleDetail_Window} 
@@ -743,7 +742,7 @@ Validate the Amount Value in Accrual Cycle Detail
     ${iCSV_Value}    Convert To Number    ${iCSV_Value}    
     ${status}    Run Keyword And Return Status    Should Be Equal    ${iCSV_Value}    ${iLIQAmount}
     Run Keyword If    ${status}==${True}    Log    ${iCSV_Value} value under ${sCSV_Field} field from Extract is reflected in LIQ Screen.
-    ...    ELSE    Log    Fail    CSV ${iCSV_Value} and LIQ Screen ${iLIQAmount} values are not matched. 
+    ...    ELSE    Log    FAIL    CSV ${iCSV_Value} and LIQ Screen ${iLIQAmount} values are not matched. 
 
 Get Column Records for VLS_OST_RATES
     [Documentation]    This keyword retrieves the unique values for ORT_RID_OUTSTANDNG. Then get the values for the following column: ORT_PCT_BASE_RATE, ORT_PCT_SPREAD, ORT_CDE_RATE_BASIS, ORT_PCT_BALI_RATE.
@@ -1536,7 +1535,7 @@ Validate Customer Description for FAC_CDE_BRANCH in VLS_FACILITY
     [Arguments]    ${sBranch_Code}    ${sBranch_Description}    ${sFacilityID}    
     
     Mx LoanIQ Select String    ${LIQ_Branch_Tree}    ${sBranch_Code.strip()}
-    Mx Native Type    {ENTER}
+    Mx Press Combination    KEY.ENTER
     Mx LoanIQ Click Button On Window    .*Branch.*;Informational Message.*;OK        strProcessingObj="JavaWindow(\"title:=Processing.*\")"         WaitForProcessing=500        strProcessingObj="JavaWindow(\"title:=Processing.*\")"         WaitForProcessing=500        strProcessingObj="JavaWindow(\"title:=Processing.*\")"         WaitForProcessing=500
     
     ###Branch Update Window###
@@ -1555,7 +1554,7 @@ Validate Branch Description for FAC_CDE_BRANCH in VLS_FACILITY
     [Arguments]    ${sBranch_Code}    ${sExpected_Branch_Description}    ${sFacilityID}    
     
     Mx LoanIQ Select String    ${LIQ_Branch_Tree}    ${sBranch_Code.strip()}
-    Mx Native Type    {ENTER}
+    Mx Press Combination    KEY.ENTER
     Mx LoanIQ Click Button On Window    .*Branch.*;Informational Message.*;OK        strProcessingObj="JavaWindow(\"title:=Processing.*\")"         WaitForProcessing=500        strProcessingObj="JavaWindow(\"title:=Processing.*\")"         WaitForProcessing=500        strProcessingObj="JavaWindow(\"title:=Processing.*\")"         WaitForProcessing=500
     
     ###Branch Update Window###
@@ -1757,7 +1756,7 @@ Compare FX Rates from CSV to LIQ
     Return From Keyword If    ${status}==False    
     
     Mx LoanIQ Select String    ${LIQ_CurrencyExchangeRate_Tree}    ${sFUND_DESK} to ${sCURRENCY}
-    Mx Native Type    {ENTER}
+    Mx Press Combination    KEY.ENTER
     
     ### Please Enter Currency Exchange Rate Window ###
     mx LoanIQ activate window    ${LIQ_ExchangeRate_Window}    
@@ -1804,7 +1803,7 @@ Check Currency Description from CSV to LIQ
     mx LoanIQ enter    ${LIQ_BrowseCurrency_ShowAllButton}    ON
     
     Mx LoanIQ Select String    ${LIQ_BrowseCurrency_Tree}    ${sIND_ACTIVE}\t${sCDE_CURRENCY}\t${sDSC_CURRENCY}
-    Mx Native Type    {ENTER}
+    Mx Press Combination    KEY.ENTER
     
     ### Currency Update Winodw Validation ###
     mx LoanIQ activate window    ${LIQ_CurrencyUpdate_Window}    
@@ -1852,7 +1851,7 @@ Check Funding Desk Description from CSV to LIQ
     mx LoanIQ enter    ${LIQ_BrowseFundingDesk_ShowALL_RadioBtn}    ON
     
     Mx LoanIQ Select String    ${LIQ_BrowseFundingDesk_Tree}    ${sFDE_CDE_FUND_DESK}\t${sFDE_DSC_FUND_DESK}
-    Mx Native Type    {ENTER}
+    Mx Press Combination    KEY.ENTER
     
     ### Funding Desk Update Window Validation ###
     mx LoanIQ activate window    ${LIQ_FundingDeskUpdate_Window}    
@@ -2544,27 +2543,28 @@ Get Business Date of Decrypted Files
 Validate BSG_CDE_PORTFOLIO_Value in Portfolio Update Window
 	[Documentation]    This keyword validates BSG_CDE_PORTFOLIO in LIQ - Portfolio Update Window
 	...    @author: mgaling    14OCT2020    - initial create
-    [Arguments]    ${BSG_CDE_PORTFOLIO_Value}    ${Description}    
+    [Arguments]    ${sBSG_CDE_PORTFOLIO_Value}    ${sDescription}    
 	
 	###Search for the Portfolio###
     mx LoanIQ activate window    ${LIQ_Portfolio_Window}
     ${Portfolio_List}    Mx LoanIQ Store Java Tree Items To Array    ${LIQ_Portfolio_Tree}    Portfolio_List    Processtimeout=180
     Log    ${Portfolio_List}            
-    ${Portfolio_IsExist}    Run Keyword And Return Status    Should Contain    ${Portfolio_List}    ${BSG_CDE_PORTFOLIO_Value}    
-    Run Keyword If    ${Portfolio_IsExist}==False    Fail    ${BSG_CDE_PORTFOLIO_Value} is not displayed in LIQ.
-    ...    ELSE    Log    ${BSG_CDE_PORTFOLIO_Value} is displayed in LIQ.
+    ${Portfolio_IsExist}    Run Keyword And Return Status    Should Contain    ${Portfolio_List}    ${sBSG_CDE_PORTFOLIO_Value}    
+    Run Keyword If    ${Portfolio_IsExist}==${False}    Run Keyword And Continue On Failure    FAIL    ${sBSG_CDE_PORTFOLIO_Value} is not displayed in LIQ.
+    ...    ELSE    Log    ${sBSG_CDE_PORTFOLIO_Value} is displayed in LIQ.
   
-    Mx LoanIQ Select String    ${LIQ_Portfolio_Tree}    ${BSG_CDE_PORTFOLIO_Value}\t${Description}
-    Mx Native Type    {ENTER}
+    Mx LoanIQ Select String    ${LIQ_Portfolio_Tree}    ${sBSG_CDE_PORTFOLIO_Value}\t${sDescription}
+    Mx Press Combination    KEY.ENTER
     
 	###Portfolio Update Window###
     mx LoanIQ activate window    ${LIQ_BrowsePortfolio_Update_Window}
     ${Code}    Mx LoanIQ Get Data    ${LIQ_BrowsePortfolio_Update_Code_Field}    Code    
-    Log    Expected: ${BSG_CDE_PORTFOLIO_Value}
+    Log    Expected: ${sBSG_CDE_PORTFOLIO_Value}
     Log    Actual: ${Code}
-    ${Verify_Equal}    Run Keyword And Return Status    Should Be Equal As Strings    ${BSG_CDE_PORTFOLIO_Value}    ${Code.strip()}    
-    Take Screenshot    Portfolio
-    Run Keyword If    ${Verify_Equal}==False    Run Keyword And Continue On Failure    Fail    Incorrect Portfolio value '${Code}' is displayed in LIQ.
+    ${Verify_Equal}    Run Keyword And Return Status    Should Be Equal As Strings    ${sBSG_CDE_PORTFOLIO_Value}    ${Code.strip()}    
+    
+    Run Keyword If    ${Verify_Equal}==${False}    Run Keyword And Continue On Failure    FAIL    Incorrect Portfolio value '${Code}' is displayed in LIQ.
     ...    ELSE    Log    Correct Portfolio value '${Code}' is displayed in LIQ.
+    Take Screenshot    ${screenshot_path}/Screenshots/DWE/${Code}
    
     mx LoanIQ close window    ${LIQ_BrowsePortfolio_Update_Window}
