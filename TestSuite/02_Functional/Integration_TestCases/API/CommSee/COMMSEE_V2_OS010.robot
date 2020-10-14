@@ -13,5 +13,5 @@ Verify Loan Outstanding for Zero Cycle Due - Accrual Share Adjustment
      ...    Pre-requisite: COMMSEE_V2_OS004 and  validates GET API for the updated values. 
      ...    author: sacuisia    02OCT2020
 
-      # Mx Execute Template with Multiple Data    Create Cycle Share Adjustment for Loan Outstanding    ${ComSeeDataSet}     ${rowid}    ComSee_SC2_Loan
+      Mx Execute Template with Multiple Data    Create Cycle Share Adjustment for Loan Outstanding    ${ComSeeDataSet}     ${rowid}    ComSee_SC2_Loan
       Mx Execute Template with Multiple Data    Get and Validate API Outstanding Response   ${ComSeeDataSet}    ${rowid}    ComSee_SC2_Loan
