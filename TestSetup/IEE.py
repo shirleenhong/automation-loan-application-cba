@@ -205,7 +205,6 @@ DWE_PASSPHRASE = 'oracle'
 DWE_TAR_GZ_EXT = '.tar.gz'
 DWE_TAR_GZ_GPG_EXT = '.tar.gz.gpg'
 DWE_CCB_LIQ_ZONE_FILENAME = 'CCB_LIQ_'
-DWE_LIQ_BusinessDate = '20200709'
 
 ### GL Postings/Extracts###
 GL_LIQ_USER = 'RPTINP01'

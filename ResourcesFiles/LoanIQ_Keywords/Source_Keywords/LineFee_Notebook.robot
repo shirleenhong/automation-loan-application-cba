@@ -5,7 +5,17 @@ Resource    ../../../Configurations/LoanIQ_Import_File.robot
 Create Line Fee Capitalization Rule
     [Documentation]    This keyword creates a Capitalization rule for line fee.
     ...    @author: fmamaril    
-    [Arguments]    ${CapitalizationFeePaymentPercentage}    ${Facility_Name}    ${PricingOption}    ${Loan_Alias}    ${Current_Date}    ${Future_Date}
+    ...    @update: dahijara    07OCT2020    Added pre processing keyword and screenshot
+    [Arguments]    ${sCapitalizationFeePaymentPercentage}    ${sFacility_Name}    ${sPricingOption}    ${sLoan_Alias}    ${sCurrent_Date}    ${sFuture_Date}
+
+    ### GetRuntime Keyword Pre-processing ###
+    ${CapitalizationFeePaymentPercentage}    Acquire Argument Value    ${sCapitalizationFeePaymentPercentage}
+    ${Facility_Name}    Acquire Argument Value    ${sFacility_Name}
+    ${PricingOption}    Acquire Argument Value    ${sPricingOption}
+    ${Loan_Alias}    Acquire Argument Value    ${sLoan_Alias}
+    ${Current_Date}    Acquire Argument Value    ${sCurrent_Date}
+    ${Future_Date}    Acquire Argument Value    ${sFuture_Date}
+
     ###Navigation to Capitalization Editor###
     mx LoanIQ activate window    ${LIQ_LineFeeNotebook_Window}
     mx LoanIQ click element if present    ${LIQ_LineFee_InquiryMode_Button}
@@ -21,12 +31,23 @@ Create Line Fee Capitalization Rule
     mx LoanIQ enter    ${LIQ_LineFee_CapitalizationEditor_PctofPayment_Textfield}    ${CapitalizationFeePaymentPercentage}
     Mx LoanIQ Select Combo Box Value    ${LIQ_LineFee_CapitalizationEditor_ToFacility_DropdownList}    ${Facility_Name}    
     Mx LoanIQ Select Combo Box Value    ${LIQ_LineFee_CapitalizationEditor_ToLoan_DropdownList}    ${PricingOption}${SPACE}Loan${SPACE}(${Loan_Alias})
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LineFee_CapitalizationEditor_window
     mx LoanIQ click    ${LIQ_LineFee_CapitalizationEditor_OK_Button}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LineFee_CapitalizationEditor_window
     
 Validate Capitalized Line Fee details
     [Documentation]    This keyword validates the detail Capitalization Rule for Line fee.
     ...    @author: fmamaril    
-    [Arguments]    ${Capitalization_FromDate}    ${Capitalization_ToDate}    ${CapitalizationFeePaymentPercentage}    ${PricingOption}    ${Loan_Alias}     
+    ...    @update: dahijara    07OCT2020    Added pre processing keyword and screenshot
+    [Arguments]    ${sCapitalization_FromDate}    ${sCapitalization_ToDate}    ${sCapitalizationFeePaymentPercentage}    ${sPricingOption}    ${sLoan_Alias}     
+
+    ### GetRuntime Keyword Pre-processing ###
+    ${Capitalization_FromDate}    Acquire Argument Value    ${sCapitalization_FromDate}
+    ${Capitalization_ToDate}    Acquire Argument Value    ${sCapitalization_ToDate}
+    ${CapitalizationFeePaymentPercentage}    Acquire Argument Value    ${sCapitalizationFeePaymentPercentage}
+    ${PricingOption}    Acquire Argument Value    ${sPricingOption}
+    ${Loan_Alias}    Acquire Argument Value    ${sLoan_Alias}
+
     ###Navigation to Capitalization Editor###
     mx LoanIQ activate window    ${LIQ_LineFeeNotebook_Window}
     mx LoanIQ select    ${LIQ_LineFee_Capitalization_Menu}  
@@ -36,6 +57,7 @@ Validate Capitalized Line Fee details
     ${PercentofPayment}    Mx LoanIQ Get Data    ${LIQ_LineFee_CapitalizationEditor_PctofPayment_Textfield}    value%percentage    
     ${UIPercentofPayment}    Remove String    ${PercentofPayment}    .0000%
     ${UILoan}    Mx LoanIQ Get Data    ${LIQ_LineFee_CapitalizationEditor_ToLoan_DropdownList}    value%loan  
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LineFee_CapitalizationEditor_window
     
     ###Validation of Line Fee details###
     Should Be Equal As Strings    ${UIFromDate}    ${Capitalization_FromDate}
@@ -43,6 +65,7 @@ Validate Capitalized Line Fee details
     Should Be Equal As Strings    ${UIPercentofPayment}    ${CapitalizationFeePaymentPercentage}    
     Should Be Equal As Strings    ${UILoan}    ${PricingOption} Loan (${Loan_Alias})       
     mx LoanIQ click    ${LIQ_LineFee_CapitalizationEditor_OK_Button}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LineFee_CapitalizationEditor_window
     
 Save and Exit Line Fee Notebook
     [Documentation]    This keyword saves and exits the the LIQ User from Line fee.
