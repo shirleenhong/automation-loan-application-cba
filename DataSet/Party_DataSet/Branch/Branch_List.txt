@@ -1,2 +1,0 @@
-00000001;Commonwealth Bank of Australia - DBU;Commonwealth Bank of Australia;036
-00000022;Commonwealth Bank of Australia - OBU;Commonwealth Bank of Australia;036
