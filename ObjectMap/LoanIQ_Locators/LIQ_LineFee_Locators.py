@@ -33,7 +33,8 @@ LIQ_LineFee_CapitalizationEditor_ToDate_Textfield = 'JavaWindow("title:=Facility
 LIQ_LineFee_CapitalizationEditor_PctofPayment_RadioButton = 'JavaWindow("title:=Facility Ongoing Fee Capitalization Editor").JavaRadioButton("attached text:=Percent of Payment")'
 LIQ_LineFee_CapitalizationEditor_PctofPayment_Textfield = 'JavaWindow("title:=Facility Ongoing Fee Capitalization Editor").JavaEdit("attached text:=To Date", "index:=2")'
 LIQ_LineFee_CapitalizationEditor_ToFacility_DropdownList = 'JavaWindow("title:=Facility Ongoing Fee Capitalization Editor").JavaList("attached text:=To Facility")'
-LIQ_LineFee_CapitalizationEditor_ToLoan_DropdownList = 'JavaWindow("title:=Facility Ongoing Fee Capitalization Editor").JavaList("attached text:=To Loan")'
+# LIQ_LineFee_CapitalizationEditor_ToLoan_DropdownList = 'JavaWindow("title:=Facility Ongoing Fee Capitalization Editor").JavaList("attached text:=To Loan")'
+LIQ_LineFee_CapitalizationEditor_ToLoan_DropdownList = 'JavaWindow("title:=Facility Ongoing Fee Capitalization Editor").JavaList("attached text:=Currency.*")' ### attached text value was updated (LIQ 7.5.1.2 HF2 version)
 LIQ_LineFee_CapitalizationEditor_OK_Button = 'JavaWindow("title:=Facility Ongoing Fee Capitalization Editor").JavaButton("attached text:=OK")'
 
 ###Line Fee Notebook - Accrual Tab###

@@ -14,8 +14,9 @@ BUS_Enter Interest Capitalization Details
 BUS_Enter Capitalize Interest Details
     [Documentation]    This keyword is used to run the assigned low level keyword.
     ...    @author: sahalder    28MAY2020    - initial create
+    ...    @update: dahijara    07OCT2020    - added 4th argument
 
-    Run Keyword    Enter Capitalize Interest Details    ${ARGUMENT_1}    ${ARGUMENT_2}    ${ARGUMENT_3}
+    Run Keyword    Enter Capitalize Interest Details    ${ARGUMENT_1}    ${ARGUMENT_2}    ${ARGUMENT_3}    ${ARGUMENT_4}
 
 
 BUS_Validate Capitalize Interest Details
