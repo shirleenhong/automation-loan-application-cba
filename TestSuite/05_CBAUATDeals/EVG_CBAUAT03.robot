@@ -172,23 +172,33 @@ Create Drawdown D4 D5 D6 - D00000476
 
 # ### February 1
 Extend Facility MOF - D00000476
-        Mx Execute Template With Multiple Data    Extend Maturity and Limit for MOF    ${CBAUAT_ExcelPath}    1    AMCH05_ExtendFacility
+    Mx Execute Template With Multiple Data    Extend Maturity and Limit for MOF    ${CBAUAT_ExcelPath}    1    AMCH05_ExtendFacility
 
-# Extend Facility FCAF and SCAF - D00000476
-    # Mx Execute Template With Multiple Data    Extend Maturity and Limit for FCAF    ${CBAUAT_ExcelPath}    1-3    AMCH05_ExtendFacility
+Extend Facility FCAF and TCAF - D00000476
+    Mx Execute Template With Multiple Data    Extend Maturity and Limit for FCAF    ${CBAUAT_ExcelPath}    2    AMCH05_ExtendFacility    
+    Mx Execute Template With Multiple Data    Extend Maturity and Limit for FCAF    ${CBAUAT_ExcelPath}    4    AMCH05_ExtendFacility
+
+Extend Facility SCAF - D00000476
+    Mx Execute Template With Multiple Data    Extend Maturity and Limit for FCAF    ${CBAUAT_ExcelPath}    3   AMCH05_ExtendFacility
+    
+Pricing Change Facility SCAF - D00000476
+    Mx Execute Template With Multiple Data    Create Pricing Change Transaction SCAF    ${CBAUAT_ExcelPath}    1   AMCH06_PricingChangeTransaction
 
 Collect Extenstion Fee for MOF
-    Mx Execute Template With Multiple Data    Collect Extension Fee for D00000476     ${CBAUAT_ExcelPath}    1-3    CRED01_UpfrontFee
+    Mx Execute Template With Multiple Data    Collect Extension Fee for D00000476     ${CBAUAT_ExcelPath}    1    CRED01_UpfrontFee
+    
+Collect Extenstion Fee for FCAF SCAF TCAF
+    Mx Execute Template With Multiple Data    Collect Extension Fee for D00000476     ${CBAUAT_ExcelPath}    2-4    CRED01_UpfrontFee
 
 # ###February 21
 # Setup BaseRate and FX Rate Feb 21
     # Mx Execute Template With Multiple Data    Load Base Rate D00000476    ${CBAUAT_ExcelPath}    5    BaseRate_Fields
     
-# Collect Early Prepayment for C - D00000476
-    # Mx Execute Template With Multiple Data    Collect Early Prepayment via Paper Clip D00000476    ${CBAUAT_ExcelPath}    2    SERV23_Paperclip
+Collect Early Prepayment for C - D00000476
+    Mx Execute Template With Multiple Data    Collect Early Prepayment via Paper Clip D00000476    ${CBAUAT_ExcelPath}    2    SERV23_Paperclip
     
-# Charge Breakcost Fee for C - D00000476
-    # Mx Execute Template With Multiple Data    Collect Break Cost Fee for Early Prepayment D00000476    ${CBAUAT_ExcelPath}    2    SERV40_BreakFunding
+Charge Breakcost Fee for C - D00000476
+    Mx Execute Template With Multiple Data    Collect Break Cost Fee for Early Prepayment D00000476    ${CBAUAT_ExcelPath}    2    SERV40_BreakFunding
     
 # Initiate Loan Merge D1 and D2 - D00000476    
     # Mx Execute Template With Multiple Data    Initiate Loan Merge and Conversion - D00000454    ${CBAUAT_ExcelPath}    1    COM06_LoanMerge
