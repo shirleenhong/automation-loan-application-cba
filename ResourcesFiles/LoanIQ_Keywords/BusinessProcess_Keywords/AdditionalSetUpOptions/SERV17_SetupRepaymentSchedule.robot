@@ -75,7 +75,7 @@ Create Initial Loan Drawdown with Repayment Schedule
     Set Test Variable    ${Loan_Alias}    60001209 
     Refresh Tables in LIQ    
     Select Item in Work in Process    Outstandings    Awaiting Generate Rate Setting Notices    Loan Initial Drawdown     ${Loan_Alias}
-    Approve Initial Drawdown
+    Wait Until Keyword Succeeds    3    5s    Approve Initial Drawdown
     
     ###Rate Setting###
     Logout from Loan IQ
