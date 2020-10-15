@@ -408,15 +408,16 @@ Validate Batch Job if Completed in Execution Journal
     ${Zone_List}    Split String    ${sZone}    ${sDelimiter}
     ${Zone_Count}    Get Length    ${Zone_List}
     :FOR    ${Zone}    IN    @{Zone_List}
-    \    ${BPR_Name_UI}    ${End_UI}    Verify BPR Name Value if Skipped    ${sJob_Name}    ${sBPR_Name}    ${Zone}
+    \    ${BPR_Name_UI}    ${End_UI}    Verify BPR Name Value is Correct or End Time is Not Empty    ${sJob_Name}    ${sBPR_Name}    ${Zone}
     \    mx LoanIQ activate window    ${LIQ_Execution_Window}
     \    Run Keyword If    '${BPR_Name_UI}'=='${sBPR_Name}'    Log    Batch EOD is completed for '${Zone}'.
          ...    ELSE IF    '${End_UI}'!=''    Log    Batch EOD is completed for '${Zone}'.
          ...    ELSE    Run Keyword And Continue On Failure    FAIL    Either Batch EOD is taking too long or it failed. Please check.
     Close All Windows on LIQ
 
-Verify BPR Name Value if Skipped
-    [Documentation]    This keyword is used to go to verify if BPR Name value for sJobName is 'Skipped'.
+Verify BPR Name Value is Correct or End Time is Not Empty
+    [Documentation]    This keyword is used to go to verify if BPR Name value for sJobName is 'sBPR_Name' or End time is not empty
+    ...    and return BPR_Name_UI and End_UI.
     ...    @author: clanding    16SEP2020    - initial create
     ...    @update: clanding    24SEP2020    - added more time to max loop
     [Arguments]    ${sJobName}    ${sBPR_Name}    ${sZone}
@@ -433,3 +434,17 @@ Verify BPR Name Value if Skipped
     \    Exit For Loop If    '${BPR_Name_UI}'=='${sBPR_Name}' or '${End_UI}'!=''
     \    mx LoanIQ close window    ${LIQ_Execution_Window}
     [Return]    ${BPR_Name_UI}    ${End_UI}
+
+Validate Batch Job is Not Skipped in Execution Journal
+    [Documentation]    This keyword is used to go to Execution Journal and validate Batch Job is not in Skipped status.
+    ...    @author: clanding    14OCT2020    - initial create
+    [Arguments]    ${sZone}    ${iTime}    ${sMinute_Or_Second}    ${sJob_Name}    ${sBPR_Name}    ${sDelimiter}
+
+    ${Zone_List}    Split String    ${sZone}    ${sDelimiter}
+    ${Zone_Count}    Get Length    ${Zone_List}
+    :FOR    ${Zone}    IN    @{Zone_List}
+    \    ${BPR_Name_UI}    ${End_UI}    Verify BPR Name Value is Correct or End Time is Not Empty    ${sJob_Name}    ${sBPR_Name}    ${Zone}
+    \    mx LoanIQ activate window    ${LIQ_Execution_Window}
+    \    Run Keyword If    '${BPR_Name_UI}'!='Skipped'    Log    Batch EOD is NOT skipped for '${Zone}'.
+         ...    ELSE    Run Keyword And Continue On Failure    FAIL    Either Batch EOD is taking too long or it Skipped. Please check.
+    mx LoanIQ close window    ${LIQ_Execution_Window}

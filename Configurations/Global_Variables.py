@@ -315,3 +315,4 @@ N = "N"
 
 BATCH_TXT_FILENAME = "BATCHSCHED.txt"
 DNA_DAT_FILE_COLUMNS = "C:\\Git_Evergreen\\fms_cba\\DataSet\\Integration_DataSet\\Extracts\\DNA\\DAT_File_Columns.txt"
+DATA_ASSURANCE_JOB = "DataAssurance"
