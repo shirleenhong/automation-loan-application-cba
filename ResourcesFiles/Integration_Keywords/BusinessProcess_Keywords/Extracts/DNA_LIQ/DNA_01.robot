@@ -15,7 +15,7 @@ Trigger Data Net Assurance Job
     Log To Console    Waiting 5 minutes for the batch to trigger.
     Sleep    5m    ###Automatic trigger of batch is every 5 mins
     Validate Batch Job is Not Skipped in Execution Journal    &{ExcelPath}[Zone]    &{ExcelPath}[Refresh_Every_Time]    &{ExcelPath}[Refresh_Every_MinuteOrSecond]
-    ...    ${DATA_ASSURANCE_JOB}    &{ExcelPath}[BPR_Name]    &{ExcelPath}[Delimiter]
+    ...    ${DATANET_ASSURANCE_JOB}    &{ExcelPath}[BPR_Name]    &{ExcelPath}[Delimiter]
     Validate Batch Job if Completed in Execution Journal    &{ExcelPath}[Zone]    &{ExcelPath}[Refresh_Every_Time]    &{ExcelPath}[Refresh_Every_MinuteOrSecond]
     ...    &{ExcelPath}[Last_Job_Name]    &{ExcelPath}[BPR_Name]    &{ExcelPath}[Delimiter]
     ${LIQ_Bus_Date}    Get LoanIQ Business Date per Zone and Return    &{ExcelPath}[Zone]
