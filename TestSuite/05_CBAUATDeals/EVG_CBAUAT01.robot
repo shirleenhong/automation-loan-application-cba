@@ -124,7 +124,7 @@ Loan Merge for Outstanding B2 - D00000454
 Collect Commitment Fee for Facility A - D00000454 - 28FEB2019
     Mx Execute Template With Multiple Data    Run Online Accrual for Commitment Fee    ${CBAUAT_ExcelPath}   5    SERV29_CommitmentFeePayment
     Mx Execute Template With Multiple Data    Run Online Accrual for Line Fee    ${CBAUAT_ExcelPath}   6    SERV29_CommitmentFeePayment
-    Pause Execution  # eod to 31JAN2018 # 
+    Pause Execution  # eod to 28FEB2019 # 
     Mx Execute Template With Multiple Data    Commitment Fee Payment with Split Balance for D00000454    ${CBAUAT_ExcelPath}   5    SERV29_CommitmentFeePayment
 
 Collect Line Fee for Facility B - D00000454 - 28FEB2019

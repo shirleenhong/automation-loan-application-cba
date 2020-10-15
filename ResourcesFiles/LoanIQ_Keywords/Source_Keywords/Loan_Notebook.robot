@@ -510,13 +510,19 @@ Navigate to Share Accrual Cycle
     Mx LoanIQ DoubleClick    ${LIQ_SharesFor_Primaries_Tree}    ${Primary_Lender}
     Log    ${Primary_Lender}
 
+Get ProjectedCycleDue
+    [Documentation]    This keyword returns value for Loan Outstanding and enter requested amount in Interest Payment.
+    ...    @author: sacuisia    05OCT2020    -initial create 
+    
+    ${projectedCycleDue}    Mx LoanIQ Get Data    ${LIQ_Payment_ProjectedCycleDue_Amount}    value%projectedCycleDue
+    [Return]    ${projectedCycleDue}  
+       
 Get Requested Amount
     [Documentation]    This keyword returns value for Loan Outstanding and enter requested amount in Interest Payment.
     ...    @author: sacuisia    05OCT2020    -initial create
     
     ${requestedAmount}    Mx LoanIQ Get Data    ${LIQ_InterestPayment_RequestedAmount_field}    value%requestedAmount
     [Return]    ${requestedAmount}
-
 
 Get Cycle Due Amount
     [Documentation]    This keyword returns value for Loan Outstanding Non Zero Cycle Cycle Due Value
