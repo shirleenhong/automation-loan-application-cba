@@ -51,23 +51,22 @@ Add Remittance Instructions
     ...    @update: AmitP       15SEPT2020   Added  argument  for ${sLoanGlobalInterest} to add in the Transaction Amount.
     ...    @update: aramos      20SEP2020    Added conversion to 2 decimal points for Total Transaction
     ...    @update: aramos      02OCT2020    Added Run If to 2 decimal points suppression
+    ...    @update: shirhong    15OCT2020    Modified Test Steps when Transaction Amount is available
     [Arguments]    ${sCustomerShortName}    ${sRemittanceDescription}    ${sTransactionAmount}=None    ${sCurrency}=None    ${sLoanGlobalInterest}=None
     Log    ${sLoanGlobalInterest}
     Log    ${sTransactionAmount}
-    ${LoanGlobalInterest}    Remove String    ${sLoanGlobalInterest}    ,
-    ${TransactionAmount}    Remove String    ${sTransactionAmount}    ,     
-    ${TotalTransactionAmount}    Run Keyword If    '${sLoanGlobalInterest}'!='None'    Evaluate    ${TransactionAmount}+${LoanGlobalInterest}
-    ...    ELSE    Set Variable    ${TransactionAmount}    
-    ${TotalTransactionAmount}    Convert Number With Comma Separators    ${TotalTransactionAmount}        
+    ${TotalTransactionAmount}    Run Keyword If    '${sLoanGlobalInterest}'!='None'    Evaluate    ${sTransactionAmount}+${sLoanGlobalInterest}
+    ...    ELSE    Set Variable    ${sTransactionAmount}           
+    
     Run Keyword If    '${sTransactionAmount}'=='None'    Mx LoanIQ Select Or DoubleClick In Javatree    ${LIQ_Cashflows_Tree}    ${sCustomerShortName}%d
     
-    Run Keyword If    '${sTransactionAmount}'!='None'    Run Keywords    Log    ${TotalTransactionAmount}${SPACE}${sCurrency}%${TotalTransactionAmount}${SPACE}${sCurrency}%Original Amount/CCY
-    ...    AND    Log    ${sTransactionAmount}
-    ...    AND    ${TotalTransactionAmount}    Remove Comma, Negative Character and Convert to Number    ${TotalTransactionAmount}
-    ...    AND    ${TotalTransactionAmount}    Evaluate    "%.2f" % ${TotalTransactionAmount}
-    ...    AND    ${TotalTransactionAmount}    Convert Number With Comma Separators    ${TotalTransactionAmount}
-    ...    AND    Log    ${TotalTransactionAmount}${SPACE}${sCurrency}%${TotalTransactionAmount}${SPACE}${sCurrency}%Original Amount/CCY
-    ...    AND    Log    ${TotalTransactionAmount}
+    Run Keyword If    '${sTransactionAmount}'!='None'    Log    ${TotalTransactionAmount}${SPACE}${sCurrency}%${TotalTransactionAmount}${SPACE}${sCurrency}%Original Amount/CCY
+    Run Keyword If    '${sTransactionAmount}'!='None'    Log    ${sTransactionAmount}
+    ${TotalTransactionAmount}    Run Keyword If    '${sTransactionAmount}'!='None'    Remove Comma and Convert to Number    ${sTransactionAmount}
+    ${TotalTransactionAmount}    Run Keyword If    '${sTransactionAmount}'!='None'    Evaluate    "%.2f" % ${TotalTransactionAmount}
+    ${TotalTransactionAmount}    Run Keyword If    '${sTransactionAmount}'!='None'    Convert Number With Comma Separators    ${TotalTransactionAmount}
+    Run Keyword If    '${sTransactionAmount}'!='None'    Log    ${TotalTransactionAmount}${SPACE}${sCurrency}%${TotalTransactionAmount}${SPACE}${sCurrency}%Original Amount/CCY
+    Run Keyword If    '${sTransactionAmount}'!='None'    Log    ${TotalTransactionAmount}   
     
     Run Keyword If    '${sTransactionAmount}'!='None'    Run keywords    Mx LoanIQ Click Javatree Cell    ${LIQ_Cashflows_Tree}    ${TotalTransactionAmount}${SPACE}${sCurrency}%${TotalTransactionAmount}${SPACE}${sCurrency}%Original Amount/CCY
     ...    AND    Mx Press Combination    Key.ENTER  
