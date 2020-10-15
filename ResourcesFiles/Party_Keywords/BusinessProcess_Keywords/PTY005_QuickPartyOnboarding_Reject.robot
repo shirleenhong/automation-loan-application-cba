@@ -1,9 +1,6 @@
 *** Settings ***
 Resource    ../../../Configurations/Party_Import_File.robot
 
-*** Variables ***
-${rowid}    1
-
 *** Keywords ***
 Create Party in Quick Party Onboarding and Reject Referral
     [Documentation]    This keyword is used to create party via quick party Onboarding screen.
