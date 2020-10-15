@@ -68,8 +68,8 @@ Verify No Extra Comma in DAT File
     ${Expected_Columns}    OperatingSystem.Get File    ${DNA_DAT_FILE_COLUMNS}
     ${Expected_Column_Count}    Get Line Count    ${Expected_Columns}
     ${DAT_File_Comma}    Get Count    ${sDAT_File_Content}    ,
-    ${IsContains_ThreeComma}    Run Keyword And Return Status    Should Be Equal As Integers    ${Expected_Column_Count}    ${DAT_File_Comma}
-    Run Keyword If    ${IsContains_ThreeComma}==${True}    Log    ${sDAT_File_Content} does not contain extra comma.
+    ${No_Extra_Comma}    Run Keyword And Return Status    Should Be Equal As Integers    ${Expected_Column_Count}    ${DAT_File_Comma}
+    Run Keyword If    ${No_Extra_Comma}==${True}    Log    ${sDAT_File_Content} does not contain extra comma.
     ...    ELSE    Run Keyword and Continue On Failure    FAIL    ${sDAT_File_Content} contains extra comma.
 
 Verify DAT File Columns if Correct
