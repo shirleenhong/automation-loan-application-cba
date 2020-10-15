@@ -98,7 +98,7 @@ Create Loan Drawdown for Syndicated Deal - ComSee
     Close All Windows on LIQ
     Logout from Loan IQ
     
-Write Loan Outstanding Accrual Zero Cycle Due
+Pay Loan Outstanding Accrual Zero Cycle Due
     [Documentation]    This keyword update the PaidToDate value after Payment transaction has been made. 
     ...    @author: sacuisia 02OCT2020    -initialCreate
     [Arguments]    ${ExcelPath}    ${sCyclesForLoan}=None    
@@ -127,6 +127,12 @@ Write Loan Outstanding Accrual Zero Cycle Due
     mx LoanIQ click    ${LIQ_CyclesForLoan_Ok_Button}
     Mx LoanIQ Click Element If Present    ${LIQ_Warning_Yes_Button}
     
+    ${ProjectedCycleDue}    Get ProjectedCycleDue
+    Write Data To Excel    ComSee_SC2_Loan    ProjectedCycleDue    ${rowid}    ${ProjectedCycleDue}    ${ComSeeDataSet}
+    
+    ${ProjectedCycleDue}    Run Keyword If    '&{ExcelPath}[OverPayment]'!='${EMPTY}'    Evaluate    ${ProjectedCycleDue} + &{ExcelPath}[OverPayment]
+    ...    ELSE    Set Variable    ${ProjectedCycleDue}
+
     ${requestAmount}    Get Requested Amount
     Write Data To Excel    ComSee_SC2_Loan    Outstanding_paidToDate    ${rowid}    ${requestAmount}    ${ComSeeDataSet}    
     
