@@ -300,3 +300,8 @@ Resource    ../ResourcesFiles/Integration_Keywords/Source_Keywords/API/SAPWUL/SA
 Resource    ../ResourcesFiles/Integration_Keywords/Source_Keywords/API/SAPWUL/SAPWUL_Generic.robot
 Resource    ../ResourcesFiles/Integration_Keywords/Source_Keywords/API/SAPWUL/SAPWUL_TableMaintenance.robot
 
+### Integration Resource Files - Datanet Assurance - Source Keywords ###
+Resource    ../ResourcesFiles/Integration_Keywords/Source_Keywords/Extracts/DNA/DNA_Extract_Validation.robot
+
+### Integration Resource Files - Datanet Assurance - Business Process Keywords ###
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/Extracts/DNA_LIQ/DNA_01.robot
