@@ -419,10 +419,13 @@ Accept Approved Party and Validate Details in Enterprise Summary Details Screen
 Reject Party via Supervisor Account
    [Documentation]    This keyword is used to reject created party via Quick Party Onboarding
     ...    @author: dahijara    07MAY2020    - initial create
-    ...    @author: gagregado   8OCT2020     - changed Party URL suffix to SSO
-    [Arguments]    ${sPartyID}
+    ...    @author: gagregado   08OCT2020    - changed Party URL suffix to SSO
+    ...    @author: javinzon    15OCT2020    - added 'Configure Zone and Branch' Keyword
+    [Arguments]    ${sPartyID}    ${sUserZone}    ${sUserBranch}
 
     Login User to Party    ${PARTY_SUPERVISOR_USERNAME}    ${PARTY_SUPERVISOR_PASSWORD}    ${USER_LINK}    ${USER_PORT}    ${PARTY_SSO_URL_SUFFIX}    ${PARTY_HTML_APPROVER_CREDENTIALS}    ${SSO_ENABLED}    ${PARTY_URL}
+    
+    Configure Zone and Branch    ${sUserZone}    ${sUserBranch}
     
     ${Task_ID_From_Supervisor}    Reject Registered Party    ${sPartyID}
     
@@ -454,15 +457,18 @@ Reject Registered Party
 
 Accept Rejected Party and Validate Details in Quick Enterprise Details Screen
     [Documentation]    This keyword validates the Enterprise Business Activity Details from Enterprise summary details page.
-    ...    @author: dahijara    07MAY2020     - initial create
-    ...    @author: gagregado   8OCT2020     - changed Party URL suffix to SSO    
-    [Arguments]    ${sTask_ID_From_Supervisor}    ${sParty_ID}    ${sCountry_of_Tax_Domicile}    ${sCountry_of_Registration}    ${sAddress_Type}    ${sCountry_Region}    ${iPost_Code}
+    ...    @author: dahijara    07MAY2020    - initial create
+    ...    @author: gagregado   08OCT2020    - changed Party URL suffix to SSO  
+    ...    @update: javinzon    15OCT2020    - added Configure Zone and Branch Keyword  
+    [Arguments]    ${sUserZone}    ${sUserBranch}    ${sTask_ID_From_Supervisor}    ${sParty_ID}    ${sCountry_of_Tax_Domicile}    ${sCountry_of_Registration}    ${sAddress_Type}    ${sCountry_Region}    ${iPost_Code}
     ...    ${sDocument_Collection_Status}    ${sIndustry_Sector}    ${sBusiness_Activity}    ${bIs_Main_Activity}    ${iGST_Number}
     ...    ${sAddress_Line_1}    ${sAddress_Line_2}    ${sTown_City}    ${sState_Province}    ${sBusiness_Country}    ${bIs_Primary_Activity}    ${iRegistered_Number}    ${sShort_Name}
     ...    ${sAddress_Line_3}=None    ${sAddress_Line_4}=None
 
     Login User to Party    ${PARTY_USERNAME}    ${PARTY_PASSWORD}    ${USER_LINK}    ${USER_PORT}    ${PARTY_SSO_URL_SUFFIX}    ${PARTY_HTML_USER_CREDENTIALS}    ${SSO_ENABLED}    ${PARTY_URL}   
     
+    Configure Zone and Branch    ${sUserZone}    ${sUserBranch}    
+
     Accept Rejected Party    ${sTask_ID_From_Supervisor}    ${sPartyID}
 
     Validate Quick Enterprise Party    ${sParty_ID}    ${sCountry_of_Tax_Domicile}    ${sCountry_of_Registration}    ${sAddress_Type}    ${sCountry_Region}    ${iPost_Code}
