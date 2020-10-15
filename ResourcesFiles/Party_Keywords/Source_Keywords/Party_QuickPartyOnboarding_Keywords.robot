@@ -684,3 +684,12 @@ Validate Branch in Party Onboarding Page
     ${isMatched}    Run Keyword And Return Status    Should Be Equal    ${sAssigned_Branch}    ${Branch_Name}
     Run Keyword If    ${isMatched}==${True}    Log    Result is correct.
     ...   ELSE    Run Keyword and Continue on Failure    Fail    Result is incorrect. Expected Value: '${sAssigned_Branch}' | Actual Value: ${Branch_Name}   
+
+Validate Mandatory Fields in Quick Enterprise Party Page    
+    [Documentation]    This test case is used to validate mandatory fields in Quick Enterprise Party Page
+    ...    @author: javinzon    15OCT2020    - initial create
+    
+    Mx Click Element    ${Party_Footer_Next_Button}
+    ${Atrb}    SeleniumLibraryExtended.Get Element Attribute    ${Party_QuickEnterpriseParty_PartyId_TextBox}    class
+    
+    
