@@ -13,6 +13,7 @@ ${PARTYDETAILS_ENQUIRY}    Party Details Enquiry
 ${Party_UserDeletedSuccessfully}    User(s) deleted successfully.
 
 ### Party Page Title ###
+${PARTY_BRANCHLIST_PAGETITLE}    Branch List
 ${PARTY_PARTYONBOARDING_PAGETITLE}    Party Onboarding
 ${PARTY_PREEXISTENCECHECK_PAGETITLE}    Pre-Existence Check
 ${PARTY_PREEXISTENCECHECKRESULTFOUND_PAGETITLE}    Pre-Existence Check ---- Result Found

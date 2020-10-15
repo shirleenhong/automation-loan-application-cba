@@ -8,7 +8,7 @@ Create Loan Drawdown for Syndicated Deal - ComSee
     [Arguments]    ${ExcelPath}
 
     ##Login to Original User###
-    # Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
+    Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
 
     ###Deal Notebook###
     Search for Deal    &{ExcelPath}[Deal_Name]
@@ -98,11 +98,14 @@ Create Loan Drawdown for Syndicated Deal - ComSee
     Close All Windows on LIQ
     Logout from Loan IQ
     
-Write Loan Outstanding Accrual Zero Cycle Due
+Pay Loan Outstanding Accrual Zero Cycle Due
     [Documentation]    This keyword update the PaidToDate value after Payment transaction has been made. 
     ...    @author: sacuisia 02OCT2020    -initialCreate
-    [Arguments]    ${ExcelPath}
+    [Arguments]    ${ExcelPath}    ${sCyclesForLoan}=None    
     
+    ${CyclesForLoan}    Acquire Argument Value    ${sCyclesForLoan}
+    
+
     Launch Loan Notebook    &{ExcelPath}[Deal_Name]    &{ExcelPath}[Facility_Name]    &{ExcelPath}[Outstanding_Alias]
     
     mx LoanIQ activate window    ${LIQ_Loan_Window}
@@ -111,11 +114,25 @@ Write Loan Outstanding Accrual Zero Cycle Due
     Mx LoanIQ Set    ${LIQ_Loan_ChoosePayment_InterestPayment_RadioButton}    ON
     mx LoanIQ click    ${LIQ_Loan_ChoosePayment_OK_Button}
     
-    mx LoanIQ activate window    ${LIQ_Loan_CyclesforLoan_Window}   
-    mx LoanIQ enter    ${LIQ_Loan_CyclesforLoan_ProjectedDue_RadioButton}    ON
-    mx LoanIQ click    ${LIQ_Loan_CyclesforLoan_OK_Button} 
-    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
+
+    ### Cycles for Loan Window Selection Condition ###
+    mx LoanIQ activate window    ${LIQ_Loan_CyclesforLoan_Window} 
+    Run Keyword If    '${sCyclesForLoan}'=='1'    mx LoanIQ enter   ${LIQ_CyclesForLoan_LenderSharesPrepayCycle_RadioButton}    ${ON}
+    ...    ELSE IF    '${sCyclesForLoan}'=='0'    mx LoanIQ enter    ${LIQ_CyclesForLoan_LenderSharesPrepayCycle_RadioButton}    ${OFF}
+    Run Keyword If    '${sCyclesForLoan}'=='1'    mx LoanIQ enter    ${LIQ_CyclesForLoan_CycleDue_RadioButton}    ${ON}
+    ...    ELSE IF    '${sCyclesForLoan}'=='0'    mx LoanIQ enter    ${LIQ_CyclesForLoan_CycleDue_RadioButton}    ${OFF}
+    Run Keyword If    '${sCyclesForLoan}'=='1'    mx LoanIQ enter    ${LIQ_Loan_CyclesforLoan_ProjectedDue_RadioButton}    ${ON}
+    ...    ELSE IF    '${sCyclesForLoan}'=='0'    mx LoanIQ enter    ${LIQ_Loan_CyclesforLoan_ProjectedDue_RadioButton}    ${OFF}
+	Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/CyclesForLoanWindow
+    mx LoanIQ click    ${LIQ_CyclesForLoan_Ok_Button}
+    Mx LoanIQ Click Element If Present    ${LIQ_Warning_Yes_Button}
     
+    ${ProjectedCycleDue}    Get ProjectedCycleDue
+    Write Data To Excel    ComSee_SC2_Loan    ProjectedCycleDue    ${rowid}    ${ProjectedCycleDue}    ${ComSeeDataSet}
+    
+    ${ProjectedCycleDue}    Run Keyword If    '&{ExcelPath}[OverPayment]'!='${EMPTY}'    Evaluate    ${ProjectedCycleDue} + &{ExcelPath}[OverPayment]
+    ...    ELSE    Set Variable    ${ProjectedCycleDue}
+
     ${requestAmount}    Get Requested Amount
     Write Data To Excel    ComSee_SC2_Loan    Outstanding_paidToDate    ${rowid}    ${requestAmount}    ${ComSeeDataSet}    
     
@@ -186,6 +203,8 @@ Write Loan Outstanding Accrual Non Zero Cycle
     
     ${LoanPaidDueAmount}   Get PaidToDate   
     Write Data To Excel    ComSee_SC2_Loan   Outstanding_paidToDate    ${rowid}    ${LoanPaidDueAmount}    ${ComSeeDataSet}
+    
+   
     
 Write Loan Details for ComSee - Scenario 2
     [Documentation]    This test case writes the Outstanding(Loan) details for comsee use.
@@ -472,3 +491,4 @@ Write Loan Details for ComSee - Scenario 7
     ${LoanPricingOption}    Get Pricing Code and Description Combined    ${PricingOptionCode}    ${LoanPricingDescription}
     Write Data To Excel    ComSee_SC7_Loan    Outstanding_PricingOption    ${rowid}    ${LoanPricingOption}    ${ComSeeDataSet}
     Close All Windows on LIQ
+    

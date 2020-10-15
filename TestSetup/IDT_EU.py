@@ -1,21 +1,20 @@
 ###Dataset###
-dataset_path = "C:\\Git_Evergreen\\fms_scotia"
-ExcelPath = "C:\\fms_scotia\\DataSet\\LoanIQ_DataSet\\EVG_PTYLIQ07_BilateralFacilityTermination.xlsx"
-CBAUAT_ExcelPath = "C:\\Git_Evergreen\\evergreen_projects\\CBA_Evergreen\\DataSet\\CBA_UAT_DataSet\\EVG_CBAUAT05.xlsx"
+dataset_path = "C:\\Git_Evergreen\\fms_cba"
+ExcelPath = "C:\\Git_Evergreen\\fms_cba\\DataSet\\LoanIQ_DataSet\\EU_Entity\\EVG_PTYLIQ01_EU_BaselineBilateralCustomer.xlsx"
+CBAUAT_ExcelPath = "C:\\Git_Evergreen\\fms_cba\\DataSet\\CBA_UAT_DataSet\\EVG_CBAUAT05.xlsx"
 APIDataSet = "..\\DataSet\\Integration_DataSet\\API\\\\API_Data_Set.xlsx"
+Countries_Codes = '..\\fms_scotia\\DataSet\\Integration_DataSet\\API\\Countries_Codes.xlsx'
+TL_DATASET = "C:\\Git_Evergreen\\DataSet\\TL_DataSet\\BaseRates_GSFile\\TL_Transformed_Data_BaseRate.xls"
+SAPWUL_DATASET = "C:\\Git_evergreen\\fms_cba\\DataSet\\Downstream_DataSet\\SAPWUL\\SAPWUL_Data_Set.xlsx"
+ComSeeDataSet = 'C:\\Git_Evergreen\\fms_cba\\DataSet\\Downstream_DataSet\\ComSee\\COMSEE_Data_Set.xlsx'
+GLExcelPath = "C:\\Git_Evergreen\\fms_cba\\DataSet\\Extract_DataSet\\GL\\EVG_GL_TestData.xlsx"
+PTY_DATASET = "C:\\Git_Evergreen\\fms_cba\\DataSet\\Party_DataSet\\PTY_DataSet_EU.xlsx"
 ExcelPath_API_temp = '..\\CBA_Evergreen\\DataSet\\API_DataSet\\temp.xlsx'
 AuditLogPath = '..\\CBA_Evergreen\\DataSet\\API_DataSet\\Audit\\Audit_Log_Data_Set.xlsx'
 AuditLogPathTemp = '..\\CBA_Evergreen\\DataSet\\API_DataSet\\Audit\\temp.xlsx'
-Countries_Codes = '..\\fms_scotia\\DataSet\\Integration_DataSet\\API\\Countries_Codes.xlsx'
-TL_DATASET = "C:\\Git_Evergreen\\DataSet\\TL_DataSet\\BaseRates_GSFile\\TL_Transformed_Data_BaseRate.xls"
-GLExcelPath = "C:\\Git_Evergreen\\evergreen_projects\\CBA_Evergreen\\DataSet\\Extract_DataSet\\GL\\EVG_GL_TestData.xlsx"
-ComSeeDataSet = 'C:\\Git_Evergreen\\evergreen_projects\\CBA_Evergreen\\DataSet\\Downstream_DataSet\\ComSee\\COMSEE_Data_Set.xlsx'
 Downstream_DataSet = '..\\CBA_Evergreen\\DataSet\\Downstream_DataSet\\ComSee\\ComSee_API_DataSet.xls'
 COMMSEEDataSet= '..\\CBA_Evergreen\\DataSet\\COM_DataSet\\Com_Data_Set.xls'
-SAPWUL_DATASET = "C:\\Git_evergreen\\evergreen_projects\\CBA_Evergreen\\DataSet\\Downstream_DataSet\\SAPWUL\\SAPWUL_Data_Set.xlsx"
 DWELIQFunc_Dataset = "C:\\Git_Evergreen\\fms_cba\\DataSet\\Integration_DataSet\\Extracts\\DWE_LIQ\\DWELIQ_Functional_TestData.xlsx"
-PTY_DATASET = "C:\\Git_Evergreen\\fms_cba\\DataSet\\Party_DataSet\\PTY_DataSet.xlsx"
-DNA_DATASET = "C:\\Git_Evergreen\\fms_cba\\DataSet\\Integration_DataSet\\Extracts\\DNA\\EVG_DNA_TestData.xlsx"
 
 FBTIDataset = 'C:\\Git_Evergreen\\evergreen_projects\\CBA_Evergreen\\DataSet\\FBTI_DataSet\\FBTI_User_Data_Set.xlsx'
 FBTIDataset_ILC = 'C:\\Git_Evergreen\\evergreen_projects\\CBA_Evergreen\\DataSet\\FBTI_DataSet\\FBTI_ILC_Data_Set.xlsx'
@@ -206,21 +205,3 @@ DWE_PASSPHRASE = '0mn1@d@v'
 DWE_TAR_GZ_EXT = '.tar.gz'
 DWE_TAR_GZ_GPG_EXT = '.tar.gz.gpg'
 DWE_CCB_LIQ_ZONE_FILENAME = 'CCB_LIQ_SYD_'
-
-### Batch EOD ###
-PUTTY_PATH = "C:\\Program Files\\PuTTY\\putty.exe"
-PUTTY_HOSTNAME = "mancsleverg0005"
-PUTTY_PORT = "22"
-PUTTY_USERNAME = "micloud"
-PUTTY_PASSWORD = "misys123"
-
-### DNA ###
-DNA_SERVER = 'mancsleverg0021'
-DNA_SERVER_LIQ = 'mancsleverg0022'
-DNA_PORT = '22'
-DNA_SERVER_USER = 'sftpuser2'
-DNA_SERVER_PASSWORD = 'luckyroll76'
-DNA_EXTRACTION_AREA_PATH = '/evgdata/STREAMSETS/workspace/extraction_area/COMRLENDING/'
-DNA_CCB_LIQ_FILENAME = 'CCB_LIQ_'
-DNA_DATAASSURANCE_FILENAME = 'DATAASSURANCE_'
-DNA_DAT_EXT = '.DAT'

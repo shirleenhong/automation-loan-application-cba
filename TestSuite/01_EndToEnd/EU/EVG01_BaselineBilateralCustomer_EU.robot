@@ -6,6 +6,15 @@ ${rowid}    1
 ${SCENARIO}    1
 
 *** Test Cases ***
+Create Quick Party Onboarding - PTY001
+    [Documentation]    This test case creates customer details through Quick Party Onboarding module of Fusion Party Application, 
+    ...    Accepts newly created customer and validates successfully created customer in LoanIQ Application
+    ...    @author:mcampomanes    02OCT2020    -initial create
+    [Tags]    01 Create Party within Essence - PTY001
+    Mx Launch UFT    Visibility=True    UFTAddins=Java    Processtimeout=300
+    Mx LoanIQ Launch    Processtimeout=300
+    Mx Execute Template With Multiple Data    Create Party in Quick Party Onboarding    ${ExcelPath}    ${rowid}    PTY001_QuickPartyOnboarding
+    
 Search Customer and Complete its Borrower Profile Creation - ORIG03
     [Documentation]    This keyword searches a customer and complete its Borrower Profile creation
     ...    @author: ghabal
