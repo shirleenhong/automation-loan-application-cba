@@ -143,7 +143,7 @@ NonAgent-HostBank Syndicated Deal - Setup Revolver Facility Fees and Interest
     [Documentation]    This keyword set ups the Ongoing Fees and Interest Pricing for the Non Agent and Host Bank Syndicated Deal.
     ...    @author: bernchua
     ...    @update: clanding    29JUL2020    - updated hard coded values to global variables; removed mx keywords
-    ...    @update:    frluberio    14OCT2020    -update the adding of Interest Pricing for EU
+    ...    @update: fluberio    14OCT2020    - updated the adding of Interest Pricing Financial Ratio for EU since there are 4 Pricing Options in EU and AU has only 2
     [Arguments]    ${ExcelPath}
     
     #### Ongoing Fee ####
@@ -156,37 +156,31 @@ NonAgent-HostBank Syndicated Deal - Setup Revolver Facility Fees and Interest
     #### Interest Pricing ###
     Click Modify Interest Pricing Button
     
-    Run Keyword If    '&{ExcelPath}[Entity]' == 'AU'    Run Keywords
-    ...    Add Interest Pricing Financial Ratio
+    Run Keyword If    '&{ExcelPath}[Entity]' == 'AU'    Run Keywords    Add Interest Pricing Financial Ratio
     ...    AND    Set Financial Ratio    &{ExcelPath}[Interest_FinancialRatioType1]    ${OFF}    &{ExcelPath}[Greater_Than]    &{ExcelPath}[Less_Than]    &{ExcelPath}[FinancialRatio_Minimum1]    &{ExcelPath}[FinancialRatio_Maximum1]
     ...    AND    Add Facility Interest    &{ExcelPath}[Interest_AddItem]    &{ExcelPath}[Interest_OptionName1]    &{ExcelPath}[Interest_RateBasis]
     ...    &{ExcelPath}[Interest_SpreadType1]    &{ExcelPath}[Interest_SpreadValue1]    &{ExcelPath}[Interest_BaseRateCode1]
     ...    AND    Add Facility Interest    &{ExcelPath}[Interest_AddItem]    &{ExcelPath}[Interest_OptionName2]    &{ExcelPath}[Interest_RateBasis]
     ...    &{ExcelPath}[Interest_SpreadType1]    &{ExcelPath}[Interest_SpreadValue1]    &{ExcelPath}[Interest_BaseRateCode2]
-    
     ...    AND    Add Interest Pricing Financial Ratio
     ...    AND    Set Financial Ratio    &{ExcelPath}[Interest_FinancialRatioType1]    ${OFF}    &{ExcelPath}[Greater_Than]    &{ExcelPath}[Less_Than]    &{ExcelPath}[FinancialRatio_Minimum2]    &{ExcelPath}[FinancialRatio_Maximum2]
     ...    AND    Add Facility Interest    &{ExcelPath}[Interest_AddItem]    &{ExcelPath}[Interest_OptionName1]    &{ExcelPath}[Interest_RateBasis]
     ...    &{ExcelPath}[Interest_SpreadType1]    &{ExcelPath}[Interest_SpreadValue2]    &{ExcelPath}[Interest_BaseRateCode1]
     ...    AND    Add Facility Interest    &{ExcelPath}[Interest_AddItem]    &{ExcelPath}[Interest_OptionName2]    &{ExcelPath}[Interest_RateBasis]
     ...    &{ExcelPath}[Interest_SpreadType1]    &{ExcelPath}[Interest_SpreadValue2]    &{ExcelPath}[Interest_BaseRateCode2]
-    
     ...    AND    Add Interest Pricing Financial Ratio
     ...    AND    Set Financial Ratio    &{ExcelPath}[Interest_FinancialRatioType1]    ${OFF}    &{ExcelPath}[Greater_Than]    &{ExcelPath}[Less_Than]    &{ExcelPath}[FinancialRatio_Minimum3]    &{ExcelPath}[FinancialRatio_Maximum3]
     ...    AND    Add Facility Interest    &{ExcelPath}[Interest_AddItem]    &{ExcelPath}[Interest_OptionName1]    &{ExcelPath}[Interest_RateBasis]
     ...    &{ExcelPath}[Interest_SpreadType1]    &{ExcelPath}[Interest_SpreadValue3]    &{ExcelPath}[Interest_BaseRateCode1]
     ...    AND    Add Facility Interest    &{ExcelPath}[Interest_AddItem]    &{ExcelPath}[Interest_OptionName2]    &{ExcelPath}[Interest_RateBasis]
     ...    &{ExcelPath}[Interest_SpreadType1]    &{ExcelPath}[Interest_SpreadValue3]    &{ExcelPath}[Interest_BaseRateCode2]
-    
     ...    AND    Add Interest Pricing Financial Ratio
     ...    AND    Set Financial Ratio    &{ExcelPath}[Interest_FinancialRatioType1]    ${ON}    &{ExcelPath}[Greater_Than]    &{ExcelPath}[Less_Than]    &{ExcelPath}[FinancialRatio_Minimum4]
     ...    AND    Add Facility Interest    &{ExcelPath}[Interest_AddItem]    &{ExcelPath}[Interest_OptionName1]    &{ExcelPath}[Interest_RateBasis]
     ...    &{ExcelPath}[Interest_SpreadType1]    &{ExcelPath}[Interest_SpreadValue4]    &{ExcelPath}[Interest_BaseRateCode1]
     ...    AND    Add Facility Interest    &{ExcelPath}[Interest_AddItem]    &{ExcelPath}[Interest_OptionName2]    &{ExcelPath}[Interest_RateBasis]
     ...    &{ExcelPath}[Interest_SpreadType1]    &{ExcelPath}[Interest_SpreadValue4]    &{ExcelPath}[Interest_BaseRateCode2]
-    
-    ...    ELSE IF    '&{ExcelPath}[Entity]' == 'EU'    Run Keywords
-    ...    Add Interest Pricing Financial Ratio
+    ...    ELSE IF    '&{ExcelPath}[Entity]' == 'EU'    Run Keywords    Add Interest Pricing Financial Ratio
     ...    AND    Set Financial Ratio    &{ExcelPath}[Interest_FinancialRatioType1]    ${OFF}    &{ExcelPath}[Greater_Than]    &{ExcelPath}[Less_Than]    &{ExcelPath}[FinancialRatio_Minimum1]    &{ExcelPath}[FinancialRatio_Maximum1]
     ...    AND    Add Facility Interest    &{ExcelPath}[Interest_AddItem]    &{ExcelPath}[Interest_OptionName1]    &{ExcelPath}[Interest_RateBasis]
     ...    &{ExcelPath}[Interest_SpreadType1]    &{ExcelPath}[Interest_SpreadValue1]    &{ExcelPath}[Interest_BaseRateCode1]
@@ -196,7 +190,6 @@ NonAgent-HostBank Syndicated Deal - Setup Revolver Facility Fees and Interest
     ...    &{ExcelPath}[Interest_SpreadType1]    &{ExcelPath}[Interest_SpreadValue1]    &{ExcelPath}[Interest_BaseRateCode3]
     ...    AND    Add Facility Interest    &{ExcelPath}[Interest_AddItem]    &{ExcelPath}[Interest_OptionName4]    &{ExcelPath}[Interest_RateBasis]
     ...    &{ExcelPath}[Interest_SpreadType1]    &{ExcelPath}[Interest_SpreadValue1]    &{ExcelPath}[Interest_BaseRateCode4]
-    
     ...    AND    Add Interest Pricing Financial Ratio
     ...    AND    Set Financial Ratio    &{ExcelPath}[Interest_FinancialRatioType1]    ${OFF}    &{ExcelPath}[Greater_Than]    &{ExcelPath}[Less_Than]    &{ExcelPath}[FinancialRatio_Minimum2]    &{ExcelPath}[FinancialRatio_Maximum2]
     ...    AND    Add Facility Interest    &{ExcelPath}[Interest_AddItem]    &{ExcelPath}[Interest_OptionName1]    &{ExcelPath}[Interest_RateBasis]
@@ -207,7 +200,6 @@ NonAgent-HostBank Syndicated Deal - Setup Revolver Facility Fees and Interest
     ...    &{ExcelPath}[Interest_SpreadType1]    &{ExcelPath}[Interest_SpreadValue2]    &{ExcelPath}[Interest_BaseRateCode3]
     ...    AND    Add Facility Interest    &{ExcelPath}[Interest_AddItem]    &{ExcelPath}[Interest_OptionName4]    &{ExcelPath}[Interest_RateBasis]
     ...    &{ExcelPath}[Interest_SpreadType1]    &{ExcelPath}[Interest_SpreadValue2]    &{ExcelPath}[Interest_BaseRateCode4]
-    
     ...    AND    Add Interest Pricing Financial Ratio
     ...    AND    Set Financial Ratio    &{ExcelPath}[Interest_FinancialRatioType1]    ${OFF}    &{ExcelPath}[Greater_Than]    &{ExcelPath}[Less_Than]    &{ExcelPath}[FinancialRatio_Minimum3]    &{ExcelPath}[FinancialRatio_Maximum3]
     ...    AND    Add Facility Interest    &{ExcelPath}[Interest_AddItem]    &{ExcelPath}[Interest_OptionName1]    &{ExcelPath}[Interest_RateBasis]
@@ -218,7 +210,6 @@ NonAgent-HostBank Syndicated Deal - Setup Revolver Facility Fees and Interest
     ...    &{ExcelPath}[Interest_SpreadType1]    &{ExcelPath}[Interest_SpreadValue3]    &{ExcelPath}[Interest_BaseRateCode3]
     ...    AND    Add Facility Interest    &{ExcelPath}[Interest_AddItem]    &{ExcelPath}[Interest_OptionName4]    &{ExcelPath}[Interest_RateBasis]
     ...    &{ExcelPath}[Interest_SpreadType1]    &{ExcelPath}[Interest_SpreadValue3]    &{ExcelPath}[Interest_BaseRateCode4]
-    
     ...    AND    Add Interest Pricing Financial Ratio
     ...    AND    Set Financial Ratio    &{ExcelPath}[Interest_FinancialRatioType1]    ${ON}    &{ExcelPath}[Greater_Than]    &{ExcelPath}[Less_Than]    &{ExcelPath}[FinancialRatio_Minimum4]
     ...    AND    Add Facility Interest    &{ExcelPath}[Interest_AddItem]    &{ExcelPath}[Interest_OptionName1]    &{ExcelPath}[Interest_RateBasis]

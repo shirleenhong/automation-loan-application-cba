@@ -537,12 +537,12 @@ Setup Syndicated Deal for Non-Agent and Host Bank
     ...    @update: clanding    29JUL2020    - updated hardcoded values to dataset/global variable; removed writing for CRED09
     ...    @update: clanding    10AUG2020    - added writing of Deal to SERV02
     ...    @update: clanding    13AUG2020    - added writing of Deal to SERV09
-    ...    @update: frluberio    12OCT2020    - added condition in Holdiay Creation and Pricing Rules for EU
+    ...    @update: fluberio    12OCT2020    - added condition in Holdiay Creation and Pricing Rules for EU since in EU there are 5 Holiday Calendar and 4 Pricing Options
     [Arguments]    ${ExcelPath}
     
 	###Switch to Original User###
-	#Logout from Loan IQ
-	#Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
+	Logout from Loan IQ
+	Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
     
     ###Data Generation###
     ${Deal_Name}    Auto Generate Name Test Data    &{ExcelPath}[Deal_NamePrefix]

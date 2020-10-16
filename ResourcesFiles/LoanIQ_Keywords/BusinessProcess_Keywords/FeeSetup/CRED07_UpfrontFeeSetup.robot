@@ -7,7 +7,6 @@ NonAgent-HostBank Syndicated Deal - Setup Upfront Fees, Bank Role and Ratio
     ...    @author: bernchua
     ...    @update: ritragel    30APR2019    Used systemDate for Financial Ratio StartDate
     ...    @update: clanding    29JUL2020    Updated hardcoded values to global variables; removed mx keywords; updated Set Bank Role to Add Bank Role
-    ...    @update: frluberio    15OCT2020    Added condition for EU upon writing the Effective date in CRED02
     [Arguments]    ${ExcelPath}
     
     ###Get System Date###
@@ -21,13 +20,9 @@ NonAgent-HostBank Syndicated Deal - Setup Upfront Fees, Bank Role and Ratio
     Add Financial Ratio    &{ExcelPath}[RatioType1]    &{ExcelPath}[FinancialRatio]    ${FinancialRatioStartDate}
     Add Financial Ratio    &{ExcelPath}[RatioType2]    &{ExcelPath}[FinancialRatio]    ${FinancialRatioStartDate}
     
-    Run Keyword If    '&{ExcelPath}[Entity]' == 'AU'    Run Keywords
-    ...    ${EffectiveDate}    Get Financial Ratio Type Effective Date and Return    &{ExcelPath}[RatioType1]
-    ...    AND    Write Data To Excel    CRED02_FacilitySetup    Facility_AgreementDate    &{ExcelPath}[rowid]    ${EffectiveDate}
-    ...    AND    Write Data To Excel    CRED02_FacilitySetup    Facility_EffectiveDate    &{ExcelPath}[rowid]    ${EffectiveDate}
-    ...    ELSE IF    '&{ExcelPath}[Entity]' == 'EU'    Run Keywords
-    ...    Write Data To Excel    CRED02_FacilitySetup    Facility_AgreementDate    &{ExcelPath}[rowid]    ${FinancialRatioStartDate}
-    ...    AND    Write Data To Excel    CRED02_FacilitySetup    Facility_EffectiveDate    &{ExcelPath}[rowid]    ${FinancialRatioStartDate}
+    ${EffectiveDate}    Get Financial Ratio Type Effective Date and Return    &{ExcelPath}[RatioType1]
+    Write Data To Excel    CRED02_FacilitySetup    Facility_AgreementDate    &{ExcelPath}[rowid]    ${EffectiveDate}
+    Write Data To Excel    CRED02_FacilitySetup    Facility_EffectiveDate    &{ExcelPath}[rowid]    ${EffectiveDate}
 
 Setup Deal Upfront Fees and Bank Role
     [Documentation]    This keyword adds 1 Upfront Fee and set ups the Bank Role in the Deal Notebook.

@@ -173,7 +173,7 @@ Set up a Non-Host and Host Bank Primaries for Syndicated Deal
     Add Contact in Primary    &{ExcelPath}[ContactName_NHB]
     
     Run Keyword If    '&{ExcelPath}[Entity]' == 'EU'    Select Servicing Group on Primaries    sPrimaryLender_ServGroupAlias=&{ExcelPath}[AdminAgent_SGAlias_Secondary]
-    ...    ELSE    Select Servicing Group on Primaries    &{ExcelPath}[AdminAgent_SGAlias_Secondary]
+    ...    ELSE IF    '&{ExcelPath}[Entity]' == 'AU'    Select Servicing Group on Primaries    &{ExcelPath}[AdminAgent_SGAlias_Secondary]
     
     ###Circle Notebook - Workflow Tab###   
     
@@ -196,7 +196,7 @@ Set up a Non-Host and Host Bank Primaries for Syndicated Deal
     Add Contact in Primary    &{ExcelPath}[ContactName]
     
     Run Keyword If    '&{ExcelPath}[Entity]' == 'EU'    Select Servicing Group on Primaries    sPrimaryLender_ServGroupAlias=&{ExcelPath}[AdminAgent_SGAlias]
-    ...    ELSE    Select Servicing Group on Primaries    &{ExcelPath}[AdminAgent_SGAlias]
+    ...    ELSE IF    '&{ExcelPath}[Entity]' == 'AU'    Select Servicing Group on Primaries    &{ExcelPath}[AdminAgent_SGAlias]
     
     ###Circle Notebook - Workflow Tab###   
     Circling for Primary Workflow    &{ExcelPath}[TradeDate]
