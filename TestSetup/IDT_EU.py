@@ -77,10 +77,10 @@ DWE_NOTIFICATION_INSTANCE = "dwe_notification_1.3.0"
 SAPWUL_INSTANCE = 'CustomCBAPush_1.3.0'
 
 ###SFTP###
-SFTP_HOST = "mancsleverg0005"
+SFTP_HOST = "mancsleverg0021"
 SFTP_PORT = "22"
-SFTP_USER = "sftpuser"
-SFTP_PASSWORD = "t3stOnly?"
+SFTP_USER = "sftpuser2"
+SFTP_PASSWORD = "luckyroll76"
 
 ###LIQ Credential###
 INPUTTER_USERNAME = "DJRHINPT"
