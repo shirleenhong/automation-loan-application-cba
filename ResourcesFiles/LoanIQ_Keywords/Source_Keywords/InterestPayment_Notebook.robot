@@ -1080,3 +1080,75 @@ Initiate Loan Latest Cycle Interest Payment
     Mx LoanIQ Click Element If Present    ${LIQ_Warning_Yes_Button}     
     Mx LoanIQ Activate Window    ${LIQ_Payment_Window}
     Take Screenshot    ${Screenshot_Path}/Screenshots/LoanIQ/InterestPaymentWindow
+    
+Create Interest Payment Reversal
+    [Documentation]    This keyword is used for creating Payment Reversal
+    ...    @author: cfrancis    - 16OCT2020    - initial create
+    
+    Mx LoanIQ Activate window    ${LIQ_Loan_Window}
+    Mx LoanIQ Select Window Tab    ${LIQ_Loan_Tab}    Events
+    Mx LoanIQ Select Or DoubleClick In Javatree   ${LIQ_Loan_Events_List}    Interest Payment Released%d
+    mx LoanIQ activate window    ${LIQ_Payment_Window}  
+    Mx LoanIQ Select    ${LIQ_Payment_Options_ReversePayment}
+    Verify If Warning Is Displayed  
+    mx LoanIQ activate window    ${LIQ_ReverseInterestPayment_Window}
+    
+    ${CurrentCycleDue}    Mx LoanIQ Get Data    ${LIQ_ReverseInterestPayment_CurrentCycleDue}    Amount
+    ${CurrentCycleDue}    Remove Comma, Negative Character and Convert to Number    ${CurrentCycleDue}
+    
+    ${CurrentCycleDue}    Run Keyword If    '${CurrentCycleDue}'=='0.0'    Mx LoanIQ Get Data    ${LIQ_ReverseInterestPayment_RequestedAmount}    Amount
+    ...    ELSE    Set Variable    ${CurrentCycleDue}
+    
+    mx LoanIQ enter    ${LIQ_ReverseInterestPayment_RequestedAmount}    ${CurrentCycleDue}
+    
+    [Return]    ${CurrentCycleDue}
+    
+Navigate to Cashflow - Reverse Interest Payment
+    [Documentation]    This keyword creates cashflow for the interest payment reversal
+    ...    @author: cfrancis    - 16OCT2020    - initial create
+    
+    mx LoanIQ activate window    ${LIQ_ReverseInterestPayment_Window}
+    Mx LoanIQ Select Window Tab    ${LIQ_ReverseInterestPayment_Tab}    Workflow
+    Run Keyword And Continue On Failure     Mx LoanIQ Click Button On Window    .* Interest Payment.*;Warning;Yes    strProcessingObj="JavaWindow(\"title:=Processing.*\")"    WaitForProcessing=500
+    Mx LoanIQ DoubleClick    ${LIQ_ReverseInterestPayment_WorkflowItems}    Create Cashflows
+    Run Keyword And Continue On Failure     Mx LoanIQ Click Button On Window    .* Interest Payment.*;Warning;Yes    strProcessingObj="JavaWindow(\"title:=Processing.*\")"    WaitForProcessing=500
+    mx LoanIQ activate window    ${LIQ_ReverseInterestPayment_Cashflows_Window}                 
+    Run Keyword And Continue On Failure    Mx LoanIQ Verify Object Exist    ${LIQ_ReverseInterestPayment_Cashflows_Window}    VerificationData="Yes"
+    
+Send Reverse Interest Payment to Approval
+    [Documentation]    This keywod sends the reverse fee payment to approval.
+    ...    @author: cfrancis    - 16OCT2020    - initial create
+
+    mx LoanIQ click element if present     ${LIQ_ReverseInterestPayment_Cashflow_OK_Button} 
+    mx LoanIQ activate window    ${LIQ_ReverseInterestPayment_Window}
+    Mx LoanIQ Select Or DoubleClick In Javatree    ${LIQ_ReverseInterestPayment_WorkflowItems}    Send to Approval%d
+    mx LoanIQ click element if present    ${LIQ_Question_Yes_Button}
+    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
+    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
+
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/ReverseInterestPayment_SendToApproval
+    
+Approve Reverse Interest Payment
+    [Documentation]    This keyword approves the Ongoing Fee Payment from LIQ.
+    ...    @author: cfrancis    - 16OCT2020    - initial create
+
+    mx LoanIQ activate window    ${LIQ_ReverseInterestPayment_Window}
+    Mx LoanIQ Select Window Tab    ${LIQ_ReverseInterestPayment_Tab}    Workflow
+    Run Keyword And Continue On Failure    mx LoanIQ click element if present    ${LIQ_InquiryMode_Button}
+    Mx LoanIQ Select Or DoubleClick In Javatree    ${LIQ_ReverseInterestPayment_WorkflowItems}    Approval%d
+    Run Keyword And Continue On Failure     Mx LoanIQ Click Button On Window    Commitment Fee.*;Question;Yes    strProcessingObj="JavaWindow(\"title:=Processing.*\")"    WaitForProcessing=500
+    Run Keyword And Continue On Failure     Mx LoanIQ Click Button On Window    Commitment Fee.*;Warning;Yes    strProcessingObj="JavaWindow(\"title:=Processing.*\")"    WaitForProcessing=500
+
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/RevereseInterestPayment_WorkflowTab_Approval
+    
+Release Reverse Interest Payment
+    [Documentation]    This keyword releases the Ongoing Fee Payment from LIQ.
+    ...    @author: cfrancis    - 16OCT2020    - initial create
+
+    mx LoanIQ activate window    ${LIQ_ReverseInterestPayment_Window}
+    Mx LoanIQ Select Window Tab    ${LIQ_ReverseInterestPayment_Tab}    Workflow
+    Run Keyword And Continue On Failure    mx LoanIQ click element if present    ${LIQ_InquiryMode_Button}
+    Mx LoanIQ Select Or DoubleClick In Javatree    ${LIQ_ReverseInterestPayment_WorkflowItems}    Release%d
+    Validate if Question or Warning Message is Displayed
+
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/ReverseInterestPayment_WorkflowTab_Release
