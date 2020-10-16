@@ -4,7 +4,8 @@ Resource     ../../../../Configurations/LoanIQ_Import_File.robot
 *** Keywords ***
 Setup a Primary Notebook
     [Arguments]    ${ExcelPath}
-    ###Circle Notebook - Facilites Tab### 
+    ###Deal Notebook - Facilites Tab###
+    Open Existing Deal    &{ExcelPath}[Deal_Name] 
     Add Lender and Location    &{ExcelPath}[Deal_Name]    &{ExcelPath}[Primary_Lender1]    &{ExcelPath}[Primary_LenderLoc1]    &{ExcelPath}[Primary_RiskBook]    &{ExcelPath}[Primaries_TransactionType]
     Set Sell Amount and Percent of Deal    &{ExcelPath}[Primary_PctOfDeal1]
     Add Pro Rate    &{ExcelPath}[Primary_BuySellPrice]
