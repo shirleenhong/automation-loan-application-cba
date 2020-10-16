@@ -306,6 +306,7 @@ Setup Fees and Interest for Revolver Facility
 Ongoing Fee Setup
     [Documentation]    This high-level keyword sets up Ongoing Fee from the Deal Notebook.
     ...    @author: fmamaril
+    ...    @update: makcamps    15OCT2020    - added closing of all LIQ windows to coordinate w/ next tc
     [Arguments]    ${ExcelPath}
     ###Facility Notebook - Pricing Tab###
     Modify Ongoing Fee Pricing - Insert Add    &{ExcelPath}[OngoingFee_Category1]    &{ExcelPath}[OngoingFee_Type1]    &{ExcelPath}[OngoingFee_RateBasis1]
@@ -316,4 +317,4 @@ Ongoing Fee Setup
     Verify Pricing Rules    &{ExcelPath}[Interest_OptionName1]
     Validate Facility
     mx LoanIQ close window    ${LIQ_FacilityNavigator_Window}
-    
+    Close All Windows on LIQ

@@ -2119,6 +2119,7 @@ Generate Rate Setting Notices for Drawdown
     ...    @update: amansuet    added keyword pre processing
     ...    @update: dahijara    15JUN2020    - Added code to get only the last 11 digits for Customer Name
     ...                                      - Update the validation for Customer Name in UI
+    ...    @update: makcamps    15OCT2020	 - added upper() method to borrower name because it is displayed as all caps
     [Arguments]    ${sCustomer_Legal_Name}    ${NoticeStatus}
 
     ### GetRuntime Keyword Pre-processing ###
@@ -2140,8 +2141,8 @@ Generate Rate Setting Notices for Drawdown
     Mx LoanIQ Select String    ${LIQ_Notice_Information_Table}    ${Customer_Legal_Name}
     mx LoanIQ click    ${LIQ_Rollover_EditHighlightedNotice_Button}       
     mx LoanIQ activate window    ${LIQ_Rollover_NoticeCreate_Window}
-    ${Verified_Customer}    Mx LoanIQ Get Data    JavaWindow("title:=.*Notice created.*","displayed:=1").JavaEdit("text:=.*${Customer_Legal_Name}")    Verified_Customer    
-    Should Contain    ${Verified_Customer}    ${Customer_Legal_Name}
+    ${Verified_Customer}    Mx LoanIQ Get Data    JavaWindow("title:=.*Notice created.*","displayed:=1").JavaEdit("text:=.*${Customer_Legal_Name.upper()}")    Verified_Customer    
+    Should Contain    ${Verified_Customer}    ${Customer_Legal_Name.upper()}
     Log    ${Verified_Customer}    
     ${Verified_Status}    Mx LoanIQ Get Data    JavaWindow("title:=.*Notice created.*","displayed:=1").JavaObject("tagname:=Group","text:=Status").JavaStaticText("text:=${NoticeStatus}")    Verified_Status    
     Should Be Equal As Strings    ${NoticeStatus}    ${Verified_Status}
