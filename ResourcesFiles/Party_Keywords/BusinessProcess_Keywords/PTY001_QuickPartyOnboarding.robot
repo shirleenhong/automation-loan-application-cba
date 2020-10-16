@@ -28,6 +28,7 @@ Create Party in Quick Party Onboarding
     ...    @update: makcamps    05OCT2020    - Added Write Data To Excel keyword for Party ID of Scenario 1
     ...    @update: javinzon    12OCT2020    - Added State_Province argument in Validate Party details in LIQ. Removed Pause Execution keyword.
     ...    @update: makcamps    13OCT2020    - Added Logout Method at the end of scenario    
+    ...    @update: makcamps    15OCT2020    - Updated Write Data To Excel keyword for Party ID of Scenario 1
     [Arguments]    ${ExcelPath}
     
     ### INPUTTER ###
@@ -84,21 +85,32 @@ Create Party in Quick Party Onboarding
 ####################################### DATA WRITING FOR SCENARIO SCRIPTS ########################################
 ##################################################################################################################
 
-    Run Keyword If    '${SCENARIO}'=='1'    Run Keywords    Write Data To Excel    CRED01_DealSetup    Borrower1_ShortName    ${rowid}    ${Enterprise_Name}
-    ...    AND    Write Data To Excel    CRED02_FacilitySetup    Facility_Borrower    ${rowid}    ${Enterprise_Name}
-    ...    AND    Write Data To Excel    ORIG03_Customer    LIQCustomer_ShortName    ${rowid}    ${Enterprise_Name}
+    Run Keyword If    '${SCENARIO}'=='1'    Run Keywords    Write Data To Excel    CRED01_DealSetup    Borrower1_ShortName    ${rowid}    ${Short_Name}
+    ...    AND    Write Data To Excel    CRED02_FacilitySetup    Facility_Borrower    ${rowid}    ${Short_Name}
+    ...    AND    Write Data To Excel    ORIG03_Customer    LIQCustomer_ShortName    ${rowid}    ${Short_Name}
     ...    AND    Write Data To Excel    ORIG03_Customer    LIQCustomer_LegalName    ${rowid}    ${Enterprise_Name}
     ...    AND    Write Data To Excel    ORIG03_Customer    LIQCustomer_ID    ${rowid}    ${Party_ID}
     ...    AND    Write Data To Excel    PTY001_QuickPartyOnboarding    Enterprise_Name    ${rowid}    ${Enterprise_Name}
     ...    AND    Write Data To Excel    PTY001_QuickPartyOnboarding    Party_ID    ${rowid}    ${Party_ID}
-    ...    AND    Write Data To Excel    SERV01_LoanDrawdown    Borrower1_ShortName    ${rowid}    ${Enterprise_Name}
-    ...    AND    Write Data To Excel    SERV01_LoanDrawdown    LIQCustomer_ShortName    ${rowid}    ${Enterprise_Name}
-    ...    AND    Write Data To Excel    SERV18_Payments    Borrower1_ShortName    ${rowid}    ${Enterprise_Name}
+    ...    AND    Write Data To Excel    SERV01_LoanDrawdown    Borrower1_ShortName    ${rowid}    ${Short_Name}
+    ...    AND    Write Data To Excel    SERV01_LoanDrawdown    LIQCustomer_ShortName    ${rowid}    ${Short_Name}
+    ...    AND    Write Data To Excel    SERV18_Payments    Borrower1_ShortName    ${rowid}    ${Short_Name}
     ...    AND    Write Data To Excel    SERV18_Payments    Borrower1_LegalName    ${rowid}    ${Enterprise_Name}
     ...    AND    Write Data To Excel    SERV21_InterestPayments    Loan_Borrower    ${rowid}    ${Enterprise_Name}
-    ...    AND    Write Data To Excel    SERV21_InterestPayments    LIQCustomer_ShortName    ${rowid}    ${Enterprise_Name}
-    ...    AND    Write Data To Excel    SERV21_InterestPayments    Borrower1_ShortName    ${rowid}    ${Enterprise_Name}
-    ...    AND    Write Data To Excel    SERV29_PaymentFees    Borrower1_ShortName    ${rowid}    ${Enterprise_Name}
+    ...    AND    Write Data To Excel    SERV21_InterestPayments    LIQCustomer_ShortName    ${rowid}    ${Short_Name}
+    ...    AND    Write Data To Excel    SERV21_InterestPayments    Borrower1_ShortName    ${rowid}    ${Short_Name}
+    ...    AND    Write Data To Excel    SERV29_PaymentFees    Borrower1_ShortName    ${rowid}    ${Short_Name}
+    ...    AND    Write Data To Excel    ORIG03_Customer    Entity    ${rowid}    ${Entity}
+    ...    AND    Write Data To Excel    CRED01_DealSetup    Entity    ${rowid}    ${Entity}
+    ...    AND    Write Data To Excel    CRED02_FacilitySetup    Entity    ${rowid}    ${Entity}
+    ...    AND    Write Data To Excel    CRED08_OngoingFeeSetup    Entity    ${rowid}    ${Entity}
+    ...    AND    Write Data To Excel    SYND02_PrimaryAllocation    Entity    ${rowid}    ${Entity}
+    ...    AND    Write Data To Excel    SERV01_LoanDrawdown    Entity    ${rowid}    ${Entity}
+    ...    AND    Write Data To Excel    SERV18_Payments    Entity    ${rowid}    ${Entity}
+    ...    AND    Write Data To Excel    SERV21_InterestPayments    Entity    ${rowid}    ${Entity}
+    ...    AND    Write Data To Excel    SERV29_PaymentFees    Entity    ${rowid}    ${Entity}
+    ...    AND    Write Data To Excel    AMCH06_PricingChangeTransaction    Entity    ${rowid}    ${Entity}
+    ...    AND    Write Data To Excel    AMCH04_DealChangeTransaction    Entity    ${rowid}    ${Entity}
   
     Run Keyword If    '${SCENARIO}'=='2'    Run Keywords    Write Data To Excel    SERV08_ComprehensiveRepricing    Borrower_ShortName    ${rowid}    ${Enterprise_Name}
     ...    AND    Write Data To Excel    SERV08_ComprehensiveRepricing    Customer_Legal_Name    ${rowid}    ${Enterprise_Name}

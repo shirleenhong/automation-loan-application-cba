@@ -51,6 +51,7 @@ Transform Base Rate CSV Data to XLS File Readable for JSON Creation
     ...    @update: jdelacru    21SEP2020    - added new logic and separated the actual transformation of CSV to XLS to cater multiple sub-entities
     ...    @update: jdelacru    29SEP2020    - revert to the original steps in transforming csv to xls
     ...    @update: mcastro     09OCT2020    - added condition for Empty ${Row_Val_List}
+    ...    @update: jdelacru    16OCT2020    - added condition in writing LIBOR Baserate Code for EU Entity
     [Arguments]    ${sCSV_FilePath}    ${sTransformedData_FilePath}    ${sTransformedDataTemplate_FilePath}    
     
     ${CSV_Content_List}    Read Csv As List    ${dataset_path}${sCSVFilePath}
@@ -95,7 +96,8 @@ Transform Base Rate CSV Data to XLS File Readable for JSON Creation
     \    ${GS_VENDOR_PUBLISH_DATE_curr}    Get From Dictionary    ${ROW_${INDEX}}    GS_VENDOR_PUBLISH_DATE
     \    ${GS_VALUE_DATE}    Get From Dictionary    ${ROW_${INDEX}}    GS_VALUE_DATE
     \    ${GS_PROCESSING_DATE}    Get From Dictionary    ${ROW_${INDEX}}    GS_PROCESSING_DATE
-    \    
+    \    ${GS_INSTR_CCY}    Get From Dictionary    ${ROW_${INDEX}}    GS_INSTR_CCY
+    \
     \    ${Same_Rate_Code}    Run Keyword And Return Status    Should Be Equal    ${BaseRateCode_prev}    ${BaseRateCode_curr}
     \    ${Same_Tenor}    Run Keyword And Return Status    Should Be Equal    ${GS_INSTR_TENOR_prev}    ${GS_INSTR_TENOR_curr} 
     \    ${Same_Date}    Run Keyword And Return Status    Should Be Equal    ${GS_VENDOR_PUBLISH_DATE_prev}    ${GS_VENDOR_PUBLISH_DATE_curr}          
@@ -124,7 +126,7 @@ Transform Base Rate CSV Data to XLS File Readable for JSON Creation
     \    
     \    ${Index_LMIR}    Evaluate    ${New_INDEX}+1
     \    
-    \    Run Keyword If    '${BaseRateCode_curr}'=='LIBOR' and '${CONFIG_PRICE_TYPE}'=='BUYRATE' and '${GS_INSTR_TENOR_curr}'=='001MNTH'    Get Single Row value from CSV File and Write to Excel for Base Rate    ${ROW_${INDEX}}    
+    \    Run Keyword If    '${BaseRateCode_curr}'=='LIBOR' and '${CONFIG_PRICE_TYPE}'=='BUYRATE' and '${GS_INSTR_TENOR_curr}'=='001MNTH' and '${GS_INSTR_CCY}'=='AUD'    Get Single Row value from CSV File and Write to Excel for Base Rate    ${ROW_${INDEX}}    
          ...    ${Index_LMIR}    ${Zone2_Curr_Date}    ${Zone3_Curr_Date}    ${CONFIG_PRICE_TYPE}    ${dataset_path}${sTransformedData_FilePath}    LMIR
     \    
     \    ${INDEX_ForGrouping}    Set Variable    ${New_INDEX}

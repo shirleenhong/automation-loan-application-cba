@@ -4,7 +4,8 @@ Resource     ../../../../Configurations/LoanIQ_Import_File.robot
 *** Keywords ***
 Setup a Primary Notebook
     [Arguments]    ${ExcelPath}
-    ###Circle Notebook - Facilites Tab### 
+    ###Deal Notebook - Facilites Tab###
+    Open Existing Deal    &{ExcelPath}[Deal_Name] 
     Add Lender and Location    &{ExcelPath}[Deal_Name]    &{ExcelPath}[Primary_Lender1]    &{ExcelPath}[Primary_LenderLoc1]    &{ExcelPath}[Primary_RiskBook]    &{ExcelPath}[Primaries_TransactionType]
     Set Sell Amount and Percent of Deal    &{ExcelPath}[Primary_PctOfDeal1]
     Add Pro Rate    &{ExcelPath}[Primary_BuySellPrice]
@@ -157,6 +158,7 @@ Set up a Non-Host and Host Bank Primaries for Syndicated Deal
     ...    @update: clanding    28JUL2020    - removed commented keyword 'Complete Portfolio Allocations for Non-Agent And Host Bank Syndicated Deal' after Circling for Primary Workflow
     ...                                      - updated selecting &{ExcelPath}[Lender_NHB] to &{ExcelPath}[Lender_Name] before Complete Portfolio
     ...                                      - updated &{ExcelPath}[PercentOfDeal_NHB] to &{ExcelPath}[PercentOfDeal_HB] in Complete Portfolio
+    ...    @update: frluberio    15OCT2020    - updated the Select Servicing Group Primaries for EU
     [Arguments]    ${ExcelPath}  
     
     ###Steps for Adding a Non-Host Bank Primary###
@@ -170,11 +172,14 @@ Set up a Non-Host and Host Bank Primaries for Syndicated Deal
     Add Contact in Primary   &{ExcelPath}[ContactName_NHB]
     Delete Contact in Primary    &{ExcelPath}[ContactName_NHB]
     Add Contact in Primary    &{ExcelPath}[ContactName_NHB]
-    Select Servicing Group on Primaries    &{ExcelPath}[AdminAgent_SGAlias_Secondary]
+    
+    Run Keyword If    '&{ExcelPath}[Entity]' == 'EU'    Select Servicing Group on Primaries    sPrimaryLender_ServGroupAlias=&{ExcelPath}[AdminAgent_SGAlias_Secondary]
+    ...    ELSE IF    '&{ExcelPath}[Entity]' == 'AU'    Select Servicing Group on Primaries    &{ExcelPath}[AdminAgent_SGAlias_Secondary]
     
     ###Circle Notebook - Workflow Tab###   
-    Circling for Primary Workflow    &{ExcelPath}[TradeDate]
     
+    Circling for Primary Workflow    &{ExcelPath}[TradeDate]
+
     ${LenderName}    Get Lender Name from Primaries Window
     Write Data To Excel    CRED01_DealSetup    Primary_Lender1    &{ExcelPath}[rowid]    ${LenderName}
     
@@ -190,7 +195,9 @@ Set up a Non-Host and Host Bank Primaries for Syndicated Deal
     Add Contact in Primary   &{ExcelPath}[ContactName]
     Delete Contact in Primary    &{ExcelPath}[ContactName]
     Add Contact in Primary    &{ExcelPath}[ContactName]
-    Select Servicing Group on Primaries    &{ExcelPath}[AdminAgent_SGAlias]
+    
+    Run Keyword If    '&{ExcelPath}[Entity]' == 'EU'    Select Servicing Group on Primaries    sPrimaryLender_ServGroupAlias=&{ExcelPath}[AdminAgent_SGAlias]
+    ...    ELSE IF    '&{ExcelPath}[Entity]' == 'AU'    Select Servicing Group on Primaries    &{ExcelPath}[AdminAgent_SGAlias]
     
     ###Circle Notebook - Workflow Tab###   
     Circling for Primary Workflow    &{ExcelPath}[TradeDate]
@@ -443,4 +450,5 @@ Approve and Close Deal with Single Primary Lender
     Navigate to Deal Notebook Workflow and Proceed With Transaction    Close
     Enter Deal Close Date    &{ExcelPath}[CloseDate]
     Logout from Loan IQ
+>>>>>>> e508fbffcc42bffe9567b8e88fd45bfc8ecb7679
     Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}    
