@@ -132,3 +132,89 @@ Initiate Interest Payment - Scenario 7 ComSee
    
    Close All Windows on LIQ
    Logout from Loan IQ
+   
+Initiate Latest Cycle Interest Payment - Scenario 7 ComSee
+   [Documentation]    This keyword will pay Interest Fees on a bilateral deal
+   ...    @author: rtarayao    13SEP2019    - Duplicate from Scenario 7 of the Functional Scenarios
+   [Arguments]    ${ExcelPath}
+   
+   ###Navigate to Existing Loan###
+   Open Existing Deal    &{ExcelPath}[Deal_Name]
+   Navigate to Outstanding Select Window from Deal
+   Navigate to Existing Loan    &{ExcelPath}[Outstanding_Type]    &{ExcelPath}[Facility_Name]    &{ExcelPath}[Loan_Alias]
+   ${ScheduledActivityReport_Date}    Get Interest Adjusted Due Date on Loan Notebook
+   ${LoanEffectiveDate}    ${LoanMaturityDate}    Get Loan Effective and Maturity Expiry Dates
+   Write Data To Excel    ComSee_SC7_LoanInterestPayment    ScheduledActivityReport_Date    ${rowid}    ${ScheduledActivityReport_Date}    ${ComSeeDataSet}
+   Close All Windows on LIQ 
+   ${SystemDate}    Get System Date
+   Navigate to the Scheduled Activity Filter
+   Open Scheduled Activity Report    ${LoanEffectiveDate}    ${LoanMaturityDate}    &{ExcelPath}[Deal_Name]
+   
+   ###Loan Notebook####
+   Open Loan Notebook    ${ScheduledActivityReport_Date}    &{ExcelPath}[ScheduledActivityReport_ActivityType]    &{ExcelPath}[Deal_Name]    &{ExcelPath}[Loan_Alias]
+   ${CycleNumber}    Get Latest Interest Cycle Row
+   Write Data To Excel    ComSee_SC7_LoanInterestPayment    CycleNumber    ${rowid}    ${CycleNumber}    ${ComSeeDataSet}
+   ${CycleDue}    Compute Interest Payment Amount Per Cycle - Zero Cycle Due    ${CycleNumber}    ${SystemDate}
+   Write Data To Excel    ComSee_SC7_LoanInterestPayment    Payment_Amount    ${rowid}    ${CycleDue}    ${ComSeeDataSet}
+
+   ###Interest Payment Notebook####
+   Initiate Loan Latest Cycle Interest Payment   ${CycleNumber}    &{ExcelPath}[Pro_Rate]
+   Input Effective Date and Requested Amount for Loan Interest Payment    ${SystemDate}    ${CycleDue}
+    
+   ##Cashflow Notebook - Create Cashflows###
+   Navigate Notebook Workflow    ${LIQ_Payment_Window}    ${LIQ_Payment_Tab}    ${LIQ_Payment_WorkflowItems}    Create Cashflows
+   Verify if Method has Remittance Instruction    &{ExcelPath}[Borrower1_ShortName]    &{ExcelPath}[Borrower1_RTGSRemittanceDescription]    &{ExcelPath}[Remittance_Instruction]
+   Verify if Status is set to Do It    &{ExcelPath}[Borrower1_ShortName]  
+    
+   ##Get Transaction Amount for Cashflow###
+   ${HostBankShare}    Get Host Bank Cash in Cashflow
+   ${BorrowerTranAmount}    Get Transaction Amount in Cashflow    &{ExcelPath}[Borrower1_ShortName]
+   ${ComputedHBTranAmount}    Compute Lender Share Transaction Amount    ${CycleDue}    &{ExcelPath}[HostBankSharePct]
+    
+   Compare UIAmount versus Computed Amount    ${HostBankShare}    ${ComputedHBTranAmount}
+     
+   ###GL Entries###
+   Navigate to GL Entries
+   ${HostBank_Credit}    Get GL Entries Amount    &{ExcelPath}[Host_Bank]    Credit Amt
+   ${Borrower_Debit}    Get GL Entries Amount    &{ExcelPath}[Borrower1_ShortName]    Debit Amt
+   ${UITotalCreditAmt}    Get GL Entries Amount    Total For:    Credit Amt
+   ${UITotalDebitAmt}    Get GL Entries Amount    Total For:    Debit Amt
+    
+   Compare UIAmount versus Computed Amount    ${HostBankShare}    ${HostBank_Credit}
+   Validate if Debit and Credit Amt is Balanced    ${Borrower_Debit}    ${HostBank_Credit}
+   Validate if Debit and Credit Amt is equal to Transaction Amount    ${UITotalCreditAmt}    ${UITotalDebitAmt}    ${CycleDue}
+   
+   ###Workflow Tab - Send to Approval###
+   Send Interest Payment to Approval
+   
+   ###Loan IQ Desktop###
+   Logout from Loan IQ
+   Login to Loan IQ    ${SUPERVISOR_USERNAME}    ${SUPERVISOR_PASSWORD}
+   
+   ###Work in Process#####
+   Open Interest Payment Notebook via WIP - Awaiting Approval    &{ExcelPath}[WIP_TransactionType]    &{ExcelPath}[WIP_AwaitingApprovalStatus]    &{ExcelPath}[WIP_PaymentType]    &{ExcelPath}[Loan_Alias]
+   Approve Interest Payment
+
+   ##Loan IQ Desktop###
+   Close All Windows on LIQ
+   Logout from Loan IQ
+   Login to Loan IQ    ${MANAGER_USERNAME}    ${MANAGER_PASSWORD}
+
+   ###Interest Payment Notebook - Workflow Tab###  
+   Select Item in Work in Process    Payments    Awaiting Release    Interest Payment     &{ExcelPath}[Facility_Name]
+   Navigate Notebook Workflow    ${LIQ_Payment_Window}    ${LIQ_Payment_Tab}    ${LIQ_Payment_WorkflowItems}    Release Cashflows
+   Release Payment
+    
+   ##Facility Notebook####
+   Navigate to Facility Notebook    &{ExcelPath}[Deal_Name]    &{ExcelPath}[Facility_Name]   
+   
+   ####Outstanding Select####  
+   Navigate to Outstanding Select Window
+   
+   ###Loan Notebook####
+   Navigate to Existing Loan    &{ExcelPath}[Outstanding_Type]    &{ExcelPath}[Facility_Name]    &{ExcelPath}[Loan_Alias]
+   ${CycleDue}    Convert To String    ${CycleDue}       
+   Validate Interest Payment in Loan Accrual Tab    &{ExcelPath}[CycleNumber]    ${CycleDue}
+   
+   Close All Windows on LIQ
+   Logout from Loan IQ

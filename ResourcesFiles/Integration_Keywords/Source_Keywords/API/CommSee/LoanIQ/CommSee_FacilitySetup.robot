@@ -409,7 +409,7 @@ Write Facility Ongoing Fee Details for Syndicated Deal - ComSee
     [Arguments]    ${ExcelPath}
     
     ###LIQ Login
-    # Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
+    Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
     
     ###Read Facility Name
     ${FacilityName}    Read Data From Excel    ComSee_SC2_FacFeeSetup    Facility_Name    ${rowid}    ${ComSeeDataSet} 
@@ -487,6 +487,4 @@ Write Facility Ongoing Fee Details for Syndicated Deal - ComSee
     Write Data To Excel    ComSee_SC2_Deal    Fee_AccruedToDate    ${rowid}    ${IndemnityAccruedtodateAmount},${CommitmentAccruedtodateAmount}    ${ComSeeDataSet}
     
     Close All Windows on LIQ
-    
-    Logout from LoanIQ
-    
+    Logout from LoanIQ    
