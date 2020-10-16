@@ -26,7 +26,8 @@ Create Party in Quick Party Onboarding
     ...										   skip blocked test steps
     ...    @update: javinzon    02OCT2020    - Added Write Data To Excel keyword for Party ID of PTY_007_DuplicateEnterpriseName
     ...    @update: makcamps    05OCT2020    - Added Write Data To Excel keyword for Party ID of Scenario 1
-    ...    @update: javinzon    12OCT2020    - Added State_Province argument in Validate Party details in LIQ. Removed Pause Execution keyword.    
+    ...    @update: javinzon    12OCT2020    - Added State_Province argument in Validate Party details in LIQ. Removed Pause Execution keyword.
+    ...    @update: makcamps    13OCT2020    - Added Logout Method at the end of scenario    
     [Arguments]    ${ExcelPath}
     
     ### INPUTTER ###
@@ -196,3 +197,4 @@ Create Party in Quick Party Onboarding
     ...    AND    Write Data To Excel    SERV21_InterestPayments    Borrower1_ShortName    ${rowid}    ${Enterprise_Name}
     ...    AND    Write Data To Excel    SERV29_PaymentFees    Borrower1_ShortName    ${rowid}    ${Enterprise_Name}
 
+    Logout from Loan IQ

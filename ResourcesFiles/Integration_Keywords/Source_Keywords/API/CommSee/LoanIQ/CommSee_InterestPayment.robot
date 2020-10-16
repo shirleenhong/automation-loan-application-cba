@@ -2,7 +2,104 @@
 Resource     ../../../../../../Configurations/LoanIQ_Import_File.robot
 
 *** Keywords ***
+
+Navigate to Accruals Share Adjustment Loans
+     [Documentation]    This keyword navigates the LIQ User to the Accruals Share Adjustment Notebook and validates the information displayed in the notebook.
+    ...    @author: rtarayao
+    ...    @update:    fmamaril    Remove validation on current cycle due
+    ...    @update: clanding    22JUL2020    - added pre-processing keywords, refactor argument per standard, added screenshot
+    [Arguments]    ${iSBLC_CycleNumber}    ${sDeal_Name}    ${sFacility_Name}    ${sDeal_Borrower}    ${sSBLC_Alias}
     
+    
+    ${SBLC_CycleNumber}    Acquire Argument Value    ${iSBLC_CycleNumber}
+    ${Deal_Name}    Acquire Argument Value    ${sDeal_Name}
+    ${Facility_Name}    Acquire Argument Value    ${sFacility_Name}
+    ${Deal_Borrower}    Acquire Argument Value    ${sDeal_Borrower}
+    ${SBLC_Alias}    Acquire Argument Value    ${sSBLC_Alias}
+    
+    Mx LoanIQ Select String    ${LIQ_Outstanding_Accrual_JavaTree}    ${SBLC_CycleNumber}   
+    mx LoanIQ click    ${LIQ_Outstanding_AccrualShared_Button}         
+    mx LoanIQ activate    ${LIQ_AccrualSharesAdjustment_Pending_Window}
+    Mx LoanIQ Verify Object Exist    ${LIQ_AccrualSharesAdjustment_Pending_Window}           VerificationData="Yes"
+    Run Keyword And Continue On Failure    Mx LoanIQ Verify Object Exist    JavaWindow("title:=Accrual Shares Adjustment -.*").JavaStaticText("attached text:=${Deal_Name}")      VerificationData="Yes"
+    Run Keyword And Continue On Failure    Mx LoanIQ Verify Object Exist    JavaWindow("title:=Accrual Shares Adjustment -.*").JavaStaticText("attached text:=${Facility_Name}")    VerificationData="Yes"
+    Run Keyword And Continue On Failure    Mx LoanIQ Verify Object Exist    JavaWindow("title:=Accrual Shares Adjustment -.*").JavaStaticText("attached text:=${Deal_Borrower}")        VerificationData="Yes"
+    Run Keyword And Continue On Failure    Mx LoanIQ Verify Object Exist    JavaWindow("title:=Accrual Shares Adjustment -.*").JavaStaticText("attached text:=${SBLC_Alias}")       VerificationData="Yes"
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/AccrualSharesAdjustment_Pending_Window
+
+
+Create Cycle Share Adjustment for Loan Outstanding
+    [Documentation]    This keyword is for creating cycle share adjustment for Bilateral Deal
+    ...    @author: sacuisia    10OCT2021
+    [Arguments]    ${ExcelPath}    ${sCyclesForLoan}=None
+    
+   
+    ${SBLC_EffectiveDate}    Get System Date
+
+    Launch Loan Notebook    &{ExcelPath}[Deal_Name]    &{ExcelPath}[Facility_Name]    &{ExcelPath}[Outstanding_Alias]
+    
+    mx LoanIQ activate window    ${LIQ_Loan_Window}
+    ##Acrued Amount after EOD
+    ${LoanAccruedtodateAmount}    Get Loan Accrued to Date Amount
+    ${LoanAccruedtodateAmount}    Remove Comma and Convert to Number    ${LoanAccruedtodateAmount}
+    ${TotalRowCount}    Get Accrual Row Count    ${LIQ_Loan_Window}    ${LIQ_Loan_AccrualTab_Cycles_Table}
+    ${AccruedtoDateAmt}    Compute Total Accruals for Fee    ${TotalRowCount}    ${LIQ_Loan_Tab}    ${LIQ_Loan_AccrualTab_Cycles_Table}
+    ${AccruedtoDateAmt}    Remove Comma and Convert to Number    ${AccruedtoDateAmt}
+    Write Data To Excel    ComSee_SC2_Loan    Outstanding_AccruedInterest    ${rowid}    ${LoanAccruedtodateAmount}    ${ComSeeDataSet}
+    
+    
+    ${Current_Cycle_Due}    ${Paid_to_Date}    Store Cycle Start Date, End Date, and Paid Fee for Loan Outstanding    &{ExcelPath}[CycleNumber]
+    Write Data To Excel    ComSee_SC2_Loan    Outstanding_cycleDue    ${rowid}    ${Current_Cycle_Due}    ${ComSeeDataSet}
+    Write Data To Excel    ComSee_SC2_Loan    Outstanding_paidToDate    ${rowid}    ${Paid_to_Date}    ${ComSeeDataSet}
+    
+    Navigate to Accruals Share Adjustment Loans    &{ExcelPath}[CycleNumber]    &{ExcelPath}[Deal_Name]    &{ExcelPath}[Facility_Name]    &{ExcelPath}[Borrower_ShortName]    &{ExcelPath}[Outstanding_Alias]    
+    Input Requested Amount, Effective Date, and Comment    ${Paid_to_Date}    ${SBLC_EffectiveDate}    &{ExcelPath}[Accrual_Comment]
+    Save the Requested Amount, Effective Date, and Comment    ${Paid_to_Date}    ${SBLC_EffectiveDate}    &{ExcelPath}[Accrual_Comment]
+  
+    Send Adjustment to Approval 
+    
+    Close All Windows on LIQ
+    
+    Logout from Loan IQ
+    Login to Loan IQ    ${MANAGER_USERNAME}    ${MANAGER_PASSWORD}
+    
+    Navigate Transaction in WIP    Payments    Awaiting Approval    Loan Accrual Shares Adjustment    &{ExcelPath}[Deal_Name]
+    
+    Approve Cycle Share Adjustment
+    
+    Release Cycle Share Adjustment
+    
+    Close Accrual Shares Adjustment Window
+
+    ###Loan IQ Desktop###    
+    Close All Windows on LIQ
+    Logout from Loan IQ
+    Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
+    
+Store Cycle Start Date, End Date, and Paid Fee for Loan Outstanding
+    [Documentation]    This keyword is used to save the Current Cycle Start Date, End Date, and Paid to Date values in Excel.
+    ...    @author: rtarayao
+    ...    @author: fmamaril    30APR2019    Remove writing and delete unnecessary arguments
+    ...    @update: clanding    22JUL2020    - added pre-processing keywords, refactor argument per standard, added screenshot
+    ...                                      - added post-processing keywords
+    ...    @update: sacuisia    14OCT2020    - change locators for Loan Outstanding
+    [Arguments]    ${iSBLC_CycleNumber}    ${sRunTimeVar_Current_Cycle_Due}=None    ${sRunTimeVar_Cycle_Paid_to_Date}=None
+
+    ### GetRuntime Keyword Pre-processing ###
+    ${SBLC_CycleNumber}    Acquire Argument Value    ${iSBLC_CycleNumber}
+
+    Mx LoanIQ Select Or DoubleClick In Javatree    ${LIQ_Outstanding_Accrual_JavaTree}    ${SBLC_CycleNumber}%s
+    ${Current_Cycle_Due}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_Outstanding_Accrual_JavaTree}    ${SBLC_CycleNumber}%Cycle Due%Current_Cycle_Due
+    ${Paid_to_Date}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_Outstanding_Accrual_JavaTree}    ${SBLC_CycleNumber}%Paid to date%Paid_to_Date
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/SBLCGuaranteeWindow_Accrual
+
+    ### Keyword Post-processing ###
+    
+    Save Values of Runtime Execution on Excel File    ${sRunTimeVar_Current_Cycle_Due}    ${Current_Cycle_Due}
+    Save Values of Runtime Execution on Excel File    ${sRunTimeVar_Cycle_Paid_to_Date}    ${Paid_to_Date}
+
+    [Return]    ${Current_Cycle_Due}    ${Paid_to_Date}
+
 Generate Intent Notices of an Interest Payment-CommSee
     [Documentation]    This keyword generates Intent Notices of an Interest Payment
     ...    @author: ghabal    

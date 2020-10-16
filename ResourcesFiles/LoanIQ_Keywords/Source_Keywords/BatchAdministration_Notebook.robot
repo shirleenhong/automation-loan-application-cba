@@ -315,22 +315,136 @@ Validate Next Business Date
      \    Run keyword if    '${status}' == 'True'    Exit For Loop
      \    Run keyword if    '${lineCount}' == '${INDEX}'    Run keyword and Continue on Failure    Fail    Please check the next business date for ${zone}. 
                
+Remove Existing Schedule in Batch Administration
+    [Documentation]    This keyword is used to remove all existing schedule in Batch Administration window.
+    ...    @author: clanding    15SEP2020    - initial create
+    [Arguments]    ${sFileLocation}    ${sBatchNet}
     
+    Mx LoanIQ Select Combo Box Value   ${LIQ_Batch_Admin_Master_ComboBox}    ${sBatchNet}
+    mx LoanIQ activate window    ${LIQ_Batch_Admin_Window}
+    Delete File If Exist    ${sFileLocation}${BATCH_TXT_FILENAME}
+    Create File    ${sFileLocation}${BATCH_TXT_FILENAME}
+    mx LoanIQ click    ${LIQ_Batch_Admin_Refresh_Button}
+    mx LoanIQ activate window    ${LIQ_Batch_Admin_Window}
+	Mx LoanIQ Copy Content And Save To File    ${LIQ_Batch_Java_Tree}    ${sFileLocation}${sBatchNet}_CurrentSchedule.txt
+	${Data}    OperatingSystem.Get file     ${sFileLocation}${sBatchNet}_CurrentSchedule.txt
+    ${LineCount}    Get Line Count    ${Data}
+    ${Data_List}    Split To Lines    ${Data}
+    :FOR    ${Index}    IN RANGE    1    ${LineCount}
+    \    Log    @{Data_List}[${Index}]
+    \    ${Sched_List}    Split String    @{Data_List}[${Index}]    "
+    \    Mx LoanIQ Select Or Doubleclick In Tree By Text    ${LIQ_Batch_Java_Tree}    @{Sched_List}[1]%S
+    \    mx LoanIQ click    ${LIQ_Batch_Admin_Remove_Button}
+    \    Mx Press Combination    KEY.ENTER
+    \    mx LoanIQ activate window    ${LIQ_Batch_Admin_Window}
+
+Purge Existing Execution Journal in Batch Administration
+    [Documentation]    This keyword is used to purge existing values in Execution Journal.
+    ...    @author: clanding    15SEP2020    - initial create
+    [Arguments]    ${sBatchNet}
     
+    Mx LoanIQ Select Combo Box Value   ${LIQ_Batch_Admin_Master_ComboBox}    ${sBatchNet}
+    mx LoanIQ click     ${LIQ_Batch_Admin_Execution_Journal_Button}
+    mx LoanIQ select    ${LIQ_Execution_Scheduled_File_Purge_Menu}
+    ${Purge_FromDate}    Mx LoanIQ Get Data    ${LIQ_Execution_Scheduled_File_Purge_From_Date}    value%Purge_FromDate
+    Run Keyword If    '${Purge_FromDate}'==''    mx LoanIQ click    ${LIQ_Execution_Scheduled_File_Purge_Cancel_Button}
+    ...    ELSE    Run Keywords    mx LoanIQ click    ${LIQ_Execution_Scheduled_File_Purge_Ok_Button}
+    ...    AND    Mx LoanIQ Verify Object Exist    ${LIQ_Execution_Scheduled_Items_Count}    VerificationData="Yes"   
+    mx LoanIQ close window    ${LIQ_Execution_Window}
+
+Add Schedule in Batch Administration
+    [Documentation]    This keyword is used to add schedule in Batch Administration per zone value.
+    ...    @author: clanding    15SEP2020    - initial create
+    [Arguments]    ${sBatchNet}    ${sFrequency}    ${sZone}    ${sDelimiter}
     
-       
-        
-                               
+    Mx LoanIQ Select Combo Box Value   ${LIQ_Batch_Admin_Master_ComboBox}    ${sBatchNet}
+    ${Zone_List}    Split String    ${sZone}    ${sDelimiter}
+    ${Frequency_List}    Split String    ${sFrequency}    ${sDelimiter}
+
+    ${Zone_Count}    Get Length    ${Zone_List}
+    :FOR    ${Index}    IN RANGE    ${Zone_Count}
+    \    ${Zone}    Get From List    ${Zone_List}    ${Index}
+    \    ${Frequency}    Get From List    ${Frequency_List}    ${Index}
+    \    mx LoanIQ click    ${LIQ_Batch_Admin_Add_Button}
+    \    mx LoanIQ activate window    ${LIQ_Scheduled_Editor_Window}
+	\    Mx LoanIQ Select Combo Box Value    ${LIQ_Scheduled_Editor_Frequency_ComboBox}    ${Frequency}
+	\    Mx LoanIQ Select Combo Box Value    ${LIQ_Scheduled_Editor_Location_ComboBox}    ${Zone}
+    \    mx LoanIQ click    ${LIQ_Scheduled_Editor_Ok_Button}
+    \    ${Status}    Run Keyword and Return Status    Mx LoanIQ Select String    ${LIQ_Batch_Java_Tree}    ${Frequency}
+    \    Run Keyword If    '${Status}' == 'True'    Log    EOD Schedule for '${Zone}' is added successfully.
+         ...    ELSE    FAIL    EOD Schedule for ${Zone} is not added.    
     
+Trigger Batch Job in Server
+    [Documentation]    This keyword is used to connect to server and trigger batch eod.
+    ...    @update: clanding    16SEP2020    - initial create
+    [Arguments]    ${sZone}    ${sDelimiter}
     
+    ${Zone_List}    Split String    ${sZone}    ${sDelimiter}
+    Open Connection and Login    ${PUTTY_HOSTNAME}    ${PUTTY_PORT}    ${PUTTY_USERNAME}    ${PUTTY_PASSWORD}
+
+    SSHLibrary.Write    adm
+    ${out_adm}    SSHLibrary.Read Until     Show Product Version information.
+
+    SSHLibrary.Write    trigger
+    ${out_trigger}    SSHLibrary.Read Until    Scheduler has been triggered.
+    ${contains_trigger_message}    Run Keyword And Return Status    Should Contain    ${out_trigger}    Scheduler has been triggered
+    Run Keyword If    ${contains_trigger_message}==${True}    Run Keywords    Log To Console    ${out_trigger}
+    ...    AND    Log    ${out_trigger}
+    ...    ELSE    FAIL    Scheduler is NOT triggered. Actual Message: ${out_trigger}
+
+    SSHLibrary.Write    status
+    ${out_status}    SSHLibrary.Read Until    BCP state: Executing Net MASTER${SPACE}${SPACE}, Region @{Zone_List}[0]
+    ${contains_status_message}    Run Keyword And Return Status    Should Contain    ${out_status}    BCP state: Executing Net MASTER${SPACE}${SPACE}, Region @{Zone_List}[0]
+    Run Keyword If    ${contains_status_message}==${True}    Run Keywords    Log To Console    ${out_status}
+    ...    AND    Log    ${out_status}
+    ...    ELSE    FAIL    Execution encountered error. Actual Message: ${out_status}
+    Close All Connections
         
-         
-        
-        
-            
-        
-        
-    
-                
-                    
-                
+Validate Batch Job if Completed in Execution Journal
+    [Documentation]    This keyword is used to go to Execution Journal and validate 'Auto Print Notifications' job status is 'Skipped' per zone.
+    ...    @author: clanding    16SEP2020    - initial create
+    [Arguments]    ${sZone}    ${iTime}    ${sMinute_Or_Second}    ${sJob_Name}    ${sBPR_Name}    ${sDelimiter}
+
+    ${Zone_List}    Split String    ${sZone}    ${sDelimiter}
+    ${Zone_Count}    Get Length    ${Zone_List}
+    :FOR    ${Zone}    IN    @{Zone_List}
+    \    ${BPR_Name_UI}    ${End_UI}    Verify BPR Name Value is Correct or End Time is Not Empty    ${sJob_Name}    ${sBPR_Name}    ${Zone}
+    \    mx LoanIQ activate window    ${LIQ_Execution_Window}
+    \    Run Keyword If    '${BPR_Name_UI}'=='${sBPR_Name}'    Log    Batch EOD is completed for '${Zone}'.
+         ...    ELSE IF    '${End_UI}'!=''    Log    Batch EOD is completed for '${Zone}'.
+         ...    ELSE    Run Keyword And Continue On Failure    FAIL    Either Batch EOD is taking too long or it failed. Please check.
+    Close All Windows on LIQ
+
+Verify BPR Name Value is Correct or End Time is Not Empty
+    [Documentation]    This keyword is used to go to verify if BPR Name value for sJobName is 'sBPR_Name' or End time is not empty
+    ...    and return BPR_Name_UI and End_UI.
+    ...    @author: clanding    16SEP2020    - initial create
+    ...    @update: clanding    24SEP2020    - added more time to max loop
+    [Arguments]    ${sJobName}    ${sBPR_Name}    ${sZone}
+
+    :FOR    ${Index}    IN RANGE    500
+    \    Log    Number of retries: ${Index}
+    \    Mx LoanIQ Click    ${LIQ_Batch_Admin_Execution_Journal_Button}
+    \    mx LoanIQ activate window    ${LIQ_Execution_Window}
+    \    Mx LoanIQ Select List    ${LIQ_Execution_Scheduled_Location_ComboBox}    ${sZone}
+    \    mx LoanIQ maximize    ${LIQ_Execution_Window}
+    \    mx LoanIQ select    ${LIQ_Execution_Scheduled_File_Refresh}
+    \    ${BPR_Name_UI}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_Execution_Scheduled_JavaTree}    ${sJobName}%BPR Name%BPR_Name_UI
+    \    ${End_UI}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_Execution_Scheduled_JavaTree}    ${sJobName}%End%End_UI
+    \    Exit For Loop If    '${BPR_Name_UI}'=='${sBPR_Name}' or '${End_UI}'!=''
+    \    mx LoanIQ close window    ${LIQ_Execution_Window}
+    [Return]    ${BPR_Name_UI}    ${End_UI}
+
+Validate Batch Job is Not Skipped in Execution Journal
+    [Documentation]    This keyword is used to go to Execution Journal and validate Batch Job is not in Skipped status.
+    ...    @author: clanding    14OCT2020    - initial create
+    [Arguments]    ${sZone}    ${iTime}    ${sMinute_Or_Second}    ${sJob_Name}    ${sBPR_Name}    ${sDelimiter}
+
+    ${Zone_List}    Split String    ${sZone}    ${sDelimiter}
+    ${Zone_Count}    Get Length    ${Zone_List}
+    :FOR    ${Zone}    IN    @{Zone_List}
+    \    ${BPR_Name_UI}    ${End_UI}    Verify BPR Name Value is Correct or End Time is Not Empty    ${sJob_Name}    ${sBPR_Name}    ${Zone}
+    \    mx LoanIQ activate window    ${LIQ_Execution_Window}
+    \    Run Keyword If    '${BPR_Name_UI}'!='Skipped'    Log    Batch EOD is NOT skipped for '${Zone}'.
+         ...    ELSE    Run Keyword And Continue On Failure    FAIL    Either Batch EOD is taking too long or it Skipped. Please check.
+    mx LoanIQ close window    ${LIQ_Execution_Window}
