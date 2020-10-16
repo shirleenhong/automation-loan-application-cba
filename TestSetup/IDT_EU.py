@@ -4,7 +4,7 @@ ExcelPath = "C:\\Git_Evergreen\\fms_cba\\DataSet\\LoanIQ_DataSet\\EU_Entity\\EVG
 CBAUAT_ExcelPath = "C:\\Git_Evergreen\\fms_cba\\DataSet\\CBA_UAT_DataSet\\EVG_CBAUAT05.xlsx"
 APIDataSet = "..\\DataSet\\Integration_DataSet\\API\\\\API_Data_Set.xlsx"
 Countries_Codes = '..\\fms_scotia\\DataSet\\Integration_DataSet\\API\\Countries_Codes.xlsx'
-TL_DATASET = "C:\\Git_Evergreen\\DataSet\\TL_DataSet\\BaseRates_GSFile\\TL_Transformed_Data_BaseRate.xls"
+TL_DATASET = "C:\\Git_Evergreen\\fms_cba\\DataSet\\Integration_DataSet\\TL\\TL_Data_Set_EU.xlsx"
 SAPWUL_DATASET = "C:\\Git_evergreen\\fms_cba\\DataSet\\Downstream_DataSet\\SAPWUL\\SAPWUL_Data_Set.xlsx"
 ComSeeDataSet = 'C:\\Git_Evergreen\\fms_cba\\DataSet\\Downstream_DataSet\\ComSee\\COMSEE_Data_Set.xlsx'
 GLExcelPath = "C:\\Git_Evergreen\\fms_cba\\DataSet\\Extract_DataSet\\GL\\EVG_GL_TestData.xlsx"
@@ -77,11 +77,10 @@ DWE_NOTIFICATION_INSTANCE = "dwe_notification_1.3.0"
 SAPWUL_INSTANCE = 'CustomCBAPush_1.3.0'
 
 ###SFTP###
-SFTP_HOST = "mancsleverg0022"
-SFTP_HOST_GL = "mancsleverg0018"
+SFTP_HOST = "mancsleverg0005"
 SFTP_PORT = "22"
-SFTP_USER = "micloud"
-SFTP_PASSWORD = "misys123"
+SFTP_USER = "sftpuser"
+SFTP_PASSWORD = "t3stOnly?"
 
 ###LIQ Credential###
 INPUTTER_USERNAME = "DJRHINPT"
