@@ -19,11 +19,12 @@ Search Customer and Complete its Borrower Profile Creation - ORIG03
     Mx Execute Template With Multiple Data    Search Customer and Complete its Borrower Profile Creation with default values    ${ExcelPath}    ${rowid}    ORIG03_Customer
 
 Create Non Agent and Host Bank Syndicated Deal - CRED01
-    [Tags]    03 Non-Agent And Host Bank Syndicated Deal - CRED01
-    Mx Execute Template With Multiple Data    Setup Syndicated Deal for Non-Agent and Host Bank    ${ExcelPath}    ${rowid}    CRED01_DealSetup
-    Mx Execute Template With Multiple Data    NonAgent-HostBank Syndicated Deal - Setup Upfront Fees, Bank Role and Ratio    ${ExcelPath}    ${rowid}    CRED01_DealSetup  
-    Mx Execute Template With Multiple Data    Setup Deal Event Fees    ${ExcelPath}    ${rowid}    CRED10_EventFee
-    Mx Execute Template With Multiple Data    Create Revolver Facility    ${ExcelPath}    ${rowid}    CRED02_FacilitySetup
-    Mx Execute Template With Multiple Data    NonAgent-HostBank Syndicated Deal - Setup Revolver Facility Fees and Interest    ${ExcelPath}    ${rowid}    CRED08_OngoingFeeSetup
-    Mx Execute Template With Multiple Data    Set up a Non-Host and Host Bank Primaries for Syndicated Deal    ${ExcelPath}    ${rowid}    SYND02_Primary_Allocation
-    Mx Execute Template With Multiple Data    Syndicated Deal Approval and Close    ${ExcelPath}    ${rowid}    CRED01_DealSetup
+    [Tags]    03 Non-Agent And Host Bank Syndicated Deal - CRED01  
+     Mx Execute Template With Multiple Data    Setup Syndicated Deal for Non-Agent and Host Bank    ${ExcelPath}    ${rowid}    CRED01_DealSetup
+     Mx Execute Template With Multiple Data    NonAgent-HostBank Syndicated Deal - Setup Upfront Fees, Bank Role and Ratio    ${ExcelPath}    ${rowid}    CRED01_DealSetup  
+     Mx Execute Template With Multiple Data    Setup Deal Event Fees    ${ExcelPath}    ${rowid}    CRED10_EventFee
+     Mx Execute Template With Multiple Data    Create Revolver Facility    ${ExcelPath}    ${rowid}    CRED02_FacilitySetup
+     Mx Execute Template With Multiple Data    NonAgent-HostBank Syndicated Deal - Setup Revolver Facility Fees and Interest    ${ExcelPath}    ${rowid}    CRED08_OngoingFeeSetup
+     Mx Execute Template With Multiple Data    Set up a Non-Host and Host Bank Primaries for Syndicated Deal    ${ExcelPath}    ${rowid}    SYND02_Primary_Allocation
+     Mx Execute Template With Multiple Data    Syndicated Deal Approval and Close    ${ExcelPath}    ${rowid}    CRED01_DealSetup
+     

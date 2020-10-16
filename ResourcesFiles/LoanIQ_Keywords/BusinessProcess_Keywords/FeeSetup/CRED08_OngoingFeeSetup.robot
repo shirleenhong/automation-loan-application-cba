@@ -143,6 +143,7 @@ NonAgent-HostBank Syndicated Deal - Setup Revolver Facility Fees and Interest
     [Documentation]    This keyword set ups the Ongoing Fees and Interest Pricing for the Non Agent and Host Bank Syndicated Deal.
     ...    @author: bernchua
     ...    @update: clanding    29JUL2020    - updated hard coded values to global variables; removed mx keywords
+    ...    @update:    frluberio    14OCT2020    -update the adding of Interest Pricing for EU
     [Arguments]    ${ExcelPath}
     
     #### Ongoing Fee ####

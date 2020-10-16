@@ -537,6 +537,7 @@ Setup Syndicated Deal for Non-Agent and Host Bank
     ...    @update: clanding    29JUL2020    - updated hardcoded values to dataset/global variable; removed writing for CRED09
     ...    @update: clanding    10AUG2020    - added writing of Deal to SERV02
     ...    @update: clanding    13AUG2020    - added writing of Deal to SERV09
+    ...    @update: frluberio    12OCT2020    - added condition in Holdiay Creation and Pricing Rules for EU
     [Arguments]    ${ExcelPath}
     
 	###Switch to Original User###

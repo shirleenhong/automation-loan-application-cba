@@ -157,6 +157,7 @@ Set up a Non-Host and Host Bank Primaries for Syndicated Deal
     ...    @update: clanding    28JUL2020    - removed commented keyword 'Complete Portfolio Allocations for Non-Agent And Host Bank Syndicated Deal' after Circling for Primary Workflow
     ...                                      - updated selecting &{ExcelPath}[Lender_NHB] to &{ExcelPath}[Lender_Name] before Complete Portfolio
     ...                                      - updated &{ExcelPath}[PercentOfDeal_NHB] to &{ExcelPath}[PercentOfDeal_HB] in Complete Portfolio
+    ...    @update: frluberio    15OCT2020    - updated the Select Servicing Group Primaries for EU
     [Arguments]    ${ExcelPath}  
     
     ###Steps for Adding a Non-Host Bank Primary###
@@ -170,11 +171,14 @@ Set up a Non-Host and Host Bank Primaries for Syndicated Deal
     Add Contact in Primary   &{ExcelPath}[ContactName_NHB]
     Delete Contact in Primary    &{ExcelPath}[ContactName_NHB]
     Add Contact in Primary    &{ExcelPath}[ContactName_NHB]
-    Select Servicing Group on Primaries    &{ExcelPath}[AdminAgent_SGAlias_Secondary]
+    
+    Run Keyword If    '&{ExcelPath}[Entity]' == 'EU'    Select Servicing Group on Primaries    sPrimaryLender_ServGroupAlias=&{ExcelPath}[AdminAgent_SGAlias_Secondary]
+    ...    ELSE    Select Servicing Group on Primaries    &{ExcelPath}[AdminAgent_SGAlias_Secondary]
     
     ###Circle Notebook - Workflow Tab###   
-    Circling for Primary Workflow    &{ExcelPath}[TradeDate]
     
+    Circling for Primary Workflow    &{ExcelPath}[TradeDate]
+
     ${LenderName}    Get Lender Name from Primaries Window
     Write Data To Excel    CRED01_DealSetup    Primary_Lender1    &{ExcelPath}[rowid]    ${LenderName}
     
@@ -190,7 +194,9 @@ Set up a Non-Host and Host Bank Primaries for Syndicated Deal
     Add Contact in Primary   &{ExcelPath}[ContactName]
     Delete Contact in Primary    &{ExcelPath}[ContactName]
     Add Contact in Primary    &{ExcelPath}[ContactName]
-    Select Servicing Group on Primaries    &{ExcelPath}[AdminAgent_SGAlias]
+    
+    Run Keyword If    '&{ExcelPath}[Entity]' == 'EU'    Select Servicing Group on Primaries    sPrimaryLender_ServGroupAlias=&{ExcelPath}[AdminAgent_SGAlias]
+    ...    ELSE    Select Servicing Group on Primaries    &{ExcelPath}[AdminAgent_SGAlias]
     
     ###Circle Notebook - Workflow Tab###   
     Circling for Primary Workflow    &{ExcelPath}[TradeDate]
