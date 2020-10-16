@@ -67,6 +67,6 @@ LIQ_LineFee_ReversePayment = 'JavaWindow("title:=Line Fee Ongoing Fee Payment.*"
 LIQ_LineFee_ReversePayment_CurrentCycleDue = 'JavaWindow("title:=Line Fee Reverse Fee.*").JavaEdit("tagname:=Line Fee", "x:=231", "y:=50")'
 LIQ_LineFee_ReversePayment_RequestedAmount = 'JavaWindow("title:=Line Fee Reverse Fee.*").JavaEdit("tagname:=Text", "x:=231", "y:=113")'
 LIQ_LineFee_ReversePayment_Tab = 'JavaWindow("title:=Line Fee Reverse Fee.*").JavaTab("tagname:=TabFolder")'
-LIQ_LineFee_ReversePayment__WorkflowItems = 'JavaWindow("title:=Line Fee Reverse Fee.*").JavaTree("attached text:=Drill down to perform Workflow item")'
+LIQ_LineFee_ReversePayment_WorkflowItems = 'JavaWindow("title:=Line Fee Reverse Fee.*").JavaTree("attached text:=Drill down to perform Workflow item")'
 LIQ_LineFee_ReversePayment_Cashflows_Window = 'JavaWindow("title:=Cashflows .* Reverse.*","displayed:=1")'
 LIQ_LineFee_ReversePayment_Cashflow_OK_Button = 'JavaWindow("title:=Cashflows For.* Reverse.*").JavaButton("attached text:=OK")'

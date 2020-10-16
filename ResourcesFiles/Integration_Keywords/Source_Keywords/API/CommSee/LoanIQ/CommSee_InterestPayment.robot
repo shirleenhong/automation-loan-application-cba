@@ -315,3 +315,68 @@ Initiate Latest Cycle Interest Payment - Scenario 7 ComSee
    
    Close All Windows on LIQ
    Logout from Loan IQ
+   
+Create Loan Interest Payment Reversal - Scenario 7 ComSee
+    [Documentation]    This keyword initiates payment reversal after Fee Payment is released.
+    ...    @author: cfrancis    16OCT2020    - initial create
+    [Arguments]    ${ExcelPath}
+    
+    ###Navigate to Existing Loan###    
+    ${Outstanding_Alias}    Read Data From Excel    ComSee_SC7_Loan    Outstanding_Alias    ${rowid}    ${ComSeeDataSet}
+    Launch Loan Notebook    &{ExcelPath}[Deal_Name]    &{ExcelPath}[Facility_Name]    ${Outstanding_Alias}
+    
+    
+    ###Interest Payment Reversal Creation###
+    ${CycleDue}    Create Interest Payment Reversal
+    Navigate to Cashflow - Reverse Interest Payment
+    ${Borrower}    Read Data From Excel    ComSee_SC7_LoanInterestPayment    Borrower1_ShortName    ${rowid}    ${ComSeeDataSet}
+    ${RIDescrption}    Read Data From Excel    ComSee_SC7_LoanInterestPayment    Borrower1_RTGSRemittanceDescription    ${rowid}    ${ComSeeDataSet}
+    ${RemittanceInstruction}    Read Data From Excel    ComSee_SC7_LoanInterestPayment    Remittance_Instruction    ${rowid}    ${ComSeeDataSet}
+    Verify if Method has Remittance Instruction    ${Borrower}    ${RIDescrption}    ${RemittanceInstruction}
+    Verify if Status is set to Do It    ${Borrower}
+    
+    ###Get Transaction Amount for Cashflow###
+    ${HostBankSharePct}    Read Data From Excel    ComSee_SC7_LoanInterestPayment    HostBankSharePct    ${rowid}    ${ComSeeDataSet}  
+    ${HostBankShare}    Get Host Bank Cash in Cashflow
+    ${BorrowerTranAmount}    Get Transaction Amount in Cashflow    ${Borrower}
+    ${ComputedHBTranAmount}    Compute Lender Share Transaction Amount    ${CycleDue}    ${HostBankSharePct}
+    
+    Compare UIAmount versus Computed Amount    ${HostBankShare}    ${ComputedHBTranAmount}
+     
+    ###GL Entries###
+    ${HostBank}    Read Data From Excel    ComSee_SC7_OngoingFeePayment    Host_Bank    ${rowid}    ${ComSeeDataSet} 
+    Navigate to GL Entries
+    ${HostBank_Debit}    Get GL Entries Amount    ${HostBank}    Debit Amt
+    ${Borrower_Credit}    Get GL Entries Amount    ${Borrower}    Credit Amt
+    ${UITotalCreditAmt}    Get GL Entries Amount    Total For:    Credit Amt
+    ${UITotalDebitAmt}    Get GL Entries Amount    Total For:    Debit Amt
+    
+    Compare UIAmount versus Computed Amount    ${HostBankShare}    ${HostBank_Debit}
+    Validate if Debit and Credit Amt is Balanced    ${Borrower_Credit}    ${HostBank_Debit}
+    Validate if Debit and Credit Amt is equal to Transaction Amount    ${UITotalCreditAmt}    ${UITotalDebitAmt}    ${CycleDue}
+    
+    ###Workflow Tab - Send to Approval###
+    Send Reverse Interest Payment to Approval
+   
+    ###Loan IQ Desktop###
+    Close All Windows on LIQ
+    Logout from Loan IQ
+    Login to Loan IQ    ${SUPERVISOR_USERNAME}    ${SUPERVISOR_PASSWORD}
+   
+    ###Work in Process#####
+    Select Item in Work in Process    Payments    Awaiting Approval    Reverse Interest Payment     &{ExcelPath}[Facility_Name]
+    
+    ###Approve Reverse Interest Payment###
+    Approve Reverse Interest Payment
+    
+    ###Loan IQ Desktop###
+    Close All Windows on LIQ
+    Logout from Loan IQ
+    Login to Loan IQ    ${MANAGER_USERNAME}    ${MANAGER_PASSWORD}
+
+    ###Release Reverse Interest Payment###  
+    Select Item in Work in Process    Payments    Awaiting Release Cashflows    Reverse Interest Payment     &{ExcelPath}[Facility_Name]
+    Navigate Notebook Workflow    ${LIQ_ReverseInterestPayment_Window}    ${LIQ_ReverseInterestPayment_Tab}    ${LIQ_ReverseInterestPayment_WorkflowItems}    Release Cashflows   
+    Release Reverse Interest Payment
+    Close All Windows on LIQ
+    Logout from Loan IQ
