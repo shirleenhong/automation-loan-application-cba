@@ -103,6 +103,14 @@ Create Party in Quick Party Onboarding
     ...    AND    Write Data To Excel    ORIG03_Customer    Entity    ${rowid}    ${Entity}
     ...    AND    Write Data To Excel    CRED01_DealSetup    Entity    ${rowid}    ${Entity}
     ...    AND    Write Data To Excel    CRED02_FacilitySetup    Entity    ${rowid}    ${Entity}
+    ...    AND    Write Data To Excel    CRED08_OngoingFeeSetup    Entity    ${rowid}    ${Entity}
+    ...    AND    Write Data To Excel    SYND02_PrimaryAllocation    Entity    ${rowid}    ${Entity}
+    ...    AND    Write Data To Excel    SERV01_LoanDrawdown    Entity    ${rowid}    ${Entity}
+    ...    AND    Write Data To Excel    SERV18_Payments    Entity    ${rowid}    ${Entity}
+    ...    AND    Write Data To Excel    SERV21_InterestPayments    Entity    ${rowid}    ${Entity}
+    ...    AND    Write Data To Excel    SERV29_PaymentFees    Entity    ${rowid}    ${Entity}
+    ...    AND    Write Data To Excel    AMCH06_PricingChangeTransaction    Entity    ${rowid}    ${Entity}
+    ...    AND    Write Data To Excel    AMCH04_DealChangeTransaction    Entity    ${rowid}    ${Entity}
   
     Run Keyword If    '${SCENARIO}'=='2'    Run Keywords    Write Data To Excel    SERV08_ComprehensiveRepricing    Borrower_ShortName    ${rowid}    ${Enterprise_Name}
     ...    AND    Write Data To Excel    SERV08_ComprehensiveRepricing    Customer_Legal_Name    ${rowid}    ${Enterprise_Name}
