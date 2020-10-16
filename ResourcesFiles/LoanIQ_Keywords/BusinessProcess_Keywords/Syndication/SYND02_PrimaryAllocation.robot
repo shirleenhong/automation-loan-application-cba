@@ -4,7 +4,8 @@ Resource     ../../../../Configurations/LoanIQ_Import_File.robot
 *** Keywords ***
 Setup a Primary Notebook
     [Arguments]    ${ExcelPath}
-    ###Circle Notebook - Facilites Tab### 
+    ###Deal Notebook - Facilites Tab###
+    Open Existing Deal    &{ExcelPath}[Deal_Name] 
     Add Lender and Location    &{ExcelPath}[Deal_Name]    &{ExcelPath}[Primary_Lender1]    &{ExcelPath}[Primary_LenderLoc1]    &{ExcelPath}[Primary_RiskBook]    &{ExcelPath}[Primaries_TransactionType]
     Set Sell Amount and Percent of Deal    &{ExcelPath}[Primary_PctOfDeal1]
     Add Pro Rate    &{ExcelPath}[Primary_BuySellPrice]
@@ -449,4 +450,5 @@ Approve and Close Deal with Single Primary Lender
     Navigate to Deal Notebook Workflow and Proceed With Transaction    Close
     Enter Deal Close Date    &{ExcelPath}[CloseDate]
     Logout from Loan IQ
+>>>>>>> e508fbffcc42bffe9567b8e88fd45bfc8ecb7679
     Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}    

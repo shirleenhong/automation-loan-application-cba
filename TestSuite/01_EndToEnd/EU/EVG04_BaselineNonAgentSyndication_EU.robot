@@ -10,6 +10,8 @@ ${Entity}    EU
 *** Test Cases ***
 Create Quick Party Onboarding - PTY001
     [Tags]    01 Create Party within Essence - PTY001
+    Mx Launch UFT    Visibility=True    UFTAddins=Java    Processtimeout=300
+    Mx LoanIQ Launch    Processtimeout=300
     Mx Execute Template With Multiple Data    Create Party in Quick Party Onboarding    ${ExcelPath}    ${rowid}    PTY001_QuickPartyOnboarding
 
 Search Customer and Complete its Borrower Profile Creation - ORIG03         

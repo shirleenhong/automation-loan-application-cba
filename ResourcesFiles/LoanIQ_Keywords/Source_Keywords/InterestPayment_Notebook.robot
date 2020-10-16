@@ -815,12 +815,14 @@ Initiate Loan Interest Payment Details from Loan Notebook
 Release Payment
     [Documentation]    This keyword is used to Release the Payment made.
     ...    @author: rtarayao
+    ...    @update: cfrancis    - added clicking question button for confirming release
    
     mx LoanIQ activate    ${LIQ_Payment_Window}
     Mx LoanIQ Verify Text In Javatree    ${LIQ_Payment_WorkflowItems}    Release%yes
     Mx LoanIQ DoubleClick    ${LIQ_Payment_WorkflowItems}    Release
     mx LoanIQ click element if present    ${LIQ_Question_Yes_Button}
     Run Keyword And Ignore Error    Repeat Keyword    3    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}  
+    mx LoanIQ click element if present    ${LIQ_Question_Yes_Button}
     Run Keyword And Continue On Failure    Verify Window    ${LIQ_Payment_Released_Status_Window} 
     Run Keyword And Continue On Failure    Mx LoanIQ Verify Object Exist    ${LIQ_Payment_WorkflowItem_Null}        VerificationData="Yes"
     
@@ -1039,3 +1041,42 @@ Navigate to Payment Workflow and Proceed With Transaction
 
     Navigate Notebook Workflow    ${LIQ_Payment_Window}    ${LIQ_Payment_Tab}    ${LIQ_Payment_WorkflowItems}    ${Transaction}
     Take Screenshot    ${Screenshot_Path}/Screenshots/LoanIQ/PaymentWindow_WorkflowTab
+
+Get Latest Interest Cycle Row 
+    [Documentation]    This keyword selects a cycle fee payment for Cycle Due amount.
+    ...    @author: cfrancis    16OCT2020    - Initial Create 
+    
+    mx LoanIQ activate window    ${LIQ_Loan_Window}    
+    Mx LoanIQ Select Window Tab    ${LIQ_Loan_Tab}    Accrual
+    ${rowcount}    Mx LoanIQ Get Data    ${LIQ_Loan_AccrualTab_Cycles_Table}    input=items count%value
+    ${rowcount}    Evaluate    ${rowcount} - 2
+    Log    The total rowcount is ${rowcount}
+    [Return]    ${rowcount}
+    
+Initiate Loan Latest Cycle Interest Payment
+    [Documentation]    This keyword initiates the payment of Loan Interest for the latest cycle due.
+    ...    @author: cfrancis    16OCT2020    - Initial Create
+    [Arguments]    ${sCycleNumber}    ${sPro_Rate}
+
+    ### Keyword Pre-processing ###
+    ${CycleNumber}    Acquire Argument Value    ${sCycleNumber}
+    ${Pro_Rate}    Acquire Argument Value    ${sPro_Rate}
+
+    Mx LoanIQ Activate window    ${LIQ_Loan_Window}
+    Mx LoanIQ Select    ${LIQ_Loan_Options_Payment}
+    Mx LoanIQ Activate window    ${LIQ_Loan_ChoosePayment_Window}
+    Mx LoanIQ Enter    ${LIQ_Loan_ChoosePayment_InterestPayment_RadioButton}    ON
+    Mx LoanIQ Click    ${LIQ_Loan_ChoosePayment_OK_Button}
+    Mx LoanIQ Activate Window    ${LIQ_Loan_CyclesforLoan_Window}
+
+    ${Pro_Rate}    Replace Variables    ${Pro_Rate}
+    ${LIQ_Loan_CyclesforLoan_ProRateType_RadioButton}    Replace Variables    ${LIQ_Loan_CyclesforLoan_ProRateType_RadioButton}
+    Mx LoanIQ Enter    ${LIQ_Loan_CyclesforLoan_ProRateType_RadioButton}    ON
+
+    Get Loan Interest Cycle Dates    ${CycleNumber}
+    ${Due_Date}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_Loan_CyclesforLoan_List}    ${sCycleNumber}%Due Date%amount
+    Mx LoanIQ Select String    ${LIQ_Loan_CyclesforLoan_List}    ${Due_Date}
+    Mx LoanIQ Click    ${LIQ_Loan_CyclesforLoan_OK_Button}
+    Mx LoanIQ Click Element If Present    ${LIQ_Warning_Yes_Button}     
+    Mx LoanIQ Activate Window    ${LIQ_Payment_Window}
+    Take Screenshot    ${Screenshot_Path}/Screenshots/LoanIQ/InterestPaymentWindow

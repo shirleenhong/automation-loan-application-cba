@@ -42,6 +42,7 @@ Resource    ../ResourcesFiles/Party_Keywords/BusinessProcess_Keywords/PTY004_Par
 Resource    ../ResourcesFiles/Party_Keywords/BusinessProcess_Keywords/PTY005_QuickPartyOnboarding_Reject.robot
 Resource    ../ResourcesFiles/Party_Keywords/BusinessProcess_Keywords/PTY007_DuplicateEnterpriseName.robot
 Resource    ../ResourcesFiles/Party_Keywords/BusinessProcess_Keywords/PTY015_QuickPartyOnboarding_Validation_Disabled_Fields.robot
+Resource    ../ResourcesFiles/Party_Keywords/BusinessProcess_Keywords/PTY016_PartyOnboarding_Validation_Branch.robot
 
 ###Party Resource Files - Sourcel###
 Resource    ../ResourcesFiles/Party_Keywords/Source_Keywords/PartyCommon_Keywords.robot

@@ -419,9 +419,13 @@ Accept Approved Party and Validate Details in Enterprise Summary Details Screen
 Reject Party via Supervisor Account
    [Documentation]    This keyword is used to reject created party via Quick Party Onboarding
     ...    @author: dahijara    07MAY2020    - initial create
-    [Arguments]    ${sPartyID}
+    ...    @author: gagregado   08OCT2020    - changed Party URL suffix to SSO
+    ...    @author: javinzon    15OCT2020    - added 'Configure Zone and Branch' Keyword
+    [Arguments]    ${sPartyID}    ${sUserZone}    ${sUserBranch}
 
-    Login User to Party    ${PARTY_SUPERVISOR_USERNAME}    ${PARTY_SUPERVISOR_PASSWORD}    ${USER_LINK}    ${USER_PORT}    ${PARTY_URL_SUFFIX}    ${PARTY_HTML_APPROVER_CREDENTIALS}    ${SSO_ENABLED}    ${PARTY_URL}
+    Login User to Party    ${PARTY_SUPERVISOR_USERNAME}    ${PARTY_SUPERVISOR_PASSWORD}    ${USER_LINK}    ${USER_PORT}    ${PARTY_SSO_URL_SUFFIX}    ${PARTY_HTML_APPROVER_CREDENTIALS}    ${SSO_ENABLED}    ${PARTY_URL}
+    
+    Configure Zone and Branch    ${sUserZone}    ${sUserBranch}
     
     ${Task_ID_From_Supervisor}    Reject Registered Party    ${sPartyID}
     
@@ -434,7 +438,6 @@ Reject Registered Party
     [Documentation]    This Keyword rejects the created party from Quick Party Onboarding using supervisor account.
     ...    @author: dahijara    05MAY2020    - initial create
     [Arguments]    ${Party_ID}
-
     Mx Click Element    ${Party_HomePage_Notification_Icon}
     Wait Until Loading Page Is Not Visible    ${PARTY_TIMEOUT}
     Validate Page Screen is Displayed    ${PARTY_NOTIFICATIONTYPES_PAGETITLE}
@@ -454,14 +457,18 @@ Reject Registered Party
 
 Accept Rejected Party and Validate Details in Quick Enterprise Details Screen
     [Documentation]    This keyword validates the Enterprise Business Activity Details from Enterprise summary details page.
-    ...    @author: dahijara    07MAY2020     - initial create
-    [Arguments]    ${sTask_ID_From_Supervisor}    ${sParty_ID}    ${sCountry_of_Tax_Domicile}    ${sCountry_of_Registration}    ${sAddress_Type}    ${sCountry_Region}    ${iPost_Code}
+    ...    @author: dahijara    07MAY2020    - initial create
+    ...    @author: gagregado   08OCT2020    - changed Party URL suffix to SSO  
+    ...    @update: javinzon    15OCT2020    - added Configure Zone and Branch Keyword  
+    [Arguments]    ${sUserZone}    ${sUserBranch}    ${sTask_ID_From_Supervisor}    ${sParty_ID}    ${sCountry_of_Tax_Domicile}    ${sCountry_of_Registration}    ${sAddress_Type}    ${sCountry_Region}    ${iPost_Code}
     ...    ${sDocument_Collection_Status}    ${sIndustry_Sector}    ${sBusiness_Activity}    ${bIs_Main_Activity}    ${iGST_Number}
     ...    ${sAddress_Line_1}    ${sAddress_Line_2}    ${sTown_City}    ${sState_Province}    ${sBusiness_Country}    ${bIs_Primary_Activity}    ${iRegistered_Number}    ${sShort_Name}
     ...    ${sAddress_Line_3}=None    ${sAddress_Line_4}=None
 
-    Login User to Party    ${PARTY_USERNAME}    ${PARTY_PASSWORD}    ${USER_LINK}    ${USER_PORT}    ${PARTY_URL_SUFFIX}    ${PARTY_HTML_USER_CREDENTIALS}    ${SSO_ENABLED}    ${PARTY_URL}   
+    Login User to Party    ${PARTY_USERNAME}    ${PARTY_PASSWORD}    ${USER_LINK}    ${USER_PORT}    ${PARTY_SSO_URL_SUFFIX}    ${PARTY_HTML_USER_CREDENTIALS}    ${SSO_ENABLED}    ${PARTY_URL}   
     
+    Configure Zone and Branch    ${sUserZone}    ${sUserBranch}    
+
     Accept Rejected Party    ${sTask_ID_From_Supervisor}    ${sPartyID}
 
     Validate Quick Enterprise Party    ${sParty_ID}    ${sCountry_of_Tax_Domicile}    ${sCountry_of_Registration}    ${sAddress_Type}    ${sCountry_Region}    ${iPost_Code}
@@ -565,6 +572,7 @@ Populate Pre-Existence Check and Validate the Duplicate Enterprise Name
    [Documentation]    This keyword populates pre-existence with Duplicate Enterprise Name, checks if Action required is Reject and view the existing Party details 
     ...    @author: javinzon    28SEP2020    - initial create
     ...	   @update: javinzon	02OCT2020	 - added Party ID argument
+    ...    @update: javinzon    14OCT2020    - updated keyword 'Capture Page ScreenShot' to 'Capture Page Screenshot' 
     [Arguments]    ${sEnterprise_Name}    ${sParty_ID}
 
     Mx Click Element     ${Party_PreExistenceCheck_EnterpriseName_TextBox} 
@@ -585,7 +593,7 @@ Populate Pre-Existence Check and Validate the Duplicate Enterprise Name
     ...    ELSE    Run Keyword and Continue on Failure    Fail    No duplicate found for Enterprise Name
     
     Wait Until Page Contains   ${PARTY_ENQUIREENTERPRISEPARTY_PAGETITLE}
-    Capture Page ScreenShot    ${screenshot_path}/Screenshots/Party/DuplicateEnterpriseName-{index}.png
+    Capture Page Screenshot    ${screenshot_path}/Screenshots/Party/DuplicateEnterpriseName-{index}.png
     ${Existing_EnterpriseName}    Get Value    ${Party_EnquirePartyDetails_EnterpriseName_TextBox}
     Log    ${Existing_EnterpriseName}
     ${isMatched}    Run Keyword And Return Status    Should Be Equal    ${Existing_EnterpriseName}    ${Party_Name}
@@ -595,6 +603,7 @@ Populate Pre-Existence Check and Validate the Duplicate Enterprise Name
 Validate Disabled Fields in Quick Enterprise Party Page
     [Documentation]    This keyword validates disabled fields in Quick Enterprise Party page and Address details dialog
     ...    @author: javinzon    08OCT2020    - initial create
+    ...    @update: javinzon    14OCT2020    - updated keyword 'Capture Page ScreenShot' to 'Capture Page Screenshot' 
     [Arguments]    ${sCountry_Region}
     
     Run Keyword And Continue On Failure    Element Should Be Disabled    ${Party_PreExistenceCheck_Locality_Dropdown}
@@ -632,14 +641,52 @@ Validate Disabled Fields in Quick Enterprise Party Page
     Run Keyword And Continue On Failure    Element Should Be Disabled    ${Party_QuickEnterpriseParty_Mobile_ContactType_Dropdown}
     Run Keyword And Continue On Failure    Element Should Be Disabled    ${Party_QuickEnterpriseParty_Mpbile_MobileNumber_CountryCode_TextBox}
     Run Keyword And Continue On Failure    Element Should Be Disabled    ${Party_QuickEnterpriseParty_Mpbile_MobileNumber_Number_TextBox}
-    Capture Page ScreenShot    ${screenshot_path}/Screenshots/Party/QuickPartyOnboarding_DisabledFields-{index}.png
+    Capture Page Screenshot    ${screenshot_path}/Screenshots/Party/QuickPartyOnboarding_DisabledFields-{index}.png
     
     ### Validate Disabled fields in Address Details Dialog ###
     Mx Input Text    ${Party_QuickEnterpriseParty_CountryRegion_Dropdown}    ${sCountry_Region}
     Mx Click Element    ${Party_QuickEnterpriseParty_RecordAddress_Button}
     Wait Until Page Contains    ${PARTY_ADDRESSDETAILS_PAGETITLE}
-    Capture Page ScreenShot    ${screenshot_path}/Screenshots/Party/QuickPartyOnboarding_DisabledFields-{index}.png
+    Capture Page Screenshot    ${screenshot_path}/Screenshots/Party/QuickPartyOnboarding_DisabledFields-{index}.png
     Run Keyword And Continue On Failure    Element Should Be Disabled    ${Party_QuickEnterpriseParty_AddressDetails_Name_TextBox}
     Run Keyword And Continue On Failure    Element Should Be Disabled    ${Party_QuickEnterpriseParty_AddressDetails_PostCode_TextBox}
     Run Keyword And Continue On Failure    Element Should Be Disabled    ${Party_QuickEnterpriseParty_AddressDetails_Country_TextBox}
     Mx Click Element    ${Party_CloseDialog_Button}
+
+Validate Branch in Party Onboarding Page
+    [Documentation]    This test case is used to validate Branches in Branch List Dialog of Party Onboarding Page
+    ...    @author: javinzon    13OCT2020    - initial create
+    [Arguments]    ${sAssigned_Branch}    ${iBranch_Code}    ${sBranch_Name}    ${sBank_Name}    ${iCountry_Code}    ${iAssigned_Branch_Code}
+    
+    Mx Click Element    ${Party_PartyOnboarding_Search_Button}
+    Wait Until Page Contains    ${PARTY_BRANCHLIST_PAGETITLE}
+    
+    ### Validate results when no parameter was given ###
+    ${Branch_Code_List}    Split String    ${iBranch_Code}    |    
+    ${Branch_Name_List}    Split String    ${sBranch_Name}    |
+    ${Bank_Name_List}    Split String    ${sBank_Name}    |
+    ${Country_Code_List}    Split String    ${iCountry_Code}    |
+    
+    Mx Click Element    ${Party_PartyOnboarding_BranchList_Search_Button}
+    ${RowCount}    SeleniumLibraryExtended.Get Element Count    ${Party_PartyOnboarding_BranchList_SearchResultTableRow}
+    
+    :FOR    ${Index}    IN RANGE    ${RowCount}
+    \    ${Branch_Code}    Get From List    ${Branch_Code_List}    ${Index}
+    \    ${Actual_Branch_Name}    Get Table Value Containing Row Value in Party    ${Party_PartyOnboarding_BranchList_SearchResultTableHeader}    ${Party_PartyOnboarding_BranchList_SearchResultTableRow}    Branch Code    ${Branch_Code}    Branch Name
+    \    ${Actual_Bank_Name}    Get Table Value Containing Row Value in Party    ${Party_PartyOnboarding_BranchList_SearchResultTableHeader}    ${Party_PartyOnboarding_BranchList_SearchResultTableRow}    Branch Code    ${Branch_Code}    Bank Name
+    \    ${Actual_Country_Code}    Get Table Value Containing Row Value in Party    ${Party_PartyOnboarding_BranchList_SearchResultTableHeader}    ${Party_PartyOnboarding_BranchList_SearchResultTableRow}    Branch Code    ${Branch_Code}    Country Code
+    \    Compare Two Strings    @{Branch_Name_List}[${Index}]    ${Actual_Branch_Name}
+    \    Compare Two Strings    @{Bank_Name_List}[${Index}]    ${Actual_Bank_Name}
+    \    Compare Two Strings    @{Country_Code_List}[${Index}]    ${Actual_Country_Code}    
+    Capture Page Screenshot    ${screenshot_path}/Screenshots/Party/QuickPartyOnboarding_BranchField-{index}.png
+
+    ### Validate results when a parameter was given ###
+    Mx Input Text    ${Party_PartyOnboarding_BranchList_BranchName_TextBox}    ${sAssigned_Branch}
+    Mx Click Element    ${Party_PartyOnboarding_BranchList_Search_Button}
+    ${Branch_Name}    Get Table Value Containing Row Value in Party    ${Party_PartyOnboarding_BranchList_SearchResultTableHeader}    ${Party_PartyOnboarding_BranchList_SearchResultTableRow}    Branch Code    ${iAssigned_Branch_Code}    Branch Name
+    Capture Page Screenshot    ${screenshot_path}/Screenshots/Party/QuickPartyOnboarding_BranchField-{index}.png
+    Mx Click Element    ${Party_CloseDialog_Button}
+    
+    ${isMatched}    Run Keyword And Return Status    Should Be Equal    ${sAssigned_Branch}    ${Branch_Name}
+    Run Keyword If    ${isMatched}==${True}    Log    Result is correct.
+    ...   ELSE    Run Keyword and Continue on Failure    Fail    Result is incorrect. Expected Value: '${sAssigned_Branch}' | Actual Value: ${Branch_Name}   
