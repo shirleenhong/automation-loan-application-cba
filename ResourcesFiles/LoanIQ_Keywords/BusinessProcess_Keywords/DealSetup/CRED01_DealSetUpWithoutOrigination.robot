@@ -540,6 +540,7 @@ Setup Syndicated Deal for Non-Agent and Host Bank
     ...    @update: clanding    29JUL2020    - updated hardcoded values to dataset/global variable; removed writing for CRED09
     ...    @update: clanding    10AUG2020    - added writing of Deal to SERV02
     ...    @update: clanding    13AUG2020    - added writing of Deal to SERV09
+    ...    @update: fluberio    12OCT2020    - added condition in Holdiay Creation and Pricing Rules for EU since in EU there are 5 Holiday Calendar and 4 Pricing Options
     [Arguments]    ${ExcelPath}
     
 	###Switch to Original User###
@@ -607,13 +608,27 @@ Setup Syndicated Deal for Non-Agent and Host Bank
     Enter Expense Code    &{ExcelPath}[Deal_ExpenseCode]
     
     ###Calendars Tab###
-    Set Deal Calendar    &{ExcelPath}[HolidayCalendar]
+    Run Keyword If    '&{ExcelPath}[Entity]' == 'EU'    Run Keywords    Set Deal Calendar    &{ExcelPath}[HolidayCalendar]
+    ...    AND    Set Deal Calendar    &{ExcelPath}[HolidayCalendar2]
+    ...    AND    Set Deal Calendar    &{ExcelPath}[HolidayCalendar3]
+    ...    AND    Set Deal Calendar    &{ExcelPath}[HolidayCalendar4]
+    ...    AND    Set Deal Calendar    &{ExcelPath}[HolidayCalendar5]
+    ...    ELSE IF    '&{ExcelPath}[Entity]' == 'AU'    Set Deal Calendar    &{ExcelPath}[HolidayCalendar]
+    
     
     ###Pricing Rules Tab###
     ###Pricing Options###
-    Add Deal Pricing Options    &{ExcelPath}[Deal_PricingOption1]    &{ExcelPath}[InitialFractionRate_Round]    &{ExcelPath}[RoundingDecimal_Round]    
+    Run Keyword If    '&{ExcelPath}[Entity]' == 'EU'    Run Keywords    Add Deal Pricing Options    &{ExcelPath}[Deal_PricingOption1]    &{ExcelPath}[InitialFractionRate_Round]    &{ExcelPath}[RoundingDecimal_Round]    
     ...    &{ExcelPath}[NonBusinessDayRule]    &{ExcelPath}[PricingOption_BillNoOfDays]    &{ExcelPath}[PricingOption_MatrixChangeAppMthd]    &{ExcelPath}[PricingOption_RateChangeAppMthd]
-    Add Deal Pricing Options    &{ExcelPath}[Deal_PricingOption2]    &{ExcelPath}[InitialFractionRate_Round]    &{ExcelPath}[RoundingDecimal_Round]    
+    ...    AND    Add Deal Pricing Options    &{ExcelPath}[Deal_PricingOption2]    &{ExcelPath}[InitialFractionRate_Round]    &{ExcelPath}[RoundingDecimal_Round]    
+    ...    &{ExcelPath}[NonBusinessDayRule]    &{ExcelPath}[PricingOption_BillNoOfDays]    &{ExcelPath}[PricingOption_MatrixChangeAppMthd]    &{ExcelPath}[PricingOption_RateChangeAppMthd]
+    ...    AND    Add Deal Pricing Options    &{ExcelPath}[Deal_PricingOption3]    &{ExcelPath}[InitialFractionRate_Round]    &{ExcelPath}[RoundingDecimal_Round]    
+    ...    &{ExcelPath}[NonBusinessDayRule]    &{ExcelPath}[PricingOption_BillNoOfDays]    &{ExcelPath}[PricingOption_MatrixChangeAppMthd]    &{ExcelPath}[PricingOption_RateChangeAppMthd]
+    ...    AND    Add Deal Pricing Options    &{ExcelPath}[Deal_PricingOption4]    &{ExcelPath}[InitialFractionRate_Round]    &{ExcelPath}[RoundingDecimal_Round]    
+    ...    &{ExcelPath}[NonBusinessDayRule]    &{ExcelPath}[PricingOption_BillNoOfDays]    &{ExcelPath}[PricingOption_MatrixChangeAppMthd]    &{ExcelPath}[PricingOption_RateChangeAppMthd]
+    ...    ELSE IF    '&{ExcelPath}[Entity]' == 'AU'    Run Keywords    Add Deal Pricing Options    &{ExcelPath}[Deal_PricingOption1]    &{ExcelPath}[InitialFractionRate_Round]    &{ExcelPath}[RoundingDecimal_Round]    
+    ...    &{ExcelPath}[NonBusinessDayRule]    &{ExcelPath}[PricingOption_BillNoOfDays]    &{ExcelPath}[PricingOption_MatrixChangeAppMthd]    &{ExcelPath}[PricingOption_RateChangeAppMthd]
+    ...    AND    Add Deal Pricing Options    &{ExcelPath}[Deal_PricingOption2]    &{ExcelPath}[InitialFractionRate_Round]    &{ExcelPath}[RoundingDecimal_Round]    
     ...    &{ExcelPath}[NonBusinessDayRule]    &{ExcelPath}[PricingOption_BillNoOfDays]    &{ExcelPath}[PricingOption_MatrixChangeAppMthd]    &{ExcelPath}[PricingOption_RateChangeAppMthd]
     
     ###Pricing Rules###
