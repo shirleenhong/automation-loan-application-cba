@@ -149,6 +149,7 @@ Get Single Row value from CSV File and Write to Excel for Base Rate
     ...    @update: clanding    21AUG2020    - updated Zone1 to Zone2
     ...    @update: jdelacru    21SEP2020    - make sBaseRateCode as optional field
     ...    @update: jdelacru    21SEP2020    - deleted the condition in writing the subentity in transformed file
+    ...    @update: jdelacru    16OCT2020    - added condition in assigning the value for ${Tenor_Converted} for RBA
     [Arguments]    ${dRow}    ${irowid}    ${sZone2_Curr_Date}    ${sZone3_Curr_Date}    ${sConfigPriceType}    ${sTLPath_Transformed_Data}    ${sBaseRateCode}=None
     ${InstrumentType}    Get From Dictionary    ${dRow}    GS_INSTR_TYPE
     ${BaseRateCode}    Run Keyword If    '${sBaseRateCode}'=='None'    Get From Dictionary    ${dRow}    GS_INSTR_SUB_TYPE    
@@ -173,7 +174,8 @@ Get Single Row value from CSV File and Write to Excel for Base Rate
     ...    ELSE IF    '${Tenor_Converted}'=='001D' and '${BaseRateCode_Converted}'=='EONIA' and '${sConfigPriceType}'=='BUYRATE'    Set Variable
     ...    ELSE IF    '${Tenor_Converted}'=='001D' and '${BaseRateCode_Converted}'=='FED-FUND' and '${sConfigPriceType}'=='BUYRATE'    Set Variable
     ...    ELSE IF    '${Tenor_Converted}'=='001D' and '${BaseRateCode_Converted}'=='TIIE' and '${sConfigPriceType}'=='BUYRATE'    Set Variable
-    ...    ELSE IF    '${Tenor_Converted}'=='001D' and '${BaseRateCode_Converted}'=='RBA' and '${sConfigPriceType}'=='LASTRATE'    Set Variable
+    ...    ELSE IF    '${Tenor_Converted}'=='001D' and '${BaseRateCode_Converted}'=='RBA' and '${sConfigPriceType}'=='LASTRATE' and '${Currency}'=='AUD'    Set Variable
+    ...    ELSE IF    '${Tenor_Converted}'=='001D' and '${BaseRateCode_Converted}'=='RBA' and '${sConfigPriceType}'=='LASTRATE' and '${Currency}'!='AUD'    Set Variable    001D
     ...    ELSE    Set Variable    ${Tenor_Converted}
     
     Write Data to Excel Using Row Index    Transformed_BaseRate    rowid    ${irowid}    ${irowid}    ${sTLPath_Transformed_Data}
