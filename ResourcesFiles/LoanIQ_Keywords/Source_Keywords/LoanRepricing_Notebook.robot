@@ -717,19 +717,7 @@ Release Loan Repricing - Scenario 6
     
     Mx LoanIQ Select Window Tab    ${LIQ_LoanRepricing_Tab}    General
     ${ConvertedRequestedAmountToBeAdded}    Convert Number With Comma Separators    ${Requested_Amount_ToBeAdded}
-    Mx LoanIQ Select String    ${LIQ_LoanRepricing_Outstanding_List}    *** Increase:\t\t${ConvertedRequestedAmountToBeAdded}
-    
-# Release Loan Repricing
-    # [Documentation]    This keyword will release the Loan Repricing
-    # ...    @update: cfrancis    19OCT2020    - Initial Create
-    # mx LoanIQ click element if present    ${LIQ_Cashflows_OK_Button}
-    # mx LoanIQ click element if present    ${LIQ_Question_Yes_Button}   
-    # mx LoanIQ activate window    ${LIQ_LoanRepricing_Window}
-    # Mx LoanIQ Select Window Tab    ${LIQ_LoanRepricing_Tab}    Workflow   
-    # Mx LoanIQ DoubleClick    ${LIQ_LoanRepricing_WorkflowItems}    Release 
-    # mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
-    # mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
-    # mx LoanIQ click element if present    ${LIQ_Question_Yes_Button} 
+    Mx LoanIQ Select String    ${LIQ_LoanRepricing_Outstanding_List}    *** Increase:\t\t${ConvertedRequestedAmountToBeAdded} 
 
 Validate Loan Repricing from Facility
     [Documentation]    This keyword is use to validate loan repricing on facility notebook

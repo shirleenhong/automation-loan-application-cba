@@ -749,9 +749,6 @@ Write Repriced Loan Details for ComSee - Scenario 7
     ###Get and Write Accrual Tab Details for Comsee
     ${LoanAccruedtodateAmount}    Get Loan Accrued to Date Amount
     ${LoanAccruedtodateAmount}    Remove Comma and Convert to Number    ${LoanAccruedtodateAmount}
-    # ${TotalRowCount}    Get Accrual Row Count    ${LIQ_Loan_Window}    ${LIQ_Loan_AccrualTab_Cycles_Table}
-    # ${AccruedtoDateAmt}    Compute Total Accruals for Fee    ${TotalRowCount}    ${LIQ_Loan_Tab}    ${LIQ_Loan_AccrualTab_Cycles_Table}
-    # ${AccruedtoDateAmt}    Remove Comma and Convert to Number    ${AccruedtoDateAmt}
     Write Data To Excel    ComSee_SC7_Loan    Outstanding_AccruedInterest    ${rowid}    &{ExcelPath}[Outstanding_AccruedInterest],${LoanAccruedtodateAmount}    ${ComSeeDataSet}
     
     ${LoanCycleDueAmount}    Get Loan Cycle Due Amount
