@@ -38,3 +38,8 @@ Primary Allocation - SYND02
 Complete Portfolio Settled Discount - TRPO12
     [Tags]    05    Portfolio Settled Discount - TRPO12 
     Mx Execute Template With Multiple Data    Portfolio Settled Discount Changes    ${ExcelPath}    ${rowid}    TRPO12_PortfolioSettledDisc
+    
+Complete Internal Participation - TRPO06
+    [Tags]    05    Internal Participation - TRPO06 
+    Mx Execute Template With Multiple Data    Complete Internal Participation    ${ExcelPath}    ${rowid}    TRPO06_InternalParticipation 
+          

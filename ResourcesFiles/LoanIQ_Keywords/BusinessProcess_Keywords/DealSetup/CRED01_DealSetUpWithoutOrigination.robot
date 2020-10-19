@@ -1221,6 +1221,7 @@ Setup RPA Internal Deal
     [Documentation]    Create a RPA Internal Deal with no Origination System
     ...    @author: fmamaril
     ...    @update: mcastro    12OCT2020    - added writing to TRPO12_PortfolioSettledDisc 
+    ...    @update: mcastrp    14OCT2020    - added writing of Expected_CloseDate for TRPO06_InternalParticipation
     [Arguments]    ${ExcelPath}
     ###Set Dates for transactions###
     ${SystemDate}    Get System Date
@@ -1240,6 +1241,7 @@ Setup RPA Internal Deal
     Write Data To Excel    SYND02_PrimaryAllocation    ApproveDate    ${rowid}    ${SystemDate}   
     Write Data To Excel    SYND02_PrimaryAllocation    CloseDate    ${rowid}    ${SystemDate}
     Write Data To Excel    SYND02_PrimaryAllocation    Primary_CircledDate    ${rowid}    ${SystemDate}
+    Run Keyword If    '${SCENARIO}'=='1'    Write Data To Excel    TRPO06_InternalParticipation    Expected_CloseDate    ${rowid}    ${SystemDate}
         
     ##Generate Deal Name and Alias###    
     ${Deal_Name}    ${Deal_Alias}    Generate Deal Name and Alias    &{ExcelPath}[Deal_NamePrefix]    &{ExcelPath}[Deal_AliasPrefix]    ${rowid}    
@@ -1251,7 +1253,8 @@ Setup RPA Internal Deal
     Write Data To Excel    SERV29_PaymentFees    Deal_Name    ${rowid}    ${Deal_Name}    
     Write Data To Excel    SERV29_PaymentFees    ScheduledActivity_DealName    ${rowid}    ${Deal_Name}
     Write Data To Excel    CRED01_DealSetup    Deal_Alias    ${rowid}    ${Deal_Alias}    multipleValue=Y
-    Write Data To Excel    TRPO12_PortfolioSettledDisc    Deal_Name    ${rowid}    ${Deal_Name}
+    Run Keyword If    '${SCENARIO}'=='1'    Run Keywords    Write Data To Excel    TRPO12_PortfolioSettledDisc    Deal_Name    ${rowid}    ${Deal_Name}
+    ...    AND    Write Data To Excel    TRPO06_InternalParticipation    Deal_Name    ${rowid}    ${Deal_Name}
           
     ###New Deal Screen###   
     Create New Deal    ${Deal_Name}    ${Deal_Alias}    &{ExcelPath}[Deal_Currency]    &{ExcelPath}[Deal_Department]    &{ExcelPath}[Deal_SalesGroup]
@@ -1292,6 +1295,7 @@ Create Facility for RPA Deal
     [Documentation]    This keyword is used to create a Facility for RPA Deal.
     ...    @author: fmamaril
     ...    @update: mcastro    12OCT2020    - added writing to TRPO12_PortfolioSettledDisc with condition
+    ...    @update: mcastro    16OCT2020    - added writing of Facility_Name to TRPO06_InternalParticipation
     [Arguments]    ${ExcelPath}
     Log    ${rowid}       
     ###Data Generation###
@@ -1304,6 +1308,8 @@ Create Facility for RPA Deal
     
     Run Keyword If    '${SCENARIO}'=='1' and '${rowid}'=='1'    Run Keywords    Write Data To Excel    TRPO12_PortfolioSettledDisc    Facility_Name    ${rowid}    ${Facility_Name}    bTestCaseColumn=True    sColumnReference=rowid
     ...    AND    Write Data To Excel    TRPO12_PortfolioSettledDisc    Portfolio_Position    ${rowid}    ${Facility_Name}    bTestCaseColumn=True    sColumnReference=rowid
+    
+    Run Keyword If    '${SCENARIO}'=='1'    Write Data To Excel    TRPO06_InternalParticipation    Facility_Name    ${rowid}    ${Facility_Name}    bTestCaseColumn=True    sColumnReference=rowid
        
     ###New Facility Screen###
     ${Facility_ProposedCmtAmt}    New Facility Select    &{ExcelPath}[Deal_Name]    ${FacilityName}    &{ExcelPath}[Facility_Type]    &{ExcelPath}[Facility_ProposedCmtAmt]    &{ExcelPath}[Facility_Currency]

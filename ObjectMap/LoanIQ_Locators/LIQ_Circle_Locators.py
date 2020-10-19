@@ -28,6 +28,15 @@ LIQ_CircleSelection_TransactionTypeDropdownList = 'JavaWindow("title:=Circle Sel
 LIQ_CircleSelection_AssignFeeDecisionDropdownList = 'JavaWindow("title:=Circle Selection").JavaList("attached text:=Assignment Fee Decision:")'
 LIQ_CircleSelection_OKButton = 'JavaWindow("title:=Circle Selection").JavaButton("label:=OK")'
 
+LIQ_CircleSelection_NewInternalOption = 'JavaWindow("title:=Circle Selection").JavaRadioButton("attached text:=New Internal")'
+LIQ_CircleSelection_BuyerLegalEntity='JavaWindow("title:=Circle Selection").JavaObject("text:=Buyer:").JavaList("attached text:=Legal Entity:")'
+LIQ_CircleSelection_BuyerRiskBook='JavaWindow("title:=Circle Selection").JavaObject("text:=Buyer:").JavaButton("attached text:=Risk Book:")'
+LIQ_CircleSelection_BuyerRiskBookDropdownList='JavaWindow("title:=Circle Selection").JavaObject("text:=Buyer:").JavaList("tagname:=Combo","items count:=11")'
+
+LIQ_CircleSelection_SellerLegalEntity='JavaWindow("title:=Circle Selection").JavaObject("text:=Seller:").JavaList("attached text:=Legal Entity:")'
+LIQ_CircleSelection_SellerRiskBook='JavaWindow("title:=Circle Selection").JavaObject("text:=Seller:").JavaButton("attached text:=Risk Book:")'
+LIQ_CircleSelection_SellerRiskBookDropdownList='JavaWindow("title:=Circle Selection").JavaObject("text:=Seller:").JavaList("tagname:=Combo","items count:=11")'
+
 ### Lender Selection ###
 LIQ_LenderSelect_SearchWindow = 'JavaWindow("title:=Lender Select.*")'
 LIQ_LenderSelect_Search_Filter = 'JavaWindow("title:=Lender Select.*").JavaList("attached text:=Identify By:","Index:=0")'
