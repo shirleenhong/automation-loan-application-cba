@@ -509,3 +509,39 @@ BUS_Validate Initial Drawdown Currency Tab Details
     ...    @author: dahijara    22SEP2020    - initial create
 
     Run Keyword    Validate Initial Drawdown Currency Tab Details    ${ARGUMENT_1}    ${ARGUMENT_2}    ${ARGUMENT_3}    ${ARGUMENT_4}    ${ARGUMENT_5}    ${ARGUMENT_6}    ${ARGUMENT_7}    ${ARGUMENT_8}    ${ARGUMENT_9}
+
+BUS_Get Updated and Validate Data on Loan Amounts Section
+    [Documentation]    This keyword is used to run the assigned low level keyword.
+    ...    @author: dahijara    13OCT2020    - initial create
+
+    Run Keyword    Get Updated and Validate Data on Loan Amounts Section    ${ARGUMENT_1}    ${ARGUMENT_2}    ${ARGUMENT_3}    ${ARGUMENT_4}
+
+BUS_Validate Currency against FX rate in API
+    [Documentation]    This keyword is used to run the assigned low level keyword.
+    ...    @author: dahijara    13OCT2020    - initial create
+
+    Run Keyword    Validate Currency against FX rate in API    ${ARGUMENT_1}
+
+BUS_Validate Conversion Amount for the Increase in Loan Amount
+    [Documentation]    This keyword is used to run the assigned low level keyword.
+    ...    @author: dahijara    13OCT2020    - initial create
+
+    Run Keyword    Validate Conversion Amount for the Increase in Loan Amount    ${ARGUMENT_1}    ${ARGUMENT_2}    ${ARGUMENT_3}
+
+BUS_Get Updated and Validate Loan Amounts
+    [Documentation]    This keyword is used to run the assigned low level keyword.
+    ...    @author: dahijara    13OCT2020    - initial create
+
+    Run Keyword    Get Updated and Validate Loan Amounts    ${ARGUMENT_1}    ${ARGUMENT_2}    ${ARGUMENT_3}    ${ARGUMENT_4}    ${ARGUMENT_5}    ${ARGUMENT_6}    ${ARGUMENT_7}    ${ARGUMENT_8}    ${ARGUMENT_9}
+
+BUS_Validation on Loan Notebook - Pending Tab
+    [Documentation]    This keyword is used to run the assigned low level keyword.
+    ...    @author: dahijara    13OCT2020    - initial create
+
+    Run Keyword    Validation on Loan Notebook - Pending Tab
+
+BUS_Get Updated and Validate Facility Amounts
+    [Documentation]    This keyword is used to run the assigned low level keyword.
+    ...    @author: dahijara    13OCT2020    - initial create
+
+    Run Keyword    Get Updated and Validate Facility Amounts    ${ARGUMENT_1}    ${ARGUMENT_2}    ${ARGUMENT_3}    ${ARGUMENT_4}

@@ -104,8 +104,17 @@ Setup Interest Capitalization
 Process Interest Payment for Capitalize Interest
     [Documentation]    This keyword do Interest Payment for Capitalize Interest (Scenario 8)
     ...    @author: ghabal
+    ...    @update: dahijara    14OCT2020    Added Login for inputter.
+    ...                                      Removed unused/missing keywords in codebase.
+    ...                                      Add correct flow for cashflow creation.
+    ...                                      Fix computations
+    ...                                      Update navigation in WIP
+    ...                                      Replaced hard coded  values
          
     [Arguments]    ${ExcelPath}           
+    ##LIQ Window###
+    Logout from Loan IQ
+    Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
     
     ###Searching a deal
     Open Existing Deal in Inquiry Mode    &{ExcelPath}[Deal_Name]
@@ -139,7 +148,7 @@ Process Interest Payment for Capitalize Interest
     ${Computed_LoanIntProjectedCycleDue}    Read Data From Excel    CAP03_InterestPayment    Computed_LoanIntProjectedCycleDue    ${rowid}
     
     # ##...Step 2-5    
-    Initiate Loan Interest Payment (Scenario 8)  ${rowid}    &{ExcelPath}[Loan_CycleNumber]    &{ExcelPath}[Pro_Rate]
+    Initiate Loan Interest Payment (Scenario 8)    &{ExcelPath}[Loan_CycleNumber]    &{ExcelPath}[Pro_Rate]
     Input Effective Date and Requested Amount for Loan Interest Payment    ${InterestPayment_EffectiveDate}    ${ProjectedCycleDue}
     
     # ##...Step 5-6
@@ -148,29 +157,26 @@ Process Interest Payment for Capitalize Interest
     Validate Lender Shares    &{ExcelPath}[Lender_Name1]    &{ExcelPath}[Lender_SharePercentage1]    ${Computed_LoanIntProjectedCycleDue}    Lender_ShareAmount1
     Validate Lender Shares    &{ExcelPath}[Lender_Name2]    &{ExcelPath}[Lender_SharePercentage2]    ${Computed_LoanIntProjectedCycleDue}    Lender_ShareAmount2    
     Validate Lender Shares    &{ExcelPath}[Lender_Name3]    &{ExcelPath}[Lender_SharePercentage3]    ${Computed_LoanIntProjectedCycleDue}    Lender_ShareAmount3    
-    mx LoanIQ click    ${LIQ_SharesFor_OK_Button}
+    Close Lender Shares Window
     
-    # ##...Step 7-9 - Workflow Tab - Create Cashfows and GL Entries
-    # Navigate to Interest Payment Cashflow Window  
-    
-    # ##...Step 10-12 - Validation of Cashflow Amounts/GL Entries
-    ### Need to comply with standards for the cashflow###     
-    # Get Transaction Amount, Validate Cashflow Amounts/GL Entries    &{ExcelPath}[Loan_Borrower]    &{ExcelPath}[Lender_Name2]     &{ExcelPath}[Lender_Name3]     &{ExcelPath}[IncompleteCashfromBorrower_Percentage]    &{ExcelPath}[IncompleteCashtoLender_Percentage]    
-    # ...    &{ExcelPath}[HostBankCashNet_Percentage]    &{ExcelPath}[Host_Bank]    ${rowid}    ${Computed_LoanIntProjectedCycleDue}    &{ExcelPath}[CashflowBorrower_Percentage]    &{ExcelPath}[CashflowLender1_Percentage]     &{ExcelPath}[CashflowLender2_Percentage]    &{ExcelPath}[AccruedInterestRecord_ShortName]
-    # ...    &{ExcelPath}[HostBankDebit_LoanAmount_Percentage]    &{ExcelPath}[BorrowerDebit_Percentage]    &{ExcelPath}[Lender1Credit_Percentage]    &{ExcelPath}[Lender2Credit_Percentage]    &{ExcelPath}[HostBankCredit_AccruedInterest_Percentage]
-        
-    # Validate Remittance Instructions in Cashflow (for Scenario 8)    &{ExcelPath}[Loan_Borrower]    &{ExcelPath}[Lender_SharePercentage2]  &{ExcelPath}[Lender_SharePercentage3]    &{ExcelPath}[Lender_ShareAmount2]    &{ExcelPath}[Remittance_Description]    &{ExcelPath}[Loan_Currency]
-    
+    ### Cashflow Notebook - Create Cashflows ###
+    Navigate to Payment Workflow and Proceed With Transaction    ${CREATE_CASHFLOWS_TYPE}
+    Verify if Method has Remittance Instruction    &{ExcelPath}[Loan_Borrower]    &{ExcelPath}[Remittance_Description]    &{ExcelPath}[Remittance_Instruction]
+    Verify if Method has Remittance Instruction    &{ExcelPath}[Lender_Name2]    &{ExcelPath}[Remittance2_Description]    &{ExcelPath}[Remittance2_Instruction]
+    Verify if Method has Remittance Instruction    &{ExcelPath}[Lender_Name3]    &{ExcelPath}[Remittance3_Description]    &{ExcelPath}[Remittance3_Instruction]
+    Verify if Status is set to Do It    &{ExcelPath}[Loan_Borrower]
+    Verify if Status is set to Do It    &{ExcelPath}[Lender_Name2]
+    Verify if Status is set to Do It    &{ExcelPath}[Lender_Name3]
+    Close GL Entries and Cashflow Window
+
     # # ##...Step 13            
     Do Generate Intent Notices for an Interest Payment (for Scenario 8)
-    Verify Customer Notice Method    &{ExcelPath}[Lender1_LegalName]    &{ExcelPath}[Lender1_IntenNoticeContact]    &{ExcelPath}[IntentNoticeStatus]    ${INPUTTER_USERNAME}    Email    &{ExcelPath}[Lender1_ContactEmail]
-    Verify Customer Notice Method    &{ExcelPath}[Lender2_LegalName]    &{ExcelPath}[Lender2_IntenNoticeContact]    &{ExcelPath}[IntentNoticeStatus]    ${INPUTTER_USERNAME}    External Notice Method    &{ExcelPath}[Lender2_ContactEmail]
-    Verify Customer Notice Method    &{ExcelPath}[Lender2_LegalName]    &{ExcelPath}[Lender2_IntenNoticeContact]    &{ExcelPath}[IntentNoticeStatus]    ${INPUTTER_USERNAME}    Email    &{ExcelPath}[Lender2_ContactEmail]
-    Verify Customer Notice Method    &{ExcelPath}[Borrower_LegalName]    &{ExcelPath}[Borrower_IntenNoticeContact]    &{ExcelPath}[IntentNoticeStatus]    ${INPUTTER_USERNAME}    External Notice Method    &{ExcelPath}[Borrower_ContactEmail]
-    Verify Customer Notice Method    &{ExcelPath}[Borrower_LegalName]    &{ExcelPath}[Borrower_IntenNoticeContact]    &{ExcelPath}[IntentNoticeStatus]    ${INPUTTER_USERNAME}    Email    &{ExcelPath}[Borrower_ContactEmail]
-    mx LoanIQ click    ${LIQ_InterestPayment_Notice_Exit_Button}
+    Verify Customer Notice Method    &{ExcelPath}[Lender1_LegalName]    &{ExcelPath}[Lender1_IntenNoticeContact]    &{ExcelPath}[IntentNoticeStatus]    ${INPUTTER_USERNAME}    &{ExcelPath}[Lender1_IntentNoticeMethod]    &{ExcelPath}[Lender1_ContactEmail]
+    Verify Customer Notice Method    &{ExcelPath}[Lender2_LegalName]    &{ExcelPath}[Lender2_IntenNoticeContact]    &{ExcelPath}[IntentNoticeStatus]    ${INPUTTER_USERNAME}    &{ExcelPath}[Lender2_IntentNoticeMethod]    &{ExcelPath}[Lender2_ContactEmail]
+    Verify Customer Notice Method    &{ExcelPath}[Borrower_LegalName]    &{ExcelPath}[Borrower_IntenNoticeContact]    &{ExcelPath}[IntentNoticeStatus]    ${INPUTTER_USERNAME}    &{ExcelPath}[Borrower_IntentNoticeMethod]    &{ExcelPath}[Borrower_ContactEmail]
+    Close Interest Payment Notice Window
     
-    # ##...Step 14     
+    ##...Step 14     
     Send Loan Interest Payment to Approval (Scenario 8)
     
     # ##...Step 15
@@ -180,11 +186,10 @@ Process Interest Payment for Capitalize Interest
     Login to Loan IQ    ${SUPERVISOR_USERNAME}    ${SUPERVISOR_PASSWORD}
    
     ###Work in Process#####
-    Open Loan Interest Payment Notebook (Scenario 8)     &{ExcelPath}[WIP_TransactionTypePayments]    &{ExcelPath}[WIP_AwaitingApprovalStatus]    &{ExcelPath}[WIP_PaymentType]    &{ExcelPath}[Loan_Alias]
-    
+    Navigate Transaction in WIP     ${PAYMENTS_TRANSACTION}    ${AWAITING_APPROVAL_STATUS}    ${INTEREST_PAYMENT}    &{ExcelPath}[Loan_Alias]
     ##Workflow Tab - Approval###
-    Approve Interest Payment (Scenario 8)
-    
+    Navigate to Payment Workflow and Proceed With Transaction    ${APPROVAL_STATUS}
+
     # ##...Step 16
     # # ##...Logout and Relogin in Manager Level
     Close All Windows on LIQ
@@ -192,14 +197,10 @@ Process Interest Payment for Capitalize Interest
     Login to Loan IQ    ${MANAGER_USERNAME}    ${MANAGER_PASSWORD}
     
     ###Work in Process#####
-    Open Loan Interest Payment Notebook (Scenario 8)     &{ExcelPath}[WIP_TransactionTypePayments]    &{ExcelPath}[WIP_AwaitingReleaseStatus]    &{ExcelPath}[WIP_PaymentType]    &{ExcelPath}[Loan_Alias]
-       
-    Navigate to Payment Workflow Tab (Scenario 8)
-    ${ReleaseCashflow_Status}    Run Keyword And Return Status    Mx LoanIQ Verify Text In Javatree    ${LIQ_Interest_WorkflowItems}    Release Cashflows%yes   
-    #Run Keyword If    ${ReleaseCashflow_Status}==True    Run Keyword    Release Payment Cashflows (Scenario 8)    &{ExcelPath}[Loan_Borrower]    &{ExcelPath}[Lender_SharePercentage2]    &{ExcelPath}[Lender_SharePercentage3]    &{ExcelPath}[Loan_Currency1]    ${Computed_LoanIntProjectedCycleDue}    &{ExcelPath}[Lender_ShareAmount2]    
-      
-    # # ##Workflow Tab - Release###   
-    Release Payment (Scenario 8)
+    Navigate Transaction in WIP     ${PAYMENTS_TRANSACTION}    ${AWAITING_RELEASE_STATUS}    ${INTEREST_PAYMENT}    &{ExcelPath}[Loan_Alias]
+
+    # # ##Workflow Tab - Release###
+    Navigate to Payment Workflow and Proceed With Transaction    ${RELEASE_STATUS}
       
     #Step 17: Validation on Interest Payment Notebook (MANAGER)###
     Validation on Interest Payment Notebook - Events Tab 
@@ -209,9 +210,7 @@ Process Interest Payment for Capitalize Interest
     Validate Lender Shares    &{ExcelPath}[Lender_Name1]    &{ExcelPath}[Lender_SharePercentage1]    ${Computed_LoanIntProjectedCycleDue}    Lender_ShareAmount1
     Validate Lender Shares    &{ExcelPath}[Lender_Name2]    &{ExcelPath}[Lender_SharePercentage2]    ${Computed_LoanIntProjectedCycleDue}    Lender_ShareAmount2    
     Validate Lender Shares    &{ExcelPath}[Lender_Name3]    &{ExcelPath}[Lender_SharePercentage3]    ${Computed_LoanIntProjectedCycleDue}    Lender_ShareAmount3    
-    ${OKButton_Status}    Run Keyword And Return Status    Element Should Be Enabled    ${LIQ_SharesFor_OK_Button}         
-    Run Keyword If    ${OKButton_Status}==True    Run Keyword    mx LoanIQ click    ${LIQ_SharesFor_OK_Button}
-    Run Keyword If    ${OKButton_Status}==False    Run Keyword    mx LoanIQ click    ${LIQ_SharesFor_Cancel_Button}
+    Close Lender Shares Window
           
     ###Step 18: Validation on Loan Notebook (MANAGER)###
     ${Orig_LoanGlobalOriginal}    Read Data From Excel    CAP03_InterestPayment    Orig_LoanGlobalOriginal    ${rowid}    
@@ -225,16 +224,17 @@ Process Interest Payment for Capitalize Interest
     Validate Currency against FX rate in API    &{ExcelPath}[FXrate_fromAPI]
     
     ${Orig_FacilityOutstandings}    Read Data From Excel    CAP03_InterestPayment    Orig_FacilityOutstandings    ${rowid}
-    Validate Conversion Amount for the Increase in Loan Amount    &{ExcelPath}[FXrate_fromAPI]    &{ExcelPath}[Computed_IncreasedCurrentAmountinUSD]    ${Orig_FacilityOutstandings}
+    Validate Conversion Amount for the Increase in Loan Amount    &{ExcelPath}[FXrate_fromAPI]    &{ExcelPath}[Computed_IncreasedCurrentAmount]    ${Orig_FacilityOutstandings}
        
     # #####Step 20 Validation on Loan Notebook (MANAGER)###
     Navigate to Outstanding Select Window
     Navigate to Existing Loan    &{ExcelPath}[Outstanding_Type]    &{ExcelPath}[Loan_FacilityName]    &{ExcelPath}[Loan_Alias]
     
     Validation on Loan Notebook - Events Tab
+    ${HostBank_Percentage}    Get Host Bank Percentage in Lender Shares Window From Loan Notebook    &{ExcelPath}[HostBank_Name]
     
     Get Updated and Validate Loan Amounts    ${Orig_LoanGlobalOriginal}    ${Orig_LoanGlobalCurrent}    &{ExcelPath}[Computed_LoanIntProjectedCycleDue]    &{ExcelPath}[CurrentAmount_ExpectedIncreasePercentage]    ${Orig_LoanHostBankGross}
-    ...    ${Orig_LoanHostBankNet}    &{ExcelPath}[HostBankGross_Percentage]    &{ExcelPath}[HostBankNet_Percentage]    &{ExcelPath}[Computed_IncreasedCurrentAmountinUSD]
+    ...    ${Orig_LoanHostBankNet}    ${HostBank_Percentage}    ${HostBank_Percentage}    &{ExcelPath}[Computed_IncreasedCurrentAmount]
        
     Validation on Loan Notebook - Pending Tab
     
@@ -245,7 +245,7 @@ Process Interest Payment for Capitalize Interest
     
     Get Updated and Validate Facility Amounts    ${Orig_FacilityCurrentCmt}    ${Orig_FacilityOutstandings}    ${Orig_FacilityAvailableToDraw}    &{ExcelPath}[Computed_IncreasedCurrentAmountinAUD]
 
-    
+    Close All Windows on LIQ
     
 Create Interest Capitalisation Rule
     [Documentation]    This keyword create Interest Capitalisation Rule at Outstanding level (Advance Servicing)

@@ -113,7 +113,7 @@ LIQ_Loan_Window = 'JavaWindow("title:=.*Loan.*ctive")'
 LIQ_InactiveLoan_Window = 'JavaWindow("title:=.*Loan.*Inactive")'
 LIQ_LoanNotebook_RepaymentSchedule_Menu = 'JavaWindow("title:=.*Loan.*Active").JavaMenu("label:=Options").JavaMenu("label:=Repayment Schedule")' 
 LIQ_LoanNotebook_FacilityNotebook_Menu = 'JavaWindow("title:=.*Loan.*Active").JavaMenu("label:=Options").JavaMenu("label:=Facility Notebook")'  
-LIQ_LoanNotebook_Options_ViewLenderShares = 'JavaWindow("title:=.*Loan.*Active").JavaMenu("label:=Options")..JavaMenu("label:=View Lender Shares")'
+LIQ_LoanNotebook_Options_ViewLenderShares = 'JavaWindow("title:=.*Loan.*Active").JavaMenu("label:=Options").JavaMenu("label:=View Lender Shares")'
 LIQ_LoanNotebook_RepaymentSchedule_Menu = 'JavaWindow("title:=.*Loan.*Active").JavaMenu("label:=Options").JavaMenu("label:=Repayment Schedule")' 
  
 LIQ_Loan_GlobalOriginal_Field = 'JavaWindow("title:=.*Loan.*ctive").JavaEdit("attached text:=Global Original:")'
