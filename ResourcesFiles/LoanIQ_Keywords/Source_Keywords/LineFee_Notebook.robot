@@ -488,7 +488,7 @@ Navigate to Cashflow - Reverse Fee
     mx LoanIQ activate window    ${LIQ_ReverseFee_Window}
     Mx LoanIQ Select Window Tab    ${LIQ_LineFee_ReversePayment_Tab}    Workflow
     Run Keyword And Continue On Failure     Mx LoanIQ Click Button On Window    .* Line Fee.*;Warning;Yes    strProcessingObj="JavaWindow(\"title:=Processing.*\")"    WaitForProcessing=500
-    Mx LoanIQ DoubleClick    ${LIQ_LineFee_ReversePayment__WorkflowItems}    Create Cashflows
+    Mx LoanIQ DoubleClick    ${LIQ_LineFee_ReversePayment_WorkflowItems}    Create Cashflows
     Run Keyword And Continue On Failure     Mx LoanIQ Click Button On Window    .* Line Fee.*;Warning;Yes    strProcessingObj="JavaWindow(\"title:=Processing.*\")"    WaitForProcessing=500
     mx LoanIQ activate window    ${LIQ_LineFee_ReversePayment_Cashflows_Window}                 
     Run Keyword And Continue On Failure    Mx LoanIQ Verify Object Exist    ${LIQ_LineFee_ReversePayment_Cashflows_Window}    VerificationData="Yes"
@@ -499,7 +499,7 @@ Send Reverse Fee Payment to Approval
 
     mx LoanIQ click element if present     ${LIQ_LineFee_ReversePayment_Cashflow_OK_Button} 
     mx LoanIQ activate window    ${LIQ_ReverseFee_Window}
-    Mx LoanIQ Select Or DoubleClick In Javatree    ${LIQ_LineFee_ReversePayment__WorkflowItems}    Send to Approval%d
+    Mx LoanIQ Select Or DoubleClick In Javatree    ${LIQ_LineFee_ReversePayment_WorkflowItems}    Send to Approval%d
     mx LoanIQ click element if present    ${LIQ_Question_Yes_Button}
     mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
     mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
@@ -513,7 +513,7 @@ Approve Reverse Fee Payment
     mx LoanIQ activate window    ${LIQ_ReverseFee_Window}
     Mx LoanIQ Select Window Tab    ${LIQ_LineFee_ReversePayment_Tab}    Workflow
     Run Keyword And Continue On Failure    mx LoanIQ click element if present    ${LIQ_InquiryMode_Button}
-    Mx LoanIQ Select Or DoubleClick In Javatree    ${LIQ_LineFee_ReversePayment__WorkflowItems}    Approval%d
+    Mx LoanIQ Select Or DoubleClick In Javatree    ${LIQ_LineFee_ReversePayment_WorkflowItems}    Approval%d
     Run Keyword And Continue On Failure     Mx LoanIQ Click Button On Window    Commitment Fee.*;Question;Yes    strProcessingObj="JavaWindow(\"title:=Processing.*\")"    WaitForProcessing=500
     Run Keyword And Continue On Failure     Mx LoanIQ Click Button On Window    Commitment Fee.*;Warning;Yes    strProcessingObj="JavaWindow(\"title:=Processing.*\")"    WaitForProcessing=500
 
@@ -526,7 +526,7 @@ Release Reverse Fee Payment
     mx LoanIQ activate window    ${LIQ_ReverseFee_Window}
     Mx LoanIQ Select Window Tab    ${LIQ_LineFee_ReversePayment_Tab}    Workflow
     Run Keyword And Continue On Failure    mx LoanIQ click element if present    ${LIQ_InquiryMode_Button}
-    Mx LoanIQ Select Or DoubleClick In Javatree    ${LIQ_LineFee_ReversePayment__WorkflowItems}    Release%d
+    Mx LoanIQ Select Or DoubleClick In Javatree    ${LIQ_LineFee_ReversePayment_WorkflowItems}    Release%d
     Validate if Question or Warning Message is Displayed
 
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LineFeeReverseWindow_WorkflowTab_Release

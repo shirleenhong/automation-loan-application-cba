@@ -52,9 +52,10 @@ Initiate Loan Merge and Conversion - D00000454
     ### Create Cashflows
     Navigate Notebook Workflow    ${LIQ_LoanRepricingForDeal_Window}    ${LIQ_LoanRepricingForDeal_Workflow_Tab}    ${LIQ_LoanRepricingForDeal_Workflow_JavaTree}    Create Cashflows
     
-    ## Remittance Instruction Addition per Cashflow ###
-    Add Remittance Instructions    &{ExcelPath}[Borrower_ShortName]    &{ExcelPath}[Borrower_RemittanceDescription]    
-    Create Cashflow    &{ExcelPath}[Borrower_ShortName]    release     
+    # Remittance Instruction Addition per Cashflow ###   
+    Add Remittance Instructions    None    &{ExcelPath}[Borrower_RemittanceDescription]    &{ExcelPath}[Tran_Amount]    &{ExcelPath}[Loan_Currency]
+    Add Remittance Instructions    None    &{ExcelPath}[Borrower_RemittanceDescription_2]    &{ExcelPath}[Loan_Increase]    &{ExcelPath}[Loan_Currency]
+    Set All Items to Do It
 
     Navigate Notebook Workflow    ${LIQ_LoanRepricingForDeal_Window}    ${LIQ_LoanRepricingForDeal_Workflow_Tab}    ${LIQ_LoanRepricingForDeal_Workflow_JavaTree}    Send to Approval
     
@@ -72,8 +73,6 @@ Initiate Loan Merge and Conversion - D00000454
     Login to Loan IQ    ${MANAGER_USERNAME}    ${MANAGER_PASSWORD}
     Select Item in Work in Process    Outstandings    Awaiting Rate Approval    Loan Repricing    &{ExcelPath}[Facility_Name]
     Navigate Notebook Workflow    ${LIQ_LoanRepricingForDeal_Window}    ${LIQ_LoanRepricingForDeal_Workflow_Tab}    ${LIQ_LoanRepricingForDeal_Workflow_JavaTree}    Rate Approval
-    Navigate Notebook Workflow    ${LIQ_LoanRepricingForDeal_Window}    ${LIQ_LoanRepricingForDeal_Workflow_Tab}    ${LIQ_LoanRepricingForDeal_Workflow_JavaTree}    Release Cashflows
-    Release Cashflow    &{ExcelPath}[Borrower_ShortName]    release    
     
     Logout from Loan IQ
     Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
