@@ -10,7 +10,7 @@ Send GS Files with Publish Date Equal to Business Date
     [Arguments]    ${ExcelPath}
     
     ###PREREQUISITE###    
-    # Login to Loan IQ    ${TL_USERNAME}    ${TL_PASSWORD}
+    Login to Loan IQ    ${TL_USERNAME}    ${TL_PASSWORD}
     ${TransformedDataFile_BaseRate}    Set Variable    &{ExcelPath}[InputFilePath]${TL_Transformed_Data_BaseRate}
     ${TransformedDataFile_Template_BaseRate}    Set Variable    &{ExcelPath}[InputFilePath]${TL_Transformed_Data_template_BaseRate}
     
