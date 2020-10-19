@@ -3276,15 +3276,21 @@ Set FX Rates Loan Drawdown
 Set FX Rates Loan Repricing
     [Documentation]    This keyword set the FX rates of any currency repricing from workflow before Rate Approval
     ...    @author: xmiranda    27SEP2019    - initial draft
-    [Arguments]    ${sCurrency}    
+    ...    @update: shirhong    16OCT2020    Added condition for Set FX Rate "Use Spot"
+    [Arguments]    ${sCurrency}    ${FxRate_Origin}=None
     mx LoanIQ activate window    ${LIQ_LoanRepricingForDeal_Window}
     Mx LoanIQ Select Window Tab    ${LIQ_LoanRepricingForDeal_Tab}    Workflow
     Mx LoanIQ DoubleClick    ${LIQ_LoanRepricingForDeal_WorkFlowAction}    Set F/X Rate
-    mx LoanIQ activate window    ${LIQ_LoanRepricing_Confirmation_Window}
-    mx LoanIQ click    ${LIQ_LoanRepricing_ConfirmationWindow_Yes_Button}
+    # mx LoanIQ activate window    ${LIQ_LoanRepricing_Confirmation_Window}
+    # mx LoanIQ click    ${LIQ_LoanRepricing_ConfirmationWindow_Yes_Button}
     mx LoanIQ activate window    ${LIQ_FacilityCurrency_Window}
-    mx LoanIQ click    JavaWindow("title:=Facility Currency.*","displayed:=1").JavaButton("attached text:=Use Facility.*to ${sCurrency} Rate")
+    # mx LoanIQ click    JavaWindow("title:=Facility Currency.*","displayed:=1").JavaButton("attached text:=Use Facility.*to ${sCurrency} Rate")
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/FXLoanRepricing_Workflow
+    Run Keyword If    '${FxRate_Origin}' == 'Spot'    mx LoanIQ click    JavaWindow("title:=Facility Currency.*","displayed:=1").JavaButton("attached text:=Use Spot.*to ${sCurrency} Rate")
+    ...    ELSE    mx LoanIQ click    JavaWindow("title:=Facility Currency.*","displayed:=1").JavaButton("attached text:=Use Facility.*to ${sCurrency} Rate")
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/FXLoanRepricing_Workflow
     mx LoanIQ click    ${LIQ_FacilityCurrency_Facility_Rate_Ok_Button}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/FXLoanRepricing_Workflow
 
 Navigate to Rates Tab
     [Documentation]    This keyword navigates to the Rates tab of the Initial Drawdown Notebook.
