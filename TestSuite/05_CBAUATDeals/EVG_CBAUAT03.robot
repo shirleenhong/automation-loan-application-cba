@@ -157,11 +157,10 @@ Initiate First Rollover for Drawdown A B C - D00000476
     
 Create Drawdown D4 D5 D6 - D00000476
     Mx Execute Template With Multiple Data    Create Drawdown D00000476    ${CBAUAT_ExcelPath}    7-9    SERV01_LoanDrawdown
- 
 
-# ### January 29
-# Collect LFIA3 - D00000476
-    # Mx Execute Template With Multiple Data    Collect LFIA Payment D00000476    ${CBAUAT_ExcelPath}    1    SERV29_Payments
+### January 29
+Collect LFIA3 - D00000476
+    Mx Execute Template With Multiple Data    Collect LFIA Payment D00000476    ${CBAUAT_ExcelPath}    1    SERV29_LineFeePayment
 
 # ###January 31
 # Setup BaseRate for Jan 31    
