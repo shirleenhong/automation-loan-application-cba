@@ -14,6 +14,6 @@ Verify Loan Outstanding Loan Outstanding - Manual Adjustment Transaction
      ...    author: sacuisia    16OCT2020
      
       Mx Execute Template with Multiple Data    Pay Loan Outstanding Accrual Zero Cycle Due    ${ComSeeDataSet}     ${rowid}    ComSee_SC2_Loan
-      Mx Execute Template with Multiple Data    Validate Payment Manual Adjustment Transaction    ${ComSeeDataSet}     ${rowid}    ComSee_SC2_Loan 
+      Mx Execute Template with Multiple Data    Validate Payment Manual Adjustment Transaction     ${ComSeeDataSet}     ${rowid}    ComSee_SC2_Loan 
       Mx Execute Template with Multiple Data    Get and Validate API Outstanding Response   ${ComSeeDataSet}    ${rowid}    ComSee_SC2_Loan
       

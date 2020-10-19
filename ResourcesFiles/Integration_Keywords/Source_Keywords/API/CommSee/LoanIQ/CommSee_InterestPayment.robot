@@ -10,17 +10,83 @@ Validate Payment Manual Adjustment Transaction
     ...    @author: sacuisia 16OCT2020
     [Arguments]    ${ExcelPath}
     
+    ${Outstanding_Alias}    Read Data From Excel    ComSee_SC2_Loan    Outstanding_Alias    ${rowid}    ${ComSeeDataSet}
+    Launch Loan Notebook    &{ExcelPath}[Deal_Name]    &{ExcelPath}[Facility_Name]    ${Outstanding_Alias}
+    
+    ###Interest Payment Reversal Creation###
+    ${CycleDue}    Create Interest Payment Reversal
+    Navigate to Cashflow - Reverse Interest Payment
+    ${Borrower}    Read Data From Excel    ComSee_SC2_Loan    Borrower_ShortName    ${rowid}    ${ComSeeDataSet}
+    ${RIDescrption}    Read Data From Excel    ComSee_SC2_Loan    Remittance_Instruction    ${rowid}    ${ComSeeDataSet}
+    ${RemittanceInstruction}    Read Data From Excel    ComSee_SC2_Loan    Remittance_Instruction    ${rowid}    ${ComSeeDataSet}
+    Verify if Method has Remittance Instruction    ${Borrower}    ${RIDescrption}    ${RemittanceInstruction}
+    Verify if Status is set to Do It    ${Borrower}
+    
+    ###Get Transaction Amount for Cashflow###
+    ${HostBankSharePct}    Read Data From Excel    ComSee_SC2_Loan    HostBankSharePct    ${rowid}    ${ComSeeDataSet}  
+    ${HostBankShare}    Get Host Bank Cash in Cashflow
+    ${BorrowerTranAmount}    Get Transaction Amount in Cashflow    ${Borrower}
+    ${ComputedHBTranAmount}    Compute Lender Share Transaction Amount    ${CycleDue}    ${HostBankSharePct}
+    
+    Compare UIAmount versus Computed Amount    ${HostBankShare}    ${ComputedHBTranAmount}
+     
+    ###GL Entries###
+    ${HostBank}    Read Data From Excel    ComSee_SC2_Loan    Host_Bank    ${rowid}    ${ComSeeDataSet} 
+    Navigate to GL Entries
+    ${HostBank_Debit}    Get GL Entries Amount    ${HostBank}    Debit Amt
+    ${Borrower_Credit}    Get GL Entries Amount    ${Borrower}    Credit Amt
+    ${UITotalCreditAmt}    Get GL Entries Amount    Total For:    Credit Amt
+    ${UITotalDebitAmt}    Get GL Entries Amount    Total For:    Debit Amt
+    
+    Compare UIAmount versus Computed Amount    ${HostBankShare}    ${HostBank_Debit}
+    Validate if Debit and Credit Amt is Balanced    ${Borrower_Credit}    ${HostBank_Debit}
+    Validate if Debit and Credit Amt is equal to Transaction Amount    ${UITotalCreditAmt}    ${UITotalDebitAmt}    ${CycleDue}
+    
+    ###Workflow Tab - Send to Approval###
+    Send Reverse Interest Payment to Approval
+   
+    ###Loan IQ Desktop###
     Close All Windows on LIQ
+    Logout from Loan IQ
+    Login to Loan IQ    ${SUPERVISOR_USERNAME}    ${SUPERVISOR_PASSWORD}
+   
+    ###Work in Process#####
+    Select Item in Work in Process    Payments    Awaiting Release    Reverse Interest Payment     &{ExcelPath}[Facility_Name]
     
-    Launch Loan Notebook    &{ExcelPath}[Deal_Name]    &{ExcelPath}[Facility_Name]    &{ExcelPath}[Outstanding_Alias]
+    Mx LoanIQ Verify Text In Javatree    ${LIQ_Payment_WorkflowItems}    Generate Intent Notices%yes    
+    Mx LoanIQ DoubleClick    ${LIQ_Payment_WorkflowItems}    Generate Intent Notices
     
-    mx LoanIQ activate window    ${LIQ_Loan_Window}
-    Mx LoanIQ Select Window Tab    ${LIQ_Loan_Tab}    Events
-    mx LoanIQ click element if present    ${LIQ_Loan_InquiryMode_Button}    
-    Mx LoanIQ Select Or DoubleClick In Javatree    ${LIQ_Loan_Events_List}    Interest Payment Released%d
-    mx LoanIQ activate window    ${LIQ_InterestPayment_Window_Released}
-    Mx LoanIQ Select    ${LIQ_InterestPayment_Reverse}
+    ${status}    Run Keyword And Return Status    Mx LoanIQ Verify Runtime Property    ${LIQ_Notices_BorrowerDepositor_Checkbox}       value%1
+    Run Keyword If    ${status}==True    mx LoanIQ click element if present    ${LIQ_Notices_OK_Button}
+    
+    mx LoanIQ click element if present    ${LIQ_Notices_OK_Button}
+      
     mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
+    
+    ${status}    Run Keyword And Return Status    Mx LoanIQ Verify Runtime Property    ${LIQ_Notices_BorrowerDepositor_Checkbox}       value%1
+    Run Keyword If    ${status}==True    mx LoanIQ click element if present    ${LIQ_Notices_OK_Button}    
+        
+    mx LoanIQ click element if present    ${LIQ_Notices_OK_Button}
+    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}    
+    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
+     
+    ###Release Reverse Interest Payment###
+    Release Payment
+    
+    ##Validate Cycle Due paidToDate after EOD
+    Navigate to Share Accrual Cycle    &{ExcelPath}[HostBank_Lender]
+    
+    ${LoanCycleDueAmount}    Get Cycle Due Amount
+    Write Data To Excel    ComSee_SC2_Loan    Outstanding_cycleDue    ${rowid}    ${LoanCycleDueAmount}    ${ComSeeDataSet}
+    
+    ${LoanPaidDueAmount}   Get PaidToDate   
+    Write Data To Excel    ComSee_SC2_Loan   Outstanding_paidToDate    ${rowid}    ${LoanPaidDueAmount}    ${ComSeeDataSet}
+    
+    ###Loan IQ Desktop###
+    Close All Windows on LIQ
+    Logout from Loan IQ
+    
+  
      
 Navigate to Accruals Share Adjustment Loans
      [Documentation]    This keyword navigates the LIQ User to the Accruals Share Adjustment Notebook and validates the information displayed in the notebook.

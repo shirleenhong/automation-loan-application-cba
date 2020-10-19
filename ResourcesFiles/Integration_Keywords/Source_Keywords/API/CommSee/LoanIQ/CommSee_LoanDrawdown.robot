@@ -106,7 +106,6 @@ Pay Loan Outstanding Accrual Zero Cycle Due
     
     ${CyclesForLoan}    Acquire Argument Value    ${sCyclesForLoan}
     
-
     Launch Loan Notebook    &{ExcelPath}[Deal_Name]    &{ExcelPath}[Facility_Name]    &{ExcelPath}[Outstanding_Alias]
     
     mx LoanIQ activate window    ${LIQ_Loan_Window}
@@ -115,7 +114,6 @@ Pay Loan Outstanding Accrual Zero Cycle Due
     Mx LoanIQ Set    ${LIQ_Loan_ChoosePayment_InterestPayment_RadioButton}    ON
     mx LoanIQ click    ${LIQ_Loan_ChoosePayment_OK_Button}
     
-
     ### Cycles for Loan Window Selection Condition ###
     mx LoanIQ activate window    ${LIQ_Loan_CyclesforLoan_Window} 
     Run Keyword If    '${sCyclesForLoan}'=='1'    mx LoanIQ enter   ${LIQ_CyclesForLoan_LenderSharesPrepayCycle_RadioButton}    ${ON}
@@ -139,25 +137,19 @@ Pay Loan Outstanding Accrual Zero Cycle Due
     
     ${SysDate}    Get System Date
     mx LoanIQ enter    ${LIQ_InterestPayment_EffectiveDate_Textfield}    ${SysDate}
-     
     Mx LoanIQ select    ${LIQ_InterestPayment_FileSave_Menu}
     Mx LoanIQ Click Element If Present    ${LIQ_Warning_Yes_Button}
     
     Generate Intent Notices of an Interest Payment-CommSee    ${ExcelPath}[Borrower_ShortName]
-    
     Send Loan Payment to Approval
     
     Close All Windows on LIQ
-    
     Logout from Loan IQ
     Login to Loan IQ    ${MANAGER_USERNAME}    ${MANAGER_PASSWORD}
     
     Navigate Transaction in WIP    Payments    Awaiting Approval    Interest Payment    &{ExcelPath}[Deal_Name]
     
     Approve Interest Payment
-    
-    Release Payment
-    
     Release Interest Payment
     
     Launch Loan Notebook    &{ExcelPath}[Deal_Name]    &{ExcelPath}[Facility_Name]    &{ExcelPath}[Outstanding_Alias]
@@ -179,7 +171,6 @@ Pay Loan Outstanding Accrual Zero Cycle Due
     Write Data To Excel    ComSee_SC2_Loan   Outstanding_paidToDate    ${rowid}    ${LoanPaidDueAmount}    ${ComSeeDataSet}
     
  
-  
 Write Loan Outstanding Accrual Non Zero Cycle
     [Documentation]    This test case writes the updated Loan Outstanding details after EOD for comsee use.
     ...    @author:    sacuisia    29SEPT2020    -InitialCreate
