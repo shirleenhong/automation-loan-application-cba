@@ -373,6 +373,7 @@ Add New Outstandings
     mx LoanIQ select    ${LIQ_RolloverConversion_Save_Menu}
     Run Keyword If    '${RepricingDate}'!='None'    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
     mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
+    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
     Mx LoanIQ Select Window Tab    ${LIQ_RolloverConversion_Tab}    Rates
     mx LoanIQ click    ${LIQ_RolloverConversion_BaseRate_Button}
     mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
