@@ -3,6 +3,25 @@ Resource     ../../../../../../Configurations/LoanIQ_Import_File.robot
 
 *** Keywords ***
 
+ ###Verify the Updates in Accrual Tab###
+
+Validate Payment Manual Adjustment Transaction
+    [Documentation]    Verify the cycleDue and paidToDate values from the payload response after the manual adjustment transaction is made in Loan Oustanding
+    ...    @author: sacuisia 16OCT2020
+    [Arguments]    ${ExcelPath}
+    
+    Close All Windows on LIQ
+    
+    Launch Loan Notebook    &{ExcelPath}[Deal_Name]    &{ExcelPath}[Facility_Name]    &{ExcelPath}[Outstanding_Alias]
+    
+    mx LoanIQ activate window    ${LIQ_Loan_Window}
+    Mx LoanIQ Select Window Tab    ${LIQ_Loan_Tab}    Events
+    mx LoanIQ click element if present    ${LIQ_Loan_InquiryMode_Button}    
+    Mx LoanIQ Select Or DoubleClick In Javatree    ${LIQ_Loan_Events_List}    Interest Payment Released%d
+    mx LoanIQ activate window    ${LIQ_InterestPayment_Window_Released}
+    Mx LoanIQ Select    ${LIQ_InterestPayment_Reverse}
+    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
+     
 Navigate to Accruals Share Adjustment Loans
      [Documentation]    This keyword navigates the LIQ User to the Accruals Share Adjustment Notebook and validates the information displayed in the notebook.
     ...    @author: rtarayao
