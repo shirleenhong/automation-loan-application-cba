@@ -123,7 +123,7 @@ Collect LFIA2 - D00000476
     Mx Execute Template With Multiple Data    Collect LFIA Payment D00000476    ${CBAUAT_ExcelPath}    2    SERV29_LineFeePayment
 
 Create Drawdown D1 and D2 D00000476
-   Mx Execute Template With Multiple Data    Create Drawdown D00000476    ${CBAUAT_ExcelPath}    4-5    SERV01_LoanDrawdown
+    Mx Execute Template With Multiple Data    Create Drawdown D00000476    ${CBAUAT_ExcelPath}    4-5    SERV01_LoanDrawdown
     
 ### December 31
 Collect Commitment Fee for MOF, FCAF, SCAF - D00000476
@@ -157,11 +157,10 @@ Initiate First Rollover for Drawdown A B C - D00000476
     
 Create Drawdown D4 D5 D6 - D00000476
     Mx Execute Template With Multiple Data    Create Drawdown D00000476    ${CBAUAT_ExcelPath}    7-9    SERV01_LoanDrawdown
- 
 
-# ### January 29
-# Collect LFIA3 - D00000476
-    # Mx Execute Template With Multiple Data    Collect LFIA Payment D00000476    ${CBAUAT_ExcelPath}    1    SERV29_Payments
+### January 29
+Collect LFIA3 - D00000476
+    Mx Execute Template With Multiple Data    Collect LFIA Payment D00000476    ${CBAUAT_ExcelPath}    3    SERV29_LineFeePayment
 
 # ###January 31
 # Setup BaseRate for Jan 31    
@@ -217,6 +216,6 @@ Charge Breakcost Fee for C - D00000476
 # Collect Full Prepayment for D6 - D00000476
     # Mx Execute Template With Multiple Data    Collect Early Prepayment via Paper Clip D00000476    ${CBAUAT_ExcelPath}    3    SERV23_Paperclip
 
-# ### February 28        
-# Collect LFIA4 - D00000476
-    # Mx Execute Template With Multiple Data    Collect LFIA Payment D00000476    ${CBAUAT_ExcelPath}    2    SERV29_Payments
+### February 28        
+Collect LFIA4 - D00000476
+    Mx Execute Template With Multiple Data    Collect LFIA Payment D00000476    ${CBAUAT_ExcelPath}    4    SERV29_LineFeePayment
