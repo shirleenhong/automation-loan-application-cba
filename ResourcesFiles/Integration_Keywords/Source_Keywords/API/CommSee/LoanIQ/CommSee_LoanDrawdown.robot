@@ -504,6 +504,7 @@ Create Initial Loan Drawdown with Repricing - Scenario 7 ComSee
     Write Data To Excel    ComSee_SC7_Loan    Outstanding_Alias    ${rowid}    ${Loan_Alias}    ${ComSeeDataSet}
     Write Data To Excel    ComSee_SC7_LoanInterestPayment   Loan_Alias    ${rowid}    ${Loan_Alias}    ${ComSeeDataSet}
     Write Data To Excel    ComSee_SC7_PrincipalLoanPayment   Loan_Alias    ${rowid}    ${Loan_Alias}    ${ComSeeDataSet}
+    Write Data To Excel    ComSee_SC7_LoanRepricing    Outstanding_Alias    ${rowid}    ${Loan_Alias}    ${ComSeeDataSet}
         
     ###Initial Loan Drawdown###
     Validate Initial Loan Dradown Details    &{ExcelPath}[Facility_Name]    &{ExcelPath}[Borrower1_ShortName]    &{ExcelPath}[Loan_Currency]
