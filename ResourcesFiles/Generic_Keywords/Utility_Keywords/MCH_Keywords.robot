@@ -35,8 +35,9 @@ Go to Dashboard and Click Source API Name
     ...    @update: clanding    12JUN2019    - added \ on index for element, this is an update for robot to consider it as a string not an index of
     ...    @update: jdelacru    26JUL2019    - removed navigation for loops for splitter to cater when Output Type is given as argument
     ...                                      - Instance Name and Output Type cannot be given at the same time
-    ...    @update: ehugo    16JUN2020    - added 'Wait Until Element Is Enabled' to wait for the Source before scrolling into it
-    ...                                   - added 'Wait Until Element Is Not Visible' for the Loading_Indicator to properly get the text of Source
+    ...    @update: ehugo       16JUN2020    - added 'Wait Until Element Is Enabled' to wait for the Source before scrolling into it
+    ...                                      - added 'Wait Until Element Is Not Visible' for the Loading_Indicator to properly get the text of Source
+    ...    @update: jdelacru    12OCT2020    - set 30s as timeout for Wait Until Element Is Visible keyword
     [Arguments]    ${sSourceName}    ${sInstance}=None    ${sOutputType}=None
 
     Click Element    ${FFC_Dashboard}
@@ -51,9 +52,9 @@ Go to Dashboard and Click Source API Name
     \    Exit For Loop If    '${HeaderText}'=='${SOURCE}'    
 
     :FOR    ${OpenAPIIndex}    IN RANGE    1    ${Summary_Row_Count}+1
-    \    Wait Until Element Is Enabled    ${Summary_Row}\[${OpenAPIIndex}]${PerColumnValue}\[${SourceIndex}]${TextValue}    3s
+    \    Wait Until Element Is Enabled    ${Summary_Row}\[${OpenAPIIndex}]${PerColumnValue}\[${SourceIndex}]${TextValue}    30s
     \    Mx Scroll Element Into View    ${Summary_Row}\[${OpenAPIIndex}]${PerColumnValue}\[${SourceIndex}]${TextValue}
-    \    Wait Until Element Is Visible    ${Summary_Row}\[${OpenAPIIndex}]${PerColumnValue}\[${SourceIndex}]${TextValue}    3s
+    \    Wait Until Element Is Visible    ${Summary_Row}\[${OpenAPIIndex}]${PerColumnValue}\[${SourceIndex}]${TextValue}    30s
     \    Wait Until Element Is Not Visible    ${Loading_Indicator}
     \    ${SourceText}    Get Text    ${Summary_Row}\[${OpenAPIIndex}]${PerColumnValue}\[${SourceIndex}]${TextValue}
     \    Exit For Loop If    '${SourceText}'=='${sSourceName}'

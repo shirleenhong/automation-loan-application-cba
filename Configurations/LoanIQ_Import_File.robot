@@ -260,6 +260,7 @@ Resource    ../ResourcesFiles/LoanIQ_Keywords/Custom_Mapping/BUS_IncomingManualC
 Resource    ../ResourcesFiles/LoanIQ_Keywords/Custom_Mapping/BUS_InterestCapitalization_Notebook.robot
 Resource    ../ResourcesFiles/LoanIQ_Keywords/Custom_Mapping/BUS_InterestPayment_Notebook.robot
 Resource    ../ResourcesFiles/LoanIQ_Keywords/Custom_Mapping/BUS_IssuanceFeePayment_Notebook.robot
+Resource    ../ResourcesFiles/LoanIQ_Keywords/Custom_Mapping/BUS_LineFee_Notebook.robot
 Resource    ../ResourcesFiles/LoanIQ_Keywords/Custom_Mapping/BUS_Loan_Notebook.robot
 Resource    ../ResourcesFiles/LoanIQ_Keywords/Custom_Mapping/BUS_LoanDrawdown_Notebook.robot
 Resource    ../ResourcesFiles/LoanIQ_Keywords/Custom_Mapping/BUS_LoanRepricing_Notebook.robot
@@ -392,11 +393,12 @@ Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/CBA_UAT03_DealTemplat
 Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/CBA_UAT03_DealTemplate/03LCCollection.robot
 Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/CBA_UAT03_DealTemplate/03LCIssuance.robot
 Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/CBA_UAT03_DealTemplate/03LoadRates.robot
-# Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/CBA_UAT03_DealTemplate/03LoanMerge.robot
-# Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/CBA_UAT03_DealTemplate/03Paperclip.robot
+Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/CBA_UAT03_DealTemplate/03LoanMerge.robot
+Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/CBA_UAT03_DealTemplate/03Paperclip.robot
 Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/CBA_UAT03_DealTemplate/03Repricing.robot
 Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/CBA_UAT03_DealTemplate/03Paperclip.robot
-# Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/CBA_UAT03_DealTemplate/03Repricing.robot
+Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/CBA_UAT03_DealTemplate/03Repricing.robot
+Resource     ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/CBA_UAT03_DealTemplate/03PricingChangeTransaction.robot
 
 
 ### UAT Deal 4 ###

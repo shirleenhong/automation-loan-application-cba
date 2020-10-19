@@ -216,6 +216,9 @@ DEALS_CATEGORY = "Deals"
 DEAL_AMENDMENT_TRANSACTION = "Deal Amendment"
 AWAITING_SET_FX_RATE_STATUS = "Awaiting Set F/X Rate"
 SET_FX_RATE_TRANSACTION = "Set F/X Rate"
+MANUALTRANS_TRANSACTION = "ManualTrans"
+MANUAL_GL_TRANSACTION = "Manual GL Transaction"
+MANUAL_CASHFLOW_TRANSACTION = "Manual Cashflow Transaction"
 
 ### Bank Role ###
 REFERENCE_BANK_ROLE = "Reference Bank"
@@ -309,3 +312,7 @@ DEAL_FACILITY_OPTION = "Deal/Facility"
 ### Y/N ###
 Y = "Y"
 N = "N"
+
+BATCH_TXT_FILENAME = "BATCHSCHED.txt"
+DNA_DAT_FILE_COLUMNS = "C:\\Git_Evergreen\\fms_cba\\DataSet\\Integration_DataSet\\Extracts\\DNA\\DAT_File_Columns.txt"
+DATANET_ASSURANCE_JOB = "DataAssurance"

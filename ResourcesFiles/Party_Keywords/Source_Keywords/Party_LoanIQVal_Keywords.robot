@@ -84,7 +84,6 @@ Validate Customer Legal Address Details in Textbox
     ...    @author: javinzon    01OCT2020    - Added False argument to City validation. Updated the documentation.
     ...                                        Added "Textbox" in keyword name; Removed Listbox field verification
     [Arguments]    ${sEnterpriseName}    ${sAddressCode}    ${sAddressLine1}    ${sAddressLine2}    ${sAddressLine3}   ${sAddressLine4}    ${sCity}    ${sPostalCode}    
-        
     
     Take Screenshot    ${screenshot_path}/Screenshots/Party/PartyLIQActiveCustomerLegalAddressPage
    
@@ -98,7 +97,6 @@ Validate Customer Legal Address Details in Textbox
     Verify If Value Exists in Loan IQ    Postal Code    ${sPostalCode}    View Address    Textbox
     Mx LoanIQ Click    ${LIQ_ViewAddress_Ok_CancelButton}
     #${LIQ_Active_Customer_Notebook_ViewAddressWindow_CancelButton}     
-  
 
 Validate Party Details in Loan IQ
     [Documentation]    This keyword navigates active customer and validates party details in Loan IQ

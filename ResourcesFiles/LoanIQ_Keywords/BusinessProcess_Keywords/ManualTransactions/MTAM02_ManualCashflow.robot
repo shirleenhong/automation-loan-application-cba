@@ -10,6 +10,7 @@ Manual Cashflow for Upfront Fee Payment
     ...                                      - Applied usage of 'Navigate Transaction in WIP' on WIP Navigation
     ...                                      - Added missing window navigations and confirmations
     ...                                      - Removed Extra Spaces
+    ...    @update: dahijara    09OCT2020    - Updated hardcoded values with global variables.
     [Arguments]    ${ExcelPath}
 
     ##LIQ Window###
@@ -37,10 +38,10 @@ Manual Cashflow for Upfront Fee Payment
   
     ###GL Entries###
     Navigate to GL Entries
-    ${HostBank_Debit}    Get GL Entries Amount    &{ExcelPath}[GL_Account_ShortName1]    Debit Amt
-    ${Borrower_Credit}    Get GL Entries Amount    &{ExcelPath}[GL_Account_ShortName2]    Credit Amt
-    ${UITotalCreditAmt}    Get GL Entries Amount    ${SPACE}Total For: CB001     Credit Amt
-    ${UITotalDebitAmt}    Get GL Entries Amount    ${SPACE}Total For: CB001     Debit Amt
+    ${HostBank_Debit}    Get GL Entries Amount    &{ExcelPath}[GL_Account_ShortName1]    ${DEBIT_AMT_LABEL}
+    ${Borrower_Credit}    Get GL Entries Amount    &{ExcelPath}[GL_Account_ShortName2]    ${CREDIT_AMT_LABEL}
+    ${UITotalCreditAmt}    Get GL Entries Amount    ${SPACE}Total For: CB001     ${CREDIT_AMT_LABEL}
+    ${UITotalDebitAmt}    Get GL Entries Amount    ${SPACE}Total For: CB001     ${DEBIT_AMT_LABEL}
     Validate if Debit and Credit Amt is Balanced    ${HostBank_Debit}    ${Borrower_Credit}
     Validate if Debit and Credit Amt is equal to Transaction Amount    ${UITotalCreditAmt}    ${UITotalDebitAmt}    &{ExcelPath}[UpfrontFee_Amount]
 
@@ -49,13 +50,13 @@ Manual Cashflow for Upfront Fee Payment
     Logout from Loan IQ
     Login to Loan IQ    ${SUPERVISOR_USERNAME}    ${SUPERVISOR_PASSWORD}
     
-    Navigate Transaction in WIP    ManualTrans    Awaiting Approval    Manual Cashflow Transaction    &{ExcelPath}[Deal_Name]
+    Navigate Transaction in WIP    ${MANUALTRANS_TRANSACTION}    ${AWAITING_APPROVAL_STATUS}    ${MANUAL_CASHFLOW_TRANSACTION}    &{ExcelPath}[Deal_Name]
     Approve Incoming Manual Cashflow to Approval
     Logout from Loan IQ
     
     ###Release of Manual Cashflow###
     Login to Loan IQ    ${MANAGER_USERNAME}    ${MANAGER_PASSWORD}
-    Navigate Transaction in WIP     ManualTrans    Awaiting Release    Manual Cashflow Transaction    &{ExcelPath}[Deal_Name]
+    Navigate Transaction in WIP     ${MANUALTRANS_TRANSACTION}    ${AWAITING_RELEASE_STATUS}    ${MANUAL_CASHFLOW_TRANSACTION}    &{ExcelPath}[Deal_Name]
     Release Cashflows for Incoming Manual Cashflow    &{ExcelPath}[Deal_Borrower]
     Release Incoming Manual Cashflow
     Logout from Loan IQ
@@ -69,7 +70,7 @@ Manual Cashflow for Upfront Fee Payment
     Populate Fee Details Window    &{ExcelPath}[Fee_Type]    &{ExcelPath}[UpfrontFeePayment_Comment]
     
     ###Upfront Fee Payment Workflow Tab- Create Cashflow Item###
-    Navigate to Payment Workflow and Proceed With Transaction    Create Cashflows
+    Navigate to Payment Workflow and Proceed With Transaction    ${CREATE_CASHFLOWS_TYPE}
     Verify if Method has Remittance Instruction    &{ExcelPath}[Deal_Borrower]    ${Remittance_Description}    &{ExcelPath}[Remittance_Instruction]
     Verify if Status is set to Do It    &{ExcelPath}[Deal_Borrower]
     Click OK In Cashflows
@@ -80,13 +81,13 @@ Manual Cashflow for Upfront Fee Payment
     ###Upfront Fee Payment Workflow Tab- Approval Item (SUPERVISOR)###
     Logout from Loan IQ
     Login to Loan IQ    ${SUPERVISOR_USERNAME}    ${SUPERVISOR_PASSWORD}
-    Navigate Transaction in WIP    Payments    Awaiting Approval    Fee Payment From Borrower    &{ExcelPath}[Deal_Name]
+    Navigate Transaction in WIP    ${PAYMENTS_TRANSACTION}    ${AWAITING_APPROVAL_STATUS}    ${FEE_PAYMENT_FROM_BORROWER_TYPE}    &{ExcelPath}[Deal_Name]
     Approve Upfront Fee Payment
 
     ###Upfront Fee Payment Workflow Tab- Release Item (MANAGER)###
     Logout from Loan IQ
     Login to Loan IQ    ${MANAGER_USERNAME}    ${MANAGER_PASSWORD}
-    Navigate Transaction in WIP    Payments    Awaiting Release    Fee Payment From Borrower    &{ExcelPath}[Deal_Name]
+    Navigate Transaction in WIP    ${PAYMENTS_TRANSACTION}    ${AWAITING_RELEASE_STATUS}    ${FEE_PAYMENT_FROM_BORROWER_TYPE}    &{ExcelPath}[Deal_Name]
     Release Upfront Fee Payment with Custom Instructions
 
     ###Upfront Fee Payment Workflow Tab- Validation (MANAGER)###
