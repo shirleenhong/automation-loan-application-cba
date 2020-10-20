@@ -74,7 +74,6 @@ Validate FFC for TL Base Rate Success with Multiple Files
     Wait Until Element Is Visible    ${FFC_Dashboard}    30s
     
     ###Base Splitter###
-    # Go to Dashboard and Click Source API Name    ${TL_BASE_ACK_MESSAGE_SOURCENAME}    sOutputType=${TLSUCCESS_OUTPUT_TYPE}
     Go to Dashboard and Click Source API Name    ${TL_BASE_ACK_MESSAGE_SOURCENAME}    ${CUSTOM_INTERFACE_INSTANCE}
     Log    ${ARCHIVE_GSFILENAME_LIST}
     ${aHeaderRefNameList}    Create List    ${REQUESTS_ID}
