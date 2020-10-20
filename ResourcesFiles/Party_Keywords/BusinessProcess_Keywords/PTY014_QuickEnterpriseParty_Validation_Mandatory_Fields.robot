@@ -17,7 +17,8 @@ Navigate to Quick Party Onboarding and Validate Mandatory Fields in Quick Enterp
     
     ${Enterprise_Name}    ${Party_ID}    Populate Pre-Existence Check    &{ExcelPath}[Enterprise_Prefix]
     
-    Validate Mandatory Fields in Quick Enterprise Party Page    
-    #Logout User on Party
+    Validate Mandatory Fields in Quick Enterprise Party Page    ${Party_ID}    &{ExcelPath}[Country_of_Tax_Domicile]    &{ExcelPath}[Country_of_Registration]    &{ExcelPath}[GST_Number]    &{ExcelPath}[Country_Region]    &{ExcelPath}[Post_Code]   
+    
+    Logout User on Party
     
     
