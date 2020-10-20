@@ -450,5 +450,4 @@ Approve and Close Deal with Single Primary Lender
     Navigate to Deal Notebook Workflow and Proceed With Transaction    Close
     Enter Deal Close Date    &{ExcelPath}[CloseDate]
     Logout from Loan IQ
->>>>>>> e508fbffcc42bffe9567b8e88fd45bfc8ecb7679
     Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}    

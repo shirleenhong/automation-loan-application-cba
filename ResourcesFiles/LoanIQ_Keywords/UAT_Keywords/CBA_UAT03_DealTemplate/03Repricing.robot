@@ -53,8 +53,8 @@ Initiate Comprehensive Repricing - D00000476
     ### Work in process notebook ###
     Select Item in Work in Process    Outstandings    Awaiting Generate Rate Setting Notices    Loan Repricing    &{ExcelPath}[Facility_Name]
     Navigate Notebook Workflow    ${LIQ_LoanRepricingForDeal_Window}    ${LIQ_LoanRepricingForDeal_Workflow_Tab}    ${LIQ_LoanRepricingForDeal_Workflow_JavaTree}    Approval
-    Run Keyword If    '&{ExcelPath}[Loan_Currency]' == 'USD'    Set FX Rates Loan Repricing    &{ExcelPath}[Loan_Currency]
-    Run Keyword If    '&{ExcelPath}[Loan_Currency]' == 'GBP'    Set FX Rates Loan Repricing    &{ExcelPath}[Loan_Currency] 
+    Run Keyword If    '&{ExcelPath}[Loan_Currency]' == 'USD'    Set FX Rates Loan Repricing    &{ExcelPath}[Loan_Currency]    Spot
+    Run Keyword If    '&{ExcelPath}[Loan_Currency]' == 'GBP'    Set FX Rates Loan Repricing    &{ExcelPath}[Loan_Currency]    Spot
     Navigate Notebook Workflow    ${LIQ_LoanRepricingForDeal_Window}    ${LIQ_LoanRepricingForDeal_Workflow_Tab}    ${LIQ_LoanRepricingForDeal_Workflow_JavaTree}    Send to Rate Approval
     
     ### LIQ Window ###
@@ -63,7 +63,7 @@ Initiate Comprehensive Repricing - D00000476
     Select Item in Work in Process    Outstandings    Awaiting Rate Approval    Loan Repricing    &{ExcelPath}[Facility_Name]
     Navigate Notebook Workflow    ${LIQ_LoanRepricingForDeal_Window}    ${LIQ_LoanRepricingForDeal_Workflow_Tab}    ${LIQ_LoanRepricingForDeal_Workflow_JavaTree}    Rate Approval
     Navigate Notebook Workflow    ${LIQ_LoanRepricingForDeal_Window}    ${LIQ_LoanRepricingForDeal_Workflow_Tab}    ${LIQ_LoanRepricingForDeal_Workflow_JavaTree}    Release Cashflows
-    Run Keyword If    '&{ExcelPath}[rowid]'!='3'    Release Cashflow    &{ExcelPath}[Borrower_ShortName]    release
+    # Run Keyword If    '&{ExcelPath}[rowid]'!='3'    Release Cashflow    &{ExcelPath}[Borrower_ShortName]    release
     Run Keyword If    '&{ExcelPath}[rowid]'=='3'    Release Cashflow    &{ExcelPath}[Loan_Increase]|${CycleAmount}    release    int
 
     Logout from Loan IQ
