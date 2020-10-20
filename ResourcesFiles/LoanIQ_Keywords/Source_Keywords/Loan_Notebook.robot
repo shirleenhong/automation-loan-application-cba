@@ -482,6 +482,7 @@ Get Pricing Code and Description Combined
 Get Loan Spread and All In Rates
     [Documentation]    This keyword returns the Loan Rates, Spread and All In Rates.
     ...    @author: rtarayao    23AUG2019    - Initial Create
+    ...    @update: cfrancis    19OCT2020    - added removing five 0 and % for all in rate
     mx LoanIQ activate window    ${LIQ_Loan_Window}
     Mx LoanIQ Select Window Tab    ${LIQ_Loan_Tab}    Rates 
     ${SpreadRate}    Mx LoanIQ Get Data    ${LIQ_Loan_Spread_Text}    value%Spread   
@@ -489,7 +490,8 @@ Get Loan Spread and All In Rates
     ${SpreadRate}    Remove String    ${SpreadRate}    .000000%    
     ${AllInRate}    Mx LoanIQ Get Data    ${LIQ_Loan_AllInRate}    value%AllInRate
     ${AllInRate}    Convert To String    ${AllInRate}
-    ${AllInRate}    Remove String    ${AllInRate}    .000000% 
+    ${AllInRate}    Remove String    ${AllInRate}    .000000%
+    ${AllInRate}    Remove String    ${AllInRate}    00000%
     Log    The Loan Spread is ${SpreadRate}. 
     Log    The Loan All In Rates is ${AllInRate}      
     Screenshot.Set Screenshot Directory    ${Screenshot_Path}
@@ -510,13 +512,19 @@ Navigate to Share Accrual Cycle
     Mx LoanIQ DoubleClick    ${LIQ_SharesFor_Primaries_Tree}    ${Primary_Lender}
     Log    ${Primary_Lender}
 
+Get ProjectedCycleDue
+    [Documentation]    This keyword returns value for Loan Outstanding and enter requested amount in Interest Payment.
+    ...    @author: sacuisia    05OCT2020    -initial create 
+    
+    ${projectedCycleDue}    Mx LoanIQ Get Data    ${LIQ_Payment_ProjectedCycleDue_Amount}    value%projectedCycleDue
+    [Return]    ${projectedCycleDue}  
+       
 Get Requested Amount
     [Documentation]    This keyword returns value for Loan Outstanding and enter requested amount in Interest Payment.
     ...    @author: sacuisia    05OCT2020    -initial create
     
     ${requestedAmount}    Mx LoanIQ Get Data    ${LIQ_InterestPayment_RequestedAmount_field}    value%requestedAmount
     [Return]    ${requestedAmount}
-
 
 Get Cycle Due Amount
     [Documentation]    This keyword returns value for Loan Outstanding Non Zero Cycle Cycle Due Value

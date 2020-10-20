@@ -316,6 +316,7 @@ Setup Bilateral Deal - Scenario 7 ComSee
     Write Data To Excel    ComSee_SC7_LoanInterestPayment    Deal_Name    ${rowid}    ${Deal_Name}    ${ComSeeDataSet}
     Write Data To Excel    ComSee_SC7_PrincipalLoanPayment    Deal_Name    ${rowid}    ${Deal_Name}    ${ComSeeDataSet}
     Write Data To Excel    ComSee_SC7_OngoingFeePayment    ScheduledActivity_DealName    ${rowid}    ${Deal_Name}    ${ComSeeDataSet}
+    Write Data To Excel    ComSee_SC7_LoanRepricing    Deal_Name    ${rowid}    ${Deal_Name}    ${ComSeeDataSet}
     
     ###Loan IQ Deasktop###                     
     Select Actions    [Actions];Deal
