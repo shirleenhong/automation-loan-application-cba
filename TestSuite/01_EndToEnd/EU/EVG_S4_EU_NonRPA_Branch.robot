@@ -9,13 +9,7 @@ ${SCENARIO}    4
 Deal Setup - CRED01
     [Tags]    01 Deal Setup - CRED01
     Mx Execute Template With Multiple Data    Setup RPA Internal Deal    ${ExcelPath}    ${rowid}    CRED01_DealSetup
-
-Upfront Fee Setup - CRED07
-    [Tags]    02 Upfront Fee Setup - CRED07
     Mx Execute Template With Multiple Data    Setup Deal Upfront Fees    ${ExcelPath}    ${rowid}    CRED07_UpfrontFeeSetup
-
-Create Facility - CRED02
-    [Tags]    03 Create Facility - CRED02
     Mx Execute Template With Multiple Data    Create Facility for RPA Deal    ${ExcelPath}    ${rowid}    CRED02_FacilitySetup
     Mx Execute Template With Multiple Data    Ongoing Fee Setup     ${ExcelPath}    ${rowid}    CRED08_OngoingFeeSetup
     
