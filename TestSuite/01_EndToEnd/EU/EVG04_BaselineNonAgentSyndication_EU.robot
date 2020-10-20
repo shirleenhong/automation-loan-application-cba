@@ -33,7 +33,6 @@ Create Non Agent and Host Bank Syndicated Deal - CRED01
 Add Facility in Amendment Notebook - AMCH11
     [Documentation]    Add a New Facility via Amendment Notebook.
     [Tags]    04 Add Facility - AMCH11
-    
     Mx Execute Template With Multiple Data    Add New Facility via Amendment Notebook    ${ExcelPath}    ${rowid}    AMCH11_AddFacility
 
 
