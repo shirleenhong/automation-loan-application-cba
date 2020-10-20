@@ -1,5 +1,6 @@
 *** Settings ***
 Resource    ../../../../../Configurations/Integration_Import_File.robot
+Suite Teardown    Test Suite Tear Down
 
 *** Test Cases ***
 
