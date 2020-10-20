@@ -325,21 +325,23 @@ Modify Interest Pricing - Insert Add (Options Item)
     Run Keyword And Continue On Failure    Mx LoanIQ Verify Object Exist    ${LIQ_Facility_InterestPricing_Window}        VerificationData="Yes"
     mx LoanIQ click    ${LIQ_Facility_InterestPricing_Add_Button}
     Mx LoanIQ Select Combo Box Value    ${LIQ_Facility_InterestPricing_AddItem_List}    ${InterestPricingItem}
+    Mx LoanIQ Select Combo Box Value    ${LIQ_Facility_InterestPricing_AddItemType_List}    ${OptionName1}
+    mx LoanIQ click    ${LIQ_Facility_InterestPricing_AddItem_OK_Button}
+    Mx LoanIQ Select Combo Box Value    ${LIQ_OptionCondition_OptionName_List}    ${OptionName1}
+    Mx LoanIQ Select Combo Box Value    ${LIQ_OptionCondition_RateBasis_List}    ${RateBasisInterestPricing}
+    mx LoanIQ click    ${LIQ_Facility_InterestPricing_OptionCondition_OK_Button}
+    mx LoanIQ enter    ${LIQ_Facility_InterestPricing_FormulaCategory_Percent_Radiobutton}    ${ON}
+    mx LoanIQ enter    ${LIQ_Facility_InterestPricing_FormulaCategory_Percent_Textfield}    ${Spread1}
+    mx LoanIQ click    ${LIQ_Facility_InterestPricing_FormulaCategory_OK_Button}
     
-    Run Keyword If    '${sEntity}' == 'EU'    Run Keywords    Mx LoanIQ Select Combo Box Value    ${LIQ_Facility_InterestPricing_AddItemType_List}    ${OptionName1}
-    ...    AND    mx LoanIQ click    ${LIQ_Facility_InterestPricing_AddItem_OK_Button}
-    ...    AND    Mx LoanIQ Select Combo Box Value    ${LIQ_OptionCondition_OptionName_List}    ${OptionName1}
-    ...    AND    Mx LoanIQ Select Combo Box Value    ${LIQ_OptionCondition_RateBasis_List}    ${RateBasisInterestPricing}
-    ...    AND    mx LoanIQ click    ${LIQ_Facility_InterestPricing_OptionCondition_OK_Button}
-    ...    AND    mx LoanIQ enter    ${LIQ_Facility_InterestPricing_FormulaCategory_Percent_Radiobutton}    ${ON}
-    ...    AND    mx LoanIQ enter    ${LIQ_Facility_InterestPricing_FormulaCategory_Percent_Textfield}    ${Spread1}
-    ...    AND    mx LoanIQ click    ${LIQ_Facility_InterestPricing_FormulaCategory_OK_Button}
-    ...    AND    Validate Loan IQ Details    ${OptionName2}    ${LIQ_OptionCondition_OptionName_List}    
-    ...    AND    Mx LoanIQ Select Combo Box Value    ${LIQ_OptionCondition_RateBasis_List}    ${RateBasisInterestPricing}
-    ...    AND    mx LoanIQ click    ${LIQ_Facility_InterestPricing_OptionCondition_OK_Button}
-    ...    AND    mx LoanIQ enter    ${LIQ_Facility_InterestPricing_FormulaCategory_Percent_Radiobutton}    ${ON}
-    ...    AND    mx LoanIQ enter    ${LIQ_Facility_InterestPricing_FormulaCategory_Percent_Textfield}    ${Spread2}
-    ...    AND    mx LoanIQ click    ${LIQ_Facility_InterestPricing_FormulaCategory_OK_Button}
+    Validate Loan IQ Details    ${OptionName2}    ${LIQ_OptionCondition_OptionName_List}    
+    Mx LoanIQ Select Combo Box Value    ${LIQ_OptionCondition_RateBasis_List}    ${RateBasisInterestPricing}
+    mx LoanIQ click    ${LIQ_Facility_InterestPricing_OptionCondition_OK_Button}
+    mx LoanIQ enter    ${LIQ_Facility_InterestPricing_FormulaCategory_Percent_Radiobutton}    ${ON}
+    mx LoanIQ enter    ${LIQ_Facility_InterestPricing_FormulaCategory_Percent_Textfield}    ${Spread2}
+    
+    ### Adding 2 additional Pricing Options for EU
+    Run Keyword If    '${sEntity}' == 'EU'    Run Keywords        mx LoanIQ click    ${LIQ_Facility_InterestPricing_FormulaCategory_OK_Button}
     ...    AND    Validate Loan IQ Details    ${OptionName3}    ${LIQ_OptionCondition_OptionName_List}    
     ...    AND    Mx LoanIQ Select Combo Box Value    ${LIQ_OptionCondition_RateBasis_List}    ${RateBasisInterestPricing}
     ...    AND    mx LoanIQ click    ${LIQ_Facility_InterestPricing_OptionCondition_OK_Button}
@@ -351,24 +353,9 @@ Modify Interest Pricing - Insert Add (Options Item)
     ...    AND    mx LoanIQ click    ${LIQ_Facility_InterestPricing_OptionCondition_OK_Button}
     ...    AND    mx LoanIQ enter    ${LIQ_Facility_InterestPricing_FormulaCategory_Percent_Radiobutton}    ${ON}
     ...    AND    mx LoanIQ enter    ${LIQ_Facility_InterestPricing_FormulaCategory_Percent_Textfield}    ${Spread4}
-    ...    AND    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/AmendmentNotebook_Fac_PricingTab  
-    ...    AND    mx LoanIQ click    ${LIQ_Facility_InterestPricing_FormulaCategory_OK_Button}
-    ...    ELSE IF   '${sEntity}' == 'AU'    Run Keywords    Mx LoanIQ Select Combo Box Value    ${LIQ_Facility_InterestPricing_AddItemType_List}    ${OptionName1}
-    ...    AND    mx LoanIQ click    ${LIQ_Facility_InterestPricing_AddItem_OK_Button}
-    ...    AND    Mx LoanIQ Select Combo Box Value    ${LIQ_OptionCondition_OptionName_List}    ${OptionName1}
-    ...    AND    Mx LoanIQ Select Combo Box Value    ${LIQ_OptionCondition_RateBasis_List}    ${RateBasisInterestPricing}
-    ...    AND    mx LoanIQ click    ${LIQ_Facility_InterestPricing_OptionCondition_OK_Button}
-    ...    AND    mx LoanIQ enter    ${LIQ_Facility_InterestPricing_FormulaCategory_Percent_Radiobutton}    ${ON}
-    ...    AND    mx LoanIQ enter    ${LIQ_Facility_InterestPricing_FormulaCategory_Percent_Textfield}    ${Spread1}
-    ...    AND    mx LoanIQ click    ${LIQ_Facility_InterestPricing_FormulaCategory_OK_Button}
-    ...    AND    Validate Loan IQ Details    ${OptionName2}    ${LIQ_OptionCondition_OptionName_List}    
-    ...    AND    Mx LoanIQ Select Combo Box Value    ${LIQ_OptionCondition_RateBasis_List}    ${RateBasisInterestPricing}
-    ...    AND    mx LoanIQ click    ${LIQ_Facility_InterestPricing_OptionCondition_OK_Button}
-    ...    AND    mx LoanIQ enter    ${LIQ_Facility_InterestPricing_FormulaCategory_Percent_Radiobutton}    ${ON}
-    ...    AND    mx LoanIQ enter    ${LIQ_Facility_InterestPricing_FormulaCategory_Percent_Textfield}    ${Spread2}
-    ...    AND    mx LoanIQ click    ${LIQ_Facility_InterestPricing_FormulaCategory_OK_Button} 
-    ...    AND    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/AmendmentNotebook_Fac_PricingTab  
-    ...    AND    mx LoanIQ click    ${LIQ_Facility_InterestPricing_FormulaCategory_OK_Button}
+
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/AmendmentNotebook_Fac_PricingTab  
+    mx LoanIQ click    ${LIQ_Facility_InterestPricing_FormulaCategory_OK_Button}
     
 Add Facility in Amendment Transaction
        [Documentation]    This keyword add the facility and Transaction Type.
