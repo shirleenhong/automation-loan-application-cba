@@ -888,14 +888,14 @@ Validate Loan Risk Type
     ...    ELSE IF    '${sVersion}'=='V2'    Log    This attribute is not present in V1 response
     ...    ELSE    Log    Expected and Actual are NOT equal. @{Input_AccruedInterest_List}[${iIndex_Input}] != @{Actual_AccruedInterest_List}[0]    level=ERROR
     
-    Run Keyword If    '${sVersion}'=='V2'    Run Keyword And Continue On Failure    Should Be Equal As Strings    @{Input_CycleDue_List}[${iIndex_Input}]    @{Actual_CycleDue_List}[0]    ignore_case=True
-    ${IsEqual}    Run Keyword And Return Status    Should Be Equal As Strings    @{Input_CycleDue_List}[${iIndex_Input}]    @{Actual_CycleDue_List}[0]    ignore_case=True
+    Run Keyword If    '${sVersion}'=='V2'    Run Keyword And Continue On Failure    Should Be Equal As Numbers    @{Input_CycleDue_List}[${iIndex_Input}]    @{Actual_CycleDue_List}[0]    ignore_case=True
+    ${IsEqual}    Run Keyword And Return Status    Should Be Equal As Numbers    @{Input_CycleDue_List}[${iIndex_Input}]    @{Actual_CycleDue_List}[0]    ignore_case=True
     Run Keyword If    ${IsEqual}==${True} and '${sVersion}'=='V2'    Log    Expected and Actual are equal. @{Input_CycleDue_List}[${iIndex_Input}] = @{Actual_CycleDue_List}[0]
     ...    ELSE IF    '${sVersion}'=='V1'    Log    This attribute is not present in V1 response
     ...    ELSE    Log    Expected and Actual are NOT equal. @{Input_CycleDue_List}[${iIndex_Input}] != @{Actual_CycleDue_List}[0]    level=ERROR
 
-    Run Keyword If    '${sVersion}'=='V2'    Run Keyword And Continue On Failure    Should Be Equal As Strings    @{Input_PaidToDatet_List}[${iIndex_Input}]    @{Actual_PaidToDate_List}[0]    ignore_case=True
-    ${IsEqual}    Run Keyword And Return Status    Should Be Equal As Strings    @{Input_PaidToDatet_List}[${iIndex_Input}]    @{Actual_PaidToDate_List}[0]    ignore_case=True
+    Run Keyword If    '${sVersion}'=='V2'    Run Keyword And Continue On Failure    Should Be Equal As Numbers    @{Input_PaidToDatet_List}[${iIndex_Input}]    @{Actual_PaidToDate_List}[0]    ignore_case=True
+    ${IsEqual}    Run Keyword And Return Status    Should Be Equal As Numbers    @{Input_PaidToDatet_List}[${iIndex_Input}]    @{Actual_PaidToDate_List}[0]    ignore_case=True
     Run Keyword If    ${IsEqual}==${True} and '${sVersion}'=='V2'    Log    Expected and Actual are equal. @{Input_PaidToDatet_List}[${iIndex_Input}] = @{Actual_PaidToDate_List}[0]
     ...    ELSE IF    '${sVersion}'=='V1'    Log    This attribute is not present in V1 response
     ...    ELSE    Log    Expected and Actual are NOT equal. @{Input_PaidToDatet_List}[${iIndex_Input}] != @{Actual_PaidToDate_List}[0]    level=ERROR

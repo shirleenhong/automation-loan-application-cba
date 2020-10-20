@@ -41,6 +41,7 @@ Validate Extracted Data Assurance File is Generated and Return
 Validate DAT File Contents if Correct
     [Documentation]    This keyword is used to validate DAT file contents are correct.
     ...    @author: clanding    14OCT2020    - initial create
+    ...    @author: clanding    15OCT2020    - updated Verify Last Column of DAT File to Verify No Extra Comma in DAT File
     [Arguments]    ${sZone}    ${sExtract_Path}    ${sDAT_File}
     
     ${DAT_File_Content}    OperatingSystem.Get File    ${sExtract_Path}${sZone}/${sDAT_File}
@@ -48,7 +49,7 @@ Validate DAT File Contents if Correct
     
     :FOR    ${LineCount}    IN RANGE    ${DAT_File_Content_Count}
     \    ${DAT_File_Line_Content}    Get Line    ${DAT_File_Content}    ${LineCount}
-    \    Verify Last Column of DAT File    ${DAT_File_Line_Content}
+    \    Verify No Extra Comma in DAT File    ${DAT_File_Line_Content}
     \    Verify DAT File Columns if Correct    ${DAT_File_Line_Content}
     \    Verify CSV File Contains Delimiter    ${sExtract_Path}${sZone}/${sDAT_File}    ,
     \    Verify DAT File Contents are Not Quoted    ${DAT_File_Line_Content}
@@ -56,17 +57,20 @@ Validate DAT File Contents if Correct
     Verify DAT File is in CSV Format    ${DAT_File_Content}
     Verify Trailer Record of DAT File    ${DAT_File_Content}
 
-Verify Last Column of DAT File
+Verify No Extra Comma in DAT File
     [Documentation]    This keyword is used to verify the last column of DAT file does not contain ',,,'.
     ...    @author: clanding    14OCT2020    - initial create
+    ...    @author: clanding    15OCT2020    - updated validation and keyword name
     [Arguments]    ${sDAT_File_Content}
 
-    ${DAT_File_Content_List}    Split String    ${sDAT_File_Content}    ,
-    ${DAT_File_Content_List_Count}    Get Length    ${DAT_File_Content_List}
-    ${Last_Value_Index}    Evaluate    ${DAT_File_Content_List_Count}-1
-    ${IsContains_ThreeComma}    Run Keyword And Return Status    Should Contain    @{DAT_File_Content_List}[${Last_Value_Index}]    ,,
-    Run Keyword If    ${IsContains_ThreeComma}==${False}    Log    @{DAT_File_Content_List}[${Last_Value_Index}] does not contain ',,,'.
-    ...    ELSE    Run Keyword and Continue On Failure    FAIL    @{DAT_File_Content_List}[${Last_Value_Index}] contains ',,,'.
+    ${IsTrailer}    Run Keyword And Return Status    Should Contain    ${sDAT_File_Content}    T,
+    Return From Keyword If    ${IsTrailer}==${True}
+    ${Expected_Columns}    OperatingSystem.Get File    ${DNA_DAT_FILE_COLUMNS}
+    ${Expected_Column_Count}    Get Line Count    ${Expected_Columns}
+    ${DAT_File_Comma}    Get Count    ${sDAT_File_Content}    ,
+    ${No_Extra_Comma}    Run Keyword And Return Status    Should Be Equal As Integers    ${Expected_Column_Count}    ${DAT_File_Comma}
+    Run Keyword If    ${No_Extra_Comma}==${True}    Log    ${sDAT_File_Content} does not contain extra comma.
+    ...    ELSE    Run Keyword and Continue On Failure    FAIL    ${sDAT_File_Content} contains extra comma.
 
 Verify DAT File Columns if Correct
     [Documentation]    This keyword is used to verify the columns in the DAT file are correct.

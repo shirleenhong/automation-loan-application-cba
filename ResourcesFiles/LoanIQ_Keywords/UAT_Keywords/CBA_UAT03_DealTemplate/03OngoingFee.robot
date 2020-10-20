@@ -16,9 +16,9 @@ Collect LFIA Payment D00000476
     Launch Existing Facility    &{ExcelPath}[Deal_Name]    &{ExcelPath}[Facility_Name]
     Navigate to Existing Ongoing Fee Notebook    &{ExcelPath}[OngoingFee_Type]
 
-    ### Select Menu Item ###
-    Update Line Fee Dates    ${LIQ_LineFeeNotebook_Window}    &{ExcelPath}[Effective_Date]    &{ExcelPath}[Rate_Start_Date]    
-    ...    &{ExcelPath}[Actual_Due]    &{ExcelPath}[Cycle_Frequency]
+    # ### Select Menu Item ###
+    # Update Line Fee Dates    ${LIQ_LineFeeNotebook_Window}    &{ExcelPath}[Effective_Date]    &{ExcelPath}[Rate_Start_Date]    
+    # ...    &{ExcelPath}[Actual_Due]    &{ExcelPath}[Cycle_Frequency]
     Select Menu Item    ${LIQ_LineFeeNotebook_Window}    Options    Payment
     Select Payment in Choose a Payment Window    &{ExcelPath}[Payment_Type]
     Select Cycle for Payment    &{ExcelPath}[Cycle_Number]    &{ExcelPath}[Prorate_With]
@@ -61,7 +61,11 @@ Collect LFIA Payment D00000476
     Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
     Select Item in Work in Process    Payments    Awaiting Release    Ongoing Fee Payment     &{ExcelPath}[Facility_Name]
     Navigate Notebook Workflow    ${LIQ_OngoingFeePayment_Window}    ${LIQ_PaymentNotebook_Tab}    ${LIQ_OngoingFeePaymentNotebook_Workflow_JavaTree}    Release Cashflows
+<<<<<<< HEAD
     # Release Cashflow    &{ExcelPath}[Borrower1_ShortName]    release
+=======
+    Release Cashflow    &{ExcelPath}[Borrower1_ShortName]    release
+>>>>>>> 87a8729be1debee4a65802404e0ed4980499c149
     Navigate Notebook Workflow    ${LIQ_OngoingFeePayment_Window}    ${LIQ_PaymentNotebook_Tab}    ${LIQ_OngoingFeePaymentNotebook_Workflow_JavaTree}    Release
 
 Collect Commitment Fee Payment

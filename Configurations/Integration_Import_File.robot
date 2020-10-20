@@ -305,3 +305,4 @@ Resource    ../ResourcesFiles/Integration_Keywords/Source_Keywords/Extracts/DNA/
 
 ### Integration Resource Files - Datanet Assurance - Business Process Keywords ###
 Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/Extracts/DNA_LIQ/DNA_01.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/Extracts/DNA_LIQ/DNA_03.robot

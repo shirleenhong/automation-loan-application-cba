@@ -206,21 +206,3 @@ DWE_PASSPHRASE = '0mn1@d@v'
 DWE_TAR_GZ_EXT = '.tar.gz'
 DWE_TAR_GZ_GPG_EXT = '.tar.gz.gpg'
 DWE_CCB_LIQ_ZONE_FILENAME = 'CCB_LIQ_SYD_'
-
-### Batch EOD ###
-PUTTY_PATH = "C:\\Program Files\\PuTTY\\putty.exe"
-PUTTY_HOSTNAME = "mancsleverg0005"
-PUTTY_PORT = "22"
-PUTTY_USERNAME = "micloud"
-PUTTY_PASSWORD = "misys123"
-
-### DNA ###
-DNA_SERVER = 'mancsleverg0021'
-DNA_SERVER_LIQ = 'mancsleverg0022'
-DNA_PORT = '22'
-DNA_SERVER_USER = 'sftpuser2'
-DNA_SERVER_PASSWORD = 'luckyroll76'
-DNA_EXTRACTION_AREA_PATH = '/evgdata/STREAMSETS/workspace/extraction_area/COMRLENDING/'
-DNA_CCB_LIQ_FILENAME = 'CCB_LIQ_'
-DNA_DATAASSURANCE_FILENAME = 'DATAASSURANCE_'
-DNA_DAT_EXT = '.DAT'
