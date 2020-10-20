@@ -57,7 +57,7 @@ Initiate LC Collection D00000476
     
     Navigate Notebook Workflow    ${LIQ_Payment_Window}    ${LIQ_Payment_Tab}    ${LIQ_Payment_WorkflowItems}    Approval
     Navigate Notebook Workflow    ${LIQ_Payment_Window}    ${LIQ_Payment_Tab}    ${LIQ_Payment_WorkflowItems}    Release Cashflows
-    Release Cashflow    &{ExcelPath}[Borrower_ShortName]    release
+    # Release Cashflow    &{ExcelPath}[Borrower_ShortName]    release
 
     ### Release ###
     Logout from Loan IQ
