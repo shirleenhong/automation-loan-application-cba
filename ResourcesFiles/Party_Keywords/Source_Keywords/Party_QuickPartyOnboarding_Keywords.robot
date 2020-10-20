@@ -687,43 +687,43 @@ Validate Branch in Party Onboarding Page
 
 Validate Mandatory Fields in Quick Enterprise Party Page    
     [Documentation]    This test case is used to validate mandatory fields in Quick Enterprise Party Page.
-    ...                Mandatory Fields as of this writting are as follows: PartyID, Registered Number, Country of Registration, Short name, Goods and service tax number
-    ...                Address type, Post code, Document collection status, Country, Industry Sector, Business Activity, Address Line 1, Town/City 
+    ...    Mandatory Fields as of this writting are as follows: PartyID, Registered Number, Country of Registration, Short name, Goods and service tax number
+    ...    Address type, Post code, Document collection status, Country, Industry Sector, Business Activity, Address Line 1, Town/City 
     ...    @author: javinzon    15OCT2020    - initial create
     [Arguments]    ${sParty_ID}    ${sCountry_of_Tax_Domicile}    ${sCountry_of_Registration}    ${iGST_Number}    ${sCountryRegion}    ${iPostCode}
     
     Click Button    ${Party_QuickEnterpriseParty_GoodsAndServiceTaxLiable_CheckBox}
     Mx Click Element    ${Party_Footer_Next_Button}
 
-    ${isMandatory}    Run Keyword And Return Status    Element Should Be Visible   //div[contains(@class,"TextBoxError")]${Party_QuickEnterpriseParty_PartyId_TextBox}    
+    ${isMandatory}    Run Keyword And Return Status    Element Should Be Visible   ${Party_QuickEnterpriseParty_Error_TextBox}${Party_QuickEnterpriseParty_PartyId_TextBox}    
     Run Keyword If    ${isMandatory}==${True}    Log    Party ID is a mandatory field.  
     ...   ELSE    Run Keyword and Continue on Failure    Fail    Party ID should be mandatory.   
     
-    ${isMandatory}    Run Keyword And Return Status    Element Should Be Visible   //div[contains(@class,"TextBoxError")]${Party_QuickEnterpriseParty_RegisteredNumber_TextBox}
+    ${isMandatory}    Run Keyword And Return Status    Element Should Be Visible   ${Party_QuickEnterpriseParty_Error_TextBox}${Party_QuickEnterpriseParty_RegisteredNumber_TextBox}
     Run Keyword If    ${isMandatory}==${True}    Log    Registered Number is a mandatory field.  
     ...   ELSE    Run Keyword and Continue on Failure    Fail    Registered Number should be mandatory.   
     
-    ${isMandatory}    Run Keyword And Return Status    Element Should Be Visible   //div[contains(@class,"TextBoxError")]${Party_QuickEnterpriseParty_CountryOfRegistration_Dropdown}
+    ${isMandatory}    Run Keyword And Return Status    Element Should Be Visible   ${Party_QuickEnterpriseParty_Error_TextBox}${Party_QuickEnterpriseParty_CountryOfRegistration_Dropdown}
     Run Keyword If    ${isMandatory}==${True}    Log    Country of Registration is a mandatory field.  
     ...   ELSE    Run Keyword and Continue on Failure    Fail    Country of Registration should be mandatory.   
 
-    ${isMandatory}    Run Keyword And Return Status    Element Should Be Visible   //div[contains(@class,"TextBoxError")]${Party_QuickEnterpriseParty_ShortName_TextBox}
+    ${isMandatory}    Run Keyword And Return Status    Element Should Be Visible   ${Party_QuickEnterpriseParty_Error_TextBox}${Party_QuickEnterpriseParty_ShortName_TextBox}
     Run Keyword If    ${isMandatory}==${True}    Log    Short Name is a mandatory field.  
     ...   ELSE    Run Keyword and Continue on Failure    Fail    Short Name should be mandatory.   
     
-    ${isMandatory}    Run Keyword And Return Status    Element Should Be Visible   //div[contains(@class,"TextBoxError")]${Party_QuickEnterpriseParty_GoodsAndServiceTaxNumber_TextBox}
+    ${isMandatory}    Run Keyword And Return Status    Element Should Be Visible   ${Party_QuickEnterpriseParty_Error_TextBox}${Party_QuickEnterpriseParty_GoodsAndServiceTaxNumber_TextBox}
     Run Keyword If    ${isMandatory}==${True}    Log    Goods And Service Tax Number is a mandatory field.  
     ...   ELSE    Run Keyword and Continue on Failure    Fail    Goods And Service Tax Number should be mandatory.     
         
-    ${isMandatory}    Run Keyword And Return Status    Element Should Be Visible   //div[contains(@class,"TextBoxError")]${Party_QuickEnterpriseParty_AddressType_Dropdown}
+    ${isMandatory}    Run Keyword And Return Status    Element Should Be Visible   ${Party_QuickEnterpriseParty_Error_TextBox}${Party_QuickEnterpriseParty_AddressType_Dropdown}
     Run Keyword If    ${isMandatory}==${True}    Log    Address Type is a mandatory field.  
     ...   ELSE    Run Keyword and Continue on Failure    Fail    Address Type should be mandatory.    
 
-    ${isMandatory}    Run Keyword And Return Status    Element Should Be Visible   //div[contains(@class,"TextBoxError")]${Party_QuickEnterpriseParty_PostCode_TextBox}
+    ${isMandatory}    Run Keyword And Return Status    Element Should Be Visible   ${Party_QuickEnterpriseParty_Error_TextBox}${Party_QuickEnterpriseParty_PostCode_TextBox}
     Run Keyword If    ${isMandatory}==${True}    Log    Post Code is a mandatory field.  
     ...   ELSE    Run Keyword and Continue on Failure    Fail    Post Code should be mandatory.     
     
-    ${isMandatory}    Run Keyword And Return Status    Element Should Be Visible   //div[contains(@class,"TextBoxError")]${Party_QuickEnterpriseParty_DocumentCollectionStatus_Dropdown}
+    ${isMandatory}    Run Keyword And Return Status    Element Should Be Visible   ${Party_QuickEnterpriseParty_Error_TextBox}${Party_QuickEnterpriseParty_DocumentCollectionStatus_Dropdown}
     Run Keyword If    ${isMandatory}==${True}    Log    Document Collection Status is a mandatory field.  
     ...   ELSE    Run Keyword and Continue on Failure    Fail    Document Collection Status should be mandatory.    
     
@@ -740,15 +740,15 @@ Validate Mandatory Fields in Quick Enterprise Party Page
     Mx Click Element    ${Party_QuickEnterpriseParty_EnterpriseBusinessActivity_NewRow_Button}
     Mx Click Element    ${Party_QuickEnterpriseParty_EnterpriseBusinessActivity_Next_Button}
     
-    ${isMandatory}    Run Keyword And Return Status    Element Should Be Visible    //div[contains(@class,"TextBoxError")]${Party_QuickEnterpriseParty_EnterpriseBusinessActivity_Country_Dropdown}
+    ${isMandatory}    Run Keyword And Return Status    Element Should Be Visible    ${Party_QuickEnterpriseParty_Error_TextBox}${Party_QuickEnterpriseParty_EnterpriseBusinessActivity_Country_Dropdown}
     Run Keyword If    ${isMandatory}==${True}    Log    Country is a mandatory field.  
     ...   ELSE    Run Keyword and Continue on Failure    Fail    Country should be mandatory.    
 
-    ${isMandatory}    Run Keyword And Return Status    Element Should Be Visible    //div[contains(@class,"TextBoxError")]${Party_QuickEnterpriseParty_EnterpriseBusinessActivity_IndustrySector_Dropdown}
+    ${isMandatory}    Run Keyword And Return Status    Element Should Be Visible    ${Party_QuickEnterpriseParty_Error_TextBox}${Party_QuickEnterpriseParty_EnterpriseBusinessActivity_IndustrySector_Dropdown}
     Run Keyword If    ${isMandatory}==${True}    Log    Industry Sector is a mandatory field.  
     ...   ELSE    Run Keyword and Continue on Failure    Fail   Industry Sector should be mandatory.     
     
-    ${isMandatory}    Run Keyword And Return Status    Element Should Be Visible    //div[contains(@class,"TextBoxError")]${Party_QuickEnterpriseParty_EnterpriseBusinessActivity_BusinessActivity_Dropdown}
+    ${isMandatory}    Run Keyword And Return Status    Element Should Be Visible    ${Party_QuickEnterpriseParty_Error_TextBox}${Party_QuickEnterpriseParty_EnterpriseBusinessActivity_BusinessActivity_Dropdown}
     Run Keyword If    ${isMandatory}==${True}    Log    Business Activity is a mandatory field.  
     ...   ELSE    Run Keyword and Continue on Failure    Fail    Business Activity should be mandatory.
     

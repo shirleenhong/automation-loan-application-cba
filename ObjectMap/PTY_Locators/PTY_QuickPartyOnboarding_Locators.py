@@ -114,6 +114,9 @@ Party_QuickEnterpriseParty_EnterpriseBusinessActivity_IsPrimaryActivity_CheckBox
 Party_QuickEnterpriseParty_EnterpriseBusinessActivity_Next_Button = '//div[@role="dialog"]//input[contains(@id, "Next")]'
 Party_QuickEnterpriseParty_EnterpriseBusinessActivity_EnquireEntBusinessAct_Next_Button = '//div[contains(@id,"EnquireEntBusActivity")]//input[@name="Next"]'
 
+### Quick Enterprise Party Page - Text Box Error ###
+Party_QuickEnterpriseParty_Error_TextBox = '//div[contains(@class,"TextBoxError")]'
+
 ### Notification Types Page ###
 Party_NotificationTypes_TaskType_TextBox = '//input[contains(@id,"taskType")]'
 
@@ -129,3 +132,5 @@ Party_Referrals_Refer_Button = '//input[contains(@id, "Reject")]'
 Party_Referrals_Replay_Button = '//input[contains(@id, "Replay")]'
 Party_Referrals_ViewDetails_Button = '//input[contains(@name, "View Details")]'
 Party_Referrals_OtherTypes_Button = '//input[contains(@id, "Next")]'
+
+
