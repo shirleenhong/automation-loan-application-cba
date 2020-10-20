@@ -66,25 +66,20 @@ Evaluate Issuance Fee
     Mx LoanIQ Select Window Tab    ${LIQ_SBLCGuarantee_Tab}    Accrual
     ${StartDate}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_BankGuarantee_Accrual_JavaTree}    ${CycleNumber}%Start Date%startdate
     ${AccrualRuleDate}    Run Keyword If    '${AccrualRule}'=='Pay in Arrears'    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_BankGuarantee_Accrual_JavaTree}    ${CycleNumber}%Due Date%duedate
-    ...    ELSE IF    '${AccrualRule}'=='Pay in Advance'    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_BankGuarantee_Accrual_JavaTree}    ${CycleNumber}%End Date%enddate
+    ...    ELSE IF    '${AccrualRule}'=='Pay In Advance'    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_BankGuarantee_Accrual_JavaTree}    ${CycleNumber}%End Date%enddate
     Log    ${StartDate}
     Log    ${AccrualRuleDate}
     ${SystemDate}    Convert Date    ${SystemDate}     date_format=%d-%b-%Y
     ${StartDate}    Convert Date    ${StartDate}     date_format=%d-%b-%Y
     ${AccrualRuleDate}    Convert Date    ${AccrualRuleDate}     date_format=%d-%b-%Y
-    ${Numberof Days1}    Subtract Date From Date    ${SystemDate}    ${StartDate}    verbose
-    ${Numberof Days2}    Subtract Date From Date    ${AccrualRuleDate}    ${StartDate}    verbose
-    Log    ${Numberof Days1}
-    Log    ${Numberof Days2}
-    ${Numberof Days1}    Remove String    ${Numberof Days1}     days    seconds    day
-    ${Numberof Days1}    Convert To Number    ${Numberof Days1}
-    ${Numberof Days2}    Remove String    ${Numberof Days2}     days    seconds    day
-    ${Numberof Days2}    Convert To Number    ${Numberof Days2}
-    ${Numberof Days}   Run Keyword If    '${Numberof Days2}' == '0.0'    Set Variable    ${Numberof Days1}
-    ...    ELSE IF    ${Numberof Days1} > ${Numberof Days2}    Set Variable    ${Numberof Days2}
-    ...    ELSE IF    '${Numberof Days1}' == '${Numberof Days2}'    Set Variable    ${Numberof Days2}
-    ...    ELSE    Set Variable    ${Numberof Days1}
-    ${ProjectedCycleDue}    Evaluate    (((${iGlobalOriginal})*(${Rate}))*(${Numberof Days}))/${RateBasis}
+    
+    ${NumberofDays}    Subtract Date From Date    ${AccrualRuleDate}    ${StartDate}    verbose
+    Log    ${NumberofDays}
+    
+    ${NumberofDays}    Remove String    ${NumberofDays}     days    seconds    day
+    ${NumberofDays}    Convert To Number    ${NumberofDays}
+    
+    ${ProjectedCycleDue}    Evaluate    (((${iGlobalOriginal})*(${Rate}))*(${NumberofDays}))/${RateBasis}
     ${ProjectedCycleDue}    Convert To Number    ${ProjectedCycleDue}    2
     [Return]    ${ProjectedCycleDue}
 
