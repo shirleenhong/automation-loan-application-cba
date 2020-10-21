@@ -7,6 +7,7 @@ Add New Facility via Amendment Notebook
     ...    @author: mgaling
     ...    @update: clanding    30JUL2020    - updated hard coded values to dataset input; added writing of data and setting to dictionary
     ...										 - added new argument for Add a Schedule Item
+    ...    @update: fluberio    20OCT3030    - updated the adding of Modify Interest Pricing since EU has 4 Price Options
     [Arguments]    ${ExcelPath}
         
     ###Close all windows and Login as original user###
@@ -64,7 +65,9 @@ Add New Facility via Amendment Notebook
     Modify Ongoing Fee - Insert After    &{ExcelPath}[FacilityItemAfter]    &{ExcelPath}[FacilityItemTypeAfter]    &{ExcelPath}[Percent]
     Validate Ongoing Fee Values
     
-    Modify Interest Pricing - Insert Add (Options Item)    &{ExcelPath}[InterestPricingItem]    &{ExcelPath}[OptionName1]    &{ExcelPath}[RateBasisInterestPricing]    &{ExcelPath}[Spread1]    &{ExcelPath}[OptionName2]    &{ExcelPath}[Spread2]
+    Run Keyword If    '&{ExcelPath}[Entity]' == 'EU'    Modify Interest Pricing - Insert Add (Options Item)    &{ExcelPath}[InterestPricingItem]    &{ExcelPath}[OptionName1]    &{ExcelPath}[RateBasisInterestPricing]    &{ExcelPath}[Spread1]    &{ExcelPath}[OptionName2]    &{ExcelPath}[Spread2]
+    ...    &{ExcelPath}[OptionName3]    &{ExcelPath}[Spread3]    &{ExcelPath}[OptionName4]    &{ExcelPath}[Spread2]    sEntity=&{ExcelPath}[Entity]
+    ...    ELSE IF    '&{ExcelPath}[Entity]' == 'AU'    Modify Interest Pricing - Insert Add (Options Item)    &{ExcelPath}[InterestPricingItem]    &{ExcelPath}[OptionName1]    &{ExcelPath}[RateBasisInterestPricing]    &{ExcelPath}[Spread1]    &{ExcelPath}[OptionName2]    &{ExcelPath}[Spread2]    sEntity=&{ExcelPath}[Entity]
     Validate Interest Pricing Values
     
     ###Facility Notebook- Pricing Rules Tab###
