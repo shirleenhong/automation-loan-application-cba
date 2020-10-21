@@ -78,6 +78,7 @@ Evaluate Issuance Fee
     
     ${NumberofDays}    Remove String    ${NumberofDays}     days    seconds    day
     ${NumberofDays}    Convert To Number    ${NumberofDays}
+    ${NummberofDays}    Evaluate    ${NumberofDays}+1
     
     ${ProjectedCycleDue}    Evaluate    (((${iGlobalOriginal})*(${Rate}))*(${NumberofDays}))/${RateBasis}
     ${ProjectedCycleDue}    Convert To Number    ${ProjectedCycleDue}    2

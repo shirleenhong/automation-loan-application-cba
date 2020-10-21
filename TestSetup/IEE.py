@@ -1,6 +1,6 @@
 ### Dataset Locations ###
 APIDataSet = "C:\\Git_Evergreen\\fms_cba\DataSet\\Integration_DataSet\\API\\API_Data_Set.xlsx"
-ExcelPath = "C:\\Git_Evergreen\\fms_cba\DataSet\\LoanIQ_DataSet\\EVG_PTYLIQ01_BaselineBilateralCustomer.xlsx"
+ExcelPath = "C:\\Git_Evergreen\\fms_cba\DataSet\\LoanIQ_DataSet\\EVG_PTYLIQ03_BaselineSBLC.xlsx"
 dataset_path = "C:\\Git_Evergreen\\fms_cba"
 CBAUAT_ExcelPath = "C:\\Git_Evergreen\\fms_cba\\DataSet\\CBAUATDeal_DataSet\\EVG_CBAUAT05.xlsx"
 TL_DATASET = "C:\\Git_Evergreen\\evergreen_projects\\CBA_Evergreen\\DataSet\\TL_DataSet\\TL_Data_Set.xls"
@@ -47,11 +47,11 @@ MDM_FFC_Password = 'admin'
 ### TL Credentials ###
 TL_USERNAME = "JCUSR01"
 TL_PASSWORD = "password"
-INPUTTER_USERNAME = "CFRANCIS"
-INPUTTER_PASSWORD = "password01"
-SUPERVISOR_USERNAME = "SUPAMT01"
+INPUTTER_USERNAME = "INPRON01"
+INPUTTER_PASSWORD = "password"
+SUPERVISOR_USERNAME = "SUPRON01"
 SUPERVISOR_PASSWORD = "password"
-MANAGER_USERNAME = "MGRAMT01"
+MANAGER_USERNAME = "MGRRON01"
 MANAGER_PASSWORD = "password"
 
 SSO_USERLINK = "mancsleverg0028"
