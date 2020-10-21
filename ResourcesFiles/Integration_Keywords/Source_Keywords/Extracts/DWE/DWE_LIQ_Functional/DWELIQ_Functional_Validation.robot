@@ -564,7 +564,7 @@ Validate FPP_CDE_PORTFOLIO Value in LIQ
     ### Launch Facility Notebook and Get the Facility Name ### 
     Navigate to Notebook Window thru RID    Facility    ${sFPP_PID_FACILITY_Value}
     
-    :FOR    ${i}    IN    RANGE    15
+    :FOR    ${i}    IN RANGE    15
     \    ${AlertsWindow_isDisplayed}    Run Keyword And Return Status    Mx LoanIQ Verify Object Exist    ${LIQ_Facility_Alerts_Window}         VerificationData="Yes"
     \    Run Keyword If     ${AlertsWindow_isDisplayed}==${True}    Run Keywords
          ...    mx LoanIQ activate window    ${LIQ_Facility_Alerts_Window}
@@ -579,7 +579,7 @@ Validate FPP_CDE_PORTFOLIO Value in LIQ
     Mx LoanIQ Select    ${LIQ_FacilityNotebook_Options_DealNotebook}
 
 
-    :FOR    ${i}    IN    RANGE    15
+    :FOR    ${i}    IN RANGE    15
     \    ${AlertsWindow_isDisplayed}    Run Keyword And Return Status    Mx LoanIQ Verify Object Exist    ${LIQ_Facility_Alerts_Window}         VerificationData="Yes"
     \    Run Keyword If     ${AlertsWindow_isDisplayed}==${True}    Run Keywords
          ...    mx LoanIQ activate window    ${LIQ_Facility_Alerts_Window}
