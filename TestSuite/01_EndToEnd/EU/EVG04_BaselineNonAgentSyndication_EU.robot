@@ -30,3 +30,8 @@ Create Non Agent and Host Bank Syndicated Deal - CRED01
      Mx Execute Template With Multiple Data    Set up a Non-Host and Host Bank Primaries for Syndicated Deal    ${ExcelPath}    ${rowid}    SYND02_Primary_Allocation
      Mx Execute Template With Multiple Data    Syndicated Deal Approval and Close    ${ExcelPath}    ${rowid}    CRED01_DealSetup
      
+Initiate Upfront Fee Payment - SYND05
+    [Documentation]    Initiate Upfront Fee Payment.
+    [Tags]    05 Upfront Fee Payment - SYND05
+    Mx Execute Template With Multiple Data    Initiate Upfront Fee Payment    ${ExcelPath}    ${rowid}    SYND05_UpfrontFee_Payment
+   
