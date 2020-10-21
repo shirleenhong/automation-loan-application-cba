@@ -288,6 +288,7 @@ Setup Facility - Scenario 7 ComSee
     Write Data To Excel    ComSee_SC7_LoanInterestPayment    Facility_Name    ${rowid}    ${Facility_Name}    ${ComSeeDataSet}
     # Write Data To Excel    ComSee_SC7_LoanInterestPayment    Loan_FacilityName    ${rowid}    ${Facility_Name}    ${ComSeeDataSet} 
     Write Data To Excel    ComSee_SC7_OngoingFeePayment    Facility_Name    ${rowid}    ${Facility_Name}    ${ComSeeDataSet}
+    Write Data To Excel    ComSee_SC7_LoanRepricing    Facility_Name    ${rowid}    ${Facility_Name}    ${ComSeeDataSet}
     
     ###New Facility Screen###
     New Facility Select    &{ExcelPath}[Deal_Name]    ${FacilityName}    &{ExcelPath}[Facility_Type]    &{ExcelPath}[Facility_ProposedCmtAmt]    &{ExcelPath}[Facility_Currency]
