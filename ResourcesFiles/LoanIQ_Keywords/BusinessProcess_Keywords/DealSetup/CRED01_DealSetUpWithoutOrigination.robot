@@ -1299,6 +1299,7 @@ Create Facility for RPA Deal
     [Documentation]    This keyword is used to create a Facility for RPA Deal.
     ...    @author: fmamaril
     ...    @update: mcastro    12OCT2020    - added writing to TRPO12_PortfolioSettledDisc with condition
+    ...    @update: dahijara    20OCT2020    - added data writing for Scenario 4
     ...    @update: mcastro    20OCT2020    - added condition to open Deal notebook when Deal notebook is not displayed
     ...                                     - added writing to SERV01_LoanDrawdown for RPA Scenario 1
     [Arguments]    ${ExcelPath}
@@ -1319,9 +1320,8 @@ Create Facility for RPA Deal
     
     ###Open Deal Notebook If Not present###
     ${Status}    Run Keyword And Return Status    Mx LoanIQ Verify Object Exist    ${LIQ_DealNotebook_Window}    VerificationData="Yes"
-    Run Keyword If    '${Status}'!='True'    Open Existing Deal    &{ExcelPath}[Deal_Name]
+    Run Keyword If    ${Status}!=True    Open Existing Deal    &{ExcelPath}[Deal_Name]
     ...    ELSE    Log    Deal Notebook Is Already Displayed
-    
     ###New Facility Screen###
     ${Facility_ProposedCmtAmt}    New Facility Select    &{ExcelPath}[Deal_Name]    ${FacilityName}    &{ExcelPath}[Facility_Type]    &{ExcelPath}[Facility_ProposedCmtAmt]    &{ExcelPath}[Facility_Currency]
     
@@ -1336,9 +1336,16 @@ Create Facility for RPA Deal
     ...    AND    Write Data To Excel    SYND02_PrimaryAllocation    Primary_PortfolioExpiryDate    ${rowid}    ${Facility_ExpiryDate}
     ...    AND    Write Data To Excel    CRED02_FacilitySetup    Facility_ExpiryDate    ${rowid}    ${Facility_ExpiryDate}
     ...    AND    Write Data To Excel    CRED02_FacilitySetup    Facility_MaturityDate    ${rowid}    ${Facility_MaturityDate}    
-    
-    Run Keyword If    '${SCENARIO}'=='1'   Run Keywords    Write Data To Excel    SERV01_LoanDrawdown    Loan_EffectiveDate    ${rowid}    ${Facility_EffectiveDate}    bTestCaseColumn=True    sColumnReference=rowid
-    ...    AND   Write Data To Excel    SERV01_LoanDrawdown    Loan_MaturityDate    ${rowid}    ${Facility_MaturityDate}
+    ...    AND    Write Data To Excel    SERV01_LoanDrawdown    Loan_EffectiveDate    ${rowid}    ${Facility_EffectiveDate}    bTestCaseColumn=True    sColumnReference=rowid
+    ...    AND    Write Data To Excel    SERV01_LoanDrawdown    Loan_MaturityDate    ${rowid}    ${Facility_MaturityDate}
+
+    Run Keyword If    '${SCENARIO}'=='4'    Run Keywords    Write Data To Excel    CRED02_FacilitySetup    Facility_AgreementDate    ${rowid}    ${Facility_EffectiveDate}
+    ...    AND    Write Data To Excel    CRED02_FacilitySetup    Facility_EffectiveDate    ${rowid}    ${Facility_EffectiveDate}
+    ...    AND    Write Data To Excel    SYND02_PrimaryAllocation    Primary_PortfolioExpiryDate    ${rowid}    ${Facility_ExpiryDate}
+    ...    AND    Write Data To Excel    CRED02_FacilitySetup    Facility_ExpiryDate    ${rowid}    ${Facility_ExpiryDate}
+    ...    AND    Write Data To Excel    CRED02_FacilitySetup    Facility_MaturityDate    ${rowid}    ${Facility_MaturityDate}
+    ...    AND    Write Data To Excel    TRPO12_PortfolioSettledDisc    Facility_Name    ${rowid}    ${Facility_Name}    bTestCaseColumn=True    sColumnReference=rowid
+    ...    AND    Write Data To Excel    TRPO12_PortfolioSettledDisc    Portfolio_Position    ${rowid}    ${Facility_Name}    bTestCaseColumn=True    sColumnReference=rowid
    
     Verify Main SG Details    &{ExcelPath}[Facility_ServicingGroup]    &{ExcelPath}[Facility_Customer]    &{ExcelPath}[Facility_SGLocation]
     

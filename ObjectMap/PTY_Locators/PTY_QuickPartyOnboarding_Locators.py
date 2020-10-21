@@ -91,11 +91,11 @@ Party_EnterpriseDetailsSummary_TaxNumber_Cell = '//div[contains(@id,"partyTaxSch
 
 ### Quick Enterprise Party Page - Address Details Dialog ###
 Party_QuickEnterpriseParty_AddressDetails_Name_TextBox = '//form[@name="PT_PAM_QuickRecordAddress_SCF"]//input[contains (@name, "Name") and @type="text"]'
-Party_QuickEnterpriseParty_AddressDetails_AddressLineOne_TextBox = '//form[@name="PT_PAM_QuickRecordAddress_SCF"]//input[contains (@name, "03PartyAddrDtl:addressLine1") and @type="text"]'
-Party_QuickEnterpriseParty_AddressDetails_AddressLineTwo_TextBox = '//form[@name="PT_PAM_QuickRecordAddress_SCF"]//input[contains (@name, "03PartyAddrDtl:addressLine2") and @type="text"]'
-Party_QuickEnterpriseParty_AddressDetails_AddressLineThree_TextBox = '//form[@name="PT_PAM_QuickRecordAddress_SCF"]//input[contains (@name, "03PartyAddrDtl:addressLine3") and @type="text"]'
-Party_QuickEnterpriseParty_AddressDetails_AddressLineFour_TextBox = '//form[@name="PT_PAM_QuickRecordAddress_SCF"]//input[contains (@name, "03PartyAddrDtl:addressLine4") and @type="text"]'
-Party_QuickEnterpriseParty_AddressDetails_TownCity_TextBox = '//form[@name="PT_PAM_QuickRecordAddress_SCF"]//input[contains (@name, "PartyAddrDtl:townOrCity") and @type="text"]'
+Party_QuickEnterpriseParty_AddressDetails_AddressLineOne_TextBox = '//form[@name="PT_PAM_QuickRecordAddress_SCF"]//input[contains (@name, "PartyAddrDtl:addressLine1") and @type="text"]'
+Party_QuickEnterpriseParty_AddressDetails_AddressLineTwo_TextBox = '//form[@name="PT_PAM_QuickRecordAddress_SCF"]//input[contains (@name, "PartyAddrDtl:addressLine2") and @type="text"]'
+Party_QuickEnterpriseParty_AddressDetails_AddressLineThree_TextBox = '//form[@name="PT_PAM_QuickRecordAddress_SCF"]//input[contains (@name, "PartyAddrDtl:addressLine3") and @type="text"]'
+Party_QuickEnterpriseParty_AddressDetails_AddressLineFour_TextBox = '//form[@name="PT_PAM_QuickRecordAddress_SCF"]//input[contains (@name, "PartyAddrDtl:addressLine4") and @type="text"]'
+Party_QuickEnterpriseParty_AddressDetails_TownCity_TextBox = '//form[@name="PT_PAM_QuickRecordAddress_SCF"]//input[contains (@id, "townOrCity")]'
 Party_QuickEnterpriseParty_AddressDetails_StateProvince_Dropdown = '//form[@name="PT_PAM_QuickRecordAddress_SCF"]//input[contains (@id, "PartyAddrDtl:addressLine1") and @type="combo"]'
 Party_QuickEnterpriseParty_AddressDetails_PostCode_TextBox = '//form[@name="PT_PAM_QuickRecordAddress_SCF"]//input[contains (@name, "postCode") and @type="text"]'
 Party_QuickEnterpriseParty_AddressDetails_Country_TextBox = '//form[@name="PT_PAM_QuickRecordAddress_SCF"]//input[contains (@name, "region") and @type="text"]'
@@ -114,8 +114,10 @@ Party_QuickEnterpriseParty_EnterpriseBusinessActivity_IsPrimaryActivity_CheckBox
 Party_QuickEnterpriseParty_EnterpriseBusinessActivity_Next_Button = '//div[@role="dialog"]//input[contains(@id, "Next")]'
 Party_QuickEnterpriseParty_EnterpriseBusinessActivity_EnquireEntBusinessAct_Next_Button = '//div[contains(@id,"EnquireEntBusActivity")]//input[@name="Next"]'
 
-### Notification Types Page ###
+### Quick Enterprise Party Page - Text Box Error ###
+Party_QuickEnterpriseParty_Error_TextBox = '//div[contains(@class,"TextBoxError")]'
 
+### Notification Types Page ###
 Party_NotificationTypes_TaskType_TextBox = '//input[contains(@id,"taskType")]'
 
 ###Referrals Page###
@@ -130,3 +132,5 @@ Party_Referrals_Refer_Button = '//input[contains(@id, "Reject")]'
 Party_Referrals_Replay_Button = '//input[contains(@id, "Replay")]'
 Party_Referrals_ViewDetails_Button = '//input[contains(@name, "View Details")]'
 Party_Referrals_OtherTypes_Button = '//input[contains(@id, "Next")]'
+
+

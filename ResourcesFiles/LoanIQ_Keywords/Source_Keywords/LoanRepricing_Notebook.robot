@@ -717,7 +717,7 @@ Release Loan Repricing - Scenario 6
     
     Mx LoanIQ Select Window Tab    ${LIQ_LoanRepricing_Tab}    General
     ${ConvertedRequestedAmountToBeAdded}    Convert Number With Comma Separators    ${Requested_Amount_ToBeAdded}
-    Mx LoanIQ Select String    ${LIQ_LoanRepricing_Outstanding_List}    *** Increase:\t\t${ConvertedRequestedAmountToBeAdded}
+    Mx LoanIQ Select String    ${LIQ_LoanRepricing_Outstanding_List}    *** Increase:\t\t${ConvertedRequestedAmountToBeAdded} 
 
 Validate Loan Repricing from Facility
     [Documentation]    This keyword is use to validate loan repricing on facility notebook
@@ -1462,6 +1462,7 @@ Validate Loan Repricing New Outstanding Amount
     ...                @author: bernchua    11SEP2019    Updated keyword documentation
     ...                @update: sahalder    25JUN2020    Added keyword Pre-Processing steps
     ...                @update: dahijara    25AUG2020    Added arguments, inserted set variable for description from test case level. Added screenshot
+    ...                @update: cfrancis    19OCT2020    Updated UI_NewAmount to remove comma and convert to number
     [Arguments]    ${sPricing_Option}    ${sLoan_Alias}    ${sNewOutstanding_Amount}
     
     ### GetRuntime Keyword Pre-processing ###
@@ -1473,6 +1474,7 @@ Validate Loan Repricing New Outstanding Amount
     
     mx LoanIQ activate window    ${LIQ_LoanRepricingForDeal_Window}
     ${UI_NewAmount}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_LoanRepricing_Outstanding_List}    ${Description}%Amount%amount
+    ${UI_NewAmount}    Remove Comma and Convert to Number    ${UI_NewAmount}
     ${VALIDATE_NEWAMOUNT}    Run Keyword And Return Status    Should Be Equal    ${NewOutstanding_Amount}    ${UI_NewAmount}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LoanRepricing_Outstanding
     Run Keyword If    ${VALIDATE_NEWAMOUNT}==True    Log    Amount for ${Description} successfully validated.

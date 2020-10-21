@@ -11,8 +11,7 @@ Create Initial Loan Drawdown with no Repayment Schedule
     ...                                    - Removed commented 'Generate Rate Setting Notices for Drawdown    &{ExcelPath}[Borrower1_ShortName]    &{ExcelPath}[NoticeStatus]'
     ...                                    - Removed commented '${Loan_Alias}    Read Data From Excel    SERV01_LoanDrawdown   Loan_Alias    ${rowid}'
     ...    @update: mcastro    20OCT2020   - Added argument variable for Get Host Bank Cash in Cashflow
-    ...                                    - Added condition for handling of RPA Scenario 1
-    [Arguments]    ${ExcelPath}
+    [Arguments]    ${ExcelPath}    
     
     ###Facility###
     Navigate to Facility Notebook    &{ExcelPath}[Deal_Name]    &{ExcelPath}[Facility_Name]
@@ -25,8 +24,8 @@ Create Initial Loan Drawdown with no Repayment Schedule
     Navigate to Outstanding Select Window
     ${Loan_Alias}    Input Initial Loan Drawdown Details    &{ExcelPath}[Outstanding_Type]    &{ExcelPath}[Loan_FacilityName]    &{ExcelPath}[Borrower1_ShortName]    &{ExcelPath}[Loan_PricingOption]    &{ExcelPath}[Loan_Currency]
     Write Data To Excel    SERV01_LoanDrawdown   Loan_Alias    ${rowid}    ${Loan_Alias}
-    Run Keyword If    '${SCENARIO}'!='1'    Write Data To Excel    SERV21_InterestPayments   Loan_Alias    ${rowid}    ${Loan_Alias}
-    Run Keyword If    '${SCENARIO}'!='1'    Write Data To Excel    SERV18_Payments   Loan_Alias    ${rowid}    ${Loan_Alias}    
+    Write Data To Excel    SERV21_InterestPayments   Loan_Alias    ${rowid}    ${Loan_Alias}
+    Write Data To Excel    SERV18_Payments   Loan_Alias    ${rowid}    ${Loan_Alias}    
         
     ###Initial Loan Drawdown###
     ###For Scenario 7###
@@ -34,9 +33,8 @@ Create Initial Loan Drawdown with no Repayment Schedule
     ...    AND    Write Data To Excel    SERV19_UnscheduledPayments   Loan_Alias    ${rowid}    ${Loan_Alias}
    
     Validate Initial Loan Dradown Details    &{ExcelPath}[Loan_FacilityName]    &{ExcelPath}[Borrower1_ShortName]    &{ExcelPath}[Loan_Currency]
-    ${AdjustedDueDate}    Run Keyword If    '${SCENARIO}'!='1'    Input General Loan Drawdown Details    &{ExcelPath}[Loan_RequestedAmount]    &{ExcelPath}[Loan_EffectiveDate]    &{ExcelPath}[Loan_MaturityDate]    None    &{ExcelPath}[Loan_IntCycleFrequency]    &{ExcelPath}[Loan_Accrue]
-    ...    ELSE    Input General Loan Drawdown Details    &{ExcelPath}[Loan_RequestedAmount]    &{ExcelPath}[Loan_EffectiveDate]    &{ExcelPath}[Loan_MaturityDate]    &{ExcelPath}[Loan_RepricingFrequency]    None    &{ExcelPath}[Loan_Accrue]    
-    Run Keyword If    '${SCENARIO}'!='1'    Write Data To Excel    SERV21_InterestPayments    ScheduledActivityReport_Date    ${rowid}    ${AdjustedDueDate}
+    ${AdjustedDueDate}    Input General Loan Drawdown Details    &{ExcelPath}[Loan_RequestedAmount]    &{ExcelPath}[Loan_EffectiveDate]    &{ExcelPath}[Loan_MaturityDate]    &{ExcelPath}[Loan_RepricingFrequency]    &{ExcelPath}[Loan_IntCycleFrequency]    &{ExcelPath}[Loan_Accrue]    
+    Write Data To Excel    SERV21_InterestPayments    ScheduledActivityReport_Date    ${rowid}    ${AdjustedDueDate}
     Input Loan Drawdown Rates    &{ExcelPath}[Borrower_BaseRate]    &{ExcelPath}[Facility_Spread]
     
     ###Cashflow Notebook - Create Cashflows###

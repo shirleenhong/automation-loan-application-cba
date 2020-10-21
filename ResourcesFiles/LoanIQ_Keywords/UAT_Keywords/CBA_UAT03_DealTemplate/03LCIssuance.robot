@@ -7,7 +7,7 @@ Issue LC D00000476
     ...    @author: ritragel    29JUL2019
     [Arguments]    ${ExcelPath}
     
-    ##LIQ Window###
+    ###LIQ Window###
     Logout from Loan IQ
     Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
     
