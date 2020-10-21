@@ -10,7 +10,7 @@ Test_Case = ""
 
 ###Dataset###
 dataset_path = ""
-ExcelPath = "C:\\Git_Evergreen\\fms_cba\\DataSet\\\LoanIQ_DataSet\\EVG_PTYLIQ03_BaselineSBLC.xlsx"
+ExcelPath = ""
 CBAUAT_ExcelPath = ""
 APIDataSet = ""
 ExcelPath_API_temp = ""
@@ -90,12 +90,12 @@ SFTP_USER = ""
 SFTP_PASSWORD = ""
 
 ###LIQ Credential###
-INPUTTER_USERNAME = "INPRON01"
-INPUTTER_PASSWORD = "password"
-SUPERVISOR_USERNAME = "SUPRON01"
-SUPERVISOR_PASSWORD = "password"
-MANAGER_USERNAME = "MGRRON01"
-MANAGER_PASSWORD = "password"
+INPUTTER_USERNAME = ""
+INPUTTER_PASSWORD = ""
+SUPERVISOR_USERNAME = ""
+SUPERVISOR_PASSWORD = ""
+MANAGER_USERNAME = ""
+MANAGER_PASSWORD = ""
 LIQ_ADMIN_USERNAME = ""
 LIQ_ADMIN_PASSWORD = ""
 
@@ -140,7 +140,7 @@ CORRES_PORT = ""
 API_CORRES_HOST = ""
 
 ###Screenshots###
-Screenshot_Path = "C:\\Git_Evergreen\\fms_cba\\Results"
+Screenshot_Path = ""
 SCREENSHOT_FILENAME = ""
 
 ###MDM###
