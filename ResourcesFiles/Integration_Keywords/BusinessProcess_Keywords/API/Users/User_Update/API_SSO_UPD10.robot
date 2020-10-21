@@ -1,8 +1,7 @@
 *** Settings ***
-Resource    ../../../../Configurations/Import_File.robot
+Resource    ../../../../../../Configurations/Integration_Import_File.robot
 
 *** Keywords ***
-
 Update Single LOB Details for an Existing Multi LOB User 
     [Documentation]    This keyword is used to update a single LOB user for an existing Multi LOB user.
     ...    @author: clanding
@@ -98,5 +97,4 @@ Update Single LOB Details for an Existing Multi LOB User
     Run Keyword And Continue On Failure    Validate Update User in Party Page    &{APIDataSet}[loginId]    &{APIDataSet}[firstName]    &{APIDataSet}[surname]
     ...    &{APIDataSet}[jobTitle]    &{APIDataSet}[osUserId]    ${2Code_CountryCode}    ${CountryDesc}    ${UserType_Desc_PARTY}    &{APIDataSet}[locale]
     ...    ${LanguageDesc}    ${DefaultZone_Config_PARTY}    ${DefaultBranch_DB_PARTY}    &{APIDataSet}[contactNumber1]    &{APIDataSet}[email]
-    ...    ${AddZone_ConfigList_PARTY}    ${AddBranch_ConfigList_PARTY}    ${Role_ConfigList_PARTY}    
-    
+    ...    ${AddZone_ConfigList_PARTY}    ${AddBranch_ConfigList_PARTY}    ${Role_ConfigList_PARTY}

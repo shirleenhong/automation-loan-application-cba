@@ -1,5 +1,5 @@
 *** Settings ***
-Resource    ../../../../Configurations/Import_File.robot
+Resource    ../../../../../../Configurations/Integration_Import_File.robot
     
 *** Keywords ***
     
@@ -58,5 +58,3 @@ Process Field Invalid Email
     Run Keyword If    ${val}==True    Mx Execute Template With Multiple Data    Get Error Message from Error Master List    ${Err_Master_List}    2    User_Email
     Run Keyword If    ${key}==True    Mx Execute Template With Multiple Data    Get Error Message from Error Master List    ${Err_Master_List}    1    User_Email
     Run Keyword If    ${val2}==True    Mx Execute Template With Multiple Data    Get Error Message from Error Master List    ${Err_Master_List}    3    User_Email
- 
- 

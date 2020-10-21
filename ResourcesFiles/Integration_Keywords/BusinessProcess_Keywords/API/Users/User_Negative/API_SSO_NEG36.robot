@@ -1,8 +1,7 @@
 *** Settings ***
-Resource    ../../../../Configurations/Import_File.robot
+Resource    ../../../../../../Configurations/Integration_Import_File.robot
     
 *** Keywords ***
-    
 DELETE User API with Incorrect URL
     [Documentation]    This keyword is used to create prerequisites for execution for DELETE API.
     ...    Send a delete request with an invalid URL, length for login does not meet the required characters

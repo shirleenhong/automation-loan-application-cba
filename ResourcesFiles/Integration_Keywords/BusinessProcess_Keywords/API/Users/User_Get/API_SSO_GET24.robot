@@ -1,5 +1,5 @@
 *** Settings ***
-Resource    ../../../../Configurations/Import_File.robot
+Resource    ../../../../../../Configurations/Integration_Import_File.robot
     
 *** Keywords ***
 Get Party User After User is Deleted via UI
@@ -7,7 +7,6 @@ Get Party User After User is Deleted via UI
     ...    Validate that response is correct in FFC for GET deleted user.
     ...    @author: dahijara    18SEP2019    - initial create
     [Arguments]    ${APIDataSet}
-
     
     Run Keyword And Continue On Failure    GET Request for User API Single Lob    &{APIDataSet}[InputFilePath]    &{APIDataSet}[InputFFCResponse]
     ...    &{APIDataSet}[OutputFilePath]    &{APIDataSet}[OutputAPIResponse]    &{APIDataSet}[loginId]    &{APIDataSet}[lineOfBusiness]
@@ -28,7 +27,6 @@ Get Essence User After User is Deleted via UI
     ...    @author: dahijara    19SEP2019    - initial create
     [Arguments]    ${APIDataSet}
 
-    
     Run Keyword And Continue On Failure    GET Request for User API Single Lob    &{APIDataSet}[InputFilePath]    &{APIDataSet}[InputFFCResponse]
     ...    &{APIDataSet}[OutputFilePath]    &{APIDataSet}[OutputAPIResponse]    &{APIDataSet}[loginId]    &{APIDataSet}[lineOfBusiness]
     
@@ -40,7 +38,4 @@ Get Essence User After User is Deleted via UI
     Run Keyword and Continue On Failure    Validate FFC for GET API Deleted User    &{APIDataSet}[lineOfBusiness]    &{APIDataSet}[InputFilePath]    &{APIDataSet}[InputAPIResponse]
     ...    &{APIDataSet}[InputFFCResponse]    &{APIDataSet}[OutputFilePath]    &{APIDataSet}[OutputFFCResponse]    &{APIDataSet}[HTTPMethodType]    &{APIDataSet}[loginId]
    
-    Run Keyword And Continue On Failure    GET API Validation for DELETE    ${APIDataSet}    
-    
-
-    
+    Run Keyword And Continue On Failure    GET API Validation for DELETE    ${APIDataSet}

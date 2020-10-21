@@ -1,5 +1,5 @@
 *** Settings ***
-Resource    ../../../../Configurations/Import_File.robot
+Resource    ../../../../../../Configurations/Integration_Import_File.robot
 
 *** Keywords ***
 DELETE User in LIQ Without FFC Validation
@@ -11,4 +11,3 @@ DELETE User in LIQ Without FFC Validation
     ...    &{APIDataSet}[HTTPMethodType]    &{APIDataSet}[loginId]
      
     Run Keyword And Continue On Failure    Validate Loan IQ for Users with INACTIVE Status    &{APIDataSet}[loginId]
-    

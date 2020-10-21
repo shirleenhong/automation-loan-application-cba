@@ -1,8 +1,7 @@
 *** Settings ***
-Resource    ../../../../Configurations/Import_File.robot
+Resource    ../../../../../../Configurations/Integration_Import_File.robot
     
 *** Keywords ***
-    
 Create User with missing Profile ID and LOBS is COMRLENDING
     [Documentation]    This keyword is used to create a user with a missing profile id when LOBS is COMRLENDING
     ...    Validate that it has failed in FFC, and it created user in SSO but not in LIQ.

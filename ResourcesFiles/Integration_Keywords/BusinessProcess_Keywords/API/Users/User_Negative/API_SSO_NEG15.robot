@@ -1,8 +1,7 @@
 *** Settings ***
-Resource    ../../../../Configurations/Import_File.robot
+Resource    ../../../../../../Configurations/Integration_Import_File.robot
     
 *** Keywords ***
-
 Create User Invalid Locale
     [Documentation]    This keyword is used to create a user with invalid locale
     ...    @author: cfrancis    06AUG2020    - refactored codes

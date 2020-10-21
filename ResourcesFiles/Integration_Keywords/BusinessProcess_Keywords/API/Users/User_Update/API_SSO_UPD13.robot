@@ -1,8 +1,7 @@
 *** Settings ***
-Resource    ../../../../Configurations/Import_File.robot
+Resource    ../../../../../../Configurations/Integration_Import_File.robot
 
 *** Keywords ***
-
 Update Existing LIQ User After Adding LIQ LOB to a User
     [Documentation]    This keyword is used to create prerequisites for execution.
     ...    And send a PUT request for existing LIQ user. And validate MCH UI for AD, SSO and LIQ.

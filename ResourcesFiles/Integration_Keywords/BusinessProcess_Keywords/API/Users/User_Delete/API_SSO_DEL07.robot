@@ -1,5 +1,5 @@
 *** Settings ***
-Resource    ../../../../Configurations/Import_File.robot
+Resource    ../../../../../../Configurations/Integration_Import_File.robot
     
 *** Keywords ***
 
@@ -19,4 +19,4 @@ Delete User on Single LOB for Party
 
     Run Keyword And Continue On Failure    Validate SSO for Delete Success    &{APIDataSet}[loginId]
 
-    Run Keyword And Continue On Failure    Validate Party for Delete Success    &{APIDataSet}[loginId]    
+    Run Keyword And Continue On Failure    Validate Party for Delete Success    &{APIDataSet}[loginId]

@@ -1,8 +1,7 @@
 *** Settings ***
-Resource    ../../../../Configurations/Import_File.robot
+Resource    ../../../../../../Configurations/Integration_Import_File.robot
     
 *** Keywords ***
-
 Create User Invalid Country Code
     [Documentation]    This keyword is used to create a user with invalid country code
     ...    @author: jaquitan/clanding
@@ -47,14 +46,3 @@ Update User with Invalid Country Code
 
     ###VALIDATION###
     Run Keyword And Continue On Failure    Validate Technical Errors on API User Response     ${RESPONSECODE_400}     ${ErrorList}
-
-AUDIT LOG USER SSO AD Error
-    [Documentation]    This keyword is used to validate OpenAPI Audit Log and Distributor Audit Log for User/SSO API when AD have errors.
-    ...    @author: clandingin
-    [Arguments]    ${APIDataSet}
-    
-    ${ffcresp}    OperatingSystem.Get File    ${dataset_path}&{APIDataSet}[OutputFilePath]&{APIDataSet}[OutputFFCResponse].json
-    
-    ${expected_message}    Catenate    Country code provided is not as per ISO standard
-    Run Keyword And Continue On Failure    Validate OpenAPI Audit Log    ${OpenAPI_Audit_File}    &{APIDataSet}[HTTPMethodType]    ${details_name}    ${ffcresp}    ${UsersName}
-    Run Keyword And Continue On Failure    Validate User Distributor Audit Log - AD Error    ${Distributor_Audit_File}    ${APIDataSet}    ${expected_message}

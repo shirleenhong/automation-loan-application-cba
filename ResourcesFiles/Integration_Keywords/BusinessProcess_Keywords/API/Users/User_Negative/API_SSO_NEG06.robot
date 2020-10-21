@@ -1,5 +1,5 @@
 *** Settings ***
-Resource    ../../../../Configurations/Import_File.robot
+Resource    ../../../../../../Configurations/Integration_Import_File.robot
     
 *** Keywords ***
 UPDATE User with Mismatch LoginId
@@ -27,4 +27,3 @@ UPDATE User with Mismatch LoginId
 
     ###VALIDATION###
     Run Keyword And Continue On Failure    Validate Technical Errors on API User Response     ${RESPONSECODE_400}     ${ErrorList}
-    

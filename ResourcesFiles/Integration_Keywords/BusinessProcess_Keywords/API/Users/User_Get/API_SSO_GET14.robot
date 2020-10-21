@@ -1,5 +1,5 @@
 *** Settings ***
-Resource    ../../../../Configurations/Import_File.robot
+Resource    ../../../../../../Configurations/Integration_Import_File.robot
     
 *** Keywords ***
 Get User with Single LOB from Created User
@@ -22,7 +22,3 @@ Get User with Single LOB from Created User
     
     ###LOB VALIDATION###
     Run Keyword And Continue On Failure    GET API Validation    ${APIDataSet}
-    
-    
-
-    

@@ -1,8 +1,7 @@
 *** Settings ***
-Resource    ../../../../Configurations/Import_File.robot
+Resource    ../../../../../../Configurations/Integration_Import_File.robot
 
 *** Keywords ***
-
 Update User with COMRLENDING LOB without FFC Validation for GET API
     [Documentation]    This keyword is used to update COMRLENDING data for execution.
     ...    This will send a PUT request for LIQ user.

@@ -1,8 +1,7 @@
 *** Settings ***
-Resource    ../../../../Configurations/Import_File.robot
+Resource    ../../../../../../Configurations/Integration_Import_File.robot
 
 *** Keywords ***
-
 Update Existing User for Single LOB and From LOCKED Account to UNLOCKED
     [Documentation]    This keyword is used to create prerequisites for execution.
     ...    And send a PUT request for existing LIQ user. And validate MCH UI for AD, SSO and LIQ.

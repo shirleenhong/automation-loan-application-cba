@@ -1,8 +1,7 @@
 *** Settings ***
-Resource    ../../../../Configurations/Import_File.robot
+Resource    ../../../../../../Configurations/Integration_Import_File.robot
     
 *** Keywords ***
-
 Delete User on Loan IQ and Essence LOBs
     [Documentation]    This keyword is used to delete user on Loan IQ and Essence Lobs
     ...    and validate successful delete in FFC, SSO, and on all lobs (Loan IQ, Essence and Party)

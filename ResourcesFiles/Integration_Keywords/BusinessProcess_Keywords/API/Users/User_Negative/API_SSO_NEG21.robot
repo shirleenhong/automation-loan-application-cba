@@ -1,8 +1,7 @@
 *** Settings ***
-Resource    ../../../../Configurations/Import_File.robot
+Resource    ../../../../../../Configurations/Integration_Import_File.robot
     
 *** Keywords ***
-    
 Create User with Invalid Primary Dept Code
     [Documentation]    This keyword is used to create a user with invalid primary department code.
     ...    @author: cfrancis    07AUG2020    - refactored based from existing codes for negative scenarios

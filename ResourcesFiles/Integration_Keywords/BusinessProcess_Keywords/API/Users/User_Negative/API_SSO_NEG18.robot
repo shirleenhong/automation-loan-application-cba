@@ -1,8 +1,7 @@
 *** Settings ***
-Resource    ../../../../Configurations/Import_File.robot
+Resource    ../../../../../../Configurations/Integration_Import_File.robot
     
 *** Keywords ***
-
 Delete User with Invalid User ID for Some Application
     [Documentation]    This keyword is used to verify if Invalid User on all related application is deleted.
     ...    @author: cfrancis    13AUG2020    - refactored based from existing codes for negative scenarios

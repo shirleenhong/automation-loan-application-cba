@@ -1,8 +1,7 @@
 *** Settings ***
-Resource    ../../../../Configurations/Import_File.robot
+Resource    ../../../../../../Configurations/Integration_Import_File.robot
 
 *** Keywords ***
-
 Update Existing User for Multiple LOBs
     [Documentation]    This keyword is used to update user with mutliple LOBs.
     ...    @author: clanding
@@ -125,5 +124,4 @@ Update Existing User for Multiple LOBs
     ...    &{APIDataSet}[defaultBusinessEntity]    &{APIDataSet}[jobTitle]    &{APIDataSet}[additionalDepartments]    &{APIDataSet}[primaryDepartment]
     ...    &{APIDataSet}[additionalProcessingArea]    &{APIDataSet}[defaultProcessingArea]    &{APIDataSet}[location]    ${ProfileID_COMRLENDING}    &{APIDataSet}[status]
     ...    &{APIDataSet}[contactNumber1]    &{APIDataSet}[userLockStatus]    &{APIDataSet}[firstName]    &{APIDataSet}[surname]    &{APIDataSet}[email]    &{APIDataSet}[loginId]
-    ...    ${INDEX_COMRLENDING}    
-    
+    ...    ${INDEX_COMRLENDING}

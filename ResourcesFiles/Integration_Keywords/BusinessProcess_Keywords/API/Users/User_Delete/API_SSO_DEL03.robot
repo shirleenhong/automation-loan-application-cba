@@ -1,5 +1,5 @@
 *** Settings ***
-Resource    ../../../../Configurations/Import_File.robot
+Resource    ../../../../../../Configurations/Integration_Import_File.robot
 
 *** Keywords ***
 Delete Existing User from Party
@@ -23,4 +23,3 @@ Delete Existing User from Party
     Run Keyword And Continue On Failure    Validate User If Existing in Database    &{APIDataSet}[loginId]    ${COMRLENDING}
     
     Run Keyword And Continue On Failure    Validate User If Existing in Database    &{APIDataSet}[loginId]    ${COREBANKING}
-    

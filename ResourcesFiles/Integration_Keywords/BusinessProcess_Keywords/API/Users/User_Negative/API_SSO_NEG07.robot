@@ -1,5 +1,5 @@
 *** Settings ***
-Resource    ../../../../Configurations/Import_File.robot
+Resource    ../../../../../../Configurations/Integration_Import_File.robot
     
 *** Keywords ***
 CREATE User API with Invalid LOB on Endpoint
@@ -80,5 +80,3 @@ Process Fields Invalid Field Value
     \   ${FieldValue_Status}    Evaluate Config File for Invalid Field value    ${Valid_userLockStatus}    &{APIDataSet}[userLockStatus]    
     \    Run Keyword If    ${FieldValue_Status}==False    Mx Execute Template With Multiple Data    Get Error Message from Error Master List    ${Err_Master_List}    8    User_UserLockStatus
          ...    ELSE IF    ${FieldValue_Status}==True    Log    UserLockStatus Value is Valid.
-    
-    

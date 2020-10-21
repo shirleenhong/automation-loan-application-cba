@@ -1,8 +1,7 @@
 *** Settings ***
-Resource    ../../../../Configurations/Import_File.robot
+Resource    ../../../../../../Configurations/Integration_Import_File.robot
     
 *** Keywords ***
-    
 Create User with Invalid Additional Dept Code
     [Documentation]    This keyword is used to create a user with invalid additional department code.
     ...    @author: cfrancis    10AUG2020    - refactored based from existing codes for negative scenarios

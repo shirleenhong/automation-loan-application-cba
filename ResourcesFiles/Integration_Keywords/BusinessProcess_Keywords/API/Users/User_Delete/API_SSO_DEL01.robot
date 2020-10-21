@@ -1,5 +1,5 @@
 *** Settings ***
-Resource    ../../../../Configurations/Import_File.robot
+Resource    ../../../../../../Configurations/Integration_Import_File.robot
 
 *** Keywords ***
 Delete Existing User from LIQ
@@ -27,4 +27,3 @@ Delete Existing User from LIQ
     Run Keyword And Continue On Failure    Validate User If Existing in Database    &{APIDataSet}[loginId]    ${COREBANKING}
     
     Run Keyword And Continue On Failure    Validate User If Existing in Database    &{APIDataSet}[loginId]    ${PARTY}
-    

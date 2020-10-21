@@ -1,8 +1,7 @@
 *** Settings ***
-Resource    ../../../../Configurations/Import_File.robot
+Resource    ../../../../../../Configurations/Integration_Import_File.robot
 
 *** Keywords ***
-
 Update Existing LIQ User
     [Documentation]    This keyword is used to create prerequisites for execution.
     ...    And send a PUT request for existing LIQ user. And validate MCH UI for AD, SSO and LIQ.
@@ -76,4 +75,3 @@ Update Existing LIQ User
     ...    &{APIDataSet}[additionalProcessingArea]    &{APIDataSet}[defaultProcessingArea]    &{APIDataSet}[location]    &{APIDataSet}[profileId]    &{APIDataSet}[status]
     ...    &{APIDataSet}[contactNumber1]    &{APIDataSet}[userLockStatus]    &{APIDataSet}[firstName]    &{APIDataSet}[surname]    &{APIDataSet}[email]    &{APIDataSet}[loginId]
     ...    ${INDEX_COMRLENDING}
-

@@ -1,8 +1,7 @@
 *** Settings ***
-Resource    ../../../../Configurations/Import_File.robot
+Resource    ../../../../../../Configurations/Integration_Import_File.robot
     
 *** Keywords ***
-    
 CREATE User API with Invalid Status
     [Documentation]    This keyword is used to create prerequisites for execution for CREATE API.
     ...    And send a GET request for a single user with invalid STATUS.
