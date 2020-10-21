@@ -395,7 +395,13 @@ Set Facility Sell Amounts
 Setup Initial Primary Details
     [Documentation]    This keyword sets up the Initial Primary Details.
     ...    @author: fmamaril    27AUG2019    Initial Create
+    ...    @update: mcastro     20OCT2020    Added conditon to open Deal notebook if not displayed
     [Arguments]    ${ExcelPath}
+    ###Open Deal Notebook If Not present###
+    ${Status}    Run Keyword And Return Status    Mx LoanIQ Verify Object Exist    ${LIQ_DealNotebook_Window}    VerificationData="Yes"
+    Run Keyword If    '${Status}'!='True'    Open Existing Deal    &{ExcelPath}[Deal_Name]
+    ...    ELSE    Log    Deal Notebook Is Already Displayed
+
     Add Lender and Location    &{ExcelPath}[Deal_Name]    &{ExcelPath}[Primary_Lender]    &{ExcelPath}[Primary_LenderLoc]    &{ExcelPath}[Primary_RiskBook]    &{ExcelPath}[Primaries_TransactionType]
     Set Sell Amount and Percent of Deal    &{ExcelPath}[Primary_PctOfDeal]
     
@@ -431,6 +437,7 @@ Complete Circle Notebook Portfolio
 Approve and Close Deal with Single Primary Lender 
     [Documentation]    This keyword Approves and Closes the Deal
     ...                @author: fmamaril    19JUL2020    Initial create
+    ...                @update: mcastro     20OCT2020    Fixed line error
     [Arguments]    ${ExcelPath}
     ##Approval using a different user###
     Logout from Loan IQ
@@ -449,6 +456,5 @@ Approve and Close Deal with Single Primary Lender
     Enter Deal Approved Date    &{ExcelPath}[ApproveDate]
     Navigate to Deal Notebook Workflow and Proceed With Transaction    Close
     Enter Deal Close Date    &{ExcelPath}[CloseDate]
-    Logout from Loan IQ
->>>>>>> e508fbffcc42bffe9567b8e88fd45bfc8ecb7679
-    Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}    
+    Logout from Loan IQ   
+    Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}

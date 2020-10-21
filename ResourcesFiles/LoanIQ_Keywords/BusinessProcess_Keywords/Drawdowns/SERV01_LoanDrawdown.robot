@@ -10,6 +10,8 @@ Create Initial Loan Drawdown with no Repayment Schedule
     ...                                    - Replaced 'Navigate Notebook Workflow' with 'Navigate to Loan Drawdown Workflow and Proceed With Transaction'
     ...                                    - Removed commented 'Generate Rate Setting Notices for Drawdown    &{ExcelPath}[Borrower1_ShortName]    &{ExcelPath}[NoticeStatus]'
     ...                                    - Removed commented '${Loan_Alias}    Read Data From Excel    SERV01_LoanDrawdown   Loan_Alias    ${rowid}'
+    ...    @update: mcastro    20OCT2020   - Added argument variable for Get Host Bank Cash in Cashflow
+    ...                                    - Added condition for handling of RPA Scenario 1
     [Arguments]    ${ExcelPath}
     
     ###Facility###
@@ -23,8 +25,8 @@ Create Initial Loan Drawdown with no Repayment Schedule
     Navigate to Outstanding Select Window
     ${Loan_Alias}    Input Initial Loan Drawdown Details    &{ExcelPath}[Outstanding_Type]    &{ExcelPath}[Loan_FacilityName]    &{ExcelPath}[Borrower1_ShortName]    &{ExcelPath}[Loan_PricingOption]    &{ExcelPath}[Loan_Currency]
     Write Data To Excel    SERV01_LoanDrawdown   Loan_Alias    ${rowid}    ${Loan_Alias}
-    Write Data To Excel    SERV21_InterestPayments   Loan_Alias    ${rowid}    ${Loan_Alias}
-    Write Data To Excel    SERV18_Payments   Loan_Alias    ${rowid}    ${Loan_Alias}    
+    Run Keyword If    '${SCENARIO}'!='1'    Write Data To Excel    SERV21_InterestPayments   Loan_Alias    ${rowid}    ${Loan_Alias}
+    Run Keyword If    '${SCENARIO}'!='1'    Write Data To Excel    SERV18_Payments   Loan_Alias    ${rowid}    ${Loan_Alias}    
         
     ###Initial Loan Drawdown###
     ###For Scenario 7###
@@ -32,8 +34,9 @@ Create Initial Loan Drawdown with no Repayment Schedule
     ...    AND    Write Data To Excel    SERV19_UnscheduledPayments   Loan_Alias    ${rowid}    ${Loan_Alias}
    
     Validate Initial Loan Dradown Details    &{ExcelPath}[Loan_FacilityName]    &{ExcelPath}[Borrower1_ShortName]    &{ExcelPath}[Loan_Currency]
-    ${AdjustedDueDate}    Input General Loan Drawdown Details    &{ExcelPath}[Loan_RequestedAmount]    &{ExcelPath}[Loan_EffectiveDate]    &{ExcelPath}[Loan_MaturityDate]    None    &{ExcelPath}[Loan_IntCycleFrequency]    &{ExcelPath}[Loan_Accrue]
-    Write Data To Excel    SERV21_InterestPayments    ScheduledActivityReport_Date    ${rowid}    ${AdjustedDueDate}
+    ${AdjustedDueDate}    Run Keyword If    '${SCENARIO}'!='1'    Input General Loan Drawdown Details    &{ExcelPath}[Loan_RequestedAmount]    &{ExcelPath}[Loan_EffectiveDate]    &{ExcelPath}[Loan_MaturityDate]    None    &{ExcelPath}[Loan_IntCycleFrequency]    &{ExcelPath}[Loan_Accrue]
+    ...    ELSE    Input General Loan Drawdown Details    &{ExcelPath}[Loan_RequestedAmount]    &{ExcelPath}[Loan_EffectiveDate]    &{ExcelPath}[Loan_MaturityDate]    &{ExcelPath}[Loan_RepricingFrequency]    None    &{ExcelPath}[Loan_Accrue]    
+    Run Keyword If    '${SCENARIO}'!='1'    Write Data To Excel    SERV21_InterestPayments    ScheduledActivityReport_Date    ${rowid}    ${AdjustedDueDate}
     Input Loan Drawdown Rates    &{ExcelPath}[Borrower_BaseRate]    &{ExcelPath}[Facility_Spread]
     
     ###Cashflow Notebook - Create Cashflows###
@@ -41,8 +44,8 @@ Create Initial Loan Drawdown with no Repayment Schedule
     Verify if Method has Remittance Instruction    &{ExcelPath}[Borrower1_ShortName]    &{ExcelPath}[Remittance_Description]    &{ExcelPath}[Remittance_Instruction]
     Verify if Status is set to Do It    &{ExcelPath}[Borrower1_ShortName]  
  
-    ##Get Transaction Amount for Cashflow###
-    ${HostBankShare}    Get Host Bank Cash in Cashflow
+    ###Get Transaction Amount for Cashflow###
+    ${HostBankShare}    Get Host Bank Cash in Cashflow    &{ExcelPath}[Facility_Currency]   
     ${BorrowerTranAmount}    Get Transaction Amount in Cashflow    &{ExcelPath}[Borrower1_ShortName]
     ${ComputedHBTranAmount}    Compute Lender Share Transaction Amount    &{ExcelPath}[Loan_RequestedAmount]    &{ExcelPath}[HostBankSharePct]
     
@@ -55,7 +58,7 @@ Create Initial Loan Drawdown with no Repayment Schedule
     ${UITotalCreditAmt}    Run Keyword If    '&{ExcelPath}[BranchCode]' != 'None'    Get GL Entries Amount    ${SPACE}Total For: &{ExcelPath}[BranchCode]     Credit Amt
     ...    ELSE    Get GL Entries Amount    ${SPACE}Total For: CB001     Credit Amt
     ${UITotalDebitAmt}    Run Keyword If    '&{ExcelPath}[BranchCode]' != 'None'    Get GL Entries Amount    ${SPACE}Total For: &{ExcelPath}[BranchCode]     Debit Amt
-    ...    ELSE    Get GL Entries Amount    ${SPACE}Total For: CB001     Debit Amt
+    ...    ELSE    Get GL Entries Amount    ${SPACE}Total For: CB001     Debit Amt   
     Compare UIAmount versus Computed Amount    ${HostBankShare}    ${HostBank_Debit}
     Validate if Debit and Credit Amt is Balanced    ${HostBank_Debit}    ${Borrower_Credit}
     Validate if Debit and Credit Amt is equal to Transaction Amount    ${UITotalCreditAmt}    ${UITotalDebitAmt}    &{ExcelPath}[Loan_RequestedAmount]
