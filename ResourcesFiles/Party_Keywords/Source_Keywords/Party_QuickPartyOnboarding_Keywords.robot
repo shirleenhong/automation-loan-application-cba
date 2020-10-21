@@ -168,7 +168,7 @@ Populate Quick Enterprise Party
     ...    @update: dahijara    30APR2020    - used Mx Input text for inputing fields
     ...    @update: dahijara    09JUN2020    - Updated Next button locator
     ...    @update: javinzon    17SEP2020    - Updated arguments for Address 3 and 4 to be mandatory
-    ...    @update: javinzon	21OCT2020	 - Updated Warning Popup to Warning Dialog, Added For Loop, Moved the Approval Required scripts in For Loop
+    ...    @update: javinzon	21OCT2020	 - Updated Warning Popup to Warning Dialog, Updated Approval Required scripts, Added Validate Duplicate Short Name 
                                                
     [Arguments]    ${sParty_ID}    ${sCountry_of_Tax_Domicile}    ${sCountry_of_Registration}    ${sAddress_Type}    ${sCountry_Region}    ${iPost_Code}
     ...    ${sDocument_Collection_Status}    ${sIndustry_Sector}    ${sBusiness_Activity}    ${bIs_Main_Activity}    ${iGST_Number}
@@ -207,13 +207,12 @@ Populate Quick Enterprise Party
     Run Keyword If    ${isWarningDisplayed}==${True}    Mx Click Element    ${Party_QuickEnterpriseParty_ProceedWarning_Button}
     Wait Until Loading Page Is Not Visible    ${PARTY_TIMEOUT}
    
-    ### Approval Required ###
-    :FOR     ${index}    IN RANGE    1
-    \    ${isApprovalRequired}    Run Keyword And Return Status    Wait Until Page Contains Element    ${Party_QuickEnterpriseParty_ApprovalRequired_Dialog}    30s
-    \    Run Keyword If    ${isApprovalRequired}==${True}    Run Keywords	Capture Page Screenshot    ${screenshot_path}/Screenshots/Party/PartyApprovalDialog-{index}.png
-    \    ...	AND	    Mx Click Element    ${Party_QuickEnterpriseParty_AskForApproval_Button}
-    \    ...	AND	    Wait Until Page Contains Element    ${Party_RaisedMessage_Notification}
-    \    ...	ELSE    Validate Duplicate Short Name
+    ### Approval Required Dialog ###
+    ${isApprovalRequired}    Run Keyword And Return Status    Wait Until Page Contains Element    ${Party_QuickEnterpriseParty_ApprovalRequired_Dialog}    30s
+    Run Keyword If    ${isApprovalRequired}==${True}    Run Keywords	Capture Page Screenshot    ${screenshot_path}/Screenshots/Party/PartyApprovalDialog-{index}.png
+    ...	AND	    Mx Click Element    ${Party_QuickEnterpriseParty_AskForApproval_Button}
+    ...	AND	    Wait Until Page Contains Element    ${Party_RaisedMessage_Notification}
+    ...	ELSE    Validate Duplicate Short Name
     
 Populate Enterprise Business Activity
     [Documentation]    This keyword populates required fields in Enterprise Business Activity modal.
@@ -789,8 +788,8 @@ Validate Mandatory Fields in Quick Enterprise Party Page
 
     ${isErrorDisplayed}    Run Keyword And Return Status    Wait Until Page Contains Element    ${Party_QuickEnterpriseParty_Errors_Dialog}    30s
     Capture Page Screenshot    ${screenshot_path}/Screenshots/Party/DuplicateShortName-{index}.png
-    ${ErrorMessage}    Get Element Attribute    ${Party_QuickEnterpriseParty_Dialog_TextArea}    value
+    ${ErrorMessage}    Get Element Attribute    ${Party_QuickEnterpriseParty_ErrorsDialog_TextArea}    value
     ${isMatched}    Run Keyword And Return Status    Should Contain    ${ErrorMessage}    Entered Short Name is already in use for Different Party
-    Run Keyword If    ${isMatched}==${True}    Mx Click Element    ${Party_QuickEnterpriseParty_GoBack_Button}
+    Run Keyword If    ${isMatched}==${True}    Mx Click Element    ${Party_QuickEnterpriseParty_ErrorsDialog_GoBack_Button}
     ...    ELSE    Run Keyword and Continue on Failure    Fail   Error message "Entered Short Name is already in use for Different Party" is expected.
     
