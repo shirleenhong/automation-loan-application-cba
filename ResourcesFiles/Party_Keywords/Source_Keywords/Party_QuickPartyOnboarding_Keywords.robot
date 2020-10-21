@@ -792,4 +792,5 @@ Validate Mandatory Fields in Quick Enterprise Party Page
     ${ErrorMessage}    Get Element Attribute    ${Party_QuickEnterpriseParty_Dialog_TextArea}    value
     ${isMatched}    Run Keyword And Return Status    Should Contain    ${ErrorMessage}    Entered Short Name is already in use for Different Party
     Run Keyword If    ${isMatched}==${True}    Mx Click Element    ${Party_QuickEnterpriseParty_GoBack_Button}
+    ...    ELSE    Run Keyword and Continue on Failure    Fail   Error message "Entered Short Name is already in use for Different Party" is expected.
     
