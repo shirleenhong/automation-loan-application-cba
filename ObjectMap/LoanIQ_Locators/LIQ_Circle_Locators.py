@@ -55,8 +55,9 @@ LIQ_PrimariesList_JavaTree = 'JavaWindow("title:=Primaries List .*").JavaTree("a
 
 ###Portfolio Allocations Window###
 LIQ_Cirlce_PortfolioAllocation_Window = 'JavaWindow("text:=Portfolio allocations for .*")'
-LIQ_PortfolioAllocation_Facilities_JavaTree = 'JavaWindow("text:=Portfolio allocations for .*").JavaTree("labeled_containers_path:=Group:Portfolio Allocations;")'
+LIQ_PortfolioAllocation_Facilities_JavaTree = 'JavaWindow("text:=Portfolio allocations for .*").JavaTree("labeled_containers_path:=Group:Facilities;")'
 LIQ_PortfolioAllocation_Exit_Button = 'JavaWindow("text:=Portfolio allocations for .*").JavaButton("attached text:=Exit")'
+LIQ_PortfolioAllocation_PortfolioExpense_JavaTree = 'JavaWindow("text:=Portfolio allocations for .*").JavaTree("labeled_containers_path:=Group:Portfolio Allocations;")'
 
 ### Circle Notebook - Amts/Dates Tab ###
 LIQ_Circle_Amounts_CurrentAmount = 'JavaWindow("title:=.*Orig Primary.*").JavaEdit("attached text:=Current:", "labeled_containers_path:=Tab:Amts/Dates;Group:Amounts;")'

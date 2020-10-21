@@ -498,7 +498,8 @@ Validate Portfolio Code Data from CSV in LIQ Screen
     ${count}    Get Length    ${DistinctData_List}
     :FOR    ${INDEX}    IN RANGE    ${count}
     \    ${RowValue}    Set Variable    @{DistinctData_List}[${INDEX}]   
-    \    Run Keyword If    '${RowValue.strip()}'!='NONE' and '${RowValue.strip()}'!='${EMPTY}'    Run Keyword and Continue on Failure    Validate the Porfolio Codes in LIQ    ${RowValue.strip()}     
+    \    Run Keyword If    '${RowValue.strip()}'!='NONE' and '${RowValue.strip()}'!='${EMPTY}'    Run Keyword and Continue on Failure    Validate the Porfolio Codes in LIQ    ${RowValue.strip()}
+         ...    ELSE    Log    ${RowValue} is empty.            
     
     Close All Windows on LIQ
     
@@ -539,18 +540,21 @@ Validate FPP_CDE_PORTFOLIO in LIQ Facility Portfolio Allocation
     \    ${FPP_CDE_BRANCH_Value}    Get the Column Value using Row Number and Column Index    ${sCSV_FileName}    ${i}    ${FPP_CDE_BRANCH_Index}
     \
     \    ### Navigate to Portfolio Window ###
-    \    Run Keyword If    '${FPP_CDE_PORTFOLIO_Value.strip()}'!='NONE' and '${FPP_CDE_PORTFOLIO_Value.strip()}'!='${EMPTY}'    Select Actions    [Actions];Table Maintenance
-    \    Run Keyword If    '${FPP_CDE_PORTFOLIO_Value.strip()}'!='NONE' and '${FPP_CDE_PORTFOLIO_Value.strip()}'!='${EMPTY}'    Search in Table Maintenance    Portfolio
+    \    Run Keyword If    '${FPP_CDE_PORTFOLIO_Value.strip()}'!='NONE' and '${FPP_CDE_PORTFOLIO_Value.strip()}'!='${EMPTY}'    Run Keywords    Select Actions    [Actions];Table Maintenance    
+         ...    AND    Search in Table Maintenance    Portfolio
+         ...    ELSE    Log    ${FPP_CDE_PORTFOLIO_Value} is empty.
     \    ${Row_Desc}    Run Keyword If    '${FPP_CDE_PORTFOLIO_Value.strip()}'!='NONE' and '${FPP_CDE_PORTFOLIO_Value.strip()}'!='${EMPTY}'    Run Keyword And Continue On Failure    Validate the Porfolio Codes in LIQ    ${FPP_CDE_PORTFOLIO_Value.strip()}
-    \    
+         ...    ELSE    Log    ${FPP_CDE_PORTFOLIO_Value} is empty.  
     \    ### Branch Customer Value ###
     \    ${Branch_Customer}    Run Keyword If    '${FPP_CDE_BRANCH_Value.strip()}'=='${BRANCH_CB001}'    Set Variable    ${BRANCH_CB001_Customer} 
-    \    ...    ELSE IF    '${FPP_CDE_BRANCH_Value.strip()}'=='${BRANCH_CB022}'    Set Variable    ${BRANCH_CB022_Customer}
-    \    ...    ELSE IF    '${FPP_CDE_BRANCH_Value.strip()}=="${BRANCH_CG852}'    Set Variable    ${BRANCH_CG852_Customer}
+         ...    ELSE IF    '${FPP_CDE_BRANCH_Value.strip()}'=='${BRANCH_CB022}'    Set Variable    ${BRANCH_CB022_Customer}
+         ...    ELSE IF    '${FPP_CDE_BRANCH_Value.strip()}=="${BRANCH_CG852}'    Set Variable    ${BRANCH_CG852_Customer}
+         ...    ELSE    Log    ${FPP_CDE_BRANCH_Value} is new and not yet configured.    
     \  
     \    Close All Windows on LIQ
     \    Run Keyword If    '${FPP_CDE_PORTFOLIO_Value.strip()}'!='NONE' and '${FPP_CDE_PORTFOLIO_Value.strip()}'!='${EMPTY}'    Run Keyword And Continue On Failure    Validate FPP_CDE_PORTFOLIO Value in LIQ    ${FPP_PID_FACILITY_Value}    ${Row_Desc}
-    \    ...    ${Branch_Customer}    ${FPP_CDE_PORTFOLIO_Value.strip()}    ${FPP_CDE_BRANCH_Value.strip()}    
+         ...    ${Branch_Customer}    ${FPP_CDE_PORTFOLIO_Value.strip()}    ${FPP_CDE_BRANCH_Value.strip()}
+         ...    ELSE    Log    ${FPP_CDE_PORTFOLIO_Value} is empty.    
 
 Validate FPP_CDE_PORTFOLIO Value in LIQ
     [Documentation]    This keyword is used to navigate Host Bank Circle Notebook and validate FPP_CDE_PORTFOLIO value in Portfolio Allocation Window.
@@ -560,26 +564,29 @@ Validate FPP_CDE_PORTFOLIO Value in LIQ
     ### Launch Facility Notebook and Get the Facility Name ### 
     Navigate to Notebook Window thru RID    Facility    ${sFPP_PID_FACILITY_Value}
     
-    Sleep    2s    
-    ${AlertsWindow_isDisplayed}    Run Keyword And Return Status    Mx LoanIQ Verify Object Exist    ${LIQ_Facility_Alerts_Window}         VerificationData="Yes"
-    Run Keyword If     ${AlertsWindow_isDisplayed}==True    Run Keywords
-    ...    mx LoanIQ activate window    ${LIQ_Facility_Alerts_Window}
-    ...    AND    mx LoanIQ click    ${LIQ_Facility_Alerts_Cancel_Button}
-    Sleep    2s 
+    :FOR    ${i}    IN    RANGE    15
+    \    ${AlertsWindow_isDisplayed}    Run Keyword And Return Status    Mx LoanIQ Verify Object Exist    ${LIQ_Facility_Alerts_Window}         VerificationData="Yes"
+    \    Run Keyword If     ${AlertsWindow_isDisplayed}==${True}    Run Keywords
+         ...    mx LoanIQ activate window    ${LIQ_Facility_Alerts_Window}
+         ...    AND    mx LoanIQ click    ${LIQ_Facility_Alerts_Cancel_Button}
+         ...    AND    Mx Activate Window    ${LIQ_FacilityNotebook_Window}
+    \    Exit For Loop If    ${AlertsWindow_isDisplayed}==${True}
     
     Mx Activate Window    ${LIQ_FacilityNotebook_Window}
     ${FacilityName}    Mx LoanIQ Get Data    ${LIQ_FacilitySummary_FacilityName_Text}    attached text%Facility Name       
     
     ### Navigate to Host Bank Circle Notebook ###
     Mx LoanIQ Select    ${LIQ_FacilityNotebook_Options_DealNotebook}
-    
-    Sleep    2s    
-    ${AlertsWindow_isDisplayed}    Run Keyword And Return Status    Mx LoanIQ Verify Object Exist    ${LIQ_Facility_Alerts_Window}         VerificationData="Yes"
-    Run Keyword If     ${AlertsWindow_isDisplayed}==True    Run Keywords
-    ...    mx LoanIQ activate window    ${LIQ_Facility_Alerts_Window}
-    ...    AND    mx LoanIQ click    ${LIQ_Facility_Alerts_Cancel_Button}
-    Sleep    2s 
 
+
+    :FOR    ${i}    IN    RANGE    15
+    \    ${AlertsWindow_isDisplayed}    Run Keyword And Return Status    Mx LoanIQ Verify Object Exist    ${LIQ_Facility_Alerts_Window}         VerificationData="Yes"
+    \    Run Keyword If     ${AlertsWindow_isDisplayed}==${True}    Run Keywords
+         ...    mx LoanIQ activate window    ${LIQ_Facility_Alerts_Window}
+         ...    AND    mx LoanIQ click    ${LIQ_Facility_Alerts_Cancel_Button}
+         ...    AND    Mx Activate Window    ${LIQ_DealNotebook_Window}
+    \    Exit For Loop If    ${AlertsWindow_isDisplayed}==${True}
+    
     Mx Activate Window    ${LIQ_DealNotebook_Window}
     Mx LoanIQ Select    ${LIQ_DealNotebook_DistributionPrimaries_Menu}
 
@@ -593,9 +600,9 @@ Validate FPP_CDE_PORTFOLIO Value in LIQ
     ### Portfolio allocation Window ###   
     mx LoanIQ activate window    ${LIQ_Cirlce_PortfolioAllocation_Window}
    
-    ${status}    Run Keyword And Return Status     Mx LoanIQ Verify Text In Javatree    ${LIQ_PortfolioAllocation_Facilities_JavaTree}    ${sFPP_CDE_BRANCH_Value}/${sRow_Desc}
+    ${status}    Run Keyword And Return Status     Mx LoanIQ Verify Text In Javatree    ${LIQ_PortfolioAllocation_PortfolioExpense_JavaTree}    ${sFPP_CDE_BRANCH_Value}/${sRow_Desc}
     Run Keyword If    ${status}==${True}    Log    ${sFPP_CDE_PORTFOLIO_Value}-${sRow_Desc} is available
-    ...    ELSE    FAIL    ${sRow_Desc} is not available  
+    ...    ELSE    Run Keyword And Continue On Failure    FAIL    ${sRow_Desc} is not available  
     
     Take Screenshot     ${screenshot_path}/Screenshots/DWE/${sFPP_CDE_PORTFOLIO_Value}                      
     mx LoanIQ click    ${LIQ_PortfolioAllocation_Exit_Button}
