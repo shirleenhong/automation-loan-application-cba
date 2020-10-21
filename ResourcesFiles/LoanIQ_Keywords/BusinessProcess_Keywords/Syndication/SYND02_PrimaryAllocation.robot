@@ -399,7 +399,7 @@ Setup Initial Primary Details
     [Arguments]    ${ExcelPath}
     ###Open Deal Notebook If Not present###
     ${Status}    Run Keyword And Return Status    Mx LoanIQ Verify Object Exist    ${LIQ_DealNotebook_Window}    VerificationData="Yes"
-    Run Keyword If    ${Status}!=True    Open Existing Deal    &{ExcelPath}[Deal_Name]
+    Run Keyword If    ${Status}!=${True}    Open Existing Deal    &{ExcelPath}[Deal_Name]
     ...    ELSE    Log    Deal Notebook Is Already Displayed
 
     Add Lender and Location    &{ExcelPath}[Deal_Name]    &{ExcelPath}[Primary_Lender]    &{ExcelPath}[Primary_LenderLoc]    &{ExcelPath}[Primary_RiskBook]    &{ExcelPath}[Primaries_TransactionType]
