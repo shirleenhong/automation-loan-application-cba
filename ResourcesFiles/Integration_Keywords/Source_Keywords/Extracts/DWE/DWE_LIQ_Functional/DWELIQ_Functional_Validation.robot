@@ -477,22 +477,28 @@ Validate Facility Type Data from CSV in LIQ Screen
     
 Validate Portfolio Code Data from CSV in LIQ Screen
     [Documentation]    This keyword is used to validate FPP_CDE_PORTFOLIO data from  VLS_FAC_PORT_POS extract to LIQ screen.
-    ...    @author: mgaling    03Sep2019    Initial Create
-    [Arguments]    ${aDistinctData_List}    
-     
-    ### Navigate to Portfolio Window ###
+    ...    @author: mgaling    03SEP2019    - initial create
+	...    @update: mgaling    14OCT2020    - added keywords for reading and getting data from CSV file
+	...										- updated the loop function
+    [Arguments]    ${sVLS_FAC_PORT_POS_CSVFileName}    
+	
+	### Get Distinct data in FPP_CDE_PORTFOLIO column from VLS_FAC_PORT_POS extract ###
+	${CSV_Content}    Read Csv File To List    ${sVLS_FAC_PORT_POS_CSVFileName}    |
+    Log List    ${CSV_Content}
+    
+	${DistinctData_List}    Get Distinct Column Data    ${CSV_Content}    ${sVLS_FAC_PORT_POS_CSVFileName}    FPP_CDE_PORTFOLIO
+    Log    ${DistinctData_List}
+	
     Select Actions    [Actions];Table Maintenance
     Search in Table Maintenance    Portfolio
     
-    ### Facility Type Code Validation ###
+    ### Portfolio Window Validation ###
     mx LoanIQ activate window    ${LIQ_Portfolio_Window}
     
-    ${count}    Get Length    ${aDistinctData_List}
+    ${count}    Get Length    ${DistinctData_List}
     :FOR    ${INDEX}    IN RANGE    ${count}
-    \    ${RowValue}    Set Variable    @{aDistinctData_List}[${INDEX}]   
-    \    Run Keyword If    '${RowValue.strip()}'=='NONE'    Log    Portfolio value is NONE. Skipping this record.
-    \    Continue For Loop If    '${RowValue.strip()}'=='NONE'
-    \    Validate the Porfolio Codes in LIQ    ${RowValue.strip()}     
+    \    ${RowValue}    Set Variable    @{DistinctData_List}[${INDEX}]   
+    \    Run Keyword If    '${RowValue.strip()}'!='NONE' and '${RowValue.strip()}'!='${EMPTY}'    Run Keyword and Continue on Failure    Validate the Porfolio Codes in LIQ    ${RowValue.strip()}     
     
     Close All Windows on LIQ
     
@@ -513,35 +519,86 @@ Get Row Data
     
     [Return]    ${Column_RowValue}
     
-Validate the Portfolio in LIQ Facility Transaction
-    [Documentation]    This keyword is used to validate FPP_CDE_PORTFOLIO data from  VLS_FAC_PORT_POS extract to LIQ Transaction - Facility Portfolio Positions.
-    ...    @author: mgaling    03Sep2019    Initial Create
-    [Arguments]    ${sFPP_CDE_PORTFOLIO_Value}    ${sFPP_PID_FACILITY_Value}
+Validate FPP_CDE_PORTFOLIO in LIQ Facility Portfolio Allocation
+    [Documentation]    This keyword is used to validate FPP_CDE_PORTFOLIO data from  VLS_FAC_PORT_POS extract to LIQ Transaction - Facility Portfolio Allocation Window.
+    ...    @author: mgaling    03SEP2019    - initial create
+    ...    @update: mgaling    15OCT2020    - added loop function to validate all data from extract file
+    ...                                     - created separate keyword for Facility Notebook validation
+    [Arguments]    ${sCSV_FileName}
     
-    ### Navigate to Portfolio Window ###
-    Select Actions    [Actions];Table Maintenance
-    Search in Table Maintenance    Portfolio
+    ${CSV_Content}    Read Csv File To List    ${sCSV_FileName}    |
+    ${Record_Count}    Get Length    ${CSV_Content}
     
-    ### Facility Type Code Validation ###
-    mx LoanIQ activate window    ${LIQ_Portfolio_Window}  
-    ${Row_Desc}    Validate the Porfolio Codes in LIQ    ${sFPP_CDE_PORTFOLIO_Value.strip()}
-    Close All Windows on LIQ
+    ${FPP_CDE_PORTFOLIO_Index}    Get the Column index of the Header    ${sCSV_FileName}    FPP_CDE_PORTFOLIO    
+    ${FPP_PID_FACILITY_Index}    Get the Column index of the Header    ${sCSV_FileName}    FPP_PID_FACILITY
+    ${FPP_CDE_BRANCH_Index}    Get the Column index of the Header    ${sCSV_FileName}    FPP_CDE_BRANCH
+
+    :FOR    ${i}    IN RANGE    1    ${Record_Count}
+    \    ${FPP_CDE_PORTFOLIO_Value}    Get the Column Value using Row Number and Column Index    ${sCSV_FileName}    ${i}    ${FPP_CDE_PORTFOLIO_Index}
+    \    ${FPP_PID_FACILITY_Value}    Get the Column Value using Row Number and Column Index    ${sCSV_FileName}    ${i}    ${FPP_PID_FACILITY_Index}
+    \    ${FPP_CDE_BRANCH_Value}    Get the Column Value using Row Number and Column Index    ${sCSV_FileName}    ${i}    ${FPP_CDE_BRANCH_Index}
+    \
+    \    ### Navigate to Portfolio Window ###
+    \    Run Keyword If    '${FPP_CDE_PORTFOLIO_Value.strip()}'!='NONE' and '${FPP_CDE_PORTFOLIO_Value.strip()}'!='${EMPTY}'    Select Actions    [Actions];Table Maintenance
+    \    Run Keyword If    '${FPP_CDE_PORTFOLIO_Value.strip()}'!='NONE' and '${FPP_CDE_PORTFOLIO_Value.strip()}'!='${EMPTY}'    Search in Table Maintenance    Portfolio
+    \    ${Row_Desc}    Run Keyword If    '${FPP_CDE_PORTFOLIO_Value.strip()}'!='NONE' and '${FPP_CDE_PORTFOLIO_Value.strip()}'!='${EMPTY}'    Run Keyword And Continue On Failure    Validate the Porfolio Codes in LIQ    ${FPP_CDE_PORTFOLIO_Value.strip()}
+    \    
+    \    ### Branch Customer Value ###
+    \    ${Branch_Customer}    Run Keyword If    '${FPP_CDE_BRANCH_Value.strip()}'=='${BRANCH_CB001}'    Set Variable    ${BRANCH_CB001_Customer} 
+    \    ...    ELSE IF    '${FPP_CDE_BRANCH_Value.strip()}'=='${BRANCH_CB022}'    Set Variable    ${BRANCH_CB022_Customer}
+    \    ...    ELSE IF    '${FPP_CDE_BRANCH_Value.strip()}=="${BRANCH_CG852}'    Set Variable    ${BRANCH_CG852_Customer}
+    \  
+    \    Close All Windows on LIQ
+    \    Run Keyword If    '${FPP_CDE_PORTFOLIO_Value.strip()}'!='NONE' and '${FPP_CDE_PORTFOLIO_Value.strip()}'!='${EMPTY}'    Run Keyword And Continue On Failure    Validate FPP_CDE_PORTFOLIO Value in LIQ    ${FPP_PID_FACILITY_Value}    ${Row_Desc}
+    \    ...    ${Branch_Customer}    ${FPP_CDE_PORTFOLIO_Value.strip()}    ${FPP_CDE_BRANCH_Value.strip()}    
+
+Validate FPP_CDE_PORTFOLIO Value in LIQ
+    [Documentation]    This keyword is used to navigate Host Bank Circle Notebook and validate FPP_CDE_PORTFOLIO value in Portfolio Allocation Window.
+    ...    @author: mgaling    15OCT2020    - initial create
+    [Arguments]    ${sFPP_PID_FACILITY_Value}    ${sRow_Desc}    ${sBranch_Customer}    ${sFPP_CDE_PORTFOLIO_Value}    ${sFPP_CDE_BRANCH_Value}
    
-    ### Launch Facility Notebook ### 
+    ### Launch Facility Notebook and Get the Facility Name ### 
     Navigate to Notebook Window thru RID    Facility    ${sFPP_PID_FACILITY_Value}
     
-    ### Facility Portfolio Positions ###
-    mx LoanIQ activate window    ${LIQ_FacilityNotebook_Window}
-    mx LoanIQ click element if present    ${LIQ_FacilityNotebook_InquiryMode_Button}
+    Sleep    2s    
+    ${AlertsWindow_isDisplayed}    Run Keyword And Return Status    Mx LoanIQ Verify Object Exist    ${LIQ_Facility_Alerts_Window}         VerificationData="Yes"
+    Run Keyword If     ${AlertsWindow_isDisplayed}==True    Run Keywords
+    ...    mx LoanIQ activate window    ${LIQ_Facility_Alerts_Window}
+    ...    AND    mx LoanIQ click    ${LIQ_Facility_Alerts_Cancel_Button}
+    Sleep    2s 
     
-    ### Portfolio Position Validation ###  
-    mx LoanIQ select    ${LIQ_FacilityNotebook_Options_PortfolioPositions}     
-    mx LoanIQ activate window    ${LIQ_Portfolio_Positions_Window}
+    Mx Activate Window    ${LIQ_FacilityNotebook_Window}
+    ${FacilityName}    Mx LoanIQ Get Data    ${LIQ_FacilitySummary_FacilityName_Text}    attached text%Facility Name       
     
-    ${status}    Run Keyword And Return Status    Mx LoanIQ Verify Text In Javatree    ${LIQ_Portfolio_Positions_JavaTree}    ${Row_Desc}
-    Run Keyword If    ${status}==${True}    Log    ${sFPP_CDE_PORTFOLIO_Value}-${Row_Desc} is available
-    ...    ELSE    Log    ${Row_Desc} is not available  
-    Take Screenshot    ${Row_Desc}                      
+    ### Navigate to Host Bank Circle Notebook ###
+    Mx LoanIQ Select    ${LIQ_FacilityNotebook_Options_DealNotebook}
+    
+    Sleep    2s    
+    ${AlertsWindow_isDisplayed}    Run Keyword And Return Status    Mx LoanIQ Verify Object Exist    ${LIQ_Facility_Alerts_Window}         VerificationData="Yes"
+    Run Keyword If     ${AlertsWindow_isDisplayed}==True    Run Keywords
+    ...    mx LoanIQ activate window    ${LIQ_Facility_Alerts_Window}
+    ...    AND    mx LoanIQ click    ${LIQ_Facility_Alerts_Cancel_Button}
+    Sleep    2s 
+
+    Mx Activate Window    ${LIQ_DealNotebook_Window}
+    Mx LoanIQ Select    ${LIQ_DealNotebook_DistributionPrimaries_Menu}
+
+    Mx Close    ${LIQ_FacilityNotebook_Window}
+    Mx Activate Window    ${LIQ_PrimariesList_Window}
+    Mx LoanIQ DoubleClick    ${LIQ_PrimariesList_JavaTree}    ${sBranch_Customer}
+    Mx Click    ${LIQ_CircleNotebook_InquiryMode_Button}
+    Mx LoanIQ Select String    ${LIQ_Circle_Amounts_JavaTree}    ${FacilityName}
+    Mx Click    ${LIQ_Circle_PortfolioAllocations_Button}   
+    
+    ### Portfolio allocation Window ###   
+    mx LoanIQ activate window    ${LIQ_Cirlce_PortfolioAllocation_Window}
+   
+    ${status}    Run Keyword And Return Status     Mx LoanIQ Verify Text In Javatree    ${LIQ_PortfolioAllocation_Facilities_JavaTree}    ${sFPP_CDE_BRANCH_Value}/${sRow_Desc}
+    Run Keyword If    ${status}==${True}    Log    ${sFPP_CDE_PORTFOLIO_Value}-${sRow_Desc} is available
+    ...    ELSE    FAIL    ${sRow_Desc} is not available  
+    
+    Take Screenshot     ${screenshot_path}/Screenshots/DWE/${sFPP_CDE_PORTFOLIO_Value}                      
+    mx LoanIQ click    ${LIQ_PortfolioAllocation_Exit_Button}
     
     Close All Windows on LIQ
                 
@@ -569,7 +626,8 @@ Validate GB2_TID_TABLE_ID in LIQ for VLS_FAM_GLOBAL2
 
 Navigate to Notebook Window thru RID
     [Documentation]    This keyword is used to navigate a certain window thru RID.
-    ...    @author: mgaling    05Sep2019    Initial Create
+    ...    @author: mgaling    05SEP2019    - initial create
+    ...    @update: mgaling    15OCT2020    - added screenshot path
     [Arguments]    ${sDataObject_Value}    ${sRID_Value}    
     
     ### Navigate to Options -> RID Select ###
@@ -582,7 +640,7 @@ Navigate to Notebook Window thru RID
     mx LoanIQ activate window    ${LIQ_SelectByRID_Window}
     Mx LoanIQ Select Combo Box Value    ${LIQ_SelectByRID_DataObject_Field}    ${sDataObject_Value}    
     mx LoanIQ enter    ${LIQ_SelectByRID_RID_Field}    ${sRID_Value}
-    Take Screenshot    RID Code Validation        
+    Take Screenshot     ${screenshot_path}/Screenshots/DWE/RID Code Validation        
     mx LoanIQ click    ${LIQ_SelectByRID_OK_Button}
     
     ${status}    Run Keyword And Return Status    Mx LoanIQ Verify Object Exist    ${LIQ_Error_Window}            VerificationData="Yes"

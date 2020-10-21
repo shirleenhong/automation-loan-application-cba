@@ -4,6 +4,7 @@ LIQ_CircleNotebook_File_Save = 'JavaWindow("title:=.*Orig Primary.*").JavaMenu("
 LIQ_CircleNotebook_File_Exit = 'JavaWindow("title:=.*Orig Primary.*").JavaMenu("label:=File").JavaMenu("label:=Exit")'
 LIQ_CircleNotebook_Tab = 'JavaWindow("title:=Closed Orig Primary.*").JavaTab("tagname:=TabFolder")'
 LIQ_CircleNotebook_Window = 'JavaWindow("title:=Closed Orig Primary.*")'
+LIQ_CircleNotebook_InquiryMode_Button = 'JavaWindow("title:=.*Orig Primary.*").JavaButton("attached text:=Notebook in Inquiry Mode - F7")'
 
 ### Circle Notebook - Summary Tab ###
 LIQ_Circle_PortfolioAllocations_Button = 'JavaWindow("title:=.*Orig Primary.*").JavaObject("tagname:=Group","text:=Other Amendments").JavaButton("label:=Portfolio Allocations")'
@@ -54,7 +55,7 @@ LIQ_PrimariesList_JavaTree = 'JavaWindow("title:=Primaries List .*").JavaTree("a
 
 ###Portfolio Allocations Window###
 LIQ_Cirlce_PortfolioAllocation_Window = 'JavaWindow("text:=Portfolio allocations for .*")'
-LIQ_PortfolioAllocation_Facilities_JavaTree = 'JavaWindow("text:=Portfolio allocations for .*").JavaTree("labeled_containers_path:=Group:Facilities;")'
+LIQ_PortfolioAllocation_Facilities_JavaTree = 'JavaWindow("text:=Portfolio allocations for .*").JavaTree("labeled_containers_path:=Group:Portfolio Allocations;")'
 LIQ_PortfolioAllocation_Exit_Button = 'JavaWindow("text:=Portfolio allocations for .*").JavaButton("attached text:=Exit")'
 
 ### Circle Notebook - Amts/Dates Tab ###
