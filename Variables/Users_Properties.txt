@@ -1,10 +1,11 @@
 *** Settings ***
 Resource    ../Configurations/LoanIQ_Import_File.robot
+
 *** Variables ***
 
 #INPUT AND OUTPUT FOLDER PATHS
-${Input_File_Path_Users}               ${dataset_path}\\DataSet\\Integration_DataSet\\API\\Input\\Users\\
-${Output_File_Path_Users}              ${dataset_path}\\DataSet\\Integration_DataSet\\API\\Output\\Users\\
+${Input_File_Path_Users}               ${dataset_path}\\DataSet\\API_DataSet\\Input\\Users\\
+${Output_File_Path_Users}              ${dataset_path}\\DataSet\\API_DataSet\\Output\\Users\\
 
 
 #File Name
@@ -80,16 +81,23 @@ ${ROUTEROPTION_DELETELIQLOBUSER}    DELETELIQLOBUSER
 ${ROUTEROPTION_LIQRESPONSE}    LIQResponse
 ${ROUTEROPTION_GETLIQUSER}    GETLIQUSERBYID
 ${ROUTEROPTION_GETLIQUSERALL}    GETLIQUSERALL
+${ROUTEROPTION_PLATFORMUSERREPLY}    PlatformUserReply
+${ROUTEROPTION_ADLOBFLOW}    ADLOBFlow
 
 ${QName_Error_Users}    errorLogQueue
 ${QName_Upsert_Users}    adUpsertUpdate
+
+${DEST_WSFINALLIQDESTINATION}    WSLIQFinalDestination
+${DEST_WSPARTYDELETEUSER}    WSPartyDeleteUserDestination
+${DEST_WSESSENCEDELETEUSER}    WSEssenceDeleteUserDestination
+${DEST_DISTERROR}    DistErrorLog
 
 ##LOAN IQ Admin
 ${UserName_FXRates}    ADMIN1
 ${Password_FXRates}    password
 
 ${sample}    sample.json
-# ${Countries_Codes}    ${dataset_path}\\DataSet\\Integration_DataSet\\API\\Countries_Codes.xlsx
+# ${Countries_Codes}    ${dataset_path}\\CBA_Evergreen\\DataSet\\API_DataSet\\Countries_Codes.xls
 
 
 ## Global variable for validation before transaction

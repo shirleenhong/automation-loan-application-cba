@@ -19,10 +19,13 @@ ${Status}
 ${MESSAGE_OBJECTNOTFOUND}    Object not found
 ${MESSAGE_NOTAVALIDCODE}    not a valid code
 ${MESSAGE_USERIDNOTONFILE}    User ID not on file
+${MESSAGE_LOGINIDNOTONFILE}    Login ID not on file
+${MESSAGE_USERIDNOTEXIST}    User does not exist:
 ${MESSAGE_EXCEPTION}    Exception
 ${MESSAGE_EMPTYARRAY}    Payload must contain at least 1 Riskbook
 ${MESSAGE_ITEMNOTASSIGNED}    ITEM NOT ASSIGNED TO THE USER
 ${MESSAGE_DATASOURCEERROR}    The DataSource is not a subscriber to the API
+${MESSAGE_PROFILEIDMISSING}    ProfileId field is missing
 
 ### Browser Setup Names ###
 ${CHROME_BROWSER}    Chrome

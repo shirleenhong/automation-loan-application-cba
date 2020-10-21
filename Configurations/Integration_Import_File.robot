@@ -56,7 +56,9 @@ Variables    ../ObjectMap/LoanIQ_Locators/LIQ_User_Administration_Locators.py
 ### Fusion Banking Essence - Locators ###
 Variables    ../ObjectMap/FBE_Locators/Essence_AdhocExtraction_Locators.py
 Variables    ../ObjectMap/FBE_Locators/Essence_ChangeOfBusinessDate_Locators.py
+Variables    ../ObjectMap/FBE_Locators/Essence_CreateUser_Locators.py
 Variables    ../ObjectMap/FBE_Locators/Essence_Dashboard_Locators.py
+Variables    ../ObjectMap/FBE_Locators/Essence_EnquireUser_Locators.py
 Variables    ../ObjectMap/FBE_Locators/Essence_EODControlAndStatusEnquiry_Locators.py
 Variables    ../ObjectMap/FBE_Locators/Essence_ZoneBranchConfig_Locators.py
 
@@ -88,15 +90,41 @@ Resource    ../ResourcesFiles/Integration_Keywords/Source_Keywords/API/Correspon
 Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Correspondence/API_COR_TC01.robot
 
 ### Integration Resource Files - User - Business Keywords ###
-Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/Users/API_SSO_CRE01.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Users/User_Create/API_SSO_CRE00.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Users/User_Create/API_SSO_CRE01.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Users/User_Create/API_SSO_CRE02.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Users/User_Create/API_SSO_CRE03.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Users/User_Create/API_SSO_CRE04.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Users/User_Create/API_SSO_CRE05.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Users/User_Create/API_SSO_CRE06.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Users/User_Create/API_SSO_CRE07.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Users/User_Create/API_SSO_CRE08.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Users/User_Create/API_SSO_CRE09.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Users/User_Create/API_SSO_CRE12.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Users/User_Create/API_SSO_CRE13.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Users/User_Create/API_SSO_CRE14.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Users/User_Create/API_SSO_CRE15.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Users/User_Create/API_SSO_CRE16.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Users/User_Create/API_SSO_CRE17.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Users/User_Create/API_SSO_CRE18.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Users/User_Create/API_SSO_CRE19.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Users/User_Create/API_SSO_CRE20.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Users/User_Create/API_SSO_CRE21.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Users/User_Create/API_SSO_CRE22.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Users/User_Create/API_SSO_CRE23.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Users/User_Create/API_SSO_CRE24.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Users/User_Create/API_SSO_CRE25.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Users/User_Create/API_SSO_CRE26.robot
 
 ### Integration Resource Files - User - Source Keywords ###
-Resource    ../ResourcesFiles/Integration_Keywords/Source_Keywords/Users/API_SSO_API_VAL.robot
-Resource    ../ResourcesFiles/Integration_Keywords/Source_Keywords/Users/API_SSO_DATABASE_VAL.robot
-Resource    ../ResourcesFiles/Integration_Keywords/Source_Keywords/Users/API_SSO_FFC_VAL.robot
-Resource    ../ResourcesFiles/Integration_Keywords/Source_Keywords/Users/API_SSO_LOANIQ_VAL.robot
-Resource    ../ResourcesFiles/Integration_Keywords/Source_Keywords/Users/API_SSO_PREREQUISITE.robot
-Resource    ../ResourcesFiles/Integration_Keywords/Source_Keywords/Users/API_SSO_VAL.robot
+Resource    ../ResourcesFiles/Integration_Keywords/Source_Keywords/API/Users/API_SSO_API_VAL.robot
+Resource    ../ResourcesFiles/Integration_Keywords/Source_Keywords/API/Users/API_SSO_DATABASE_VAL.robot
+Resource    ../ResourcesFiles/Integration_Keywords/Source_Keywords/API/Users/API_SSO_ESSENCE_VAL.robot
+Resource    ../ResourcesFiles/Integration_Keywords/Source_Keywords/API/Users/API_SSO_FFC_VAL.robot
+Resource    ../ResourcesFiles/Integration_Keywords/Source_Keywords/API/Users/API_SSO_LOANIQ_VAL.robot
+Resource    ../ResourcesFiles/Integration_Keywords/Source_Keywords/API/Users/API_SSO_PARTY_VAL.robot
+Resource    ../ResourcesFiles/Integration_Keywords/Source_Keywords/API/Users/API_SSO_PREREQUISITE.robot
+Resource    ../ResourcesFiles/Integration_Keywords/Source_Keywords/API/Users/API_SSO_VAL.robot
 
 ### Integration Resource Files - TL Calendar - Business Keywords ###
 Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/Transformation_Layer/Calendar/TL_CAL_01.robot
@@ -277,6 +305,7 @@ Resource    ../ResourcesFiles/Integration_Keywords/Source_Keywords/API/CommSee/L
 Resource    ../ResourcesFiles/Integration_Keywords/Source_Keywords/API/CommSee/LoanIQ/CommSee_AdminFeeSetup.robot
 Resource    ../ResourcesFiles/Integration_Keywords/Source_Keywords/API/CommSee/LoanIQ/CommSee_LoanDrawdown.robot
 Resource    ../ResourcesFiles/Integration_Keywords/Source_Keywords/API/CommSee/LoanIQ/CommSee_InterestPayment.robot
+
 ### Integration Resource Files - GL Extracts - Source Keywords ###
 Resource    ../ResourcesFiles/Integration_Keywords/Source_Keywords/Extracts/GL/GLEssence_Extracts_Validation.robot
 
@@ -286,8 +315,10 @@ Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/Extr
 Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/Extracts/GL_Essence/GLPOST_15.robot
 
 ### Integration Resource Files - Essence - Source Keywords ###
-Resource    ../ResourcesFiles/Essence_Keywords/Source_Keywords/EssenceCommon_Keywords.robot
 Resource    ../ResourcesFiles/Essence_Keywords/Source_Keywords/Essence_EODControlAndStatusEnquiry_Keywords.robot
+Resource    ../ResourcesFiles/Essence_Keywords/Source_Keywords/EssenceCommon_Keywords.robot
+Resource    ../ResourcesFiles/Essence_Keywords/Source_Keywords/EssenceDeleteUser_Keywords.robot
+Resource    ../ResourcesFiles/Essence_Keywords/Source_Keywords/EssenceEnquireUser_Keywords.robot
 
 ### Integration Resource Files - SAPWUL - Business Keywords ###
 Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/SAPWUL/SAPWUL_DealSetup.robot

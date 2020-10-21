@@ -28,6 +28,8 @@ Library    PdfToText
 Library    MathLibrary  
 
 ###Party Variable Files###
+Variables    ../ObjectMap/PTY_Locators/PTY_CreateUser_Locators.py
+Variables    ../ObjectMap/PTY_Locators/PTY_EnquireUser_Locators.py
 Variables    ../ObjectMap/PTY_Locators/PTY_Global_Locators.py
 Variables    ../ObjectMap/PTY_Locators/PTY_Party_Locators.py
 Variables    ../ObjectMap/PTY_Locators/PTY_QuickPartyOnboarding_Locators.py
@@ -51,6 +53,7 @@ Resource    ../ResourcesFiles/Party_Keywords/Source_Keywords/Party_Generic_Keywo
 Resource    ../ResourcesFiles/Party_Keywords/Source_Keywords/Party_QuickPartyOnboarding_Keywords.robot
 Resource    ../ResourcesFiles/Party_Keywords/Source_Keywords/Party_LoanIQVal_Keywords.robot
 Resource    ../ResourcesFiles/Party_Keywords/Source_Keywords/Party_EnquirePartyDetails_Keywords.robot
+Resource    ../ResourcesFiles/Party_Keywords/Source_Keywords/Party_EnquireUser_Keywords.robot
 
 ##Party Global Variables##
 Resource    ../Variables/Party_Properties.txt
