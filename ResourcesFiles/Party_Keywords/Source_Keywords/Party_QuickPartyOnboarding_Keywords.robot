@@ -788,7 +788,7 @@ Validate Mandatory Fields in Quick Enterprise Party Page
     ...    @author: javinzon    21OCT2020    - initial create
 
     ${isErrorDisplayed}    Run Keyword And Return Status    Wait Until Page Contains Element    ${Party_QuickEnterpriseParty_Errors_Dialog}    30s
-    Capture Page Screenshot    ${screenshot_path}/Screenshots/Party/PartyQuickEnterprisePartyPage-{index}.png
+    Capture Page Screenshot    ${screenshot_path}/Screenshots/Party/DuplicateShortName-{index}.png
     ${ErrorMessage}    Get Element Attribute    ${Party_QuickEnterpriseParty_Dialog_TextArea}    value
     ${isMatched}    Run Keyword And Return Status    Should Contain    ${ErrorMessage}    Entered Short Name is already in use for Different Party
     Run Keyword If    ${isMatched}==${True}    Mx Click Element    ${Party_QuickEnterpriseParty_GoBack_Button}
