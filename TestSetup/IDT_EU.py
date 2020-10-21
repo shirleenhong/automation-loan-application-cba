@@ -2,9 +2,9 @@
 dataset_path = "C:\\Git_Evergreen\\fms_cba"
 ExcelPath = "C:\\Git_Evergreen\\fms_cba\\DataSet\\LoanIQ_DataSet\\EU_Entity\\EVG_PTYLIQ01_EU_BaselineBilateralCustomer.xlsx"
 CBAUAT_ExcelPath = "C:\\Git_Evergreen\\fms_cba\\DataSet\\CBA_UAT_DataSet\\EVG_CBAUAT05.xlsx"
-APIDataSet = "..\\DataSet\\Integration_DataSet\\API\\\\API_Data_Set.xlsx"
+APIDataSet = "C:\\Git_Evergreen\\fms_cba\\DataSet\\Integration_DataSet\\API\\API_Data_Set.xlsx"
 Countries_Codes = '..\\fms_scotia\\DataSet\\Integration_DataSet\\API\\Countries_Codes.xlsx'
-TL_DATASET = "C:\\Git_Evergreen\\DataSet\\TL_DataSet\\BaseRates_GSFile\\TL_Transformed_Data_BaseRate.xls"
+TL_DATASET = "C:\\Git_Evergreen\\fms_cba\\DataSet\\Integration_DataSet\\TL\\TL_Data_Set_EU.xlsx"
 SAPWUL_DATASET = "C:\\Git_evergreen\\fms_cba\\DataSet\\Downstream_DataSet\\SAPWUL\\SAPWUL_Data_Set.xlsx"
 ComSeeDataSet = 'C:\\Git_Evergreen\\fms_cba\\DataSet\\Downstream_DataSet\\ComSee\\COMSEE_Data_Set.xlsx'
 GLExcelPath = "C:\\Git_Evergreen\\fms_cba\\DataSet\\Extract_DataSet\\GL\\EVG_GL_TestData.xlsx"
@@ -15,6 +15,7 @@ AuditLogPathTemp = '..\\CBA_Evergreen\\DataSet\\API_DataSet\\Audit\\temp.xlsx'
 Downstream_DataSet = '..\\CBA_Evergreen\\DataSet\\Downstream_DataSet\\ComSee\\ComSee_API_DataSet.xls'
 COMMSEEDataSet= '..\\CBA_Evergreen\\DataSet\\COM_DataSet\\Com_Data_Set.xls'
 DWELIQFunc_Dataset = "C:\\Git_Evergreen\\fms_cba\\DataSet\\Integration_DataSet\\Extracts\\DWE_LIQ\\DWELIQ_Functional_TestData.xlsx"
+DNA_DATASET = "C:\\Git_Evergreen\\fms_cba\\DataSet\\Integration_DataSet\\Extracts\\DNA\\EVG_DNA_TestData_EU.xlsx"
 
 FBTIDataset = 'C:\\Git_Evergreen\\evergreen_projects\\CBA_Evergreen\\DataSet\\FBTI_DataSet\\FBTI_User_Data_Set.xlsx'
 FBTIDataset_ILC = 'C:\\Git_Evergreen\\evergreen_projects\\CBA_Evergreen\\DataSet\\FBTI_DataSet\\FBTI_ILC_Data_Set.xlsx'
@@ -76,11 +77,10 @@ DWE_NOTIFICATION_INSTANCE = "dwe_notification_1.3.0"
 SAPWUL_INSTANCE = 'CustomCBAPush_1.3.0'
 
 ###SFTP###
-SFTP_HOST = "mancsleverg0022"
-SFTP_HOST_GL = "mancsleverg0018"
+SFTP_HOST = "mancsleverg0021"
 SFTP_PORT = "22"
-SFTP_USER = "micloud"
-SFTP_PASSWORD = "misys123"
+SFTP_USER = "sftpuser2"
+SFTP_PASSWORD = "luckyroll76"
 
 ###LIQ Credential###
 INPUTTER_USERNAME = "DJRHINPT"

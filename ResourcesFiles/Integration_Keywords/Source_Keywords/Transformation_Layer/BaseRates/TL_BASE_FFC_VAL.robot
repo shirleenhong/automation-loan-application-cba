@@ -74,7 +74,6 @@ Validate FFC for TL Base Rate Success with Multiple Files
     Wait Until Element Is Visible    ${FFC_Dashboard}    30s
     
     ###Base Splitter###
-    # Go to Dashboard and Click Source API Name    ${TL_BASE_ACK_MESSAGE_SOURCENAME}    sOutputType=${TLSUCCESS_OUTPUT_TYPE}
     Go to Dashboard and Click Source API Name    ${TL_BASE_ACK_MESSAGE_SOURCENAME}    ${CUSTOM_INTERFACE_INSTANCE}
     Log    ${ARCHIVE_GSFILENAME_LIST}
     ${aHeaderRefNameList}    Create List    ${REQUESTS_ID}
@@ -145,6 +144,7 @@ Validate FFC for TL Base Rate Failed
     ...    @update: cfrancis    12SEP2019    - added condition to run only verification of file validation failed on response
     ...    if the error is caused by inactive base rate code
     ...    @update: dahijara    14FEB2019    - added logic to handle/validate multiple expected resopnses.
+    ...    @update: jdelacru    20OCT2020    - deleted commented code
     [Arguments]    ${sOutputFilePath}    ${sOutputFileName}    ${sExpectedErrorMsg}    ${isMultipleExpectedResponse}=None
     
     Login to MCH UI
@@ -154,7 +154,6 @@ Validate FFC for TL Base Rate Failed
     Go to Dashboard and Click Source API Name    ${CBAPUSH_SOURCENAME}    ${CBAPUSH_INSTANCE}
     ${ResultsRowList}    Filter by Reference Header and Save Header Value and Return Results Row List Value    ${JMS_HEADERS}    X-Request-ID=${GSFILENAME_WITHTIMESTAMP}    ${sOutputFilePath}${sOutputFileName}    
     ...    ${JSON}    ${JMS_PAYLOAD}    ${RESULTSTABLE_STATUS}    ${JMS_INBOUND_QUEUE}    ${HTTPSTATUS}
-    #Validate Results Row Values Using Expected Value List    ${ResultsRowList}    ${FAILED}    ${TL_NOTIF_OUT}    ${FAILED_STATUS}
     Validate Results Row Values Using Expected Value List    ${ResultsRowList}    ${SUCCESSFUL}    ${TL_NOTIF_OUT}    ${RESPONSECODE_200}
     
     Verify Expected Value in the Given JSON File for Base Rate TL    ${sOutputFilePath}${sOutputFileName}    ${REQUEST_ID}    ${GSFILENAME_WITHTIMESTAMP}

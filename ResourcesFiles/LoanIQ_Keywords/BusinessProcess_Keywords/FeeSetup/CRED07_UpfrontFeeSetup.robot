@@ -19,6 +19,7 @@ NonAgent-HostBank Syndicated Deal - Setup Upfront Fees, Bank Role and Ratio
     
     Add Financial Ratio    &{ExcelPath}[RatioType1]    &{ExcelPath}[FinancialRatio]    ${FinancialRatioStartDate}
     Add Financial Ratio    &{ExcelPath}[RatioType2]    &{ExcelPath}[FinancialRatio]    ${FinancialRatioStartDate}
+    
     ${EffectiveDate}    Get Financial Ratio Type Effective Date and Return    &{ExcelPath}[RatioType1]
     Write Data To Excel    CRED02_FacilitySetup    Facility_AgreementDate    &{ExcelPath}[rowid]    ${EffectiveDate}
     Write Data To Excel    CRED02_FacilitySetup    Facility_EffectiveDate    &{ExcelPath}[rowid]    ${EffectiveDate}

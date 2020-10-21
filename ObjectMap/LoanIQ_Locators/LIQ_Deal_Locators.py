@@ -330,7 +330,7 @@ LIQ_FrequencySelectionList_DeselectAll_Button = 'JavaWindow("title:=Frequency Se
 ###Deal Notebook - Ratios/Conds Tab###    
 LIQ_FinancialRatio_Add_Button = 'JavaWindow("title:=Deal Notebook -.*").JavaTab("text:=Ratios/Conds").JavaButton("text:=Add...")'    
 LIQ_FinancialRatio_Delete_Button = 'JavaWindow("title:=Deal Notebook -.*").JavaTab("text:=Ratios/Conds").JavaButton("label:=Delete")'    
-LIQ_FinancialRatio_History_Button = 'JavaWindow("title:=Deal Notebook -.*").JavaTab("text:=Ratios/Conds").JavaButton("text:=His&tory")'    
+LIQ_FinancialRatio_History_Button = 'JavaWindow("title:=Deal Notebook -.*").JavaTab("text:=Ratios/Conds").JavaButton("label:=History","labeled_containers_path:=.*Financial Ratios.*")'    
 LIQ_FinantialRatio_RatioType_List = 'JavaWindow("title:=Financial Ratio Add").JavaList("attached text:=Ratio Type:")'    
 LIQ_FinantialRatio_Field = 'JavaWindow("title:=Financial Ratio Add").JavaEdit("attached text:=Financial Ratio:","enabled:=1")'    
 LIQ_FinantialRatio_Date = 'JavaWindow("title:=Financial Ratio Add").JavaEdit("tagname:=Text","index:=1")'    
