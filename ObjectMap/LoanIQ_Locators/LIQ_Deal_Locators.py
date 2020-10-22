@@ -687,7 +687,7 @@ LIQ_LenderShares_OK_Button = 'JavaWindow("title:=Shares for .*").JavaButton("att
 LIQ_LenderShares_HostBankShare_Window= 'JavaWindow("title:=Host Bank Share for .*")'
 LIQ_HostBankShare_ActualAmount = 'JavaWindow("title:=Host Bank Share for.*").JavaEdit("attached text:=Actual Amount:")'
 LIQ_HostBankShare_Cancel_Button = 'JavaWindow("title:=Host Bank Share for.*").JavaButton("attached text:=Cancel")'
-LIQ_HostBankShare_ExpenseCodeList = 'JavaWindow("title:=Host Bank Share for.*").JavaTree("attached text:=Drill down to view/edit")'
+LIQ_HostBankShare_ExpenseCodeList = 'JavaWindow("title:=Host Bank Share for.*").JavaTree("attached text:=Drill down to view.*")'
 LIQ_HostBankShare_OK_Button = 'JavaWindow("title:=Host Bank Share for.*").JavaButton("attached text:=OK")'
 LIQ_ServicingGroupShare_Window = 'JavaWindow("title:=Servicing Group Share for.*")'
 LIQ_ServicingGroupShare_ActualAmount = 'JavaWindow("title:=Servicing Group Share for.*").JavaEdit("attached text:=Actual Amount:")'

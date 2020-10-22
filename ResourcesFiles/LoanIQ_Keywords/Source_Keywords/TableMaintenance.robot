@@ -718,19 +718,21 @@ Validate the Facility Type Code in LIQ
     mx LoanIQ click    ${LIQ_BrowseFacilityType_Update_OK_Button}
       
 Validate the Porfolio Codes in LIQ
-    [Documentation]    This keyword ...
-    ...    @author: mgaling    03Sep2019    Initial Create
+    [Documentation]    This keyword validate the Portfolio Code from CSV in LIQ Portfolio Window
+    ...    @author: mgaling    03SEP2020    - initial create
+    ...    @update: mgaling    15OCT2020    - updated documentation and updated Mx Native Type    {ENTER} keyword into Mx Press Combination    KEY.ENTER
+    ...                                     - added screenshot path
     [Arguments]    ${sRowValue}
     
     mx LoanIQ activate window    ${LIQ_Portfolio_Window}
     ${Row_Desc}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_Portfolio_Tree}    ${sRowValue}%Description%value    
     Mx LoanIQ Select String    ${LIQ_Portfolio_Tree}    ${sRowValue}\t${Row_Desc}
-    Mx Native Type    {ENTER} 
+    Mx Press Combination    KEY.ENTER 
     
     mx LoanIQ activate window    ${LIQ_BrowsePortfolio_Update_Window}
     Mx LoanIQ Verify Runtime Property    ${LIQ_BrowsePortfolio_Update_Code_Field}    text%${sRowValue}
-    Take Screenshot    ${sRowValue}        
-    Log    ${sRowValue} is available   
+    Log    ${sRowValue} is available
+    Take Screenshot    ${screenshot_path}/Screenshots/DWE/${sRowValue}          
     mx LoanIQ close window    ${LIQ_BrowsePortfolio_Update_Window}    
     
     [Return]    ${Row_Desc}
