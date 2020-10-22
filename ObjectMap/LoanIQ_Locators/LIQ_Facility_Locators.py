@@ -78,6 +78,7 @@ LIQ_FacilitySummary_Outstandings_Button = 'JavaWindow("title:=Facility -.*").Jav
 LIQ_FacilitySummary_Currency_StaticText = 'JavaWindow("title:=Facility -.*").JavaStaticText("labeled_containers_path:=Tab:Summary;","index:=5")'
 LIQ_FacilitySummary_FCN_Text = 'JavaWindow("title:=Facility -.*").JavaStaticText("labeled_containers_path:=Tab:Summary;", "Index:=7")'
 LIQ_FacilitySummary_FacilityType_Text = 'JavaWindow("title:=Facility -.*").JavaStaticText("labeled_containers_path:=Tab:Summary;", "Label:=Term")'
+LIQ_FacilitySummary_FacilityName_Text= 'JavaWindow("title:=Facility -.*").JavaStaticText("labeled_containers_path:=Tab:Summary;","index:=0")'
 
 ###Facility Notebook - Outstanding for Facility###    
 LIQ_OutstandingForFacility_Window = 'JavaWindow("title:=Outstanding for Facility.*")'     
