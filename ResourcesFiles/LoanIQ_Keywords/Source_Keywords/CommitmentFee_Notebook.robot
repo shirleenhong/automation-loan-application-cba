@@ -303,7 +303,7 @@ Compute Commitment Fee Amount Per Cycle
     ...                                      Added Get data for the Balance Amount.
     ...    @update: fmamaril    11SEP2019    
     ...    @update: ehugo    04JUN2020    - added keyword pre-processing and post-processing; added optional runtime argument; added screenshot
-    [Arguments]    ${sPrincipalAmount}    ${sRateBasis}    ${sCycleNumber}    ${sSystemDate}    ${sTotal}=None    ${sRunTimeVar_ProjectedCycleDue}=None
+    [Arguments]    ${sPrincipalAmount}    ${sRateBasis}    ${sCycleNumber}    ${sSystemDate}    ${sTotal}=None    ${sRunTimeVar_ProjectedCycleDue}=None    ${sAccrualRule}=Pay in Arrears
 
     ### GetRuntime Keyword Pre-processing ###
     ${PrincipalAmount}    Acquire Argument Value    ${sPrincipalAmount}
@@ -311,6 +311,7 @@ Compute Commitment Fee Amount Per Cycle
     ${CycleNumber}    Acquire Argument Value    ${sCycleNumber}
     ${SystemDate}    Acquire Argument Value    ${sSystemDate}
     ${Total}    Acquire Argument Value    ${sTotal}
+    ${AccrualRule}    Acquire Argument Value    ${sAccrualRule}
 
     mx LoanIQ activate window    ${LIQ_CommitmentFee_Window}
     ${Rate}    Mx LoanIQ Get Data    ${LIQ_CommitmentFee_CurrentRate_Field}    value%test
@@ -324,7 +325,7 @@ Compute Commitment Fee Amount Per Cycle
     ${Rate}    Evaluate    ${Rate}/100
     ${RateBasis}    Remove String    ${RateBasis}    Actual/
     ${RateBasis}    Convert To Integer    ${RateBasis}
-    ${ProjectedCycleDue}    Evaluate Commitment Fee    ${BalanceAmount}    ${Rate}    ${RateBasis}    ${CycleNumber}    ${SystemDate}
+    ${ProjectedCycleDue}    Evaluate Commitment Fee    ${BalanceAmount}    ${Rate}    ${RateBasis}    ${CycleNumber}    ${SystemDate}    ${AccrualRule}
     Log    Projected Cycle Due: ${ProjectedCycleDue}
 
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/CommitmentFeeWindow_FeeAmount
@@ -338,31 +339,29 @@ Evaluate Commitment Fee
     [Documentation]    This keyword evaluates the FIRST Projected Cycle Due on a 'Weekly' cycle.
     ...    @author: fmamaril
     ...    @update: jdelacru - updated actions that assign the value for variable '${Numberof Days}', used ELSE instead of using two Run Keyword If's
-    [Arguments]    ${PrincipalAmount}    ${Rate}    ${RateBasis}    ${CycleNumber}    ${SystemDate}
-    Mx LoanIQ Select Window Tab    ${LIQ_CommitmentFee_Tab}    Accrual
-    ${StartDate}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_CommitmentFee_Acrual_JavaTree}    ${CycleNumber}%Start Date%startdate
-    ${DueDate}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_CommitmentFee_Acrual_JavaTree}    ${CycleNumber}%Due Date%duedate
+    [Arguments]    ${iGlobalOriginal}    ${Rate}    ${RateBasis}    ${CycleNumber}    ${SystemDate}    ${sAccrualRule}=Pay in Arrears
+    
+    ${AccrualRule}    Acquire Argument Value    ${sAccrualRule}    
+
+    Mx LoanIQ Select Window Tab    ${LIQ_SBLCGuarantee_Tab}    Accrual
+    ${StartDate}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_BankGuarantee_Accrual_JavaTree}    ${CycleNumber}%Start Date%startdate
+    ${AccrualRuleDate}    Run Keyword If    '${AccrualRule}'=='Pay in Arrears'    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_BankGuarantee_Accrual_JavaTree}    ${CycleNumber}%Due Date%duedate
+    ...    ELSE IF    '${AccrualRule}'=='Pay In Advance'    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_BankGuarantee_Accrual_JavaTree}    ${CycleNumber}%End Date%enddate
     Log    ${StartDate}
-    Log    ${DueDate}
+    Log    ${AccrualRuleDate}
     ${SystemDate}    Convert Date    ${SystemDate}     date_format=%d-%b-%Y
     ${StartDate}    Convert Date    ${StartDate}     date_format=%d-%b-%Y
-    ${DueDate}    Convert Date    ${DueDate}     date_format=%d-%b-%Y
-    ${Numberof Days1}    Subtract Date From Date    ${SystemDate}    ${StartDate}    verbose    
-    ${Numberof Days2}    Subtract Date From Date    ${DueDate}    ${StartDate}    verbose 
-    Log    ${Numberof Days1}
-    Log    ${Numberof Days2}
-    ${Numberof Days1}    Remove String    ${Numberof Days1}     days    seconds    day
-    ${Numberof Days1}    Convert To Number    ${Numberof Days1}
-    ${Numberof Days2}    Remove String    ${Numberof Days2}     days    seconds    day
-    ${Numberof Days2}    Convert To Number    ${Numberof Days2}        
-    ${Numberof Days}   Run Keyword If    '${Numberof Days2}' == '0.0'    Set Variable    ${Numberof Days1}
-    ...    ELSE IF    ${Numberof Days1} > ${Numberof Days2}    Set Variable    ${Numberof Days2}    
-    ...    ELSE IF    '${Numberof Days1}' == '${Numberof Days2}'    Set Variable    ${Numberof Days2}
-    ...    ELSE IF    '${Numberof Days1}' == '0.0'    Set Variable    ${Numberof Days2}    
-    ...    ELSE    Set Variable    ${Numberof Days1}
-    ${ProjectedCycleDue}    Evaluate    (((${PrincipalAmount})*(${Rate}))*(${Numberof Days}))/${RateBasis}
+    ${AccrualRuleDate}    Convert Date    ${AccrualRuleDate}     date_format=%d-%b-%Y
+    
+    ${NumberofDays}    Subtract Date From Date    ${AccrualRuleDate}    ${StartDate}    verbose
+    Log    ${NumberofDays}
+    
+    ${NumberofDays}    Remove String    ${NumberofDays}     days    seconds    day
+    ${NumberofDays}    Convert To Number    ${NumberofDays}
+    ${NummberofDays}    Evaluate    ${NumberofDays}+1
+    
+    ${ProjectedCycleDue}    Evaluate    (((${iGlobalOriginal})*(${Rate}))*(${NumberofDays}))/${RateBasis}
     ${ProjectedCycleDue}    Convert To Number    ${ProjectedCycleDue}    2
-    [Return]    ${ProjectedCycleDue} 
     
 Validate GL Entries for Ongoing Fee Payment
     [Documentation]    This keyword validates the GL Entries of the Ongoing Fee Payment.
