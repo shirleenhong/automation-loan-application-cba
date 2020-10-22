@@ -167,3 +167,148 @@ Verify Trailer Record of DAT File
     Run Keyword If    ${IsContains_CRLF}==${False}    Log    Trailer row does not contain CRLF character.
     ...    ELSE    Run Keyword and Continue On Failure    FAIL    Trailer row does contains CRLF character.
 
+Verify DAT File Control Value and DB Record are Matched
+    [Documentation]    This keyword is used to validate DAT file content matched DB results.
+    ...    @author: clanding    15OCT2020    - initial create
+    [Arguments]    ${sZone}    ${sExtract_Path}    ${sDAT_File}    ${sBranch_Code}
+    
+    ${DAT_File_Content}    OperatingSystem.Get File    ${sExtract_Path}${sZone}/${sDAT_File}
+    ${DAT_File_Content_Count}    Get Line Count    ${DAT_File_Content}
+    
+    ${DAT_File_Line_Content_H}    Get Line    ${DAT_File_Content}    0    ### Header
+    ${DAT_File_List_H}    Split String    ${DAT_File_Line_Content_H}    ,
+    ${DAT_File_ListCount}    Get Length    ${DAT_File_List_H}
+    
+    ### Get CONTROL_MATRIX index ###
+    :FOR    ${CONTROL_MATRIX_Index}    IN RANGE    ${DAT_File_ListCount}
+    \    Log    @{DAT_File_List_H}[${CONTROL_MATRIX_Index}]
+    \    Exit For Loop If    '@{DAT_File_List_H}[${CONTROL_MATRIX_Index}]'=='CONTROL_MATRIX'
+    
+    ### Get BUSINESS_DATE index ###
+    :FOR    ${BUSINESS_DATE_Index}    IN RANGE    ${DAT_File_ListCount}
+    \    Log    @{DAT_File_List_H}[${BUSINESS_DATE_Index}]
+    \    Exit For Loop If    '@{DAT_File_List_H}[${BUSINESS_DATE_Index}]'=='BUSINESS_DATE'
+    
+    ### Get CONTROL_VALUE index ###
+    :FOR    ${CONTROL_VALUE_Index}    IN RANGE    ${DAT_File_ListCount}
+    \    Log    @{DAT_File_List_H}[${CONTROL_VALUE_Index}]
+    \    Exit For Loop If    '@{DAT_File_List_H}[${CONTROL_VALUE_Index}]'=='CONTROL_VALUE'
+
+    ### Get CURRENCY index ###
+    :FOR    ${CURRENCY_Index}    IN RANGE    ${DAT_File_ListCount}
+    \    Log    @{DAT_File_List_H}[${CURRENCY_Index}]
+    \    Exit For Loop If    '@{DAT_File_List_H}[${CURRENCY_Index}]'=='CURRENCY'
+    
+    :FOR    ${LineCount}    IN RANGE    1    ${DAT_File_Content_Count}
+    \    ${DAT_File_Line_Content}    Get Line    ${DAT_File_Content}    ${LineCount}
+    \    Validate DAT File Line Value and Compare to DB Result    ${sZone}    ${sBranch_Code}    ${DAT_File_Line_Content}
+         ...    ${CONTROL_MATRIX_Index}    ${BUSINESS_DATE_Index}    ${CONTROL_VALUE_Index}    ${CURRENCY_Index}
+
+Validate DAT File Line Value and Compare to DB Result
+    [Documentation]    This keyword is used to connect in Loan IQ database and execute query designed for each row of DAT file
+    ...    and validate amount value is correct.
+    [Arguments]    ${sZone}    ${sBranch_Code}    ${sDAT_File_Line}    ${iCONTROL_MATRIX_Index}    ${iBUSINESS_DATE_Index}    ${iCONTROL_VALUE_Index}
+    ...    ${iCURRENCY_Index}
+    
+    ${DAT_File_List}    Split String    ${sDAT_File_Line}    ,
+    ${DAT_File_ListCount}    Get Length    ${DAT_File_List}
+    Return From Keyword If    '@{DAT_File_List}[0]'=='T'
+    
+    Log    DAT File CONTROL_MATRIX: @{DAT_File_List}[${iCONTROL_MATRIX_Index}]
+    Log    DAT File BUSINESS_DATE: @{DAT_File_List}[${iBUSINESS_DATE_Index}]
+    Log    DAT File CONTROL_VALUE: @{DAT_File_List}[${iCONTROL_VALUE_Index}]
+    Log    DAT File CURRENCY: @{DAT_File_List}[${iCURRENCY_Index}]
+
+    ${Expected_Currency}    Run Keyword If    '@{DAT_File_List}[${iCURRENCY_Index}]'!=''    Set Variable    @{DAT_File_List}[${iCURRENCY_Index}]
+    ...    ELSE IF    '${sZone}'=='ZONE3'    Set Variable    AUD
+    ...    ELSE IF    '${sZone}'=='ZONE2'    Set Variable    EUR
+    
+    ${DB_Branch_Code}    Set Variable
+    ${Branch_Code_List}    Split String    ${sBranch_Code}    ,
+    ${Branch_Code_ListCount}    Get Length    ${Branch_Code_List}
+    :FOR    ${Index}    IN RANGE    ${Branch_Code_ListCount}
+    \    ${DB_Branch_Code}    Run Keyword If    '${Index}'=='0'    Catenate    SEPARATOR=    '    @{Branch_Code_List}[${Index}]    '
+         ...    ELSE    Catenate    SEPARATOR=    ${DB_Branch_Code}    ,    '    @{Branch_Code_List}[${Index}]    '
+    \    Log    ${DB_Branch_Code}
+    Log    Branch Code: ${DB_Branch_Code}    
+
+    ${Control_Matrix}    Set Variable    @{DAT_File_List}[${iCONTROL_MATRIX_Index}]
+    ${Expected_Date}    Convert Date    @{DAT_File_List}[${iBUSINESS_DATE_Index}]    result_format=%d-%b-%Y    date_format=%Y-%m-%d
+    ${DB_Control_Value}    Run Keyword If    '${Control_Matrix}'=='SUM_NEW_FUNDING_AMOUNT'    Get Sum New Funding Amount from LIQ Database    ${Expected_Date}    ${Expected_Currency}
+    ...    ELSE IF    '${Control_Matrix}'=='SUM_OF_ACCRUED_FEES'    Get Sum of Accrued Fees from LIQ Database    ${DB_Branch_Code}    ${Expected_Currency}
+    ...    ELSE IF    '${Control_Matrix}'=='SUM_OF_ACCRUED_INTEREST'    Get Sum of Accrued Interest from LIQ Database    ${DB_Branch_Code}    ${Expected_Currency}
+    ...    ELSE IF    '${Control_Matrix}'=='SUM_OF_HB_DEAL_LIMITS_GROSS'    Get Sum of Deal Limits Gross from LIQ Database    ${DB_Branch_Code}    ${Expected_Currency}
+    ...    ELSE IF    '${Control_Matrix}'=='SUM_OF_HB_DEAL_LIMITS_NET'    Get Sum of Deal Limits Net from LIQ Database    ${DB_Branch_Code}    ${Expected_Currency}
+    ...    ELSE IF    '${Control_Matrix}'=='SUM_OF_HB_FAC_LIMITS_GROSS'    Get Sum of Facility Limits Gross from LIQ Database    ${DB_Branch_Code}    ${Expected_Currency}
+    ...    ELSE IF    '${Control_Matrix}'=='SUM_OF_HB_FAC_LIMITS_NET'    Get Sum of Facility Limits Net from LIQ Database    ${DB_Branch_Code}    ${Expected_Currency}
+    ...    ELSE IF    '${Control_Matrix}'=='SUM_OF_PRINCIPAL_BALANCES'    Get Sum of Principal Balances from LIQ Database    ${DB_Branch_Code}    ${Expected_Currency}
+    ...    ELSE IF    '${Control_Matrix}'=='SUM_TRANSACTION_AMOUNT'    Get Sum of Transaction Amount from LIQ Database    ${DB_Branch_Code}    ${Expected_Currency}
+    ...    ELSE IF    '${Control_Matrix}'=='TOTAL_ACTIVE_DEAL_BORROWERS'    Get Total Active Deal Borrowers from LIQ Database    ${DB_Branch_Code}    ${Expected_Date}
+    ...    ELSE IF    '${Control_Matrix}'=='TOTAL_ACTIVE_DEAL_COUNT'    Get Total Active Deal Count from LIQ Database    ${DB_Branch_Code}    ${Expected_Date}
+    ...    ELSE IF    '${Control_Matrix}'=='TOTAL_ACTIVE_FAC_BORROWERS'    Get Total Active Facility Borrowers from LIQ Database    ${DB_Branch_Code}
+    ...    ELSE IF    '${Control_Matrix}'=='TOTAL_ACTIVE_FAC_COUNT'    Get Total Active Facility Count from LIQ Database    ${DB_Branch_Code}
+    ...    ELSE IF    '${Control_Matrix}'=='TOTAL_ACTIVE_OST_BORROWERS'    Get Total Active OST Borrowers from LIQ Database    ${DB_Branch_Code}
+    ...    ELSE IF    '${Control_Matrix}'=='TOTAL_ACTIVE_OST_COUNT'    Get Total Active OST Count from LIQ Database    ${DB_Branch_Code}
+    ...    ELSE    Set Variable    0
+
+    ${IsEqual}    Run Keyword And Return Status    Should Be Equal As Integers    @{DAT_File_List}[${iCONTROL_VALUE_Index}]    ${DB_Control_Value}
+    Run Keyword If    ${IsEqual}==${True}    Log    DAT File Control Value: '@{DAT_File_List}[${iCONTROL_VALUE_Index}]' is equal to DB Control Value: ${DB_Control_Value}
+    ...    ELSE    Run Keyword and Continue On Failure    FAIL    DAT File Control Value: '@{DAT_File_List}[${iCONTROL_VALUE_Index}]' is NOT equal to DB Control Value: ${DB_Control_Value}
+
+Verify DAT File Control Value and CSV Files are Matched
+    [Documentation]    This keyword is used to validate DAT file content matched CSV files record.
+    ...    @author: clanding    19OCT2020    - initial create
+    [Arguments]    ${sZone}    ${sExtract_Path}    ${sDAT_File}    ${sBranch_Code}    ${sDWE_Extract_Path}    ${sBus_Date}
+    
+    ${DAT_File_Content}    OperatingSystem.Get File    ${sExtract_Path}${sZone}/${sDAT_File}
+    ${DAT_File_Content_Count}    Get Line Count    ${DAT_File_Content}
+    
+    ${DAT_File_Line_Content_H}    Get Line    ${DAT_File_Content}    0    ### Header
+    ${DAT_File_List_H}    Split String    ${DAT_File_Line_Content_H}    ,
+    ${DAT_File_ListCount}    Get Length    ${DAT_File_List_H}
+    
+    ### Get CONTROL_MATRIX index ###
+    :FOR    ${CONTROL_MATRIX_Index}    IN RANGE    ${DAT_File_ListCount}
+    \    Log    @{DAT_File_List_H}[${CONTROL_MATRIX_Index}]
+    \    Exit For Loop If    '@{DAT_File_List_H}[${CONTROL_MATRIX_Index}]'=='CONTROL_MATRIX'
+    
+    ### Get BUSINESS_DATE index ###
+    :FOR    ${BUSINESS_DATE_Index}    IN RANGE    ${DAT_File_ListCount}
+    \    Log    @{DAT_File_List_H}[${BUSINESS_DATE_Index}]
+    \    Exit For Loop If    '@{DAT_File_List_H}[${BUSINESS_DATE_Index}]'=='BUSINESS_DATE'
+    
+    ### Get CONTROL_VALUE index ###
+    :FOR    ${CONTROL_VALUE_Index}    IN RANGE    ${DAT_File_ListCount}
+    \    Log    @{DAT_File_List_H}[${CONTROL_VALUE_Index}]
+    \    Exit For Loop If    '@{DAT_File_List_H}[${CONTROL_VALUE_Index}]'=='CONTROL_VALUE'
+
+    ### Get CURRENCY index ###
+    :FOR    ${CURRENCY_Index}    IN RANGE    ${DAT_File_ListCount}
+    \    Log    @{DAT_File_List_H}[${CURRENCY_Index}]
+    \    Exit For Loop If    '@{DAT_File_List_H}[${CURRENCY_Index}]'=='CURRENCY'
+    
+    :FOR    ${LineCount}    IN RANGE    1    ${DAT_File_Content_Count}
+    \    ${DAT_File_Line_Content}    Get Line    ${DAT_File_Content}    ${LineCount}
+    \    ${DAT_File_Line_Content_List}    Split String    ${DAT_File_Line_Content}    ,
+    \    Exit For Loop If    '@{DAT_File_Line_Content_List}[0]'=='T'    ###Exit when data is on the Trailer row
+    \    
+    \    ${Expected_Currency}    Run Keyword If    '@{DAT_File_Line_Content_List}[${CURRENCY_Index}]'!=''    Set Variable    @{DAT_File_Line_Content_List}[${CURRENCY_Index}]
+         ...    ELSE IF    '${sZone}'=='ZONE3'    Set Variable    AUD
+         ...    ELSE IF    '${sZone}'=='ZONE2'    Set Variable    EUR
+    \
+    \    ${Control_Matrix}    Set Variable    @{DAT_File_Line_Content_List}[${CONTROL_MATRIX_Index}]
+    \    ${CSV_Control_Value}    Run Keyword If    '${Control_Matrix}'=='SUM_NEW_FUNDING_AMOUNT'    Access GL Entry CSV File for New Funding Amount and Return Sum of Amount    ${sDWE_Extract_Path}    ${sZone}    ${sBus_Date}
+         ...    ELSE IF    '${Control_Matrix}'=='SUM_OF_ACCRUED_FEES'    Access Balance Subledger CSV File and Return Sum of Amount    ${sDWE_Extract_Path}    ${sZone}    ${sBus_Date}    ${Expected_Currency}    FEERC
+         ...    ELSE IF    '${Control_Matrix}'=='SUM_OF_ACCRUED_INTEREST'    Access Balance Subledger CSV File and Return Sum of Amount    ${sDWE_Extract_Path}    ${sZone}    ${sBus_Date}    ${Expected_Currency}    INTRC
+         ...    ELSE IF    '${Control_Matrix}'=='SUM_OF_HB_DEAL_LIMITS_GROSS'    Access Deal and Prod Pos Current CSV Files and Return Sum    ${sDWE_Extract_Path}    ${sZone}    ${sBus_Date}    ${Expected_Currency}    ${Control_Matrix}
+         ...    ELSE IF    '${Control_Matrix}'=='SUM_OF_HB_DEAL_LIMITS_NET'    Access Deal and Prod Pos Current CSV Files and Return Sum    ${sDWE_Extract_Path}    ${sZone}    ${sBus_Date}    ${Expected_Currency}    ${Control_Matrix}
+         ...    ELSE IF    '${Control_Matrix}'=='SUM_OF_PRINCIPAL_BALANCES'    Access Balance Subledger CSV File and Return Sum of Amount    ${sDWE_Extract_Path}    ${sZone}    ${sBus_Date}    ${Expected_Currency}    PRINC
+         ...    ELSE IF    '${Control_Matrix}'=='SUM_TRANSACTION_AMOUNT'    Access GL Entry CSV File for Transaction Amount and Return Sum of Amount    ${sDWE_Extract_Path}    ${sZone}    ${sBus_Date}    ${Expected_Currency}
+         ...    ELSE IF    '${Control_Matrix}'=='TOTAL_ACTIVE_DEAL_BORROWERS'    Access Deal and Borrower CSV Files and Return Sum    ${sDWE_Extract_Path}    ${sZone}    ${sBus_Date}
+         ...    ELSE IF    '${Control_Matrix}'=='TOTAL_ACTIVE_DEAL_COUNT'    Access Deal CSV File and Return Sum    ${sDWE_Extract_Path}    ${sZone}    ${sBus_Date}    ${sBranch_Code}
+         ...    ELSE    Log    Control Matrix '${Control_Matrix}' is not yet handled.    level=WARN
+    \    Continue For Loop If    '${CSV_Control_Value}'=='None'
+    \    
+    \    ${IsEqual}    Run Keyword And Return Status    Should Be Equal As Integers    @{DAT_File_Line_Content_List}[${CONTROL_VALUE_Index}]    ${CSV_Control_Value}
+    \    Run Keyword If    ${IsEqual}==${True}    Log    Control Matrix '${Control_Matrix}' - DAT File Control Value: '@{DAT_File_Line_Content_List}[${CONTROL_VALUE_Index}]' is equal to CSV Control Value: '${CSV_Control_Value}'
+         ...    ELSE    Run Keyword and Continue On Failure    FAIL    Control Matrix '${Control_Matrix}' - DAT File Control Value: '@{DAT_File_Line_Content_List}[${CONTROL_VALUE_Index}]' is NOT equal to CSV Control Value: '${CSV_Control_Value}'

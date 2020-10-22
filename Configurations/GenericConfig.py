@@ -237,6 +237,7 @@ DNA_EXTRACTION_AREA_PATH = ""
 DNA_CCB_LIQ_FILENAME= ""
 DNA_DATAASSURANCE_FILENAME = ""
 DNA_DAT_EXT = ""
+LIQDBSCHEMA = ""
 
 import os
 project_path = os.path.dirname(os.path.realpath(__file__)).replace("MDM_ConfigFile","")
