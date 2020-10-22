@@ -61,11 +61,7 @@ Collect LFIA Payment D00000476
     Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
     Select Item in Work in Process    Payments    Awaiting Release    Ongoing Fee Payment     &{ExcelPath}[Facility_Name]
     Navigate Notebook Workflow    ${LIQ_OngoingFeePayment_Window}    ${LIQ_PaymentNotebook_Tab}    ${LIQ_OngoingFeePaymentNotebook_Workflow_JavaTree}    Release Cashflows
-<<<<<<< HEAD
     # Release Cashflow    &{ExcelPath}[Borrower1_ShortName]    release
-=======
-    Release Cashflow    &{ExcelPath}[Borrower1_ShortName]    release
->>>>>>> 87a8729be1debee4a65802404e0ed4980499c149
     Navigate Notebook Workflow    ${LIQ_OngoingFeePayment_Window}    ${LIQ_PaymentNotebook_Tab}    ${LIQ_OngoingFeePaymentNotebook_Workflow_JavaTree}    Release
 
 Collect Commitment Fee Payment
