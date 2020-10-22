@@ -343,10 +343,10 @@ Evaluate Commitment Fee
     
     ${AccrualRule}    Acquire Argument Value    ${sAccrualRule}    
 
-    Mx LoanIQ Select Window Tab    ${LIQ_SBLCGuarantee_Tab}    Accrual
+    Mx LoanIQ Select Window Tab    ${LIQ_CommitmentFee_Tab}    Accrual
     ${StartDate}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_BankGuarantee_Accrual_JavaTree}    ${CycleNumber}%Start Date%startdate
-    ${AccrualRuleDate}    Run Keyword If    '${AccrualRule}'=='Pay in Arrears'    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_BankGuarantee_Accrual_JavaTree}    ${CycleNumber}%Due Date%duedate
-    ...    ELSE IF    '${AccrualRule}'=='Pay In Advance'    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_BankGuarantee_Accrual_JavaTree}    ${CycleNumber}%End Date%enddate
+    ${AccrualRuleDate}    Run Keyword If    '${AccrualRule}'=='Pay in Arrears'    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_CommitmentFee_Acrual_JavaTree}    ${CycleNumber}%Due Date%duedate
+    ...    ELSE IF    '${AccrualRule}'=='Pay In Advance'    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_CommitmentFee_Acrual_JavaTree}    ${CycleNumber}%End Date%enddate
     Log    ${StartDate}
     Log    ${AccrualRuleDate}
     ${SystemDate}    Convert Date    ${SystemDate}     date_format=%d-%b-%Y
