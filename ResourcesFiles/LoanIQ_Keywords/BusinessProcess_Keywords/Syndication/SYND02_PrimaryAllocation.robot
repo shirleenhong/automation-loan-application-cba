@@ -455,5 +455,53 @@ Approve and Close Deal with Single Primary Lender
     Enter Deal Approved Date    &{ExcelPath}[ApproveDate]
     Navigate to Deal Notebook Workflow and Proceed With Transaction    Close
     Enter Deal Close Date    &{ExcelPath}[CloseDate]
-    Logout from Loan IQ   
-    Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
+    Logout from Loan IQ
+    Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}    
+
+Setup 2 Host Bank Primaries for RPA Deal
+    [Documentation]    This keyword adds Lenders in a RPA Deal. Specifically, 2 Host banks with protfolios in different branches.
+    ...    @author: dahijara    20OCT2020    - initial create
+    [Arguments]    ${ExcelPath}
+    
+    Open Existing Deal    &{ExcelPath}[Deal_Name]
+
+    ###Primary Lender - Host Bank 1###
+    Add Lender and Location    &{ExcelPath}[Deal_Name]    &{ExcelPath}[Primary_Lender1]    &{ExcelPath}[Primary_LenderLoc1]    &{ExcelPath}[Primary_RiskBook1]    &{ExcelPath}[Primaries_TransactionType]
+    Set Sell Amount and Percent of Deal    &{ExcelPath}[Primary_PctOfDeal1]
+    Add Pro Rate    &{ExcelPath}[Primary_BuySellPrice1]
+    Verify Buy/Sell Price in Circle Notebook
+    Add Contact in Primary    &{ExcelPath}[Primary_Contact1]
+    Select Servicing Group on Primaries    None    &{ExcelPath}[Primary_SGAlias1]
+    ${SellAmount1}    Get Circle Notebook Sell Amount
+    Write Data To Excel    SYND02_PrimaryAllocation    SellAmount1    &{ExcelPath}[rowid]    ${SellAmount1}
+    mx LoanIQ close window    ${LIQ_OrigPrimaries_Window}
+    
+    ###Primary Lender - Host Bank 2###
+    Add Lender and Location    &{ExcelPath}[Deal_Name]    &{ExcelPath}[Primary_Lender2]    &{ExcelPath}[Primary_LenderLoc2]    &{ExcelPath}[Primary_RiskBook2]    &{ExcelPath}[Primaries_TransactionType]
+    Set Sell Amount and Percent of Deal    &{ExcelPath}[Primary_PctOfDeal2]
+    Add Pro Rate    &{ExcelPath}[Primary_BuySellPrice2]
+    Verify Buy/Sell Price in Circle Notebook
+    Add Contact in Primary    &{ExcelPath}[Primary_Contact2]
+    Select Servicing Group on Primaries    None    &{ExcelPath}[Primary_SGAlias2]
+    ${SellAmount2}    Get Circle Notebook Sell Amount
+    Write Data To Excel    SYND02_PrimaryAllocation    SellAmount2    &{ExcelPath}[rowid]    ${SellAmount2}
+    mx LoanIQ close window    ${LIQ_OrigPrimaries_Window}
+    
+    ##Circle Notebook Complete Portfolio Allocation, Circling, and Sending to Settlement Approval###
+    ${HostBank_ShareAmount1}    Circle Notebook Workflow Navigation    &{ExcelPath}[Primary_Lender1]    &{ExcelPath}[Primary_CircledDate]
+    ...    Yes    &{ExcelPath}[Primary_Portfolio1]    &{ExcelPath}[Primary_PortfolioBranch1]    ${SellAmount1}    &{ExcelPath}[Primary_PortfolioExpiryDate]    &{ExcelPath}[Primary_RiskBook1]
+
+    ${HostBank_ShareAmount2}    Circle Notebook Workflow Navigation    &{ExcelPath}[Primary_Lender2]    &{ExcelPath}[Primary_CircledDate]
+    ...    Yes    &{ExcelPath}[Primary_Portfolio2]    &{ExcelPath}[Primary_PortfolioBranch2]    ${SellAmount2}    &{ExcelPath}[Primary_PortfolioExpiryDate]    &{ExcelPath}[Primary_RiskBook2]
+
+    Close All Windows on LIQ
+    
+    ##Approval using a different user###
+    Logout from Loan IQ
+    Login to Loan IQ    ${SUPERVISOR_USERNAME}    ${SUPERVISOR_PASSWORD}
+    Select Actions    ${WORK_IN_PROCESS_ACTIONS}
+    Circle Notebook Settlement Approval    &{ExcelPath}[Primary_Lender1]    Host Bank
+    Close All Windows on LIQ
+    Select Actions    ${WORK_IN_PROCESS_ACTIONS}
+    Circle Notebook Settlement Approval    &{ExcelPath}[Primary_Lender2]    Host Bank
+    Close All Windows on LIQ
