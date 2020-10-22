@@ -139,7 +139,9 @@ Pay Commitment Fee Amount
     Verify if Status is set to Do It    &{ExcelPath}[Borrower1_ShortName]  
     
     ###Get Transaction Amount for Cashflow###
-    ${HostBankShare}    Get Host Bank Cash in Cashflow    &{ExcelPath}[Currency]
+    
+    ${HostBankShare}    Run Keyword If    '${ExcelPath}[Entity]'=='EU'    Get Host Bank Cash in Cashflow    &{ExcelPath}[Currency]
+    ...    ELSE    Get Host Bank Cash in Cashflow
     ${BorrowerTranAmount}    Get Transaction Amount in Cashflow    &{ExcelPath}[Borrower1_ShortName]
     ${ComputedHBTranAmount}    Compute Lender Share Transaction Amount    ${ProjectedCycleDue}    &{ExcelPath}[HostBankSharePct]
     
