@@ -210,21 +210,7 @@ Validate LIQ Success Response in FFC for User API
 Validate LIQ Success Response in FFC for Delete User API
     [Documentation]    This keyword is used to validate LIQ success response for Delete User API by searching for TextJMS and filtering by ID from OpenAPI,
     ...    Status and Queuename and getting actual XML and comparing to input XML.
-    ...    @author: amansuet    16AUG2019    - initial create
-
-    # [Arguments]    ${sInputFilePath}    ${sOutputFilePath}    ${sHTTPMethod}    ${sExpected_wsFinalLIQDestination}    ${sActual_wsFinalLIQDestination}
-    
-    # ###Distributor - wsFinalLIQDestination###
-    # Click Element    ${RefreshButton}
-    # Wait Until Element Is Visible    ${Summary_Table}    30s
-    # Go to Dashboard and Click Source API Name    ${TEXTJMS_SOURCENAME}    ${TEXTJMS_INSTANCE}
-    # ${aHeaderRefNameList}    Create List    ${JMS_CORRELATION_ID}    ${RESULTSTABLE_STATUS}    ${HEADER_QUEUENAME}
-    # ${aExpectedRefList}    Create List    ${ID}    ${SENT}    ${QNAME_WSFINALLIQDESTINATION}
-    # ${ColumnIndex}    Filter by Multiple Reference Headers and Values and Return Column Index    ${aHeaderRefNameList}    ${aExpectedRefList}
-    # ${ResultsRowList}    Save Message TextArea and Return Results Row List Value    ${ColumnIndex}    ${sOutputFilePath}${sActual_wsFinalLIQDestination}    ${XML}    ${HEADER_ROUTEROPERATION}    
-    # ...    ${HEADER_CATEGORY}    ${HEADER_OPERATION}
-    # Validate Results Row Values Using Expected Value List    ${ResultsRowList}    ${ROUTEROPTION_DELETELIQLOBUSER}    ${CATEGORY_LIQUSER}    ${sHTTPMethod}
-    # Verify Security Details in Output XML for Delete User API    ${sInputFilePath}${sExpected_wsFinalLIQDestination}    ${sOutputFilePath}${sActual_wsFinalLIQDestination}    ${XML} 
+    ...    @author: amansuet    16AUG2019    - initial create 
     [Arguments]    ${sOutputFilePath}    ${sHTTPMethod}    ${sLoginID}
     
     ${Queuename}    Run Keyword If    '${sHTTPMethod}'=='${POSTMethod}'    Set Variable    ${QNAME_WSLIQUSERDESTINATION}
