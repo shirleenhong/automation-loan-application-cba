@@ -3,7 +3,7 @@ Resource     ../../../../../../Configurations/LoanIQ_Import_File.robot
 
 *** Keywords ***
 
- ###Verify the Updates in Accrual Tab###
+###Verify the Updates in Accrual Tab###
 
 Validate Payment Manual Adjustment Transaction
     [Documentation]    Verify the cycleDue and paidToDate values from the payload response after the manual adjustment transaction is made in Loan Oustanding
