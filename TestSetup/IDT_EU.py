@@ -126,6 +126,7 @@ SSO_URL = ""
 
 ###COMSEE###
 COM_HOST = 'http://mancsleverg0022:9150'
+ENTITY = 'EU'
 
 ##CORRESPONDENCE##
 CORRES_SERVER = 'http://mancsleverg0022'

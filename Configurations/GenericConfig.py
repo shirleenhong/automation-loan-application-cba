@@ -137,6 +137,7 @@ SSO_URL = ""
 
 ###COMSEE###
 COM_HOST = ""
+ENTITY = ""
 
 ##CORRESPONDENCE##
 CORRES_SERVER = ""
