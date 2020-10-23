@@ -73,7 +73,7 @@ Get Riskbook API Response and Validate API Response to Riskbook LoanIQ
     \    ${Response_UserId}    Set Variable    ${Converted_JSON}[userId]
     \
     \    Mx LoanIQ Select Window Tab    ${LIQ_RiskBookAccess_Tab}    Risk Book Access
-    \    Take Screenshot    LIQ_RiskBookAccess
+    \    Take Screenshot    ${screenshot_path}/Screenshots/Integration/LIQ_RiskBookAccess
     \    
     \    ### Risk Book Access ###
     \    
@@ -135,7 +135,7 @@ Get Riskbook API Response and Validate API Response to Riskbook LoanIQ
     \    
     \    mx LoanIQ activate window    ${LIQ_UserProfileMaint_Window}
     \    Mx LoanIQ Select Window Tab    ${LIQ_Events_Tab}    Events
-    \    Take Screenshot    LIQ_Events
+    \    Take Screenshot    ${screenshot_path}/Screenshots/Integration/LIQ_Events
     \    
     \    ### Select User Profile Riskbook Updated in Events Table  ###
     \    
@@ -192,7 +192,7 @@ Validate Empty Riskbook API Response and Validate Riskbook User ID not Displayed
     mx LoanIQ click    ${LIQ_OpenAUserProfile_UserList_OK_Button}
     mx LoanIQ activate window    ${LIQ_UserProfileMaint_Window}
     Mx LoanIQ Select Window Tab    ${LIQ_RiskBookAccess_Tab}    Risk Book Access
-    Take Screenshot    LIQ_RiskBookAccess
+    Take Screenshot    ${screenshot_path}/Screenshots/Integration/LIQ_RiskBookAccess
     
     mx LoanIQ activate window    ${LIQ_UserProfileMaint_Window}
     ${status}    Run Keyword And Return Status    Mx LoanIQ Verify Runtime Property    ${LIQ_RiskBookAccess_JavaTree}    items count%0
@@ -222,7 +222,7 @@ Get Risk Book Details to an Existing User Before Any Transaction
     ...    AND    Fail    User does not exists.
     
     mx LoanIQ activate window    ${LIQ_OpenAUserProfile_UserList_Window}
-	Take Screenshot    LIQ_SearchUser
+	Take Screenshot    ${screenshot_path}/Screenshots/Integration/LIQ_SearchUser
     ${UserList_exist}    Run Keyword And Return Status    Mx LoanIQ Select String    ${LIQ_OpenAUserProfile_UserList_Tree}    ${sUserId}    60
     Run Keyword If    ${UserList_exist}==${False}    Fail    User '${sUserId}' does not exist!!
     ...    ELSE    Log    User '${sUserId}' exists.
@@ -231,7 +231,7 @@ Get Risk Book Details to an Existing User Before Any Transaction
     mx LoanIQ activate window    ${LIQ_UserProfileMaint_Window}
     mx LoanIQ click    ${LIQ_UserProfileMaint_InqMode_Button}
     
-    Take Screenshot    LIQ_UserProfile    
+    Take Screenshot    ${screenshot_path}/Screenshots/Integration/LIQ_UserProfile    
     ${input_userid}    Convert To Uppercase    ${sUserId}
     ${UserID_Locator}    Set Static Text to Locator Single Text    User Profile Maintenance    ${input_userid}
     Run Keyword And Continue On Failure    Mx LoanIQ Verify Object Exist    ${UserID_Locator}    VerificationData="Yes"
@@ -241,7 +241,7 @@ Get Risk Book Details to an Existing User Before Any Transaction
 
     mx LoanIQ activate window    ${LIQ_UserProfileMaint_Window}
     Mx LoanIQ Select Window Tab    ${LIQ_UserProfileMaint_Tab}    Risk Book Access
-    Take Screenshot    LIQ_UserProfile_RiskBookAccess
+    Take Screenshot    ${screenshot_path}/Screenshots/Integration/LIQ_UserProfile_RiskBookAccess
     Get Risk Book List From User Profile    ${sInputFilePath}    ${sInputFileName}
 
 Get Risk Book List From User Profile
@@ -393,7 +393,7 @@ Validate Risk Book Details to an Existing User in LoanIQ for PUT
     ...    AND    Fail    User does not exists.
     
     mx LoanIQ activate window    ${LIQ_OpenAUserProfile_UserList_Window}
-	Take Screenshot    LIQ_SearchUser
+	Take Screenshot    ${screenshot_path}/Screenshots/Integration/LIQ_SearchUser
     ${UserList_exist}    Run Keyword And Return Status    Mx LoanIQ Select String    ${LIQ_OpenAUserProfile_UserList_Tree}    ${sUserId}    60
     Run Keyword If    ${UserList_exist}==${False}    Fail    User '${sUserId}' does not exist!!
     ...    ELSE    Log    User '${sUserId}' exists.
@@ -402,7 +402,7 @@ Validate Risk Book Details to an Existing User in LoanIQ for PUT
     mx LoanIQ activate window    ${LIQ_UserProfileMaint_Window}
     mx LoanIQ click    ${LIQ_UserProfileMaint_InqMode_Button}
     
-    Take Screenshot    LIQ_UserProfile    
+    Take Screenshot    ${screenshot_path}/Screenshots/Integration/LIQ_UserProfile    
     ${input_userid}    Convert To Uppercase    ${sUserId}
     ${UserID_Locator}    Set Static Text to Locator Single Text    User Profile Maintenance    ${input_userid}
     Run Keyword And Continue On Failure    Mx LoanIQ Verify Object Exist    ${UserID_Locator}    VerificationData="Yes"
@@ -448,7 +448,7 @@ Validate Risk Book Details to an Existing User in LoanIQ for PUT
     \    Run Keyword If    ${IsEqual}==${True}    Log    Expected and Actual are equal. ${LIQ_ViewPricesIndicator}=${ViewPricesIndicator_List}[${index}]
          ...    ELSE    Log    Expected and Actual are NOT equal. ${LIQ_ViewPricesIndicator}!=${ViewPricesIndicator_List}[${index}]    level=ERROR
     
-    Take Screenshot    LIQ_UserProfile_RiskBookAccess
+    Take Screenshot    ${screenshot_path}/Screenshots/Integration/LIQ_UserProfile_RiskBookAccess
     Mx LoanIQ Select Window Tab    ${LIQ_UserProfileMaint_Tab}    Events
     
     
@@ -496,7 +496,7 @@ Validate Risk Book Details to an Existing User in LoanIQ for PUT
     Run Keyword If    ${location_stat}==True    Log    Location is correct!! Time from Update Time Stamp: '${UpdateTimeStamp_TimeValue}' is found
     ...    ELSE    Log    Location is incorrect!! Time from Update Time Stamp:: '${UpdateTimeStamp_TimeValue}' is not found    level=ERROR
     
-    Take Screenshot    LIQ_UserProfile_Events
+    Take Screenshot    ${screenshot_path}/Screenshots/Integration/LIQ_UserProfile_Events
     Refresh Tables in LIQ    
 
 Update Details for Single Risk Book
@@ -546,7 +546,7 @@ Update Risk Book to Existing User in LoanIQ
     ...    AND    Fail    User does not exists.
     
     mx LoanIQ activate window    ${LIQ_OpenAUserProfile_UserList_Window}
-	Take Screenshot    LIQ_SearchUser
+	Take Screenshot    ${screenshot_path}/Screenshots/Integration/LIQ_SearchUser
     ${UserList_exist}    Run Keyword And Return Status    Mx LoanIQ Select String    ${LIQ_OpenAUserProfile_UserList_Tree}    ${sUserId}    60
     Run Keyword If    ${UserList_exist}==${False}    Fail    User '${sUserId}' does not exist!!
     ...    ELSE    Log    User '${sUserId}' exists.
@@ -555,7 +555,7 @@ Update Risk Book to Existing User in LoanIQ
     mx LoanIQ activate window    ${LIQ_UserProfileMaint_Window}
     mx LoanIQ click    ${LIQ_UserProfileMaint_InqMode_Button}
     
-    Take Screenshot    LIQ_UserProfile    
+    Take Screenshot    ${screenshot_path}/Screenshots/Integration/LIQ_UserProfile    
     ${input_userid}    Convert To Uppercase    ${sUserId}
     ${UserID_Locator}    Set Static Text to Locator Single Text    User Profile Maintenance    ${input_userid}
     Run Keyword And Continue On Failure    Mx LoanIQ Verify Object Exist    ${UserID_Locator}    VerificationData="Yes"
@@ -566,7 +566,7 @@ Update Risk Book to Existing User in LoanIQ
     #Validate Risk Book
     mx LoanIQ activate window    ${LIQ_UserProfileMaint_Window}
     Mx LoanIQ Select Window Tab    ${LIQ_UserProfileMaint_Tab}    Risk Book Access
-    Take Screenshot    LIQ_UserProfile_RiskBookAccess
+    Take Screenshot    ${screenshot_path}/Screenshots/Integration/LIQ_UserProfile_RiskBookAccess
     mx LoanIQ click    ${LIQ_RiskBookAccess_Button}
     mx LoanIQ activate window    ${LIQ_RiskBookSelection_Window}
 
@@ -578,7 +578,7 @@ Update Risk Book to Existing User in LoanIQ
     mx LoanIQ click    ${LIQ_RiskBookSelection_Ok_Button}
 
     mx LoanIQ activate window    ${LIQ_UserProfileMaint_Window}
-    Take Screenshot    LIQ_UserProfile_RiskBookAccess_AddedRiskBook
+    Take Screenshot    ${screenshot_path}/Screenshots/Integration/LIQ_UserProfile_RiskBookAccess_AddedRiskBook
     
     :FOR    ${index}    IN RANGE    ${RiskBookCount}
     \    Exit For Loop If    ${index}==${RiskBookCount}
@@ -632,7 +632,7 @@ Validate Non-Existing Risk Book Code in Risk Book Collection
     ...    AND    Fail    User does not exists.
     
     mx LoanIQ activate window    ${LIQ_OpenAUserProfile_UserList_Window}
-	Take Screenshot    LIQ_SearchUser
+	Take Screenshot    ${screenshot_path}/Screenshots/Integration/LIQ_SearchUser
     ${UserList_exist}    Run Keyword And Return Status    Mx LoanIQ Select Or DoubleClick In Javatree    ${LIQ_OpenAUserProfile_UserList_Tree}    ${ID}%s
     # ${UserList_exist}    Run Keyword And Return Status    Mx LoanIQ Select String    ${LIQ_OpenAUserProfile_UserList_Tree}    ${ID}    60
     
@@ -643,7 +643,7 @@ Validate Non-Existing Risk Book Code in Risk Book Collection
     mx LoanIQ activate window    ${LIQ_UserProfileMaint_Window}
     mx LoanIQ click    ${LIQ_UserProfileMaint_InqMode_Button}
     
-    Take Screenshot    LIQ_UserProfile    
+    Take Screenshot    ${screenshot_path}/Screenshots/Integration/LIQ_UserProfile    
     ${input_userid}    Convert To Uppercase    ${ID}
     ${UserID_Locator}    Set Static Text to Locator Single Text    User Profile Maintenance    ${input_userid}
     Run Keyword And Continue On Failure    Mx LoanIQ Verify Object Exist    ${UserID_Locator}    VerificationData="Yes"
@@ -653,7 +653,7 @@ Validate Non-Existing Risk Book Code in Risk Book Collection
 
     mx LoanIQ activate window    ${LIQ_UserProfileMaint_Window}
     Mx LoanIQ Select Window Tab    ${LIQ_UserProfileMaint_Tab}    Risk Book Access
-    Take Screenshot    LIQ_UserProfile_RiskBookAccess
+    Take Screenshot    ${screenshot_path}/Screenshots/Integration/LIQ_UserProfile_RiskBookAccess
 
     :FOR    ${index}    IN RANGE    ${RiskBookCount}
     \        
@@ -699,7 +699,7 @@ Validate Risk Book Details to an Existing User in LoanIQ for Delete
     ...    AND    Fail    User does not exists.
     
     mx LoanIQ activate window    ${LIQ_OpenAUserProfile_UserList_Window}
-	Take Screenshot    LIQ_SearchUser
+	Take Screenshot    ${screenshot_path}/Screenshots/Integration/LIQ_SearchUser
     ${UserList_exist}    Run Keyword And Return Status    Mx LoanIQ Select String    ${LIQ_OpenAUserProfile_UserList_Tree}    ${sUserId}    60
     Run Keyword If    ${UserList_exist}==${False}    Fail    User '${sUserId}' does not exist!!
     ...    ELSE    Log    User '${sUserId}' exists.
@@ -708,7 +708,7 @@ Validate Risk Book Details to an Existing User in LoanIQ for Delete
     mx LoanIQ activate window    ${LIQ_UserProfileMaint_Window}
     mx LoanIQ click    ${LIQ_UserProfileMaint_InqMode_Button}
     
-    Take Screenshot    LIQ_UserProfile    
+    Take Screenshot    ${screenshot_path}/Screenshots/Integration/LIQ_UserProfile    
     ${input_userid}    Convert To Uppercase    ${sUserId}
     ${UserID_Locator}    Set Static Text to Locator Single Text    User Profile Maintenance    ${input_userid}
     Run Keyword And Continue On Failure    Mx LoanIQ Verify Object Exist    ${UserID_Locator}    VerificationData="Yes"
@@ -718,7 +718,7 @@ Validate Risk Book Details to an Existing User in LoanIQ for Delete
 
     mx LoanIQ activate window    ${LIQ_UserProfileMaint_Window}
     Mx LoanIQ Select Window Tab    ${LIQ_UserProfileMaint_Tab}    Risk Book Access
-    Take Screenshot    LIQ_UserProfile_RiskBookAccess
+    Take Screenshot    ${screenshot_path}/Screenshots/Integration/LIQ_UserProfile_RiskBookAccess
 
     :FOR    ${index}    IN RANGE    ${RiskBookCount}
     \    Exit For Loop If    ${index}==${RiskBookCount}
@@ -762,7 +762,7 @@ Validate Risk Book Details to an Existing User in LoanIQ for Delete All Risk Boo
     ...    AND    Fail    User does not exists.
     
     mx LoanIQ activate window    ${LIQ_OpenAUserProfile_UserList_Window}
-	Take Screenshot    LIQ_SearchUser
+	Take Screenshot    ${screenshot_path}/Screenshots/Integration/LIQ_SearchUser
     ${UserList_exist}    Run Keyword And Return Status    Mx LoanIQ Select String    ${LIQ_OpenAUserProfile_UserList_Tree}    ${sUserId}    60
     Run Keyword If    ${UserList_exist}==${False}    Fail    User '${sUserId}' does not exist!!
     ...    ELSE    Log    User '${sUserId}' exists.
@@ -771,7 +771,7 @@ Validate Risk Book Details to an Existing User in LoanIQ for Delete All Risk Boo
     mx LoanIQ activate window    ${LIQ_UserProfileMaint_Window}
     mx LoanIQ click    ${LIQ_UserProfileMaint_InqMode_Button}
     
-    Take Screenshot    LIQ_UserProfile    
+    Take Screenshot    ${screenshot_path}/Screenshots/Integration/LIQ_UserProfile    
     ${input_userid}    Convert To Uppercase    ${sUserId}
     ${UserID_Locator}    Set Static Text to Locator Single Text    User Profile Maintenance    ${input_userid}
     Run Keyword And Continue On Failure    Mx LoanIQ Verify Object Exist    ${UserID_Locator}    VerificationData="Yes"
@@ -781,7 +781,7 @@ Validate Risk Book Details to an Existing User in LoanIQ for Delete All Risk Boo
 
     mx LoanIQ activate window    ${LIQ_UserProfileMaint_Window}
     Mx LoanIQ Select Window Tab    ${LIQ_UserProfileMaint_Tab}    Risk Book Access
-    Take Screenshot    LIQ_UserProfile_RiskBookAccess
+    Take Screenshot    ${screenshot_path}/Screenshots/Integration/LIQ_UserProfile_RiskBookAccess
     
     ${UserRiskBookCollection}    Get Risk Book List From User Profile    ${sOutputFilePath}    ${sOutputFileName}
     ${UserRiskBookCollection}    evaluate    json.loads('${UserRiskBookCollection}')    ${JSON}
@@ -861,7 +861,7 @@ Delete RiskBook in LIQ
     \    ${Response_UserId}    Set Variable    ${Converted_JSON}[userId]
     \
     \    Mx LoanIQ Select Window Tab    ${LIQ_RiskBookAccess_Tab}    Risk Book Access
-    \    Take Screenshot    LIQ_RiskBookAccess
+    \    Take Screenshot    ${screenshot_path}/Screenshots/Integration/LIQ_RiskBookAccess
     \    
     \    ### Risk Book Access ###
     \    
@@ -922,7 +922,7 @@ Delete RiskBook in LIQ
     
     mx LoanIQ click    ${LIQ_RiskBookSelection_Ok_Button}
     mx LoanIQ activate window    ${LIQ_UserProfileMaint_Window}
-    Take Screenshot    LIQ_UserProfile_RiskBookAccess_DeletedRiskBook
+    Take Screenshot    ${screenshot_path}/Screenshots/Integration/LIQ_UserProfile_RiskBookAccess_DeletedRiskBook
     mx LoanIQ select    ${LIQ_User_Profile_Maintenance_File_Save}
 
     Refresh Tables in LIQ
@@ -962,7 +962,7 @@ Delete Risk Book to Existing User in LoanIQ
     ...    AND    Fail    User does not exists.
     
     mx LoanIQ activate window    ${LIQ_OpenAUserProfile_UserList_Window}
-	Take Screenshot    LIQ_SearchUser
+	Take Screenshot    ${screenshot_path}/Screenshots/Integration/LIQ_SearchUser
     ${UserList_exist}    Run Keyword And Return Status    Mx LoanIQ Select String    ${LIQ_OpenAUserProfile_UserList_Tree}    ${sUserId}    60
     Run Keyword If    ${UserList_exist}==${False}    Fail    User '${sUserId}' does not exist!!
     ...    ELSE    Log    User '${sUserId}' exists.
@@ -971,7 +971,7 @@ Delete Risk Book to Existing User in LoanIQ
     mx LoanIQ activate window    ${LIQ_UserProfileMaint_Window}
     mx LoanIQ click    ${LIQ_UserProfileMaint_InqMode_Button}
     
-    Take Screenshot    LIQ_UserProfile    
+    Take Screenshot    ${screenshot_path}/Screenshots/Integration/LIQ_UserProfile    
     ${input_userid}    Convert To Uppercase    ${sUserId}
     ${UserID_Locator}    Set Static Text to Locator Single Text    User Profile Maintenance    ${input_userid}
     Run Keyword And Continue On Failure    Mx LoanIQ Verify Object Exist    ${UserID_Locator}    VerificationData="Yes"
@@ -990,7 +990,7 @@ Delete Risk Book to Existing User in LoanIQ
     \    Run Keyword If    ${IsSelected}==${True}    Log    Risk Book Description: '@{RiskBookDesc_List}[${index}]' is exists the Risk Book Access Table.
          ...    ELSE    Run Keyword And Continue On Failure    Fail    Risk Book Description: '@{RiskBookDesc_List}[${index}]' does not exist the Risk Book Access Table.
     
-    Take Screenshot    LIQ_UserProfile_RiskBookAccess
+    Take Screenshot    ${screenshot_path}/Screenshots/Integration/LIQ_UserProfile_RiskBookAccess
     
     mx LoanIQ click    ${LIQ_RiskBookAccess_Button}
     mx LoanIQ activate window    ${LIQ_RiskBookSelection_Window}
@@ -1000,12 +1000,12 @@ Delete Risk Book to Existing User in LoanIQ
     \    Mx LoanIQ Select Or Doubleclick In Tree By Text    ${LIQ_RiskBookSelection_Tree}    ${RiskBookCode_List}[${index}]%s
     \    Mx Native Type    {SPACE}
     
-    Take Screenshot    LIQ_UserProfile_DeleteRiskBook
+    Take Screenshot    ${screenshot_path}/Screenshots/Integration/LIQ_UserProfile_DeleteRiskBook
     mx LoanIQ click    ${LIQ_RiskBookSelection_Ok_Button}
 
     mx LoanIQ activate window    ${LIQ_UserProfileMaint_Window}
     
-    Take Screenshot    LIQ_UserProfile_RiskBookAccess_DeletedRiskBook
+    Take Screenshot    ${screenshot_path}/Screenshots/Integration/LIQ_UserProfile_RiskBookAccess_DeletedRiskBook
     
     ${UserRiskBookCollection}    Get Risk Book List From User Profile    ${sOutputFilePath}    ${sOutputFileName}
     ${UserRiskBookCollection}    evaluate    json.loads('${UserRiskBookCollection}')    ${JSON}
@@ -1064,6 +1064,6 @@ Add New Risk Book Code in Table Maintenance
     \    mx LoanIQ click    ${LIQ_EnterOptionalUserComment_OK_Button}
     \    
     
-    Take Screenshot    LIQ_BrowseRiskBook 
+    Take Screenshot    ${screenshot_path}/Screenshots/Integration/LIQ_BrowseRiskBook 
     mx LoanIQ click    ${LIQ_BrowseRiskBook_Exit_Button}
     Refresh Tables in LIQ
