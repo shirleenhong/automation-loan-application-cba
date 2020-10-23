@@ -39,6 +39,7 @@ Variables    ../ObjectMap/PTY_Locators/PTY_PartyDetailsEnquiry_Locators.py
 Resource    ../Variables/Party_Properties.txt
 
 ###Party Resource Files - Business Process Keywords###
+Resource    ../ResourcesFiles/Party_Keywords/BusinessProcess_Keywords/PTY000_CreatePartyID.robot
 Resource    ../ResourcesFiles/Party_Keywords/BusinessProcess_Keywords/PTY001_QuickPartyOnboarding.robot
 Resource    ../ResourcesFiles/Party_Keywords/BusinessProcess_Keywords/PTY002_UpdatePartyDetails.robot
 Resource    ../ResourcesFiles/Party_Keywords/BusinessProcess_Keywords/PTY004_PartyDetailsEnquiry.robot
