@@ -10,15 +10,15 @@ Create Quick Party Onboarding - PTY001
     [Tags]    01 Create Party within Common Party - PTY001
     Mx Execute Template With Multiple Data    Create Party in Quick Party Onboarding    ${ExcelPath}    ${rowid}    PTY001_QuickPartyOnboarding
     
-## Create Customer within Loan IQ - ORIG03
-    ## [Documentation]    This keyword creates Customer within LoanIQ
-    ## ...    when using this, the following keywords(validations) should be disabled in the succeeding keyword 'Search Customer and Complete its Borrower Profile Creation - ORIG03'
-    ## ...    -> Read Excel Data and Validate Customer ID, Short Name and Legal Name fields
-    ## ...    -> Check Legal Address Details Under Profiles Tab
-    ## ...    @author: ghabal
-    ## [Tags]    01 Create Customer within Loan IQ - ORIG03
-    ## Set Test Variable    ${rowid}    5
-    ## Mx Execute Template With Multiple Data    Create Customer within Loan IQ    ${ExcelPath}    ${rowid}    ORIG03_Customer
+Create Customer within Loan IQ - ORIG03
+    [Documentation]    This keyword creates Customer within LoanIQ
+    ...    when using this, the following keywords(validations) should be disabled in the succeeding keyword 'Search Customer and Complete its Borrower Profile Creation - ORIG03'
+    ...    -> Read Excel Data and Validate Customer ID, Short Name and Legal Name fields
+    ...    -> Check Legal Address Details Under Profiles Tab
+    ...    @author: ghabal
+    [Tags]    01 Create Customer within Loan IQ - ORIG03
+    Set Test Variable    ${rowid}    1
+    Mx Execute Template With Multiple Data    Create Customer within Loan IQ    ${ExcelPath}    ${rowid}    ORIG03_Customer
 
 Search Customer and Complete its Borrower Profile Creation - ORIG03
     [Tags]    02 Search customer and complete its Borrower Profile creatio - ORIG03

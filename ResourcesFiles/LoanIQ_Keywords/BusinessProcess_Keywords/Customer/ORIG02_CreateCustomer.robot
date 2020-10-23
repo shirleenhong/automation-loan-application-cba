@@ -43,6 +43,7 @@ Create Customer within Loan IQ
     ...    @update: dahijara    08JUL2020    - updated Scenario 6 test data writing.
     ...    @update: dahijara    21JUL2020    - updated Scenario 8 test data writing.
     ...    @update: dahijara    29JUL2020    - Updatede writing for scenario 1, 4, 5 & 6 for SERV01_LoanDrawdown - Borrower1_LegalName
+    ...    @update: aramos      23OCT2020    - Update Scenario 5 for SERV01_LoanDrawdown - Borrower1_LegalName
     [Arguments]    ${ExcelPath}          
 
     ### Login to LoanIQ###
@@ -129,7 +130,7 @@ Create Customer within Loan IQ
     Run Keyword If    '${SCENARIO}'=='5'    Run Keywords    Write Data To Excel    SERV21_InterestPayments    LIQCustomer_ID    ${rowid}   ${LIQCustomer_ID}
     ...    AND    Write Data To Excel    SERV29_PaymentFees    LIQCustomer_ID    ${rowid}    ${LIQCustomer_ID}
     ...    AND    Write Data To Excel    SERV01_TermLoanDrawdowninUSD    LIQCustomer_ID    ${rowid}    ${LIQCustomer_ID}
-    ...    AND    Write Data To Excel    SERV01_LoanDrawdown    Borrower1_LegalName    ${rowid}    ${LIQCustomer_LegalName}
+    # ...    AND    Write Data To Excel    SERV01_LoanDrawdown    Borrower1_LegalName    ${rowid}    ${LIQCustomer_LegalName}
 
     Run Keyword If    '${SCENARIO}'=='2'    Write Data To Excel    SERV29_PaymentFees    LIQCustomer_ID    ${rowid}   ${LIQCustomer_ID}   
   
