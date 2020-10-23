@@ -35,4 +35,7 @@ Add Facility in Amendment Notebook - AMCH11
     [Tags]    04 Add Facility - AMCH11
     Mx Execute Template With Multiple Data    Add New Facility via Amendment Notebook    ${ExcelPath}    ${rowid}    AMCH11_AddFacility
 
-
+Initiate Upfront Fee Payment - SYND05
+    [Documentation]    Initiate Upfront Fee Payment.
+    [Tags]    05 Upfront Fee Payment - SYND05
+    Mx Execute Template With Multiple Data    Initiate Upfront Fee Payment    ${ExcelPath}    ${rowid}    SYND05_UpfrontFee_Payment

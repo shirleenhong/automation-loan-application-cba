@@ -96,15 +96,23 @@ Update Indemnity Fee Cycle
 Pay Commitment Fee Amount
     [Documentation]    This keyword will pay Commitment Fee Amount on a deal
     ...    @author: fmamaril
-    ...    @update: fmamaril    23APR2019    Apply cashflow handling based on standards and removed notices validation for correspondence testing
-    ...    @update: fmamaril    29APR2019    Remove commented steps
-    ...    @update: ehugo    05JUN2020    - used 'Navigate to Payment Workflow and Proceed With Transaction' instead of 'Navigate Notebook Workflow'
-    [Arguments]    ${ExcelPath}    
-
-    ###Return to Scheduled Activity Fiter###
+    ...    @update: fmamaril    23APR2019	Apply cashflow handling based on standards and removed notices validation for correspondence testing
+    ...    @update: fmamaril    29APR2019	Remove commented steps
+    ...    @update: ehugo   	05JUN2020	Used 'Navigate to Payment Workflow and Proceed With Transaction' instead of 'Navigate Notebook Workflow'
+    ...    @update: makcamps    22OCT2020	Added relogin for system date reset, write method condition for EU,
+    ...										deleted Release Cashflow method before Release Ongoing Fee Payment
+    [Arguments]    ${ExcelPath}   
+     
+    ##Re-login to reset date###
+    Logout from Loan IQ
+    Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
+    
+    ##Return to Scheduled Activity Fiter###
     ${SystemDate}    Get System Date
     Set Global Variable    ${SystemDate}
-    ${RemittanceDescription}    Read Data From Excel    ORIG03_Customer    RemittanceInstruction_RTGSDescriptionAUD   ${rowid}               
+    
+    ${RemittanceDescription}    Run Keyword If    '${ExcelPath}[Entity]'=='EU'    Read Data From Excel    ORIG03_Customer    RemittanceInstruction_IMTDescriptionUSD   ${rowid} 
+    ...    ELSE    Read Data From Excel    ORIG03_Customer    RemittanceInstruction_RTGSDescriptionAUD   ${rowid}            
     Navigate to Scheduled Activity Filter
 
     ###Scheduled Activity Filter###
@@ -131,7 +139,9 @@ Pay Commitment Fee Amount
     Verify if Status is set to Do It    &{ExcelPath}[Borrower1_ShortName]  
     
     ###Get Transaction Amount for Cashflow###
-    ${HostBankShare}    Get Host Bank Cash in Cashflow
+    
+    ${HostBankShare}    Run Keyword If    '${ExcelPath}[Entity]'=='EU'    Get Host Bank Cash in Cashflow    &{ExcelPath}[Currency]
+    ...    ELSE    Get Host Bank Cash in Cashflow
     ${BorrowerTranAmount}    Get Transaction Amount in Cashflow    &{ExcelPath}[Borrower1_ShortName]
     ${ComputedHBTranAmount}    Compute Lender Share Transaction Amount    ${ProjectedCycleDue}    &{ExcelPath}[HostBankSharePct]
     
@@ -167,7 +177,6 @@ Pay Commitment Fee Amount
     ###Generation of Intent Notice is skipped - Customer Notice Method must be updated###
     Select Item in Work in Process    Payments    Release Cashflows    Ongoing Fee Payment     &{ExcelPath}[Facility_Name]
     Navigate to Payment Workflow and Proceed With Transaction    Release Cashflows
-    Release Cashflow    &{ExcelPath}[Borrower1_ShortName]    release
     Release Ongoing Fee Payment
     
     ###Loan IQ Desktop###
