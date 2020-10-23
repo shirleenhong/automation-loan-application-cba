@@ -283,3 +283,8 @@ LIQ_AccrualCycleDetail_LineItems_Button = 'JavaWindow("title:=Accrual Cycle Deta
 ###Line Items for###
 LIQ_LineItemsFor_Window = 'JavaWindow("title:=Line Items for .*")'
 LIQ_LineItemsFor_JavaTree = 'JavaWindow("title:=Line Items for .*").JavaTree("displayed:=1")'
+
+### Generic Loan Notebook ###
+LIQ_Loan_Generic_Window = 'JavaWindow("title:=.*Loan.*/.*")'
+LIQ_Loan_Generic_Options_RepaymentSchedule = 'JavaWindow("title:=.*Loan.*${LoanNotebook_Status}.*").JavaMenu("label:=Options").JavaMenu("label:=Repayment Schedule")'
+LIQ_Loan_Generic_IntCycleFreq_Dropdownlist = 'JavaWindow("title:=.*Loan.*${LoanNotebook_Status}.*").JavaList("attached text:=Int. Cycle Freq:")'
