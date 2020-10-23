@@ -2312,8 +2312,9 @@ Validate Inactive Borrower in Facility Notebook
 
 Validate CSV values in LIQ for VLS_SCHEDULE
     [Documentation]    This keyword is used to validate fields values from CSV in LIQ. 
-    ...    @author: mgaling    25Sep2019    Initial Create
-    [Arguments]    ${aTableName_List}    ${sRID_OWNER_Index}    ${sCDE_BAL_TYPE_Index}    ${iAMT_RESIDUAL_Index}
+    ...    @author: mgaling    25SEP2020    - initial Create
+    ...    @update: mgaling    22OCT2020    - removed other Run Keyword If keywords
+    [Arguments]    ${aTableName_List}    ${sRID_OWNER_Index}    ${sCDE_BAL_TYPE_Index}    ${sAMT_RESIDUAL_Index}
     
     ${Data_Rows}    Get Length    ${aTableName_List}
     
@@ -2322,7 +2323,7 @@ Validate CSV values in LIQ for VLS_SCHEDULE
     \    Log    ${Table_NameList}
     \    ${RID_OWNER}    Remove String    @{Table_NameList}[${sRID_OWNER_Index}]    " 
     \    ${CDE_BAL_TYPE}    Remove String    @{Table_NameList}[${sCDE_BAL_TYPE_Index}]    "
-    \    ${AMT_RESIDUAL}    Remove String    @{Table_NameList}[${iAMT_RESIDUAL_Index}]    "
+    \    ${AMT_RESIDUAL}    Remove String    @{Table_NameList}[${sAMT_RESIDUAL_Index}]    "
     \    ### SCH_AMT_RESIDUAL Field Validation ###
     \    Run Keyword And Continue On Failure    Should Be Equal    ${AMT_RESIDUAL.strip()}    0
     \    ### SCH_CDE_BAL_TYPE Field Validation ###
@@ -2330,37 +2331,43 @@ Validate CSV values in LIQ for VLS_SCHEDULE
          ...    ELSE IF    "${RID_OWNER}"!="${EMPTY}" and "${CDE_BAL_TYPE.strip()}"=="PRINB"    Run Keyword And Return Status     Navigate to Notebook Window thru RID    Outstanding    ${RID_OWNER.strip()}
          ...    ELSE IF    "${RID_OWNER}"!="${EMPTY}" and "${CDE_BAL_TYPE.strip()}"=="PRINI"    Run Keyword And Return Status     Navigate to Notebook Window thru RID    Outstanding    ${RID_OWNER.strip()}
          ...    ELSE IF    "${RID_OWNER}"!="${EMPTY}" and "${CDE_BAL_TYPE.strip()}"=="FIXED"    Run Keyword And Return Status     Navigate to Notebook Window thru RID    Outstanding    ${RID_OWNER.strip()}
-    \    Run Keyword If    "${OutstandingRID_IsExist}"=="${True}"    Run Keyword And Continue On Failure    Check CSV Values in Repayment Schedule    ${CDE_BAL_TYPE.strip()}   
-         ...    ELSE IF    "${OutstandingRID_IsExist}"=="${False}"    Run Keyword And Continue On Failure    Fail    Oustanding RID ${RID_OWNER} does not exist! 
-         ...    ELSE IF    "${OutstandingRID_IsExist}"=="None"    Log    Oustanding RID ${RID_OWNER} is not a Bullet or Fixed Transaction.
-    \    Run Keyword If    "${OutstandingRID_IsExist}"!="None"    Close All Windows on LIQ    
+         ...    ELSE    Run Keyword And Continue On Failure    FAIL    ${RID_OWNER} is empty or None or ${CDE_BAL_TYPE.strip} is not yet configured.     
+    \    Run Keyword If    ${OutstandingRID_IsExist}==${True}    Run Keyword And Continue On Failure    Check CSV Values in Repayment Schedule    ${CDE_BAL_TYPE.strip()}   
+         ...    ELSE    Run Keyword And Continue On Failure    FAIL    Oustanding RID ${RID_OWNER} does not exist! 
+    \    Close All Windows on LIQ    
     
 Check CSV Values in Repayment Schedule
     [Documentation]    This keyword is used to validate SCH_CDE_BAL_TYPE field values from CSV in LIQ - Repayment Schedule Screen. 
-    ...    @author: mgaling    25Sep2019    Initial Create
+    ...    @author: mgaling    25SEP2019    - initial create
+    ...    @update: mgaling    22OCT2020    - added validation for the loan window status, updated locator and added screenshot path
     [Arguments]    ${sCDE_BAL_TYPE}   
      
-    ###    Outstanding Notebook    ###
-    mx LoanIQ activate window    ${LIQ_Loan_Window}
-    Take Screenshot    Oustanding_Notebook
+    ### Outstanding Notebook ###
+    Mx LoanIQ Activate Window    ${LIQ_Loan_Generic_Window}
+    Take Screenshot    ${screenshot_path}/Screenshots/DWE/Oustanding_Notebook
     
-    mx LoanIQ click element if present    ${LIQ_InquiryMode_Button}
-    ${cyclefreq_value}    Mx LoanIQ Get Data    ${LIQ_Loan_IntCycleFreq_Dropdownlist}    value    
-        
-    mx LoanIQ select    ${LIQ_Loan_Options_RepaymentSchedule}
+    ${LoanNotebook_Title}    Mx LoanIQ Get Data    ${LIQ_Loan_Generic_Window}    title
+    ${LoanNotebook_Status}    Fetch From Right    ${LoanNotebook_Title}    /
     
-    ### Repayment Schedule Window ###
+    ${LoanNotebook_Status}    Replace Variables    ${LoanNotebook_Status}
+    ${LIQ_Loan_Generic_IntCycleFreq_Dropdownlist}    Replace Variables    ${LIQ_Loan_Generic_IntCycleFreq_Dropdownlist}
+    ${LIQ_Loan_Generic_Options_RepaymentSchedule}    Replace Variables    ${LIQ_Loan_Generic_Options_RepaymentSchedule}
+                    
+    Mx LoanIQ Activate Window    ${LIQ_Loan_Generic_Window}
+    ${cyclefreq_value}    Mx LoanIQ Get Data    ${LIQ_Loan_Generic_IntCycleFreq_Dropdownlist}    value
+    mx LoanIQ select    ${LIQ_Loan_Generic_Options_RepaymentSchedule}
     mx LoanIQ activate window    ${LIQ_RepaymentSchedule_Window}
-    Take Screenshot    Repayment_Schedule
+    Take Screenshot    ${screenshot_path}/Screenshots/DWE/Repayment_Schedule
     
     ### SCH_CDE_BAL_TYPE Field Validation ###
     
     Run Keyword If    "${sCDE_BAL_TYPE}"=="PRIN" or "${sCDE_BAL_TYPE}"=="PRINB"    Run Keyword And Continue On Failure    Mx LoanIQ Verify Object Exist    ${LIQ_RepaymentSchedule_Window}.JavaStaticText("attached text:=Bullet")    VerificationData="Yes"
     ...    ELSE IF    "${sCDE_BAL_TYPE}"=="PRINI" or "${sCDE_BAL_TYPE}"=="FIXED"    Run Keyword And Continue On Failure    Run Keywords    Mx LoanIQ Verify Object Exist    ${LIQ_RepaymentSchedule_Window}.JavaObject("text:=Current Schedule - Fixed.*")    VerificationData="Yes"
-    ...    AND    Mx LoanIQ Verify Object Exist    ${LIQ_RepaymentSchedule_Window}.JavaObject("text:=${cyclefreq_value}")     VerificationData="Yes"
-                  
+    ...    AND    Mx LoanIQ Verify Object Exist    ${LIQ_RepaymentSchedule_Window}.JavaStaticText("labeled_containers_path:=Group:Current Schedule.*","text:=${cyclefreq_value}")     VerificationData="Yes"
+    ...    ELSE    Log    ${sCDE_BAL_TYPE} is not yet configured.
+              
     mx LoanIQ close window    ${LIQ_RepaymentSchedule_Window}
-    mx LoanIQ close window    ${LIQ_Loan_Window}
+    Close All Windows on LIQ
     
 Validate CSV values in LIQ for VLS_Outstanding
     [Documentation]    This keyword is used to validate CSV Values from VLS_Outstanding Extract to LIQ Screen
