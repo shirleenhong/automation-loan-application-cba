@@ -16,11 +16,11 @@ Deal Setup - CRED01
 Primary Allocation - SYND02
     [Tags]    02 Primary Allocation - SYND02
     Mx Execute Template With Multiple Data    Setup 2 Host Bank Primaries for RPA Deal    ${ExcelPath}    ${rowid}    SYND02_PrimaryAllocation
-#     Mx Execute Template With Multiple Data    RPA Deal Approval and Close    ${ExcelPath}    ${rowid}    SYND02_PrimaryAllocation
+    Mx Execute Template With Multiple Data    RPA Deal Approval and Close    ${ExcelPath}    ${rowid}    SYND02_PrimaryAllocation
 
-# Charge Upfront Fee - CRED07
-#     [Tags]    03 Charge Upfront Fee - CRED07
-#     Mx Execute Template With Multiple Data    Initiate Upfront Fee Payment    ${ExcelPath}    ${rowid}    CRED07_UpfrontFee_Payment
+Charge Upfront Fee - CRED07
+    [Tags]    03 Charge Upfront Fee - CRED07
+    Mx Execute Template With Multiple Data    Initiate Upfront Fee Payment    ${ExcelPath}    ${rowid}    CRED07_UpfrontFee_Payment
 
 # Complete Portfolio Settled Discount - TRPO12
 #     [Tags]    05    Portfolio Settled Discount - TRPO12 
