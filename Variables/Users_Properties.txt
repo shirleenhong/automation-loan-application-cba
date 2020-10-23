@@ -4,8 +4,8 @@ Resource    ../Configurations/LoanIQ_Import_File.robot
 *** Variables ***
 
 #INPUT AND OUTPUT FOLDER PATHS
-${Input_File_Path_Users}               ${dataset_path}\\DataSet\\API_DataSet\\Input\\Users\\
-${Output_File_Path_Users}              ${dataset_path}\\DataSet\\API_DataSet\\Output\\Users\\
+${Input_File_Path_Users}               ${dataset_path}\\DataSet\\Integration_DataSet\\API\\Input\\Users\\
+${Output_File_Path_Users}              ${dataset_path}\\DataSet\\Integration_DataSet\\API\\Output\\Users\\
 
 
 #File Name
@@ -97,7 +97,7 @@ ${UserName_FXRates}    ADMIN1
 ${Password_FXRates}    password
 
 ${sample}    sample.json
-# ${Countries_Codes}    ${dataset_path}\\CBA_Evergreen\\DataSet\\API_DataSet\\Countries_Codes.xls
+# ${Countries_Codes}    ${dataset_path}\\CBA_Evergreen\\DataSet\\Integration_DataSet\\API\\Countries_Codes.xls
 
 
 ## Global variable for validation before transaction
