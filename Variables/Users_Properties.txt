@@ -97,7 +97,7 @@ ${UserName_FXRates}    ADMIN1
 ${Password_FXRates}    password
 
 ${sample}    sample.json
-# ${Countries_Codes}    ${dataset_path}\\DataSet\\Integration_DataSet\\API\\Countries_Codes.xls
+# ${Countries_Codes}    ${dataset_path}\\DataSet\\Integration_DataSet\\API\\Countries_Codes.xlsx
 
 
 ## Global variable for validation before transaction
