@@ -782,9 +782,10 @@ Validate Mandatory Fields in Quick Enterprise Party Page
     Capture Page Screenshot    ${screenshot_path}/Screenshots/Party/QuickPartyOnboarding_MandatoryFields-{index}.png
     Mx Click Element    ${Party_CloseDialog_Button}
 
- Validate Duplicate Short Name 
+Validate Duplicate Short Name 
     [Documentation]    This test case is used to validate the duplicate shortname and corresponding error message.
     ...    @author: javinzon    21OCT2020    - initial create
+    ...	   @update: javinzon	23OCT2020	 - removed white space in Keyword name
 
     ${isErrorDisplayed}    Run Keyword And Return Status    Wait Until Page Contains Element    ${Party_QuickEnterpriseParty_Errors_Dialog}    30s
     Capture Page Screenshot    ${screenshot_path}/Screenshots/Party/DuplicateShortName-{index}.png
