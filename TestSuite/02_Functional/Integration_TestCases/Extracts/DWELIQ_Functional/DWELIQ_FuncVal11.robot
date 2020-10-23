@@ -3,18 +3,15 @@ Resource    ../../../../../Configurations/Integration_Import_File.robot
 
 
 *** Test Cases ***
-DWELIQ_FuncVal11_Zone2
-    [Tags]    Zone2_VLS_RISK_PORT_EXP
+DWELIQ_FuncVal11
 	[Documentation]    This keyword is used to validate RPE_CDE_EXPENSE, RPE_CDE_PORTFOLIO and RPE_CDE_RISK_BOOK vs LIQ screen
-    ...    @author: ehugo    28AUG2019
+    ...    @author: ehugo    28AUG2019    - initial create
+    ...    @update: mgaling    23OCT2020    - added keyword to handle multi entity test cases
     
-    Set Test Variable    ${rowid}    1    
-    Mx Execute Template With Multiple Data    Validate VLS_RISK_PORT_EXP Extract    ${DWELIQFunc_Dataset}    ${rowid}    FuncVal11
+    Set Global Variable    ${TestCase_Name}    DWELIQ_Multi_E2E_001|DWELIQ_Multi_E2E_002
+    Set Global Variable    ${TestCase_Name_FuncVal}    DWELIQ_FuncVal11_Z3|DWELIQ_FuncVal11_Z2
+    Set Global Variable    ${DWELIQFunc_Dataset_SheetName}    FuncVal11
+    Mx Execute Template With Multiple Test Case Name    Get Business Date of Decrypted Files    ${DWE_DATASET}    Test_Case    ${TestCase_Name}    DWE
 
-DWELIQ_FuncVal11_Zone3
-    [Tags]    Zone3_VLS_RISK_PORT_EXP
-	[Documentation]    This keyword is used to validate RPE_CDE_EXPENSE, RPE_CDE_PORTFOLIO and RPE_CDE_RISK_BOOK vs LIQ screen
-    ...    @author: ehugo    28AUG2019
-    
-    Set Test Variable    ${rowid}    2    
-    Mx Execute Template With Multiple Data    Validate VLS_RISK_PORT_EXP Extract    ${DWELIQFunc_Dataset}    ${rowid}    FuncVal11
+    Set Global Variable    ${TestCase_Name}    DWELIQ_FuncVal11_Z3|DWELIQ_FuncVal11_Z2        
+    Mx Execute Template With Multiple Test Case Name    Validate VLS_RISK_PORT_EXP Extract    ${DWELIQFunc_Dataset}    Test_Case    ${TestCase_Name}    FuncVal11
