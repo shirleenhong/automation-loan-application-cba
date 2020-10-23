@@ -28,6 +28,9 @@ Library    PdfToText
 Library    MathLibrary  
 
 ###Party Variable Files###
+Variables    ../ObjectMap/PTY_Locators/PTY_CreateUser_Locators.py
+Variables    ../ObjectMap/PTY_Locators/PTY_DeleteUser_Locators.py
+Variables    ../ObjectMap/PTY_Locators/PTY_EnquireUser_Locators.py
 Variables    ../ObjectMap/PTY_Locators/PTY_Global_Locators.py
 Variables    ../ObjectMap/PTY_Locators/PTY_Party_Locators.py
 Variables    ../ObjectMap/PTY_Locators/PTY_QuickPartyOnboarding_Locators.py
@@ -47,12 +50,14 @@ Resource    ../ResourcesFiles/Party_Keywords/BusinessProcess_Keywords/PTY014_Qui
 Resource    ../ResourcesFiles/Party_Keywords/BusinessProcess_Keywords/PTY015_QuickPartyOnboarding_Validation_Disabled_Fields.robot
 Resource    ../ResourcesFiles/Party_Keywords/BusinessProcess_Keywords/PTY016_PartyOnboarding_Validation_Branch.robot
 
-###Party Resource Files - Sourcel###
+###Party Resource Files - Source###
 Resource    ../ResourcesFiles/Party_Keywords/Source_Keywords/PartyCommon_Keywords.robot
 Resource    ../ResourcesFiles/Party_Keywords/Source_Keywords/Party_Generic_Keywords.robot
 Resource    ../ResourcesFiles/Party_Keywords/Source_Keywords/Party_QuickPartyOnboarding_Keywords.robot
 Resource    ../ResourcesFiles/Party_Keywords/Source_Keywords/Party_LoanIQVal_Keywords.robot
 Resource    ../ResourcesFiles/Party_Keywords/Source_Keywords/Party_EnquirePartyDetails_Keywords.robot
+Resource    ../ResourcesFiles/Party_Keywords/Source_Keywords/Party_EnquireUser_Keywords.robot
+Resource    ../ResourcesFiles/Party_Keywords/Source_Keywords/Party_DeleteUser_Keywords.robot
 
 ##Party Global Variables##
 Resource    ../Variables/Party_Properties.txt
