@@ -10,7 +10,7 @@ DWELIQ_FuncVal19
     
     Set Global Variable    ${TestCase_Name}    DWELIQ_Multi_E2E_001|DWELIQ_Multi_E2E_002
     Set Global Variable    ${TestCase_Name_FuncVal}    DWELIQ_FuncVal19_Z3|DWELIQ_FuncVal19_Z2
-    Set Global Variable    ${DWELIQFunc_Dataset_SheetName}  FuncVal19
+    Set Global Variable    ${DWELIQFunc_Dataset_SheetName}    FuncVal19
     Mx Execute Template With Multiple Test Case Name    Get Business Date of Decrypted Files    ${DWE_DATASET}    Test_Case    ${TestCase_Name}    DWE
 
     Set Global Variable    ${TestCase_Name}    DWELIQ_FuncVal19_Z3|DWELIQ_FuncVal19_Z2       

@@ -2332,7 +2332,7 @@ Validate CSV values in LIQ for VLS_SCHEDULE
          ...    ELSE IF    "${RID_OWNER}"!="${EMPTY}" and "${CDE_BAL_TYPE.strip()}"=="PRINI"    Run Keyword And Return Status     Navigate to Notebook Window thru RID    Outstanding    ${RID_OWNER.strip()}
          ...    ELSE IF    "${RID_OWNER}"!="${EMPTY}" and "${CDE_BAL_TYPE.strip()}"=="FIXED"    Run Keyword And Return Status     Navigate to Notebook Window thru RID    Outstanding    ${RID_OWNER.strip()}
          ...    ELSE    Run Keyword And Continue On Failure    FAIL    ${RID_OWNER} is empty or None or ${CDE_BAL_TYPE.strip} is not yet configured.     
-    \    Run Keyword If    "${OutstandingRID_IsExist}"=="${True}"    Run Keyword And Continue On Failure    Check CSV Values in Repayment Schedule    ${CDE_BAL_TYPE.strip()}   
+    \    Run Keyword If    ${OutstandingRID_IsExist}==${True}    Run Keyword And Continue On Failure    Check CSV Values in Repayment Schedule    ${CDE_BAL_TYPE.strip()}   
          ...    ELSE    Run Keyword And Continue On Failure    FAIL    Oustanding RID ${RID_OWNER} does not exist! 
     \    Close All Windows on LIQ    
     
@@ -2349,7 +2349,7 @@ Check CSV Values in Repayment Schedule
     ${LoanNotebook_Title}    Mx LoanIQ Get Data    ${LIQ_Loan_Generic_Window}    title
     ${LoanNotebook_Status}    Fetch From Right    ${LoanNotebook_Title}    /
     
-    
+    ${LoanNotebook_Status}    Replace Variables    ${LoanNotebook_Status}
     ${LIQ_Loan_Generic_IntCycleFreq_Dropdownlist}    Replace Variables    ${LIQ_Loan_Generic_IntCycleFreq_Dropdownlist}
     ${LIQ_Loan_Generic_Options_RepaymentSchedule}    Replace Variables    ${LIQ_Loan_Generic_Options_RepaymentSchedule}
                     
