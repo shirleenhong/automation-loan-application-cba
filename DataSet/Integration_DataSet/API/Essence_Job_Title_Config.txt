@@ -1,0 +1,4 @@
+CLR=CLR
+Officer=LoanOfficer
+SeniorManager=Loan Manager
+ADMIN=LoanOfficer
