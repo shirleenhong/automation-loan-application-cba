@@ -62,7 +62,8 @@ Validate Records for RPE_CDE_RISK_BOOK exist in LIQ
     \    ${RiskPortExp_Row_Item}    Get From List    ${aRiskPortExp_CSV_Content}    ${i}
     \    ${RiskPortExp_Row_Value}    Get From List    ${RiskPortExp_Row_Item}    ${RPE_CDE_RISK_BOOK_Index}
     \    ${count}    Get Match Count    ${aCodes_List}    ${RiskPortExp_Row_Value.strip()}    
-    \    Run Keyword If    ${count}==0    Run Keyword And Continue On Failure    FAIL    ${RiskPortExp_Row_Value} does not exist in LIQ Risk Book.   
+    \    Run Keyword If    ${count}==0    Run Keyword And Continue On Failure    FAIL    ${RiskPortExp_Row_Value} does not exist in LIQ Risk Book.
+         ...    ELSE    Log    ${RiskPortExp_Row_Value} is available in LIQ Risk Book.       
 
 Validate CUS_CID_CUST_ID and CUS_XID_CUST_ID in LIQ for VLS_Customer
     [Documentation]    This keyword validates CUS_CID_CUST_ID and CUS_XID_CUST_ID in LIQ for VLS_Customer
