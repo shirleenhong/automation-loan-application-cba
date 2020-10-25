@@ -638,6 +638,7 @@ Navigate to Notebook Window thru RID
     [Documentation]    This keyword is used to navigate a certain window thru RID.
     ...    @author: mgaling    05SEP2019    - initial create
     ...    @update: mgaling    15OCT2020    - added screenshot path
+    ...    @update: mgaling    25OCT2020    - removed "" in ${False}
     [Arguments]    ${sDataObject_Value}    ${sRID_Value}    
     
     ### Navigate to Options -> RID Select ###
@@ -653,10 +654,10 @@ Navigate to Notebook Window thru RID
     Take Screenshot     ${screenshot_path}/Screenshots/DWE/RID Code Validation        
     mx LoanIQ click    ${LIQ_SelectByRID_OK_Button}
     
-    ${status}    Run Keyword And Return Status    Mx LoanIQ Verify Object Exist    ${LIQ_Error_Window}            VerificationData="Yes"
-    Run Keyword If    "${status}"=="${False}"    Log    RID Code ${sRID_Value} is Available in LIQ.
+    ${status}    Run Keyword And Return Status    Mx LoanIQ Verify Object Exist    ${LIQ_Error_Window}    VerificationData="Yes"
+    Run Keyword If    ${status}==${False}    Log    RID Code ${sRID_Value} is Available in LIQ.
     ...    ELSE    Run Keywords    Run Keyword And Continue On Failure    FAIL    RID Code ${sRID_Value} is not Available.
-    ...    AND    Take Screenshot    Error_Window
+    ...    AND    Take Screenshot    ${screenshot_path}/Screenshots/DWE/Error_Window
     ...    AND    mx LoanIQ click    ${LIQ_Error_OK_Button}    
     ...    AND    Close All Windows on LIQ                    
     
@@ -1939,74 +1940,107 @@ Check Funding Desk Description from CSV to LIQ
 
 Validate CSV values in LIQ for VLS_PROD_POS_CUR
     [Documentation]    This keyword is used to validate fields values from CSV in LIQ. 
-    ...    @author: mgaling    23Sep2019    Initial Create
-    [Arguments]    ${aTable_NameList}    ${sPDC_PID_PRODUCT_ID_Index}    ${sPDC_CDE_PROD_TYPE_Index}    ${iPDC_AMT_BNK_NT_CMT_Index}    ${iPDC_AMT_BNK_GR_OUT_Index}    ${iPDC_AMT_BNK_NT_OUT_Index}
-    ...    ${iPDC_AMT_GLOBAL_CMT_Index}    ${iPDC_AMT_BNK_GR_CMT_Index}        
+    ...    @author: mgaling    23SEP2019    - initial create
+    ...    @update: mgaling    25OCT2020    - added Get Index From List keywords and updated FOR LOOP keywords
+    [Arguments]    ${aCSV_Content}        
     
-    ${Data_Rows}    Get Length    ${aTableName_List}
+    ### Read and Get the Index of the Fields from CSV File ###
+    ${header}    Get From List    ${aCSV_Content}    0
     
-    :FOR    ${Index}    IN RANGE    1    ${Data_Rows}
-    \    ${Table_NameList}    Set Variable    @{aTable_NameList}[${INDEX}]
+    ${PDC_PID_PRODUCT_ID_Index}    Get Index From List    ${header}    PDC_PID_PRODUCT_ID
+    ${PDC_CDE_PROD_TYPE_Index}    Get Index From List    ${header}    PDC_CDE_PROD_TYPE
+    
+    ${PDC_AMT_BNK_NT_CMT_Index}    Get Index From List    ${header}    PDC_AMT_BNK_NT_CMT
+    ${PDC_AMT_BNK_GR_OUT_Index}    Get Index From List    ${header}    PDC_AMT_BNK_GR_OUT
+    ${PDC_AMT_BNK_NT_OUT_Index}    Get Index From List    ${header}    PDC_AMT_BNK_NT_OUT
+    ${PDC_AMT_GLOBAL_CMT_Index}    Get Index From List    ${header}    PDC_AMT_GLOBAL_CMT
+    ${PDC_AMT_BNK_GR_CMT_Index}    Get Index From List    ${header}    PDC_AMT_BNK_GR_CMT
+
+    ${Data_Rows}    Get Length    ${aCSV_Content}
+    
+    :FOR    ${Index}    IN RANGE    5    10    ##${Data_Rows}
+    \    ${Table_NameList}    Set Variable    @{aCSV_Content}[${INDEX}]
     \    Log    ${Table_NameList}
-    \    ${PID_PRODUCT_ID}    Remove String    @{Table_NameList}[${sPDC_PID_PRODUCT_ID_Index}]    " 
-    \    ${CDE_PROD_TYPE}    Remove String    @{Table_NameList}[${sPDC_CDE_PROD_TYPE_Index}]    "
-    \    ${AMT_BNK_NT_CMT}    Remove String    @{Table_NameList}[${iPDC_AMT_BNK_NT_CMT_Index}]    " 
-    \    ${AMT_BNK_GR_OUT}    Remove String    @{Table_NameList}[${iPDC_AMT_BNK_GR_OUT_Index}]    "
-    \    ${AMT_BNK_NT_OUT}    Remove String    @{Table_NameList}[${iPDC_AMT_BNK_NT_OUT_Index}]    "
-    \    ${AMT_GLOBAL_CMT}    Remove String    @{Table_NameList}[${iPDC_AMT_GLOBAL_CMT_Index}]    "
-    \    ${AMT_BNK_GR_CMT}    Remove String    @{Table_NameList}[${iPDC_AMT_BNK_GR_CMT_Index}]    "
+    \    ${PID_PRODUCT_ID}    Remove String    @{Table_NameList}[${PDC_PID_PRODUCT_ID_Index}]    " 
+    \    ${CDE_PROD_TYPE}    Remove String    @{Table_NameList}[${PDC_CDE_PROD_TYPE_Index}]    "
+    \    ${AMT_BNK_NT_CMT}    Remove String    @{Table_NameList}[${PDC_AMT_BNK_NT_CMT_Index}]    " 
+    \    ${AMT_BNK_GR_OUT}    Remove String    @{Table_NameList}[${PDC_AMT_BNK_GR_OUT_Index}]    "
+    \    ${AMT_BNK_NT_OUT}    Remove String    @{Table_NameList}[${PDC_AMT_BNK_NT_OUT_Index}]    "
+    \    ${AMT_GLOBAL_CMT}    Remove String    @{Table_NameList}[${PDC_AMT_GLOBAL_CMT_Index}]    "
+    \    ${AMT_BNK_GR_CMT}    Remove String    @{Table_NameList}[${PDC_AMT_BNK_GR_CMT_Index}]    "
     \    
-    \    ${DealRID_IsExist}    Run Keyword If    "${PID_PRODUCT_ID}"!="${EMPTY}" and "${CDE_PROD_TYPE.strip()}"=="DEA"     Run Keyword And Return Status     Navigate to Notebook Window thru RID    Deal    ${PID_PRODUCT_ID.strip()}
-    \    Run Keyword If    "${DealRID_IsExist}"=="${True}" and "${CDE_PROD_TYPE.strip()}"=="DEA"    Run Keyword And Continue On Failure    Check VLS_PROD_POS_CUR values in Deal Notebook    ${AMT_GLOBAL_CMT.strip()}    ${AMT_BNK_GR_CMT.strip()}    
-         ...    ELSE IF    "${DealRID_IsExist}"=="${False}" and "${CDE_PROD_TYPE.strip()}"=="DEA"    Run Keyword And Continue On Failure    Fail    Deal RID ${PID_PRODUCT_ID} does not exist!        
-    \     
-    \    ${FacilityRID_IsExist}    Run Keyword If    "${PID_PRODUCT_ID}"!="${EMPTY}" and "${CDE_PROD_TYPE.strip()}"=="FAC"     Run Keyword And Return Status     Navigate to Notebook Window thru RID    Facility    ${PID_PRODUCT_ID.strip()}
-    \    Run Keyword If    "${FacilityRID_IsExist}"=="${True}" and "${CDE_PROD_TYPE.strip()}"=="FAC"    Run Keyword And Continue On Failure    Check VLS_PROD_POS_CUR values in Facility Notebook    ${AMT_BNK_NT_CMT.strip()}    ${AMT_BNK_NT_OUT.strip()}    ${AMT_BNK_GR_OUT.strip()}    
-         ...    ELSE IF    "${FacilityRID_IsExist}"=="${False}" and "${CDE_PROD_TYPE.strip()}"=="FAC"    Run Keyword And Continue On Failure    Fail    Facility RID ${PID_PRODUCT_ID} does not exist!
-    
-    Close All Windows on LIQ
+    \    ${RID_IsExist}    Run Keyword If    "${PID_PRODUCT_ID}"!="${EMPTY}" and "${CDE_PROD_TYPE.strip()}"=="DEA"     Run Keyword And Return Status     Navigate to Notebook Window thru RID    Deal    ${PID_PRODUCT_ID.strip()}
+         ...    ELSE IF    "${PID_PRODUCT_ID}"!="${EMPTY}" and "${CDE_PROD_TYPE.strip()}"=="FAC"     Run Keyword And Return Status     Navigate to Notebook Window thru RID    Facility    ${PID_PRODUCT_ID.strip()}
+         ...    ELSE    Log    ${PID_PRODUCT_ID} is empty or ${CDE_PROD_TYPE} is not yet configured.        
+    \    Run Keyword If    ${RID_IsExist}==${True} and "${CDE_PROD_TYPE.strip()}"=="DEA"    Run Keyword And Continue On Failure    Check VLS_PROD_POS_CUR values in Deal Notebook    ${AMT_GLOBAL_CMT.strip()}    ${AMT_BNK_GR_CMT.strip()}    
+         ...    ELSE IF    ${RID_IsExist}==${True} and "${CDE_PROD_TYPE.strip()}"=="FAC"    Run Keyword And Continue On Failure    Check VLS_PROD_POS_CUR values in Facility Notebook    ${AMT_BNK_NT_CMT.strip()}    ${AMT_BNK_NT_OUT.strip()}    ${AMT_BNK_GR_OUT.strip()}
+         ...    ELSE IF    ${RID_IsExist}==${False}    Run Keyword And Continue On Failure    FAIL    RID ${PID_PRODUCT_ID} does not exist!
+         ...    ELSE    Log    ${PID_PRODUCT_ID} is empty or ${CDE_PROD_TYPE} is not yet configured.       
+
+    \   Close All Windows on LIQ
 
 Check VLS_PROD_POS_CUR values in Deal Notebook
     [Documentation]    This keyword is used to validate the values of the fields PDC_AMT_GLOBAL_CMT and PDC_AMT_BNK_GR_CMT from CSV to LIQ Screen.
-    ...    @author: mgaling    23Sep2019    Initial Create
-    [Arguments]    ${iAMT_GLOBAL_CMT}    ${iAMT_BNK_GR_CMT}     
+    ...    @author: mgaling    23SEP2019    - initial Create
+    ...    @update: mgaling    25OCT2020    - added keywords to handle alert window, updated locators and added screenshot path
+    [Arguments]    ${iAMT_GLOBAL_CMT}    ${iAMT_BNK_GR_CMT}
+    
+    ### Alert Window Validation ###
+    :FOR    ${i}    IN RANGE    15
+    \    ${AlertsWindow_isDisplayed}    Run Keyword And Return Status    Mx LoanIQ Verify Object Exist    ${LIQ_Facility_Alerts_Window}         VerificationData="Yes"
+    \    Run Keyword If     ${AlertsWindow_isDisplayed}==${True}    Run Keywords
+         ...    mx LoanIQ activate window    ${LIQ_Facility_Alerts_Window}
+         ...    AND    mx LoanIQ click    ${LIQ_Facility_Alerts_Cancel_Button}
+         ...    AND    Mx Activate Window    ${LIQ_FacilityNotebook_Window}
+    \    Exit For Loop If    ${AlertsWindow_isDisplayed}==${True}     
     
     ### Deal Notebook Validation ###
     mx LoanIQ activate window    ${LIQ_DealNotebook_Window}
     Mx LoanIQ Select Window Tab    ${LIQ_DealNotebook_Tab}    Summary
-    Take Screenshot    Deal_Notebook
+    Take Screenshot    ${screenshot_path}/Screenshots/DWE/Deal_Notebook
     
     ### PDC_AMT_GLOBAL_CMT Validation ###
-    ${UI_AMT_GLOBAL_CMT}    Mx LoanIQ Get Data    ${LIQ_DealSummary_CurrentCmt_Text}    text
+    ${UI_AMT_GLOBAL_CMT}    Mx LoanIQ Get Data    ${LIQ_DealSummary_ClosingCmt_Text}    text
     ${UI_AMT_GLOBAL_CMT}    Remove Comma and Convert to Number    ${UI_AMT_GLOBAL_CMT}
     
     ${iAMT_GLOBAL_CMT}    Convert To Number    ${iAMT_GLOBAL_CMT}    
     
     ${status}    Run Keyword And Return Status    Should Be Equal As Numbers    ${iAMT_GLOBAL_CMT}    ${UI_AMT_GLOBAL_CMT}
-    Run Keyword If    "${status}"=="${True}"    Log    CSV value(${iAMT_GLOBAL_CMT}) and UI Value (${UI_AMT_GLOBAL_CMT}) are matched!
-    ...    ELSE    Run Keyword And Continue On Failure    Fail    CSV value(${iAMT_GLOBAL_CMT}) and UI Value (${UI_AMT_GLOBAL_CMT}) are not matched!  
+    Run Keyword If    ${status}==${True}    Log    CSV value(${iAMT_GLOBAL_CMT}) and UI Value (${UI_AMT_GLOBAL_CMT}) are matched!
+    ...    ELSE    Run Keyword And Continue On Failure    FAIL    CSV value(${iAMT_GLOBAL_CMT}) and UI Value (${UI_AMT_GLOBAL_CMT}) are not matched!  
     
     ### PDC_AMT_BNK_GR_CMT Validation ###
-    ${UI_AMT_BNK_GR_CMT}    Mx LoanIQ Get Data    ${LIQ_ClosedDeal__DealNB_ContrGross_StaticText}    text
+    ${UI_AMT_BNK_GR_CMT}    Mx LoanIQ Get Data    ${LIQ_DealSummary_HBClosingCmt_Text}    text
     ${UI_AMT_BNK_GR_CMT}    Remove Comma and Convert to Number    ${UI_AMT_BNK_GR_CMT}
     
     ${iAMT_BNK_GR_CMT}    Convert To Number    ${iAMT_BNK_GR_CMT}    
     
     ${status}    Run Keyword And Return Status    Should Be Equal As Numbers    ${iAMT_BNK_GR_CMT}    ${UI_AMT_BNK_GR_CMT}
-    Run Keyword If    "${status}"=="${True}"    Log    CSV value(${iAMT_BNK_GR_CMT}) and UI Value (${UI_AMT_BNK_GR_CMT}) are matched!
-    ...    ELSE    Run Keyword And Continue On Failure    Fail    CSV Value (${iAMT_BNK_GR_CMT}) and UI Value (${UI_AMT_BNK_GR_CMT}) are not matched! 
+    Run Keyword If    ${status}==${True}    Log    CSV value(${iAMT_BNK_GR_CMT}) and UI Value (${UI_AMT_BNK_GR_CMT}) are matched!
+    ...    ELSE    Run Keyword And Continue On Failure    FAIL    CSV Value (${iAMT_BNK_GR_CMT}) and UI Value (${UI_AMT_BNK_GR_CMT}) are not matched! 
         
     mx LoanIQ close window    ${LIQ_DealNotebook_Window}
          
     
 Check VLS_PROD_POS_CUR values in Facility Notebook
     [Documentation]    This keyword is used to validate the values of the fields PDC_AMT_BNK_NT_CMT, PDC_AMT_BNK_GR_OUT and PDC_AMT_BNK_NT_OUT from CSV to LIQ Screen.
-    ...    @author: mgaling    23Sep2019    Initial Create
+    ...    @author: mgaling    23SEP2019    - initial create
+    ...    @update: mgaling    25OCT2020    - added keywords to handle alert window, updated locators and added screenshot path
     [Arguments]    ${iAMT_BNK_NT_CMT}    ${iAMT_BNK_NT_OUT}    ${iAMT_BNK_GR_OUT}         
     
+    ### Alert Window Validation ###
+    :FOR    ${i}    IN RANGE    15
+    \    ${AlertsWindow_isDisplayed}    Run Keyword And Return Status    Mx LoanIQ Verify Object Exist    ${LIQ_Facility_Alerts_Window}         VerificationData="Yes"
+    \    Run Keyword If     ${AlertsWindow_isDisplayed}==${True}    Run Keywords
+         ...    mx LoanIQ activate window    ${LIQ_Facility_Alerts_Window}
+         ...    AND    mx LoanIQ click    ${LIQ_Facility_Alerts_Cancel_Button}
+         ...    AND    Mx Activate Window    ${LIQ_FacilityNotebook_Window}
+    \    Exit For Loop If    ${AlertsWindow_isDisplayed}==${True} 
+    
+    ### Facility Notebook ###
     mx LoanIQ activate window    ${LIQ_FacilityNotebook_Window}
     Mx LoanIQ Select Window Tab    ${LIQ_FacilityNotebook_Tab}    Summary
-    Take Screenshot    Facility_Notebook
+    Take Screenshot    ${screenshot_path}/Screenshots/DWE/Facility_Notebook
     
     ###    PDC_AMT_BNK_NT_CMT: Net gross amount of the Facility ###
     ${UI_AMT_BNK_NT_CMT}    Mx LoanIQ Get Data    ${LIQ_FacilitySummary_HostBank_NetCmt}    text
@@ -2015,8 +2049,8 @@ Check VLS_PROD_POS_CUR values in Facility Notebook
     ${iAMT_BNK_NT_CMT}    Convert To Number    ${iAMT_BNK_NT_CMT}    2    
     
     ${status}    Run Keyword And Return Status    Should Be Equal As Numbers    ${iAMT_BNK_NT_CMT}    ${UI_AMT_BNK_NT_CMT}
-    Run Keyword If    "${status}"=="${True}"    Log    CSV value(${iAMT_BNK_NT_CMT}) and UI Value (${UI_AMT_BNK_NT_CMT}) are matched!
-    ...    ELSE    Run Keyword And Continue On Failure    Fail    CSV value(${iAMT_BNK_NT_CMT}) and UI Value (${UI_AMT_BNK_NT_CMT}) are not matched!  
+    Run Keyword If    ${status}==${True}    Log    CSV value(${iAMT_BNK_NT_CMT}) and UI Value (${UI_AMT_BNK_NT_CMT}) are matched!
+    ...    ELSE    Run Keyword And Continue On Failure    FAIL    CSV value(${iAMT_BNK_NT_CMT}) and UI Value (${UI_AMT_BNK_NT_CMT}) are not matched!  
     
     
     ###    PDC_AMT_BNK_GR_OUT: Verify the gross effective utilisation of the facility ###
@@ -2026,8 +2060,8 @@ Check VLS_PROD_POS_CUR values in Facility Notebook
     ${iAMT_BNK_NT_OUT}    Convert To Number    ${iAMT_BNK_NT_OUT}    2    
     
     ${status}    Run Keyword And Return Status    Should Be Equal As Numbers    ${iAMT_BNK_NT_OUT}    ${UI_AMT_BNK_NT_OUT}
-    Run Keyword If    "${status}"=="${True}"    Log    CSV value(${iAMT_BNK_NT_OUT}) and UI Value (${UI_AMT_BNK_NT_OUT}) are matched!
-    ...    ELSE    Run Keyword And Continue On Failure    Fail    CSV value(${iAMT_BNK_NT_OUT}) and UI Value (${UI_AMT_BNK_NT_OUT}) are not matched! 
+    Run Keyword If    ${status}==${True}    Log    CSV value(${iAMT_BNK_NT_OUT}) and UI Value (${UI_AMT_BNK_NT_OUT}) are matched!
+    ...    ELSE    Run Keyword And Continue On Failure    FAIL    CSV value(${iAMT_BNK_NT_OUT}) and UI Value (${UI_AMT_BNK_NT_OUT}) are not matched! 
     
     ###    PDC_AMT_BNK_GR_OUT: Verify the gross effective utilisation of the facility ###
     ${UI_AMT_BNK_GR_OUT}    Mx LoanIQ Get Data    ${LIQ_FacilitySummary_HostBank_Outstandings}    text
@@ -2036,10 +2070,9 @@ Check VLS_PROD_POS_CUR values in Facility Notebook
     ${iAMT_BNK_GR_OUT}    Convert To Number    ${iAMT_BNK_GR_OUT}    2
     
     ${status}    Run Keyword And Return Status    Should Be Equal As Numbers    ${iAMT_BNK_GR_OUT}    ${UI_AMT_BNK_GR_OUT}
-    Run Keyword If    "${status}"=="${True}"    Log    CSV value(${iAMT_BNK_GR_OUT}) and UI Value (${UI_AMT_BNK_GR_OUT}) are matched!
-    ...    ELSE    Run Keyword And Continue On Failure    Fail    CSV value(${iAMT_BNK_GR_OUT}) and UI Value (${UI_AMT_BNK_GR_OUT}) are not matched!
+    Run Keyword If    ${status}==${True}    Log    CSV value(${iAMT_BNK_GR_OUT}) and UI Value (${UI_AMT_BNK_GR_OUT}) are matched!
+    ...    ELSE    Run Keyword And Continue On Failure    FAIL    CSV value(${iAMT_BNK_GR_OUT}) and UI Value (${UI_AMT_BNK_GR_OUT}) are not matched!
     
- 
     mx LoanIQ close window    ${LIQ_FacilityNotebook_Window}
 
 Validate CSV values in Loan IQ for VLS_PROD_GUARANTEE
