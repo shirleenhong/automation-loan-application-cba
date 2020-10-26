@@ -27,31 +27,53 @@ Complete Internal Participation
     Complete Circle Fee Decisions
     
     ### Pending Participation Sell Workflow ###
-    Complete Circling for Pending Participation Sell    &{ExcelPath}[Expected_CloseDate]
-    
-    Complete Portfolio Allocations Workflow for Pending Participation Sell    #Incomplete#    
-    Send to Approval Internal Participation Sell
-    
+    Complete Circling for Pending Participation Sell    &{ExcelPath}[Expected_CloseDate]  
+    Complete Portfolio Allocations Workflow for Pending Participation Sell    
+       
     ### Participation Buy Window ###
+    Navigate To Participation Buy
     Validate Pending Participation Buy    &{ExcelPath}[Buyer_LegalEntity]    &{ExcelPath}[Buy_Sell_Amount]    &{ExcelPath}[Expected_CloseDate]
     
     ### Pending Participation Buy Workflow ###
-    Complete Portfolio Allocations Workflow for Pending Participation Buy    #Incomplete#
-    Send to Approval Internal Participation Buy
+    Complete Portfolio Allocations Workflow for Pending Participation Buy    &{ExcelPath}[Buyer_ExpenseCode]    &{ExcelPath}[Buyer_Branch]
+    Validate Fee Decisions For All Facilities
     
-    ###LIQ Window###
+    ### Send To Approval ###
+    Send to Approval Internal Participation Buy
+    Close All Windows on LIQ    
+    
+    ### Internal Participation Buy Approval ###
     Logout from Loan IQ
     Login to Loan IQ    ${SUPERVISOR_USERNAME}    ${SUPERVISOR_PASSWORD}
+    Approval For Internal Participation Buy    &{ExcelPath}[Deal_Name]
     
-    ##Transaction in Process###
-    Approval For Internal Participation Buy    &{ExcelPath}[Deal_Name]    &{ExcelPath}[Buyer_LegalEntity]
-    Approval For Internal Participation Sell    &{ExcelPath}[Deal_Name]    &{ExcelPath}[Buyer_LegalEntity]
-   
-    ###LIQ Window###
+    ### Internal Participation Sell Approval ###
+    Logout from Loan IQ
+    Login to Loan IQ    ${MANAGER_USERNAME}    ${MANAGER_PASSWORD}
+    Approval For Internal Participation Sell    &{ExcelPath}[Deal_Name]
+    Close All Windows on LIQ
+
+    ### Send to Settlement Approval For Participation Buy ###
     Logout from Loan IQ
     Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
-    
-    ###Release Transaction###
-    #For completion#
+    Funding Memo for Pending Participation Buy    &{ExcelPath}[Deal_Name]
+    Send to Settlement Approval For Pending Participation Buy    ${ExcelPath}[Deal_Name]
    
+    ### Settlement Approval Participation Buy ###
+    Logout from Loan IQ
+    Login to Loan IQ    ${SUPERVISOR_USERNAME}    ${SUPERVISOR_PASSWORD}
+    Settlement Approval For Internal Participation Buy    &{ExcelPath}[Deal_Name]
+    
+    ### Settlement Approval For Participation Sell ###
+    Logout from Loan IQ
+    Login to Loan IQ    ${MANAGER_USERNAME}    ${MANAGER_PASSWORD}
+    Settlement Approval For Internal Participation Sell    ${ExcelPath}[Deal_Name]
 
+    ### Close Transaction ###
+    Logout from Loan IQ
+    Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
+    Close For Internal Participation    &{ExcelPath}[Deal_Name]    &{ExcelPath}[Expected_CloseDate] 
+    
+    # Logout from Loan IQ
+    # Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}   
+   

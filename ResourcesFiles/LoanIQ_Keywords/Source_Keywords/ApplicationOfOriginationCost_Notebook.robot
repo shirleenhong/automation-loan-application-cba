@@ -61,6 +61,7 @@ Select Portfolio Position
 Portfolio Settled Discount Change
     [Documentation]    This keyword is used to input details in Portfolio Settled Discount Chnage Window
     ...    @author: Archana 13Jul2020
+    ...    @update: mcastro    22OCT2020    Added Clicking of warning OK button if present
     [Arguments]    ${sEffective_date}    ${sAdjustment_Amount}
     
     ###Pre-processing keywords###
@@ -70,6 +71,7 @@ Portfolio Settled Discount Change
     Mx LoanIQ Activate Window    ${LIQ_PortfolioSettledDiscountChange_Window}
     Mx LoanIQ Enter    ${LIQ_PortfolioSettledDiscountChange_EffectiveDate}    ${Effective_date}
     Mx LoanIQ Enter    ${LIQ_PortfolioSettledDiscountChange_AdjustmentAmount}    ${Adjustment_Amount}
+    Mx LoanIQ Click Element If Present    ${LIQ_Warning_Yes_Button}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/PortfolioSettledDiscountChange
     Mx LoanIQ Click    ${LIQ_PortfolioSettledDiscountChange_GLOffset_Button}
     Mx LoanIQ Click Element If Present    ${LIQ_PortfolioSettledDiscountChange_GLOffset_Button}    
@@ -155,4 +157,3 @@ Verification of Released Upfront Fee Payment Status
     Run Keyword And Continue On Failure    Mx LoanIQ Verify Text In Javatree    ${LIQ_Events_Javatree}    Upfront Fee Payment from Borrower/Agent Released%yes 
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/UpfrontFeePaymentStatus       
     Select Menu Item    ${LIQ_DealNotebook_Window}    File    Exit   
-    
