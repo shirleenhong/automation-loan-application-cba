@@ -557,7 +557,6 @@ Filter by Reference Header and Save Message TextArea and Return Results Row List
     \    Log    ${FFC_RESPONSE}
     \    Run Keyword If    '${status2}' == '${False}'    Create File    ${dataset_path}${sOutputFilePath}_${ResultsRowIndex_Ref}.${sFileExtension}    ${FFC_RESPONSE}
     \    Run Keyword If    '${status2}' == '${False}'    Append To List    ${Multiple_List}    ${ResultsRowList}
-    \    Log    ResultsRowList is ${ResultsRowList}
     \    Run Keyword If    '${status2}' == '${False}'    Append To List    ${FileName_List}    ${dataset_path}${sOutputFilePath}_${ResultsRowIndex_Ref}.${sFileExtension}
     Set Global Variable    ${ROUTEROPERATION}    ROUTEROPERATION
     [Return]    ${Multiple_List}    ${FileName_List}    

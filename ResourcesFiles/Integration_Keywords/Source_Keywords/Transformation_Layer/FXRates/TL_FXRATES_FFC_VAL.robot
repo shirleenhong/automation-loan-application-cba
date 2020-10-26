@@ -156,13 +156,10 @@ Validate FFC for TL FX Rate Success with Multiple Files
     [Documentation]    This keyword is used to validate OpenAPI and Distributor in MCH FFC UI.
     ...    @author: cfrancis    01AUG2019    - initial create
     ...    @update: nbautist    07OCT2020    - new argument to replace incorrect input parameter; removed incorrect index; updated file extension
-    ...    @update: jdelacru    26OCT2020    - added new argument FileNameWithTimeStamp
-    ...                                      - deleted evaluating value of Result_Row_Count
-    ...                                      - added creating list for aExpectedRefList for correct argument type
+    ...    @update: jdelacru    26OCT2020    - added new argument FileNameWithTimeStamp; added creating list for aExpectedRefList for correct argument type
     [Arguments]    ${sInputFilePath}    ${sInputFileName}    ${sInputXML}    ${sOutputFilePath}    ${sOutputFileName}    ${sOutputXML}
     ...    ${sXMLExcelFile}    ${sfundingDeskStatus}    ${sResponse}    ${sResponseMechanism}    ${iIndex}    ${sInputGSFile}    ${FileNameWithTimeStamp}=None    ${sFundingDesk}=NY    ${Delimiter}=None
     Login to MCH UI
-    Pause Execution
     
     ###FX Rate Splitter###
     @{InputGSFile_List}    Run Keyword If    '${Delimiter}'=='None'    Split String    ${sInputGSFile}    ,

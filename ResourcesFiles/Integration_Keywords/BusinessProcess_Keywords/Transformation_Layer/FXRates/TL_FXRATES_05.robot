@@ -8,7 +8,7 @@ Send FXRates GS Group Multiple Files for FIFO
     ...    @author: mnanquil    20MAR2019    - initial create
     ...    @update: mnanquil    11APR2019    - added Login to LoanIQ keyword.
     ...    @update: cfrancis    08AUG2019    - modified keywords to fit scenario and documentation
-    ...    @udpate: jdelacru    26OCT2020    - used templateFilePath variable for the location of temaplate files
+    ...    @update: jdelacru    26OCT2020    - used templateFilePath variable for the location of temaplate files
     [Arguments]    ${ExcelPath}
     ###START OF PREREQUISITE###
     Login to Loan IQ    ${TL_USERNAME}    ${TL_PASSWORD}
