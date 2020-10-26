@@ -1,0 +1,31 @@
+*** Settings ***
+Resource    ../../../../../../Configurations/Integration_Import_File.robot
+
+*** Keywords ***
+
+Update User with No Existing Risk Book Using Login ID
+    [Documentation]    This keyword is used to validate that user is able to Update RiskBook for a User with no existing RiskBooks using Login Id
+    ...    @author: dahijara    5SEP2019    - initial create
+    ...    @update: cfrancis    06JUL2020    - updated to use loginId instead of userId for some keywords
+    [Arguments]    ${APIDataSet}
+    
+    Run Keyword And Continue On Failure    Update Key Values of Input JSON File for Risk Book API    &{APIDataSet}[InputFilePath]    &{APIDataSet}[InputJson]    &{APIDataSet}[buySellIndicator]    &{APIDataSet}[markIndicator]    &{APIDataSet}[primaryIndicator]
+    ...    &{APIDataSet}[riskBookCode]    &{APIDataSet}[viewPricesIndicator]
+    
+    Run Keyword And Continue On Failure    Get Risk Book Details to an Existing User Before Any Transaction    &{APIDataSet}[OutputFilePath]    &{APIDataSet}[OutputLIQData]    &{APIDataSet}[loginId]
+    
+    Run Keyword And Continue On Failure    Update LIQ Risk Book Data for Comparison    &{APIDataSet}[OutputFilePath]    &{APIDataSet}[OutputLIQData]
+    
+    Run Keyword And Continue On Failure    Compare Input and Actual Risk Book Data for LIQ    &{APIDataSet}[InputFilePath]    &{APIDataSet}[InputJson]    &{APIDataSet}[OutputFilePath]    &{APIDataSet}[OutputLIQData]
+
+    Run Keyword And Continue On Failure    Update Expected Response for Risk Book API    &{APIDataSet}[InputFilePath]    &{APIDataSet}[InputAPIResponse]    &{APIDataSet}[loginId]    &{APIDataSet}[updateUserId]    &{APIDataSet}[updateUserId]
+    ...    &{APIDataSet}[buySellIndicator]    &{APIDataSet}[markIndicator]    &{APIDataSet}[primaryIndicator]    &{APIDataSet}[riskBookCode]    &{APIDataSet}[viewPricesIndicator]
+    
+    Run Keyword And Continue On Failure    PUT Request for Risk Book API    &{APIDataSet}[InputFilePath]    &{APIDataSet}[InputJson]    &{APIDataSet}[InputAPIResponse]    &{APIDataSet}[OutputFilePath]    &{APIDataSet}[OutputAPIResponse]
+    ...    &{APIDataSet}[InputFile_AccessToken_FilePath]    &{APIDataSet}[InputFile_AccessToken]    sLoginId=&{APIDataSet}[loginId]
+
+    Run Keyword And Continue On Failure    Validate Risk Book Details to an Existing User in LoanIQ for PUT    &{APIDataSet}[loginId]    &{APIDataSet}[riskBookCode]    &{APIDataSet}[buySellIndicator]    &{APIDataSet}[markIndicator]
+    ...    &{APIDataSet}[viewPricesIndicator]    &{APIDataSet}[updateUserId]
+
+    Run Keyword And Continue On Failure    DELETE Request API for Riskbook    &{APIDataSet}[InputFilePath]    &{APIDataSet}[InputJson]    &{APIDataSet}[OutputFilePath]
+    ...    &{APIDataSet}[OutputAPIDelResponse]    sLoginId=&{APIDataSet}[loginId]

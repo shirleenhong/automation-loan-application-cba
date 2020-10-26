@@ -26,10 +26,11 @@ Validate the Short Name Code and Natural Balance records in LIQ Screen
 
 Get Risk Book List of Code
     [Documentation]    This keyword retrieves the list of code from Risk Book
-    ...    @author: ehugo    29AUG2019
+    ...    @author: ehugo    29AUG2019    - initial create
+    ...    @update: mgaling    23OCT2020    - added screenshot path
     
     ${RiskBook_Items}    Mx LoanIQ Store Java Tree Items To Array    ${LIQ_BrowseRiskBook_JavaTree}    RiskBook_Items    Processtimeout=180
-    Take Screenshot    RiskBook_Items
+    Take Screenshot    ${screenshot_path}/Screenshots/DWE/RiskBook_Items
     Log    ${RiskBook_Items}    
     
     ${Codes_List}    Create List
@@ -49,19 +50,20 @@ Get Risk Book List of Code
     
 Validate Records for RPE_CDE_RISK_BOOK exist in LIQ
     [Documentation]    This keyword validates if records for RPE_CDE_RISK_BOOK exist in LIQ
-    ...    @author: ehugo    29AUG2019
-    [Arguments]    ${ExcelPath}    ${Codes_List}
+    ...    @author: ehugo    29AUG2019    - initial create
+    ...    @update: mgaling    23OCT2020    - removed Read Csv File To List keyword and updated arguments
+    [Arguments]    ${aRiskPortExp_CSV_Content}    ${aCodes_List}
     
-    ${RiskPortExp_CSV_Content}    Read Csv File To List    ${dataset_path}&{ExcelPath}[CSV_FilePath]&{ExcelPath}[RiskPortExp_CSV_FileName].csv    |
-    ${RiskPortExp_Header}    Get From List    ${RiskPortExp_CSV_Content}    0
-    ${RiskPortExp_Length}    Get Length    ${RiskPortExp_CSV_Content}
+    ${RiskPortExp_Header}    Get From List    ${aRiskPortExp_CSV_Content}    0
+    ${RiskPortExp_Length}    Get Length    ${aRiskPortExp_CSV_Content}
     ${RPE_CDE_RISK_BOOK_Index}    Get Index From List    ${RiskPortExp_Header}    RPE_CDE_RISK_BOOK    
     
     :FOR    ${i}    IN RANGE    1    ${RiskPortExp_Length}
-    \    ${RiskPortExp_Row_Item}    Get From List    ${RiskPortExp_CSV_Content}    ${i}
+    \    ${RiskPortExp_Row_Item}    Get From List    ${aRiskPortExp_CSV_Content}    ${i}
     \    ${RiskPortExp_Row_Value}    Get From List    ${RiskPortExp_Row_Item}    ${RPE_CDE_RISK_BOOK_Index}
-    \    ${count}    Get Match Count    ${Codes_List}    ${RiskPortExp_Row_Value.strip()}    
-    \    Run Keyword If    ${count}==0    Run Keyword And Continue On Failure    Fail    ${RiskPortExp_Row_Value} does not exist in LIQ Risk Book.
+    \    ${count}    Get Match Count    ${aCodes_List}    ${RiskPortExp_Row_Value.strip()}    
+    \    Run Keyword If    ${count}==0    Run Keyword And Continue On Failure    FAIL    ${RiskPortExp_Row_Value} does not exist in LIQ Risk Book.
+         ...    ELSE    Log    ${RiskPortExp_Row_Value} is available in LIQ Risk Book.       
 
 Validate CUS_CID_CUST_ID and CUS_XID_CUST_ID in LIQ for VLS_Customer
     [Documentation]    This keyword validates CUS_CID_CUST_ID and CUS_XID_CUST_ID in LIQ for VLS_Customer
@@ -401,8 +403,9 @@ Validate BSG_CDE_PORTFOLIO in LIQ for VLS_Bal_Subledger
     
 Validate RPE_CDE_RISK_BOOK records exist in LIQ for VLS_RISK_PORT_EXP
     [Documentation]    This keyword validates RPE_CDE_RISK_BOOK records exist in LIQ for VLS_RISK_PORT_EXP
-    ...    @author: ehugo    30AUG2019
-    [Arguments]    ${ExcelPath}    
+    ...    @author: ehugo    30AUG2019    - initial create
+    ...    @update: mgaling    23OCT2020    - updated arguments and variable
+    [Arguments]    ${aRiskPortExp_CSV_Content}    
     
     ###Navigate to Actions -> Table Maintenance###
     mx LoanIQ activate window    ${LIQ_Window}
@@ -416,7 +419,7 @@ Validate RPE_CDE_RISK_BOOK records exist in LIQ for VLS_RISK_PORT_EXP
     ${Codes_List}    Get Risk Book List of Code
     
     ###Validate Records exist in LIQ###
-    Validate Records for RPE_CDE_RISK_BOOK exist in LIQ    ${ExcelPath}    ${Codes_List}
+    Validate Records for RPE_CDE_RISK_BOOK exist in LIQ    ${aRiskPortExp_CSV_Content}    ${Codes_List}
 
 Get Distinct Column Data 
     [Documentation]    This keyword is used to get distinct data of a certain column.
