@@ -469,6 +469,7 @@ Search Customer and Complete its Borrower Profile Creation with default values
     ...    @update: fjluberio    10OCT2020    -added Entity conditions for EU when adding remittance instruction
     ...    @update: makcamps    09OCT2020    - Added write data to excel method for Deal and Facility Setup data
     ...    @update: makcamps    15OCT2020    - Added write data to excel method for Scenario 1 and EU Initial Loan Creation
+	...    @update: makcamps    22OCT2020    - Updated write data to excel method for Scenario 1 and EU SERV29
     [Arguments]    ${ExcelPath}
 	
 	## Login to LoanIQ###
@@ -678,7 +679,18 @@ Search Customer and Complete its Borrower Profile Creation with default values
     ...    AND    Add Remittance Instruction to Servicing Group    ${RemittanceInstruction_RTGSDescriptionAUD}
     ...    ELSE IF    '&{ExcelPath}[Entity]' == 'EU'    Run Keywords    Add Remittance Instruction to Servicing Group    ${RemittanceInstruction_IMTDescriptionUSD}
     ...    AND    Write Data To Excel    SERV01_LoanDrawdown    Remittance_Description    ${rowid}    &{ExcelPath}[RemittanceInstruction_IMTDescriptionUSD]
-    
+    ...    AND    Write Data To Excel    SERV18_Payments    Borrower1_RTGSRemittanceDescription    ${rowid}    &{ExcelPath}[RemittanceInstruction_IMTDescriptionUSD]
+    ...    AND    Write Data To Excel    SERV21_InterestPayments    Borrower1_RTGSRemittanceDescription    ${rowid}    &{ExcelPath}[RemittanceInstruction_IMTDescriptionUSD]
+    ...    AND    Write Data To Excel    SERV29_PaymentFees    Borrower1_RTGSRemittanceInstruction    ${rowid}    &{ExcelPath}[RemittanceInstruction_IMTDescriptionUSD]
+    ...    AND    Write Data To Excel    SERV01_LoanDrawdown    Remittance_Instruction    ${rowid}    &{ExcelPath}[Remittance_Instruction]
+    ...    AND    Write Data To Excel    SERV18_Payments    Remittance_Instruction    ${rowid}    &{ExcelPath}[Remittance_Instruction]
+    ...    AND    Write Data To Excel    SERV21_InterestPayments    Remittance_Instruction    ${rowid}    &{ExcelPath}[Remittance_Instruction]    
+    ...    AND    Write Data To Excel    SERV29_PaymentFees    Borrower1_RTGSRemittanceDescription    ${rowid}    &{ExcelPath}[Remittance_Instruction]
+    ...    AND    Write Data To Excel    SERV01_LoanDrawdown    Facility_Currency    ${rowid}    &{ExcelPath}[RemittanceInstruction_IMTCurrencyUSD]
+    ...    AND    Write Data To Excel    SERV01_LoanDrawdown    Loan_Currency    ${rowid}    &{ExcelPath}[RemittanceInstruction_IMTCurrencyUSD]
+    ...    AND    Write Data To Excel    SERV18_Payments    Loan_Currency    ${rowid}    &{ExcelPath}[RemittanceInstruction_IMTCurrencyUSD]
+    ...    AND    Write Data To Excel    SERV21_InterestPayments    Loan_Currency    ${rowid}    &{ExcelPath}[RemittanceInstruction_IMTCurrencyUSD]
+    ...    AND    Write Data To Excel    SERV29_PaymentFees    Loan_Currency    ${rowid}    &{ExcelPath}[RemittanceInstruction_IMTCurrencyUSD]
     Close Servicing Group Remittance Instructions Selection List Window    &{ExcelPath}[LIQCustomer_ShortName]
      
     Validate 'Active Customer' Window    &{ExcelPath}[LIQCustomer_ShortName] 

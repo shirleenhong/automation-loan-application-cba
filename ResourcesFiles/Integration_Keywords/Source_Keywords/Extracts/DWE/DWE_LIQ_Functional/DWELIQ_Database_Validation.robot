@@ -5,14 +5,17 @@ Resource    ../../../../../../Configurations/Integration_Import_File.robot
 Create Query for VLS_RISK_PORT_EXP to validate RPE_CDE_EXPENSE
     [Documentation]    This keyword is used to create a/an SQL Query for VLS_RISK_PORT_EXP to validate RPE_CDE_EXPENSE
     ...    @author: ehugo    29AUG2019    - initial create
+    ...    @update: mgaling    23OCT2020    - added branch column and branch code variable
+    [Arguments]    ${sBranchCode}
     
-    Get Count of Non-Unique Items from Different Tables    RPE_CDE_EXPENSE    VLS_RISK_PORT_EXP    BSG_CDE_EXPENSE    VLS_BAL_SUBLEDGER
+    Get Count of Non-Unique Items from Different Tables    RPE_CDE_EXPENSE    VLS_RISK_PORT_EXP    BSG_CDE_EXPENSE    VLS_BAL_SUBLEDGER    BSG_CDE_BRANCH    ${sBranchCode}
 
 Create Query for VLS_RISK_PORT_EXP to validate RPE_CDE_PORTFOLIO
     [Documentation]    This keyword is used to create a/an SQL Query for VLS_RISK_PORT_EXP to validate RPE_CDE_PORTFOLIO
     ...    @author: ehugo    30AUG2019    - initial create
-    
-    Get Count of Non-Unique Items from Different Tables    RPE_CDE_PORTFOLIO    VLS_RISK_PORT_EXP    BSG_CDE_PORTFOLIO    VLS_BAL_SUBLEDGER
+    ...    @update: mgaling    23OCT2020    - added branch column and branch code variable
+    [Arguments]    ${sBranchCode}
+    Get Count of Non-Unique Items from Different Tables    RPE_CDE_PORTFOLIO    VLS_RISK_PORT_EXP    BSG_CDE_PORTFOLIO    VLS_BAL_SUBLEDGER    BSG_CDE_BRANCH    ${sBranchCode}
         
 Run Query to get Records from DB
     [Documentation]    This keyword is used run query to get the records from DB
