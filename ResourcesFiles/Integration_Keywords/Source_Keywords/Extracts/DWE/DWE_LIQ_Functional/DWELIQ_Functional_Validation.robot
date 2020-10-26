@@ -638,6 +638,7 @@ Navigate to Notebook Window thru RID
     [Documentation]    This keyword is used to navigate a certain window thru RID.
     ...    @author: mgaling    05SEP2019    - initial create
     ...    @update: mgaling    15OCT2020    - added screenshot path
+    ...    @update: mgaling    26OCT2020    - added screenshot path for LIQ Error
     [Arguments]    ${sDataObject_Value}    ${sRID_Value}    
     
     ### Navigate to Options -> RID Select ###
@@ -654,7 +655,7 @@ Navigate to Notebook Window thru RID
     mx LoanIQ click    ${LIQ_SelectByRID_OK_Button}
     
     ${status}    Run Keyword And Return Status    Mx LoanIQ Verify Object Exist    ${LIQ_Error_Window}            VerificationData="Yes"
-    Run Keyword If    "${status}"=="${False}"    Log    RID Code ${sRID_Value} is Available in LIQ.
+    Run Keyword If    ${status}==${False}    Log    RID Code ${sRID_Value} is Available in LIQ.
     ...    ELSE    Run Keywords    Run Keyword And Continue On Failure    FAIL    RID Code ${sRID_Value} is not Available.
     ...    AND    Take Screenshot    ${screenshot_path}/Screenshots/DWE/Error_Window
     ...    AND    mx LoanIQ click    ${LIQ_Error_OK_Button}    
