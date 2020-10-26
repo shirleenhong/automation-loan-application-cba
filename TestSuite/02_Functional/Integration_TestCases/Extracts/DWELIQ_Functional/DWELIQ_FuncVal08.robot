@@ -3,7 +3,6 @@ Resource    ../../../../../Configurations/Integration_Import_File.robot
 
 *** Test Cases ***
 DWELIQ_FuncVal08
-    [Tags]    Zone2_VLS_OUTSTANDING
     [Documentation]    This keyword is used to validate the fields in VLS_OUTSTANDING CSV vs LIQ Screen 
     ...    @author: mgaling    26SEP2020    - initial create
     ...    @update: mgaling    25OCT2020    - added keyword to handle multi entity test cases
