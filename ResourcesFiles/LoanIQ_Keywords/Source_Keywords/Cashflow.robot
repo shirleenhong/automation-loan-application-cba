@@ -485,35 +485,32 @@ Release a Cashflow
 
 Release Cashflow Based on Remittance Instruction
     [Documentation]    This keyword will proceed to cashflow release based on the Remittance Instruction Supplied
-    ...    @author: hstone    	08MAY2020	- Initial Create
-    ...    @update: hstone    	19MAY2020	- Added Keyword Pre-processing
-    ...                                  	- Replaced argument ${sBorrowerName} with ${sCustomerName}
-    ...    @update: hstone    	20MAY2020	- Added 'Navigate to Loan Drawdown Workflow and Proceed With Transaction    Release Cashflows'
-    ...                                  	- Added ${sDataType} argument for Release Cashflow parameter
-    ...                                  	- Added Acquire Argument Value for ${sDataType}
-    ...                                  	- Replaced ${sCustomerName} arg with ${sCashflowReference} arg
-    ...    @update: amansuet    16JUN2020	- Replaced 'Navigate to Loan Drawdown Workflow and Proceed With Transaction' to 'Navigate to Loan Repricing Workflow and Proceed With Transaction'
-    ...    @update: amansuet    22JUN2020	- Revert changes and added new argument to make keyword generic on its Workflow Navigation
-    ...    @update: amansuet    22JUN2020	- Added Condition for 'Navigate to Payment Workflow and Proceed With Transaction'
-    ...    @update: fluberio    21OCT2020	- Added Condition to add Release Cashflow when Remittance Instruction is Set to IMT
-    ...    @update: makcamps    28OCT2020	- Added Condition to add Release Cashflow when Remittance Instruction is Set to IMT and Transaction is Loan Drawdown
+    ...    @author: hstone    08MAY2020    - Initial Create
+    ...    @update: hstone    19MAY2020    - Added Keyword Pre-processing
+    ...                                    - Replaced argument ${sBorrowerName} with ${sCustomerName}
+    ...    @update: hstone    20MAY2020    - Added 'Navigate to Loan Drawdown Workflow and Proceed With Transaction    Release Cashflows'
+    ...                                    - Added ${sDataType} argument for Release Cashflow parameter
+    ...                                    - Added Acquire Argument Value for ${sDataType}
+    ...                                    - Replaced ${sCustomerName} arg with ${sCashflowReference} arg
+    ...    @update: amansuet    16JUN2020    - Replaced 'Navigate to Loan Drawdown Workflow and Proceed With Transaction' to 'Navigate to Loan Repricing Workflow and Proceed With Transaction'
+    ...    @update: amansuet    22JUN2020    - Revert changes and added new argument to make keyword generic on its Workflow Navigation
+    ...    @update: amansuet    22JUN2020    - Added Condition for 'Navigate to Payment Workflow and Proceed With Transaction'
+    ...    @update: amitp       26OCT2020    - Remove Relase Cashflow Keyword from the Payment Keyword and Add Log
     [Arguments]    ${sRemittanceInstruction}    ${sCashflowReference}    ${sDataType}=default    ${sNavigateToWorkflow}=Loan Drawdown
 
     ### Keyword Pre-processing ###
     ${RemittanceInstruction}    Acquire Argument Value    ${sRemittanceInstruction}
     ${CashflowReference}    Acquire Argument Value    ${sCashflowReference}
     ${DataType}    Acquire Argument Value    ${sDataType}
-    ${NavigateToWorkflow}    Acquire Argument Value    ${sNavigateToWorkflow}
-
+    ${NavigateToWorkflow}    Acquire Argument Value    ${sNavigateToWorkflow}    
     ${RemittanceInstruction}    Convert To Uppercase    ${RemittanceInstruction}
+    
     Run Keyword If    '${RemittanceInstruction}'=='RTGS' and '${NavigateToWorkflow}'=='Loan Drawdown'    Run Keywords    Navigate to Loan Drawdown Workflow and Proceed With Transaction    Release Cashflows
-    ...    AND    Release Cashflow    ${CashflowReference}    default    ${DataType}
+    ...    AND    Log    Cashflow Released
     ...    ELSE IF    '${RemittanceInstruction}'=='RTGS' and '${NavigateToWorkflow}'=='Loan Repricing'    Run Keywords    Navigate to Loan Repricing Workflow and Proceed With Transaction    Release Cashflows
-    ...    AND    Release Cashflow    ${CashflowReference}    default    ${DataType}
+    ...    AND    Log    Cashflow Released
     ...    ELSE IF    '${RemittanceInstruction}'=='RTGS' and '${NavigateToWorkflow}'=='Payment'    Run Keywords    Navigate to Payment Workflow and Proceed With Transaction    Release Cashflows
-    ...    AND    Release Cashflow    ${CashflowReference}    default    ${DataType}
-    ...    ELSE IF    '${RemittanceInstruction}'=='IMT' and '${NavigateToWorkflow}'=='Loan Drawdown'    Navigate to Loan Drawdown Workflow and Proceed With Transaction    Release Cashflows
-    ...    ELSE IF    '${RemittanceInstruction}'=='IMT' and '${NavigateToWorkflow}'=='Payment'    Navigate to Payment Workflow and Proceed With Transaction    Release Cashflows
+    ...    AND    Log    Cashflow Released
     ...    ELSE    Log    Release of Cashflow is Not Needed for '${RemittanceInstruction}' Remittance Instruction
 
 Compute Lender Share Transaction Amount - Repricing
