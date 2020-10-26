@@ -169,7 +169,7 @@ Populate Quick Enterprise Party
     ...    @update: dahijara    09JUN2020    - Updated Next button locator
     ...    @update: javinzon    17SEP2020    - Updated arguments for Address 3 and 4 to be mandatory
     ...    @update: javinzon	21OCT2020	 - Updated Warning Popup to Warning Dialog, Updated Approval Required scripts, Added Validate Duplicate Short Name 
-    ...    @update: javinzon    26OCT2020    - Updated keyword name from 'Validate Duplicate Short Name' to 'Validate Error Message',
+    ...    @update: javinzon    26OCT2020    - Updated keyword name from 'Validate Duplicate Short Name' to 'Validate Error Message in Quick Enterprise Party',
     ...                                        Added optional argument ${sExpected_Error_Message}.
                                                
     [Arguments]    ${sParty_ID}    ${sCountry_of_Tax_Domicile}    ${sCountry_of_Registration}    ${sAddress_Type}    ${sCountry_Region}    ${iPost_Code}
@@ -214,7 +214,7 @@ Populate Quick Enterprise Party
     Run Keyword If    ${isApprovalRequired}==${True}    Run Keywords	Capture Page Screenshot    ${screenshot_path}/Screenshots/Party/PartyApprovalDialog-{index}.png
     ...	AND	    Mx Click Element    ${Party_QuickEnterpriseParty_AskForApproval_Button}
     ...	AND	    Wait Until Page Contains Element    ${Party_RaisedMessage_Notification}
-    ...	ELSE    Validate Error Message    ${sExpected_Error_Message}
+    ...	ELSE    Validate Error Message in Quick Enterprise Party    ${sExpected_Error_Message}
     
 Populate Enterprise Business Activity
     [Documentation]    This keyword populates required fields in Enterprise Business Activity modal.
@@ -784,12 +784,12 @@ Validate Mandatory Fields in Quick Enterprise Party Page
     Capture Page Screenshot    ${screenshot_path}/Screenshots/Party/QuickPartyOnboarding_MandatoryFields-{index}.png
     Mx Click Element    ${Party_CloseDialog_Button}
 
-Validate Error Message
+Validate Error Message in Quick Enterprise Party
     [Documentation]    This test case is used to get and validate error message in Error dialog.
     ...    @author: javinzon    21OCT2020    - initial create
     ...	   @update: javinzon	23OCT2020	 - removed white space in Keyword name
-    ...    @update: javinzon    26OCT2020    - updated keyword name from 'Validate Duplicate Short Name' to 'Validate Error Message',
-    ...                                        updated documentation, added argument ${sExpected_Error_Message}.
+    ...    @update: javinzon    26OCT2020    - updated keyword name from 'Validate Duplicate Short Name' to 'Validate Error Message in Quick 
+    ...                                        Enterprise Party', updated documentation, added argument ${sExpected_Error_Message}.
     [Arguments]    ${sExpected_Error_Message}
     
     ${isErrorDisplayed}    Run Keyword And Return Status    Wait Until Page Contains Element    ${Party_QuickEnterpriseParty_Errors_Dialog}    30s
