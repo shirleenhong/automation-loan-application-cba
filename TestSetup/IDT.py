@@ -1,5 +1,5 @@
 ###Dataset###
-dataset_path = "C:\\Git_Evergreen\\fms_scotia"
+dataset_path = "C:\\Git_Evergreen\\fms_cba"
 ExcelPath = "C:\\fms_scotia\\DataSet\\LoanIQ_DataSet\\EVG_PTYLIQ07_BilateralFacilityTermination.xlsx"
 CBAUAT_ExcelPath = "C:\\Git_Evergreen\\evergreen_projects\\CBA_Evergreen\\DataSet\\CBA_UAT_DataSet\\EVG_CBAUAT05.xlsx"
 APIDataSet = "..\\DataSet\\Integration_DataSet\\API\\\\API_Data_Set.xlsx"
@@ -14,6 +14,8 @@ Downstream_DataSet = '..\\CBA_Evergreen\\DataSet\\Downstream_DataSet\\ComSee\\Co
 COMMSEEDataSet= '..\\CBA_Evergreen\\DataSet\\COM_DataSet\\Com_Data_Set.xls'
 SAPWUL_DATASET = "C:\\Git_evergreen\\evergreen_projects\\CBA_Evergreen\\DataSet\\Downstream_DataSet\\SAPWUL\\SAPWUL_Data_Set.xlsx"
 DWELIQFunc_Dataset = "C:\\Git_Evergreen\\fms_cba\\DataSet\\Integration_DataSet\\Extracts\\DWE_LIQ\\DWELIQ_Functional_TestData.xlsx"
+PTY_DATASET = "C:\\Git_Evergreen\\fms_cba\\DataSet\\Party_DataSet\\PTY_DataSet.xlsx"
+DNA_DATASET = "C:\\Git_Evergreen\\fms_cba\\DataSet\\Integration_DataSet\\Extracts\\DNA\\EVG_DNA_TestData.xlsx"
 
 FBTIDataset = 'C:\\Git_Evergreen\\evergreen_projects\\CBA_Evergreen\\DataSet\\FBTI_DataSet\\FBTI_User_Data_Set.xlsx'
 FBTIDataset_ILC = 'C:\\Git_Evergreen\\evergreen_projects\\CBA_Evergreen\\DataSet\\FBTI_DataSet\\FBTI_ILC_Data_Set.xlsx'
@@ -31,12 +33,12 @@ FBTIDataset_FIC = 'C:\\Git_Evergreen\\evergreen_projects\\CBA_Evergreen\\DataSet
 FBTIDataset_FOC = 'C:\\Git_Evergreen\\evergreen_projects\\CBA_Evergreen\\DataSet\\FBTI_DataSet\\FBTI_FOC_Data_Set.xlsx'
 
 ###PARTY###
-PARTY_URL = 'mancsleverg0022:8080/uxp/rt/html/login.html'
+PARTY_URL = 'mancsleverg0019:6080/uxp/rt/html/login.html'
 PARTY_SSO_URL = 'http://${PARTY_HTML_CREDENTIALS}@${SSO_SERVER}:${SSO_PORT_NUMBER}/bfweb/servlet/GetServiceTicketForUser?redirectTo=http://${PARTY_SERVER}/uxp/rt/html/login.html'
-PARTY_SERVER = 'mancsleverg0022:8080'
+PARTY_SERVER = 'mancsleverg0019:6080'
 PARTY_HTML_CREDENTIALS = 'misysroot%5Cbrad:welcome%4099'
-USER_LINK = "mancsleverg0022"
-USER_PORT = "8080"
+USER_LINK = "mancsleverg0019"
+USER_PORT = "6080"
 PARTY_URL_SUFFIX = "/uxp/rt/html/login.html"
 DOMAIN = "http://misysroot"
 
@@ -97,9 +99,9 @@ ESS_PASSWORD = "welcome@99"
 
 ###Party Credential###
 PARTY_USERNAME = 'brad'
-PARTY_PASSWORD = 'welcome@99'
+PARTY_PASSWORD = 'brad'
 PARTY_SUPERVISOR_USERNAME  = 'superit'
-PARTY_SUPERVISOR_PASSWORD = 'welcome@99'
+PARTY_SUPERVISOR_PASSWORD = 'superit'
 PARTY_HTML_USER_CREDENTIALS = 'misysroot%5Cbrad:welcome%4099'
 PARTY_HTML_APPROVER_CREDENTIALS = 'misysroot%5Csuperit:welcome%4099'
 
@@ -132,7 +134,7 @@ CORRES_PORT = '8480'
 API_CORRES_HOST = 'http://mancsleverg0022:9150'
 
 ###Screenshots###
-Screenshot_Path = "C:\\Git_Evergreen\\fms_scotia\\Results"
+Screenshot_Path = "C:\\Git_Evergreen\\fms_cba\\Results"
 SCREENSHOT_FILENAME = ""
 
 ###MDM###

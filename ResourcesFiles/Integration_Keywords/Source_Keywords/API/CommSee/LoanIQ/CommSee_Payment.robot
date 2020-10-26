@@ -366,7 +366,7 @@ Create Payment Reversal - Scenario 7 ComSee
 
     ###Release Reverse Fee Payment###       
     Select Item in Work in Process    Payments    Awaiting Release Cashflows   Reverse Fee Payment     ${FacilityName}
-    Navigate Notebook Workflow    ${LIQ_ReverseFee_Window}    ${LIQ_LineFee_ReversePayment_Tab}    ${LIQ_LineFee_ReversePayment__WorkflowItems}    Release Cashflows   
+    Navigate Notebook Workflow    ${LIQ_ReverseFee_Window}    ${LIQ_LineFee_ReversePayment_Tab}    ${LIQ_LineFee_ReversePayment_WorkflowItems}    Release Cashflows   
     Release Cashflow    ${Borrower}    release    
     Release Reverse Fee Payment
     Close All Windows on LIQ

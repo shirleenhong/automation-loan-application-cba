@@ -1,0 +1,13 @@
+###Delete User###
+Party_DeleteUser_UserId_TextBox = '//input[contains(@name,"Username")]'
+Party_DeleteUser_Search_Button = '//input[contains(@name,"Search")]'
+Party_DeleteUser_Table = '//div[@role="presentation"]//div[contains(@id,"grid__View")]//div[@role="row"]'
+Party_DeleteUser_TableRow = '//div[@role="presentation"]//div[contains(@id,"grid__View")]//tr'
+Party_DeleteUser_UserId_TableCol = '//td[@role="gridcell" and @idx="1"]'
+Party_DeleteUser_CheckBox_TableCol = '//td[@role="gridcell" and @idx="0"]/div[@role="checkbox"]'
+Party_DeleteUser_Next_Button = '//input[contains(@name,"Next")]'
+Party_DeleteUser_Warning_Dialog = '//div[@role="dialog" and contains(@id,"EVENT_WARNING")]'
+Party_DeleteUser_WarningDialog_Proceed_Button = '//div[@class="ux-form-footerbuttons"]//input[contains(@id,"Proceed")]'
+Party_DeleteUser_WarningDialog_Message = '//textarea[contains(@name,"messages")]'
+Party_DeleteUser_Status_Form ='//form[@name="DeleteUser_SCF"]'
+Party_DeleteUser_Status_Message  = '//input[contains(@name,"ShowMessage")]'

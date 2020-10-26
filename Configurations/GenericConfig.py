@@ -27,6 +27,7 @@ SAPWUL_DATASET = ""
 DWHExcelPath = ""
 CBARPA_ExcelPath = ""
 DWELIQFunc_Dataset = ""
+DNA_DATASET = ""
 
 FBTIDataset = ""
 FBTIDataset_ILC = ""
@@ -49,7 +50,8 @@ USER_LINK = ""
 USER_PORT = ""
 PARTY_URL_SUFFIX = ""
 DOMAIN = ""
-PTY_DATASET =""
+PTY_DATASET = ""
+BRANCHNAME_LIST = ""
 
 ###ESSENCE###
 ESSENCE_URL = ""
@@ -195,6 +197,8 @@ DWE_PASSPHRASE = ""
 DWE_TAR_GZ_EXT = ""
 DWE_TAR_GZ_GPG_EXT = ""
 DWE_CCB_LIQ_ZONE_FILENAME = ""
+TestCase_Name_FuncVal = ""
+DWELIQFunc_Dataset_SheetName = ""
 
 ### GL ###
 GL_LIQ_USER = ""
@@ -212,6 +216,27 @@ ESS_AUWASADMIN_SCHEMA = ""
 ESS_EUWASADMIN_SCHEMA = ""
 GL_VALIDATION_TOOL_PATH = ""
 GL_VALIDATION_TOOL_JAR = ""
+GL_VALIDATION_TOOL_JAR_AU = ""
+GL_VALIDATION_TOOL_JAR_EU = ""
+DATAROW_INDEX = ""
+
+### Batch EOD ###
+PUTTY_PATH = ""
+PUTTY_HOSTNAME = ""
+PUTTY_PORT = ""
+PUTTY_USERNAME = ""
+PUTTY_PASSWORD = ""
+
+### DNA ###
+DNA_SERVER = ""
+DNA_SERVER_LIQ = ""
+DNA_PORT = ""
+DNA_SERVER_USER = ""
+DNA_SERVER_PASSWORD = ""
+DNA_EXTRACTION_AREA_PATH = ""
+DNA_CCB_LIQ_FILENAME= ""
+DNA_DATAASSURANCE_FILENAME = ""
+DNA_DAT_EXT = ""
 
 import os
 project_path = os.path.dirname(os.path.realpath(__file__)).replace("MDM_ConfigFile","")

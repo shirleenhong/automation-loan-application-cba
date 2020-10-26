@@ -330,7 +330,7 @@ LIQ_FrequencySelectionList_DeselectAll_Button = 'JavaWindow("title:=Frequency Se
 ###Deal Notebook - Ratios/Conds Tab###    
 LIQ_FinancialRatio_Add_Button = 'JavaWindow("title:=Deal Notebook -.*").JavaTab("text:=Ratios/Conds").JavaButton("text:=Add...")'    
 LIQ_FinancialRatio_Delete_Button = 'JavaWindow("title:=Deal Notebook -.*").JavaTab("text:=Ratios/Conds").JavaButton("label:=Delete")'    
-LIQ_FinancialRatio_History_Button = 'JavaWindow("title:=Deal Notebook -.*").JavaTab("text:=Ratios/Conds").JavaButton("text:=His&tory")'    
+LIQ_FinancialRatio_History_Button = 'JavaWindow("title:=Deal Notebook -.*").JavaTab("text:=Ratios/Conds").JavaButton("label:=History","labeled_containers_path:=.*Financial Ratios.*")'    
 LIQ_FinantialRatio_RatioType_List = 'JavaWindow("title:=Financial Ratio Add").JavaList("attached text:=Ratio Type:")'    
 LIQ_FinantialRatio_Field = 'JavaWindow("title:=Financial Ratio Add").JavaEdit("attached text:=Financial Ratio:","enabled:=1")'    
 LIQ_FinantialRatio_Date = 'JavaWindow("title:=Financial Ratio Add").JavaEdit("tagname:=Text","index:=1")'    
@@ -687,7 +687,7 @@ LIQ_LenderShares_OK_Button = 'JavaWindow("title:=Shares for .*").JavaButton("att
 LIQ_LenderShares_HostBankShare_Window= 'JavaWindow("title:=Host Bank Share for .*")'
 LIQ_HostBankShare_ActualAmount = 'JavaWindow("title:=Host Bank Share for.*").JavaEdit("attached text:=Actual Amount:")'
 LIQ_HostBankShare_Cancel_Button = 'JavaWindow("title:=Host Bank Share for.*").JavaButton("attached text:=Cancel")'
-LIQ_HostBankShare_ExpenseCodeList = 'JavaWindow("title:=Host Bank Share for.*").JavaTree("attached text:=Drill down to view/edit")'
+LIQ_HostBankShare_ExpenseCodeList = 'JavaWindow("title:=Host Bank Share for.*").JavaTree("attached text:=Drill down to view.*")'
 LIQ_HostBankShare_OK_Button = 'JavaWindow("title:=Host Bank Share for.*").JavaButton("attached text:=OK")'
 LIQ_ServicingGroupShare_Window = 'JavaWindow("title:=Servicing Group Share for.*")'
 LIQ_ServicingGroupShare_ActualAmount = 'JavaWindow("title:=Servicing Group Share for.*").JavaEdit("attached text:=Actual Amount:")'

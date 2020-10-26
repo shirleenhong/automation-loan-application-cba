@@ -1,5 +1,6 @@
 ### Dataset Locations ###
-APIDataSet = "C:\\Git_Evergreen\\fms_cba\DataSet\\Integration_DataSet\\API\\API_Data_Set.xlsx"
+APIDataSet = "C:\\Git_Evergreen\\fms_cba\\DataSet\\Integration_DataSet\\API\\API_Data_Set.xlsx"
+ExcelPath_API_temp = 'C:\\Git_Evergreen\\fms_cba\\DataSet\\Integration_DataSet\\API\\temp.xlsx'
 ExcelPath = "C:\\Git_Evergreen\\fms_cba\DataSet\\LoanIQ_DataSet\\EVG_PTYLIQ01_BaselineBilateralCustomer.xlsx"
 dataset_path = "C:\\Git_Evergreen\\fms_cba"
 CBAUAT_ExcelPath = "C:\\Git_Evergreen\\fms_cba\\DataSet\\CBAUATDeal_DataSet\\EVG_CBAUAT03.xlsx"
@@ -69,11 +70,13 @@ PARTY_URL = 'mancsleverg0031:7080/uxp/rt/html/login.html'
 PARTY_USERNAME = 'amipac'
 PARTY_PASSWORD = 'password'
 
+###Transformation Layer###
 TL_SERVICE_HOST = "mancsleverg0007"
 TL_SERVICE_PORT = "22"
 TL_SERVER_USER = "sftpuser"
 TL_SERVER_PASSWORD = "t3stOnly?"
 TL_SERVICE_DIR = "/evgdata/FFC/mch-2.1.3.3.0-6162/config/Transformation_129/"
+TL_SERVICE_LOGS_DIR = "/evgdata/FFC/mch-2.2.0.0.0-6534/config/Transformation_129/logs/"
 
 ###Screenshots###
 screenshot_Path = "C:\\Git_Evergreen\\fms_cba\\Results"
@@ -85,7 +88,7 @@ LIQ_ADMIN_PASSWORD = "password"
 
 ###CORRESPONDENCE###
 CORRES_SERVER = 'http://mancsleverg0007'
-CORRES_PORT = '8480'
+CORRES_PORT = '9090'
 API_CORRES_HOST = 'http://mancsleverg0007:9150'
 
 ###COMSEE###
@@ -178,8 +181,8 @@ SAPWUL_INSTANCE = 'CustomCBAPush_1.3.0'
 DWE_SERVER = 'mancsleverg0007'
 DWE_SERVER_LIQ = 'mancsleverg0005'
 DWE_PORT = '22'
-DWE_SERVER_USER = 'micloud'
-DWE_SERVER_PASSWORD = 'misys123'
+DWE_SERVER_USER = 'sftpuser'
+DWE_SERVER_PASSWORD = 't3stOnly?'
 DWE_LANDING_AREA_PATH = '/evgdata/misys/loaniq/server/data/release/'
 DWE_EXTRACTION_PATH = '/evgdata/STREAMSETS/workspace/extraction_area/COMRLENDING/'
 DWE_DATASET = 'C:\\Git_Evergreen\\fms_cba\\DataSet\\Integration_DataSet\Extracts\\DWE_LIQ\\EVG_DWE_LIQEXTRACT_TestData.xlsx'
@@ -195,12 +198,13 @@ DWE_CSV_FILES_COUNT = '186'
 DWE_MANIFEST_FILE_FIELDLIST = 'C:\\Git_Evergreen\\fms_cba\\DataSet\\Integration_DataSet\Extracts\\DWE_LIQ\\Manifest_Fields.txt'
 DWE_DECRYPTION_PART1 = 'C:/Git_Evergreen/fms_cba/DataSet/Integration_DataSet/Extracts/DWE_LIQ/Decryptor_Tool/DWE_DECRYPTION_PART1.vbs'
 DWE_DECRYPTION_PART2 = 'C:/Git_Evergreen/fms_cba/DataSet/Integration_DataSet/Extracts/DWE_LIQ/Decryptor_Tool/DWE_DECRYPTION_PART2.vbs'
+DWE_DECRYPTION_PART3 = 'C:/Git_Evergreen/fms_cba/DataSet/Integration_DataSet/Extracts/DWE_LIQ/Decryptor_Tool/DWE_DECRYPTION_PART3.vbs'
 DWE_LIQ_EXTRACT_PATH = 'C:\\Git_Evergreen\\fms_cba\\DataSet\\Integration_DataSet\Extracts\\DWE_LIQ\\DWE_LIQ_Extracts\\'
-DWE_PGP_SECRET_KEY = 'OMNIA_CCB_DEV_KEY_pub.asc'
-DWE_PASSPHRASE = '0mn1@d@v'
+DWE_PGP_SECRET_KEY = 'secret.skr'
+DWE_PASSPHRASE = 'oracle'
 DWE_TAR_GZ_EXT = '.tar.gz'
 DWE_TAR_GZ_GPG_EXT = '.tar.gz.gpg'
-DWE_CCB_LIQ_ZONE_FILENAME = 'CCB_LIQ_SYD_'
+DWE_CCB_LIQ_ZONE_FILENAME = 'CCB_LIQ_'
 
 ### GL Postings/Extracts###
 GL_LIQ_USER = 'RPTINP01'
@@ -212,11 +216,12 @@ GL_DECRYPTION_PART1 = 'C:/Git_Evergreen/fms_cba/DataSet/Integration_DataSet/Extr
 GL_DECRYPTION_PART2 = 'C:/Git_Evergreen/fms_cba/DataSet/Integration_DataSet/Extracts/GL/Decryptor_Tool/GL_DECRYPTION_PART2.vbs'
 GL_DECRYPTION_PART3 = 'C:/Git_Evergreen/fms_cba/DataSet/Integration_DataSet/Extracts/GL/Decryptor_Tool/GL_DECRYPTION_PART3.vbs'
 GL_PGP_SECRET_KEY = 'secret.skr'
-GL_PASSPHRASE = 'password'
+GL_PASSPHRASE = 'oracle'
 GL_CSV_GPG_FILEEXTENSION = '.csv.gpg'
 ESS_AUWASADMIN_SCHEMA = "AUWASADMIN"
 GL_VALIDATION_TOOL_PATH = 'C:\\Git_Evergreen\\fms_cba\\DataSet\\Integration_DataSet\Extracts\\GL\\Validation_Tool'
 GL_VALIDATION_TOOL_JAR = 'gpgCheck-1.0.3-jar-with-dependencies.jar'
+GL_VALIDATION_TOOL_JAR_AU = 'gpgCheck-1.0.3-jar-with-dependencies.jar'
 
 ### TI ###
 FBTIDataset = 'C:\\Git_Evergreen\\evergreen_projects\\CBA_Evergreen\\DataSet\\FBTI_DataSet\\FBTI_User_Data_Set.xlsx'

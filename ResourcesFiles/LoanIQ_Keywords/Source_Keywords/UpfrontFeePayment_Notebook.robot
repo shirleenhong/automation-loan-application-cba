@@ -244,3 +244,20 @@ Save and Exit Upfront Fee From Borrower / Agent
     Mx LoanIQ Select    ${LIQ_UpfrontFeeFromBorrower_Options_Save}
     Mx LoanIQ Click Element If Present    ${LIQ_Warning_OK_Button}
     Mx LoanIQ Select    ${LIQ_UpfrontFeeFromBorrower_Options_Exit}
+    
+Compute Upfront Fee Amount Based On Percentage
+    [Documentation]    This keyword Computes and returns the expected Upfront Fee amount based on percentage.
+    ...    @author: mcastro    23OCT2020
+    [Arguments]    ${iUpfrontFee_Percent}
+    
+    ### GetRuntime Keyword Pre-processing ###
+    ${UpfrontFee_Percent}    Acquire Argument Value    ${iUpfrontFee_Percent}
+    
+    ${Percent}    Evaluate    ${UpfrontFee_Percent}/100
+    
+    ${Deal_Amount}    Read Data From Excel    CRED01_DealSetup    Deal_ProposedCmt   ${rowid}
+    ${Deal_Amount}    Remove String    ${Deal_Amount}    ,
+    ${Deal_Amount}    Convert To Number    ${Deal_Amount}   
+    ${New_Upfrontfee_Amount}    Evaluate    ${Percent}*${Deal_Amount}
+
+    [Return]    ${New_Upfrontfee_Amount} 

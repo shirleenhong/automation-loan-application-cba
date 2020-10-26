@@ -5,7 +5,17 @@ Resource    ../../../Configurations/LoanIQ_Import_File.robot
 Create Line Fee Capitalization Rule
     [Documentation]    This keyword creates a Capitalization rule for line fee.
     ...    @author: fmamaril    
-    [Arguments]    ${CapitalizationFeePaymentPercentage}    ${Facility_Name}    ${PricingOption}    ${Loan_Alias}    ${Current_Date}    ${Future_Date}
+    ...    @update: dahijara    07OCT2020    Added pre processing keyword and screenshot
+    [Arguments]    ${sCapitalizationFeePaymentPercentage}    ${sFacility_Name}    ${sPricingOption}    ${sLoan_Alias}    ${sCurrent_Date}    ${sFuture_Date}
+
+    ### GetRuntime Keyword Pre-processing ###
+    ${CapitalizationFeePaymentPercentage}    Acquire Argument Value    ${sCapitalizationFeePaymentPercentage}
+    ${Facility_Name}    Acquire Argument Value    ${sFacility_Name}
+    ${PricingOption}    Acquire Argument Value    ${sPricingOption}
+    ${Loan_Alias}    Acquire Argument Value    ${sLoan_Alias}
+    ${Current_Date}    Acquire Argument Value    ${sCurrent_Date}
+    ${Future_Date}    Acquire Argument Value    ${sFuture_Date}
+
     ###Navigation to Capitalization Editor###
     mx LoanIQ activate window    ${LIQ_LineFeeNotebook_Window}
     mx LoanIQ click element if present    ${LIQ_LineFee_InquiryMode_Button}
@@ -21,12 +31,23 @@ Create Line Fee Capitalization Rule
     mx LoanIQ enter    ${LIQ_LineFee_CapitalizationEditor_PctofPayment_Textfield}    ${CapitalizationFeePaymentPercentage}
     Mx LoanIQ Select Combo Box Value    ${LIQ_LineFee_CapitalizationEditor_ToFacility_DropdownList}    ${Facility_Name}    
     Mx LoanIQ Select Combo Box Value    ${LIQ_LineFee_CapitalizationEditor_ToLoan_DropdownList}    ${PricingOption}${SPACE}Loan${SPACE}(${Loan_Alias})
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LineFee_CapitalizationEditor_window
     mx LoanIQ click    ${LIQ_LineFee_CapitalizationEditor_OK_Button}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LineFee_CapitalizationEditor_window
     
 Validate Capitalized Line Fee details
     [Documentation]    This keyword validates the detail Capitalization Rule for Line fee.
     ...    @author: fmamaril    
-    [Arguments]    ${Capitalization_FromDate}    ${Capitalization_ToDate}    ${CapitalizationFeePaymentPercentage}    ${PricingOption}    ${Loan_Alias}     
+    ...    @update: dahijara    07OCT2020    Added pre processing keyword and screenshot
+    [Arguments]    ${sCapitalization_FromDate}    ${sCapitalization_ToDate}    ${sCapitalizationFeePaymentPercentage}    ${sPricingOption}    ${sLoan_Alias}     
+
+    ### GetRuntime Keyword Pre-processing ###
+    ${Capitalization_FromDate}    Acquire Argument Value    ${sCapitalization_FromDate}
+    ${Capitalization_ToDate}    Acquire Argument Value    ${sCapitalization_ToDate}
+    ${CapitalizationFeePaymentPercentage}    Acquire Argument Value    ${sCapitalizationFeePaymentPercentage}
+    ${PricingOption}    Acquire Argument Value    ${sPricingOption}
+    ${Loan_Alias}    Acquire Argument Value    ${sLoan_Alias}
+
     ###Navigation to Capitalization Editor###
     mx LoanIQ activate window    ${LIQ_LineFeeNotebook_Window}
     mx LoanIQ select    ${LIQ_LineFee_Capitalization_Menu}  
@@ -36,6 +57,7 @@ Validate Capitalized Line Fee details
     ${PercentofPayment}    Mx LoanIQ Get Data    ${LIQ_LineFee_CapitalizationEditor_PctofPayment_Textfield}    value%percentage    
     ${UIPercentofPayment}    Remove String    ${PercentofPayment}    .0000%
     ${UILoan}    Mx LoanIQ Get Data    ${LIQ_LineFee_CapitalizationEditor_ToLoan_DropdownList}    value%loan  
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LineFee_CapitalizationEditor_window
     
     ###Validation of Line Fee details###
     Should Be Equal As Strings    ${UIFromDate}    ${Capitalization_FromDate}
@@ -43,6 +65,7 @@ Validate Capitalized Line Fee details
     Should Be Equal As Strings    ${UIPercentofPayment}    ${CapitalizationFeePaymentPercentage}    
     Should Be Equal As Strings    ${UILoan}    ${PricingOption} Loan (${Loan_Alias})       
     mx LoanIQ click    ${LIQ_LineFee_CapitalizationEditor_OK_Button}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LineFee_CapitalizationEditor_window
     
 Save and Exit Line Fee Notebook
     [Documentation]    This keyword saves and exits the the LIQ User from Line fee.
@@ -465,7 +488,7 @@ Navigate to Cashflow - Reverse Fee
     mx LoanIQ activate window    ${LIQ_ReverseFee_Window}
     Mx LoanIQ Select Window Tab    ${LIQ_LineFee_ReversePayment_Tab}    Workflow
     Run Keyword And Continue On Failure     Mx LoanIQ Click Button On Window    .* Line Fee.*;Warning;Yes    strProcessingObj="JavaWindow(\"title:=Processing.*\")"    WaitForProcessing=500
-    Mx LoanIQ DoubleClick    ${LIQ_LineFee_ReversePayment__WorkflowItems}    Create Cashflows
+    Mx LoanIQ DoubleClick    ${LIQ_LineFee_ReversePayment_WorkflowItems}    Create Cashflows
     Run Keyword And Continue On Failure     Mx LoanIQ Click Button On Window    .* Line Fee.*;Warning;Yes    strProcessingObj="JavaWindow(\"title:=Processing.*\")"    WaitForProcessing=500
     mx LoanIQ activate window    ${LIQ_LineFee_ReversePayment_Cashflows_Window}                 
     Run Keyword And Continue On Failure    Mx LoanIQ Verify Object Exist    ${LIQ_LineFee_ReversePayment_Cashflows_Window}    VerificationData="Yes"
@@ -476,7 +499,7 @@ Send Reverse Fee Payment to Approval
 
     mx LoanIQ click element if present     ${LIQ_LineFee_ReversePayment_Cashflow_OK_Button} 
     mx LoanIQ activate window    ${LIQ_ReverseFee_Window}
-    Mx LoanIQ Select Or DoubleClick In Javatree    ${LIQ_LineFee_ReversePayment__WorkflowItems}    Send to Approval%d
+    Mx LoanIQ Select Or DoubleClick In Javatree    ${LIQ_LineFee_ReversePayment_WorkflowItems}    Send to Approval%d
     mx LoanIQ click element if present    ${LIQ_Question_Yes_Button}
     mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
     mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
@@ -490,7 +513,7 @@ Approve Reverse Fee Payment
     mx LoanIQ activate window    ${LIQ_ReverseFee_Window}
     Mx LoanIQ Select Window Tab    ${LIQ_LineFee_ReversePayment_Tab}    Workflow
     Run Keyword And Continue On Failure    mx LoanIQ click element if present    ${LIQ_InquiryMode_Button}
-    Mx LoanIQ Select Or DoubleClick In Javatree    ${LIQ_LineFee_ReversePayment__WorkflowItems}    Approval%d
+    Mx LoanIQ Select Or DoubleClick In Javatree    ${LIQ_LineFee_ReversePayment_WorkflowItems}    Approval%d
     Run Keyword And Continue On Failure     Mx LoanIQ Click Button On Window    Commitment Fee.*;Question;Yes    strProcessingObj="JavaWindow(\"title:=Processing.*\")"    WaitForProcessing=500
     Run Keyword And Continue On Failure     Mx LoanIQ Click Button On Window    Commitment Fee.*;Warning;Yes    strProcessingObj="JavaWindow(\"title:=Processing.*\")"    WaitForProcessing=500
 
@@ -503,7 +526,21 @@ Release Reverse Fee Payment
     mx LoanIQ activate window    ${LIQ_ReverseFee_Window}
     Mx LoanIQ Select Window Tab    ${LIQ_LineFee_ReversePayment_Tab}    Workflow
     Run Keyword And Continue On Failure    mx LoanIQ click element if present    ${LIQ_InquiryMode_Button}
-    Mx LoanIQ Select Or DoubleClick In Javatree    ${LIQ_LineFee_ReversePayment__WorkflowItems}    Release%d
+    Mx LoanIQ Select Or DoubleClick In Javatree    ${LIQ_LineFee_ReversePayment_WorkflowItems}    Release%d
     Validate if Question or Warning Message is Displayed
 
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LineFeeReverseWindow_WorkflowTab_Release
+    
+Change Expiry Date of Line Fee
+    [Documentation]    This keyword changes the expiry date of the Line Fee from LIQ
+    ...    @author: cfrancis    -06OCT2020    - initial create
+    [Arguments]    ${sExpiryDate}
+    
+    mx LoanIQ activate window    ${LIQ_LineFee_Window}
+    Mx LoanIQ Select    ${LIQ_LineFee_Update_Menu}
+    Mx LoanIQ Select    ${LIQ_LineFee_ChangeExpiryDate_Menu}
+    mx LoanIQ enter    ${LIQ_LineFee_ExpiryDate}    ${sExpiryDate}
+    mx LoanIQ click    ${LIQ_LineFee_ExpiryDate_OK_Button}
+    mx LoanIQ click element if present    ${LIQ_LineFee_ExpiryDate_OK_Button}
+    
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LineFeeWindow_ChangeExpiryDate
