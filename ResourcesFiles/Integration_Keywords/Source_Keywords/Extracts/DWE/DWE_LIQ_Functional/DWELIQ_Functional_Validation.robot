@@ -638,7 +638,7 @@ Navigate to Notebook Window thru RID
     [Documentation]    This keyword is used to navigate a certain window thru RID.
     ...    @author: mgaling    05SEP2019    - initial create
     ...    @update: mgaling    15OCT2020    - added screenshot path
-    ...    @update: mgaling    25OCT2020    - removed "" in ${False}
+    ...    @update: mgaling    26OCT2020    - added screenshot path for LIQ Error
     [Arguments]    ${sDataObject_Value}    ${sRID_Value}    
     
     ### Navigate to Options -> RID Select ###
@@ -1958,7 +1958,7 @@ Validate CSV values in LIQ for VLS_PROD_POS_CUR
 
     ${Data_Rows}    Get Length    ${aCSV_Content}
     
-    :FOR    ${Index}    IN RANGE    5    10    ##${Data_Rows}
+    :FOR    ${Index}    IN RANGE    1    ${Data_Rows}
     \    ${Table_NameList}    Set Variable    @{aCSV_Content}[${INDEX}]
     \    Log    ${Table_NameList}
     \    ${PID_PRODUCT_ID}    Remove String    @{Table_NameList}[${PDC_PID_PRODUCT_ID_Index}]    " 
@@ -1971,12 +1971,11 @@ Validate CSV values in LIQ for VLS_PROD_POS_CUR
     \    
     \    ${RID_IsExist}    Run Keyword If    "${PID_PRODUCT_ID}"!="${EMPTY}" and "${CDE_PROD_TYPE.strip()}"=="DEA"     Run Keyword And Return Status     Navigate to Notebook Window thru RID    Deal    ${PID_PRODUCT_ID.strip()}
          ...    ELSE IF    "${PID_PRODUCT_ID}"!="${EMPTY}" and "${CDE_PROD_TYPE.strip()}"=="FAC"     Run Keyword And Return Status     Navigate to Notebook Window thru RID    Facility    ${PID_PRODUCT_ID.strip()}
-         ...    ELSE    Log    ${PID_PRODUCT_ID} is empty or ${CDE_PROD_TYPE} is not yet configured.        
+         ...    ELSE    Log    PID_PRODUCT_ID is empty or ${CDE_PROD_TYPE} is not yet configured.        
     \    Run Keyword If    ${RID_IsExist}==${True} and "${CDE_PROD_TYPE.strip()}"=="DEA"    Run Keyword And Continue On Failure    Check VLS_PROD_POS_CUR values in Deal Notebook    ${AMT_GLOBAL_CMT.strip()}    ${AMT_BNK_GR_CMT.strip()}    
          ...    ELSE IF    ${RID_IsExist}==${True} and "${CDE_PROD_TYPE.strip()}"=="FAC"    Run Keyword And Continue On Failure    Check VLS_PROD_POS_CUR values in Facility Notebook    ${AMT_BNK_NT_CMT.strip()}    ${AMT_BNK_NT_OUT.strip()}    ${AMT_BNK_GR_OUT.strip()}
          ...    ELSE IF    ${RID_IsExist}==${False}    Run Keyword And Continue On Failure    FAIL    RID ${PID_PRODUCT_ID} does not exist!
-         ...    ELSE    Log    ${PID_PRODUCT_ID} is empty or ${CDE_PROD_TYPE} is not yet configured.       
-
+         ...    ELSE    Log    PID_PRODUCT_ID is empty or ${CDE_PROD_TYPE} is not yet configured.
     \   Close All Windows on LIQ
 
 Check VLS_PROD_POS_CUR values in Deal Notebook
