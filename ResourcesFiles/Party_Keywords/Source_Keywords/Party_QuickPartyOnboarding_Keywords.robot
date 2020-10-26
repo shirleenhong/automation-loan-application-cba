@@ -169,11 +169,13 @@ Populate Quick Enterprise Party
     ...    @update: dahijara    09JUN2020    - Updated Next button locator
     ...    @update: javinzon    17SEP2020    - Updated arguments for Address 3 and 4 to be mandatory
     ...    @update: javinzon	21OCT2020	 - Updated Warning Popup to Warning Dialog, Updated Approval Required scripts, Added Validate Duplicate Short Name 
+    ...    @update: javinzon    26OCT2020    - Updated keyword name from 'Validate Duplicate Short Name' to 'Validate Error Message',
+    ...                                        Added optional argument ${sExpected_Error_Message}.
                                                
     [Arguments]    ${sParty_ID}    ${sCountry_of_Tax_Domicile}    ${sCountry_of_Registration}    ${sAddress_Type}    ${sCountry_Region}    ${iPost_Code}
     ...    ${sDocument_Collection_Status}    ${sIndustry_Sector}    ${sBusiness_Activity}    ${bIs_Main_Activity}    ${iGST_Number}
     ...    ${sAddress_Line_1}    ${sAddress_Line_2}    ${sAddress_Line_3}    ${sAddress_Line_4}    ${sTown_City}    ${sState_Province}    
-    ...    ${sBusiness_Country}    ${bIs_Primary_Activity}    ${iRegistered_Number}    ${sShort_Name}
+    ...    ${sBusiness_Country}    ${bIs_Primary_Activity}    ${iRegistered_Number}    ${sShort_Name}    ${sExpected_Error_Message}=None
     
     Mx Input Text    ${Party_QuickEnterpriseParty_PartyId_TextBox}    ${sParty_ID}
     Mx Input Text    ${Party_QuickEnterpriseParty_RegisteredNumber_TextBox}    ${iRegistered_Number}
@@ -212,7 +214,7 @@ Populate Quick Enterprise Party
     Run Keyword If    ${isApprovalRequired}==${True}    Run Keywords	Capture Page Screenshot    ${screenshot_path}/Screenshots/Party/PartyApprovalDialog-{index}.png
     ...	AND	    Mx Click Element    ${Party_QuickEnterpriseParty_AskForApproval_Button}
     ...	AND	    Wait Until Page Contains Element    ${Party_RaisedMessage_Notification}
-    ...	ELSE    Validate Duplicate Short Name
+    ...	ELSE    Validate Error Message    ${sExpected_Error_Message}
     
 Populate Enterprise Business Activity
     [Documentation]    This keyword populates required fields in Enterprise Business Activity modal.
@@ -782,15 +784,17 @@ Validate Mandatory Fields in Quick Enterprise Party Page
     Capture Page Screenshot    ${screenshot_path}/Screenshots/Party/QuickPartyOnboarding_MandatoryFields-{index}.png
     Mx Click Element    ${Party_CloseDialog_Button}
 
-Validate Duplicate Short Name 
-    [Documentation]    This test case is used to validate the duplicate shortname and corresponding error message.
+Validate Error Message
+    [Documentation]    This test case is used to get and validate error message in Error dialog.
     ...    @author: javinzon    21OCT2020    - initial create
     ...	   @update: javinzon	23OCT2020	 - removed white space in Keyword name
-
+    ...    @update: javinzon    26OCT2020    - updated keyword name from 'Validate Duplicate Short Name' to 'Validate Error Message',
+    ...                                        updated documentation, added argument ${sExpected_Error_Message}.
+    [Arguments]    ${sExpected_Error_Message}
+    
     ${isErrorDisplayed}    Run Keyword And Return Status    Wait Until Page Contains Element    ${Party_QuickEnterpriseParty_Errors_Dialog}    30s
     Capture Page Screenshot    ${screenshot_path}/Screenshots/Party/DuplicateShortName-{index}.png
     ${ErrorMessage}    Get Element Attribute    ${Party_QuickEnterpriseParty_ErrorsDialog_TextArea}    value
-    ${isMatched}    Run Keyword And Return Status    Should Contain    ${ErrorMessage}    Entered Short Name is already in use for Different Party
+    ${isMatched}    Run Keyword And Return Status    Should Contain    ${ErrorMessage}    ${sExpected_Error_Message}
     Run Keyword If    ${isMatched}==${True}    Mx Click Element    ${Party_QuickEnterpriseParty_ErrorsDialog_GoBack_Button}
-    ...    ELSE    Run Keyword and Continue on Failure    Fail   Error message "Entered Short Name is already in use for Different Party" is expected.
-    
+    ...    ELSE    Run Keyword and Continue on Failure    Fail   Error message: '${sExpected_Error_Message}' is expected.
