@@ -11,6 +11,7 @@ Create Initial Loan Drawdown with Repayment Schedule
     ...    @update: jloretiz    15JUL2020    - Added writing of loan alias to correspondence and updated argument
     ...    @update: kduenas     23SEP2020    - Added writing of loan alias to correspondence dataset for API_COR_TC03
     ...    @update: makcamps    15OCT2020    - Added 'Run Keywords' in writing of loan alias to correspondence dataset
+    ...    @update: makcamps    23OCT2020    - Added EU conditions for Rate Approval and updated Release Cashflow method
     [Arguments]    ${ExcelPath}
     
     ###Close all windows###
@@ -85,13 +86,15 @@ Create Initial Loan Drawdown with Repayment Schedule
     ###Rate Approval###
     Logout from Loan IQ
     Login to Loan IQ    ${MANAGER_USERNAME}    ${MANAGER_PASSWORD}
-    Select Item in Work in Process    Outstandings    Awaiting Rate Approval    Loan Initial Drawdown     ${Loan_Alias}
+    Run Keyword If	'&{ExcelPath}[Entity]'=='EU'	Select Item in Work in Process	Outstandings	Awaiting Release Cashflows	Loan Initial Drawdown	${Loan_Alias}
+    ...	ELSE	Select Item in Work in Process	Outstandings	Awaiting Rate Approval	Loan Initial Drawdown	${Loan_Alias}
     Approve Initial Drawdown Rate
     
     ###Intent Notices Generation
     Generate Rate Setting Notices for Drawdown    &{ExcelPath}[Borrower1_LegalName]    &{ExcelPath}[NoticeStatus]
     
     ###Cashflow Notebook - Release Cashflows###
+    Release Cashflow Based on Remittance Instruction    &{ExcelPath}[Remittance_Instruction]    &{ExcelPath}[Borrower1_ShortName]	&{ExcelPath}[Cashflow_DataType]
     Navigate Notebook Workflow    ${LIQ_InitialDrawdown_Window}    ${LIQ_InitialDrawdown_Tab}    ${LIQ_Drawdown_WorkflowItems}    Release
 
     ### Release Loan Drawdown
