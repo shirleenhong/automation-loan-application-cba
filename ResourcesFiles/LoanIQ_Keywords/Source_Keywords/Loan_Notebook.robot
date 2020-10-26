@@ -482,6 +482,7 @@ Get Pricing Code and Description Combined
 Get Loan Spread and All In Rates
     [Documentation]    This keyword returns the Loan Rates, Spread and All In Rates.
     ...    @author: rtarayao    23AUG2019    - Initial Create
+    ...    @update: cfrancis    19OCT2020    - added removing five 0 and % for all in rate
     mx LoanIQ activate window    ${LIQ_Loan_Window}
     Mx LoanIQ Select Window Tab    ${LIQ_Loan_Tab}    Rates 
     ${SpreadRate}    Mx LoanIQ Get Data    ${LIQ_Loan_Spread_Text}    value%Spread   
@@ -489,7 +490,8 @@ Get Loan Spread and All In Rates
     ${SpreadRate}    Remove String    ${SpreadRate}    .000000%    
     ${AllInRate}    Mx LoanIQ Get Data    ${LIQ_Loan_AllInRate}    value%AllInRate
     ${AllInRate}    Convert To String    ${AllInRate}
-    ${AllInRate}    Remove String    ${AllInRate}    .000000% 
+    ${AllInRate}    Remove String    ${AllInRate}    .000000%
+    ${AllInRate}    Remove String    ${AllInRate}    00000%
     Log    The Loan Spread is ${SpreadRate}. 
     Log    The Loan All In Rates is ${AllInRate}      
     Screenshot.Set Screenshot Directory    ${Screenshot_Path}

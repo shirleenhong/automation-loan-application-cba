@@ -35,7 +35,7 @@ Populate Party Onboarding and Return Values
 
     ${Entity}    Get Value    ${Party_PartyOnboarding_Entity_Textbox}
     ${Assigned_Branch}    Get Value    ${Party_PartyOnboarding_AssignedBranch_Dropdown}
-
+ 
     Capture Page Screenshot    ${screenshot_path}/Screenshots/Party/PartyOnboarding-{index}.png
 
     Mx Click Element    ${Party_Footer_Next_Button}
@@ -168,12 +168,13 @@ Populate Quick Enterprise Party
     ...    @update: dahijara    30APR2020    - used Mx Input text for inputing fields
     ...    @update: dahijara    09JUN2020    - Updated Next button locator
     ...    @update: javinzon    17SEP2020    - Updated arguments for Address 3 and 4 to be mandatory
+    ...    @update: javinzon	21OCT2020	 - Updated Warning Popup to Warning Dialog, Updated Approval Required scripts, Added Validate Duplicate Short Name 
+                                               
     [Arguments]    ${sParty_ID}    ${sCountry_of_Tax_Domicile}    ${sCountry_of_Registration}    ${sAddress_Type}    ${sCountry_Region}    ${iPost_Code}
     ...    ${sDocument_Collection_Status}    ${sIndustry_Sector}    ${sBusiness_Activity}    ${bIs_Main_Activity}    ${iGST_Number}
     ...    ${sAddress_Line_1}    ${sAddress_Line_2}    ${sAddress_Line_3}    ${sAddress_Line_4}    ${sTown_City}    ${sState_Province}    
     ...    ${sBusiness_Country}    ${bIs_Primary_Activity}    ${iRegistered_Number}    ${sShort_Name}
     
-
     Mx Input Text    ${Party_QuickEnterpriseParty_PartyId_TextBox}    ${sParty_ID}
     Mx Input Text    ${Party_QuickEnterpriseParty_RegisteredNumber_TextBox}    ${iRegistered_Number}
     Mx Input Text    ${Party_QuickEnterpriseParty_CountryOfTaxDomicile_Dropdown}    ${sCountry_of_Tax_Domicile}
@@ -200,18 +201,19 @@ Populate Quick Enterprise Party
     # Mx Native Type    {ESC}
     # Wait Until Keyword Succeeds    10x    2s    Mx Click Element    ${Party_Next_Button}
 
-    ##### Warning Popup #####
+    ### Warning Dialog ###
     Wait Until Loading Page Is Not Visible    ${PARTY_TIMEOUT}
     ${isWarningDisplayed}    Run Keyword And Return Status    Wait Until Page Contains Element    ${Party_QuickEnterpriseParty_BiometricsWarning_Dialog}    30s
     Run Keyword If    ${isWarningDisplayed}==${True}    Mx Click Element    ${Party_QuickEnterpriseParty_ProceedWarning_Button}
     Wait Until Loading Page Is Not Visible    ${PARTY_TIMEOUT}
-
-    Wait Until Page Contains Element    ${Party_QuickEnterpriseParty_ApprovalRequired_Dialog}    20s 
-    Capture Page Screenshot    ${screenshot_path}/Screenshots/Party/PartyApprovalDialog-{index}.png
-    Mx Click Element    ${Party_QuickEnterpriseParty_AskForApproval_Button}
-
-    Wait Until Page Contains Element    ${Party_RaisedMessage_Notification}
-
+   
+    ### Approval Required Dialog ###
+    ${isApprovalRequired}    Run Keyword And Return Status    Wait Until Page Contains Element    ${Party_QuickEnterpriseParty_ApprovalRequired_Dialog}    30s
+    Run Keyword If    ${isApprovalRequired}==${True}    Run Keywords	Capture Page Screenshot    ${screenshot_path}/Screenshots/Party/PartyApprovalDialog-{index}.png
+    ...	AND	    Mx Click Element    ${Party_QuickEnterpriseParty_AskForApproval_Button}
+    ...	AND	    Wait Until Page Contains Element    ${Party_RaisedMessage_Notification}
+    ...	ELSE    Validate Duplicate Short Name
+    
 Populate Enterprise Business Activity
     [Documentation]    This keyword populates required fields in Enterprise Business Activity modal.
     ...    @author: jcdelacruz
@@ -690,3 +692,105 @@ Validate Branch in Party Onboarding Page
     ${isMatched}    Run Keyword And Return Status    Should Be Equal    ${sAssigned_Branch}    ${Branch_Name}
     Run Keyword If    ${isMatched}==${True}    Log    Result is correct.
     ...   ELSE    Run Keyword and Continue on Failure    Fail    Result is incorrect. Expected Value: '${sAssigned_Branch}' | Actual Value: ${Branch_Name}   
+
+Validate Mandatory Fields in Quick Enterprise Party Page    
+    [Documentation]    This test case is used to validate mandatory fields in Quick Enterprise Party Page.
+    ...    Mandatory Fields as of this writting are as follows: PartyID, Registered Number, Country of Registration, Short name, Goods and service tax number
+    ...    Address type, Post code, Document collection status, Country, Industry Sector, Business Activity, Address Line 1, Town/City 
+    ...    @author: javinzon    15OCT2020    - initial create
+    [Arguments]    ${sParty_ID}    ${sCountry_of_Tax_Domicile}    ${sCountry_of_Registration}    ${iGST_Number}    ${sCountryRegion}    ${iPostCode}
+    
+    Click Button    ${Party_QuickEnterpriseParty_GoodsAndServiceTaxLiable_CheckBox}
+    Mx Click Element    ${Party_Footer_Next_Button}
+
+    ${isMandatory}    Run Keyword And Return Status    Element Should Be Visible   ${Party_QuickEnterpriseParty_Error_TextBox}${Party_QuickEnterpriseParty_PartyId_TextBox}    
+    Run Keyword If    ${isMandatory}==${True}    Log    Party ID is a mandatory field.  
+    ...   ELSE    Run Keyword and Continue on Failure    Fail    Party ID should be mandatory.   
+    
+    ${isMandatory}    Run Keyword And Return Status    Element Should Be Visible   ${Party_QuickEnterpriseParty_Error_TextBox}${Party_QuickEnterpriseParty_RegisteredNumber_TextBox}
+    Run Keyword If    ${isMandatory}==${True}    Log    Registered Number is a mandatory field.  
+    ...   ELSE    Run Keyword and Continue on Failure    Fail    Registered Number should be mandatory.   
+    
+    ${isMandatory}    Run Keyword And Return Status    Element Should Be Visible   ${Party_QuickEnterpriseParty_Error_TextBox}${Party_QuickEnterpriseParty_CountryOfRegistration_Dropdown}
+    Run Keyword If    ${isMandatory}==${True}    Log    Country of Registration is a mandatory field.  
+    ...   ELSE    Run Keyword and Continue on Failure    Fail    Country of Registration should be mandatory.   
+
+    ${isMandatory}    Run Keyword And Return Status    Element Should Be Visible   ${Party_QuickEnterpriseParty_Error_TextBox}${Party_QuickEnterpriseParty_ShortName_TextBox}
+    Run Keyword If    ${isMandatory}==${True}    Log    Short Name is a mandatory field.  
+    ...   ELSE    Run Keyword and Continue on Failure    Fail    Short Name should be mandatory.   
+    
+    ${isMandatory}    Run Keyword And Return Status    Element Should Be Visible   ${Party_QuickEnterpriseParty_Error_TextBox}${Party_QuickEnterpriseParty_GoodsAndServiceTaxNumber_TextBox}
+    Run Keyword If    ${isMandatory}==${True}    Log    Goods And Service Tax Number is a mandatory field.  
+    ...   ELSE    Run Keyword and Continue on Failure    Fail    Goods And Service Tax Number should be mandatory.     
+        
+    ${isMandatory}    Run Keyword And Return Status    Element Should Be Visible   ${Party_QuickEnterpriseParty_Error_TextBox}${Party_QuickEnterpriseParty_AddressType_Dropdown}
+    Run Keyword If    ${isMandatory}==${True}    Log    Address Type is a mandatory field.  
+    ...   ELSE    Run Keyword and Continue on Failure    Fail    Address Type should be mandatory.    
+
+    ${isMandatory}    Run Keyword And Return Status    Element Should Be Visible   ${Party_QuickEnterpriseParty_Error_TextBox}${Party_QuickEnterpriseParty_PostCode_TextBox}
+    Run Keyword If    ${isMandatory}==${True}    Log    Post Code is a mandatory field.  
+    ...   ELSE    Run Keyword and Continue on Failure    Fail    Post Code should be mandatory.     
+    
+    ${isMandatory}    Run Keyword And Return Status    Element Should Be Visible   ${Party_QuickEnterpriseParty_Error_TextBox}${Party_QuickEnterpriseParty_DocumentCollectionStatus_Dropdown}
+    Run Keyword If    ${isMandatory}==${True}    Log    Document Collection Status is a mandatory field.  
+    ...   ELSE    Run Keyword and Continue on Failure    Fail    Document Collection Status should be mandatory.    
+    
+    Capture Page Screenshot    ${screenshot_path}/Screenshots/Party/QuickPartyOnboarding_MandatoryFields-{index}.png
+    
+    ### Validate Mandatory Fields in Business Activity Dialog ###
+    Mx Scroll Element Into View    ${Party_PartyOnboarding_AssignedBranch_Dropdown}
+    Mx Input Text    ${Party_QuickEnterpriseParty_PartyId_TextBox}    ${sParty_ID}
+    Mx Input Text    ${Party_QuickEnterpriseParty_CountryOfTaxDomicile_Dropdown}    ${sCountry_of_Tax_Domicile}
+    Mx Input Text    ${Party_QuickEnterpriseParty_CountryOfRegistration_Dropdown}    ${sCountry_of_Registration}
+    Mx Input Text    ${Party_QuickEnterpriseParty_GoodsAndServiceTaxNumber_TextBox}    ${iGST_Number}
+    Click Element    ${Party_QuickEnterpriseParty_BusinessActivity_CheckBox}
+    Wait Until Page Contains    Create Enterprise Business Activity
+    Mx Click Element    ${Party_QuickEnterpriseParty_EnterpriseBusinessActivity_NewRow_Button}
+    Mx Click Element    ${Party_QuickEnterpriseParty_EnterpriseBusinessActivity_Next_Button}
+    
+    ${isMandatory}    Run Keyword And Return Status    Element Should Be Visible    ${Party_QuickEnterpriseParty_Error_TextBox}${Party_QuickEnterpriseParty_EnterpriseBusinessActivity_Country_Dropdown}
+    Run Keyword If    ${isMandatory}==${True}    Log    Country is a mandatory field.  
+    ...   ELSE    Run Keyword and Continue on Failure    Fail    Country should be mandatory.    
+
+    ${isMandatory}    Run Keyword And Return Status    Element Should Be Visible    ${Party_QuickEnterpriseParty_Error_TextBox}${Party_QuickEnterpriseParty_EnterpriseBusinessActivity_IndustrySector_Dropdown}
+    Run Keyword If    ${isMandatory}==${True}    Log    Industry Sector is a mandatory field.  
+    ...   ELSE    Run Keyword and Continue on Failure    Fail   Industry Sector should be mandatory.     
+    
+    ${isMandatory}    Run Keyword And Return Status    Element Should Be Visible    ${Party_QuickEnterpriseParty_Error_TextBox}${Party_QuickEnterpriseParty_EnterpriseBusinessActivity_BusinessActivity_Dropdown}
+    Run Keyword If    ${isMandatory}==${True}    Log    Business Activity is a mandatory field.  
+    ...   ELSE    Run Keyword and Continue on Failure    Fail    Business Activity should be mandatory.
+    
+    Capture Page Screenshot    ${screenshot_path}/Screenshots/Party/QuickPartyOnboarding_MandatoryFields-{index}.png
+    Mx Click Element    ${Party_CloseDialog_Button}
+    
+    ### Validate Mandatory Fields in Address Details Dialog ### 
+    Mx Input Text    ${Party_QuickEnterpriseParty_CountryRegion_Dropdown}    ${sCountryRegion}
+    Mx Input Text    ${Party_QuickEnterpriseParty_PostCode_TextBox}    ${iPostCode}
+    Mx Click Element    ${Party_QuickEnterpriseParty_RecordAddress_Button}
+    Mx Click Element    ${Party_QuickEnterpriseParty_AddressDetails_Next_Button}
+    
+    ${AddressLine1_ConfigDetails}    Get Element Attribute   ${Party_QuickEnterpriseParty_AddressDetails_AddressLineOne_TextBox}    data-configuration-details
+    ${isMandatory}    Run Keyword And Return Status    Should Contain    ${AddressLine1_ConfigDetails}    {"mandatory":"F"}
+    Run Keyword If    ${isMandatory}==${True}    Log    Address Line 1 is a mandatory field.  
+    ...   ELSE    Run Keyword and Continue on Failure    Fail    Address Line 1 should be mandatory.    
+
+    ${TownCity_ConfigDetails}    Get Element Attribute   ${Party_QuickEnterpriseParty_AddressDetails_TownCity_TextBox}    data-configuration-details
+    ${isMandatory}    Run Keyword And Return Status    Should Contain    ${TownCity_ConfigDetails}    {"mandatory":"F"}
+    Run Keyword If    ${isMandatory}==${True}    Log    Town/City is a mandatory field.  
+    ...   ELSE    Run Keyword and Continue on Failure    Fail   Town/City should be mandatory.   
+    
+    Capture Page Screenshot    ${screenshot_path}/Screenshots/Party/QuickPartyOnboarding_MandatoryFields-{index}.png
+    Mx Click Element    ${Party_CloseDialog_Button}
+
+Validate Duplicate Short Name 
+    [Documentation]    This test case is used to validate the duplicate shortname and corresponding error message.
+    ...    @author: javinzon    21OCT2020    - initial create
+    ...	   @update: javinzon	23OCT2020	 - removed white space in Keyword name
+
+    ${isErrorDisplayed}    Run Keyword And Return Status    Wait Until Page Contains Element    ${Party_QuickEnterpriseParty_Errors_Dialog}    30s
+    Capture Page Screenshot    ${screenshot_path}/Screenshots/Party/DuplicateShortName-{index}.png
+    ${ErrorMessage}    Get Element Attribute    ${Party_QuickEnterpriseParty_ErrorsDialog_TextArea}    value
+    ${isMatched}    Run Keyword And Return Status    Should Contain    ${ErrorMessage}    Entered Short Name is already in use for Different Party
+    Run Keyword If    ${isMatched}==${True}    Mx Click Element    ${Party_QuickEnterpriseParty_ErrorsDialog_GoBack_Button}
+    ...    ELSE    Run Keyword and Continue on Failure    Fail   Error message "Entered Short Name is already in use for Different Party" is expected.
+    

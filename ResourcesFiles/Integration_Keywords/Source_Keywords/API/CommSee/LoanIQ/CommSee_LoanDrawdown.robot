@@ -106,7 +106,6 @@ Pay Loan Outstanding Accrual Zero Cycle Due
     
     ${CyclesForLoan}    Acquire Argument Value    ${sCyclesForLoan}
     
-
     Launch Loan Notebook    &{ExcelPath}[Deal_Name]    &{ExcelPath}[Facility_Name]    &{ExcelPath}[Outstanding_Alias]
     
     mx LoanIQ activate window    ${LIQ_Loan_Window}
@@ -115,7 +114,6 @@ Pay Loan Outstanding Accrual Zero Cycle Due
     Mx LoanIQ Set    ${LIQ_Loan_ChoosePayment_InterestPayment_RadioButton}    ON
     mx LoanIQ click    ${LIQ_Loan_ChoosePayment_OK_Button}
     
-
     ### Cycles for Loan Window Selection Condition ###
     mx LoanIQ activate window    ${LIQ_Loan_CyclesforLoan_Window} 
     Run Keyword If    '${sCyclesForLoan}'=='1'    mx LoanIQ enter   ${LIQ_CyclesForLoan_LenderSharesPrepayCycle_RadioButton}    ${ON}
@@ -139,25 +137,19 @@ Pay Loan Outstanding Accrual Zero Cycle Due
     
     ${SysDate}    Get System Date
     mx LoanIQ enter    ${LIQ_InterestPayment_EffectiveDate_Textfield}    ${SysDate}
-     
     Mx LoanIQ select    ${LIQ_InterestPayment_FileSave_Menu}
     Mx LoanIQ Click Element If Present    ${LIQ_Warning_Yes_Button}
     
     Generate Intent Notices of an Interest Payment-CommSee    ${ExcelPath}[Borrower_ShortName]
-    
     Send Loan Payment to Approval
     
     Close All Windows on LIQ
-    
     Logout from Loan IQ
     Login to Loan IQ    ${MANAGER_USERNAME}    ${MANAGER_PASSWORD}
     
     Navigate Transaction in WIP    Payments    Awaiting Approval    Interest Payment    &{ExcelPath}[Deal_Name]
     
     Approve Interest Payment
-    
-    Release Payment
-    
     Release Interest Payment
     
     Launch Loan Notebook    &{ExcelPath}[Deal_Name]    &{ExcelPath}[Facility_Name]    &{ExcelPath}[Outstanding_Alias]
@@ -179,7 +171,6 @@ Pay Loan Outstanding Accrual Zero Cycle Due
     Write Data To Excel    ComSee_SC2_Loan   Outstanding_paidToDate    ${rowid}    ${LoanPaidDueAmount}    ${ComSeeDataSet}
     
  
-  
 Write Loan Outstanding Accrual Non Zero Cycle
     [Documentation]    This test case writes the updated Loan Outstanding details after EOD for comsee use.
     ...    @author:    sacuisia    29SEPT2020    -InitialCreate
@@ -513,6 +504,7 @@ Create Initial Loan Drawdown with Repricing - Scenario 7 ComSee
     Write Data To Excel    ComSee_SC7_Loan    Outstanding_Alias    ${rowid}    ${Loan_Alias}    ${ComSeeDataSet}
     Write Data To Excel    ComSee_SC7_LoanInterestPayment   Loan_Alias    ${rowid}    ${Loan_Alias}    ${ComSeeDataSet}
     Write Data To Excel    ComSee_SC7_PrincipalLoanPayment   Loan_Alias    ${rowid}    ${Loan_Alias}    ${ComSeeDataSet}
+    Write Data To Excel    ComSee_SC7_LoanRepricing    Outstanding_Alias    ${rowid}    ${Loan_Alias}    ${ComSeeDataSet}
         
     ###Initial Loan Drawdown###
     Validate Initial Loan Dradown Details    &{ExcelPath}[Facility_Name]    &{ExcelPath}[Borrower1_ShortName]    &{ExcelPath}[Loan_Currency]
@@ -639,4 +631,129 @@ Write Loan Details for ComSee with Repricing - Scenario 7
     ${LoanPricingDescription}    Get Pricing Option Description from Table Maintenance    ${PricingOptionCode}
     ${LoanPricingOption}    Get Pricing Code and Description Combined    ${PricingOptionCode}    ${LoanPricingDescription}
     Write Data To Excel    ComSee_SC7_Loan    Outstanding_PricingOption    ${rowid}    ${LoanPricingOption}    ${ComSeeDataSet}
+    Close All Windows on LIQ
+    
+Create Loan Repricing for ComSee - Scenario 7
+    [Documentation]    This will serve as a High Level keyword for the creation of Comprehensive Loan Repricing.
+    ...    @author: cfrancis    18OCT2020    - Initial Create
+    [Arguments]    ${ExcelPath}
+    
+    ###Deal Notebook###
+    ${Facility_Spread}    Read Data From Excel    ComSee_SC7_LoanRepricing    Interest_SpreadValue    1    ${ComSeeDataSet}
+    Search for Deal    &{ExcelPath}[Deal_Name]
+    Search for Existing Outstanding    &{ExcelPath}[Outstanding_Type]    &{ExcelPath}[Facility_Name]
+    Select Loan to Reprice    &{ExcelPath}[Outstanding_Alias]
+    Select Repricing Type    Comprehensive Repricing
+    Select Loan Repricing for Deal    &{ExcelPath}[Outstanding_Alias]
+
+    ###Select Outstanding to Reprice###
+    Select Existing Outstandings for Loan Repricing    &{ExcelPath}[Outstanding_PricingOption]    &{ExcelPath}[Outstanding_Alias]
+    Cick Add in Loan Repricing Notebook
+
+    ###Input Repricing Details###
+    Set Repricing Detail Add Options    Rollover/Conversion to New    &{ExcelPath}[Outstanding_PricingOption]    &{ExcelPath}[Facility_Name]    &{ExcelPath}[Borrower_ShortName]
+    ${Effective_Date}    ${Loan_Alias}    Set RolloverConversion Notebook General Details    &{ExcelPath}[Rollover_RequestedAmount]    &{ExcelPath}[Rollover_RepricingFrequency]
+    Write Data To Excel    ComSee_SC7_LoanRepricing    NewOutstanding_Alias    ${rowid}    ${Loan_Alias}    ${ComSeeDataSet}
+    Write Data To Excel    ComSee_SC7_LoanRepricing    Rollover_EffectiveDate    ${rowid}    ${Effective_Date}    ${ComSeeDataSet}
+    Save Notebook Transaction    ${LIQ_RolloverConversion_Window}    ${LIQ_RolloverConversion_Save_Menu}
+
+    ###Input Base and Spread Rates###
+    Set RolloverConversion Notebook Rates    &{ExcelPath}[Rollover_BaseRate]
+    Close RolloverConversion Notebook
+
+    ###Validate New Oustanding Details###
+    ${New_Outstanding}    Set Variable    &{ExcelPath}[Outstanding_PricingOption] (${Loan_Alias})
+    Validate Loan Repricing Effective Date    ${Effective_Date}
+    Validate Loan Repricing New Outstanding Amount    ${New_Outstanding}    ${Loan_Alias}    &{ExcelPath}[Rollover_RequestedAmount]
+
+    ###Create Cashflow###
+    Navigate Notebook Workflow    ${LIQ_LoanRepricingForDeal_Window}    ${LIQ_LoanRepricingForDeal_Workflow_Tab}    ${LIQ_LoanRepricingForDeal_Workflow_JavaTree}    Create Cashflows
+    Navigate Notebook Workflow    ${LIQ_LoanRepricingForDeal_Window}    ${LIQ_LoanRepricingForDeal_Workflow_Tab}    ${LIQ_LoanRepricingForDeal_Workflow_JavaTree}    Send to Approval
+
+    Logout from Loan IQ
+    Login to Loan IQ    ${SUPERVISOR_USERNAME}    ${SUPERVISOR_PASSWORD}
+    Navigate Transaction in WIP    Outstandings    Awaiting Generate Rate Setting Notices    Loan Repricing    &{ExcelPath}[Deal_Name]
+    Navigate Notebook Workflow    ${LIQ_LoanRepricingForDeal_Window}    ${LIQ_LoanRepricingForDeal_Workflow_Tab}    ${LIQ_LoanRepricingForDeal_Workflow_JavaTree}    Approval
+    
+    Navigate Notebook Workflow    ${LIQ_LoanRepricingForDeal_Window}    ${LIQ_LoanRepricingForDeal_Workflow_Tab}    ${LIQ_LoanRepricingForDeal_Workflow_JavaTree}    Send to Rate Approval
+    
+    Logout from Loan IQ
+    Login to Loan IQ    ${MANAGER_USERNAME}    ${MANAGER_PASSWORD}
+    Navigate Transaction in WIP    Outstandings    Awaiting Generate Rate Setting Notices    Loan Repricing    &{ExcelPath}[Deal_Name]
+    Navigate Notebook Workflow    ${LIQ_LoanRepricingForDeal_Window}    ${LIQ_LoanRepricingForDeal_Workflow_Tab}    ${LIQ_LoanRepricingForDeal_Workflow_JavaTree}    Rate Approval
+    Release Loan Repricing
+    
+    Close All Windows on LIQ
+    Logout from Loan IQ
+    
+Write Repriced Loan Details for ComSee - Scenario 7
+    [Documentation]    This test case writes the Repriced Outstanding(Loan) details for comsee use.
+    ...    @author: cfrancis    19OCT2020    - Initial create
+    [Arguments]    ${ExcelPath}
+    
+    ${New_OutstandingAlias}    Read Data From Excel    ComSee_SC7_LoanRepricing    NewOutstanding_Alias    ${rowid}    ${ComSeeDataSet}
+    
+    ###Outstanding Navigation###
+    Launch Loan Notebook    &{ExcelPath}[Deal_Name]    &{ExcelPath}[Facility_Name]    ${New_OutstandingAlias}
+    
+    Write Data To Excel    ComSee_SC7_Loan    Outstanding_Alias    ${rowid}    &{ExcelPath}[Outstanding_Alias],${New_OutstandingAlias}    ${ComSeeDataSet}
+
+    ###Get and Write General Tab Details for Comsee##
+    ${LoanRiskType}    Get Loan Risk Type 
+    Write Data To Excel    ComSee_SC7_Loan    Outstanding_RiskType    ${rowid}    &{ExcelPath}[Outstanding_RiskType],${LoanRiskType}    ${ComSeeDataSet}
+    
+    ${LoanCCY}    Get Loan Currency
+    Write Data To Excel    ComSee_SC7_Loan    Outstanding_Currency    ${rowid}    &{ExcelPath}[Outstanding_Currency],${LoanCCY}    ${ComSeeDataSet}
+    
+    ${LoanEffectiveDate}    ${LoanMaturityDate}    Get Loan Effective and Maturity Expiry Dates
+    ${RepricngFrequency}    ${RepricingDate}    Get Loan Repricing Frequency and Date
+    ${LoanEffectiveDate}    Convert LIQ Date to Year-Month-Day Format    ${LoanEffectiveDate}
+    ${LoanMaturityDate}    Convert LIQ Date to Year-Month-Day Format    ${LoanMaturityDate}
+    ${RepricingDate}    Convert LIQ Date to Year-Month-Day Format    ${RepricingDate}
+    Write Data To Excel    ComSee_SC7_Loan    Outstanding_EffectiveDate    ${rowid}    &{ExcelPath}[Outstanding_EffectiveDate],${LoanEffectiveDate}    ${ComSeeDataSet}
+    Write Data To Excel    ComSee_SC7_Loan    Outstanding_MaturityExpiryDate    ${rowid}    &{ExcelPath}[Outstanding_MaturityExpiryDate],${LoanMaturityDate}    ${ComSeeDataSet}
+    Write Data To Excel    ComSee_SC7_Loan    Outstanding_RepricingFrequency    ${rowid}    &{ExcelPath}[Outstanding_RepricingFrequency],${RepricngFrequency}    ${ComSeeDataSet}
+    Write Data To Excel    ComSee_SC7_Loan    Outstanding_RepricingDate    ${rowid}    &{ExcelPath}[Outstanding_RepricingDate],${RepricingDate}    ${ComSeeDataSet}
+    
+    ${HBGrossAmount}    ${HBNetAmount}    Get Loan Host Bank Net and Gross Amount
+    ${HBGrossAmount}    Remove Comma and Convert to Number    ${HBGrossAmount}
+    ${HBNetAmount}    Remove Comma and Convert to Number    ${HBNetAmount}
+    Write Data To Excel    ComSee_SC7_Loan    Outstanding_HBGrossAmount    ${rowid}    &{ExcelPath}[Outstanding_HBGrossAmount],${HBGrossAmount}    ${ComSeeDataSet}
+    Write Data To Excel    ComSee_SC7_Loan    Outstanding_HBNetAmount    ${rowid}    &{ExcelPath}[Outstanding_HBNetAmount],${HBNetAmount}    ${ComSeeDataSet}
+    Write Data To Excel    ComSee_SC7_Loan    Outstanding_HBNetFacCCYAmount    ${rowid}    &{ExcelPath}[Outstanding_HBNetFacCCYAmount],${HBNetAmount}    ${ComSeeDataSet}
+    
+    ${GlobalOriginalAmount}    ${GlobalCurrentAmount}    Get Loan Global Original and Current Amount
+    ${GlobalOriginalAmount}    Remove Comma and Convert to Number    ${GlobalOriginalAmount}
+    ${GlobalCurrentAmount}    Remove Comma and Convert to Number    ${GlobalCurrentAmount}
+    Write Data To Excel    ComSee_SC7_Loan    Outstanding_GlobalOriginalAmount    ${rowid}    &{ExcelPath}[Outstanding_GlobalOriginalAmount],${GlobalOriginalAmount}    ${ComSeeDataSet}
+    Write Data To Excel    ComSee_SC7_Loan    Outstanding_GlobalCurrentAmount    ${rowid}    &{ExcelPath}[Outstanding_GlobalCurrentAmount],${GlobalCurrentAmount}    ${ComSeeDataSet}
+     
+    ${PaymentMode}    ${IntCycleFrequency}    Get Loan Payment Mode and Interest Frequency Cycle
+    Write Data To Excel    ComSee_SC7_Loan    Outstanding_PaymentMode    ${rowid}    &{ExcelPath}[Outstanding_PaymentMode],${PaymentMode}    ${ComSeeDataSet}
+    Write Data To Excel    ComSee_SC7_Loan    Outstanding_IntCycleFrequency    ${rowid}    &{ExcelPath}[Outstanding_IntCycleFrequency],${IntCycleFrequency}    ${ComSeeDataSet}
+    
+    ###Get and Write Rates Tab Details for Comsee##
+    ${SpreadRate}    ${AllInRate}    Get Loan Spread and All In Rates
+    Write Data To Excel    ComSee_SC7_Loan    Outstanding_Margin    ${rowid}    &{ExcelPath}[Outstanding_Margin],${SpreadRate}    ${ComSeeDataSet}
+    Write Data To Excel    ComSee_SC7_Loan    Outstanding_AllInRate    ${rowid}    &{ExcelPath}[Outstanding_AllInRate],${AllInRate}    ${ComSeeDataSet}
+    
+    
+    ###Get and Write Accrual Tab Details for Comsee
+    ${LoanAccruedtodateAmount}    Get Loan Accrued to Date Amount
+    ${LoanAccruedtodateAmount}    Remove Comma and Convert to Number    ${LoanAccruedtodateAmount}
+    Write Data To Excel    ComSee_SC7_Loan    Outstanding_AccruedInterest    ${rowid}    &{ExcelPath}[Outstanding_AccruedInterest],${LoanAccruedtodateAmount}    ${ComSeeDataSet}
+    
+    ${LoanCycleDueAmount}    Get Loan Cycle Due Amount
+    ${LoanCycleDueAmount}    Remove Comma and Convert to Number    ${LoanCycleDueAmount}
+    Write Data To Excel    ComSee_SC7_Loan   Outstanding_cycleDue    ${rowid}    &{ExcelPath}[Outstanding_cycleDue],${LoanCycleDueAmount}    ${ComSeeDataSet}
+
+    ${LoanPaidDueAmount}   Get Loan Paid to Date Amount
+    ${LoanPaidDueAmount}    Remove Comma and Convert to Number    ${LoanPaidDueAmount}
+    Write Data To Excel    ComSee_SC7_Loan   Outstanding_paidToDate    ${rowid}    &{ExcelPath}[Outstanding_paidToDate],${LoanPaidDueAmount}    ${ComSeeDataSet}
+
+    ###Get and Write Accrual Tab Details for Comsee
+    ${PricingOptionCode}    Get Loan Pricing Option Code
+    ${LoanPricingDescription}    Get Pricing Option Description from Table Maintenance    ${PricingOptionCode}
+    ${LoanPricingOption}    Get Pricing Code and Description Combined    ${PricingOptionCode}    ${LoanPricingDescription}
+    Write Data To Excel    ComSee_SC7_Loan    Outstanding_PricingOption    ${rowid}    &{ExcelPath}[Outstanding_PricingOption],${LoanPricingOption}    ${ComSeeDataSet}
     Close All Windows on LIQ

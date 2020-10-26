@@ -40,6 +40,12 @@ Complete Portfolio Settled Discount - TRPO12
     Mx Execute Template With Multiple Data    Portfolio Settled Discount Changes    ${ExcelPath}    ${rowid}    TRPO12_PortfolioSettledDisc
     
 Complete Internal Participation - TRPO06
-    [Tags]    05    Internal Participation - TRPO06 
+    [Tags]    06    Internal Participation - TRPO06 
     Mx Execute Template With Multiple Data    Complete Internal Participation    ${ExcelPath}    ${rowid}    TRPO06_InternalParticipation 
-          
+
+Create Initial Loan Drawdown - SERV01
+    [Tags]    07    Loan Drawdown - SERV01 
+    Mx Execute Template With Multiple Data    Create Initial Loan Drawdown with no Repayment Schedule    ${ExcelPath}    ${rowid}    SERV01_LoanDrawdown
+    Set Test Variable    ${rowid}    2
+    Mx Execute Template With Multiple Data    Create Initial Loan Drawdown with no Repayment Schedule    ${ExcelPath}    ${rowid}    SERV01_LoanDrawdown
+
