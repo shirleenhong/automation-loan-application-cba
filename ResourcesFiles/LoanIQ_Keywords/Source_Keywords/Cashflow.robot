@@ -495,7 +495,7 @@ Release Cashflow Based on Remittance Instruction
     ...    @update: amansuet    16JUN2020    - Replaced 'Navigate to Loan Drawdown Workflow and Proceed With Transaction' to 'Navigate to Loan Repricing Workflow and Proceed With Transaction'
     ...    @update: amansuet    22JUN2020    - Revert changes and added new argument to make keyword generic on its Workflow Navigation
     ...    @update: amansuet    22JUN2020    - Added Condition for 'Navigate to Payment Workflow and Proceed With Transaction'
-    ...    @update: amitp       26OCT2020    - Remove Relase Cashflow Keyword from the Payment Keyword and Add Log
+    ...    @update: amitp       26OCT2020    - Remove Relase Cashflow Keyword and Add Log
     [Arguments]    ${sRemittanceInstruction}    ${sCashflowReference}    ${sDataType}=default    ${sNavigateToWorkflow}=Loan Drawdown
 
     ### Keyword Pre-processing ###
@@ -506,9 +506,9 @@ Release Cashflow Based on Remittance Instruction
     ${RemittanceInstruction}    Convert To Uppercase    ${RemittanceInstruction}
     
     Run Keyword If    '${RemittanceInstruction}'=='RTGS' and '${NavigateToWorkflow}'=='Loan Drawdown'    Run Keywords    Navigate to Loan Drawdown Workflow and Proceed With Transaction    Release Cashflows
-    ...    AND    Log    Cashflow Released
+    ...    AND    Log    Cashflow Released   
     ...    ELSE IF    '${RemittanceInstruction}'=='RTGS' and '${NavigateToWorkflow}'=='Loan Repricing'    Run Keywords    Navigate to Loan Repricing Workflow and Proceed With Transaction    Release Cashflows
-    ...    AND    Log    Cashflow Released
+    ...    AND    Log    Cashflow Released    
     ...    ELSE IF    '${RemittanceInstruction}'=='RTGS' and '${NavigateToWorkflow}'=='Payment'    Run Keywords    Navigate to Payment Workflow and Proceed With Transaction    Release Cashflows
     ...    AND    Log    Cashflow Released
     ...    ELSE    Log    Release of Cashflow is Not Needed for '${RemittanceInstruction}' Remittance Instruction
