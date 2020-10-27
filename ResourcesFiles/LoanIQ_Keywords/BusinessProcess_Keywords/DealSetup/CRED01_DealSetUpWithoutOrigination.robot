@@ -1004,6 +1004,7 @@ Setup Comprehensive Deal
     ...    @update: ehugo    22JUN2020    - updated 'Borrower_Name' to 'Borrower_ShortName' for COMPR06_LoanMerge
     ...    @update: dahijara    22JUL2020    - added excel writing for SYND04_TickingFeePayment-Deal_Name
     ...    @update: dahijara    28SEP2020    - Updated sheet name for Loan Merge from COMPR06_LoanMerge to SERV11_Loan Amalgamation
+    ...    @update: kiduenas    27OCT2020    - added writing of deal name for API_TC_023 of corro
     [Arguments]    ${ExcelPath}
 
     ${Deal_Name}    ${Deal_Alias}    Generate And Return Deal Name And Alias    &{ExcelPath}[Deal_NamePrefix]    &{ExcelPath}[Deal_AliasPrefix]
@@ -1034,6 +1035,7 @@ Setup Comprehensive Deal
     Write Data To Excel    MTAM01_ManualGL    Deal_Name    &{ExcelPath}[rowid]    ${Deal_Name}
     Write Data To Excel    MTAM02_ManualCashflow    Deal_Name    &{ExcelPath}[rowid]    ${Deal_Name}
     Write Data To Excel    SERV18_Payments    Deal_Name    &{ExcelPath}[rowid]    ${Deal_Name}
+    Write Data To Excel    Correspondence    Deal_Name    23    ${Deal_Name}    ${APIDataSet}    bTestCaseColumn=True    sColumnReference=rowid
     
     ### Deal Alias
     Write Data To Excel    CRED01_DealSetup    Deal_Alias    &{ExcelPath}[rowid]    ${Deal_Alias}
@@ -1104,6 +1106,7 @@ Setup Term Facility for Comprehensive Deal
     ...                                   - used 'Enter Facility Dates With Business Day and Non-Business Day Validations for Term Facility' instead of 'Enter Date With Business Day and Non-Business Day Validations'
     ...    @update: clanding    16JUL2020    - updated sheet name from CRED08_FacilityFeeSetup to CRED08_OngoingFeeSetup
     ...    @update: dahijara    28SEP2020    - Updated sheet name for Loan Merge from COMPR06_LoanMerge to SERV11_Loan Amalgamation
+    ...    @update: kduenas    27OCT2020    - added writing of facility name for API_TC_023 of corro
     [Arguments]    ${ExcelPath}
     ### Data Generation
     ${Facility_Name}    Generate Name Test Data    &{ExcelPath}[Facility_NamePrefix]
@@ -1123,6 +1126,7 @@ Setup Term Facility for Comprehensive Deal
     Write Data To Excel    CAP02_CapitalizedFeePayment    Facility_Name    &{ExcelPath}[rowid]    ${Facility_Name}
     Write Data To Excel    SERV18_Payments    Facility_Name    &{ExcelPath}[rowid]    ${Facility_Name}
     Write Data To Excel    TRP002_SecondarySale    Facility_Amount_1    &{ExcelPath}[rowid]    &{ExcelPath}[Facility_ProposedCmtAmt]
+    Write Data To Excel    Correspondence    Facility_Name    23    ${Facility_Name}    ${APIDataSet}    bTestCaseColumn=True    sColumnReference=rowid
     
     
     ### Facility Creation
