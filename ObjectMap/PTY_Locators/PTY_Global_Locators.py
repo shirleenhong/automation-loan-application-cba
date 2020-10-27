@@ -6,7 +6,7 @@ Party_SignIn_Button = '//input[@id="login"]'
 Party_Search = '//input[@name="Search..."]'
 
 
-#Party Dialog Search
+### Party Dialog Search ###
 Party_Search_Dialog_Search_Button = '//span[contains(@class,"Dialog")][text()="Party Search"]/ancestor::div/descendant::input[@uitype="Button"][@name="Search"]'
 Party_Search_Dialog = '//span[contains(@class,"Dialog")][text()="Party Search"]'
 Party_Search_Dialog_Branch = '//input[contains(@id,"Branch")][@type="combo"]'
@@ -53,6 +53,7 @@ Party_ZoneBranchSelectionPage_Zone_TextBox = '//input[contains(@id,"zone")]'
 Party_ZoneBranchSelectionPage_Branch_TextBox = '//input[contains(@id,"BrchName")]'
 Party_ZoneBranchSelectionPage_CloseTab_Button = '//span[contains(@id,"ConfigureZoneBranchMF")]/following-sibling::span[@title="Close"]'
 Party_ZoneBranchSelectionPage_SuccessMessage_Label = '//input[contains(@id,"showmessage") and @value="Zone/Branch Switched Successfully"]'
+Party_ZoneSelection_Dropdown_Button = '//div[contains(@id,"ZoneName_Label")]/preceding-sibling::div//child::div[contains(@class,"DownArrowButton")]'
 
 ### Error Dialog ###
 Party_Error_Dialog = '//div[contains(@id,"ERROR") and @role="dialog"]'

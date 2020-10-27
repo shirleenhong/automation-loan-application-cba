@@ -88,6 +88,9 @@ Party_QuickEnterpriseParty_PartyCategory_Dropdown = '//input[contains(@id,"Party
 Party_QuickEnterpriseParty_PartyType_Dropdown = '//input[contains(@id,"PartyType")]'
 Party_EnterpriseDetailsSummary_TaxCountry_Cell = '//div[contains(@id,"partyTaxSchemes") and @role="grid"]//div[@class="dojoxGridMasterView"]//table[1]//td[1]'
 Party_EnterpriseDetailsSummary_TaxNumber_Cell = '//div[contains(@id,"partyTaxSchemes") and @role="grid"]//div[@class="dojoxGridMasterView"]//table[1]//td[1]'
+Party_QuickEnterpriseParty_Errors_Dialog = '//div[@role="dialog" and contains(@id,"EVENT_ERROR")]//child::span[contains(text(),"Errors")]'
+Party_QuickEnterpriseParty_ErrorsDialog_GoBack_Button = '//input[contains(@id, "GoBack")]'
+Party_QuickEnterpriseParty_ErrorsDialog_TextArea = '//form[contains(@id, "EVENT_ERROR")]//textarea[contains(@name, "messages")]'
 
 ### Quick Enterprise Party Page - Address Details Dialog ###
 Party_QuickEnterpriseParty_AddressDetails_Name_TextBox = '//form[@name="PT_PAM_QuickRecordAddress_SCF"]//input[contains (@name, "Name") and @type="text"]'

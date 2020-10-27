@@ -158,4 +158,29 @@ Validate No Result in FFC for CustomCBAPush for TL Calendar
     
     Filter by Reference Header and Value and Expect No Row in Results Table    ${JMS_CORRELATION_ID}    ${Request_ID}
 
-    Logout to MCH UI and Close Browser    
+    Logout to MCH UI and Close Browser
+    
+Validate Response Mechanism for Failure Response on TL Calendar
+    [Documentation]    This keyword is used to validate response mechanism for a failure response in MCH FFC UI.
+    ...    @author: jdelacru    26OCT2020    - initial create
+    [Arguments]    ${sOutputFilePath}    ${sResponseMechanism}
+    
+    Login to MCH UI
+    
+    ###Calendar Splitter###
+    Wait Until Element Is Visible    ${FFC_Dashboard}    30s
+    ${aHeaderRefNameList}    Create List    ${REQUESTS_ID}
+    ${aExpectedRefList}    Create List    ${FILE1_ARCHIVE_NAME}
+    Go to Dashboard and Click Source API Name    ${TL_CAL_ACK_MESSAGE_SOURCENAME}    ${CUSTOM_INTERFACE_INSTANCE}
+    ${ColumnIndex}    Filter by Multiple Reference Headers and Values and Return Column Index    ${aHeaderRefNameList}    ${aExpectedRefList}
+    ${Results_Row_Count}    SeleniumLibraryExtended.Get Element Count    ${Results_Row}
+    ${RequestID_UI}    Get Results Table Column Value by Header Title and Return    ${Results_Row_Count}    ${REQUESTS_ID}
+    ${REQUESTID_VALUE}    Split Request ID From Splitter Queue for TL and Return Final Request ID    ${RequestID_UI}    |
+    
+    ###Response Mechanism###
+    Go to Dashboard and Click Source API Name    ${RESPONSE_MECHANISM_SOURCENAME}    ${RESPONSE_MECHANISM_INSTANCE}
+    ${ResultsRowList}    Filter by Reference Header and Save Message TextArea for Specified File and Return Results Row List Value    ${DESTINATION}    ${DESTINATION_CAL}    ${REQUESTID_VALUE}    ${sOutputFilePath}${sResponseMechanism}
+    ...    ${JSON}    ${RESULTSTABLE_STATUS}
+    Run Keyword And Continue On Failure    Validate Response Mechanism    ${sOutputFilePath}${sResponseMechanism}    ${REQUESTID_VALUE}    ${PUTMethod}    ${CALENDAR_APINAME}    ${MESSAGESTATUS_FAILURE}
+    
+    Logout to MCH UI and Close Browser
