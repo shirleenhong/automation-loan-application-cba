@@ -11,7 +11,7 @@ Update Regions For User And Restore User Details
     Login User to Party    ${PARTY_SUPERVISOR_USERNAME}    ${PARTY_SUPERVISOR_PASSWORD}    ${USER_LINK}    ${USER_PORT}    ${PARTY_URL_SUFFIX}    ${PARTY_HTML_USER_CREDENTIALS}    ${SSO_ENABLED}    ${PARTY_URL} 
     Configure Zone and Branch    &{ExcelPath}[UserZone]    &{ExcelPath}[UserBranch]
     Navigate Amend User    ${PARTY_USERNAME}
-    ${default_zone}    Get Default Zone
+    ${Default_Zone}    Get Default Zone
     Change Default Zone    &{ExcelPath}[UserZone]
     Remove Associated Zone from User    &{ExcelPath}[AddRemove_UserZone]
     Logout User on Party
@@ -37,5 +37,5 @@ Update Regions For User And Restore User Details
     Login User to Party    ${PARTY_SUPERVISOR_USERNAME}    ${PARTY_SUPERVISOR_PASSWORD}    ${USER_LINK}    ${USER_PORT}    ${PARTY_URL_SUFFIX}    ${PARTY_HTML_USER_CREDENTIALS}    ${SSO_ENABLED}    ${PARTY_URL}
     Configure Zone and Branch    &{ExcelPath}[UserZone]    &{ExcelPath}[UserBranch]
     Navigate Amend User    ${PARTY_USERNAME}
-    Restore Default Zone    ${default_zone}
+    Restore Default Zone    ${Default_Zone}
     Logout User on Party
