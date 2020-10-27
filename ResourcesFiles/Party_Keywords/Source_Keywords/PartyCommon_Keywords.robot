@@ -854,3 +854,47 @@ Get Table Value Containing Row Value in Party
 	${RowValue}    Get Text    ${eTableRowLocator}//td\[contains(text(),"${sReferenceRowValue}")]/parent::tr/td\[${HeaderIndex}]
     
     [Return]    ${RowValue}    
+    
+Navigate Amend User
+    [Documentation]    This keyword navigates the user to Amend User page.
+    ...    @author: nbautist    23OCT2020    - initial creation
+    [Arguments]    ${sUser_ID}
+    
+    Input Text    ${Party_HomePage_Process_TextBox}    ${PARTY_AMEND_USER_PAGETITLE}
+    Press Keys    ${Party_HomePage_Process_TextBox}    RETURN
+    Wait Until Browser Ready State
+    Wait Until Keyword Succeeds    10x    2s     Mx Input Text    ${Party_AmendUser_UserId_TextBox}     ${sUser_ID}
+    Wait Until Browser Ready State
+    Wait Until Element Is Visible    ${Party_AmendUser_Next_Button}
+    Wait Until Element Is Enabled    ${Party_AmendUser_Next_Button}
+    ${status}    Run Keyword And Return Status    Wait Until Element Is Visible    ${Party_AmendUser_SearchUser_Dialog_TitleBar}
+    Run Keyword If    ${status}==${True}    Mx Click Element    ${Party_AmendUser_Next_Button}
+    Wait Until Browser Ready State
+    Wait Until Page Contains    ${PARTY_AMEND_USER_PAGETITLE}    20s
+    Capture Page Screenshot    ${screenshot_path}/Screenshots/Party/AmendUserPage-{index}.png
+    
+Remove Associated Zone from User
+    [Documentation]    This keyword removes an associated zone from the user.
+    ...    @author: nbautist    23OCT2020    - initial creation
+    [Arguments]    ${sZone}
+    
+    ${sZone}    Replace Variables    ${sZone}
+    ${Party_AmendUser_Remove_Zone_Locator}    Replace Variables    ${Party_AmendUser_Remove_Zone_Locator}
+    Mx Click Element    ${Party_AmendUser_Remove_Zone_Locator}
+    Mx Click Element    ${Party_AmendUser_Remove_Row_Button}
+    Capture Page Screenshot    ${screenshot_path}/Screenshots/Party/AmendUserPage-{index}.png
+    Mx Click Element    ${Party_AmendUser_Next_Button}
+    Capture Page Screenshot    ${screenshot_path}/Screenshots/Party/AmendUserPage-{index}.png
+    
+Add Associated Zone To User
+    [Documentation]    This keyword adds an associated zone to the user.
+    ...    @author: nbautist    26OCT2020    - initial creation
+    [Arguments]    ${sUserZone}    ${sUserBranch}
+    
+    Mx Click Element    ${Party_AmendUser_New_Row_Button}
+    Mx Input Text    ${Party_AmendUser_New_Zone_TextBox}    ${sUserZone}
+    Mx Input Text    ${Party_AmendUser_New_BranchName_TextBox}    ${sUserBranch}
+    Mx Click Element    ${Party_AmendUser_Save_Row_Button}
+    Capture Page Screenshot    ${screenshot_path}/Screenshots/Party/AmendUserPage-{index}.png
+    Mx Click Element    ${Party_AmendUser_Next_Button}
+    Capture Page Screenshot    ${screenshot_path}/Screenshots/Party/AmendUserPage-{index}.png
