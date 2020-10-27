@@ -60,16 +60,24 @@ Generate Intent Notices For Upfront Fee Payment
     ...    @author: mgaling
     ...    @update: hstone     22JUL2020    - Added Keyword Pre-processing
     ...                                     - Added Screenshot Path
-    [Arguments]    ${sUpfrontFeePayment_NoticeMethod}
+    ...    @update: fluberio    22OCT2020    - Added condition in Writing Contact and Notice Method in Excel
+    [Arguments]    ${sUpfrontFeePayment_NoticeMethod}   ${sEntity}=None
 
     ### Keyword Pre-processing ###
     ${UpfrontFeePayment_NoticeMethod}    Acquire Argument Value    ${sUpfrontFeePayment_NoticeMethod}
+    ${Entity}    Acquire Argument Value    ${sEntity}
 
     Mx LoanIQ Select Window Tab    ${LIQ_UpfrontFeePayment_Tab}    Workflow
     Mx LoanIQ Select Or DoubleClick In Javatree    ${LIQ_UpfrontFeePayment_WorkflowItems}    Generate Intent Notices%d
     mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
     
     mx LoanIQ activate window    ${LIQ_UpfrontFeePaymentGroup_IntentNoticeGroup_Window}
+    
+    ${Contact}    Run Keyword If   '${SCENARIO}'=='4' and '${sEntity}' == 'EU'    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_UpfrontFeePaymentGroup_Tree}    Y%Contact%Contact     
+    ${Notice_Method}    Run Keyword If   '${SCENARIO}'=='4' and '${sEntity}' == 'EU'    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_UpfrontFeePaymentGroup_Tree}    Y%Notice Method%Notice_Method
+    Run Keyword If    '${SCENARIO}'=='4'    Run Keywords    Write Data to Excel    Correspondence    Contact    ${rowid}    ${Contact}
+    ...    AND    Write Data to Excel    Correspondence    Notice_Method    ${rowid}    ${Notice_Method}
+
     Mx LoanIQ Select Or Doubleclick In Tree By Text    ${LIQ_UpfrontFeePaymentGroup_Tree}    ${UpfrontFeePayment_NoticeMethod}%s
     mx LoanIQ click    ${LIQ_UpfrontFeePaymentGroup_Edit_Button}
     mx LoanIQ activate window    ${LIQ_UpfrontFeePaymentGroup_IntentNotice_Window}
@@ -105,7 +113,7 @@ Approve Upfront Fee Payment
     mx LoanIQ click element if present    ${LIQ_Question_Yes_Button}
     mx LoanIQ click element if present    ${LIQ_Question_Yes_Button}
     mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
-    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}     
+    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}        
     
 Release Upfront Fee Payment
     [Documentation]    This keyword navigates the 'Work In Process' window and release the Upfront Fee Payment.
