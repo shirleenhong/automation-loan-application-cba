@@ -11,6 +11,7 @@ Send Multiple Golden Source Files
     ...    @author: clanding    04MAR2019    - initial create
     ...    @update: clanding    11APR2019    - added Login to Loan IQ
     ...    @update: clanding    31MAY2019    - added new argument for Validate FFC for TL Base Rate Success with Multiple Files
+    ...    @update: jdelacru    27OCT2020    - used templatefilepath variable in declaring the location of template files
     [Arguments]    ${ExcelPath}
     
     ###PREREQUISITE###
