@@ -3823,3 +3823,36 @@ Get Loan Paid to Date Amount
     Screenshot.Set Screenshot Directory    ${Screenshot_Path}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/Loan_Paid_To_Date
     [Return]    ${PaidtodateAmount}
+
+Validate and Delete if Repayment Schedule Exists in the Loan
+    [Documentation]    This keyword Validates if Repayment schedule exists when navigating to Principal Payment from Loan Notebook.
+    ...    and deletes  the existing repayment schedule if there is.
+    ...    @author: dahijara    27OCT2020    - Initial Create
+
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LoanNotebook_PrincipalPayment
+    ${Err_exist}    Run Keyword And Return Status    Mx LoanIQ Verify Object Exist    ${LIQ_Error_Window}    VerificationData="Yes"    Processtimeout=100
+    ${Err_Msg}    Run Keyword If    ${Err_exist}==${True}    Mx LoanIQ Get Data    ${LIQ_Error_MessageBox}    text%data
+    ${IsMatched}    Run Keyword And Return Status    Should Contain    ${Err_Msg}    repayment schedule exists
+    Run Keyword If    ${Err_exist}==${True} and ${IsMatched}==${True}    Run Keywords    Mx LoanIQ Click    ${LIQ_Error_OK_Button}
+    ...    AND    Mx LoanIQ activate window    ${LIQ_Loan_ChoosePayment_Window}
+    ...    AND    Mx LoanIQ click    ${LIQ_Loan_ChoosePayment_Cancel_Button}
+    ...    AND    Delete Repayment Schedule in the Loan
+    ...    ELSE IF    ${Err_exist}==${False} or ${IsMatched}==${False}    Log    Repayment Schedule does not exist
+
+Delete Repayment Schedule in the Loan
+    [Documentation]    This keyword deletes Repayment schedule from Loan Notebook.
+    ...    @author: dahijara    27OCT2020    - Initial Create
+
+    mx LoanIQ activate window    ${LIQ_Loan_Window}
+    mx LoanIQ click element if present    ${LIQ_Loan_InquiryMode_Button}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LoanNotebook
+    mx LoanIQ select    ${LIQ_Loan_Options_RepaymentSchedule}
+    mx LoanIQ select    ${LIQ_RepaymentSchedule_Options_DeleteSchedule}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LoanNotebook_RepaymentSchedule
+    Mx LoanIQ Click Element If Present    ${LIQ_Question_Yes_Button}
+    Mx LoanIQ Click Element If Present     ${LIQ_Warning_Yes_Button}
+    :FOR    ${i}    IN RANGE    3
+     \    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
+     \    ${Warning_Status}    Run Keyword And Return Status    Mx LoanIQ Verify Object Exist    ${LIQ_Warning_Window}     VerificationData="Yes"
+     \    Exit For Loop If    ${Warning_Status}==False
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LoanNotebook_RepaymentSchedule

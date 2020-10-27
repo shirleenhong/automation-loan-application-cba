@@ -38,6 +38,7 @@ LIQ_Loan_RepricingDate_Text = 'JavaWindow("title:=.*Loan.*Active").JavaStaticTex
 LIQ_Loan_Options_LoanChangeTransaction_Menu = 'JavaWindow("title:=.*Loan.*Active").JavaMenu("label:=Options").JavaMenu("label:=Loan Change Transaction")'
 LIQ_Loan_Queries_FeeActivityLIst_Menu = 'JavaWindow("title:=.*Loan.*Active").JavaMenu("label:=Queries").JavaMenu("label:=Fee Activity List")'
 LIQ_Loan_CyclesforLoan_ProRateType_RadioButton = 'JavaWindow("title:=Cycles for Loan.*").JavaRadioButton("attached text:=${Pro_Rate}")'
+LIQ_Loan_ChoosePayment_Cancel_Button = 'JavaWindow("title:=Choose a Payment").JavaButton("attached text:=Cancel")'
 
 ####Loan Notebook - Rate Tab#####
 LIQ_Loan_AllInRate = 'JavaWindow("title:=.*Loan.*Active").JavaEdit("attached text:=All-In Rate:")'
@@ -101,6 +102,7 @@ LIQ_RepaymentSchedule_Options_CreateTemporaryPaymentPlan = 'JavaWindow("title:=R
 LIQ_RepaymentSchedule_ModifyItem_Button = 'JavaWindow("title:=Repayment Schedule For Loan.*").JavaButton("attached text:=Modify Item.*")'
 LIQ_RepaymentSchedule_Options_Resynchronize = 'JavaWindow("title:=Repayment Schedule For Loan.*").JavaMenu("label:=Options").JavaMenu("label:=Resynchronize")'
 LIQ_RepaymentSchedule_ResyncSettings_Dropdown = 'JavaWindow("title:=Repayment Schedule For Loan.*").JavaList("attached text:=Resync.*Settings:")'
+LIQ_RepaymentSchedule_Options_DeleteSchedule = 'JavaWindow("title:=Repayment Schedule For Loan.*").JavaMenu("label:=Options").JavaMenu("label:=Delete Schedule")'
 
 ###Temporary Repayment Schedule Window###
 LIQ_TemporaryRepaymentSchedule_Window = 'JavaWindow("title:=Temporary Repayment Schedule For Loan.*")'

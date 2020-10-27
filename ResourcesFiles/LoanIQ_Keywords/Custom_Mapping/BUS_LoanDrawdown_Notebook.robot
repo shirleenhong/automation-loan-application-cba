@@ -545,3 +545,15 @@ BUS_Get Updated and Validate Facility Amounts
     ...    @author: dahijara    13OCT2020    - initial create
 
     Run Keyword    Get Updated and Validate Facility Amounts    ${ARGUMENT_1}    ${ARGUMENT_2}    ${ARGUMENT_3}    ${ARGUMENT_4}
+
+BUS_Validate and Delete if Repayment Schedule Exists in the Loan
+    [Documentation]    This keyword is used to run the assigned low level keyword.
+    ...    @author: dahijara    27OCT2020    - initial create
+
+    Run Keyword    Validate and Delete if Repayment Schedule Exists in the Loan
+
+BUS_Delete Repayment Schedule in the Loan
+    [Documentation]    This keyword is used to run the assigned low level keyword.
+    ...    @author: dahijara    27OCT2020    - initial create
+
+    Run Keyword    Delete Repayment Schedule in the Loan

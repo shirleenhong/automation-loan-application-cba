@@ -268,7 +268,8 @@ Workflow Navigation For Fee On Lender Shares Payment
 
 Principal Payment for Comprehensive Deal
     [Documentation]    This keyword is used for Principal Payment for Comprehensive Deal
-    ...    @update: dahijara    15OCT2020    -Added login step befor starting the transaction.
+    ...    @update: dahijara    15OCT2020    -Added login step before starting the transaction.
+    ...    @update: dahijara    27OCT2020    - Revised script navigations
     [Arguments]    ${ExcelPath}
 
     ##LIQ Window###
@@ -299,11 +300,9 @@ Principal Payment for Comprehensive Deal
     ${Lender1_RIDescription}    Get Customer Lender Remittance Instruction Desc Via Lender Shares In Deal Notebook    ${Lender1}    &{ExcelPath}[Remittance_Instruction]
     ${Lender2_RIDescription}    Get Customer Lender Remittance Instruction Desc Via Lender Shares In Deal Notebook    ${Lender2}    &{ExcelPath}[Remittance_Instruction]
     
-
     Navigate to Facility Notebook from Deal Notebook    &{ExcelPath}[Facility_Name]    
     Navigate to Outstanding Select Window
     Navigate to Existing Loan    &{ExcelPath}[Type]    &{ExcelPath}[Facility_Name]    &{ExcelPath}[Loan_Alias]
-
     
     ${Orig_LoanGlobalOriginal}    ${Orig_LoanGlobalCurrent}    ${Orig_LoanHostBankGross}    ${Orig_LoanHostBankNet}    Get Original Data on Loan Amounts Section  
     Write Data To Excel    SERV18_Payments    Orig_LoanGlobalOriginal    ${rowid}    ${Orig_LoanGlobalOriginal}
@@ -313,7 +312,7 @@ Principal Payment for Comprehensive Deal
     
     ### Step 2-3: Navigate to Principal Payment###
     Navigate to Principal Payment
-    
+    Validate and Delete if Repayment Schedule Exists in the Loan
     
     ###Step 4: Input data on fields under General Tab###
     ${PrincipalPayment_EffectiveDate}    Read Data From Excel    SERV18_Payments    PrincipalPayment_EffectiveDate    ${rowid}
@@ -339,13 +338,6 @@ Principal Payment for Comprehensive Deal
     
     ##Step 9: Principal Payment - Workflow Tab Send to Approval Item###
     Send Principal Payment to Approval
-    Logout from Loan IQ
-    
-    ###Step 10: Principal Payment - Workflow Tab Approval Item (SUPERVISOR)###
-    # Login to Loan IQ    &{ExcelPath}[ApproverUsername]    &{ExcelPath}[ApproverPassword]
-    # Select Item in Work in Process    Payments   Awaiting Approval    Loan Principal Prepayment    &{ExcelPath}[Loan_Alias]
-    # Approve Principal Payment
-    # Logout from Loan IQ
 
     ###Loan IQ Desktop###
     Logout from Loan IQ
@@ -355,11 +347,6 @@ Principal Payment for Comprehensive Deal
     Navigate Transaction in WIP     ${PAYMENTS_TRANSACTION}    ${AWAITING_APPROVAL_STATUS}    ${LOAN_PRINCIPAL_PREPAYMENT_TRANSACTION}    &{ExcelPath}[Loan_Alias]
     Navigate to Payment Workflow and Proceed With Transaction    ${APPROVAL_STATUS}
     Close All Windows on LIQ
-    
-    ###Step 11: Principal Payment - Workflow Tab Release Item (MANAGER)###
-    # Login to Loan IQ    &{ExcelPath}[ApproverUsername2]    &{ExcelPath}[ApproverPassword2]
-    # Select Item in Work in Process    Payments   Awaiting Release    Loan Principal Prepayment    &{ExcelPath}[Loan_Alias]
-    # Release Principal Payment    
 
     ###Loan IQ Desktop###
     Logout from Loan IQ
@@ -368,8 +355,6 @@ Principal Payment for Comprehensive Deal
     ### Release Payment ###
     Navigate Transaction in WIP     ${PAYMENTS_TRANSACTION}    ${AWAITING_RELEASE_STATUS}    ${LOAN_PRINCIPAL_PREPAYMENT_TRANSACTION}    &{ExcelPath}[Loan_Alias]
     Navigate to Payment Workflow and Proceed With Transaction    ${RELEASE_STATUS}
-
-    ##Step 12: Validation on Principal Payment Notebook (MANAGER)###
     Validation on Principal Payment Notebook - Events Tab 
 
     ${Lender1}    Read Data From Excel    TRP002_SecondarySale    Buyer_Lender    &{ExcelPath}[rowid]
