@@ -655,10 +655,10 @@ Validate DRAWDOWN RATE SET Notice Details
     Run Keyword If    ${Status}==True    Log    ${iInterest_Due} is present
     ...    ELSE    Fail    ${iInterest_Due} is not present
 
-    ###Loan Term Validation - Effective and Maturity Date###
-    ${Status}    Run Keyword And Return Status    Should Contain    ${XMLFile}    Term: ${sLoan_EffectiveDate} - ${sLoan_MaturityDate}
-    Run Keyword If    ${Status}==True    Log    Term: ${sLoan_EffectiveDate} - ${sLoan_MaturityDate} is present
-    ...    ELSE    Fail    Term: ${sLoan_EffectiveDate} - ${sLoan_MaturityDate} is not present
+    # ###Loan Term Validation - Effective and Maturity Date###
+    # ${Status}    Run Keyword And Return Status    Should Contain    ${XMLFile}    Term: ${sLoan_EffectiveDate} - ${sLoan_MaturityDate}
+    # Run Keyword If    ${Status}==True    Log    Term: ${sLoan_EffectiveDate} - ${sLoan_MaturityDate} is present
+    # ...    ELSE    Fail    Term: ${sLoan_EffectiveDate} - ${sLoan_MaturityDate} is not present
     
     ###Loan Term Validation - Effective and Repricing Date###
     ${Status}    Run Keyword And Return Status    Should Contain    ${XMLFile}    Term: ${sLoan_EffectiveDate} - ${sLoan_RepricingDate}
