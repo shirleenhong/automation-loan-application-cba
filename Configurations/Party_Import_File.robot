@@ -50,6 +50,7 @@ Resource    ../ResourcesFiles/Party_Keywords/BusinessProcess_Keywords/PTY010_Dup
 Resource    ../ResourcesFiles/Party_Keywords/BusinessProcess_Keywords/PTY014_QuickEnterpriseParty_Validation_Mandatory_Fields.robot
 Resource    ../ResourcesFiles/Party_Keywords/BusinessProcess_Keywords/PTY015_QuickPartyOnboarding_Validation_Disabled_Fields.robot
 Resource    ../ResourcesFiles/Party_Keywords/BusinessProcess_Keywords/PTY016_PartyOnboarding_Validation_Branch.robot
+Resource    ../ResourcesFiles/Party_Keywords/BusinessProcess_Keywords/PTY018_AU_Party_Navigation.robot
 
 ###Party Resource Files - Source###
 Resource    ../ResourcesFiles/Party_Keywords/Source_Keywords/PartyCommon_Keywords.robot
