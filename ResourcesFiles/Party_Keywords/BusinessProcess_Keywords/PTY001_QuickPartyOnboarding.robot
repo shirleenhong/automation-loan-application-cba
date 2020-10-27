@@ -33,6 +33,7 @@ Create Party in Quick Party Onboarding
     ...    @update: javinzon    20OCT2020    - Added Write Data To Excel keyword for Shortname of PTY009_DuplicateShortName    
     ...    @update: makcamps    22OCT2020    - Updated Write Data To Excel keyword for Party ID of Scenario 1
     ...    @update: javinzon    22OCT2020    - Updated Documentation and removed Write Data To Excel for PTY009_DuplicateShortName and PTY007_DuplicateEnterpriseName
+    ...    @update: javinzon    27OCT2020    - Added Write Data To Excel keyword for Enterprisename of PTY008_DuplicateEnterpriseName_AcrossEntities
     [Arguments]    ${ExcelPath}
     
     ### INPUTTER ###
@@ -59,6 +60,7 @@ Create Party in Quick Party Onboarding
     ...    AND    Write Data To Excel    QuickPartyOnboarding    Enterprise_Name    PTY002_UpdatePartyDetails    ${Enterprise_Name}    ${PTY_DATASET}        bTestCaseColumn=True   
     ...    AND    Write Data To Excel    QuickPartyOnboarding    Short_Name    PTY001_QuickPartyOnboarding    ${Short_Name}    ${PTY_DATASET}        bTestCaseColumn=True
     ...    AND    Write Data To Excel    QuickPartyOnboarding    Short_Name    PTY002_UpdatePartyDetails    ${Short_Name}    ${PTY_DATASET}        bTestCaseColumn=True   
+    ...    AND    Write Data To Excel    QuickPartyOnboarding    Enterprise_Name    PTY008_DuplicateEnterpriseName_AcrossEntities    ${Enterprise_Name}    ${PTY_DATASET}        bTestCaseColumn=True   
 
     Populate Quick Enterprise Party    ${Party_ID}    &{ExcelPath}[Country_of_Tax_Domicile]    &{ExcelPath}[Country_of_Registration]
     ...    &{ExcelPath}[Address_Type]    &{ExcelPath}[Country_Region]    &{ExcelPath}[Post_Code]    &{ExcelPath}[Document_Collection_Status]
