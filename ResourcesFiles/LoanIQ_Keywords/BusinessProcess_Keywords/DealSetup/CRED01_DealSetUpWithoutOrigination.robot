@@ -541,6 +541,7 @@ Setup Syndicated Deal for Non-Agent and Host Bank
     ...    @update: clanding    10AUG2020    - added writing of Deal to SERV02
     ...    @update: clanding    13AUG2020    - added writing of Deal to SERV09
     ...    @update: fluberio    12OCT2020    - added condition in Holdiay Creation and Pricing Rules for EU since in EU there are 5 Holiday Calendar and 4 Pricing Options
+    ...    @update: fluberio    22OCT2020    - added writing of Deal Name to Notices_UpfrontFee
     [Arguments]    ${ExcelPath}
     
 	###Switch to Original User###
@@ -563,6 +564,7 @@ Setup Syndicated Deal for Non-Agent and Host Bank
     Write Data to Excel    AMCH05_ExtendMaturityDate    Deal_Name    ${rowid}    ${Deal_Name}
     Write Data to Excel    SERV02_LoanDrawdownNonAgent    Deal_Name    ${rowid}    ${Deal_Name}
     Write Data to Excel    SERV09_LoanRepricing    Deal_Name    ${rowid}    ${Deal_Name}
+    Run Keyword If   '${SCENARIO}'=='4' and '&{ExcelPath}[Entity]' == 'EU'    Write Data to Excel    Correspondence    Deal_Name    ${rowid}    ${Deal_Name}
     ${Deal_Name}    Read Data From Excel    CRED01_DealSetup    Deal_Name    ${rowid}
     ${Deal_Alias}    Read Data From Excel    CRED01_DealSetup    Deal_Alias    ${rowid}
     
@@ -641,6 +643,7 @@ Create Revolver Facility
     ...    @update: clanding    27JUL2020    - updated SERV09C_LoanRepricing to SERV09_LoanRepricing
     ...                                      - updated SERV01_LoanDrawdown to SERV02_LoanDrawdownNonAgent
     ...    @update: clanding    10AUG2020    - added writing of facility to SERV02_LoanDrawdownNonAgent
+    ...    @update: fluberio    22OCT2020    - added writing of Facility Name to Notices_UpfrontFee
     [Arguments]    ${ExcelPath}
     
     ###Test Data Generation and Writings###
@@ -654,6 +657,7 @@ Create Revolver Facility
 	Write Data To Excel    AMCH02_LenderShareAdjustment    Facility_Name    ${rowid}    ${Facility_Name}
 	Write Data to Excel    AMCH05_ExtendMaturityDate    Facility_Name    ${rowid}    ${Facility_Name}
 	Write Data to Excel    SERV02_LoanDrawdownNonAgent    Facility_Name    ${rowid}    ${Facility_Name}
+	Run Keyword If   '${SCENARIO}'=='4' and '&{ExcelPath}[Entity]' == 'EU'    Write Data to Excel    Correspondence    Facility_Name    ${rowid}    ${Facility_Name}
 	Set To Dictionary    ${ExcelPath}    Facility_Name=${FacilityName}
 	
 	###Add Revolver Facility###

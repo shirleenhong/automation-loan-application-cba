@@ -239,6 +239,7 @@ Get Notice ID thru Deal Notebook
     ...    @author: mgaling     DDMMMYYYY    - initial create
     ...    @update: ehugo       15AUG2019    - added functionality to select the next notice group, used variables for notice status and notice method
     ...    @update: jloretiz    15JUL2019    - added screenshots, remove unnecessary sleep keyword, updated the writing to excel keyword and updated screenshot location
+    ...    @update: fluberio    26OCT2020    - added writing of Notice Details in Excel Path  
     [Arguments]    ${From_Date}    ${Thru_Date}    ${Notice_Type}         
     
     mx LoanIQ activate window    ${LIQ_DealNotebook_Window}
@@ -269,6 +270,10 @@ Get Notice ID thru Deal Notebook
     Write Data To Excel    Correspondence    Notice_Identifier    ${rowid}     ${Notice_ID}    ${APIDataSet}    bTestCaseColumn=True    sColumnReference=rowid
     Write Data To Excel    Correspondence    Notice_Customer_LegalName    ${rowid}     ${Notice_Customer_LegalName}    ${APIDataSet}    bTestCaseColumn=True    sColumnReference=rowid
     Write Data To Excel    Correspondence    Contact    ${rowid}     ${Contact}    ${APIDataSet}    bTestCaseColumn=True    sColumnReference=rowid
+    
+    Run Keyword If    '${SCENARIO}'=='4'    Run Keywords    Write Data To Excel    Correspondence    Notice_Identifier    ${rowid}     ${Notice_ID}    ${ExcelPath}    bTestCaseColumn=True    sColumnReference=rowid
+    ...    AND    Write Data To Excel    Correspondence    Notice_Customer_LegalName    ${rowid}     ${Notice_Customer_LegalName}    ${ExcelPath}    bTestCaseColumn=True    sColumnReference=rowid
+    ...    AND    Write Data To Excel    Correspondence    Contact    ${rowid}     ${Contact}    ${ExcelPath}    bTestCaseColumn=True    sColumnReference=rowid
     
     Close All Windows on LIQ
 
