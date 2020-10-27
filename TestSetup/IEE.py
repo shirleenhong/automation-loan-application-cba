@@ -38,8 +38,8 @@ MDM_FFC_Username ='admin'
 MDM_FFC_Password = 'admin'
 
 ### TL Credentials ###
-TL_USERNAME = "AMSCARL1"
-TL_PASSWORD = "password01"
+TL_USERNAME = "JCUSR01"
+TL_PASSWORD = "password"
 INPUTTER_USERNAME = "USERINP"
 INPUTTER_PASSWORD = "password"
 SUPERVISOR_USERNAME = "wbayers"

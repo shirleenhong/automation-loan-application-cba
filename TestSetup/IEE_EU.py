@@ -26,8 +26,8 @@ MDM_HOST = "http://mancsleverg0007:8081"
 MDM_HOST_PARTY = 'http://mancsleverg0007:8081'
 MDM_User_API = "/corporate/v1/users"
 
-TL_USERNAME = "AMSCARL1"
-TL_PASSWORD = "password01"
+TL_USERNAME = "DONATELO"
+TL_PASSWORD = "password"
 INPUTTER_USERNAME = "FJUSRAM"
 INPUTTER_PASSWORD = "password"
 SUPERVISOR_USERNAME = "FJSUPAM"
