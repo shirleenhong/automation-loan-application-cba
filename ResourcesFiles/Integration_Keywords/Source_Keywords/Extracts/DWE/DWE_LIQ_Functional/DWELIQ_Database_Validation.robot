@@ -29,14 +29,16 @@ Run Query to get Records from DB
 
 Check Bank and Net Amounts from VLS_PROD_POS_CUR DB Table
     [Documentation]    This keyword is used to validate PDC_AMT_BNK_GR_CMT and PDC_AMT_BNK_NT_CMT values from DB VLS_PROD_POS_CUR Table.
-    ...    @author: mgaling    23Sep2019    Initial Create
+    ...    Note: Use the LIQ DWE DB Schema
+    ...    @author: mgaling    23SEP2019    - initial create
+    ...    @update: mgaling    26OCT2020    - added note in Documentation and removed Run Keyword And Continue On Failure    Fail
     [Arguments]    ${sSQL_Query} 
     
     ${result}    Run Query to get Records from DB    ${sSQL_Query}
     ${Result}    Convert To String    ${Result}
     ${Result}=    Remove String    ${Result}    [    (    ,    )    ]
-    Run Keyword If    "${result}"=="${Empty}"    Log    Gross and Net Amount are matched!
-    ...    ELSE    Run Keyword And Continue On Failure    Fail    Gross and Net Amount are not matched, Deal is Syndicated!
+    Run Keyword If    "${result}"=="${Empty}"    Log    Gross and Net Amount are matched, Deal is Bilateral!
+    ...    ELSE    Log    Gross and Net Amount are not matched, Deal is Syndicated!
 
 Run Query for Referential Integrity Validation
     [Documentation]    This keyword is used to run the query to check if there's an orphan records between the two DB Tables.

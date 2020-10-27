@@ -679,6 +679,8 @@ Filter by Reference Header and Save Message TextArea and Return Results Row List
     ...    Then gets the row values using array of Header Names. Then gets the Message Text after clicking results row.
     ...    @author: mnanquil    13MAR2019    - initial create
     ...    @update: clanding    12JUN2019    - added \ on index for element, this is an update for robot to consider it as a string not an index of
+    ...    @update: jdelacru    26OCT2020    - added ELSE condition in assign values for status1 and status 2
+    ...                                      - added declaring global variable for ROUTEROPERATION
     [Arguments]    ${sHeaderRefName}    ${sFundingDesk}    ${sFundingStatus}    ${sExpectedRefValue}    ${sOutputFilePath}    ${sFileExtension}    @{aHeaderNames}
     
     ${Results_Column_Count}    SeleniumLibraryExtended.Get Element Count    ${Results_Header}
@@ -711,13 +713,16 @@ Filter by Reference Header and Save Message TextArea and Return Results Row List
     \    Mx Scroll Element Into View    ${Textarea}
     \    ${FFC_RESPONSE}    Get Value   ${Textarea}
     \    ${status1}    Run Keyword If    '${sFundingStatus}'=='I'    Run Keyword And Return Status    Should Contain    ${FFC_RESPONSE}    Value ${sFundingDesk} of field fundingDesk is not an active code in table Funding Desk.    
+         ...    ELSE    Set Variable    ${status1}
     \    Run Keyword If    '${status1}' == '${True}'    Log    ${sFundingDesk} is currently inactive will not create xml file.
-    \    ${status2}    Run Keyword If    '${status1}' == '${False}'    Run Keyword And Return Status    Should Contain    ${FFC_RESPONSE}    fundingDesk='${sFundingDesk}'        
+    \    ${status2}    Run Keyword If    '${status1}' == '${False}'    Run Keyword And Return Status    Should Contain    ${FFC_RESPONSE}    fundingDesk='${sFundingDesk}'
+         ...    ELSE    Set Variable    ${FALSE}
     \    Run Keyword If    '${status2}' == '${True}'    Log    ${sFundingDesk} is currently inactive will not create xml file.
-    \    lOG    ${FFC_RESPONSE}
+    \    Log    ${FFC_RESPONSE}
     \    Run Keyword If    '${status2}' == '${False}'    Create File    ${dataset_path}${sOutputFilePath}_${ResultsRowIndex_Ref}.${sFileExtension}    ${FFC_RESPONSE}
     \    Run Keyword If    '${status2}' == '${False}'    Append To List    ${Multiple_List}    ${ResultsRowList}
     \    Run Keyword If    '${status2}' == '${False}'    Append To List    ${FileName_List}    ${dataset_path}${sOutputFilePath}_${ResultsRowIndex_Ref}.${sFileExtension}
+    Set Global Variable    ${ROUTEROPERATION}    ROUTEROPERATION
     [Return]    ${Multiple_List}    ${FileName_List}    
 
 Create Prerequisite for Multiple FX Files Scenario
