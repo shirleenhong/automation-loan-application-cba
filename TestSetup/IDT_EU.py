@@ -51,10 +51,10 @@ ESSENCE_PORT_NUMBER = '8080'
 ESSENCE_LINK = '/uxp/rt/html/login.html'
 
 ###Transformation Layer###
-TL_SERVICE_HOST = "mancsleverg0022"
+TL_SERVICE_HOST = "mancsleverg0021"
 TL_SERVICE_PORT = "22"
-TL_SERVER_USER = "micloud"
-TL_SERVER_PASSWORD = "misys123"
+TL_SERVER_USER = "sftpuser2"
+TL_SERVER_PASSWORD = "luckyroll76"
 TL_SERVICE_DIR = "/evgdata/FFC/mch-2.1.3.3.0-6162/config/Transformation1.3.0/"
 TL_SERVICE_LOGS_DIR = "/evgdata/FFC/mch-2.1.3.3.0-6162/config/Transformation1.3.0/logs/"
 
@@ -71,10 +71,11 @@ TEXTJMS_INSTANCE = "distributor_1.3.0"
 GETTEXTJMS_INSTANCE = "distributor_1.3.0"
 CBAINTERFACE_INSTANCE = "CustomInterface_1.3.0"
 CBAPUSH_INSTANCE = "CustomCBAPush_1.3.0"
-CUSTOM_INTERFACE_INSTANCE = "CustomInterface_1.3.0"
+CUSTOM_INTERFACE_INSTANCE = "CustomInterface"
 RESPONSE_MECHANISM_INSTANCE = "responsemechanism_1.3.0"
 DWE_NOTIFICATION_INSTANCE = "dwe_notification_1.3.0"
 SAPWUL_INSTANCE = 'CustomCBAPush_1.3.0'
+TL_CAL_ACK_MESSAGE_SOURCENAME = 'tl_ack_message_splitter_cal'
 
 ###SFTP###
 SFTP_HOST = "mancsleverg0021"
@@ -126,6 +127,7 @@ SSO_URL = ""
 
 ###COMSEE###
 COM_HOST = 'http://mancsleverg0022:9150'
+ENTITY = 'EU'
 
 ##CORRESPONDENCE##
 CORRES_SERVER = 'http://mancsleverg0022'
@@ -205,3 +207,13 @@ DWE_PASSPHRASE = '0mn1@d@v'
 DWE_TAR_GZ_EXT = '.tar.gz'
 DWE_TAR_GZ_GPG_EXT = '.tar.gz.gpg'
 DWE_CCB_LIQ_ZONE_FILENAME = 'CCB_LIQ_SYD_'
+
+### IDT LIQ SERVER ###
+DBSERVICENAME_LIQ = 'MLLOANIQ.misys.global.ad'
+DBUSERNAME_LIQ = 'system'
+DBPASSWORD_LIQ = 'Ch2vr4n_M1r1th4n'
+DBHOST_LIQ = 'MANCSLEVERG0017'
+DBPORT_LIQ = '1521'
+DBUR_LIQ = 'jdbc:oracle:thin:@//mancsleverg0017:1521/MLLOANIQ.misys.global.ad'
+LIQDBSCHEMA = 'LIQIDT'
+LIQ7474_USER = 'LIQIDT'
