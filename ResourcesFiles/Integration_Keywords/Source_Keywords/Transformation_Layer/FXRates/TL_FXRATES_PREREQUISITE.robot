@@ -84,6 +84,7 @@ Get Single Row value from CSV File and Write to Excel for FXRates
     ...    @author: mnanquil    04MAR2019    - initial create
     ...    @update: cfrancis    18JUL2019    - change logic for subentity to be dependent on excel rather than zone dates
     ...    @update: dahijara    21NOV2019    - Added keyword to close opened excel file
+    ...    @update: ccarriedo   27OCT2020    - added '${sFunding_Desk}'=='EUR' for EU subEntity
     [Arguments]    ${dRow}    ${irowid}    ${sZone1_Curr_Date}    ${sZone3_Curr_Date}    ${sConfigPriceType}    ${sTLPath_Transformed_Data}    ${sFunding_Desk}
     ${GS_INSTR_CCY}    Get From Dictionary    ${dRow}    GS_BASE_CCY
     ${GS_TRGT_CCY}    Get From Dictionary    ${dRow}    GS_TRGT_CCY
@@ -124,6 +125,7 @@ Get Single Row value from CSV File and Write to Excel for FXRates
     # ...    ELSE IF    ${SubEntity_NY_Status}==False and ${SubEntity_AUD_Status}==False    Write Data to Excel Using Row Index    Transformed_FXRates    subEntity    ${irowid}    NY,AUD    ${sTLPath_Transformed_Data}
     Run Keyword If    '${sFunding_Desk}'=='NY'    Write Data to Excel Using Row Index    Transformed_FXRates    subEntity    ${irowid}    NY    ${sTLPath_Transformed_Data}
     ...    ELSE IF    '${sFunding_Desk}'=='AUD'    Write Data to Excel Using Row Index    Transformed_FXRates    subEntity    ${irowid}    AUD    ${sTLPath_Transformed_Data}
+    ...    ELSE IF    '${sFunding_Desk}'=='EUR'    Write Data to Excel Using Row Index    Transformed_FXRates    subEntity    ${irowid}    EUR    ${sTLPath_Transformed_Data}
     Run Keyword If    '${sConfigPriceType}'=='BUYRATE'    Write Data to Excel Using Row Index    Transformed_FXRates    buyRate    ${irowid}    ${GS_INSTR_PRICE}    ${sTLPath_Transformed_Data}
     ...    ELSE IF    '${sConfigPriceType}'=='MIDRATE'    Write Data to Excel Using Row Index    Transformed_FXRates    midRate    ${irowid}    ${GS_INSTR_PRICE}    ${sTLPath_Transformed_Data}
     ...    ELSE IF    '${sConfigPriceType}'=='SELLRATE'   Write Data to Excel Using Row Index    Transformed_FXRates    sellRate    ${irowid}    ${GS_INSTR_PRICE}    ${sTLPath_Transformed_Data}
@@ -133,6 +135,7 @@ Create Expected JSON for FXRates TL
     ...    @author: mnanquil    04MAR2019    - initial create
     ...    @update: dahijara    21NOV2019    - Added keyword to close opened excel file
     ...    @update: nbautist    09OCT2020    - removed commented exit condition
+    ...    @update: ccarriedo   27OCT2020    - added '${val_subEntity}'=='EUR' to run the keyword Update Key Values for EU of input JSON file for FXRates TL
     [Arguments]    ${sTransformedData_FilePath}    ${sInputJsonFile}    ${dConvertedCSVFile}    ${sTransformedDataXML_FilePath}      
     Open Excel    ${dataset_path}${sTransformedData_FilePath}    
     ${Row_Count}    Get Row Count    Transformed_FXRates
@@ -142,7 +145,9 @@ Create Expected JSON for FXRates TL
     Close Current Excel Document
     :FOR    ${INDEX}    IN RANGE    1    ${Row_Count}
     \    ${dTransformedData}    ${rowCount}    Create Dictionary Using Transformed Data and Return FXRates    ${dataset_path}${sTransformedData_FilePath}    ${INDEX}
-    \    ${New_JSON}    Update Key Values of input JSON file for FXRates TL    ${dTransformedData}    ${dataset_path}${jsonfile}    ${rowCount}    ${dConvertedCSVFile}     ${sTransformedDataXML_FilePath} 
+    \    ${val_subEntity}    Get From Dictionary    ${dTransformedData}    subEntity
+    \    ${New_JSON}    Run Keyword If    '${val_subEntity}'=='AUD'    Update Key Values of input JSON file for FXRates TL    ${dTransformedData}    ${dataset_path}${jsonfile}    ${rowCount}    ${dConvertedCSVFile}     ${sTransformedDataXML_FilePath}
+         ...    ELSE IF    '${val_subEntity}'=='EUR'    Update Key Values for EU of input JSON file for FXRates TL    ${dTransformedData}    ${dataset_path}${jsonfile}    ${rowCount}    ${dConvertedCSVFile}     ${sTransformedDataXML_FilePath} 
     \    Log    ${New_JSON}
     
     ${file}    OperatingSystem.Get File    ${dataset_path}${jsonfile}
@@ -384,6 +389,163 @@ Update Key Values of input JSON file for FXRates TL
     \    Write Data to Excel Using Row Index    Transformed_FXRates    effectiveDate    ${COUNTER}    ${effectiveDate}      ${sTransformedDataXML_FilePath}                                                          
     \    Set Global Variable    ${COUNTER}
    [Return]    ${NewJSON}
+
+Update Key Values for EU of input JSON file for FXRates TL
+    [Documentation]    This keyword is used to update key values of JSON file and save to new file for EU.
+    ...    @author: ccarriedo	27OCT2020    - initial create
+    [Arguments]    ${dRowData}    ${jsonFilePath}    ${rowCount}    ${dConvertedCSVFile}    ${sTransformedDataXML_FilePath}         
+    ${File_Path}    Set Variable    ${TemplateInput}    
+    ${EMPTY}    Set Variable    
+    ${JSON_Object}    Load JSON From File    ${File_Path}
+    ${INDEX_0}    Set Variable    0
+    ${INDEX_00}    Set Variable    0
+    ${val_subEntity_0}    Get From Dictionary    ${dRowData}    subEntity
+    ${subEntity_list}    Split String    ${val_subEntity_0}    ,
+    ${subEntity_length}    Get Length    ${subEntity_list}
+    ${totalJSONCount}    Evaluate    ${subEntity_length}*${rowCount}-1 
+    ${eurBuyRateConvertion}    Read Data From Excel    Transformed_FXRates    buyRate    7    ${dConvertedCSVFile}
+    ${eurMidRateConvertion}    Read Data From Excel    Transformed_FXRates    midRate    7    ${dConvertedCSVFile}
+    ${eurSellRateConvertion}    Read Data From Excel    Transformed_FXRates    sellRate    7    ${dConvertedCSVFile}  
+    :FOR    ${INDEX}    IN RANGE    ${subEntity_length}
+    \    
+    \    ${fromCurrency_Val}    Get From Dictionary    ${dRowData}    fromCurrency
+    \    ${fromCurrency}    Get From Dictionary    ${dRowData}    fromCurrency
+    \    ${toCurrency_Val}    Get From Dictionary    ${dRowData}    toCurrency
+    \    
+    \    ${status1}    Run Keyword And Return Status	Should Contain    ${fromCurrency}    EUR
+    \    ${status2}    Run Keyword And Return Status	Should Contain    ${toCurrency_Val}    USD
+    \    
+    \    ${buyRate_Val}    Get From Dictionary    ${dRowData}    buyRate
+    \    ${buyRate_Val2B}    Get From Dictionary    ${dRowData}    buyRate
+    \    ${midRate_Val}    Get From Dictionary    ${dRowData}    midRate
+    \    ${midRate_Val2B}    Get From Dictionary    ${dRowData}    midRate
+    \    ${sellRate_Val}    Get From Dictionary    ${dRowData}    sellRate
+    \    ${sellRate_Val2B}    Get From Dictionary    ${dRowData}    sellRate
+    \    ${effectiveDate}    Get From Dictionary    ${dRowData}    effectiveDate
+    \    
+    \    ###EUR CURRENCY COMPUTATION###
+    \    Run Keyword If    '@{subEntity_list}[${INDEX}]' == 'EUR' and '${fromCurrency_Val}' != 'EUR'    Set Global Variable    ${fromCurrency_Val}    @{subEntity_list}[${INDEX}]
+    \    Run Keyword If    '@{subEntity_list}[${INDEX}]' == 'EUR' and '${toCurrency_Val}' == 'USD' or '${toCurrency_Val}' == 'EUR'    Set Global Variable    ${toCurrency_Val}    ${fromCurrency}
+    \    Run Keyword If    '${fromCurrency_Val}' == '${toCurrencyVal}'    Set Global Variable    ${toCurrency_Val}    USD
+    \    
+    \    ${status}	Run Keyword and Return Status	Should Contain	${toCurrency_Val}	USD	
+   	\    ${buyRate_Val3}	Run Keyword If	'${status}'=='${False}'    Run Keyword If    '@{subEntity_list}[${INDEX}]' == 'EUR' and '${fromCurrency_Val}' == 'EUR'      Multiply Two Values With Exact Precision    ${eurBuyRateConvertion}    ${buyRate_Val}
+    \    ${buyRate_Val3}	Run Keyword If	'${status}'=='${False}'    Run Keyword If    '@{subEntity_list}[${INDEX}]' == 'EUR' and '${fromCurrency_Val}' == 'EUR'      Evaluate    "%.5f" % ${buyRate_Val3}
+    \    ${buyRate_Val3}	Run Keyword If	'${status}'=='${False}'    Run Keyword If    '@{subEntity_list}[${INDEX}]' == 'EUR' and '${fromCurrency_Val}' == 'EUR'      Divide Two Values With Exact Precision    1    ${buyRate_Val3}   
+    \    ${buyRate_Val3}	Run Keyword If	'${status}'=='${False}'    Run Keyword If    '@{subEntity_list}[${INDEX}]' == 'EUR' and '${fromCurrency_Val}' == 'EUR'      Evaluate    "%.15f" % ${buyRate_Val3}
+    \    ${buyRate_Val3}	Run Keyword If	'${status}'=='${False}'    Run Keyword If    '@{subEntity_list}[${INDEX}]' == 'EUR' and '${fromCurrency_Val}' == 'EUR'      Strip String    ${buyRate_Val3}    mode=right    characters=0
+    \    Run Keyword If	'${status}'=='${False}'		Run Keyword If    '@{subEntity_list}[${INDEX}]' == 'EUR' and '${fromCurrency_Val}' == 'EUR'      Set Global Variable    ${buyRate_Val}    ${buyRate_Val3}
+    \    
+    \    ${buyRate_Val4}	Run Keyword If	'${status1}' == '${False}' and '${status2}' == '${True}'	Run Keyword If	'${status}'=='${False}'    Run Keyword If    '@{subEntity_list}[${INDEX}]' == 'EUR' and '${fromCurrency_Val}' == 'EUR'      Divide Two Values With Exact Precision    ${eurBuyRateConvertion}    ${buyRate_Val2B}
+    \    ${buyRate_Val4}	Run Keyword If	'${status1}' == '${False}' and '${status2}' == '${True}'	Run Keyword If	'${status}'=='${False}'    Run Keyword If    '@{subEntity_list}[${INDEX}]' == 'EUR' and '${fromCurrency_Val}' == 'EUR'      Evaluate    "%.5f" % ${buyRate_Val4}
+    \    ${buyRate_Val4}	Run Keyword If	'${status1}' == '${False}' and '${status2}' == '${True}'	Run Keyword If	'${status}'=='${False}'    Run Keyword If    '@{subEntity_list}[${INDEX}]' == 'EUR' and '${fromCurrency_Val}' == 'EUR'      Divide Two Values With Exact Precision    1    ${buyRate_Val4}   
+    \    ${buyRate_Val4}	Run Keyword If	'${status1}' == '${False}' and '${status2}' == '${True}'	Run Keyword If	'${status}'=='${False}'    Run Keyword If    '@{subEntity_list}[${INDEX}]' == 'EUR' and '${fromCurrency_Val}' == 'EUR'      Evaluate    "%.15f" % ${buyRate_Val4}
+    \    ${buyRate_Val4}	Run Keyword If	'${status1}' == '${False}' and '${status2}' == '${True}'	Run Keyword If	'${status}'=='${False}'    Run Keyword If    '@{subEntity_list}[${INDEX}]' == 'EUR' and '${fromCurrency_Val}' == 'EUR'      Strip String    ${buyRate_Val4}    mode=right    characters=0
+    \    Run Keyword If	'${status1}' == '${False}' and '${status2}' == '${True}'	Run Keyword If	'${status}'=='${False}'		Run Keyword If    '@{subEntity_list}[${INDEX}]' == 'EUR' and '${fromCurrency_Val}' == 'EUR'      Set Global Variable    ${buyRate_Val}    ${buyRate_Val4}
+    \    
+    \    ${buyRate_Val2A}	Run Keyword If	'${status}'=='${True}'    Run Keyword If    '@{subEntity_list}[${INDEX}]' == 'EUR' and '${fromCurrency_Val}' == 'EUR' and '${toCurrency_Val}' == 'USD'     Evaluate    "%.5f" % ${buyRate_Val}
+    \    ${buyRate_Val2A}	Run Keyword If	'${status}'=='${True}'    Run Keyword If    '@{subEntity_list}[${INDEX}]' == 'EUR' and '${fromCurrency_Val}' == 'EUR' and '${toCurrency_Val}' == 'USD'     Divide Two Values With Exact Precision    1    ${buyRate_Val2A}      
+    \    ${buyRate_Val2A}	Run Keyword If	'${status}'=='${True}'    Run Keyword If    '@{subEntity_list}[${INDEX}]' == 'EUR' and '${fromCurrency_Val}' == 'EUR' and '${toCurrency_Val}' == 'USD'     Evaluate    "%.15f" % ${buyRate_Val2A}
+    \    ${buyRate_Val2A}	Run Keyword If	'${status}'=='${True}'    Run Keyword If    '@{subEntity_list}[${INDEX}]' == 'EUR' and '${fromCurrency_Val}' == 'EUR' and '${toCurrency_Val}' == 'USD'     Strip String    ${buyRate_Val2A}    mode=right    characters=0       
+    \    Run Keyword If	'${status}'=='${True}'		Run Keyword If    '@{subEntity_list}[${INDEX}]' == 'EUR' and '${fromCurrency_Val}' == 'EUR' and '${toCurrency_Val}' == 'USD'     Set Global Variable    ${buyRate_Val}    ${buyRate_Val2A}
+    \    
+    \    ${midRate_Val3}    Run Keyword If	'${status}'=='${False}'    Run Keyword If    '@{subEntity_list}[${INDEX}]' == 'EUR' and '${fromCurrency_Val}' == 'EUR'      Multiply Two Values With Exact Precision    ${eurMidRateConvertion}    ${midRate_Val}
+    \    ${midRate_Val3}	Run Keyword If	'${status}'=='${False}'    Run Keyword If    '@{subEntity_list}[${INDEX}]' == 'EUR' and '${fromCurrency_Val}' == 'EUR'      Evaluate    "%.5f" % ${midRate_Val3}
+    \    ${midRate_Val3}	Run Keyword If	'${status}'=='${False}'	   Run Keyword If    '@{subEntity_list}[${INDEX}]' == 'EUR' and '${fromCurrency_Val}' == 'EUR'      Divide Two Values With Exact Precision    1    ${midRate_Val3}   
+    \    ${midRate_Val3}	Run Keyword If	'${status}'=='${False}'    Run Keyword If    '@{subEntity_list}[${INDEX}]' == 'EUR' and '${fromCurrency_Val}' == 'EUR'      Evaluate    "%.15f" % ${midRate_Val3}
+    \    ${midRate_Val3}	Run Keyword If	'${status}'=='${False}'    Run Keyword If    '@{subEntity_list}[${INDEX}]' == 'EUR' and '${fromCurrency_Val}' == 'EUR'      Strip String    ${midRate_Val3}    mode=right    characters=0
+    \    Run Keyword If    '${status}'=='${False}'    Run Keyword If    '@{subEntity_list}[${INDEX}]' == 'EUR' and '${fromCurrency_Val}' == 'EUR'      Set Global Variable    ${midRate_Val}    ${midRate_Val3}
+    \    
+    \    ${midRate_Val4}    Run Keyword If	'${status1}' == '${False}' and '${status2}' == '${True}'    Run Keyword If	'${status}'=='${False}'    Run Keyword If    '@{subEntity_list}[${INDEX}]' == 'EUR' and '${fromCurrency_Val}' == 'EUR'      Divide Two Values With Exact Precision    ${eurMidRateConvertion}    ${midRate_Val2B}    
+    \    ${midRate_Val4}	Run Keyword If	'${status1}' == '${False}' and '${status2}' == '${True}'    Run Keyword If	'${status}'=='${False}'    Run Keyword If    '@{subEntity_list}[${INDEX}]' == 'EUR' and '${fromCurrency_Val}' == 'EUR'      Evaluate    "%.5f" % ${midRate_Val4}
+    \    ${midRate_Val4}	Run Keyword If	'${status1}' == '${False}' and '${status2}' == '${True}'    Run Keyword If	'${status}'=='${False}'	   Run Keyword If    '@{subEntity_list}[${INDEX}]' == 'EUR' and '${fromCurrency_Val}' == 'EUR'      Divide Two Values With Exact Precision    1    ${midRate_Val4}   
+    \    ${midRate_Val4}	Run Keyword If	'${status1}' == '${False}' and '${status2}' == '${True}'    Run Keyword If	'${status}'=='${False}'    Run Keyword If    '@{subEntity_list}[${INDEX}]' == 'EUR' and '${fromCurrency_Val}' == 'EUR'      Evaluate    "%.15f" % ${midRate_Val4}
+    \    ${midRate_Val4}	Run Keyword If	'${status1}' == '${False}' and '${status2}' == '${True}'    Run Keyword If	'${status}'=='${False}'    Run Keyword If    '@{subEntity_list}[${INDEX}]' == 'EUR' and '${fromCurrency_Val}' == 'EUR'      Strip String    ${midRate_Val4}    mode=right    characters=0
+    \    Run Keyword If    '${status1}' == '${False}' and '${status2}' == '${True}'    Run Keyword If	'${status}'=='${False}'    Run Keyword If    '@{subEntity_list}[${INDEX}]' == 'EUR' and '${fromCurrency_Val}' == 'EUR'      Set Global Variable    ${midRate_Val}    ${midRate_Val4}
+    \    
+    \    ${midRate_Val2A}	Run Keyword If	'${status}'=='${True}'    Run Keyword If    '@{subEntity_list}[${INDEX}]' == 'EUR' and '${fromCurrency_Val}' == 'EUR' and '${toCurrency_Val}' == 'USD'     Evaluate    "%.5f" % ${midRate_Val}
+    \    ${midRate_Val2A}	Run Keyword If	'${status}'=='${True}'    Run Keyword If    '@{subEntity_list}[${INDEX}]' == 'EUR' and '${fromCurrency_Val}' == 'EUR' and '${toCurrency_Val}' == 'USD'     Divide Two Values With Exact Precision    1    ${midRate_Val2A}  
+    \    ${midRate_Val2A}	Run Keyword If	'${status}'=='${True}'    Run Keyword If    '@{subEntity_list}[${INDEX}]' == 'EUR' and '${fromCurrency_Val}' == 'EUR' and '${toCurrency_Val}' == 'USD'     Evaluate    "%.15f" % ${midRate_Val2A}
+    \    ${midRate_Val2A}	Run Keyword If	'${status}'=='${True}'    Run Keyword If    '@{subEntity_list}[${INDEX}]' == 'EUR' and '${fromCurrency_Val}' == 'EUR' and '${toCurrency_Val}' == 'USD'     Strip String    ${midRate_Val2A}    mode=right    characters=0       
+    \    Run Keyword If    '${status}'=='${True}'	Run Keyword If    '@{subEntity_list}[${INDEX}]' == 'EUR' and '${fromCurrency_Val}' == 'EUR' and '${toCurrency_Val}' == 'USD'     Set Global Variable    ${midRate_Val}    ${midRate_Val2A}
+    \    
+    \    ${sellRate_Val3}	Run Keyword If	'${status}'=='${False}'	   Run Keyword If    '@{subEntity_list}[${INDEX}]' == 'EUR' and '${fromCurrency_Val}' == 'EUR'      Multiply Two Values With Exact Precision    ${eurSellRateConvertion}    ${sellRate_Val}
+    \    ${sellRate_Val3}	Run Keyword If	'${status}'=='${False}'    Run Keyword If    '@{subEntity_list}[${INDEX}]' == 'EUR' and '${fromCurrency_Val}' == 'EUR'      Evaluate    "%.5f" % ${sellRate_Val3}
+    \    ${sellRate_Val3}	Run Keyword If	'${status}'=='${False}'    Run Keyword If    '@{subEntity_list}[${INDEX}]' == 'EUR' and '${fromCurrency_Val}' == 'EUR'      Divide Two Values With Exact Precision    1    ${sellRate_Val3}   
+    \    ${sellRate_Val3}	Run Keyword If	'${status}'=='${False}'    Run Keyword If    '@{subEntity_list}[${INDEX}]' == 'EUR' and '${fromCurrency_Val}' == 'EUR'      Evaluate    "%.15f" % ${sellRate_Val3}
+    \    ${sellRate_Val3}	Run Keyword If	'${status}'=='${False}'    Run Keyword If    '@{subEntity_list}[${INDEX}]' == 'EUR' and '${fromCurrency_Val}' == 'EUR'      Strip String    ${sellRate_Val3}    mode=right    characters=0
+    \    Run Keyword If    '${status}'=='${False}'		Run Keyword If    '@{subEntity_list}[${INDEX}]' == 'EUR' and '${fromCurrency_Val}' == 'EUR'      Set Global Variable    ${sellRate_Val}    ${sellRate_Val3}
+    \    
+    \    ${sellRate_Val4}	Run Keyword If	'${status1}' == '${False}' and '${status2}' == '${True}'	Run Keyword If	'${status}'=='${False}'	   Run Keyword If    '@{subEntity_list}[${INDEX}]' == 'EUR' and '${fromCurrency_Val}' == 'EUR'      Divide Two Values With Exact Precision    ${eurSellRateConvertion}    ${sellRate_Val2B}
+    \    ${sellRate_Val4}	Run Keyword If	'${status1}' == '${False}' and '${status2}' == '${True}'	Run Keyword If	'${status}'=='${False}'    Run Keyword If    '@{subEntity_list}[${INDEX}]' == 'EUR' and '${fromCurrency_Val}' == 'EUR'      Evaluate    "%.5f" % ${sellRate_Val4}
+    \    ${sellRate_Val4}	Run Keyword If	'${status1}' == '${False}' and '${status2}' == '${True}'	Run Keyword If	'${status}'=='${False}'    Run Keyword If    '@{subEntity_list}[${INDEX}]' == 'EUR' and '${fromCurrency_Val}' == 'EUR'      Divide Two Values With Exact Precision    1    ${sellRate_Val4}   
+    \    ${sellRate_Val4}	Run Keyword If	'${status1}' == '${False}' and '${status2}' == '${True}'	Run Keyword If	'${status}'=='${False}'    Run Keyword If    '@{subEntity_list}[${INDEX}]' == 'EUR' and '${fromCurrency_Val}' == 'EUR'      Evaluate    "%.15f" % ${sellRate_Val4}
+    \    ${sellRate_Val4}	Run Keyword If	'${status1}' == '${False}' and '${status2}' == '${True}'	Run Keyword If	'${status}'=='${False}'    Run Keyword If    '@{subEntity_list}[${INDEX}]' == 'EUR' and '${fromCurrency_Val}' == 'EUR'      Strip String    ${sellRate_Val4}    mode=right    characters=0
+    \    Run Keyword If    '${status1}' == '${False}' and '${status2}' == '${True}'	Run Keyword If	'${status}'=='${False}'		Run Keyword If    '@{subEntity_list}[${INDEX}]' == 'EUR' and '${fromCurrency_Val}' == 'EUR'      Set Global Variable    ${sellRate_Val}    ${sellRate_Val4}
+    \    
+    \    ${sellRate_Val2A}	Run Keyword If	'${status}'=='${True}'    Run Keyword If    '@{subEntity_list}[${INDEX}]' == 'EUR' and '${fromCurrency_Val}' == 'EUR' and '${toCurrency_Val}' == 'USD'     Evaluate    "%.5f" % ${sellRate_Val}  
+    \    ${sellRate_Val2A}	Run Keyword If	'${status}'=='${True}'    Run Keyword If    '@{subEntity_list}[${INDEX}]' == 'EUR' and '${fromCurrency_Val}' == 'EUR' and '${toCurrency_Val}' == 'USD'     Divide Two Values With Exact Precision    1    ${sellRate_Val2A}  
+    \    ${sellRate_Val2A}	Run Keyword If	'${status}'=='${True}'    Run Keyword If    '@{subEntity_list}[${INDEX}]' == 'EUR' and '${fromCurrency_Val}' == 'EUR' and '${toCurrency_Val}' == 'USD'     Evaluate    "%.15f" % ${sellRate_Val2A}
+    \    ${sellRate_Val2A}	Run Keyword If	'${status}'=='${True}'    Run Keyword If    '@{subEntity_list}[${INDEX}]' == 'EUR' and '${fromCurrency_Val}' == 'EUR' and '${toCurrency_Val}' == 'USD'     Strip String    ${sellRate_Val2A}    mode=right    characters=0       
+    \    Run Keyword If    '${status}'=='${True}'	Run Keyword If    '@{subEntity_list}[${INDEX}]' == 'EUR' and '${fromCurrency_Val}' == 'EUR' and '${toCurrency_Val}' == 'USD'     Set Global Variable    ${sellRate_Val}    ${sellRate_Val2A}
+    \    
+    \    ${New_JSON}    Run Keyword If    '${fromCurrency_Val}'=='null'    Set To Dictionary    ${JSON_Object}    fromCurrency=${NONE}
+         ...    ELSE IF    '${fromCurrency_Val}'==''    Set To Dictionary    ${JSON_Object}    fromCurrency=${EMPTY}
+         ...    ELSE IF    '${fromCurrency_Val}'=='Empty' or '${fromCurrency_Val}'=='empty'    Set To Dictionary    ${JSON_Object}    fromCurrency=${EMPTY}
+         ...    ELSE IF    '${fromCurrency_Val}'=='no tag'    Set Variable    ${JSON_Object}
+         ...    ELSE    Set To Dictionary    ${JSON_Object}    fromCurrency=${fromCurrency_Val}    
+    \    
+    \    ${New_JSON}    Run Keyword If    '${toCurrency_Val}'=='null'    Set To Dictionary    ${JSON_Object}    toCurrency=${NONE}
+         ...    ELSE IF    '${toCurrency_Val}'==''    Set To Dictionary    ${JSON_Object}    toCurrency=${EMPTY}
+         ...    ELSE IF    '${toCurrency_Val}'=='Empty' or '${toCurrency_Val}'=='empty'    Set To Dictionary    ${JSON_Object}    toCurrency=${EMPTY}
+         ...    ELSE IF    '${toCurrency_Val}'=='no tag'    Set Variable    ${JSON_Object}
+         ...    ELSE    Set To Dictionary    ${JSON_Object}    toCurrency=${toCurrency_Val}
+    \    
+	\    ${New_JSON}    Run Keyword If    '${buyRate_Val}'=='null'    Set To Dictionary    ${New_JSON}    buyRate=${NONE}
+         ...    ELSE IF    '${buyRate_Val}'==''    Set To Dictionary    ${New_JSON}    buyRate=${EMPTY}
+         ...    ELSE IF    '${buyRate_Val}'=='Empty' or '${buyRate_Val}'=='empty'    Set To Dictionary    ${New_JSON}    buyRate=${EMPTY}
+         ...    ELSE IF    '${buyRate_Val}'=='no tag'    Set Variable    ${New_JSON}
+         ...    ELSE    Set To Dictionary    ${New_JSON}    buyRate=|${buyRate_Val}|
+    \    
+	\    ${New_JSON}    Run Keyword If    '${midRate_Val}'=='null'    Set To Dictionary    ${New_JSON}    midRate=${NONE}
+         ...    ELSE IF    '${midRate_Val}'==''    Set To Dictionary    ${New_JSON}    midRate=${EMPTY}
+         ...    ELSE IF    '${midRate_Val}'=='Empty' or '${midRate_Val}'=='empty'    Set To Dictionary    ${New_JSON}    midRate=${EMPTY}
+         ...    ELSE IF    '${midRate_Val}'=='no tag'    Set Variable    ${New_JSON}
+         ...    ELSE    Set To Dictionary    ${New_JSON}    midRate=|${midRate_Val}|
+    \    
+	\    ${New_JSON}    Run Keyword If    '${sellRate_Val}'=='null'    Set To Dictionary    ${New_JSON}    sellRate=${NONE}
+         ...    ELSE IF    '${sellRate_Val}'==''    Set To Dictionary    ${New_JSON}    sellRate=${EMPTY}
+         ...    ELSE IF    '${sellRate_Val}'=='Empty' or '${sellRate_Val}'=='empty'    Set To Dictionary    ${New_JSON}    sellRate=${EMPTY}
+         ...    ELSE IF    '${sellRate_Val}'=='no tag'    Set Variable    ${New_JSON}
+         ...    ELSE    Set To Dictionary    ${New_JSON}    sellRate=|${sellRate_Val}|
+    \    ${effectiveDate_Val}    Get From Dictionary    ${dRowData}    effectiveDate
+	\    ${New_JSON}    Run Keyword If    '${effectiveDate_Val}'=='null'    Set To Dictionary    ${New_JSON}    effectiveDate=${NONE}
+         ...    ELSE IF    '${effectiveDate_Val}'==''    Set To Dictionary    ${New_JSON}    effectiveDate=${EMPTY}
+         ...    ELSE IF    '${effectiveDate_Val}'=='Empty' or '${effectiveDate_Val}'=='empty'    Set To Dictionary    ${New_JSON}    effectiveDate=${EMPTY}
+         ...    ELSE IF    '${effectiveDate_Val}'=='no tag'    Set Variable    ${New_JSON}
+         ...    ELSE    Set To Dictionary    ${New_JSON}    effectiveDate=${effectiveDate_Val}
+    \    ${rateType_Val}    Get From Dictionary    ${dRowData}    rateType
+	\    ${New_JSON}    Run Keyword If    '${rateType_Val}'=='null'    Set To Dictionary    ${New_JSON}    rateType=${NONE}
+         ...    ELSE IF    '${rateType_Val}'==''    Set To Dictionary    ${New_JSON}    rateType=${EMPTY}
+         ...    ELSE IF    '${rateType_Val}'=='Empty' or '${rateType_Val}'=='empty'    Set To Dictionary    ${New_JSON}    rateType=${EMPTY}
+         ...    ELSE IF    '${rateType_Val}'=='no tag'    Set Variable    ${New_JSON}
+         ...    ELSE    Set To Dictionary    ${New_JSON}    rateType=${rateType_Val}
+    \    ${New_JSON}    Create Expected JSON FxRates TL    ${dRowData}    @{subEntity_list}[${INDEX}]    ${New_JSON}
+    \    ${converted_json}    Evaluate    json.dumps(${New_JSON})        json
+    \    Log    ${converted_json}
+    \    Run Keyword If    ${COUNTER}==0    Append To File    ${jsonFilePath}    ${converted_json}
+    \    Run Keyword If    ${COUNTER}>0 or ${counter}==${totalJSONCount}   Append To File    ${jsonFilePath}    ,${converted_json}
+    \    ${COUNTER}    Evaluate    int(${COUNTER}+1)
+    \    Write Data to Excel Using Row Index    Transformed_FXRates    rowid    ${COUNTER}    ${COUNTER}    ${sTransformedDataXML_FilePath}            
+    \    Write Data to Excel Using Row Index    Transformed_FXRates    subEntity    ${COUNTER}    @{subEntity_list}[${INDEX}]    ${sTransformedDataXML_FilePath}    
+    \    Write Data to Excel Using Row Index    Transformed_FXRates    fromCurrency    ${COUNTER}    ${fromCurrency_Val}      ${sTransformedDataXML_FilePath}    
+    \    Write Data to Excel Using Row Index    Transformed_FXRates    toCurrency    ${COUNTER}    ${toCurrency_Val}      ${sTransformedDataXML_FilePath}    
+    \    Write Data to Excel Using Row Index    Transformed_FXRates    buyRate    ${COUNTER}    ${buyRate_Val}      ${sTransformedDataXML_FilePath}           
+    \    Write Data to Excel Using Row Index    Transformed_FXRates    midRate    ${COUNTER}    ${midRate_Val}      ${sTransformedDataXML_FilePath}                   
+    \    Write Data to Excel Using Row Index    Transformed_FXRates    sellRate    ${COUNTER}    ${sellRate_Val}      ${sTransformedDataXML_FilePath}    
+    \    Write Data to Excel Using Row Index    Transformed_FXRates    effectiveDate    ${COUNTER}    ${effectiveDate}      ${sTransformedDataXML_FilePath}                                                          
+    \    Set Global Variable    ${COUNTER}
+   [Return]    ${NewJSON}
    
 Create Expected JSON FxRates TL
     [Arguments]    ${dRowData}    ${sSubEntity}    ${New_JSON}   
@@ -462,6 +624,7 @@ Update Expected XML Elements for wsFinalLIQDestination - FXRates TL
     ...    @author: mnanquil    04MAR2019    - initial create
     ...    @update: cfrancis    18JUL2019    - update added saving XML for NY subentity
     ...    @update: jdelacru    04SEP2020    - added new argument for the location of template files, TemplateFilePath
+    ...    @update: ccarriedo   27OCT2020    - added '${sSubentityVal}'=='EUR'
     [Arguments]    ${sInputFilePath}    ${sFileName}    ${fromCurrency}    ${sCurrency}    ${sRateEffDate}    ${sSubentityVal}    ${sMidRate}    ${sTemplateFilePath} 
     Run Keyword If    '${sSubentityVal}'=='AUD' and '${fromCurrency}'=='USD'    Set Global Variable    ${fromCurrency}    AUD    
     ${Expected_wsFinalLIQDestination}    Set Variable    ${dataset_path}${sInputFilePath}${sFileName}_${fromCurrency}_${sCurrency}.xml
@@ -478,6 +641,7 @@ Update Expected XML Elements for wsFinalLIQDestination - FXRates TL
     Log    ${attr}
     Run Keyword If    '${sSubentityVal}'=='AUD'    Save Xml    ${Updated_template}    ${Expected_wsFinalLIQDestination}
     ...    ELSE IF    '${sSubentityVal}'=='NY'    Save Xml    ${Updated_template}    ${Expected_wsFinalLIQDestination}
+    ...    ELSE IF    '${sSubentityVal}'=='EUR'    Save Xml    ${Updated_template}    ${Expected_wsFinalLIQDestination}
     
 Validate FFC JSON File
     [Documentation]    This keyword will validate the xls file against the created json file in FFC

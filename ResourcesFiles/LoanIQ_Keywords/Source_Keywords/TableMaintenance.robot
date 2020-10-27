@@ -24,6 +24,17 @@ Validate Currency Pairs
     mx LoanIQ click    ${LIQ_BrowseCurrencyPairs_Exit_Button}    
     mx LoanIQ click    ${LIQ_TableMaintenance_Exit_Button}
 
+Validate Currency Pairs By Funding Desk
+    [Documentation]    This keyword is used to validate currency pairs by funding desk is existing in table maintenance.
+    ...    @author: ccarriedo    27OCT2020    - initial create
+    [Arguments]    ${sToCurrencyVal}    ${sFromCurrencyVal}    ${sFundingDeskVal}
+    mx LoanIQ click    ${LIQ_TableMaintenance_Button}
+    Search in Table Maintenance    Currency Pairs By Funding Desk
+    Run Keyword And Continue On Failure    Mx LoanIQ Select String    ${LIQ_BrowseCurrencyPair_Tree}    ${sFromCurrencyVal}\t${sToCurrencyVal}\t${sFundingDeskVal}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/Currency_Pairs_By_Funding_Desk
+    mx LoanIQ click    ${LIQ_BrowseCurrencyPairs_Exit_Button}    
+    mx LoanIQ click    ${LIQ_TableMaintenance_Exit_Button}
+
 Get Funding Desk Details from Table Maintenance
     [Documentation]    This keyword is used to get funding desk description from table maintenance using cluster from json file.
     ...    @author: clanding
