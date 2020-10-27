@@ -12,6 +12,7 @@ Create Initial Loan Drawdown with Repayment Schedule
     ...    @update: kduenas     23SEP2020    - Added writing of loan alias to correspondence dataset for API_COR_TC03
     ...    @update: makcamps    15OCT2020    - Added 'Run Keywords' in writing of loan alias to correspondence dataset
     ...    @update: makcamps    23OCT2020    - Added EU conditions for Rate Approval and updated Release Cashflow method
+    ...    @update: kduenas     27OCT2020    - Added writing of loan alias to correspondence dataset for API_COR_TC21
     [Arguments]    ${ExcelPath}
     
     ###Close all windows###
@@ -33,6 +34,8 @@ Create Initial Loan Drawdown with Repayment Schedule
     Write Data To Excel    SERV21_InterestPayments   Loan_Alias    ${rowid}    ${Loan_Alias}
     Run Keyword If    '${SCENARIO}'=='1'    Run Keywords    Write Data To Excel    Correspondence    Loan_Alias    ${rowid}    ${Loan_Alias}    ${APIDataSet}    bTestCaseColumn=True    sColumnReference=rowid
     ...  AND    Write Data To Excel    Correspondence    Loan_Alias    3    ${Loan_Alias}    ${APIDataSet}    bTestCaseColumn=True    sColumnReference=rowid
+    ...  AND    Write Data To Excel    Correspondence    Loan_Alias    21    ${Loan_Alias}    ${APIDataSet}    bTestCaseColumn=True    sColumnReference=rowid
+    
     Run Keyword If    '${SCENARIO}'=='2'    Write Data To Excel    SERV21_InterestPayments   Loan_Alias    ${rowid}    ${Loan_Alias}
     Run Keyword If    '${SCENARIO}'=='2'    Write Data To Excel    SERV18_Payments   Loan_Alias    ${rowid}    ${Loan_Alias}
         
