@@ -603,7 +603,8 @@ Validate DRAWDOWN RATE SET Notice Details
     ...    @author: mgaling
     ...    @update:jaquitan 21Mar2019 updated arguments and variables
     ...    @update: ehugo    22AUG2019    added arguments - Interest Due, Loan Effective and Maturity Dates
-    ...    @update: ehugo    13SEP2019    added argument - Repricing Date 
+    ...    @update: ehugo    13SEP2019    added argument - Repricing Date
+    ...    @update: kduenas    27OCT2020    removed Loan Term Validation - Effective and Maturity Date as this is no longer present in the rate notice 
     [Arguments]    ${sPath_XMLFile}    ${sNotice_Customer_LegalName}    ${sContact}    ${sDeal_Name}    ${sXML_NoticeType}    ${sLoan_PricingOption}    ${iLoan_BaseRate}
     ...    ${iLoan_Spread}    ${iLoan_AllInRate}    ${iInterest_Due}    ${sLoan_EffectiveDate}    ${sLoan_MaturityDate}    ${sLoan_RepricingDate}
     
