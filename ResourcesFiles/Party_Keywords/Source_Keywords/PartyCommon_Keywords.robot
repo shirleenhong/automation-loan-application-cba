@@ -898,3 +898,39 @@ Add Associated Zone To User
     Capture Page Screenshot    ${screenshot_path}/Screenshots/Party/AmendUserPage-{index}.png
     Mx Click Element    ${Party_AmendUser_Next_Button}
     Capture Page Screenshot    ${screenshot_path}/Screenshots/Party/AmendUserPage-{index}.png
+
+Change Default Zone
+    [Documentation]    This keyword changes the default zone of the user.
+    ...    @author: nbautist    27OCT2020    - initial creation
+    [Arguments]    ${sUserZone}
+    
+    Mx Click Element    ${Party_AmendUser_Default_Zone_Search_Button}
+    Wait Until Element Is Visible    ${Party_AmendUser_Select_Zone_Branch_Dialog_Title}    20s
+    Mx Input Text    ${Party_AmendUser_Select_Zone_Branch_Textbox}    ${sUserZone}
+    Mx Click Element    ${Party_AmendUser_Select_Zone_Branch_Next_Button}
+
+Restore Default Zone
+    [Documentation]    This keyword changes the default zone of the user.
+    ...    @author: nbautist    27OCT2020    - initial creation
+    [Arguments]    ${sUserZone}
+    
+    Change Default Zone    ${sUserZone}
+    Capture Page Screenshot    ${screenshot_path}/Screenshots/Party/AmendUserPage-{index}.png
+    Mx Click Element    ${Party_AmendUser_Next_Button}
+    Capture Page Screenshot    ${screenshot_path}/Screenshots/Party/AmendUserPage-{index}.png
+    
+Get Default Zone
+    [Documentation]    This keyword gets the default zone of the user.
+    ...    @author: nbautist    27OCT2020    - initial creation
+    
+    ${value}    SeleniumLibraryExtended.Get Element Attribute    ${Party_AmendUser_Default_Zone_Selected}    value
+    ${items}    SeleniumLibraryExtended.Get Element Attribute    ${Party_AmendUser_Default_Zone_Items}    data
+    ${zone}    Fetch From Right    ${items}    --Select-- 
+    ${zone}    Fetch From Left    ${zone}    ","03referenceID":"${value}
+    ${Count}    Get Count    ${zone}    "03description":"
+    
+    :FOR    ${Index}    IN RANGE    1    ${Count}
+    \    ${zone}    Fetch From Right    ${zone}    "03description":"
+    \    Exit For Loop If    ${Index}== ${Count}    
+        
+    [Return]    ${zone}

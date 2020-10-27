@@ -11,8 +11,11 @@ Update Regions For User And Restore User Details
     Login User to Party    ${PARTY_SUPERVISOR_USERNAME}    ${PARTY_SUPERVISOR_PASSWORD}    ${USER_LINK}    ${USER_PORT}    ${PARTY_URL_SUFFIX}    ${PARTY_HTML_USER_CREDENTIALS}    ${SSO_ENABLED}    ${PARTY_URL} 
     Configure Zone and Branch    &{ExcelPath}[UserZone]    &{ExcelPath}[UserBranch]
     Navigate Amend User    ${PARTY_USERNAME}
+    ${default_zone}    Get Default Zone
+    Change Default Zone    &{ExcelPath}[UserZone]
     Remove Associated Zone from User    &{ExcelPath}[AddRemove_UserZone]
     Logout User on Party
+    
     ### Login as user to validate removed zone
     Login User to Party    ${PARTY_USERNAME}    ${PARTY_PASSWORD}    ${USER_LINK}    ${USER_PORT}    ${PARTY_URL_SUFFIX}    ${PARTY_HTML_USER_CREDENTIALS}    ${SSO_ENABLED}    ${PARTY_URL}
     Verify Zone Visibility in Zone Dropdown List    &{ExcelPath}[AddRemove_UserZone]    ${False}
@@ -24,8 +27,15 @@ Update Regions For User And Restore User Details
     Navigate Amend User    ${PARTY_USERNAME}
     Add Associated Zone To User    &{ExcelPath}[AddRemove_UserZone]    &{ExcelPath}[AddRemove_UserBranch]
     Logout User on Party
+    
     ### Login as user to validate restored zone
     Login User to Party    ${PARTY_USERNAME}    ${PARTY_PASSWORD}    ${USER_LINK}    ${USER_PORT}    ${PARTY_URL_SUFFIX}    ${PARTY_HTML_USER_CREDENTIALS}    ${SSO_ENABLED}    ${PARTY_URL}
     Verify Zone Visibility In Zone Dropdown List    &{ExcelPath}[AddRemove_UserZone]    ${True}
     Logout User on Party
     
+    ### Restore the default zone of the user
+    Login User to Party    ${PARTY_SUPERVISOR_USERNAME}    ${PARTY_SUPERVISOR_PASSWORD}    ${USER_LINK}    ${USER_PORT}    ${PARTY_URL_SUFFIX}    ${PARTY_HTML_USER_CREDENTIALS}    ${SSO_ENABLED}    ${PARTY_URL}
+    Configure Zone and Branch    &{ExcelPath}[UserZone]    &{ExcelPath}[UserBranch]
+    Navigate Amend User    ${PARTY_USERNAME}
+    Restore Default Zone    ${default_zone}
+    Logout User on Party
