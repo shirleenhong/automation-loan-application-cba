@@ -170,12 +170,13 @@ OPEAPI_INSTANCE_TL = "openAPI_1.4.1.1"
 OPEAPI_INSTANCE = "openAPI_1.4.1.1"
 TEXTJMS_INSTANCE = "distributor_1.4.1.1"
 GETTEXTJMS_INSTANCE = "distributor_1.4.1.1"
-CBAINTERFACE_INSTANCE = "CustomInterface_v1.3.3"
-CBAPUSH_INSTANCE = "CustomCBAPush_v1.3.2"
-CUSTOM_INTERFACE_INSTANCE = "CustomInterface_v1.3.3"
+CBAINTERFACE_INSTANCE = "CustomInterface_v1.4.0"
+CBAPUSH_INSTANCE = "CustomCBAPush_v1.4.0"
+CUSTOM_INTERFACE_INSTANCE = "CustomInterface_v1.4.0"
 RESPONSE_MECHANISM_INSTANCE = "responsemechanism_1.4.1.0"
 DWE_NOTIFICATION_INSTANCE = "dwe_notification_1.3.0"
 SAPWUL_INSTANCE = 'CustomCBAPush_1.3.0'
+TL_CAL_ACK_MESSAGE_SOURCENAME = 'ccb_source_cal'
 
 ### DWE ###
 DWE_SERVER = 'mancsleverg0007'

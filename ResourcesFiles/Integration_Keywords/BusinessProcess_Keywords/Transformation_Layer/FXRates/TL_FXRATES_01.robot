@@ -13,7 +13,7 @@ Send FXRates GS Group 1 File
     ...    @update: jdelacru    04SEP2020    - added new argument for the location of template files, TemplateFilePath
     [Arguments]    ${ExcelPath}
     ###PREREQUISITE###
-    # Login to Loan IQ    ${TL_USERNAME}    ${TL_PASSWORD}
+    Login to Loan IQ    ${TL_USERNAME}    ${TL_PASSWORD}
     ${fundingDeskStatus}    Get Funding Desk Status from Table Maintenance    &{ExcelPath}[FundingDesk_1]
     ${CSVFile}    Set Variable    &{ExcelPath}[InputFilePath]&{ExcelPath}[InputGSFile]
     ${TransformedDataFile_FXRates}    Set Variable    &{ExcelPath}[InputFilePath]${TL_Transformed_Data_FXRates}
