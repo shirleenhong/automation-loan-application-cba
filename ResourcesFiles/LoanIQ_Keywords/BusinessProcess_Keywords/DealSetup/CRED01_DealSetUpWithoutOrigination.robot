@@ -65,6 +65,7 @@ Setup a Bilateral Deal
     ...    AND    Write Data To Excel    Correspondence    Deal_Name    5    ${Deal_Name}    ${APIDataSet}    bTestCaseColumn=True    sColumnReference=rowid
     ...    AND    Write Data To Excel    Correspondence    Deal_Name    6    ${Deal_Name}    ${APIDataSet}    bTestCaseColumn=True    sColumnReference=rowid
     ...    AND    Write Data To Excel    Correspondence    Deal_Name    21    ${Deal_Name}    ${APIDataSet}    bTestCaseColumn=True    sColumnReference=rowid
+    ...    AND    Write Data To Excel    Correspondence    Deal_Name    22    ${Deal_Name}    ${APIDataSet}    bTestCaseColumn=True    sColumnReference=rowid
     
     ###For Scenario 7###
     Run Keyword If    '${SCENARIO}'=='7'    Run Keywords    Write Data To Excel    SERV35_Terminate_FacilityDeal    Deal_Name    ${rowid}    ${Deal_Name}
@@ -141,6 +142,7 @@ Create Facility
     Write Data To Excel    Correspondence    Facility_Name    5    ${Facility_Name}    ${APIDataSet}    bTestCaseColumn=True    sColumnReference=rowid
     Write Data To Excel    Correspondence    Facility_Name    6    ${Facility_Name}    ${APIDataSet}    bTestCaseColumn=True    sColumnReference=rowid
     Write Data To Excel    Correspondence    Facility_Name    21    ${Facility_Name}    ${APIDataSet}    bTestCaseColumn=True    sColumnReference=rowid
+    Write Data To Excel    Correspondence    Facility_Name    22    ${Facility_Name}    ${APIDataSet}    bTestCaseColumn=True    sColumnReference=rowid
 
 
     ###For Scenario 4###
