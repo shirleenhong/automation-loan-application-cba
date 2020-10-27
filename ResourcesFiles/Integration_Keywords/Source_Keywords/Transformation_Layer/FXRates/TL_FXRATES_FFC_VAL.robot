@@ -156,8 +156,9 @@ Validate FFC for TL FX Rate Success with Multiple Files
     [Documentation]    This keyword is used to validate OpenAPI and Distributor in MCH FFC UI.
     ...    @author: cfrancis    01AUG2019    - initial create
     ...    @update: nbautist    07OCT2020    - new argument to replace incorrect input parameter; removed incorrect index; updated file extension
+    ...    @update: jdelacru    26OCT2020    - added new argument FileNameWithTimeStamp; added creating list for aExpectedRefList for correct argument type
     [Arguments]    ${sInputFilePath}    ${sInputFileName}    ${sInputXML}    ${sOutputFilePath}    ${sOutputFileName}    ${sOutputXML}
-    ...    ${sXMLExcelFile}    ${sfundingDeskStatus}    ${sResponse}    ${sResponseMechanism}    ${iIndex}    ${sInputGSFile}    ${GSFilename}    ${sFundingDesk}=NY    ${Delimiter}=None
+    ...    ${sXMLExcelFile}    ${sfundingDeskStatus}    ${sResponse}    ${sResponseMechanism}    ${iIndex}    ${sInputGSFile}    ${FileNameWithTimeStamp}=None    ${sFundingDesk}=NY    ${Delimiter}=None
     Login to MCH UI
     
     ###FX Rate Splitter###
@@ -166,14 +167,14 @@ Validate FFC for TL FX Rate Success with Multiple Files
     ${InputGSFile_Count}    Get Length    ${InputGSFile_List}
     Wait Until Element Is Visible    ${FFC_Dashboard}    30s
     ${aHeaderRefNameList}    Create List    ${REQUESTS_ID}
-    ${aExpectedRefList}    Create List    ${GSFilename}
+    ${aExpectedRefList}    Create List
+    Append to List    ${aExpectedRefList}    ${FileNameWithTimeStamp}
     Go to Dashboard and Click Source API Name    ${FXRATES_ACK_MESSAGE_SPLITTER}    ${CUSTOM_INTERFACE_INSTANCE}
     ${ColumnIndex}    Filter by Multiple Reference Headers and Values and Return Column Index    ${aHeaderRefNameList}    ${aExpectedRefList}
     ${Results_Row_Count}    SeleniumLibraryExtended.Get Element Count    ${Results_Row}
     ${Row_Count_Diff}    Evaluate    ${Results_Row_Count} - ${InputGSFile_Count}
     ${Results_Row_Count_Temp}    Evaluate    ${Results_Row_Count} - ${Row_Count_Diff}
     ${Results_Row_Count}    Set Variable If    ${Results_Row_Count} > ${InputGSFile_Count}    ${Results_Row_Count_Temp}    ${Results_Row_Count}  
-
     ${RequestID_UI}    Get Results Table Column Value by Header Title and Return    ${Results_Row_Count}    ${REQUESTS_ID}
     ${REQUESTID_VALUE}    Split Request ID From Splitter Queue for TL and Return Final Request ID    ${RequestID_UI}    |   
       
@@ -213,6 +214,7 @@ Validate Multiple Files for Success on TL FX Rates in FFC
     [Documentation]    This keyword is used to validate multiple FX Rates files in FFC
     ...    @author: cfrancis    01AUG2019    - initial create
     ...    @update: nbautist    08OCT2020    - updated extension
+    ...    @update: jdelacru    26OCT2020    - added getting the value from list for GSFILENAME_WITHTIMESTAMP to be assigned to new argument FileNameWithTimeStamp
     [Arguments]    ${sInputFilePath}    ${sInputFileName}    ${sInputXML}    ${sOutputFilePath}    ${sOutputFileName}    ${sOutputXML}
     ...    ${sXMLExcelFile}    ${sfundingDeskStatus}    ${sResponse}    ${sResponseMechanism}    ${sInputGSFile}    ${sFundingDesk}    ${Delimiter}=None
     @{InputGSFile_List}    Run Keyword If    '${Delimiter}'=='None'    Split String    ${sInputGSFile}    ,
@@ -221,8 +223,9 @@ Validate Multiple Files for Success on TL FX Rates in FFC
     @{XMLExcelFile_NoExt}    Split String    ${sXMLExcelFile}    .
     ${sXMLExcelFile_NoExt}    Set Variable    @{XMLExcelFile_NoExt}[0]
     :FOR    ${Index}    IN RANGE    ${InputGSFile_Count}
+    \    ${FileNameWithTimeStamp}    Get From List    ${GSFILENAME_WITHTIMESTAMP}    ${Index}
     \    Validate FFC for TL FX Rate Success with Multiple Files    ${sInputFilePath}    ${sInputFileName}_${Index}    ${sInputXML}_${Index}    ${sOutputFilePath}    ${sOutputFileName}_${Index}    ${sOutputXML}_${Index}
-         ...    ${sXMLExcelFile_NoExt}${Index}.${XLSX}    ${fundingDeskStatus}    ${sResponse}_${Index}    ${sResponseMechanism}_${Index}    ${Index}    ${sInputGSFile}    @{ARCHIVE_GSFILENAME_LIST}[${Index}]    ${sFundingDesk}
+         ...    ${sXMLExcelFile_NoExt}${Index}.${XLSX}    ${fundingDeskStatus}    ${sResponse}_${Index}    ${sResponseMechanism}_${Index}    ${Index}    ${sInputGSFile}    ${FileNameWithTimeStamp}    ${sFundingDesk}
     Set Global Variable    ${COUNTER}    ${Index}
 
 Verify Multiple Expected Value in the Given JSON File for FXRates TL
