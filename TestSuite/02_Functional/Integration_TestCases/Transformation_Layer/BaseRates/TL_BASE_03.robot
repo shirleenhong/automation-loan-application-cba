@@ -1,6 +1,6 @@
 *** Settings ***
 Resource    ../../../../../Configurations/Integration_Import_File.robot
-# Suite Teardown    Test Suite Tear Down
+Suite Teardown    Test Suite Tear Down
 
 *** Test Cases ***
 
@@ -10,6 +10,3 @@ TL_BASE_03
     
     Set Global Variable    ${rowid}    3
     Mx Execute Template With Multiple Data    Send Multiple Golden Source Files    ${ExcelPath}    ${rowid}    BaseRate_Fields
-    
-    # ${Test}    Evaluate    2.642/100
-    # ${Test}    Evaluate    4.323*0.01
