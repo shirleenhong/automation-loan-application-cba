@@ -48,9 +48,9 @@ Create Comprehensive Repricing - SERV08C
 Ongoing Fee Payment for Bilateral Deal - SERV29
     [Tags]    07 Update and Pay the Commitment Fee - SERV29
     Mx Execute Template With Multiple Data    Update Commitment Fee Cycle    ${ExcelPath}    ${rowid}    SERV29_PaymentFees   
-    Log to Console    Pause Execution - Run Daily EOD
-    Pause Execution    
-    Mx Execute Template With Multiple Data    Pay Commitment Fee Amount - Syndicated with Secondary Sale    ${ExcelPath}    ${rowid}    SERV29_PaymentFees
+    # Log to Console    Pause Execution - Run Daily EOD
+    # Pause Execution    
+    # Mx Execute Template With Multiple Data    Pay Commitment Fee Amount - Syndicated with Secondary Sale    ${ExcelPath}    ${rowid}    SERV29_PaymentFees
 
 Create Agency Fee Payment - SERV30
     [Tags]    08 Create Agency Fee Payment - SERV30
