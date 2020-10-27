@@ -386,9 +386,13 @@ Create Initial Loan Drawdown for Syndicated Deal with Repayment Schedule
     ${Loan_Alias}    Input Initial Loan Drawdown Details    &{ExcelPath}[Outstanding_Type]    &{ExcelPath}[Facility_Name]    &{ExcelPath}[Borrower1_ShortName]    &{ExcelPath}[Loan_PricingOption]    &{ExcelPath}[Loan_Currency]
     Write Data To Excel    SERV01_LoanDrawdown   Loan_Alias    ${rowid}    ${Loan_Alias}
     Write Data To Excel    SERV21_InterestPayments   Loan_Alias    ${rowid}    ${Loan_Alias}
+    
     Run Keyword If    '${SCENARIO}'=='1'    Write Data To Excel    Correspondence    Loan_Alias    ${rowid}    ${Loan_Alias}    ${APIDataSet}    bTestCaseColumn=True    sColumnReference=rowid
-    Run Keyword If    '${SCENARIO}'=='2'    Write Data To Excel    SERV21_InterestPayments   Loan_Alias    ${rowid}    ${Loan_Alias}
-    Run Keyword If    '${SCENARIO}'=='2'    Write Data To Excel    SERV18_Payments   Loan_Alias    ${rowid}    ${Loan_Alias}
+    
+    Run Keyword If    '${SCENARIO}'=='2'    Run Keywords    Write Data To Excel    SERV21_InterestPayments   Loan_Alias    ${rowid}    ${Loan_Alias}
+    ...    AND    Write Data To Excel    SERV18_Payments   Loan_Alias    ${rowid}    ${Loan_Alias}
+    ...    AND    Write Data To Excel    SERV18_Payments   Loan_Alias    ${rowid}    ${Loan_Alias}
+    ...    AND    Write Data To Excel    Correspondence    Loan_Alias    20    ${Loan_Alias}    ${APIDataSet}    bTestCaseColumn=True    sColumnReference=rowid
         
     ###Initial Loan Drawdown###
     Run Keyword If    '${SCENARIO}'=='7'    Write Data To Excel    SERV35_Terminate_FacilityDeal    Loan_Alias    7    ${Loan_Alias}

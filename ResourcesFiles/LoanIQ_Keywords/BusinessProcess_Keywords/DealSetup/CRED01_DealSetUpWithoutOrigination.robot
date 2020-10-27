@@ -220,6 +220,7 @@ Setup Syndicated Deal
     Write Data To Excel    SERV20_UnschedPrincipalPayments    Deal_Name    ${rowid}    ${Deal_Name}
     Write Data To Excel    SYND02_PrimaryAllocation    Deal_Name    ${rowid}    ${Deal_Name}
     Write Data To Excel    Correspondence    Deal_Name    7    ${Deal_Name}    ${APIDataSet}    bTestCaseColumn=True    sColumnReference=rowid
+    Write Data To Excel    Correspondence    Deal_Name    20    ${Deal_Name}    ${APIDataSet}    bTestCaseColumn=True    sColumnReference=rowid
       
     ###Deal Select Window###
     Create New Deal    ${Deal_Name}    ${Deal_Alias}    &{ExcelPath}[Deal_Currency]    &{ExcelPath}[Deal_Department]    &{ExcelPath}[Deal_SalesGroup]
@@ -323,6 +324,7 @@ Setup Term Facility for Syndicated Deal
     ...    AND    Write Data To Excel    SERV23_PaperclipTransaction    Facility_Name    ${rowid}    ${Facility_Name}
     ...    AND    Write Data To Excel    SERV05_SBLCIssuance    Facility_Name    ${rowid}    ${Facility_Name}
     ...    AND    Write Data To Excel    Correspondence    Facility_Name    7    ${Facility_Name}    ${APIDataSet}    bTestCaseColumn=True    sColumnReference=rowid
+    ...    AND    Write Data To Excel    Correspondence    Facility_Name    20    ${Facility_Name}    ${APIDataSet}    bTestCaseColumn=True    sColumnReference=rowid
 
     
     Run Keyword If    '${SCENARIO}'=='5'    Run Keywords    Write Data To Excel    SERV13_InterestCapitalization    Loan_FacilityName    ${rowid}    ${Facility_Name}
