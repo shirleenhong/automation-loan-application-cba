@@ -35,7 +35,6 @@ Create Initial Loan Drawdown with Repayment Schedule
     Run Keyword If    '${SCENARIO}'=='1'    Run Keywords    Write Data To Excel    Correspondence    Loan_Alias    ${rowid}    ${Loan_Alias}    ${APIDataSet}    bTestCaseColumn=True    sColumnReference=rowid
     ...  AND    Write Data To Excel    Correspondence    Loan_Alias    3    ${Loan_Alias}    ${APIDataSet}    bTestCaseColumn=True    sColumnReference=rowid
     ...  AND    Write Data To Excel    Correspondence    Loan_Alias    21    ${Loan_Alias}    ${APIDataSet}    bTestCaseColumn=True    sColumnReference=rowid
-    ...  AND    Write Data To Excel    Correspondence    Loan_Alias    22    ${Loan_Alias}    ${APIDataSet}    bTestCaseColumn=True    sColumnReference=rowid
     
     Run Keyword If    '${SCENARIO}'=='2'    Write Data To Excel    SERV21_InterestPayments   Loan_Alias    ${rowid}    ${Loan_Alias}
     Run Keyword If    '${SCENARIO}'=='2'    Write Data To Excel    SERV18_Payments   Loan_Alias    ${rowid}    ${Loan_Alias}
