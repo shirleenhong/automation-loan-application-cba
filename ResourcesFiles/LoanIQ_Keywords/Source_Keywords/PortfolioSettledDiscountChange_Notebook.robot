@@ -55,6 +55,7 @@ Select Portfolio Position Based on Portfolio Name and Facility Name for Portfoli
     Mx LoanIQ Set    ${LIQ_Make_Selections_SettledDiscountChage_RadioButton}    ON
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/PortfolioPosition
     Mx LoanIQ Click    ${LIQ_Make_Selections_OK_Button}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/PortfolioSettledDiscountChange
     
 Update Portfolio Settled Discount Change Details
     [Documentation]    This keyword is used to input details in Portfolio Settled Discount Chnage Window
@@ -83,7 +84,6 @@ Update GLOffset Details
 
     Mx LoanIQ Activate Window    ${LIQ_PortfolioSettledDiscountChange_Window}
     Mx LoanIQ Click    ${LIQ_PortfolioSettledDiscountChange_GLOffset_Button}
-    # Mx LoanIQ Click Element If Present    ${LIQ_PortfolioSettledDiscountChange_GLOffset_Button}
 
     Mx LoanIQ Activate Window    ${LIQ_DebitGLOffsetDetails_Window}
     Run Keyword If    '${GL_Offset_Type}'=='Existing WIP'    Mx LoanIQ Set    ${LIQ_DebitGLOffsetDeatils_ExistingWIP_RadioButton}    ON
