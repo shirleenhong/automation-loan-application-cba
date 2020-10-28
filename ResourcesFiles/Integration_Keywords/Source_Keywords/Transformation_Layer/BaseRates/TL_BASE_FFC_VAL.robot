@@ -68,8 +68,9 @@ Validate FFC for TL Base Rate Success with Multiple Files
     ...    @update: jdelacru    21JUN2019    - added for loop in getting the RequestID from Base Splitter
     ...    @update: jdelacru    08AUG2019    - added for loops for APISource, CustomCBAPush, TextJMS and Response Mechanism to handle validation in processing multiple files
     ...    @update: jdelacru    28AUG2019    - added _${index} in validating OpenAPI base rate and textjms, this is lookup for same file details with different rates.
+    ...    @update: jdelacru    27OCT2020    - deleted exit for loop to validate all files being processed
     [Arguments]    ${sInputFilePath}    ${sInputFileName}    ${sInputXML}    ${sOutputFilePath}    ${sOutputFileName}    ${sOutputXML}    ${sResponse}    ${sResponseMechanism}
-    
+        
     Login to MCH UI
     Wait Until Element Is Visible    ${FFC_Dashboard}    30s
     
@@ -89,7 +90,6 @@ Validate FFC for TL Base Rate Success with Multiple Files
     \    Append To List    ${RequestID_List}    ${REQUESTID_VALUE}
     \    ${GSFile_Count}    Evaluate    ${GSFile_Count}-1
     \    Log    ${RequestID_List}
-    \    Exit For Loop If    ${i}==${GSFile_Count}
     Set Global Variable    ${REQUESTID_LIST}    ${RequestID_List}
     
     ###OpenAPI###

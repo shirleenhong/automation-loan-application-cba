@@ -259,8 +259,9 @@ Run Online Acrual to Commitment Fee
     ...    @update: fmamaril    18SEP2019    Add click to toogle inquiry mode
     ...    @update: ehugo    	04JUN2020    - added screenshot
     ...    @update: dahijara    16JUL2020    - Fix warnings - too many variables assigned in Mx LoanIQ Click Button On Window
-    ...    @update: makcamps	22OCT2020	 - added click LIQ_Warning_OK_Button if present
+    ...    @update: makcamps	22OCT2020	 - added click warning buttons if present
     mx LoanIQ activate window    ${LIQ_CommitmentFee_Window}
+    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
     mx LoanIQ click element if present    ${LIQ_Warning_OK_Button}
     Mx LoanIQ Select Window Tab    ${LIQ_CommitmentFee_Tab}    Workflow
     mx LoanIQ click element if present    ${LIQ_OngoingFee_InquiryMode_Button}
