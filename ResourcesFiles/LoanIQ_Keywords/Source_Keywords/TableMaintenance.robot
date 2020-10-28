@@ -583,6 +583,25 @@ Get Branch Code from Table Maintenance
     Log    Portfolio code for ${sBranchDesc} is ${BranchCode}    
     mx LoanIQ click    ${LIQ_Branch_Exit_Button}
     [Return]    ${BranchCode}
+    
+Get Customer Name from Table Maintenance
+    [Documentation]    This keyword returns customer name inside the Table Maintenance
+    ...    @author: fluberio    26OCT2020    Initial Create
+    [Arguments]    ${sBranchDesc}
+    mx LoanIQ click    ${LIQ_TableMaintenance_Button}    
+    Search in Table Maintenance    Branch
+    mx LoanIQ activate window    ${LIQ_Branch_Window}    
+    Mx LoanIQ Set    ${LIQ_Branch_ShowALL_RadioButton}    ON  
+    ${BranchCode}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_Branch_Tree}    ${sBranchDesc}%Code%BranchCode
+    Mx LoanIQ DoubleClick    ${LIQ_Branch_Tree}    ${BranchCode}
+    mx LoanIQ click element if present    ${LIQ_Information_OK_Button}
+    mx LoanIQ click    ${LIQ_Branch_Update_Customer_Name}
+    ${Customer_Name}    Mx LoanIQ Get Data    ${LIQ_Branch_Update_Customer_Name}    text%Customer_Name
+    Log    Customer Name for ${sBranchDesc} is ${Customer_Name}   
+    Take Screenshot    ${Screenshot_Path}/Screenshots/LoanIQ/TableMaintenance_BranchUpdate
+    Mx LoanIQ click    ${LIQ_Branch_Update_Cancel_Button}
+    mx LoanIQ click    ${LIQ_Branch_Exit_Button}
+    [Return]    ${Customer_Name}
 
 Check the Short Name Code in GL Short Name Window
     [Documentation]    This keyword is used to check the Short Name Code in LIQ Screen - G/L Short Name Window
