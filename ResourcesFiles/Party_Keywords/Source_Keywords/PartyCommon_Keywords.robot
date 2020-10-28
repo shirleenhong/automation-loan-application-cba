@@ -898,3 +898,46 @@ Add Associated Zone To User
     Capture Page Screenshot    ${screenshot_path}/Screenshots/Party/AmendUserPage-{index}.png
     Mx Click Element    ${Party_AmendUser_Next_Button}
     Capture Page Screenshot    ${screenshot_path}/Screenshots/Party/AmendUserPage-{index}.png
+
+Change Default Zone
+    [Documentation]    This keyword changes the default zone of the user.
+    ...    @author: nbautist    27OCT2020    - initial creation
+    [Arguments]    ${sUserZone}
+    
+    Mx Click Element    ${Party_AmendUser_Default_Zone_Search_Button}
+    Wait Until Element Is Visible    ${Party_AmendUser_Select_Zone_Branch_Dialog_Title}    20s
+    Mx Input Text    ${Party_AmendUser_Select_Zone_Branch_Textbox}    ${sUserZone}
+    Mx Click Element    ${Party_AmendUser_Select_Zone_Branch_Next_Button}
+    Capture Page Screenshot    ${screenshot_path}/Screenshots/Party/AmendUserPage-{index}.png
+
+Restore Default Zone
+    [Documentation]    This keyword changes the default zone of the user.
+    ...    @author: nbautist    27OCT2020    - initial creation
+    [Arguments]    ${sUserZone}
+    
+    Change Default Zone    ${sUserZone}
+    Mx Click Element    ${Party_AmendUser_Next_Button}
+    Capture Page Screenshot    ${screenshot_path}/Screenshots/Party/AmendUserPage-{index}.png
+    
+Get Default Zone
+    [Documentation]    This keyword gets the default zone of the user.
+    ...    @author: nbautist    27OCT2020    - initial creation
+    
+    ${Value}    SeleniumLibraryExtended.Get Element Attribute    ${Party_AmendUser_Default_Zone_Selected}    value
+    ${Items_Raw}    SeleniumLibraryExtended.Get Element Attribute    ${Party_AmendUser_Default_Zone_Items}    data
+    ${Items_Raw}    Fetch From Right    ${Items_Raw}    items: [
+    ${Items}    Fetch From Left    ${Items_Raw}    ]}
+    ${Count}    Get Count   ${Items}    03description
+    ${Count}    Evaluate    ${Count}+1    
+
+    :FOR    ${Index}    IN RANGE    1    ${Count}
+    \    ${Country_Pair}    Fetch From Left    ${Items}    ,{
+    \    ${Items}    Remove String    ${Items}    ${Country_Pair}
+    \    ${Items}    Strip String    ${Items}    mode=left    characters=,
+    \    ${Country_Pair}    Replace String    ${Country_Pair}    ""    "None"
+    \    ${Country_Pair_Dictionary}    Evaluate    ${Country_Pair}
+    \    ${Country_Code}    Get From Dictionary    ${Country_Pair_Dictionary}    03referenceID
+    \    ${Zone}    Run Keyword If    "${Country_Code}"=="${Value}"    Get From Dictionary    ${Country_Pair_Dictionary}    03description
+    \    Exit For Loop If    '${Zone}'!='${None}'
+
+    [Return]    ${Zone}

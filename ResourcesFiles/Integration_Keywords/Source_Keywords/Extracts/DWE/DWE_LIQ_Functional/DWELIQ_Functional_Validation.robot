@@ -651,7 +651,7 @@ Navigate to Notebook Window thru RID
     mx LoanIQ activate window    ${LIQ_SelectByRID_Window}
     Mx LoanIQ Select Combo Box Value    ${LIQ_SelectByRID_DataObject_Field}    ${sDataObject_Value}    
     mx LoanIQ enter    ${LIQ_SelectByRID_RID_Field}    ${sRID_Value}
-    Take Screenshot     ${screenshot_path}/Screenshots/DWE/RID Code Validation        
+    Take Screenshot    ${screenshot_path}/Screenshots/DWE/RID Code Validation        
     mx LoanIQ click    ${LIQ_SelectByRID_OK_Button}
     
     ${status}    Run Keyword And Return Status    Mx LoanIQ Verify Object Exist    ${LIQ_Error_Window}            VerificationData="Yes"
@@ -1342,8 +1342,9 @@ Get Column Records for VLS_FACILITY
 
 Validate Records for VLS_FACILITY
     [Documentation]    This keyword validates the records for VLS_Facility
-    ...    @author: ehugo    16SEP2019
-    ...    @update: mgaling    17FEB2020    added Run Keyword And Continue On Failure on the validation keywords
+    ...    @author: ehugo    16SEP2019    - initial create
+    ...    @update: mgaling    17FEB2020    - added Run Keyword And Continue On Failure on the validation keywords
+    ...    @update: mgaling    27OCT2020    - removed the keywords that handle the alert and lockout 
     [Arguments]    ${aFacilityID_List}    ${aMulti_Currency_Dictionary}    ${aEffective_Date_Dictionary}    ${aFinal_Maturity_Dictionary}    ${aExpiry_Date_Dictionary}    ${aCurrency_Dictionary}
     ...    ${aAgreement_Date_Dictionary}    ${aFacility_Type_Dictionary}    ${aTermination_Date_Dictionary}    ${aFL_Drawdown_Date_Dictionary}    ${aCommitted_Dictionary}    ${aBranch_Dictionary}
     
@@ -1355,51 +1356,40 @@ Validate Records for VLS_FACILITY
     ${Row_Count}    Get Length    ${aFacilityID_List}    
     
     :FOR    ${i}    IN RANGE    0    ${Row_Count}
-    \    ${Current_FacilityID}    Set Variable    ${aFacilityID_List}[${i}]
+    \    ${Current_FacilityID}    Set Variable    @{aFacilityID_List}[${i}]
     \    Run Keyword If    '${Current_FacilityID.strip()}'=='NONE'    Log    Facility ID is NONE. Skipping record.
     \    Continue For Loop If    '${Current_FacilityID.strip()}'=='NONE'
     \    
-    \    ${Current_Multi_Currency}    Get From Dictionary    ${aMulti_Currency_Dictionary}    ${aFacilityID_List}[${i}]
-    \    ${Current_Effective_Date}    Get From Dictionary    ${aEffective_Date_Dictionary}    ${aFacilityID_List}[${i}]
-    \    ${Current_Final_Maturity}    Get From Dictionary    ${aFinal_Maturity_Dictionary}    ${aFacilityID_List}[${i}]
-    \    ${Current_Expiry_Date}    Get From Dictionary    ${aExpiry_Date_Dictionary}    ${aFacilityID_List}[${i}]
-    \    ${Current_Currency}    Get From Dictionary    ${aCurrency_Dictionary}    ${aFacilityID_List}[${i}]
-    \    ${Current_Agreement_Date}    Get From Dictionary    ${aAgreement_Date_Dictionary}    ${aFacilityID_List}[${i}]
-    \    ${Current_Facility_Type}    Get From Dictionary    ${aFacility_Type_Dictionary}    ${aFacilityID_List}[${i}]
-    \    ${Current_Termination_Date}    Get From Dictionary    ${aTermination_Date_Dictionary}    ${aFacilityID_List}[${i}]
-    \    ${Current_FL_Drawdown_Date}    Get From Dictionary    ${aFL_Drawdown_Date_Dictionary}    ${aFacilityID_List}[${i}]
-    \    ${Current_Committed}    Get From Dictionary    ${aCommitted_Dictionary}    ${aFacilityID_List}[${i}]
-    \    ${Current_Branch}    Get From Dictionary    ${aBranch_Dictionary}    ${aFacilityID_List}[${i}]
+    \    ${Current_Multi_Currency}    Get From Dictionary    ${aMulti_Currency_Dictionary}    @{aFacilityID_List}[${i}]
+    \    ${Current_Effective_Date}    Get From Dictionary    ${aEffective_Date_Dictionary}    @{aFacilityID_List}[${i}]
+    \    ${Current_Final_Maturity}    Get From Dictionary    ${aFinal_Maturity_Dictionary}    @{aFacilityID_List}[${i}]
+    \    ${Current_Expiry_Date}    Get From Dictionary    ${aExpiry_Date_Dictionary}    @{aFacilityID_List}[${i}]
+    \    ${Current_Currency}    Get From Dictionary    ${aCurrency_Dictionary}    @{aFacilityID_List}[${i}]
+    \    ${Current_Agreement_Date}    Get From Dictionary    ${aAgreement_Date_Dictionary}    @{aFacilityID_List}[${i}]
+    \    ${Current_Facility_Type}    Get From Dictionary    ${aFacility_Type_Dictionary}    @{aFacilityID_List}[${i}]
+    \    ${Current_Termination_Date}    Get From Dictionary    ${aTermination_Date_Dictionary}    @{aFacilityID_List}[${i}]
+    \    ${Current_FL_Drawdown_Date}    Get From Dictionary    ${aFL_Drawdown_Date_Dictionary}    @{aFacilityID_List}[${i}]
+    \    ${Current_Committed}    Get From Dictionary    ${aCommitted_Dictionary}    @{aFacilityID_List}[${i}]
+    \    ${Current_Branch}    Get From Dictionary    ${aBranch_Dictionary}    @{aFacilityID_List}[${i}]
     \    
     \    ###Select By RID###
-    \    Select By RID    Facility    ${aFacilityID_List}[${i}]
+    \    Select By RID    Facility    @{aFacilityID_List}[${i}]
     \    
-    \    Sleep    2s    
-    \    ${AlertsWindow_isDisplayed}    Run Keyword And Return Status    Mx LoanIQ Verify Object Exist    ${LIQ_Facility_Alerts_Window}         VerificationData="Yes"
-    \    Run Keyword If     ${AlertsWindow_isDisplayed}==True    Run Keywords
-        ...    mx LoanIQ activate window    ${LIQ_Facility_Alerts_Window}
-        ...    AND    mx LoanIQ click    ${LIQ_Facility_Alerts_Cancel_Button}
-    \    Sleep    2s
-    \    ${LockoutsWindow_isDisplayed}    Run Keyword And Return Status    Mx LoanIQ Verify Object Exist    ${LIQ_Facility_Lockouts_Window}        VerificationData="Yes"
-    \    Run Keyword If     ${LockoutsWindow_isDisplayed}==True    Run Keywords
-        ...    mx LoanIQ activate window    ${LIQ_FacilityLockouts_Window}
-    	...    AND    mx LoanIQ click    ${LIQ_Facility_Lockouts_Cancel_Button}    
-    \    
-    \    Run Keyword And Continue On Failure    Validate FAC_IND_MULTI_CURR for VLS_FACILITY - Summary Tab    ${aFacilityID_List}[${i}]    ${Current_Multi_Currency}
-    \    Run Keyword And Continue On Failure    Validate FAC_DTE_EFFECTIVE for VLS_FACILITY    ${aFacilityID_List}[${i}]    ${Current_Effective_Date}
-    \    Run Keyword And Continue On Failure    Validate FAC_DTE_FINAL_MAT for VLS_FACILITY    ${aFacilityID_List}[${i}]    ${Current_Final_Maturity}
-    \    Run Keyword And Continue On Failure    Validate FAC_DTE_EXPIRY for VLS_FACILITY    ${aFacilityID_List}[${i}]    ${Current_Expiry_Date}
-    \    Run Keyword And Continue On Failure    Validate FAC_CDE_CURRENCY for VLS_FACILITY    ${aFacilityID_List}[${i}]    ${Current_Currency}
-    \    Run Keyword And Continue On Failure    Validate FAC_DTE_AGREEMENT for VLS_FACILITY    ${aFacilityID_List}[${i}]    ${Current_Agreement_Date}
-    \    Run Keyword And Continue On Failure    Validate FAC_CDE_FAC_TYPE for VLS_FACILITY    ${aFacilityID_List}[${i}]    ${Current_Facility_Type}    ${Facility_Type_List}    ${Facility_Type_Dictionary}
-    \    Run Keyword And Continue On Failure    Validate FAC_DTE_TERM_FAC for VLS_FACILITY    ${aFacilityID_List}[${i}]    ${Current_Termination_Date}
-    \    Run Keyword And Continue On Failure    Validate FAC_DTE_FL_DRAWDWN for VLS_FACILITY - Events Tab    ${aFacilityID_List}[${i}]    ${Current_FL_Drawdown_Date}
-    \    Run Keyword And Continue On Failure    Validate FAC_IND_COMMITTED for VLS_FACILITY    ${aFacilityID_List}[${i}]    ${Current_Committed}
-    \    Run Keyword And Continue On Failure    Validate FAC_DTE_FL_DRAWDWN for VLS_FACILITY - Existing Loans Window    ${aFacilityID_List}[${i}]    ${Current_FL_Drawdown_Date}
+    \    Run Keyword And Continue On Failure    Validate FAC_IND_MULTI_CURR for VLS_FACILITY - Summary Tab    @{aFacilityID_List}[${i}]    ${Current_Multi_Currency}
+    \    Run Keyword And Continue On Failure    Validate FAC_DTE_EFFECTIVE for VLS_FACILITY    @{aFacilityID_List}[${i}]    ${Current_Effective_Date}
+    \    Run Keyword And Continue On Failure    Validate FAC_DTE_FINAL_MAT for VLS_FACILITY    @{aFacilityID_List}[${i}]    ${Current_Final_Maturity}
+    \    Run Keyword And Continue On Failure    Validate FAC_DTE_EXPIRY for VLS_FACILITY    @{aFacilityID_List}[${i}]    ${Current_Expiry_Date}
+    \    Run Keyword And Continue On Failure    Validate FAC_CDE_CURRENCY for VLS_FACILITY    @{aFacilityID_List}[${i}]    ${Current_Currency}
+    \    Run Keyword And Continue On Failure    Validate FAC_DTE_AGREEMENT for VLS_FACILITY    @{aFacilityID_List}[${i}]    ${Current_Agreement_Date}
+    \    Run Keyword And Continue On Failure    Validate FAC_CDE_FAC_TYPE for VLS_FACILITY    @{aFacilityID_List}[${i}]    ${Current_Facility_Type}    ${Facility_Type_List}    ${Facility_Type_Dictionary}
+    \    Run Keyword And Continue On Failure    Validate FAC_DTE_TERM_FAC for VLS_FACILITY    @{aFacilityID_List}[${i}]    ${Current_Termination_Date}
+    \    Run Keyword And Continue On Failure    Validate FAC_DTE_FL_DRAWDWN for VLS_FACILITY - Events Tab    @{aFacilityID_List}[${i}]    ${Current_FL_Drawdown_Date}
+    \    Run Keyword And Continue On Failure    Validate FAC_IND_COMMITTED for VLS_FACILITY    @{aFacilityID_List}[${i}]    ${Current_Committed}
+    \    Run Keyword And Continue On Failure    Validate FAC_DTE_FL_DRAWDWN for VLS_FACILITY - Existing Loans Window    @{aFacilityID_List}[${i}]    ${Current_FL_Drawdown_Date}
     \
-    \    ${Customer_Description}    ${Branch_Description}    Get Branch value for FAC_CDE_BRANCH in VLS_FACILITY    ${aFacilityID_List}[${i}]
-    \    Run Keyword If    '${Customer_Description}'!='${EMPTY}'    Set To Dictionary    ${Customer_Description_Dictionary}    ${aFacilityID_List}[${i}]=${Customer_Description}
-    \    Run Keyword If    '${Customer_Description}'=='${EMPTY}'    Set To Dictionary    ${Branch_Description_Dictionary}    ${aFacilityID_List}[${i}]=${Branch_Description}
+    \    ${Customer_Description}    ${Branch_Description}    Get Branch value for FAC_CDE_BRANCH in VLS_FACILITY    @{aFacilityID_List}[${i}]
+    \    Run Keyword If    '${Customer_Description.strip()}'!='${EMPTY}'    Set To Dictionary    ${Customer_Description_Dictionary}    @{aFacilityID_List}[${i}]=${Customer_Description}
+         ...    ELSE    Set To Dictionary    ${Branch_Description_Dictionary}    @{aFacilityID_List}[${i}]=${Branch_Description}
     \    
     \    mx LoanIQ close window    ${LIQ_FacilityNotebook_Window}    
     
@@ -1409,92 +1399,115 @@ Validate Records for VLS_FACILITY
 
 Validate FAC_IND_MULTI_CURR for VLS_FACILITY - Summary Tab
     [Documentation]    This keyword validates FAC_IND_MULTI_CURR in Facility Notebook Summary Tab for VLS_Facility
-    ...    @author: ehugo    16SEP2019
+    ...    @author: ehugo    16SEP2019    - initial create
+    ...    @update: mgaling    27OCT2020    - added FOR LOOP to handle alerts and lock out window
+    ...                                     - added screenshotpath                                       
     [Arguments]    ${sFacilityID}    ${sExpected_MultiCurrency_Value}    
+
+    :FOR    ${i}    IN RANGE    10
+    \    ${AlertsWindow_isDisplayed}    Run Keyword And Return Status    Mx LoanIQ Verify Object Exist    ${LIQ_Facility_Alerts_Window}         VerificationData="Yes"
+    \    Run Keyword If     ${AlertsWindow_isDisplayed}==${True}    Run Keywords
+         ...    mx LoanIQ activate window    ${LIQ_Facility_Alerts_Window}
+         ...    AND    mx LoanIQ click    ${LIQ_Facility_Alerts_Cancel_Button}
+    \    Exit For Loop If    ${AlertsWindow_isDisplayed}==${True}
+  
+    :FOR    ${i}    IN RANGE    10
+    \    ${LockoutsWindow_isDisplayed}    Run Keyword And Return Status    Mx LoanIQ Verify Object Exist    ${LIQ_Facility_Lockouts_Window}         VerificationData="Yes"
+    \    Run Keyword If     ${LockoutsWindow_isDisplayed}==${True}    Run Keywords
+         ...    mx LoanIQ activate window    ${LIQ_FacilityLockouts_Window}
+         ...    AND    mx LoanIQ click    ${LIQ_Facility_Lockouts_Cancel_Button}
+    \    Exit For Loop If    ${LockoutsWindow_isDisplayed}==${True}
     
     mx LoanIQ activate window    ${LIQ_FacilityNotebook_Window}    
-    Take Screenshot    MultiCurrency_SummaryTab
+    Take Screenshot    ${screenshot_path}/Screenshots/DWE/MultiCurrency_SummaryTab
     ${Actual_MultiCurrency_Value}    Mx LoanIQ Get Data    ${LIQ_FacilitySummary_MultiCurrencyFacility_Checkbox}    value%Actual_MultiCurrency_Value
-    Run Keyword If    '${sExpected_MultiCurrency_Value}'=='Y' and '${Actual_Multi_Currency_Value}'=='1'    Log    Multi-Currency checkbox is correctly ticked for ${sFacilityID}
-    Run Keyword If    '${sExpected_MultiCurrency_Value}'=='N' and '${Actual_Multi_Currency_Value}'=='0'    Log    Multi-Currency checkbox is correctly unticked for ${sFacilityID}
-    Run Keyword If    '${sExpected_MultiCurrency_Value}'=='Y' and '${Actual_Multi_Currency_Value}'=='0'    Run Keyword And Continue On Failure    Fail    Multi-Currency checkbox for ${sFacilityID} is unticked in LIQ but is expected to be ticked in CSV.
-    Run Keyword If    '${sExpected_MultiCurrency_Value}'=='N' and '${Actual_Multi_Currency_Value}'=='1'    Run Keyword And Continue On Failure    Fail    Multi-Currency checkbox for ${sFacilityID} is ticked in LIQ but is expected to be unticked in CSV.
-    
+    Run Keyword If    '${sExpected_MultiCurrency_Value}'=='Y' and '${Actual_MultiCurrency_Value}'=='1'    Log    Multi-Currency checkbox is correctly ticked for ${sFacilityID}
+    ...    ELSE IF    '${sExpected_MultiCurrency_Value}'=='N' and '${Actual_MultiCurrency_Value}'=='0'    Log    Multi-Currency checkbox is correctly unticked for ${sFacilityID}
+    ...    ELSE IF    '${sExpected_MultiCurrency_Value}'=='Y' and '${Actual_MultiCurrency_Value}'=='0'    Run Keyword And Continue On Failure    Fail    Multi-Currency checkbox for ${sFacilityID} is unticked in LIQ but is expected to be ticked in CSV.
+    ...    ELSE    Run Keyword And Continue On Failure    FAIL    Multi-Currency checkbox for ${sFacilityID} is ticked in LIQ but is expected to be unticked in CSV.  
+
 Validate FAC_DTE_EFFECTIVE for VLS_FACILITY
     [Documentation]    This keyword validates FAC_DTE_EFFECTIVE for VLS_Facility
-    ...    @author: ehugo    16SEP2019
+    ...    @author: ehugo    16SEP2019    - initial create
+    ...    @update: mgaling    27OCT2020    - added screenshotpath and added ELSE condition
     [Arguments]    ${sFacilityID}    ${sExpected_EffectiveDate_Value}    
     
     mx LoanIQ activate window    ${LIQ_FacilityNotebook_Window}
-    Take Screenshot    Effective_Date    
+    Take Screenshot    ${screenshot_path}/Screenshots/DWE/Effective_Date
+        
     ${Actual_EffectiveDate_Value}    Mx LoanIQ Get Data    ${LIQ_FacilitySummary_EffectiveDate_Datefield}    text%Actual_EffectiveDate_Value
     Run Keyword If    '${sExpected_EffectiveDate_Value}'=='0'    Log    No Effective Date value in CSV for Facility ID ${sFacilityID}
     Return From Keyword If    '${sExpected_EffectiveDate_Value}'=='0'    
     ${sExpected_EffectiveDate_Value}    Convert CSV Date Format to LIQ Date Format    ${sExpected_EffectiveDate_Value}
     ${EffectiveDate_isEqual}    Run Keyword And Return Status    Should Be Equal As Strings    ${sExpected_EffectiveDate_Value.strip()}    ${Actual_EffectiveDate_Value.strip()}       
-    Run Keyword If    ${EffectiveDate_isEqual}==True    Log    Effective Date ${sExpected_EffectiveDate_Value} for ${sFacilityID} is correct.
-    Run Keyword If    ${EffectiveDate_isEqual}==False    Run Keyword And Continue On Failure    Fail    Facility ID ${sFacilityID}: Expected Effective Date ${sExpected_EffectiveDate_Value} is not equal to Actual Effective Date ${Actual_EffectiveDate_Value}
+    Run Keyword If    ${EffectiveDate_isEqual}==${True}    Log    Effective Date ${sExpected_EffectiveDate_Value} for ${sFacilityID} is correct.
+    ...    ELSE    Run Keyword And Continue On Failure    FAIL    Facility ID ${sFacilityID}: Expected Effective Date ${sExpected_EffectiveDate_Value} is not equal to Actual Effective Date ${Actual_EffectiveDate_Value}
 
 Validate FAC_DTE_FINAL_MAT for VLS_FACILITY
     [Documentation]    This keyword validates FAC_DTE_FINAL_MAT for VLS_Facility
-    ...    @author: ehugo    18SEP2019
+    ...    @author: ehugo    18SEP2019    - initial create
+    ...    @update: mgaling    27OCT2020    - added screenshotpath and ELSE Condition
     [Arguments]    ${sFacilityID}    ${sExpected_FinalMaturity_Value}    
     
     mx LoanIQ activate window    ${LIQ_FacilityNotebook_Window}
-    Take Screenshot    Final_Maturity_Date    
+    Take Screenshot    ${screenshot_path}/Screenshots/DWE/Final_Maturity_Date    
     ${Actual_FinalMaturity_Value}    Mx LoanIQ Get Data    ${LIQ_FacilitySummary_FinalMaturityDate_Datefield}    text%Actual_FinalMaturity_Value
     Run Keyword If    '${sExpected_FinalMaturity_Value}'=='0'    Log    No Final Maturity value in CSV for Facility ID ${sFacilityID}
     Return From Keyword If    '${sExpected_FinalMaturity_Value}'=='0'   
     ${sExpected_FinalMaturity_Value}    Convert CSV Date Format to LIQ Date Format    ${sExpected_FinalMaturity_Value}
     ${FinalMaturity_isEqual}    Run Keyword And Return Status    Should Be Equal As Strings    ${sExpected_FinalMaturity_Value.strip()}    ${Actual_FinalMaturity_Value.strip()}       
-    Run Keyword If    ${FinalMaturity_isEqual}==True    Log    Final Maturity ${sExpected_FinalMaturity_Value} for ${sFacilityID} is correct.
-    Run Keyword If    ${FinalMaturity_isEqual}==False    Run Keyword And Continue On Failure    Fail    Facility ID ${sFacilityID}: Expected Final Maturity ${sExpected_FinalMaturity_Value} is not equal to Actual Final Maturity ${Actual_FinalMaturity_Value}
+    Run Keyword If    ${FinalMaturity_isEqual}==${True}    Log    Final Maturity ${sExpected_FinalMaturity_Value} for ${sFacilityID} is correct.
+    ...    ELSE    Run Keyword And Continue On Failure    FAIL    Facility ID ${sFacilityID}: Expected Final Maturity ${sExpected_FinalMaturity_Value} is not equal to Actual Final Maturity ${Actual_FinalMaturity_Value}
 
 Validate FAC_DTE_EXPIRY for VLS_FACILITY
     [Documentation]    This keyword validates FAC_DTE_EXPIRY for VLS_Facility
-    ...    @author: ehugo    18SEP2019
+    ...    @author: ehugo    18SEP2019    - initial create
+    ...    @update: mgaling    27OCT2020    - added screenshotpath and ELSE Condition
     [Arguments]    ${sFacilityID}    ${sExpected_Expiry_Value}    
     
     mx LoanIQ activate window    ${LIQ_FacilityNotebook_Window}
-    Take Screenshot    Expiry_Date    
+    Take Screenshot    ${screenshot_path}/Screenshots/DWE/Expiry_Date    
     ${Actual_Expiry_Value}    Mx LoanIQ Get Data    ${LIQ_FacilitySummary_ExpiryDate_Datefield}    text%Actual_Expiry_Value
     Run Keyword If    '${sExpected_Expiry_Value}'=='0'    Log    No Expiry value in CSV for Facility ID ${sFacilityID}
     Return From Keyword If    '${sExpected_Expiry_Value}'=='0'    
     ${sExpected_Expiry_Value}    Convert CSV Date Format to LIQ Date Format    ${sExpected_Expiry_Value}
     ${Expiry_isEqual}    Run Keyword And Return Status    Should Be Equal As Strings    ${sExpected_Expiry_Value.strip()}    ${Actual_Expiry_Value.strip()}       
-    Run Keyword If    ${Expiry_isEqual}==True    Log    Expiry ${sExpected_Expiry_Value} for ${sFacilityID} is correct.
-    Run Keyword If    ${Expiry_isEqual}==False    Run Keyword And Continue On Failure    Fail    Facility ID ${sFacilityID}: Expected Expiry ${sExpected_Expiry_Value} is not equal to Actual Expiry ${Actual_Expiry_Value}
+    Run Keyword If    ${Expiry_isEqual}==${True}    Log    Expiry ${sExpected_Expiry_Value} for ${sFacilityID} is correct.
+    ...    ELSE    Run Keyword And Continue On Failure    FAIL    Facility ID ${sFacilityID}: Expected Expiry ${sExpected_Expiry_Value} is not equal to Actual Expiry ${Actual_Expiry_Value}
 
 Validate FAC_CDE_CURRENCY for VLS_FACILITY
     [Documentation]    This keyword validates FAC_CDE_CURRENCY for VLS_Facility
-    ...    @author: ehugo    18SEP2019
+    ...    @author: ehugo    18SEP2019    - initial create
+    ...    @update: mgaling    27OCT2020    - added screenshotpath and ELSE Condition
     [Arguments]    ${sFacilityID}    ${sExpected_Currency_Value}    
     
     mx LoanIQ activate window    ${LIQ_FacilityNotebook_Window}
-    Take Screenshot    Currency    
+    Take Screenshot    ${screenshot_path}/Screenshots/DWE/Currency    
     ${Actual_Currency_Value}    Mx LoanIQ Get Data    ${LIQ_FacilitySummary_Currency_StaticText}    text%Actual_Currency_Value
     ${Currency_isEqual}    Run Keyword And Return Status    Should Be Equal As Strings    ${sExpected_Currency_Value.strip()}    ${Actual_Currency_Value.strip()}       
-    Run Keyword If    ${Currency_isEqual}==True    Log    Currency ${sExpected_Currency_Value} for ${sFacilityID} is correct.
-    Run Keyword If    ${Currency_isEqual}==False    Run Keyword And Continue On Failure    Fail    Facility ID ${sFacilityID}: Expected Currency ${sExpected_Currency_Value} is not equal to Actual Currency ${Actual_Currency_Value}
+    Run Keyword If    ${Currency_isEqual}==${True}    Log    Currency ${sExpected_Currency_Value} for ${sFacilityID} is correct.
+    ...    ELSE    Run Keyword And Continue On Failure    FAIL    Facility ID ${sFacilityID}: Expected Currency ${sExpected_Currency_Value} is not equal to Actual Currency ${Actual_Currency_Value}
     
 Validate FAC_DTE_AGREEMENT for VLS_FACILITY
     [Documentation]    This keyword validates FAC_DTE_AGREEMENT for VLS_Facility
-    ...    @author: ehugo    18SEP2019
+    ...    @author: ehugo    18SEP2019    - initial create
+    ...    @update: mgaling    27OCT2020    - added screenshotpath and ELSE Condition
     [Arguments]    ${sFacilityID}    ${sExpected_Agreement_Value}    
     
     mx LoanIQ activate window    ${LIQ_FacilityNotebook_Window}
-    Take Screenshot    Agreement_Date    
+    Take Screenshot    ${screenshot_path}/Screenshots/DWE/Agreement_Date    
     ${Actual_Agreement_Value}    Mx LoanIQ Get Data    ${LIQ_FacilitySummary_AgreementDate_Datefield}    text%Actual_Agreement_Value
     Run Keyword If    '${sExpected_Agreement_Value}'=='0'    Log    No Agreement value in CSV for Facility ID ${sFacilityID}
     Return From Keyword If    '${sExpected_Agreement_Value}'=='0'    
     ${sExpected_Agreement_Value}    Convert CSV Date Format to LIQ Date Format    ${sExpected_Agreement_Value}
     ${Agreement_isEqual}    Run Keyword And Return Status    Should Be Equal As Strings    ${sExpected_Agreement_Value.strip()}    ${Actual_Agreement_Value.strip()}       
     Run Keyword If    ${Agreement_isEqual}==True    Log    Agreement ${sExpected_Agreement_Value} for ${sFacilityID} is correct.
-    Run Keyword If    ${Agreement_isEqual}==False    Run Keyword And Continue On Failure    Fail    Facility ID ${sFacilityID}: Expected Agreement ${sExpected_Agreement_Value} is not equal to Actual Agreement ${Actual_Agreement_Value}
+    ...    ELSE    Run Keyword And Continue On Failure    FAIL    Facility ID ${sFacilityID}: Expected Agreement ${sExpected_Agreement_Value} is not equal to Actual Agreement ${Actual_Agreement_Value}
     
 Get Facility Type List of Codes
     [Documentation]    This keyword retrieves the Facility Type List of Codes from Table Maintenance
-    ...    @author: ehugo    18SEP2019
+    ...    @author: ehugo    18SEP2019    - initial create
+    ...    @update: mgaling    27OCT2020    - added screenshotpath
     
     ###Navigate to Actions -> Table Maintenance###
     Select Actions    [Actions];Table Maintenance
@@ -1504,7 +1517,7 @@ Get Facility Type List of Codes
     mx LoanIQ activate window    ${LIQ_BrowseFacilityType_Window}
     
     ${FacilityType_Items}    Mx LoanIQ Store Java Tree Items To Array    ${LIQ_BrowseFacilityType_JavaTree}    FacilityType_Items    Processtimeout=180
-    Take Screenshot    FacilityType_Items
+    Take Screenshot    ${screenshot_path}/Screenshots/DWE/FacilityType_Items
     Log    ${FacilityType_Items}    
     
     ${Codes_List}    Create List
@@ -1528,12 +1541,13 @@ Get Facility Type List of Codes
     
 Validate FAC_CDE_FAC_TYPE for VLS_FACILITY
     [Documentation]    This keyword validates FAC_CDE_FAC_TYPE for VLS_Facility
-    ...    @author: ehugo    18SEP2019
+    ...    @author: ehugo    18SEP2019    - initial create
+    ...    @update: mgaling    27OCT2020    - added ELSE Condition and screenshotpath
     [Arguments]    ${sFacilityID}    ${sExpected_FacilityType_Value}    ${aFacilityType_List}    ${aFacilityType_Dictionary}
     
     ${Count}    Get Match Count    ${aFacilityType_List}    ${sExpected_FacilityType_Value.strip()}    
     Run Keyword If    ${Count}>0    Log    Facility ID ${sFacilityID}: Facility Type ${sExpected_FacilityType_Value} exists in Facility Type List in Table Maintenance
-    Run Keyword If    ${Count}==0    Run Keyword And Continue On Failure    Fail    Facility ID ${sFacilityID}: Facility Type ${sExpected_FacilityType_Value} does not exists in Facility Type List in Table Maintenance
+    ...    ELSE    Run Keyword And Continue On Failure    FAIL    Facility ID ${sFacilityID}: Facility Type ${sExpected_FacilityType_Value} does not exists in Facility Type List in Table Maintenance
     
     ${FacilityType_Description}    Get From Dictionary    ${aFacilityType_Dictionary}    ${sExpected_FacilityType_Value}
     ${hasOpenParenthesis}    Run Keyword And Return Status    Should Contain    ${FacilityType_Description.strip()}    (
@@ -1546,13 +1560,14 @@ Validate FAC_CDE_FAC_TYPE for VLS_FACILITY
     mx LoanIQ activate window    ${LIQ_FacilityNotebook_Window}
     ${FacilityType_Field}    Set Variable    JavaWindow("title:=Facility -.*","displayed:=1").JavaStaticText("attached text:=${FacilityType_Description.strip()}")
     ${FacilityType_IsDisplayed}    Run Keyword And Return Status    Mx LoanIQ Verify Object Exist    ${FacilityType_Field}    VerificationData="Yes"
-    Take Screenshot    FacilityType
-    Run Keyword If    ${FacilityType_IsDisplayed}==True    Log    Facility Type ${sExpected_FacilityType_Value} for ${sFacilityID} is correct.
-    Run Keyword If    ${FacilityType_IsDisplayed}==False    Run Keyword And Continue On Failure    Fail    Facility ID ${sFacilityID}: Expected Facility Type ${sExpected_FacilityType_Value} does not exists in LIQ Facility Window
+    Take Screenshot    ${screenshot_path}/Screenshots/DWE/FacilityType
+    Run Keyword If    ${FacilityType_IsDisplayed}==${True}    Log    Facility Type ${sExpected_FacilityType_Value} for ${sFacilityID} is correct.
+    ...    ELSE    Run Keyword And Continue On Failure    FAIL    Facility ID ${sFacilityID}: Expected Facility Type ${sExpected_FacilityType_Value} does not exists in LIQ Facility Window
     
 Validate FAC_CDE_BRANCH for VLS_FACILITY
     [Documentation]    This keyword validates FAC_CDE_BRANCH for VLS_Facility
-    ...    @author: ehugo    18SEP2019
+    ...    @author: ehugo    18SEP2019    - initial create
+    ...    @update: mgaling    27OCT2020    - updated keywords under FOR Loop function
     [Arguments]    ${aFacilityID_List}    ${aBranch_Dictionary}    ${aCustomer_Description_Dictionary}    ${aBranch_Description_Dictionary}
     
     ###Navigate to Actions -> Table Maintenance###
@@ -1567,40 +1582,47 @@ Validate FAC_CDE_BRANCH for VLS_FACILITY
     
     ${Row_Item_Count}    Get Length    ${aFacilityID_List}
     :FOR    ${i}    IN RANGE    0    ${Row_Item_Count}
-    \    ${Branch_Code}    Get From Dictionary    ${aBranch_Dictionary}    ${aFacilityID_List}[${i}]
-    \    ${FacilityID_isExist}    Run Keyword And Return Status    Get From Dictionary    ${aCustomer_Description_Dictionary}    ${aFacilityID_List}[${i}]
-    \    Continue For Loop If    ${FacilityID_isExist}==False
-    \    ${Branch_Description}    Get From Dictionary    ${aCustomer_Description_Dictionary}    ${aFacilityID_List}[${i}]
+    \    ${Branch_Code}    Get From Dictionary    ${aBranch_Dictionary}    @{aFacilityID_List}[${i}]
+    \    ${FacilityID_isExist}    Run Keyword And Return Status    Get From Dictionary    ${aCustomer_Description_Dictionary}    @{aFacilityID_List}[${i}]
+    \    Continue For Loop If    ${FacilityID_isExist}==${False}
+    \    ${Branch_Description}    Get From Dictionary    ${aCustomer_Description_Dictionary}    @{aFacilityID_List}[${i}]
     \    
     \    ${BranchCode_isChecked}    Run Keyword And Return Status    Dictionary Should Contain Key    ${Code_CustomerDescription_Dictionary}    ${Branch_Code}
-    \    Run Keyword If    ${BranchCode_isChecked}==False    Validate Customer Description for FAC_CDE_BRANCH in VLS_FACILITY    ${Branch_Code}    ${Branch_Description}    ${aFacilityID_List}[${i}]
-    \    Run Keyword If    ${BranchCode_isChecked}==False    Set To Dictionary    ${Code_CustomerDescription_Dictionary}    ${Branch_Code}=${Branch_Description}
-    \    ${BranchDescription_Expected}    Run Keyword If    ${BranchCode_isChecked}==True    Get From Dictionary    ${Code_CustomerDescription_Dictionary}    ${Branch_Code}
-    \    Run Keyword If    ${BranchCode_isChecked}==True and '${BranchDescription_Expected}'!='${Branch_Description}'    Validate Customer Description for FAC_CDE_BRANCH in VLS_FACILITY    ${Branch_Code}    ${Branch_Description}    ${aFacilityID_List}[${i}]
-    \    Run Keyword If    ${BranchCode_isChecked}==True and '${BranchDescription_Expected}'!='${Branch_Description}'    Set To Dictionary    ${Code_CustomerDescription_Dictionary}    ${Branch_Code}=${Branch_Description}
-    \    Run Keyword If    ${BranchCode_isChecked}==True and '${BranchDescription_Expected}'=='${Branch_Description}'    Log    Branch Code ${Branch_Code} with Description ${Branch_Description} already checked.
+    \    Run Keyword If    ${BranchCode_isChecked}==${False}    Run Keywords    Validate Customer Description for FAC_CDE_BRANCH in VLS_FACILITY    ${Branch_Code}    ${Branch_Description}    @{aFacilityID_List}[${i}]
+         ...    AND    Set To Dictionary    ${Code_CustomerDescription_Dictionary}    ${Branch_Code}=${Branch_Description}
+         ...    ELSE    Log    Branch Code and Branch Description is not the same.     
+    \    ${BranchDescription_Expected}    Run Keyword If    ${BranchCode_isChecked}==${True}    Get From Dictionary    ${Code_CustomerDescription_Dictionary}    ${Branch_Code}
+         ...    ELSE    Log    Branch Code and Branch Description is the same.
+    \    Run Keyword If    ${BranchCode_isChecked}==${True} and '${BranchDescription_Expected}'!='${Branch_Description}'    Run Keywords    Validate Customer Description for FAC_CDE_BRANCH in VLS_FACILITY    ${Branch_Code}    ${Branch_Description}    @{aFacilityID_List}[${i}]
+         ...    AND    Set To Dictionary    ${Code_CustomerDescription_Dictionary}    ${Branch_Code}=${Branch_Description}
+         ...    ELSE IF    ${BranchCode_isChecked}==${True} and '${BranchDescription_Expected}'=='${Branch_Description}'    Log    Branch Code ${Branch_Code} with Description ${Branch_Description} already checked.    
+         ...    ELSE    Log    Branch Code and Branch Description is the same. 
     
     ${Branch_Desc_Dictionary_Length}    Get Length    ${aBranch_Description_Dictionary}
     Return From Keyword If    ${Branch_Desc_Dictionary_Length}==0
     
     ${Row_Item_Count}    Get Length    ${aFacilityID_List}
     :FOR    ${i}    IN RANGE    0    ${Row_Item_Count}
-    \    ${Branch_Code}    Get From Dictionary    ${aBranch_Dictionary}    ${aFacilityID_List}[${i}]
-    \    ${FacilityID_isExist}    Run Keyword And Return Status    Get From Dictionary    ${aBranch_Description_Dictionary}    ${aFacilityID_List}[${i}]
-    \    Continue For Loop If    ${FacilityID_isExist}==False
-    \    ${Branch_Description}    Get From Dictionary    ${aBranch_Description_Dictionary}    ${aFacilityID_List}[${i}]
+    \    ${Branch_Code}    Get From Dictionary    ${aBranch_Dictionary}    @{aFacilityID_List}[${i}]
+    \    ${FacilityID_isExist}    Run Keyword And Return Status    Get From Dictionary    ${aBranch_Description_Dictionary}    @{aFacilityID_List}[${i}]
+    \    Continue For Loop If    ${FacilityID_isExist}==${False}
+    \    ${Branch_Description}    Get From Dictionary    ${aBranch_Description_Dictionary}    @{aFacilityID_List}[${i}]
     \    
     \    ${BranchCode_isChecked}    Run Keyword And Return Status    Dictionary Should Contain Key    ${Code_BranchDescription_Dictionary}    ${Branch_Code}
-    \    Run Keyword If    ${BranchCode_isChecked}==False    Validate Branch Description for FAC_CDE_BRANCH in VLS_FACILITY    ${Branch_Code}    ${Branch_Description}    ${aFacilityID_List}[${i}]
-    \    Run Keyword If    ${BranchCode_isChecked}==False    Set To Dictionary    ${Code_BranchDescription_Dictionary}    ${Branch_Code}=${Branch_Description}
-    \    ${BranchDescription_Expected}    Run Keyword If    ${BranchCode_isChecked}==True    Get From Dictionary    ${Code_BranchDescription_Dictionary}    ${Branch_Code}
-    \    Run Keyword If    ${BranchCode_isChecked}==True and '${BranchDescription_Expected}'!='${Branch_Description}'    Validate Branch Description for FAC_CDE_BRANCH in VLS_FACILITY    ${Branch_Code}    ${Branch_Description}    ${aFacilityID_List}[${i}]
-    \    Run Keyword If    ${BranchCode_isChecked}==True and '${BranchDescription_Expected}'!='${Branch_Description}'    Set To Dictionary    ${Code_BranchDescription_Dictionary}    ${Branch_Code}=${Branch_Description}
-    \    Run Keyword If    ${BranchCode_isChecked}==True and '${BranchDescription_Expected}'=='${Branch_Description}'    Log    Branch Code ${Branch_Code} with Description ${Branch_Description} already checked.
+    \    Run Keyword If    ${BranchCode_isChecked}==${False}    Run Keywords    Validate Branch Description for FAC_CDE_BRANCH in VLS_FACILITY    ${Branch_Code}    ${Branch_Description}    @{aFacilityID_List}[${i}]
+         ...    AND    Set To Dictionary    ${Code_BranchDescription_Dictionary}    ${Branch_Code}=${Branch_Description}
+         ...    ELSE    Log    Branch Code and Branch Description is not the same.
+    \    ${BranchDescription_Expected}    Run Keyword If    ${BranchCode_isChecked}==${True}    Get From Dictionary    ${Code_BranchDescription_Dictionary}    ${Branch_Code}
+         ...    ELSE    Log    Branch Code and Branch Description is the same.
+    \    Run Keyword If    ${BranchCode_isChecked}==${True} and '${BranchDescription_Expected}'!='${Branch_Description}'    Run Keywords    Validate Branch Description for FAC_CDE_BRANCH in VLS_FACILITY    ${Branch_Code}    ${Branch_Description}    @{aFacilityID_List}[${i}]
+         ...    AND    Set To Dictionary    ${Code_BranchDescription_Dictionary}    ${Branch_Code}=${Branch_Description}
+         ...    ELSE IF    ${BranchCode_isChecked}==${True} and '${BranchDescription_Expected}'=='${Branch_Description}'    Log    Branch Code ${Branch_Code} with Description ${Branch_Description} already checked.    
+         ...    ELSE    Log    Branch Code and Branch Description is the same.  
 
 Validate Customer Description for FAC_CDE_BRANCH in VLS_FACILITY
     [Documentation]    This keyword validates customer description for FAC_CDE_BRANCH for VLS_Facility
-    ...    @author: ehugo    19SEP2019
+    ...    @author: ehugo    19SEP2019    - initial create
+    ...    @update: mgaling    27OCT2020    - added screenshotpath and ELSE Condition
     [Arguments]    ${sBranch_Code}    ${sBranch_Description}    ${sFacilityID}    
     
     Mx LoanIQ Select String    ${LIQ_Branch_Tree}    ${sBranch_Code.strip()}
@@ -1611,16 +1633,17 @@ Validate Customer Description for FAC_CDE_BRANCH in VLS_FACILITY
     mx LoanIQ activate window    ${LIQ_Branch_Update_Window}
     ${Branch_Description_Field}    Set Variable    JavaWindow("title:=Branch Update").JavaEdit("text:=${sBranch_Description}")
     ${Branch_Description_IsDisplayed}    Run Keyword And Return Status    Mx LoanIQ Verify Object Exist    ${Branch_Description_Field}    VerificationData="Yes" 
-    Take Screenshot    Branch_Customer
-    Run Keyword If    ${Branch_Description_IsDisplayed}==True    Log    Branch Customer ${sBranch_Description} is correct.
-    Run Keyword If    ${Branch_Description_IsDisplayed}==False    Run Keyword And Continue On Failure    Fail    Branch Customer ${sBranch_Description} for ${sFacilityID} is incorrect.
+    Take Screenshot    ${screenshot_path}/Screenshots/DWE/Branch_Customer
+    Run Keyword If    ${Branch_Description_IsDisplayed}==${True}    Log    Branch Customer ${sBranch_Description} is correct.
+    ...    ELSE    Run Keyword And Continue On Failure    FAIL    Branch Customer ${sBranch_Description} for ${sFacilityID} is incorrect.
     
     mx LoanIQ close window    ${LIQ_Branch_Update_Window}
 
 Validate Branch Description for FAC_CDE_BRANCH in VLS_FACILITY
     [Documentation]    This keyword validates branch description for FAC_CDE_BRANCH for VLS_Facility
     ...    @author: ehugo    19SEP2019    - initial create
-    ...    @update: mgaling    14OCT2020    - updated Mx Native Type    {ENTER} keyword into Mx Press Combination    KEY.ENTER 
+    ...    @update: mgaling    14OCT2020    - updated Mx Native Type    {ENTER} keyword into Mx Press Combination    KEY.ENTER
+    ...    @update: mgaling    27OCT2020    - added screenshotpath and ELSE Condition 
     [Arguments]    ${sBranch_Code}    ${sExpected_Branch_Description}    ${sFacilityID}    
     
     Mx LoanIQ Select String    ${LIQ_Branch_Tree}    ${sBranch_Code.strip()}
@@ -1631,15 +1654,16 @@ Validate Branch Description for FAC_CDE_BRANCH in VLS_FACILITY
     mx LoanIQ activate window    ${LIQ_Branch_Update_Window}
     ${Branch_Description_Field}    Set Variable    JavaWindow("title:=Branch Update").JavaEdit("text:=${sExpected_Branch_Description}")
     ${Branch_Description_IsDisplayed}    Run Keyword And Return Status    Mx LoanIQ Verify Object Exist    ${Branch_Description_Field}    VerificationData="Yes"
-    Take Screenshot    Branch_Description
-    Run Keyword If    ${Branch_Description_IsDisplayed}==True    Log    Branch Description ${sExpected_Branch_Description} is correct.
-    Run Keyword If    ${Branch_Description_IsDisplayed}==False    Run Keyword And Continue On Failure    Fail    Branch Description ${sExpected_Branch_Description} for ${sFacilityID} is incorrect.
+    Take Screenshot    ${screenshot_path}/Screenshots/DWE/Branch_Description
+    Run Keyword If    ${Branch_Description_IsDisplayed}==${True}    Log    Branch Description ${sExpected_Branch_Description} is correct.
+    ...    ELSE    Run Keyword And Continue On Failure    FAIL    Branch Description ${sExpected_Branch_Description} for ${sFacilityID} is incorrect.
     
     mx LoanIQ close window    ${LIQ_Branch_Update_Window}
 
 Get Branch value for FAC_CDE_BRANCH in VLS_FACILITY
     [Documentation]    This keyword retrieves the Branch value FAC_CDE_BRANCH for VLS_Facility
-    ...    @author: ehugo    19SEP2019
+    ...    @author: ehugo    19SEP2019    - initial create
+    ...    @update: mgaling    27OCT2020    - added screenshotpath and ELSE Condition
     [Arguments]    ${sFacilityID}
     
     mx LoanIQ activate window    ${LIQ_FacilityNotebook_Window}
@@ -1652,18 +1676,22 @@ Get Branch value for FAC_CDE_BRANCH in VLS_FACILITY
     ${Customer_Value}    Mx LoanIQ Get Data    ${LIQ_MainCustomer_Customer_List}    value%Customer_Value
     mx LoanIQ close window    ${LIQ_MainCustomer_Window}
     
-    Run Keyword If    '${Customer_Value}'=='${EMPTY}'    Run Keywords    Run Keyword And Continue On Failure    Fail    Customer for Facility ID ${sFacilityID} does not exists.
-    ...    AND    Take Screenshot    Failed_Branch
+    Run Keyword If    '${Customer_Value}'=='${EMPTY}'    Run Keywords    Run Keyword And Continue On Failure    FAIL    Customer for Facility ID ${sFacilityID} does not exists.
+    ...    AND    Take Screenshot    ${screenshot_path}/Screenshots/DWE/Failed_Branch
     ...    AND    mx LoanIQ select    ${LIQ_FacilityNotebook_Options_ChangeBranch_ProcArea}
     ...    AND    mx LoanIQ activate window    ${LIQ_FacilityNotebook_ChangeBranchProcArea_Window}
+    ...    ELSE    Log    Customer for Facility ID ${sFacilityID} is exist.   
     ${Branch_Value}    Run Keyword If    '${Customer_Value}'=='${EMPTY}'    Mx LoanIQ Get Data    ${LIQ_FacilityNotebook_ChangeBranchProcArea_Branch_Field}    value%Branch_Value
+    ...    ELSE    Log    Customer for Facility ID ${sFacilityID} is exist.
     Run Keyword If    '${Customer_Value}'=='${EMPTY}'    mx LoanIQ close window    ${LIQ_FacilityNotebook_ChangeBranchProcArea_Window}
-    
+    ...    ELSE    Log    Customer for Facility ID ${sFacilityID} is exist.
+
     [Return]    ${Customer_Value}    ${Branch_Value}
     
 Validate FAC_DTE_TERM_FAC for VLS_FACILITY
     [Documentation]    This keyword validates FAC_DTE_TERM_FAC for VLS_Facility
-    ...    @author: ehugo    18SEP2019
+    ...    @author: ehugo    18SEP2019    - initial create
+    ...    @update: mgaling    27OCT2020    - added screenshotpath and ELSE Condition
     [Arguments]    ${sFacilityID}    ${sExpected_TerminationDate_Value}    
     
     mx LoanIQ activate window    ${LIQ_FacilityNotebook_Window}
@@ -1676,13 +1704,14 @@ Validate FAC_DTE_TERM_FAC for VLS_FACILITY
     Mx LoanIQ Select Or DoubleClick In Javatree    ${LIQ_FacilityEvents_JavaTree}    Terminated%s
     ${EffectiveDate_Field}    Set Variable    JavaWindow("title:=Facility -.*").JavaStaticText("labeled_containers_path:=Tab:Events;Group:Event Details;","attached text:=${sExpected_TerminationDate_Value}")
     ${TerminationDate_IsDisplayed}    Run Keyword And Return Status    Mx LoanIQ Verify Object Exist    ${EffectiveDate_Field}    VerificationData="Yes"
-    Take Screenshot    TerminationDate
-    Run Keyword If    ${TerminationDate_IsDisplayed}==True    Log    Termination Date ${sExpected_TerminationDate_Value} for ${sFacilityID} is correct.
-    Run Keyword If    ${TerminationDate_IsDisplayed}==False    Run Keyword And Continue On Failure    Fail    Facility ID ${sFacilityID}: Expected Termination Date ${sExpected_TerminationDate_Value} does not exists in LIQ Facility Window
+    Take Screenshot    ${screenshot_path}/Screenshots/DWE/TerminationDate
+    Run Keyword If    ${TerminationDate_IsDisplayed}==${True}    Log    Termination Date ${sExpected_TerminationDate_Value} for ${sFacilityID} is correct.
+    ...    ELSE    Run Keyword And Continue On Failure    FAIL    Facility ID ${sFacilityID}: Expected Termination Date ${sExpected_TerminationDate_Value} does not exists in LIQ Facility Window
 
 Validate FAC_DTE_FL_DRAWDWN for VLS_FACILITY - Events Tab
     [Documentation]    This keyword validates FAC_DTE_FL_DRAWDWN in Facility Notebook Events Tab for VLS_Facility
-    ...    @author: ehugo    19SEP2019
+    ...    @author: ehugo    19SEP2019    - initial create
+    ...    @update: mgaling    27OCT2020    - added screenshotpath and ELSE Condition
     [Arguments]    ${sFacilityID}    ${sExpected_FL_Drawdown_Date_Value}    
     
     mx LoanIQ activate window    ${LIQ_FacilityNotebook_Window}
@@ -1695,13 +1724,14 @@ Validate FAC_DTE_FL_DRAWDWN for VLS_FACILITY - Events Tab
     Mx LoanIQ Select Or Doubleclick In Tree By Text    ${LIQ_FacilityEvents_JavaTree}    First Loan Drawdown Date Changed%s
     ${EffectiveDate_Field}    Set Variable    JavaWindow("title:=Facility -.*").JavaStaticText("labeled_containers_path:=Tab:Events;Group:Event Details;","attached text:=${sExpected_FL_Drawdown_Date_Value}")
     ${FL_Drawdown_Date_IsDisplayed}    Run Keyword And Return Status    Mx LoanIQ Verify Object Exist    ${EffectiveDate_Field}    VerificationData="Yes"
-    Take Screenshot    FL_Drawdown_Date
-    Run Keyword If    ${FL_Drawdown_Date_IsDisplayed}==True    Log    First Loan Drawdown Date ${sExpected_FL_Drawdown_Date_Value} for ${sFacilityID} is correct.
-    Run Keyword If    ${FL_Drawdown_Date_IsDisplayed}==False    Run Keyword And Continue On Failure    Fail    Facility ID ${sFacilityID}: Expected First Loan Drawdown Date ${sExpected_FL_Drawdown_Date_Value} does not exists in LIQ Facility Window    
+    Take Screenshot    ${screenshot_path}/Screenshots/DWE/FL_Drawdown_Date
+    Run Keyword If    ${FL_Drawdown_Date_IsDisplayed}==${True}    Log    First Loan Drawdown Date ${sExpected_FL_Drawdown_Date_Value} for ${sFacilityID} is correct.
+    ...    ELSE    Run Keyword And Continue On Failure    FAIL    Facility ID ${sFacilityID}: Expected First Loan Drawdown Date ${sExpected_FL_Drawdown_Date_Value} does not exists in LIQ Facility Window    
     
 Validate FAC_IND_COMMITTED for VLS_FACILITY
     [Documentation]    This keyword validates FAC_IND_COMMITTED for VLS_Facility
-    ...    @author: ehugo    19SEP2019
+    ...    @author: ehugo    19SEP2019    - initial create
+    ...    @update: mgaling    27OCT2020    - added screenshotpath and ELSE Condition
     [Arguments]    ${sFacilityID}    ${sExpected_Committed_Value}    
     
     mx LoanIQ activate window    ${LIQ_FacilityNotebook_Window}
@@ -1710,18 +1740,18 @@ Validate FAC_IND_COMMITTED for VLS_FACILITY
     ###Facility Type Details Window###
     mx LoanIQ activate window    ${LIQ_Facility_Type_Details_Window}
     ${Committed_IsDisplayed}    Run Keyword And Return Status    Mx LoanIQ Verify Object Exist    ${LIQ_Facility_Type_Details_Committed_Field}    VerificationData="Yes"
-    Take Screenshot    Committed
-    Run Keyword If    '${sExpected_Committed_Value}'=='Y' and ${Committed_IsDisplayed}==True    Log    Committed is shown for ${sFacilityID}. Expected output is correct.
-    Run Keyword If    '${sExpected_Committed_Value}'=='N' and ${Committed_IsDisplayed}==False    Log    Committed is not shown for ${sFacilityID}. Expected output is correct.
-    Run Keyword If    '${sExpected_Committed_Value}'=='Y' and ${Committed_IsDisplayed}==False    Run Keyword And Continue On Failure    Fail    Committed is not shown for ${sFacilityID}. Expected out is incorrect.
-    Run Keyword If    '${sExpected_Committed_Value}'=='N' and ${Committed_IsDisplayed}==True    Run Keyword And Continue On Failure    Fail    Committed is shown for ${sFacilityID}. Expected out is incorrect.
-    
+    Take Screenshot    ${screenshot_path}/Screenshots/DWE/Committed
+    Run Keyword If    '${sExpected_Committed_Value}'=='Y' and ${Committed_IsDisplayed}==${True}    Log    Committed is shown for ${sFacilityID}. Expected output is correct.
+    ...    ELSE IF    '${sExpected_Committed_Value}'=='N' and ${Committed_IsDisplayed}==${False}    Log    Committed is not shown for ${sFacilityID}. Expected output is correct.
+    ...    ELSE IF    '${sExpected_Committed_Value}'=='Y' and ${Committed_IsDisplayed}==${False}    Run Keyword And Continue On Failure    FAIL    Committed is not shown for ${sFacilityID}. Expected out is incorrect.
+    ...    ELSE IF    '${sExpected_Committed_Value}'=='N' and ${Committed_IsDisplayed}==${True}    Run Keyword And Continue On Failure    FAIL    Committed is shown for ${sFacilityID}. Expected out is incorrect.
+    ...    ELSE    Log    Not yet configured.    
     mx LoanIQ click    ${LIQ_Facility_Type_Details_Exit_Button}    
     
 Validate FAC_DTE_FL_DRAWDWN for VLS_FACILITY - Existing Loans Window
     [Documentation]    This keyword validates FAC_DTE_FL_DRAWDWN in Existing Loans Window for VLS_Facility
-    ...    @author: ehugo    19SEP2019
-    ...    For improvement
+    ...    @author: ehugo    19SEP2019    - initial create
+    ...    @update: mgaling    27OCT2020    - added screenshotpath
     [Arguments]    ${sFacilityID}    ${sExpected_FL_Drawdown_Date_Value}    
     
     Run Keyword If    '${sExpected_FL_Drawdown_Date_Value}'=='0'    Log    No First Loan Drawdown Date value in CSV for Facility ID ${sFacilityID}
@@ -1745,10 +1775,10 @@ Validate FAC_DTE_FL_DRAWDWN for VLS_FACILITY - Existing Loans Window
     mx LoanIQ activate window    ${ExistingLoan_Window}
     ${Effective_Date}    Mx LoanIQ Store TableCell To Clipboard   ${ExistingLoan_JavaTree}    ${sExpected_FL_Drawdown_Date_Value}%Effective Date%var    Processtimeout=10
     
-    Take Screenshot    FL_Drawdown_Date_LoanList
+    Take Screenshot    ${screenshot_path}/Screenshots/DWE/FL_Drawdown_Date_LoanList
     ${FL_Drawdown_Date_isEqual}    Run Keyword And Return Status    Should Be Equal As Strings    ${sExpected_FL_Drawdown_Date_Value.strip()}    ${Effective_Date.strip()}       
-    Run Keyword If    ${FL_Drawdown_Date_isEqual}==True    Log    First Loan Drawdown Date ${sExpected_FL_Drawdown_Date_Value} for ${sFacilityID} is correct.
-    Run Keyword If    ${FL_Drawdown_Date_isEqual}==False    Run Keyword And Continue On Failure    Fail    Facility ID ${sFacilityID}: Expected First Loan Drawdown Date ${sExpected_FL_Drawdown_Date_Value} is not equal to Actual First Loan Drawdown Date ${Effective_Date}
+    Run Keyword If    ${FL_Drawdown_Date_isEqual}==${True}    Log    First Loan Drawdown Date ${sExpected_FL_Drawdown_Date_Value} for ${sFacilityID} is correct.
+    ...    ELSE    Run Keyword And Continue On Failure    FAIL    Facility ID ${sFacilityID}: Expected First Loan Drawdown Date ${sExpected_FL_Drawdown_Date_Value} is not equal to Actual First Loan Drawdown Date ${Effective_Date}
     
     mx LoanIQ close window    ${ExistingLoan_Window}
     mx LoanIQ close window    ${LIQ_OutstandingSelect_Window}
@@ -2184,13 +2214,14 @@ Validate Guarantor in Facility Change Transaction NoteBook
 
 Get and Return Guarantor Short Name Using Customer RID
     [Documentation]    This keyword is used to navigate on Deal noteboook and validate guarantor.
-    ...    @author: dahijara    23SEP2019
+    ...    @author: dahijara    23SEP2019    - initial create
+    ...    @update: mgaling    27OCT2020    - added screenshotpath
     [Arguments]    ${sCust_Id}
    
     ### Launch Active Customer Window ### 
     Navigate to Notebook Window thru RID    Customer    ${sCust_Id}
     mx LoanIQ activate window    ${LIQ_ActiveCustomer_Window}
-    Take Screenshot    ActiveCustomer_Window
+    Take Screenshot    ${screenshot_path}/Screenshots/DWE/ActiveCustomer_Window
     ${Guarantor_Short_Name}    Mx LoanIQ Get Data    ${LIQ_ActiveCustomer_Window_ShortName}    Guarantor_Short_Name
     
     mx LoanIQ close window    ${LIQ_ActiveCustomer_Window}    
@@ -2199,57 +2230,59 @@ Get and Return Guarantor Short Name Using Customer RID
       
 Validate CSV values in Loan IQ for VLS_DEAL_BORROWER
     [Documentation]    This keyword is used to navigate on LIQbased on product type and validate guarantor.
-    ...    @author: dahijara    24SEP2019
-    [Arguments]    ${sCSV_Content}    ${sProd_Id_Header_Index}    ${sCust_Id_Header_Index}    ${sBorrowerInd_Header_Index}    ${sDepositorInd_Header_Index}
+    ...    @author: dahijara    24SEP2019    - initial create
+    ...    @update: mgaling    27OCT2020    - updated arguments and added ELSE condition
+    [Arguments]    ${sCSV_Content}    ${iProd_Id_Header_Index}    ${iCust_Id_Header_Index}    ${iBorrowerInd_Header_Index}    ${iDepositorInd_Header_Index}
     
     ${Row_Count}    Get Length    ${sCSV_Content}
     
     :FOR    ${i}    IN RANGE    1    ${Row_Count}
     \    ${Table_Row_Item}    Get From List    ${sCSV_Content}    ${i}
-    \    ${val_Prod_Id}    Get From List    ${Table_Row_Item}    ${sProd_Id_Header_Index}
-    \    ${val_Cust_Id}    Get From List    ${Table_Row_Item}    ${sCust_Id_Header_Index}
-    \    ${val_BorrowerInd}    Get From List    ${Table_Row_Item}    ${sBorrowerInd_Header_Index}
-    \    ${val_DepositorInd}    Get From List    ${Table_Row_Item}    ${sDepositorInd_Header_Index}
+    \    ${val_Prod_Id}    Get From List    ${Table_Row_Item}    ${iProd_Id_Header_Index}
+    \    ${val_Cust_Id}    Get From List    ${Table_Row_Item}    ${iCust_Id_Header_Index}
+    \    ${val_BorrowerInd}    Get From List    ${Table_Row_Item}    ${iBorrowerInd_Header_Index}
+    \    ${val_DepositorInd}    Get From List    ${Table_Row_Item}    ${iDepositorInd_Header_Index}
+    \    
     \    Refresh Tables in LIQ
     \    ${val_ShortName}    Run Keyword And Continue On Failure    Get and Return Guarantor Short Name Using Customer RID    ${val_Cust_Id}
-    \    
     \    ${RID_IsExist}    Run Keyword And Return Status    Navigate to Notebook Window thru RID    Deal    ${val_Prod_Id}
-    \    Run Keyword If    "${RID_IsExist}"=="${False}"    Run Keyword And Continue On Failure    Fail    ${val_Prod_Id} does not exist!
-    \    Run Keyword If    "${RID_IsExist}"=="${True}"    Run Keyword And Continue On Failure    Validate Borrower in Deal NoteBook    ${val_ShortName}    ${val_BorrowerInd}    ${val_DepositorInd}
+    \    Run Keyword If    ${RID_IsExist}==${True}    Run Keyword And Continue On Failure    Validate Borrower in Deal NoteBook    ${val_ShortName}    ${val_BorrowerInd}    ${val_DepositorInd}
+         ...    ELSE    Run Keyword And Continue On Failure    FAIL    ${val_Prod_Id} does not exist!
 
 Validate Borrower in Deal NoteBook
     [Documentation]    This keyword is used to navigate on Deal noteboook and validate guarantor.
-    ...    @author: dahijara    23SEP2019
+    ...    @author: dahijara    23SEP2019    - initial create
+    ...    @update: mgaling    27OCT2020    - added screenshotpath and updated Fail into FAIL
     [Arguments]    ${sShortName}    ${sBorrowerInd}    ${sDepositorInd}
     
     ### Launch DEAL Notebook ### 
     mx LoanIQ activate window    ${LIQ_DealNotebook_Window}
     Mx LoanIQ Select String        ${LIQ_DealSummary_BorrowerDepositor_JavaTree}    ${sShortName}
-    Take Screenshot    Deal_Summary_Tab
+    Take Screenshot    ${screenshot_path}/Screenshots/DWE/Deal_Summary_Tab
     
     ### Validate Borrower Indicator ###
     ${val_Borrower}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_DealSummary_BorrowerDepositor_JavaTree}    ${sShortName}%Borrower%val_Borrower
     ${IsMatched}    Run Keyword And Return Status    Should Be Equal As Strings    ${val_Borrower}    ${sBorrowerInd}
     Run Keyword If    ${IsMatched}==${True}    Log    Borrower Indicators are equal. CSV Borrower Indicator: ${val_Borrower} = LIQ Deal Borrower Indicator: ${sBorrowerInd}
-    ...    ELSE    Run Keyword And Continue On Failure    Fail    Borrower Indicators are NOT equal. CSV Borrower Indicator: ${val_Borrower} != LIQ Deal Borrower Indicator: ${sBorrowerInd}
+    ...    ELSE    Run Keyword And Continue On Failure    FAIL    Borrower Indicators are NOT equal. CSV Borrower Indicator: ${val_Borrower} != LIQ Deal Borrower Indicator: ${sBorrowerInd}
     
     ### Validate Depositor Indicator ###
     ${val_Depositor}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_DealSummary_BorrowerDepositor_JavaTree}    ${sShortName}%Depositor%val_Depositor
     ${IsMatched}    Run Keyword And Return Status    Should Be Equal As Strings    ${val_Depositor}    ${sDepositorInd}
     Run Keyword If    ${IsMatched}==${True}    Log    Depositor Indicators are equal. CSV Depositor Indicator: ${val_Depositor} = LIQ Deal Depositor Indicator: ${sDepositorInd}
-    ...    ELSE    Run Keyword And Continue On Failure    Fail    Depositor Indicators are NOT equal. CSV Depositor Indicator: ${val_Depositor} != LIQ Deal Depositor Indicator: ${sDepositorInd}
+    ...    ELSE    Run Keyword And Continue On Failure    FAIL    Depositor Indicators are NOT equal. CSV Depositor Indicator: ${val_Depositor} != LIQ Deal Depositor Indicator: ${sDepositorInd}
     
     ### Select Short Name Row ###
     Mx LoanIQ Select Or Doubleclick In Javatree    ${LIQ_DealSummary_BorrowerDepositor_JavaTree}    ${sShortName}%d
     
     ### Deal Guarantor Details ###
     mx LoanIQ activate window    ${LIQ_DealBorrower_Window}
-    Take Screenshot    DealBorrower_Window
+    Take Screenshot    ${screenshot_path}/Screenshots/DWE/DealBorrower_Window
     
     ${ShortName_Locator}    Set Static Text to Locator Single Text    Deal Borrower    ${sShortName}
     ${isExisting}    Run Keyword And Return Status    Mx LoanIQ Verify Object Exist    ${ShortName_Locator}    VerificationData="Yes"
     Run Keyword If    ${isExisting}==${True}    Log    Borrower ${sShortName} exists in Deal Borrower window.
-    ...    ELSE    Run Keyword And Continue On Failure    Fail    Borrower ${sShortName} does NOT exist in Deal Borrower window.
+    ...    ELSE    Run Keyword And Continue On Failure    FAIL    Borrower ${sShortName} does NOT exist in Deal Borrower window.
 
     Refresh Tables in LIQ  
 
