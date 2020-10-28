@@ -208,7 +208,8 @@ Pay Line Fee Amount - Scenario 7 ComSee
     Verify if Status is set to Do It    &{ComSeeDataSet}[Borrower1_ShortName]  
     
     ###Get Transaction Amount for Cashflow###
-    ${HostBankShare}    Get Host Bank Cash in Cashflow
+    ${HostBankShare}    Run Keyword If    '${ENTITY}'== 'EU'    Get Host Bank Cash in Cashflow     sCurrency=&{ComSeeDataSet}[Loan_Currency]
+    ...     ELSE    Get Host Bank Cash in Cashflow
     ${BorrowerTranAmount}    Get Transaction Amount in Cashflow    &{ComSeeDataSet}[Borrower1_ShortName]
     ${ComputedHBTranAmount}    Compute Lender Share Transaction Amount    ${ProjectedCycleDue}    &{ComSeeDataSet}[HostBankSharePct]
     
@@ -245,7 +246,7 @@ Pay Line Fee Amount - Scenario 7 ComSee
     ###Generation of Intent Notice is skipped - Customer Notice Method must be updated###
     Select Item in Work in Process    Payments    Release Cashflows    Ongoing Fee Payment     &{ComSeeDataSet}[Facility_Name]
     Navigate Notebook Workflow    ${LIQ_Payment_Window}    ${LIQ_Payment_Tab}    ${LIQ_Payment_WorkflowItems}    Release Cashflows    
-    Release Cashflow    &{ComSeeDataSet}[Borrower1_ShortName]    release           
+    Run Keyword If    '${ENTITY}'!= 'EU'    Release Cashflow    &{ComSeeDataSet}[Borrower1_ShortName]    release              
     Release Ongoing Fee Payment
     
     ###Loan IQ Desktop###
@@ -366,7 +367,7 @@ Create Payment Reversal - Scenario 7 ComSee
 
     ###Release Reverse Fee Payment###       
     Select Item in Work in Process    Payments    Awaiting Release Cashflows   Reverse Fee Payment     ${FacilityName}
-    Navigate Notebook Workflow    ${LIQ_ReverseFee_Window}    ${LIQ_LineFee_ReversePayment_Tab}    ${LIQ_LineFee_ReversePayment__WorkflowItems}    Release Cashflows   
+    Navigate Notebook Workflow    ${LIQ_ReverseFee_Window}    ${LIQ_LineFee_ReversePayment_Tab}    ${LIQ_LineFee_ReversePayment_WorkflowItems}    Release Cashflows   
     Release Cashflow    ${Borrower}    release    
     Release Reverse Fee Payment
     Close All Windows on LIQ

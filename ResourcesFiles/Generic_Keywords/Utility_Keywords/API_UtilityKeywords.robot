@@ -146,7 +146,7 @@ Put Json File
     Run Keyword If    '${sAccessToken}' == 'None'    Set Global Variable    ${Headers}    &{Headers2}
     ${InputJsonFile}    OperatingSystem.Get File    ${dataset_path}${sInputPath}${sInputFile}.json
     ${API_RESPONSE}    Put Request    ${APISESSION}    ${sAPIEndPoint}    ${InputJsonFile}    headers=${Headers}
-    ${PUTREQUEST_TIMESTAMP}    Get Current Date    UTC    + 1 Hour    result_format=%Y-%m-%dT%H:
+    ${PUTREQUEST_TIMESTAMP}    Get Current Date    UTC    + 8 Hour    result_format=%Y-%m-%dT%H:
     
     Set Global Variable    ${PUTREQUEST_TIMESTAMP}
     Set Global Variable    ${API_RESPONSE}
@@ -1538,10 +1538,11 @@ Set Static Text to Locator Multiple Text
     [Return]    ${Locator}
 
 Set Edit Text to Locator Single Text
-    [Arguments]    ${WindowName}    ${Edit_Text}
+    [Arguments]    ${WindowName}    ${Edit_Text}    ${bWildCard}=True
     [Documentation]    This keyword is used to create a dyanmic locator of JavaEdit.
     ...    [WindowsName, text/value]
-    ${Locator}    Set Variable    JavaWindow("title:=${WindowName}.*").JavaEdit("text:=${Edit_Text}.*","value:=${Edit_Text}.*")
+     ${Locator}    Run Keyword If    '${bWildCard}'=='True'    Set Variable    JavaWindow("title:=${WindowName}.*").JavaEdit("text:=${Edit_Text}.*","value:=${Edit_Text}.*")
+    ...    ELSE    Set Variable    JavaWindow("title:=${WindowName}.*").JavaEdit("text:=${Edit_Text}","value:=${Edit_Text}")
     [Return]    ${Locator}
 
 Set Attached and Label Text with 2 words to Locator
@@ -1552,7 +1553,7 @@ Set Attached and Label Text with 2 words to Locator
     ${label_2}=    Get From List    ${string1}    1
     ${Locator}    Set Variable    JavaWindow("title:=${WindowName}.*").JavaStaticText("label:=${label_1}.*${label_2}.*","attached text:=${label_1}.*${label_2}.*")
     [Return]    ${Locator}
-
+    
 Set List Text with 2 words to Locator
     [Arguments]    ${WindowName}    ${List_Text}
     [Documentation]    This keyword is for creation of locator with the text of 2 words which will add a wildcard (.*) on each word to be splitted.
@@ -2596,3 +2597,13 @@ Remove Fields on JSON Payload
     Log    ${Converted_JSON}
     Delete File If Exist    ${dataset_path}${JSON_File}
     Create File    ${dataset_path}${JSON_File}    ${Converted_JSON}
+    
+Get the MessageId Decode Value
+    [Documentation]    This keyword is used to get the MessageId Decode using CorrelationID
+    ...    @author: fluberio    28OCT2020    - initial create
+    [Arguments]    ${sCorrelationID}
+
+    ${CorrelationIdByte}    Encode String To Bytes    ${sCorrelationID}     UTF-8
+    ${MessageIdEncode}    B 32 Encode    ${CorrelationIdByte}
+    ${MessageIdDecode}    Decode Bytes To String    ${MessageIdEncode}    UTF-8
+    [Return]    ${MessageIdDecode}

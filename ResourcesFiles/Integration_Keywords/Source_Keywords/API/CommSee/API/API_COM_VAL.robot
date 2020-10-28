@@ -729,12 +729,12 @@ Get Risk Type and Validate Response Per Risk Type
          ...    ELSE IF    '@{Actual_RiskType_List}[0]'=='Loan' and '${Code}'!='FIXED'    Validate Loan Risk Type    ${Json_Object}    ${sVersion}    ${sExp_Alias}    ${sExp_RiskType}    ${sExp_Currency}    
          ...    ${sExp_EffDate}    ${iExp_HostBankNet}    ${iExp_HostBankNetFac}    ${sExp_MaturityDate}    ${iExp_HostBankGross}    ${iExp_GlobalOriginal}    ${iExp_GlobalCurrent}    
          ...    ${sRepFreq}    ${sRepDate}    ${sPayMode}    ${sIntCycleFreq}    ${sPricingOption}    ${iMargin}    ${iAllInRate}    ${iAccruedInterest}    ${iCycleDue}    ${iPaidToDate}    ${Index_Input}    ${sDelimiter}
-         ...    ELSE IF    '@{Actual_RiskType_List}[0]'=='Loan' and '${Code}'=='FIXED'    Validate Fixed Rate Loan Risk Type    ${Json_Object}    ${sExp_Alias}    ${sExp_RiskType}    ${sExp_Currency}    
+         ...    ELSE IF    '@{Actual_RiskType_List}[0]'=='Loan' and '${Code}'=='FIXED'    Validate Fixed Rate Loan Risk Type    ${Json_Object}    ${sVersion}    ${sExp_Alias}    ${sExp_RiskType}    ${sExp_Currency}    
          ...    ${sExp_EffDate}    ${iExp_HostBankNet}    ${iExp_HostBankNetFac}    ${sExp_MaturityDate}    ${iExp_HostBankGross}    ${iExp_GlobalOriginal}    ${iExp_GlobalCurrent}    
-         ...    ${sPayMode}    ${sIntCycleFreq}    ${sPricingOption}    ${iMargin}    ${iAllInRate}    ${iAccruedInterest}    ${Index_Input}    ${sDelimiter}
-         ...    ELSE IF    '@{Actual_RiskType_List}[0]'=='Fixed Rate Loan'    Validate Fixed Rate Loan Risk Type    ${Json_Object}    ${sExp_Alias}    ${sExp_RiskType}    ${sExp_Currency}    
+         ...    ${sPayMode}    ${sIntCycleFreq}    ${sPricingOption}    ${iMargin}    ${iAllInRate}    ${iAccruedInterest}    ${iCycleDue}    ${iPaidToDate}    ${Index_Input}    ${sDelimiter}
+         ...    ELSE IF    '@{Actual_RiskType_List}[0]'=='Fixed Rate Loan'    Validate Fixed Rate Loan Risk Type    ${Json_Object}    ${sVersion}    ${sExp_Alias}    ${sExp_RiskType}    ${sExp_Currency}    
          ...    ${sExp_EffDate}    ${iExp_HostBankNet}    ${iExp_HostBankNetFac}    ${sExp_MaturityDate}    ${iExp_HostBankGross}    ${iExp_GlobalOriginal}    ${iExp_GlobalCurrent}    
-         ...    ${sPayMode}    ${sIntCycleFreq}    ${sPricingOption}    ${iMargin}    ${iAllInRate}    ${iAccruedInterest}    ${Index_Input}    ${sDelimiter}
+         ...    ${sPayMode}    ${sIntCycleFreq}    ${sPricingOption}    ${iMargin}    ${iAllInRate}    ${iAccruedInterest}    ${iCycleDue}    ${iPaidToDate}    ${Index_Input}    ${sDelimiter}
     \    
     \    Delete File If Exist    ${dataset_path}${sOutputFilePath}tempfile.json
 
@@ -888,22 +888,23 @@ Validate Loan Risk Type
     ...    ELSE IF    '${sVersion}'=='V2'    Log    This attribute is not present in V1 response
     ...    ELSE    Log    Expected and Actual are NOT equal. @{Input_AccruedInterest_List}[${iIndex_Input}] != @{Actual_AccruedInterest_List}[0]    level=ERROR
     
-    Run Keyword If    '${sVersion}'=='V2'    Run Keyword And Continue On Failure    Should Be Equal As Strings    @{Input_CycleDue_List}[${iIndex_Input}]    @{Actual_CycleDue_List}[0]    ignore_case=True
-    ${IsEqual}    Run Keyword And Return Status    Should Be Equal As Strings    @{Input_CycleDue_List}[${iIndex_Input}]    @{Actual_CycleDue_List}[0]    ignore_case=True
+    Run Keyword If    '${sVersion}'=='V2'    Run Keyword And Continue On Failure    Should Be Equal As Numbers    @{Input_CycleDue_List}[${iIndex_Input}]    @{Actual_CycleDue_List}[0]    ignore_case=True
+    ${IsEqual}    Run Keyword And Return Status    Should Be Equal As Numbers    @{Input_CycleDue_List}[${iIndex_Input}]    @{Actual_CycleDue_List}[0]    ignore_case=True
     Run Keyword If    ${IsEqual}==${True} and '${sVersion}'=='V2'    Log    Expected and Actual are equal. @{Input_CycleDue_List}[${iIndex_Input}] = @{Actual_CycleDue_List}[0]
     ...    ELSE IF    '${sVersion}'=='V1'    Log    This attribute is not present in V1 response
     ...    ELSE    Log    Expected and Actual are NOT equal. @{Input_CycleDue_List}[${iIndex_Input}] != @{Actual_CycleDue_List}[0]    level=ERROR
 
-    Run Keyword If    '${sVersion}'=='V2'    Run Keyword And Continue On Failure    Should Be Equal As Strings    @{ Input_PaidToDatet_List}[${iIndex_Input}]    @{Actual_PaidToDate_List}[0]    ignore_case=True
-    ${IsEqual}    Run Keyword And Return Status    Should Be Equal As Strings    @{ Input_PaidToDatet_List}[${iIndex_Input}]    @{Actual_PaidToDate_List}[0]    ignore_case=True
+    Run Keyword If    '${sVersion}'=='V2'    Run Keyword And Continue On Failure    Should Be Equal As Numbers    @{Input_PaidToDatet_List}[${iIndex_Input}]    @{Actual_PaidToDate_List}[0]    ignore_case=True
+    ${IsEqual}    Run Keyword And Return Status    Should Be Equal As Numbers    @{Input_PaidToDatet_List}[${iIndex_Input}]    @{Actual_PaidToDate_List}[0]    ignore_case=True
     Run Keyword If    ${IsEqual}==${True} and '${sVersion}'=='V2'    Log    Expected and Actual are equal. @{Input_PaidToDatet_List}[${iIndex_Input}] = @{Actual_PaidToDate_List}[0]
     ...    ELSE IF    '${sVersion}'=='V1'    Log    This attribute is not present in V1 response
-    ...    ELSE    Log    Expected and Actual are NOT equal. @{ Input_PaidToDatet_List}[${iIndex_Input}] != @{Actual_PaidToDate_List}[0]    level=ERROR
+    ...    ELSE    Log    Expected and Actual are NOT equal. @{Input_PaidToDatet_List}[${iIndex_Input}] != @{Actual_PaidToDate_List}[0]    level=ERROR
    
     Run Keyword And Continue On Failure    Should Be Equal As Strings    ${PricingOption_Dict}    @{Actual_PricingOption_List}[0]
     ${IsEqual}    Run Keyword And Return Status    Should Be Equal As Strings    ${PricingOption_Dict}    @{Actual_PricingOption_List}[0]
     Run Keyword If    ${IsEqual}==${True}    Log    Expected and Actual are equal. ${PricingOption_Dict} = @{Actual_PricingOption_List}[0]
     ...    ELSE    Log    Expected and Actual are NOT equal. ${PricingOption_Dict} != @{Actual_PricingOption_List}[0]    level=ERROR
+    
 Validate SBLC or Guarantee Risk Type
     [Documentation]    This keyword is used to validate response generated by Get API (Commsee) and compare to input dataset for SBLC and Guarantee Risk Type.
     ...    @author: clanding    20AUG2019    - initial create
@@ -1006,13 +1007,13 @@ Get Input Value and Return Index
     \    Exit For Loop If    '${Value}'=='${sOutputValue}'
     [Return]    ${Index}
 
-
 Validate Fixed Rate Loan Risk Type
     [Documentation]    This keyword is used to validate response generated by Get API (Commsee) and compare to input dataset for Fized Rate Loan Risk Type.
     ...    @author: clanding    21AUG2019    - initial create
-    [Arguments]    ${oJson}    ${sExp_Alias}    ${sExp_RiskType}    ${sExp_Currency}    ${sExp_EffDate}    ${iExp_HostBankNet}    ${iExp_HostBankNetFac}
+    ...    @update: cfrancis    09OCT2020    - added logic to handle v1 and v2 endpoints for ${iAccruedInterest}, ${iCycleDue} and ${iPaidToDate}
+    [Arguments]    ${oJson}    ${sVersion}    ${sExp_Alias}    ${sExp_RiskType}    ${sExp_Currency}    ${sExp_EffDate}    ${iExp_HostBankNet}    ${iExp_HostBankNetFac}
     ...    ${sExp_MaturityDate}    ${iExp_HostBankGross}    ${iExp_GlobalOriginal}    ${iExp_GlobalCurrent}    ${sPayMode}    ${sIntCycleFreq}
-    ...    ${sPricingOption}    ${iMargin}    ${iAllInRate}    ${iAccruedInterest}    ${iIndex_Input}    ${sDelimiter}
+    ...    ${sPricingOption}    ${iMargin}    ${iAllInRate}    ${iAccruedInterest}    ${iCycleDue}    ${iPaidTodate}    ${iIndex_Input}    ${sDelimiter}
 
     ### Get JSON field values ###
     Log    ${oJson}
@@ -1032,6 +1033,8 @@ Validate Fixed Rate Loan Risk Type
     ${Actual_Margin_List}    Get Value From Json    ${oJson}    $..margin
     ${Actual_AllInRate_List}    Get Value From Json    ${oJson}    $..allInRate
     ${Actual_AccruedInterest_List}    Get Value From Json    ${oJson}    $..accruedInterest
+    ${Actual_CycleDue_List}    Get Value From Json    ${oJson}    $..cycleDue
+    ${Actual_PaidToDate_List}    Get Value From Json    ${oJson}    $..paidToDate
 
     ### Get Dataset values ###
     @{Input_Alias_List}    Split String    ${sExp_Alias}    ${sDelimiter}
@@ -1049,6 +1052,8 @@ Validate Fixed Rate Loan Risk Type
     @{Input_Margin_List}    Split String    ${iMargin}    ${sDelimiter}
     @{Input_AllInRate_List}    Split String    ${iAllInRate}    ${sDelimiter}
     @{Input_AccruedInterest_List}    Split String    ${iAccruedInterest}    ${sDelimiter}
+    @{Input_CycleDue_List}    Split String    ${iCycleDue}    ${sDelimiter}
+    @{Input_PaidToDatet_List}    Split String    ${iPaidTodate}    ${sDelimiter}
     @{Input_PricingOption_List}    Split String    ${sPricingOption}    ${sDelimiter}
     
     ${PricingOption_List}    Split String    @{Input_PricingOption_List}[${iIndex_Input}]    /
@@ -1132,11 +1137,24 @@ Validate Fixed Rate Loan Risk Type
     ${IsEqual}    Run Keyword And Return Status    Should Be Equal As Numbers    @{Input_AllInRate_List}[${iIndex_Input}]    @{Actual_AllInRate_List}[0]
     Run Keyword If    ${IsEqual}==${True}    Log    Expected and Actual are equal. @{Input_AllInRate_List}[${iIndex_Input}] = @{Actual_AllInRate_List}[0]
     ...    ELSE    Log    Expected and Actual are NOT equal. @{Input_AllInRate_List}[${iIndex_Input}] != @{Actual_AllInRate_List}[0]    level=ERROR
-
-    Run Keyword And Continue On Failure    Should Be Equal As Numbers    @{Input_AccruedInterest_List}[${iIndex_Input}]    @{Actual_AccruedInterest_List}[0]
-    ${IsEqual}    Run Keyword And Return Status    Should Be Equal As Numbers    @{Input_AccruedInterest_List}[${iIndex_Input}]    @{Actual_AccruedInterest_List}[0]
-    Run Keyword If    ${IsEqual}==${True}    Log    Expected and Actual are equal. @{Input_AccruedInterest_List}[${iIndex_Input}] = @{Actual_AccruedInterest_List}[0]
+     
+    Run Keyword If     '${sVersion}'=='V1'    Run Keyword And Continue On Failure    Should Be Equal As Numbers   @{Input_AccruedInterest_List}[${iIndex_Input}]    @{Actual_AccruedInterest_List}[0]    ignore_case=True 
+    ${IsEqual}    Run Keyword And Return Status    Should Be Equal As Numbers    @{Input_AccruedInterest_List}[${iIndex_Input}]    @{Actual_AccruedInterest_List}[0]     
+    Run Keyword If    ${IsEqual}==${True} and '${sVersion}'=='V1'    Log    Expected and Actual are equal. @{Input_AccruedInterest_List}[${iIndex_Input}] = @{Actual_AccruedInterest_List}[0]
+    ...    ELSE IF    '${sVersion}'=='V2'    Log    This attribute is not present in V1 response
     ...    ELSE    Log    Expected and Actual are NOT equal. @{Input_AccruedInterest_List}[${iIndex_Input}] != @{Actual_AccruedInterest_List}[0]    level=ERROR
+       
+    Run Keyword If    '${sVersion}'=='V2'    Run Keyword And Continue On Failure    Should Be Equal As Numbers    @{Input_CycleDue_List}[${iIndex_Input}]    @{Actual_CycleDue_List}[0]    ignore_case=True
+    ${IsEqual}    Run Keyword And Return Status    Should Be Equal As Numbers    @{Input_CycleDue_List}[${iIndex_Input}]    @{Actual_CycleDue_List}[0]    ignore_case=True
+    Run Keyword If    ${IsEqual}==${True} and '${sVersion}'=='V2'    Log    Expected and Actual are equal. @{Input_CycleDue_List}[${iIndex_Input}] = @{Actual_CycleDue_List}[0]
+    ...    ELSE IF    '${sVersion}'=='V1'    Log    This attribute is not present in V1 response
+    ...    ELSE    Log    Expected and Actual are NOT equal. @{Input_CycleDue_List}[${iIndex_Input}] != @{Actual_CycleDue_List}[0]    level=ERROR
+
+    Run Keyword If    '${sVersion}'=='V2'    Run Keyword And Continue On Failure    Should Be Equal As Numbers    @{Input_PaidToDatet_List}[${iIndex_Input}]    @{Actual_PaidToDate_List}[0]    ignore_case=True
+    ${IsEqual}    Run Keyword And Return Status    Should Be Equal As Numbers    @{Input_PaidToDatet_List}[${iIndex_Input}]    @{Actual_PaidToDate_List}[0]    ignore_case=True
+    Run Keyword If    ${IsEqual}==${True} and '${sVersion}'=='V2'    Log    Expected and Actual are equal. @{Input_PaidToDatet_List}[${iIndex_Input}] = @{Actual_PaidToDate_List}[0]
+    ...    ELSE IF    '${sVersion}'=='V1'    Log    This attribute is not present in V1 response
+    ...    ELSE    Log    Expected and Actual are NOT equal. @{Input_PaidToDatet_List}[${iIndex_Input}] != @{Actual_PaidToDate_List}[0]    level=ERROR
 
     Run Keyword And Continue On Failure    Should Be Equal As Strings    ${PricingOption_Dict}    @{Actual_PricingOption_List}[0]
     ${IsEqual}    Run Keyword And Return Status    Should Be Equal As Strings    ${PricingOption_Dict}    @{Actual_PricingOption_List}[0]
@@ -1151,9 +1169,10 @@ Get Fee Type and Validate Response Per Level
     ...    @update: cfrancis    15SEP2020    - added passing of version values from datasheeet
     ...                                      - added passing of accrual rules and paid to date
     ...    @update: cfrancis    20SEP2020    - added passing of cycle start date and cycle end date
+    ...    @update: cfrancis    09OCT2020    - added passing of cycle due
     [Arguments]    ${sOutputFilePath}    ${sOutputFile}    ${sVersion}    ${sExp_Name}    ${sExp_Fee}    ${sExp_Currency}    ${iExp_CurrentRate}
-    ...    ${sExp_EffectiveDate}    ${sExp_ExpiryDate}    ${sExp_FeeAlias}    ${sExp_Status}    ${iExp_AccruedToDate}    ${iExp_PaidToDate}    ${sExp_DueDate}
-    ...    ${sExp_AccrualRule}    ${sExp_CycleStartDate}    ${sExp_CycleEndDate}    ${sDelimiter}
+    ...    ${sExp_EffectiveDate}    ${sExp_ExpiryDate}    ${sExp_FeeAlias}    ${sExp_Status}    ${iExp_AccruedToDate}    ${iExp_CycleDue}    ${iExp_PaidToDate}
+    ...    ${sExp_DueDate}    ${sExp_AccrualRule}    ${sExp_CycleStartDate}    ${sExp_CycleEndDate}    ${sDelimiter}
     
     ${Response_Payload}    OperatingSystem.Get File    ${datasetpath}${sOutputFilePath}${sOutputFile}.${JSON}
     ${Response_Payload}    Strip String    ${Response_Payload}    mode=left    characters=[
@@ -1180,15 +1199,15 @@ Get Fee Type and Validate Response Per Level
     \    ${Index_Input}    Get Input Value and Return Index    ${sExp_Fee}    @{Actual_Fee_List}[0]    ${sDelimiter}
     \    
     \    Run Keyword If    '@{Actual_Fee_List}[0]'=='Fronting Usage Fee (SFBG)' or '@{Actual_Fee_List}[0]'=='Issuance Fee (BG/LC)'    Validate Fee Response for Outstanding Level    ${Json_Object}    ${sVersion}    ${OUTSTANDING}    
-         ...    ${sExp_Name}    ${sExp_Fee}    ${sExp_Currency}    ${iExp_CurrentRate}    ${sExp_EffectiveDate}    ${sExp_ExpiryDate}    ${iExp_AccruedToDate}    ${iExp_PaidToDate}    ${sExp_DueDate}    ${sExp_AccrualRule}    ${sExp_CycleStartDate}    ${sExp_CycleEndDate}    ${Index_Input}    ${sDelimiter}
+         ...    ${sExp_Name}    ${sExp_Fee}    ${sExp_Currency}    ${iExp_CurrentRate}    ${sExp_EffectiveDate}    ${sExp_ExpiryDate}    ${iExp_AccruedToDate}    ${iExp_CycleDue}    ${iExp_PaidToDate}    ${sExp_DueDate}    ${sExp_AccrualRule}    ${sExp_CycleStartDate}    ${sExp_CycleEndDate}    ${Index_Input}    ${sDelimiter}
          ...    ELSE IF    '@{Actual_Fee_List}[0]'=='Commitment Fee' or '@{Actual_Fee_List}[0]'=='Fronting Commitment Fee (SFBG)'    Validate Fee Response for Facility Level    ${Json_Object}    ${sVersion}    ${FACILITY}    ${sExp_Name}    ${sExp_Fee}    ${sExp_Currency}    ${iExp_CurrentRate}    ${sExp_EffectiveDate}    
-         ...    ${sExp_ExpiryDate}    ${sExp_FeeAlias}    ${sExp_Status}    ${iExp_AccruedToDate}    ${iExp_PaidToDate}    ${sExp_DueDate}    ${sExp_AccrualRule}    ${sExp_CycleStartDate}    ${sExp_CycleEndDate}    ${Index_Input}    ${sDelimiter}
+         ...    ${sExp_ExpiryDate}    ${sExp_FeeAlias}    ${sExp_Status}    ${iExp_AccruedToDate}    ${iExp_CycleDue}    ${iExp_PaidToDate}    ${sExp_DueDate}    ${sExp_AccrualRule}    ${sExp_CycleStartDate}    ${sExp_CycleEndDate}    ${Index_Input}    ${sDelimiter}
          ...    ELSE IF    '@{Actual_Fee_List}[0]'=='Fronting Line Fee (SFBG)' or '@{Actual_Fee_List}[0]'=='Indemnity Fee - Commitment (SFBG)'    Validate Fee Response for Facility Level    ${Json_Object}    ${sVersion}    ${FACILITY}    ${sExp_Name}    ${sExp_Fee}    ${sExp_Currency}    ${iExp_CurrentRate}    ${sExp_EffectiveDate}    
-         ...    ${sExp_ExpiryDate}    ${sExp_FeeAlias}    ${sExp_Status}    ${iExp_AccruedToDate}    ${iExp_PaidToDate}    ${sExp_DueDate}    ${sExp_AccrualRule}    ${sExp_CycleStartDate}    ${sExp_CycleEndDate}    ${Index_Input}    ${sDelimiter}
+         ...    ${sExp_ExpiryDate}    ${sExp_FeeAlias}    ${sExp_Status}    ${iExp_AccruedToDate}    ${iExp_CycleDue}    ${iExp_PaidToDate}    ${sExp_DueDate}    ${sExp_AccrualRule}    ${sExp_CycleStartDate}    ${sExp_CycleEndDate}    ${Index_Input}    ${sDelimiter}
          ...    ELSE IF    '@{Actual_Fee_List}[0]'=='Indemnity Fee - Line (SFBG)' or '@{Actual_Fee_List}[0]'=='Indemnity Fee - Usage (SFBG)'    Validate Fee Response for Facility Level    ${Json_Object}    ${sVersion}    ${FACILITY}    ${sExp_Name}    ${sExp_Fee}    ${sExp_Currency}    ${iExp_CurrentRate}    ${sExp_EffectiveDate}    
-         ...    ${sExp_ExpiryDate}    ${sExp_FeeAlias}    ${sExp_Status}    ${iExp_AccruedToDate}    ${iExp_PaidToDate}    ${sExp_DueDate}    ${sExp_AccrualRule}    ${sExp_CycleStartDate}    ${sExp_CycleEndDate}    ${Index_Input}    ${sDelimiter}
+         ...    ${sExp_ExpiryDate}    ${sExp_FeeAlias}    ${sExp_Status}    ${iExp_AccruedToDate}    ${iExp_CycleDue}    ${iExp_PaidToDate}    ${sExp_DueDate}    ${sExp_AccrualRule}    ${sExp_CycleStartDate}    ${sExp_CycleEndDate}    ${Index_Input}    ${sDelimiter}
          ...    ELSE IF    '@{Actual_Fee_List}[0]'=='Line Fee' or '@{Actual_Fee_List}[0]'=='Risk Cover Premium Fee' or '@{Actual_Fee_List}[0]'=='Usage Fee'     Validate Fee Response for Facility Level    ${Json_Object}    ${sVersion}    ${FACILITY}    ${sExp_Name}    ${sExp_Fee}    ${sExp_Currency}    ${iExp_CurrentRate}    ${sExp_EffectiveDate}    
-         ...    ${sExp_ExpiryDate}    ${sExp_FeeAlias}    ${sExp_Status}    ${iExp_AccruedToDate}    ${iExp_PaidToDate}    ${sExp_DueDate}    ${sExp_AccrualRule}    ${sExp_CycleStartDate}    ${sExp_CycleEndDate}    ${Index_Input}    ${sDelimiter}
+         ...    ${sExp_ExpiryDate}    ${sExp_FeeAlias}    ${sExp_Status}    ${iExp_AccruedToDate}    ${iExp_CycleDue}    ${iExp_PaidToDate}    ${sExp_DueDate}    ${sExp_AccrualRule}    ${sExp_CycleStartDate}    ${sExp_CycleEndDate}    ${Index_Input}    ${sDelimiter}
          ...    ELSE    Run Keyword And Continue On Failure    Fail    '@{Actual_Fee_List}[0]' should not be displayed in the response.
     \    Delete File If Exist    ${dataset_path}${sOutputFilePath}tempfile.json
 
@@ -1198,7 +1217,7 @@ Validate Fee Response for Outstanding Level
     ...    @update: cfrancis    15SEP2020    - added handling of V1 and V2 Endpoints response attributes, cycleDue, cycleStartDate, cycleEndDate, paidToDate and paymentMode
     ...                                      - added AccrualRules as value to be verified for V2
     [Arguments]    ${oJson}    ${sVersion}    ${sExp_Level}    ${sExp_Name}    ${sExp_Fee}    ${sExp_Currency}    ${iExp_CurrentRate}
-    ...    ${sExp_EffectiveDate}    ${sExp_ExpiryDate}    ${iExp_AccruedToDate}    ${iExp_PaidToDate}    ${sExp_DueDate}    ${sExp_AccrualRule}    
+    ...    ${sExp_EffectiveDate}    ${sExp_ExpiryDate}    ${iExp_AccruedToDate}    ${iExp_CycleDue}    ${iExp_PaidToDate}    ${sExp_DueDate}    ${sExp_AccrualRule}    
     ...    ${sExp_CycleStartDate}    ${sExp_CycleEndDate}    ${iIndex_Input}    ${sDelimiter}
 
     ### Get JSON field values ###
@@ -1227,6 +1246,7 @@ Validate Fee Response for Outstanding Level
     @{Input_ExpiryDate_List}    Split String    ${sExp_ExpiryDate}    ${sDelimiter}
     @{Input_AccruedToDate_List}    Split String    ${iExp_AccruedToDate}    ${sDelimiter}
     @{Input_DueDate_List}    Split String    ${sExp_DueDate}    ${sDelimiter}
+    @{Input_CycleDue_List}    Split String    ${iExp_CycleDue}    ${sDelimiter}
     @{Input_PaidToDate_List}    Split String    ${iExp_PaidToDate}    ${sDelimiter}
     @{Input_PaymentMode_List}    Split String    ${sExp_AccrualRule}    ${sDelimiter}
     @{Input_CycleStartDate_List}    Split String    ${sExp_CycleStartDate}    ${sDelimiter}
@@ -1285,6 +1305,13 @@ Validate Fee Response for Outstanding Level
     ...    ELSE IF    '${sVersion}'=='V1'    Log    This attribute is not present in V1 response
     ...    ELSE    Log    Expected and Actual are NOT equal. @{Input_CycleEndDate_List}[${iIndex_Input}] != @{Actual_CycleEndDate_List}[0]    level=ERROR
     
+    ${Converted_CycleDue}    Run Keyword If    '${sVersion}'=='V2'    Remove Comma and Convert to Number    @{Actual_CycleDue_List}[0]
+    Run Keyword If    '${sVersion}'=='V2'    Run Keyword And Continue On Failure    Should Be Equal As Strings    @{Input_CycleDue_List}[${iIndex_Input}]    ${Converted_CycleDue}
+    ${IsEqual}    Run Keyword And Return Status    Should Be Equal As Strings    @{Input_CycleDue_List}[${iIndex_Input}]    ${Converted_CycleDue}
+    Run Keyword If    ${IsEqual}==${True} and '${sVersion}'=='V2'    Log    Expected and Actual are equal. @{Input_CycleDue_List}[${iIndex_Input}] = @{Actual_CycleDue_List}[0]
+    ...    ELSE IF    '${sVersion}'=='V1'    Log    This attribute is not present in V1 response
+    ...    ELSE    Log    Expected and Actual are NOT equal. @{Input_CycleDue_List}[${iIndex_Input}] != @{Actual_CycleDue_List}[0]    level=ERROR
+
     ${Converted_PaidToDate}    Run Keyword If    '${sVersion}'=='V2'    Remove Comma and Convert to Number    @{Actual_PaidToDate_List}[0]
     Run Keyword If    '${sVersion}'=='V2'    Run Keyword And Continue On Failure    Should Be Equal As Strings    @{Input_PaidToDate_List}[${iIndex_Input}]    ${Converted_PaidToDate}
     ${IsEqual}    Run Keyword And Return Status    Should Be Equal As Strings    @{Input_PaidToDate_List}[${iIndex_Input}]    ${Converted_PaidToDate}
@@ -1308,7 +1335,7 @@ Validate Fee Response for Facility Level
     ...    @author: clanding    26AUG2019    - initial create
     ...    @update: cfrancis    18SEP2020    - added handling of V1 and V2 Endpoints response attributes, cycleDue, cycleStartDate, cycleEndDate, paidToDate and paymentMode
     [Arguments]    ${oJson}    ${sVersion}    ${sExp_Level}    ${sExp_Name}    ${sExp_Fee}    ${sExp_Currency}    ${iExp_CurrentRate}
-    ...    ${sExp_EffectiveDate}    ${sExp_ExpiryDate}    ${sFeeAlias}    ${sStatus}    ${iExp_AccruedToDate}    ${iExp_PaidToDate}    ${sExp_DueDate}    
+    ...    ${sExp_EffectiveDate}    ${sExp_ExpiryDate}    ${sFeeAlias}    ${sStatus}    ${iExp_AccruedToDate}    ${iExp_CycleDue}    ${iExp_PaidToDate}    ${sExp_DueDate}    
     ...    ${sExp_AccrualRule}    ${sExp_CycleStartDate}    ${sExp_CycleEndDate}    ${iIndex_Input}    ${sDelimiter}
 
     ### Get JSON field values ###
@@ -1342,6 +1369,7 @@ Validate Fee Response for Facility Level
     @{Input_DueDate_List}    Split String    ${sExp_DueDate}    ${sDelimiter}
     @{Input_FeeAlias_List}    Split String    ${sFeeAlias}    ${sDelimiter}
     @{Input_Status_List}    Split String    ${sStatus}    ${sDelimiter}
+    @{Input_CycleDue_List}    Split String    ${iExp_CycleDue}    ${sDelimiter}
     @{Input_PaidToDate_List}    Split String    ${iExp_PaidToDate}    ${sDelimiter}
     @{Input_PaymentMode_List}    Split String    ${sExp_AccrualRule}    ${sDelimiter}
     @{Input_CycleStartDate_List}    Split String    ${sExp_CycleStartDate}    ${sDelimiter}
@@ -1399,6 +1427,13 @@ Validate Fee Response for Facility Level
     Run Keyword If    ${IsEqual}==${True} and '${sVersion}'=='V2'    Log    Expected and Actual are equal. @{Input_CycleEndDate_List}[${iIndex_Input}] = @{Actual_CycleEndDate_List}[0]
     ...    ELSE IF    '${sVersion}'=='V1'    Log    This attribute is not present in V1 response
     ...    ELSE    Log    Expected and Actual are NOT equal. @{Input_CycleEndDate_List}[${iIndex_Input}] != @{Actual_CycleEndDate_List}[0]    level=ERROR
+    
+    ${Converted_CycleDue}    Run Keyword If    '${sVersion}'=='V2'    Remove Comma and Convert to Number    @{Actual_CycleDue_List}[0]
+    Run Keyword If    '${sVersion}'=='V2'    Run Keyword And Continue On Failure    Should Be Equal As Strings    @{Input_CycleDue_List}[${iIndex_Input}]    ${Converted_CycleDue}
+    ${IsEqual}    Run Keyword And Return Status    Should Be Equal As Strings    @{Input_CycleDue_List}[${iIndex_Input}]    ${Converted_CycleDue}
+    Run Keyword If    ${IsEqual}==${True} and '${sVersion}'=='V2'    Log    Expected and Actual are equal. @{Input_CycleDue_List}[${iIndex_Input}] = @{Actual_CycleDue_List}[0]
+    ...    ELSE IF    '${sVersion}'=='V1'    Log    This attribute is not present in V1 response
+    ...    ELSE    Log    Expected and Actual are NOT equal. @{Input_CycleDue_List}[${iIndex_Input}] != @{Actual_CycleDue_List}[0]    level=ERROR
     
     ${Converted_PaidToDate}    Run Keyword If    '${sVersion}'=='V2'    Remove Comma and Convert to Number    @{Actual_PaidToDate_List}[0]
     Run Keyword If    '${sVersion}'=='V2'    Run Keyword And Continue On Failure    Should Be Equal As Strings    @{Input_PaidToDate_List}[${iIndex_Input}]    ${Converted_PaidToDate}

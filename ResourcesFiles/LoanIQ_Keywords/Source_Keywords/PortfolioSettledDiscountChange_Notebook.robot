@@ -23,10 +23,11 @@ GLOffset Interest Income Details
 Verification of Portfolio Selection Discount Change Transaction
     [Documentation]    This keyword is used to verify the released status of Portfolio Selection Discount Change
     ...    @author:    sahalder    27JUL2020
+    ...    @update:    mcastro     13OCT2020    - updated double click to Java tree into Mx LoanIQ Select Or DoubleClick In Javatree
     mx LoanIQ activate window    ${LIQ_FacilityNotebook_Window}     
     Mx LoanIQ Select Window Tab    ${LIQ_FacilityNotebook_Tab}    Events
-    Run Keyword And Continue On Failure    Mx LoanIQ Verify Text In Javatree    ${LIQ_FacilityEvents_JavaTree}    Portfolio Settled Discount Change Released%yes
-    Mx LoanIQ Select Or Double Click In Tree By Index    ${LIQ_FacilityEvents_JavaTree}    Portfolio Settled Discount Change Released%d    
+    Run Keyword And Continue On Failure    Mx LoanIQ Verify Text In Javatree    ${LIQ_FacilityEvents_JavaTree}    Portfolio Settled Discount Change Released%yes 
+    Mx LoanIQ Select Or DoubleClick In Javatree    ${LIQ_FacilityEvents_JavaTree}    Portfolio Settled Discount Change Released%d
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/PortfolioSelectionDiscountChangeStatus     
     mx LoanIQ select    ${LIQ_PortfolioSettledDiscountChange_Queries_GLEntries}
     mx LoanIQ activate window  ${LIQ_GL_Entries_Window}   

@@ -288,6 +288,7 @@ Setup Facility - Scenario 7 ComSee
     Write Data To Excel    ComSee_SC7_LoanInterestPayment    Facility_Name    ${rowid}    ${Facility_Name}    ${ComSeeDataSet}
     # Write Data To Excel    ComSee_SC7_LoanInterestPayment    Loan_FacilityName    ${rowid}    ${Facility_Name}    ${ComSeeDataSet} 
     Write Data To Excel    ComSee_SC7_OngoingFeePayment    Facility_Name    ${rowid}    ${Facility_Name}    ${ComSeeDataSet}
+    Write Data To Excel    ComSee_SC7_LoanRepricing    Facility_Name    ${rowid}    ${Facility_Name}    ${ComSeeDataSet}
     
     ###New Facility Screen###
     New Facility Select    &{ExcelPath}[Deal_Name]    ${FacilityName}    &{ExcelPath}[Facility_Type]    &{ExcelPath}[Facility_ProposedCmtAmt]    &{ExcelPath}[Facility_Currency]
@@ -309,7 +310,8 @@ Setup Facility - Scenario 7 ComSee
     Write Data To Excel    ComSee_SC7_FacSetup    Facility_MultiCCY    ${rowid}    ${MulitCCYStatus}    ${ComSeeDataSet} 
     Write Data To Excel    ComSee_SC7_Deal    COM_ID    ${rowid}    ${FacilityControlNumber}    ${ComSeeDataSet}
     Write Data To Excel    ComSee_SC7_FacSetup    Facility_ControlNumber    ${rowid}    ${FacilityControlNumber}    ${ComSeeDataSet}  
-    Write Data To Excel    ComSee_SC7_FacFeeSetup    COM_ID    ${rowid}    ${FacilityControlNumber}    ${ComSeeDataSet} 
+    Write Data To Excel    ComSee_SC7_FacFeeSetup    COM_ID    ${rowid}    ${FacilityControlNumber}    ${ComSeeDataSet}
+    Write Data To Excel    ComSee_SC7_Loan    COM_ID    ${rowid}    ${FacilityControlNumber}    ${ComSeeDataSet}
     
     # ###Facility Notebook - Codes Tab###
     ${FundingDeskDesc}    Get Facility Funding Desk Description
@@ -408,7 +410,7 @@ Write Facility Ongoing Fee Details for Syndicated Deal - ComSee
     [Arguments]    ${ExcelPath}
     
     ###LIQ Login
-    # Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
+    Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
     
     ###Read Facility Name
     ${FacilityName}    Read Data From Excel    ComSee_SC2_FacFeeSetup    Facility_Name    ${rowid}    ${ComSeeDataSet} 
@@ -486,6 +488,4 @@ Write Facility Ongoing Fee Details for Syndicated Deal - ComSee
     Write Data To Excel    ComSee_SC2_Deal    Fee_AccruedToDate    ${rowid}    ${IndemnityAccruedtodateAmount},${CommitmentAccruedtodateAmount}    ${ComSeeDataSet}
     
     Close All Windows on LIQ
-    
-    Logout from LoanIQ
-    
+    Logout from LoanIQ    

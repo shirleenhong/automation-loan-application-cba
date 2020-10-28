@@ -21,9 +21,9 @@ LIQ_LineFee_AccrualEnd_Date = 'JavaWindow("title:=Line Fee.*").JavaEdit("attache
 LIQ_LineFee_Cycle = 'JavaWindow("title:=Line Fee.*").JavaList("attached text:=Cycle Frequency:")' 
 LIQ_LineFee_Accrue_Dropdown = 'JavaWindow("title:=Line Fee.*").JavaList("attached text:=Accrue.*")' 
 LIQ_LineFeeReleasedNotebook_Window = 'JavaWindow("title:=Line Fee.* / Released:.*")'
-LIQ_LineFee_Currency_Text = 'JavaWindow("title:=Line Fee.*").JavaStaticText("labeled_containers_path:=Tab:General;", "x:=185", "y:=168")'
-LIQ_LineFee_ActualExpiryDate_Text = 'JavaWindow("title:=Line Fee.*").JavaStaticText("labeled_containers_path:=Tab:General;", "x:=567", "y:=152")'
-LIQ_LineFee_CycleStartDate_Text = 'JavaWindow("title:=Line Fee.*").JavaStaticText("labeled_containers_path:=Tab:General;", "x:=567", "y:=198")'
+LIQ_LineFee_Currency_Text = 'JavaWindow("title:=Line Fee.*").JavaStaticText("labeled_containers_path:=Tab:General;", "Index:=16")'
+LIQ_LineFee_ActualExpiryDate_Text = 'JavaWindow("title:=Line Fee.*").JavaStaticText("labeled_containers_path:=Tab:General;", "Index:=1")'
+LIQ_LineFee_CycleStartDate_Text = 'JavaWindow("title:=Line Fee.*").JavaStaticText("labeled_containers_path:=Tab:General;", "Index:=2")'
 
 ###Line Fee Notebook - Facility Ongoing Fee Capitalization Editor### 
 LIQ_LineFee_CapitalizationEditor_Window = 'JavaWindow("title:=Facility Ongoing Fee Capitalization Editor")'
@@ -33,7 +33,8 @@ LIQ_LineFee_CapitalizationEditor_ToDate_Textfield = 'JavaWindow("title:=Facility
 LIQ_LineFee_CapitalizationEditor_PctofPayment_RadioButton = 'JavaWindow("title:=Facility Ongoing Fee Capitalization Editor").JavaRadioButton("attached text:=Percent of Payment")'
 LIQ_LineFee_CapitalizationEditor_PctofPayment_Textfield = 'JavaWindow("title:=Facility Ongoing Fee Capitalization Editor").JavaEdit("attached text:=To Date", "index:=2")'
 LIQ_LineFee_CapitalizationEditor_ToFacility_DropdownList = 'JavaWindow("title:=Facility Ongoing Fee Capitalization Editor").JavaList("attached text:=To Facility")'
-LIQ_LineFee_CapitalizationEditor_ToLoan_DropdownList = 'JavaWindow("title:=Facility Ongoing Fee Capitalization Editor").JavaList("attached text:=To Loan")'
+# LIQ_LineFee_CapitalizationEditor_ToLoan_DropdownList = 'JavaWindow("title:=Facility Ongoing Fee Capitalization Editor").JavaList("attached text:=To Loan")'
+LIQ_LineFee_CapitalizationEditor_ToLoan_DropdownList = 'JavaWindow("title:=Facility Ongoing Fee Capitalization Editor").JavaList("attached text:=Currency.*")' ### attached text value was updated (LIQ 7.5.1.2 HF2 version)
 LIQ_LineFee_CapitalizationEditor_OK_Button = 'JavaWindow("title:=Facility Ongoing Fee Capitalization Editor").JavaButton("attached text:=OK")'
 
 ###Line Fee Notebook - Accrual Tab###
@@ -66,6 +67,6 @@ LIQ_LineFee_ReversePayment = 'JavaWindow("title:=Line Fee Ongoing Fee Payment.*"
 LIQ_LineFee_ReversePayment_CurrentCycleDue = 'JavaWindow("title:=Line Fee Reverse Fee.*").JavaEdit("tagname:=Line Fee", "x:=231", "y:=50")'
 LIQ_LineFee_ReversePayment_RequestedAmount = 'JavaWindow("title:=Line Fee Reverse Fee.*").JavaEdit("tagname:=Text", "x:=231", "y:=113")'
 LIQ_LineFee_ReversePayment_Tab = 'JavaWindow("title:=Line Fee Reverse Fee.*").JavaTab("tagname:=TabFolder")'
-LIQ_LineFee_ReversePayment__WorkflowItems = 'JavaWindow("title:=Line Fee Reverse Fee.*").JavaTree("attached text:=Drill down to perform Workflow item")'
+LIQ_LineFee_ReversePayment_WorkflowItems = 'JavaWindow("title:=Line Fee Reverse Fee.*").JavaTree("attached text:=Drill down to perform Workflow item")'
 LIQ_LineFee_ReversePayment_Cashflows_Window = 'JavaWindow("title:=Cashflows .* Reverse.*","displayed:=1")'
 LIQ_LineFee_ReversePayment_Cashflow_OK_Button = 'JavaWindow("title:=Cashflows For.* Reverse.*").JavaButton("attached text:=OK")'

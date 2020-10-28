@@ -28,6 +28,7 @@ LIQ_Notice_IntentNotice_Email = 'JavaWindow("title:=.* Payment Notice created.*"
 LIQ_Payment_Window = 'JavaWindow("title:=.* .* Payment .*")'
 LIQ_Payment_Options_Cashflow = 'JavaWindow("title:=.* .* Payment .*").JavaMenu("label:=Options").JavaMenu("label:=Cashflow")'
 LIQ_Payment_Options_PaperClipNotebook = 'JavaWindow("title:=.* .* Payment .*").JavaMenu("label:=Options").JavaMenu("label:=Paper Clip Notebook")'
+LIQ_Payment_Options_ReversePayment = 'JavaWindow("title:=.* .* Payment .*").JavaMenu("label:=Options").JavaMenu("label:=Reverse Payment")'
 LIQ_Payment_Queries_GLEntries = 'JavaWindow("title:=.* .* Payment .*").JavaMenu("label:=Queries").JavaMenu("label:=GL Entries")'
 LIQ_Payment_EffectiveDate_Textfield = 'JavaWindow("title:=.* .* Payment .*").JavaEdit("attached text:=Effective Date:")'
 LIQ_Payment_File_Save = 'JavaWindow("title:=.* .* Payment .*").JavaMenu("label:=File").JavaMenu("label:=Save")'    
@@ -66,3 +67,12 @@ LIQ_ScheduledActivityReport_ViewBy_Dropdown = 'JavaWindow("title:=Scheduled Acti
 LIQ_ScheduledActivityReport_CollapseAll_Button = 'JavaWindow("title:=Scheduled Activity Report.*").JavaButton("attached text:=Collapse All")'
 
 LIQ_InterestPayment_WorkflowItems = 'JavaWindow("title:=.*Interest Payment.*").JavaTree("attached text:=Drill down to perform Workflow item")'
+
+###Reverse Interest Payment###
+LIQ_ReverseInterestPayment_Window = 'JavaWindow("title:=.*Reverse Interest Payment.*")'
+LIQ_ReverseInterestPayment_CurrentCycleDue = 'JavaWindow("title:=.*Reverse Interest Payment.*").JavaEdit("labeled_containers_path:=Tab:General;.*", "x:=231", "y:=50")'
+LIQ_ReverseInterestPayment_RequestedAmount = 'JavaWindow("title:=.*Reverse Interest Payment.*").JavaEdit("labeled_containers_path:=Tab:General;.*", "x:=231", "y:=113")'
+LIQ_ReverseInterestPayment_Tab = 'JavaWindow("title:=.*Reverse Interest Payment.*").JavaTab("tagname:=TabFolder")'
+LIQ_ReverseInterestPayment_WorkflowItems = 'JavaWindow("title:=.*Reverse Interest Payment.*").JavaTree("attached text:=Drill down to perform Workflow item")'
+LIQ_ReverseInterestPayment_Cashflows_Window = 'JavaWindow("title:=Cashflows .* Reverse.*","displayed:=1")'
+LIQ_ReverseInterestPayment_Cashflow_OK_Button = 'JavaWindow("title:=Cashflows For.* Reverse.*").JavaButton("attached text:=OK")'

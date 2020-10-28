@@ -130,7 +130,20 @@ Configure Zone and Branch
     Capture Page Screenshot    ${screenshot_path}/Screenshots/Party/MessagePage-{index}.png
     Mx Click Element    ${Party_ZoneBranchSelectionPage_CloseTab_Button}
 
-
-
-
-
+Verify Zone Visibility In Zone Dropdown List
+    [Documentation]    This keyword is used to verify a zone's visibility among the menu items.
+    ...    @author: nbautist    23OCT2020    - initial create
+    [Arguments]    ${sZone}    ${bShouldBeVisible}
+    
+    Mx Click Element    ${Party_Zone_Button}
+    Wait Until Loading Page Is Not Visible    ${PARTY_TIMEOUT}
+    Validate Page Screen is Displayed    ${PARTY_ZONEANDBRANCHSELECTION_PAGETITLE}
+    Capture Page Screenshot    ${screenshot_path}/Screenshots/Party/ZoneAndBranchSelectionPage-{index}.png
+    Mx Click Element    ${Party_ZoneSelection_Dropdown_Button}
+    ${sZone}    Replace Variables    ${sZone}
+    ${Party_AmendUser_Zone_Menu_Item}    Replace Variables    ${Party_AmendUser_Zone_Menu_Item}
+    ${status}    Run Keyword And Return Status    Wait Until Element Is Visible    ${Party_AmendUser_Zone_Menu_Item}    10s
+    Capture Page Screenshot    ${screenshot_path}/Screenshots/Party/ZoneAndBranchSelectionPage-{index}.png
+    Run Keyword If    ${status}==${bShouldBeVisible} and ${bShouldBeVisible}==${True}    Log    Correct. ${sZone} is visibile in ${PARTY_ZONEANDBRANCHSELECTION_PAGETITLE}.
+    ...    ELSE IF    ${status}==${bShouldBeVisible} and ${bShouldBeVisible}==${False}    Log    Correct. ${sZone} is not visibile in ${PARTY_ZONEANDBRANCHSELECTION_PAGETITLE}.
+    ...    ELSE    Fail   Zone changes were not applied correctly.

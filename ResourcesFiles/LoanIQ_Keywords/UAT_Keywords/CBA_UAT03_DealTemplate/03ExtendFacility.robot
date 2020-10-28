@@ -106,29 +106,4 @@ Extend Maturity and Limit for FCAF
     
     ###Facility Notebook
     Validate Facility Change Transaction    &{ExcelPath}[Maturity_Date]    &{ExcelPath}[Deal_Name]    &{ExcelPath}[Facility_Name]
-    
-    ###Facility Notebook###
-    Navigate to Facility Notebook    &{ExcelPath}[Deal_Name]    &{ExcelPath}[Facility_Name]
-    
-    # ### Create Pending Transactions ###
-    # Create Pending Transaction in Facility Schedule    &{ExcelPath}[Cycle_Number]    &{ExcelPath}[PendingTran_EffectiveDate]
-    # Enter Facility Schedule Commitment Details    Limit Increase
-    
-    # ### Send to Approval
-    # Navigate Notebook Workflow    ${LIQ_ScheduledCommitment_Notebook}    ${LIQ_ScheduledCommitment_Tab}    ${LIQ_ScheduledCommitment_Workflow_JavaTree}    Send to Approval
-    
-    # ###Loan IQ Window###
-    # Logout from LIQ
-    # Login to Loan IQ    ${MANAGER_USERNAME}    ${MANAGER_PASSWORD}
-    
-    # Select Item in Work in Process    Facilities    Awaiting Approval    Scheduled Commitment Increase    &{ExcelPath}[Facility_Name]
-    # Navigate Notebook Workflow    ${LIQ_ScheduledCommitment_Notebook}    ${LIQ_ScheduledCommitment_Tab}    ${LIQ_ScheduledCommitment_Workflow_JavaTree}    Approval
-
-    
-    # ###Loan IQ Window###
-    # Logout from LIQ
-    # Login to Loan IQ    ${MANAGER_USERNAME}    ${MANAGER_PASSWORD}
-    
-    # Select Item in Work in Process    Facilities    Awaiting Release    Scheduled Commitment Increase    &{ExcelPath}[Facility_Name]
-    # Navigate Notebook Workflow    ${LIQ_ScheduledCommitment_Notebook}    ${LIQ_ScheduledCommitment_Tab}    ${LIQ_ScheduledCommitment_Workflow_JavaTree}    Release
 

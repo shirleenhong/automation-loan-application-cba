@@ -400,10 +400,13 @@ Validate Currency Exchange Rate List is displayed
     ...    @update: clanding    26MAR2019    - refactor according to CBA Evergreen Automation Checklist and PointSheet v1.0.1
     ...    @update: cfrancis    18JUL2019    - added logic to change funding desk for NY FX rates    
     ...    @update: clanding    07OCT2020    - removed process timeout for Mx LoanIQ Select String
+    ...    @update: ccarriedo   27OCT2020    - added ${sFundingDesk_Currency}=='EUR' and 'AUD'
     [Arguments]    ${sExchangeCurrency}    ${sToCurrency}    ${sFundingDesk_Desc}    ${sFundingDesk_Currency}    ${iFXRate_WholeNum}    ${iFXRate_DecNum}
 
     mx LoanIQ activate window    ${LIQ_CurrencyExchangeRate_Window}
-    Run Keyword If    '${sFundingDesk_Currency}'=='USD'    mx LoanIQ select    ${LIQ_ExchangeRate_FundingDesk_List}    ${sFundingDesk_Desc}    
+    Run Keyword If    '${sFundingDesk_Currency}'=='USD'    mx LoanIQ select    ${LIQ_ExchangeRate_FundingDesk_List}    ${sFundingDesk_Desc}
+    ...    ELSE IF    '${sFundingDesk_Currency}'=='AUD'    mx LoanIQ select    ${LIQ_ExchangeRate_FundingDesk_List}    ${sFundingDesk_Desc}    
+    ...    ELSE IF    '${sFundingDesk_Currency}'=='EUR'    mx LoanIQ select    ${LIQ_ExchangeRate_FundingDesk_List}    ${sFundingDesk_Desc}    
     Run Keyword And Continue On Failure    Validate Loan IQ Details    ${sFundingDesk_Desc}    ${LIQ_ExchangeRate_FundingDesk_List}
     Run Keyword And Continue On Failure    Mx LoanIQ Verify Object Exist    JavaWindow("title:=Currency Exchange Rates.*").JavaStaticText("label:=${sFundingDesk_Currency}")            VerificationData="Yes"
     Log    ${sExchangeCurrency}\t${iFXRate_WholeNum}\t${iFXRate_DecNum}
