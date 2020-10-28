@@ -820,6 +820,7 @@ Setup Bilateral Deal with Multiple Risk Type
     ...    @update: rtarayao    26FEB2019    Updated read and write actions; deleted "add deal pricing options"
     ...    @author: bernchua    10JUL2019    Updated passed argument for Add Bank Role keyword
     ...    @update: amansueto    15APR2020    - merged select actions and validate field keywords to Create New Deal
+    ...    @update: kduenas    28OCT2020    added writing of deal name to corro dataset for api_cor_tc13
     [Arguments]    ${ExcelPath}
     
     ###Test Data Generation###
@@ -836,6 +837,7 @@ Setup Bilateral Deal with Multiple Risk Type
     Write Data To Excel    PTRF_CRE01_PortfolioTransfer   Deal_Name    ${rowid}    ${Deal_Name}     
     Write Data To Excel    MTAM06B_CycleShareAdjustment   Deal_Name    ${rowid}    ${Deal_Name} 
     Write Data To Excel    MTAM05B_CycleShareAdjustment   Deal_Name    ${rowid}    ${Deal_Name}
+    Write Data To Excel    Correspondence    Deal_Name    13    ${Deal_Name}    ${APIDataSet}    bTestCaseColumn=True    sColumnReference=rowid
     Write Data To Excel    CRED01_DealSetup    Deal_Alias    ${rowid}    ${Deal_Alias} 
     ${Deal_Name}    Read Data From Excel    CRED01_DealSetup    Deal_Name    ${rowid}  
     ${Deal_Alias}    Read Data From Excel    CRED01_DealSetup    Deal_Alias    ${rowid}
