@@ -461,6 +461,7 @@ Approve and Close Deal with Single Primary Lender
 Setup 2 Host Bank Primaries for RPA Deal
     [Documentation]    This keyword adds Lenders in a RPA Deal. Specifically, 2 Host banks with protfolios in different branches.
     ...    @author: dahijara    20OCT2020    - initial create
+    ...    @update: dahijara    28OCT2020    - Added writing of data for portfolio name in TRPO12_PortfolioSettledDisc
     [Arguments]    ${ExcelPath}
     
     Open Existing Deal    &{ExcelPath}[Deal_Name]
@@ -493,6 +494,8 @@ Setup 2 Host Bank Primaries for RPA Deal
 
     ${HostBank_ShareAmount2}    Circle Notebook Workflow Navigation    &{ExcelPath}[Primary_Lender2]    &{ExcelPath}[Primary_CircledDate]
     ...    Yes    &{ExcelPath}[Primary_Portfolio2]    &{ExcelPath}[Primary_PortfolioBranch2]    ${SellAmount2}    &{ExcelPath}[Primary_PortfolioExpiryDate]    &{ExcelPath}[Primary_RiskBook2]
+
+    Write Data To Excel    TRPO12_PortfolioSettledDisc    Portfolio_Name    1    &{ExcelPath}[Primary_Portfolio1]
 
     Close All Windows on LIQ
     
