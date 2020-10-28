@@ -798,3 +798,21 @@ Validate Error Message in Quick Enterprise Party
     ${isMatched}    Run Keyword And Return Status    Should Contain    ${ErrorMessage}    ${sExpected_Error_Message}
     Run Keyword If    ${isMatched}==${True}    Mx Click Element    ${Party_QuickEnterpriseParty_ErrorsDialog_GoBack_Button}
     ...    ELSE    Run Keyword and Continue on Failure    Fail   Error message: '${sExpected_Error_Message}' is expected.
+
+Populate Pre-Existence Check with Duplicate Enterprise Name
+    [Documentation]    This keyword populates Pre-Existence page with duplicate Enterprise name and click 
+    ...    Next to redirect to Quick Party Enterprise page.
+    ...    @author: javinzon    27OCT2020    - initial create
+    [Arguments]    ${sDuplicate_Enterprise_Name}
+    
+    Mx Click Element     ${Party_PreExistenceCheck_EnterpriseName_TextBox} 
+    Set Focus To Element    ${Party_PreExistenceCheck_EnterpriseName_TextBox}
+    ${Party_ID}    Generate Unique Number or Text for Party
+    
+    Mx Activate And Input Text    ${Party_PreExistenceCheck_EnterpriseName_TextBox}    ${sDuplicate_Enterprise_Name}  
+    Capture Page Screenshot    ${screenshot_path}/Screenshots/Party/DuplicateEnterpriseName-{index}.png 
+    Mx Click Element    ${Party_Footer_Next_Button}
+
+    Wait Until Page Contains   ${PARTY_ENQUIREENTERPRISEPARTY_PAGETITLE}
+    
+    [Return]    ${Party_ID}
