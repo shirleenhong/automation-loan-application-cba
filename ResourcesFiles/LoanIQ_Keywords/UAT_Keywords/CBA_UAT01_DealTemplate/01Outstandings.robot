@@ -5,6 +5,7 @@ Resource    ../../../../Configurations/LoanIQ_Import_File.robot
 Setup Deal D00000454 Outstandings
     [Documentation]    This high-level keyword is used to setup the outstandings per Facility for Deal D00000454.
     ...                @author: fmamaril    28AUG2019    Initial create
+    ...                @update: kduenas    28OCT2020    Added writing of loan alias to corro dataset for api_cor_tc26
     [Arguments]    ${ExcelPath}
     
     ${Portfolio_Name}    Read Data From Excel    CRED01_Primaries    Primary_Portfolio    1    ${CBAUAT_ExcelPath}
@@ -18,6 +19,7 @@ Setup Deal D00000454 Outstandings
     Navigate to Outstanding Select Window from Deal
     ${Loan_Alias}    New Outstanding Select    &{ExcelPath}[Deal_Name]    &{ExcelPath}[Facility_Name]    &{ExcelPath}[Borrower_Name]    &{ExcelPath}[Outstanding_Type]    &{ExcelPath}[Pricing_Option]    &{ExcelPath}[Outstanding_Currency]
     Write Data To Excel    SERV01_LoanDrawdown    Loan_Alias    &{ExcelPath}[rowid]    ${Loan_Alias}    ${CBAUAT_ExcelPath}
+    Write Data To Excel    Correspondence    Loan_Alias    26    ${Loan_Alias}    ${APIDataSet}    bTestCaseColumn=True    sColumnReference=rowid
     Run Keyword If    &{ExcelPath}[rowid] == 3    Run Keyword    Write Data To Excel    SERV23_Paperclip    Loan_Alias    2    ${Loan_Alias}    ${CBAUAT_ExcelPath}
     Write Data To Excel    SERV08C_ComprehensiveRepricing    Loan_Alias    &{ExcelPath}[rowid]    ${Loan_Alias}    ${CBAUAT_ExcelPath}
 
