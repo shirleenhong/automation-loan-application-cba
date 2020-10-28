@@ -7,15 +7,16 @@ Send GS Files with Publish Date Equal to Business Date
     ...    Validate if GS file is processed and moved to Archive folder. Then validate FFC if file is sent to CCB OpenAPI, distributor and CustomCBAPush. 
     ...    Then validate in LoanIQ if Base Rate Code is updated correctly.
     ...    @author: jdelacru    15AUG2019    - initial create
+    ...    @update: jdelacru    28OCT2020    - used templatefilepath variable in declaring the location of template files
     [Arguments]    ${ExcelPath}
     
     ###PREREQUISITE###    
-    # Login to Loan IQ    ${TL_USERNAME}    ${TL_PASSWORD}
+    Login to Loan IQ    ${TL_USERNAME}    ${TL_PASSWORD}
     ${TransformedDataFile_BaseRate}    Set Variable    &{ExcelPath}[InputFilePath]${TL_Transformed_Data_BaseRate}
-    ${TransformedDataFile_Template_BaseRate}    Set Variable    &{ExcelPath}[InputFilePath]${TL_Transformed_Data_template_BaseRate}
+    ${TransformedDataFile_Template_BaseRate}    Set Variable    &{ExcelPath}[TemplateFilePath]${TL_Transformed_Data_template_BaseRate}
     
     Create Prerequisite for Multiple GS Files Scenario    &{ExcelPath}[InputFilePath]    ${TL_Transformed_Data_BaseRate}    ${TransformedDataFile_Template_BaseRate}
-    ...    &{ExcelPath}[InputGSFile]    &{ExcelPath}[InputJson]     &{ExcelPath}[Expected_wsFinalLIQDestination]
+    ...    &{ExcelPath}[InputGSFile]    &{ExcelPath}[InputJson]     &{ExcelPath}[Expected_wsFinalLIQDestination]    sTemplateFilePath=&{ExcelPath}[TemplateFilePath]
     ###END OF PREREQUISITE###
     
     Send Multiple Files to SFTP and Validate If Files are Processed    &{ExcelPath}[InputFilePath]    ${TL_Base_Folder}    &{ExcelPath}[InputGSFile]    
