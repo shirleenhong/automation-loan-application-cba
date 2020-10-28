@@ -219,6 +219,8 @@ SET_FX_RATE_TRANSACTION = "Set F/X Rate"
 MANUALTRANS_TRANSACTION = "ManualTrans"
 MANUAL_GL_TRANSACTION = "Manual GL Transaction"
 MANUAL_CASHFLOW_TRANSACTION = "Manual Cashflow Transaction"
+FACILITIES = "Facilities"
+PORTFOLIO_SETTLED_DISCOUNT_ADJUSTMENT = "Portfolio Settled Discount Adjustment"
 
 ### Bank Role ###
 REFERENCE_BANK_ROLE = "Reference Bank"
