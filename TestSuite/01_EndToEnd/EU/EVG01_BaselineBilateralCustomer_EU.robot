@@ -28,6 +28,9 @@ Deal Setup - CRED01
 	Mx Execute Template With Multiple Data    Ongoing Fee Setup     ${ExcelPath}    ${rowid}    CRED08_OngoingFeeSetup
 	Mx Execute Template With Multiple Data    Setup a Primary Notebook    ${ExcelPath}    ${rowid}    SYND02_PrimaryAllocation
 
+Scenario 1 - Calendar Load
+    Mx Execute Template With Multiple Data    Send Valid Copp Clark Files    ${ExcelPath}    ${rowid}    Calendar_Fields
+
 Create Initial Loan Drawdown - SERV01
     [Tags]    04 Create Initial Loan Drawdown - SERV01
     Mx Execute Template With Multiple Data    Create Initial Loan Drawdown with Repayment Schedule    ${ExcelPath}    ${rowid}    SERV01_LoanDrawdown
