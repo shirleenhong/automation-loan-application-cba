@@ -1355,41 +1355,41 @@ Validate Records for VLS_FACILITY
     
     ${Row_Count}    Get Length    ${aFacilityID_List}    
     
-    :FOR    ${i}    IN RANGE    0    ${Row_Count}
-    \    ${Current_FacilityID}    Set Variable    ${aFacilityID_List}[${i}]
+    :FOR    ${i}    IN RANGE    0    1    ##${Row_Count}
+    \    ${Current_FacilityID}    Set Variable    @{aFacilityID_List}[${i}]
     \    Run Keyword If    '${Current_FacilityID.strip()}'=='NONE'    Log    Facility ID is NONE. Skipping record.
     \    Continue For Loop If    '${Current_FacilityID.strip()}'=='NONE'
     \    
-    \    ${Current_Multi_Currency}    Get From Dictionary    ${aMulti_Currency_Dictionary}    ${aFacilityID_List}[${i}]
-    \    ${Current_Effective_Date}    Get From Dictionary    ${aEffective_Date_Dictionary}    ${aFacilityID_List}[${i}]
-    \    ${Current_Final_Maturity}    Get From Dictionary    ${aFinal_Maturity_Dictionary}    ${aFacilityID_List}[${i}]
-    \    ${Current_Expiry_Date}    Get From Dictionary    ${aExpiry_Date_Dictionary}    ${aFacilityID_List}[${i}]
-    \    ${Current_Currency}    Get From Dictionary    ${aCurrency_Dictionary}    ${aFacilityID_List}[${i}]
-    \    ${Current_Agreement_Date}    Get From Dictionary    ${aAgreement_Date_Dictionary}    ${aFacilityID_List}[${i}]
-    \    ${Current_Facility_Type}    Get From Dictionary    ${aFacility_Type_Dictionary}    ${aFacilityID_List}[${i}]
-    \    ${Current_Termination_Date}    Get From Dictionary    ${aTermination_Date_Dictionary}    ${aFacilityID_List}[${i}]
-    \    ${Current_FL_Drawdown_Date}    Get From Dictionary    ${aFL_Drawdown_Date_Dictionary}    ${aFacilityID_List}[${i}]
-    \    ${Current_Committed}    Get From Dictionary    ${aCommitted_Dictionary}    ${aFacilityID_List}[${i}]
-    \    ${Current_Branch}    Get From Dictionary    ${aBranch_Dictionary}    ${aFacilityID_List}[${i}]
+    \    ${Current_Multi_Currency}    Get From Dictionary    ${aMulti_Currency_Dictionary}    @{aFacilityID_List}[${i}]
+    \    ${Current_Effective_Date}    Get From Dictionary    ${aEffective_Date_Dictionary}    @{aFacilityID_List}[${i}]
+    \    ${Current_Final_Maturity}    Get From Dictionary    ${aFinal_Maturity_Dictionary}    @{aFacilityID_List}[${i}]
+    \    ${Current_Expiry_Date}    Get From Dictionary    ${aExpiry_Date_Dictionary}    @{aFacilityID_List}[${i}]
+    \    ${Current_Currency}    Get From Dictionary    ${aCurrency_Dictionary}    @{aFacilityID_List}[${i}]
+    \    ${Current_Agreement_Date}    Get From Dictionary    ${aAgreement_Date_Dictionary}    @{aFacilityID_List}[${i}]
+    \    ${Current_Facility_Type}    Get From Dictionary    ${aFacility_Type_Dictionary}    @{aFacilityID_List}[${i}]
+    \    ${Current_Termination_Date}    Get From Dictionary    ${aTermination_Date_Dictionary}    @{aFacilityID_List}[${i}]
+    \    ${Current_FL_Drawdown_Date}    Get From Dictionary    ${aFL_Drawdown_Date_Dictionary}    @{aFacilityID_List}[${i}]
+    \    ${Current_Committed}    Get From Dictionary    ${aCommitted_Dictionary}    @{aFacilityID_List}[${i}]
+    \    ${Current_Branch}    Get From Dictionary    ${aBranch_Dictionary}    @{aFacilityID_List}[${i}]
     \    
     \    ###Select By RID###
-    \    Select By RID    Facility    ${aFacilityID_List}[${i}]
+    \    Select By RID    Facility    @{aFacilityID_List}[${i}]
     \    
-    \    Run Keyword And Continue On Failure    Validate FAC_IND_MULTI_CURR for VLS_FACILITY - Summary Tab    ${aFacilityID_List}[${i}]    ${Current_Multi_Currency}
-    \    Run Keyword And Continue On Failure    Validate FAC_DTE_EFFECTIVE for VLS_FACILITY    ${aFacilityID_List}[${i}]    ${Current_Effective_Date}
-    \    Run Keyword And Continue On Failure    Validate FAC_DTE_FINAL_MAT for VLS_FACILITY    ${aFacilityID_List}[${i}]    ${Current_Final_Maturity}
-    \    Run Keyword And Continue On Failure    Validate FAC_DTE_EXPIRY for VLS_FACILITY    ${aFacilityID_List}[${i}]    ${Current_Expiry_Date}
-    \    Run Keyword And Continue On Failure    Validate FAC_CDE_CURRENCY for VLS_FACILITY    ${aFacilityID_List}[${i}]    ${Current_Currency}
-    \    Run Keyword And Continue On Failure    Validate FAC_DTE_AGREEMENT for VLS_FACILITY    ${aFacilityID_List}[${i}]    ${Current_Agreement_Date}
-    \    Run Keyword And Continue On Failure    Validate FAC_CDE_FAC_TYPE for VLS_FACILITY    ${aFacilityID_List}[${i}]    ${Current_Facility_Type}    ${Facility_Type_List}    ${Facility_Type_Dictionary}
-    \    Run Keyword And Continue On Failure    Validate FAC_DTE_TERM_FAC for VLS_FACILITY    ${aFacilityID_List}[${i}]    ${Current_Termination_Date}
-    \    Run Keyword And Continue On Failure    Validate FAC_DTE_FL_DRAWDWN for VLS_FACILITY - Events Tab    ${aFacilityID_List}[${i}]    ${Current_FL_Drawdown_Date}
-    \    Run Keyword And Continue On Failure    Validate FAC_IND_COMMITTED for VLS_FACILITY    ${aFacilityID_List}[${i}]    ${Current_Committed}
-    \    Run Keyword And Continue On Failure    Validate FAC_DTE_FL_DRAWDWN for VLS_FACILITY - Existing Loans Window    ${aFacilityID_List}[${i}]    ${Current_FL_Drawdown_Date}
+    \    Run Keyword And Continue On Failure    Validate FAC_IND_MULTI_CURR for VLS_FACILITY - Summary Tab    @{aFacilityID_List}[${i}]    ${Current_Multi_Currency}
+    \    Run Keyword And Continue On Failure    Validate FAC_DTE_EFFECTIVE for VLS_FACILITY    @{aFacilityID_List}[${i}]    ${Current_Effective_Date}
+    \    Run Keyword And Continue On Failure    Validate FAC_DTE_FINAL_MAT for VLS_FACILITY    @{aFacilityID_List}[${i}]    ${Current_Final_Maturity}
+    \    Run Keyword And Continue On Failure    Validate FAC_DTE_EXPIRY for VLS_FACILITY    @{aFacilityID_List}[${i}]    ${Current_Expiry_Date}
+    \    Run Keyword And Continue On Failure    Validate FAC_CDE_CURRENCY for VLS_FACILITY    @{aFacilityID_List}[${i}]    ${Current_Currency}
+    \    Run Keyword And Continue On Failure    Validate FAC_DTE_AGREEMENT for VLS_FACILITY    @{aFacilityID_List}[${i}]    ${Current_Agreement_Date}
+    \    Run Keyword And Continue On Failure    Validate FAC_CDE_FAC_TYPE for VLS_FACILITY    @{aFacilityID_List}[${i}]    ${Current_Facility_Type}    ${Facility_Type_List}    ${Facility_Type_Dictionary}
+    \    Run Keyword And Continue On Failure    Validate FAC_DTE_TERM_FAC for VLS_FACILITY    @{aFacilityID_List}[${i}]    ${Current_Termination_Date}
+    \    Run Keyword And Continue On Failure    Validate FAC_DTE_FL_DRAWDWN for VLS_FACILITY - Events Tab    @{aFacilityID_List}[${i}]    ${Current_FL_Drawdown_Date}
+    \    Run Keyword And Continue On Failure    Validate FAC_IND_COMMITTED for VLS_FACILITY    @{aFacilityID_List}[${i}]    ${Current_Committed}
+    \    Run Keyword And Continue On Failure    Validate FAC_DTE_FL_DRAWDWN for VLS_FACILITY - Existing Loans Window    @{aFacilityID_List}[${i}]    ${Current_FL_Drawdown_Date}
     \
-    \    ${Customer_Description}    ${Branch_Description}    Get Branch value for FAC_CDE_BRANCH in VLS_FACILITY    ${aFacilityID_List}[${i}]
-    \    Run Keyword If    '${Customer_Description.strip()}'!='${EMPTY}'    Set To Dictionary    ${Customer_Description_Dictionary}    ${aFacilityID_List}[${i}]=${Customer_Description}
-         ...    ELSE    Set To Dictionary    ${Branch_Description_Dictionary}    ${aFacilityID_List}[${i}]=${Branch_Description}
+    \    ${Customer_Description}    ${Branch_Description}    Get Branch value for FAC_CDE_BRANCH in VLS_FACILITY    @{aFacilityID_List}[${i}]
+    \    Run Keyword If    '${Customer_Description.strip()}'!='${EMPTY}'    Set To Dictionary    ${Customer_Description_Dictionary}    @{aFacilityID_List}[${i}]=${Customer_Description}
+         ...    ELSE    Set To Dictionary    ${Branch_Description_Dictionary}    @{aFacilityID_List}[${i}]=${Branch_Description}
     \    
     \    mx LoanIQ close window    ${LIQ_FacilityNotebook_Window}    
     
@@ -1582,18 +1582,18 @@ Validate FAC_CDE_BRANCH for VLS_FACILITY
     
     ${Row_Item_Count}    Get Length    ${aFacilityID_List}
     :FOR    ${i}    IN RANGE    0    ${Row_Item_Count}
-    \    ${Branch_Code}    Get From Dictionary    ${aBranch_Dictionary}    ${aFacilityID_List}[${i}]
-    \    ${FacilityID_isExist}    Run Keyword And Return Status    Get From Dictionary    ${aCustomer_Description_Dictionary}    ${aFacilityID_List}[${i}]
+    \    ${Branch_Code}    Get From Dictionary    ${aBranch_Dictionary}    @{aFacilityID_List}[${i}]
+    \    ${FacilityID_isExist}    Run Keyword And Return Status    Get From Dictionary    ${aCustomer_Description_Dictionary}    @{aFacilityID_List}[${i}]
     \    Continue For Loop If    ${FacilityID_isExist}==${False}
-    \    ${Branch_Description}    Get From Dictionary    ${aCustomer_Description_Dictionary}    ${aFacilityID_List}[${i}]
+    \    ${Branch_Description}    Get From Dictionary    ${aCustomer_Description_Dictionary}    @{aFacilityID_List}[${i}]
     \    
     \    ${BranchCode_isChecked}    Run Keyword And Return Status    Dictionary Should Contain Key    ${Code_CustomerDescription_Dictionary}    ${Branch_Code}
-    \    Run Keyword If    ${BranchCode_isChecked}==${False}    Run Keywords    Validate Customer Description for FAC_CDE_BRANCH in VLS_FACILITY    ${Branch_Code}    ${Branch_Description}    ${aFacilityID_List}[${i}]
+    \    Run Keyword If    ${BranchCode_isChecked}==${False}    Run Keywords    Validate Customer Description for FAC_CDE_BRANCH in VLS_FACILITY    ${Branch_Code}    ${Branch_Description}    @{aFacilityID_List}[${i}]
          ...    AND    Set To Dictionary    ${Code_CustomerDescription_Dictionary}    ${Branch_Code}=${Branch_Description}
          ...    ELSE    Log    Branch Code and Branch Description is not the same.     
     \    ${BranchDescription_Expected}    Run Keyword If    ${BranchCode_isChecked}==${True}    Get From Dictionary    ${Code_CustomerDescription_Dictionary}    ${Branch_Code}
          ...    ELSE    Log    Branch Code and Branch Description is the same.
-    \    Run Keyword If    ${BranchCode_isChecked}==${True} and '${BranchDescription_Expected}'!='${Branch_Description}'    Run Keywords    Validate Customer Description for FAC_CDE_BRANCH in VLS_FACILITY    ${Branch_Code}    ${Branch_Description}    ${aFacilityID_List}[${i}]
+    \    Run Keyword If    ${BranchCode_isChecked}==${True} and '${BranchDescription_Expected}'!='${Branch_Description}'    Run Keywords    Validate Customer Description for FAC_CDE_BRANCH in VLS_FACILITY    ${Branch_Code}    ${Branch_Description}    @{aFacilityID_List}[${i}]
          ...    AND    Set To Dictionary    ${Code_CustomerDescription_Dictionary}    ${Branch_Code}=${Branch_Description}
          ...    ELSE IF    ${BranchCode_isChecked}==${True} and '${BranchDescription_Expected}'=='${Branch_Description}'    Log    Branch Code ${Branch_Code} with Description ${Branch_Description} already checked.    
          ...    ELSE    Log    Branch Code and Branch Description is the same. 
@@ -1603,18 +1603,18 @@ Validate FAC_CDE_BRANCH for VLS_FACILITY
     
     ${Row_Item_Count}    Get Length    ${aFacilityID_List}
     :FOR    ${i}    IN RANGE    0    ${Row_Item_Count}
-    \    ${Branch_Code}    Get From Dictionary    ${aBranch_Dictionary}    ${aFacilityID_List}[${i}]
-    \    ${FacilityID_isExist}    Run Keyword And Return Status    Get From Dictionary    ${aBranch_Description_Dictionary}    ${aFacilityID_List}[${i}]
+    \    ${Branch_Code}    Get From Dictionary    ${aBranch_Dictionary}    @{aFacilityID_List}[${i}]
+    \    ${FacilityID_isExist}    Run Keyword And Return Status    Get From Dictionary    ${aBranch_Description_Dictionary}    @{aFacilityID_List}[${i}]
     \    Continue For Loop If    ${FacilityID_isExist}==${False}
-    \    ${Branch_Description}    Get From Dictionary    ${aBranch_Description_Dictionary}    ${aFacilityID_List}[${i}]
+    \    ${Branch_Description}    Get From Dictionary    ${aBranch_Description_Dictionary}    @{aFacilityID_List}[${i}]
     \    
     \    ${BranchCode_isChecked}    Run Keyword And Return Status    Dictionary Should Contain Key    ${Code_BranchDescription_Dictionary}    ${Branch_Code}
-    \    Run Keyword If    ${BranchCode_isChecked}==${False}    Run Keywords    Validate Branch Description for FAC_CDE_BRANCH in VLS_FACILITY    ${Branch_Code}    ${Branch_Description}    ${aFacilityID_List}[${i}]
+    \    Run Keyword If    ${BranchCode_isChecked}==${False}    Run Keywords    Validate Branch Description for FAC_CDE_BRANCH in VLS_FACILITY    ${Branch_Code}    ${Branch_Description}    @{aFacilityID_List}[${i}]
          ...    AND    Set To Dictionary    ${Code_BranchDescription_Dictionary}    ${Branch_Code}=${Branch_Description}
          ...    ELSE    Log    Branch Code and Branch Description is not the same.
     \    ${BranchDescription_Expected}    Run Keyword If    ${BranchCode_isChecked}==${True}    Get From Dictionary    ${Code_BranchDescription_Dictionary}    ${Branch_Code}
          ...    ELSE    Log    Branch Code and Branch Description is the same.
-    \    Run Keyword If    ${BranchCode_isChecked}==${True} and '${BranchDescription_Expected}'!='${Branch_Description}'    Run Keywords    Validate Branch Description for FAC_CDE_BRANCH in VLS_FACILITY    ${Branch_Code}    ${Branch_Description}    ${aFacilityID_List}[${i}]
+    \    Run Keyword If    ${BranchCode_isChecked}==${True} and '${BranchDescription_Expected}'!='${Branch_Description}'    Run Keywords    Validate Branch Description for FAC_CDE_BRANCH in VLS_FACILITY    ${Branch_Code}    ${Branch_Description}    @{aFacilityID_List}[${i}]
          ...    AND    Set To Dictionary    ${Code_BranchDescription_Dictionary}    ${Branch_Code}=${Branch_Description}
          ...    ELSE IF    ${BranchCode_isChecked}==${True} and '${BranchDescription_Expected}'=='${Branch_Description}'    Log    Branch Code ${Branch_Code} with Description ${Branch_Description} already checked.    
          ...    ELSE    Log    Branch Code and Branch Description is the same.  
