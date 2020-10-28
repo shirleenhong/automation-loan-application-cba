@@ -19,9 +19,7 @@ Get Notice Details for Fee Payment Notice Upfront Fee LIQ
     Mx LoanIQ Select Or DoubleClick In Javatree    ${LIQ_Events_Javatree}    Upfront Fee Payment from Borrower/Agent Released%d
     
     ### Get the Values of Effective Date, UpfrontFee Ammountn Currencym Fee Tyoe###
-    ${Effective_Date}    Mx LoanIQ Get Data    ${LIQ_UpfrontFeeFromBorrower_EffectiveDate_Textfield}    text%Effective_Date
-    ${UpfrontFee_Amount}    Mx LoanIQ Get Data    ${LIQ_UpfrontFeeFromBorrower_Amount_Textfield}    text%UpfrontFee_Amount
-    ${Branch_Description}    Mx LoanIQ Get Data    ${LIQ_UpfrontFeeFromBorrower_Branch_ComboBox}    text%Branch_Description
+    ${Effective_Date}    ${UpfrontFee_Amount}    ${Branch_Description}   Get Upfront Fee Details in Upfront Fee Payment Notebook
     ${Currency}    Mx LoanIQ Get Data    ${LIQ_UpfrontFeeFromBorrower_Currency_ComboBox}    text%Currency
     mx LoanIQ click    ${LIQ_FeeDetail_Button}
     Sleep    4s
@@ -76,17 +74,12 @@ Send Notice For Upfront Fee
     Validate FFC CBACorrespUpdateMQ API    ${CorrelationID}    &{ExcelPath}[OutputFilePath]    ${TEMPLATE_TEXTFILE}
     
     ###Step 9: Send Call Back thru Postman###
-    ${CorrelationIdByte}    Encode String To Bytes    ${CorrelationID}     UTF-8
-    ${MessageIdEncode}    B 32 Encode    ${CorrelationIdByte}
-    ${MessageIdDecode}    Decode Bytes To String    ${MessageIdEncode}    UTF-8
+    ${MessageIdDecode}    Get the MessageId Decode Value    ${CorrelationID}
     Update Key Values of input JSON file for Correspondence API    ${MessageIdDecode}    &{ExcelPath}[CallBack_Status]    &{ExcelPath}[errorMessage]    
     ...    &{ExcelPath}[InputFilePath]&{ExcelPath}[InputJson].json
      
     Correspondence POST API    &{ExcelPath}[InputFilePath]    &{ExcelPath}[InputJson]    &{ExcelPath}[OutputFilePath]    
-    ...    &{ExcelPath}[OutputAPIResponse]    &{ExcelPath}[ExpectedJson]    ${RESPONSECODE_200}
-        
-    ###Step 10: Exception Queue Validation###
-    #Validate Notice in Logged Exception List Window in LIQ    ${BEOStartDate}    ${BEOEndDate}    &{ExcelPath}[Deal_Name]    ${NoticeIdentifier}    
+    ...    &{ExcelPath}[OutputAPIResponse]    &{ExcelPath}[ExpectedJson]    ${RESPONSECODE_200} 
     
     ###Step 12: FFC Validation FFC1CMUpdateSourceMQ### 
     Validate FFC FFC1CMUpdateSourceMQ    ${dataset_path}&{ExcelPath}[OutputFilePath]&{ExcelPath}[OutputAPIResponse].json    ${CorrelationID}    &{ExcelPath}[OutputFilePath]    ${TEMPLATE_TEXTFILE} 

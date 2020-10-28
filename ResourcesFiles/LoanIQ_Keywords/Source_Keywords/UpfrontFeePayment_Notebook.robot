@@ -252,3 +252,12 @@ Save and Exit Upfront Fee From Borrower / Agent
     Mx LoanIQ Select    ${LIQ_UpfrontFeeFromBorrower_Options_Save}
     Mx LoanIQ Click Element If Present    ${LIQ_Warning_OK_Button}
     Mx LoanIQ Select    ${LIQ_UpfrontFeeFromBorrower_Options_Exit}
+    
+Get Upfront Fee Details in Upfront Fee Payment Notebook 
+    [Documentation]    This keyword returns Effective Date, Upfront Fee Ammount and Branch Description in Upfront Fee Payment Notebook
+    ...    @author: fluberio    28OCT2020    Initial Create
+    
+    ${Effective_Date}    Mx LoanIQ Get Data    ${LIQ_UpfrontFeeFromBorrower_EffectiveDate_Textfield}    text%Effective_Date
+    ${UpfrontFee_Amount}    Mx LoanIQ Get Data    ${LIQ_UpfrontFeeFromBorrower_Amount_Textfield}    text%UpfrontFee_Amount
+    ${Branch_Description}   Mx LoanIQ Get Data    ${LIQ_UpfrontFeeFromBorrower_Branch_ComboBox}    text%Branch_Description
+    [Return]    ${Effective_Date}    ${UpfrontFee_Amount}    ${Branch_Description}

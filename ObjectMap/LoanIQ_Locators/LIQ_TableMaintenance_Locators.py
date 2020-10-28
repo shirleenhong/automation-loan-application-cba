@@ -169,7 +169,7 @@ LIQ_Branch_ShowALL_RadioButton = 'JavaWindow("title:=Browse data from Branch.*")
 LIQ_Branch_Search_Field = 'JavaWindow("title:=Browse data from Branch.*").JavaEdit("attached text:=Search:")'
 LIQ_Branch_Update_Window = 'JavaWindow("title:=Branch Update")'
 LIQ_Branch_Update_Code_Field = 'JavaWindow("title:=Branch Update").JavaEdit("attached text:=Code:")'
-LIQ_Branch_Update_Customer_Name = 'JavaWindow("title:=Branch Update").JavaEdit("attached text:=")'
+LIQ_Branch_Update_Customer_Name = 'JavaWindow("title:=Branch Update").JavaEdit("index:=4")'
 LIQ_Branch_Update_Cancel_Button = 'JavaWindow("title:=Branch Update").JavaButton("text:=Cancel")'
 
 #Browse data from Language

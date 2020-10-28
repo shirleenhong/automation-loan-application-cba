@@ -379,7 +379,7 @@ Validate the Notice Window in LIQ
     ...    ${sNotice_Type}    ${sPath_XMLFile}    ${sDeal_Name}    ${sXML_NoticeType}    ${sLoan_PricingOption}    
     ...    ${iLoan_BaseRate}    ${iLoan_Spread}    ${iNotice_AllInRate}    ${sOngoingFee_Type}    ${sNotice_Amount}    ${sBalance_Amount}    ${sRate_Basis}
     ...    ${sLoan_EffectiveDate}    ${sLoan_MaturityDate}    ${sLoan_GlobalOriginal}    ${sLoan_RateSetting_DueDate}    ${sLoan_RepricingDate}
-    ...    ${EffectiveDate}=None    ${UpfrontFee_Amount}=None    ${Fee_Type}=None    ${Currency}=None    ${Account_Name}=None
+    ...    ${sEffectiveDate}=None    ${sUpfrontFee_Amount}=None    ${sFee_Type}=None    ${sCurrency}=None    ${sAccount_Name}=None
     
     Refresh Tables in LIQ
     Navigate to Notice Select Window
@@ -394,8 +394,8 @@ Validate the Notice Window in LIQ
     ...    ${sDeal_Name}    ${sXML_NoticeType}    ${sLoan_PricingOption}    ${sNotice_Amount}    
     ...    ELSE IF    '${sNotice_Type}' == 'Drawdown Intent Notice'    Run Keyword    Validate Drawdown Intent Notice Details    ${sPath_XMLFile}    ${sNotice_Customer_LegalName}    ${sContact}
     ...    ${sDeal_Name}    ${sXML_NoticeType}    ${sLoan_GlobalOriginal}    ${sLoan_EffectiveDate}    ${sLoan_RateSetting_DueDate}
-    ...    ELSE IF    '${sNotice_Type}' == 'Upfront Fee From Borrower/Agent/Third Party Intent Notice'    Run Keyword    Validate Upfront Fee Notice Details    ${sPath_XMLFile}    ${sNotice_Customer_LegalName}    ${sContact}    
-    ...    ${sDeal_Name}    ${sXML_NoticeType}    ${EffectiveDate}    ${UpfrontFee_Amount}    ${Fee_Type}    ${Currency}    ${Account_Name}
+    ...    ELSE IF    '${sNotice_Type}' == 'Upfront Fee From Borrower/Agent/Third Party Intent Notice'    Validate Upfront Fee Notice Details    ${sPath_XMLFile}    ${sNotice_Customer_LegalName}    ${sContact}    
+    ...    ${sDeal_Name}    ${sXML_NoticeType}    ${sEffectiveDate}    ${sUpfrontFee_Amount}    ${sFee_Type}    ${sCurrency}    ${sAccount_Name}
 
 Validate the Paperclip Notice Window in LIQ
     [Documentation]    This keyword validates the fields, status and Data in Paperclip Notice Window.
@@ -878,45 +878,45 @@ Validate Upfront Fee Notice Details
     
     ###Customer Legal Name Validation###
     ${Status}    Run Keyword And Return Status    Should Contain    ${XMLFile}    ${sNotice_Customer_LegalName}
-    Run Keyword If    ${Status}==True    Log    ${sNotice_Customer_LegalName} is present
-    ...    ELSE    Fail    ${sNotice_Customer_LegalName} is not present
+    Run Keyword If    ${Status}==${True}    Log    ${sNotice_Customer_LegalName} is present
+    ...    ELSE    Run Keyword And Continue On Failure    FAIL    ${sNotice_Customer_LegalName} is not present
     
     ###Contact Validation###
     ${Status}    Run Keyword And Return Status    Should Contain    ${XMLFile}    ${sContact}
-    Run Keyword If    ${Status}==True    Log    ${sContact} is present
-    ...    ELSE    Fail    ${sContact} is not present
+    Run Keyword If    ${Status}==${True}    Log    ${sContact} is present
+    ...    ELSE    Run Keyword And Continue On Failure    FAIL    ${sContact} is not present
     
     ###Deal Validation###
     ${Status}    Run Keyword And Return Status    Should Contain    ${XMLFile}    ${sDeal_Name}
-    Run Keyword If    ${Status}==True    Log    ${sDeal_Name} is present
-    ...    ELSE    Fail    ${sDeal_Name} is not present
+    Run Keyword If    ${Status}==${True}    Log    ${sDeal_Name} is present
+    ...    ELSE    Run Keyword And Continue On Failure    FAIL    ${sDeal_Name} is not present
     
     ###Notice Type Validation###
     ${Status}    Run Keyword And Return Status    Should Contain    ${XMLFile}    ${sXML_NoticeType}
-    Run Keyword If    ${Status}==True    Log    ${sXML_NoticeType} is present
-    ...    ELSE    Fail    ${sXML_NoticeType} is not present
+    Run Keyword If    ${Status}==${True}    Log    ${sXML_NoticeType} is present
+    ...    ELSE    Run Keyword And Continue On Failure    FAIL    ${sXML_NoticeType} is not present
     
     ###Effective Validation###
     ${Status}    Run Keyword And Return Status    Should Contain    ${XMLFile}    ${sEffectiveDate}
-    Run Keyword If    ${Status}==True    Log    ${sEffectiveDate} is present
-    ...    ELSE    Fail    ${sEffectiveDate} is not present 
+    Run Keyword If    ${Status}==${True}    Log    ${sEffectiveDate} is present
+    ...    ELSE    Run Keyword And Continue On Failure    FAIL    ${sEffectiveDate} is not present 
     
     ###Upfront Fee Amount Validation###
     ${Status}    Run Keyword And Return Status    Should Contain    ${XMLFile}    ${sUpfrontFee_Amount}
-    Run Keyword If    ${Status}==True    Log    ${sUpfrontFee_Amount} is present
-    ...    ELSE    Fail    ${sUpfrontFee_Amount} is not present 
+    Run Keyword If    ${Status}==${True}    Log    ${sUpfrontFee_Amount} is present
+    ...    ELSE    Run Keyword And Continue On Failure    FAIL    ${sUpfrontFee_Amount} is not present 
     
     ###Fee Type Validation###
     ${Status}    Run Keyword And Return Status    Should Contain    ${XMLFile}    ${sFee_Type}
-    Run Keyword If    ${Status}==True    Log    ${sFee_Type} is present
-    ...    ELSE    Fail    ${sFee_Type} is not present 
+    Run Keyword If    ${Status}==${True}    Log    ${sFee_Type} is present
+    ...    ELSE    Run Keyword And Continue On Failure    FAIL    ${sFee_Type} is not present 
     
     ###Currency Validation###
     ${Status}    Run Keyword And Return Status    Should Contain    ${XMLFile}    ${sCurrency}
-    Run Keyword If    ${Status}==True    Log    ${sCurrency} is present
-    ...    ELSE    Fail    ${sCurrency} is not present 
+    Run Keyword If    ${Status}==${True}    Log    ${sCurrency} is present
+    ...    ELSE    Run Keyword And Continue On Failure    FAIL    ${sCurrency} is not present 
     
     ###Account Name Validation###
     ${Status}    Run Keyword And Return Status    Should Contain    ${XMLFile}    ${sAccount_Name}    ignore_case=True
-    Run Keyword If    ${Status}==True    Log    ${sAccount_Name} is present
-    ...    ELSE    Fail    ${sAccount_Name} is not present 
+    Run Keyword If    ${Status}==${True}    Log    ${sAccount_Name} is present
+    ...    ELSE    Run Keyword And Continue On Failure    FAIL    ${sAccount_Name} is not present 

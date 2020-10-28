@@ -42,6 +42,6 @@ Initiate Upfront Fee Payment - SYND05
     
 Upfront Fee Notices
 	[Documentation]    Create an Upfront Fee Notices via API
-    [Tags]    06 API_COR_TC01
+    [Tags]    06 Notices_Upfront_Fee
     Mx Execute Template With Multiple Data    Send Notice For Upfront Fee    ${ExcelPath}    ${rowid}    Correspondence
     

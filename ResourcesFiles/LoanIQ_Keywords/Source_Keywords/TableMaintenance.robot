@@ -588,7 +588,7 @@ Get Customer Name from Table Maintenance
     mx LoanIQ click    ${LIQ_Branch_Update_Customer_Name}
     ${Customer_Name}    Mx LoanIQ Get Data    ${LIQ_Branch_Update_Customer_Name}    text%Customer_Name
     Log    Customer Name for ${sBranchDesc} is ${Customer_Name}   
-     
+    Take Screenshot    ${Screenshot_Path}/Screenshots/LoanIQ/TableMaintenance_BranchUpdate
     Mx LoanIQ click    ${LIQ_Branch_Update_Cancel_Button}
     mx LoanIQ click    ${LIQ_Branch_Exit_Button}
     [Return]    ${Customer_Name}
