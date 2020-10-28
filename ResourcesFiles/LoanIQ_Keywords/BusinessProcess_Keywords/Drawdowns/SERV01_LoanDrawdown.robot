@@ -102,6 +102,7 @@ Create First Term Facility Loan Drawdown
     ...                                      Uncomment necessary steps.
     ...    @update: dahijara    10SEP2020    Updated hard coded values with variables.
     ...    @update: dahijara    28SEP2020    - Updated sheet name for Loan Merge from COMPR06_LoanMerge to SERV11_Loan Amalgamation
+    ...    @update: kduenas    27OCT2020    - added writing of loan alias for API_TC_023 of corro
     [Arguments]    ${ExcelPath}
     
     ### Get Base Rate data generated from TL-API Base Rate test case. ###
@@ -153,6 +154,7 @@ Create First Term Facility Loan Drawdown
     ${Drawdown_Alias}    New Outstanding Select    &{ExcelPath}[Deal_Name]    &{ExcelPath}[Facility_Name]    ${Borrower_ShortName}    &{ExcelPath}[Outstanding_Type]    &{ExcelPath}[Loan_PricingOption]    &{ExcelPath}[Loan_Currency]
     Write Data To Excel    SERV01_LoanDrawdown    Loan_Alias    &{ExcelPath}[rowid]    ${Drawdown_Alias}
     Write Data To Excel    SERV11_Loan Amalgamation    Alias_Loan1    &{ExcelPath}[rowid]    ${Drawdown_Alias}
+    Write Data To Excel    Correspondence    Loan_Alias    23    ${Drawdown_Alias}    ${APIDataSet}    bTestCaseColumn=True    sColumnReference=rowid
     
     ${Current_Date}    Get System Date
     ${Loan_MaturityDate}    Read Data From Excel    CRED02_FacilitySetup    Facility_ExpiryDate    &{ExcelPath}[rowid]

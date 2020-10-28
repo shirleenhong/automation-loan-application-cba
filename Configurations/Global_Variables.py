@@ -321,3 +321,6 @@ DATANET_ASSURANCE_JOB = "DataAssurance"
 
 ### LIQ ACTIONS LIST ###
 WORK_IN_PROCESS_ACTIONS = '[Actions];Work In Process'
+
+### PARTY ERROR MESSAGES ###
+DUPLICATE_SHORTNAME_ERROR_MESSAGE = 'Entered Short Name is already in use for Different Party'

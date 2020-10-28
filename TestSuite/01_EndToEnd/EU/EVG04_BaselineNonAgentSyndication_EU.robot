@@ -39,3 +39,9 @@ Initiate Upfront Fee Payment - SYND05
     [Documentation]    Initiate Upfront Fee Payment.
     [Tags]    05 Upfront Fee Payment - SYND05
     Mx Execute Template With Multiple Data    Initiate Upfront Fee Payment    ${ExcelPath}    ${rowid}    SYND05_UpfrontFee_Payment
+    
+Upfront Fee Notices
+	[Documentation]    Create an Upfront Fee Notices via API
+    [Tags]    06 Notices_Upfront_Fee
+    Mx Execute Template With Multiple Data    Send Notice For Upfront Fee    ${ExcelPath}    ${rowid}    Correspondence
+    

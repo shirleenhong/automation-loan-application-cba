@@ -8,6 +8,7 @@ Initiate Upfront Fee Payment
     ...    @author: mgaling
     ...    @update: clanding    05AUG2020    - updated hard coded values to global variables;
     ...    								     - updated 'Release Cashflow' and 'Navigate Notebook Workflow' to 'Release Cashflow Based on Remittance Instruction'
+    ...    @update: fluberio    23OCT2020    - added condition to generate intent notices for Upfront Fee Payment
     [Arguments]    ${ExcelPath}
 
     ###Close all windows and Login as original user###
@@ -25,7 +26,8 @@ Initiate Upfront Fee Payment
     ###Upfront Fee Payment Workflow Tab- Create Cashflow Item###
     Navigate Notebook Workflow    ${LIQ_UpfrontFeePayment_Notebook}    ${LIQ_UpfrontFeePayment_Tab}    ${LIQ_UpfrontFeePayment_WorkflowItems}    ${CREATE_CASHFLOWS_TYPE}
     Verify if Method has Remittance Instruction    &{ExcelPath}[Lender_ShortName]    &{ExcelPath}[Remittance_Description]    &{ExcelPath}[Remittance_Instruction]
-    Create Cashflow    &{ExcelPath}[Lender_ShortName]    ${RELEASE_TRANSACTION}     
+    Create Cashflow    &{ExcelPath}[Lender_ShortName]    ${RELEASE_TRANSACTION}
+    Run Keyword If   '${SCENARIO}'=='4' and '&{ExcelPath}[Entity]' == 'EU'    Generate Intent Notices For Upfront Fee Payment     &{ExcelPath}[UpfrontFeePayment_NoticeMethod]    &{ExcelPath}[Entity]
  
     ###Upfront Fee Payment Workflow Tab- Send to Approval Item###
     Send to Approval Upfront Fee Payment    
