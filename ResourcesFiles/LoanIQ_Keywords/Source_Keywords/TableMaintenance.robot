@@ -24,6 +24,17 @@ Validate Currency Pairs
     mx LoanIQ click    ${LIQ_BrowseCurrencyPairs_Exit_Button}    
     mx LoanIQ click    ${LIQ_TableMaintenance_Exit_Button}
 
+Validate Currency Pairs By Funding Desk
+    [Documentation]    This keyword is used to validate currency pairs by funding desk is existing in table maintenance.
+    ...    @author: ccarriedo    27OCT2020    - initial create
+    [Arguments]    ${sToCurrencyVal}    ${sFromCurrencyVal}    ${sFundingDeskVal}
+    mx LoanIQ click    ${LIQ_TableMaintenance_Button}
+    Search in Table Maintenance    Currency Pairs By Funding Desk
+    Run Keyword And Continue On Failure    Mx LoanIQ Select String    ${LIQ_BrowseCurrencyPair_Tree}    ${sFromCurrencyVal}\t${sToCurrencyVal}\t${sFundingDeskVal}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/Currency_Pairs_By_Funding_Desk
+    mx LoanIQ click    ${LIQ_BrowseCurrencyPairs_Exit_Button}    
+    mx LoanIQ click    ${LIQ_TableMaintenance_Exit_Button}
+
 Get Funding Desk Details from Table Maintenance
     [Documentation]    This keyword is used to get funding desk description from table maintenance using cluster from json file.
     ...    @author: clanding
@@ -471,14 +482,13 @@ Get Base Rate Frequency Status from Table Maintenance
 Return Base Rate Frequency Status
     [Documentation]    This keyword return the status of the checkbox of Base Rate Frequency if checked or unchecked.
     ...    @author: jdelacru    05AUG2019    - initial create
+    ...    @update: jdelacru    27OCT2020    - deleted keywords for closing the notebook since close all windows on LIQ should be sufficient
+    ...                                      - added Wait Until Keyword Succeeds in getting the status of active indicator checkbox
     [Arguments]    ${sRepFreq_From_JSON}
     mx LoanIQ activate window    ${LIQ_BaseRateFrequency_Window}
     Mx LoanIQ DoubleClick    ${LIQ_BaseRateFrequency_Tree}    ${sRepFreq_From_JSON}     
     mx LoanIQ activate window    ${LIQ_BaseRateFrequencyUpd_Window}
-    ${BaseRateFrequency_Status}    Get LIQ Checkbox Status    ${LIQ_BaseRateFrequencyUpd_Active_Checkbox}
-    mx LoanIQ click    ${LIQ_BaseRateFrequencyUpd_Cancel_Button}
-    mx LoanIQ close window    ${LIQ_BaseRateFrequency_Window}
-    mx LoanIQ close window    ${LIQ_TableMaintenance_Window}    
+    ${BaseRateFrequency_Status}    Wait Until Keyword Succeeds    5x    5s    Get LIQ Checkbox Status    ${LIQ_BaseRateFrequencyUpd_Active_Checkbox}  
     Close All Windows on LIQ
     [Return]    ${BaseRateFrequency_Status}
 

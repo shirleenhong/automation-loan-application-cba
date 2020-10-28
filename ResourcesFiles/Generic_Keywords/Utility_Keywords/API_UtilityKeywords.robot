@@ -146,7 +146,7 @@ Put Json File
     Run Keyword If    '${sAccessToken}' == 'None'    Set Global Variable    ${Headers}    &{Headers2}
     ${InputJsonFile}    OperatingSystem.Get File    ${dataset_path}${sInputPath}${sInputFile}.json
     ${API_RESPONSE}    Put Request    ${APISESSION}    ${sAPIEndPoint}    ${InputJsonFile}    headers=${Headers}
-    ${PUTREQUEST_TIMESTAMP}    Get Current Date    UTC    + 1 Hour    result_format=%Y-%m-%dT%H:
+    ${PUTREQUEST_TIMESTAMP}    Get Current Date    UTC    + 8 Hour    result_format=%Y-%m-%dT%H:
     
     Set Global Variable    ${PUTREQUEST_TIMESTAMP}
     Set Global Variable    ${API_RESPONSE}

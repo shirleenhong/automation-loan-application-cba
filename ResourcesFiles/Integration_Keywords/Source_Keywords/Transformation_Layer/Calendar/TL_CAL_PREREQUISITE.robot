@@ -160,6 +160,7 @@ Create Expected JSON for TL Calendar XLS File 1 and File 2
     ...    @update: clanding    15JUL2019    - added creation of json per unique calendar id
     ...    @update: jloretiz    15AUG2019    - added a condition to skip a for loop iteration if date is same
     ...    @update: jloretiz    26NOV2019    - add the keyword to close the current excel document
+    ...    @update: clanding    23OCT2020    - added condition to handle different ${ENTITY}
     [Arguments]    ${sInputFilePath}    ${sXLSFile}    ${sSheetName}    ${sInputJSON}    ${sFileType}
     
     Open Excel    ${sXLSFile}
@@ -252,7 +253,9 @@ Create Expected JSON for TL Calendar XLS File 1 and File 2
     \    Continue For Loop If    ${Same_Date}==${True}
     \    
     \    ### Get LIQ Business Date and verify if Event Data is greater than LIQ Date ###
-    \    ${LIQ_Business_Date_DBFormat}    Get LIQ Business Date from Database    ${ZONE3}
+    \    ${Zone}    Run Keyword If    '${ENTITY}'=='EU'    Set Variable    ${ZONE2}
+         ...    ELSE    Set Variable    ${ZONE3}
+    \    ${LIQ_Business_Date_DBFormat}    Get LIQ Business Date from Database    ${Zone}
     \    ${LIQ_Business_Date}    Convert Date    ${LIQ_Business_Date_DBFormat}    result_format=%Y-%M-%d    date_format=%M-%d-%Y
     \    ${LIQ_EventDate_Diff}    Subtract Date From Date    ${EventDate_PayloadFormat}    ${LIQ_Business_Date}
     \    

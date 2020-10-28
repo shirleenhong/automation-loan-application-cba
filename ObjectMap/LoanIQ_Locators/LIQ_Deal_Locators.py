@@ -94,7 +94,7 @@ LIQ_DealSummary_BorrowersDepositors_Tree = 'JavaWindow("title:=Deal Notebook.*")
 LIQ_DealSummary_ClosingCmt_Text = 'JavaWindow("title:=Deal Notebook.*").JavaObject("tagname:=Group","text:=Global Deal Amounts").JavaStaticText("index:=2")'
 LIQ_DealSummaryClosingCmt_Textfield = 'JavaWindow("title:=Deal Notebook.*").JavaStaticText("x:=156","y:=52")'
 LIQ_DealSummary_CurrentCmt_Text = 'JavaWindow("title:=Deal Notebook.*").JavaObject("tagname:=Group","text:=Global Deal Amounts").JavaStaticText("index:=3")'
-LIQ_DealSummary_HBClosingCmt_Text = 'JavaWindow("title:=Deal Notebook.*").JavaObject("tagname:=Group","text:=Host Bank Share Amounts").JavaStaticText("index:=6")'
+LIQ_DealSummary_HBClosingCmt_Text = 'JavaWindow("title:=Deal Notebook.*").JavaObject("tagname:=Group","text:=Host Bank Share Amounts").JavaStaticText("index:=4")'
 LIQ_DealSummary_HBCurrentCmt_Text = 'JavaWindow("title:=Deal Notebook.*").JavaObject("tagname:=Group","text:=Host Bank Share Amounts").JavaStaticText("index:=4")'
 LIQ_DealSummary_BorrowerDepositor_JavaTree = 'JavaWindow("title:=Deal Notebook -.*").JavaTab("text:=Summary").JavaTree("labeled_containers_path:=Tab:Summary;Group:Borrowers / Depositors;","attached text:=Drill down to view details")'
 

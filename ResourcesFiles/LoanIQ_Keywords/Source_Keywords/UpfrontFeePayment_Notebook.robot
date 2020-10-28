@@ -261,3 +261,20 @@ Get Upfront Fee Details in Upfront Fee Payment Notebook
     ${UpfrontFee_Amount}    Mx LoanIQ Get Data    ${LIQ_UpfrontFeeFromBorrower_Amount_Textfield}    text%UpfrontFee_Amount
     ${Branch_Description}   Mx LoanIQ Get Data    ${LIQ_UpfrontFeeFromBorrower_Branch_ComboBox}    text%Branch_Description
     [Return]    ${Effective_Date}    ${UpfrontFee_Amount}    ${Branch_Description}
+
+Compute Upfront Fee Amount Based On Percentage
+    [Documentation]    This keyword Computes and returns the expected Upfront Fee amount based on percentage.
+    ...    @author: mcastro    23OCT2020
+    [Arguments]    ${iUpfrontFee_Percent}
+    
+    ### GetRuntime Keyword Pre-processing ###
+    ${UpfrontFee_Percent}    Acquire Argument Value    ${iUpfrontFee_Percent}
+    
+    ${Percent}    Evaluate    ${UpfrontFee_Percent}/100
+    
+    ${Deal_Amount}    Read Data From Excel    CRED01_DealSetup    Deal_ProposedCmt   ${rowid}
+    ${Deal_Amount}    Remove String    ${Deal_Amount}    ,
+    ${Deal_Amount}    Convert To Number    ${Deal_Amount}   
+    ${New_Upfrontfee_Amount}    Evaluate    ${Percent}*${Deal_Amount}
+
+    [Return]    ${New_Upfrontfee_Amount} 
