@@ -17,6 +17,7 @@ LIQ_FeeDetails_OK_Button= 'JavaWindow("title:=Fee Details","displayed:=1").JavaB
 ###Fee Detail Window###
 LIQ_FeeDetail_Window= 'JavaWindow("title:=Fee Detail","displayed:=1")'
 LIQ_FeeDetail_FeeType_List= 'JavaWindow("title:=Fee Detail","displayed:=1").JavaList("attached text:=Fee Type:")'
+LIQ_FeeDetail_Selected_FeeType= 'JavaWindow("title:=Fee Details","displayed:=1").JavaTree("tagname:=Tree","columns_count:=3")'
 LIQ_FeeDetail_FeeType_OK_Button= 'JavaWindow("title:=Fee Detail","displayed:=1").JavaButton("attached text:=OK")'
 
 ###Upfront Fee Payment Notebook- Workflow Tab###
