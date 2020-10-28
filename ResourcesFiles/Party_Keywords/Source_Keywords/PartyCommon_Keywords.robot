@@ -923,7 +923,6 @@ Get Default Zone
     [Documentation]    This keyword gets the default zone of the user.
     ...    @author: nbautist    27OCT2020    - initial creation
     
-    ${Zone}    Set Variable    ${None}
     ${Value}    SeleniumLibraryExtended.Get Element Attribute    ${Party_AmendUser_Default_Zone_Selected}    value
     ${Items_Raw}    SeleniumLibraryExtended.Get Element Attribute    ${Party_AmendUser_Default_Zone_Items}    data
     ${Items_Raw}    Fetch From Right    ${Items_Raw}    items: [
@@ -939,6 +938,6 @@ Get Default Zone
     \    ${Country_Pair_Dictionary}    Evaluate    ${Country_Pair}
     \    ${Country_Code}    Get From Dictionary    ${Country_Pair_Dictionary}    03referenceID
     \    ${Zone}    Run Keyword If    "${Country_Code}"=="${Value}"    Get From Dictionary    ${Country_Pair_Dictionary}    03description
-    \    Exit For Loop If    "${Zone}"!="${None}"
+    \    Exit For Loop If    '${Zone}'!='${None}'
 
     [Return]    ${Zone}
