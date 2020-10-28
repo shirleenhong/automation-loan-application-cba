@@ -651,7 +651,7 @@ Navigate to Notebook Window thru RID
     mx LoanIQ activate window    ${LIQ_SelectByRID_Window}
     Mx LoanIQ Select Combo Box Value    ${LIQ_SelectByRID_DataObject_Field}    ${sDataObject_Value}    
     mx LoanIQ enter    ${LIQ_SelectByRID_RID_Field}    ${sRID_Value}
-    Take Screenshot     ${screenshot_path}/Screenshots/DWE/RID Code Validation        
+    Take Screenshot    ${screenshot_path}/Screenshots/DWE/RID Code Validation        
     mx LoanIQ click    ${LIQ_SelectByRID_OK_Button}
     
     ${status}    Run Keyword And Return Status    Mx LoanIQ Verify Object Exist    ${LIQ_Error_Window}            VerificationData="Yes"
@@ -2214,13 +2214,14 @@ Validate Guarantor in Facility Change Transaction NoteBook
 
 Get and Return Guarantor Short Name Using Customer RID
     [Documentation]    This keyword is used to navigate on Deal noteboook and validate guarantor.
-    ...    @author: dahijara    23SEP2019
+    ...    @author: dahijara    23SEP2019    - initial create
+    ...    @update: mgaling    27OCT2020    - added screenshotpath
     [Arguments]    ${sCust_Id}
    
     ### Launch Active Customer Window ### 
     Navigate to Notebook Window thru RID    Customer    ${sCust_Id}
     mx LoanIQ activate window    ${LIQ_ActiveCustomer_Window}
-    Take Screenshot    ActiveCustomer_Window
+    Take Screenshot    ${screenshot_path}/Screenshots/DWE/ActiveCustomer_Window
     ${Guarantor_Short_Name}    Mx LoanIQ Get Data    ${LIQ_ActiveCustomer_Window_ShortName}    Guarantor_Short_Name
     
     mx LoanIQ close window    ${LIQ_ActiveCustomer_Window}    
@@ -2229,57 +2230,59 @@ Get and Return Guarantor Short Name Using Customer RID
       
 Validate CSV values in Loan IQ for VLS_DEAL_BORROWER
     [Documentation]    This keyword is used to navigate on LIQbased on product type and validate guarantor.
-    ...    @author: dahijara    24SEP2019
-    [Arguments]    ${sCSV_Content}    ${sProd_Id_Header_Index}    ${sCust_Id_Header_Index}    ${sBorrowerInd_Header_Index}    ${sDepositorInd_Header_Index}
+    ...    @author: dahijara    24SEP2019    - initial create
+    ...    @update: mgaling    27OCT2020    - updated arguments and added ELSE condition
+    [Arguments]    ${sCSV_Content}    ${iProd_Id_Header_Index}    ${iCust_Id_Header_Index}    ${iBorrowerInd_Header_Index}    ${iDepositorInd_Header_Index}
     
     ${Row_Count}    Get Length    ${sCSV_Content}
     
     :FOR    ${i}    IN RANGE    1    ${Row_Count}
     \    ${Table_Row_Item}    Get From List    ${sCSV_Content}    ${i}
-    \    ${val_Prod_Id}    Get From List    ${Table_Row_Item}    ${sProd_Id_Header_Index}
-    \    ${val_Cust_Id}    Get From List    ${Table_Row_Item}    ${sCust_Id_Header_Index}
-    \    ${val_BorrowerInd}    Get From List    ${Table_Row_Item}    ${sBorrowerInd_Header_Index}
-    \    ${val_DepositorInd}    Get From List    ${Table_Row_Item}    ${sDepositorInd_Header_Index}
+    \    ${val_Prod_Id}    Get From List    ${Table_Row_Item}    ${iProd_Id_Header_Index}
+    \    ${val_Cust_Id}    Get From List    ${Table_Row_Item}    ${iCust_Id_Header_Index}
+    \    ${val_BorrowerInd}    Get From List    ${Table_Row_Item}    ${iBorrowerInd_Header_Index}
+    \    ${val_DepositorInd}    Get From List    ${Table_Row_Item}    ${iDepositorInd_Header_Index}
+    \    
     \    Refresh Tables in LIQ
     \    ${val_ShortName}    Run Keyword And Continue On Failure    Get and Return Guarantor Short Name Using Customer RID    ${val_Cust_Id}
-    \    
     \    ${RID_IsExist}    Run Keyword And Return Status    Navigate to Notebook Window thru RID    Deal    ${val_Prod_Id}
-    \    Run Keyword If    "${RID_IsExist}"=="${False}"    Run Keyword And Continue On Failure    Fail    ${val_Prod_Id} does not exist!
-    \    Run Keyword If    "${RID_IsExist}"=="${True}"    Run Keyword And Continue On Failure    Validate Borrower in Deal NoteBook    ${val_ShortName}    ${val_BorrowerInd}    ${val_DepositorInd}
+    \    Run Keyword If    ${RID_IsExist}==${True}    Run Keyword And Continue On Failure    Validate Borrower in Deal NoteBook    ${val_ShortName}    ${val_BorrowerInd}    ${val_DepositorInd}
+         ...    ELSE    Run Keyword And Continue On Failure    FAIL    ${val_Prod_Id} does not exist!
 
 Validate Borrower in Deal NoteBook
     [Documentation]    This keyword is used to navigate on Deal noteboook and validate guarantor.
-    ...    @author: dahijara    23SEP2019
+    ...    @author: dahijara    23SEP2019    - initial create
+    ...    @update: mgaling    27OCT2020    - added screenshotpath and updated Fail into FAIL
     [Arguments]    ${sShortName}    ${sBorrowerInd}    ${sDepositorInd}
     
     ### Launch DEAL Notebook ### 
     mx LoanIQ activate window    ${LIQ_DealNotebook_Window}
     Mx LoanIQ Select String        ${LIQ_DealSummary_BorrowerDepositor_JavaTree}    ${sShortName}
-    Take Screenshot    Deal_Summary_Tab
+    Take Screenshot    ${screenshot_path}/Screenshots/DWE/Deal_Summary_Tab
     
     ### Validate Borrower Indicator ###
     ${val_Borrower}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_DealSummary_BorrowerDepositor_JavaTree}    ${sShortName}%Borrower%val_Borrower
     ${IsMatched}    Run Keyword And Return Status    Should Be Equal As Strings    ${val_Borrower}    ${sBorrowerInd}
     Run Keyword If    ${IsMatched}==${True}    Log    Borrower Indicators are equal. CSV Borrower Indicator: ${val_Borrower} = LIQ Deal Borrower Indicator: ${sBorrowerInd}
-    ...    ELSE    Run Keyword And Continue On Failure    Fail    Borrower Indicators are NOT equal. CSV Borrower Indicator: ${val_Borrower} != LIQ Deal Borrower Indicator: ${sBorrowerInd}
+    ...    ELSE    Run Keyword And Continue On Failure    FAIL    Borrower Indicators are NOT equal. CSV Borrower Indicator: ${val_Borrower} != LIQ Deal Borrower Indicator: ${sBorrowerInd}
     
     ### Validate Depositor Indicator ###
     ${val_Depositor}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_DealSummary_BorrowerDepositor_JavaTree}    ${sShortName}%Depositor%val_Depositor
     ${IsMatched}    Run Keyword And Return Status    Should Be Equal As Strings    ${val_Depositor}    ${sDepositorInd}
     Run Keyword If    ${IsMatched}==${True}    Log    Depositor Indicators are equal. CSV Depositor Indicator: ${val_Depositor} = LIQ Deal Depositor Indicator: ${sDepositorInd}
-    ...    ELSE    Run Keyword And Continue On Failure    Fail    Depositor Indicators are NOT equal. CSV Depositor Indicator: ${val_Depositor} != LIQ Deal Depositor Indicator: ${sDepositorInd}
+    ...    ELSE    Run Keyword And Continue On Failure    FAIL    Depositor Indicators are NOT equal. CSV Depositor Indicator: ${val_Depositor} != LIQ Deal Depositor Indicator: ${sDepositorInd}
     
     ### Select Short Name Row ###
     Mx LoanIQ Select Or Doubleclick In Javatree    ${LIQ_DealSummary_BorrowerDepositor_JavaTree}    ${sShortName}%d
     
     ### Deal Guarantor Details ###
     mx LoanIQ activate window    ${LIQ_DealBorrower_Window}
-    Take Screenshot    DealBorrower_Window
+    Take Screenshot    ${screenshot_path}/Screenshots/DWE/DealBorrower_Window
     
     ${ShortName_Locator}    Set Static Text to Locator Single Text    Deal Borrower    ${sShortName}
     ${isExisting}    Run Keyword And Return Status    Mx LoanIQ Verify Object Exist    ${ShortName_Locator}    VerificationData="Yes"
     Run Keyword If    ${isExisting}==${True}    Log    Borrower ${sShortName} exists in Deal Borrower window.
-    ...    ELSE    Run Keyword And Continue On Failure    Fail    Borrower ${sShortName} does NOT exist in Deal Borrower window.
+    ...    ELSE    Run Keyword And Continue On Failure    FAIL    Borrower ${sShortName} does NOT exist in Deal Borrower window.
 
     Refresh Tables in LIQ  
 
