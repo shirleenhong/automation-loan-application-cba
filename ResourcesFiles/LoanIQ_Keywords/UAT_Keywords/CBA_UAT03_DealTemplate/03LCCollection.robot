@@ -19,12 +19,12 @@ Initiate LC Collection D00000476
     ###Cycles for Bank Guarantee Window###    
     ${ProjectedCycleDue}    Compute SBLC Issuance Fee Amount Per Cycle    &{ExcelPath}[CycleNumber]    &{ExcelPath}[SBLC_DueDate]
     ...    None    &{ExcelPath}[Accrual_Rule]
-    Write Data To Excel    SERV18_FeeOnLenderSharesPayment    Computed_ProjectedCycleDue    &{ExcelPath}[rowid]    ${ProjectedCycleDue}    ${CBAUAT_ExcelPath}
-    
+    Write Data To Excel    SERV18_FeeOnLenderSharesPayment    Computed_ProjectedCycleDue    &{ExcelPath}[rowid]    ${ProjectedCycleDue}    ${CBAUAT_ExcelPath}  
+
     ###SBLC Guarantee Window###
     Navigate To Fees On Lender Shares
     Initiate Issuance Fee Payment    &{ExcelPath}[SBLC_Alias]    &{ExcelPath}[IssuanceFeePayment_EffectiveDate]
-    ...    &{ExcelPath}[Deal_Name]    &{ExcelPath}[Facility_Name]    &{ExcelPath}[Borrower_ShortName]    &{ExcelPath}[Computed_ProjectedCycleDue]
+    ...    &{ExcelPath}[Deal_Name]    &{ExcelPath}[Facility_Name]    &{ExcelPath}[Borrower_ShortName]    ${ProjectedCycleDue}    &{ExcelPath}[CycleNumber]
     
     ###Cashflow Notebook - Create Cashflows###
     Navigate Notebook Workflow    ${LIQ_Payment_Window}    ${LIQ_Payment_Tab}    ${LIQ_Payment_WorkflowItems}    Create Cashflows
@@ -34,7 +34,7 @@ Initiate LC Collection D00000476
     ###Get Transaction Amount for Cashflow###
     ${HostBankShare}    Get Host Bank Cash in Cashflow
     ${BorrowerTranAmount}    Get Transaction Amount in Cashflow    &{ExcelPath}[Borrower_ShortName]
-    ${ComputedHBTranAmount}    Compute Lender Share Transaction Amount    &{ExcelPath}[Computed_ProjectedCycleDue]    &{ExcelPath}[HostBankSharePct]
+    ${ComputedHBTranAmount}    Compute Lender Share Transaction Amount    ${ProjectedCycleDue}    &{ExcelPath}[HostBankSharePct]
     
     Compare UIAmount versus Computed Amount    ${HostBankShare}    ${ComputedHBTranAmount}
      
@@ -47,7 +47,7 @@ Initiate LC Collection D00000476
     
     Compare UIAmount versus Computed Amount    ${HostBankShare}    ${HostBank_Credit}
     Validate if Debit and Credit Amt is Balanced    ${Borrower_Debit}    ${HostBank_Credit}
-    Validate if Debit and Credit Amt is equal to Transaction Amount    ${UITotalCreditAmt}    ${UITotalDebitAmt}    &{ExcelPath}[Computed_ProjectedCycleDue]
+    Validate if Debit and Credit Amt is equal to Transaction Amount    ${UITotalCreditAmt}    ${UITotalDebitAmt}    ${ProjectedCycleDue}
     
     ### Send to Approval ###
     Navigate Notebook Workflow    ${LIQ_Payment_Window}    ${LIQ_Payment_Tab}    ${LIQ_Payment_WorkflowItems}    Send to Approval
@@ -57,7 +57,7 @@ Initiate LC Collection D00000476
     
     Navigate Notebook Workflow    ${LIQ_Payment_Window}    ${LIQ_Payment_Tab}    ${LIQ_Payment_WorkflowItems}    Approval
     Navigate Notebook Workflow    ${LIQ_Payment_Window}    ${LIQ_Payment_Tab}    ${LIQ_Payment_WorkflowItems}    Release Cashflows
-    # Release Cashflow    &{ExcelPath}[Borrower_ShortName]    release
+    Release Cashflow    &{ExcelPath}[Borrower_ShortName]    release
 
     ### Release ###
     Logout from Loan IQ

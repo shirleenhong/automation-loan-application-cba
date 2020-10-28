@@ -341,12 +341,10 @@ Evaluate Commitment Fee
     ...    @update: jdelacru - updated actions that assign the value for variable '${Numberof Days}', used ELSE instead of using two Run Keyword If's
     [Arguments]    ${iGlobalOriginal}    ${Rate}    ${RateBasis}    ${CycleNumber}    ${SystemDate}    ${sAccrualRule}=Pay in Arrears
     
-    ${AccrualRule}    Acquire Argument Value    ${sAccrualRule}    
-
     Mx LoanIQ Select Window Tab    ${LIQ_CommitmentFee_Tab}    Accrual
     ${StartDate}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_CommitmentFee_Acrual_JavaTree}    ${CycleNumber}%Start Date%startdate
-    ${AccrualRuleDate}    Run Keyword If    '${AccrualRule}'=='Pay in Arrears'    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_CommitmentFee_Acrual_JavaTree}    ${CycleNumber}%Due Date%duedate
-    ...    ELSE IF    '${AccrualRule}'=='Pay In Advance'    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_CommitmentFee_Acrual_JavaTree}    ${CycleNumber}%End Date%enddate
+    ${AccrualRuleDate}    Run Keyword If    '${sAccrualRule}'=='Pay in Arrears'    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_CommitmentFee_Acrual_JavaTree}    ${CycleNumber}%Due Date%duedate
+    ...    ELSE IF    '${sAccrualRule}'=='Pay In Advance'    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_CommitmentFee_Acrual_JavaTree}    ${CycleNumber}%End Date%enddate
     Log    ${StartDate}
     Log    ${AccrualRuleDate}
     ${SystemDate}    Convert Date    ${SystemDate}     date_format=%d-%b-%Y
@@ -358,10 +356,14 @@ Evaluate Commitment Fee
     
     ${NumberofDays}    Remove String    ${NumberofDays}     days    seconds    day
     ${NumberofDays}    Convert To Number    ${NumberofDays}
-    ${NummberofDays}    Evaluate    ${NumberofDays}+1
+    ${NumberofDays}    Evaluate    ${NumberofDays}+1
     
-    ${ProjectedCycleDue}    Evaluate    (((${iGlobalOriginal})*(${Rate}))*(${NumberofDays}))/${RateBasis}
+    Log    ${Rate}
+    Log    ${RateBasis}
+    
+    ${ProjectedCycleDue}    Evaluate    (((${iGlobalOriginal}*${Rate})*${NumberofDays})/${RateBasis})
     ${ProjectedCycleDue}    Convert To Number    ${ProjectedCycleDue}    2
+    [Return]    ${ProjectedCycleDue}
     
 Validate GL Entries for Ongoing Fee Payment
     [Documentation]    This keyword validates the GL Entries of the Ongoing Fee Payment.
@@ -1621,7 +1623,7 @@ Navigate Directly to Commitment Fee Notebook from Deal Notebook
     
 Select Cycle Due Fee Payment 
     [Documentation]    This keyword selects a cycle fee payment for Cycle Due amount.
-    ...    @author: mgaling   
+    ...    @author: mgaling
     
     mx LoanIQ activate window    ${LIQ_CommitmentFee_Window}    
     mx LoanIQ select    ${LIQ_CommitmentFee_General_OptionsPayment_Menu}
@@ -1629,7 +1631,20 @@ Select Cycle Due Fee Payment
     mx LoanIQ click    ${LIQ_ChoosePayment_OK_Button} 
     mx LoanIQ enter    ${LIQ_CommitmentFee_Cycles_CycleDue_RadioButton}    ON   
     mx LoanIQ click    ${LIQ_CommitmentFee_Cycles_OK_Button}
-    Take Screenshot    CycleDueAmount
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/CommitmentFeePayment
+    
+Select Projected Cycle Due Fee Payment 
+    [Documentation]    This keyword selects a cycle fee payment for Cycle Due amount.
+    ...    @author: ritragel    10/28/2020    Initial Create
+    
+    mx LoanIQ activate window    ${LIQ_CommitmentFee_Window}    
+    mx LoanIQ select    ${LIQ_CommitmentFee_General_OptionsPayment_Menu}
+    mx LoanIQ enter    ${LIQ_ChoosePayment_Fee_RadioButton}    ON
+    mx LoanIQ click    ${LIQ_ChoosePayment_OK_Button} 
+    mx LoanIQ enter    ${LIQ_CommitmentFee_Cycles_ProjectedDue_RadioButton}    ON   
+    mx LoanIQ click    ${LIQ_CommitmentFee_Cycles_OK_Button}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/CommitmentFeePayment
+
     
 Enter Effective Date for Ongoing Fee-Cycle Due Payment
     [Documentation]    This keywod populates the effective date for ongoing fee-cycle dues payment.

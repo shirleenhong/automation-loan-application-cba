@@ -1,245 +1,272 @@
-###General###
-retry = "30x"
-retry_interval = "3s" 
-BROWSER = "chrome"
-SCENARIO = ""
-rowid = ""
-TestCase_Name = ""
-TestCase_Name_ValTool = ""
-ExcelPath_API = ""
-Test_Case = ""
+### Dataset Locations ###
+APIDataSet = "C:\\Git_Evergreen\\fms_cba\\DataSet\\Integration_DataSet\\API\\API_Data_Set.xlsx"
+ExcelPath_API_temp = 'C:\\Git_Evergreen\\fms_cba\\DataSet\\Integration_DataSet\\API\\temp.xlsx'
+ExcelPath = "C:\\Git_Evergreen\\fms_cba\DataSet\\LoanIQ_DataSet\\EVG_PTYLIQ01_BaselineBilateralCustomer.xlsx"
+dataset_path = "C:\\Git_Evergreen\\fms_cba"
+CBAUAT_ExcelPath = "C:\\Git_Evergreen\\fms_cba\\DataSet\\CBAUATDeal_DataSet\\EVG_CBAUAT03.xlsx"
+TL_DATASET = "C:\\Git_Evergreen\\fms_cba\\DataSet\\Integration_DataSet\\TL\\TL_Data_Set_AU.xlsx"
+SAPWUL_DATASET = "C:\\Git_evergreen\\evergreen_projects\\CBA_Evergreen\\DataSet\\Downstream_DataSet\\SAPWUL\\SAPWUL_Data_Set.xlsx"
+ComSeeDataSet = "C:\\Git_Evergreen\\fms_cba\DataSet\\Integration_DataSet\\CommSee\\COMMSEE_Data_Set.xlsx"
+GLExcelPath = "C:\\Git_Evergreen\\evergreen_projects\\CBA_Evergreen\\DataSet\\Extract_DataSet\\GL\\EVG_GL_TestData.xls"
+GLExcelPath = 'C:\\Git_Evergreen\\fms_cba\\DataSet\\Integration_DataSet\Extracts\\GL\\EVG_GL_TestData.xlsx'
+PTY_DATASET = "C:\\Git_Evergreen\\fms_cba\\DataSet\\Party_DataSet\\PTY_DataSet.xlsx"
+DWELIQFunc_Dataset = "C:\\Git_Evergreen\\fms_cba\\DataSet\\Integration_DataSet\\Extracts\\DWE_LIQ\\DWELIQ_Functional_TestData.xlsx"
 
-###Dataset###
-dataset_path = ""
-ExcelPath = ""
-CBAUAT_ExcelPath = ""
-APIDataSet = ""
-ExcelPath_API_temp = ""
-AuditLogPath = ""
-AuditLogPathTemp = ""
-Countries_Codes = ""
-TL_DATASET = ""
-GLExcelPath = ""
-ComSeeDataSet = ""
-Downstream_DataSet = ""
-COMMSEEDataSet= ""
-SAPWUL_DATASET = ""
-DWHExcelPath = ""
-CBARPA_ExcelPath = ""
-DWELIQFunc_Dataset = ""
-DNA_DATASET = ""
+SERVER = "http://mancsleverg0007"
+PORT = "9090"
+MDM_FFC_URL="/mch-ui"
 
-FBTIDataset = ""
-FBTIDataset_ILC = ""
-FBTIDataset_ELC = ""
-FBTIDataset_ESB = ""
-FBTIDataset_FSA = ""
-FBTIDataset_EGT = ""
-FBTIDataset_ISB = ""
-FBTIDataset_ODC = ""
-FBTIDataset_IDC = ""
-FBTIDataset_FELC = ""
-FBTIDataset_IGT = ""
+SFTP_HOST = "mancsleverg0005"
+SFTP_PORT = "22"
+SFTP_USER = "sftpuser"
+SFTP_PASSWORD = "t3stOnly?"
 
-###PARTY###
-PARTY_URL = ""
-PARTY_SSO_URL = ""
-PARTY_SERVER = ""
-PARTY_HTML_CREDENTIALS = ""
-USER_LINK = ""
-USER_PORT = ""
-PARTY_URL_SUFFIX = ""
-DOMAIN = ""
-PTY_DATASET = ""
-BRANCHNAME_LIST = ""
+DBServiceName = "MLFFC1.misys.global.ad"
+DBUsername = "MCH"
+DBPassword = "oracle"
+DBHost = "mancsleverg0023"
+DBPort = "1539"
+DB_URL = "jdbc:oracle:thin:MCH@//mancsleverg0023:1539/MLFFC1.misys.global.ad"
 
-###ESSENCE###
-ESSENCE_URL = ""
-ESSENCE_SSO_URL = ""
-ESSENCE_HTML_CREDENTIALS = ""
-ESSENCE_SERVER = ""
-ESSENCE_PORT_NUMBER = ""
-ESSENCE_LINK = ""
+MDM_HOST_TOKEN = "http://mancsleverg0028:8080"
+MDM_HOST = "http://mancsleverg0007:8081"
+MDM_HOST_PARTY = 'http://mancsleverg0007:8081'
+MDM_User_API = "/corporate/v1/users"
 
-###Transformation Layer###
-TL_SERVICE_HOST = ""
-TL_SERVICE_PORT = ""
-TL_SERVER_USER = ""
-TL_SERVER_PASSWORD = ""
-TL_SERVICE_DIR = ""
-TL_SERVICE_LOGS_DIR = ""
+### FFC Credentials ###
+MDM_FFC_Username ='admin'
+MDM_FFC_Password = 'admin'
 
-###FFC###
-SERVER = ""
-PORT = ""
-MDM_FFC_URL = ""
+### TL Credentials ###
+TL_USERNAME = "JCUSR01"
+TL_PASSWORD = "password"
+INPUTTER_USERNAME = "USERINP"
+INPUTTER_PASSWORD = "password"
+SUPERVISOR_USERNAME = "wbayers"
+SUPERVISOR_PASSWORD = "password"
+MANAGER_USERNAME = "mwheeler"
+MANAGER_PASSWORD = "password"
 
-###FFC Instance###
-OPEAPI_INSTANCE_TL = ""
-OPEAPI_INSTANCE = ""
-TEXTJMS_INSTANCE = ""
-GETTEXTJMS_INSTANCE = ""
-CBAINTERFACE_INSTANCE = ""
-CBAPUSH_INSTANCE = ""
-CUSTOM_INTERFACE_INSTANCE = ""
-RESPONSE_MECHANISM_INSTANCE = ""
-DWE_NOTIFICATION_INSTANCE = ""
-SAPWUL_INSTANCE = ""
+SSO_USERLINK = "mancsleverg0028"
+SSO_PORT = "8080"
+USER_LINK = "mancsleverg0031"
+USER_PORT = "8080"
+PARTY_SSO_URL_SUFFIX = "/uxp/rt/html/login.html"
+DOMAIN = "http://misysroot"
+SSO_URL_LINK = "/bfweb/servlet/GetServiceTicketForUser?redirectTo=http://"
+SSO_ENABLED = "NO"
 
-###SFTP###
-SFTP_HOST = ""
-SFTP_HOST_GL = ""
-SFTP_PORT = ""
-SFTP_USER = ""
-SFTP_PASSWORD = ""
-
-###LIQ Credential###
-INPUTTER_USERNAME = ""
-INPUTTER_PASSWORD = ""
-SUPERVISOR_USERNAME = ""
-SUPERVISOR_PASSWORD = ""
-MANAGER_USERNAME = ""
-MANAGER_PASSWORD = ""
-LIQ_ADMIN_USERNAME = ""
-LIQ_ADMIN_PASSWORD = ""
-
-###Essence Credential###
-ESS_USERNAME = ""
-ESS_PASSWORD = ""
+SSO_SERVER = 'mancsleverg0031'
+SSO_PORT_NUMBER = '7080'
+PARTY_SSO_URL = 'http://${PARTY_HTML_CREDENTIALS}@${SSO_SERVER}:${SSO_PORT_NUMBER}/bfweb/servlet/GetServiceTicketForUser?redirectTo=http://${PARTY_SERVER}/uxp/rt/html/login.html                   '
+PARTY_HTML_USER_CREDENTIALS = 'misysroot%5Cbrad:welcome%4099'
+PARTY_HTML_APPROVER_CREDENTIALS = 'misysroot%5Csuperit:welcome%4099'
+PARTY_SUPERVISOR_USERNAME  = 'superit'
+PARTY_SUPERVISOR_PASSWORD = 'superit'
+PARTY_SERVER = 'mancsleverg0031:7080'
+PARTY_URL = 'mancsleverg0031:7080/uxp/rt/html/login.html'
 
 ###Party Credential###
-PARTY_USERNAME = ""
-PARTY_PASSWORD = ""
-PARTY_SUPERVISOR_USERNAME  = ""
-PARTY_SUPERVISOR_PASSWORD = ""
-PARTY_HTML_USER_CREDENTIALS = ""
-PARTY_HTML_APPROVER_CREDENTIALS = ""
+PARTY_USERNAME = 'amipac'
+PARTY_PASSWORD = 'password'
 
-###FFC Credential###
-MDM_FFC_Username =""
-MDM_FFC_Password = ""
-
-###TL Credential###
-TL_USERNAME = ""
-TL_PASSWORD = ""
-
-###SSO###
-SSO_USERLINK = ""
-SSO_PORT = ""
-SSO_USERNAME = ""
-SSO_PASSWORD = ""
-SSO_ENABLED = ""
-SSO_SERVER = ""
-SSO_PORT_NUMBER = ""
-SSO_URL_LINK = ""
-PARTY_SSO_URL_SUFFIX = ""
-SSO_URL = ""
-
-###COMSEE###
-COM_HOST = ""
-
-##CORRESPONDENCE##
-CORRES_SERVER = ""
-CORRES_PORT = ""
-API_CORRES_HOST = ""
+###Transformation Layer###
+TL_SERVICE_HOST = "mancsleverg0007"
+TL_SERVICE_PORT = "22"
+TL_SERVER_USER = "sftpuser"
+TL_SERVER_PASSWORD = "t3stOnly?"
+TL_SERVICE_DIR = "/evgdata/FFC/mch-2.1.3.3.0-6162/config/Transformation_129/"
+TL_SERVICE_LOGS_DIR = "/evgdata/FFC/mch-2.2.0.0.0-6534/config/Transformation_129/logs/"
 
 ###Screenshots###
-Screenshot_Path = ""
+screenshot_Path = "C:\\Git_Evergreen\\fms_cba\\Results"
 SCREENSHOT_FILENAME = ""
 
-###MDM###
-MDM_HOST_TOKEN = ""
-MDM_HOST = ""
-MDM_HOST_PARTY = ""
-MDM_Cal_API = ""
-MDM_BASE_API = ""
-MDM_FX_API = ""
-MDM_User_API = ""
-MDM_Party_API = ""
-MDM_HOST_NONSSO = ""
-MDM_HOST_CUSTOM_COM = ""
+###LIQ ADMIN CREDENTIALS###
+LIQ_ADMIN_USERNAME = "ADMIN1"
+LIQ_ADMIN_PASSWORD = "password"
 
-###ActiveMQ###
-ACTIVEMQ_HTML_CREDENTIALS = ""
-ACTIVEMQ_SERVER_CREDENTIAL = ""
-ACTIVEMQ_PORT_NUMBER = ""
-ACTIVEMQ_URL = ""
+###CORRESPONDENCE###
+CORRES_SERVER = 'http://mancsleverg0007'
+CORRES_PORT = '9090'
+API_CORRES_HOST = 'http://mancsleverg0007:9150'
 
-###MD5 site###
-MD5_URL = ""
+###COMSEE###
+COM_HOST = 'http://mancsleverg0007:9150'
+
+###SAPWUL###
+SAPWUL_INSTANCE = 'CustomCBAPush_v1.2.9'
+
+###ESSENCE###
+ESSENCE_URL = '${ESSENCE_SERVER}:${ESSENCE_PORT_NUMBER}${ESSENCE_LINK}'
+ESSENCE_SSO_URL = 'http://${ESSENCE_HTML_CREDENTIALS}@${SSO_SERVER}:${SSO_PORT_NUMBER}/bfweb/servlet/GetServiceTicketForUser?redirectTo=http://${ESSENCE_SERVER}:${ESSENCE_LINK}'
+ESSENCE_HTML_CREDENTIALS = 'misysroot%5Cbrad:welcome%4099'
+ESSENCE_SERVER = 'mancsleverg0033'
+ESSENCE_PORT_NUMBER = '8080'
+ESSENCE_LINK = '/uxp/rt/html/login.html'
+SSO_SERVER = 'mancsleverg0028'
+
+###Essence Credential###
+ESS_USERNAME = "brad"
+ESS_PASSWORD = "brad"
+
+### IEE LIQ SERVER ###
+DBSERVICENAME_LIQ = 'MLLIQ.misys.global.ad'
+DBUSERNAME_LIQ = 'LIQ7512UPG'
+DBPASSWORD_LIQ = 'password'
+DBHOST_LIQ = 'MANCSLEVERG0023'
+DBPORT_LIQ = '1539'
+DBUR_LIQ = 'jdbc:oracle:thin:@//mancsleverg0023:1539/MLLIQ.misys.global.ad'
+LIQ7474_USER = 'LIQ7512UPG'
+
+###AU User###
+BFBANKFUSION_USER = 'AUBANKFUSION'
+BFTB_BRANCH_TABLE = 'BFTB_BRANCH'
+BFBRANCHNAME = 'BFBRANCHNAME'
+BFBRANCHSORTCODEPK = 'BFBRANCHSORTCODEPK'
+AUBANKFUSION_USER = 'AUBANKFUSION'
+
+# ### IEE ESSENCE AU SERVER ###
+DBSERVICENAME_ESS_AU = 'AUGLBPDB'
+DBUSERNAME_ESS_AU = 'bfdbusr'
+DBPASSWORD_ESS_AU = 'password'
+DBHOST_ESS_AU = 'MANCSLEVERG0023'
+DBPORT_ESS_AU = '1521'
+DBUR_ESS_AU = 'jdbc:oracle:thin:@//mancsleverg0023:1521/AUGLBPDB'
+
+### ESSENCE SERVER ###
+DBSERVICENAME_ESS = 'FBE203R'
+DBUSERNAME_ESS = 'audbusr'
+DBPASSWORD_ESS = 'password'
+DBHOST_ESS = 'MANCSLEVERG0023'
+DBPORT_ESS = '1521'
+DBUR_ESS = 'jdbc:oracle:thin:@//mancsleverg0023:1521/FBE203R'
+
+
+### IEE PARTY SERVER ###
+DBSERVICENAME_PTY = 'AUPTYPDB'
+DBUSERNAME_PTY = 'bfdbusr'
+DBPASSWORD_PTY = 'password'
+DBHOST_PTY = 'MANCSLEVERG0023'
+DBPORT_PTY = '1521'
+DBUR_PTY = 'jdbc:oracle:thin:@//MANCSLEVERG0023:1521/AUPTYPDB'
+
+
+###SFTP HOST/CREDENTIALS###
+SFTP_HOST_GL = "mancsleverg0007"
+
+###FFC MCH DB DETAILS###
+DBHost = 'mancsleverg0023'
+DBPort = '1539'
+DBServiceName = 'MLFFC1.misys.global.ad'
+DWE_NOTIFICATION_INSTANCE = 'notification'
+
+###FFC Credential###
+MDM_FFC_Username ='admin'
+MDM_FFC_Password = 'admin'
+
+###FFC Instance###
+OPEAPI_INSTANCE_TL = "openAPI_1.4.1.1"
+OPEAPI_INSTANCE = "openAPI_1.4.1.1"
+TEXTJMS_INSTANCE = "distributor_1.4.1.1"
+GETTEXTJMS_INSTANCE = "distributor_1.4.1.1"
+CBAINTERFACE_INSTANCE = "CustomInterface_v1.3.3"
+CBAPUSH_INSTANCE = "CustomCBAPush_v1.3.2"
+CUSTOM_INTERFACE_INSTANCE = "CustomInterface_v1.3.3"
+RESPONSE_MECHANISM_INSTANCE = "responsemechanism_1.4.1.0"
+DWE_NOTIFICATION_INSTANCE = "dwe_notification_1.3.0"
+SAPWUL_INSTANCE = 'CustomCBAPush_1.3.0'
 
 ### DWE ###
-DWE_SERVER = ""
-DWE_SERVER_LIQ = ""
-DWE_PORT = ""
-DWE_SERVER_USER = ""
-DWE_SERVER_PASSWORD = ""
-DWE_LANDING_AREA_PATH = ""
-DWE_EXTRACTION_PATH = ""
-DWE_DATASET = ""
-DWE_EXCEL_DATASET = ""
-DWE_TABLE_LIST = ""
-DWE_LIQ_USER = ""
-DWE_LIQ_PASSWORD = ""
-DWE_EXCEL_DATASET = ""
-DWE_BATCH_NET = ""
-DWE_DECRYPT_TOOL_PATH = ""
-DWE_EXTRACTION_AREA_PATH = ""
-DWE_DECRYPTOR_JAR = ""
-DWE_CSV_FILES_COUNT = ""
-DWE_MANIFEST_FILE_FIELDLIST = ""
-DWE_DECRYPTION_PART1 = ""
-DWE_DECRYPTION_PART2 = ""
-DWE_DECRYPTION_PART3 = ""
-DWE_LIQ_EXTRACT_PATH = ""
-DWE_PGP_SECRET_KEY = ""
-DWE_PASSPHRASE = ""
-DWE_TAR_GZ_EXT = ""
-DWE_TAR_GZ_GPG_EXT = ""
-DWE_CCB_LIQ_ZONE_FILENAME = ""
-TestCase_Name_FuncVal = ""
-DWELIQFunc_Dataset_SheetName = ""
+DWE_SERVER = 'mancsleverg0007'
+DWE_SERVER_LIQ = 'mancsleverg0005'
+DWE_PORT = '22'
+DWE_SERVER_USER = 'sftpuser'
+DWE_SERVER_PASSWORD = 't3stOnly?'
+DWE_LANDING_AREA_PATH = '/evgdata/misys/loaniq/server/data/release/'
+DWE_EXTRACTION_PATH = '/evgdata/STREAMSETS/workspace/extraction_area/COMRLENDING/'
+DWE_DATASET = 'C:\\Git_Evergreen\\fms_cba\\DataSet\\Integration_DataSet\Extracts\\DWE_LIQ\\EVG_DWE_LIQEXTRACT_TestData.xlsx'
+DWE_EXCEL_DATASET = 'C:\\Git_Evergreen\\fms_cba\\DataSet\\Integration_DataSet\Extracts\\DWE_LIQ\\EVG_DWE_LIQEXTRACT_TestData.xlsx'
+DWE_TABLE_LIST = 'C:\\Git_Evergreen\\fms_cba\\DataSet\\Integration_DataSet\Extracts\\DWE_LIQ\\DWE_Table.txt'
+DWE_LIQ_USER = 'INPCHER'
+DWE_LIQ_PASSWORD = 'password'
+DWE_BATCH_NET = 'TEST_DE'
+DWE_DECRYPT_TOOL_PATH = 'C:\\Git_Evergreen\\fms_cba\\DataSet\\Integration_DataSet\Extracts\\DWE_LIQ\\Decryptor_Tool'
+DWE_EXTRACTION_AREA_PATH = '/evgdata/STREAMSETS/workspace/extraction_area/COMRLENDING/'
+DWE_DECRYPTOR_JAR = 'Decryptor-1.0.0-jar-with-dependencies.jar'
+DWE_CSV_FILES_COUNT = '186'
+DWE_MANIFEST_FILE_FIELDLIST = 'C:\\Git_Evergreen\\fms_cba\\DataSet\\Integration_DataSet\Extracts\\DWE_LIQ\\Manifest_Fields.txt'
+DWE_DECRYPTION_PART1 = 'C:/Git_Evergreen/fms_cba/DataSet/Integration_DataSet/Extracts/DWE_LIQ/Decryptor_Tool/DWE_DECRYPTION_PART1.vbs'
+DWE_DECRYPTION_PART2 = 'C:/Git_Evergreen/fms_cba/DataSet/Integration_DataSet/Extracts/DWE_LIQ/Decryptor_Tool/DWE_DECRYPTION_PART2.vbs'
+DWE_DECRYPTION_PART3 = 'C:/Git_Evergreen/fms_cba/DataSet/Integration_DataSet/Extracts/DWE_LIQ/Decryptor_Tool/DWE_DECRYPTION_PART3.vbs'
+DWE_LIQ_EXTRACT_PATH = 'C:\\Git_Evergreen\\fms_cba\\DataSet\\Integration_DataSet\Extracts\\DWE_LIQ\\DWE_LIQ_Extracts\\'
+DWE_PGP_SECRET_KEY = 'secret.skr'
+DWE_PASSPHRASE = 'oracle'
+DWE_TAR_GZ_EXT = '.tar.gz'
+DWE_TAR_GZ_GPG_EXT = '.tar.gz.gpg'
+DWE_CCB_LIQ_ZONE_FILENAME = 'CCB_LIQ_'
 
-### GL ###
-GL_LIQ_USER = ""
-GL_LIQ_PASSWORD = ""
-GL_EXTRACT_PATH = ""
-GL_DECRYPTOR_TOOL_PATH = ""
-GL_DECRYPTOR_JAR = ""
-GL_DECRYPTION_PART1 = ""
-GL_DECRYPTION_PART2 = ""
-GL_DECRYPTION_PART3 = ""
-GL_PGP_SECRET_KEY = ""
-GL_PASSPHRASE = ""
-GL_CSV_GPG_FILEEXTENSION = ""
-ESS_AUWASADMIN_SCHEMA = ""
-ESS_EUWASADMIN_SCHEMA = ""
-GL_VALIDATION_TOOL_PATH = ""
-GL_VALIDATION_TOOL_JAR = ""
-GL_VALIDATION_TOOL_JAR_AU = ""
-GL_VALIDATION_TOOL_JAR_EU = ""
-DATAROW_INDEX = ""
+### GL Postings/Extracts###
+GL_LIQ_USER = 'RPTINP01'
+GL_LIQ_PASSWORD = 'password02'
+GL_EXTRACT_PATH = '/evgdata/FBE_GL_Extract/extract'
+GL_DECRYPTOR_TOOL_PATH = 'C:\\Git_Evergreen\\fms_cba\\DataSet\\Integration_DataSet\Extracts\\GL\\Decryptor_Tool'
+GL_DECRYPTOR_JAR = 'Decryptor-1.0.0-jar-with-dependencies.jar'
+GL_DECRYPTION_PART1 = 'C:/Git_Evergreen/fms_cba/DataSet/Integration_DataSet/Extracts/GL/Decryptor_Tool/GL_DECRYPTION_PART1.vbs'
+GL_DECRYPTION_PART2 = 'C:/Git_Evergreen/fms_cba/DataSet/Integration_DataSet/Extracts/GL/Decryptor_Tool/GL_DECRYPTION_PART2.vbs'
+GL_DECRYPTION_PART3 = 'C:/Git_Evergreen/fms_cba/DataSet/Integration_DataSet/Extracts/GL/Decryptor_Tool/GL_DECRYPTION_PART3.vbs'
+GL_PGP_SECRET_KEY = 'secret.skr'
+GL_PASSPHRASE = 'oracle'
+GL_CSV_GPG_FILEEXTENSION = '.csv.gpg'
+ESS_AUWASADMIN_SCHEMA = "AUWASADMIN"
+GL_VALIDATION_TOOL_PATH = 'C:\\Git_Evergreen\\fms_cba\\DataSet\\Integration_DataSet\Extracts\\GL\\Validation_Tool'
+GL_VALIDATION_TOOL_JAR = 'gpgCheck-1.0.3-jar-with-dependencies.jar'
+GL_VALIDATION_TOOL_JAR_AU = 'gpgCheck-1.0.3-jar-with-dependencies.jar'
 
-### Batch EOD ###
-PUTTY_PATH = ""
-PUTTY_HOSTNAME = ""
-PUTTY_PORT = ""
-PUTTY_USERNAME = ""
-PUTTY_PASSWORD = ""
+### TI ###
+FBTIDataset = 'C:\\Git_Evergreen\\evergreen_projects\\CBA_Evergreen\\DataSet\\FBTI_DataSet\\FBTI_User_Data_Set.xlsx'
+FBTIDataset_ILC = 'C:\\Git_Evergreen\\evergreen_projects\\CBA_Evergreen\\DataSet\\FBTI_DataSet\\FBTI_ILC_Data_Set.xlsx'
+FBTIDataset_ELC = 'C:\\Git_Evergreen\\evergreen_projects\\CBA_Evergreen\\DataSet\\FBTI_DataSet\\FBTI_ELC_Data_Set.xlsx'
+FBTIDataset_ESB = 'C:\\Git_Evergreen\\evergreen_projects\\CBA_Evergreen\\DataSet\\FBTI_DataSet\\FBTI_ESB_Data_Set.xlsx'
+FBTIDataset_FSA = 'C:\\Git_Evergreen\\evergreen_projects\\CBA_Evergreen\\DataSet\\FBTI_DataSet\\FBTI_FSA_Data_Set.xlsx'
+FBTIDataset_EGT = 'C:\\Git_Evergreen\\evergreen_projects\\CBA_Evergreen\\DataSet\\FBTI_DataSet\\FBTI_EGT_Data_Set.xlsx'
+FBTIDataset_ISB = 'C:\\Git_Evergreen\\evergreen_projects\\CBA_Evergreen\\DataSet\\FBTI_DataSet\\FBTI_ISB_Data_Set.xlsx'
+FBTIDataset_ODC = 'C:\\Git_Evergreen\\evergreen_projects\\CBA_Evergreen\\DataSet\\FBTI_DataSet\\FBTI_ODC_Data_Set.xlsx'
+FBTIDataset_IDC = 'C:\\Git_Evergreen\\evergreen_projects\\CBA_Evergreen\\DataSet\\FBTI_DataSet\\FBTI_IDC_Data_Set.xlsx'
+FBTIDataset_IGT = 'C:\\Git_Evergreen\\evergreen_projects\\CBA_Evergreen\\DataSet\\FBTI_DataSet\\FBTI_IGT_Data_Set.xlsx'
+FBTIDataset_FIC = 'C:\\Git_Evergreen\\evergreen_projects\\CBA_Evergreen\\DataSet\\FBTI_DataSet\\FBTI_FIC_Data_Set.xlsx'
+FBTIDataset_FOC = 'C:\\Git_Evergreen\\evergreen_projects\\CBA_Evergreen\\DataSet\\FBTI_DataSet\\FBTI_FOC_Data_Set.xlsx'
+FBTIDataset_FELC = 'C:\\Git_Evergreen\\evergreen_projects\\CBA_Evergreen\\DataSet\\FBTI_DataSet\\FBTI_FELC_Data_Set.xlsx'
+FBTIDataset_FILC = 'C:\\Git_Evergreen\\evergreen_projects\\CBA_Evergreen\\DataSet\\FBTI_DataSet\\FBTI_FILC_Data_Set.xlsx'
+FBTIDataset_EOD_Batch = 'C:\\Git_Evergreen\\evergreen_projects\\CBA_Evergreen\\DataSet\\FBTI_DataSet\\EOD_Batch.xlsx'
 
-### DNA ###
-DNA_SERVER = ""
-DNA_SERVER_LIQ = ""
-DNA_PORT = ""
-DNA_SERVER_USER = ""
-DNA_SERVER_PASSWORD = ""
-DNA_EXTRACTION_AREA_PATH = ""
-DNA_CCB_LIQ_FILENAME= ""
-DNA_DATAASSURANCE_FILENAME = ""
-DNA_DAT_EXT = ""
+### FBTI Supervisor ###
+FBTI_SERVER = 'mancsleverg0035'
+FBTI_PORT = '8443'
+FBTI_URL = 'https://${FBTI_SERVER}:${FBTI_PORT}/tiplus2-global'
+FBTI_USERNAME_SUPERVISOR = 'SUPERVISOR'
+FBTI_PASSWORD_SUPERVISOR = '2'
+
+### FBTI Inputter ###
+FBTI_USERNAME_INPUTTER = 'INPUTTER'
+FBTI_PASSWORD_INPUTTER = 'Password15'
+
+### FBTI Reviewer ###
+FBTI_USERNAME_REVIEWER = 'REVIEWER'
+FBTI_PASSWORD_REVIEWER = 'Password15'
+
+### FBTI Authoriser ###
+FBTI_USERNAME_AUTHORISER = 'AUTHORISOR'
+FBTI_PASSWORD_AUTHORISER = 'Password15'
+
+IDC_DOCUMENT_UPLOAD_PATH = 'C:\\Git_Evergreen\\evergreen_projects\\CBA_Evergreen\\DataSet\\FBTI_DataSet\\Uploads\\'
+IDC_DOCUMENT_DOWNLOAD_PATH = 'C:\\Git_Evergreen\\evergreen_projects\\CBA_Evergreen\\DataSet\\FBTI_DataSet\\Downloads\\'
 
 import os
 project_path = os.path.dirname(os.path.realpath(__file__)).replace("MDM_ConfigFile","")
 dataset_path = os.path.dirname(os.path.abspath('.//Data_Set'))
 screenshot_path = os.path.dirname(os.path.abspath('.//Results'))
 apidataset_path = os.path.dirname(os.path.abspath('.//API_DataSet'))
+
+retry = "30x"
+retry_interval = "3s" 
