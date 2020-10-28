@@ -16,12 +16,12 @@ SBLC Guarantee Issuance
     Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
     
     ###Deal Notebook###
-    Open Existing Deal    &{ExcelPath}[Deal_Name]
+	
 
     ###Outstanding Select Window###
     ${Effective_Date}    Get System Date
     ${Alias}    Create New Outstanding Select - SBLC    &{ExcelPath}[OutstandingSelect_Type]    &{ExcelPath}[Facility_Name]    &{ExcelPath}[Amount_Requested]
-    ...    ${Effective_Date}   &{ExcelPath}[Pricing_Option]    &{ExcelPath}[Expiry_Date]
+    ...    ${Effective_Date}   &{ExcelPath}[Pricing_Option]    &{ExcelPath}[Expiry_Date]    &{ExcelPath}[Deal_Name]
     Write Data To Excel    SERV05_SBLCIssuance    SBLC_Alias    ${rowid}    ${Alias}  
     ${Alias}    Read Data From Excel    SERV05_SBLCIssuance    SBLC_Alias    ${rowid}
     Set To Dictionary    ${ExcelPath}    SBLC_Alias=${Alias}
