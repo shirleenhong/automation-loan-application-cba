@@ -1355,7 +1355,7 @@ Validate Records for VLS_FACILITY
     
     ${Row_Count}    Get Length    ${aFacilityID_List}    
     
-    :FOR    ${i}    IN RANGE    0    1    ##${Row_Count}
+    :FOR    ${i}    IN RANGE    0    ${Row_Count}
     \    ${Current_FacilityID}    Set Variable    @{aFacilityID_List}[${i}]
     \    Run Keyword If    '${Current_FacilityID.strip()}'=='NONE'    Log    Facility ID is NONE. Skipping record.
     \    Continue For Loop If    '${Current_FacilityID.strip()}'=='NONE'
