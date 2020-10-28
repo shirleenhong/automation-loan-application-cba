@@ -68,7 +68,7 @@ Validate FXRate Not Updated in LoanIQ
     ${FX_Rate_no_0}    ${FXRate_whole_no_0}    ${FXRate_dec_no_0}    Run Keyword If    '${subEntity}'=='AUD'    Convert Mid Rate    ${Mid_Rate}
     ...    ELSE IF    '${subEntity}'=='NY'    Get Significant Mid Rate    ${Mid_Rate}
     ...    ELSE IF    '${subEntity}'=='EUR'    Convert Mid Rate    ${Mid_Rate}
-   ### convert days to be used in execution###
+    ### convert days to be used in execution###
     ${Conv_Eff_Date_With_0}    Convert Date    ${Effective_Date}    result_format=%d-%b-%Y
     ${Backdated_Day}    Subtract Time From Date    ${Effective_Date}    1 d
     ${Conv_Backdated_Day_With_0}    Convert Date    ${Backdated_Day}    result_format=%d-%b-%Y
