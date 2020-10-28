@@ -176,13 +176,9 @@ Initiate Second Rollover for Drawdown A B C - D00000476
 Extend Facility MOF - D00000476
     Mx Execute Template With Multiple Data    Extend Maturity and Limit for MOF    ${CBAUAT_ExcelPath}    1    AMCH05_ExtendFacility
 
-Extend Facility FCAF and TCAF - D00000476
-    Mx Execute Template With Multiple Data    Extend Maturity and Limit for FCAF    ${CBAUAT_ExcelPath}    2    AMCH05_ExtendFacility    
-    Mx Execute Template With Multiple Data    Extend Maturity and Limit for FCAF    ${CBAUAT_ExcelPath}    4    AMCH05_ExtendFacility
+Extend Facility FCAF, SCAF and TCAF - D00000476
+    Mx Execute Template With Multiple Data    Extend Maturity and Limit    ${CBAUAT_ExcelPath}    2-4    AMCH05_ExtendFacility    
 
-Extend Facility SCAF - D00000476
-    Mx Execute Template With Multiple Data    Extend Maturity and Limit for FCAF    ${CBAUAT_ExcelPath}    3   AMCH05_ExtendFacility
-    
 Pricing Change Facility SCAF - D00000476
     Mx Execute Template With Multiple Data    Create Pricing Change Transaction SCAF    ${CBAUAT_ExcelPath}    1   AMCH06_PricingChangeTransaction
 
@@ -210,11 +206,8 @@ Setup BaseRate and FX Rate for Feb 22
     Mx Execute Template With Multiple Data    Load Base Rate D00000476    ${CBAUAT_ExcelPath}    4    BaseRate_Fields
     Mx Execute Template With Multiple Data    Load FX Rate D00000476     ${CBAUAT_ExcelPath}    2    FXRates_Fields
     
-Initiate Rollover for D4
-    Mx Execute Template With Multiple Data    Initiate Comprehensive Repricing - D00000476    ${CBAUAT_ExcelPath}    8    SERV08C_ComprehensiveRepricing
-
-Initiate Rollover for D5
-    Mx Execute Template With Multiple Data    Initiate Comprehensive Repricing - D00000476    ${CBAUAT_ExcelPath}    9    SERV08C_ComprehensiveRepricing 
+Initiate Rollover for D4 and D5
+    Mx Execute Template With Multiple Data    Initiate Comprehensive Repricing - D00000476    ${CBAUAT_ExcelPath}    8-9    SERV08C_ComprehensiveRepricing
 
 Collect Full Prepayment for D6 - D00000476
     Mx Execute Template With Multiple Data    Collect Early Prepayment via Paper Clip D00000476    ${CBAUAT_ExcelPath}    3    SERV23_Paperclip
