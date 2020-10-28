@@ -50,3 +50,41 @@ Portfolio Settled Discount Changes
     Release Portfolio Selection Discount Change
     Verification of Portfolio Selection Discount Change Transaction
     Close All Windows on LIQ
+
+
+Complete Portfolio Settled Discount
+    [Documentation]    This keyword is used to peform Portfolio Settled Discount Change/Adjustment
+    ...    @author:    dahijara    26OCT2020    initial create
+    [Arguments]    ${ExcelPath}
+
+    ###LIQ Window###
+    Logout from Loan IQ
+    Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
+
+    ${Adjustment_Amount}    Read Data From Excel    CRED07_UpfrontFee_Payment    UpfrontFee_Amount    1
+    ${EffectiveDate}    Read Data From Excel    SYND02_PrimaryAllocation    CloseDate    1
+
+    ###Portfolio position Selection###
+    Open Existing Deal    &{ExcelPath}[Deal_Name]
+    Navigate to Portfolio Positions Notebook
+    Select Portfolio Position Based on Portfolio Name and Facility Name for Portfolio Settled Discount Change    &{ExcelPath}[Portfolio_Name]    &{ExcelPath}[Facility_Name]
+    Update Portfolio Settled Discount Change Details    ${EffectiveDate}    ${Adjustment_Amount}
+    Update GLOffset Details    &{ExcelPath}[GL_ShortName]    &{ExcelPath}[GL_Offset_Type]    &{ExcelPath}[Deal_Name]    
+
+    ###Send transaction for approval###
+    Send to Approval Portfolio Selection Discount Change  
+    
+    ### Approval ###
+    Logout from Loan IQ
+    Login to Loan IQ    ${SUPERVISOR_USERNAME}    ${SUPERVISOR_PASSWORD}
+    Navigate Transaction in WIP    ${FACILITIES}    ${AWAITING_APPROVAL_STATUS}    ${PORTFOLIO_SETTLED_DISCOUNT_ADJUSTMENT}    &{ExcelPath}[Deal_Name]    
+    Navigate to Portfolio Settled Discount Change Workflow and Proceed With Transaction    ${APPROVAL_STATUS}
+    
+    ###Release Transaction###
+    Logout from Loan IQ
+    Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
+    Launch Existing Facility    &{ExcelPath}[Deal_Name]    &{ExcelPath}[Facility_Name]
+    Navigate to Pending Portfolio Selection Discount Change
+    Navigate to Portfolio Settled Discount Change Workflow and Proceed With Transaction    ${RELEASE_STATUS}
+    Verification of Portfolio Selection Discount Change Transaction
+    Close All Windows on LIQ
