@@ -956,3 +956,19 @@ Get Default Zone
     \    Exit For Loop If    '${Zone}'!='${None}'
 
     [Return]    ${Zone}
+
+Enter Short Name and Validate
+    [Documentation]    This keyword enters the short name in Maintain Party Details and validates if changes can be sent for approval or will prompt duplicate short name error
+    ...    @author: nbautist    29OCT2020
+    [Arguments]    ${Short_Name}
+    
+    Mx Input Text    ${Party_QuickEnterpriseParty_ShortName_TextBox}    ${Short_Name}
+    Capture Page Screenshot    ${screenshot_path}/Screenshots/Party/MaintainPartyDetailsPage-{index}.png
+    Mx Click Element    ${Party_Footer_Next_Button}
+    
+    ### Approval Required Dialog ###
+    ${isApprovalRequired}    Run Keyword And Return Status    Wait Until Page Contains Element    ${Party_QuickEnterpriseParty_ApprovalRequired_Dialog}    30s
+    Run Keyword If    ${isApprovalRequired}==${True}    Run Keywords	Capture Page Screenshot    ${screenshot_path}/Screenshots/Party/PartyApprovalDialog-{index}.png
+    ...    AND	    Mx Click Element    ${Party_QuickEnterpriseParty_AskForApproval_Button}
+    ...    AND	    Wait Until Page Contains Element    ${Party_RaisedMessage_Notification}
+    ...    ELSE    Validate Error Message in Quick Enterprise Party    ${DUPLICATE_SHORTNAME_ERROR_MESSAGE}
