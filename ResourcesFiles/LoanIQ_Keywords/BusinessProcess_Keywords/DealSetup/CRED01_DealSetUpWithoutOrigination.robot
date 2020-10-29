@@ -562,6 +562,7 @@ Setup Syndicated Deal for Non-Agent and Host Bank
     ...    @update: clanding    13AUG2020    - added writing of Deal to SERV09
     ...    @update: fluberio    12OCT2020    - added condition in Holdiay Creation and Pricing Rules for EU since in EU there are 5 Holiday Calendar and 4 Pricing Options
     ...    @update: fluberio    22OCT2020    - added writing of Deal Name to Notices_UpfrontFee
+    ...    @update: kduenas     29OCT2020    - added writing of deal name to corro api dataset for API_COR_TC15   
     [Arguments]    ${ExcelPath}
     
 	###Switch to Original User###
@@ -584,6 +585,7 @@ Setup Syndicated Deal for Non-Agent and Host Bank
     Write Data to Excel    AMCH05_ExtendMaturityDate    Deal_Name    ${rowid}    ${Deal_Name}
     Write Data to Excel    SERV02_LoanDrawdownNonAgent    Deal_Name    ${rowid}    ${Deal_Name}
     Write Data to Excel    SERV09_LoanRepricing    Deal_Name    ${rowid}    ${Deal_Name}
+    Write Data To Excel    Correspondence    Deal_Name    15    ${Deal_Name}    ${APIDataSet}    bTestCaseColumn=True    sColumnReference=rowid
     Run Keyword If   '${SCENARIO}'=='4' and '&{ExcelPath}[Entity]' == 'EU'    Write Data to Excel    Correspondence    Deal_Name    ${rowid}    ${Deal_Name}
     ${Deal_Name}    Read Data From Excel    CRED01_DealSetup    Deal_Name    ${rowid}
     ${Deal_Alias}    Read Data From Excel    CRED01_DealSetup    Deal_Alias    ${rowid}
