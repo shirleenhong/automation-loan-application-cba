@@ -55,7 +55,7 @@ Update Party For Duplicate Short Name Validation
     Navigate Maintain Party Details    &{ExcelPath}[Party_ID]
     
     ### Edit Short Name
-    Enter Short Name and Validate    ${DUPLICATE_SHORT_NAME}
+    Enter Short Name and Validate Duplicate Error    ${DUPLICATE_SHORT_NAME}
 
     Run Keyword If    '${SSO_ENABLED}'=='NO'    Logout User on Party
     ...    ELSE    Close Browser

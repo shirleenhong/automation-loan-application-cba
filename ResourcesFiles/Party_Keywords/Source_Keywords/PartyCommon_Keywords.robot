@@ -957,9 +957,9 @@ Get Default Zone
 
     [Return]    ${Zone}
 
-Enter Short Name and Validate
+Enter Short Name and Validate Duplicate Error
     [Documentation]    This keyword enters the short name in Maintain Party Details and validates if changes can be sent for approval or will prompt duplicate short name error
-    ...    @author: nbautist    29OCT2020
+    ...    @author: nbautist    29OCT2020    - initial creation
     [Arguments]    ${Short_Name}
     
     Mx Input Text    ${Party_QuickEnterpriseParty_ShortName_TextBox}    ${Short_Name}
