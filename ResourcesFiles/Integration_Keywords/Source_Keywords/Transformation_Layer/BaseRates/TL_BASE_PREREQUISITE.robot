@@ -51,6 +51,7 @@ Transform Base Rate CSV Data to XLS File Readable for JSON Creation
     ...    @update: jdelacru    21SEP2020    - added new logic and separated the actual transformation of CSV to XLS to cater multiple sub-entities
     ...    @update: jdelacru    29SEP2020    - revert to the original steps in transforming csv to xls
     ...    @update: mcastro     09OCT2020    - added condition for Empty ${Row_Val_List}
+    ...    @update: jdelacru    16OCT2020    - added condition in writing LIBOR Baserate Code for EU Entity
     [Arguments]    ${sCSV_FilePath}    ${sTransformedData_FilePath}    ${sTransformedDataTemplate_FilePath}    
     
     ${CSV_Content_List}    Read Csv As List    ${dataset_path}${sCSVFilePath}
@@ -95,7 +96,8 @@ Transform Base Rate CSV Data to XLS File Readable for JSON Creation
     \    ${GS_VENDOR_PUBLISH_DATE_curr}    Get From Dictionary    ${ROW_${INDEX}}    GS_VENDOR_PUBLISH_DATE
     \    ${GS_VALUE_DATE}    Get From Dictionary    ${ROW_${INDEX}}    GS_VALUE_DATE
     \    ${GS_PROCESSING_DATE}    Get From Dictionary    ${ROW_${INDEX}}    GS_PROCESSING_DATE
-    \    
+    \    ${GS_INSTR_CCY}    Get From Dictionary    ${ROW_${INDEX}}    GS_INSTR_CCY
+    \
     \    ${Same_Rate_Code}    Run Keyword And Return Status    Should Be Equal    ${BaseRateCode_prev}    ${BaseRateCode_curr}
     \    ${Same_Tenor}    Run Keyword And Return Status    Should Be Equal    ${GS_INSTR_TENOR_prev}    ${GS_INSTR_TENOR_curr} 
     \    ${Same_Date}    Run Keyword And Return Status    Should Be Equal    ${GS_VENDOR_PUBLISH_DATE_prev}    ${GS_VENDOR_PUBLISH_DATE_curr}          
@@ -124,7 +126,7 @@ Transform Base Rate CSV Data to XLS File Readable for JSON Creation
     \    
     \    ${Index_LMIR}    Evaluate    ${New_INDEX}+1
     \    
-    \    Run Keyword If    '${BaseRateCode_curr}'=='LIBOR' and '${CONFIG_PRICE_TYPE}'=='BUYRATE' and '${GS_INSTR_TENOR_curr}'=='001MNTH'    Get Single Row value from CSV File and Write to Excel for Base Rate    ${ROW_${INDEX}}    
+    \    Run Keyword If    '${BaseRateCode_curr}'=='LIBOR' and '${CONFIG_PRICE_TYPE}'=='BUYRATE' and '${GS_INSTR_TENOR_curr}'=='001MNTH' and '${GS_INSTR_CCY}'=='AUD'    Get Single Row value from CSV File and Write to Excel for Base Rate    ${ROW_${INDEX}}    
          ...    ${Index_LMIR}    ${Zone2_Curr_Date}    ${Zone3_Curr_Date}    ${CONFIG_PRICE_TYPE}    ${dataset_path}${sTransformedData_FilePath}    LMIR
     \    
     \    ${INDEX_ForGrouping}    Set Variable    ${New_INDEX}
@@ -147,6 +149,7 @@ Get Single Row value from CSV File and Write to Excel for Base Rate
     ...    @update: clanding    21AUG2020    - updated Zone1 to Zone2
     ...    @update: jdelacru    21SEP2020    - make sBaseRateCode as optional field
     ...    @update: jdelacru    21SEP2020    - deleted the condition in writing the subentity in transformed file
+    ...    @update: jdelacru    16OCT2020    - added condition in assigning the value for ${Tenor_Converted} for RBA
     [Arguments]    ${dRow}    ${irowid}    ${sZone2_Curr_Date}    ${sZone3_Curr_Date}    ${sConfigPriceType}    ${sTLPath_Transformed_Data}    ${sBaseRateCode}=None
     ${InstrumentType}    Get From Dictionary    ${dRow}    GS_INSTR_TYPE
     ${BaseRateCode}    Run Keyword If    '${sBaseRateCode}'=='None'    Get From Dictionary    ${dRow}    GS_INSTR_SUB_TYPE    
@@ -171,7 +174,8 @@ Get Single Row value from CSV File and Write to Excel for Base Rate
     ...    ELSE IF    '${Tenor_Converted}'=='001D' and '${BaseRateCode_Converted}'=='EONIA' and '${sConfigPriceType}'=='BUYRATE'    Set Variable
     ...    ELSE IF    '${Tenor_Converted}'=='001D' and '${BaseRateCode_Converted}'=='FED-FUND' and '${sConfigPriceType}'=='BUYRATE'    Set Variable
     ...    ELSE IF    '${Tenor_Converted}'=='001D' and '${BaseRateCode_Converted}'=='TIIE' and '${sConfigPriceType}'=='BUYRATE'    Set Variable
-    ...    ELSE IF    '${Tenor_Converted}'=='001D' and '${BaseRateCode_Converted}'=='RBA' and '${sConfigPriceType}'=='LASTRATE'    Set Variable
+    ...    ELSE IF    '${Tenor_Converted}'=='001D' and '${BaseRateCode_Converted}'=='RBA' and '${sConfigPriceType}'=='LASTRATE' and '${Currency}'=='AUD'    Set Variable
+    ...    ELSE IF    '${Tenor_Converted}'=='001D' and '${BaseRateCode_Converted}'=='RBA' and '${sConfigPriceType}'=='LASTRATE' and '${Currency}'!='AUD'    Set Variable    001D
     ...    ELSE    Set Variable    ${Tenor_Converted}
     
     Write Data to Excel Using Row Index    Transformed_BaseRate    rowid    ${irowid}    ${irowid}    ${sTLPath_Transformed_Data}
@@ -221,6 +225,7 @@ Get Single Row value from CSV File and Write to Excel for Base Rate
 Create Expected JSON for Base Rate TL
     [Documentation]    This keyword is used to create expected JSON payload for Base Rate Transformation Layer using the transformed data.
     ...    @author: clanding    20FEB2019    - initial create
+    ...    @update: mcastro     09OCT2020    - added condition for empty row in file
     [Arguments]    ${sTransformedData_FilePath}    ${sInputJsonFile}
     
     Open Excel    ${dataset_path}${sTransformedData_FilePath}    
@@ -236,13 +241,13 @@ Create Expected JSON for Base Rate TL
     \    
     \    ${dTransformedData}    Create Dictionary Using Transformed Data and Return    ${dataset_path}${sTransformedData_FilePath}    ${INDEX}
     \    ${val_subEntity}    Get From Dictionary    ${dTransformedData}    subEntity
-    \    ${New_JSON}    Update Key Values of Input JSON file for Base Rate TL	${dTransformedData}
+    \    ${New_JSON}    Run Keyword If    '${val_subEntity}'!='None'    Update Key Values of Input JSON file for Base Rate TL	${dTransformedData}
     \    Log    ${New_JSON}
     \    ${converted_json}    Evaluate    json.dumps(${New_JSON})    json
     \    Log    ${converted_json}
-    \    Run Keyword If    ${INDEX}==1 and '${val_subEntity}'!='null'    Append To File    ${dataset_path}${jsonfile}    ${converted_json}
-         ...    ELSE IF    ${INDEX}!=1 and ${File_Empty}==${True} and '${val_subEntity}'!='null'    Append To File    ${dataset_path}${jsonfile}    ${converted_json}
-         ...    ELSE IF    ${INDEX}!=1 and ${File_Empty}==${False} and '${val_subEntity}'!='null'    Append To File    ${dataset_path}${jsonfile}    ,${converted_json}
+    \    Run Keyword If    ${INDEX}==1 and '${val_subEntity}'!='null' and '${val_subEntity}'!='None'    Append To File    ${dataset_path}${jsonfile}    ${converted_json}
+         ...    ELSE IF    ${INDEX}!=1 and ${File_Empty}==${True} and '${val_subEntity}'!='null' and '${val_subEntity}'!='None'    Append To File    ${dataset_path}${jsonfile}    ${converted_json}
+         ...    ELSE IF    ${INDEX}!=1 and ${File_Empty}==${False} and '${val_subEntity}'!='null' and '${val_subEntity}'!='None'   Append To File    ${dataset_path}${jsonfile}    ,${converted_json}
     \    
     \    Exit For Loop If    ${INDEX}==${Row_Count}
 
@@ -427,6 +432,7 @@ Create Expected TextJMS XML for Base Rate TL
     [Documentation]    This keyword is used to create expected XML for every row in the csv file and save file name with Base Rate Code, Funding Desk and Repricing Frequency.
     ...    @author: clanding    27FEB2019    - initial create
     ...    @update: jdelacru    11AUG2020    - added new argument ${sTemplateFilePath}
+    ...    @update: mcastro     09OCT2020    - added condition for empty row in TransformedDataFile_BaseRate
     [Arguments]    ${sTransformedData_FilePath}    ${sInputFilePath}    ${sFileName}    ${sTemplateFilePath}
     
     Open Excel    ${dataset_path}${sTransformedData_FilePath}    
@@ -436,7 +442,9 @@ Create Expected TextJMS XML for Base Rate TL
     \    
     \    ${dTransformedData}    Create Dictionary Using Transformed Data and Return    ${dataset_path}${sTransformedData_FilePath}    ${INDEX}
     \    
-    \    Get Individual Subentity Value and Create XML for TL    ${dTransformedData}    ${sInputFilePath}    ${sFileName}    ${sTemplateFilePath}
+    \    ${subEntity_Val}    Get From Dictionary    ${dTransformedData}    subEntity
+    \    
+    \    Run Keyword If    '${subEntity_Val}'!='None'    Get Individual Subentity Value and Create XML for TL    ${dTransformedData}    ${sInputFilePath}    ${sFileName}    ${sTemplateFilePath}
     \    Exit For Loop If    ${INDEX}==${Row_Count}
     
     
@@ -610,6 +618,7 @@ Create Individual Expected JSON for Base Rate TL
     [Documentation]    This keyword is used to create indeividual expected JSON payload for Base Rate Transformation Layer using the transformed data.
     ...    @author: clanding    18MAR2019    - initial create
     ...    @update: jdelacru    21SEP2020    - added ${val_subEntity} variable to correct the filename of generated json file
+    ...    @update: mcastro     09OCT2020    - added condition for empty row on TransformedDataFile_BaseRate
     [Arguments]    ${sTransformedData_FilePath}    ${sInputJsonFile}
     
     Open Excel    ${dataset_path}${sTransformedData_FilePath}    
@@ -623,13 +632,13 @@ Create Individual Expected JSON for Base Rate TL
     \    ${val_rateTenor}    Run Keyword If    '${val_rateTenor}'==''    Set Variable    None
          ...    ELSE    Set Variable    ${val_rateTenor}
     \
-    \    ${New_JSON}    Update Key Values of Input JSON file for Base Rate TL	${dTransformedData}
+    \    ${New_JSON}    Run Keyword If    '${val_baseRateCode}'!='None' and '${val_rateTenor}'!='None'    Update Key Values of Input JSON file for Base Rate TL    ${dTransformedData}
     \    Log    ${New_JSON}
-    \    ${converted_json}    Evaluate    json.dumps(${New_JSON})        json
+    \    ${converted_json}    Run Keyword If    '${val_baseRateCode}'!='None' and '${val_rateTenor}'!='None'    Evaluate    json.dumps(${New_JSON})        json
     \    Log    ${converted_json}
     \    
     \    Delete File If Exist    ${dataset_path}${sInputJsonFile}_${val_baseRateCode}_${val_rateTenor}.json
-    \    Create File    ${dataset_path}${sInputJsonFile}_${val_baseRateCode}_${val_rateTenor}.json    ${converted_json}
+    \    Run Keyword If    '${val_baseRateCode}'!='None' and '${val_rateTenor}'!='None'    Create File    ${dataset_path}${sInputJsonFile}_${val_baseRateCode}_${val_rateTenor}.json    ${converted_json}
     \    
     \    Exit For Loop If    ${INDEX}==${Row_Count}
     

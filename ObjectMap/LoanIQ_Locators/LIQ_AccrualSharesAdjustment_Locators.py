@@ -1,5 +1,6 @@
  
 ### Accrual Shares Adjustment Window###
+
 LIQ_AccrualSharesAdjustment_InquiryMode_Button = 'JavaWindow("title:=Accrual Shares Adjustment -.*").JavaButton("attached text:=Notebook in Inquiry Mode - F7")'
 LIQ_AccrualSharesAdjustment_UpdateMode_Button = 'JavaWindow("title:=Accrual Shares Adjustment -.*").JavaButton("attached text:=Notebook in Update Mode - F7")'
 LIQ_AccrualSharesAdjustment_Pending_Window = 'JavaWindow("title:=Accrual Shares Adjustment - Pending")'
@@ -21,3 +22,5 @@ LIQ_AccrualSharesAdjustment_Released_Status_Window = 'JavaWindow("title:=Accrual
 LIQ_AccrualSharesAdjustment_WorkflowAction_Release_Null = 'JavaWindow("title:=Accrual Shares Adjustment -.*").JavaTree("attached text:=Drill down to perform Workflow item", "items count:=0")'
 ##WIP Window###
 LIQ_WIP_Facilities_List = 'JavaWindow("title:=Transactions In Process that Satisfy the Filter").JavaTree("labeled_containers_path:=Group:Details;Tab:Facilities;")'
+LIQ_Outstanding_AccrualShared_Button = 'JavaWindow("title:=.* Loan.*.*Active.*").JavaTab("tagname:=TabFolder").JavaButton("attached text:=Cycle Shares Adjustment")'
+LIQ_Outstanding_Accrual_JavaTree = 'JavaWindow("title:=.* Loan.*.*Active.*").JavaTab("text:=Accrual").JavaTree("labeled_containers_path:=Tab:Accrual;")'

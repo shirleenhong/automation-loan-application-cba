@@ -51,23 +51,22 @@ Add Remittance Instructions
     ...    @update: AmitP       15SEPT2020   Added  argument  for ${sLoanGlobalInterest} to add in the Transaction Amount.
     ...    @update: aramos      20SEP2020    Added conversion to 2 decimal points for Total Transaction
     ...    @update: aramos      02OCT2020    Added Run If to 2 decimal points suppression
+    ...    @update: shirhong    15OCT2020    Modified Test Steps when Transaction Amount is available
     [Arguments]    ${sCustomerShortName}    ${sRemittanceDescription}    ${sTransactionAmount}=None    ${sCurrency}=None    ${sLoanGlobalInterest}=None
     Log    ${sLoanGlobalInterest}
     Log    ${sTransactionAmount}
-    ${LoanGlobalInterest}    Remove String    ${sLoanGlobalInterest}    ,
-    ${TransactionAmount}    Remove String    ${sTransactionAmount}    ,     
-    ${TotalTransactionAmount}    Run Keyword If    '${sLoanGlobalInterest}'!='None'    Evaluate    ${TransactionAmount}+${LoanGlobalInterest}
-    ...    ELSE    Set Variable    ${TransactionAmount}    
-    ${TotalTransactionAmount}    Convert Number With Comma Separators    ${TotalTransactionAmount}        
+    ${TotalTransactionAmount}    Run Keyword If    '${sLoanGlobalInterest}'!='None'    Evaluate    ${sTransactionAmount}+${sLoanGlobalInterest}
+    ...    ELSE    Set Variable    ${sTransactionAmount}           
+    
     Run Keyword If    '${sTransactionAmount}'=='None'    Mx LoanIQ Select Or DoubleClick In Javatree    ${LIQ_Cashflows_Tree}    ${sCustomerShortName}%d
     
-    Run Keyword If    '${sTransactionAmount}'!='None'    Run Keywords    Log    ${TotalTransactionAmount}${SPACE}${sCurrency}%${TotalTransactionAmount}${SPACE}${sCurrency}%Original Amount/CCY
-    ...    AND    Log    ${sTransactionAmount}
-    ...    AND    ${TotalTransactionAmount}    Remove Comma, Negative Character and Convert to Number    ${TotalTransactionAmount}
-    ...    AND    ${TotalTransactionAmount}    Evaluate    "%.2f" % ${TotalTransactionAmount}
-    ...    AND    ${TotalTransactionAmount}    Convert Number With Comma Separators    ${TotalTransactionAmount}
-    ...    AND    Log    ${TotalTransactionAmount}${SPACE}${sCurrency}%${TotalTransactionAmount}${SPACE}${sCurrency}%Original Amount/CCY
-    ...    AND    Log    ${TotalTransactionAmount}
+    Run Keyword If    '${sTransactionAmount}'!='None'    Log    ${TotalTransactionAmount}${SPACE}${sCurrency}%${TotalTransactionAmount}${SPACE}${sCurrency}%Original Amount/CCY
+    Run Keyword If    '${sTransactionAmount}'!='None'    Log    ${sTransactionAmount}
+    ${TotalTransactionAmount}    Run Keyword If    '${sTransactionAmount}'!='None'    Remove Comma and Convert to Number    ${sTransactionAmount}
+    ${TotalTransactionAmount}    Run Keyword If    '${sTransactionAmount}'!='None'    Evaluate    "%.2f" % ${TotalTransactionAmount}
+    ${TotalTransactionAmount}    Run Keyword If    '${sTransactionAmount}'!='None'    Convert Number With Comma Separators    ${TotalTransactionAmount}
+    Run Keyword If    '${sTransactionAmount}'!='None'    Log    ${TotalTransactionAmount}${SPACE}${sCurrency}%${TotalTransactionAmount}${SPACE}${sCurrency}%Original Amount/CCY
+    Run Keyword If    '${sTransactionAmount}'!='None'    Log    ${TotalTransactionAmount}   
     
     Run Keyword If    '${sTransactionAmount}'!='None'    Run keywords    Mx LoanIQ Click Javatree Cell    ${LIQ_Cashflows_Tree}    ${TotalTransactionAmount}${SPACE}${sCurrency}%${TotalTransactionAmount}${SPACE}${sCurrency}%Original Amount/CCY
     ...    AND    Mx Press Combination    Key.ENTER  
@@ -496,6 +495,7 @@ Release Cashflow Based on Remittance Instruction
     ...    @update: amansuet    16JUN2020    - Replaced 'Navigate to Loan Drawdown Workflow and Proceed With Transaction' to 'Navigate to Loan Repricing Workflow and Proceed With Transaction'
     ...    @update: amansuet    22JUN2020    - Revert changes and added new argument to make keyword generic on its Workflow Navigation
     ...    @update: amansuet    22JUN2020    - Added Condition for 'Navigate to Payment Workflow and Proceed With Transaction'
+    ...    @update: fluberio    21OCT2020    - Added Condition to add Release Cashflow when Remittance Instruction is Set to IMT
     [Arguments]    ${sRemittanceInstruction}    ${sCashflowReference}    ${sDataType}=default    ${sNavigateToWorkflow}=Loan Drawdown
 
     ### Keyword Pre-processing ###
@@ -511,6 +511,7 @@ Release Cashflow Based on Remittance Instruction
     ...    AND    Release Cashflow    ${CashflowReference}    default    ${DataType}
     ...    ELSE IF    '${RemittanceInstruction}'=='RTGS' and '${NavigateToWorkflow}'=='Payment'    Run Keywords    Navigate to Payment Workflow and Proceed With Transaction    Release Cashflows
     ...    AND    Release Cashflow    ${CashflowReference}    default    ${DataType}
+    ...    ELSE IF    '${RemittanceInstruction}'=='IMT' and '${NavigateToWorkflow}'=='Payment'    Navigate to Payment Workflow and Proceed With Transaction    Release Cashflows
     ...    ELSE    Log    Release of Cashflow is Not Needed for '${RemittanceInstruction}' Remittance Instruction
 
 Compute Lender Share Transaction Amount - Repricing
@@ -574,3 +575,12 @@ Open Cashflow Window from Loan Repricing Menu
 
     Open Cashflows Window from Notebook Menu    ${LIQ_LoanRepricing_Window}    ${LIQ_LoanRepricing_CashFlows_Menu}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LoanRepricing_CashFlowWindow
+
+Set All Items to Do It
+    [Documentation]    This keyword will handle the behavior of the cashflow window where the Java Tree is not updating in realtine. Cashflow window must be saved an re-opened again for the
+    ...    changes to  take effect
+    ...    @author: ritargel    10/10/2020    initial create
+    Mx LoanIQ Activate    ${LIQ_Cashflows_Window}
+    Select Menu Item    ${LIQ_Cashflows_Window}    Options    Set All To 'Do It'
+    Mx LoanIQ click    ${LIQ_Cashflows_OK_Button}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/CashflowVerification

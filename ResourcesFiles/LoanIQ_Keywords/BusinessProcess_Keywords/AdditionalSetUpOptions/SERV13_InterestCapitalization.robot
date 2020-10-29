@@ -28,6 +28,7 @@ Setup Interest Capitalization
     Write Data To Excel    SERV13_InterestCapitalization    Loan_Alias    ${rowid}    ${Loan_Alias}
     Write Data To Excel    SERV08C_ComprehensiveRepricing    Loan_Alias    ${rowid}    ${Loan_Alias}
     Write Data To Excel    TRP002_SecondarySale    Loan_Alias    ${rowid}    ${Loan_Alias}
+    Write Data To Excel    Correspondence    Loan_Alias    22    ${Loan_Alias}    ${APIDataSet}    bTestCaseColumn=True    sColumnReference=rowid
     
     # ###Loan Drawdown Notebook###
     ${Loan_Alias}    Read Data From Excel    SERV13_InterestCapitalization    Loan_Alias    ${rowid}

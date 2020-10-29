@@ -1,15 +1,13 @@
 *** Settings ***
 Resource    ../../../Configurations/Party_Import_File.robot
 
-
-*** Variables ***
-${rowid}    1
-
 *** Keywords ***
 Create Party in Quick Party Onboarding and Reject Referral
     [Documentation]    This keyword is used to create party via quick party Onboarding screen.
     ...    @author: dahijara    11MAY2020    - initial create.
     ...    @author: bagregado   08OCT2020    - Create Party in Quick Party Onboarding and Reject Referral, updated the target test case name for generating data
+    ...    @update: javinzon    15OCT2020    - Added UserZone and UserBranch arguments in 'Reject Party via Supervisor Account' keyword.
+    ...                                        Added UserZone and UserBranch arguments in 'Accept Rejected Party' keyword.
     [Arguments]    ${ExcelPath}
     ### INPUTTER ###
     Login User to Party    ${PARTY_USERNAME}    ${PARTY_PASSWORD}    ${USER_LINK}    ${USER_PORT}    ${PARTY_SSO_URL_SUFFIX}    ${PARTY_HTML_USER_CREDENTIALS}    ${SSO_ENABLED}    ${PARTY_URL} 
@@ -37,10 +35,10 @@ Create Party in Quick Party Onboarding and Reject Referral
     Logout User on Party
  
     ### SUPERVISOR ###
-    ${Task_ID_From_Supervisor}    Reject Party via Supervisor Account    ${Party_ID}
+    ${Task_ID_From_Supervisor}    Reject Party via Supervisor Account    ${Party_ID}    &{ExcelPath}[UserZone]    &{ExcelPath}[UserBranch]
     
     ### INPUTTER ###
-    Accept Rejected Party and Validate Details in Quick Enterprise Details Screen    ${Task_ID_From_Supervisor}    ${Party_ID}    &{ExcelPath}[Country_of_Tax_Domicile]    &{ExcelPath}[Country_of_Registration]
+    Accept Rejected Party and Validate Details in Quick Enterprise Details Screen    &{ExcelPath}[UserZone]    &{ExcelPath}[UserBranch]    ${Task_ID_From_Supervisor}    ${Party_ID}    &{ExcelPath}[Country_of_Tax_Domicile]    &{ExcelPath}[Country_of_Registration]
     ...    &{ExcelPath}[Address_Type]    &{ExcelPath}[Country_Region]    &{ExcelPath}[Post_Code]    &{ExcelPath}[Document_Collection_Status]
     ...    &{ExcelPath}[Industry_Sector]    &{ExcelPath}[Business_Activity]    &{ExcelPath}[Is_Main_Activity]
     ...    &{ExcelPath}[GST_Number]    &{ExcelPath}[Address_Line_1]    &{ExcelPath}[Address_Line_2]    &{ExcelPath}[Town_City]    

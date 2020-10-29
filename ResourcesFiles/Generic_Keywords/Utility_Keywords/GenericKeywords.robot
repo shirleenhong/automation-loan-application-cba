@@ -727,6 +727,7 @@ Navigate Notebook Workflow
     ...    @update: clanding    05AUG2020    Updated hard coded values to global variable
     ...    @update: aramos      30SEP2020    Updated mx LOANIQ click element if present LIQ_Breakfunding_Yes_Button
     ...    @update: aramos      05OCT2020    Updated to insert new code for Transaction - Release Cashflows
+    ...    @update: dahijara    09OCT2020    Added screenshot
     [Arguments]    ${sNotebook_Locator}    ${sNotebookTab_Locator}    ${sNotebookWorkflow_Locator}    ${sTransaction}    
 
     ###Pre-processing Keyword##
@@ -741,7 +742,7 @@ Navigate Notebook Workflow
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/NotebookWorkflow
     Mx LoanIQ Select Or DoubleClick In Javatree    ${NotebookWorkflow_Locator}    ${Transaction}%d
     Validate if Question or Warning Message is Displayed
-    
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/NotebookWorkflow
     Run Keyword if     '${Transaction}'=='Release Cashflows'    Run Keywords    Mx Click    ${LIQ_Cashflows_MarkSelectedItemForRelease_Button}
     ...   AND    Mx Click    ${LIQ_Cashflows_OK_Button}
     ...   AND     mx LoanIQ click element if present    ${LIQ_Question_Yes_Button}

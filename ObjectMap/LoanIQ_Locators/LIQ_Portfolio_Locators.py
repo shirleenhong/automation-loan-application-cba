@@ -24,6 +24,7 @@ LIQ_Make_Selections_AssignableChange_RadioButton = 'JavaWindow("title:=Make Sele
 LIQ_Make_Selections_DefferedPLChange_RadioButton = 'JavaWindow("title:=Make Selection.*").JavaRadioButton("attached text:=Portfolio Deferred P/L Change.*")'
 LIQ_Make_Selections_DefferedPLIndicatorChange_RadioButton = 'JavaWindow("title:=Make Selection.*").JavaRadioButton("attached text:=Portfolio Deferred P/L Indicator Change.*")'
 LIQ_Make_Selections_TransactionCostAdjustment_RadioButton = 'JavaWindow("title:=Make Selection.*").JavaRadioButton("attached text:=Portfolio Transaction Cost Adjustment.*")'
+LIQ_Portfolio_Positions_CollapseAll_Button = 'JavaWindow("title:=Portfolio Positions.*").JavaButton("attached text:=Collapse All.*")'
 
 ###Portfolio Settled Discount Change###
 LIQ_PortfolioSettledDiscountChange_Window = 'JavaWindow("title:=Portfolio Settled Discount Change.*")'
@@ -33,6 +34,7 @@ LIQ_PortfolioSettledDiscountChange_AdjustmentAmount = 'JavaWindow("title:=Portfo
 LIQ_PortfolioSettledDiscountChange_NewAmount = 'JavaWindow("title:=Portfolio Settled Discount Change.*").JavaEdit("attached text:=New:")'
 LIQ_PortfolioSettledDiscountChange_GLOffset_Button = 'JavaWindow("title:=Portfolio Settled Discount Change.*").JavaButton("attached text:=GL Offset\.\.\.")'
 LIQ_PortfolioSettledDiscountChange_Queries_GLEntries = 'JavaWindow("title:=Portfolio Settled Discount Change.*","displayed:=1").JavaMenu("label:=Options").JavaMenu("label:=GL Entries")'
+LIQ_PortfolioSettledDiscountChange_File_Save = 'JavaWindow("title:=Portfolio Settled Discount Change.*").JavaMenu("label:=File").JavaMenu("label:=Save")'
 
 ###GL Offset Details Window###
 LIQ_DebitGLOffsetDeatils_ExistingWIP_RadioButton = 'JavaWindow("title:=Debit GL Offset Details").JavaRadioButton("attached text:=Existing WIP")'

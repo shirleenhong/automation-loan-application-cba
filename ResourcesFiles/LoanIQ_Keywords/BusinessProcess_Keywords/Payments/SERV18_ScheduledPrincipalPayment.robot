@@ -8,7 +8,8 @@ Manual Schedule Principal Payment
     [Documentation]    This keyword will pay Principal with Schedule
     ...    @update: fmamaril    23APR2019    Apply standards for release cashflow
     ...    @update: bernchua    25JUN2019    Updated condition logic during post validation of amounts
-    ...    @update: ehugo    01JUN2020    - updated keyword 'Navigate Notebook Workflow' to 'Navigate to Payment Workflow and Proceed With Transaction'
+    ...    @update: ehugo       01JUN2020    - updated keyword 'Navigate Notebook Workflow' to 'Navigate to Payment Workflow and Proceed With Transaction'
+    ...    @update: makcamps    26OCT2020    Updated get host bank cash in cashflow with EU currency and added release cashflow based on remittance instruction
     [Arguments]    ${ExcelPath}
     
     ###Loan IQ Desktop###
@@ -29,7 +30,8 @@ Manual Schedule Principal Payment
     Verify if Status is set to Do It    &{ExcelPath}[Borrower1_ShortName]  
     
     ##Get Transaction Amount for Cashflow###
-    ${HostBankShare}    Get Host Bank Cash in Cashflow
+    ${HostBankShare}    Run Keyword If   '&{ExcelPath}[Entity]'=='EU'    Get Host Bank Cash in Cashflow    &{ExcelPath}[Loan_Currency]
+	...    ELSE    Get Host Bank Cash in Cashflow
     ${BorrowerTranAmount}    Get Transaction Amount in Cashflow    &{ExcelPath}[Borrower1_ShortName]
     ${ComputedHBTranAmount}    Compute Lender Share Transaction Amount    ${ActualAmount}    &{ExcelPath}[HostBankSharePct]
     
@@ -71,6 +73,7 @@ Manual Schedule Principal Payment
     Login to Loan IQ    ${MANAGER_USERNAME}    ${MANAGER_PASSWORD}
     
     Select Item in Work in Process    Payments    Awaiting Release    Scheduled Loan Principal Payment     &{ExcelPath}[Deal_Name]    
+    Release Cashflow Based on Remittance Instruction    &{ExcelPath}[Remittance_Instruction]    &{ExcelPath}[Borrower1_ShortName]    &{ExcelPath}[Cashflow_DataType]    Payment
     Release Scheduled Principal Payment
         
     ###Loan IQ Desktop###  

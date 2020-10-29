@@ -24,24 +24,30 @@ Return Customer Details from Active Customer General Tab
     [Documentation]    This keyword searches customer in Customer notebook using Customer/PartyID
     ...    @author: dahijara    06MAY2020    - Initial Create
     ...    @update: javinzon    18SEP2020    - Updated keyword Capture Screenshot to Take Screenshot. Updated name of ${LIQ_ActiveCustomer_Window_GSTID_Textbox}.
+    ...    @update: makcamps    22OCT2020    - Updated conditions for EU setup.
+    [Arguments]    ${sEntity}=AU
 
     Take Screenshot    ${screenshot_path}/Screenshots/Party/PartyLIQActiveCustomerGeneralTabPage 
     ${CustomerID}    Mx LoanIQ Get Data    ${LIQ_ActiveCustomer_Window_CustomerID}    text
     ${ShortName}    Mx LoanIQ Get Data    ${LIQ_ActiveCustomer_Window_ShortName}    text
     ${LegalName}    Mx LoanIQ Get Data    ${LIQ_ActiveCustomer_Window_LegalName}    text
     # ${Classification}    Mx LoanIQ Get Data    ${LIQ_ActiveCustomer_Window_CustomerID}    text
-    ${GSTID}    Mx LoanIQ Get Data    ${LIQ_ActiveCustomer_Window_GSTID_Textbox}    text
+    ${GSTID}    Run Keyword If    '${sEntity}'=='EU'    Log    No GST since not australia
+    ...    ELSE    Mx LoanIQ Get Data    ${LIQ_ActiveCustomer_Window_GSTID_Textbox}    text
 
     [Return]    ${CustomerID}    ${ShortName}    ${LegalName}    ${GSTID}
     
 Return Customer Address Details from Active Customer Listbox fields
     [Documentation]    This keyword gets and return address details that are in Listbox fields 
     ...    @author: javinzon    01OCT2020    - Initial Create
+	...    @update: makcamps    22OCT2020    - Updated conditions for EU setup.
+    [Arguments]    ${sEntity}=AU
     
     Take Screenshot    ${screenshot_path}/Screenshots/Party/PartyAddressDetailsPage 
     ${Country}    Mx LoanIQ Get Data    ${LIQ_ViewAddress_Country}    text
     ${CountryOfTaxDomicile}    Mx LoanIQ Get Data    ${LIQ_ViewAddress_TreasuryReportingArea}    text
-    ${Province}    Mx LoanIQ Get Data    ${LIQ_ViewAddress_Province}    text
+    ${Province}     Run Keyword If    '${sEntity}'=='EU'    Log    No Province since not australia
+    ...    ELSE    Mx LoanIQ Get Data    ${LIQ_ViewAddress_Province}    text
    
 
     [Return]    ${Country}    ${CountryOfTaxDomicile}    ${Province}
@@ -84,7 +90,6 @@ Validate Customer Legal Address Details in Textbox
     ...    @author: javinzon    01OCT2020    - Added False argument to City validation. Updated the documentation.
     ...                                        Added "Textbox" in keyword name; Removed Listbox field verification
     [Arguments]    ${sEnterpriseName}    ${sAddressCode}    ${sAddressLine1}    ${sAddressLine2}    ${sAddressLine3}   ${sAddressLine4}    ${sCity}    ${sPostalCode}    
-        
     
     Take Screenshot    ${screenshot_path}/Screenshots/Party/PartyLIQActiveCustomerLegalAddressPage
    
@@ -98,7 +103,6 @@ Validate Customer Legal Address Details in Textbox
     Verify If Value Exists in Loan IQ    Postal Code    ${sPostalCode}    View Address    Textbox
     Mx LoanIQ Click    ${LIQ_ViewAddress_Ok_CancelButton}
     #${LIQ_Active_Customer_Notebook_ViewAddressWindow_CancelButton}     
-  
 
 Validate Party Details in Loan IQ
     [Documentation]    This keyword navigates active customer and validates party details in Loan IQ
@@ -108,14 +112,16 @@ Validate Party Details in Loan IQ
     ...                                        Added Return Customer Address Details from Active Customer Listbox fields
     ...										   Updated label from PARTY SUBTYPE to Classification
     ...	   @update: javinzon	09OCT2020	 - Added comments for SIC, Country of Tax Domicile, and Province Validation
+    ...    @update: makcamps    22OCT2020    - Updated conditions for EU setup.
     [Arguments]    ${sPartyID}    ${sShortName}    ${sEnterpriseName}    ${sGSTID}    ${sPartySubType}    ${sPartyBusinessActivity}    ${sBusinessCountry}    
-    ...    ${sAddressCode}    ${sAddressLine1}    ${sAddressLine2}    ${sAddressLine3}    ${sAddressLine4}    ${sCity}    ${sCountry}    ${sCountryOfTaxDomicile}    ${sProvince}    ${sPostalCode}
+    ...    ${sAddressCode}    ${sAddressLine1}    ${sAddressLine2}    ${sAddressLine3}    ${sAddressLine4}    ${sCity}    ${sCountry}    ${sCountryOfTaxDomicile}
+    ...    ${sProvince}    ${sPostalCode}    ${sEntity}=AU
     
     Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
     Navigate to Customer Notebook via Customer ID    ${sPartyID}
     
     ### Get LIQ Values ###
-    ${LIQ_CustomerID}    ${LIQ_ShortName}    ${LIQ_LegalName}    ${LIQ_GSTID}    Return Customer Details from Active Customer General Tab
+    ${LIQ_CustomerID}    ${LIQ_ShortName}    ${LIQ_LegalName}    ${LIQ_GSTID}    Return Customer Details from Active Customer General Tab    ${sEntity}
 
     ### Party ID Validation ###
     ${isMatched}    Run Keyword And Return Status    Should Be Equal    ${sPartyID}    ${LIQ_CustomerID}
@@ -133,8 +139,9 @@ Validate Party Details in Loan IQ
     ...    ELSE    Run Keyword And Continue On Failure    Fail    Enterprise Name: '${sEnterpriseName}' does NOT match Legal Name: '${LIQ_LegalName}' in Loan IQ
 
     ### GST ID Validation ###
-    ${isMatched}    Run Keyword And Return Status    Should Be Equal    ${sGSTID}    ${LIQ_GSTID}
+    ${isMatched}    Run Keyword If    '${sEntity}'=='AU'    Run Keyword And Return Status    Should Be Equal    ${sGSTID}    ${LIQ_GSTID}
     Run Keyword If    ${isMatched}==${True}    Log    GST ID: '${sGSTID}' matched GST ID: '${LIQ_GSTID}' in Loan IQ
+    ...    ELSE IF    '${sEntity}'=='EU'    Log    No GST since not australia
     ...    ELSE    Run Keyword And Continue On Failure    Fail    GST ID: '${sGSTID}' does NOT match GST ID: '${LIQ_GSTID}' in Loan IQ    
 
     ### Party Subtype Validation ###
@@ -145,7 +152,7 @@ Validate Party Details in Loan IQ
     
     ### Get Address details that are in Listbox ###
     Mx LoanIQ Select    ${LIQ_Active_Customer_Notebook_OptionsMenu_LegalAddress}
-    ${Country}    ${CountryOfTaxDomicile}    ${Province}    Return Customer Address Details from Active Customer Listbox fields
+    ${Country}    ${CountryOfTaxDomicile}    ${Province}    Return Customer Address Details from Active Customer Listbox fields    ${sEntity}
     
     ### Country Validation ###
     ${isMatched}    Run Keyword And Return Status    Should Be Equal    ${sCountry}    ${Country}
@@ -158,8 +165,9 @@ Validate Party Details in Loan IQ
     ...    ELSE    Run Keyword And Continue On Failure    Fail    CountryOfTaxDomicile: '${sCountryOfTaxDomicile}' does NOT match CountryOfTaxDomicile: '${CountryOfTaxDomicile}' in Loan IQ   
     
     ### Province Validation ###
-    ${isMatched}    Run Keyword And Return Status    Should Be Equal    ${sProvince}    ${Province}
+    ${isMatched}    Run Keyword If    '${sEntity}'=='AU'    Run Keyword And Return Status    Should Be Equal    ${sProvince}    ${Province}
     Run Keyword If    ${isMatched}==${True}    Log    Province: '${sProvince}' matched Province: '${Province}' in Loan IQ
+    ...    ELSE IF    '${sEntity}'=='EU'    Log    No Province since not australia
     ...    ELSE    Run Keyword And Continue On Failure    Fail    Province: '${sProvince}' does NOT match Province: '${Province}' in Loan IQ   
         
     Validate Customer Legal Address Details in Textbox    ${sEnterpriseName}    ${sAddressCode}    ${sAddressLine1}    ${sAddressLine2}    ${sAddressLine3}    ${sAddressLine4}    ${sCity}    ${sPostalCode}

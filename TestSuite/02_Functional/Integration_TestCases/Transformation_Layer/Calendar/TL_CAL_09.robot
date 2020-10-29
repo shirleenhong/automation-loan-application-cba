@@ -1,10 +1,11 @@
 *** Settings ***
 Resource    ../../../../../Configurations/Integration_Import_File.robot
+Suite Teardown    Test Suite Tear Down
 
 *** Test Cases ***
 
 TL_CAL_09
-    [Documentation]    Send Copp Clark Files that with holiday less than current system date and verify that holiday will not be processed.
+    [Documentation]    Send Copp Clark Files that with holiday current system date and verify that holiday will not be processed.
     ...    @author: dahijara    10DEC2019    - initial create
 
     Set Global Variable    ${rowid}    9
