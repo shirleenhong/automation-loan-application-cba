@@ -8,13 +8,13 @@ PTY_012
     ...    @author: nbautist    29OCT2020    - initial create
     
     Set Global Variable    ${DUPLICATE_SHORT_NAME}    ${EMPTY}
-    Set Global Variable    ${TESTCASE_NAME_PARTY}    PTY011_DuplicateShortNameEdit_Party1
+    Set Global Variable    ${TESTCASE_NAME_PARTY}    PTY012_DuplicateShortNameEdit_Party1
     Mx Execute Template With Specific Test Case Name    Create Party For Duplicate Short Name Validation     ${PTY_DATASET}    Test_Case    ${TESTCASE_NAME_PARTY}    QuickPartyOnboarding
     
     ### Create Party 2 from different entity
-    Set Global Variable    ${TESTCASE_NAME_PARTY}    PTY012_DuplicateShortNameEdit_Party3
+    Set Global Variable    ${TESTCASE_NAME_PARTY}    PTY012_DuplicateShortNameEdit_Party2
     Mx Execute Template With Specific Test Case Name    Create Party For Duplicate Short Name Validation     ${PTY_DATASET}    Test_Case    ${TESTCASE_NAME_PARTY}    QuickPartyOnboarding
     
     ### Duplicate shortname value should be value from party 2 at this point
-    Set Global Variable    ${TESTCASE_NAME_PARTY}    PTY011_DuplicateShortNameEdit_Party1
+    Set Global Variable    ${TESTCASE_NAME_PARTY}    PTY012_DuplicateShortNameEdit_Party1
     Mx Execute Template With Specific Test Case Name    Update Party For Duplicate Short Name Validation     ${PTY_DATASET}    Test_Case    ${TESTCASE_NAME_PARTY}    QuickPartyOnboarding
