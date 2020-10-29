@@ -93,6 +93,7 @@ API_CORRES_HOST = 'http://mancsleverg0007:9150'
 
 ###COMSEE###
 COM_HOST = 'http://mancsleverg0007:9150'
+ENTITY = 'AU'
 
 ###SAPWUL###
 SAPWUL_INSTANCE = 'CustomCBAPush_v1.2.9'

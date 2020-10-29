@@ -78,6 +78,7 @@ LIQ_ADMIN_PASSWORD = "password"
 
 ###COMSEE###
 COM_HOST = 'http://mancsleverg0007:9150'
+ENTITY = 'AU'
 
 ###SAPWUL###
 SAPWUL_INSTANCE = 'CustomCBAPush_v1.2.9'
