@@ -1600,11 +1600,13 @@ Get Fee Cycle Due Amount
 Get Fee Paid to Date Amount
     [Documentation]    This keyword returns the Fee total paid to date amount.
     ...    @author: cfrancis    18SEP2020    - Initial Create
+    ...    @update: clanding    28OCT2020    - added condition for EU entity
     [Arguments]    ${sLIQ_Fee_Window}    ${sLIQ_Fee_Tab_Locator}    ${sLIQ_Fee_Accrual_Cycles_JavaTree_Locator}
     mx LoanIQ activate window    ${sLIQ_Fee_Window}
-    # Mx LoanIQ Select Window Tab    ${sLIQ_Fee_Tab_Locator}    Accrual
     ${rowcount}    Mx LoanIQ Get Data    ${sLIQ_Fee_Accrual_Cycles_JavaTree_Locator}    input=items count%value
     ${rowcount}    Evaluate    ${rowcount} - 2
+    ${rowcount}    Run Keyword If    '${ENTITY}'=='EU'    Set Variable    1
+    ...    ELSE    Set Variable    ${rowcount}
     Log    The total rowcount is ${rowcount}
     ${PaidtodateAmount}    Mx LoanIQ Store TableCell To Clipboard    ${sLIQ_Fee_Accrual_Cycles_JavaTree_Locator}    ${rowcount}%Paid to date%amount
     Log    The Fee Paid to Date amount is ${PaidtodateAmount} 
