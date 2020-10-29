@@ -72,6 +72,21 @@ Validate Enquire Enterprise Party Details
     Compare Two Arguments    ${sCountry_of_Tax_Domicile}    ${Party_EnquireEnterpriseParty_CountryOfTaxDomicile_Text}
     Compare Two Arguments    ${sCountry_of_Registration}    ${Party_EnquireEnterpriseParty_CountryOfRegistration_Text}  
     
+Navigate Maintain Party Details
+    [Documentation]    This keyword navigates the user to Maintain Party Details page.
+    ...    @author: nbautist
+    [Arguments]    ${sParty_id}
+    Input Text    ${Party_HomePage_Process_TextBox}    ${PARTY_MAINTAIN_PARTY_DETAILS}
+    Press Keys    ${Party_HomePage_Process_TextBox}    RETURN
+    Wait Until Browser Ready State
+    Wait Until Keyword Succeeds    10x    2s     Mx Input Text    ${Party_EnquireEnterpriseParty_PartyId_Text}     ${sParty_id}
+    Wait Until Browser Ready State
+    Wait Until Element Is Visible    ${Party_EnquireEnterpriseParty_Next_Button}
+    Wait Until Element Is Enabled    ${Party_EnquireEnterpriseParty_Next_Button}       
+    Mx Click Element    ${Party_EnquireEnterpriseParty_Next_Button}
+    Wait Until Browser Ready State
+    Wait Until Page Contains    ${PARTY_MAINTAIN_PARTY_DETAILS}    20s
+
 Select Row That Contains Text
     [Documentation]    This keyword concatenates current date as a unique 7 numeric test data
     ...    @update: gbagregado    30SEPT2020    - add documentation  
