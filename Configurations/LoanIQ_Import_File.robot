@@ -233,6 +233,7 @@ Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/
 Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Correspondence/API_COR_TC21.robot
 Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Correspondence/API_COR_TC22.robot
 Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Correspondence/API_COR_TC23.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Correspondence/API_COR_TC26.robot
 ## Correspondence Files - Source Keywords
 Resource    ../ResourcesFiles/Integration_Keywords/Source_Keywords/API/Correspondence/API_COR_FFC_VAL.robot
 Resource    ../ResourcesFiles/Integration_Keywords/Source_Keywords/API/Correspondence/API_COR_VAL.robot
