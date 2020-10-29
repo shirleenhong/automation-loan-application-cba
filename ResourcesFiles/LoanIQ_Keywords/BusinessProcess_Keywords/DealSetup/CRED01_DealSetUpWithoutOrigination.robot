@@ -17,6 +17,7 @@ Setup a Bilateral Deal
     ...    @update: makcamps     15OCT2020    - added writing of method name in excel
     ...    @UPDATE: kduenas      27OCT2020    - added writing of deal name to corro api dataset for API_COR_TC21
     ...    @update: makcamps     28OCT2020    - added writing of method name in excel
+    ...    @update: makcamps     29OCT2020    - added writing of deal name to corro api dataset for API_COR_TC14
     [Arguments]    ${ExcelPath}
 
     ###Set Dates for transactions###
@@ -82,6 +83,7 @@ Setup a Bilateral Deal
     ###For Scenario 7###
     Run Keyword If    '${SCENARIO}'=='7'    Run Keywords    Write Data To Excel    SERV35_Terminate_FacilityDeal    Deal_Name    ${rowid}    ${Deal_Name}
     ...    AND    Write Data To Excel    SERV19_UnscheduledPayments    Deal_Name    ${rowid}    ${Deal_Name}
+    ...    AND    Write Data To Excel    Correspondence    Deal_Name    14    ${Deal_Name}    ${APIDataSet}    bTestCaseColumn=True    sColumnReference=rowid
              
     ###New Deal Screen###   
     Create New Deal    ${Deal_Name}    ${Deal_Alias}    &{ExcelPath}[Deal_Currency]    &{ExcelPath}[Deal_Department]    &{ExcelPath}[Deal_SalesGroup]
