@@ -1,0 +1,46 @@
+<liqInfo>
+{"event_schema_id":"3559","event":{"header":{"correlationId":"LIQ-I@DO5QFC-I3DO5PAM-2","processPath":{"array":[{"source":"FINASTRA_CCB","timestamp":"2019-03-29T14:34:50.876+08:00"}]}},"sourceSystem":{"string":"FINASTRA_CCB"},"ttl":{"au.com.cba.avro.customermanagement.noticesnotify.ttl":{"ttlDuration":"300","ttlSourceTime":"2019-03-29T14:34:50.876+08:00"}},"cifIds":{"array":[{"string":"9"}]},"documentInfo":{"documentPackage":{"businessChannel":"LOANIQ","name":null,"version":null,"templateId":null,"fileType":null,"content":"<FinastraApplication>
+        <StandardNotice>
+            <ProcessingArea>AUSNA</ProcessingArea>
+            <Address>
+                <line>Date: 29-Mar-2019</line>
+                <line>TO  : CBAUATLender31136</line>
+                <line>ATTN: John Bloggs</line>
+                <line>Re  : S8SYN_12032019162918 S8TERM12032019164050</line>
+            </Address>
+            <BodyContent>
+                <section>
+                    <line>                             *** DRAWDOWN RATE SET NOTICE ***</line>
+                    <line/>
+                    <line>In accordance with the facility agreement, we advise the following drawing has been requested by LIQIDT7473BRWS843145.</line>
+                    <line>Description: BBSY - Bid Borrowing </line>
+                    <line/>
+                    <line>Effective Date: 10-Aug-2018 </line>
+                    <line>LIQIDT7473BRWS843145 has elected to borrow a total of AUD 7,000,000.00. </line>
+                    <line/>
+                    <line>Please see details below:</line>
+                </section>
+                <section>
+                    <line>Your share of the BBSY - Bid borrowing is AUD 1,400,000.00.</line>
+                    <line>Term: 10-Aug-2018 - 16-Aug-2018</line>
+                    <line>BBSY - Bid: 2.250000%</line>
+                    <line>The Margin is: 0.750000%</line>
+                    <line>The all-in rate is: 3.000000%</line>
+                </section>
+                <section>
+                    <line>Your share of the interest due on 17-Aug-2018 is AUD 690.41.</line>
+                </section>
+                <section>
+                    <line>We will charge your account for an amount of AUD 1,400,000.00 on the effective date.</line>
+                </section>
+                <section>
+                    <line>1020188515</line>
+                    <line>CBA Domestic Account</line>
+                </section>
+                <section>
+                    <line/>
+                </section>
+            </BodyContent>
+        </StandardNotice>
+    </FinastraApplication>"},"documentStorage":{"status":null,"fileName":null,"inputSource":null,"inputSourceDetail":null,"scanDate":null,"departmentId":{"string":"BG_COL"},"retrievalId":null,"documentumType":null,"applicationNumber":null,"purgeDate":null,"boxLocation":null,"recordManager":null,"description":null,"processes":{"array":[{"string":"I3DO5PAM"}]},"services":{"array":[{"string":"121"}]},"accountNumbers":{"array":[{"source":{"string":"LOANIQ"},"productCode":{"string":"OST"},"number":{"string":"LIQIDT747300031"}}]},"processFlags":{"array":[{"name":null,"value":null}]}}},"emailSecureMessageDetails":{"subject":"S8SYN_12032019162918 S8TERM12032019164050","senderEmail":"ALLIANCE_LOANIQ_CORRO@CBA.COM.AU","toRecipientEmail":"john.blogg@abc.com","ccRecipientEmail":{"string":"ALLIANCE_LOANIQ_CORRO@CBA.COM.AU"},"mimeType":null,"messageID":"LIQ-I@DO5QFC-I3DO5PAM-2","body":null,"attachment":null,"inBandAttachment":null,"deliveredToEmail":null,"undeliveredToEmail":null,"systemCode":null,"systemName":null,"identifier":{"string":"AUSNA"},"digitalSignature":null}}}
+</liqInfo>
