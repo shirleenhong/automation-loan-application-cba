@@ -2236,10 +2236,19 @@ Validate Facility Events Tab after Payment Transaction
 Validate Updated Facility Amounts After Payment - Capitalized Ongoing Fee
     [Documentation]    This keyword validates the new data on Loan Amounts Section.
     ...    @author:rtarayao
-    [Arguments]    ${Orig_FacilityCurrentCmt}    ${Orig_FacilityOutstandings}    ${Orig_FacilityAvailableToDraw}    ${Capitalization_PctofPayment}    ${CycleDue}    
+    ...    @update: dahijara    16OCT2020    - Added screenshot and pre-processing keywords
+    [Arguments]    ${sOrig_FacilityCurrentCmt}    ${sOrig_FacilityOutstandings}    ${sOrig_FacilityAvailableToDraw}    ${sCapitalization_PctofPayment}    ${sCycleDue}    
+    
+    ### GetRuntime Keyword Pre-processing ###
+    ${Orig_FacilityCurrentCmt}    Acquire Argument Value    ${sOrig_FacilityCurrentCmt}
+    ${Orig_FacilityOutstandings}    Acquire Argument Value    ${sOrig_FacilityOutstandings}
+    ${Orig_FacilityAvailableToDraw}    Acquire Argument Value    ${sOrig_FacilityAvailableToDraw}
+    ${Capitalization_PctofPayment}    Acquire Argument Value    ${sCapitalization_PctofPayment}
+    ${CycleDue}    Acquire Argument Value    ${sCycleDue}
+	
     mx LoanIQ activate window    ${LIQ_FacilityNotebook_Window}
     Mx LoanIQ Select Window Tab    ${LIQ_FacilityNotebook_Tab}    Summary  
-    
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/Facility_SummaryTab
     ####### Validate 'Current Commitment' Amount
     ${Orig_FacilityCurrentCmt}    Convert To Number    ${Orig_FacilityCurrentCmt}    2
     
@@ -2279,6 +2288,7 @@ Validate Updated Facility Amounts After Payment - Capitalized Ongoing Fee
     ${TotalAmount}    Evaluate    ${New_FacilityOutstandings}+${New_FacilityAvailableToDraw} 
     Should Be Equal    ${New_FacilityCurrentCmt}    ${TotalAmount}   
     Log    Total Amount for 'Outstanding' and 'Available to Draw' is confirmed equal to the current Facility commitment amount
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/Facility_SummaryTab
 
 Get Global Facility Amounts
     [Documentation]    This keyword returns the Current Cmt, Outstandings amount, and Avail To Draw amount from the Facility Notebook's Summary Tab "Global Facility Amounts"

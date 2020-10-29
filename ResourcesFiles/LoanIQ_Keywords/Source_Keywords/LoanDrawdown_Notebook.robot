@@ -2721,8 +2721,15 @@ Get Updated and Validate Data on Loan Amounts Section
     [Documentation]    This keyword validates the new data on Loan Amounts Section.
     ...    @author:mgaling 
     ...    <updated> @ghabal - for Scenario 8 computation
-    [Arguments]    ${Orig_LoanGlobalOriginal}    ${Orig_LoanGlobalCurrent}    ${Computed_LoanIntProjectedCycleDue}    ${CurrentAmount_ExpectedIncreasePercentage}
+    ...    @update: dahijara    13OCT2020    - Add preprocessing keyword and screenshot
+    [Arguments]    ${sOrig_LoanGlobalOriginal}    ${sOrig_LoanGlobalCurrent}    ${sComputed_LoanIntProjectedCycleDue}    ${sCurrentAmount_ExpectedIncreasePercentage}
     
+    ### GetRuntime Keyword Pre-processing ###
+    ${Orig_LoanGlobalOriginal}    Acquire Argument Value    ${sOrig_LoanGlobalOriginal}
+    ${Orig_LoanGlobalCurrent}    Acquire Argument Value    ${sOrig_LoanGlobalCurrent}
+    ${Computed_LoanIntProjectedCycleDue}    Acquire Argument Value    ${sComputed_LoanIntProjectedCycleDue}
+    ${CurrentAmount_ExpectedIncreasePercentage}    Acquire Argument Value    ${sCurrentAmount_ExpectedIncreasePercentage}
+
     ${Computed_LoanIntProjectedCycleDue}    Convert To Number    ${Computed_LoanIntProjectedCycleDue}    2
     
     mx LoanIQ activate window    ${LIQ_InterestPayment_Window}
@@ -2730,7 +2737,7 @@ Get Updated and Validate Data on Loan Amounts Section
     
     mx LoanIQ activate window    ${LIQ_Loan_Window}    
     Mx LoanIQ Select Window Tab    ${LIQ_Loan_Tab}    General    
-    
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/Payment_GeneralTab
     ${New_LoanGlobalOriginal}    Mx LoanIQ Get Data    ${LIQ_Loan_GlobalOriginal_Amount}    value%Amount 
     ${New_LoanGlobalOriginal}    Remove String    ${New_LoanGlobalOriginal}     ,
     ${New_LoanGlobalOriginal}    Convert To Number    ${New_LoanGlobalOriginal}    2
@@ -2753,20 +2760,34 @@ Get Updated and Validate Data on Loan Amounts Section
     Run Keyword If    ${Difference_Status}==True    Run Keywords    Write Data To Excel  CAP03_InterestPayment    Computed_IncreasedCurrentAmount    ${rowid}    ${Computed_IncreasedAmount}    
     ...    AND    Log    An increased by ${CurrentAmount_ExpectedIncreasePercentage}% of the Requested amount has been confirmed
     Run Keyword If    ${Difference_Status}==False    Log    An increased by ${CurrentAmount_ExpectedIncreasePercentage}% of the Requested amount has been NOT confirmed
-    
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/Payment_GeneralTab
+
 Get Updated and Validate Loan Amounts
     [Documentation]    This keyword validates the new data on Loan Amounts Section.
     ...    @author:mgaling 
     ...    <updated> @ghabal - for Scenario 8 computation
+    ...    @update: dahijara    13OCT2020    - Added pre-processing and screenshot
+    ...    @update: dahijara    14OCT2020    - Removed Convert to Number Keyword for Host Bank percentage. Reason: Rounding off to 2 decimal causes issue in computation.
     
-    [Arguments]    ${Orig_LoanGlobalOriginal}    ${Orig_LoanGlobalCurrent}    ${Computed_LoanIntProjectedCycleDue}    ${CurrentAmount_ExpectedIncreasePercentage}    
-    ...    ${Orig_LoanHostBankGross}    ${Orig_LoanHostBankNet}    ${HostBankGross_Percentage}    ${HostBankNet_Percentage}    ${Computed_IncreasedCurrentAmountinUSD}
+    [Arguments]    ${sOrig_LoanGlobalOriginal}    ${sOrig_LoanGlobalCurrent}    ${sComputed_LoanIntProjectedCycleDue}    ${sCurrentAmount_ExpectedIncreasePercentage}    
+    ...    ${sOrig_LoanHostBankGross}    ${sOrig_LoanHostBankNet}    ${sHostBankGross_Percentage}    ${sHostBankNet_Percentage}    ${sComputed_IncreasedCurrentAmountinUSD}
+
+    ### GetRuntime Keyword Pre-processing ###
+    ${Orig_LoanGlobalOriginal}    Acquire Argument Value    ${sOrig_LoanGlobalOriginal}
+    ${Orig_LoanGlobalCurrent}    Acquire Argument Value    ${sOrig_LoanGlobalCurrent}
+    ${Computed_LoanIntProjectedCycleDue}    Acquire Argument Value    ${sComputed_LoanIntProjectedCycleDue}
+    ${CurrentAmount_ExpectedIncreasePercentage}    Acquire Argument Value    ${sCurrentAmount_ExpectedIncreasePercentage}
+    ${Orig_LoanHostBankGross}    Acquire Argument Value    ${sOrig_LoanHostBankGross}
+    ${Orig_LoanHostBankNet}    Acquire Argument Value    ${sOrig_LoanHostBankNet}
+    ${HostBankGross_Percentage}    Acquire Argument Value    ${sHostBankGross_Percentage}
+    ${HostBankNet_Percentage}    Acquire Argument Value    ${sHostBankNet_Percentage}
+    ${Computed_IncreasedCurrentAmountinUSD}    Acquire Argument Value    ${sComputed_IncreasedCurrentAmountinUSD}
     
     ${Computed_LoanIntProjectedCycleDue}    Convert To Number    ${Computed_LoanIntProjectedCycleDue}    2
     
     mx LoanIQ activate window    ${LIQ_Loan_Window}    
     Mx LoanIQ Select Window Tab    ${LIQ_Loan_Tab}    General    
-    
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/Loan_GeneralTab
     ####### Validate 'Global Original' Amounts
     ${New_LoanGlobalOriginal}    Mx LoanIQ Get Data    ${LIQ_Loan_GlobalOriginal_Amount}    value%Amount 
     ${New_LoanGlobalOriginal}    Remove String    ${New_LoanGlobalOriginal}     ,
@@ -2795,7 +2816,6 @@ Get Updated and Validate Loan Amounts
     ${New_LoanHostBankGross}    Convert To Number    ${New_LoanHostBankGross}    2  
     
     ${HostBankGross_Percentage}    Evaluate    ${HostBankGross_Percentage}/100
-    ${HostBankGross_Percentage}    Convert To Number    ${HostBankGross_Percentage}    2
     Log    ${HostBankGross_Percentage}
     
     ${Computed_LoanHostBankGross}    Evaluate    ${New_LoanGlobalCurrent}*${HostBankGross_Percentage}
@@ -2809,27 +2829,33 @@ Get Updated and Validate Loan Amounts
     ${New_LoanHostBankNet}    Convert To Number    ${New_LoanHostBankNet}    2  
     
     ${HostBankNet_Percentage}    Evaluate    ${HostBankNet_Percentage}/100
-    ${HostBankNet_Percentage}    Convert To Number    ${HostBankNet_Percentage}    2
     Log    ${HostBankNet_Percentage}
         
     ${Computed_LoanHostBankNet}    Evaluate    ${New_LoanGlobalCurrent}*${HostBankNet_Percentage}
     ${Computed_LoanHostBankNet}    Convert To Number    ${Computed_LoanHostBankNet}    2
     Should Be Equal    ${New_LoanHostBankNet}    ${Computed_LoanHostBankNet} 
     Log    Host Bank Net amount is confirmed ${HostBankNet_Percentage}% of the Global Current
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/Loan_GeneralTab
 
 Get Updated and Validate Facility Amounts
     [Documentation]    This keyword validates the new data on Loan Amounts Section.
     ...    @author:mgaling 
     ...    <updated> @ghabal - for Scenario 8 computation
-    
-    [Arguments]    ${Orig_FacilityCurrentCmt}    ${Orig_FacilityOutstandings}    ${Orig_FacilityAvailableToDraw}    ${Computed_IncreasedCurrentAmountinAUD}    
-        
+    ...    @update: dahijara    13OCT2020    - Added pre-processing and screenshot
+    [Arguments]    ${sOrig_FacilityCurrentCmt}    ${sOrig_FacilityOutstandings}    ${sOrig_FacilityAvailableToDraw}    ${sComputed_IncreasedCurrentAmountinAUD}    
+
+    ### GetRuntime Keyword Pre-processing ###
+    ${Orig_FacilityCurrentCmt}    Acquire Argument Value    ${sOrig_FacilityCurrentCmt}
+    ${Orig_FacilityOutstandings}    Acquire Argument Value    ${sOrig_FacilityOutstandings}
+    ${Orig_FacilityAvailableToDraw}    Acquire Argument Value    ${sOrig_FacilityAvailableToDraw}
+    ${Computed_IncreasedCurrentAmountinAUD}    Acquire Argument Value    ${sComputed_IncreasedCurrentAmountinAUD}
+
     mx LoanIQ activate window    ${LIQ_Loan_Window}
     mx LoanIQ select    ${LIQ_LoanNotebook_FacilityNotebook_Menu}
 
     mx LoanIQ activate window    ${LIQ_FacilityNotebook_Window}
     Mx LoanIQ Select Window Tab    ${LIQ_FacilityNotebook_Tab}    Summary  
-    
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/Facility_SummaryTab
     ${Computed_IncreasedCurrentAmountinAUD}    Convert To Number    ${Computed_IncreasedCurrentAmountinAUD}    2
     
     ####### Validate 'Current Commitment' Amount
@@ -2866,17 +2892,23 @@ Get Updated and Validate Facility Amounts
     ${TotalAmount}    Evaluate    ${New_FacilityOutstandings}+${New_FacilityAvailableToDraw} 
     Should Be Equal    ${New_FacilityCurrentCmt}    ${TotalAmount}   
     Log    Total Amount for 'Outstanding' and 'Available to Draw' is confirmed equal to the current Facility commitment amount
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/Facility_SummaryTab
     
 Validate Currency against FX rate in API   
     [Documentation]    This keyword validates the FX rates against API 
     ...    @author:@ghabal
-    [Arguments]    ${FXrate_fromAPI}    
+    ...    @update: dahijara    13OCT2020    - Added pre-processing keyword and screenshot.
+    [Arguments]    ${sFXrate_fromAPI}    
+
+    ### GetRuntime Keyword Pre-processing ###
+    ${FXrate_fromAPI}    Acquire Argument Value    ${sFXrate_fromAPI}
     
     mx LoanIQ activate window    ${LIQ_InterestPayment_Window}
     mx LoanIQ select    ${LIQ_Interest_Options_LoanNotebook}
     
     mx LoanIQ activate window    ${LIQ_Loan_Window}    
     Mx LoanIQ Select Window Tab    ${LIQ_Loan_Tab}    Currency
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LoanWindow_CurrencyTab
     
     ${FXrate_fromUI}    Mx LoanIQ Get Data    ${LIQ_Loan_Currency_FXRateAUDtoUSD}    value%Amount
     ${FXrate_fromUI}    Strip String    ${FXrate_fromUI}    characters=AUD to USD
@@ -2888,14 +2920,20 @@ Validate Currency against FX rate in API
 Validate Conversion Amount for the Increase in Loan Amount   
     [Documentation]    This keyword validates the conversion amount from AUD to USD  
     ...    @author:@ghabal
-    
-    [Arguments]    ${FXrate_fromAPI}    ${Computed_IncreasedCurrentAmount}    ${Orig_FacilityOutstandings}    
-    
+    ...    @update: dahijara    13OCT2020    - Added pre-processing keyword and screenshot.
+    [Arguments]    ${sFXrate_fromAPI}    ${sComputed_IncreasedCurrentAmount}    ${sOrig_FacilityOutstandings}    
+
+    ### GetRuntime Keyword Pre-processing ###
+    ${FXrate_fromAPI}    Acquire Argument Value    ${sFXrate_fromAPI}
+    ${Computed_IncreasedCurrentAmount}    Acquire Argument Value    ${sComputed_IncreasedCurrentAmount}
+    ${Orig_FacilityOutstandings}    Acquire Argument Value    ${sOrig_FacilityOutstandings}
+
     mx LoanIQ activate window    ${LIQ_Loan_Window}
     mx LoanIQ select    ${LIQ_LoanNotebook_FacilityNotebook_Menu}
     
     mx LoanIQ activate window    ${LIQ_FacilityNotebook_Window}    
     Mx LoanIQ Select Window Tab    ${LIQ_FacilityNotebook_Tab}    Summary
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/FacilityWindow_SummaryTab
     
     ${New_FacilityOutstandings}    Mx LoanIQ Get Data    ${LIQ_FacilitySummary_GlobalFacAmt_Outstandings_Amount}    value%Amount
     ${New_FacilityOutstandings}    Remove String    ${New_FacilityOutstandings}    ,
@@ -3790,3 +3828,36 @@ Get Loan Paid to Date Amount
     Screenshot.Set Screenshot Directory    ${Screenshot_Path}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/Loan_Paid_To_Date
     [Return]    ${PaidtodateAmount}
+
+Validate and Delete if Repayment Schedule Exists in the Loan
+    [Documentation]    This keyword Validates if Repayment schedule exists when navigating to Principal Payment from Loan Notebook.
+    ...    and deletes  the existing repayment schedule if there is.
+    ...    @author: dahijara    27OCT2020    - Initial Create
+
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LoanNotebook_PrincipalPayment
+    ${Err_exist}    Run Keyword And Return Status    Mx LoanIQ Verify Object Exist    ${LIQ_Error_Window}    VerificationData="Yes"    Processtimeout=100
+    ${Err_Msg}    Run Keyword If    ${Err_exist}==${True}    Mx LoanIQ Get Data    ${LIQ_Error_MessageBox}    text%data
+    ${IsMatched}    Run Keyword And Return Status    Should Contain    ${Err_Msg}    repayment schedule exists
+    Run Keyword If    ${Err_exist}==${True} and ${IsMatched}==${True}    Run Keywords    Mx LoanIQ Click    ${LIQ_Error_OK_Button}
+    ...    AND    Mx LoanIQ activate window    ${LIQ_Loan_ChoosePayment_Window}
+    ...    AND    Mx LoanIQ click    ${LIQ_Loan_ChoosePayment_Cancel_Button}
+    ...    AND    Delete Repayment Schedule in the Loan
+    ...    ELSE IF    ${Err_exist}==${False} or ${IsMatched}==${False}    Log    Repayment Schedule does not exist
+
+Delete Repayment Schedule in the Loan
+    [Documentation]    This keyword deletes Repayment schedule from Loan Notebook.
+    ...    @author: dahijara    27OCT2020    - Initial Create
+
+    mx LoanIQ activate window    ${LIQ_Loan_Window}
+    mx LoanIQ click element if present    ${LIQ_Loan_InquiryMode_Button}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LoanNotebook
+    mx LoanIQ select    ${LIQ_Loan_Options_RepaymentSchedule}
+    mx LoanIQ select    ${LIQ_RepaymentSchedule_Options_DeleteSchedule}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LoanNotebook_RepaymentSchedule
+    Mx LoanIQ Click Element If Present    ${LIQ_Question_Yes_Button}
+    Mx LoanIQ Click Element If Present     ${LIQ_Warning_Yes_Button}
+    :FOR    ${i}    IN RANGE    3
+     \    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
+     \    ${Warning_Status}    Run Keyword And Return Status    Mx LoanIQ Verify Object Exist    ${LIQ_Warning_Window}     VerificationData="Yes"
+     \    Exit For Loop If    ${Warning_Status}==False
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LoanNotebook_RepaymentSchedule

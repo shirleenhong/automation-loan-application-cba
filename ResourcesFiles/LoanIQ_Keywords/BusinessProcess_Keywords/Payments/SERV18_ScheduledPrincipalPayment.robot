@@ -270,7 +270,14 @@ Workflow Navigation For Fee On Lender Shares Payment
     Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
 
 Principal Payment for Comprehensive Deal
+    [Documentation]    This keyword is used for Principal Payment for Comprehensive Deal
+    ...    @update: dahijara    15OCT2020    -Added login step before starting the transaction.
+    ...    @update: dahijara    27OCT2020    - Revised script navigations
     [Arguments]    ${ExcelPath}
+
+    ##LIQ Window###
+    Logout from Loan IQ
+    Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
     ### <update> 16Dec18 - bernchua : Scenario 8 integration. GEt data from Excel of previous transactions / test cases.
     ${Lender1}    Read Data From Excel    TRP002_SecondarySale    Buyer_Lender    &{ExcelPath}[rowid]
     ${Lender2}    Read Data From Excel    TRP002_SecondarySale    Buyer_Lender_2    &{ExcelPath}[rowid]
@@ -296,9 +303,9 @@ Principal Payment for Comprehensive Deal
     ${Lender1_RIDescription}    Get Customer Lender Remittance Instruction Desc Via Lender Shares In Deal Notebook    ${Lender1}    &{ExcelPath}[Remittance_Instruction]
     ${Lender2_RIDescription}    Get Customer Lender Remittance Instruction Desc Via Lender Shares In Deal Notebook    ${Lender2}    &{ExcelPath}[Remittance_Instruction]
     
-    Search Loan    &{ExcelPath}[Type]    &{ExcelPath}[Search_By]    &{ExcelPath}[Facility_Name]
-    Open Existing Loan    &{ExcelPath}[Loan_Alias]
-    
+    Navigate to Facility Notebook from Deal Notebook    &{ExcelPath}[Facility_Name]    
+    Navigate to Outstanding Select Window
+    Navigate to Existing Loan    &{ExcelPath}[Type]    &{ExcelPath}[Facility_Name]    &{ExcelPath}[Loan_Alias]
     
     ${Orig_LoanGlobalOriginal}    ${Orig_LoanGlobalCurrent}    ${Orig_LoanHostBankGross}    ${Orig_LoanHostBankNet}    Get Original Data on Loan Amounts Section  
     Write Data To Excel    SERV18_Payments    Orig_LoanGlobalOriginal    ${rowid}    ${Orig_LoanGlobalOriginal}
@@ -308,7 +315,7 @@ Principal Payment for Comprehensive Deal
     
     ### Step 2-3: Navigate to Principal Payment###
     Navigate to Principal Payment
-    
+    Validate and Delete if Repayment Schedule Exists in the Loan
     
     ###Step 4: Input data on fields under General Tab###
     ${PrincipalPayment_EffectiveDate}    Read Data From Excel    SERV18_Payments    PrincipalPayment_EffectiveDate    ${rowid}
@@ -318,34 +325,49 @@ Principal Payment for Comprehensive Deal
     ${HostBankShare}    Compute For Lender Share Percentage    ${HostBank}    &{ExcelPath}[PrincipalPayment_RequestedAmount]
     ${LenderShare1}    Compute For Lender Share Percentage    ${Lender1}    &{ExcelPath}[PrincipalPayment_RequestedAmount]
     ${LenderShare2}    Compute For Lender Share Percentage    ${Lender2}    &{ExcelPath}[PrincipalPayment_RequestedAmount]
-    
-    ###Step 5-6: Principal Payment - Workflow Tab Create Cashflow Item###
-    ###Commented first as this will still be updated for Scenario 8###
-    # Navigate to Payment Cashflow Window
-    # Validate Incomplete Cash and Host Bank Cash Amount    &{ExcelPath}[PrincipalPayment_RequestedAmount]    ${LenderShare1}    ${LenderShare2}    ${HostBankShare}
-    # Validate the Tran Amount of Borrower and Lenders    &{ExcelPath}[PrincipalPayment_RequestedAmount]    &{ExcelPath}[Borrower_Name]    ${Lender1}    ${LenderShare1}    ${Lender2}    ${LenderShare2} 
-    # Add Remittance Instruction in Cashflow - Payment    &{ExcelPath}[Borrower_Name]    ${Lender1}    ${Lender2}    ${Borrower_RIDescription}    &{ExcelPath}[Remittance1_Description]    &{ExcelPath}[Remittance2_Description]    &{ExcelPath}[Remittance_Instruction]    &{ExcelPath}[Remittance_Status]
-    
+
+    ### Create Cashflows ###
+    Navigate to Payment Workflow and Proceed With Transaction    ${CREATE_CASHFLOWS_TYPE}
+    Verify if Method has Remittance Instruction    &{ExcelPath}[Borrower_Name]    ${Borrower_RIDescription}    &{ExcelPath}[Remittance_Instruction]
+    Verify if Method has Remittance Instruction    ${Lender1}    ${Lender1_RIDescription}    &{ExcelPath}[Remittance_Instruction]
+    Verify if Method has Remittance Instruction    ${Lender2}    ${Lender2_RIDescription}    &{ExcelPath}[Remittance_Instruction]
+    Verify if Status is set to Do It    &{ExcelPath}[Borrower_Name]
+    Verify if Status is set to Do It    ${Lender1}
+    Verify if Status is set to Do It    ${Lender2}
+    Close GL Entries and Cashflow Window
+
     ##Step 7-8: Principal Payment - Workflow Tab Generate Intent Notice Item###
     Generate Intent Notices on Principal Payment
     
     ##Step 9: Principal Payment - Workflow Tab Send to Approval Item###
     Send Principal Payment to Approval
+
+    ###Loan IQ Desktop###
     Logout from Loan IQ
+    Login to Loan IQ    ${SUPERVISOR_USERNAME}    ${SUPERVISOR_PASSWORD}
     
-    ###Step 10: Principal Payment - Workflow Tab Approval Item (SUPERVISOR)###
-    Login to Loan IQ    &{ExcelPath}[ApproverUsername]    &{ExcelPath}[ApproverPassword]
-    Select Item in Work in Process    Payments   Awaiting Approval    Loan Principal Prepayment    &{ExcelPath}[Loan_Alias]
-    Approve Principal Payment
+    ### Payment Approval ####
+    Navigate Transaction in WIP     ${PAYMENTS_TRANSACTION}    ${AWAITING_APPROVAL_STATUS}    ${LOAN_PRINCIPAL_PREPAYMENT_TRANSACTION}    &{ExcelPath}[Loan_Alias]
+    Navigate to Payment Workflow and Proceed With Transaction    ${APPROVAL_STATUS}
+    Close All Windows on LIQ
+
+    ###Loan IQ Desktop###
     Logout from Loan IQ
-    
-    ###Step 11: Principal Payment - Workflow Tab Release Item (MANAGER)###
-    Login to Loan IQ    &{ExcelPath}[ApproverUsername2]    &{ExcelPath}[ApproverPassword2]
-    Select Item in Work in Process    Payments   Awaiting Release    Loan Principal Prepayment    &{ExcelPath}[Loan_Alias]
-    Release Principal Payment    
-     
-    ##Step 12: Validation on Principal Payment Notebook (MANAGER)###
+    Login to Loan IQ    ${MANAGER_USERNAME}    ${MANAGER_PASSWORD}
+
+    ### Release Payment ###
+    Navigate Transaction in WIP     ${PAYMENTS_TRANSACTION}    ${AWAITING_RELEASE_STATUS}    ${LOAN_PRINCIPAL_PREPAYMENT_TRANSACTION}    &{ExcelPath}[Loan_Alias]
+    Navigate to Payment Workflow and Proceed With Transaction    ${RELEASE_STATUS}
     Validation on Principal Payment Notebook - Events Tab 
+
+    ${Lender1}    Read Data From Excel    TRP002_SecondarySale    Buyer_Lender    &{ExcelPath}[rowid]
+    ${Lender2}    Read Data From Excel    TRP002_SecondarySale    Buyer_Lender_2    &{ExcelPath}[rowid]
+    ${HostBank}    Read Data From Excel    TRP002_SecondarySale    Seller_LegalEntity    &{ExcelPath}[rowid]
+
+    ${HostBankShare}    Compute For Lender Share Percentage    ${HostBank}    &{ExcelPath}[PrincipalPayment_RequestedAmount]
+    ${LenderShare1}    Compute For Lender Share Percentage    ${Lender1}    &{ExcelPath}[PrincipalPayment_RequestedAmount]
+    ${LenderShare2}    Compute For Lender Share Percentage    ${Lender2}    &{ExcelPath}[PrincipalPayment_RequestedAmount]
+
     ${Computed_CreditAmt1}    ${Computed_CreditAmt2}    ${Computed_CreditAmt3}    Validation on Principal Payment Notebook - GL Entries Window    &{ExcelPath}[PrincipalPayment_RequestedAmount]    &{ExcelPath}[Borrower_Name]    ${Lender1}    ${LenderShare1}    ${Lender2}    ${LenderShare2}    ${HostBankShare}
     Validation on Principal Payment Notebook - Lender Shares Window    ${HostBank}    ${Computed_CreditAmt3}    ${Lender1}    ${Computed_CreditAmt1}    ${Lender2}    ${Computed_CreditAmt2}    &{ExcelPath}[PrincipalPayment_RequestedAmount] 
     
