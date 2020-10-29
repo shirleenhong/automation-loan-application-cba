@@ -553,7 +553,7 @@ Change Expiry Date of Line Fee
 Initiate Line Fee Payment
     [Documentation]    This keyword selects a cycle fee payment for projected Due amount.
     ...    @author: dahijara    15OCT2020    Initial Create 
-    [Arguments]    ${Cycle_Number} 
+    [Arguments]    ${sCycle_Number} 
 
     ### GetRuntime Keyword Pre-processing ###
     ${Cycle_Number}    Acquire Argument Value    ${sCycle_Number}

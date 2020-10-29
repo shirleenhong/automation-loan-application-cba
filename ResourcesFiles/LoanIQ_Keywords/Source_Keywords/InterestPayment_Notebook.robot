@@ -1179,4 +1179,4 @@ Release Reverse Interest Payment
 Close Interest Payment Notice Window
     [Documentation]    This keyword closes Interest Payment Notice Window. 
     ...    @author: dahijara    12OCT2020    - Initial create
-    mx LoanIQ click    
+    mx LoanIQ click    ${LIQ_InterestPayment_Notice_Exit_Button}

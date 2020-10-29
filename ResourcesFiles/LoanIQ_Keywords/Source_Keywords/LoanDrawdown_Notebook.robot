@@ -2816,7 +2816,6 @@ Get Updated and Validate Loan Amounts
     ${New_LoanHostBankGross}    Convert To Number    ${New_LoanHostBankGross}    2  
     
     ${HostBankGross_Percentage}    Evaluate    ${HostBankGross_Percentage}/100
-    # ${HostBankGross_Percentage}    Convert To Number    ${HostBankGross_Percentage}    2
     Log    ${HostBankGross_Percentage}
     
     ${Computed_LoanHostBankGross}    Evaluate    ${New_LoanGlobalCurrent}*${HostBankGross_Percentage}
@@ -2830,7 +2829,6 @@ Get Updated and Validate Loan Amounts
     ${New_LoanHostBankNet}    Convert To Number    ${New_LoanHostBankNet}    2  
     
     ${HostBankNet_Percentage}    Evaluate    ${HostBankNet_Percentage}/100
-    # ${HostBankNet_Percentage}    Convert To Number    ${HostBankNet_Percentage}    2
     Log    ${HostBankNet_Percentage}
         
     ${Computed_LoanHostBankNet}    Evaluate    ${New_LoanGlobalCurrent}*${HostBankNet_Percentage}
