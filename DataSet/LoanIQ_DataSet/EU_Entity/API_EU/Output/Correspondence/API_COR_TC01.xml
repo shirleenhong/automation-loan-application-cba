@@ -1,0 +1,50 @@
+<liqInfo>
+    {"event_schema_id":"2148","event":{"header":{"correlationId":"LIQ-RKEIS3RH-;*EIS25Q-2","processPath":{"array":[{"source":"FINASTRA_CCB","timestamp":"2020-10-28T20:29:50.425+08:00"}]}},"sourceSystem":{"string":"FINASTRA_CCB"},"ttl":{"au.com.cba.avro.customermanagement.noticesnotify.ttl":{"ttlDuration":"300","ttlSourceTime":"2020-10-28T20:29:50.424+08:00"}},"cifIds":{"array":[{"string":"1611306"}]},"documentInfo":{"documentPackage":{"businessChannel":"LOANIQ","name":null,"version":null,"templateId":null,"fileType":null,"content":"
+    <FinastraApplication>
+        <StandardNotice>
+            <ProcessingArea>EUOPS</ProcessingArea>
+            <Address>
+                <line>Date: 28-Oct-2020</line>
+                <line>TO  : Sanseera Electronics Ltd 1611306</line>
+                <line>ATTN: Makee Campomanes</line>
+                <line>Re  : CBAEU_28102020182441XPY CEU_FAC_28102020183354WXB</line>
+            </Address>
+            <BodyContent>
+                <section>
+                    <line>                          *** DRAWDOWN RATE SET NOTICE ***</line>
+                    <line/>
+                    <line>In accordance with the facility agreement, we advise the following drawing has been requested by Sanseera Electronics Ltd 1611306</line>
+                    <line/>
+                    <line>Description: Fixed Rate Option Borrowing </line>
+                    <line/>
+                    <line>Effective Date: 07-Jul-2020</line>
+                    <line>Sanseera Electronics Ltd 1611306 has elected to borrow a total of EUR 10,000.00. </line>
+                    <line/>
+                    <line>Please see details below:</line>
+                    <line/>
+                    <line>Term: 07-Jul-2020 - 09-Aug-2021</line>
+                    <line>Fixed Rate Option: 10.000000%</line>
+                    <line>The Margin is: 5.000000%</line>
+                    <line>The all-in rate is: 15.000000%</line>
+                </section>
+                <section>
+                    <line>The interest due on 07-Aug-2020 is EUR 127.40.</line>
+                </section>
+                <section>
+                    <line>We will credit your nominated account for an amount of EUR 10,000.00 on the effective date.</line>
+                </section>
+                <section>
+                    <line>For: Sanseera Electronics Ltd 1611306</line>
+                </section>
+                <section>
+                    <line>Reference: EUOPS1000678</line>
+                </section>
+                <section>
+                    <line/>
+                </section>
+            </BodyContent>
+        </StandardNotice>
+    </FinastraApplication>
+    "},"documentStorage":{"status":null,"fileName":null,"inputSource":null,"inputSourceDetail":null,"scanDate":null,"departmentId":{"string":"BP_CML"},"retrievalId":null,"documentumType":null,"applicationNumber":null,"purgeDate":null,"boxLocation":null,"recordManager":null,"description":null,"processes":{"array":[{"string":";*EIS25Q"}]},"services":{"array":[{"string":"1000678"}]},"accountNumbers":{"array":[{"source":{"string":"LOANIQ"},"productCode":{"string":"OST"},"number":{"string":"60000552"}}]},"processFlags":{"array":[{"name":null,"value":null}]}}},"emailSecureMessageDetails":{"subject":"1000678 CBAEU_28102020182441XPY","senderEmail":"NON-AGENCY@CBA.AU.COM","toRecipientEmail":"{BACKSPACE}makee.campomanes@abc.com","ccRecipientEmail":{"string":"JOHN.DOE_1@CBA.AU.COM"},"mimeType":null,"messageID":"LIQ-RKEIS3RH-;*EIS25Q-2","body":null,"attachment":null,"inBandAttachment":null,"deliveredToEmail":null,"undeliveredToEmail":null,"systemCode":null,"systemName":null,"identifier":{"string":"EUOPS"},"digitalSignature":null}}}
+
+</liqInfo>

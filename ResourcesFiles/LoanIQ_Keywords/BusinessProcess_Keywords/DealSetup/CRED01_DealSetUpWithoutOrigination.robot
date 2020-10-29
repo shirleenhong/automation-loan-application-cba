@@ -16,6 +16,7 @@ Setup a Bilateral Deal
     ...    @UPDATE: kduenas      08OCT2020    - added writing of deal name to corro api dataset for API_COR_TC06
     ...    @update: makcamps     15OCT2020    - added writing of method name in excel
     ...    @UPDATE: kduenas      27OCT2020    - added writing of deal name to corro api dataset for API_COR_TC21
+    ...    @update: makcamps     28OCT2020    - added writing of method name in excel
     [Arguments]    ${ExcelPath}
 
     ###Set Dates for transactions###
@@ -59,6 +60,18 @@ Setup a Bilateral Deal
     Write Data To Excel    SERV29_PaymentFees    Deal_Name    ${rowid}    ${Deal_Name}
     Write Data To Excel    SERV29_PaymentFees    ScheduledActivity_DealName    ${rowid}    ${Deal_Name}
     Write Data To Excel    CRED01_DealSetup    Deal_Alias    ${rowid}    ${Deal_Alias}
+    
+    ###For Scenario 1 Deal Setup###
+    Run Keyword If    '${SCENARIO}'=='1'   Run Keywords    Write Data To Excel    CRED02_FacilitySetup    Facility_CustomerServicingGroup    ${rowid}    ${ExcelPath}[OwningBranch]
+    ...    AND    Write Data To Excel    CRED02_FacilitySetup    Facility_Currency1    ${rowid}    ${ExcelPath}[Deal_Currency]
+    ...    AND    Write Data To Excel    CRED02_FacilitySetup    Facility_Currency    ${rowid}    ${ExcelPath}[Deal_Currency]
+    ...    AND    Write Data To Excel    CRED02_FacilitySetup    Deal_Currency    ${rowid}    ${ExcelPath}[Deal_Currency]
+    ...    AND    Write Data To Excel    CRED02_FacilitySetup    Facility_SGLocation    ${rowid}    ${ExcelPath}[AdminAgent_Location]
+    ...    AND    Write Data To Excel    CRED02_FacilitySetup    Facility_Customer    ${rowid}    ${ExcelPath}[Deal_AdminAgent]
+    ...    AND    Write Data To Excel    SYND02_PrimaryAllocation    Primary_PortfolioBranch    ${rowid}    ${ExcelPath}[OwningBranch]
+    ...    AND    Write Data To Excel    SYND02_PrimaryAllocation    Primary_LenderLoc1    ${rowid}    ${ExcelPath}[AdminAgent_Location]
+    ...    AND    Write Data To Excel    SYND02_PrimaryAllocation    Primary_Lender1    ${rowid}    ${ExcelPath}[Deal_AdminAgent]
+    ...    AND    Write Data To Excel    SYND02_PrimaryAllocation    FundReceiverDetailCustomer    ${rowid}    ${ExcelPath}[Deal_AdminAgent]
     
     Run Keyword If    '${SCENARIO}'=='1'   Run Keywords    Write Data To Excel    Correspondence    Deal_Name    ${rowid}    ${Deal_Name}    ${APIDataSet}    bTestCaseColumn=True    sColumnReference=rowid
     ...    AND    Write Data To Excel    Correspondence    Deal_Name    3    ${Deal_Name}    ${APIDataSet}    bTestCaseColumn=True    sColumnReference=rowid

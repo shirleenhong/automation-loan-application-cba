@@ -12,11 +12,12 @@ Send Notice via Notice Application
     ...    @update: ehugo       13SEP2019    - added argument in Validate Notice Details
     ...    @update: amansuet    27NOV2019    - updated keyword for UTF UPGRADE 4.0
     ...    @update: jloretiz    10JUL2020    - updated keywords, writing and reading to excel, put comments, updated variable name
+    ...    @update: makcamps    27OCT2020    - updated arguments in Get the Notice Details in LIQ and Validate Notice in Business Event Output Window in LIQ
     [Arguments]    ${APIDictionary}
     
     ### Get Notice Details in LIQ ###
     Get Notice Details via Loan Notebook in LIQ    ${rowid}    &{APIDictionary}[Facility_Name]    &{APIDictionary}[Deal_Name]    &{APIDictionary}[Loan_Alias]
-    Get the Notice Details in LIQ    ${rowid}    &{APIDictionary}[SubAdd_Days]    &{APIDictionary}[Deal_Name]    &{APIDictionary}[Notice_Type]
+    Get the Notice Details in LIQ    ${rowid}    &{APIDictionary}[SubAdd_Days]    &{APIDictionary}[Deal_Name]    &{APIDictionary}[Notice_Type]    &{APIDictionary}[Zero_TempPath]
 
     ### Read Data from Dataset ###
     ${FromDate}    Read Data From Excel    Correspondence    From_Date    ${rowid}   ${APIDataSet}
@@ -29,7 +30,7 @@ Send Notice via Notice Application
     ...    ${NoticeCustomerLegalName}    &{APIDictionary}[Notice_Method]      
     
     ### Validate Notices in LIQ ###
-    ${StartEndDate}    ${CorrelationID}    Validate Notice in Business Event Output Window in LIQ    &{APIDictionary}[Customer_IdentifiedBy]    ${NoticeCustomerLegalName}    ${NoticeIdentifier}
+    ${StartEndDate}    ${CorrelationID}    Validate Notice in Business Event Output Window in LIQ    ${rowid}    &{APIDictionary}[Customer_IdentifiedBy]    ${NoticeCustomerLegalName}    ${NoticeIdentifier}
     ...    ${dataset_path}&{APIDictionary}[InputFilePath]&{APIDictionary}[XML_File].xml
     ...    ${dataset_path}&{APIDictionary}[InputFilePath]&{APIDictionary}[Temp_File].json    &{APIDictionary}[Field_Name]
     
@@ -47,7 +48,7 @@ Send Notice via Notice Application
     ${MessageIdDecode}    Decode Bytes To String    ${MessageIdEncode}    UTF-8
     Update Key Values of input JSON file for Correspondence API    ${MessageIdDecode}    &{APIDictionary}[CallBack_Status]    &{APIDictionary}[errorMessage]    
     ...    &{APIDictionary}[InputFilePath]&{APIDictionary}[InputJson].json
-    Correspondence POST API    &{APIDictionary}[InputFilePath]    &{APIDictionary}[InputJson]    &{APIDictionary}[OutputFilePath]    &{APIDictionary}[OutputAPIResponse]    
+    Correspondence POST API    &{APIDictionary}[InputFilePath]    &{APIDictionary}[InputJson]    &{APIDictionary}[OutputFilePath]    &{APIDictionary}[OutputAPIResponse]    &{APIDictionary}[OutputAPIResponse]    
     ...    ${RESPONSECODE_200}
     
     ### Exception Queue Validation ###
