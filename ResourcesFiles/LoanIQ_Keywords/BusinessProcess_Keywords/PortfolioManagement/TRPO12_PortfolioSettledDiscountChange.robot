@@ -7,7 +7,8 @@ Portfolio Settled Discount Changes
     [Documentation]    This keyword is used to peform Portfolio Settled Discount Change/Adjustment to Balance of Discount/ 
     ...    Premium on settled Portfolio Position
     ...    @author:    sahalder    23JUL2020    initial create
-    ...    @update:    mcastro     23OCT2020    - Added condition for RPA Scenario 1    
+    ...    @update:    mcastro     23OCT2020    - Added condition for RPA Scenario 1 
+    ...    @update:    mcastro     29OCT2020    - Added condition for RPA Scenario 2   
     [Arguments]    ${ExcelPath}
     
     ###LIQ Window###
@@ -19,12 +20,12 @@ Portfolio Settled Discount Changes
     Open Existing Deal    &{ExcelPath}[Deal_Name]
     Navigate to Portfolio Positions Notebook
     Select Portfolio Position    &{ExcelPath}[Portfolio_Position]
-    Run Keyword If    '${Scenario}'=='1'    Run Keywords    Portfolio Settled Discount Change    &{ExcelPath}[Closed_Date]    &{ExcelPath}[Adjustment_Amount]
+
+    Run Keyword If    '${Scenario}'=='1' or '${Scenario}'=='2'    Run Keywords    Portfolio Settled Discount Change    &{ExcelPath}[Closed_Date]    &{ExcelPath}[Adjustment_Amount]
     ...    AND    GLOffset Details    &{ExcelPath}[GL_ShortName]    &{ExcelPath}[AwaitingDispose]    
     ...    ELSE    Run Keywords    Portfolio Settled Discount Change    ${Effective_date}    &{ExcelPath}[Adjustment_Amount]
     ...    AND    GLOffset Interest Income Details    &{ExcelPath}[GL_ShortName]
          
-
     ###Send transaction for approval###
     Send to Approval Portfolio Selection Discount Change  
 
