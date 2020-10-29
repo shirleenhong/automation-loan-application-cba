@@ -58,3 +58,18 @@ BUS_Get Host Bank and Lender Shares
     [Documentation]    This keyword is used to run the assigned low level keyword.
     ...    @author: dahijara    25AUG2020    - initial create
     Run Keyword    Get Host Bank and Lender Shares    ${ARGUMENT_1}    ${ARGUMENT_2}    ${ARGUMENT_3}    ${ARGUMENT_4}
+
+BUS_View Lender Shares From Interest Payment Window
+    [Documentation]    This keyword is used to run the assigned low level keyword.
+    ...    @author: dahijara    12OCT2020    - initial create
+    Run Keyword    View Lender Shares From Interest Payment Window
+
+BUS_Close Lender Shares Window
+    [Documentation]    This keyword is used to run the assigned low level keyword.
+    ...    @author: dahijara    12OCT2020    - initial create
+    Run Keyword    Close Lender Shares Window
+
+BUS_Get Host Bank Percentage in Lender Shares Window From Loan Notebook
+    [Documentation]    This keyword is used to run the assigned low level keyword.
+    ...    @author: dahijara    12OCT2020    - initial create
+    Run Keyword    Get Host Bank Percentage in Lender Shares Window From Loan Notebook    ${ARGUMENT_1}    ${ARGUMENT_2}
