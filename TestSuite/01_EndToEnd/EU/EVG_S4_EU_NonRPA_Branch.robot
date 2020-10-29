@@ -26,6 +26,6 @@ Complete Portfolio Settled Discount - TRPO12
     [Tags]    05    Portfolio Settled Discount - TRPO12 
     Mx Execute Template With Multiple Data    Complete Portfolio Settled Discount    ${ExcelPath}    ${rowid}    TRPO12_PortfolioSettledDisc
 
-# Create Initial Loan Drawdown - SERV01
-#     [Tags]    08    Loan Drawdown - SERV01 
-#     Mx Execute Template With Multiple Data    Create Initial Loan Drawdown with no Repayment Schedule    ${ExcelPath}    ${rowid}    SERV01_LoanDrawdown
+Create Initial Loan Drawdown - SERV01
+    [Tags]    08    Loan Drawdown - SERV01 
+    Mx Execute Template With Multiple Data    Create Initial Loan Drawdown For RPA Deal    ${ExcelPath}    ${rowid}    SERV01_LoanDrawdown
