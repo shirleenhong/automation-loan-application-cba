@@ -13,11 +13,9 @@ ${API_COR_RESPONSE_TC14.json}                         API_COR_RESPONSE_TC14.json
 ### API MESSAGES ###
 ${Correspondence}            Correspondence
 ${CBACORRESPUPDATEMQ_SOURCENAME}    CBACorrespUpdateMQ
-${CBACorrespUpdateMQ_Instance}    CustomCBAPush_v1.3.0
 ${RESULTTABLEHEADERS}    Headers
 ${RESULTTABLECORELATIONID}    CorelationId
 ${FFC1CMUPDATESOURCEMQ_SOURCENAME}    FFC1CMUpdateSourceMQ
-${FFC1CMUpdateSourceMQ_Instance}    CustomInterface
 
 ### Notice ###
 ${Initial_Notice_Status}    Awaiting release

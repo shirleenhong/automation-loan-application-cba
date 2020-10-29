@@ -162,6 +162,8 @@ RESPONSE_MECHANISM_INSTANCE = "responsemechanism_1.4.1.0"
 DWE_NOTIFICATION_INSTANCE = "dwe_notification_1.3.0"
 SAPWUL_INSTANCE = 'CustomCBAPush_1.3.0'
 TL_CAL_ACK_MESSAGE_SOURCENAME = 'ccb_source_cal'
+CBACorrespUpdateMQ_Instance = 'CustomCBAPush_v1.4.0'
+FFC1CMUpdateSourceMQ_Instance = 'CustomInterface_v1.4.0'
 
 ### New Framework ###
 RUNTIME_EXCEL_FILE = "C:\\fms_scotia\\Customization\\Temp\\RUNTIME_VALUES.xlsx"
