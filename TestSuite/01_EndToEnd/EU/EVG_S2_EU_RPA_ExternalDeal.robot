@@ -35,3 +35,7 @@ Close Deal - CRED01
 Charge Upfront Fee - CRED07
     [Tags]    04 Charge Upfront Fee - CRED07
     Mx Execute Template With Multiple Data    Initiate Upfront Fee Payment    ${ExcelPath}    ${rowid}    CRED07_UpfrontFee_Payment
+
+Complete Portfolio Settled Discount - TRPO12
+    [Tags]    05 Portfolio Settled Discount - TRPO12 
+    Mx Execute Template With Multiple Data    Portfolio Settled Discount Changes    ${ExcelPath}    ${rowid}    TRPO12_PortfolioSettledDisc
