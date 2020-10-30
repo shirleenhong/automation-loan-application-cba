@@ -101,6 +101,7 @@ Pay Commitment Fee Amount
     ...    @update: ehugo   	05JUN2020	Used 'Navigate to Payment Workflow and Proceed With Transaction' instead of 'Navigate Notebook Workflow'
     ...    @update: makcamps    22OCT2020	Added relogin for system date reset, write method condition for EU,
     ...										deleted Release Cashflow method before Release Ongoing Fee Payment
+    ...    @update: makcamps    30OCT2020	Added generate intent notice steps
     [Arguments]    ${ExcelPath}   
      
     ##Re-login to reset date###
@@ -176,6 +177,8 @@ Pay Commitment Fee Amount
     Login to Loan IQ    ${MANAGER_USERNAME}    ${MANAGER_PASSWORD}
     ###Generation of Intent Notice is skipped - Customer Notice Method must be updated###
     Select Item in Work in Process    Payments    Release Cashflows    Ongoing Fee Payment     &{ExcelPath}[Facility_Name]
+    Generate Intent Notices for Ongoing Fee Payment
+    Mx LoanIQ Close    ${LIQ_Notice_PaymentIntentNotice_Window}
     Navigate to Payment Workflow and Proceed With Transaction    Release Cashflows
     Release Ongoing Fee Payment
     
