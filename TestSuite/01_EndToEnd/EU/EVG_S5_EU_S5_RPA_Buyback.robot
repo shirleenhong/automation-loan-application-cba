@@ -16,4 +16,4 @@ Deal Setup - CRED01
 Primary Allocation - SYND02
     [Tags]    02 Primary Allocation - SYND02
     Mx Execute Template With Multiple Data    Setup Primary for RPA Deal    ${ExcelPath}    ${rowid}    SYND02_PrimaryAllocation
-#     Mx Execute Template With Multiple Data    RPA Deal Approval and Close    ${ExcelPath}    ${rowid}    SYND02_PrimaryAllocation
+    Mx Execute Template With Multiple Data    RPA Deal Approval and Close    ${ExcelPath}    ${rowid}    SYND02_PrimaryAllocation
