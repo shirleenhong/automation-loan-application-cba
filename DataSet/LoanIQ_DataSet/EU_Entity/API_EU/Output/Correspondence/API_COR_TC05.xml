@@ -1,0 +1,52 @@
+<liqInfo>
+    {"event_schema_id":"2148","event":{"header":{"correlationId":"LIQ-MOEISI20-MTEISH9S-2","processPath":{"array":[{"source":"FINASTRA_CCB","timestamp":"2020-10-30T11:04:16.795+08:00"}]}},"sourceSystem":{"string":"FINASTRA_CCB"},"ttl":{"au.com.cba.avro.customermanagement.noticesnotify.ttl":{"ttlDuration":"300","ttlSourceTime":"2020-10-30T11:04:16.791+08:00"}},"cifIds":{"array":[{"string":"1611306"}]},"documentInfo":{"documentPackage":{"businessChannel":"LOANIQ","name":null,"version":null,"templateId":null,"fileType":null,"content":"
+    <FinastraApplication>
+        <StandardNotice>
+            <ProcessingArea>EUOPS</ProcessingArea>
+            <Address>
+                <line>Date: 30-Oct-2020</line>
+                <line>TO  : Sanseera Electronics Ltd 1611306</line>
+                <line>ATTN: Makee Campomanes</line>
+                <line>Re  : CBAEU_28102020182441XPY CEU_FAC_28102020183354WXB</line>
+            </Address>
+            <BodyContent>
+                <section>
+                    <line>                                *** FEE INVOICE ***</line>
+                    <line/>
+                    <line>Description: Commitment Fee                   </line>
+                    <line/>
+                    <line>In accordance with the facility agreement, we advise the following.</line>
+                    <line/>
+                    <line>Effective 08-Aug-2020, the following Commitment Fee totalling EUR 69.04 for Sanseera Electronics Ltd 1611306 becomes due.</line>
+                </section>
+                <section>
+                    <line>Calculated as follows:</line>
+                    <line/>
+                    <line>Rate Basis:  Actual/365</line>
+                    <line/>
+                    <line>Start       End         Days CCY Amount    All        Amount</line>
+                    <line>                                           In Rate          </line>
+                    <line>___________ ___________ ____ ___ _________ __________ ______</line>
+                    <line/>
+                    <line>07-Jul-2020 13-Jul-2020 7    EUR 90,000.00 4.000000%  69.04 </line>
+                </section>
+                <section>
+                    <line>Please remit EUR 69.04 into our nominated account below for value on the effective date.</line>
+                </section>
+                <section>
+                    <line>For: Sanseera Electronics Ltd 1611306</line>
+                    <line>Correspondent Bank: BANK OF NEW YORK MELLON SA/NV, AMSTERDAM BRANCH (Swift ID: BNYMNL22XXX) </line>
+                    <line>Account Name: CBA Amsterdam</line>
+                </section>
+                <section>
+                    <line>Reference: EUOPS1000678</line>
+                </section>
+                <section>
+                    <line/>
+                </section>
+            </BodyContent>
+        </StandardNotice>
+    </FinastraApplication>
+    "},"documentStorage":{"status":null,"fileName":null,"inputSource":null,"inputSourceDetail":null,"scanDate":null,"departmentId":{"string":"BP_CML"},"retrievalId":null,"documentumType":null,"applicationNumber":null,"purgeDate":null,"boxLocation":null,"recordManager":null,"description":null,"processes":{"array":[{"string":"MTEISH9S"}]},"services":{"array":[{"string":"1000678"}]},"accountNumbers":{"array":[{"source":{"string":"LOANIQ"},"productCode":{"string":"FAC"},"number":{"string":"3000583"}}]},"processFlags":{"array":[{"name":null,"value":null}]}}},"emailSecureMessageDetails":{"subject":"1000678 CBAEU_28102020182441XPY","senderEmail":"NON-AGENCY@CBA.AU.COM","toRecipientEmail":"{BACKSPACE}makee.campomanes@abc.com","ccRecipientEmail":{"string":"JOHN.DOE_1@CBA.AU.COM"},"mimeType":null,"messageID":"LIQ-MOEISI20-MTEISH9S-2","body":null,"attachment":null,"inBandAttachment":null,"deliveredToEmail":null,"undeliveredToEmail":null,"systemCode":null,"systemName":null,"identifier":{"string":"EUOPS"},"digitalSignature":null}}}
+
+</liqInfo>

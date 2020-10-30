@@ -76,7 +76,7 @@ Navigate Maintain Party Details
     [Documentation]    This keyword navigates the user to Maintain Party Details page.
     ...    @author: nbautist
     [Arguments]    ${sParty_id}
-    Input Text    ${Party_HomePage_Process_TextBox}    ${PARTY_MAINTAIN_PARTY_DETAILS}
+    Input Text    ${Party_HomePage_Process_TextBox}    ${PARTY_MAINTAIN_PARTY_DETAILS_PAGETITLE}
     Press Keys    ${Party_HomePage_Process_TextBox}    RETURN
     Wait Until Browser Ready State
     Wait Until Keyword Succeeds    10x    2s     Mx Input Text    ${Party_EnquireEnterpriseParty_PartyId_Text}     ${sParty_id}
@@ -85,7 +85,7 @@ Navigate Maintain Party Details
     Wait Until Element Is Enabled    ${Party_EnquireEnterpriseParty_Next_Button}       
     Mx Click Element    ${Party_EnquireEnterpriseParty_Next_Button}
     Wait Until Browser Ready State
-    Wait Until Page Contains    ${PARTY_MAINTAIN_PARTY_DETAILS}    20s
+    Wait Until Page Contains    ${PARTY_MAINTAIN_PARTY_DETAILS_PAGETITLE}    20s
 
 Select Row That Contains Text
     [Documentation]    This keyword concatenates current date as a unique 7 numeric test data

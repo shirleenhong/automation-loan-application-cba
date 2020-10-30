@@ -13,6 +13,7 @@ Create Loan Drawdown with Flex Schedule for Fixed P&I Repayment
     ...                                    - Replaced 'Navigate Notebook Workflow' with 'Navigate to Loan Drawdown Workflow and Proceed With Transaction'
     ...                                    - Fixed 'Verify if Method has Remittance Instruction' arguments on Create Cashflows
     ...    @update: dahijara    03JUL2020    - Replaced 'Create Flex Repayment Schedule' to 'Create Flex Repayment Schedule for Initial Drawdown'
+    ...    @update: kduenas    29OCT2020   - Added generation of Rate Setting Notice as pre-requisite of Correspondence testcase
     [Arguments]    ${ExcelPath}
     ###Launch Facility Notebook###
     Launch Existing Facility    &{ExcelPath}[Deal_Name]    &{ExcelPath}[Facility2_Name]
@@ -129,6 +130,9 @@ Create Loan Drawdown with Flex Schedule for Fixed P&I Repayment
     Login to Loan IQ    ${SUPERVISOR_USERNAME}    ${SUPERVISOR_PASSWORD}
     Navigate Transaction in WIP    Outstandings    Awaiting Rate Approval    Loan Initial Drawdown    ${sLoanAlias}
     Navigate to Loan Drawdown Workflow and Proceed With Transaction    Rate Approval
+
+    ###Workflow Items- Generate Intent Notices thru WIP###
+    Generate Rate Setting Notices via WIP    &{ExcelPath}[Borrower1_LegalName]    Awaiting release    ${sLoanAlias}
 
     Release Cashflow Based on Remittance Instruction    &{ExcelPath}[Borrower1_RTGSRemittanceInstruction]    ${sSplitRTGSAmount}|${sSplitDDAAmount}    int
     

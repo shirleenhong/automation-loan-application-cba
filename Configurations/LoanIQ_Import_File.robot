@@ -87,6 +87,7 @@ Variables    ../ObjectMap/LoanIQ_Locators/LIQ_OpenAUserProfile_Locators.py
 Variables    ../ObjectMap/LoanIQ_Locators/LIQ_OutgoingManualCashflow_Locators.py
 Variables    ../ObjectMap/LoanIQ_Locators/LIQ_OngoingFeePayment_Locators.py
 Variables    ../ObjectMap/LoanIQ_Locators/LIQ_PaperClip_Locators.py
+Variables    ../ObjectMap/LoanIQ_Locators/LIQ_Participation_Locators.py
 Variables    ../ObjectMap/LoanIQ_Locators/LIQ_Portfolio_Locators.py
 Variables    ../ObjectMap/LoanIQ_Locators/LIQ_PricingChangeTransaction_Locators.py
 Variables    ../ObjectMap/LoanIQ_Locators/LIQ_Primaries_Locators.py
@@ -201,6 +202,7 @@ Resource    ../ResourcesFiles/LoanIQ_Keywords/BusinessProcess_Keywords/Payments/
 Resource    ../ResourcesFiles/LoanIQ_Keywords/BusinessProcess_Keywords/Payments/SERV21_InterestPayment.robot
 Resource    ../ResourcesFiles/LoanIQ_Keywords/BusinessProcess_Keywords/Payments/SERV22_InterestPaymentNonAgent.robot
 Resource    ../ResourcesFiles/LoanIQ_Keywords/BusinessProcess_Keywords/Payments/SERV23_PaperClipPayment.robot
+Resource    ../ResourcesFiles/LoanIQ_Keywords/BusinessProcess_Keywords/PortfolioManagement/TRPO06_InternalParticipation.robot
 Resource    ../ResourcesFiles/LoanIQ_Keywords/BusinessProcess_Keywords/PortfolioManagement/TRPO11_PortfolioTransfer.robot
 Resource    ../ResourcesFiles/LoanIQ_Keywords/BusinessProcess_Keywords/PortfolioManagement/TRPO12_PortfolioSettledDiscountChange.robot
 Resource    ../ResourcesFiles/LoanIQ_Keywords/BusinessProcess_Keywords/PortfolioManagement/TRPO13_PortfolioTradeDateDiscountChange.robot
@@ -218,6 +220,7 @@ Resource    ../ResourcesFiles/LoanIQ_Keywords/BusinessProcess_Keywords/Syndicati
 Resource    ../ResourcesFiles/LoanIQ_Keywords/BusinessProcess_Keywords/Syndication/SYND05_UprontFeePayment.robot
 Resource    ../ResourcesFiles/LoanIQ_Keywords/BusinessProcess_Keywords/Syndication/SYND06_Distribute Upfront Fee Payment.robot
 
+
 ## Resource Files - Correspondence Files - Business Process Keywords
 Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Correspondence/API_COR_TC01.robot
 Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Correspondence/API_COR_TC02.robot
@@ -230,6 +233,12 @@ Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/
 Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Correspondence/API_COR_TC11.robot
 Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Correspondence/API_COR_TC12.robot
 Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Correspondence/API_COR_TC13.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Correspondence/API_COR_TC14.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Correspondence/API_COR_TC15.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Correspondence/API_COR_TC16.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Correspondence/API_COR_TC17.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Correspondence/API_COR_TC18.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Correspondence/API_COR_TC19.robot
 Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Correspondence/API_COR_TC20.robot
 Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Correspondence/API_COR_TC21.robot
 Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Correspondence/API_COR_TC22.robot
