@@ -21,9 +21,9 @@ LIQ_LineFee_AccrualEnd_Date = 'JavaWindow("title:=Line Fee.*").JavaEdit("attache
 LIQ_LineFee_Cycle = 'JavaWindow("title:=Line Fee.*").JavaList("attached text:=Cycle Frequency:")' 
 LIQ_LineFee_Accrue_Dropdown = 'JavaWindow("title:=Line Fee.*").JavaList("attached text:=Accrue.*")' 
 LIQ_LineFeeReleasedNotebook_Window = 'JavaWindow("title:=Line Fee.* / Released:.*")'
-LIQ_LineFee_Currency_Text = 'JavaWindow("title:=Line Fee.*").JavaStaticText("labeled_containers_path:=Tab:General;", "x:=185", "y:=168")'
-LIQ_LineFee_ActualExpiryDate_Text = 'JavaWindow("title:=Line Fee.*").JavaStaticText("labeled_containers_path:=Tab:General;", "x:=567", "y:=152")'
-LIQ_LineFee_CycleStartDate_Text = 'JavaWindow("title:=Line Fee.*").JavaStaticText("labeled_containers_path:=Tab:General;", "x:=567", "y:=198")'
+LIQ_LineFee_Currency_Text = 'JavaWindow("title:=Line Fee.*").JavaStaticText("labeled_containers_path:=Tab:General;", "Index:=16")'
+LIQ_LineFee_ActualExpiryDate_Text = 'JavaWindow("title:=Line Fee.*").JavaStaticText("labeled_containers_path:=Tab:General;", "Index:=1")'
+LIQ_LineFee_CycleStartDate_Text = 'JavaWindow("title:=Line Fee.*").JavaStaticText("labeled_containers_path:=Tab:General;", "Index:=2")'
 
 ###Line Fee Notebook - Facility Ongoing Fee Capitalization Editor### 
 LIQ_LineFee_CapitalizationEditor_Window = 'JavaWindow("title:=Facility Ongoing Fee Capitalization Editor")'
@@ -70,3 +70,6 @@ LIQ_LineFee_ReversePayment_Tab = 'JavaWindow("title:=Line Fee Reverse Fee.*").Ja
 LIQ_LineFee_ReversePayment_WorkflowItems = 'JavaWindow("title:=Line Fee Reverse Fee.*").JavaTree("attached text:=Drill down to perform Workflow item")'
 LIQ_LineFee_ReversePayment_Cashflows_Window = 'JavaWindow("title:=Cashflows .* Reverse.*","displayed:=1")'
 LIQ_LineFee_ReversePayment_Cashflow_OK_Button = 'JavaWindow("title:=Cashflows For.* Reverse.*").JavaButton("attached text:=OK")'
+
+### Line Fee - Notice Group ###
+LIQ_FeePayment_Notice_Exit_Button = 'JavaWindow("title:=.*Notice Group.*","displayed:=1").JavaButton("label:=Exit.*")'

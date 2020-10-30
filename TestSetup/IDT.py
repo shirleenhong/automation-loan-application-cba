@@ -75,6 +75,9 @@ CUSTOM_INTERFACE_INSTANCE = "CustomInterface_1.3.0"
 RESPONSE_MECHANISM_INSTANCE = "responsemechanism_1.3.0"
 DWE_NOTIFICATION_INSTANCE = "dwe_notification_1.3.0"
 SAPWUL_INSTANCE = 'CustomCBAPush_1.3.0'
+TL_CAL_ACK_MESSAGE_SOURCENAME = 'tl_ack_message_splitter_cal'
+CBACorrespUpdateMQ_Instance = 'CustomCBAPush_v1.3.0'
+FFC1CMUpdateSourceMQ_Instance = 'CustomInterface'
 
 ###SFTP###
 SFTP_HOST = "mancsleverg0022"
@@ -127,6 +130,7 @@ SSO_URL = ""
 
 ###COMSEE###
 COM_HOST = 'http://mancsleverg0022:9150'
+ENTITY = 'AU'
 
 ##CORRESPONDENCE##
 CORRES_SERVER = 'http://mancsleverg0022'

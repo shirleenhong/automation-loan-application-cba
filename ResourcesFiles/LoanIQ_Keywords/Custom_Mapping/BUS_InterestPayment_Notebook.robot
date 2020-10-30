@@ -74,3 +74,39 @@ BUS_Compute Interest Payment Amount Per Cycle
     ...    @author: dahijara    06JUL2020    - initial create
 
     Run Keyword    Compute Interest Payment Amount Per Cycle    ${ARGUMENT_1}    ${ARGUMENT_2}
+
+BUS_Initiate Loan Interest Payment (Scenario 8)
+    [Documentation]    This keyword is used to run the assigned low level keyword.
+    ...    @author: dahijara    12OCT2020    - initial create
+
+    Run Keyword    Initiate Loan Interest Payment (Scenario 8)    ${ARGUMENT_1}    ${ARGUMENT_2}
+
+BUS_Close Interest Payment Notice Window
+    [Documentation]    This keyword is used to run the assigned low level keyword.
+    ...    @author: dahijara    12OCT2020    - initial create
+
+    Run Keyword    Close Interest Payment Notice Window
+
+BUS_Send Loan Interest Payment to Approval (Scenario 8)
+    [Documentation]    This keyword is used to run the assigned low level keyword.
+    ...    @author: dahijara    12OCT2020    - initial create
+
+    Run Keyword    Send Loan Interest Payment to Approval (Scenario 8)
+
+BUS_Approve Interest Payment (Scenario 8)
+    [Documentation]    This keyword is used to run the assigned low level keyword.
+    ...    @author: dahijara    12OCT2020    - initial create
+
+    Run Keyword    Approve Interest Payment (Scenario 8)
+
+BUS_Release Payment (Scenario 8)
+    [Documentation]    This keyword is used to run the assigned low level keyword.
+    ...    @author: dahijara    12OCT2020    - initial create
+
+    Run Keyword    Release Payment (Scenario 8)
+
+BUS_Validation on Interest Payment Notebook - Events Tab
+    [Documentation]    This keyword is used to run the assigned low level keyword.
+    ...    @author: dahijara    12OCT2020    - initial create
+
+    Run Keyword    Validation on Interest Payment Notebook - Events Tab

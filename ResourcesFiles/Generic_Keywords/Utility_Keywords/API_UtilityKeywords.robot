@@ -2597,3 +2597,13 @@ Remove Fields on JSON Payload
     Log    ${Converted_JSON}
     Delete File If Exist    ${dataset_path}${JSON_File}
     Create File    ${dataset_path}${JSON_File}    ${Converted_JSON}
+    
+Get the MessageId Decode Value
+    [Documentation]    This keyword is used to get the MessageId Decode using CorrelationID
+    ...    @author: fluberio    28OCT2020    - initial create
+    [Arguments]    ${sCorrelationID}
+
+    ${CorrelationIdByte}    Encode String To Bytes    ${sCorrelationID}     UTF-8
+    ${MessageIdEncode}    B 32 Encode    ${CorrelationIdByte}
+    ${MessageIdDecode}    Decode Bytes To String    ${MessageIdEncode}    UTF-8
+    [Return]    ${MessageIdDecode}
