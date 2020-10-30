@@ -8,6 +8,7 @@ Pay SBLC Issuance - ComSee
     [Documentation]    This high-level keyword is used when customer pays for the Issuance Fee.
     ...    This also writes the details needed for the Comsee outstanding fee details validations.
     ...    @author: rtarayao    23AUG2019    - Initial Create
+    ...    @update: clanding    30OCT2020    - Remove duplicate Release cashflow, cleaned up the codes
     [Arguments]    ${ExcelPath}
     ###LIQ Window###
     Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
@@ -18,7 +19,7 @@ Pay SBLC Issuance - ComSee
     Navigate Existing Standby Letters of Credit    &{ExcelPath}[Outstanding_Alias]
         
     ###Cycles for Bank Guarantee Window###    
-    ${ComputedCycleDue}    Compute SBLC Issuance Fee Amount Per Cycle    &{ExcelPath}[CycleNumber]    ${SystemDate}
+    ${ComputedCycleDue}    Compute SBLC Issuance Fee Amount Per Cycle    &{ExcelPath}[CycleNumber]    ${SystemDate}    sAccrualRule=&{ExcelPath}[AccrualRule_PayInAdvance]
     
     ###SBLC Guarantee Window###
     Navigate To Fees On Lender Shares
@@ -31,7 +32,7 @@ Pay SBLC Issuance - ComSee
     Verify if Status is set to Do It    &{ExcelPath}[Borrower1_ShortName]  
     
     ##Get Transaction Amount for Cashflow###
-    ${HostBankShare}    Get Host Bank Cash in Cashflow
+    ${HostBankShare}    Get Host Bank Cash in Cashflow    &{ExcelPath}[Fee_Currency]
     ${BorrowerTranAmount}    Get Transaction Amount in Cashflow    &{ExcelPath}[Borrower1_ShortName]
     ${ComputedHBTranAmount}    Compute Lender Share Transaction Amount    ${ComputedCycleDue}    &{ExcelPath}[HostBankSharePct]
     
@@ -70,7 +71,6 @@ Pay SBLC Issuance - ComSee
     ###Transactions in Process###
     Select Item in Work in Process    Payments    Release Cashflows    Issuance Fee Payment     &{ExcelPath}[Facility_Name]
     Navigate Notebook Workflow    ${LIQ_Payment_Window}    ${LIQ_Payment_Tab}    ${LIQ_Payment_WorkflowItems}    Release Cashflows    
-    Release Cashflow    &{ExcelPath}[Borrower1_ShortName]    release           
     Release Issuance Fee Payment for Lender Share
 
     ###Loan IQ Desktop###    
@@ -125,15 +125,15 @@ Pay SBLC Issuance - ComSee
     Write Data To Excel    ComSee_SC3_IssuanceFeePayment    Fee_EffectiveDate    ${rowid}    ${Fee_EffectiveDate}    ${ComSeeDataSet}
     Write Data To Excel    ComSee_SC3_IssuanceFeePayment    Fee_ExpiryDate    ${rowid}    ${Fee_ExpiryDate}    ${ComSeeDataSet}
     Write Data To Excel    ComSee_SC3_IssuanceFeePayment    Fee_DueDate    ${rowid}    ${Fee_DueDate}    ${ComSeeDataSet}
+    Write Data To Excel    ComSee_SC3_IssuanceFeePayment    Fee_CycleStartDate    ${rowid}    ${Fee_EffectiveDate}    ${ComSeeDataSet}
+    Write Data To Excel    ComSee_SC3_IssuanceFeePayment    Fee_AccrualEndDate    ${rowid}    ${Fee_ExpiryDate}    ${ComSeeDataSet}
     
     ###Accrual Tab - Get Total Accrued to Date
     ${IssuanceFee_AccruedToDate}    Get Issuance Accrued to Date Amount
     ${IssuanceFee_AccruedToDate}    Remove Comma and Convert to Number    ${IssuanceFee_AccruedToDate}
-    # ${TotalRowCount}    Get Accrual Row Count    ${LIQ_BankGuarantee_Window}    ${LIQ_BankGuarantee_Accrual_JavaTree}
-    # ${AccruedtoDateAmt}    Compute Total Accruals for Fee    ${TotalRowCount}    ${LIQ_SBLCGuarantee_Window_Tab}    ${LIQ_BankGuarantee_Accrual_JavaTree}
-    # ${AccruedtoDateAmt}    Remove Comma and Convert to Number    ${AccruedtoDateAmt}
-    # Validate Accrued to Date Amount    ${AccruedtoDateAmt}    ${IssuanceFee_AccruedToDate}
-    Write Data To Excel    ComSee_SC3_IssuanceFeePayment    Fee_AccruedToDate    ${rowid}    ${IssuanceFee_AccruedToDate}    ${ComSeeDataSet}
+    ${OngoingFee_CycleDue}    Get Fee Cycle Due Amount    ${LIQ_SBLCGuarantee_Window_Tab}    ${LIQ_SBLCGuarantee_Window_Tab}    ${LIQ_BankGuarantee_Accrual_JavaTree}
+    Write Data To Excel    ComSee_SC3_IssuanceFeePayment    Fee_AccruedToDate    ${rowid}    ${OngoingFee_CycleDue}    ${ComSeeDataSet}
+    Write Data To Excel    ComSee_SC3_IssuanceFeePayment    Fee_PaidToDate    ${rowid}    ${IssuanceFee_AccruedToDate}    ${ComSeeDataSet}
     
     ${IssuanceFee_PaidToDate}    Get Issuance Paid to Date Amount
     ${IssuanceFee_PaidToDate}    Remove Comma and Convert to Number    ${IssuanceFee_PaidToDate}
