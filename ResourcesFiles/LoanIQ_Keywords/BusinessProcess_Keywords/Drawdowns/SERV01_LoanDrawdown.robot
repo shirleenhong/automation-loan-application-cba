@@ -11,6 +11,7 @@ Create Initial Loan Drawdown with no Repayment Schedule
     ...                                    - Removed commented 'Generate Rate Setting Notices for Drawdown    &{ExcelPath}[Borrower1_ShortName]    &{ExcelPath}[NoticeStatus]'
     ...                                    - Removed commented '${Loan_Alias}    Read Data From Excel    SERV01_LoanDrawdown   Loan_Alias    ${rowid}'
     ...    @update: mcastro    20OCT2020   - Added argument variable for Get Host Bank Cash in Cashflow
+    ...    @update: kduenas    29OCT2020   - Added generation of Rate Setting Notice as pre-requisite of Correspondence testcase
     [Arguments]    ${ExcelPath}    
     
     ###Facility###
@@ -79,6 +80,9 @@ Create Initial Loan Drawdown with no Repayment Schedule
     Login to Loan IQ    ${MANAGER_USERNAME}    ${MANAGER_PASSWORD}
     Select Item in Work in Process    Outstandings    Awaiting Rate Approval    Loan Initial Drawdown     ${Loan_Alias}
     Approve Initial Drawdown Rate
+    
+    ###Generate Rate Setting Notices###
+    Generate Rate Setting Notices for Drawdown    &{ExcelPath}[Borrower1_LegalName]    &{ExcelPath}[NoticeStatus]
     
     ###Cashflow Notebook - Release Cashflows###
     Release Cashflow Based on Remittance Instruction    &{ExcelPath}[Remittance_Instruction]    &{ExcelPath}[Borrower1_ShortName]
