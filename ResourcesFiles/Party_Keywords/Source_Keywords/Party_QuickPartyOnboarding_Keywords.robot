@@ -596,14 +596,8 @@ Populate Pre-Existence Check and Validate the Duplicate Enterprise Name
     ...    AND    Mx Click Element    ${Party_PreExistenceCheck_View_Button}     
     ...    ELSE    Run Keyword and Continue on Failure    Fail    No duplicate found for Enterprise Name
     
-    Wait Until Page Contains   ${PARTY_ENQUIREENTERPRISEPARTY_PAGETITLE}
-    Capture Page Screenshot    ${screenshot_path}/Screenshots/Party/DuplicateEnterpriseName-{index}.png
-    ${Existing_EnterpriseName}    Get Value    ${Party_EnquirePartyDetails_EnterpriseName_TextBox}
-    Log    ${Existing_EnterpriseName}
-    ${isMatched}    Run Keyword And Return Status    Should Be Equal    ${Existing_EnterpriseName}    ${Party_Name}
-    Run Keyword If    ${isMatched}==${True}    Logout User on Party    
-    ...    ELSE    Run Keyword and Continue on Failure    Fail    Party details displayed are not for Party:${Party_Name}
-
+    Validate Enterprise Name in Enquire Enterprise Party    ${Party_Name}
+    
 Validate Disabled Fields in Quick Enterprise Party Page
     [Documentation]    This keyword validates disabled fields in Quick Enterprise Party page and Address details dialog
     ...    @author: javinzon    08OCT2020    - initial create
@@ -799,20 +793,43 @@ Validate Error Message in Quick Enterprise Party
     Run Keyword If    ${isMatched}==${True}    Mx Click Element    ${Party_QuickEnterpriseParty_ErrorsDialog_GoBack_Button}
     ...    ELSE    Run Keyword and Continue on Failure    Fail   Error message: '${sExpected_Error_Message}' is expected.
 
-Populate Pre-Existence Check with Duplicate Enterprise Name
-    [Documentation]    This keyword populates Pre-Existence page with duplicate Enterprise name and click 
-    ...    Next to redirect to Quick Party Enterprise page.
-    ...    @author: javinzon    27OCT2020    - initial create
-    [Arguments]    ${sDuplicate_Enterprise_Name}
+Validate Enterprise Name in Enquire Enterprise Party
+    [DOcumentation]    This keyword is used to get and validate Enterprise name in Enquire Enterprise Party Page.
+    ...    @author: javinzon    29OCT2020    - intial create
+    [Arguments]    ${sEnterprise_Name}
     
+    Capture Page Screenshot    ${screenshot_path}/Screenshots/Party/EnterpriseName-{index}.png
+    ${Existing_EnterpriseName}    Get Value    ${Party_EnquirePartyDetails_EnterpriseName_TextBox}
+    Log    ${Existing_EnterpriseName}
+    ${isMatched}    Run Keyword And Return Status    Should Be Equal    ${Existing_EnterpriseName}    ${sEnterprise_Name}
+    Run Keyword If    ${isMatched}==${True}    Logout User on Party    
+    ...    ELSE    Run Keyword and Continue on Failure    Fail    Party details displayed are not for Party:${sEnterprise_Name}
+             
+Populate Pre-Existence Check and Validate Duplicate Enterprise Name Across Entities
+    [Documentation]    This keyword populates pre-existence with Duplicate Enterprise Name, checks if Action required is Reject, 
+    ...    then switch to other entity to view the existing Party details 
+    ...    @author: javinzon    29OCT2020    - initial create
+    [Arguments]    ${sEnterprise_Name}    ${sParty_ID}    ${sSwitch_UserZone}    ${sSwitch_UserBranch}    ${sEntity}
+
     Mx Click Element     ${Party_PreExistenceCheck_EnterpriseName_TextBox} 
     Set Focus To Element    ${Party_PreExistenceCheck_EnterpriseName_TextBox}
-    ${Party_ID}    Generate Unique Number or Text for Party
-    
-    Mx Activate And Input Text    ${Party_PreExistenceCheck_EnterpriseName_TextBox}    ${sDuplicate_Enterprise_Name}  
-    Capture Page Screenshot    ${screenshot_path}/Screenshots/Party/DuplicateEnterpriseName-{index}.png 
+    Mx Activate And Input Text    ${Party_PreExistenceCheck_EnterpriseName_TextBox}    ${sEnterprise_Name}  
+    Capture Page Screenshot    ${screenshot_path}/Screenshots/Party/DuplicateEnterpriseNameAcrossEntities-{index}.png 
     Mx Click Element    ${Party_Footer_Next_Button}
 
-    Wait Until Page Contains   ${PARTY_ENQUIREENTERPRISEPARTY_PAGETITLE}
+    Wait Until Element Is Not Visible    ${PARTY_GLOBALDEDUPRESULT_PAGETITLE}    ${PARTY_TIMEOUT} 
+    ${Entity_Result}    Get Table Value Containing Row Value in Party    ${Party_PreExistenceCheck_SearchResultTableHeader}    ${Party_PreExistenceCheck_SearchResultTableRow}    Party ID    ${sParty_ID}    Entity  
+    ${Action_Result}    Get Table Value Containing Row Value in Party    ${Party_PreExistenceCheck_SearchResultTableHeader}    ${Party_PreExistenceCheck_SearchResultTableRow}    Party ID    ${sParty_ID}    Action  
     
-    [Return]    ${Party_ID}
+    ${isMatched}    Run Keyword And Return Status    Should Be Equal    ${sEntity}    ${Entity_Result}
+    Run Keyword If    ${isMatched}==${True} and '${Action_Result}'=='Reject'    Run Keywords    Log    Enterprise Name:'${sEnterprise_Name}' is already existing in Party ID '${sParty_ID}' created from '${sEntity}' Entity.
+    ...    AND    Capture Page Screenshot    ${screenshot_path}/Screenshots/Party/DuplicateEnterpriseNameAcrossEntities-{index}.png
+    ...    AND    Mx Click Element    ${Party_CloseTab_Button}
+    ...    AND    Configure Zone and Branch    ${sSwitch_UserZone}    ${sSwitch_UserBranch}
+    ...    AND    Navigate Party Details Enquiry    ${sParty_ID}
+    ...    AND    Validate Enterprise Name in Enquire Enterprise Party    ${sEnterprise_Name}
+    ...   ELSE    Run Keyword and Continue on Failure    Fail    There is no Duplicate Enterprise Name   
+    
+
+    
+    

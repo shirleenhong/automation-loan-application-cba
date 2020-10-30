@@ -47,6 +47,7 @@ Party_Zone_Button = '//div[@title="Bank, Zone, Branch information"]//span//stron
 
 ### Generic Locator ###
 Party_Loading_Image = '//div[@id="preloaderGlobal"]//img[@alt="Processing"]'
+Party_CloseTab_Button = '//span[contains(@class, "TabCloseButton")]'
 
 ### Zone and Branch Selection ###
 Party_ZoneBranchSelectionPage_Zone_TextBox = '//input[contains(@id,"zone")]'

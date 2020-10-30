@@ -6,7 +6,7 @@ Create Party ID Successfully in Quick Party Onboarding
         [Documentation]    This keyword is used to create party successfully via quick party Onboarding screen.
     ...    @author: javinzon    22OCT2020    - initial create
     ...    @update: javinzon    26OCT2020    - Added Write Data To Excel for PTY010_DuplicateShortName_AcrossEntities
-    ...    @update: javinzon    27OCT2020    - Added Write Data To Excel keyword for Enterprisename of PTY008_DuplicateEnterpriseName_AcrossEntities
+    ...    @update: javinzon    27OCT2020    - Added Write Data To Excel keyword for EnterpriseName and PartyID of PTY008_DuplicateEnterpriseName_AcrossEntities
     [Arguments]    ${ExcelPath}
     
     ### INPUTTER ###
@@ -27,6 +27,7 @@ Create Party ID Successfully in Quick Party Onboarding
     Write Data To Excel    QuickPartyOnboarding    Short_Name    PTY009_DuplicateShortName    ${Short_Name}    ${PTY_DATASET}    bTestCaseColumn=True
     Write Data To Excel    QuickPartyOnboarding    Short_Name    PTY010_DuplicateShortName_AcrossEntities    ${Short_Name}    ${PTY_DATASET}    bTestCaseColumn=True
     Write Data To Excel    QuickPartyOnboarding    Enterprise_Name    PTY008_DuplicateEnterpriseName_AcrossEntities    ${Enterprise_Name}    ${PTY_DATASET}        bTestCaseColumn=True
+    Write Data To Excel    QuickPartyOnboarding    Party_ID    PTY008_DuplicateEnterpriseName_AcrossEntities    ${Party_ID}    ${PTY_DATASET}        bTestCaseColumn=True
     
     Populate Quick Enterprise Party    ${Party_ID}    &{ExcelPath}[Country_of_Tax_Domicile]    &{ExcelPath}[Country_of_Registration]
     ...    &{ExcelPath}[Address_Type]    &{ExcelPath}[Country_Region]    &{ExcelPath}[Post_Code]    &{ExcelPath}[Document_Collection_Status]
