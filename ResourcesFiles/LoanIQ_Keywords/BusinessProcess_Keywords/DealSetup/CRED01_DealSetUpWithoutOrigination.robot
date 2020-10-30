@@ -1257,6 +1257,7 @@ Setup RPA Internal Deal
     [Documentation]    Create a RPA Internal Deal with no Origination System
     ...    @author: fmamaril
     ...    @update: mcastro    12OCT2020    - added writing to TRPO12_PortfolioSettledDisc 
+    ...    @update: mcastro    14OCT2020    - added writing of Expected_CloseDate for TRPO06_InternalParticipation
     ...    @update: mcastro    20OCT2020    - added writing to Loan drawdown for other facility rows
     ...    @update: dahijara    21OCT2020    - added writing for scenario 4 - CRED07_UpfrontFee_Payment
     ...    @update: mcastro    23OCT2020    - added writing to CRED07_UpfrontFee_Payment for scenario 1
@@ -1296,8 +1297,10 @@ Setup RPA Internal Deal
     ###For RPA Scenario 1###
     Run Keyword If    '${SCENARIO}'=='1' and '${rowid}'=='1'    Run Keywords    Write Data To Excel    TRPO12_PortfolioSettledDisc    Deal_Name    ${rowid}    ${Deal_Name}
     ...    AND    Write Data To Excel    TRPO12_PortfolioSettledDisc    AwaitingDispose    ${rowid}    ${Deal_Name}
-    ...    AND    Write Data To Excel    TRPO12_PortfolioSettledDisc    Closed_Date    ${rowid}    ${SystemDate}
+    ...    AND    Write Data To Excel    TRPO12_PortfolioSettledDisc    Closed_Date    ${rowid}    ${SystemDate}  
+    ...    AND    Write Data To Excel    TRPO06_InternalParticipation    Expected_CloseDate    ${rowid}    ${SystemDate}
     Run Keyword If    '${SCENARIO}'=='1'    Run Keywords    Write Data To Excel    SERV01_LoanDrawdown    Deal_Name    2    ${Deal_Name}
+    ...    AND    Write Data To Excel    TRPO06_InternalParticipation    Deal_Name    ${rowid}    ${Deal_Name}
     ...    AND    Write Data To Excel    SERV01_LoanDrawdown    Loan_EffectiveDate    2    ${SystemDate}
     ...    AND    Write Data To Excel    SERV01_LoanDrawdown    Repayment_TriggerDate    2    ${SystemDate}
     ...    AND    Write Data To Excel    CRED07_UpfrontFee_Payment    Deal_Name    ${rowid}    ${Deal_Name}
@@ -1352,6 +1355,7 @@ Create Facility for RPA Deal
     [Documentation]    This keyword is used to create a Facility for RPA Deal.
     ...    @author: fmamaril
     ...    @update: mcastro    12OCT2020    - added writing to TRPO12_PortfolioSettledDisc with condition
+    ...    @update: mcastro    16OCT2020    - added writing of Facility_Name to TRPO06_InternalParticipation
     ...    @update: dahijara    20OCT2020    - added data writing for Scenario 4
     ...    @update: mcastro    20OCT2020    - added condition to open Deal notebook when Deal notebook is not displayed
     ...                                     - added writing to SERV01_LoanDrawdown for RPA Scenario 1
@@ -1370,8 +1374,9 @@ Create Facility for RPA Deal
     ###For RPA Scenario 1###
     Run Keyword If    '${SCENARIO}'=='1' and '${rowid}'=='1'    Run Keywords    Write Data To Excel    TRPO12_PortfolioSettledDisc    Facility_Name    ${rowid}    ${Facility_Name}    bTestCaseColumn=True    sColumnReference=rowid
     ...    AND    Write Data To Excel    TRPO12_PortfolioSettledDisc    Portfolio_Position    ${rowid}    ${Facility_Name}    bTestCaseColumn=True    sColumnReference=rowid
-    ...    AND    Write Data To Excel    CRED07_UpfrontFee_Payment    Facility_Name    ${rowid}    ${Facility_Name}    bTestCaseColumn=True    sColumnReference=rowid  
-    Run Keyword If    '${SCENARIO}'=='1'   Run Keywords    Write Data To Excel    SERV01_LoanDrawdown    Facility_Name    ${rowid}    ${Facility_Name}    bTestCaseColumn=True    sColumnReference=rowid
+    ...    AND    Write Data To Excel    CRED07_UpfrontFee_Payment    Facility_Name    ${rowid}    ${Facility_Name}    bTestCaseColumn=True    sColumnReference=rowid   
+    Run Keyword If    '${SCENARIO}'=='1'   Run Keywords    Write Data To Excel    TRPO06_InternalParticipation    Facility_Name    ${rowid}    ${Facility_Name}    bTestCaseColumn=True    sColumnReference=rowid    
+    ...    AND    Write Data To Excel    SERV01_LoanDrawdown    Facility_Name    ${rowid}    ${Facility_Name}    bTestCaseColumn=True    sColumnReference=rowid 
     ...    AND    Write Data To Excel    SERV01_LoanDrawdown    Loan_FacilityName    ${rowid}    ${Facility_Name}    bTestCaseColumn=True    sColumnReference=rowid 
     
     ###For RPA Scenario 2###
