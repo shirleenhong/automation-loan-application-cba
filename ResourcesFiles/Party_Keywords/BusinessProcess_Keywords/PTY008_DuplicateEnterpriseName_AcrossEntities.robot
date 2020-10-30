@@ -15,5 +15,5 @@ Create Party in Quick Party Onboarding and Validate Duplicate Enterprise Name Ac
     
     ${Entity}    ${Assigned_Branch}    Populate Party Onboarding and Return Values    &{ExcelPath}[Locality]    &{ExcelPath}[Party_Type]    &{ExcelPath}[Party_Sub_Type]    &{ExcelPath}[Party_Category]    &{ExcelPath}[Branch_Code]
     
-    Populate Pre-Existence Check and Validate Duplicate Enterprise Name Across Entities    &{ExcelPath}[Enterprise_Name]    &{ExcelPath}[Party_ID]    &{ExcelPath}[SwitchTo_UserZone]    &{ExcelPath}[SwitchTo_UserBranch]    &{ExcelPath}[Entity]
+    Populate Pre-Existence Check and Validate Duplicate Enterprise Name Across Entities    &{ExcelPath}[Enterprise_Name]    &{ExcelPath}[Party_ID]    &{ExcelPath}[SwitchTo_UserZone]    &{ExcelPath}[SwitchTo_UserBranch]    &{ExcelPath}[Expected_Entity]
     
