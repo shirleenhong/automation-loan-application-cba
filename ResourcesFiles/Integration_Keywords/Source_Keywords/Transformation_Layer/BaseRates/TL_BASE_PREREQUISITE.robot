@@ -580,6 +580,7 @@ Create Prerequisite for Multiple GS Files Scenario
     ...                                        processing file with the same details but different rate
     ...    @update: dahijara    20NOV2019    - updated file format from XLS to XLSX
     ...    @update: clanding    21AUG2020    - added new argument    ${sTemplateFilePath}
+    ...    @update: jdelacru    30OCT2020    - added transforming xls for on hold rates
     [Arguments]    ${sInputFilePath}    ${sTransformedData_FilePath}    ${sTransformedDataTemplate_FilePath}    ${sInputGSFile}    ${sInputJson}
     ...    ${sExpected_TextJMS}    ${Delimiter}=None    ${sTemplateFilePath}=None
     
