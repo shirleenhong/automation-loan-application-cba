@@ -496,7 +496,6 @@ Release Cashflow Based on Remittance Instruction
     ...    @update: amansuet    22JUN2020    - Revert changes and added new argument to make keyword generic on its Workflow Navigation
     ...    @update: amansuet    22JUN2020    - Added Condition for 'Navigate to Payment Workflow and Proceed With Transaction'
     ...    @update: fluberio    21OCT2020    - Added Condition to add Release Cashflow when Remittance Instruction is Set to IMT
-    ...    @update: dahijara    29OCT2020    - Added Condition to add Release Cashflow when Remittance Instruction is Set to IMT for Loan Drawdown Transaction
     [Arguments]    ${sRemittanceInstruction}    ${sCashflowReference}    ${sDataType}=default    ${sNavigateToWorkflow}=Loan Drawdown
 
     ### Keyword Pre-processing ###
@@ -513,7 +512,6 @@ Release Cashflow Based on Remittance Instruction
     ...    ELSE IF    '${RemittanceInstruction}'=='RTGS' and '${NavigateToWorkflow}'=='Payment'    Run Keywords    Navigate to Payment Workflow and Proceed With Transaction    Release Cashflows
     ...    AND    Release Cashflow    ${CashflowReference}    default    ${DataType}
     ...    ELSE IF    '${RemittanceInstruction}'=='IMT' and '${NavigateToWorkflow}'=='Payment'    Navigate to Payment Workflow and Proceed With Transaction    Release Cashflows
-    ...    ELSE IF    '${RemittanceInstruction}'=='IMT' and '${NavigateToWorkflow}'=='Loan Drawdown'    Navigate to Loan Drawdown Workflow and Proceed With Transaction    Release Cashflows
     ...    ELSE    Log    Release of Cashflow is Not Needed for '${RemittanceInstruction}' Remittance Instruction
 
 Compute Lender Share Transaction Amount - Repricing

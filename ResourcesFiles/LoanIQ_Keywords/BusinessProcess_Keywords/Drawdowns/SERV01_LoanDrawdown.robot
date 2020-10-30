@@ -538,7 +538,7 @@ Create Second Term Facility Loan Drawdown
     Logout from Loan IQ
     Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}       
 
-Create Initial Loan Drawdown For RPA Deal
+Create Initial Loan Drawdown for RPA Deal
     [Documentation]    This keyword is used to create a Loan Drawdown for RPA deal.
     ...    @author: dahijara    28OCT2020    - Initial create
     [Arguments]    ${ExcelPath}    
