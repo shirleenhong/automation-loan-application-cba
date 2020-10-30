@@ -35,45 +35,44 @@ Complete Internal Participation
     Validate Pending Participation Buy    &{ExcelPath}[Buyer_LegalEntity]    &{ExcelPath}[Buy_Sell_Amount]    &{ExcelPath}[Expected_CloseDate]
     
     ### Pending Participation Buy Workflow ###
-    Complete Portfolio Allocations Workflow for Pending Participation Buy    &{ExcelPath}[Buyer_ExpenseCode]    &{ExcelPath}[Buyer_Branch]
+    Complete Portfolio Allocations Workflow for Pending Participation Buy    &{ExcelPath}[Buyer_Portfolio]    &{ExcelPath}[Buyer_ExpenseCode]    &{ExcelPath}[Buyer_Branch]
     Validate Fee Decisions For All Facilities
     
-    # ### Send To Approval ###
-    # Send to Approval Internal Participation Buy
-    # Close All Windows on LIQ    
+    ### Send To Approval ###
+    Send to Approval Internal Participation Buy
+    Close All Windows on LIQ    
     
-    # ### Internal Participation Buy Approval ###
-    # Logout from Loan IQ
-    # Login to Loan IQ    ${SUPERVISOR_USERNAME}    ${SUPERVISOR_PASSWORD}
-    # Approval For Internal Participation Buy    &{ExcelPath}[Deal_Name]
+    ### Internal Participation Buy Approval ###
+    Logout from Loan IQ
+    Login to Loan IQ    ${SUPERVISOR_USERNAME}    ${SUPERVISOR_PASSWORD}
+    Approval For Internal Participation Buy    &{ExcelPath}[Deal_Name]
     
-    # ### Internal Participation Sell Approval ###
-    # Logout from Loan IQ
-    # Login to Loan IQ    ${MANAGER_USERNAME}    ${MANAGER_PASSWORD}
-    # Approval For Internal Participation Sell    &{ExcelPath}[Deal_Name]
-    # Close All Windows on LIQ
+    ### Internal Participation Sell Approval ###
+    Logout from Loan IQ
+    Login to Loan IQ    ${MANAGER_USERNAME}    ${MANAGER_PASSWORD}
+    Approval For Internal Participation Sell    &{ExcelPath}[Deal_Name]
+    Close All Windows on LIQ
 
-    # ### Send to Settlement Approval For Participation Buy ###
-    # Logout from Loan IQ
-    # Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
-    # Funding Memo for Pending Participation Buy    &{ExcelPath}[Deal_Name]
-    # Send to Settlement Approval For Pending Participation Buy    ${ExcelPath}[Deal_Name]
+    ### Send to Settlement Approval For Participation ###
+    Logout from Loan IQ
+    Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
+    Funding Memo for Pending Participation    &{ExcelPath}[Deal_Name]
+    Send to Settlement Approval For Pending Participation    ${ExcelPath}[Deal_Name]  
    
-    # ### Settlement Approval Participation Buy ###
-    # Logout from Loan IQ
-    # Login to Loan IQ    ${SUPERVISOR_USERNAME}    ${SUPERVISOR_PASSWORD}
-    # Settlement Approval For Internal Participation Buy    &{ExcelPath}[Deal_Name]
+    ### Settlement Approval Participation Buy ###
+    Logout from Loan IQ
+    Login to Loan IQ    ${SUPERVISOR_USERNAME}    ${SUPERVISOR_PASSWORD}
+    Settlement Approval For Internal Participation Buy    &{ExcelPath}[Deal_Name]
     
-    # ### Settlement Approval For Participation Sell ###
-    # Logout from Loan IQ
-    # Login to Loan IQ    ${MANAGER_USERNAME}    ${MANAGER_PASSWORD}
-    # Settlement Approval For Internal Participation Sell    ${ExcelPath}[Deal_Name]
+    ### Settlement Approval For Participation Sell ###
+    Logout from Loan IQ
+    Login to Loan IQ    ${MANAGER_USERNAME}    ${MANAGER_PASSWORD}
+    Settlement Approval For Internal Participation Sell    ${ExcelPath}[Deal_Name]
+    
+    ### Close Transaction ###
+    Logout from Loan IQ
+    Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
+    Close For Internal Participation    &{ExcelPath}[Deal_Name]    &{ExcelPath}[Expected_CloseDate] 
+    Validate GL Entries For Internal Participation    &{ExcelPath}[Buyer_LegalEntity]    &{ExcelPath}[Seller_LegalEntity]
+   
 
-    # ### Close Transaction ###
-    # Logout from Loan IQ
-    # Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
-    # Close For Internal Participation    &{ExcelPath}[Deal_Name]    &{ExcelPath}[Expected_CloseDate] 
-    
-    # # Logout from Loan IQ
-    # # Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}   
-   

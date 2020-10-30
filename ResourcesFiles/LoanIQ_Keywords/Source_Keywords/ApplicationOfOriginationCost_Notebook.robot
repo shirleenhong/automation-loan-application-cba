@@ -79,6 +79,7 @@ Portfolio Settled Discount Change
 GLOffset Details
     [Documentation]    This keyword is used to input details to GLOffset details
     ...    @author: Archana 13Jul2020
+    ...    @update: mcastro    29OCT2020    - Added additional handling of warning pop-up when saving the details
     [Arguments]    ${sGL_ShortName}    ${sAwaitingDispose}
     
     ###Pre-processing Keyword###
@@ -95,9 +96,13 @@ GLOffset Details
     Mx LoanIQ Click    ${LIQ_FeesHeldAwaitingDispose_Use_Button}
     mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
     Mx LoanIQ Activate Window    ${LIQ_DebitGLOffsetDetails_Window}
-    Mx LoanIQ Click    ${LIQ_DebitGLOffsetDetails_Ok_Button}
+    Mx LoanIQ Click    ${LIQ_DebitGLOffsetDetails_Ok_Button} 
     Mx LoanIQ Activate Window    ${LIQ_PortfolioSettledDiscountChange_Window}
+    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}   
     Select Menu Item    ${LIQ_PortfolioSettledDiscountChange_Window}    File    Save
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/OffsetDetails
+    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/OffsetDetails
     
 Send to Approval Portfolio Selection Discount Change
     [Documentation]    This keyword sends the Portfolio Selection Discount Change to Approval. 

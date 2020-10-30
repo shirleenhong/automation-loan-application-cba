@@ -59,6 +59,7 @@ LIQ_AwaitingApprovalParticipationWorkflow_JavaTree = 'JavaWindow("title:=Awaitin
 LIQ_OpenParticipation_JavaWindow = 'JavaWindow("title:=Open Participation.*")'
 LIQ_OpenParticipation_JavaWindow_Tab = 'JavaWindow("title:=Open Participation.*","displayed:=1").JavaTab("tagname:=TabFolder")'
 LIQ_OpenParticipation_Workflow_Javatree = 'JavaWindow("title:=Open Participation.*").JavaTree("attached text:=Drill down to perform.*")'
+LIQ_OpenParticipation_File_OpenContraCircle = 'JavaWindow("title:=Open Participation.*").JavaMenu("label:=File").JavaMenu("label:=Open Contra Circle.*")'
 
 ### Portfolio Allocations Window ###
 LIQ_Participation_PortfolioAllocations_Facilities_List = 'JavaWindow("title:=Portfolio allocations for.*").JavaTree("labeled_containers_path:=Group:Facilities;")'
@@ -84,5 +85,15 @@ LIQ_Participation_Closing_CircledTradeDate = 'JavaWindow("title:=Closing .*").Ja
 LIQ_Participation_Closing_EffectiveDate = 'JavaWindow("title:=Closing .*").JavaEdit("index:=0")'
 LIQ_Participation_ClosedApproved_Window = 'JavaWindow("title:=Closed.*")'
 LIQ_Participation_Closed_File_OpenContraCircle = 'JavaWindow("title:=Closed.*").JavaMenu("label:=File").JavaMenu("label:=Open Contra Circle.*")'
-LIQ_Participation_Otustanding_FreezeAll = 'JavaWindow("title:=Outstandings.*").JavaButton("attached text:=Freeze All")'    
-LIQ_Participation_Otustanding_OKButton = 'JavaWindow("title:=Outstandings.*").JavaButton("attached text:=OK")'
+LIQ_Participation_Closed_Queries_GLEntries = 'JavaWindow("title:=Closed.*","displayed:=1").JavaMenu("label:=Queries").JavaMenu("label:=GL Entries")'
+
+### Participation Oustanding Window ###
+LIQ_Participation_Outstanding_Window = 'JavaWindow("title:=Outstandings.*", "displayed:=1")'
+LIQ_Participation_Outstanding_FreezeAll = 'JavaWindow("title:=Outstandings.*").JavaButton("attached text:=Freeze All")'    
+LIQ_Participation_Outstanding_OKButton = 'JavaWindow("title:=Outstandings.*").JavaButton("attached text:=OK")'
+LIQ_Participation_Outstanding_FundingMemo_Create = 'JavaWindow("title:=Outstandings, .*").JavaMenu("label:=Funding Memo").JavaMenu("label:=Create")'
+
+### Participation FundingMemo Window ###
+LIQ_Participation_Funding_Window = 'JavaWindow("title:=Funding Memo for.*")'
+LIQ_Participation_Funding_Ok_Button = 'JavaWindow("title:=Funding Memo for.*").JavaButton("attached text:=OK.*")'
+
