@@ -177,8 +177,8 @@ Pay Commitment Fee Amount
     Login to Loan IQ    ${MANAGER_USERNAME}    ${MANAGER_PASSWORD}
     ###Generation of Intent Notice is skipped - Customer Notice Method must be updated###
     Select Item in Work in Process    Payments    Release Cashflows    Ongoing Fee Payment     &{ExcelPath}[Facility_Name]
-    Generate Intent Notices for Ongoing Fee Payment
-    Mx LoanIQ Close    ${LIQ_Notice_PaymentIntentNotice_Window}
+    Run Keyword If    '${ExcelPath}[Entity]'=='EU'    Run Keywords    Generate Intent Notices for Ongoing Fee Payment
+    ...    AND    Mx LoanIQ Close    ${LIQ_Notice_PaymentIntentNotice_Window}
     Navigate to Payment Workflow and Proceed With Transaction    Release Cashflows
     Release Ongoing Fee Payment
     
