@@ -6,6 +6,7 @@ Resource    ../../../../Configurations/LoanIQ_Import_File.robot
 Setup Deal D00000476
     [Documentation]    This keyword is the template for setting up UAT Deal 3
     ...                @author: bernchua    28JUN2019    Initial create
+    ...                @update: kduenas     30OCT2020    added writing of deal name to corro api dataset
     [Arguments]    ${ExcelPath}
     ${Deal_Name}    ${Deal_Alias}    Generate And Return Deal Name And Alias    &{ExcelPath}[Deal_NamePrefix]    &{ExcelPath}[Deal_AliasPrefix]
     ${Borrower_ShortName}    Read Data From Excel    ORIG03_Customer    Party_ID    &{ExcelPath}[rowid]    ${CBAUAT_ExcelPath}
@@ -13,6 +14,7 @@ Setup Deal D00000476
 
     Write Data To Excel    CRED01_DealSetup    Deal_Name    &{ExcelPath}[rowid]    ${Deal_Name}    ${CBAUAT_ExcelPath}
     Write Data To Excel    Correspondence    Deal_Name    17    ${Deal_Name}    ${APIDataSet}    bTestCaseColumn=True    sColumnReference=rowid
+    Write Data To Excel    Correspondence    Deal_Name    18    ${Deal_Name}    ${APIDataSet}    bTestCaseColumn=True    sColumnReference=rowid
     Write Data To Excel    CRED01_DealSetup    Deal_Alias    &{ExcelPath}[rowid]    ${Deal_Alias}    ${CBAUAT_ExcelPath}
     Write Data To Excel    CRED01_DealSetup    Borrower_ShortName    &{ExcelPath}[rowid]    ${Borrower_ShortName}    ${CBAUAT_ExcelPath}
     Write Data To Excel    CRED01_DealSetup    Borrower_Location    &{ExcelPath}[rowid]    ${Borrower_Location}    ${CBAUAT_ExcelPath}
