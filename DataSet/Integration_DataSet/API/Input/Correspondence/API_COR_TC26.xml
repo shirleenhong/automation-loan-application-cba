@@ -1,0 +1,67 @@
+<liqInfo>
+    {"event_schema_id":"2148","event":{"header":{"correlationId":"LIQ-)YEIRORN-)YEIROGE-3","processPath":{"array":[{"source":"FINASTRA_CCB","timestamp":"2020-10-28T15:01:25.642+08:00"}]}},"sourceSystem":{"string":"FINASTRA_CCB"},"ttl":{"au.com.cba.avro.customermanagement.noticesnotify.ttl":{"ttlDuration":"300","ttlSourceTime":"2020-10-28T15:01:25.642+08:00"}},"cifIds":{"array":[{"string":"122"}]},"documentInfo":{"documentPackage":{"businessChannel":"LOANIQ","name":null,"version":null,"templateId":null,"fileType":null,"content":"
+    <FinastraApplication>
+        <StandardNotice>
+            <ProcessingArea>AUSNA</ProcessingArea>
+            <Address>
+                <line>Date: 28-Oct-2020</line>
+                <line>TO  : CUSTLEGAL41107</line>
+                <line>ATTN: John Bloggs</line>
+                <line>Re  : Payments against NAB2SYN_16102020184409EFD</line>
+            </Address>
+            <BodyContent>
+                <section>
+                    <line>                              *** PAYMENT NOTICE ***</line>
+                    <line/>
+                    <line>In accordance with the facility agreement, we advise the following has been requested.</line>
+                    <line/>
+                    <line>On 09-Aug-2021 the following transaction(s) totalling: AUD 14,383.56 will be made in relation to NAB2SYN_16102020184409EFD S2TERM16102020202441HTX.</line>
+                    <line/>
+                    <line>Please see details below:</line>
+                </section>
+                <section>
+                    <line>*BBSY Interest Payment* </line>
+                    <line>CUSTLEGAL41107 will pay interest on the BBSY - Bid loan effective 29-Apr-2021, scheduled to reprice on 31-May-2021, totalling AUD 4,383.56.  </line>
+                    <line/>
+                    <line>Calculated as follows:</line>
+                    <line/>
+                    <line>BBSY - Bid Interest Payment</line>
+                    <line/>
+                    <line>Rate Basis:  Actual/365</line>
+                    <line/>
+                    <line>Start       End         Days CCY Amount       All        Amount  </line>
+                    <line>                                              In Rate            </line>
+                    <line>___________ ___________ ____ ___ ____________ __________ ________</line>
+                    <line/>
+                    <line>29-Apr-2021 30-May-2021 32   AUD 1,000,000.00 5.000000%  4,383.56</line>
+                </section>
+                <section>
+                    <line>*BBSY Principal Payment*</line>
+                    <line>CUSTLEGAL41107 will pay principal on the BBSY - Bid loan effective 29-Apr-2021, scheduled to reprice on 31-May-2021, totalling AUD 10,000.00.  </line>
+                </section>
+                <section>
+                    <line/>
+                </section>
+                <section>
+                    <line/>
+                    <line/>
+                    <line>Please remit AUD 14,383.56 into our nominated account below for value on the effective date.</line>
+                </section>
+                <section>
+                    <line>For: CUSTLEGAL41107</line>
+                    <line>Correspondent Bank: COMMONWEALTH BANK OF AUSTRALIA SYDNEY (Swift ID: CTBAAU2SXXX) </line>
+                    <line>Account Number: 06200010295080 </line>
+                    <line>Account Name: INSTITUTIONAL BANKING SUNDRY PARTIES</line>
+                </section>
+                <section>
+                    <line>Reference: AUSNA1001181</line>
+                </section>
+                <section>
+                    <line/>
+                </section>
+            </BodyContent>
+        </StandardNotice>
+    </FinastraApplication>
+    "},"documentStorage":{"status":null,"fileName":null,"inputSource":null,"inputSourceDetail":null,"scanDate":null,"departmentId":{"string":"BP_CML"},"retrievalId":null,"documentumType":null,"applicationNumber":null,"purgeDate":null,"boxLocation":null,"recordManager":null,"description":null,"processes":{"array":[{"string":")YEIROGE"}]},"services":{"array":[{"string":"1001181"}]},"accountNumbers":{"array":[{"source":{"string":"LOANIQ"},"productCode":{"string":"DEA"},"number":{"string":"1001181"}}]},"processFlags":{"array":[{"name":null,"value":null}]}}},"emailSecureMessageDetails":{"subject":"1001181 NAB2SYN_16102020184409EFD","senderEmail":"NON-AGENCY@CBA.AU.COM","toRecipientEmail":"{BACKSPACE}john.blogg@abc.com","ccRecipientEmail":{"string":"JOHN.DOE_1@CBA.AU.COM"},"mimeType":null,"messageID":"LIQ-)YEIRORN-)YEIROGE-3","body":null,"attachment":null,"inBandAttachment":null,"deliveredToEmail":null,"undeliveredToEmail":null,"systemCode":null,"systemName":null,"identifier":{"string":"AUSNA"},"digitalSignature":null}}}
+
+</liqInfo>

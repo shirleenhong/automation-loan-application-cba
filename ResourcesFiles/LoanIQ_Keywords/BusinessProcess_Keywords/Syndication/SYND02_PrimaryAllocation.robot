@@ -461,6 +461,8 @@ Approve and Close Deal with Single Primary Lender
 Setup 2 Host Bank Primaries for RPA Deal
     [Documentation]    This keyword adds Lenders in a RPA Deal. Specifically, 2 Host banks with protfolios in different branches.
     ...    @author: dahijara    20OCT2020    - initial create
+    ...    @update: dahijara    28OCT2020    - Added writing of data for portfolio name in TRPO12_PortfolioSettledDisc
+    ...    @update: dahijara    30OCT2020    - Updated hardcoded values for Host Bank
     [Arguments]    ${ExcelPath}
     
     Open Existing Deal    &{ExcelPath}[Deal_Name]
@@ -494,14 +496,49 @@ Setup 2 Host Bank Primaries for RPA Deal
     ${HostBank_ShareAmount2}    Circle Notebook Workflow Navigation    &{ExcelPath}[Primary_Lender2]    &{ExcelPath}[Primary_CircledDate]
     ...    Yes    &{ExcelPath}[Primary_Portfolio2]    &{ExcelPath}[Primary_PortfolioBranch2]    ${SellAmount2}    &{ExcelPath}[Primary_PortfolioExpiryDate]    &{ExcelPath}[Primary_RiskBook2]
 
+    Write Data To Excel    TRPO12_PortfolioSettledDisc    Portfolio_Name    1    &{ExcelPath}[Primary_Portfolio1]
+
     Close All Windows on LIQ
     
     ##Approval using a different user###
     Logout from Loan IQ
     Login to Loan IQ    ${SUPERVISOR_USERNAME}    ${SUPERVISOR_PASSWORD}
     Select Actions    ${WORK_IN_PROCESS_ACTIONS}
-    Circle Notebook Settlement Approval    &{ExcelPath}[Primary_Lender1]    Host Bank
+    Circle Notebook Settlement Approval    &{ExcelPath}[Primary_Lender1]    ${HOST_BANK}
     Close All Windows on LIQ
     Select Actions    ${WORK_IN_PROCESS_ACTIONS}
-    Circle Notebook Settlement Approval    &{ExcelPath}[Primary_Lender2]    Host Bank
+    Circle Notebook Settlement Approval    &{ExcelPath}[Primary_Lender2]    ${HOST_BANK}
+    Close All Windows on LIQ
+
+Setup Primary for RPA Deal
+    [Documentation]    This keyword adds primary lender in a RPA Deal.
+    ...    @author: dahijara    20OCT2020    - initial create
+    [Arguments]    ${ExcelPath}
+    
+    Open Existing Deal    &{ExcelPath}[Deal_Name]
+
+    ###Primary Lender - Host Bank 1###
+    Add Lender and Location    &{ExcelPath}[Deal_Name]    &{ExcelPath}[Primary_Lender1]    &{ExcelPath}[Primary_LenderLoc1]    &{ExcelPath}[Primary_RiskBook1]    &{ExcelPath}[Primaries_TransactionType]
+    Set Sell Amount and Percent of Deal    &{ExcelPath}[Primary_PctOfDeal1]
+    Add Pro Rate    &{ExcelPath}[Primary_BuySellPrice1]
+    Verify Buy/Sell Price in Circle Notebook
+    Add Contact in Primary    &{ExcelPath}[Primary_Contact1]
+    Select Servicing Group on Primaries    None    &{ExcelPath}[Primary_SGAlias1]
+    ${SellAmount1}    Get Circle Notebook Sell Amount
+    Write Data To Excel    SYND02_PrimaryAllocation    SellAmount1    &{ExcelPath}[rowid]    ${SellAmount1}
+    mx LoanIQ close window    ${LIQ_OrigPrimaries_Window}
+    
+    ##Circle Notebook Complete Portfolio Allocation, Circling, and Sending to Settlement Approval###
+    ${HostBank_ShareAmount1}    Circle Notebook Workflow Navigation    &{ExcelPath}[Primary_Lender1]    &{ExcelPath}[Primary_CircledDate]
+    ...    Yes    &{ExcelPath}[Primary_Portfolio1]    &{ExcelPath}[Primary_PortfolioBranch1]    ${SellAmount1}    &{ExcelPath}[Primary_PortfolioExpiryDate]    &{ExcelPath}[Primary_RiskBook1]
+
+    Write Data To Excel    TRPO12_PortfolioSettledDisc    Portfolio_Name    ${rowid}    &{ExcelPath}[Primary_Portfolio1]
+
+    Close All Windows on LIQ
+    
+    ##Approval using a different user###
+    Logout from Loan IQ
+    Login to Loan IQ    ${SUPERVISOR_USERNAME}    ${SUPERVISOR_PASSWORD}
+    Select Actions    ${WORK_IN_PROCESS_ACTIONS}
+    Circle Notebook Settlement Approval    &{ExcelPath}[Primary_Lender1]    ${HOST_BANK}
     Close All Windows on LIQ

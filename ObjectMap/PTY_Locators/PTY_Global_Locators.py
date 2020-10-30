@@ -47,12 +47,14 @@ Party_Zone_Button = '//div[@title="Bank, Zone, Branch information"]//span//stron
 
 ### Generic Locator ###
 Party_Loading_Image = '//div[@id="preloaderGlobal"]//img[@alt="Processing"]'
+Party_CloseTab_Button = '//span[contains(@class, "TabCloseButton")]'
 
 ### Zone and Branch Selection ###
 Party_ZoneBranchSelectionPage_Zone_TextBox = '//input[contains(@id,"zone")]'
 Party_ZoneBranchSelectionPage_Branch_TextBox = '//input[contains(@id,"BrchName")]'
 Party_ZoneBranchSelectionPage_CloseTab_Button = '//span[contains(@id,"ConfigureZoneBranchMF")]/following-sibling::span[@title="Close"]'
 Party_ZoneBranchSelectionPage_SuccessMessage_Label = '//input[contains(@id,"showmessage") and @value="Zone/Branch Switched Successfully"]'
+Party_ZoneSelection_Dropdown_Button = '//div[contains(@id,"ZoneName_Label")]/preceding-sibling::div//child::div[contains(@class,"DownArrowButton")]'
 
 ### Error Dialog ###
 Party_Error_Dialog = '//div[contains(@id,"ERROR") and @role="dialog"]'
