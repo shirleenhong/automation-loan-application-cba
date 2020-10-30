@@ -2140,18 +2140,6 @@ Get Sell Amount from Pending Assignment Sell
     ${Sell_Amount}    Mx LoanIQ Store TableCell To Clipboard   ${LIQ_AssignmentSell_Facilities_JavaTree}    ${Facility_Name}%Sell Amount%Sell_Amount
     Take Screenshot    ${Screenshot_Path}/Screenshots/LoanIQ/PendingAssignmentWindow_FacilitiesTree
     [Return]    ${Sell_Amount}
-
-Release Internal Participation Buy
-    [Documentation]    This keyword navigates the 'Work In Process' window and release the Release Internal Participation Buy.
-    ...    @author: Archana 13Jul2020    
-    mx LoanIQ activate    ${LIQ_PortfolioSettledDiscountChange_Window}
-    Mx LoanIQ Select Window Tab    ${LIQ_PortfolioSettledDiscountChange_Tab}    Workflow
-    Mx LoanIQ Select Or DoubleClick In Javatree    ${LIQ_PortfolioSettledDiscountChange_WorkflowItems}    Release%d
-    mx LoanIQ click element if present    ${LIQ_Question_Yes_Button}
-    mx LoanIQ click element if present    ${LIQ_Question_Yes_Button}
-    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
-    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
-    Select Menu Item    ${LIQ_PortfolioSettledDiscountChange_Window}    File    Exit
     
 Create New Internal Participation
     [Documentation]    This keyword is used to create circle selection for New Internal Participation
@@ -2176,9 +2164,9 @@ Create New Internal Participation
     Mx LoanIQ Select Combo Box Value    ${LIQ_CircleSelection_SellerLegalEntity}    ${Seller_LegalEntity}
     Mx LoanIQ Select Combo Box Value    ${LIQ_CircleSelection_SellerRiskBookDropdownList}    ${Seller_RiskBook}
     
-    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/CircleSelect
-    
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/CircleSelect  
     Mx LoanIQ Click    ${LIQ_CircleSelection_OKButton}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/CircleSelect
        
 Populate Pending Participation Sell
     [Documentation]    This Keyword Populates And Validates Pending Participation Sell Facilities
@@ -2242,7 +2230,7 @@ Add Contacts For Participation Sell
     ### Add Buyer's Contact ###
     Wait Until Keyword Succeeds    ${retry}    ${retry_interval}    Mx LoanIQ Click    ${LIQ_PendingAssignmentSell_ContactTab_AddContacts_Button}
     ${IsExisting}    Run Keyword And Return Status    Mx LoanIQ Verify Object Exist    ${LIQ_AssignmentSell_ContactSelection}
-    Run Keyword If    ${IsExisting}!=${True}    Mx LoanIQ Click    ${LIQ_PendingAssignmentSell_ContactTab_AddContacts_Button}
+    Run Keyword If    ${IsExisting}==${False}    Mx LoanIQ Click    ${LIQ_PendingAssignmentSell_ContactTab_AddContacts_Button}
     ...    ELSE    Log    Contact Selection Window Is Displayed
     
     Mx LoanIQ activate window    ${LIQ_AssignmentSell_ContactSelection}
@@ -2272,7 +2260,7 @@ Complete Circle Fee Decisions
     Mx LoanIQ Click Element If Present    ${LIQ_Warning_Yes_Button}
     Mx LoanIQ Activate    ${LIQ_CircleFeeDecisions_Window}
      
-    :FOR    ${rowid}    IN RANGE    ${facility_count}
+    :FOR    ${rowid}    IN RANGE    ${FACILITY_COUNT}
     \    Log    ${rowid}  
     \    ${rowid}    Evaluate    ${rowid}+1  
     \    ${rowid}    Convert to String    ${rowid}
@@ -2341,7 +2329,7 @@ Complete Portfolio Allocations Workflow for Pending Participation Sell
     mx LoanIQ activate    ${LIQ_PortfolioAllocationsFor_Window}
     Take Screenshot    ${Screenshot_Path}/Screenshots/LoanIQ/PorfolioAllocationsWindow
     
-    :FOR    ${rowid}    IN RANGE    ${facility_count}
+    :FOR    ${rowid}    IN RANGE    ${FACILITY_COUNT}
     \    Log    ${rowid}   
     \    ${rowid}    Evaluate    ${rowid}+1  
     \    ${rowid}    Convert to String    ${rowid} 
@@ -2402,7 +2390,7 @@ Validate Pending Participation Buy
     ${Expected_CloseDate}    Acquire Argument Value    ${sExpected_CloseDate}    
     
     ### Validate Buy Amount on Facilities tab###      
-    ${Actual_Buy_Amount}    Mx LoanIQ Get Data    ${LIQ_PendingParticipationBuy_BuyAmount}    Value
+    ${Actual_Buy_Amount}    Mx LoanIQ Get Data    ${LIQ_PendingParticipationBuy_BuyAmount_Textfield}    Value
     ${Actual_Buy_Amount}    Remove String    ${Actual_Buy_Amount}    ,
     ${Actual_Buy_Amount}    Convert To Number    ${Actual_Buy_Amount}
     ${Status}    Run Keyword And Return Status    Should Be Equal As Numbers    ${Actual_Buy_Amount}    ${Buy_Sell_Amount}
@@ -2413,14 +2401,14 @@ Validate Pending Participation Buy
                   
     ### Validate Amts/Dates Tab Details ###
     Mx LoanIQ Select Window Tab    ${LIQ_PendingParticipationBuy_Tab}    Amts/Dates
-    ${Actual_Circled_Amount}    Mx LoanIQ Get Data    ${LIQ_PendingParticipationBuy_AmtsTab_CircledAmount}    Value
+    ${Actual_Circled_Amount}    Mx LoanIQ Get Data    ${LIQ_PendingParticipationBuy_AmtsTab_CircledAmount_Textfield}    Value
     ${Actual_Circled_Amount}    Remove String    ${Actual_Circled_Amount}    ,
     ${Actual_Circled_Amount}    Convert To Number    ${Actual_Circled_Amount}
     ${Status}    Run Keyword And Return Status    Should Be Equal As Numbers    ${Actual_Circled_Amount}	${Buy_Sell_Amount}
     Run Keyword If    ${Status}==${True}    Log    ${Actual_Circled_Amount} and ${Buy_Sell_Amount} are equal
     ...    ELSE    Run Keyword And Continue On Failure    FAIL   ${Actual_Circled_Amount} is incorrect. Expected amount is ${Buy_Sell_Amount}
 
-    ${Actual_Current_Amount}    Mx LoanIQ Get Data    ${LIQ_PendingParticipationBuy_AmtsTab_CurrentAmount}    Value
+    ${Actual_Current_Amount}    Mx LoanIQ Get Data    ${LIQ_PendingParticipationBuy_AmtsTab_CurrentAmount_Textfield}    Value
     ${Actual_Current_Amount}    Remove String    ${Actual_Current_Amount}    ,
     ${Actual_Current_Amount}    Convert To Number    ${Actual_Current_Amount}
     ${Status}    Run Keyword And Return Status    Should Be Equal As Numbers    ${Actual_Current_Amount}    ${Buy_Sell_Amount}
@@ -2433,7 +2421,7 @@ Validate Displayed Sell Amount From Participation Sell
     [Documentation]    This keyword validates if displayed 'Sell Amount' matches the Computed 'Sell Amount'
     ...    @author: mcastro    16OCT2020    -initial create
 
-    ${Current_DealAmount}    Mx LoanIQ Get Data    ${LIQ_PendingParticipationSell_DealAmount}    displayeddealamount
+    ${Current_DealAmount}    Mx LoanIQ Get Data    ${LIQ_PendingParticipationSell_DealAmount_Textfield}    displayeddealamount
     ${Current_DealAmount}    Remove String    ${Current_DealAmount}    ,
     ${Current_DealAmount}    Convert To Number    ${Current_DealAmount}    
     Log    ${Current_DealAmount}
@@ -2446,7 +2434,7 @@ Validate Displayed Sell Amount From Participation Sell
     
     ${ComputedSellAmount}    Evaluate    ${Current_DealAmount}*${PctofDeal}    
     Log    ${ComputedSellAmount}
-    ${Actual_DisplayedSellAmount}    Mx LoanIQ Get Data    ${LIQ_PendingParticipationSell_SellAmount}    displayedsellamount
+    ${Actual_DisplayedSellAmount}    Mx LoanIQ Get Data    ${LIQ_PendingParticipationSell_SellAmount_Textfield}    displayedsellamount
     ${iDisplayedSellAmount}    Remove String     ${Actual_DisplayedSellAmount}    ,
     ${iDisplayedSellAmount}    Convert To Number     ${iDisplayedSellAmount}    
     Log     ${iDisplayedSellAmount}
@@ -2467,7 +2455,7 @@ Validate Buy/Sell Price For Facilities On Participation Sell
     ### Keyword Pre-processing ###
     ${Buy_Sell_Price}    Acquire Argument Value    ${sBuy_Sell_Price}
 	    
-    :FOR    ${rowid}    IN RANGE    ${facility_count}
+    :FOR    ${rowid}    IN RANGE    ${FACILITY_COUNT}
     \    Log    ${rowid}   
     \    ${rowid}    Evaluate    ${rowid}+1 
     \    ${rowid}    Convert to String    ${rowid}
@@ -2508,7 +2496,7 @@ Complete Portfolio Allocations Workflow for Pending Participation Buy
     mx LoanIQ activate    ${LIQ_PortfolioAllocationsFor_Window}
     Take Screenshot    ${Screenshot_Path}/Screenshots/LoanIQ/PorfolioAllocationsWindow
     
-    :FOR    ${rowid}    IN RANGE    ${facility_count}
+    :FOR    ${rowid}    IN RANGE    ${FACILITY_COUNT}
     \    Log    ${rowid} 
     \    ${rowid}    Evaluate    ${rowid}+1   
     \    ${rowid}    Convert to String    ${rowid}
@@ -2570,7 +2558,7 @@ Approval For Internal Participation Sell
     [Documentation]    This keyword Approves Internal Participation Sell
     ...    @author: mcastro    19OCT2020    -initial created
     [Arguments]    ${sDeal_Name}
-     ### Keyword Pre-processing ###
+    ### Keyword Pre-processing ###
     ${Deal_Name}    Acquire Argument Value    ${sDeal_Name}
 
     Mx LoanIQ Click    ${LIQ_WorkInProgress_Button}
@@ -2599,7 +2587,7 @@ Funding Memo For Pending Participation
     [Documentation]    This keyword completes Funding Memo for Pending participation
     ...    @author: mcastro    22OCT2020    Initial Create
     [Arguments]    ${sDeal_Name}
-     ### Keyword Pre-processing ###
+    ### Keyword Pre-processing ###
     ${Deal_Name}    Acquire Argument Value    ${sDeal_Name}
     
     Mx LoanIQ Click    ${LIQ_WorkInProgress_Button}
@@ -2656,7 +2644,7 @@ Send to Settlement Approval For Pending Participation
     Mx LoanIQ Select Or DoubleClick In Javatree    ${LIQ_OpenParticipation_Workflow_Javatree}     ${SEND_TO_SETTLEMENT_APPROVAL_WORKFLOW}%d
     Validate if Question or Warning Message is Displayed
     Take Screenshot    ${Screenshot_Path}/Screenshots/LoanIQ/PendingParticipationWindow_WorkflowTab
-    Run Keyword And Continue On Failure    Mx LoanIQ Verify Object Exist    ${LIQ_Participation_SendToSettlementApproval}    VerificationData="Yes"
+    Run Keyword And Continue On Failure    Mx LoanIQ Verify Object Exist    ${LIQ_Participation_SendToSettlementApproval_Window}    VerificationData="Yes"
     Take Screenshot    ${Screenshot_Path}/Screenshots/LoanIQ/PendingParticipationWindow_WorkflowTab
     Close All Windows on LIQ
 
@@ -2684,7 +2672,7 @@ Settlement Approval For Internal Participation Buy
     Take Screenshot    ${Screenshot_Path}/Screenshots/LoanIQ/WorkInProcess_Window
     Mx LoanIQ Select String    ${LIQ_WorkInProgress_TransactionDetails_List}    ${Deal_Name}
     Wait Until Keyword Succeeds    3x    5 sec    Mx Press Combination    Key.ENTER
-    mx LoanIQ activate window    ${LIQ_Participation_SendToSettlementApproval}   
+    mx LoanIQ activate window    ${LIQ_Participation_SendToSettlementApproval_Window}   
     Take Screenshot    ${Screenshot_Path}/Screenshots/LoanIQ/PendingParticipationWindow_WorkflowTab 
 	Mx LoanIQ Select Window Tab    ${LIQ_Participation_SendToSettlementApproval_Tab}    ${WORKFLOW_TAB}
 	Validate if Question or Warning Message is Displayed
@@ -2693,9 +2681,9 @@ Settlement Approval For Internal Participation Buy
     Take Screenshot    ${Screenshot_Path}/Screenshots/LoanIQ/PendingParticipationWindow_WorkflowTab 
     Validate if Question or Warning Message is Displayed
     Take Screenshot    ${Screenshot_Path}/Screenshots/LoanIQ/ApprovedParticipationWindow_WorkflowTab
-    Run Keyword And Continue On Failure    Mx LoanIQ Verify Object Exist    ${LIQ_Participation_SettlementApproved}    VerificationData="Yes"
+    Run Keyword And Continue On Failure    Mx LoanIQ Verify Object Exist    ${LIQ_Participation_SettlementApproved_Window}    VerificationData="Yes"
     Take Screenshot    ${Screenshot_Path}/Screenshots/LoanIQ/ApprovedParticipationWindow_WorkflowTab
-    mx LoanIQ close window    ${LIQ_Participation_SettlementApproved}  
+    mx LoanIQ close window    ${LIQ_Participation_SettlementApproved_Window}  
     mx LoanIQ click element if present     ${LIQ_Information_OK_Button}
     Close All Windows on LIQ
 
@@ -2715,7 +2703,7 @@ Settlement Approval For Internal Participation Sell
     Take Screenshot    ${Screenshot_Path}/Screenshots/LoanIQ/WorkInProcess_Window 
     Mx LoanIQ Select String    ${LIQ_WorkInProgress_TransactionDetails_List}    ${Deal_Name}
     Wait Until Keyword Succeeds    3x    5 sec    Mx Press Combination    Key.ENTER
-    mx LoanIQ activate window    ${LIQ_Participation_SendToSettlementApproval}    
+    mx LoanIQ activate window    ${LIQ_Participation_SendToSettlementApproval_Window}    
 	Mx LoanIQ Select Window Tab    ${LIQ_Participation_SendToSettlementApproval_Tab}    ${WORKFLOW_TAB}
     Take Screenshot    ${Screenshot_Path}/Screenshots/LoanIQ/PendingParticipationWindow_WorkflowTab
 	Validate if Question or Warning Message is Displayed
@@ -2723,9 +2711,9 @@ Settlement Approval For Internal Participation Sell
     Mx LoanIQ Select Or DoubleClick In Javatree    ${LIQ_Participation_SendToSettlementApproval_Workflow_JavaTree}    ${SETTLEMENT_APPROVAL_STATUS}%d  
     Take Screenshot    ${Screenshot_Path}/Screenshots/LoanIQ/PendingParticipationWindow_WorkflowTab
     Validate if Question or Warning Message is Displayed
-    Run Keyword And Continue On Failure    Mx LoanIQ Verify Object Exist    ${LIQ_Participation_SettlementApproved}    VerificationData="Yes"
+    Run Keyword And Continue On Failure    Mx LoanIQ Verify Object Exist    ${LIQ_Participation_SettlementApproved_Window}    VerificationData="Yes"
     Take Screenshot    ${Screenshot_Path}/Screenshots/LoanIQ/ApprovedParticipationWindow_WorkflowTab
-    mx LoanIQ close window    ${LIQ_Participation_SettlementApproved}  
+    mx LoanIQ close window    ${LIQ_Participation_SettlementApproved_Window}  
     mx LoanIQ click element if present     ${LIQ_Information_OK_Button}
     Close All Windows on LIQ
 
@@ -2746,7 +2734,7 @@ Close For Internal Participation
     Take Screenshot    ${Screenshot_Path}/Screenshots/LoanIQ/WorkInProcess_Window
     Mx LoanIQ Select String    ${LIQ_WorkInProgress_TransactionDetails_List}    ${Deal_Name}
     Wait Until Keyword Succeeds    3x    5 sec    Mx Press Combination    Key.ENTER
-    mx LoanIQ activate window    ${LIQ_Participation_SettlementApproved}    
+    mx LoanIQ activate window    ${LIQ_Participation_SettlementApproved_Window}    
 	Mx LoanIQ Select Window Tab    ${LIQ_Participation_SettlementApproved_Tab}    ${WORKFLOW_TAB}
     Take Screenshot    ${Screenshot_Path}/Screenshots/LoanIQ/ApprovedParticipationWindow_WorkflowTab
 	Validate if Question or Warning Message is Displayed
@@ -2762,27 +2750,6 @@ Close For Internal Participation
     mx LoanIQ click    ${LIQ_Participation_Closing_OKButton}  
     mx LoanIQ activate window    ${LIQ_Participation_ClosedApproved_Window} 
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/ParticipationClosed
-    # Close All Windows on LIQ
-
-    # ### Navigate to Participation Sell workflow ###
-    # Mx LoanIQ Select    ${LIQ_Participation_Closed_File_OpenContraCircle}  
-    # Mx LoanIQ Activate Window    ${LIQ_Participation_ClosedApproved_Window}
-    
-    # Mx LoanIQ Select Window Tab    ${LIQ_Participation_SettlementApproved_Tab}    ${WORKFLOW_TAB}
-    # Take Screenshot    ${Screenshot_Path}/Screenshots/LoanIQ/ApprovedParticipationWindow_WorkflowTab
-	# Validate if Question or Warning Message is Displayed
-    # Take Screenshot    ${Screenshot_Path}/Screenshots/LoanIQ/ApprovedParticipationWindow_WorkflowTab
-    # Mx LoanIQ Select Or DoubleClick In Javatree    ${LIQ_Participation_SettlementApproved_Workflow_Javatree}    ${CLOSE_WORKFLOW}%d  
-    # Validate if Question or Warning Message is Displayed
-    # Take Screenshot    ${Screenshot_Path}/Screenshots/LoanIQ/ApprovedParticipationWindow_WorkflowTab
-    
-    # Wait Until Keyword Succeeds    ${retry}    ${retry_interval}    mx LoanIQ activate window    ${LIQ_Participation_Closing_Window}
-    # Run Keyword And Continue On Failure    Wait Until Keyword Succeeds    3x    5s    Validate Loan IQ Details    ${CloseDate}    ${LIQ_Participation_Closing_EffectiveDate}
-    # Run Keyword And Continue On Failure    Wait Until Keyword Succeeds    3x    5s    Validate Loan IQ Details    ${CloseDate}    ${LIQ_Participation_Closing_CircledTradeDate}
-    # Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/ParticipationClosing
-    # mx LoanIQ click    ${LIQ_Participation_Closing_OKButton}  
-    # mx LoanIQ activate window    ${LIQ_Participation_ClosedApproved_Window} 
-    # Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/ParticipationClosed
     
 Validate Fee Decisions For All Facilities
     [Documentation]    This keyword is used to validate fee decision amounts on Participation Buy.
@@ -2793,7 +2760,7 @@ Validate Fee Decisions For All Facilities
     Mx LoanIQ Click Element If Present    ${LIQ_Warning_Yes_Button}
     Mx LoanIQ Activate    ${LIQ_CircleFeeDecisions_Window}
      
-    :FOR    ${rowid}    IN RANGE    ${facility_count}
+    :FOR    ${rowid}    IN RANGE    ${FACILITY_COUNT}
     \    Log    ${rowid}  
     \    ${rowid}    Evaluate    ${rowid}+1  
     \    ${rowid}    Convert to String    ${rowid}

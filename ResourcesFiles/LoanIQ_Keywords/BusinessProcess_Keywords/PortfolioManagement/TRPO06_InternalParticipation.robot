@@ -1,8 +1,7 @@
 *** Settings ***
 Resource    ../../../../Configurations/LoanIQ_Import_File.robot
 
-*** Variables ***
-${facility_count}    3 
+*** Variables *** 
 
 ***Keyword***
 Complete Internal Participation

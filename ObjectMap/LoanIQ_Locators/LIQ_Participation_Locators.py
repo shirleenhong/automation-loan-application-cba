@@ -2,8 +2,8 @@
 LIQ_PendingParticipationSell_Window = 'JavaWindow("title:=Pending Participation Sell.*")'
 LIQ_PendingParticipationSell_PctofDeal_InputField = 'JavaWindow("title:=Pending Participation Sell.*").JavaEdit("attached text:=Pct of Deal:")'
 LIQ_PendingParticipationSell_IntFeeDropdownList = 'JavaWindow("title:=Pending Participation Sell.*").JavaList("attached text:=Int/Fee.*")'
-LIQ_PendingParticipationSell_SellAmount = 'JavaWindow("title:=Pending Participation Sell.*").JavaEdit("attached text:=Seller.*","index:=0")'
-LIQ_PendingParticipationSell_DealAmount = 'JavaWindow("title:=Pending Participation Sell.*").JavaEdit("labeled_containers_path:=.*Aggregate Amounts.*","Index:=2")'
+LIQ_PendingParticipationSell_SellAmount_Textfield = 'JavaWindow("title:=Pending Participation Sell.*").JavaEdit("attached text:=Seller.*","index:=0")'
+LIQ_PendingParticipationSell_DealAmount_Textfield = 'JavaWindow("title:=Pending Participation Sell.*").JavaEdit("labeled_containers_path:=.*Aggregate Amounts.*","Index:=2")'
 LIQ_PendingParticipationSell_ProRate_Button = 'JavaWindow("title:=Pending Participation Sell.*").JavaButton("attached text:=Pro Rate")'
 LIQ_PendingParticipationSell_FacilityList = 'JavaWindow("title:=Pending Participation Sell.*").JavaTree("attached text:=Drill down to change details.*")'
 
@@ -31,7 +31,7 @@ LIQ_CircleFeeDecisions_Facilities_JavaTreeIndex = 'JavaWindow("title:=Circle Fee
 
 ###Pending Participation Buy###
 LIQ_PendingParticipationBuy_Window = 'JavaWindow("title:=Pending Participation Buy.*")'
-LIQ_PendingParticipationBuy_BuyAmount = 'JavaWindow("title:=Pending Participation Buy.*").JavaEdit("attached text:=Buyer.*","index:=0")'
+LIQ_PendingParticipationBuy_BuyAmount_Textfield = 'JavaWindow("title:=Pending Participation Buy.*").JavaEdit("attached text:=Buyer.*","index:=0")'
 LIQ_PendingParticipationBuy_Tab = 'JavaWindow("title:=Pending Participation Buy.*","displayed:=1").JavaTab("tagname:=TabFolder")'
 LIQ_PendingParticipation_Maintenance_FeeDecisions = 'JavaWindow("title:=Pending Participation Buy.*").JavaMenu("label:=Maintenance").JavaMenu("label:=.*Fee Decisions.*")'
 LIQ_PendingParticipationBuyWorkflow_JavaTree = 'JavaWindow("title:=Pending Participation Buy.*").JavaTree("attached text:=Drill down to perform.*")'
@@ -39,19 +39,19 @@ LIQ_PendingParticipation_OKButton = 'JavaWindow("title:=Approving.*").JavaButton
 
 ### Pending Participation Buy Amts/Dates tab ###
 LIQ_PendingParticipationBuy_AmtsTab_ExpectedClose = 'JavaWindow("title:=Pending Participation Buy.*").JavaEdit("attached text:=Expected Close:")'
-LIQ_PendingParticipationBuy_AmtsDates_CircledAmount = 'JavaWindow("title:=Pending Participation Buy.*").JavaEdit(tagname:=Text","Index:=0")'
-LIQ_PendingParticipationBuy_AmtsTab_CurrentAmount = 'JavaWindow("title:=Pending Participation Buy.*").JavaEdit("attached text:=Current:")'
-LIQ_PendingParticipationBuy_AmtsTab_CircledAmount = 'JavaWindow("title:=Pending Participation Buy.*").JavaEdit("tagname:=Text","Index:=0")'
+LIQ_PendingParticipationBuy_AmtsDates_CircledAmount_Textfield = 'JavaWindow("title:=Pending Participation Buy.*").JavaEdit(tagname:=Text","Index:=0")'
+LIQ_PendingParticipationBuy_AmtsTab_CurrentAmount_Textfield = 'JavaWindow("title:=Pending Participation Buy.*").JavaEdit("attached text:=Current:")'
+LIQ_PendingParticipationBuy_AmtsTab_CircledAmount_Textfield = 'JavaWindow("title:=Pending Participation Buy.*").JavaEdit("tagname:=Text","Index:=0")'
 
 ###Awaiting Approval Participation - Workflow###
 LIQ_AwaitingApprovalParticipation_Window = 'JavaWindow("title:=Awaiting Approval Participation.*")'
 LIQ_AwaitingApprovalParticipation_Workflow_JavaTree = 'JavaWindow("title:=Awaiting Approval Participation.*").JavaTree("attached text:=Drill down to perform.*")'
 LIQ_AwaitingApprovalParticipation_OKButton = 'JavaWindow("title:=Approving.*").JavaButton("label:=OK")'
 LIQ_AwaitingApprovalParticipation_File_OpenContraCircle = 'JavaWindow("title:=Awaiting Approval Participation.*").JavaMenu("label:=File").JavaMenu("label:=Open Contra Circle.*")'
-LIQ_AwaitingApprovalParticipation_BuyAmount = 'JavaWindow("title:=Awaiting Approval Participation.*").JavaEdit("attached text:=Buyer.*","index:=0")'
+LIQ_AwaitingApprovalParticipation_BuyAmount_Textfield = 'JavaWindow("title:=Awaiting Approval Participation.*").JavaEdit("attached text:=Buyer.*","index:=0")'
 LIQ_AwaitingApprovalParticipation_Tab = 'JavaWindow("title:=Awaiting Approval Participation.*","displayed:=1").JavaTab("tagname:=TabFolder")'
-LIQ_AwaitingApprovalParticipation_AmtsTab_CurrentAmount = 'JavaWindow("title:=Awaiting Approval Participation.*").JavaEdit("attached text:=Current:")'
-LIQ_AwaitingApprovalParticipation_AmtsTab_CircledAmount = 'JavaWindow("title:=Awaiting Approval Participation.*").JavaEdit("tagname:=Text","Index:=0")'
+LIQ_AwaitingApprovalParticipation_AmtsTab_CurrentAmount_Textfield = 'JavaWindow("title:=Awaiting Approval Participation.*").JavaEdit("attached text:=Current:")'
+LIQ_AwaitingApprovalParticipation_AmtsTab_CircledAmount_Textfield = 'JavaWindow("title:=Awaiting Approval Participation.*").JavaEdit("tagname:=Text","Index:=0")'
 LIQ_AwaitingApprovalParticipation_Maintenance_FeeDecisions = 'JavaWindow("title:=Awaiting Approval Participation.*").JavaMenu("label:=Maintenance").JavaMenu("label:=.*Fee Decisions.*")'
 LIQ_AwaitingApprovalParticipationWorkflow_JavaTree = 'JavaWindow("title:=Awaiting Approval Participation.*").JavaTree("attached text:=Drill down to perform.*")'
 
@@ -71,10 +71,10 @@ LIQ_Participation_PortfolioAllocations_OK_Button = 'JavaWindow("title:=Portfolio
 LIQ_Participation_PortfolioAllocationsFor_OK_Button = 'JavaWindow("title:=Portfolio allocations for.*").JavaButton("attached text:=OK.*")'
 
 ### Participation Settlement Window ###
-LIQ_Participation_SendToSettlementApproval = 'JavaWindow("title:=Open/Awaiting Settlement Approval.*")'
+LIQ_Participation_SendToSettlementApproval_Window = 'JavaWindow("title:=Open/Awaiting Settlement Approval.*")'
 LIQ_Participation_SendToSettlementApproval_Tab = 'JavaWindow("title:=Open/Awaiting Settlement Approval.*","displayed:=1").JavaTab("tagname:=TabFolder")'
 LIQ_Participation_SendToSettlementApproval_Workflow_JavaTree = 'JavaWindow("title:=Open/Awaiting Settlement Approval.*").JavaTree("attached text:=Drill down to perform.*")'
-LIQ_Participation_SettlementApproved = 'JavaWindow("title:=Open/Settlement Approved.*")'
+LIQ_Participation_SettlementApproved_Window = 'JavaWindow("title:=Open/Settlement Approved.*")'
 LIQ_Participation_SettlementApproved_Tab = 'JavaWindow("title:=Open/Settlement Approved.*","displayed:=1").JavaTab("tagname:=TabFolder")'
 LIQ_Participation_SettlementApproved_Workflow_Javatree = 'JavaWindow("title:=Open/Settlement Approved.*").JavaTree("attached text:=Drill down to perform.*")'
 

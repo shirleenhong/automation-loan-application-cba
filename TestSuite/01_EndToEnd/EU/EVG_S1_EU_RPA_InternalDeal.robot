@@ -4,6 +4,7 @@ Resource    ../../../Configurations/LoanIQ_Import_File.robot
 *** Variables ***
 ${rowid}    1
 ${SCENARIO}    1
+${FACILITY_COUNT}    3
 
 *** Test Cases ***
 Deal Setup - CRED01
@@ -46,7 +47,7 @@ Complete Portfolio Settled Discount - TRPO12
 Complete Internal Participation - TRPO06
     [Tags]    07 Internal Participation - TRPO06 
     Mx Execute Template With Multiple Data    Complete Internal Participation    ${ExcelPath}    ${rowid}    TRPO06_InternalParticipation   
-  
+ 
 Create Initial Loan Drawdown - SERV01
     [Tags]    08 Loan Drawdown - SERV01 
     Mx Execute Template With Multiple Data    Create Initial Loan Drawdown with no Repayment Schedule    ${ExcelPath}    ${rowid}    SERV01_LoanDrawdown
