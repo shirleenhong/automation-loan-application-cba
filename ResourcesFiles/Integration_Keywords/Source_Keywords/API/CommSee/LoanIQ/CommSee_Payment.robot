@@ -8,7 +8,7 @@ Pay SBLC Issuance - ComSee
     [Documentation]    This high-level keyword is used when customer pays for the Issuance Fee.
     ...    This also writes the details needed for the Comsee outstanding fee details validations.
     ...    @author: rtarayao    23AUG2019    - Initial Create
-    ...    @update: clanding    30OCT2020    - added condition for EU Entity, remove duplicate Release cashflow
+    ...    @update: clanding    30OCT2020    - Remove duplicate Release cashflow, cleaned up the codes
     [Arguments]    ${ExcelPath}
     ###LIQ Window###
     Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
@@ -19,8 +19,7 @@ Pay SBLC Issuance - ComSee
     Navigate Existing Standby Letters of Credit    &{ExcelPath}[Outstanding_Alias]
         
     ###Cycles for Bank Guarantee Window###    
-    ${ComputedCycleDue}    Run Keyword If    '${ENTITY}'=='EU'    Compute SBLC Issuance Fee Amount Per Cycle    &{ExcelPath}[CycleNumber]    ${SystemDate}    sAccrualRule=&{ExcelPath}[AccrualRule_PayInAdvance]
-    ...    ELSE    Compute SBLC Issuance Fee Amount Per Cycle    &{ExcelPath}[CycleNumber]    ${SystemDate}
+    ${ComputedCycleDue}    Compute SBLC Issuance Fee Amount Per Cycle    &{ExcelPath}[CycleNumber]    ${SystemDate}    sAccrualRule=&{ExcelPath}[AccrualRule_PayInAdvance]
     
     ###SBLC Guarantee Window###
     Navigate To Fees On Lender Shares
@@ -33,8 +32,7 @@ Pay SBLC Issuance - ComSee
     Verify if Status is set to Do It    &{ExcelPath}[Borrower1_ShortName]  
     
     ##Get Transaction Amount for Cashflow###
-    ${HostBankShare}    Run Keyword If    '${ENTITY}'=='EU'    Get Host Bank Cash in Cashflow    &{ExcelPath}[Fee_Currency]
-    ...    ELSE    Get Host Bank Cash in Cashflow
+    ${HostBankShare}    Get Host Bank Cash in Cashflow    &{ExcelPath}[Fee_Currency]
     ${BorrowerTranAmount}    Get Transaction Amount in Cashflow    &{ExcelPath}[Borrower1_ShortName]
     ${ComputedHBTranAmount}    Compute Lender Share Transaction Amount    ${ComputedCycleDue}    &{ExcelPath}[HostBankSharePct]
     
