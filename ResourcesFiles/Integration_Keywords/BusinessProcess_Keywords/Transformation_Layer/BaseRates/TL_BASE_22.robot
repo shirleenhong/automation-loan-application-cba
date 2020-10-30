@@ -11,7 +11,7 @@ Send GS File with Future Date and Existing Base Rate Record in Holding Table
     [Arguments]    ${ExcelPath}
     
     ##PREREQUISITE###
-    # Login to Loan IQ    ${TL_USERNAME}    ${TL_PASSWORD}
+    Login to Loan IQ    ${TL_USERNAME}    ${TL_PASSWORD}
     ${TransformedDataFile_BaseRate}    Set Variable    &{ExcelPath}[InputFilePath]${TL_Transformed_Data_BaseRate}
     ${TransformedDataFile_Template_BaseRate}    Set Variable    &{ExcelPath}[TemplateFilePath]${TL_Transformed_Data_template_BaseRate}
     Create Prerequisite for Multiple GS Files Scenario    &{ExcelPath}[InputFilePath]    ${TL_Transformed_Data_BaseRate}    ${TransformedDataFile_Template_BaseRate}
@@ -22,13 +22,13 @@ Send GS File with Future Date and Existing Base Rate Record in Holding Table
     ${QueryList}    Get Future Date Record in Holding Table for Multiple Files for TL Base Rate    ${ARCHIVE_GSFILENAME_LIST}
     Run Keyword And Continue On Failure    Validate Future Date Record in Holding Table for TL Base Rate for Multiple Files    ${QueryList}
 
-    Pause Execution
+    # Pause Execution
     # Run Keyword and Continue on Failure    Execute EOD - Daily
     
     ### SAMPLE TEST DATA ###
     ### Don't remove not until automated EOD has been plugged in to this script ###
-    # ${ARCHIVE_GSFILENAME_LIST}    Create LisT    FINASTRA_CCB_BASERATE_LN_GROUP5_B22_02_1565751389925_1.csv    FINASTRA_CCB_BASERATE_LN_GROUP5_B22_01_1565751385845_1.csv
-    # ${TRANSFORMEDDATA_LIST}    Create List    \\DataSet\\TL_DataSet\\BaseRates_GSFile\\TL_Transformed_Data_BaseRate.xls_1.xls    \\DataSet\\TL_DataSet\\BaseRates_GSFile\\TL_Transformed_Data_BaseRate.xls_0.xls
+    # ${ARCHIVE_GSFILENAME_LIST}    Create LisT    FINASTRA_CCB_BASERATE_LN_GROUP5_B22_01_1603978840031_1.csv    FINASTRA_CCB_BASERATE_LN_GROUP5_B22_02_1603978846127_1.csv
+    # ${TRANSFORMEDDATA_LIST}    Create List    \\DataSet\\Integration_DataSet\\TL\\BaseRates_GSFile\\AU\\TL_BASE_22_Files\\TL_Transformed_Data_BaseRate.xlsx_0.xlsx    \\DataSet\\Integration_DataSet\\TL\\BaseRates_GSFile\\AU\\TL_BASE_22_Files\\TL_Transformed_Data_BaseRate.xlsx_1.xlsx
     # Set Global Variable    ${ARCHIVE_GSFILENAME_LIST}
     # Set Global Variable    ${TRANSFORMEDDATA_LIST}   
     
