@@ -11,6 +11,7 @@ Setup Deal D00000454
     ...                @update: kduenas     08OCT2020    Added writing of deal name to corro api dataset for API_CORRO_TC10
     ...                @update: kduenas     09OCT2020    Added writing of deal name to corro api dataset for API_CORRO_TC11
     ...                @update: kduenas     09OCT2020    Added writing of deal name to corro api dataset for API_CORRO_TC12
+    ...                @update: kduenas     28OCT2020    Added writing of deal name to corro api dataset for API_CORRO_TC26
     [Arguments]    ${ExcelPath}
     ${Deal_Name}    ${Deal_Alias}    Generate And Return Deal Name And Alias    &{ExcelPath}[Deal_NamePrefix]    &{ExcelPath}[Deal_AliasPrefix]
     ${Borrower_ShortName}    Read Data From Excel    ORIG03_Customer    LIQCustomer_ShortName    &{ExcelPath}[rowid]    ${CBAUAT_ExcelPath}   
@@ -29,10 +30,11 @@ Setup Deal D00000454
     Write Data To Excel    SERV40_BreakFunding    Deal_Name    &{ExcelPath}[rowid]    ${Deal_Name}    ${CBAUAT_ExcelPath}
     Write Data To Excel    SERV23_Paperclip    Deal_Name    &{ExcelPath}[rowid]    ${Deal_Name}    ${CBAUAT_ExcelPath}    Y
     Write Data To Excel    COMPR06_LoanMerge    Deal_Name    &{ExcelPath}[rowid]    ${Deal_Name}    ${CBAUAT_ExcelPath}
-    Write Data To Excel    Correspondence    Deal_Name    &{ExcelPath}[2]    ${Deal_Name}    ${APIDataSet}    bTestCaseColumn=True    sColumnReference=rowid
-    Write Data To Excel    Correspondence    Deal_Name    &{ExcelPath}[10]    ${Deal_Name}    ${APIDataSet}    bTestCaseColumn=True    sColumnReference=rowid
-    Write Data To Excel    Correspondence    Deal_Name    &{ExcelPath}[11]    ${Deal_Name}    ${APIDataSet}    bTestCaseColumn=True    sColumnReference=rowid
-    Write Data To Excel    Correspondence    Deal_Name    &{ExcelPath}[12]    ${Deal_Name}    ${APIDataSet}    bTestCaseColumn=True    sColumnReference=rowid
+    Write Data To Excel    Correspondence    Deal_Name    2    ${Deal_Name}    ${APIDataSet}    bTestCaseColumn=True    sColumnReference=rowid
+    Write Data To Excel    Correspondence    Deal_Name    10    ${Deal_Name}    ${APIDataSet}    bTestCaseColumn=True    sColumnReference=rowid
+    Write Data To Excel    Correspondence    Deal_Name    11    ${Deal_Name}    ${APIDataSet}    bTestCaseColumn=True    sColumnReference=rowid
+    Write Data To Excel    Correspondence    Deal_Name    12    ${Deal_Name}    ${APIDataSet}    bTestCaseColumn=True    sColumnReference=rowid
+    Write Data To Excel    Correspondence    Deal_Name    26    ${Deal_Name}    ${APIDataSet}    bTestCaseColumn=True    sColumnReference=rowid
     Select Actions    [Actions];Deal
     Create New Deal    ${Deal_Name}    ${Deal_Alias}    &{ExcelPath}[Deal_Currency]    &{ExcelPath}[Deal_Department]    &{ExcelPath}[Deal_SalesGroup]
     Unrestrict Deal

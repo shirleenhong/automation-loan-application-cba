@@ -72,6 +72,21 @@ Validate Enquire Enterprise Party Details
     Compare Two Arguments    ${sCountry_of_Tax_Domicile}    ${Party_EnquireEnterpriseParty_CountryOfTaxDomicile_Text}
     Compare Two Arguments    ${sCountry_of_Registration}    ${Party_EnquireEnterpriseParty_CountryOfRegistration_Text}  
     
+Navigate Maintain Party Details
+    [Documentation]    This keyword navigates the user to Maintain Party Details page.
+    ...    @author: nbautist
+    [Arguments]    ${sParty_id}
+    Input Text    ${Party_HomePage_Process_TextBox}    ${PARTY_MAINTAIN_PARTY_DETAILS_PAGETITLE}
+    Press Keys    ${Party_HomePage_Process_TextBox}    RETURN
+    Wait Until Browser Ready State
+    Wait Until Keyword Succeeds    10x    2s     Mx Input Text    ${Party_EnquireEnterpriseParty_PartyId_Text}     ${sParty_id}
+    Wait Until Browser Ready State
+    Wait Until Element Is Visible    ${Party_EnquireEnterpriseParty_Next_Button}
+    Wait Until Element Is Enabled    ${Party_EnquireEnterpriseParty_Next_Button}       
+    Mx Click Element    ${Party_EnquireEnterpriseParty_Next_Button}
+    Wait Until Browser Ready State
+    Wait Until Page Contains    ${PARTY_MAINTAIN_PARTY_DETAILS_PAGETITLE}    20s
+
 Select Row That Contains Text
     [Documentation]    This keyword concatenates current date as a unique 7 numeric test data
     ...    @update: gbagregado    30SEPT2020    - add documentation  
@@ -941,3 +956,19 @@ Get Default Zone
     \    Exit For Loop If    '${Zone}'!='${None}'
 
     [Return]    ${Zone}
+
+Enter Short Name and Validate Duplicate Error
+    [Documentation]    This keyword enters the short name in Maintain Party Details and validates if changes can be sent for approval or will prompt duplicate short name error
+    ...    @author: nbautist    29OCT2020    - initial creation
+    [Arguments]    ${Short_Name}
+    
+    Mx Input Text    ${Party_QuickEnterpriseParty_ShortName_TextBox}    ${Short_Name}
+    Capture Page Screenshot    ${screenshot_path}/Screenshots/Party/MaintainPartyDetailsPage-{index}.png
+    Mx Click Element    ${Party_Footer_Next_Button}
+    
+    ### Approval Required Dialog ###
+    ${isApprovalRequired}    Run Keyword And Return Status    Wait Until Page Contains Element    ${Party_QuickEnterpriseParty_ApprovalRequired_Dialog}    30s
+    Run Keyword If    ${isApprovalRequired}==${True}    Run Keywords	Capture Page Screenshot    ${screenshot_path}/Screenshots/Party/PartyApprovalDialog-{index}.png
+    ...    AND	    Mx Click Element    ${Party_QuickEnterpriseParty_AskForApproval_Button}
+    ...    AND	    Wait Until Page Contains Element    ${Party_RaisedMessage_Notification}
+    ...    ELSE    Validate Error Message in Quick Enterprise Party    ${DUPLICATE_SHORTNAME_ERROR_MESSAGE}

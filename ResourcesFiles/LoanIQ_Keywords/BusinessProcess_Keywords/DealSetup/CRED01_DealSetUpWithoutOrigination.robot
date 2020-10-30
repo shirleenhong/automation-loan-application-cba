@@ -16,6 +16,8 @@ Setup a Bilateral Deal
     ...    @UPDATE: kduenas      08OCT2020    - added writing of deal name to corro api dataset for API_COR_TC06
     ...    @update: makcamps     15OCT2020    - added writing of method name in excel
     ...    @UPDATE: kduenas      27OCT2020    - added writing of deal name to corro api dataset for API_COR_TC21
+    ...    @update: makcamps     28OCT2020    - added writing of method name in excel
+    ...    @update: makcamps     29OCT2020    - added writing of deal name to corro api dataset for API_COR_TC14
     [Arguments]    ${ExcelPath}
 
     ###Set Dates for transactions###
@@ -60,6 +62,18 @@ Setup a Bilateral Deal
     Write Data To Excel    SERV29_PaymentFees    ScheduledActivity_DealName    ${rowid}    ${Deal_Name}
     Write Data To Excel    CRED01_DealSetup    Deal_Alias    ${rowid}    ${Deal_Alias}
     
+    ###For Scenario 1 Deal Setup###
+    Run Keyword If    '${SCENARIO}'=='1'   Run Keywords    Write Data To Excel    CRED02_FacilitySetup    Facility_CustomerServicingGroup    ${rowid}    ${ExcelPath}[OwningBranch]
+    ...    AND    Write Data To Excel    CRED02_FacilitySetup    Facility_Currency1    ${rowid}    ${ExcelPath}[Deal_Currency]
+    ...    AND    Write Data To Excel    CRED02_FacilitySetup    Facility_Currency    ${rowid}    ${ExcelPath}[Deal_Currency]
+    ...    AND    Write Data To Excel    CRED02_FacilitySetup    Deal_Currency    ${rowid}    ${ExcelPath}[Deal_Currency]
+    ...    AND    Write Data To Excel    CRED02_FacilitySetup    Facility_SGLocation    ${rowid}    ${ExcelPath}[AdminAgent_Location]
+    ...    AND    Write Data To Excel    CRED02_FacilitySetup    Facility_Customer    ${rowid}    ${ExcelPath}[Deal_AdminAgent]
+    ...    AND    Write Data To Excel    SYND02_PrimaryAllocation    Primary_PortfolioBranch    ${rowid}    ${ExcelPath}[OwningBranch]
+    ...    AND    Write Data To Excel    SYND02_PrimaryAllocation    Primary_LenderLoc1    ${rowid}    ${ExcelPath}[AdminAgent_Location]
+    ...    AND    Write Data To Excel    SYND02_PrimaryAllocation    Primary_Lender1    ${rowid}    ${ExcelPath}[Deal_AdminAgent]
+    ...    AND    Write Data To Excel    SYND02_PrimaryAllocation    FundReceiverDetailCustomer    ${rowid}    ${ExcelPath}[Deal_AdminAgent]
+    
     Run Keyword If    '${SCENARIO}'=='1'   Run Keywords    Write Data To Excel    Correspondence    Deal_Name    ${rowid}    ${Deal_Name}    ${APIDataSet}    bTestCaseColumn=True    sColumnReference=rowid
     ...    AND    Write Data To Excel    Correspondence    Deal_Name    3    ${Deal_Name}    ${APIDataSet}    bTestCaseColumn=True    sColumnReference=rowid
     ...    AND    Write Data To Excel    Correspondence    Deal_Name    5    ${Deal_Name}    ${APIDataSet}    bTestCaseColumn=True    sColumnReference=rowid
@@ -69,6 +83,7 @@ Setup a Bilateral Deal
     ###For Scenario 7###
     Run Keyword If    '${SCENARIO}'=='7'    Run Keywords    Write Data To Excel    SERV35_Terminate_FacilityDeal    Deal_Name    ${rowid}    ${Deal_Name}
     ...    AND    Write Data To Excel    SERV19_UnscheduledPayments    Deal_Name    ${rowid}    ${Deal_Name}
+    ...    AND    Write Data To Excel    Correspondence    Deal_Name    14    ${Deal_Name}    ${APIDataSet}    bTestCaseColumn=True    sColumnReference=rowid
              
     ###New Deal Screen###   
     Create New Deal    ${Deal_Name}    ${Deal_Alias}    &{ExcelPath}[Deal_Currency]    &{ExcelPath}[Deal_Department]    &{ExcelPath}[Deal_SalesGroup]
@@ -549,6 +564,7 @@ Setup Syndicated Deal for Non-Agent and Host Bank
     ...    @update: clanding    13AUG2020    - added writing of Deal to SERV09
     ...    @update: fluberio    12OCT2020    - added condition in Holdiay Creation and Pricing Rules for EU since in EU there are 5 Holiday Calendar and 4 Pricing Options
     ...    @update: fluberio    22OCT2020    - added writing of Deal Name to Notices_UpfrontFee
+    ...    @update: kduenas     29OCT2020    - added writing of deal name to corro api dataset for API_COR_TC15   
     [Arguments]    ${ExcelPath}
     
 	###Switch to Original User###
@@ -571,6 +587,7 @@ Setup Syndicated Deal for Non-Agent and Host Bank
     Write Data to Excel    AMCH05_ExtendMaturityDate    Deal_Name    ${rowid}    ${Deal_Name}
     Write Data to Excel    SERV02_LoanDrawdownNonAgent    Deal_Name    ${rowid}    ${Deal_Name}
     Write Data to Excel    SERV09_LoanRepricing    Deal_Name    ${rowid}    ${Deal_Name}
+    Write Data To Excel    Correspondence    Deal_Name    15    ${Deal_Name}    ${APIDataSet}    bTestCaseColumn=True    sColumnReference=rowid
     Run Keyword If   '${SCENARIO}'=='4' and '&{ExcelPath}[Entity]' == 'EU'    Write Data to Excel    Correspondence    Deal_Name    ${rowid}    ${Deal_Name}
     ${Deal_Name}    Read Data From Excel    CRED01_DealSetup    Deal_Name    ${rowid}
     ${Deal_Alias}    Read Data From Excel    CRED01_DealSetup    Deal_Alias    ${rowid}
@@ -820,6 +837,7 @@ Setup Bilateral Deal with Multiple Risk Type
     ...    @update: rtarayao    26FEB2019    Updated read and write actions; deleted "add deal pricing options"
     ...    @author: bernchua    10JUL2019    Updated passed argument for Add Bank Role keyword
     ...    @update: amansueto    15APR2020    - merged select actions and validate field keywords to Create New Deal
+    ...    @update: kduenas    28OCT2020    added writing of deal name to corro dataset for api_cor_tc13
     [Arguments]    ${ExcelPath}
     
     ###Test Data Generation###
@@ -836,6 +854,7 @@ Setup Bilateral Deal with Multiple Risk Type
     Write Data To Excel    PTRF_CRE01_PortfolioTransfer   Deal_Name    ${rowid}    ${Deal_Name}     
     Write Data To Excel    MTAM06B_CycleShareAdjustment   Deal_Name    ${rowid}    ${Deal_Name} 
     Write Data To Excel    MTAM05B_CycleShareAdjustment   Deal_Name    ${rowid}    ${Deal_Name}
+    Write Data To Excel    Correspondence    Deal_Name    13    ${Deal_Name}    ${APIDataSet}    bTestCaseColumn=True    sColumnReference=rowid
     Write Data To Excel    CRED01_DealSetup    Deal_Alias    ${rowid}    ${Deal_Alias} 
     ${Deal_Name}    Read Data From Excel    CRED01_DealSetup    Deal_Name    ${rowid}  
     ${Deal_Alias}    Read Data From Excel    CRED01_DealSetup    Deal_Alias    ${rowid}
