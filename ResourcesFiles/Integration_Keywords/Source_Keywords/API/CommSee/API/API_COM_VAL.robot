@@ -1174,6 +1174,9 @@ Get Fee Type and Validate Response Per Level
     ...    ${sExp_EffectiveDate}    ${sExp_ExpiryDate}    ${sExp_FeeAlias}    ${sExp_Status}    ${iExp_AccruedToDate}    ${iExp_CycleDue}    ${iExp_PaidToDate}
     ...    ${sExp_DueDate}    ${sExp_AccrualRule}    ${sExp_CycleStartDate}    ${sExp_CycleEndDate}    ${sDelimiter}
     
+    ${iExp_CycleDue}    Run Keyword If    '${ENTITY}'=='EU'    Set Variable    ${iExp_AccruedToDate}
+    ...    ELSE    Set Variable    ${iExp_CycleDue}
+
     ${Response_Payload}    OperatingSystem.Get File    ${datasetpath}${sOutputFilePath}${sOutputFile}.${JSON}
     ${Response_Payload}    Strip String    ${Response_Payload}    mode=left    characters=[
     ${Response_Payload}    Strip String    ${Response_Payload}    mode=right    characters=]
