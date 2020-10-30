@@ -41,8 +41,13 @@ Scenario 1 EU - Initiate Ongoing Fee Payment
     Mx Execute Template With Multiple Data    Update Commitment Fee Cycle    ${ExcelPath}    ${rowid}    SERV29_PaymentFees   
     Log to Console    Pause Execution - Run Daily EOD
     Pause Execution
-    Mx Execute Template With Multiple Data    Pay Commitment Fee Amount    ${ExcelPath}    ${rowid}    SERV29_PaymentFees 
+    Mx Execute Template With Multiple Data    Pay Commitment Fee Amount    ${ExcelPath}    ${rowid}    SERV29_PaymentFees
     
+Scenario 1 EU - Send Ongoing Fee Payment Notices
+    [Tags]    08 Send Ongoing Fee Payment Notices - API_COR_TC05
+    Set Test Variable    ${rowid}    5
+    Mx Execute Template With Multiple Data    Send a SENT Callback for Notice for BILATERAL Deal via WIP    ${ExcelPath}    ${rowid}    Correspondence
+        
 Scenario 1 EU - Create Pricing Change Transaction
     [Tags]    09 Create Pricing Change Transaction - AMCH06
     Mx Execute Template With Multiple Data    Create Pricing Change Transaction    ${ExcelPath}    ${rowid}    AMCH06_PricingChangeTransaction

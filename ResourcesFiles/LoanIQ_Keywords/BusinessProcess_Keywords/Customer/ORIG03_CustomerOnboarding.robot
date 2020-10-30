@@ -471,6 +471,7 @@ Search Customer and Complete its Borrower Profile Creation with default values
     ...    @update: makcamps    15OCT2020    - Added write data to excel method for Scenario 1 and EU Initial Loan Creation
 	...    @update: makcamps    22OCT2020    - Updated write data to excel method for Scenario 1 and EU SERV29
 	...    @update: makcamps    28OCT2020    - Updated write data to excel method for Scenario 1 and EU APICORTC01
+	...    @update: makcamps    30OCT2020    - Updated write data to excel method for Scenario 1 and EU APICORTC05
     [Arguments]    ${ExcelPath}
 	
 	## Login to LoanIQ###
@@ -689,7 +690,7 @@ Search Customer and Complete its Borrower Profile Creation with default values
     ...    AND    Write Data To Excel    SERV01_LoanDrawdown    Loan_Currency    ${rowid}    &{ExcelPath}[RemittanceInstruction_IMTCurrencyUSD]
     ...    AND    Write Data To Excel    SERV18_Payments    Loan_Currency    ${rowid}    &{ExcelPath}[RemittanceInstruction_IMTCurrencyUSD]
     ...    AND    Write Data To Excel    SERV21_InterestPayments    Loan_Currency    ${rowid}    &{ExcelPath}[RemittanceInstruction_IMTCurrencyUSD]
-    ...    AND    Write Data To Excel    SERV29_PaymentFees    Loan_Currency    ${rowid}    &{ExcelPath}[RemittanceInstruction_IMTCurrencyUSD]
+    ...    AND    Write Data To Excel    SERV29_PaymentFees    Currency    ${rowid}    &{ExcelPath}[RemittanceInstruction_IMTCurrencyUSD]
     Close Servicing Group Remittance Instructions Selection List Window    &{ExcelPath}[LIQCustomer_ShortName]
      
     Validate 'Active Customer' Window    &{ExcelPath}[LIQCustomer_ShortName] 
