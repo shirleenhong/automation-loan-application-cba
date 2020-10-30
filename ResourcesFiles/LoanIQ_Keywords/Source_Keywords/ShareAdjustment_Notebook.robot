@@ -249,11 +249,14 @@ View Lender Shares From Payment Window
 View Lender Shares From Interest Payment Window
     [Documentation]    This keyword selects Option > View/Update Lender Shares from Payment Notebook
     ...    @author: ghabal
+    ...    @update: dahijara    12OCT2020    - Removed hardcoded sleep. Added screenshot
     mx LoanIQ activate window    ${LIQ_Payment_Window}
-    Sleep    10s    
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/PaymentWindow
     mx LoanIQ select    ${LIQ_Interest_Options_ViewUpdateLenderShares}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/PaymentWindow
     mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
     mx LoanIQ activate    ${LIQ_SharesFor_Window}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/PaymentWindow
     
 Validate Lender Shares
     [Documentation]    This keyword validates Lender Shares.
@@ -397,3 +400,30 @@ Get Host Bank and Lender Shares
     Save Values of Runtime Execution on Excel File    ${sRunVar_HostBankSharePct}    ${HostBankSharePct_Value}
     Save Values of Runtime Execution on Excel File    ${sRunVar_LenderSharePct}    ${LenderSharePct_Value}
     [Return]    ${HostBankSharePct_Value}    ${LenderSharePct_Value}
+
+Close Lender Shares Window
+    [Documentation]    This keyword closes lender shares Window. 
+    ...    @author: dahijara    12OCT2020    - Initial create
+    ${OKButton_Status}    Run Keyword And Return Status    Element Should Be Enabled    ${LIQ_SharesFor_OK_Button}         
+    Run Keyword If    ${OKButton_Status}==True    Run Keyword    mx LoanIQ click    ${LIQ_SharesFor_OK_Button}
+    Run Keyword If    ${OKButton_Status}==False    Run Keyword    mx LoanIQ click    ${LIQ_SharesFor_Cancel_Button}
+
+Get Host Bank Percentage in Lender Shares Window From Loan Notebook
+    [Documentation]    This keyword navigates from deal notbook to Lender shares and Get the shares percentage for Host bank and Lender.
+    ...    @author: dahijara    25AUG2020    initial create
+    [Arguments]    ${sHostBank_LegalName}    ${sRunVar_HostBankSharePct}=None
+    ###Pre-processing Keyword##
+    ${HostBank_LegalName}    Acquire Argument Value    ${sHostBank_LegalName}
+
+    Mx LoanIQ Activate Window    ${LIQ_Loan_Window}      
+    Mx LoanIQ Select    ${LIQ_LoanNotebook_Options_ViewLenderShares}
+    Mx LoanIQ Activate Window    ${LIQ_LenderShares_Window}
+    ${ColumnName}    Set Variable    <PERCENTAGE> of Global
+    ${HostBankSharePct_Value}    Mx LoanIQ Store TableCell To Clipboard   ${LIQ_LenderShares_PrimariesAssignees_List}    ${HostBank_LegalName}%${ColumnName}%var    Processtimeout=180
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LenderShares
+    ### Convert Percentage to Whole Number ###
+    ${HostBankSharePct_Value}    Evaluate    ${HostBankSharePct_Value}*100
+	Mx LoanIQ Close Window    ${LIQ_LenderShares_Window}
+    ### ConstRuntime Keyword Post-processing ###
+    Save Values of Runtime Execution on Excel File    ${sRunVar_HostBankSharePct}    ${HostBankSharePct_Value}
+    [Return]    ${HostBankSharePct_Value}
