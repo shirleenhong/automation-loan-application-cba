@@ -59,7 +59,8 @@ Select Portfolio Position Based on Portfolio Name and Facility Name for Portfoli
     
 Update Portfolio Settled Discount Change Details
     [Documentation]    This keyword is used to input details in Portfolio Settled Discount Chnage Window
-    ...    @author: dahijara 26OCT2020
+    ...    @author: dahijara 26OCT2020    - Initial create
+    ...    @update: dahijara    29OCT2020    - Added handling for warning messages when entering effective date.
     [Arguments]    ${sEffective_date}    ${sAdjustment_Amount}
     
     ###Pre-processing keywords###
@@ -68,6 +69,8 @@ Update Portfolio Settled Discount Change Details
                   
     Mx LoanIQ Activate Window    ${LIQ_PortfolioSettledDiscountChange_Window}
     Mx LoanIQ Enter    ${LIQ_PortfolioSettledDiscountChange_EffectiveDate}    ${Effective_date}
+    Mx Press Combination    Key.TAB
+    Repeat Keyword    3 times    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
     Mx LoanIQ Enter    ${LIQ_PortfolioSettledDiscountChange_AdjustmentAmount}    ${Adjustment_Amount}
     Mx Press Combination    Key.TAB
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/PortfolioSettledDiscountChange
@@ -75,6 +78,7 @@ Update Portfolio Settled Discount Change Details
 Update GLOffset Details
     [Documentation]    This keyword is used to input details to GLOffset details
     ...    @author: dahijara 26OCT2020
+    ...    @update: dahijara    29OCT2020    - Added handling for warning messages when saving data.
     [Arguments]    ${sGL_ShortName}    ${sGL_Offset_Type}    ${sAwaitingDispose}
     
     ###Pre-processing Keyword###
@@ -100,6 +104,7 @@ Update GLOffset Details
     Mx LoanIQ Click    ${LIQ_DebitGLOffsetDetails_Ok_Button}
     Mx LoanIQ Activate Window    ${LIQ_PortfolioSettledDiscountChange_Window}
     Mx LoanIQ select    ${LIQ_PortfolioSettledDiscountChange_File_Save}
+    Repeat Keyword    3 times    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/OffsetDetails
 
 Navigate to Portfolio Settled Discount Change Workflow and Proceed With Transaction
