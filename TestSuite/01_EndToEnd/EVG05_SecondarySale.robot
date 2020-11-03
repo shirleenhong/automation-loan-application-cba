@@ -44,8 +44,8 @@ Setup Interest Capitalization - SERV13
 Ongoing Fee Payment for Bilateral Deal - SERV29
     [Tags]    07 Update and Pay the Commitment Fee - SERV29
     Mx Execute Template With Multiple Data    Update Commitment Fee Cycle    ${ExcelPath}    ${rowid}    SERV29_PaymentFees   
-    # Log to Console    Pause Execution - Run Daily EOD
-    # Pause Execution    
+    Log to Console    Pause Execution - Run Daily EOD
+    Pause Execution    
     Mx Execute Template With Multiple Data    Pay Commitment Fee Amount - Syndicated with Secondary Sale    ${ExcelPath}    ${rowid}    SERV29_PaymentFees
 
 Create Comprehensive Repricing - SERV08C
