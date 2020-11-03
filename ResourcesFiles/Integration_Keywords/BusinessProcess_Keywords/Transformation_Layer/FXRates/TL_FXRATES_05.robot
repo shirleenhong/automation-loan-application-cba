@@ -8,6 +8,7 @@ Send FXRates GS Group Multiple Files for FIFO
     ...    @author: mnanquil    20MAR2019    - initial create
     ...    @update: mnanquil    11APR2019    - added Login to LoanIQ keyword.
     ...    @update: cfrancis    08AUG2019    - modified keywords to fit scenario and documentation
+    ...    @update: jdelacru    26OCT2020    - used templateFilePath variable for the location of temaplate files
     [Arguments]    ${ExcelPath}
     ###START OF PREREQUISITE###
     Login to Loan IQ    ${TL_USERNAME}    ${TL_PASSWORD}
@@ -15,29 +16,28 @@ Send FXRates GS Group Multiple Files for FIFO
     ${CSVFile}    Set Variable    &{ExcelPath}[InputGSFile]
     ${TransformedDataFile_FXRates}    Set Variable    &{ExcelPath}[InputFilePath]${TL_Transformed_Data_FXRates}
     ${TransformedDataFileXML_FXRates}    Set Variable    &{ExcelPath}[InputFilePath]${TL_Transformed_Data_XMLFXRates}
-    ${TransformedDataFile_Template_FXRates}    Set Variable    &{ExcelPath}[InputFilePath]${TL_Transformed_Data_template_FXRates}
+    ${TransformedDataFile_Template_FXRates}    Set Variable    &{ExcelPath}[TemplateFilePath]${TL_Transformed_Data_template_FXRates}
     ${fundingDesk}    Set Variable    &{ExcelPath}[FundingDesk_1]
     ${InputJSON}    Set Variable    &{ExcelPath}[InputFilePath]&{ExcelPath}[InputJson]
     ${InputFilePath}    Set Variable    &{ExcelPath}[InputFilePath]
     ${FinalLIQDestination}    Set Variable    &{ExcelPath}[Expected_wsFinalLIQDestination]
     ${row}    Generate Single Random Number and Return    1    19
     Create Prerequisite for Multiple FX Files Scenario    ${CSVFile}    ${TransformedDataFile_FXRates}    ${TransformedDataFileXML_FXRates}    ${TransformedDataFile_Template_FXRates}    ${fundingDesk}
-    ...    ${InputJSON}    ${InputFilePath}    ${FinalLIQDestination}
+    ...    ${InputJSON}    ${InputFilePath}    ${FinalLIQDestination}    sTemplateFilePath=&{ExcelPath}[TemplateFilePath]
     ###END OF PREREQUISITE###
     
     Run Keyword And Continue On Failure    Send Multiple Files to SFTP and Validate If Files are Processed    &{ExcelPath}[InputFilePath]    ${TL_FX_FOLDER}    &{ExcelPath}[InputGSFile]    ${TL_FX_ARCHIVE_FOLDER}    iDelayTime=5s
-    ${QueryList}    Get Future Date Record in Holding Table for TL FXRates of Multiple Files    ${ARCHIVE_GSFILENAME_LIST}    ${TransformedDataFile_FXRates}
-    # ${a}    Set Variable    FINASTRA_CCB_FX_NY_FX05A_1_1565254836840_1.csv
-    # ${b}    Set Variable    FINASTRA_CCB_FX_NY_FX05A_2_1565254842954_1.csv
-    # ${GSFilename_ArchiveList}    Create List
-    # Append To List    ${GSFilename_ArchiveList}    ${a}
-    # Append To List    ${GSFilename_ArchiveList}    ${b}
-    # Log    ${GSFilename_ArchiveList}
-    # ${QueryList}    Get Future Date Record in Holding Table for TL FXRates of Multiple Files    ${GSFilename_ArchiveList}    ${TransformedDataFile_FXRates}
-    
+    ${QueryList}    Get Future Date Record in Holding Table for TL FXRates of Multiple Files    ${ARCHIVE_GSFILENAME_LIST}    ${TransformedDataFile_FXRates}  
+
     ###PERFORM EOD###
     # Run Keyword and Continue on Failure    Execute EOD - Daily
     ###END OF EOD###
+    
+    ### Below commented script is a workaround while EOD - Daily is not yet integrated in this highlevel keyword
+    # ${GSFilename_ArchiveList}    Create List
+    # Append To List    ${GSFilename_ArchiveList}    FINASTRA_CCB_FX_NY_FX05_1_1603333807956_1.csv
+    # Append To List    ${GSFilename_ArchiveList}    FINASTRA_CCB_FX_NY_FX05_2_1603333814075_1.csv
+    # Set Global Variable    ${GSFILENAME_WITHTIMESTAMP}    ${GSFilename_ArchiveList}
     
     Run Keyword And Continue On Failure    Validate Multiple Files for Success on TL FX Rates in FFC    &{ExcelPath}[InputFilePath]    &{ExcelPath}[InputJson]    &{ExcelPath}[Expected_wsFinalLIQDestination]    &{ExcelPath}[OutputFilePath]    &{ExcelPath}[OutputFFCResponse]    &{ExcelPath}[Actual_wsFinalLIQDestination]
     ...    ${dataset_path}&{ExcelPath}[InputFilePath]${TL_Transformed_Data_XMLFXRates}    ${fundingDeskStatus}    &{ExcelPath}[Actual_CustomCBAPush_Response]    &{ExcelPath}[Actual_ResponseMechanism]    &{ExcelPath}[InputGSFile]    &{ExcelPath}[FundingDesk_1]

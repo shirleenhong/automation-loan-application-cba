@@ -12,6 +12,7 @@ Initiate Interest Payment
    ...    @update: amansuet    17JUN2020    - replaced navigation keywords that uses locators as inputs
    ...    @update: amansuet    18JUN2020    - updated Release a Cashflow
    ...    @update: amansuet    22JUN2020    - used generic keyword 'Release Cashflow Based on Remittance Instruction'
+   ...    @update: makcamps    23OCT2020    - added condition for EU config for Currency and deleted Release Cashflow
    [Arguments]    ${ExcelPath}   
    ###Navigate to Existing Loan###
    Open Existing Deal    &{ExcelPath}[Deal_Name]
@@ -42,7 +43,8 @@ Initiate Interest Payment
    Verify if Status is set to Do It    &{ExcelPath}[Borrower1_ShortName]  
     
    ##Get Transaction Amount for Cashflow###
-   ${HostBankShare}    Get Host Bank Cash in Cashflow
+   ${HostBankShare}    Run Keyword If   '&{ExcelPath}[Entity]'=='EU'    Get Host Bank Cash in Cashflow    &{ExcelPath}[Loan_Currency]
+   ...    ELSE    Get Host Bank Cash in Cashflow
    ${BorrowerTranAmount}    Get Transaction Amount in Cashflow    &{ExcelPath}[Borrower1_ShortName]
    ${ComputedHBTranAmount}    Compute Lender Share Transaction Amount    ${CycleDue}    &{ExcelPath}[HostBankSharePct]
     
@@ -78,7 +80,6 @@ Initiate Interest Payment
 
    ###Interest Payment Notebook - Workflow Tab###  
    Select Item in Work in Process    Payments    Awaiting Release    Interest Payment     &{ExcelPath}[Facility_Name]
-   Navigate to Payment Workflow and Proceed With Transaction    Release Cashflows
    Release Cashflow Based on Remittance Instruction    &{ExcelPath}[Remittance_Instruction]    &{ExcelPath}[Borrower1_ShortName]    &{ExcelPath}[Cashflow_DataType]    Payment
    Navigate to Payment Workflow and Proceed With Transaction    Release
     

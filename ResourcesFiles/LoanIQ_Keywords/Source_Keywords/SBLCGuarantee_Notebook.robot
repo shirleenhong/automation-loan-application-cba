@@ -58,32 +58,32 @@ Evaluate Issuance Fee
     ...    @author: fmamaril
     ...    @update: ritragel    02SEP2019    Updated documentation
     ...    @update: ritragel    17SEP2020    Setting Default value as Due Date then adding an Option for End Date
-    [Arguments]    ${iGlobalOriginal}    ${Rate}    ${RateBasis}    ${CycleNumber}    ${SystemDate}    ${sAccrualRule}=Pay in Arrears    
- 
+    ...    @update: clanding    30OCT2020    Updated condition on getting ${AccrualRuleDate}
+    [Arguments]    ${iGlobalOriginal}    ${Rate}    ${RateBasis}    ${CycleNumber}    ${SystemDate}    ${sAccrualRule}=Pay in Arrears
     Mx LoanIQ Select Window Tab    ${LIQ_SBLCGuarantee_Tab}    Accrual
     ${StartDate}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_BankGuarantee_Accrual_JavaTree}    ${CycleNumber}%Start Date%startdate
+    Log    ${sAccrualRule}
     ${AccrualRuleDate}    Run Keyword If    '${sAccrualRule}'=='Pay in Arrears'    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_BankGuarantee_Accrual_JavaTree}    ${CycleNumber}%Due Date%duedate
-    ...    ELSE IF    '${sAccrualRule}'=='Pay In Advance'    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_BankGuarantee_Accrual_JavaTree}    ${CycleNumber}%End Date%enddate
+    ...    ELSE IF    '${sAccrualRule}'=='Pay in Advance'    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_BankGuarantee_Accrual_JavaTree}    ${CycleNumber}%End Date%enddate
     Log    ${StartDate}
     Log    ${AccrualRuleDate}
     ${SystemDate}    Convert Date    ${SystemDate}     date_format=%d-%b-%Y
     ${StartDate}    Convert Date    ${StartDate}     date_format=%d-%b-%Y
     ${AccrualRuleDate}    Convert Date    ${AccrualRuleDate}     date_format=%d-%b-%Y
-    
-    ${NumberofDays}    Subtract Date From Date    ${AccrualRuleDate}    ${StartDate}    verbose
-    Log    ${NumberofDays}
-    
-    ${NumberofDays}    Remove String    ${NumberofDays}     days    seconds    day
-    ${NumberofDays}    Convert To Number    ${NumberofDays}
-    ${NumberofDays}    Evaluate    ${NumberofDays}+1
-    
-    Log    ${Rate}
-    Log    ${RateBasis}
-    Log    ${iGlobalOriginal}
-    
-    ${ProjectedCycleDue}    Evaluate    (((${iGlobalOriginal}*${Rate})*${NumberofDays})/${RateBasis})
+    ${Numberof Days1}    Subtract Date From Date    ${SystemDate}    ${StartDate}    verbose
+    ${Numberof Days2}    Subtract Date From Date    ${AccrualRuleDate}    ${StartDate}    verbose
+    Log    ${Numberof Days1}
+    Log    ${Numberof Days2}
+    ${Numberof Days1}    Remove String    ${Numberof Days1}     days    seconds    day
+    ${Numberof Days1}    Convert To Number    ${Numberof Days1}
+    ${Numberof Days2}    Remove String    ${Numberof Days2}     days    seconds    day
+    ${Numberof Days2}    Convert To Number    ${Numberof Days2}
+    ${Numberof Days}   Run Keyword If    '${Numberof Days2}' == '0.0'    Set Variable    ${Numberof Days1}
+    ...    ELSE IF    ${Numberof Days1} > ${Numberof Days2}    Set Variable    ${Numberof Days2}
+    ...    ELSE IF    '${Numberof Days1}' == '${Numberof Days2}'    Set Variable    ${Numberof Days2}
+    ...    ELSE    Set Variable    ${Numberof Days1}
+    ${ProjectedCycleDue}    Evaluate    (((${iGlobalOriginal})*(${Rate}))*(${Numberof Days}))/${RateBasis}
     ${ProjectedCycleDue}    Convert To Number    ${ProjectedCycleDue}    2
-
     [Return]    ${ProjectedCycleDue}
 
 Navigate Existing Standby Letters of Credit

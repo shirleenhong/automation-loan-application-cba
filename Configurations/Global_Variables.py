@@ -20,15 +20,15 @@ LoanIQ = "LoanIQJ.exe"
 Zone_Config = "${dataset_path}\\DataSet\\API_DataSet\\Zone_Config.txt"
 Valid_Status = "${dataset_path}\\DataSet\\API_DataSet\\Valid_STATUS_Config.txt"
 Valid_userLockStatus = "${dataset_path}\\DataSet\\API_DataSet\\Valid_userLockStatus_Config.txt"
-ESSENCE_BRANCH_CONFIG = "${dataset_path}\\DataSet\\API_DataSet\\Essence_Branch_Config.txt"
-ESSENCE_ZONE_CONFIG = "${dataset_path}\\DataSet\\API_DataSet\\Essence_Zone_Config.txt"
-ESSENCE_ROLE_CONFIG = "${dataset_path}\\DataSet\\API_DataSet\\Essence_Role_Config.txt"
-ESSENCE_JOBTITLE_CONFIG = "${dataset_path}\\DataSet\\API_DataSet\\Essence_Job_Title_Config.txt"
-PARTY_BRANCH_CONFIG = "${dataset_path}\\DataSet\\API_DataSet\\Party_Branch_Config.txt"
-PARTY_ROLE_CONFIG = "${dataset_path}\\DataSet\\API_DataSet\\PARTY_Role_Config.txt"
-PARTY_BUSINESSENTITY_CONFIG = "${dataset_path}\\DataSet\\API_DataSet\\PARTY_BusinessEntity_Config.txt"
-PARTY_TITLE_CONFIG = "${dataset_path}\\DataSet\\API_DataSet\\PARTY_Title_Config.txt"
-PARTY_ZONE_CONFIG = "${dataset_path}\\DataSet\\API_DataSet\\PARTY_Zone_Config.txt"
+ESSENCE_BRANCH_CONFIG = "${dataset_path}\\DataSet\\Integration_DataSet\\API\\Essence_Branch_Config.txt"
+ESSENCE_ZONE_CONFIG = "${dataset_path}\\DataSet\\Integration_DataSet\\API\\Essence_Zone_Config.txt"
+ESSENCE_ROLE_CONFIG = "${dataset_path}\\DataSet\\Integration_DataSet\\API\\Essence_Role_Config.txt"
+ESSENCE_JOBTITLE_CONFIG = "${dataset_path}\\DataSet\\Integration_DataSet\\API\\Essence_Job_Title_Config.txt"
+PARTY_BRANCH_CONFIG = "${dataset_path}\\DataSet\\Integration_DataSet\\API\\Party_Branch_Config.txt"
+PARTY_ROLE_CONFIG = "${dataset_path}\\DataSet\\Integration_DataSet\\API\\PARTY_Role_Config.txt"
+PARTY_BUSINESSENTITY_CONFIG = "${dataset_path}\\DataSet\\Integration_DataSet\\API\\PARTY_BusinessEntity_Config.txt"
+PARTY_TITLE_CONFIG = "${dataset_path}\\DataSet\\Integration_DataSet\\API\\PARTY_Title_Config.txt"
+PARTY_ZONE_CONFIG = "${dataset_path}\\DataSet\\Integration_DataSet\\API\\PARTY_Zone_Config.txt"
 LIQ_ROLE_CONFIG = "${dataset_path}\\DataSet\\API_DataSet\\LIQ_Role_Config.txt"
 AD_ROLE_CONFIG = "${dataset_path}\\DataSet\\API_DataSet\\AD_Role_Config.txt"
 LIQ_JOBTITLE_CONFIG = "${dataset_path}\\DataSet\\API_DataSet\\JobFunction_Config.txt"
@@ -219,6 +219,10 @@ SET_FX_RATE_TRANSACTION = "Set F/X Rate"
 MANUALTRANS_TRANSACTION = "ManualTrans"
 MANUAL_GL_TRANSACTION = "Manual GL Transaction"
 MANUAL_CASHFLOW_TRANSACTION = "Manual Cashflow Transaction"
+FACILITIES = "Facilities"
+PORTFOLIO_SETTLED_DISCOUNT_ADJUSTMENT = "Portfolio Settled Discount Adjustment"
+ONGOING_FEE_PAYMENT_TRANSACTION= "Ongoing Fee Payment"
+LOAN_PRINCIPAL_PREPAYMENT_TRANSACTION = "Loan Principal Prepayment"
 
 ### Bank Role ###
 REFERENCE_BANK_ROLE = "Reference Bank"
@@ -316,3 +320,13 @@ N = "N"
 BATCH_TXT_FILENAME = "BATCHSCHED.txt"
 DNA_DAT_FILE_COLUMNS = "C:\\Git_Evergreen\\fms_cba\\DataSet\\Integration_DataSet\\Extracts\\DNA\\DAT_File_Columns.txt"
 DATANET_ASSURANCE_JOB = "DataAssurance"
+
+### LIQ ACTIONS LIST ###
+WORK_IN_PROCESS_ACTIONS = '[Actions];Work In Process'
+
+### PARTY ERROR MESSAGES ###
+DUPLICATE_SHORTNAME_ERROR_MESSAGE = 'Entered Short Name is already in use for Different Party'
+
+### PARTY VARIABLES ###
+TESTCASE_NAME_PARTY = ""
+DUPLICATE_SHORT_NAME = ""

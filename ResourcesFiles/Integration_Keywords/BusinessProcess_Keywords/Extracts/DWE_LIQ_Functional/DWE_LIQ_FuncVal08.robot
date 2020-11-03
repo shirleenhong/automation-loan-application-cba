@@ -7,10 +7,11 @@ ${rowid}    1
 *** Keywords ***
 Validate VLS_OUTSTANDING Extract
     [Documentation]    This keyword is used to validate the fields in VLS_OUTSTANDING CSV vs LIQ Screen  
-    ...    @author: mgaling    19Sep2019    - initial create
+    ...    @author: mgaling    19SEP2019    - initial create
+    ...    @update: mgaling    26OCT2020    - added login and logout to LIQ keywords
     [Arguments]    ${Excelpath}        
     
-    ${CSV_Content}    Read Csv File To List    ${dataset_path}&{Excelpath}[CSV_FilePath]&{ExcelPath}[OUTSTANDING_CSV_FileName].csv    |
+    ${CSV_Content}    Read Csv File To List    &{ExcelPath}[CSV_FilePath]&{ExcelPath}[Business_Date]\\&{ExcelPath}[OUTSTANDING_CSV_FileName]&{ExcelPath}[Business_Date].csv    |
     Log List    ${CSV_Content}
     
     ${header}    Get From List    ${CSV_Content}    0
@@ -36,7 +37,9 @@ Validate VLS_OUTSTANDING Extract
     ${OST_CDE_LOAN_PURP_Index}    Get Index From List    ${header}    OST_CDE_LOAN_PURP
     ${OST_RTE_FC_RATE_Index}    Get Index From List    ${header}    OST_RTE_FC_RATE
     
+    Login to Loan IQ    ${Excelpath}[LIQ_Username]    ${Excelpath}[LIQ_Password]
     Validate CSV values in LIQ for VLS_Outstanding    ${CSV_Content}    ${OST_RID_OUTSTANDNG_Index}    ${OST_DTE_EXPIRY_ENT_Index}    ${OST_DTE_REPRICING_Index}    ${OST_CDE_REPR_FREQ_Index}    ${OST_IND_FLOAT_RATE_Index}
     ...    ${OST_DTE_EFFECTIVE_Index}    ${OST_CDE_ACR_PERIOD_Index}    ${OST_CDE_PRICE_OPT_Index}    ${OST_DTE_EXPIRY_CLC_Index}    ${OST_CDE_CURRENCY_Index}    ${OST_AMT_BANK_NET_Index}
     ...    ${OST_CDE_RISK_TYPE_Index}    ${OST_NME_ALIAS_Index}    ${OST_CID_BORROWER_Index}    ${OST_CDE_OB_ST_CTG_Index}    ${OST_CDE_OBJ_STATE_Index}    ${OST_CDE_PERF_STAT_Index}
     ...    ${OST_AMT_FC_CURRENT_Index}    ${OST_CDE_LOAN_PURP_Index}    ${OST_RTE_FC_RATE_Index}
+    Logout From Loan IQ

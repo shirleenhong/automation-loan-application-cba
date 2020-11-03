@@ -6,7 +6,7 @@ APIDataSet = "C:\\Git_Evergreen\\fms_cba\\DataSet\\Integration_DataSet\\API\\API
 Countries_Codes = '..\\fms_scotia\\DataSet\\Integration_DataSet\\API\\Countries_Codes.xlsx'
 TL_DATASET = "C:\\Git_Evergreen\\fms_cba\\DataSet\\Integration_DataSet\\TL\\TL_Data_Set_EU.xlsx"
 SAPWUL_DATASET = "C:\\Git_evergreen\\fms_cba\\DataSet\\Downstream_DataSet\\SAPWUL\\SAPWUL_Data_Set.xlsx"
-ComSeeDataSet = 'C:\\Git_Evergreen\\fms_cba\\DataSet\\Downstream_DataSet\\ComSee\\COMSEE_Data_Set.xlsx'
+ComSeeDataSet = 'C:\\Git_Evergreen\\fms_cba\\DataSet\\Integration_DataSet\\CommSee\\COMMSEE_Data_Set_EU.xlsx'
 GLExcelPath = "C:\\Git_Evergreen\\fms_cba\\DataSet\\Extract_DataSet\\GL\\EVG_GL_TestData.xlsx"
 PTY_DATASET = "C:\\Git_Evergreen\\fms_cba\\DataSet\\Party_DataSet\\PTY_DataSet_EU.xlsx"
 ExcelPath_API_temp = '..\\CBA_Evergreen\\DataSet\\API_DataSet\\temp.xlsx'
@@ -51,10 +51,10 @@ ESSENCE_PORT_NUMBER = '8080'
 ESSENCE_LINK = '/uxp/rt/html/login.html'
 
 ###Transformation Layer###
-TL_SERVICE_HOST = "mancsleverg0022"
+TL_SERVICE_HOST = "mancsleverg0021"
 TL_SERVICE_PORT = "22"
-TL_SERVER_USER = "micloud"
-TL_SERVER_PASSWORD = "misys123"
+TL_SERVER_USER = "sftpuser2"
+TL_SERVER_PASSWORD = "luckyroll76"
 TL_SERVICE_DIR = "/evgdata/FFC/mch-2.1.3.3.0-6162/config/Transformation1.3.0/"
 TL_SERVICE_LOGS_DIR = "/evgdata/FFC/mch-2.1.3.3.0-6162/config/Transformation1.3.0/logs/"
 
@@ -71,10 +71,13 @@ TEXTJMS_INSTANCE = "distributor_1.3.0"
 GETTEXTJMS_INSTANCE = "distributor_1.3.0"
 CBAINTERFACE_INSTANCE = "CustomInterface_1.3.0"
 CBAPUSH_INSTANCE = "CustomCBAPush_1.3.0"
-CUSTOM_INTERFACE_INSTANCE = "CustomInterface_1.3.0"
+CUSTOM_INTERFACE_INSTANCE = "CustomInterface"
 RESPONSE_MECHANISM_INSTANCE = "responsemechanism_1.3.0"
 DWE_NOTIFICATION_INSTANCE = "dwe_notification_1.3.0"
 SAPWUL_INSTANCE = 'CustomCBAPush_1.3.0'
+TL_CAL_ACK_MESSAGE_SOURCENAME = 'tl_ack_message_splitter_cal'
+CBACorrespUpdateMQ_Instance = 'CustomCBAPush_v1.3.0'
+FFC1CMUpdateSourceMQ_Instance = 'CustomInterface'
 
 ###SFTP###
 SFTP_HOST = "mancsleverg0021"
@@ -126,6 +129,7 @@ SSO_URL = ""
 
 ###COMSEE###
 COM_HOST = 'http://mancsleverg0022:9150'
+ENTITY = 'EU'
 
 ##CORRESPONDENCE##
 CORRES_SERVER = 'http://mancsleverg0022'
@@ -205,3 +209,13 @@ DWE_PASSPHRASE = '0mn1@d@v'
 DWE_TAR_GZ_EXT = '.tar.gz'
 DWE_TAR_GZ_GPG_EXT = '.tar.gz.gpg'
 DWE_CCB_LIQ_ZONE_FILENAME = 'CCB_LIQ_SYD_'
+
+### IDT LIQ SERVER ###
+DBSERVICENAME_LIQ = 'MLLOANIQ.misys.global.ad'
+DBUSERNAME_LIQ = 'system'
+DBPASSWORD_LIQ = 'Ch2vr4n_M1r1th4n'
+DBHOST_LIQ = 'MANCSLEVERG0017'
+DBPORT_LIQ = '1521'
+DBUR_LIQ = 'jdbc:oracle:thin:@//mancsleverg0017:1521/MLLOANIQ.misys.global.ad'
+LIQDBSCHEMA = 'LIQIDT'
+LIQ7474_USER = 'LIQIDT'
