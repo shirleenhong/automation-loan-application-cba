@@ -306,7 +306,7 @@ Compute Commitment Fee Amount Per Cycle
     ...                                      Added Get data for the Balance Amount.
     ...    @update: fmamaril    11SEP2019    
     ...    @update: ehugo    04JUN2020    - added keyword pre-processing and post-processing; added optional runtime argument; added screenshot
-    [Arguments]    ${sPrincipalAmount}    ${sRateBasis}    ${sCycleNumber}    ${sSystemDate}    ${sTotal}=None    ${sRunTimeVar_ProjectedCycleDue}=None
+    [Arguments]    ${sPrincipalAmount}    ${sRateBasis}    ${sCycleNumber}    ${sSystemDate}    ${sTotal}=None    ${sRunTimeVar_ProjectedCycleDue}=None    ${sAccrualRule}=Pay in Arrears
 
     ### GetRuntime Keyword Pre-processing ###
     ${PrincipalAmount}    Acquire Argument Value    ${sPrincipalAmount}
