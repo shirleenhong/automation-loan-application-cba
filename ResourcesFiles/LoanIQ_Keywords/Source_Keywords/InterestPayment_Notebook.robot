@@ -85,7 +85,8 @@ Initiate Loan Interest Payment
     Mx LoanIQ Enter    ${LIQ_Loan_CyclesforLoan_ProRateType_RadioButton}    ON
 
     Get Loan Interest Cycle Dates    ${CycleNumber}
-    Mx LoanIQ Click    ${LIQ_Loan_CyclesforLoan_OK_Button}
+    Mx PressTab    ${LIQ_Loan_CyclesforLoan_OK_Button}  
+    Mx LoanIQ Click    ${LIQ_Loan_CyclesforLoan_OK_Button}        
     Mx LoanIQ Click Element If Present    ${LIQ_Warning_Yes_Button}     
     Mx LoanIQ Activate Window    ${LIQ_Payment_Window}
     Take Screenshot    ${Screenshot_Path}/Screenshots/LoanIQ/InterestPaymentWindow
