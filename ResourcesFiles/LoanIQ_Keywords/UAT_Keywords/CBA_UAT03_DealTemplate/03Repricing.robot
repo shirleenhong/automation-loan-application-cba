@@ -138,9 +138,7 @@ Approve D1 Repricing - D00000476
     Select Item in Work in Process    Outstandings    Awaiting Rate Approval    Loan Repricing    &{ExcelPath}[Facility_Name]
     Navigate Notebook Workflow    ${LIQ_LoanRepricingForDeal_Window}    ${LIQ_LoanRepricingForDeal_Workflow_Tab}    ${LIQ_LoanRepricingForDeal_Workflow_JavaTree}    Rate Approval
     Navigate Notebook Workflow    ${LIQ_LoanRepricingForDeal_Window}    ${LIQ_LoanRepricingForDeal_Workflow_Tab}    ${LIQ_LoanRepricingForDeal_Workflow_JavaTree}    Release Cashflows
-    Run Keyword If    '&{ExcelPath}[rowid]'!='3'    Release Cashflow    &{ExcelPath}[Borrower_ShortName]    release
-    Run Keyword If    '&{ExcelPath}[rowid]'=='3'    Release Cashflow    &{ExcelPath}[Loan_Increase]|${CycleAmount}    release    int
-
+    
     Logout from Loan IQ
     Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
     Select Item in Work in Process    Outstandings    Awaiting Release    Loan Repricing    &{ExcelPath}[Facility_Name]

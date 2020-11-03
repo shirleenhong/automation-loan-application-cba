@@ -17,8 +17,6 @@ Collect LFIA Payment D00000476
     Navigate to Existing Ongoing Fee Notebook    &{ExcelPath}[OngoingFee_Type]
 
     # ### Select Menu Item ###
-    # Update Line Fee Dates    ${LIQ_LineFeeNotebook_Window}    &{ExcelPath}[Effective_Date]    &{ExcelPath}[Rate_Start_Date]    
-    # ...    &{ExcelPath}[Actual_Due]    &{ExcelPath}[Cycle_Frequency]
     Select Menu Item    ${LIQ_LineFeeNotebook_Window}    Options    Payment
     Select Payment in Choose a Payment Window    &{ExcelPath}[Payment_Type]
     Select Cycle for Payment    &{ExcelPath}[Cycle_Number]    &{ExcelPath}[Prorate_With]

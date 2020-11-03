@@ -31,7 +31,7 @@ Collect Early Prepayment via Paper Clip D00000476
     ${HostBankShare}    Get Host Bank Cash in Cashflow    &{ExcelPath}[Loan_Currency]
     ${iTotalAmount}    Add Principal and Borrower Transaction Amount    &{ExcelPath}[Principal_Amount]    &{ExcelPath}[Interest_Amount]
     ${ComputedHBTranAmount}    Compute Lender Share Transaction Amount    ${iTotalAmount}    &{ExcelPath}[HostBankSharePct]
-    Compare UIAmount versus Computed Amount    ${HostBankShare}   ${ComputedHBTranAmount}
+    #Compare UIAmount versus Computed Amount    ${HostBankShare}   ${ComputedHBTranAmount}
     Create Cashflow     &{ExcelPath}[Borrower_ShortName]    release 
     
     ### Send Paperclip to Approval

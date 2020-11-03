@@ -3229,7 +3229,9 @@ Enter Initial Loan Drawdown Spread Rate
     [Documentation]    This keyword will enter a spread rate on initial loan drawdown rates.
     ...    @author: mnanquil
     ...    Jan-07-2018
+    ...    @update: added navigation to rates tab
     [Arguments]    ${spreadRate}
+    Mx LoanIQ Select Window Tab    ${LIQ_InitialDrawdown_Tab}    ${RATES_TAB}
     mx LoanIQ click    ${LIQ_InitialDrawdown_SpreadRate_Button}
     mx LoanIQ enter    ${LIQ_InitialDrawdown_SpreadRate_TextField}    ${spreadRate}
     mx LoanIQ click    ${LIQ_InitialDrawdown_SpreadRate_OKButton}

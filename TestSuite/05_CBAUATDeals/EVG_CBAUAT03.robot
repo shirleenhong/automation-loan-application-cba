@@ -170,7 +170,7 @@ Setup BaseRate for Jan 31
     Mx Execute Template With Multiple Data    Load Base Rate D00000476    ${CBAUAT_ExcelPath}    5    BaseRate_Fields
     
 Initiate Second Rollover for Drawdown A B C - D00000476
-    Mx Execute Template With Multiple Data    Initiate Comprehensive Repricing - D00000476    ${CBAUAT_ExcelPath}    4-6    SERV08C_ComprehensiveRepricing  
+    Mx Execute Template With Multiple Data    Initiate Comprehensive Repricing - D00000476    ${CBAUAT_ExcelPath}    5-6    SERV08C_ComprehensiveRepricing  
 
 # ### February 1
 Extend Facility MOF - D00000476
