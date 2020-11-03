@@ -1170,13 +1170,11 @@ Get Fee Type and Validate Response Per Level
     ...                                      - added passing of accrual rules and paid to date
     ...    @update: cfrancis    20SEP2020    - added passing of cycle start date and cycle end date
     ...    @update: cfrancis    09OCT2020    - added passing of cycle due
+    ...    @update: clanding    02NOV2020    - reverted back the condition for EU
     [Arguments]    ${sOutputFilePath}    ${sOutputFile}    ${sVersion}    ${sExp_Name}    ${sExp_Fee}    ${sExp_Currency}    ${iExp_CurrentRate}
     ...    ${sExp_EffectiveDate}    ${sExp_ExpiryDate}    ${sExp_FeeAlias}    ${sExp_Status}    ${iExp_AccruedToDate}    ${iExp_CycleDue}    ${iExp_PaidToDate}
     ...    ${sExp_DueDate}    ${sExp_AccrualRule}    ${sExp_CycleStartDate}    ${sExp_CycleEndDate}    ${sDelimiter}
     
-    ${iExp_CycleDue}    Run Keyword If    '${ENTITY}'=='EU'    Set Variable    ${iExp_AccruedToDate}
-    ...    ELSE    Set Variable    ${iExp_CycleDue}
-
     ${Response_Payload}    OperatingSystem.Get File    ${datasetpath}${sOutputFilePath}${sOutputFile}.${JSON}
     ${Response_Payload}    Strip String    ${Response_Payload}    mode=left    characters=[
     ${Response_Payload}    Strip String    ${Response_Payload}    mode=right    characters=]
