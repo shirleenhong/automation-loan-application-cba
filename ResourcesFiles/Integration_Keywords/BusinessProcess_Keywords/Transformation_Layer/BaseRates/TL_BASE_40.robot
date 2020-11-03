@@ -9,13 +9,14 @@ Send GS File with Duplicate Record Having Different Rate Value
     ...    Then validate FFC if processing has an error on CustomCBAPush.
     ...    Then validate in LoanIQ if Base Rate Code is not updated.
     ...    @author: cfrancis    04SEP2019    - initial create
+    ...    @update: jdelacru    01NOV2020    - changed the location of templates items for Base Rate by adding variable TemplateFilePath
     [Arguments]    ${ExcelPath}
     
     ###START OF PREREQUISITE###
-    # Login to Loan IQ    ${TL_USERNAME}    ${TL_PASSWORD}
+    Login to Loan IQ    ${TL_USERNAME}    ${TL_PASSWORD}
     ${CSVFile}    Set Variable    &{ExcelPath}[InputFilePath]&{ExcelPath}[InputGSFile]
     ${TransformedDataFile_BaseRate}    Set Variable    &{ExcelPath}[InputFilePath]${TL_Transformed_Data_BaseRate}
-    ${TransformedDataFile_Template_BaseRate}    Set Variable    &{ExcelPath}[InputFilePath]${TL_Transformed_Data_template_BaseRate}
+    ${TransformedDataFile_Template_BaseRate}    Set Variable    &{ExcelPath}[TemplateFilePath]${TL_Transformed_Data_template_BaseRate}
     
     Transform Base Rate CSV Data to XLS File Readable for JSON Creation    ${CSVFile}    ${TransformedDataFile_BaseRate}    ${TransformedDataFile_Template_BaseRate}
     ###END OF PREREQUISITE###
