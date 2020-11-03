@@ -433,6 +433,7 @@ Create Deal - Baseline SBLC
     ...    @update: clanding    17JUL2020    - removed commented code 'Get Current Date and Save on Excel'
     ...    @update: clanding    21JUL2020    - added getting of Branch Code for Primary_PortfolioBranch value and write it to Branch_Code for SERV24_CreateCashflow
     ...                                      - added getting of Method Desc and Method Type from Remittance List and write it to Remittance_Instruction for SERV24_CreateCashflow
+    ...    @update: rmendoza   09OCT2020    - added writting of system date in agreement date
     [Arguments]    ${ExcelPath}
     
     ## Get Table Maintenance Code for Branch
@@ -454,7 +455,8 @@ Create Deal - Baseline SBLC
     Write Data To Excel    CRED01_DealSetup    ApproveDate    ${rowid}    ${CurrentDate}   
     Write Data To Excel    CRED01_DealSetup    CloseDate    ${rowid}    ${CurrentDate}  
     Write Data To Excel    CRED01_DealSetup    ActualDueDate    ${rowid}    ${CurrentDate}   
-    Write Data To Excel    CRED01_DealSetup    Deal_EffectiveDate    ${rowid}    ${CurrentDate} 
+    Write Data To Excel    CRED01_DealSetup    Deal_EffectiveDate    ${rowid}    ${CurrentDate}
+    Write Data To Excel    CRED01_DealSetup    Deal_AgreementDate    ${rowid}    ${CurrentDate}
     Write Data To Excel    CRED02_FacilitySetup    Facility_EffectiveDate    ${rowid}    ${CurrentDate}
     Write Data To Excel    SERV05_SBLCIssuance    Effective_Date    ${rowid}    ${CurrentDate}   
     
