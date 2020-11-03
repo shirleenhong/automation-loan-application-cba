@@ -24,6 +24,17 @@ Validate Currency Pairs
     mx LoanIQ click    ${LIQ_BrowseCurrencyPairs_Exit_Button}    
     mx LoanIQ click    ${LIQ_TableMaintenance_Exit_Button}
 
+Validate Currency Pairs By Funding Desk
+    [Documentation]    This keyword is used to validate currency pairs by funding desk is existing in table maintenance.
+    ...    @author: ccarriedo    27OCT2020    - initial create
+    [Arguments]    ${sToCurrencyVal}    ${sFromCurrencyVal}    ${sFundingDeskVal}
+    mx LoanIQ click    ${LIQ_TableMaintenance_Button}
+    Search in Table Maintenance    Currency Pairs By Funding Desk
+    Run Keyword And Continue On Failure    Mx LoanIQ Select String    ${LIQ_BrowseCurrencyPair_Tree}    ${sFromCurrencyVal}\t${sToCurrencyVal}\t${sFundingDeskVal}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/Currency_Pairs_By_Funding_Desk
+    mx LoanIQ click    ${LIQ_BrowseCurrencyPairs_Exit_Button}    
+    mx LoanIQ click    ${LIQ_TableMaintenance_Exit_Button}
+
 Get Funding Desk Details from Table Maintenance
     [Documentation]    This keyword is used to get funding desk description from table maintenance using cluster from json file.
     ...    @author: clanding
@@ -471,14 +482,13 @@ Get Base Rate Frequency Status from Table Maintenance
 Return Base Rate Frequency Status
     [Documentation]    This keyword return the status of the checkbox of Base Rate Frequency if checked or unchecked.
     ...    @author: jdelacru    05AUG2019    - initial create
+    ...    @update: jdelacru    27OCT2020    - deleted keywords for closing the notebook since close all windows on LIQ should be sufficient
+    ...                                      - added Wait Until Keyword Succeeds in getting the status of active indicator checkbox
     [Arguments]    ${sRepFreq_From_JSON}
     mx LoanIQ activate window    ${LIQ_BaseRateFrequency_Window}
     Mx LoanIQ DoubleClick    ${LIQ_BaseRateFrequency_Tree}    ${sRepFreq_From_JSON}     
     mx LoanIQ activate window    ${LIQ_BaseRateFrequencyUpd_Window}
-    ${BaseRateFrequency_Status}    Get LIQ Checkbox Status    ${LIQ_BaseRateFrequencyUpd_Active_Checkbox}
-    mx LoanIQ click    ${LIQ_BaseRateFrequencyUpd_Cancel_Button}
-    mx LoanIQ close window    ${LIQ_BaseRateFrequency_Window}
-    mx LoanIQ close window    ${LIQ_TableMaintenance_Window}    
+    ${BaseRateFrequency_Status}    Wait Until Keyword Succeeds    5x    5s    Get LIQ Checkbox Status    ${LIQ_BaseRateFrequencyUpd_Active_Checkbox}  
     Close All Windows on LIQ
     [Return]    ${BaseRateFrequency_Status}
 
@@ -573,6 +583,25 @@ Get Branch Code from Table Maintenance
     Log    Portfolio code for ${sBranchDesc} is ${BranchCode}    
     mx LoanIQ click    ${LIQ_Branch_Exit_Button}
     [Return]    ${BranchCode}
+    
+Get Customer Name from Table Maintenance
+    [Documentation]    This keyword returns customer name inside the Table Maintenance
+    ...    @author: fluberio    26OCT2020    Initial Create
+    [Arguments]    ${sBranchDesc}
+    mx LoanIQ click    ${LIQ_TableMaintenance_Button}    
+    Search in Table Maintenance    Branch
+    mx LoanIQ activate window    ${LIQ_Branch_Window}    
+    Mx LoanIQ Set    ${LIQ_Branch_ShowALL_RadioButton}    ON  
+    ${BranchCode}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_Branch_Tree}    ${sBranchDesc}%Code%BranchCode
+    Mx LoanIQ DoubleClick    ${LIQ_Branch_Tree}    ${BranchCode}
+    mx LoanIQ click element if present    ${LIQ_Information_OK_Button}
+    mx LoanIQ click    ${LIQ_Branch_Update_Customer_Name}
+    ${Customer_Name}    Mx LoanIQ Get Data    ${LIQ_Branch_Update_Customer_Name}    text%Customer_Name
+    Log    Customer Name for ${sBranchDesc} is ${Customer_Name}   
+    Take Screenshot    ${Screenshot_Path}/Screenshots/LoanIQ/TableMaintenance_BranchUpdate
+    Mx LoanIQ click    ${LIQ_Branch_Update_Cancel_Button}
+    mx LoanIQ click    ${LIQ_Branch_Exit_Button}
+    [Return]    ${Customer_Name}
 
 Check the Short Name Code in GL Short Name Window
     [Documentation]    This keyword is used to check the Short Name Code in LIQ Screen - G/L Short Name Window
@@ -718,19 +747,21 @@ Validate the Facility Type Code in LIQ
     mx LoanIQ click    ${LIQ_BrowseFacilityType_Update_OK_Button}
       
 Validate the Porfolio Codes in LIQ
-    [Documentation]    This keyword ...
-    ...    @author: mgaling    03Sep2019    Initial Create
+    [Documentation]    This keyword validate the Portfolio Code from CSV in LIQ Portfolio Window
+    ...    @author: mgaling    03SEP2020    - initial create
+    ...    @update: mgaling    15OCT2020    - updated documentation and updated Mx Native Type    {ENTER} keyword into Mx Press Combination    KEY.ENTER
+    ...                                     - added screenshot path
     [Arguments]    ${sRowValue}
     
     mx LoanIQ activate window    ${LIQ_Portfolio_Window}
     ${Row_Desc}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_Portfolio_Tree}    ${sRowValue}%Description%value    
     Mx LoanIQ Select String    ${LIQ_Portfolio_Tree}    ${sRowValue}\t${Row_Desc}
-    Mx Native Type    {ENTER} 
+    Mx Press Combination    KEY.ENTER 
     
     mx LoanIQ activate window    ${LIQ_BrowsePortfolio_Update_Window}
     Mx LoanIQ Verify Runtime Property    ${LIQ_BrowsePortfolio_Update_Code_Field}    text%${sRowValue}
-    Take Screenshot    ${sRowValue}        
-    Log    ${sRowValue} is available   
+    Log    ${sRowValue} is available
+    Take Screenshot    ${screenshot_path}/Screenshots/DWE/${sRowValue}          
     mx LoanIQ close window    ${LIQ_BrowsePortfolio_Update_Window}    
     
     [Return]    ${Row_Desc}

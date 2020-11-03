@@ -117,17 +117,18 @@ Connect to MCH Oracle Database and Return Row Count
 Get Count of Non-Unique Items from Different Tables
     [Documentation]    This keyword is used to retrieve the count of non-unique items from 2 columns of different tables. 
     ...    @author: ehugo    04SEP2019    - initial create
-    [Arguments]    ${ColumnName_SourceTable}    ${SourceTable_Name}    ${ColumnName_ReferenceTable}    ${ReferenceTable_Name}
+    ...    @update: mgaling    23OCT2020    - added branch code filter in the query
+    [Arguments]    ${sColumnName_SourceTable}    ${sSourceTable_Name}    ${sColumnName_ReferenceTable}    ${sReferenceTable_Name}    ${sBranchColumn_ReferenceTable}    ${sBranchCode}
     
-    ${Query}    Set Variable    select count(distinct ${ColumnName_SourceTable}) from ${SourceTable_Name} left join ${ReferenceTable_Name} on ${SourceTable_Name}.${ColumnName_SourceTable} = ${ReferenceTable_Name}.${ColumnName_ReferenceTable} where ${ReferenceTable_Name}.${ColumnName_ReferenceTable} is null having count(*) > 0
+    ${Query}    Set Variable    select count(distinct ${sColumnName_SourceTable}) from ${sSourceTable_Name} left join ${sReferenceTable_Name} on ${sSourceTable_Name}.${sColumnName_SourceTable} = ${sReferenceTable_Name}.${sColumnName_ReferenceTable} where ${sReferenceTable_Name}.${sBranchColumn_ReferenceTable} in (${sBranchCode}) and ${sReferenceTable_Name}.${sColumnName_ReferenceTable} is null having count(*) > 0
     ${Result}    Connect to LIQ Database and Return Results    ${Query}
     
     ${Result}    Convert To String    ${Result}
     ${Result}=    Remove String    ${Result}    [    (    ,    )    ]
     
     ${Result_isEmpty}    Run Keyword And Return Status    Should Be Empty    ${Result}
-    Run Keyword If     ${Result_isEmpty}==False    Run Keyword And Continue On Failure    Fail    ${ColumnName_SourceTable}: Non-unique item count is not equal to 0. Current count is ${Result}.
-    ...    ELSE    Log    ${ColumnName_SourceTable}: Non-unique item count is equal to ${Result}.
+    Run Keyword If     ${Result_isEmpty}==${False}    Run Keyword And Continue On Failure    FAIL    ${sColumnName_SourceTable}: Non-unique item count is not equal to 0. Current count is ${Result}.
+    ...    ELSE    Log    ${sColumnName_SourceTable}: Non-unique item count is equal to ${Result}.
     
 Connect to Essence Database and Execute Query and Return List
     [Documentation]    This keyword is used to connect to Essence and Global database and perform query and return query results as a list.

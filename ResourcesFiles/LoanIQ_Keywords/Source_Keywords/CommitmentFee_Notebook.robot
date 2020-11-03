@@ -257,9 +257,12 @@ Run Online Acrual to Commitment Fee
     [Documentation]    This keyword runs the online accrual for commitment fee.
     ...    @author: fmamaril
     ...    @update: fmamaril    18SEP2019    Add click to toogle inquiry mode
-    ...    @update: ehugo    04JUN2020    - added screenshot
+    ...    @update: ehugo    	04JUN2020    - added screenshot
     ...    @update: dahijara    16JUL2020    - Fix warnings - too many variables assigned in Mx LoanIQ Click Button On Window
+    ...    @update: makcamps	22OCT2020	 - added click warning buttons if present
     mx LoanIQ activate window    ${LIQ_CommitmentFee_Window}
+    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
+    mx LoanIQ click element if present    ${LIQ_Warning_OK_Button}
     Mx LoanIQ Select Window Tab    ${LIQ_CommitmentFee_Tab}    Workflow
     mx LoanIQ click element if present    ${LIQ_OngoingFee_InquiryMode_Button}
     mx LoanIQ select    ${LIQ_CommitmentFee_OnlineAcrual_Menu}
@@ -1597,11 +1600,13 @@ Get Fee Cycle Due Amount
 Get Fee Paid to Date Amount
     [Documentation]    This keyword returns the Fee total paid to date amount.
     ...    @author: cfrancis    18SEP2020    - Initial Create
+    ...    @update: clanding    28OCT2020    - added condition for EU entity
     [Arguments]    ${sLIQ_Fee_Window}    ${sLIQ_Fee_Tab_Locator}    ${sLIQ_Fee_Accrual_Cycles_JavaTree_Locator}
     mx LoanIQ activate window    ${sLIQ_Fee_Window}
-    # Mx LoanIQ Select Window Tab    ${sLIQ_Fee_Tab_Locator}    Accrual
     ${rowcount}    Mx LoanIQ Get Data    ${sLIQ_Fee_Accrual_Cycles_JavaTree_Locator}    input=items count%value
     ${rowcount}    Evaluate    ${rowcount} - 2
+    ${rowcount}    Run Keyword If    '${ENTITY}'=='EU'    Set Variable    1
+    ...    ELSE    Set Variable    ${rowcount}
     Log    The total rowcount is ${rowcount}
     ${PaidtodateAmount}    Mx LoanIQ Store TableCell To Clipboard    ${sLIQ_Fee_Accrual_Cycles_JavaTree_Locator}    ${rowcount}%Paid to date%amount
     Log    The Fee Paid to Date amount is ${PaidtodateAmount} 

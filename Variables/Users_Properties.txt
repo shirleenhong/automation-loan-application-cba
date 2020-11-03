@@ -1,5 +1,6 @@
 *** Settings ***
 Resource    ../Configurations/LoanIQ_Import_File.robot
+
 *** Variables ***
 
 #INPUT AND OUTPUT FOLDER PATHS
@@ -80,9 +81,16 @@ ${ROUTEROPTION_DELETELIQLOBUSER}    DELETELIQLOBUSER
 ${ROUTEROPTION_LIQRESPONSE}    LIQResponse
 ${ROUTEROPTION_GETLIQUSER}    GETLIQUSERBYID
 ${ROUTEROPTION_GETLIQUSERALL}    GETLIQUSERALL
+${ROUTEROPTION_PLATFORMUSERREPLY}    PlatformUserReply
+${ROUTEROPTION_ADLOBFLOW}    ADLOBFlow
 
 ${QName_Error_Users}    errorLogQueue
 ${QName_Upsert_Users}    adUpsertUpdate
+
+${DEST_WSFINALLIQDESTINATION}    WSLIQFinalDestination
+${DEST_WSPARTYDELETEUSER}    WSPartyDeleteUserDestination
+${DEST_WSESSENCEDELETEUSER}    WSEssenceDeleteUserDestination
+${DEST_DISTERROR}    DistErrorLog
 
 ##LOAN IQ Admin
 ${UserName_FXRates}    ADMIN1

@@ -58,11 +58,13 @@ Evaluate Issuance Fee
     ...    @author: fmamaril
     ...    @update: ritragel    02SEP2019    Updated documentation
     ...    @update: ritragel    17SEP2020    Setting Default value as Due Date then adding an Option for End Date
+    ...    @update: clanding    30OCT2020    Updated condition on getting ${AccrualRuleDate}
     [Arguments]    ${iGlobalOriginal}    ${Rate}    ${RateBasis}    ${CycleNumber}    ${SystemDate}    ${sAccrualRule}=Pay in Arrears
     Mx LoanIQ Select Window Tab    ${LIQ_SBLCGuarantee_Tab}    Accrual
     ${StartDate}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_BankGuarantee_Accrual_JavaTree}    ${CycleNumber}%Start Date%startdate
+    Log    ${sAccrualRule}
     ${AccrualRuleDate}    Run Keyword If    '${sAccrualRule}'=='Pay in Arrears'    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_BankGuarantee_Accrual_JavaTree}    ${CycleNumber}%Due Date%duedate
-    ${AccrualRuleDate}    Run Keyword If    '${sAccrualRule}'=='Pay in Advance'    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_BankGuarantee_Accrual_JavaTree}    ${CycleNumber}%End Date%enddate
+    ...    ELSE IF    '${sAccrualRule}'=='Pay in Advance'    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_BankGuarantee_Accrual_JavaTree}    ${CycleNumber}%End Date%enddate
     Log    ${StartDate}
     Log    ${AccrualRuleDate}
     ${SystemDate}    Convert Date    ${SystemDate}     date_format=%d-%b-%Y

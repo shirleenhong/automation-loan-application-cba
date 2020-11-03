@@ -145,3 +145,21 @@ BUS_Validate Repayment Schedule Last Payment Remaining Value
     ...    @author: hstone    29JUL2020    - initial create
 
     Run Keyword   Validate Repayment Schedule Last Payment Remaining Value    ${ARGUMENT_1}
+
+BUS_Validate Updated Loan Amount After Payment - Capitalized Ongoing Fee
+    [Documentation]    This keyword is used to run the assigned low level keyword.
+    ...    @author: hstone    29JUL2020    - initial create
+
+    Run Keyword    Validate Updated Loan Amount After Payment - Capitalized Ongoing Fee    ${ARGUMENT_1}    ${ARGUMENT_2}    ${ARGUMENT_3}    ${ARGUMENT_4}    ${ARGUMENT_5}    ${ARGUMENT_6}    ${ARGUMENT_7}
+
+BUS_Validate Loan Events Tab after Payment - Capiltalized Ongoing Fee
+    [Documentation]    This keyword is used to run the assigned low level keyword.
+    ...    @author: hstone    29JUL2020    - initial create
+
+    Run Keyword    Validate Loan Events Tab after Payment - Capiltalized Ongoing Fee
+
+BUS_Validate Loan Pending Tab- Capitalized Ongoing Fee
+    [Documentation]    This keyword is used to run the assigned low level keyword.
+    ...    @author: hstone    29JUL2020    - initial create
+
+    Run Keyword    Validate Loan Pending Tab- Capitalized Ongoing Fee
