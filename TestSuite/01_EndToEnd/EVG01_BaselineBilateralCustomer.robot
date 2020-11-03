@@ -40,7 +40,7 @@ Initiate Ongoing Fee Payment - SERV29
     [Tags]    05 Initiate Ongoing Fee Payment - SERV29
     Mx Execute Template With Multiple Data    Update Commitment Fee Cycle    ${ExcelPath}    ${rowid}    SERV29_PaymentFees   
     Log to Console    Pause Execution - Run Daily EOD
-    #Pause Execution
+    Pause Execution
     Mx Execute Template With Multiple Data    Pay Commitment Fee Amount    ${ExcelPath}    ${rowid}    SERV29_PaymentFees 
     
 Create Pricing Change Transaction - AMCH06
