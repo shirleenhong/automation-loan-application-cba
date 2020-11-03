@@ -86,7 +86,6 @@ Set Sell Amount and Percent of Deal
     ${CurrentDealAmount}    Mx LoanIQ Get Data    ${LIQ_OrigPrimaries_CurrentDealAmount_Textfield}    value%amount
     ${CurrentDealAmount}    Remove String    ${CurrentDealAmount}    ,
     ${CurrentDealAmount}    Convert To Number    ${CurrentDealAmount}
-    Mx LoanIQ Click    ${LIQ_OrigPrimaries_SellAmount_Textfield}    
     ${SellAmountUI}    Mx LoanIQ Get Data    ${LIQ_OrigPrimaries_SellAmount_Textfield}    value%amount
     
     ${PercentOfDeal}    Remove Comma and Convert to Number    ${PercentOfDeal}
