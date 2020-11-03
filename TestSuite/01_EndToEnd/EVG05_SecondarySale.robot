@@ -10,15 +10,15 @@ Create Quick Party Onboarding - PTY001
     [Tags]    01 Create Party within Common Party - PTY001
     Mx Execute Template With Multiple Data    Create Party in Quick Party Onboarding    ${ExcelPath}    ${rowid}    PTY001_QuickPartyOnboarding
     
-Create Customer within Loan IQ - ORIG03
-    [Documentation]    This keyword creates Customer within LoanIQ
-    ...    when using this, the following keywords(validations) should be disabled in the succeeding keyword 'Search Customer and Complete its Borrower Profile Creation - ORIG03'
-    ...    -> Read Excel Data and Validate Customer ID, Short Name and Legal Name fields
-    ...    -> Check Legal Address Details Under Profiles Tab
-    ...    @author: ghabal
-    [Tags]    01 Create Customer within Loan IQ - ORIG03
-    Set Test Variable    ${rowid}    1
-    Mx Execute Template With Multiple Data    Create Customer within Loan IQ    ${ExcelPath}    ${rowid}    ORIG03_Customer
+# Create Customer within Loan IQ - ORIG03
+    # [Documentation]    This keyword creates Customer within LoanIQ
+    # ...    when using this, the following keywords(validations) should be disabled in the succeeding keyword 'Search Customer and Complete its Borrower Profile Creation - ORIG03'
+    # ...    -> Read Excel Data and Validate Customer ID, Short Name and Legal Name fields
+    # ...    -> Check Legal Address Details Under Profiles Tab
+    # ...    @author: ghabal
+    # [Tags]    01 Create Customer within Loan IQ - ORIG03
+    # Set Test Variable    ${rowid}    1
+    # Mx Execute Template With Multiple Data    Create Customer within Loan IQ    ${ExcelPath}    ${rowid}    ORIG03_Customer
 
 Search Customer and Complete its Borrower Profile Creation - ORIG03
     [Tags]    02 Search customer and complete its Borrower Profile creatio - ORIG03
@@ -41,16 +41,16 @@ Setup Interest Capitalization - SERV13
     Log to Console    Pause Execution - Run Monthly EOD
     Pause Execution
 
-Create Comprehensive Repricing - SERV08C
-    [Tags]    05 Create a Comprehensive Repricing of a Loan apart of Interest Payment - SERV08 & SERV21
-    Mx Execute Template With Multiple Data    Create Comprehensive Repricing for Syndicated Deal - Secondary Sale    ${ExcelPath}    ${rowid}    SERV08C_ComprehensiveRepricing
-
 Ongoing Fee Payment for Bilateral Deal - SERV29
     [Tags]    07 Update and Pay the Commitment Fee - SERV29
     Mx Execute Template With Multiple Data    Update Commitment Fee Cycle    ${ExcelPath}    ${rowid}    SERV29_PaymentFees   
     Log to Console    Pause Execution - Run Daily EOD
     Pause Execution    
     Mx Execute Template With Multiple Data    Pay Commitment Fee Amount - Syndicated with Secondary Sale    ${ExcelPath}    ${rowid}    SERV29_PaymentFees
+
+Create Comprehensive Repricing - SERV08C
+    [Tags]    05 Create a Comprehensive Repricing of a Loan apart of Interest Payment - SERV08 & SERV21
+    Mx Execute Template With Multiple Data    Create Comprehensive Repricing for Syndicated Deal - Secondary Sale    ${ExcelPath}    ${rowid}    SERV08C_ComprehensiveRepricing
 
 Create Agency Fee Payment - SERV30
     [Tags]    08 Create Agency Fee Payment - SERV30
@@ -67,6 +67,8 @@ Create Loan Share Adjustment - MTAM08
 Create Term Loan Drawdown for Syndicated Deal in USD - SERV01
     [Tags]    11 Create Term Loan Drawdown for SYNDICATED deal in USD - SERV01
     Mx Execute Template With Multiple Data    Create Term Loan Drawdown for SYNDICATED deal in USD    ${ExcelPath}    ${rowid}    SERV01_TermLoanDrawdowninUSD
+    Log to Console    Pause Execution - Run Daily EOD
+    Pause Execution    
     
 Create Repricing for Conversion of Interest Type - SERV10
     [Tags]    12 Create a Comprehensive Repricing of a Loan for conversion of interest type - SERV10

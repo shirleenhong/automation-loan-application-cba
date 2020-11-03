@@ -464,6 +464,7 @@ Search Customer and Complete its Borrower Profile Creation with default values
     ...    @update: hstone     04MAY2020    - Updated 'Add Classification Code Details under General tab' Arguments to take Excel Data Values
     ...    @update: dahijara    07JUL2020    - added writing in SERV23_LoanPaperClip for Borrower1_RTGSRemittanceDescription
     ...    @update: dahijara    08JUL2020    - added writing for scenario 6 - SERV29_PaymentFees-Borrower1_ContactEmail
+    ...    @update: aramos      23OCT2020    - Update Write Remittance Description to add condition not to run it for Scenario 5 / Took out Mx LOANIQ Click ServicingGroupWindow_ExitButton after Close Servicing Group Remittance Instructions Selection List Window
     [Arguments]    ${ExcelPath}
 	
 	## Login to LoanIQ###
@@ -484,7 +485,9 @@ Search Customer and Complete its Borrower Profile Creation with default values
 	Write Data To Excel    ORIG03_Customer    RemittanceInstruction_IMTDescriptionUSD    ${rowid}    ${RemittanceInstruction_IMTDescriptionUSD}
 	Write Data To Excel    ORIG03_Customer    RemittanceInstruction_RTGSDescriptionAUD    ${rowid}    ${RemittanceInstruction_RTGSDescriptionAUD}
 	
-	Write Remittance Description    ${SCENARIO}    &{ExcelPath}[Remittance_Instruction]    ${RemittanceInstruction_DDADescriptionAUD}    ${RemittanceInstruction_IMTDescriptionUSD}    ${RemittanceInstruction_RTGSDescriptionAUD}
+
+    Log    ${SCENARIO}	
+	Run Keyword if     ${SCENARIO}!=5    Write Remittance Description    ${SCENARIO}    &{ExcelPath}[Remittance_Instruction]    ${RemittanceInstruction_DDADescriptionAUD}    ${RemittanceInstruction_IMTDescriptionUSD}    ${RemittanceInstruction_RTGSDescriptionAUD}
 
 	###Searching Customer 	
     Search Customer    &{ExcelPath}[Customer_Search]    &{ExcelPath}[LIQCustomer_ID]    &{ExcelPath}[LIQCustomer_ShortName]          
@@ -651,8 +654,7 @@ Search Customer and Complete its Borrower Profile Creation with default values
     Add Remittance Instruction to Servicing Group    ${RemittanceInstruction_RTGSDescriptionAUD}
     
     Close Servicing Group Remittance Instructions Selection List Window    &{ExcelPath}[LIQCustomer_ShortName]
-     
-    mx LoanIQ click    ${ServicingGroupWindow_ExitButton}
+    
     Validate 'Active Customer' Window    &{ExcelPath}[LIQCustomer_ShortName] 
         
     ###Saving Customer Details
