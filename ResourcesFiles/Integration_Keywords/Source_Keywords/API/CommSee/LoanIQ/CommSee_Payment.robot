@@ -132,8 +132,8 @@ Pay SBLC Issuance - ComSee
     ${IssuanceFee_AccruedToDate}    Get Issuance Accrued to Date Amount
     ${IssuanceFee_AccruedToDate}    Remove Comma and Convert to Number    ${IssuanceFee_AccruedToDate}
     ${OngoingFee_CycleDue}    Get Fee Cycle Due Amount    ${LIQ_SBLCGuarantee_Window_Tab}    ${LIQ_SBLCGuarantee_Window_Tab}    ${LIQ_BankGuarantee_Accrual_JavaTree}
-    Write Data To Excel    ComSee_SC3_IssuanceFeePayment    Fee_AccruedToDate    ${rowid}    ${OngoingFee_CycleDue}    ${ComSeeDataSet}
-    Write Data To Excel    ComSee_SC3_IssuanceFeePayment    Fee_PaidToDate    ${rowid}    ${IssuanceFee_AccruedToDate}    ${ComSeeDataSet}
+    Write Data To Excel    ComSee_SC3_IssuanceFeePayment    Fee_CycleDue    ${rowid}    ${OngoingFee_CycleDue}    ${ComSeeDataSet}
+    Write Data To Excel    ComSee_SC3_IssuanceFeePayment    Fee_AccruedToDate    ${rowid}    ${IssuanceFee_AccruedToDate}    ${ComSeeDataSet}
     
     ${IssuanceFee_PaidToDate}    Get Issuance Paid to Date Amount
     ${IssuanceFee_PaidToDate}    Remove Comma and Convert to Number    ${IssuanceFee_PaidToDate}
