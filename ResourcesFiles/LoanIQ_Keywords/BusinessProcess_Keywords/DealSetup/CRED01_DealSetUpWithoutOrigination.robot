@@ -59,7 +59,7 @@ Setup a Bilateral Deal
     Write Data To Excel    SERV29_PaymentFees    Deal_Name    ${rowid}    ${Deal_Name}
     Write Data To Excel    SERV29_PaymentFees    ScheduledActivity_DealName    ${rowid}    ${Deal_Name}
     Write Data To Excel    CRED01_DealSetup    Deal_Alias    ${rowid}    ${Deal_Alias}
-    
+
     Run Keyword If    '${SCENARIO}'=='1'   Run Keywords    Write Data To Excel    Correspondence    Deal_Name    ${rowid}    ${Deal_Name}    ${APIDataSet}    bTestCaseColumn=True    sColumnReference=rowid
     ...    AND    Write Data To Excel    Correspondence    Deal_Name    3    ${Deal_Name}    ${APIDataSet}    bTestCaseColumn=True    sColumnReference=rowid
     ...    AND    Write Data To Excel    Correspondence    Deal_Name    5    ${Deal_Name}    ${APIDataSet}    bTestCaseColumn=True    sColumnReference=rowid
@@ -571,7 +571,8 @@ Setup Syndicated Deal for Non-Agent and Host Bank
     Write Data to Excel    AMCH05_ExtendMaturityDate    Deal_Name    ${rowid}    ${Deal_Name}
     Write Data to Excel    SERV02_LoanDrawdownNonAgent    Deal_Name    ${rowid}    ${Deal_Name}
     Write Data to Excel    SERV09_LoanRepricing    Deal_Name    ${rowid}    ${Deal_Name}
-    Run Keyword If   '${SCENARIO}'=='4' and '&{ExcelPath}[Entity]' == 'EU'    Write Data to Excel    Correspondence    Deal_Name    ${rowid}    ${Deal_Name}
+    Run Keyword If   '${SCENARIO}'=='4' and '&{ExcelPath}[Entity]' == 'EU'    Run Keywords    Write Data to Excel    Correspondence    Deal_Name    ${rowid}    ${Deal_Name}
+    ...    AND    Write Data To Excel    SERV02_LoanDrawdownNonAgent    Deal_Name    ${rowid}   ${Deal_Name}    multipleValue=Y
     ${Deal_Name}    Read Data From Excel    CRED01_DealSetup    Deal_Name    ${rowid}
     ${Deal_Alias}    Read Data From Excel    CRED01_DealSetup    Deal_Alias    ${rowid}
     
@@ -664,7 +665,8 @@ Create Revolver Facility
 	Write Data To Excel    AMCH02_LenderShareAdjustment    Facility_Name    ${rowid}    ${Facility_Name}
 	Write Data to Excel    AMCH05_ExtendMaturityDate    Facility_Name    ${rowid}    ${Facility_Name}
 	Write Data to Excel    SERV02_LoanDrawdownNonAgent    Facility_Name    ${rowid}    ${Facility_Name}
-	Run Keyword If   '${SCENARIO}'=='4' and '&{ExcelPath}[Entity]' == 'EU'    Write Data to Excel    Correspondence    Facility_Name    ${rowid}    ${Facility_Name}
+	Run Keyword If   '${SCENARIO}'=='4' and '&{ExcelPath}[Entity]' == 'EU'    Run Keywords    Write Data to Excel    Correspondence    Facility_Name    ${rowid}    ${Facility_Name}
+	...    AND     Write Data To Excel    SERV02_LoanDrawdownNonAgent    Facility_Name    ${rowid}   ${Facility_Name}    multipleValue=Y
 	Set To Dictionary    ${ExcelPath}    Facility_Name=${FacilityName}
 	
 	###Add Revolver Facility###
@@ -691,6 +693,9 @@ Create Revolver Facility
     
     ###Facility Notebook - Restrictions###
     Add Facility Currency    &{ExcelPath}[Facility_Currency]
+    Run Keyword If   '${SCENARIO}'=='4' and '&{ExcelPath}[Entity]' == 'EU'    Run Keywords    Add Facility Currency    &{ExcelPath}[Facility_Currency2]
+    ...    AND    Add Facility Currency    &{ExcelPath}[Facility_Currency3]
+    ...    AND    Add Facility Currency    &{ExcelPath}[Facility_Currency4]
     
     ###Facility Notebook - Sublimit/Cust###
     Add Borrower    &{ExcelPath}[Facility_Currency]    &{ExcelPath}[Facility_BorrowerSGName]    &{ExcelPath}[Facility_BorrowerPercent]    &{ExcelPath}[Borrower_ShortName]    &{ExcelPath}[Facility_GlobalLimit]    &{ExcelPath}[Facility_BorrowerMaturity]    ${SystemDate} 

@@ -1,0 +1,51 @@
+<liqInfo>
+    {"event_schema_id":"2148","event":{"header":{"correlationId":"LIQ-QJEJ33BA-QJEJ338J-2","processPath":{"array":[{"source":"FINASTRA_CCB","timestamp":"2020-11-03T18:37:41.645+08:00"}]}},"sourceSystem":{"string":"FINASTRA_CCB"},"ttl":{"au.com.cba.avro.customermanagement.noticesnotify.ttl":{"ttlDuration":"300","ttlSourceTime":"2020-11-03T18:37:41.645+08:00"}},"cifIds":{"array":[{"string":"9"}]},"documentInfo":{"documentPackage":{"businessChannel":"LOANIQ","name":null,"version":null,"templateId":null,"fileType":null,"content":"
+    <FinastraApplication>
+        <StandardNotice>
+            <ProcessingArea>EUOPS</ProcessingArea>
+            <Address>
+                <line>Date: 03-Nov-2020</line>
+                <line>TO  : LENDLEG0414</line>
+                <line>ATTN: Lending NHB</line>
+                <line>Re  : Establishment/Extension Fee for CBANLD_03112020160326YZJ</line>
+            </Address>
+            <BodyContent>
+                <section>
+                    <line>                                *** FEE INVOICE ***</line>
+                    <line/>
+                    <line>Description: Establishment/Extension Fee </line>
+                    <line/>
+                    <line>In accordance with the facility agreement, we advise the following.</line>
+                    <line/>
+                    <line>Effective 03-Nov-2020, Establishment/Extension Fee totalling EUR 5,000.00 are due.</line>
+                </section>
+                <section>
+                    <line>Fee                                Amount                Total</line>
+                    <line>____________________ ____________________ ____________________</line>
+                    <line/>
+                    <line>Establishment/Extens             5,000.00             5,000.00</line>
+                    <line>ion Fee                                                       </line>
+                    <line>____________________ ____________________ ____________________</line>
+                    <line/>
+                    <line>TOTAL:                           5,000.00             5,000.00</line>
+                </section>
+                <section>
+                    <line>Please remit EUR 5,000.00 into our nominated account below for value on the effective date.</line>
+                </section>
+                <section>
+                    <line>For: LENDLEG0414</line>
+                    <line>Correspondent Bank: BANK OF NEW YORK MELLON SA/NV, AMSTERDAM BRANCH (Swift ID: BNYMNL22XXX) </line>
+                    <line>Account Name: CBA Amsterdam</line>
+                </section>
+                <section>
+                    <line>Reference: EUOPS1000733</line>
+                </section>
+                <section>
+                    <line/>
+                </section>
+            </BodyContent>
+        </StandardNotice>
+    </FinastraApplication>
+    "},"documentStorage":{"status":null,"fileName":null,"inputSource":null,"inputSourceDetail":null,"scanDate":null,"departmentId":{"string":"BG_COL"},"retrievalId":null,"documentumType":null,"applicationNumber":null,"purgeDate":null,"boxLocation":null,"recordManager":null,"description":null,"processes":{"array":[{"string":"QJEJ338J"}]},"services":{"array":[{"string":"1000733"}]},"accountNumbers":{"array":[{"source":{"string":"LOANIQ"},"productCode":{"string":"DEA"},"number":{"string":"1000733"}}]},"processFlags":{"array":[{"name":null,"value":null}]}}},"emailSecureMessageDetails":{"subject":"1000733 CBANLD_03112020160326YZJ","senderEmail":"NON-AGENCY@CBA.AU.COM","toRecipientEmail":"lending@cba.com.au","ccRecipientEmail":{"string":"JOHN.DOE_1@CBA.AU.COM"},"mimeType":null,"messageID":"LIQ-QJEJ33BA-QJEJ338J-2","body":null,"attachment":null,"inBandAttachment":null,"deliveredToEmail":null,"undeliveredToEmail":null,"systemCode":null,"systemName":null,"identifier":{"string":"EUOPS"},"digitalSignature":null}}}
+
+</liqInfo>

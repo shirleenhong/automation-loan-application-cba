@@ -33,6 +33,7 @@ Create Party in Quick Party Onboarding
     ...    @update: javinzon    20OCT2020    - Added Write Data To Excel keyword for Shortname of PTY009_DuplicateShortName    
     ...    @update: makcamps    22OCT2020    - Updated Write Data To Excel keyword for Party ID of Scenario 1
     ...    @update: javinzon    22OCT2020    - Updated Documentation and removed Write Data To Excel for PTY009_DuplicateShortName and PTY007_DuplicateEnterpriseName
+    ...    @update: fluberio    03NOV2020    - Added Write Date to Excel for Scenario 4 in EU
     [Arguments]    ${ExcelPath}
     
     ### INPUTTER ###
@@ -162,6 +163,20 @@ Create Party in Quick Party Onboarding
     ...    AND    Write Data To Excel    CRED09_AdminFee    Borrower_ShortName    ${rowid}    ${Enterprise_Name}
     ...    AND    Write Data To Excel    SERV01_LoanDrawdown    Borrower_ShortName    ${rowid}    ${Enterprise_Name}
     ...    AND    Write Data To Excel    SERV22_InterestPayments    Borrower_ShortName    ${rowid}    ${Enterprise_Name}
+   
+    Run Keyword If    '${SCENARIO}'=='4' and  '${Entity}'=='EU-EU'   Run Keywords    Write Data To Excel    CRED01_DealSetup    Borrower_ShortName    ${rowid}    ${Short_Name}
+    ...    AND    Write Data To Excel    ORIG03_Customer    LIQCustomer_ShortName    ${rowid}    ${Short_Name}
+    ...    AND    Write Data To Excel    ORIG03_Customer    LIQCustomer_LegalName    ${rowid}    ${Enterprise_Name}
+    ...    AND    Write Data To Excel    ORIG03_Customer    LIQCustomer_ID    ${rowid}    ${Party_ID}
+    ...    AND    Write Data To Excel    PTY001_QuickPartyOnboarding    Enterprise_Name    ${rowid}    ${Enterprise_Name}
+    ...    AND    Write Data To Excel    CRED01_DealSetup    Borrower_ShortName    ${rowid}    ${Short_Name}
+    ...    AND    Write Data To Excel    CRED10_EventFee    Borrower_ShortName    ${rowid}    ${Short_Name}
+    ...    AND    Write Data To Excel    CRED02_FacilitySetup    Borrower_ShortName    ${rowid}    ${Short_Name}
+    ...    AND    Write Data To Excel    SERV30_AdminFeePayment    Borrower_ShortName    ${rowid}    ${Short_Name}
+    ...    AND    Write Data To Excel    SYND05_UpfrontFee_Payment    Borrower_ShortName    ${rowid}    ${Short_Name}
+    ...    AND    Write Data To Excel    CRED09_AdminFee    Borrower_ShortName    ${rowid}    ${Short_Name}
+    ...    AND    Write Data To Excel    SERV01_LoanDrawdown    Borrower_ShortName    ${rowid}    ${Short_Name}
+    ...    AND    Write Data To Excel    SERV22_InterestPayments    Borrower_ShortName    ${rowid}    ${Short_Name}
 
     Run Keyword If    '${SCENARIO}'=='5'    Run Keywords    Write Data To Excel    CRED01_DealSetup    Deal_Borrower    ${rowid}    ${Enterprise_Name}
     ...    AND    Write Data To Excel    CRED02_FacilitySetup    Facility_Borrower    ${rowid}    ${Enterprise_Name}

@@ -2634,3 +2634,15 @@ Populate and Validate If Field Value Is Updated
     ${isMatched}    Run Keyword And Return Status    Should Be Equal    ${sUIValue}    ${sNewValue}
     Run Keyword If    ${isMatched}!=${True}    Log    "${sFieldName}" is UPDATED! Prev Value: ${sUIValue} | New Value: ${sUIValue}
     ...    ELSE    Log    "${sFieldName}" is NOT UPDATED! Prev Value: ${sUIValue} | New Value: ${sUIValue}    level=WARN
+
+Split the Value with Decimal and Return the whole number
+    [Documentation]    This Keyword is used to split the Value having decimal number (Sample: 1000.07 to 1000 and 07) and return the whole number
+    ...    @author: fluberio    30OCT2020    - initial create.
+    [Arguments]    ${sValue}
+    
+    ${sValue}    Convert To String    ${sValue}
+    ${Container_List}    Split String    ${sValue}    .
+    ${sWholeNum_Value}    Set Variable    @{Container_List}[0]
+    ${sDecimal_Value}    Set Variable    @{Container_List}[1]
+
+    [RETURN]    ${sWholeNum_Value}

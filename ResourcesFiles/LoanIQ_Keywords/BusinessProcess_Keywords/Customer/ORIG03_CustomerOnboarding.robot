@@ -470,6 +470,7 @@ Search Customer and Complete its Borrower Profile Creation with default values
     ...    @update: makcamps    09OCT2020    - Added write data to excel method for Deal and Facility Setup data
     ...    @update: makcamps    15OCT2020    - Added write data to excel method for Scenario 1 and EU Initial Loan Creation
 	...    @update: makcamps    22OCT2020    - Updated write data to excel method for Scenario 1 and EU SERV29
+	...    @update: fluberio    28OCT2020    - Added write data to excel method for Scenario 4 and EU SERV02
     [Arguments]    ${ExcelPath}
 	
 	## Login to LoanIQ###
@@ -496,7 +497,8 @@ Search Customer and Complete its Borrower Profile Creation with default values
     Write Data To Excel    CRED01_DealSetup    Borrower1_ShortName    ${rowid}   &{ExcelPath}[LIQCustomer_ShortName]
     Write Data To Excel    CRED02_FacilitySetup    Facility_Borrower    ${rowid}    &{ExcelPath}[LIQCustomer_ShortName]
     Write Data To Excel    CRED02_FacilitySetup    Facility_BorrowerSGName    ${rowid}    &{ExcelPath}[Group_Contact]
-	
+    Run Keyword If   '${SCENARIO}'=='4' and '&{ExcelPath}[Entity]'=='EU'    Run Keywords    Write Data To Excel    CRED01_DealSetup    Borrower_ShortName    ${rowid}   &{ExcelPath}[LIQCustomer_ShortName]
+	...    AND    Write Data To Excel    SERV02_LoanDrawdownNonAgent    Borrower_ShortName    ${rowid}   &{ExcelPath}[LIQCustomer_ShortName]    multipleValue=Y
 	Write Remittance Description    ${SCENARIO}    &{ExcelPath}[Remittance_Instruction]    ${RemittanceInstruction_DDADescriptionAUD}    ${RemittanceInstruction_IMTDescriptionUSD}    ${RemittanceInstruction_RTGSDescriptionAUD}
 
 	###Searching Customer 	

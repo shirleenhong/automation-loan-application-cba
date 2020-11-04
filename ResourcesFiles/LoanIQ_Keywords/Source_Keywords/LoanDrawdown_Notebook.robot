@@ -121,7 +121,8 @@ Input General Loan Drawdown Details
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LoanDrawdown_General
     Log    ${Loan_RepricingFrequency}
     Run Keyword If    '${Loan_RepricingFrequency}'!='None'    Mx LoanIQ Select Combo Box Value    ${LIQ_InitialDrawdown_Repricing_Dropdownlist}    ${Loan_RepricingFrequency}
-    Run Keyword If    '${Loan_IntCycleFrequency}'!='None'    Mx LoanIQ Select Combo Box Value    ${LIQ_InitialDrawdown_IntCycleFreq_Dropdownlist}    ${Loan_IntCycleFrequency}
+    ### Commented this Line since Loan_IntCycleFrequency is automatically being set once Loan+Repricing Frequency is set, let me know if i could delete this one###
+    #Run Keyword If    '${Loan_IntCycleFrequency}'!='None'    Mx LoanIQ Select Combo Box Value    ${LIQ_InitialDrawdown_IntCycleFreq_Dropdownlist}    ${Loan_IntCycleFrequency}
     Run Keyword If    '${Loan_Accrue}'!='None'    Mx LoanIQ Select Combo Box Value    ${LIQ_InitialDrawdown_Accrue_Dropdownlist}    ${Loan_Accrue} 
     Run Keyword If    '${Repricing_Date}'!='None'    mx LoanIQ enter    ${LIQ_InitialDrawdown_RepricingDate_Datefield}    ${Repricing_Date}  
     Run Keyword if    '${Loan_RiskType}'!='None'    Run Keywords    mx LoanIQ click    ${LIQ_InitialDrawdown_RiskType_Button}
