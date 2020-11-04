@@ -1262,6 +1262,7 @@ Setup RPA Internal Deal
     ...    @update: dahijara    21OCT2020    - added writing for scenario 4 - CRED07_UpfrontFee_Payment
     ...    @update: mcastro    23OCT2020    - added writing to CRED07_UpfrontFee_Payment for scenario 1
     ...    @update: mcastro    27OCT2020    - added writing for RPA Scenario 2, added arguments for Add Pricing Option
+    ...    @update: mcastro    03NOV2020    - added writing to SERV08_ComprehensiveRepricing for RPA scenario 1
     [Arguments]    ${ExcelPath}
     ###Set Dates for transactions###
     ${SystemDate}    Get System Date
@@ -1304,6 +1305,7 @@ Setup RPA Internal Deal
     ...    AND    Write Data To Excel    SERV01_LoanDrawdown    Loan_EffectiveDate    2    ${SystemDate}
     ...    AND    Write Data To Excel    SERV01_LoanDrawdown    Repayment_TriggerDate    2    ${SystemDate}
     ...    AND    Write Data To Excel    CRED07_UpfrontFee_Payment    Deal_Name    ${rowid}    ${Deal_Name}
+    ...    AND    Write Data To Excel    SERV08_ComprehensiveRepricing    Deal_Name    ${rowid}    ${Deal_Name}
 
     ###For RPA Scenario 2###
     Run Keyword If    '${SCENARIO}'=='2' and '${rowid}'=='1'    Run Keywords    Write Data To Excel    TRPO12_PortfolioSettledDisc    Deal_Name    ${rowid}    ${Deal_Name}
@@ -1361,6 +1363,7 @@ Create Facility for RPA Deal
     ...                                     - added writing to SERV01_LoanDrawdown for RPA Scenario 1
     ...    @update: mcastro    27OCT2020    - added writing for RPA Scenario 2
     ...    @update: dahijara    28OCT2020    - Added writing for SERV01 Loan Drawdown for Scenario 4
+    ...    @update: mcastro    03NOV2020    - Added Writing to SERV08_ComprehensiveRepricing for RPA Scenario 1
     [Arguments]    ${ExcelPath}
     Log    ${rowid}       
     ###Data Generation###
@@ -1378,6 +1381,7 @@ Create Facility for RPA Deal
     Run Keyword If    '${SCENARIO}'=='1'   Run Keywords    Write Data To Excel    TRPO06_InternalParticipation    Facility_Name    ${rowid}    ${Facility_Name}    bTestCaseColumn=True    sColumnReference=rowid    
     ...    AND    Write Data To Excel    SERV01_LoanDrawdown    Facility_Name    ${rowid}    ${Facility_Name}    bTestCaseColumn=True    sColumnReference=rowid 
     ...    AND    Write Data To Excel    SERV01_LoanDrawdown    Loan_FacilityName    ${rowid}    ${Facility_Name}    bTestCaseColumn=True    sColumnReference=rowid 
+    ...    AND    Write Data To Excel    SERV08_ComprehensiveRepricing    Facility_Name    ${rowid}    ${Facility_Name}    bTestCaseColumn=True    sColumnReference=rowid 
     
     ###For RPA Scenario 2###
     Run Keyword If    '${SCENARIO}'=='2' and '${rowid}'=='1'    Run Keywords    Write Data To Excel    TRPO12_PortfolioSettledDisc    Facility_Name    ${rowid}    ${Facility_Name}    bTestCaseColumn=True    sColumnReference=rowid

@@ -223,6 +223,7 @@ FACILITIES = "Facilities"
 PORTFOLIO_SETTLED_DISCOUNT_ADJUSTMENT = "Portfolio Settled Discount Adjustment"
 ONGOING_FEE_PAYMENT_TRANSACTION= "Ongoing Fee Payment"
 LOAN_PRINCIPAL_PREPAYMENT_TRANSACTION = "Loan Principal Prepayment"
+RATE_SETTING_TRANSACTION = "Rate Setting"
 
 ### Bank Role ###
 REFERENCE_BANK_ROLE = "Reference Bank"
