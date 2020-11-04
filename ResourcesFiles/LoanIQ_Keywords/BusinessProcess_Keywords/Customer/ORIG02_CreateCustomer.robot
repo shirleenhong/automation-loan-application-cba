@@ -132,7 +132,6 @@ Create Customer within Loan IQ
     Run Keyword If    '${SCENARIO}'=='5'    Run Keywords    Write Data To Excel    SERV21_InterestPayments    LIQCustomer_ID    ${rowid}   ${LIQCustomer_ID}
     ...    AND    Write Data To Excel    SERV29_PaymentFees    LIQCustomer_ID    ${rowid}    ${LIQCustomer_ID}
     ...    AND    Write Data To Excel    SERV01_TermLoanDrawdowninUSD    LIQCustomer_ID    ${rowid}    ${LIQCustomer_ID}
-    # ...    AND    Write Data To Excel    SERV01_LoanDrawdown    Borrower1_LegalName    ${rowid}    ${LIQCustomer_LegalName}
 
     Run Keyword If    '${SCENARIO}'=='2'    Write Data To Excel    SERV29_PaymentFees    LIQCustomer_ID    ${rowid}   ${LIQCustomer_ID}   
   

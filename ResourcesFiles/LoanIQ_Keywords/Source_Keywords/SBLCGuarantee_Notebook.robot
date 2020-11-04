@@ -218,7 +218,7 @@ Create New Outstanding Select - SBLC
     ...    @update: clanding    20JUL2020    - removed '${LIQmx LoanIQ enter'; updated mx LoanIQ select to mx LoanIQ enter for inputting Effective_Date
     ...                                      - added selecting of Facility_Name; updated Sleep to FOR Loop checking of the next object if present
     ...                                      - re-arrange codes based from actual input
-    [Arguments]    ${sOutstandingSelect_Type}    ${sFacility_Name}    ${sAmount_Requested}    ${sEffective_Date}    ${sPricing_Option}    ${sExpiry_Date}    ${sRunTimevarAlias}=None
+    [Arguments]    ${sOutstandingSelect_Type}    ${sFacility_Name}    ${sAmount_Requested}    ${sEffective_Date}    ${sPricing_Option}    ${sExpiry_Date}    ${Deal_Name}    ${sRunTimevarAlias}=None
 
     ####Pre-Processing Keywords####
     ${OutstandingSelect_Type}    Acquire Argument Value    ${sOutstandingSelect_Type}
@@ -227,10 +227,10 @@ Create New Outstanding Select - SBLC
     ${Effective_Date}    Acquire Argument Value    ${sEffective_Date}
     ${Pricing_Option}    Acquire Argument Value    ${sPricing_Option}
     ${Expiry_Date}    Acquire Argument Value    ${sExpiry_Date}
-    ${Deal__Name}    Acquire Argument Value    ${sDealName}
-    
+    ${Deal_Name}    Acquire Argument Value    ${sDealName}
+
     Refresh Tables in LIQ
-    Open Existing Deal    ${Deal__Name}
+    Open Existing Deal    ${Deal_Name}
 
 	mx LoanIQ activate window    ${LIQ_DealNotebook_Window}
 	
@@ -433,7 +433,7 @@ Validate Error in Workflow for SBLC without Favouree
     Mx LoanIQ DoubleClick    ${LIQ_SBLCIssuance_GenerateIntentNotices_ListItem}    Send to Approval
     Sleep    3s
 
-    ${Error_Exist}    Run Keyword And Return Status    Mx LoanIQ Verify Object Exist    ${LIQ_Error_Window}        VerificationData="Yes"        VerificationData="Yes"
+    ${Error_Exist}    Run Keyword And Return Status    Mx LoanIQ Verify Object Exist    ${LIQ_Error_Window}        VerificationData="Yes"
     Run Keyword If    ${Error_Exist}==True    Run Keywords    Log    The Error requiring a Favouree displayed!
     ...    AND    Take Screenshot    Error_Window
     ...    AND    mx LoanIQ click    ${LIQ_Error_OK_Button}

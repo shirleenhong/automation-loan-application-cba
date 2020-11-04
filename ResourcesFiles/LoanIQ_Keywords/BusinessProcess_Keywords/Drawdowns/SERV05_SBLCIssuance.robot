@@ -16,7 +16,7 @@ SBLC Guarantee Issuance
     Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
     
     ###Deal Notebook###
-	
+	Open Existing Deal    &{ExcelPath}[Deal_Name]
 
     ###Outstanding Select Window###
     ${Effective_Date}    Get System Date

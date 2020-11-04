@@ -93,6 +93,8 @@ Create Initial Loan Drawdown with Repayment Schedule
     Logout from Loan IQ
     Login to Loan IQ    ${MANAGER_USERNAME}    ${MANAGER_PASSWORD}
     Refresh Tables in LIQ
+    Run Keyword If	'&{ExcelPath}[Entity]'=='EU'	Select Item in Work in Process	Outstandings	Awaiting Release Cashflows	Loan Initial Drawdown	${Loan_Alias}
+    ...	ELSE	Select Item in Work in Process	Outstandings	Awaiting Rate Approval	Loan Initial Drawdown	${Loan_Alias}
     Select Item in Work in Process    Outstandings    Awaiting Rate Approval    Loan Initial Drawdown     ${Loan_Alias}
     Approve Initial Drawdown Rate
     
