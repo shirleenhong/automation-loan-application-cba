@@ -312,6 +312,8 @@ USE_SPOT_AUD_TO_USD_RATE = "Use Spot AUD to USD Rate"
 
 ### LOAN SEARCH BY OPTIONS ###
 DEAL_FACILITY_OPTION = "Deal/Facility"
+FACILITY_COUNT = ""
+
 
 ### Y/N ###
 Y = "Y"
