@@ -18,16 +18,8 @@ MDM_FFC_URL="/mch-ui"
 
 SFTP_HOST = "mancsleverg0005"
 SFTP_PORT = "22"
-SFTP_USER = "micloud"
-SFTP_PASSWORD = "misys123"
-
-OPEAPI_INSTANCE_TL = "openAPI_1.3.0"
-OPEAPI_INSTANCE = "openAPI_1.3.0"
-TEXTJMS_INSTANCE = "distributor_1.3.0"
-CBAINTERFACE_INSTANCE = "CustomInterface_v1.3.2"
-CBAPUSH_INSTANCE = "CustomCBAPush_v1.3.2"
-CUSTOM_INTERFACE_INSTANCE = "CustomInterface_v1.3.2"
-RESPONSE_MECHANISM_INSTANCE = "responsemechanism_1.3.0"
+SFTP_USER = "sftpuser"
+SFTP_PASSWORD = "t3stOnly?"
 
 DBServiceName = "MLFFC1.misys.global.ad"
 DBUsername = "MCH"
