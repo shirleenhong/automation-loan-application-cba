@@ -638,4 +638,3 @@ Select Financial Ratio in Interest Pricing List
     mx LoanIQ activate    ${LIQ_Facility_InterestPricing_Window}
 	Mx LoanIQ Select Or DoubleClick In Javatree    ${LIQ_PCT_InterestPricing_List}    ${PCT_FinancialRatioType}%s
 	Take Screenshot    ${Screenshot_Path}/Screenshots/LoanIQ/InterestPricingWindow
-    

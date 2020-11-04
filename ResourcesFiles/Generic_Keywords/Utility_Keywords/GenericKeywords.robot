@@ -1073,7 +1073,7 @@ Remove Comma and Evaluate to Number
     ${result}    Evaluate    ${sWholeNum_Value}.${sDecimal_Value}
 
     [Return]    ${result}
-
+    
 Add Days to Date
     [Documentation]    This will add a number of days in the current date
     ...    @author: ritragel

@@ -843,4 +843,3 @@ Validate Repayment Schedule Last Payment Remaining Value
 
     Run Keyword If    '${Comparison_Status}'=='True'    Log    Last Payment Remaining Validation Passed
     ...    ELSE IF    '${Prev_RemainingVal_Comparison_Status}'=='True'    Run Keyword And Continue On Failure    Fail    Last Payment Remaining Validation Failed. Last Payment Remaining Value is '${Prev_RemainingValue}' instead of '${Expected_RemainingValue}'
-    ...    ELSE    Run Keyword And Continue On Failure    Fail    Condition is NOT Supported by Validate Repayment Schedule Last Payment Remaining Value

@@ -18,7 +18,7 @@ Verify if Method has Remittance Instruction
     ...    @update: sahalder    22072020    added condition for handling the SPAP remittance instruction
     [Arguments]    ${sCustomerShortName}    ${sRemittanceDescription}    ${sRemittanceInstruction}    ${sTransactionAmount}=None    ${sCurrency}=None
 
-    ### Keyword Pre-processing ###
+    ## Keyword Pre-processing ###   
     ${CustomerShortName}    Acquire Argument Value    ${sCustomerShortName}
     ${RemittanceDescription}    Acquire Argument Value    ${sRemittanceDescription}
     ${RemittanceInstruction}    Acquire Argument Value    ${sRemittanceInstruction}
@@ -74,7 +74,7 @@ Add Remittance Instructions
     Run Keyword And Continue On Failure    Mx LoanIQ Verify Object Exist    ${LIQ_Cashflows_DetailsForCashflow_Window}     VerificationData="Yes"
     mx LoanIQ click    ${LIQ_Cashflows_DetailsForCashflow_SelectRI_Button}  
     mx LoanIQ activate    ${LIQ_Cashflows_ChooseRemittanceInstructions_Window}
-    Mx LoanIQ Select Or DoubleClick In Javatree    ${LIQ_Cashflows_ChooseRemittanceInstructions_Tree}    ${sRemittanceDescription}%s 
+    Mx LoanIQ Select Or DoubleClick In Javatree    ${LIQ_Cashflows_ChooseRemittanceInstructions_Tree}    ${sRemittanceDescription}%s         
     mx LoanIQ click    ${LIQ_Cashflows_ChooseRemittanceInstructions_OK_Button}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/CashflowVerification
     mx LoanIQ click    ${LIQ_Cashflows_DetailsForCashflow_OK_Button}
