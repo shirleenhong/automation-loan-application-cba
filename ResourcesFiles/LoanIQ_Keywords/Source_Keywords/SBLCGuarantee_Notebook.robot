@@ -218,7 +218,7 @@ Create New Outstanding Select - SBLC
     ...    @update: clanding    20JUL2020    - removed '${LIQmx LoanIQ enter'; updated mx LoanIQ select to mx LoanIQ enter for inputting Effective_Date
     ...                                      - added selecting of Facility_Name; updated Sleep to FOR Loop checking of the next object if present
     ...                                      - re-arrange codes based from actual input
-    [Arguments]    ${sOutstandingSelect_Type}    ${sFacility_Name}    ${sAmount_Requested}    ${sEffective_Date}    ${sPricing_Option}    ${sExpiry_Date}    ${Deal_Name}    ${sRunTimevarAlias}=None
+    [Arguments]    ${sOutstandingSelect_Type}    ${sFacility_Name}    ${sAmount_Requested}    ${sEffective_Date}    ${sPricing_Option}    ${sExpiry_Date}    ${sDealName}    ${sRunTimevarAlias}=None
 
     ####Pre-Processing Keywords####
     ${OutstandingSelect_Type}    Acquire Argument Value    ${sOutstandingSelect_Type}
