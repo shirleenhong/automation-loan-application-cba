@@ -317,4 +317,68 @@ Create Comprehensive Repricing for RPA Scenario
 
     ###Login to Original User###
     Logout from Loan IQ
+    Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}    Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
+
+Complete Comprehensive Repricing, Principal Payment and Interest Payment
+    [Documentation]    This is a high-level keyword to Completion of Comprehensive Repricing, Principal Payment and Interest Payment for RPA Deal
+    ...    @author: dahijara    04NOV2020    - Initial create
+    [Arguments]    ${ExcelPath}
+    
+    ###LIQ Window###
+    Logout from Loan IQ
+    Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
+
+    ###Deal Notebook###
+    Search for Deal    &{ExcelPath}[Deal_Name]
+    
+    ###Outstanding Select Window###
+    Search for Existing Outstanding    &{ExcelPath}[OutstandingSelect_Type]    &{ExcelPath}[Facility_Name]
+    
+    ###Existing Loans for Deal Window###
+    Select Loan to Reprice    &{ExcelPath}[Loan_Alias]
+    Select Repricing Type    &{ExcelPath}[Repricing_Type]  
+    Select Loan Repricing for Deal    &{ExcelPath}[Loan_Alias]
+
+    ###Rollover/Conversion Notebook###
+    ${NewLoanAlias}    Add New Outstandings    &{ExcelPath}[Pricing_Option]    &{ExcelPath}[Base_Rate]    &{ExcelPath}[Loan_RequestedAmount]
+
+    ### Add Principal Payment ###
+    Add Principal Payment after New Outstanding Addition    &{ExcelPath}[Pricing_Option]    &{ExcelPath}[Loan_RequestedAmount]
+
+    ### Add Interest Payment ###
+    Add Interest Payment for Loan Repricing
+
+    ### Create Cashflow ###
+    Navigate to Loan Repricing Workflow and Proceed With Transaction    Create Cashflows
+    Verify if Method has Remittance Instruction    &{ExcelPath}[Borrower1_ShortName]    &{ExcelPath}[Borrower1_RemittanceDescription]    &{ExcelPath}[Borrower1_RemittanceInstruction]
+    Verify if Status is set to Do It    &{ExcelPath}[Borrower1_ShortName]
+
+    ### GL Entries ###
+    Navigate to GL Entries
+    Close GL Entries and Cashflow Window
+    Navigate to Loan Repricing Workflow and Proceed With Transaction    ${SEND_TO_APPROVAL_STATUS}
+    
+    ### LIQ Window ###
+    Logout from Loan IQ
+    Login to Loan IQ    ${SUPERVISOR_USERNAME}    ${SUPERVISOR_PASSWORD}
+    
+    ###Loan Approval/Send Rate Approval ###
+    Select Item in Work in Process    ${OUTSTANDINGS_TRANSACTION}    ${AWAITING_GENERATE_RATE_SETTING_NOTICES_STATUS}    ${LOAN_REPRICING}    &{ExcelPath}[Deal_Name]
+    Approve Loan Repricing
+    Send to Rate Approval
+    
+    ###LIQ Window###
+    Logout from Loan IQ
+    Login to Loan IQ    ${MANAGER_USERNAME}    ${MANAGER_PASSWORD}
+    
+    ###Rate Approval###
+    Select Item in Work in Process    ${OUTSTANDINGS_TRANSACTION}    ${AWAITING_GENERATE_RATE_SETTING_NOTICES_STATUS}    ${LOAN_REPRICING}    &{ExcelPath}[Deal_Name]
+    Navigate to Loan Repricing Workflow and Proceed With Transaction    ${RATE_APPROVAL_STATUS}
+    
+    ###Release###
+    Release Cashflow Based on Remittance Instruction    &{ExcelPath}[Borrower1_RemittanceInstruction]    &{ExcelPath}[Borrower1_ShortName]
+    Navigate to Loan Repricing Workflow and Proceed With Transaction    ${RELEASE_STATUS}
+    
+    Close All Windows on LIQ
+    Logout from Loan IQ
     Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
