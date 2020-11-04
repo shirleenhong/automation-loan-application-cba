@@ -15,7 +15,7 @@ Create Initial Loan Drawdown with Repayment Schedule
     ...    @update: kduenas     27OCT2020    - Added writing of loan alias to correspondence dataset for API_COR_TC21
     [Arguments]    ${ExcelPath}
     
-    ###Close all windows###
+    ##Close all windows###
     Close All Windows on LIQ
     Logout from Loan IQ
     Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
@@ -40,9 +40,11 @@ Create Initial Loan Drawdown with Repayment Schedule
     Run Keyword If    '${SCENARIO}'=='2'    Write Data To Excel    SERV18_Payments   Loan_Alias    ${rowid}    ${Loan_Alias}
         
     ###Initial Loan Drawdown###
+    ${SysDate}    Get System Date
+    ${MaturityDate}    Add Days to Date    ${SysDate}    365
     Run Keyword If    '${SCENARIO}'=='7'    Write Data To Excel    SERV35_Terminate_FacilityDeal    Loan_Alias    7    ${Loan_Alias}
     Validate Initial Loan Dradown Details    &{ExcelPath}[Facility_Name]    &{ExcelPath}[Borrower1_ShortName]    &{ExcelPath}[Loan_Currency]
-    ${AdjustedDueDate}    Input General Loan Drawdown Details    &{ExcelPath}[Loan_RequestedAmount]    &{ExcelPath}[Loan_EffectiveDate]    &{ExcelPath}[Loan_MaturityDate]    None    &{ExcelPath}[Loan_IntCycleFrequency]    &{ExcelPath}[Loan_Accrue]
+    ${AdjustedDueDate}    Input General Loan Drawdown Details    &{ExcelPath}[Loan_RequestedAmount]    ${SysDate}    ${MaturityDate}    None    &{ExcelPath}[Loan_IntCycleFrequency]    &{ExcelPath}[Loan_Accrue]
     Write Data To Excel    SERV21_InterestPayments    ScheduledActivityReport_Date    ${rowid}    ${AdjustedDueDate}
     Input Loan Drawdown Rates    &{ExcelPath}[Borrower_BaseRate]    &{ExcelPath}[Facility_Spread]
     
@@ -77,6 +79,7 @@ Create Initial Loan Drawdown with Repayment Schedule
     Send Initial Drawdown to Approval
     Logout from Loan IQ
     Login to Loan IQ    ${SUPERVISOR_USERNAME}    ${SUPERVISOR_PASSWORD}
+    Refresh Tables in LIQ    
     Select Item in Work in Process    Outstandings    Awaiting Generate Rate Setting Notices    Loan Initial Drawdown     ${Loan_Alias}
     Approve Initial Drawdown
     
@@ -89,8 +92,8 @@ Create Initial Loan Drawdown with Repayment Schedule
     ###Rate Approval###
     Logout from Loan IQ
     Login to Loan IQ    ${MANAGER_USERNAME}    ${MANAGER_PASSWORD}
-    Run Keyword If	'&{ExcelPath}[Entity]'=='EU'	Select Item in Work in Process	Outstandings	Awaiting Release Cashflows	Loan Initial Drawdown	${Loan_Alias}
-    ...	ELSE	Select Item in Work in Process	Outstandings	Awaiting Rate Approval	Loan Initial Drawdown	${Loan_Alias}
+    Refresh Tables in LIQ
+    Select Item in Work in Process    Outstandings    Awaiting Rate Approval    Loan Initial Drawdown     ${Loan_Alias}
     Approve Initial Drawdown Rate
     
     ###Intent Notices Generation

@@ -23,7 +23,7 @@ Add Lender and Location
     ${LenderLocation}    Acquire Argument Value    ${sLenderLocation}
     ${RiskBook_ExpenseCode}    Acquire Argument Value    ${sRiskBook_ExpenseCode}
     ${Primaries_TransactionType}    Acquire Argument Value    ${sPrimaries_TransactionType}
-
+    
     mx LoanIQ activate window    ${LIQ_DealNotebook_Window}
     mx LoanIQ click element if present    ${LIQ_InquiryMode_Button}
     mx LoanIQ select    ${LIQ_DealNotebook_DistributionPrimaries_Menu}
@@ -81,7 +81,7 @@ Set Sell Amount and Percent of Deal
     Mx LoanIQ Select Window Tab    ${LIQ_OrigPrimaries_Tab}    Facilities
     mx LoanIQ activate window    ${LIQ_OrigPrimaries_Window}    
     mx LoanIQ enter    ${LIQ_OrigPrimaries_PctOfDeal_Textfield}    ${PercentOfDeal}
-    Mx Press Combination    Key.Tab    
+    Mx Press Combination    Key.Tab   
 
     ${CurrentDealAmount}    Mx LoanIQ Get Data    ${LIQ_OrigPrimaries_CurrentDealAmount_Textfield}    value%amount
     ${CurrentDealAmount}    Remove String    ${CurrentDealAmount}    ,

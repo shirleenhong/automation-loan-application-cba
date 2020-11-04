@@ -1062,7 +1062,6 @@ Remove Comma and Convert to Number
 Remove Comma and Evaluate to Number
     [Documentation]    This keyword removes comma to amounts above hudred values, evaluates to Number.
     ...    @author: hstone    12MAY2020    - initial create
-    ...    @update: dahijara    13OCT2020    - Update logic for evaluating. Previous logic returns incorrect value (ex. 1,788.08 is returned as 1788.8)
     [Arguments]     ${sNumberToBeConverted}
     ${sContainer}    Convert To String    ${sNumberToBeConverted}
     ${sContainer}    Remove String    ${sContainer}    ,
@@ -1070,7 +1069,10 @@ Remove Comma and Evaluate to Number
     ${sWholeNum_Value}    Set Variable    @{Container_List}[0]
     ${sDecimal_Value}    Set Variable    @{Container_List}[1]
 
-    ${result}    Evaluate    ${sWholeNum_Value}.${sDecimal_Value}
+    ${WholeNum_Value}    Convert To Integer    ${sWholeNum_Value}
+    ${Decimal_Value}    Convert To Integer    ${sDecimal_Value}
+
+    ${result}    Evaluate    ${WholeNum_Value}+.${Decimal_Value}
 
     [Return]    ${result}
 
