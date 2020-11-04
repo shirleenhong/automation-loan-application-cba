@@ -50,6 +50,10 @@ Complete Internal Participation - TRPO06
  
 Create Initial Loan Drawdown - SERV01
     [Tags]    08 Loan Drawdown - SERV01 
-    Mx Execute Template With Multiple Data    Create Initial Loan Drawdown with no Repayment Schedule    ${ExcelPath}    ${rowid}    SERV01_LoanDrawdown
+    Mx Execute Template With Multiple Data    Create Initial Loan Drawdown for RPA Deal    ${ExcelPath}    ${rowid}    SERV01_LoanDrawdown
     Set Test Variable    ${rowid}    2
-    Mx Execute Template With Multiple Data    Create Initial Loan Drawdown with no Repayment Schedule    ${ExcelPath}    ${rowid}    SERV01_LoanDrawdown
+    Mx Execute Template With Multiple Data    Create Initial Loan Drawdown for RPA Deal    ${ExcelPath}    ${rowid}    SERV01_LoanDrawdown
+
+Comprehensive Repricing - SERV08
+    [Tags]    09 Comprehensive Repricing - SERV08
+    Mx Execute Template With Multiple Data    Create Comprehensive Repricing for RPA Scenario    ${ExcelPath}    ${rowid}    SERV08_ComprehensiveRepricing
