@@ -24,7 +24,7 @@ Deal Setup - CRED01
     [Tags]    03 Deal Setup - CRED01
     Mx Execute Template With Multiple Data    Create Deal - Baseline SBLC    ${ExcelPath}    ${rowid}    CRED01_DealSetup
     Mx Execute Template With Multiple Data    Setup Multi-Currency SBLC Facility    ${ExcelPath}    ${rowid}    CRED02_FacilitySetup
-
+ 
     Mx Execute Template With Multiple Data    Setup Fees for SBLC Facility     ${ExcelPath}    ${rowid}    CRED08_OngoingFeeSetup
     Mx Execute Template With Multiple Data    Setup a Primary Notebook - SBLC    ${ExcelPath}    ${rowid}    CRED01_DealSetup
 

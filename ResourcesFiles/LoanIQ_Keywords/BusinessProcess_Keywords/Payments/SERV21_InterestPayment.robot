@@ -22,8 +22,10 @@ Initiate Interest Payment
    Write Data To Excel    SERV21_InterestPayments    ScheduledActivityReport_Date    ${rowid}    ${ScheduledActivityReport_Date}
    Close All Windows on LIQ 
    ${SystemDate}    Get System Date
+   ${ScheduledActivity_FromDate}    Subtract Days to Date     ${SystemDate}    365
+   ${ScheduledActivity_ThruDate}    Add Days to Date    ${SystemDate}    365
    Navigate to the Scheduled Activity Filter
-   Open Scheduled Activity Report    &{ExcelPath}[ScheduledActivity_FromDate]    &{ExcelPath}[ScheduledActivity_ThruDate]    &{ExcelPath}[Deal_Name]
+   Open Scheduled Activity Report    ${ScheduledActivity_FromDate}    ${ScheduledActivity_ThruDate}    &{ExcelPath}[Deal_Name]
    
    ###Loan Notebook####
    Open Loan Notebook    ${ScheduledActivityReport_Date}    &{ExcelPath}[ScheduledActivityReport_ActivityType]    &{ExcelPath}[Deal_Name]    &{ExcelPath}[Loan_Alias]
@@ -80,7 +82,8 @@ Initiate Interest Payment
 
    ###Interest Payment Notebook - Workflow Tab###  
    Select Item in Work in Process    Payments    Awaiting Release    Interest Payment     &{ExcelPath}[Facility_Name]
-   Release Cashflow Based on Remittance Instruction    &{ExcelPath}[Remittance_Instruction]    &{ExcelPath}[Borrower1_ShortName]    &{ExcelPath}[Cashflow_DataType]    Payment
+   Navigate Notebook Workflow    ${LIQ_Payment_Window}    ${LIQ_Payment_Tab}    ${LIQ_Payment_WorkflowItems}    Release Cashflows   
+   Release Cashflow    &{ExcelPath}[Borrower1_ShortName]    release
    Navigate to Payment Workflow and Proceed With Transaction    Release
     
    ##Facility Notebook####
