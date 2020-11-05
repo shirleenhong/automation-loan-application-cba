@@ -23,7 +23,7 @@ Search Customer and Complete its Borrower Profile Creation - ORIG03
     [Tags]    02 Complete Borrower's Profile - 0RIG03
     Mx Execute Template With Multiple Data    Search Customer and Complete its Borrower Profile Creation with default values    ${ExcelPath}    ${rowid}    ORIG03_Customer
 
- Create Non Agent and Host Bank Syndicated Deal - CRED01
+Create Non Agent and Host Bank Syndicated Deal - CRED01
     [Tags]    03 Non-Agent And Host Bank Syndicated Deal - CRED01
     Mx Execute Template With Multiple Data    Setup Syndicated Deal for Non-Agent and Host Bank    ${ExcelPath}    ${rowid}    CRED01_DealSetup
     Mx Execute Template With Multiple Data    NonAgent-HostBank Syndicated Deal - Setup Upfront Fees, Bank Role and Ratio    ${ExcelPath}    ${rowid}    CRED01_DealSetup  
@@ -68,3 +68,4 @@ Perform Lender Share Adjustment - AMCH02
 Extend Facility Maturity Date - AMCH05
     [Tags]    11 Facility Change Transaction - Extend Maturity Exp Date
     Mx Execute Template With Multiple Data    Extend Maturity Date    ${ExcelPath}   ${rowid}    AMCH05_ExtendMaturityDate
+    

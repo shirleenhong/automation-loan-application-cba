@@ -545,6 +545,8 @@ Create Second Term Facility Loan Drawdown
 Create Initial Loan Drawdown for RPA Deal
     [Documentation]    This keyword is used to create a Loan Drawdown for RPA deal.
     ...    @author: dahijara    28OCT2020    - Initial create
+    ...    @update: mcastro     03NOV2020    - Added Writing to SERV08_ComprehensiveRepricing for RPA Scenario 1
+    ...    @update: dahijara    04NOV2020    - Added writing for SERV08_ComprehensiveRepricing-Loan_Alias
     [Arguments]    ${ExcelPath}    
     
     Logout from Loan IQ
@@ -561,6 +563,9 @@ Create Initial Loan Drawdown for RPA Deal
     Navigate to Outstanding Select Window
     ${Loan_Alias}    Input Initial Loan Drawdown Details    &{ExcelPath}[Outstanding_Type]    &{ExcelPath}[Loan_FacilityName]    &{ExcelPath}[Borrower1_ShortName]    &{ExcelPath}[Loan_PricingOption]    &{ExcelPath}[Loan_Currency]
     Write Data To Excel    SERV01_LoanDrawdown   Loan_Alias    ${rowid}    ${Loan_Alias}
+
+    ###For RPA Scenario 1###
+    Run Keyword If    '${SCENARIO}'=='1' or '${SCENARIO}'=='4'    Write Data To Excel    SERV08_ComprehensiveRepricing   Loan_Alias    ${rowid}    ${Loan_Alias}
         
     ###Initial Loan Drawdown###
     Validate Initial Loan Dradown Details    &{ExcelPath}[Loan_FacilityName]    &{ExcelPath}[Borrower1_ShortName]    &{ExcelPath}[Loan_Currency]
