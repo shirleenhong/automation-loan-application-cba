@@ -565,6 +565,7 @@ Setup Syndicated Deal for Non-Agent and Host Bank
     ...    @update: fluberio    12OCT2020    - added condition in Holdiay Creation and Pricing Rules for EU since in EU there are 5 Holiday Calendar and 4 Pricing Options
     ...    @update: fluberio    22OCT2020    - added writing of Deal Name to Notices_UpfrontFee
     ...    @update: kduenas     29OCT2020    - added writing of deal name to corro api dataset for API_COR_TC15   
+    ...    @update: fluberio    29OCT2020    - added writing of Deal name in SERV02
     [Arguments]    ${ExcelPath}
     
 	###Switch to Original User###
@@ -588,7 +589,8 @@ Setup Syndicated Deal for Non-Agent and Host Bank
     Write Data to Excel    SERV02_LoanDrawdownNonAgent    Deal_Name    ${rowid}    ${Deal_Name}
     Write Data to Excel    SERV09_LoanRepricing    Deal_Name    ${rowid}    ${Deal_Name}
     Write Data To Excel    Correspondence    Deal_Name    15    ${Deal_Name}    ${APIDataSet}    bTestCaseColumn=True    sColumnReference=rowid
-    Run Keyword If   '${SCENARIO}'=='4' and '&{ExcelPath}[Entity]' == 'EU'    Write Data to Excel    Correspondence    Deal_Name    ${rowid}    ${Deal_Name}
+    Run Keyword If   '${SCENARIO}'=='4' and '&{ExcelPath}[Entity]' == 'EU'    Run Keywords    Write Data to Excel    Correspondence    Deal_Name    ${rowid}    ${Deal_Name}
+    ...    AND    Write Data To Excel    SERV02_LoanDrawdownNonAgent    Deal_Name    ${rowid}   ${Deal_Name}    multipleValue=Y
     ${Deal_Name}    Read Data From Excel    CRED01_DealSetup    Deal_Name    ${rowid}
     ${Deal_Alias}    Read Data From Excel    CRED01_DealSetup    Deal_Alias    ${rowid}
     
@@ -668,6 +670,7 @@ Create Revolver Facility
     ...                                      - updated SERV01_LoanDrawdown to SERV02_LoanDrawdownNonAgent
     ...    @update: clanding    10AUG2020    - added writing of facility to SERV02_LoanDrawdownNonAgent
     ...    @update: fluberio    22OCT2020    - added writing of Facility Name to Notices_UpfrontFee
+    ...    @update: fluberio    29OCT2020    - added writing of Facility name in SERV02 and Additional Currency for Scenario 4 of EU
     [Arguments]    ${ExcelPath}
     
     ###Test Data Generation and Writings###
@@ -681,7 +684,8 @@ Create Revolver Facility
 	Write Data To Excel    AMCH02_LenderShareAdjustment    Facility_Name    ${rowid}    ${Facility_Name}
 	Write Data to Excel    AMCH05_ExtendMaturityDate    Facility_Name    ${rowid}    ${Facility_Name}
 	Write Data to Excel    SERV02_LoanDrawdownNonAgent    Facility_Name    ${rowid}    ${Facility_Name}
-	Run Keyword If   '${SCENARIO}'=='4' and '&{ExcelPath}[Entity]' == 'EU'    Write Data to Excel    Correspondence    Facility_Name    ${rowid}    ${Facility_Name}
+	Run Keyword If   '${SCENARIO}'=='4' and '&{ExcelPath}[Entity]' == 'EU'    Run Keywords    Write Data to Excel    Correspondence    Facility_Name    ${rowid}    ${Facility_Name}
+	...    AND     Write Data To Excel    SERV02_LoanDrawdownNonAgent    Facility_Name    ${rowid}   ${Facility_Name}    multipleValue=Y
 	Set To Dictionary    ${ExcelPath}    Facility_Name=${FacilityName}
 	
 	###Add Revolver Facility###
@@ -708,6 +712,9 @@ Create Revolver Facility
     
     ###Facility Notebook - Restrictions###
     Add Facility Currency    &{ExcelPath}[Facility_Currency]
+    Run Keyword If   '${SCENARIO}'=='4' and '&{ExcelPath}[Entity]' == 'EU'    Run Keywords    Add Facility Currency    &{ExcelPath}[Facility_Currency2]
+    ...    AND    Add Facility Currency    &{ExcelPath}[Facility_Currency3]
+    ...    AND    Add Facility Currency    &{ExcelPath}[Facility_Currency4]
     
     ###Facility Notebook - Sublimit/Cust###
     Add Borrower    &{ExcelPath}[Facility_Currency]    &{ExcelPath}[Facility_BorrowerSGName]    &{ExcelPath}[Facility_BorrowerPercent]    &{ExcelPath}[Borrower_ShortName]    &{ExcelPath}[Facility_GlobalLimit]    &{ExcelPath}[Facility_BorrowerMaturity]    ${SystemDate} 
@@ -1263,6 +1270,7 @@ Setup RPA Internal Deal
     ...    @update: mcastro    23OCT2020    - added writing to CRED07_UpfrontFee_Payment for scenario 1
     ...    @update: mcastro    27OCT2020    - added writing for RPA Scenario 2, added arguments for Add Pricing Option
     ...    @update: mcastro    03NOV2020    - added writing to SERV08_ComprehensiveRepricing for RPA scenario 1
+    ...    @update: mcastro    05NOV2020    - added writing for RPA Scenario 3
     [Arguments]    ${ExcelPath}
     ###Set Dates for transactions###
     ${SystemDate}    Get System Date
@@ -1316,6 +1324,15 @@ Setup RPA Internal Deal
     ...    AND    Write Data To Excel    SERV01_LoanDrawdown    Repayment_TriggerDate    2    ${SystemDate}
     ...    AND    Write Data To Excel    CRED07_UpfrontFee_Payment    Deal_Name    ${rowid}    ${Deal_Name}
 
+    ###For RPA Scenario 3###
+    Run Keyword If    '${SCENARIO}'=='3' and '${rowid}'=='1'    Run Keywords    Write Data To Excel    TRPO12_PortfolioSettledDisc    Deal_Name    ${rowid}    ${Deal_Name}
+    ...    AND    Write Data To Excel    TRPO12_PortfolioSettledDisc    AwaitingDispose    ${rowid}    ${Deal_Name}
+    ...    AND    Write Data To Excel    TRPO12_PortfolioSettledDisc    Closed_Date    ${rowid}    ${SystemDate}
+    Run Keyword If    '${SCENARIO}'=='3'    Run Keywords    Write Data To Excel    SERV01_LoanDrawdown    Deal_Name    2    ${Deal_Name}
+    ...    AND    Write Data To Excel    SERV01_LoanDrawdown    Loan_EffectiveDate    2    ${SystemDate}
+    ...    AND    Write Data To Excel    SERV01_LoanDrawdown    Repayment_TriggerDate    2    ${SystemDate}
+    ...    AND    Write Data To Excel    CRED07_UpfrontFee_Payment    Deal_Name    ${rowid}    ${Deal_Name}
+
     Run Keyword If    '${SCENARIO}'=='4'    Write Data To Excel    CRED07_UpfrontFee_Payment    Deal_Name    ${rowid}    ${Deal_Name}
           
     ###New Deal Screen###   
@@ -1351,6 +1368,12 @@ Setup RPA Internal Deal
     ...    &{ExcelPath}[PricingOption_BillNoOfDays]    &{ExcelPath}[PricingOption_MatrixChangeAppMthd]    &{ExcelPath}[PricingOption_RateChangeAppMthd]    None
     ...    None    None    &{ExcelPath}[PricingOption_PercentOfRateFormulaUsage]    &{ExcelPath}[PricingOption_RepricingNonBusinessDayRule]    None    &{ExcelPath}[PricingOption_InterestDueUponPrincipalPayment]    &{ExcelPath}[PricingOption_InterestDueUponRepricing]
     ...    None    &{ExcelPath}[PricingOption_IntentNoticeDaysInAdvance]    None    None    None    None    None    None    None    &{ExcelPath}[PricingOption_BillBorrower]           
+    
+    Run Keyword If    '${SCENARIO}'=='3'    Add Pricing Option    &{ExcelPath}[Deal_PricingOption2]    &{ExcelPath}[InitialFractionRate_Round]    &{ExcelPath}[RoundingDecimal_Round]    &{ExcelPath}[NonBusinessDayRule]
+    ...    &{ExcelPath}[PricingOption_BillNoOfDays]    &{ExcelPath}[PricingOption_MatrixChangeAppMthd]    &{ExcelPath}[PricingOption_RateChangeAppMthd]    None
+    ...    None    None    &{ExcelPath}[PricingOption_PercentOfRateFormulaUsage]    &{ExcelPath}[PricingOption_RepricingNonBusinessDayRule]    None    &{ExcelPath}[PricingOption_InterestDueUponPrincipalPayment]    &{ExcelPath}[PricingOption_InterestDueUponRepricing]
+    ...    None    &{ExcelPath}[PricingOption_IntentNoticeDaysInAdvance]    None    None    None    None    None    None    None    &{ExcelPath}[PricingOption_BillBorrower]           
+  
     Add Fee Pricing Rules    &{ExcelPath}[PricingRule_Fee1]    &{ExcelPath}[PricingRule_MatrixChangeAppMthd1]    &{ExcelPath}[PricingRule_NonBussDayRule1]    &{ExcelPath}[PricingRule_BillBorrowerStatus1]    &{ExcelPath}[PricingRule_BillNoOfDays1]
 
 Create Facility for RPA Deal
@@ -1364,6 +1387,7 @@ Create Facility for RPA Deal
     ...    @update: mcastro    27OCT2020    - added writing for RPA Scenario 2
     ...    @update: dahijara    28OCT2020    - Added writing for SERV01 Loan Drawdown for Scenario 4
     ...    @update: mcastro    03NOV2020    - Added Writing to SERV08_ComprehensiveRepricing for RPA Scenario 1
+    ...    @update: mcastro    05NOV2020    - Added writing for RPA Scenario 3
     [Arguments]    ${ExcelPath}
     Log    ${rowid}       
     ###Data Generation###
@@ -1390,6 +1414,14 @@ Create Facility for RPA Deal
     Run Keyword If    '${SCENARIO}'=='2'   Run Keywords    Write Data To Excel    SERV01_LoanDrawdown    Facility_Name    ${rowid}    ${Facility_Name}    bTestCaseColumn=True    sColumnReference=rowid
     ...    AND    Write Data To Excel    SERV01_LoanDrawdown    Loan_FacilityName    ${rowid}    ${Facility_Name}    bTestCaseColumn=True    sColumnReference=rowid 
 
+    ###For RPA Scenario 3###
+    Run Keyword If    '${SCENARIO}'=='3'    Run Keywords    Write Data To Excel    TRPO12_PortfolioSettledDisc    Facility_Name    ${rowid}    ${Facility_Name}    bTestCaseColumn=True    sColumnReference=rowid
+    ...    AND    Write Data To Excel    TRPO12_PortfolioSettledDisc    Portfolio_Position    ${rowid}    ${Facility_Name}    bTestCaseColumn=True    sColumnReference=rowid
+    ...    AND    Write Data To Excel    CRED07_UpfrontFee_Payment    Facility_Name    ${rowid}    ${Facility_Name}    bTestCaseColumn=True    sColumnReference=rowid  
+    ...    AND    Write Data To Excel    SERV01_LoanDrawdown    Facility_Name    ${rowid}    ${Facility_Name}    bTestCaseColumn=True    sColumnReference=rowid
+    ...    AND    Write Data To Excel    SERV01_LoanDrawdown    Loan_FacilityName    ${rowid}    ${Facility_Name}    bTestCaseColumn=True    sColumnReference=rowid 
+    ...    AND    Write Data To Excel    SERV08_ComprehensiveRepricing    Facility_Name    ${rowid}    ${Facility_Name}    bTestCaseColumn=True    sColumnReference=rowid
+
     ###Open Deal Notebook If Not present###
     ${Status}    Run Keyword And Return Status    Mx LoanIQ Verify Object Exist    ${LIQ_DealNotebook_Window}    VerificationData="Yes"
     Run Keyword If    ${Status}!=${True}    Open Existing Deal    &{ExcelPath}[Deal_Name]
@@ -1413,6 +1445,14 @@ Create Facility for RPA Deal
     ...    AND    Write Data To Excel    SERV01_LoanDrawdown    Loan_MaturityDate    ${rowid}    ${Facility_MaturityDate}
 
     Run Keyword If    '${SCENARIO}'=='2'    Run Keywords    Write Data To Excel    CRED02_FacilitySetup    Facility_AgreementDate    ${rowid}    ${Facility_EffectiveDate}
+    ...    AND    Write Data To Excel    CRED02_FacilitySetup    Facility_EffectiveDate    ${rowid}    ${Facility_EffectiveDate}
+    ...    AND    Write Data To Excel    SYND02_PrimaryAllocation    Primary_PortfolioExpiryDate    ${rowid}    ${Facility_ExpiryDate}
+    ...    AND    Write Data To Excel    CRED02_FacilitySetup    Facility_ExpiryDate    ${rowid}    ${Facility_ExpiryDate}
+    ...    AND    Write Data To Excel    CRED02_FacilitySetup    Facility_MaturityDate    ${rowid}    ${Facility_MaturityDate}    
+    ...    AND    Write Data To Excel    SERV01_LoanDrawdown    Loan_EffectiveDate    ${rowid}    ${Facility_EffectiveDate}    bTestCaseColumn=True    sColumnReference=rowid
+    ...    AND    Write Data To Excel    SERV01_LoanDrawdown    Loan_MaturityDate    ${rowid}    ${Facility_MaturityDate}
+
+    Run Keyword If    '${SCENARIO}'=='3'    Run Keywords    Write Data To Excel    CRED02_FacilitySetup    Facility_AgreementDate    ${rowid}    ${Facility_EffectiveDate}
     ...    AND    Write Data To Excel    CRED02_FacilitySetup    Facility_EffectiveDate    ${rowid}    ${Facility_EffectiveDate}
     ...    AND    Write Data To Excel    SYND02_PrimaryAllocation    Primary_PortfolioExpiryDate    ${rowid}    ${Facility_ExpiryDate}
     ...    AND    Write Data To Excel    CRED02_FacilitySetup    Facility_ExpiryDate    ${rowid}    ${Facility_ExpiryDate}

@@ -470,6 +470,7 @@ Search Customer and Complete its Borrower Profile Creation with default values
     ...    @update: makcamps    09OCT2020    - Added write data to excel method for Deal and Facility Setup data
     ...    @update: makcamps    15OCT2020    - Added write data to excel method for Scenario 1 and EU Initial Loan Creation
 	...    @update: makcamps    22OCT2020    - Updated write data to excel method for Scenario 1 and EU SERV29
+	...    @update: fluberio    28OCT2020    - Added write data to excel method for Scenario 4 and EU SERV02
 	...    @update: makcamps    28OCT2020    - Updated write data to excel method for Scenario 1 and EU APICORTC01
 	...    @update: makcamps    30OCT2020    - Updated write data to excel method for Scenario 1 and EU APICORTC05
     ...    @update: aramos      23OCT2020    - Update Write Remittance Description to add condition not to run it for Scenario 5 / Took out Mx LOANIQ Click ServicingGroupWindow_ExitButton after Close Servicing Group Remittance Instructions Selection List Window
@@ -499,10 +500,14 @@ Search Customer and Complete its Borrower Profile Creation with default values
     Write Data To Excel    CRED01_DealSetup    Borrower1_ShortName    ${rowid}   &{ExcelPath}[LIQCustomer_ShortName]
     Write Data To Excel    CRED02_FacilitySetup    Facility_Borrower    ${rowid}    &{ExcelPath}[LIQCustomer_ShortName]
     Write Data To Excel    CRED02_FacilitySetup    Facility_BorrowerSGName    ${rowid}    &{ExcelPath}[Group_Contact]
-	
+
+    Run Keyword If   '${SCENARIO}'=='4' and '&{ExcelPath}[Entity]'=='EU'    Run Keywords    Write Data To Excel    CRED01_DealSetup    Borrower_ShortName    ${rowid}   &{ExcelPath}[LIQCustomer_ShortName]
+	...    AND    Write Data To Excel    SERV02_LoanDrawdownNonAgent    Borrower_ShortName    ${rowid}   &{ExcelPath}[LIQCustomer_ShortName]    multipleValue=Y
+	Write Remittance Description    ${SCENARIO}    &{ExcelPath}[Remittance_Instruction]    ${RemittanceInstruction_DDADescriptionAUD}    ${RemittanceInstruction_IMTDescriptionUSD}    ${RemittanceInstruction_RTGSDescriptionAUD}
 
     Log    ${SCENARIO}	
 	Run Keyword if     ${SCENARIO}!=5    Write Remittance Description    ${SCENARIO}    &{ExcelPath}[Remittance_Instruction]    ${RemittanceInstruction_DDADescriptionAUD}    ${RemittanceInstruction_IMTDescriptionUSD}    ${RemittanceInstruction_RTGSDescriptionAUD}
+
 
 	###Searching Customer 	
     Search Customer    &{ExcelPath}[Customer_Search]    &{ExcelPath}[LIQCustomer_ID]    &{ExcelPath}[LIQCustomer_ShortName]          
