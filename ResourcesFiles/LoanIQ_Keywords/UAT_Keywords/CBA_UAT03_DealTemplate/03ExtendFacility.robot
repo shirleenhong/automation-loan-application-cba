@@ -69,7 +69,7 @@ Extend Maturity and Limit for MOF
     Select Item in Work in Process    Facilities    Awaiting Release    Scheduled Commitment Increase    &{ExcelPath}[Facility_Name]
     Navigate Notebook Workflow    ${LIQ_ScheduledCommitment_Notebook}    ${LIQ_ScheduledCommitment_Tab}    ${LIQ_ScheduledCommitment_Workflow_JavaTree}    Release
 
-Extend Maturity and Limit for FCAF
+Extend Maturity and Limit
     [Documentation]    This Keyword modifies extends the Maturity Date of the specified Facility
     [Arguments]    ${ExcelPath}
     

@@ -33,7 +33,9 @@ Create Party in Quick Party Onboarding
     ...    @update: javinzon    20OCT2020    - Added Write Data To Excel keyword for Shortname of PTY009_DuplicateShortName    
     ...    @update: makcamps    22OCT2020    - Updated Write Data To Excel keyword for Party ID of Scenario 1
     ...    @update: javinzon    22OCT2020    - Updated Documentation and removed Write Data To Excel for PTY009_DuplicateShortName and PTY007_DuplicateEnterpriseName
+    ...    @update: javinzon    30OCT2020    - Added ELSE condition to Close Browser
     ...    @update: fluberio    03NOV2020    - Added Write Date to Excel for Scenario 4 in EU
+
     [Arguments]    ${ExcelPath}
     
     ### INPUTTER ###
@@ -67,9 +69,8 @@ Create Party in Quick Party Onboarding
     ...    &{ExcelPath}[GST_Number]    &{ExcelPath}[Address_Line_1]    &{ExcelPath}[Address_Line_2]    &{ExcelPath}[Address_Line_3]    &{ExcelPath}[Address_Line_4]
     ...    &{ExcelPath}[Town_City]    &{ExcelPath}[State_Province]    &{ExcelPath}[Business_Country]    &{ExcelPath}[Is_Primary_Activity]    &{ExcelPath}[Registered_Number]    ${Short_Name}    
    
-
     Run Keyword If    '${SSO_ENABLED}'=='NO'    Logout User on Party
-    Close Browser
+    ...    ELSE    Close Browser
     
     ### SUPERVISOR ###
     ${Task_ID_From_Supervisor}    Approve Party via Supervisor Account    ${Party_ID}    &{ExcelPath}[UserZone]    &{ExcelPath}[UserBranch]

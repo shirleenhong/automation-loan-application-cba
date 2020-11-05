@@ -16,8 +16,8 @@ Create SBLC Guarantee Issuance - ComSee
     Open Existing Deal    &{ExcelPath}[Deal_Name]
 
     ###Outstanding Select Window###
-    ${Alias}    Create New Outstanding Select - SBLC    &{ExcelPath}[OutstandingSelect_Type]    &{ExcelPath}[Facility_Name]    &{ExcelPath}[Amount_Requested]
-    ...    ${Effective_Date}   &{ExcelPath}[Pricing_Option]    &{ExcelPath}[SBLC_ExpiryDate]
+    ${Alias}    Create New Outstanding Select - SBLC    &{ExcelPath}[OutstandingSelect_Type]    &{ExcelPath}[Facility_Name]    &{ExcelPath}[Amount_Requested]    
+    ...    ${Effective_Date}   &{ExcelPath}[Pricing_Option]    &{ExcelPath}[SBLC_ExpiryDate]    &{ExcelPath}[Deal_Name]
     Write Data To Excel    ComSee_SC3_Issuance    Fee_Name    ${rowid}    ${Alias}    ${ComSeeDataSet}
     Write Data To Excel    ComSee_SC3_IssuanceFeePayment    Fee_Name    ${rowid}    ${Alias}    ${ComSeeDataSet} 
     Write Data To Excel    ComSee_SC3_IssuanceFeePayment    Outstanding_Alias    ${rowid}    ${Alias}    ${ComSeeDataSet} 
@@ -117,6 +117,7 @@ Create SBLC Guarantee Issuance - ComSee
 Update SBLC Guarantee Issuance - ComSee
     [Documentation]    This high-level keyword will cater the update of Bank Guarantee.
     ...    @author: cfrancis    15SEP2020    Initial Create
+    ...    @update: clanding    02NOV2020    Added getting of ${OngoingFee_CycleDue} and writing to excel
     [Arguments]    ${ExcelPath}
     ###LIQ Window###
     Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
@@ -146,6 +147,9 @@ Update SBLC Guarantee Issuance - ComSee
     ${IssuanceFee_PaidToDate}    Get Issuance Paid to Date Amount
     ${IssuanceFee_PaidToDate}    Remove Comma and Convert to Number    ${IssuanceFee_PaidToDate}
     Write Data To Excel    ComSee_SC3_Issuance    Fee_PaidToDate    ${rowid}    ${IssuanceFee_PaidToDate}    ${ComSeeDataSet}
+    
+    ${OngoingFee_CycleDue}    Get Fee Cycle Due Amount    ${LIQ_SBLCGuarantee_Window_Tab}    ${LIQ_SBLCGuarantee_Window_Tab}    ${LIQ_BankGuarantee_Accrual_JavaTree}
+    Write Data To Excel    ComSee_SC3_Issuance    Fee_CycleDue    ${rowid}    ${OngoingFee_CycleDue}    ${ComSeeDataSet}
     
     Close All Windows on LIQ
     Logout from Loan IQ

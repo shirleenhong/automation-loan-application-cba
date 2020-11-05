@@ -1,7 +1,7 @@
 ### Dataset Locations ###
 APIDataSet = "C:\\Git_Evergreen\\fms_cba\\DataSet\\Integration_DataSet\\API\\API_Data_Set.xlsx"
 ExcelPath_API_temp = 'C:\\Git_Evergreen\\fms_cba\\DataSet\\Integration_DataSet\\API\\temp.xlsx'
-ExcelPath = "C:\\Git_Evergreen\\fms_cba\DataSet\\LoanIQ_DataSet\\EVG_PTYLIQ01_BaselineBilateralCustomer.xlsx"
+ExcelPath = "C:\\Git_Evergreen\\fms_cba\DataSet\\LoanIQ_DataSet\\EVG_PTYLIQ04_BaselineNonAgentSyndication.xlsx"
 dataset_path = "C:\\Git_Evergreen\\fms_cba"
 CBAUAT_ExcelPath = "C:\\Git_Evergreen\\fms_cba\\DataSet\\CBAUATDeal_DataSet\\EVG_CBAUAT03.xlsx"
 TL_DATASET = "C:\\Git_Evergreen\\fms_cba\\DataSet\\Integration_DataSet\\TL\\TL_Data_Set_AU.xlsx"
@@ -40,11 +40,11 @@ MDM_FFC_Password = 'admin'
 ### TL Credentials ###
 TL_USERNAME = "JCUSR01"
 TL_PASSWORD = "password"
-INPUTTER_USERNAME = "USERINP"
+INPUTTER_USERNAME = "INPAMT01"
 INPUTTER_PASSWORD = "password"
-SUPERVISOR_USERNAME = "wbayers"
+SUPERVISOR_USERNAME = "SUPAMT01"
 SUPERVISOR_PASSWORD = "password"
-MANAGER_USERNAME = "mwheeler"
+MANAGER_USERNAME = "MGRRON01"
 MANAGER_PASSWORD = "password"
 
 SSO_USERLINK = "mancsleverg0028"
@@ -93,6 +93,7 @@ API_CORRES_HOST = 'http://mancsleverg0007:9150'
 
 ###COMSEE###
 COM_HOST = 'http://mancsleverg0007:9150'
+ENTITY = 'AU'
 
 ###SAPWUL###
 SAPWUL_INSTANCE = 'CustomCBAPush_v1.2.9'
@@ -177,6 +178,8 @@ RESPONSE_MECHANISM_INSTANCE = "responsemechanism_1.4.1.0"
 DWE_NOTIFICATION_INSTANCE = "dwe_notification_1.3.0"
 SAPWUL_INSTANCE = 'CustomCBAPush_1.3.0'
 TL_CAL_ACK_MESSAGE_SOURCENAME = 'ccb_source_cal'
+CBACorrespUpdateMQ_Instance = 'CustomCBAPush_v1.4.0'
+FFC1CMUpdateSourceMQ_Instance = 'CustomInterface_v1.4.0'
 
 ### DWE ###
 DWE_SERVER = 'mancsleverg0007'

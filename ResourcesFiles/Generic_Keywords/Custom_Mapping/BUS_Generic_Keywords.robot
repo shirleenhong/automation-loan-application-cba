@@ -49,5 +49,6 @@ BUS_Select Actions
 BUS_Compute for Percentage of an Amount and Return with Comma Separator
     [Documentation]    This keyword is used to run the assigned low level keyword.
     ...    @author: dahijara    23SEP2020    - initial create
+    ...    @update: dahijara    30OCT2020    - Removed 1 extra argument
 
-    Run Keyword    Compute for Percentage of an Amount and Return with Comma Separator    ${ARGUMENT_1}    ${ARGUMENT_2}    ${ARGUMENT_3}
+    Run Keyword    Compute for Percentage of an Amount and Return with Comma Separator    ${ARGUMENT_1}    ${ARGUMENT_2}

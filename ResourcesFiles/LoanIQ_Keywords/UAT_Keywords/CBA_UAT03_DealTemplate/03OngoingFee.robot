@@ -17,8 +17,6 @@ Collect LFIA Payment D00000476
     Navigate to Existing Ongoing Fee Notebook    &{ExcelPath}[OngoingFee_Type]
 
     # ### Select Menu Item ###
-    # Update Line Fee Dates    ${LIQ_LineFeeNotebook_Window}    &{ExcelPath}[Effective_Date]    &{ExcelPath}[Rate_Start_Date]    
-    # ...    &{ExcelPath}[Actual_Due]    &{ExcelPath}[Cycle_Frequency]
     Select Menu Item    ${LIQ_LineFeeNotebook_Window}    Options    Payment
     Select Payment in Choose a Payment Window    &{ExcelPath}[Payment_Type]
     Select Cycle for Payment    &{ExcelPath}[Cycle_Number]    &{ExcelPath}[Prorate_With]
@@ -61,7 +59,7 @@ Collect LFIA Payment D00000476
     Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
     Select Item in Work in Process    Payments    Awaiting Release    Ongoing Fee Payment     &{ExcelPath}[Facility_Name]
     Navigate Notebook Workflow    ${LIQ_OngoingFeePayment_Window}    ${LIQ_PaymentNotebook_Tab}    ${LIQ_OngoingFeePaymentNotebook_Workflow_JavaTree}    Release Cashflows
-    Release Cashflow    &{ExcelPath}[Borrower1_ShortName]    release
+    # Release Cashflow    &{ExcelPath}[Borrower1_ShortName]    release
     Navigate Notebook Workflow    ${LIQ_OngoingFeePayment_Window}    ${LIQ_PaymentNotebook_Tab}    ${LIQ_OngoingFeePaymentNotebook_Workflow_JavaTree}    Release
 
 Collect Commitment Fee Payment
@@ -85,11 +83,11 @@ Collect Commitment Fee Payment
     Write Data To Excel    SERV29_CommitmentFeePayment    Balance_Amount    ${rowid}    ${BalanceAmount}    ${CBAUAT_ExcelPath}
     Write Data To Excel    SERV29_CommitmentFeePayment    Rate_Basis    ${rowid}    ${RateBasis}    ${CBAUAT_ExcelPath}
     
-    ${ProjectedCycleDue}    Compute Commitment Fee Amount Per Cycle    &{ExcelPath}[Balance_Amount]    &{ExcelPath}[Rate_Basis]    &{ExcelPath}[Cycle_Number]    ${Date}
+    ${ProjectedCycleDue}    Compute Commitment Fee Amount Per Cycle    ${BalanceAmount}    ${RateBasis}    &{ExcelPath}[Cycle_Number]    ${Date}    sAccrualRule=Pay In Advance
     Write Data To Excel    SERV29_CommitmentFeePayment    Computed_CycleDue    ${rowid}    ${ProjectedCycleDue}    ${CBAUAT_ExcelPath}
     
     ## Ongoing Fee Payment ###
-    Select Cycle Due Fee Payment 
+    Select Projected Cycle Due Fee Payment 
     Enter Effective Date for Ongoing Fee-Cycle Due Payment    ${Date}
     Select Menu Item    ${LIQ_OngoingFeePayment_Window}    File    Save
     
@@ -100,9 +98,7 @@ Collect Commitment Fee Payment
     Verify if Method has Remittance Instruction    &{ExcelPath}[Borrower_ShortName]    &{ExcelPath}[Remittance_Description]    &{ExcelPath}[Remittance_Instruction]
     Verify if Status is set to Do It    &{ExcelPath}[Borrower_ShortName]  
     
-    ### GL Entries Validation ###
-    ${ProjectedCycleDue}    Read Data From Excel    SERV29_CommitmentFeePayment    Computed_CycleDue    &{ExcelPath}[rowid]    ${CBAUAT_ExcelPath}
-    
+    ### GL Entries Validation ###    
     Navigate to GL Entries
     ${Borrower_Debit}    Get GL Entries Amount    &{ExcelPath}[Borrower_ShortName]    Debit Amt
     ${HostBank_Credit}    Get GL Entries Amount    &{ExcelPath}[Host_Bank]    Credit Amt
@@ -187,7 +183,66 @@ Commitment Fee Release
     # ### Workflow Tab ###
     # Validate Commitment Fee Notebook Status
     
+Collect Commitment Fee Payment D00000476
+    [Documentation]    This keyword collects the commitment fee payment of the facility
+    ...    @author:mgaling    31July2019    Intial Create
+    [Arguments]    ${ExcelPath}
+    
+    ${Date}    Get System Date
+    
+    ### Login to LIQ ###
+    Logout from Loan IQ
+    Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
+        
+    ### Launch Facility ###
+    Launch Existing Facility    &{ExcelPath}[Deal_Name]    &{ExcelPath}[Facility_Name]
+    Navigate to Existing Ongoing Fee Notebook    &{ExcelPath}[OngoingFee_Type]
 
+    ### Commitment Fee Notebook - General Tab ###  
+    ${Rate}    ${BalanceAmount}    ${RateBasis}    Get Data in General Tab
+    Write Data To Excel    SERV29_CommitmentFeePayment    Rate    ${rowid}    ${Rate}    ${CBAUAT_ExcelPath}
+    Write Data To Excel    SERV29_CommitmentFeePayment    Balance_Amount    ${rowid}    ${BalanceAmount}    ${CBAUAT_ExcelPath}
+    Write Data To Excel    SERV29_CommitmentFeePayment    Rate_Basis    ${rowid}    ${RateBasis}    ${CBAUAT_ExcelPath}
+    
+    ## Ongoing Fee Payment ###
+    Select Projected Cycle Due Fee Payment 
+    Enter Effective Date for Ongoing Fee-Cycle Due Payment    ${Date}
+    Select Menu Item    ${LIQ_OngoingFeePayment_Window}    File    Save
+    
+    ### Ongoing Fee Payment - Cashflow Validation ###
+    Navigate Notebook Workflow    ${LIQ_OngoingFeePayment_Window}    ${LIQ_OngoingFeePayment_Tab}    ${LIQ_OngoingFeePayment_WorkflowItems}    Create Cashflow
+    
+    ### Cashflow Window ###
+    Verify if Method has Remittance Instruction    &{ExcelPath}[Borrower_ShortName]    &{ExcelPath}[Remittance_Description]    &{ExcelPath}[Remittance_Instruction] 
+    Create Cashflow    &{ExcelPath}[Borrower_ShortName]    release    
+            
+    ### Send to Approval ###
+    Navigate Notebook Workflow    ${LIQ_OngoingFeePayment_Window}    ${LIQ_OngoingFeePayment_Tab}    ${LIQ_OngoingFeePayment_WorkflowItems}    Send to Approval
+    Logout from Loan IQ
+    Login to Loan IQ    ${SUPERVISOR_USERNAME}    ${SUPERVISOR_PASSWORD}
+    Select Item in Work in Process    Payments    Awaiting Approval    Ongoing Fee Payment     &{ExcelPath}[Facility_Name]
+    
+    Navigate Notebook Workflow    ${LIQ_OngoingFeePayment_Window}    ${LIQ_OngoingFeePayment_Tab}    ${LIQ_OngoingFeePayment_WorkflowItems}    Approval
+    
+    ### Release ###
+    Logout from Loan IQ
+    Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
+    Select Item in Work in Process    Payments    Awaiting Release    Ongoing Fee Payment     &{ExcelPath}[Facility_Name]
+    Navigate Notebook Workflow    ${LIQ_OngoingFeePayment_Window}    ${LIQ_OngoingFeePayment_Tab}    ${LIQ_OngoingFeePayment_WorkflowItems}    Release Cashflows
+    Release Cashflow    &{ExcelPath}[Borrower_ShortName]    release
+    Navigate Notebook Workflow    ${LIQ_OngoingFeePayment_Window}    ${LIQ_PaymentNotebook_Tab}    ${LIQ_OngoingFeePaymentNotebook_Workflow_JavaTree}    Release
+    
+    ### Payment Transaction Validation ###
+    Close All Windows on LIQ
+    Search Existing Deal    &{ExcelPath}[Deal_Name]
+    
+    ### Launch Facility ###
+    Launch Existing Facility    &{ExcelPath}[Deal_Name]    &{ExcelPath}[Facility_Name]
+    Navigate to Existing Ongoing Fee Notebook    &{ExcelPath}[OngoingFee_Type]
+
+    ### Validate Accrual Details ###
+    Validate release of Ongoing Fee Payment
+    Close All Windows on LIQ   
     
     
     
