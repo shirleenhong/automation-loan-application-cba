@@ -148,7 +148,7 @@ Approve Registered Party
 
     Wait Until Loading Page Is Not Visible    ${PARTY_TIMEOUT}
     Validate Page Screen is Displayed    ${PARTY_PROCESSREFERRALS_PAGETITLE}   
-    
+     
     ${TaskID}    Select Referral Using Reference ID    ${Party_ID}    ${True}
     Capture Page Screenshot    ${screenshot_path}/Screenshots/Party/PartyProcessReferralsPage-{index}.png
     Run Keyword If    '${TaskID}'!='None'    Mx Click Element    ${Party_Approve_Button}
@@ -263,9 +263,10 @@ Populate Address Details
 
 
 Approve Party via Supervisor Account
-   [Documentation]    This keyword is used to approve created party via Quick Party Onboarding
+    [Documentation]    This keyword is used to approve created party via Quick Party Onboarding
     ...    @author: dahijara    05MAY2020    - initial create
     ...    @update: dahijara    09JUN2020    - Added keyword to update zone an branch
+    ...    @update: javinzon    04NOV2020    - Added ELSE condition to Close Browser
     [Arguments]    ${sPartyID}    ${sUserZone}    ${sUserBranch}
 
     Login User to Party    ${PARTY_SUPERVISOR_USERNAME}    ${PARTY_SUPERVISOR_PASSWORD}    ${USER_LINK}    ${USER_PORT}    ${PARTY_URL_SUFFIX}    ${PARTY_HTML_APPROVER_CREDENTIALS}    ${SSO_ENABLED}    ${PARTY_URL}
@@ -274,7 +275,7 @@ Approve Party via Supervisor Account
     ${Task_ID_From_Supervisor}    Approve Registered Party    ${sPartyID}
     
     Run Keyword If    '${SSO_ENABLED}'=='NO'    Logout User on Party
-    Close Browser
+    ...    ELSE    Close Browser
 
     [Return]    ${Task_ID_From_Supervisor}
 
@@ -331,11 +332,13 @@ Validate Enterprise Summary Details
     [Documentation]    This keyword validates the Party details from Enterprise summary details page.
     ...    @author: dahijara    05MAY2020     - initial create
     ...    @update: javinzon    16SEP2020     - changed parameter from ${sAssignedBranch} to ${sUserBranch}
+    ...    @update: javinzon    04NOV2020     - added Run Keyword And Ignore Error for Page screen validation,
+    ...                                         updated validation for Tax Country cell
     [Arguments]    ${sLocality}    ${sEntity}    ${sUserBranch}    ${sParty_Type}    ${sParty_Sub_Type}    ${sParty_Category}    ${sParty_ID}    
     ...    ${sEnterprise_Name}    ${sRegistered_Number}    ${sCountryOfRegistration}    ${sCountryOfTaxDomicile}    ${sShortName}    ${sGTS_Number}
 
     Wait Until Loading Page Is Not Visible    ${PARTY_TIMEOUT}
-    Validate Page Screen is Displayed    ${PARTY_ENTERPRISEPARTYSUMMARYDETAILS_PAGETITLE}
+    Run Keyword And Ignore Error    Validate Page Screen is Displayed    ${PARTY_ENTERPRISEPARTYSUMMARYDETAILS_PAGETITLE}
 
     Compare Two Arguments    ${sLocality}    ${Party_PreExistenceCheck_Locality_Dropdown}
     Compare Two Arguments    ${sEntity}    ${Party_QuickEnterpriseParty_Entity_Dropdown}
@@ -355,32 +358,14 @@ Validate Enterprise Summary Details
     ...    ELSE    Run Keyword And Continue On Failure    Fail    Goods & Service Tax Number value is incorrect! Goods & Service Tax Number:${GST_Number}, Expected Goods & Service Tax Number:${sGTS_Number}       
 
     ${TaxCountry}    Get Text    ${Party_EnterpriseDetailsSummary_TaxCountry_Cell}
-    ${isMatched}    Run Keyword And Return Status    Should Be Equal    ${sGTS_Number}    ${GST_Number}
+    ${isMatched}    Run Keyword And Return Status    Should Be Equal    ${sCountryOfTaxDomicile}    ${TaxCountry}
     Run Keyword If    ${isMatched}==${True}    Log    Country of Tax value is correct! Party ID:${TaxCountry}    level=INFO
     ...    ELSE    Run Keyword And Continue On Failure    Fail    Country of Tax value is incorrect! Country of Tax:${TaxCountry}, Expected Country of Tax:${sCountryOfTaxDomicile}     
-
-Validate Enterprise Business Activity Details
-    [Documentation]    This keyword validates the Enterprise Business Activity Details from Enterprise summary details page.
-    ...    @author: dahijara    05MAY2020     - initial create
-    [Arguments]    ${sCountry}    ${sIndustrySector}    ${sBusinessActivity}    ${bIsMainActivity}    ${bIsPrimaryActivity}
-
-    Wait Until Loading Page Is Not Visible    ${PARTY_TIMEOUT}
-    Validate Page Screen is Displayed    ${PARTY_ENTERPRISEPARTYSUMMARYDETAILS_PAGETITLE}
-
-    Click Button    ${Party_QuickEnterpriseParty_BusinessActivity_CheckBox}
-    Wait Until Loading Page Is Not Visible    ${PARTY_TIMEOUT}
-    Wait Until Page Contains    Create Enterprise Business Activity  
-
-    ${IsMainActivity}    Get Value    ${Party_QuickEnterpriseParty_EnterpriseBusinessActivity_IsMainActivity_CheckBox}
-    ${IsPrimaryActivity}    Get Value    ${Party_QuickEnterpriseParty_EnterpriseBusinessActivity_IsMainActivity_CheckBox}
-
-    Compare Two Arguments    ${sCountry}    ${Party_QuickEnterpriseParty_EnterpriseBusinessActivity_Country_Dropdown}
-    Compare Two Arguments    ${sIndustrySector}    ${Party_QuickEnterpriseParty_EnterpriseBusinessActivity_IndustrySector_Dropdown}
-    Compare Two Arguments    ${sBusinessActivity}    ${Party_QuickEnterpriseParty_EnterpriseBusinessActivity_BusinessActivity_Dropdown}    
     
 Validate Enquire Enterprise Business Activity Details
     [Documentation]    This keyword validates the Enterprise Business Activity Details from Enterprise summary details page.
-    ...    @author: javinzon    17SEP2020     - initial create
+    ...    @author: javinzon    17SEP2020    - initial create
+    ...    @update: javinzon    03NOV2020    - updated validations for MainActivity and PrimaryActivity
     [Arguments]    ${sCountry}    ${sIndustrySector}    ${sBusinessActivity}    ${bIsMainActivity}    ${bIsPrimaryActivity}
 
     Click Button    ${Party_EnterPrisePartySummaryDetails_BusinessActivity_View_Button}
@@ -389,11 +374,15 @@ Validate Enquire Enterprise Business Activity Details
     Compare Two Arguments    ${sCountry}    ${Party_QuickEnterpriseParty_EnterpriseBusinessActivity_Country_Dropdown}
     Compare Two Arguments    ${sIndustrySector}    ${Party_QuickEnterpriseParty_EnterpriseBusinessActivity_IndustrySector_Dropdown}
     Compare Two Arguments    ${sBusinessActivity}    ${Party_QuickEnterpriseParty_EnterpriseBusinessActivity_BusinessActivity_Dropdown} 
-    Compare Two Arguments    ${sCountry}    ${Party_QuickEnterpriseParty_EnterpriseBusinessActivity_Country_Dropdown}
-    Compare Two Arguments    ${sIndustrySector}    ${Party_QuickEnterpriseParty_EnterpriseBusinessActivity_IndustrySector_Dropdown}
-    Compare Two Arguments    ${sBusinessActivity}    ${Party_QuickEnterpriseParty_EnterpriseBusinessActivity_BusinessActivity_Dropdown}   
     
+    ${IsMainActivity_Actual}    SeleniumLibraryExtended.Get Element Attribute    ${Party_EnquirePartyDetails_BusinessActivity_Is_Main_Activity_Checkbox}    aria-checked
+    Run Keyword If    '${IsMainActivity_Actual.upper()}'=='${bIsMainActivity.upper()}'    Log    Value for Main Activity is correct
+    ...    ELSE    Run Keyword And Continue On Failure    Fail    Value for Main Activity is incorrect
     
+    ${IsPrimaryActivity_Actual}    SeleniumLibraryExtended.Get Element Attribute    ${Party_EnquirePartyDetails_BusinessActivity_Is_Main_Activity_Checkbox}    aria-checked
+    Run Keyword If    '${IsPrimaryActivity_Actual.upper()}'=='${bIsPrimaryActivity.upper()}'    Log    Value for Primary Activity is correct 
+    ...    ELSE    Run Keyword And Continue On Failure    Fail    Value for Primary Activity is incorrect
+     
 Accept Approved Party and Validate Details in Enterprise Summary Details Screen
     [Documentation]    This keyword validates the Enterprise Business Activity Details from Enterprise summary details page.
     ...    @author: dahijara    05MAY2020     - initial create

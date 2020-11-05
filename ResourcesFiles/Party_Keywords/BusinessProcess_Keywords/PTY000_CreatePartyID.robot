@@ -8,6 +8,7 @@ Create Party ID Successfully in Quick Party Onboarding
     ...    @update: javinzon    26OCT2020    - Added Write Data To Excel for PTY010_DuplicateShortName_AcrossEntities
     ...    @update: javinzon    27OCT2020    - Added condition for writing data to excel, Added Write Data To Excel keyword 
     ...                                        for PTY008_DuplicateEnterpriseName_AcrossEntities, Added ELSE condition to Close Browser
+    ...    @update: javinzon    03NOV2020    - Added Write Data To Excel for PTY002_CreatePartyID_MaintainPartyDetails
     [Arguments]    ${ExcelPath}
     
     ### INPUTTER ###
@@ -29,7 +30,15 @@ Create Party ID Successfully in Quick Party Onboarding
     ...    AND    Write Data To Excel    QuickPartyOnboarding    Party_ID    PTY008_DuplicateEnterpriseName_AcrossEntities    ${Party_ID}    ${PTY_DATASET}        bTestCaseColumn=True
     ...    ELSE IF    '${TestCase_Name}'=='PTY009_CreatePartyID_DuplicateShortName'    Write Data To Excel    QuickPartyOnboarding    Short_Name    PTY009_DuplicateShortName    ${Short_Name}    ${PTY_DATASET}    bTestCaseColumn=True
     ...    ELSE IF    '${TestCase_Name}'=='PTY010_CreatePartyID_DuplicateShortName_AcrossEntities'    Write Data To Excel    QuickPartyOnboarding    Short_Name    PTY010_DuplicateShortName_AcrossEntities    ${Short_Name}    ${PTY_DATASET}    bTestCaseColumn=True
-    
+    ...    ELSE IF    '${TestCase_Name}'=='PTY002_CreatePartyID_MaintainPartyDetails'    Run Keywords    Write Data To Excel    QuickPartyOnboarding    Party_ID    ${TestCase_Name}    ${Party_ID}    ${PTY_DATASET}    bTestCaseColumn=True
+    ...    AND    Write Data To Excel    QuickPartyOnboarding    Entity    ${TestCase_Name}    ${Entity}    ${PTY_DATASET}        bTestCaseColumn=True
+    ...    AND    Write Data To Excel    QuickPartyOnboarding    Assigned_Branch    ${TestCase_Name}    ${Assigned_Branch}    ${PTY_DATASET}        bTestCaseColumn=True
+    ...    AND    Write Data To Excel    QuickPartyOnboarding    Enterprise_Name    ${TestCase_Name}    ${Enterprise_Name}    ${PTY_DATASET}        bTestCaseColumn=True
+    ...    AND    Write Data To Excel    QuickPartyOnboarding    Short_Name    ${TestCase_Name}    ${Short_Name}    ${PTY_DATASET}        bTestCaseColumn=True
+    ...    AND    Write Data To Excel    QuickPartyOnboarding    Party_ID    PTY002_MaintainPartyDetails    ${Party_ID}    ${PTY_DATASET}    bTestCaseColumn=True
+    ...    AND    Write Data To Excel    QuickPartyOnboarding    Entity    PTY002_MaintainPartyDetails    ${Entity}    ${PTY_DATASET}        bTestCaseColumn=True
+    ...    AND    Write Data To Excel    QuickPartyOnboarding    Assigned_Branch    PTY002_MaintainPartyDetails    ${Assigned_Branch}    ${PTY_DATASET}        bTestCaseColumn=True
+
     Populate Quick Enterprise Party    ${Party_ID}    &{ExcelPath}[Country_of_Tax_Domicile]    &{ExcelPath}[Country_of_Registration]
     ...    &{ExcelPath}[Address_Type]    &{ExcelPath}[Country_Region]    &{ExcelPath}[Post_Code]    &{ExcelPath}[Document_Collection_Status]
     ...    &{ExcelPath}[Industry_Sector]    &{ExcelPath}[Business_Activity]    &{ExcelPath}[Is_Main_Activity]
