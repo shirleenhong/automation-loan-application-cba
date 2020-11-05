@@ -97,8 +97,8 @@ Create Initial Loan Drawdown for Non Agent Syndication
     ${NewGlobalOutstandings}    Get New Facility Global Outstandings
     ${Computed_GlobalOutstandings}    Run Keyword If   '${SCENARIO}'=='4' and '&{ExcelPath}[Entity]' == 'EU'    Compute New Global Outstandings     ${Excel_FacilityCurrentGlobalOutstandings}    ${CovertedLoanRequested_Amount}
     ...    ELSE    Compute New Global Outstandings     &{ExcelPath}[Facility_CurrentGlobalOutstandings]    &{ExcelPath}[Loan_RequestedAmount]
-    ${NewGlobalOutstandings}    Run Keyword If   '${SCENARIO}'=='4' and '&{ExcelPath}[Entity]' == 'EU'    Split the Value with Decimal and Return the whole number    ${NewGlobalOutstandings}
-    ${Computed_GlobalOutstandings}    Run Keyword If   '${SCENARIO}'=='4' and '&{ExcelPath}[Entity]' == 'EU'    Split the Value with Decimal and Return the whole number    ${Computed_GlobalOutstandings}
+    ${NewGlobalOutstandings}    Run Keyword If   '${SCENARIO}'=='4' and '&{ExcelPath}[Entity]' == 'EU'    Split the Value with Decimal and Return the Whole Number    ${NewGlobalOutstandings}
+    ${Computed_GlobalOutstandings}    Run Keyword If   '${SCENARIO}'=='4' and '&{ExcelPath}[Entity]' == 'EU'    Split the Value with Decimal and Return the Whole Number    ${Computed_GlobalOutstandings}
     Compare Two Numbers    ${Computed_GlobalOutstandings}    ${NewGlobalOutstandings}
     
     ${Excel_FacilityCurrentAvailToDraw}    Read Data From Excel    SERV02_LoanDrawdownNonAgent    Facility_CurrentAvailToDraw    ${rowid}
@@ -106,22 +106,10 @@ Create Initial Loan Drawdown for Non Agent Syndication
     ${NewAvailToDrawAmount}    Get New Facility Available to Draw Amount
     ${Computed_AvailToDrawAmt}    Run Keyword If   '${SCENARIO}'=='4' and '&{ExcelPath}[Entity]' == 'EU'    Compute New Facility Available to Draw Amount    ${Excel_FacilityCurrentAvailToDraw}    ${CovertedLoanRequested_Amount}
     ...    ELSE    Compute New Facility Available to Draw Amount    &{ExcelPath}[Facility_CurrentAvailToDraw]    &{ExcelPath}[Loan_RequestedAmount]
-    ${NewAvailToDrawAmount}    Run Keyword If   '${SCENARIO}'=='4' and '&{ExcelPath}[Entity]' == 'EU'    Split the Value with Decimal and Return the whole number    ${NewAvailToDrawAmount}
-    ${Computed_AvailToDrawAmt}    Run Keyword If   '${SCENARIO}'=='4' and '&{ExcelPath}[Entity]' == 'EU'    Split the Value with Decimal and Return the whole number    ${Computed_AvailToDrawAmt}
+    ${NewAvailToDrawAmount}    Run Keyword If   '${SCENARIO}'=='4' and '&{ExcelPath}[Entity]' == 'EU'    Split the Value with Decimal and Return the Whole Number    ${NewAvailToDrawAmount}
+    ${Computed_AvailToDrawAmt}    Run Keyword If   '${SCENARIO}'=='4' and '&{ExcelPath}[Entity]' == 'EU'    Split the Value with Decimal and Return the Whole Number    ${Computed_AvailToDrawAmt}
     Compare Two Numbers    ${Computed_AvailToDrawAmt}    ${NewAvailToDrawAmount}    
     
     Close All Windows on LIQ
     Logout from Loan IQ
     Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
-    
-Get the Row Id for Given Pricing Option
-    [Documentation]    This keyword is used to set the row id of the correspoding Pricing Option
-    ...    @update: fluberio    29OCT2020    - initial create
-    [Arguments]    ${sPricing_Option}
-    
-    ${rowId}    Run Keyword If    '${sPricing_Option}' == 'Euro LIBOR Option'    Set Variable    1
-    ...    ELSE IF    '${sPricing_Option}' == 'NIBOR Option'    Set Variable    2
-    ...    ELSE IF    '${sPricing_Option}' == 'USD LIBOR Option'    Set Variable    3
-    ...    ELSE IF    '${sPricing_Option}' == 'GBP LIBOR Option'    Set Variable    4
-    
-    [Return]    ${rowId}
