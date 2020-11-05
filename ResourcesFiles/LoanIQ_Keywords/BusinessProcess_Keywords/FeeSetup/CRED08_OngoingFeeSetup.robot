@@ -346,12 +346,16 @@ Ongoing Fee Setup
     [Documentation]    This high-level keyword sets up Ongoing Fee from the Deal Notebook.
     ...    @author: fmamaril
     ...    @update: makcamps    15OCT2020    - added closing of all LIQ windows to coordinate w/ next tc
+    ...    @update: mcastro     05NOV2020    - Added condition for RPA Scenario 3
     [Arguments]    ${ExcelPath}
     ###Facility Notebook - Pricing Tab###
     Modify Ongoing Fee Pricing - Insert Add    &{ExcelPath}[OngoingFee_Category1]    &{ExcelPath}[OngoingFee_Type1]    &{ExcelPath}[OngoingFee_RateBasis1]
     Modify Ongoing Fee Pricing - Insert After   &{ExcelPath}[OngoingFee_AfterItem]    &{ExcelPath}[Facility_PercentWhole]    &{ExcelPath}[OngoingFee_Category1]    &{ExcelPath}[Facility_Percent] 
     Modify Interest Pricing - Insert Add    &{ExcelPath}[Interest_AddItem]    &{ExcelPath}[Interest_OptionName1]    &{ExcelPath}[Interest_RateBasis]    &{ExcelPath}[Interest_SpreadAmt1]    &{ExcelPath}[Interest_BaseRateCode1]
     
+    ### For RPA Scenario 3 ###
+    Run Keyword If    '${SCENARIO}'=='3'    Modify Interest Pricing - Insert Add    &{ExcelPath}[Interest_AddItem]    &{ExcelPath}[Interest_OptionName2]    &{ExcelPath}[Interest_RateBasis]    &{ExcelPath}[Interest_SpreadAmt2]    &{ExcelPath}[Interest_BaseRateCode2]
+
     ###Facility Notebook - Pricing Rules Tab###
     Verify Pricing Rules    &{ExcelPath}[Interest_OptionName1]
     Validate Facility
