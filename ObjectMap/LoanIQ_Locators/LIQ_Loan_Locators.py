@@ -20,7 +20,7 @@ LIQ_Loan_Options_RepaymentSchedule = 'JavaWindow("title:=.*Loan.*Active").JavaMe
 LIQ_Loan_InquiryMode_Button = 'JavaWindow("title:=.*Loan.*Active").JavaButton("attached text:=Notebook in Inquiry Mode - F7")'    
 LIQ_Loan_UpdateMode_Button = 'JavaWindow("title:=.*Loan.*Active").JavaButton("attached text:=Notebook in Update Mode - F7")'
 LIQ_Loan_RiskType_Text = 'JavaWindow("title:=.*Loan.*Active").JavaStaticText("labeled_containers_path:=Tab:General;", "x:=116", "y:=201")'
-LIQ_Loan_Currency_Text = 'JavaWindow("title:=.*Loan.*Active").JavaStaticText("labeled_containers_path:=Tab:General;Group:Loan Amounts;", "x:=217", "y:=211")'
+LIQ_Loan_Currency_Text = 'JavaWindow("title:=.*Loan.*Active").JavaStaticText("labeled_containers_path:=Tab:General;Group:Loan Amounts;", "x:=217", "y:=208")'
 LIQ_Loan_EffectiveDate_Text = 'JavaWindow("title:=.*Loan.*Active").JavaStaticText("labeled_containers_path:=Tab:General;", "x:=580", "y:=117")'
 LIQ_Loan_MaturityDate_Text = 'JavaWindow("title:=.*Loan.*Active").JavaEdit("labeled_containers_path:=Tab:General;", "index:=0")'
 LIQ_Loan_PaymentMode_List = 'JavaWindow("title:=.*Loan.*ctive").JavaList("attached text:=Payment Mode:")'
