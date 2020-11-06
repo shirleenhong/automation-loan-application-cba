@@ -455,3 +455,16 @@ Set FX Rates Rollover or Conversion
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/InitialDrawdown_Workflow
     mx LoanIQ click    ${LIQ_FacilityCurrency_Facility_Rate_Ok_Button}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/InitialDrawdown_Workflow
+
+Send to Rate Setting Approval
+    [Documentation]    This keyword is used to Send Rate Setting
+    ...    @author: mcastro    04NOV2020    - Initial Create
+    mx LoanIQ activate window    ${LIQ_LoanRepricingForDeal_Window}
+    Mx LoanIQ Select Window Tab    ${LIQ_LoanRepricingForDeal_Workflow_Tab}    ${WORKFLOW_TAB}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LoanRepricingWindow_WorkflowTab
+    Mx LoanIQ DoubleClick    ${LIQ_LoanRepricingForDeal_Workflow_JavaTree}    ${RATE_SETTING_TRANSACTION}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LoanRepricingWindow_WorkflowTab_Approval
+    mx LoanIQ activate window    ${LIQ_LoanRepricingForDeal_Window}
+    mx LoanIQ activate window    ${LIQ_Confirmation_Window}
+    Wait Until Keyword Succeeds    3x    5 sec  Mx Press Combination    Key.ENTER
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LoanRepricingWindow_WorkflowTab_Approval

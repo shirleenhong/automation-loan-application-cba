@@ -343,7 +343,8 @@ Write Repriced Loan Details for ComSee - Scenario 2
 Create Initial Loan Drawdown with no Repayment Schedule - Scenario 7 ComSee
     [Documentation]    This keyword is used to create a Loan Drawdown without selecting a Payment Schedule.
     ...    @author: rtarayao    11SEP2019    - Duplicate of Scenario 7 from Functional Scenarios
-    ...    @update: clanding    03NOV2020    - Added argument for Currency; Updated hard coded value CB001 to input dataset
+    ...    @author: songchan    06NOV2020    - Added Loan Currency as an argument to Get Host Bank in Cashflow
+    ...    @update: clanding    03NOV2020    - Updated hard coded value CB001 to input dataset
     [Arguments]    ${ExcelPath}
     
     ###Facility###

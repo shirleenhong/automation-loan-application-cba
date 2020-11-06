@@ -16,8 +16,8 @@ Create SBLC Guarantee Issuance - ComSee
     Open Existing Deal    &{ExcelPath}[Deal_Name]
 
     ###Outstanding Select Window###
-    ${Alias}    Create New Outstanding Select - SBLC    &{ExcelPath}[OutstandingSelect_Type]    &{ExcelPath}[Facility_Name]    &{ExcelPath}[Amount_Requested]
-    ...    ${Effective_Date}   &{ExcelPath}[Pricing_Option]    &{ExcelPath}[SBLC_ExpiryDate]
+    ${Alias}    Create New Outstanding Select - SBLC    &{ExcelPath}[OutstandingSelect_Type]    &{ExcelPath}[Facility_Name]    &{ExcelPath}[Amount_Requested]    
+    ...    ${Effective_Date}   &{ExcelPath}[Pricing_Option]    &{ExcelPath}[SBLC_ExpiryDate]    &{ExcelPath}[Deal_Name]
     Write Data To Excel    ComSee_SC3_Issuance    Fee_Name    ${rowid}    ${Alias}    ${ComSeeDataSet}
     Write Data To Excel    ComSee_SC3_IssuanceFeePayment    Fee_Name    ${rowid}    ${Alias}    ${ComSeeDataSet} 
     Write Data To Excel    ComSee_SC3_IssuanceFeePayment    Outstanding_Alias    ${rowid}    ${Alias}    ${ComSeeDataSet} 

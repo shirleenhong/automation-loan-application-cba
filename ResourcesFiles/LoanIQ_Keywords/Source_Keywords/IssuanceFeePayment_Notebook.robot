@@ -7,7 +7,7 @@ Initiate Issuance Fee Payment
     ...    This validates the details in the Issuance Fee Payment Notebook, sets the Effective date, and saves the transaction.
     ...    @author: bernchua
     ...    @update: ehugo    02JUN2020    - added keyword pre-processing; added screenshot
-    [Arguments]    ${sSBLC_Alias}    ${sIssuanceFeePayment_EffectiveDate}    ${sDeal_Name}    ${sFacility_Name}    ${sBorrower_Name}    ${sProjectedCycleDue}
+    [Arguments]    ${sSBLC_Alias}    ${sIssuanceFeePayment_EffectiveDate}    ${sDeal_Name}    ${sFacility_Name}    ${sBorrower_Name}    ${sProjectedCycleDue}    ${sCycleNumber}
 
     ### GetRuntime Keyword Pre-processing ###
     ${SBLC_Alias}    Acquire Argument Value    ${sSBLC_Alias}
@@ -16,11 +16,13 @@ Initiate Issuance Fee Payment
     ${Facility_Name}    Acquire Argument Value    ${sFacility_Name}
     ${Borrower_Name}    Acquire Argument Value    ${sBorrower_Name}
     ${ProjectedCycleDue}    Acquire Argument Value    ${sProjectedCycleDue}
+    ${CycleNumber}    Acquire Argument Value    ${sCycleNumber}
 
     mx LoanIQ activate    ${LIQ_CyclesForBankGuarantee_Window}
     ${CyclesForBank_Exist}    Run Keyword And Return Status    Mx LoanIQ Verify Object Exist    JavaWindow("title:=.*${SBLC_Alias}.*")        VerificationData="Yes"
     Run Keyword If    ${CyclesForBank_Exist}==True    Log    Window title is verified with ${SBLC_Alias}.
     Validate if Element is Checked    ${LIQ_CyclesForBankGuarantee_ProjectedDue_RadioButton}    Projected Due
+    Mx LoanIQ Select Or Doubleclick In Tree By Text    ${LIQ_CyclesForBankGuarantee_Tree}    ${CycleNumber}%s
     :FOR    ${i}    IN RANGE    3
     \    mx LoanIQ click    ${LIQ_CyclesForBankGuarantee_OK_Button}
     \    ${Warning_Displayed}    Run Keyword And Return Status    Mx LoanIQ Verify Object Exist    ${LIQ_Warning_Window}    VerificationData="Yes"
@@ -40,6 +42,8 @@ Initiate Issuance Fee Payment
     Validate Loan IQ Details    ${IssuanceFeePayment_EffectiveDate}    ${LIQ_IssuanceFeePaymentNotebook_EffectiveDate_Field}
 
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/IssuanceFeePaymentWindow
+    
+    Mx LoanIQ Click Element If Present    ${LIQ_Warning_OK_Button}    
     
 Validate Issuance Fee Payment Notebook Details
     [Documentation]    This keyword validates the details in the Issuance Fee Payment Notebook.

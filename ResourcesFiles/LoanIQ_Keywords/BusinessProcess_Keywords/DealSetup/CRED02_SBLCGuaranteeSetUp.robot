@@ -70,6 +70,9 @@ Setup Multi-Currency SBLC Facility
     
     Write Data To Excel    CRED01_DealSetup    Primary_PortfolioExpiryDate    ${rowid}   ${Facility_ExpiryDate}
     Write Data To Excel    SERV05_SBLCIssuance    Expiry_Date    ${rowid}   ${Facility_ExpiryDate}
+	
+	Refresh Tables in LIQ
+    Open Existing Deal    &{ExcelPath}[Deal_Name]
     
     Add New Facility    &{ExcelPath}[Deal_Name]    &{ExcelPath}[Deal_Currency]
     ...    ${FacilityName}    &{ExcelPath}[Facility_Type]    &{ExcelPath}[Facility_ProposedCmtAmt]    &{ExcelPath}[Facility_Currency]

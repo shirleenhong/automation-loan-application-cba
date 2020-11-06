@@ -95,9 +95,9 @@ Enter Effective Date for Ongoing Fee Payment
 
     mx LoanIQ activate window    ${LIQ_OngoingFeePayment_Window}
     mx LoanIQ enter    ${LIQ_OngoingFeePayment_EffectiveDate_Field}    ${FeePayment_EffectiveDate}
-    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
+    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}    
     Run Keyword If    "${ProjectedCycleDue}" != "null"    mx LoanIQ enter    ${LIQ_Payment_RequestedAmount_Textfield}    ${ProjectedCycleDue}     
-    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
+
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/OngoingFeePaymentWindow_EffectiveDate
 
 Send Ongoing Fee Payment to Approval
@@ -257,7 +257,7 @@ Run Online Acrual to Commitment Fee
     [Documentation]    This keyword runs the online accrual for commitment fee.
     ...    @author: fmamaril
     ...    @update: fmamaril    18SEP2019    Add click to toogle inquiry mode
-    ...    @update: ehugo    	04JUN2020    - added screenshot
+    ...    @update: ehugo    04JUN2020    - added screenshot
     ...    @update: dahijara    16JUL2020    - Fix warnings - too many variables assigned in Mx LoanIQ Click Button On Window
     ...    @update: makcamps	22OCT2020	 - added click warning buttons if present
     mx LoanIQ activate window    ${LIQ_CommitmentFee_Window}
@@ -306,7 +306,7 @@ Compute Commitment Fee Amount Per Cycle
     ...                                      Added Get data for the Balance Amount.
     ...    @update: fmamaril    11SEP2019    
     ...    @update: ehugo    04JUN2020    - added keyword pre-processing and post-processing; added optional runtime argument; added screenshot
-    [Arguments]    ${sPrincipalAmount}    ${sRateBasis}    ${sCycleNumber}    ${sSystemDate}    ${sTotal}=None    ${sRunTimeVar_ProjectedCycleDue}=None
+    [Arguments]    ${sPrincipalAmount}    ${sRateBasis}    ${sCycleNumber}    ${sSystemDate}    ${sTotal}=None    ${sRunTimeVar_ProjectedCycleDue}=None    ${sAccrualRule}=Pay in Arrears
 
     ### GetRuntime Keyword Pre-processing ###
     ${PrincipalAmount}    Acquire Argument Value    ${sPrincipalAmount}

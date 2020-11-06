@@ -644,7 +644,8 @@ Add New Facility
     ${Facility_Currency}    Acquire Argument Value    ${sFacility_Currency}
     
     mx LoanIQ activate window    ${LIQ_DealNotebook_Window}
-    mx LoanIQ select    ${LIQ_DealNotebook_Options_Facilities}
+    Select Menu Item    ${LIQ_DealNotebook_Window}    Options    Facilities...
+	
     ${status}    Run Keyword And Return Status    Wait Until Keyword Succeeds    3x    5s    Mx LoanIQ Verify Object Exist    ${LIQ_FacilityNavigator_Window}    VerificationData="Yes"
     ${verify}    Run Keyword And Return Status    Run Keyword If    ${status}==True
     ...    Mx LoanIQ Verify Runtime Property    JavaWindow("title:=Facility Navigator - ${Deal_Name} in ${Deal_Currency}")    title%Facility Navigator - ${Deal_Name} in ${Deal_Currency}
