@@ -125,10 +125,13 @@ Validate View/Update Lender Shares Details
     Run Keyword And Continue On Failure    Should Be Equal    ${ActualAmountFromUI}    ${RequestedAmount}
     ${NewBalanceFromUi}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_SharesForSBLCDecrease_HostBankShares_List}    ${Legal_Entity}%New Balance%NewBalance_Variable
     ${NewBalance} =    Evaluate    ${Non_Loan_Amount}-${Requested_Amount}
+    ${ConvertedBalanceFromUi}    Remove Comma and Convert to Number    ${NewBalanceFromUi}
+    ${ConvertedBalance}    Remove Comma and Convert to Number    ${NewBalance}
+      
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/SBLCLenderShares
     Log    New Balance from UI in Lender Shares is ${NewBalanceFromUi}
     Log    Evaluated New Balance for Lender Shares is ${NewBalance}
-    Run Keyword And Continue On Failure    Should Be Equal As Numbers    ${NewBalanceFromUi}    ${NewBalance} 
+    Run Keyword And Continue On Failure    Should Be Equal As Numbers    ${ConvertedBalanceFromUi}    ${ConvertedBalance} 
     mx LoanIQ click    ${LIQ_SharesForSBLCDecrease_Ok_Button}
 
 Validate View/Update Issuing Bank Shares Details
@@ -153,9 +156,13 @@ Validate View/Update Issuing Bank Shares Details
     Run Keyword And Continue On Failure    Should Be Equal    ${ActualAmountFromUI}    ${RequestedAmount}
     ${NewBalanceFromUi}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_SharesForSBLCDecrease_HostBankShares_List}    ${Legal_Entity}%New Balance%NewBalance_Variable
     ${NewBalance} =    Evaluate    ${Non_Loan_Amount}-${Requested_Amount}
+    
+    ${ConvertedBalanceFromUi}    Remove Comma and Convert to Number    ${NewBalanceFromUi}
+    ${ConvertedBalance}    Remove Comma and Convert to Number    ${NewBalance}
+    
     Log    New Balance from UI in Issuing Bank Shares is ${NewBalanceFromUi}
     Log    Evaluated New Balance in Issuing Bank Shares is ${NewBalance}
-    Run Keyword And Continue On Failure    Should Be Equal As Numbers    ${NewBalanceFromUi}    ${NewBalance}    
+    Run Keyword And Continue On Failure    Should Be Equal As Numbers    ${ConvertedBalanceFromUi}    ${ConvertedBalance}    
     mx LoanIQ click    ${LIQ_SharesForSBLCDecrease_Ok_Button}      
     
 Generate Intent Notices for SBLC Decrease

@@ -223,6 +223,7 @@ FACILITIES = "Facilities"
 PORTFOLIO_SETTLED_DISCOUNT_ADJUSTMENT = "Portfolio Settled Discount Adjustment"
 ONGOING_FEE_PAYMENT_TRANSACTION= "Ongoing Fee Payment"
 LOAN_PRINCIPAL_PREPAYMENT_TRANSACTION = "Loan Principal Prepayment"
+RATE_SETTING_TRANSACTION = "Rate Setting"
 
 ### Bank Role ###
 REFERENCE_BANK_ROLE = "Reference Bank"
@@ -312,6 +313,8 @@ USE_SPOT_AUD_TO_USD_RATE = "Use Spot AUD to USD Rate"
 
 ### LOAN SEARCH BY OPTIONS ###
 DEAL_FACILITY_OPTION = "Deal/Facility"
+FACILITY_COUNT = ""
+
 
 ### Y/N ###
 Y = "Y"
