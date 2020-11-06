@@ -270,6 +270,7 @@ Setup Fees for Term Facility - ComSee
 Setup Facility - Scenario 7 ComSee
     [Documentation]    This keyword is used to create a facility.
     ...    @author: rtarayao    11SEP2019    Initial Create
+    ...    @update: clanding    03NOV2020    Added writing of Facility_BranchCode in ComSee_SC7_Loan sheet
     [Arguments]    ${ExcelPath}
     ###Log In to LIQ###
     Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
@@ -336,6 +337,7 @@ Setup Facility - Scenario 7 ComSee
     Write Data To Excel    ComSee_SC7_FacSetup    Facility_EffectiveDate    ${rowid}    ${Facility_EffectiveDate}    ${ComSeeDataSet}
     Write Data To Excel    ComSee_SC7_FacSetup    Facility_ExpiryDate    ${rowid}    ${Facility_ExpiryDate}    ${ComSeeDataSet}
     Write Data To Excel    ComSee_SC7_FacSetup    Facility_FinalMaturityDate    ${rowid}    ${Facility_MaturityDate}    ${ComSeeDataSet}
+    Write Data To Excel    ComSee_SC7_Loan    Facility_BranchCode    ${rowid}    &{ExcelPath}[Facility_BranchCode]    ${ComSeeDataSet}
     
 Setup Expired Facility - Scenario 7 ComSee
     [Documentation]    This keyword is used to create a facility.
