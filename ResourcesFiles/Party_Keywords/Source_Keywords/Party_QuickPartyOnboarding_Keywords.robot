@@ -834,6 +834,7 @@ Populate Pre-Existence Check and Validate Duplicate Enterprise Name Across Entit
 Get the Available Business Activity Options 
     [Documentation]    This keyword is used to compare and validate if the available Business Activity Options are correct.
     ...    @author: javinzon    06OCT2020    - initial create
+    ...    @update: clanding    06NOV2020    - removed \ in the \    ...
     [Arguments]    ${sIndustry_Sector}
      
     ${Industry_Sector_FileName}    Replace String    ${sIndustry_Sector}    ${SPACE}    _  
@@ -845,7 +846,7 @@ Get the Available Business Activity Options
     \    ${BusinessActivity_Dropdown_Content}    Get Text    ${Party_QuickEnterpriseParty_EnterpriseBusinessActivity_BusinessActivity_Dropdown_List}//div[contains(@item, "${LineCount}")]
     \    ${isMatched}    Run Keyword And Return Status    Should Be Equal    ${BusinessActivity_List_Line_Content}    ${BusinessActivity_Dropdown_Content}       
     \    Run Keyword If    ${isMatched}==${True}    Log    Business Activity '${BusinessActivity_Dropdown_Content}' is matched in Valid Business Activty List with value:${\n}${BusinessActivity_List_Line_Content}.
-    \    ...    ELSE    Run Keyword And Continue On Failure    Fail    Business Activity '${BusinessActivity_Dropdown_Content}' is NOT matched in Valid Business Activty List with value:${\n}${BusinessActivity_List_Line_Content}. 
+         ...    ELSE    Run Keyword And Continue On Failure    Fail    Business Activity '${BusinessActivity_Dropdown_Content}' is NOT matched in Valid Business Activty List with value:${\n}${BusinessActivity_List_Line_Content}. 
     
 Validate Available Options in Business Activity Field
     [Documentation]    This keyword validates the Available Options in Business Activity Field across All Industry Sectors. 

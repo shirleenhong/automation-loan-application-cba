@@ -229,6 +229,24 @@ GL_VALIDATION_TOOL_PATH = 'C:\\Git_Evergreen\\fms_cba\\DataSet\\Integration_Data
 GL_VALIDATION_TOOL_JAR = 'gpgCheck-1.0.3-jar-with-dependencies.jar'
 GL_VALIDATION_TOOL_JAR_AU = 'gpgCheck-1.0.3-jar-with-dependencies.jar'
 
+### Batch EOD ###
+PUTTY_PATH = "C:\\Program Files\\PuTTY\\putty.exe"
+PUTTY_HOSTNAME = "mancsleverg0005"
+PUTTY_PORT = "22"
+PUTTY_USERNAME = "micloud"
+PUTTY_PASSWORD = "misys123"
+
+### DNA ###
+DNA_SERVER = 'mancsleverg0021'
+DNA_SERVER_LIQ = 'mancsleverg0022'
+DNA_PORT = '22'
+DNA_SERVER_USER = 'sftpuser2'
+DNA_SERVER_PASSWORD = 'luckyroll76'
+DNA_EXTRACTION_AREA_PATH = '/evgdata/STREAMSETS/workspace/extraction_area/COMRLENDING/'
+DNA_CCB_LIQ_FILENAME = 'CCB_LIQ_'
+DNA_DATAASSURANCE_FILENAME = 'DATAASSURANCE_'
+DNA_DAT_EXT = '.DAT'
+
 ### TI ###
 FBTIDataset = 'C:\\Git_Evergreen\\evergreen_projects\\CBA_Evergreen\\DataSet\\FBTI_DataSet\\FBTI_User_Data_Set.xlsx'
 FBTIDataset_ILC = 'C:\\Git_Evergreen\\evergreen_projects\\CBA_Evergreen\\DataSet\\FBTI_DataSet\\FBTI_ILC_Data_Set.xlsx'
