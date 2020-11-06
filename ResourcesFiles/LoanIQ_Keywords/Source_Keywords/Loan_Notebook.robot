@@ -718,6 +718,7 @@ Navigate to Existing Loan
     Mx LoanIQ Select Combo Box Value    ${LIQ_OutstandingSelect_Type_Dropdown}    ${Outstanding_Type}
     Mx LoanIQ Select Combo Box Value    ${LIQ_OutstandingSelect_Facility_Dropdown}    ${Loan_FacilityName}
     Mx LoanIQ Click    ${LIQ_OutstandingSelect_Search_Button}
+    Sleep    2s
     Mx LoanIQ Activate Window    ${LIQ_ExistingOutstandings_Window}
     Mx LoanIQ Maximize    ${LIQ_ExistingOutstandings_Window}    
     Mx LoanIQ Select Or DoubleClick In Javatree    ${LIQ_ExistingOutstandings_Table}    ${Loan_Alias}%d
