@@ -374,8 +374,7 @@ Create Initial Loan Drawdown with no Repayment Schedule - Scenario 7 ComSee
     Verify if Status is set to Do It    &{ExcelPath}[Borrower1_ShortName]  
  
     ##Get Transaction Amount for Cashflow###
-    ${HostBankShare}    Run Keyword If    '&{ExcelPath}[Loan_Currency]'!='${EMPTY}'    Get Host Bank Cash in Cashflow    &{ExcelPath}[Loan_Currency]
-    ...    ELSE    Get Host Bank Cash in Cashflow
+    ${HostBankShare}    Get Host Bank Cash in Cashflow    &{ExcelPath}[Loan_Currency]
     ${BorrowerTranAmount}    Get Transaction Amount in Cashflow    &{ExcelPath}[Borrower1_ShortName]
     ${ComputedHBTranAmount}    Compute Lender Share Transaction Amount    &{ExcelPath}[Loan_RequestedAmount]    &{ExcelPath}[HostBankSharePct]
     
