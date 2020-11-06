@@ -1271,6 +1271,7 @@ Setup RPA Internal Deal
     ...    @update: mcastro    27OCT2020    - added writing for RPA Scenario 2, added arguments for Add Pricing Option
     ...    @update: mcastro    03NOV2020    - added writing to SERV08_ComprehensiveRepricing for RPA scenario 1
     ...    @update: mcastro    05NOV2020    - added writing for RPA Scenario 3
+    ...    @update: dahijara    05NOV2020    - added writing for scenario 5 - CRED07_UpfrontFee_Payment
     [Arguments]    ${ExcelPath}
     ###Set Dates for transactions###
     ${SystemDate}    Get System Date
@@ -1334,6 +1335,7 @@ Setup RPA Internal Deal
     ...    AND    Write Data To Excel    CRED07_UpfrontFee_Payment    Deal_Name    ${rowid}    ${Deal_Name}
 
     Run Keyword If    '${SCENARIO}'=='4'    Write Data To Excel    CRED07_UpfrontFee_Payment    Deal_Name    ${rowid}    ${Deal_Name}
+    Run Keyword If    '${SCENARIO}'=='5'    Write Data To Excel    CRED07_UpfrontFee_Payment    Deal_Name    ${rowid}    ${Deal_Name}
           
     ###New Deal Screen###   
     Create New Deal    ${Deal_Name}    ${Deal_Alias}    &{ExcelPath}[Deal_Currency]    &{ExcelPath}[Deal_Department]    &{ExcelPath}[Deal_SalesGroup]
