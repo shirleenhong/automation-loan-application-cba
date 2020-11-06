@@ -831,6 +831,51 @@ Populate Pre-Existence Check and Validate Duplicate Enterprise Name Across Entit
     ...   AND    Validate Enterprise Name in Enquire Enterprise Party    ${sEnterprise_Name}
     ...   ELSE    Run Keyword and Continue on Failure    Fail    There is no Duplicate Enterprise Name   
     
+Validate Business Activity Options for Each Industry Sector
+    [Documentation]    This keyword is used to get each Industry sector.
+    ...    @author: javinzon    06OCT2020    - initial create
+  
+    ${IndustrySector_List_Content}    OperatingSystem.Get File    ${INDUSTRYSECTOR_LIST}
+    ${IndustrySector_List_Count}    Get Line Count    ${IndustrySector_List_Content}
+    :FOR    ${LineCount}    IN RANGE    ${IndustrySector_List_Count}
+    \    ${IndustrySector_List_Line_Content}    Get Line    ${IndustrySector_List_Content}    ${LineCount}
+    \    Mx Input Text    ${Party_QuickEnterpriseParty_EnterpriseBusinessActivity_IndustrySector_Dropdown}    ${IndustrySector_List_Line_Content}
+    \    Click Element    ${Party_QuickEnterpriseParty_EnterpriseBusinessActivity_BusinessActivity_Arrow}
+    \    Capture Page Screenshot    ${screenshot_path}/Screenshots/Party/BusinessActivityOptions-{index}.png 
+    \    Get the Available Business Activity Options   ${IndustrySector_List_Line_Content}
+    \    Click Element    ${Party_QuickEnterpriseParty_EnterpriseBusinessActivity_IndustrySector_Label}
 
+Get the Available Business Activity Options 
+    [Documentation]    This keyword is used to compare and validate if the available Business Activity Options are correct.
+    ...    @author: javinzon    06OCT2020    - initial create
+    [Arguments]    ${sIndustry_Sector}
+     
+    ${Industry_Sector_FileName}    Replace String    ${sIndustry_Sector}    ${SPACE}    _  
+    ${Industry_Sector_FileName}    Remove String    ${Industry_Sector_FileName}    ,    and_
+    ${Expected_BusinessActivity}    OperatingSystem.Get File    ${BUSINESSACTIVITY_DIRECTORY}\\${Industry_Sector_FileName}.txt
+    ${Expected_BusinessActivity_Line_Count}    Get Line Count    ${Expected_BusinessActivity}
+    :FOR    ${LineCount}    IN RANGE    ${Expected_BusinessActivity_Line_Count}
+    \    ${BusinessActivity_List_Line_Content}    Get Line    ${Expected_BusinessActivity}    ${LineCount}
+    \    ${BusinessActivity_Dropdown_Content}    Get Text    ${Party_QuickEnterpriseParty_EnterpriseBusinessActivity_BusinessActivity_Dropdown_List}//div[contains(@item, "${LineCount}")]
+    \    Run Keyword And Continue On Failure    Should Be Equal    ${BusinessActivity_List_Line_Content}    ${BusinessActivity_Dropdown_Content} 
+    \    ${isMatched}    Run Keyword And Return Status    Should Be Equal    ${BusinessActivity_List_Line_Content}    ${BusinessActivity_Dropdown_Content}       
+    \    Run Keyword If    ${isMatched}==${True}    Log    Business Activity '${BusinessActivity_Dropdown_Content}' is matched in Valid Business Activty List with value:${\n}${BusinessActivity_List_Line_Content}.
+    \    ...    ELSE    Log    Business Activity '${BusinessActivity_Dropdown_Content}' is NOT matched in Valid Business Activty List with value:${\n}${BusinessActivity_List_Line_Content}.    level=ERROR
+    
+Validate Available Options in Business Activity Field
+    [Documentation]    This keyword validates the Available Options in Business Activity Field across All Industry Sectors. 
+    ...    @author: javinzon    02OCT2020    - initial create
+    [Arguments]    ${sBusiness_Country}    
+    
+    Wait Until Page Contains Element    ${Party_QuickEnterpriseParty_BusinessActivity_CheckBox}
+    Click Element    ${Party_QuickEnterpriseParty_BusinessActivity_CheckBox}
+    Wait Until Loading Page Is Not Visible    ${PARTY_TIMEOUT}
+    Wait Until Page Contains    Create Enterprise Business Activity  
+    Mx Click Element    ${Party_QuickEnterpriseParty_EnterpriseBusinessActivity_NewRow_Button}
+    Mx Input Text    ${Party_QuickEnterpriseParty_EnterpriseBusinessActivity_Country_Dropdown}    ${sBusiness_Country}
+    Wait Until Browser Ready State
+    
+    Validate Business Activity Options for Each Industry Sector
+    Mx Click Element    ${Party_CloseDialog_Button}
     
     
