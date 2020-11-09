@@ -329,6 +329,7 @@ WORK_IN_PROCESS_ACTIONS = '[Actions];Work In Process'
 
 ### PARTY ERROR MESSAGES ###
 DUPLICATE_SHORTNAME_ERROR_MESSAGE = 'Entered Short Name is already in use for Different Party'
+FIELDLENGTH_ENTERPRISENAME_ERROR_MESSAGE = 'Enterprise Name Field cannot have greater than 140 Characters'
 
 ### PARTY VARIABLES ###
 TESTCASE_NAME_PARTY = ""

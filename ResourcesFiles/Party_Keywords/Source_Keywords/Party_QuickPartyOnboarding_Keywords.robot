@@ -784,11 +784,12 @@ Validate Error Message in Quick Enterprise Party
     ...	   @update: javinzon	23OCT2020	 - removed white space in Keyword name
     ...    @update: javinzon    26OCT2020    - updated keyword name from 'Validate Duplicate Short Name' to 'Validate Error Message in Quick 
     ...                                        Enterprise Party', updated documentation, added argument ${sExpected_Error_Message}.
+    ...    @update: javinzon	09NOV2020	 - added SeleniumLibraryExtended in Get Element Attirbute keyword
     [Arguments]    ${sExpected_Error_Message}
     
     ${isErrorDisplayed}    Run Keyword And Return Status    Wait Until Page Contains Element    ${Party_QuickEnterpriseParty_Errors_Dialog}    30s
     Capture Page Screenshot    ${screenshot_path}/Screenshots/Party/DuplicateShortName-{index}.png
-    ${ErrorMessage}    Get Element Attribute    ${Party_QuickEnterpriseParty_ErrorsDialog_TextArea}    value
+    ${ErrorMessage}    SeleniumLibraryExtended.Get Element Attribute    ${Party_QuickEnterpriseParty_ErrorsDialog_TextArea}    value
     ${isMatched}    Run Keyword And Return Status    Should Contain    ${ErrorMessage}    ${sExpected_Error_Message}
     Run Keyword If    ${isMatched}==${True}    Mx Click Element    ${Party_QuickEnterpriseParty_ErrorsDialog_GoBack_Button}
     ...    ELSE    Run Keyword and Continue on Failure    Fail   Error message: '${sExpected_Error_Message}' is expected.
@@ -871,5 +872,50 @@ Validate Available Options in Business Activity Field
     \    Click Element    ${Party_QuickEnterpriseParty_EnterpriseBusinessActivity_IndustrySector_Label}
     
     Mx Click Element    ${Party_CloseDialog_Button}
+
+Validate Field Length in Quick Enterprise Party
+    [Documentation]    This test case is used to validate field length of the following fields in Quick Party Onboarding: Short Name, 
+	...	   Post Code, Address Line 1, Address Line 2, Address Line 3, Address Line 4, Address City
+    ...    @author:    javinzon    06NOV2020    - initial create
+    [Arguments]    ${sShort_Name}
     
+    ${ShortName_MaxLength}    SeleniumLibraryExtended.Get Element Attribute   ${Party_QuickEnterpriseParty_ShortName_TextBox}    maxlength
+    ${isMaximum}    Run Keyword And Return Status    Should Contain    ${ShortName_MaxLength}    25
+    Run Keyword If    ${isMaximum}==${True}    Log    Maximum Length of Short Name field is 25 characters only.  
+    ...   ELSE    Run Keyword and Continue on Failure    Fail    Length of Shortn Name field should not be more than 25 characters.     
+    
+    ${PostCode_MaxLength}    SeleniumLibraryExtended.Get Element Attribute   ${Party_QuickEnterpriseParty_PostCode_TextBox}    maxlength
+    ${isMaximum}    Run Keyword And Return Status    Should Contain    ${PostCode_MaxLength}    10
+    Run Keyword If    ${isMaximum}==${True}    Log    Maximum Length of Post Code field is 10 characters only.  
+    ...   ELSE    Run Keyword and Continue on Failure    Fail    Length of Post Code field should not be more than 10 characters.     
+    
+    ### Validate field length in Address Details Dialog ###
+    Mx Scroll Element Into View    ${Party_QuickEnterpriseParty_AddressType_Dropdown}
+    Mx Click Element    ${Party_QuickEnterpriseParty_RecordAddress_Button}   
+    ${AddressLine1_MaxLength}    SeleniumLibraryExtended.Get Element Attribute   ${Party_QuickEnterpriseParty_AddressDetails_AddressLineOne_TextBox}    maxlength
+    ${isMaximum}    Run Keyword And Return Status    Should Contain    ${AddressLine1_MaxLength}    36
+    Run Keyword If    ${isMaximum}==${True}    Log    Maximum Length of Address Line 1 field is 36 characters only.  
+    ...   ELSE    Run Keyword and Continue on Failure    Fail    Length of Address Line 1 field should not be more than 36 characters.
+    
+    ${AddressLine2_MaxLength}    SeleniumLibraryExtended.Get Element Attribute   ${Party_QuickEnterpriseParty_AddressDetails_AddressLineTwo_TextBox}    maxlength
+    ${isMaximum}    Run Keyword And Return Status    Should Contain    ${AddressLine2_MaxLength}    36
+    Run Keyword If    ${isMaximum}==${True}    Log    Maximum Length of Address Line 2 field is 36 characters only.  
+    ...   ELSE    Run Keyword and Continue on Failure    Fail    Length of Address Line 2 field should not be more than 36 characters.     
+    
+    ${AddressLine3_MaxLength}    SeleniumLibraryExtended.Get Element Attribute   ${Party_QuickEnterpriseParty_AddressDetails_AddressLineThree_TextBox}    maxlength
+    ${isMaximum}    Run Keyword And Return Status    Should Contain    ${AddressLine3_MaxLength}    36
+    Run Keyword If    ${isMaximum}==${True}    Log    Maximum Length of Address Line 3 field is 36 characters only.  
+    ...   ELSE    Run Keyword and Continue on Failure    Fail    Length of Address Line 3 field should not be more than 36 characters.     
+    
+    ${AddressLine4_MaxLength}    SeleniumLibraryExtended.Get Element Attribute   ${Party_QuickEnterpriseParty_AddressDetails_AddressLineFour_TextBox}    maxlength
+    ${isMaximum}    Run Keyword And Return Status    Should Contain    ${AddressLine4_MaxLength}    36
+    Run Keyword If    ${isMaximum}==${True}    Log    Maximum Length of Address Line 4 field is 36 characters only.  
+    ...   ELSE    Run Keyword and Continue on Failure    Fail    Length of Address Line 4 field should not be more than 36 characters.          
+    
+    ${City_MaxLength}    SeleniumLibraryExtended.Get Element Attribute   ${Party_QuickEnterpriseParty_AddressDetails_TownCity_TextBox}    maxlength
+    ${isMaximum}    Run Keyword And Return Status    Should Contain    ${City_MaxLength}    35
+    Run Keyword If    ${isMaximum}==${True}    Log    Maximum Length of City field is 35 characters only.  
+    ...   ELSE    Run Keyword and Continue on Failure    Fail    Length of City field should not be more than 35 characters.     
+    
+    Mx Click Element    ${Party_CloseDialog_Button}
     
