@@ -52,6 +52,7 @@ Create Interest Pricing Change via Facility Notebook
     [Documentation]    Create Interest Pricing Change Transaction via Facility Notebook.
     ...    @author: mgaling
     ...    @update: clanding    11AUG2020    - removed Mx keywords, added Clearing of Interest Pricing current values before adding to matrix
+    ...    @update: fluberio    09NOV2020    - added condition to add 2 more pricing options if the Scenario is 4 and Entity is in EU
     [Arguments]    ${ExcelPath}
     
     ${TransactionNo}    Auto Generate Only 4 Numeric Test Data    &{ExcelPath}[TransactionNo_Prefix]
@@ -75,21 +76,30 @@ Create Interest Pricing Change via Facility Notebook
     Add Matrix Item    &{ExcelPath}[PCT_InterestPricing_MatrixItem]    &{ExcelPath}[PCT_InterestPricing_FRType]    &{ExcelPath}[PCT_FinancialRatioType]    &{ExcelPath}[MinimumValue_1]    &{ExcelPath}[MaximumValue_1]
     Add After Option Item - First    &{ExcelPath}[PCT_InterestPricing_OptionItem]    &{ExcelPath}[OptionName1]    &{ExcelPath}[OptionName1]    &{ExcelPath}[RateBasisInterestPricing]    &{ExcelPath}[Spread1]
 	Add After Option Item - Second    &{ExcelPath}[OptionName2]    &{ExcelPath}[RateBasisInterestPricing]    &{ExcelPath}[Spread1]
+	Run Keyword If   '${SCENARIO}'=='4' and '&{ExcelPath}[Entity]' == 'EU'    Run Keywords    Add After Option Item - Third    &{ExcelPath}[OptionName3]    &{ExcelPath}[RateBasisInterestPricing]    &{ExcelPath}[Spread1]
+	...    AND    Add After Option Item - Third    &{ExcelPath}[OptionName4]    &{ExcelPath}[RateBasisInterestPricing]    &{ExcelPath}[Spread1]
 	###Second Item
 	Select Financial Ratio in Interest Pricing List    &{ExcelPath}[PCT_FinancialRatioType]
 	Add Matrix Item    &{ExcelPath}[PCT_InterestPricing_MatrixItem]    &{ExcelPath}[PCT_InterestPricing_FRType]    &{ExcelPath}[PCT_FinancialRatioType]    &{ExcelPath}[MinimumValue_2]    &{ExcelPath}[MaximumValue_2]
     Add After Option Item - First    &{ExcelPath}[PCT_InterestPricing_OptionItem]    &{ExcelPath}[OptionName1]    &{ExcelPath}[OptionName1]    &{ExcelPath}[RateBasisInterestPricing]    &{ExcelPath}[Spread2]
 	Add After Option Item - Second    &{ExcelPath}[OptionName2]    &{ExcelPath}[RateBasisInterestPricing]    &{ExcelPath}[Spread2]	
+	Run Keyword If   '${SCENARIO}'=='4' and '&{ExcelPath}[Entity]' == 'EU'    Run Keywords    Add After Option Item - Third    &{ExcelPath}[OptionName3]    &{ExcelPath}[RateBasisInterestPricing]    &{ExcelPath}[Spread2]
+	...    AND    Add After Option Item - Third    &{ExcelPath}[OptionName4]    &{ExcelPath}[RateBasisInterestPricing]    &{ExcelPath}[Spread2]
 	###Third Item
 	Select Financial Ratio in Interest Pricing List    &{ExcelPath}[PCT_FinancialRatioType]
 	Add Matrix Item    &{ExcelPath}[PCT_InterestPricing_MatrixItem]    &{ExcelPath}[PCT_InterestPricing_FRType]    &{ExcelPath}[PCT_FinancialRatioType]    &{ExcelPath}[MinimumValue_3]    &{ExcelPath}[MaximumValue_3]
     Add After Option Item - First    &{ExcelPath}[PCT_InterestPricing_OptionItem]    &{ExcelPath}[OptionName1]    &{ExcelPath}[OptionName1]    &{ExcelPath}[RateBasisInterestPricing]    &{ExcelPath}[Spread3]
 	Add After Option Item - Second    &{ExcelPath}[OptionName2]    &{ExcelPath}[RateBasisInterestPricing]    &{ExcelPath}[Spread3]
+	Run Keyword If   '${SCENARIO}'=='4' and '&{ExcelPath}[Entity]' == 'EU'    Run Keywords    Add After Option Item - Third    &{ExcelPath}[OptionName3]    &{ExcelPath}[RateBasisInterestPricing]    &{ExcelPath}[Spread3]
+	...    AND    Add After Option Item - Third    &{ExcelPath}[OptionName4]    &{ExcelPath}[RateBasisInterestPricing]    &{ExcelPath}[Spread3]
 	###Fourth Item
 	Select Financial Ratio in Interest Pricing List    &{ExcelPath}[PCT_FinancialRatioType]
+	Run Keyword If   '${SCENARIO}'=='4' and '&{ExcelPath}[Entity]' == 'EU'    Run Keywords    Interest Pricing Window Press Up Key Until Add Button is Enabled
 	Add Matrix Item - Mnemonic    &{ExcelPath}[PCT_InterestPricing_MatrixItem]    &{ExcelPath}[PCT_InterestPricing_FRType]    &{ExcelPath}[PCT_FinancialRatioType]    &{ExcelPath}[MaximumValue_3]    &{ExcelPath}[Mnemonic_Value]    
 	Add After Option Item - First    &{ExcelPath}[PCT_InterestPricing_OptionItem]    &{ExcelPath}[OptionName1]    &{ExcelPath}[OptionName1]    &{ExcelPath}[RateBasisInterestPricing]    &{ExcelPath}[Spread4]
 	Add After Option Item - Second    &{ExcelPath}[OptionName2]    &{ExcelPath}[RateBasisInterestPricing]    &{ExcelPath}[Spread4]
+	Run Keyword If   '${SCENARIO}'=='4' and '&{ExcelPath}[Entity]' == 'EU'    Run Keywords    Add After Option Item - Third    &{ExcelPath}[OptionName3]    &{ExcelPath}[RateBasisInterestPricing]    &{ExcelPath}[Spread4]
+	...    AND    Add After Option Item - Third    &{ExcelPath}[OptionName4]    &{ExcelPath}[RateBasisInterestPricing]    &{ExcelPath}[Spread4]
 	
 	Validate the Interest Pricing Values with Matrix Item
 	        
