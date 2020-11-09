@@ -76,6 +76,7 @@ RESPONSE_MECHANISM_INSTANCE = "responsemechanism_1.3.0"
 DWE_NOTIFICATION_INSTANCE = "dwe_notification_1.3.0"
 SAPWUL_INSTANCE = 'CustomCBAPush_1.3.0'
 TL_CAL_ACK_MESSAGE_SOURCENAME = 'tl_ack_message_splitter_cal'
+TL_BASE_ACK_MESSAGE_SOURCENAME = 'tl_ack_message_splitter_base'
 CBACorrespUpdateMQ_Instance = 'CustomCBAPush_v1.3.0'
 FFC1CMUpdateSourceMQ_Instance = 'CustomInterface'
 
