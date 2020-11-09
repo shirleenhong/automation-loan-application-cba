@@ -120,10 +120,10 @@ Create Party in Quick Party Onboarding
     ...    AND    Write Data To Excel    AMCH04_DealChangeTransaction    Entity    ${rowid}    ${Entity_Name}
 
 	###Writing for E2E EU scenario 1 Corro### 
-    Run Keyword If    '${SCENARIO}'=='1' and '&{ExcelPath}[Entity]' == 'EU'    Run Keywords    Write Data To Excel    Correspondence    Notice_Customer_LegalName    1    ${Enterprise_Name}    sColumnReference=rowid
-    ...  AND    Write Data To Excel    Correspondence    Notice_Customer_LegalName    2    ${Enterprise_Name}    sColumnReference=rowid
-    ...  AND    Write Data To Excel    Correspondence    Notice_Customer_LegalName    3    ${Enterprise_Name}    sColumnReference=rowid
-    ...  AND    Write Data To Excel    Correspondence    Notice_Customer_LegalName    4    ${Enterprise_Name}    sColumnReference=rowid  
+    Run Keyword If    '${SCENARIO}'=='1' and '&{ExcelPath}[Entity]' == 'EU'    Run Keywords    Write Data To Excel    Correspondence    Notice_Customer_LegalName    ${rowid}    ${Enterprise_Name}
+    ...  AND    Write Data To Excel    Correspondence    Notice_Customer_LegalName    2    ${Enterprise_Name}    bTestCaseColumn=True    sColumnReference=rowid
+    ...  AND    Write Data To Excel    Correspondence    Notice_Customer_LegalName    3    ${Enterprise_Name}    bTestCaseColumn=True    sColumnReference=rowid
+    ...  AND    Write Data To Excel    Correspondence    Notice_Customer_LegalName    4    ${Enterprise_Name}    bTestCaseColumn=True    sColumnReference=rowid 
     
     Run Keyword If    '${SCENARIO}'=='2'    Run Keywords    Write Data To Excel    SERV08_ComprehensiveRepricing    Borrower_ShortName    ${rowid}    ${Enterprise_Name}
     ...    AND    Write Data To Excel    SERV08_ComprehensiveRepricing    Customer_Legal_Name    ${rowid}    ${Enterprise_Name}

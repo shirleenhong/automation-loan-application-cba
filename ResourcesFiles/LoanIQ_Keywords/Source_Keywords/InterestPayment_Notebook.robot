@@ -419,7 +419,6 @@ Generate Intent Notices of an Interest Payment
     ${status}    Run Keyword And Return Status    Mx LoanIQ Verify Runtime Property    ${LIQ_Notices_BorrowerDepositor_Checkbox}       value%1    
     Run Keyword If    ${status}==True    mx LoanIQ click element if present    ${LIQ_Notices_OK_Button}
     mx LoanIQ activate window    ${LIQ_Notice_Window}
-    Pause Execution
     ${NoticeStatus}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_Notice_Information_Table}    ${LIQCustomer_ShortName.upper()}%Status%test    
     Log    ${NoticeStatus}
     Mx LoanIQ Select Or Doubleclick In Tree By Text    ${LIQ_Notice_Information_Table}    ${LIQCustomer_ShortName.upper()}%s 

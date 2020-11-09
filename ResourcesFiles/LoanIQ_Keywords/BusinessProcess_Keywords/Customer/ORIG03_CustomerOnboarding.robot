@@ -558,24 +558,22 @@ Search Customer and Complete its Borrower Profile Creation with default values
 	
 	###Adding Fax Details                 
     Add Fax Details under Profiles Tab    &{ExcelPath}[Customer_Location]    &{ExcelPath}[Fax_Number]    &{ExcelPath}[Fax_Description]    
-  
-    ##Writing for Scenario 1
-    Run Keyword If   '${SCENARIO}'=='1'    Run Keywords    Write Data To Excel    SERV01_LoanDrawdown    Borrower1_LegalName    ${rowid}    &{ExcelPath}[LIQCustomer_LegalName]     
+
+	###Writing for E2E EU scenario 1### 
+    Run Keyword If    '${SCENARIO}'=='1' and '&{ExcelPath}[Entity]' == 'EU'    Run Keywords    Write Data To Excel    Correspondence    Contact    ${rowid}    &{ExcelPath}[Contact_FirstName] &{ExcelPath}[Contact_LastName]
+    ...    AND    Write Data To Excel    Correspondence    Contact    2    &{ExcelPath}[Contact_FirstName] &{ExcelPath}[Contact_LastName]    bTestCaseColumn=True    sColumnReference=rowid
+    ...    AND    Write Data To Excel    Correspondence    Contact    3    &{ExcelPath}[Contact_FirstName] &{ExcelPath}[Contact_LastName]    bTestCaseColumn=True    sColumnReference=rowid
+    ...    AND    Write Data To Excel    Correspondence    Contact    4    &{ExcelPath}[Contact_FirstName] &{ExcelPath}[Contact_LastName]    bTestCaseColumn=True    sColumnReference=rowid
+    ...    AND    Write Data To Excel    Correspondence    Notice_Method    ${rowid}    &{ExcelPath}[ContactNotice_Method]
+    ...    AND    Write Data To Excel    Correspondence    Notice_Method    2    &{ExcelPath}[ContactNotice_Method]    bTestCaseColumn=True    sColumnReference=rowid
+    ...    AND    Write Data To Excel    Correspondence    Notice_Method    3    &{ExcelPath}[ContactNotice_Method]    bTestCaseColumn=True    sColumnReference=rowid
+    ...    AND    Write Data To Excel    Correspondence    Notice_Method    4    &{ExcelPath}[ContactNotice_Method]    bTestCaseColumn=True    sColumnReference=rowid
+    ...    ELSE IF    '${SCENARIO}'=='1'    Run Keywords    Write Data To Excel    SERV01_LoanDrawdown    Borrower1_LegalName    ${rowid}    &{ExcelPath}[LIQCustomer_LegalName]     
     ...    AND    Write Data To Excel    SERV18_Payments    Contact_Email    ${rowid}    &{ExcelPath}[Contact_Email]       
     ...    AND    Write Data To Excel    SERV21_InterestPayments    Borrower_ContactEmail    ${rowid}    &{ExcelPath}[Contact_Email]       
     ...    AND    Write Data To Excel    SERV21_InterestPayments    Contact_Email    ${rowid}    &{ExcelPath}[Contact_Email]
     ...    AND    Write Data To Excel    SERV29_PaymentFees    Contact_Email    ${rowid}    &{ExcelPath}[Contact_Email]    
-    ...    AND    Write Data To Excel    SERV29_PaymentFees    Borrower_Contact    ${rowid}    &{ExcelPath}[Contact_FirstName] &{ExcelPath}[Contact_LastName]    
-
-	###Writing for E2E EU scenario 1 Corro### 
-    Run Keyword If    '${SCENARIO}'=='1' and '&{ExcelPath}[Entity]' == 'EU'    Run Keywords    Write Data To Excel    Correspondence    Contact    1    &{ExcelPath}[Contact_FirstName] &{ExcelPath}[Contact_LastName]    sColumnReference=rowid
-    ...  AND    Write Data To Excel    Correspondence    Contact    2    &{ExcelPath}[Contact_FirstName] &{ExcelPath}[Contact_LastName]    sColumnReference=rowid
-    ...  AND    Write Data To Excel    Correspondence    Contact    3    &{ExcelPath}[Contact_FirstName] &{ExcelPath}[Contact_LastName]    sColumnReference=rowid
-    ...  AND    Write Data To Excel    Correspondence    Contact    4    &{ExcelPath}[Contact_FirstName] &{ExcelPath}[Contact_LastName]    sColumnReference=rowid
-    ...  AND    Write Data To Excel    Correspondence    Notice_Method    1    &{ExcelPath}[ContactNotice_Method]    sColumnReference=rowid
-    ...  AND    Write Data To Excel    Correspondence    Notice_Method    2    &{ExcelPath}[ContactNotice_Method]    sColumnReference=rowid
-    ...  AND    Write Data To Excel    Correspondence    Notice_Method    3    &{ExcelPath}[ContactNotice_Method]    sColumnReference=rowid
-    ...  AND    Write Data To Excel    Correspondence    Notice_Method    4    &{ExcelPath}[ContactNotice_Method]    sColumnReference=rowid
+    ...    AND    Write Data To Excel    SERV29_PaymentFees    Borrower_Contact    ${rowid}    &{ExcelPath}[Contact_FirstName] &{ExcelPath}[Contact_LastName]
         
     ###Writing for Scenario 2
     Run Keyword If   '${SCENARIO}'=='2'    Run Keywords    Write Data To Excel    SERV01A_LoanDrawdown    Contact_Email    ${rowid}    &{ExcelPath}[Contact_Email]
@@ -711,10 +709,10 @@ Search Customer and Complete its Borrower Profile Creation with default values
     ...    AND    Write Data To Excel    SERV29_PaymentFees    Currency    ${rowid}    &{ExcelPath}[RemittanceInstruction_IMTCurrencyUSD]
   
     ###Writing for E2E EU scenario 1 Corro### 
-    Run Keyword If    '${SCENARIO}'=='1' and '&{ExcelPath}[Entity]' == 'EU'    Run Keywords    Write Data To Excel    Correspondence    Currency    1    &{ExcelPath}[RemittanceInstruction_IMTCurrencyUSD]    sColumnReference=rowid
-    ...  AND    Write Data To Excel    Correspondence    Currency    2    &{ExcelPath}[RemittanceInstruction_IMTCurrencyUSD]    sColumnReference=rowid
-    ...  AND    Write Data To Excel    Correspondence    Currency    3    &{ExcelPath}[RemittanceInstruction_IMTCurrencyUSD]    sColumnReference=rowid
-    ...  AND    Write Data To Excel    Correspondence    Currency    4    &{ExcelPath}[RemittanceInstruction_IMTCurrencyUSD]    sColumnReference=rowid
+    Run Keyword If    '${SCENARIO}'=='1' and '&{ExcelPath}[Entity]' == 'EU'    Run Keywords    Write Data To Excel    Correspondence    Currency    ${rowid}    &{ExcelPath}[RemittanceInstruction_IMTCurrencyUSD]
+    ...  AND    Write Data To Excel    Correspondence    Currency    2    &{ExcelPath}[RemittanceInstruction_IMTCurrencyUSD]    bTestCaseColumn=True    sColumnReference=rowid
+    ...  AND    Write Data To Excel    Correspondence    Currency    3    &{ExcelPath}[RemittanceInstruction_IMTCurrencyUSD]    bTestCaseColumn=True    sColumnReference=rowid
+    ...  AND    Write Data To Excel    Correspondence    Currency    4    &{ExcelPath}[RemittanceInstruction_IMTCurrencyUSD]    bTestCaseColumn=True    sColumnReference=rowid
   
     Close Servicing Group Remittance Instructions Selection List Window    &{ExcelPath}[LIQCustomer_ShortName]
      

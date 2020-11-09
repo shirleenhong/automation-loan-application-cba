@@ -18,7 +18,7 @@ Get Notice Details for Interest Payment LIQ
     Mx LoanIQ Select Window Tab    ${LIQ_FixedRateOptionLoan_Pending_Tab}    Events
     Mx LoanIQ Select Or DoubleClick In Javatree    ${LIQ_FixedRateOptionLoan_Events_JavaTree}    Interest Payment Released%d
     
-    ## Get the Values of Effective Date, All In Rate Amount, Currency, All in Rate, Pricing Option###
+    ### Get the Values of Effective Date, All In Rate Amount, Currency, All in Rate, Pricing Option###
     ${Effective_Date}    ${AllInRate_Amount}    ${Loan_Currency}    Get Notice Details in Interest Payment Notebook
     mx LoanIQ activate    ${LIQ_FixedRateOptionLoan_Window}
     ${PricingOption}    ${AllInRate}    Get Notice Details in Loan Notebook
