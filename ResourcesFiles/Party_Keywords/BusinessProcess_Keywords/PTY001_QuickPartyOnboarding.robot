@@ -35,7 +35,7 @@ Create Party in Quick Party Onboarding
     ...    @update: javinzon    22OCT2020    - Updated Documentation and removed Write Data To Excel for PTY009_DuplicateShortName and PTY007_DuplicateEnterpriseName
     ...    @update: javinzon    30OCT2020    - Added ELSE condition to Close Browser
     ...    @update: fluberio    03NOV2020    - Added Write Date to Excel for Scenario 4 in EU
-
+    ...    @update: makcamps    04NOV2020    - Added Write Data To Excel keyword for EU E2E Scenario 1 (Correspondence)
     [Arguments]    ${ExcelPath}
     
     ### INPUTTER ###
@@ -111,14 +111,20 @@ Create Party in Quick Party Onboarding
     ...    AND    Write Data To Excel    CRED02_FacilitySetup    Entity    ${rowid}    ${Entity_Name}
     ...    AND    Write Data To Excel    CRED08_OngoingFeeSetup    Entity    ${rowid}    ${Entity_Name}
     ...    AND    Write Data To Excel    SYND02_PrimaryAllocation    Entity    ${rowid}    ${Entity_Name}
-    ...    AND    Write Data To Excel    TLCAL01_CalendarLoad    Entity    ${rowid}    ${Entity_Name}
+    ...    AND    Write Data To Excel    Calendar_Fields    Entity    ${rowid}    ${Entity_Name}
     ...    AND    Write Data To Excel    SERV01_LoanDrawdown    Entity    ${rowid}    ${Entity_Name}
     ...    AND    Write Data To Excel    SERV18_Payments    Entity    ${rowid}    ${Entity_Name}
     ...    AND    Write Data To Excel    SERV21_InterestPayments    Entity    ${rowid}    ${Entity_Name}
     ...    AND    Write Data To Excel    SERV29_PaymentFees    Entity    ${rowid}    ${Entity_Name}
     ...    AND    Write Data To Excel    AMCH06_PricingChangeTransaction    Entity    ${rowid}    ${Entity_Name}
     ...    AND    Write Data To Excel    AMCH04_DealChangeTransaction    Entity    ${rowid}    ${Entity_Name}
-  
+
+	###Writing for E2E EU scenario 1 Corro### 
+    Run Keyword If    '${SCENARIO}'=='1' and '&{ExcelPath}[Entity]' == 'EU'    Run Keywords    Write Data To Excel    Correspondence    Notice_Customer_LegalName    1    ${Enterprise_Name}    sColumnReference=rowid
+    ...  AND    Write Data To Excel    Correspondence    Notice_Customer_LegalName    2    ${Enterprise_Name}    sColumnReference=rowid
+    ...  AND    Write Data To Excel    Correspondence    Notice_Customer_LegalName    3    ${Enterprise_Name}    sColumnReference=rowid
+    ...  AND    Write Data To Excel    Correspondence    Notice_Customer_LegalName    4    ${Enterprise_Name}    sColumnReference=rowid  
+    
     Run Keyword If    '${SCENARIO}'=='2'    Run Keywords    Write Data To Excel    SERV08_ComprehensiveRepricing    Borrower_ShortName    ${rowid}    ${Enterprise_Name}
     ...    AND    Write Data To Excel    SERV08_ComprehensiveRepricing    Customer_Legal_Name    ${rowid}    ${Enterprise_Name}
     ...    AND    Write Data To Excel    SERV29_PaymentFees    Borrower_ShortName    ${rowid}    ${Enterprise_Name}

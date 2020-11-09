@@ -45,7 +45,7 @@ Scenario 1 EU - Initiate Ongoing Fee Payment
     
 Scenario 1 EU - Send Ongoing Fee Payment Notices
     [Tags]    08 Send Ongoing Fee Payment Notices - API_COR_TC05
-    Set Test Variable    ${rowid}    5
+    Set Test Variable    ${rowid}    2
     Mx Execute Template With Multiple Data    Send a SENT Callback for Notice for BILATERAL Deal via WIP    ${ExcelPath}    ${rowid}    Correspondence
         
 Scenario 1 EU - Create Pricing Change Transaction
@@ -56,10 +56,15 @@ Scenario 1 EU - Initiate Loan Interest Payment
     [Tags]    10 Initiate Loan Interest Payment - SERV21
     Mx Execute Template With Multiple Data    Initiate Interest Payment    ${ExcelPath}    ${rowid}    SERV21_InterestPayments
     
+Scenario 1 EU - Send Interest Payment notices
+    [Tags]    11 Send Interest Payment Notices
+    Set Test Variable    ${rowid}    3
+    Mx Execute Template With Multiple Data    Send Notice For Interest Payment    ${ExcelPath}    ${rowid}    Correspondence
+
 Scenario 1 EU - Manual Scheduled Principal Payment
     [Tags]    12 Manual Scheduled Principal Payment - SERV18
     Mx Execute Template With Multiple Data    Manual Schedule Principal Payment    ${ExcelPath}    ${rowid}    SERV18_Payments    
     
 Scenario 1 EU - Deal Change Transaction
     [Tags]    14 Deal Change Transaction - AMCH04
-    Mx Execute Template With Multiple Data    Deal Change Transaction on Financial Ratio    ${ExcelPath}    ${rowid}    AMCH04_DealChangeTransaction   
+    Mx Execute Template With Multiple Data    Deal Change Transaction on Financial Ratio    ${ExcelPath}    ${rowid}    AMCH04_DealChangeTransaction

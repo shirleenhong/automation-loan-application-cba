@@ -474,6 +474,7 @@ Search Customer and Complete its Borrower Profile Creation with default values
 	...    @update: makcamps    28OCT2020    - Updated write data to excel method for Scenario 1 and EU APICORTC01
 	...    @update: makcamps    30OCT2020    - Updated write data to excel method for Scenario 1 and EU APICORTC05
     ...    @update: aramos      23OCT2020    - Update Write Remittance Description to add condition not to run it for Scenario 5 / Took out Mx LOANIQ Click ServicingGroupWindow_ExitButton after Close Servicing Group Remittance Instructions Selection List Window
+    ...    @update: makcamps    04NOV2020    - Added write data to excel method for EU E2E Scenario 1 Corro
     [Arguments]    ${ExcelPath}
 	
 	## Login to LoanIQ###
@@ -507,7 +508,6 @@ Search Customer and Complete its Borrower Profile Creation with default values
 
     Log    ${SCENARIO}	
 	Run Keyword if     ${SCENARIO}!=5    Write Remittance Description    ${SCENARIO}    &{ExcelPath}[Remittance_Instruction]    ${RemittanceInstruction_DDADescriptionAUD}    ${RemittanceInstruction_IMTDescriptionUSD}    ${RemittanceInstruction_RTGSDescriptionAUD}
-
 
 	###Searching Customer 	
     Search Customer    &{ExcelPath}[Customer_Search]    &{ExcelPath}[LIQCustomer_ID]    &{ExcelPath}[LIQCustomer_ShortName]          
@@ -565,7 +565,17 @@ Search Customer and Complete its Borrower Profile Creation with default values
     ...    AND    Write Data To Excel    SERV21_InterestPayments    Borrower_ContactEmail    ${rowid}    &{ExcelPath}[Contact_Email]       
     ...    AND    Write Data To Excel    SERV21_InterestPayments    Contact_Email    ${rowid}    &{ExcelPath}[Contact_Email]
     ...    AND    Write Data To Excel    SERV29_PaymentFees    Contact_Email    ${rowid}    &{ExcelPath}[Contact_Email]    
-    ...    AND    Write Data To Excel    SERV29_PaymentFees    Borrower_Contact    ${rowid}    &{ExcelPath}[Contact_FirstName] &{ExcelPath}[Contact_LastName]
+    ...    AND    Write Data To Excel    SERV29_PaymentFees    Borrower_Contact    ${rowid}    &{ExcelPath}[Contact_FirstName] &{ExcelPath}[Contact_LastName]    
+
+	###Writing for E2E EU scenario 1 Corro### 
+    Run Keyword If    '${SCENARIO}'=='1' and '&{ExcelPath}[Entity]' == 'EU'    Run Keywords    Write Data To Excel    Correspondence    Contact    1    &{ExcelPath}[Contact_FirstName] &{ExcelPath}[Contact_LastName]    sColumnReference=rowid
+    ...  AND    Write Data To Excel    Correspondence    Contact    2    &{ExcelPath}[Contact_FirstName] &{ExcelPath}[Contact_LastName]    sColumnReference=rowid
+    ...  AND    Write Data To Excel    Correspondence    Contact    3    &{ExcelPath}[Contact_FirstName] &{ExcelPath}[Contact_LastName]    sColumnReference=rowid
+    ...  AND    Write Data To Excel    Correspondence    Contact    4    &{ExcelPath}[Contact_FirstName] &{ExcelPath}[Contact_LastName]    sColumnReference=rowid
+    ...  AND    Write Data To Excel    Correspondence    Notice_Method    1    &{ExcelPath}[ContactNotice_Method]    sColumnReference=rowid
+    ...  AND    Write Data To Excel    Correspondence    Notice_Method    2    &{ExcelPath}[ContactNotice_Method]    sColumnReference=rowid
+    ...  AND    Write Data To Excel    Correspondence    Notice_Method    3    &{ExcelPath}[ContactNotice_Method]    sColumnReference=rowid
+    ...  AND    Write Data To Excel    Correspondence    Notice_Method    4    &{ExcelPath}[ContactNotice_Method]    sColumnReference=rowid
         
     ###Writing for Scenario 2
     Run Keyword If   '${SCENARIO}'=='2'    Run Keywords    Write Data To Excel    SERV01A_LoanDrawdown    Contact_Email    ${rowid}    &{ExcelPath}[Contact_Email]
@@ -699,6 +709,13 @@ Search Customer and Complete its Borrower Profile Creation with default values
     ...    AND    Write Data To Excel    SERV18_Payments    Loan_Currency    ${rowid}    &{ExcelPath}[RemittanceInstruction_IMTCurrencyUSD]
     ...    AND    Write Data To Excel    SERV21_InterestPayments    Loan_Currency    ${rowid}    &{ExcelPath}[RemittanceInstruction_IMTCurrencyUSD]
     ...    AND    Write Data To Excel    SERV29_PaymentFees    Currency    ${rowid}    &{ExcelPath}[RemittanceInstruction_IMTCurrencyUSD]
+  
+    ###Writing for E2E EU scenario 1 Corro### 
+    Run Keyword If    '${SCENARIO}'=='1' and '&{ExcelPath}[Entity]' == 'EU'    Run Keywords    Write Data To Excel    Correspondence    Currency    1    &{ExcelPath}[RemittanceInstruction_IMTCurrencyUSD]    sColumnReference=rowid
+    ...  AND    Write Data To Excel    Correspondence    Currency    2    &{ExcelPath}[RemittanceInstruction_IMTCurrencyUSD]    sColumnReference=rowid
+    ...  AND    Write Data To Excel    Correspondence    Currency    3    &{ExcelPath}[RemittanceInstruction_IMTCurrencyUSD]    sColumnReference=rowid
+    ...  AND    Write Data To Excel    Correspondence    Currency    4    &{ExcelPath}[RemittanceInstruction_IMTCurrencyUSD]    sColumnReference=rowid
+  
     Close Servicing Group Remittance Instructions Selection List Window    &{ExcelPath}[LIQCustomer_ShortName]
      
     Validate 'Active Customer' Window    &{ExcelPath}[LIQCustomer_ShortName] 

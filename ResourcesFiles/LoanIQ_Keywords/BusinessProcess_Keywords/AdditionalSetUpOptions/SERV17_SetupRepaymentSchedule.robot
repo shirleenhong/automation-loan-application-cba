@@ -13,6 +13,7 @@ Create Initial Loan Drawdown with Repayment Schedule
     ...    @update: makcamps    15OCT2020    - Added 'Run Keywords' in writing of loan alias to correspondence dataset
     ...    @update: makcamps    23OCT2020    - Added EU conditions for Rate Approval and updated Release Cashflow method
     ...    @update: kduenas     27OCT2020    - Added writing of loan alias to correspondence dataset for API_COR_TC21
+    ...    @update: makcamps    04NOV2020    - Added writing of loan alias to correspondence dataset for EU E2E Scenario 1
     [Arguments]    ${ExcelPath}
     
     ##Close all windows###
@@ -32,9 +33,15 @@ Create Initial Loan Drawdown with Repayment Schedule
     ${Loan_Alias}    Input Initial Loan Drawdown Details    &{ExcelPath}[Outstanding_Type]    &{ExcelPath}[Facility_Name]    &{ExcelPath}[Borrower1_ShortName]    &{ExcelPath}[Loan_PricingOption]    &{ExcelPath}[Loan_Currency]
     Write Data To Excel    SERV01_LoanDrawdown   Loan_Alias    ${rowid}    ${Loan_Alias}
     Write Data To Excel    SERV21_InterestPayments   Loan_Alias    ${rowid}    ${Loan_Alias}
-    Run Keyword If    '${SCENARIO}'=='1'    Run Keywords    Write Data To Excel    Correspondence    Loan_Alias    ${rowid}    ${Loan_Alias}    ${APIDataSet}    bTestCaseColumn=True    sColumnReference=rowid
+    Run Keyword If    '${SCENARIO}'=='1' and '&{ExcelPath}[Entity]' != 'EU'    Run Keywords    Write Data To Excel    Correspondence    Loan_Alias    ${rowid}    ${Loan_Alias}    ${APIDataSet}    bTestCaseColumn=True    sColumnReference=rowid
     ...  AND    Write Data To Excel    Correspondence    Loan_Alias    3    ${Loan_Alias}    ${APIDataSet}    bTestCaseColumn=True    sColumnReference=rowid
     ...  AND    Write Data To Excel    Correspondence    Loan_Alias    21    ${Loan_Alias}    ${APIDataSet}    bTestCaseColumn=True    sColumnReference=rowid
+    
+    ###Writing for E2E EU scenario 1 Corro### 
+    Run Keyword If    '${SCENARIO}'=='1' and '&{ExcelPath}[Entity]' == 'EU'    Run Keywords    Write Data To Excel    Correspondence    Loan_Alias    1    ${Loan_Alias}    sColumnReference=rowid
+    ...  AND    Write Data To Excel    Correspondence    Loan_Alias    2    ${Loan_Alias}    sColumnReference=rowid
+    ...  AND    Write Data To Excel    Correspondence    Loan_Alias    3    ${Loan_Alias}    sColumnReference=rowid
+    ...  AND    Write Data To Excel    Correspondence    Loan_Alias    4    ${Loan_Alias}    sColumnReference=rowid
     
     Run Keyword If    '${SCENARIO}'=='2'    Write Data To Excel    SERV21_InterestPayments   Loan_Alias    ${rowid}    ${Loan_Alias}
     Run Keyword If    '${SCENARIO}'=='2'    Write Data To Excel    SERV18_Payments   Loan_Alias    ${rowid}    ${Loan_Alias}
@@ -476,4 +483,3 @@ Create Initial Loan Drawdown for Syndicated Deal with Repayment Schedule
     Verify if Status is set to Do It    &{ExcelPath}[Lender1_ShortName]
     Release Cashflow    &{ExcelPath}[Lender2_ShortName]
     Close All Windows on LIQ
-    
