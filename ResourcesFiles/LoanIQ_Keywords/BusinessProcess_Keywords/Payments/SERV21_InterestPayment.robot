@@ -20,7 +20,7 @@ Initiate Interest Payment
    Navigate to Outstanding Select Window from Deal
    Navigate to Existing Loan    &{ExcelPath}[Outstanding_Type]    &{ExcelPath}[Facility_Name]    &{ExcelPath}[Loan_Alias]
    ${ScheduledActivityReport_Date}    Get Interest Actual Due Date on Loan Notebook
-   # Write Data To Excel    SERV21_InterestPayments    ScheduledActivityReport_Date    ${rowid}    ${ScheduledActivityReport_Date}
+   Write Data To Excel    SERV21_InterestPayments    ScheduledActivityReport_Date    ${rowid}    ${ScheduledActivityReport_Date}
    Close All Windows on LIQ 
    ${SystemDate}    Get System Date
    ${ScheduledActivity_FromDate}    Subtract Days to Date     ${SystemDate}    365
