@@ -559,7 +559,7 @@ Search Customer and Complete its Borrower Profile Creation with default values
 	###Adding Fax Details                 
     Add Fax Details under Profiles Tab    &{ExcelPath}[Customer_Location]    &{ExcelPath}[Fax_Number]    &{ExcelPath}[Fax_Description]    
 
-	###Writing for E2E EU scenario 1### 
+	###Writing for Scenario 1### 
     Run Keyword If    '${SCENARIO}'=='1' and '&{ExcelPath}[Entity]' == 'EU'    Run Keywords    Write Data To Excel    Correspondence    Contact    ${rowid}    &{ExcelPath}[Contact_FirstName] &{ExcelPath}[Contact_LastName]
     ...    AND    Write Data To Excel    Correspondence    Contact    2    &{ExcelPath}[Contact_FirstName] &{ExcelPath}[Contact_LastName]    bTestCaseColumn=True    sColumnReference=rowid
     ...    AND    Write Data To Excel    Correspondence    Contact    3    &{ExcelPath}[Contact_FirstName] &{ExcelPath}[Contact_LastName]    bTestCaseColumn=True    sColumnReference=rowid
@@ -708,7 +708,7 @@ Search Customer and Complete its Borrower Profile Creation with default values
     ...    AND    Write Data To Excel    SERV21_InterestPayments    Loan_Currency    ${rowid}    &{ExcelPath}[RemittanceInstruction_IMTCurrencyUSD]
     ...    AND    Write Data To Excel    SERV29_PaymentFees    Currency    ${rowid}    &{ExcelPath}[RemittanceInstruction_IMTCurrencyUSD]
   
-    ###Writing for E2E EU scenario 1 Corro### 
+    ###Writing for Scenario 1### 
     Run Keyword If    '${SCENARIO}'=='1' and '&{ExcelPath}[Entity]' == 'EU'    Run Keywords    Write Data To Excel    Correspondence    Currency    ${rowid}    &{ExcelPath}[RemittanceInstruction_IMTCurrencyUSD]
     ...  AND    Write Data To Excel    Correspondence    Currency    2    &{ExcelPath}[RemittanceInstruction_IMTCurrencyUSD]    bTestCaseColumn=True    sColumnReference=rowid
     ...  AND    Write Data To Excel    Correspondence    Currency    3    &{ExcelPath}[RemittanceInstruction_IMTCurrencyUSD]    bTestCaseColumn=True    sColumnReference=rowid

@@ -29,7 +29,7 @@ Initiate Interest Payment
    Open Scheduled Activity Report    ${ScheduledActivity_FromDate}    ${ScheduledActivity_ThruDate}    &{ExcelPath}[Deal_Name]
    
    ###Loan Notebook####
-   Open Loan Notebook    &{ExcelPath}[ScheduledActivityReport_Date]    &{ExcelPath}[ScheduledActivityReport_ActivityType]    &{ExcelPath}[Deal_Name]    &{ExcelPath}[Loan_Alias]
+   Open Loan Notebook    ${ScheduledActivityReport_Date}    &{ExcelPath}[ScheduledActivityReport_ActivityType]    &{ExcelPath}[Deal_Name]    &{ExcelPath}[Loan_Alias]
    ${CycleDue}    Compute Interest Payment Amount Per Cycle - Zero Cycle Due    &{ExcelPath}[CycleNumber]    ${SystemDate}
    Write Data To Excel    SERV21_InterestPayments    Payment_Amount    ${rowid}    ${CycleDue}
 

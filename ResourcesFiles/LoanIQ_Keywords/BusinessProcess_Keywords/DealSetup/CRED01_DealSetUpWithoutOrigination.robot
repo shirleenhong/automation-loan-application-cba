@@ -75,7 +75,7 @@ Setup a Bilateral Deal
     ...    AND    Write Data To Excel    SYND02_PrimaryAllocation    Primary_Lender1    ${rowid}    ${ExcelPath}[Deal_AdminAgent]
     ...    AND    Write Data To Excel    SYND02_PrimaryAllocation    FundReceiverDetailCustomer    ${rowid}    ${ExcelPath}[Deal_AdminAgent]
 
-    ###Writing for E2E EU scenario 1 Corro### 
+    ###Writing for Scenario 1### 
     Run Keyword If    '${SCENARIO}'=='1' and '&{ExcelPath}[Entity]' == 'EU'    Run Keywords    Write Data To Excel    Correspondence    Deal_Name    ${rowid}    ${Deal_Name}
     ...    AND    Write Data To Excel    Correspondence    Deal_Name    2    ${Deal_Name}    bTestCaseColumn=True    sColumnReference=rowid
     ...    AND    Write Data To Excel    Correspondence    Deal_Name    3    ${Deal_Name}    bTestCaseColumn=True    sColumnReference=rowid
@@ -159,7 +159,7 @@ Create Facility
     Write Data To Excel    SERV21_InterestPayments    Facility_Name    ${rowid}    ${Facility_Name}
     Write Data To Excel    SYND02_PrimaryAllocation    Facility_Name    ${rowid}    ${Facility_Name}
 
-    ###Writing for E2E EU scenario 1 Corro### 
+    ###Writing for Scenario 1### 
     Run Keyword If    '${SCENARIO}'=='1' and '&{ExcelPath}[Entity]' == 'EU'    Run Keywords    Write Data To Excel    Correspondence    Facility_Name    ${rowid}    ${Facility_Name}
     ...    AND    Write Data To Excel    Correspondence    Facility_Name    2    ${Facility_Name}    bTestCaseColumn=True    sColumnReference=rowid
     ...    AND    Write Data To Excel    Correspondence    Facility_Name    3    ${Facility_Name}    bTestCaseColumn=True    sColumnReference=rowid
