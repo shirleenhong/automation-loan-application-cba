@@ -494,3 +494,12 @@ Resource    ../ResourcesFiles/Integration_Keywords/Source_Keywords/Extracts/DNA/
 ### Integration Resource Files - Datanet Assurance - Business Process Keywords ###
 Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/Extracts/DNA_LIQ/DNA_01.robot
 Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/Extracts/DNA_LIQ/DNA_03.robot
+
+### Integration Resource Files - DNR - Source Keywords ###
+Resource    ../ResourcesFiles/Integration_Keywords/Source_Keywords/Extracts/DNR/DNR_Extract/DNR_Extract_Validation.robot
+Resource    ../ResourcesFiles/Integration_Keywords/Source_Keywords/Extracts/DNR/DNR_LIQ/DNR_DealSetup.robot
+Resource    ../ResourcesFiles/Integration_Keywords/Source_Keywords/Extracts/DNR/DNR_LIQ/DNR_FacilityFeeSetup.robot
+Resource    ../ResourcesFiles/Integration_Keywords/Source_Keywords/Extracts/DNR/DNR_LIQ/DNR_FacilitySetup.robot
+Resource    ../ResourcesFiles/Integration_Keywords/Source_Keywords/Extracts/DNR/DNR_LIQ/DNR_LoanDrawdown.robot
+
+### Integration Resource Files - DNR - Business Process Keywords ###
