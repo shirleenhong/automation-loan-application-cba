@@ -13,6 +13,7 @@ Initiate Interest Payment
    ...    @update: amansuet    18JUN2020    - updated Release a Cashflow
    ...    @update: amansuet    22JUN2020    - used generic keyword 'Release Cashflow Based on Remittance Instruction'
    ...    @update: makcamps    23OCT2020    - added condition for EU config for Currency and deleted Release Cashflow
+   ...    @update: makcamps    04NOV2020    - added Generate Intent Notices for EU End to End script for Scenario 1
    [Arguments]    ${ExcelPath}   
    ###Navigate to Existing Loan###
    Open Existing Deal    &{ExcelPath}[Deal_Name]
@@ -82,8 +83,10 @@ Initiate Interest Payment
 
    ###Interest Payment Notebook - Workflow Tab###  
    Select Item in Work in Process    Payments    Awaiting Release    Interest Payment     &{ExcelPath}[Facility_Name]
-   Navigate Notebook Workflow    ${LIQ_Payment_Window}    ${LIQ_Payment_Tab}    ${LIQ_Payment_WorkflowItems}    Release Cashflows   
-   Release Cashflow    &{ExcelPath}[Borrower1_ShortName]    release
+
+   # ##Intent Notices Generation
+   Run Keyword If    '${ExcelPath}[Entity]'=='EU'    Generate Intent Notices of an Interest Payment    &{ExcelPath}[Borrower1_LegalName]    &{ExcelPath}[Contact_Email]    &{ExcelPath}[Borrower1_LegalName]    &{ExcelPath}[Notice_Status]
+   Release Cashflow Based on Remittance Instruction    &{ExcelPath}[Remittance_Instruction]    &{ExcelPath}[Borrower1_ShortName]    &{ExcelPath}[Cashflow_DataType]    Payment
    Navigate to Payment Workflow and Proceed With Transaction    Release
     
    ##Facility Notebook####
@@ -479,5 +482,3 @@ Initiate Interest Payment with Three Lenders
     ###Deal Notebook
     Search Loan    &{ExcelPath}[OutstandingSelect_Type]    &{ExcelPath}[Search_By]    &{ExcelPath}[Facility_Name]    &{ExcelPath}[Active]
     Open Existing Inactive Loan from a Facility    &{ExcelPath}[Loan_Alias]
-   
-    

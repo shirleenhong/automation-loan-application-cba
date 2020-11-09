@@ -53,6 +53,7 @@ LIQ_InterestPayment_RequestedAmount_Textfield = 'JavaWindow("title:=.* Interest 
 LIQ_InterestPayment_CycleDueDate_Text = 'JavaWindow("title:=.* Interest Payment.*").JavaStaticText("labeled_containers_path:=.*Cycle.*","Index:=5")'
 ##Interest Payment-- FROM CIELO###
 LIQ_InterestPayment_RequestedAmount_field = 'JavaWindow("title:=.* Interest Payment.*").JavaEdit("labeled_containers_path:=Tab:General;Group: Amounts ;","index:=0")'
+LIQ_InterestPayment_Currency_Textfield = 'JavaWindow("title:=.* Interest Payment.*").JavaStaticText("labeled_containers_path:=Tab:General;Group: Amounts ;","index:=0")'
 ###GL Entries####
 LIQ_Payment_GLEntries_Table = 'JavaWindow("title:=GL Entries.*").JavaTree("attached text:=Drill down to view details")'
 LIQ_Payment_GLEntries_Window = 'JavaWindow("title:=GL Entries.*")'
