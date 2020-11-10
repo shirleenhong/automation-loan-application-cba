@@ -4,6 +4,7 @@ Resource    ../../../Configurations/LoanIQ_Import_File.robot
 *** Variables ***
 ${rowid}    1
 ${SCENARIO}    2
+${FACILITY_COUNT}    3
 
 *** Test Cases ***
 Deal Setup and Facilities - CRED01
@@ -39,3 +40,9 @@ Charge Upfront Fee - CRED07
 Complete Portfolio Settled Discount - TRPO12
     [Tags]    05 Portfolio Settled Discount - TRPO12 
     Mx Execute Template With Multiple Data    Portfolio Settled Discount Changes    ${ExcelPath}    ${rowid}    TRPO12_PortfolioSettledDisc
+
+Complete External Participation - TRPO06
+    [Tags]    06 External Participation - TRPO06 
+    Mx Execute Template With Multiple Data    Complete External Participation    ${ExcelPath}    ${rowid}    TRPO06_InternalParticipation  
+    
+
