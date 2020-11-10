@@ -28,6 +28,7 @@ LIQ_FixedRateOptionLoan_Window = 'JavaWindow("title:=Fixed Rate Option Loan.*")'
 LIQ_FixedRateOptionLoan_Pending_Tab = 'JavaWindow("title:=Fixed Rate Option Loan.*").JavaTab("tagname:=TabFolder")'
 LIQ_FixedRateOptionLoan_ListItem = 'JavaWindow("title:=Fixed Rate Option Loan.*").JavaTree("attached text:=Pending Transactions")'
 LIQ_FixedRateOptionLoan_ContractID = 'JavaWindow("title:=Fixed Rate Option Loan.*").JavaEdit("attached text:=Contract ID:")'
+LIQ_FixedRateOptionLoan_Events_JavaTree = 'JavaWindow("title:=.*Fixed Rate Option Loan.*").JavaTree("tagname:=Select event to view details.*","index:=0")'
 LIQ_LoanChangeTransaction_EffectiveDate = 'JavaWindow("title:=.*Loan Change Transaction").JavaEdit("attached text:=Effective Date:")'
 LIQ_LoanChangeTransaction_NewValue_JavaTree = 'JavaWindow("title:=.*Loan Change Transaction").JavaTree("attached text:=Drill down to edit the new value on a change item")'
 

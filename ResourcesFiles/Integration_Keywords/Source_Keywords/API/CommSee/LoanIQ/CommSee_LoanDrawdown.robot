@@ -343,6 +343,8 @@ Write Repriced Loan Details for ComSee - Scenario 2
 Create Initial Loan Drawdown with no Repayment Schedule - Scenario 7 ComSee
     [Documentation]    This keyword is used to create a Loan Drawdown without selecting a Payment Schedule.
     ...    @author: rtarayao    11SEP2019    - Duplicate of Scenario 7 from Functional Scenarios
+    ...    @author: songchan    06NOV2020    - Added Loan Currency as an argument to Get Host Bank in Cashflow
+    ...    @update: clanding    03NOV2020    - Updated hard coded value CB001 to input dataset
     [Arguments]    ${ExcelPath}
     
     ###Facility###
@@ -372,9 +374,9 @@ Create Initial Loan Drawdown with no Repayment Schedule - Scenario 7 ComSee
     Navigate to Drawdown Cashflow Window
     Verify if Method has Remittance Instruction    &{ExcelPath}[Borrower1_ShortName]    &{ExcelPath}[Remittance_Description]    &{ExcelPath}[Remittance_Instruction]
     Verify if Status is set to Do It    &{ExcelPath}[Borrower1_ShortName]  
- 
+     
     ##Get Transaction Amount for Cashflow###
-    ${HostBankShare}    Get Host Bank Cash in Cashflow
+    ${HostBankShare}    Get Host Bank Cash in Cashflow    &{ExcelPath}[Loan_Currency]
     ${BorrowerTranAmount}    Get Transaction Amount in Cashflow    &{ExcelPath}[Borrower1_ShortName]
     ${ComputedHBTranAmount}    Compute Lender Share Transaction Amount    &{ExcelPath}[Loan_RequestedAmount]    &{ExcelPath}[HostBankSharePct]
     
@@ -384,8 +386,8 @@ Create Initial Loan Drawdown with no Repayment Schedule - Scenario 7 ComSee
     Navigate to GL Entries
     ${HostBank_Debit}    Get GL Entries Amount    &{ExcelPath}[Host_Bank]    Debit Amt
     ${Borrower_Credit}    Get GL Entries Amount    &{ExcelPath}[Borrower1_ShortName]    Credit Amt
-    ${UITotalCreditAmt}    Get GL Entries Amount    ${SPACE}Total For: CB001     Credit Amt
-    ${UITotalDebitAmt}    Get GL Entries Amount    ${SPACE}Total For: CB001     Debit Amt
+    ${UITotalCreditAmt}    Get GL Entries Amount    ${SPACE}Total For: &{ExcelPath}[Facility_BranchCode]     Credit Amt
+    ${UITotalDebitAmt}    Get GL Entries Amount    ${SPACE}Total For: &{ExcelPath}[Facility_BranchCode]     Debit Amt
     
     Compare UIAmount versus Computed Amount    ${HostBankShare}    ${HostBank_Debit}
     Validate if Debit and Credit Amt is Balanced    ${HostBank_Debit}    ${Borrower_Credit}

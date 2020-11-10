@@ -28,6 +28,7 @@ DWHExcelPath = ""
 CBARPA_ExcelPath = ""
 DWELIQFunc_Dataset = ""
 DNA_DATASET = ""
+DNR_DATASET = ""
 
 FBTIDataset = ""
 FBTIDataset_ILC = ""
@@ -52,6 +53,8 @@ PARTY_URL_SUFFIX = ""
 DOMAIN = ""
 PTY_DATASET = ""
 BRANCHNAME_LIST = ""
+INDUSTRYSECTOR_LIST = ""
+BUSINESSACTIVITY_DIRECTORY = ""
 
 ###ESSENCE###
 ESSENCE_URL = ""

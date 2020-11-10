@@ -9,6 +9,9 @@ SAPWUL_DATASET = "C:\\Git_evergreen\\evergreen_projects\\CBA_Evergreen\\DataSet\
 ComSeeDataSet = 'C:\\Git_Evergreen\\evergreen_projects\\CBA_Evergreen\\DataSet\\Downstream_DataSet\\ComSee\\COMSEE_Data_Set.xls'
 GLExcelPath = 'C:\\Git_Evergreen\\fms_cba\\DataSet\\Integration_DataSet\Extracts\\GL\\EVG_GL_TestData_EU.xlsx'
 PTY_DATASET = "C:\\Git_Evergreen\\fms_cba\\DataSet\\Party_DataSet\\PTY_DataSet_EU.xlsx"
+INDUSTRYSECTOR_LIST = "C:\\Git_Evergreen\\fms_cba\\DataSet\\Party_DataSet\\Industry_Sector\\Industry_Sector_Values.txt"
+BUSINESSACTIVITY_DIRECTORY = "C:\\Git_Evergreen\\fms_cba\\DataSet\\Party_DataSet\\Business_Activity"
+DNR_DATASET = "C:\\Git_Evergreen\\fms_cba\\DataSet\\Integration_DataSet\\Extracts\\DNR\\DNR_Dataset_EU.xlsx"
 
 SERVER = "http://mancsleverg0007"
 PORT = "9090"
@@ -188,3 +191,21 @@ GL_CSV_GPG_FILEEXTENSION = '.csv.gpg'
 ESS_EUWASADMIN_SCHEMA = "EUWASADMIN"
 GL_VALIDATION_TOOL_PATH = 'C:\\Git_Evergreen\\fms_cba\\DataSet\\Integration_DataSet\Extracts\\GL\\Validation_Tool'
 GL_VALIDATION_TOOL_JAR_EU = 'gpgCheck-1.0.3-jar-with-dependencies-EU.jar'
+
+### Batch EOD ###
+PUTTY_PATH = "C:\\Program Files\\PuTTY\\putty.exe"
+PUTTY_HOSTNAME = "mancsleverg0005"
+PUTTY_PORT = "22"
+PUTTY_USERNAME = "micloud"
+PUTTY_PASSWORD = "misys123"
+
+### DNA ###
+DNA_SERVER = 'mancsleverg0021'
+DNA_SERVER_LIQ = 'mancsleverg0022'
+DNA_PORT = '22'
+DNA_SERVER_USER = 'sftpuser2'
+DNA_SERVER_PASSWORD = 'luckyroll76'
+DNA_EXTRACTION_AREA_PATH = '/evgdata/STREAMSETS/workspace/extraction_area/COMRLENDING/'
+DNA_CCB_LIQ_FILENAME = 'CCB_LIQ_'
+DNA_DATAASSURANCE_FILENAME = 'DATAASSURANCE_'
+DNA_DAT_EXT = '.DAT'
