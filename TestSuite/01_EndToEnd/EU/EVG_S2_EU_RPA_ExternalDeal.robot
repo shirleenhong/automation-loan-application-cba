@@ -4,7 +4,6 @@ Resource    ../../../Configurations/LoanIQ_Import_File.robot
 *** Variables ***
 ${rowid}    1
 ${SCENARIO}    2
-${FACILITY_COUNT}    3
 
 *** Test Cases ***
 Deal Setup and Facilities - CRED01
@@ -43,6 +42,6 @@ Complete Portfolio Settled Discount - TRPO12
 
 Complete External Participation - TRPO06
     [Tags]    06 External Participation - TRPO06 
-    Mx Execute Template With Multiple Data    Complete External Participation    ${ExcelPath}    ${rowid}    TRPO06_InternalParticipation  
+    Mx Execute Template With Multiple Data    Complete External Participation    ${ExcelPath}    ${rowid}    TRPO06_ExternalParticipation  
     
 

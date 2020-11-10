@@ -5,16 +5,25 @@ Resource    ../../../../Configurations/LoanIQ_Import_File.robot
 
 ***Keyword***
 Complete Internal Participation
-    [Documentation]    This keyword is used to Complete Internal Participation For A Closed Deal
+    [Documentation]    This keyword is used to Complete Internal Participation For A Closed Deal with 3 facilities
     ...    @author:    mcastro    14OCT2020    initial create 
+    ...    @update:    mcastro    10NOV2020    Updated steps to read and write data from this business process keyword, deleted unecessary validation
     [Arguments]    ${ExcelPath}
+    Logout from Loan IQ
+    Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
+    ### Read Data from Excel ###
+    ${Facility1}    Read Data From Excel    TRPO06_InternalParticipation    Facility_Name    ${rowid}
+    ${Facility2}    Read Data From Excel    TRPO06_InternalParticipation    Facility_Name    2
+    ${Facility3}    Read Data From Excel    TRPO06_InternalParticipation    Facility_Name    3
+
     Open Existing Deal    &{ExcelPath}[Deal_Name]
     Create New Internal Participation    &{ExcelPath}[LenderShare_Type]    &{ExcelPath}[Buyer_LegalEntity]    &{ExcelPath}[Seller_LegalEntity]    &{ExcelPath}[Buyer_RiskBook]    &{ExcelPath}[Seller_RiskBook]
     
     ### Complete Pending Participation Sell Window ###
     Populate Pending Participation Sell    &{ExcelPath}[Pct_of_Deal]    &{ExcelPath}[Int_Fee]    &{ExcelPath}[Buy_Sell_Price]
-    Validate Displayed Sell Amount From Participation Sell      
-    Validate Buy/Sell Price For Facilities On Participation Sell    &{ExcelPath}[Buy_Sell_Price]
+    ${Buy_Sell_Amount}    Validate Displayed Sell Amount From Participation Sell      
+    Write Data To Excel    TRPO06_InternalParticipation    Buy_Sell_Amount    ${rowid}    ${Buy_Sell_Amount}
+    Validate Buy/Sell Price For Facilities On Participation Sell    &{ExcelPath}[Buy_Sell_Price]    ${Facility1}|${Facility2}|${Facility3}
     
     ### Complete Amts/Debts tab ###
     Populate Pending Participation Amts/Debts    &{ExcelPath}[Expected_CloseDate]    &{ExcelPath}[Buy_Sell_Amount]       
@@ -23,18 +32,18 @@ Complete Internal Participation
     Add Contacts For Participation Sell    &{ExcelPath}[Buyer_LegalEntity]    &{ExcelPath}[Seller_LegalEntity]    
     
     ### Complete Fee Decisions ###
-    Complete Circle Fee Decisions
+    Complete Circle Fee Decisions    ${Facility1}|${Facility2}|${Facility3}
     
     ### Pending Participation Sell Workflow ###
     Complete Circling for Pending Participation Sell    &{ExcelPath}[Expected_CloseDate]  
-    Complete Portfolio Allocations Workflow for Pending Participation Sell    
+    Complete Portfolio Allocations Workflow for Pending Participation Sell    ${Facility1}|${Facility2}|${Facility3}    
        
     ### Participation Buy Window ###
     Navigate To Participation Buy
     Validate Pending Participation Buy    &{ExcelPath}[Buyer_LegalEntity]    &{ExcelPath}[Buy_Sell_Amount]    &{ExcelPath}[Expected_CloseDate]
     
     ### Pending Participation Buy Workflow ###
-    Complete Portfolio Allocations Workflow for Pending Participation Buy    &{ExcelPath}[Buyer_Portfolio]    &{ExcelPath}[Buyer_ExpenseCode]    &{ExcelPath}[Buyer_Branch]
+    Complete Portfolio Allocations Workflow for Pending Participation Buy    &{ExcelPath}[Buyer_Portfolio]    &{ExcelPath}[Buyer_ExpenseCode]    &{ExcelPath}[Buyer_Branch]    ${Facility1}|${Facility2}|${Facility3}
     Validate Fee Decisions For All Facilities
     
     ### Send To Approval ###
@@ -75,18 +84,24 @@ Complete Internal Participation
     Validate GL Entries For Internal Participation    &{ExcelPath}[Buyer_LegalEntity]    &{ExcelPath}[Seller_LegalEntity]
    
 Complete External Participation
-    [Documentation]    This keyword is used to Complete External Participation For A Closed Deal
+    [Documentation]    This keyword is used to Complete External Participation For A Closed Deal with 3 facilities
     ...    @author:    mcastro    05NOV2020    initial create 
     [Arguments]    ${ExcelPath}
     Logout from Loan IQ
     Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
+    ### Read Data from Excel ###
+    ${Facility1}    Read Data From Excel    TRPO06_ExternalParticipation    Facility_Name    ${rowid}
+    ${Facility2}    Read Data From Excel    TRPO06_ExternalParticipation    Facility_Name    2
+    ${Facility3}    Read Data From Excel    TRPO06_ExternalParticipation    Facility_Name    3
+
     Open Existing Deal    &{ExcelPath}[Deal_Name]
     Create New External Participation    &{ExcelPath}[LenderShare_Type]    &{ExcelPath}[Buyer_LegalEntity]    &{ExcelPath}[Seller_LegalEntity]    &{ExcelPath}[Seller_RiskBook]
     
     ### Complete Pending Participation Sell Window ###
     Populate Pending Participation Sell    &{ExcelPath}[Pct_of_Deal]    &{ExcelPath}[Int_Fee]    &{ExcelPath}[Buy_Sell_Price]
-    Validate Displayed Sell Amount From Participation Sell      
-    Validate Buy/Sell Price For Facilities On Participation Sell    &{ExcelPath}[Buy_Sell_Price]
+    ${Buy_Sell_Amount}    Validate Displayed Sell Amount From Participation Sell  
+    Write Data To Excel    TRPO06_ExternalParticipation    Buy_Sell_Amount    ${rowid}    ${Buy_Sell_Amount}   
+    Validate Buy/Sell Price For Facilities On Participation Sell    &{ExcelPath}[Buy_Sell_Price]    ${Facility1}|${Facility2}|${Facility3}
     
     ### Complete Amts/Debts tab ###
     Populate Pending Participation Amts/Debts    &{ExcelPath}[Expected_CloseDate]    &{ExcelPath}[Buy_Sell_Amount]       
@@ -95,11 +110,11 @@ Complete External Participation
     Add Contacts For Participation Sell    &{ExcelPath}[Buyer_LegalEntity]    &{ExcelPath}[Seller_LegalEntity]    
     
     ### Complete Fee Decisions ### 
-    Complete Circle Fee Decisions
+    Complete Circle Fee Decisions    ${Facility1}|${Facility2}|${Facility3}
     
     ### Pending Participation Sell Workflow ###
     Complete Circling for Pending Participation Sell    &{ExcelPath}[Expected_CloseDate]  
-    Complete Portfolio Allocations Workflow for Pending Participation Sell  
+    Complete Portfolio Allocations Workflow for Pending Participation Sell    ${Facility1}|${Facility2}|${Facility3} 
     Send to Approval Internal Participation Sell
 
     ## External Participation Sell Approval ###
