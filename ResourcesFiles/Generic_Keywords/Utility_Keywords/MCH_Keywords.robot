@@ -228,21 +228,23 @@ Get TextJMS XML Files and Rename with Base Rate Code, Repricing Frequency and Ac
     ...    @update: clanding    18MAR2019    - removed For loop. inserted keyword to Compare Expected and Actual TextJMS for Base Rate TL
     ...                                      - added name to Active Funding Desk
     ...    @update: ehugo    18JUN2020    - added 'sXML_Filename' argument to properly delete the XML file if exist
+    ...    @update: fluberio    10NOV2020    - added Currencty in the XML File
     [Arguments]    ${sInputFilePath}    ${sOutputFilePath}    ${sXML_file}    ${sXML_Filename}
     
     ${BaseRate}    XML.Get Element Attribute    ${sXML_file}    baseRate    xpath=UpdateFundingRate
     ${FundingDesk}    XML.Get Element Attribute    ${sXML_file}    fundingDesk    xpath=UpdateFundingRate
     ${RepricingFrequency}    XML.Get Element Attribute    ${sXML_file}    repricingFrequency    xpath=UpdateFundingRate
+    ${Currency}    XML.Get Element Attribute    ${sXML_file}    currency    xpath=UpdateFundingRate
     
     Delete File If Exist    ${sXML_Filename}
-    Create File    ${dataset_path}${sOutputFilePath}_${BaseRate}_${RepricingFrequency}_${FundingDesk}.xml    ${sXML_file}    
+    Create File    ${dataset_path}${sOutputFilePath}_${BaseRate}_${RepricingFrequency}_${FundingDesk}_${Currency}.xml    ${sXML_file}    
     
-    Run Keyword And Continue On Failure    Mx Compare Xml With Baseline File    ${dataset_path}${sInputFilePath}_${BaseRate}_${RepricingFrequency}_${FundingDesk}.xml    
-    ...    ${dataset_path}${sOutputFilePath}_${BaseRate}_${RepricingFrequency}_${FundingDesk}.xml    
-    ${Stat}    Run Keyword And Return Status    Mx Compare Xml With Baseline File    ${dataset_path}${sInputFilePath}_${BaseRate}_${RepricingFrequency}_${FundingDesk}.xml    
-    ...    ${dataset_path}${sOutputFilePath}_${BaseRate}_${RepricingFrequency}_${FundingDesk}.xml
-    Run Keyword If    ${Stat}==${True}    Log    ${dataset_path}${sInputFilePath}_${BaseRate}_${RepricingFrequency}_${FundingDesk}.xml and ${dataset_path}${sOutputFilePath}_${BaseRate}_${RepricingFrequency}_${FundingDesk}.xml are matched!
-    ...    ELSE    Log    ${dataset_path}${sInputFilePath}_${BaseRate}_${RepricingFrequency}_${FundingDesk}.xml and ${dataset_path}${sOutputFilePath}_${BaseRate}_${RepricingFrequency}_${FundingDesk}.xml does not matched!    level=ERROR
+    Run Keyword And Continue On Failure    Mx Compare Xml With Baseline File    ${dataset_path}${sInputFilePath}_${BaseRate}_${RepricingFrequency}_${FundingDesk}_${Currency}.xml    
+    ...    ${dataset_path}${sOutputFilePath}_${BaseRate}_${RepricingFrequency}_${FundingDesk}_${Currency}.xml    
+    ${Stat}    Run Keyword And Return Status    Mx Compare Xml With Baseline File    ${dataset_path}${sInputFilePath}_${BaseRate}_${RepricingFrequency}_${FundingDesk}_${Currency}.xml    
+    ...    ${dataset_path}${sOutputFilePath}_${BaseRate}_${RepricingFrequency}_${FundingDesk}_${Currency}.xml
+    Run Keyword If    ${Stat}==${True}    Log    ${dataset_path}${sInputFilePath}_${BaseRate}_${RepricingFrequency}_${FundingDesk}_${Currency}.xml and ${dataset_path}${sOutputFilePath}_${BaseRate}_${RepricingFrequency}_${FundingDesk}_${Currency}.xml are matched!
+    ...    ELSE    Log    ${dataset_path}${sInputFilePath}_${BaseRate}_${RepricingFrequency}_${FundingDesk}_${Currency}.xml and ${dataset_path}${sOutputFilePath}_${BaseRate}_${RepricingFrequency}_${FundingDesk}_${Currency}.xml does not matched!    level=ERROR
     
 
 Get TextJMS XML Files and Rename with Funding Desk, From Currency, To Currency, and Compare to Input
@@ -496,6 +498,7 @@ Compare Multiple Input and Output JSON for Base Rate
     ...    @author: clanding    18MAR2019    - initial create
     ...    @update: jdelacru    21SEP2020    - added new argument ${sSubEntity} and change the file name of the file being read
     ...    @update: jdelacru    29SEP2020    - deleted argument ${sSubEntity}, not needed in OpenAPI generated response
+    ...    @update: fluberio    10NOV2020    - added currency in Json file
     [Arguments]    ${sInputFilePath}    ${sFileName}
     
     ${InputJSON}    OperatingSystem.Get File    ${dataset_path}${sInputFilePath}${sFileName}.json
@@ -522,7 +525,9 @@ Compare Multiple Input and Output JSON for Base Rate
     \    ${Val_baseRateCode}    Get From List    ${Val_baseRateCode}    0
     \    ${Val_rateTenor}    Get Value From Json    ${JSON_Value}    $..rateTenor
     \    ${Val_rateTenor}    Get From List    ${Val_rateTenor}    0
-    \    ${InputJSON}    OperatingSystem.Get File    ${dataset_path}${sInputFilePath}${sFileName}_${Val_baseRateCode}_${Val_rateTenor}.json
+    \    ${Val_currency}    Get Value From Json    ${JSON_Value}    $..currency
+    \    ${Val_currency}    Get From List    ${Val_currency}    0
+    \    ${InputJSON}    OperatingSystem.Get File    ${dataset_path}${sInputFilePath}${sFileName}_${Val_baseRateCode}_${Val_rateTenor}_${Val_currency}.json
     \    ${JSON_Value}    Evaluate    json.dumps(${JSON_Value})    json
     \    Run Keyword And Continue On Failure    Mx Compare Json Data    ${InputJSON}     ${JSON_Value}
     \    ${Stat}    Run Keyword And Return Status    Mx Compare Json Data    ${InputJSON}     ${JSON_Value}
