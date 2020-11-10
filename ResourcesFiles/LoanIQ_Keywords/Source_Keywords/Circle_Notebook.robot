@@ -2823,7 +2823,7 @@ Validate GL Entries For Internal Participation
 
 Create New External Participation
     [Documentation]    This keyword is used to create circle selection for New Internal Participation
-    ...    @author:    mcastro    14OCT2020    initial create 
+    ...    @author:    mcastro    04NOV2020    initial create 
     [Arguments]    ${sLenderShare_Type}    ${sBuyer_LegalEntity}   ${sSeller_LegalEntity}    ${sSeller_RiskBook}
     
     ###Pre-processing keywords###
@@ -2895,7 +2895,7 @@ Release Cashflow For Participation
     Mx LoanIQ Click    ${LIQ_Cashflows_OK_Button}
     Take Screenshot    ${Screenshot_Path}/Screenshots/LoanIQ/ApprovedParticipationWindow_WorkflowTab  
     Validate if Question or Warning Message is Displayed
-    # Close All Windows on LIQ
+    Close All Windows on LIQ
 
 Validate GL Entries For External Participation
     [Documentation]    This keyword is to Validate GL Entries for Closed Participation.
