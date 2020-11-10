@@ -10,6 +10,7 @@ Send GS File with removed Floating Rates
     ...    @author: jdelacru    22JUL2019    - initial create
     ...    @update: mcastro     07OCT2020    - added missing argument variable for Create expected TextJMS XML
     ...                                      - updated [InputFilePath] to [TemplateFilePath] of TransformedDataFile_Template_BaseRate
+    ...    @update: fluberio    10NOV2020    - added Logout from Loan IQ for scenario 4 and EU Entity
     [Arguments]    ${ExcelPath}
     
     ###PREREQUISITE###
