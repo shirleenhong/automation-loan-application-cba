@@ -2259,15 +2259,14 @@ Complete Circle Fee Decisions
 
     ${Facility_Name}    Acquire Argument Value    ${sFacility_Name}
 
-    ${Facility_Name}    Split String    ${Facility_Name}    |
-    ${Facility_Name}    Convert To List    ${Facility_Name}
+    ${Facility_Name_List}    Split String    ${Facility_Name}    |
 
     Mx LoanIQ Activate    ${LIQ_PendingParticipationSell_Window}
     Mx LoanIQ Select    ${LIQ_PendingParticipationSell_Maintenance_FeeDecisions}
     Mx LoanIQ Click Element If Present    ${LIQ_Warning_Yes_Button}
     Mx LoanIQ Activate    ${LIQ_CircleFeeDecisions_Window}
     
-    :FOR    ${Facility_Name}    IN    @{Facility_Name}
+    :FOR    ${Facility_Name}    IN    @{Facility_Name_List}
     \    Populate Circle Fee Decisions    ${Facility_Name}
 
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/CircleFeeDecisions
@@ -2331,8 +2330,7 @@ Complete Portfolio Allocations Workflow for Pending Participation Sell
     [Arguments]    ${sFacility_Name}
     ${Facility_Name}    Acquire Argument Value    ${sFacility_Name}
 
-    ${Facility_Name}    Split String    ${Facility_Name}    |
-    ${Facility_Name}    Convert To List    ${Facility_Name}
+    ${Facility_Name_List}    Split String    ${Facility_Name}    |
 
     Mx LoanIQ Activate    ${LIQ_PendingParticipationSell_Window}
     Mx LoanIQ Select Window Tab    ${LIQ_PendingParticipationSell_Tab}    ${WORKFLOW_TAB}
@@ -2340,7 +2338,7 @@ Complete Portfolio Allocations Workflow for Pending Participation Sell
     mx LoanIQ activate    ${LIQ_PortfolioAllocationsFor_Window}
     Take Screenshot    ${Screenshot_Path}/Screenshots/LoanIQ/PorfolioAllocationsWindow
     
-    :FOR    ${Facility_Name}    IN    @{Facility_Name}
+    :FOR    ${Facility_Name}    IN    @{Facility_Name_List}
     \    Populate Portfolio Allocations For A Facility    ${Facility_Name}
 
     mx LoanIQ click    ${AssignmentSell_PortfolioAllocations_OKButton}
@@ -2464,10 +2462,9 @@ Validate Buy/Sell Price For Facilities On Participation Sell
     ${Buy_Sell_Price}    Acquire Argument Value    ${sBuy_Sell_Price}
     ${Facility_Name}    Acquire Argument Value    ${sFacility_Name}
 
-    ${Facility_Name}    Split String    ${Facility_Name}    |
-    ${Facility_Name}    Convert To List    ${Facility_Name}  
+    ${Facility_Name_List}    Split String    ${Facility_Name}    |
 
-    :FOR    ${Facility_Name}    IN    @{Facility_Name}
+    :FOR    ${Facility_Name}    IN    @{Facility_Name_List}
     \    Validate Buy/Sell Price For a Facility    ${Facility_Name}    ${Buy_Sell_Price}  
 
     Take Screenshot    ${Screenshot_Path}/Screenshots/LoanIQ/ParticipationSellWindow_FacilitiesTab
@@ -2499,8 +2496,7 @@ Complete Portfolio Allocations Workflow for Pending Participation Buy
     ${Branch}    Acquire Argument Value    ${sBranch}
     ${Facility_Name}    Acquire Argument Value    ${sFacility_Name}
 
-    ${Facility_Name}    Split String    ${Facility_Name}    |
-    ${Facility_Name}    Convert To List    ${Facility_Name}
+    ${Facility_Name_List}    Split String    ${Facility_Name}    |
     
     ### Portfolio Allocation Buy Window ###
     Mx LoanIQ Select Window Tab    ${LIQ_PendingParticipationBuy_Tab}    ${WORKFLOW_TAB}
@@ -2509,7 +2505,7 @@ Complete Portfolio Allocations Workflow for Pending Participation Buy
     mx LoanIQ activate    ${LIQ_PortfolioAllocationsFor_Window}
     Take Screenshot    ${Screenshot_Path}/Screenshots/LoanIQ/PorfolioAllocationsWindow
 
-    :FOR    ${Facility_Name}    IN    @{Facility_Name}
+    :FOR    ${Facility_Name}    IN    @{Facility_Name_List}
     \    Mx LoanIQ Select Or DoubleClick In Javatree    ${LIQ_Participation_PortfolioAllocations_Facilities_List}    ${Facility_Name}%s
     \    Add Portfolio and Expense Code for Pending Participation    ${Portfolio}   ${Expense_Code}    ${Branch}
 
