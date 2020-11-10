@@ -3774,3 +3774,12 @@ Retrieve Facility Notebook Amounts prior to Loan Merge
 
     [Return]    ${GlobalFacility_ProposedCmtBeforeMerge}    ${GlobalFacility_CurrentCmtBeforeMerge}    ${GlobalFacility_OutstandingsBeforeMerge}    ${GlobalFacility_AvailToDrawBeforeMerge}
     ...    ${HostBank_ProposedCmtBeforeMerge}    ${HostBank_ContrGrossBeforeMerge}    ${HostBank_OutstandingsBeforeMerge}    ${HostBank_AvailToDrawBeforeMerge}
+
+Close Option Condition Window
+    [Documentation]    This keyword is used to close Option Condition dialog window.
+    ...    @author: clanding    09NOV2020    - initial create
+    
+    ${IsDisplayed}    Run Keyword And Return Status    Mx LoanIQ Verify Object Exist    ${LIQ_FacilityPricing_Interest_OptionCondition_Cancel_Button}    VerificationData="Yes"
+    Run Keyword If    ${IsDisplayed}==${True}    mx LoanIQ click    ${LIQ_FacilityPricing_Interest_OptionCondition_Cancel_Button}
+    ...    ELSE    Log    No Option Condition window is displayed.
+    
