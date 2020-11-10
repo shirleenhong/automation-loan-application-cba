@@ -13,6 +13,7 @@ Send GS File with removed Floating Rates
     [Arguments]    ${ExcelPath}
     
     ###PREREQUISITE###
+    Run Keyword If   '${SCENARIO}'=='4' and '&{ExcelPath}[Entity]' == 'EU'    Logout from Loan IQ
     Login to Loan IQ    ${TL_USERNAME}    ${TL_PASSWORD}
     ${CSVFile}    Set Variable    &{ExcelPath}[InputFilePath]&{ExcelPath}[InputGSFile]
     ${TransformedDataFile_BaseRate}    Set Variable    &{ExcelPath}[InputFilePath]${TL_Transformed_Data_BaseRate}

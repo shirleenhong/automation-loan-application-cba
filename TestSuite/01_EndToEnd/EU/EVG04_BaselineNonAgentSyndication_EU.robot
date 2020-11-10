@@ -49,3 +49,8 @@ Create Initial Loan Drawdown - SERV02
     [Documentation]    Creation of Initial Loan Drawdown
     [Tags]    07 Create Initial Loan Drawdown - SERV02
     Mx Execute Template With Multiple Data    Create Initial Loan Drawdown for Non Agent Syndication    ${ExcelPath}    1-4    SERV02_LoanDrawdownNonAgent      
+    
+Variable Rates Load using TL_BASE   
+    [Documentation]    Creation of Initial Loan Drawdown
+    [Tags]    07 Create Initial Loan Drawdown - SERV02
+    Mx Execute Template With Multiple Data    Send GS File with removed Floating Rates    ${ExcelPath}    ${rowid}    BaseRate_Fields   
