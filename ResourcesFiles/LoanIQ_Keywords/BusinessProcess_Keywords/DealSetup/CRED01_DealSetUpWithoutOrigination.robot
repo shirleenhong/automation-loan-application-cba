@@ -18,6 +18,7 @@ Setup a Bilateral Deal
     ...    @UPDATE: kduenas      27OCT2020    - added writing of deal name to corro api dataset for API_COR_TC21
     ...    @update: makcamps     28OCT2020    - added writing of method name in excel
     ...    @update: makcamps     29OCT2020    - added writing of deal name to corro api dataset for API_COR_TC14
+    ...    @update: makcamps     04NOV2020    - added writing of facility name to corro for E2E EU Scenario 1
     [Arguments]    ${ExcelPath}
 
     ###Set Dates for transactions###
@@ -73,13 +74,18 @@ Setup a Bilateral Deal
     ...    AND    Write Data To Excel    SYND02_PrimaryAllocation    Primary_LenderLoc1    ${rowid}    ${ExcelPath}[AdminAgent_Location]
     ...    AND    Write Data To Excel    SYND02_PrimaryAllocation    Primary_Lender1    ${rowid}    ${ExcelPath}[Deal_AdminAgent]
     ...    AND    Write Data To Excel    SYND02_PrimaryAllocation    FundReceiverDetailCustomer    ${rowid}    ${ExcelPath}[Deal_AdminAgent]
-    
-    Run Keyword If    '${SCENARIO}'=='1'   Run Keywords    Write Data To Excel    Correspondence    Deal_Name    ${rowid}    ${Deal_Name}    ${APIDataSet}    bTestCaseColumn=True    sColumnReference=rowid
+
+    ###Writing for Scenario 1### 
+    Run Keyword If    '${SCENARIO}'=='1' and '&{ExcelPath}[Entity]' == 'EU'    Run Keywords    Write Data To Excel    Correspondence    Deal_Name    ${rowid}    ${Deal_Name}
+    ...    AND    Write Data To Excel    Correspondence    Deal_Name    2    ${Deal_Name}    bTestCaseColumn=True    sColumnReference=rowid
+    ...    AND    Write Data To Excel    Correspondence    Deal_Name    3    ${Deal_Name}    bTestCaseColumn=True    sColumnReference=rowid
+    ...    AND    Write Data To Excel    Correspondence    Deal_Name    4    ${Deal_Name}    bTestCaseColumn=True    sColumnReference=rowid
+    ...    ELSE IF    '${SCENARIO}'=='1'   Run Keywords    Write Data To Excel    Correspondence    Deal_Name    ${rowid}    ${Deal_Name}    ${APIDataSet}    bTestCaseColumn=True    sColumnReference=rowid
     ...    AND    Write Data To Excel    Correspondence    Deal_Name    3    ${Deal_Name}    ${APIDataSet}    bTestCaseColumn=True    sColumnReference=rowid
     ...    AND    Write Data To Excel    Correspondence    Deal_Name    5    ${Deal_Name}    ${APIDataSet}    bTestCaseColumn=True    sColumnReference=rowid
     ...    AND    Write Data To Excel    Correspondence    Deal_Name    6    ${Deal_Name}    ${APIDataSet}    bTestCaseColumn=True    sColumnReference=rowid
     ...    AND    Write Data To Excel    Correspondence    Deal_Name    21    ${Deal_Name}    ${APIDataSet}    bTestCaseColumn=True    sColumnReference=rowid
-    
+
     ###For Scenario 7###
     Run Keyword If    '${SCENARIO}'=='7'    Run Keywords    Write Data To Excel    SERV35_Terminate_FacilityDeal    Deal_Name    ${rowid}    ${Deal_Name}
     ...    AND    Write Data To Excel    SERV19_UnscheduledPayments    Deal_Name    ${rowid}    ${Deal_Name}
@@ -136,6 +142,7 @@ Create Facility
     ...    @update: kduenas      08OCT2020    - added writing of facility name to corro api dataset for API_COR_TC05
     ...    @update: kduenas      08OCT2020    - added writing of facility name to corro api dataset for API_COR_TC06
     ...    @update: kduenas      27OCT2020    - added writing of facility name to corro api dataset for API_COR_TC21
+    ...    @update: makcamps     04NOV2020    - added writing of facility name to corro for E2E EU Scenario 1
     [Arguments]    ${ExcelPath}
     
     ###Data Generation###
@@ -151,11 +158,17 @@ Create Facility
     Write Data To Excel    AMCH06_PricingChangeTransaction    Facility_Name    ${rowid}    ${Facility_Name}
     Write Data To Excel    SERV21_InterestPayments    Facility_Name    ${rowid}    ${Facility_Name}
     Write Data To Excel    SYND02_PrimaryAllocation    Facility_Name    ${rowid}    ${Facility_Name}
-    Write Data To Excel    Correspondence    Facility_Name    ${rowid}    ${Facility_Name}    ${APIDataSet}    bTestCaseColumn=True    sColumnReference=rowid
-    Write Data To Excel    Correspondence    Facility_Name    3    ${Facility_Name}    ${APIDataSet}    bTestCaseColumn=True    sColumnReference=rowid
-    Write Data To Excel    Correspondence    Facility_Name    5    ${Facility_Name}    ${APIDataSet}    bTestCaseColumn=True    sColumnReference=rowid
-    Write Data To Excel    Correspondence    Facility_Name    6    ${Facility_Name}    ${APIDataSet}    bTestCaseColumn=True    sColumnReference=rowid
-    Write Data To Excel    Correspondence    Facility_Name    21    ${Facility_Name}    ${APIDataSet}    bTestCaseColumn=True    sColumnReference=rowid
+
+    ###Writing for Scenario 1### 
+    Run Keyword If    '${SCENARIO}'=='1' and '&{ExcelPath}[Entity]' == 'EU'    Run Keywords    Write Data To Excel    Correspondence    Facility_Name    ${rowid}    ${Facility_Name}
+    ...    AND    Write Data To Excel    Correspondence    Facility_Name    2    ${Facility_Name}    bTestCaseColumn=True    sColumnReference=rowid
+    ...    AND    Write Data To Excel    Correspondence    Facility_Name    3    ${Facility_Name}    bTestCaseColumn=True    sColumnReference=rowid
+    ...    AND    Write Data To Excel    Correspondence    Facility_Name    4    ${Facility_Name}    bTestCaseColumn=True    sColumnReference=rowid
+    ...    ELSE IF    '${SCENARIO}'='1'    Run Keywords    Write Data To Excel    Correspondence    Facility_Name    ${rowid}    ${Facility_Name}    ${APIDataSet}    bTestCaseColumn=True    sColumnReference=rowid
+    ...    AND    Write Data To Excel    Correspondence    Facility_Name    3    ${Facility_Name}    ${APIDataSet}    bTestCaseColumn=True    sColumnReference=rowid
+    ...    AND    Write Data To Excel    Correspondence    Facility_Name    5    ${Facility_Name}    ${APIDataSet}    bTestCaseColumn=True    sColumnReference=rowid
+    ...    AND    Write Data To Excel    Correspondence    Facility_Name    6    ${Facility_Name}    ${APIDataSet}    bTestCaseColumn=True    sColumnReference=rowid
+    ...    AND    Write Data To Excel    Correspondence    Facility_Name    21    ${Facility_Name}    ${APIDataSet}    bTestCaseColumn=True    sColumnReference=rowid
 
     ###For Scenario 4###
     Run Keyword If    '${rowid}'=='4'    Run Keywords    Write Data To Excel    AMCH02_LenderShareAdjustment    Facility_Name    ${rowid}    ${Facility_Name}        
@@ -1320,10 +1333,13 @@ Setup RPA Internal Deal
     Run Keyword If    '${SCENARIO}'=='2' and '${rowid}'=='1'    Run Keywords    Write Data To Excel    TRPO12_PortfolioSettledDisc    Deal_Name    ${rowid}    ${Deal_Name}
     ...    AND    Write Data To Excel    TRPO12_PortfolioSettledDisc    AwaitingDispose    ${rowid}    ${Deal_Name}
     ...    AND    Write Data To Excel    TRPO12_PortfolioSettledDisc    Closed_Date    ${rowid}    ${SystemDate}
+    ...    AND    Write Data To Excel    TRPO06_ExternalParticipation    Expected_CloseDate    ${rowid}    ${SystemDate}
     Run Keyword If    '${SCENARIO}'=='2'    Run Keywords    Write Data To Excel    SERV01_LoanDrawdown    Deal_Name    2    ${Deal_Name}
+    ...    AND    Write Data To Excel    TRPO06_ExternalParticipation    Deal_Name    ${rowid}    ${Deal_Name}
     ...    AND    Write Data To Excel    SERV01_LoanDrawdown    Loan_EffectiveDate    2    ${SystemDate}
     ...    AND    Write Data To Excel    SERV01_LoanDrawdown    Repayment_TriggerDate    2    ${SystemDate}
     ...    AND    Write Data To Excel    CRED07_UpfrontFee_Payment    Deal_Name    ${rowid}    ${Deal_Name}
+    ...    AND    Write Data To Excel    SERV08_ComprehensiveRepricing    Deal_Name    ${rowid}    ${Deal_Name}
 
     ###For RPA Scenario 3###
     Run Keyword If    '${SCENARIO}'=='3' and '${rowid}'=='1'    Run Keywords    Write Data To Excel    TRPO12_PortfolioSettledDisc    Deal_Name    ${rowid}    ${Deal_Name}
@@ -1414,8 +1430,10 @@ Create Facility for RPA Deal
     Run Keyword If    '${SCENARIO}'=='2' and '${rowid}'=='1'    Run Keywords    Write Data To Excel    TRPO12_PortfolioSettledDisc    Facility_Name    ${rowid}    ${Facility_Name}    bTestCaseColumn=True    sColumnReference=rowid
     ...    AND    Write Data To Excel    TRPO12_PortfolioSettledDisc    Portfolio_Position    ${rowid}    ${Facility_Name}    bTestCaseColumn=True    sColumnReference=rowid
     ...    AND    Write Data To Excel    CRED07_UpfrontFee_Payment    Facility_Name    ${rowid}    ${Facility_Name}    bTestCaseColumn=True    sColumnReference=rowid  
-    Run Keyword If    '${SCENARIO}'=='2'   Run Keywords    Write Data To Excel    SERV01_LoanDrawdown    Facility_Name    ${rowid}    ${Facility_Name}    bTestCaseColumn=True    sColumnReference=rowid
+    Run Keyword If    '${SCENARIO}'=='2'   Run Keywords    Write Data To Excel    TRPO06_ExternalParticipation    Facility_Name    ${rowid}    ${Facility_Name}    bTestCaseColumn=True    sColumnReference=rowid    
+    ...    AND    Write Data To Excel    SERV01_LoanDrawdown    Facility_Name    ${rowid}    ${Facility_Name}    bTestCaseColumn=True    sColumnReference=rowid
     ...    AND    Write Data To Excel    SERV01_LoanDrawdown    Loan_FacilityName    ${rowid}    ${Facility_Name}    bTestCaseColumn=True    sColumnReference=rowid 
+    ...    AND    Write Data To Excel    SERV08_ComprehensiveRepricing    Facility_Name    ${rowid}    ${Facility_Name}    bTestCaseColumn=True    sColumnReference=rowid 
 
     ###For RPA Scenario 3###
     Run Keyword If    '${SCENARIO}'=='3'    Run Keywords    Write Data To Excel    TRPO12_PortfolioSettledDisc    Facility_Name    ${rowid}    ${Facility_Name}    bTestCaseColumn=True    sColumnReference=rowid
