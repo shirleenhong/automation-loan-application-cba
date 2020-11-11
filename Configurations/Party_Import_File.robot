@@ -54,6 +54,7 @@ Resource    ../ResourcesFiles/Party_Keywords/BusinessProcess_Keywords/PTY015_Qui
 Resource    ../ResourcesFiles/Party_Keywords/BusinessProcess_Keywords/PTY016_PartyOnboarding_Validation_Branch.robot
 Resource    ../ResourcesFiles/Party_Keywords/BusinessProcess_Keywords/PTY017_QuickPartyOnboarding_FieldsValidationForSIC.robot  
 Resource    ../ResourcesFiles/Party_Keywords/BusinessProcess_Keywords/PTY018_AU_Party_Navigation.robot
+Resource    ../ResourcesFiles/Party_Keywords/BusinessProcess_Keywords/PTY020_PartyCrossReferenceDetails.robot
 
 ###Party Resource Files - Source###
 Resource    ../ResourcesFiles/Party_Keywords/Source_Keywords/PartyCommon_Keywords.robot
@@ -63,6 +64,7 @@ Resource    ../ResourcesFiles/Party_Keywords/Source_Keywords/Party_LoanIQVal_Key
 Resource    ../ResourcesFiles/Party_Keywords/Source_Keywords/Party_EnquirePartyDetails_Keywords.robot
 Resource    ../ResourcesFiles/Party_Keywords/Source_Keywords/Party_EnquireUser_Keywords.robot
 Resource    ../ResourcesFiles/Party_Keywords/Source_Keywords/Party_DeleteUser_Keywords.robot
+Resource    ../ResourcesFiles/Party_Keywords/Source_Keywords/Party_DatabaseValidation_Keywords.robot
 
 ##Party Global Variables##
 Resource    ../Variables/Party_Properties.txt

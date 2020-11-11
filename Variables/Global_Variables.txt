@@ -145,7 +145,6 @@ ${CBAINTERFACE_SOURCENAME}    CCBCorrespUpdateMQ_base
 ${CBAINTERFACE_INSTANCE}    CustomCBAInterface_Transformation1.1.6
 ${CBAINTERFACE_SOURCENAME_FXRATES}    CCBCorrespUpdateMQ_notf
 ${CBAPUSH_SOURCENAME}    CCBCorrespUpdateMQ_notf
-${TL_BASE_ACK_MESSAGE_SOURCENAME}    ccb_source_base
 ${RESPONSE_MECHANISM_SOURCENAME}    MessageResponseProcessor
 
 ###FFC Summary Headers###
