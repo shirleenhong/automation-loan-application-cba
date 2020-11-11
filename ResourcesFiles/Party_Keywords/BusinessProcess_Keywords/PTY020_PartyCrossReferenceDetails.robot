@@ -7,5 +7,5 @@ Validate GL Application Column in Party Database
     ...    @author: javinzon    29OCT2020    - initial create
     [Arguments]    ${ExcelPath}    
     
-    Validate GL Application Column in GLTB_CROSSREFERENCE table if Correct    &{ExcelPath}[Party_ID]    &{ExcelPath}[Valid_GLApplication]
+    Validate GL Application Column in GLTB_CROSSREFERENCE Table if Correct    &{ExcelPath}[Party_ID]    &{ExcelPath}[Valid_GLApplication]
      

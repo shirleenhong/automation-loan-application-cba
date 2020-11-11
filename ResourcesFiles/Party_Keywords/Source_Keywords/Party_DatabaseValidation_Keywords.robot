@@ -2,7 +2,7 @@
 Resource       ../../../Configurations/Party_Import_File.robot
 
 *** Keywords ***
-Validate GL Application Column in GLTB_CROSSREFERENCE table if Correct
+Validate GL Application Column in GLTB_CROSSREFERENCE Table if Correct
     [Documentation]    This test case is used to validate values of GL Application Column in GLTB_CROSSREFERENCE table if correct. 
     ...    @author: javinzon    11NOV2020    - initial create
     [Arguments]    ${sParty_ID}    ${sValid_GLApplication}
@@ -27,8 +27,7 @@ Validate GL Application Column in GLTB_CROSSREFERENCE table if Correct
     \    Append To List    ${DB_GLApplication_List}    ${Application}
     \    Log    GLApplication list contains: ${DB_GLApplication_List}
     Sort List    ${DBQuery_GLAPPLICATION_List}
-    
-    ${Valid_GLAPPLICATION_List}    Create List    
+        
     ${Valid_GLAPPLICATION_List}    Split String    ${sValid_GLApplication}    |
     Sort List    ${Valid_GLAPPLICATION_List}
     
