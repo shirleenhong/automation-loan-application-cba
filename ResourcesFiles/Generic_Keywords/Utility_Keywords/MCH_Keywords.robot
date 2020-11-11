@@ -239,14 +239,14 @@ Get TextJMS XML Files and Rename with Base Rate Code, Repricing Frequency and Ac
     Delete File If Exist    ${sXML_Filename}
     Create File    ${dataset_path}${sOutputFilePath}_${BaseRate}_${RepricingFrequency}_${FundingDesk}_${Currency}.xml    ${sXML_file}    
     
-    Run Keyword And Continue On Failure    Mx Compare Xml With Baseline File    ${dataset_path}${sInputFilePath}_${BaseRate}_${RepricingFrequency}_${FundingDesk}_${Currency}.xml    
+    Run Keyword If    '${BaseRate}'!='None' and '${FundingDesk}'!='None' and '${RepricingFrequency}'!='None' and '${Currency}'!='None'    Run Keyword And Continue On Failure    Mx Compare Xml With Baseline File    ${dataset_path}${sInputFilePath}_${BaseRate}_${RepricingFrequency}_${FundingDesk}_${Currency}.xml    
     ...    ${dataset_path}${sOutputFilePath}_${BaseRate}_${RepricingFrequency}_${FundingDesk}_${Currency}.xml    
     ${Stat}    Run Keyword And Return Status    Mx Compare Xml With Baseline File    ${dataset_path}${sInputFilePath}_${BaseRate}_${RepricingFrequency}_${FundingDesk}_${Currency}.xml    
     ...    ${dataset_path}${sOutputFilePath}_${BaseRate}_${RepricingFrequency}_${FundingDesk}_${Currency}.xml
     Run Keyword If    ${Stat}==${True}    Log    ${dataset_path}${sInputFilePath}_${BaseRate}_${RepricingFrequency}_${FundingDesk}_${Currency}.xml and ${dataset_path}${sOutputFilePath}_${BaseRate}_${RepricingFrequency}_${FundingDesk}_${Currency}.xml are matched!
-    ...    ELSE    Log    ${dataset_path}${sInputFilePath}_${BaseRate}_${RepricingFrequency}_${FundingDesk}_${Currency}.xml and ${dataset_path}${sOutputFilePath}_${BaseRate}_${RepricingFrequency}_${FundingDesk}_${Currency}.xml does not matched!    level=ERROR
+    ...    ELSE IF    '${BaseRate}'!='None' or '${FundingDesk}'!='None' or '${RepricingFrequency}'!='None' or '${Currency}'!='None'    Log    None was set to required fields
+    ...    ELSE    Log    ${dataset_path}${sInputFilePath}_${BaseRate}_${RepricingFrequency}_${FundingDesk}_${Currency}.xml and ${dataset_path}${sOutputFilePath}_${BaseRate}_${RepricingFrequency}_${FundingDesk}_${Currency}.xml does not matched!    level=ERRO
     
-
 Get TextJMS XML Files and Rename with Funding Desk, From Currency, To Currency, and Compare to Input
     [Documentation]    This keyword is used to get sOutputFilePath (TextJMS) files and rename them to have the file name with Base Rate Code, 
     ...    Repricing Frequency and Funding Desk. Then delete TextJMS files with appended numbers.
@@ -527,13 +527,13 @@ Compare Multiple Input and Output JSON for Base Rate
     \    ${Val_rateTenor}    Get From List    ${Val_rateTenor}    0
     \    ${Val_currency}    Get Value From Json    ${JSON_Value}    $..currency
     \    ${Val_currency}    Get From List    ${Val_currency}    0
-    \    ${InputJSON}    OperatingSystem.Get File    ${dataset_path}${sInputFilePath}${sFileName}_${Val_baseRateCode}_${Val_rateTenor}_${Val_currency}.json
-    \    ${JSON_Value}    Evaluate    json.dumps(${JSON_Value})    json
-    \    Run Keyword And Continue On Failure    Mx Compare Json Data    ${InputJSON}     ${JSON_Value}
+    \    ${InputJSON}    Run Keyword If    '${Val_baseRateCode}'!='None' and '${Val_rateTenor}'!='None' and '${Val_currency}'!='None'    OperatingSystem.Get File    ${dataset_path}${sInputFilePath}${sFileName}_${Val_baseRateCode}_${Val_rateTenor}_${Val_currency}.json
+    \    ${JSON_Value}    Run Keyword If    '${Val_baseRateCode}'!='None' and '${Val_rateTenor}'!='None' and '${Val_currency}'!='None'    Evaluate    json.dumps(${JSON_Value})    json
+    \    Run Keyword If    '${Val_baseRateCode}'!='None' and '${Val_rateTenor}'!='None' and '${Val_currency}'!='None'    Run Keyword And Continue On Failure    Mx Compare Json Data    ${InputJSON}     ${JSON_Value}
     \    ${Stat}    Run Keyword And Return Status    Mx Compare Json Data    ${InputJSON}     ${JSON_Value}
     \    Run Keyword If    ${Stat}==${True}    Log    Input and Output JSON Files are matched. ${InputJSON} == ${JSON_Value}
-         ...    ELSE    Log    Input and Output JSON Files does not matched. ${InputJSON} != ${JSON_Value}    level=ERROR
-    \    
+         ...    ELSE IF    '${Val_baseRateCode}'!='None' or '${Val_rateTenor}'!='None' or '${Val_currency}'!='None'    Log    None was set on the required fields
+         ...    ELSE    Log    Input and Output JSON Files does not matched. ${InputJSON} != ${JSON_Value}    level=ERROR   
     \    Delete File If Exist    ${dataset_path}${sInputFilePath}tempfile.json
 
 Login FFC Correspondence
