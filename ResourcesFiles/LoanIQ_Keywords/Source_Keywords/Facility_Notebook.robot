@@ -3783,7 +3783,7 @@ Close Option Condition Window
     Run Keyword If    ${IsDisplayed}==${True}    mx LoanIQ click    ${LIQ_FacilityPricing_Interest_OptionCondition_Cancel_Button}
     ...    ELSE    Log    No Option Condition window is displayed.
 
-Update Branch and Processing Area Of A Facility
+Update Branch and Processing Area of a Facility
     [Documentation]    This keyword updates Branch and Processing Area in Facility Notebook.
     ...    @author: mcastro    11NOV2020    - initial create
     [Arguments]    ${sBranchName}    ${sProcessingArea}
@@ -3802,3 +3802,4 @@ Update Branch and Processing Area Of A Facility
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/ChangeBranchProcArea_Window
     mx LoanIQ click    ${LIQ_ChangeBranchProcArea_OK_Button}
     mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/ChangeBranchProcArea_Window
