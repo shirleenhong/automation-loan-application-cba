@@ -170,12 +170,11 @@ Complete External Participation without Premiun/Discount
     ### Complete Contacts Tab ###
     Add Contacts For Participation Sell    &{ExcelPath}[Buyer_Lender]    &{ExcelPath}[Seller_LegalEntity]    
 
-    ###Circle Notebook - Workflow Tab###
+    ### Circle Notebook - Workflow Tab ###
     Complete Circling for Pending Participation Sell    &{ExcelPath}[Expected_CloseDate]  
     Navigate Portfolio Allocations Workflow for Pending Participation Sell
     Populate Portfolio Allocations For A Facility    &{ExcelPath}[Facility_Name]
     Close Portfolio Allocation Notebook
-    # Navigate to Participation Workflow and Proceed With Transaction    ${SEND_TO_APPROVAL_STATUS}
     Send to Approval Internal Participation Sell
     Close Participation Window
 
@@ -195,12 +194,11 @@ Complete External Participation without Premiun/Discount
     ### Complete Contacts Tab ###
     Add Contacts For Participation Sell    &{ExcelPath}[Buyer_Lender2]    &{ExcelPath}[Seller_LegalEntity]    
 
-    ###Circle Notebook - Workflow Tab###
+    ### Circle Notebook - Workflow Tab ###
     Complete Circling for Pending Participation Sell    &{ExcelPath}[Expected_CloseDate]  
     Navigate Portfolio Allocations Workflow for Pending Participation Sell
     Populate Portfolio Allocations For A Facility    &{ExcelPath}[Facility_Name]
     Close Portfolio Allocation Notebook
-    # Navigate to Participation Workflow and Proceed With Transaction    ${SEND_TO_APPROVAL_STATUS}
     Send to Approval Internal Participation Sell
     Close Participation Window
     
@@ -209,7 +207,7 @@ Complete External Participation without Premiun/Discount
     Login to Loan IQ    ${MANAGER_USERNAME}    ${MANAGER_PASSWORD}
     ### Lender 1 ###
     Navigate to Participation Workflow and Proceed With Transaction    ${AWAITING_APPROVAL_STATUS}    &{ExcelPath}[Buyer_Lender]    ${APPROVAL_STATUS}
-    # ### Lender 2 ###
+    ### Lender 2 ###
     Navigate to Participation Workflow and Proceed With Transaction    ${AWAITING_APPROVAL_STATUS}    &{ExcelPath}[Buyer_Lender2]    ${APPROVAL_STATUS}
 
     ### Send to Settlement Approval ###
@@ -217,7 +215,7 @@ Complete External Participation without Premiun/Discount
     Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
     ### Lender 1 ###
     Navigate to Participation Workflow and Proceed With Transaction    ${AWAITING_SEND_TO_SETTLEMENT_APPROVAL_TRANSACTION}    &{ExcelPath}[Buyer_Lender]    ${SEND_TO_SETTLEMENT_APPROVAL_WORKFLOW}
-    # ### Lender 2 ###
+    ### Lender 2 ###
     Navigate to Participation Workflow and Proceed With Transaction    ${AWAITING_SEND_TO_SETTLEMENT_APPROVAL_TRANSACTION}    &{ExcelPath}[Buyer_Lender2]    ${SEND_TO_SETTLEMENT_APPROVAL_WORKFLOW}
 
     ### Settlement Approval ###
@@ -225,7 +223,7 @@ Complete External Participation without Premiun/Discount
     Login to Loan IQ    ${SUPERVISOR_USERNAME}    ${SUPERVISOR_PASSWORD}
     ### Lender 1 ###
     Navigate to Participation Workflow and Proceed With Transaction    ${AWAITING_SETTLEMENT_APPROVAL_STATUS}    &{ExcelPath}[Buyer_Lender]    ${SETTLEMENT_APPROVAL_STATUS}
-    # ### Lender 2 ###
+    ### Lender 2 ###
     Navigate to Participation Workflow and Proceed With Transaction    ${AWAITING_SETTLEMENT_APPROVAL_STATUS}    &{ExcelPath}[Buyer_Lender2]    ${SETTLEMENT_APPROVAL_STATUS}
     
     ### Close Transaction ###
