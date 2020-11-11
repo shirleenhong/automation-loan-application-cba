@@ -106,6 +106,14 @@ PARTY_SUPERVISOR_PASSWORD = 'superit'
 PARTY_HTML_USER_CREDENTIALS = 'misysroot%5Cbrad:welcome%4099'
 PARTY_HTML_APPROVER_CREDENTIALS = 'misysroot%5Csuperit:welcome%4099'
 
+### IDT PARTY SERVER ###
+DBSERVICENAME_PTY = 'PTY203R'
+DBUSERNAME_PTY = 'system'
+DBPASSWORD_PTY = 'password'
+DBHOST_PTY = 'mancsleverg0017'
+DBPORT_PTY = '1521'
+DBUR_PTY = 'jdbc:oracle:thin:@mancsleverg0017:1521:PTY203R'
+
 ###FFC Credential###
 MDM_FFC_Username ='admin'
 MDM_FFC_Password = 'admin'

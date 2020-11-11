@@ -61,6 +61,7 @@ Resource    ../ResourcesFiles/Party_Keywords/Source_Keywords/Party_LoanIQVal_Key
 Resource    ../ResourcesFiles/Party_Keywords/Source_Keywords/Party_EnquirePartyDetails_Keywords.robot
 Resource    ../ResourcesFiles/Party_Keywords/Source_Keywords/Party_EnquireUser_Keywords.robot
 Resource    ../ResourcesFiles/Party_Keywords/Source_Keywords/Party_DeleteUser_Keywords.robot
+Resource    ../ResourcesFiles/Party_Keywords/Source_Keywords/Party_DatabaseValidation_Keywords.robot
 
 ##Party Global Variables##
 Resource    ../Variables/Party_Properties.txt
