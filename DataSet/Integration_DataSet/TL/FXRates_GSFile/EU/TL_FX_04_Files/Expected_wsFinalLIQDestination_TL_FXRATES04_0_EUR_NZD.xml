@@ -1,0 +1,4 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<executeUpdateCrossCurrency xmlns="http://api.ws.liq.misys.com/">
+  <UpdateCrossCurrency currency="NZD" date="16-Oct-2021" fundingDesk="EUR" rate="1.095062363801619" version="1.0" xmlns="" />
+</executeUpdateCrossCurrency>
