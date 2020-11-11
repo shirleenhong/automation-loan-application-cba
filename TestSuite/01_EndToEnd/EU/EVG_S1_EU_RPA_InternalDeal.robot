@@ -4,7 +4,6 @@ Resource    ../../../Configurations/LoanIQ_Import_File.robot
 *** Variables ***
 ${rowid}    1
 ${SCENARIO}    1
-${FACILITY_COUNT}    3
 
 *** Test Cases ***
 Deal Setup - CRED01

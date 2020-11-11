@@ -144,6 +144,24 @@ GL_VALIDATION_TOOL_PATH = 'C:\\Git_Evergreen\\fms_cba\\DataSet\\Integration_Data
 GL_VALIDATION_TOOL_JAR_AU = 'gpgCheck-1.0.3-jar-with-dependencies.jar'
 GL_VALIDATION_TOOL_JAR_EU = 'gpgCheck-1.0.3-jar-with-dependencies-EU.jar'
 
+### Batch EOD ###
+PUTTY_PATH = "C:\\Program Files\\PuTTY\\putty.exe"
+PUTTY_HOSTNAME = "mancsleverg0005"
+PUTTY_PORT = "22"
+PUTTY_USERNAME = "micloud"
+PUTTY_PASSWORD = "misys123"
+
+### DNA ###
+DNA_SERVER = 'mancsleverg0021'
+DNA_SERVER_LIQ = 'mancsleverg0022'
+DNA_PORT = '22'
+DNA_SERVER_USER = 'sftpuser2'
+DNA_SERVER_PASSWORD = 'luckyroll76'
+DNA_EXTRACTION_AREA_PATH = '/evgdata/STREAMSETS/workspace/extraction_area/COMRLENDING/'
+DNA_CCB_LIQ_FILENAME = 'CCB_LIQ_'
+DNA_DATAASSURANCE_FILENAME = 'DATAASSURANCE_'
+DNA_DAT_EXT = '.DAT'
+
 ###Screenshots###
 screenshot_path = "C:\\Git_Evergreen\\fms_cba\\Results"
 

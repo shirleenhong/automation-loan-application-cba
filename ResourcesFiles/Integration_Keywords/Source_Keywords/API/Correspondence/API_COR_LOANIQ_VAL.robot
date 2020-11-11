@@ -374,6 +374,7 @@ Validate the Notice Window in LIQ
     ...    @update: ehugo       23AUG2019    - added validation of Drawdown Intent Notice
     ...    @update: ehugo       13SEP2019    - added argument - Repricing Date
     ...    @update: fluberio    26OCT2020    - added argument for Upfront Fee From Borrower/Agent/Third Party Intent Notice
+    ...    @update: makcamps    05NOV2020    - added argument for Interest Payment Notice
     [Arguments]    ${sSearch_By}    ${sNotice_Identifier}    ${sFrom_Date}    ${sThru_Date}    ${sNotice_Status}    ${sNotice_Customer_LegalName}    
     ...    ${sContact}    ${sNoticeGroup_UserID}    ${sNotice_Method}
     ...    ${sNotice_Type}    ${sPath_XMLFile}    ${sDeal_Name}    ${sXML_NoticeType}    ${sLoan_PricingOption}    
@@ -396,6 +397,8 @@ Validate the Notice Window in LIQ
     ...    ${sDeal_Name}    ${sXML_NoticeType}    ${sLoan_GlobalOriginal}    ${sLoan_EffectiveDate}    ${sLoan_RateSetting_DueDate}
     ...    ELSE IF    '${sNotice_Type}' == 'Upfront Fee From Borrower/Agent/Third Party Intent Notice'    Validate Upfront Fee Notice Details    ${sPath_XMLFile}    ${sNotice_Customer_LegalName}    ${sContact}    
     ...    ${sDeal_Name}    ${sXML_NoticeType}    ${sEffectiveDate}    ${sUpfrontFee_Amount}    ${sFee_Type}    ${sCurrency}    ${sAccount_Name}
+    ...    ELSE IF    '${sNotice_Type}' == 'Interest Payment Notice'    Run Keyword    Validate Interest Payment Notice Details    ${sPath_XMLFile}    ${sFee_Type}    ${iNotice_AllInRate}    ${sEffectiveDate}
+    ...    ${sNotice_Customer_LegalName}    ${sCurrency}    ${sNotice_Amount}
 
 Validate the Paperclip Notice Window in LIQ
     [Documentation]    This keyword validates the fields, status and Data in Paperclip Notice Window.
@@ -921,3 +924,41 @@ Validate Upfront Fee Notice Details
     ${Status}    Run Keyword And Return Status    Should Contain    ${XMLFile}    ${sAccount_Name}    ignore_case=True
     Run Keyword If    ${Status}==${True}    Log    ${sAccount_Name} is present
     ...    ELSE    Run Keyword And Continue On Failure    FAIL    ${sAccount_Name} is not present 
+
+Validate Interest Payment Notice Details
+    [Documentation]    This keyword validates the Upfront Fee Notice details in XML.
+    ...    @author: makcamps    05NOV2020    initial create
+    [Arguments]    ${sPath_XMLFile}    ${sFee_Type}    ${iNotice_AllInRate}    ${sEffectiveDate}    ${sNotice_Customer_LegalName}    ${sCurrency}    ${sNotice_Amount}
+                 
+    
+    ${XMLFile}    OperatingSystem.Get File    ${sPath_XMLFile} 
+    
+    ###Fee Type Validation###
+    ${Status}    Run Keyword And Return Status    Should Contain    ${XMLFile}    ${sFee_Type}
+    Run Keyword If    ${Status}==${True}    Log    ${sFee_Type} is present
+    ...    ELSE    Run Keyword And Continue On Failure    FAIL    ${sFee_Type} is not present 
+    
+    ###Rate Validation###
+    ${Status}    Run Keyword And Return Status    Should Contain    ${XMLFile}    ${iNotice_AllInRate}
+    Run Keyword If    ${Status}==${True}    Log    ${iNotice_AllInRate} is present
+    ...    ELSE    Run Keyword And Continue On Failure    FAIL    ${iNotice_AllInRate} is not present
+    
+    ###Effective Validation###
+    ${Status}    Run Keyword And Return Status    Should Contain    ${XMLFile}    ${sEffectiveDate}
+    Run Keyword If    ${Status}==${True}    Log    ${sEffectiveDate} is present
+    ...    ELSE    Run Keyword And Continue On Failure    FAIL    ${sEffectiveDate} is not present 
+    
+    ###Customer Legal Name Validation###
+    ${Status}    Run Keyword And Return Status    Should Contain    ${XMLFile}    ${sNotice_Customer_LegalName}
+    Run Keyword If    ${Status}==${True}    Log    ${sNotice_Customer_LegalName} is present
+    ...    ELSE    Run Keyword And Continue On Failure    FAIL    ${sNotice_Customer_LegalName} is not present
+    
+    ###Currency Validation###
+    ${Status}    Run Keyword And Return Status    Should Contain    ${XMLFile}    ${sCurrency}
+    Run Keyword If    ${Status}==${True}    Log    ${sCurrency} is present
+    ...    ELSE    Run Keyword And Continue On Failure    FAIL    ${sCurrency} is not present 
+    
+    ###All in Rate Amount Validation###
+    ${Status}    Run Keyword And Return Status    Should Contain    ${XMLFile}    ${sNotice_Amount}
+    Run Keyword If    ${Status}==${True}    Log    ${sNotice_Amount} is present
+    ...    ELSE    Run Keyword And Continue On Failure    FAIL    ${sNotice_Amount} is not present 
