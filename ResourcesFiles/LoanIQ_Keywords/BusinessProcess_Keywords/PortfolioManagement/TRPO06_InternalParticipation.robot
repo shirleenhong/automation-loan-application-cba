@@ -144,3 +144,92 @@ Complete External Participation
     Close For Internal Participation    &{ExcelPath}[Deal_Name]    &{ExcelPath}[Expected_CloseDate] 
     Validate GL Entries For External Participation    &{ExcelPath}[Buyer_LegalEntity]
    
+Complete External Participation without Premiun/Discount
+    [Documentation]    This keyword is used to Complete an external participation with no premium or discount for a closed deal
+    ...    This keyword completes 2 external participations
+    ...    @author:    dahijara    09NOV2020    initial create 
+    [Arguments]    ${ExcelPath}
+
+    Logout from Loan IQ
+    Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
+    Search for Deal    &{ExcelPath}[Deal_Name]
+    
+    ### External Lender 1 ###
+    ### Complete Participation ###
+    Launch Circle Select    &{ExcelPath}[CircleSelection_Transaction]
+    Populate Circle Selection    &{ExcelPath}[Buy_Sell]    &{ExcelPath}[LenderShare_Type]    &{ExcelPath}[Buyer_Lender]    &{ExcelPath}[Buyer_Location]    &{ExcelPath}[Seller_LegalEntity]    &{ExcelPath}[Seller_Location]    
+    ...    &{ExcelPath}[Seller_Riskbook]    &{ExcelPath}[Transaction_Type]    &{ExcelPath}[AssigFeeDecision]
+    Populate Pending Participation Sell    &{ExcelPath}[Pct_of_Deal]    &{ExcelPath}[Int_Fee]    &{ExcelPath}[Buy_Sell_Price]
+    ${Buy_Sell_Amount}    Validate Displayed Sell Amount From Participation Sell
+    Write Data To Excel    TRPO06_ExternalParticipation    Buy_Sell_Amount    ${rowid}    ${Buy_Sell_Amount}
+    Validate Buy/Sell Price For a Facility    &{ExcelPath}[Facility_Name]    &{ExcelPath}[Buy_Sell_Price]
+
+    ### Complete Amts/Debts tab ###
+    Populate Pending Participation Amts/Debts    &{ExcelPath}[Expected_CloseDate]    ${Buy_Sell_Amount}       
+    
+    ### Complete Contacts Tab ###
+    Add Contacts For Participation Sell    &{ExcelPath}[Buyer_Lender]    &{ExcelPath}[Seller_LegalEntity]    
+
+    ### Circle Notebook - Workflow Tab ###
+    Complete Circling for Pending Participation Sell    &{ExcelPath}[Expected_CloseDate]  
+    Navigate Portfolio Allocations Workflow for Pending Participation Sell
+    Populate Portfolio Allocations For A Facility    &{ExcelPath}[Facility_Name]
+    Close Portfolio Allocation Notebook
+    Send to Approval Internal Participation Sell
+    Close Participation Window
+
+    ### External Lender 2 ###
+    ### Complete Participation ###
+    Launch Circle Select    &{ExcelPath}[CircleSelection_Transaction]
+    Populate Circle Selection    &{ExcelPath}[Buy_Sell]    &{ExcelPath}[LenderShare_Type]    &{ExcelPath}[Buyer_Lender2]    &{ExcelPath}[Buyer_Location2]    &{ExcelPath}[Seller_LegalEntity]    &{ExcelPath}[Seller_Location]    
+    ...    &{ExcelPath}[Seller_Riskbook]    &{ExcelPath}[Transaction_Type]    &{ExcelPath}[AssigFeeDecision]
+    Populate Pending Participation Sell    &{ExcelPath}[Pct_of_Deal2]    &{ExcelPath}[Int_Fee2]    &{ExcelPath}[Buy_Sell_Price2]
+    ${Buy_Sell_Amount2}    Validate Displayed Sell Amount From Participation Sell
+    Write Data To Excel    TRPO06_ExternalParticipation    Buy_Sell_Amount2    ${rowid}    ${Buy_Sell_Amount2}
+    Validate Buy/Sell Price For a Facility    &{ExcelPath}[Facility_Name]    &{ExcelPath}[Buy_Sell_Price2]
+
+    ### Complete Amts/Debts tab ###
+    Populate Pending Participation Amts/Debts    &{ExcelPath}[Expected_CloseDate]    ${Buy_Sell_Amount2}       
+    
+    ### Complete Contacts Tab ###
+    Add Contacts For Participation Sell    &{ExcelPath}[Buyer_Lender2]    &{ExcelPath}[Seller_LegalEntity]    
+
+    ### Circle Notebook - Workflow Tab ###
+    Complete Circling for Pending Participation Sell    &{ExcelPath}[Expected_CloseDate]  
+    Navigate Portfolio Allocations Workflow for Pending Participation Sell
+    Populate Portfolio Allocations For A Facility    &{ExcelPath}[Facility_Name]
+    Close Portfolio Allocation Notebook
+    Send to Approval Internal Participation Sell
+    Close Participation Window
+    
+    ### Approval ###
+    Logout from Loan IQ
+    Login to Loan IQ    ${MANAGER_USERNAME}    ${MANAGER_PASSWORD}
+    ### Lender 1 ###
+    Navigate to Participation Workflow and Proceed With Transaction    ${AWAITING_APPROVAL_STATUS}    &{ExcelPath}[Buyer_Lender]    ${APPROVAL_STATUS}
+    ### Lender 2 ###
+    Navigate to Participation Workflow and Proceed With Transaction    ${AWAITING_APPROVAL_STATUS}    &{ExcelPath}[Buyer_Lender2]    ${APPROVAL_STATUS}
+
+    ### Send to Settlement Approval ###
+    Logout from Loan IQ
+    Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
+    ### Lender 1 ###
+    Navigate to Participation Workflow and Proceed With Transaction    ${AWAITING_SEND_TO_SETTLEMENT_APPROVAL_TRANSACTION}    &{ExcelPath}[Buyer_Lender]    ${SEND_TO_SETTLEMENT_APPROVAL_WORKFLOW}
+    ### Lender 2 ###
+    Navigate to Participation Workflow and Proceed With Transaction    ${AWAITING_SEND_TO_SETTLEMENT_APPROVAL_TRANSACTION}    &{ExcelPath}[Buyer_Lender2]    ${SEND_TO_SETTLEMENT_APPROVAL_WORKFLOW}
+
+    ### Settlement Approval ###
+    Logout from Loan IQ
+    Login to Loan IQ    ${SUPERVISOR_USERNAME}    ${SUPERVISOR_PASSWORD}
+    ### Lender 1 ###
+    Navigate to Participation Workflow and Proceed With Transaction    ${AWAITING_SETTLEMENT_APPROVAL_STATUS}    &{ExcelPath}[Buyer_Lender]    ${SETTLEMENT_APPROVAL_STATUS}
+    ### Lender 2 ###
+    Navigate to Participation Workflow and Proceed With Transaction    ${AWAITING_SETTLEMENT_APPROVAL_STATUS}    &{ExcelPath}[Buyer_Lender2]    ${SETTLEMENT_APPROVAL_STATUS}
+    
+    ### Close Transaction ###
+    Logout from Loan IQ
+    Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
+    ### Lender 1 ###
+    Navigate to Participation Workflow and Proceed With Transaction    ${AWAITING_CLOSE_TRANSACTION}    &{ExcelPath}[Buyer_Lender]    ${CLOSE_WORKFLOW}    &{ExcelPath}[Expected_CloseDate]    &{ExcelPath}[Cust_Portfolio]
+    ### Lender 2 ###
+    Navigate to Participation Workflow and Proceed With Transaction    ${AWAITING_CLOSE_TRANSACTION}    &{ExcelPath}[Buyer_Lender2]    ${CLOSE_WORKFLOW}    &{ExcelPath}[Expected_CloseDate]    &{ExcelPath}[Cust_Portfolio]

@@ -10,9 +10,11 @@ Send GS File with removed Floating Rates
     ...    @author: jdelacru    22JUL2019    - initial create
     ...    @update: mcastro     07OCT2020    - added missing argument variable for Create expected TextJMS XML
     ...                                      - updated [InputFilePath] to [TemplateFilePath] of TransformedDataFile_Template_BaseRate
+    ...    @update: fluberio    10NOV2020    - added Logout from Loan IQ for scenario 4 and EU Entity
     [Arguments]    ${ExcelPath}
     
     ###PREREQUISITE###
+    Run Keyword If   '${SCENARIO}'=='4' and '&{ExcelPath}[Entity]' == 'EU'    Logout from Loan IQ
     Login to Loan IQ    ${TL_USERNAME}    ${TL_PASSWORD}
     ${CSVFile}    Set Variable    &{ExcelPath}[InputFilePath]&{ExcelPath}[InputGSFile]
     ${TransformedDataFile_BaseRate}    Set Variable    &{ExcelPath}[InputFilePath]${TL_Transformed_Data_BaseRate}
@@ -22,7 +24,7 @@ Send GS File with removed Floating Rates
     Create Expected JSON for Base Rate TL    ${TransformedDataFile_BaseRate}    &{ExcelPath}[InputFilePath]&{ExcelPath}[InputJson]
     Create Individual Expected JSON for Base Rate TL    ${TransformedDataFile_BaseRate}    &{ExcelPath}[InputFilePath]&{ExcelPath}[InputJson]
     Create Expected TextJMS XML for Base Rate TL    ${TransformedDataFile_BaseRate}    &{ExcelPath}[InputFilePath]    &{ExcelPath}[Expected_wsFinalLIQDestination]    &{ExcelPath}[TemplateFilePath]
-    # ###END OF PREREQUISITE###
+    ###END OF PREREQUISITE###
 
     Run Keyword And Continue On Failure    Send Single File to SFTP and Validate If File is Processed    &{ExcelPath}[InputFilePath]    &{ExcelPath}[InputGSFile]    ${TL_Base_Folder}
     Run Keyword And Continue On Failure    Validate File If Moved to Archive Folder    ${TL_BASE_ARCHIVE_FOLDER}    &{ExcelPath}[InputGSFile]
