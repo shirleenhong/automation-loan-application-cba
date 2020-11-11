@@ -1519,7 +1519,7 @@ Create Facility for RPA Deal
     ...    &{ExcelPath}[Facility_GlobalLimit]    &{ExcelPath}[Facility_BorrowerMaturity]    ${Facility_EffectiveDate}
 
     ###Update Branch For RPA Scenario 3####
-    Run Keyword If    '${SCENARIO}'=='3'    Update Branch and Processing Area Of A Facility    &{ExcelPath}[Facility_Branch]    &{ExcelPath}[Facility_Processing_Area]
+    Run Keyword If    '${SCENARIO}'=='3'    Update Branch and Processing Area of a Facility    &{ExcelPath}[Facility_Branch]    &{ExcelPath}[Facility_Processing_Area]
 
 RPA Deal Approval and Close
     [Documentation]    This keywords Approves and Closes the created RPA Deal.
