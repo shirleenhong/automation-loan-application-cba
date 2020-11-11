@@ -97,3 +97,7 @@ LIQ_Participation_Outstanding_FundingMemo_Create = 'JavaWindow("title:=Outstandi
 LIQ_Participation_Funding_Window = 'JavaWindow("title:=Funding Memo for.*")'
 LIQ_Participation_Funding_Ok_Button = 'JavaWindow("title:=Funding Memo for.*").JavaButton("attached text:=OK.*")'
 
+### Generic Participation Objects ###
+LIQ_Participation_Window = 'JavaWindow("title:=.*Participation.*")'
+LIQ_Participation_Tab = 'JavaWindow("title:=.*Participation.*","displayed:=1").JavaTab("tagname:=TabFolder")'
+LIQ_Participation_Workflow_JavaTree = 'JavaWindow("title:=.*Participation.*").JavaTree("attached text:=Drill down to perform.*")'

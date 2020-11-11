@@ -25,3 +25,7 @@ Charge Upfront Fee - CRED07
 Complete Portfolio Settled Discount - TRPO12
     [Tags]    04    Portfolio Settled Discount - TRPO12 
     Mx Execute Template With Multiple Data    Complete Portfolio Settled Discount    ${ExcelPath}    ${rowid}    TRPO12_PortfolioSettledDisc
+
+Complete External Participation without Premiun/Discount - TRPO06
+    [Tags]    05    Complete External Participation without Premiun/Discount - TRPO06
+    Mx Execute Template With Multiple Data    Complete External Participation without Premiun/Discount    ${ExcelPath}    ${rowid}    TRPO06_ExternalParticipation
