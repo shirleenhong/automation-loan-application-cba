@@ -18,7 +18,7 @@ Verify if Method has Remittance Instruction
     ...    @update: sahalder    22072020    added condition for handling the SPAP remittance instruction
     [Arguments]    ${sCustomerShortName}    ${sRemittanceDescription}    ${sRemittanceInstruction}    ${sTransactionAmount}=None    ${sCurrency}=None
 
-    ### Keyword Pre-processing ###
+    ## Keyword Pre-processing ###   
     ${CustomerShortName}    Acquire Argument Value    ${sCustomerShortName}
     ${RemittanceDescription}    Acquire Argument Value    ${sRemittanceDescription}
     ${RemittanceInstruction}    Acquire Argument Value    ${sRemittanceInstruction}
@@ -74,7 +74,7 @@ Add Remittance Instructions
     Run Keyword And Continue On Failure    Mx LoanIQ Verify Object Exist    ${LIQ_Cashflows_DetailsForCashflow_Window}     VerificationData="Yes"
     mx LoanIQ click    ${LIQ_Cashflows_DetailsForCashflow_SelectRI_Button}  
     mx LoanIQ activate    ${LIQ_Cashflows_ChooseRemittanceInstructions_Window}
-    Mx LoanIQ Select Or DoubleClick In Javatree    ${LIQ_Cashflows_ChooseRemittanceInstructions_Tree}    ${sRemittanceDescription}%s 
+    Mx LoanIQ Select Or DoubleClick In Javatree    ${LIQ_Cashflows_ChooseRemittanceInstructions_Tree}    ${sRemittanceDescription}%s         
     mx LoanIQ click    ${LIQ_Cashflows_ChooseRemittanceInstructions_OK_Button}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/CashflowVerification
     mx LoanIQ click    ${LIQ_Cashflows_DetailsForCashflow_OK_Button}
@@ -496,21 +496,25 @@ Release Cashflow Based on Remittance Instruction
     ...    @update: amansuet    22JUN2020    - Revert changes and added new argument to make keyword generic on its Workflow Navigation
     ...    @update: amansuet    22JUN2020    - Added Condition for 'Navigate to Payment Workflow and Proceed With Transaction'
     ...    @update: fluberio    21OCT2020    - Added Condition to add Release Cashflow when Remittance Instruction is Set to IMT
+    ...    @update: makcamps    28OCT2020    - Added Condition to add Release Cashflow when Remittance Instruction is Set to IMT and Transaction is Loan Drawdown
+    ...    @update: amitp       26OCT2020    - Remove Relase Cashflow Keyword and Add Log for Remittance Instruction RTGS.
+
     [Arguments]    ${sRemittanceInstruction}    ${sCashflowReference}    ${sDataType}=default    ${sNavigateToWorkflow}=Loan Drawdown
 
     ### Keyword Pre-processing ###
     ${RemittanceInstruction}    Acquire Argument Value    ${sRemittanceInstruction}
     ${CashflowReference}    Acquire Argument Value    ${sCashflowReference}
     ${DataType}    Acquire Argument Value    ${sDataType}
-    ${NavigateToWorkflow}    Acquire Argument Value    ${sNavigateToWorkflow}
-
+    ${NavigateToWorkflow}    Acquire Argument Value    ${sNavigateToWorkflow}    
     ${RemittanceInstruction}    Convert To Uppercase    ${RemittanceInstruction}
+    
     Run Keyword If    '${RemittanceInstruction}'=='RTGS' and '${NavigateToWorkflow}'=='Loan Drawdown'    Run Keywords    Navigate to Loan Drawdown Workflow and Proceed With Transaction    Release Cashflows
-    ...    AND    Release Cashflow    ${CashflowReference}    default    ${DataType}
+    ...    AND    Log    Cashflow Released   
     ...    ELSE IF    '${RemittanceInstruction}'=='RTGS' and '${NavigateToWorkflow}'=='Loan Repricing'    Run Keywords    Navigate to Loan Repricing Workflow and Proceed With Transaction    Release Cashflows
-    ...    AND    Release Cashflow    ${CashflowReference}    default    ${DataType}
+    ...    AND    Log    Cashflow Released    
     ...    ELSE IF    '${RemittanceInstruction}'=='RTGS' and '${NavigateToWorkflow}'=='Payment'    Run Keywords    Navigate to Payment Workflow and Proceed With Transaction    Release Cashflows
-    ...    AND    Release Cashflow    ${CashflowReference}    default    ${DataType}
+    ...    AND    Log    Cashflow Released
+    ...    ELSE IF    '${RemittanceInstruction}'=='IMT' and '${NavigateToWorkflow}'=='Loan Drawdown'    Navigate to Loan Drawdown Workflow and Proceed With Transaction    Release Cashflows
     ...    ELSE IF    '${RemittanceInstruction}'=='IMT' and '${NavigateToWorkflow}'=='Payment'    Navigate to Payment Workflow and Proceed With Transaction    Release Cashflows
     ...    ELSE    Log    Release of Cashflow is Not Needed for '${RemittanceInstruction}' Remittance Instruction
 

@@ -76,6 +76,7 @@ Collect Early Prepayment via Paper Clip D00000454
 Collect Full Payment via Paper Clip Outstanding B1 D00000454
     [Documentation]    This Keyword initiates full payment via paper clip
     ...    @author: fmamaril    17SEP2019
+    ...    @update: kduenas     29OCT2020    - added generation of paper clip notices as correspondence pre-requisite.
     [Arguments]    ${ExcelPath}
     
     ### Search for Existing Loan
@@ -97,7 +98,9 @@ Collect Full Payment via Paper Clip Outstanding B1 D00000454
     Select Cycles for Loan Item    Projected Due    1
     Verify Added Paperclip Payments    &{ExcelPath}[Pricing_Option]${SPACE}(&{ExcelPath}[Loan_Alias])Principal|&{ExcelPath}[Pricing_Option]${SPACE}(&{ExcelPath}[Loan_Alias])Interest
 
-    
+    ###Generate Paper Clip Intent Notice####
+    Generate Intent Notices for Paper Clip    &{ExcelPath}[Customer_Legal_Name]    &{ExcelPath}[NoticeStatus]
+
     ## Create Cashflows for Paperclip ###
     Navigate Notebook Workflow    ${LIQ_PendingPaperClip_Window}    ${LIQ_PaperClip_Tabs}    ${LIQ_PaperClip_Workflow_Tab}    Create Cashflow
     Verify if Method has Remittance Instruction    &{ExcelPath}[Borrower_ShortName]    &{ExcelPath}[Remittance_Description]    &{ExcelPath}[Remittance_Instruction]    

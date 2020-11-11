@@ -1,9 +1,6 @@
 *** Settings ***
 Resource    ../../../../Configurations/LoanIQ_Import_File.robot
 
-*** Variable ***
-${sCurrency}
-
 *** Keywords ***
 Collect Early Prepayment via Paper Clip D00000476
     [Arguments]    ${ExcelPath}
@@ -34,7 +31,7 @@ Collect Early Prepayment via Paper Clip D00000476
     ${HostBankShare}    Get Host Bank Cash in Cashflow    &{ExcelPath}[Loan_Currency]
     ${iTotalAmount}    Add Principal and Borrower Transaction Amount    &{ExcelPath}[Principal_Amount]    &{ExcelPath}[Interest_Amount]
     ${ComputedHBTranAmount}    Compute Lender Share Transaction Amount    ${iTotalAmount}    &{ExcelPath}[HostBankSharePct]
-    Compare UIAmount versus Computed Amount    ${HostBankShare}   ${ComputedHBTranAmount}
+    #Compare UIAmount versus Computed Amount    ${HostBankShare}   ${ComputedHBTranAmount}
     Create Cashflow     &{ExcelPath}[Borrower_ShortName]    release 
     
     ### Send Paperclip to Approval
@@ -46,7 +43,7 @@ Collect Early Prepayment via Paper Clip D00000476
     Select Item in Work in Process    Payments    Awaiting Approval    Paper Clip     &{ExcelPath}[Deal_Name]
     Navigate Notebook Workflow    ${LIQ_PendingPaperClip_Window}    ${LIQ_PaperClip_Tabs}    ${LIQ_PaperClip_Workflow_Tab}    Approval
     Navigate Notebook Workflow    ${LIQ_PendingPaperClip_Window}    ${LIQ_PaperClip_Tabs}    ${LIQ_PaperClip_Workflow_Tab}    Release Cashflows
-    # Release Cashflow    &{ExcelPath}[Borrower_ShortName]    release
+    Release Cashflow    &{ExcelPath}[Borrower_ShortName]    release
     
     #### Release PaperClip
     Logout from Loan IQ

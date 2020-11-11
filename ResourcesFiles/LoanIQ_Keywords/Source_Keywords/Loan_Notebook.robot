@@ -77,11 +77,22 @@ Check Loan Status If Inactive
 Validate Updated Loan Amount After Payment - Capitalized Ongoing Fee
     [Documentation]    This keyword validates the current loan amount after payment of the capitalized ongoing fee.
     ...    @author: rtarayao 
-    [Arguments]    ${Orig_LoanGlobalOriginal}    ${Orig_LoanGlobalCurrent}    ${Orig_LoanHostBankGross}    ${Orig_LoanHostBankNet}    ${Capitalization_PctofPayment}    ${HBSharePercentage}    ${CycleDue}
+    ...    @update: dahijara    16OCT2020    - Added pre-processing and screenshot
+    [Arguments]    ${sOrig_LoanGlobalOriginal}    ${sOrig_LoanGlobalCurrent}    ${sOrig_LoanHostBankGross}    ${sOrig_LoanHostBankNet}    ${sCapitalization_PctofPayment}    ${sHBSharePercentage}    ${sCycleDue}
+
+    ### GetRuntime Keyword Pre-processing ###
+    ${Orig_LoanGlobalOriginal}    Acquire Argument Value    ${sOrig_LoanGlobalOriginal}
+    ${Orig_LoanGlobalCurrent}    Acquire Argument Value    ${sOrig_LoanGlobalCurrent}
+    ${Orig_LoanHostBankGross}    Acquire Argument Value    ${sOrig_LoanHostBankGross}
+    ${Orig_LoanHostBankNet}    Acquire Argument Value    ${sOrig_LoanHostBankNet}
+    ${Capitalization_PctofPayment}    Acquire Argument Value    ${sCapitalization_PctofPayment}
+    ${HBSharePercentage}    Acquire Argument Value    ${sHBSharePercentage}
+    ${CycleDue}    Acquire Argument Value    ${sCycleDue}
+	
     mx LoanIQ activate window    ${LIQ_Loan_Window}
     mx LoanIQ click element if present    ${LIQ_Loan_UpdateMode_Button}      
     Mx LoanIQ Select Window Tab    ${LIQ_Loan_Tab}    General    
-    
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LoanWindow
     ${New_LoanGlobalOriginal}    Mx LoanIQ Get Data    ${LIQ_Loan_GlobalOriginal_Amount}    value%Amount 
     ${New_LoanGlobalOriginal}    Remove String    ${New_LoanGlobalOriginal}     ,
     ${New_LoanGlobalOriginal}    Convert To Number    ${New_LoanGlobalOriginal}    2
@@ -136,30 +147,36 @@ Validate Updated Loan Amount After Payment - Capitalized Ongoing Fee
     ${Status}    Run Keyword And Return Status    Should Be Equal    ${GlobalHostBankNet_Difference}    ${Computed_LoanHostBankBNet}          
     Run Keyword If    ${Status}==True    Log    Loan Host Bank Net Amount has increased by ${Computed_LoanHostBankBNet}. 
     Run Keyword If    ${Status}==False    Log    Loan Host Bank Net Amount has not increased by the expected amount which is ${Computed_LoanHostBankBNet}.
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LoanWindow
     
 Validate Loan Events Tab after Payment - Capiltalized Ongoing Fee
     [Documentation]    This keyword validates the Loan Events tab after payment of the capitalized Ongoing fee.
     ...    @author: rtarayao
+    ...    @update: dahijara    16OCT2020    - Added screenshot
        
     mx LoanIQ activate window    ${LIQ_Loan_Window}
     Mx LoanIQ Select Window Tab    ${LIQ_Loan_Tab}    Events
     Mx LoanIQ Verify Text In Javatree    ${LIQ_Loan_Event_JavaTree}    Increase Applied%yes
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/Loan_EventTab
 
 Validate Loan Pending Tab- Capitalized Ongoing Fee 
     [Documentation]    This keyword validates that after capitalized ongoing fee payment, the loan pending tab has no pending payment items.
     ...    @author: rtarayao
-       
+    ...    @update: dahijara    16OCT2020    - Added screenshot
     mx LoanIQ activate window    ${LIQ_Loan_Window}
     Mx LoanIQ Select Window Tab    ${LIQ_Loan_Tab}    Pending
     Run Keyword And Continue On Failure    Mx LoanIQ Verify Object Exist    ${LIQ_Loan_PendingItems_Null}        VerificationData="Yes"
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/Loan_PendingTab
     
 Validation on Loan Notebook - Pending Tab
     [Documentation]    This keyword is for validates Interest Payment Notebook Pending Tab.
     ...    @author: ghabal
+    ...    @update: dahijara    13OCT2020    added screenshot
        
     mx LoanIQ activate window    ${LIQ_Loan_Window}
     Mx LoanIQ Select Window Tab    ${LIQ_Loan_Tab}    Pending
     Run Keyword And Continue On Failure    Mx LoanIQ Verify Object Exist    ${LIQ_Loan_PendingItems_Null}        VerificationData="Yes"
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/Loan_PendingTab
 
 Validation on Loan Notebook - Events Tab
     [Documentation]    This keyword is for validates Interest Payment Notebook Events Tab.
@@ -701,6 +718,7 @@ Navigate to Existing Loan
     Mx LoanIQ Select Combo Box Value    ${LIQ_OutstandingSelect_Type_Dropdown}    ${Outstanding_Type}
     Mx LoanIQ Select Combo Box Value    ${LIQ_OutstandingSelect_Facility_Dropdown}    ${Loan_FacilityName}
     Mx LoanIQ Click    ${LIQ_OutstandingSelect_Search_Button}
+    Sleep    2s
     Mx LoanIQ Activate Window    ${LIQ_ExistingOutstandings_Window}
     Mx LoanIQ Maximize    ${LIQ_ExistingOutstandings_Window}    
     Mx LoanIQ Select Or DoubleClick In Javatree    ${LIQ_ExistingOutstandings_Table}    ${Loan_Alias}%d
@@ -826,4 +844,3 @@ Validate Repayment Schedule Last Payment Remaining Value
 
     Run Keyword If    '${Comparison_Status}'=='True'    Log    Last Payment Remaining Validation Passed
     ...    ELSE IF    '${Prev_RemainingVal_Comparison_Status}'=='True'    Run Keyword And Continue On Failure    Fail    Last Payment Remaining Validation Failed. Last Payment Remaining Value is '${Prev_RemainingValue}' instead of '${Expected_RemainingValue}'
-    ...    ELSE    Run Keyword And Continue On Failure    Fail    Condition is NOT Supported by Validate Repayment Schedule Last Payment Remaining Value

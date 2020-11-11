@@ -45,3 +45,15 @@ Upfront Fee Notices
     [Tags]    06 Notices_Upfront_Fee
     Mx Execute Template With Multiple Data    Send Notice For Upfront Fee    ${ExcelPath}    ${rowid}    Correspondence
     
+Create Initial Loan Drawdown - SERV02
+    [Documentation]    Creation of Initial Loan Drawdown
+    [Tags]    07 Create Initial Loan Drawdown - SERV02
+    Mx Execute Template With Multiple Data    Create Initial Loan Drawdown for Non Agent Syndication    ${ExcelPath}    1-4    SERV02_LoanDrawdownNonAgent      
+    
+Create Pricing Change Transaction - AMCH06
+    [Documentation]    Change Interest Pricing Matrix from Debt Service Cover Ratio (DSCR) into Loan to Value Ratio (LVR).
+    [Tags]    09 Create Interest Pricing Change via Facility Notebook - AMCH11
+    Mx Execute Template With Multiple Data    Create Interest Pricing Change via Facility Notebook    ${ExcelPath}    ${rowid}    AMCH06_PricingChangeTransaction
+    Log to Console    Pause Execution - Run Monthly EOD
+    Pause Execution
+    ###SCENARIO 4 WILL NOT HAVE ITS DAY 2 SINCE THE NEXT TEST CASE IS COMPREHENSIVE REPRICING WHICH WILL OCCUR AFTER 30DAYS EOD###

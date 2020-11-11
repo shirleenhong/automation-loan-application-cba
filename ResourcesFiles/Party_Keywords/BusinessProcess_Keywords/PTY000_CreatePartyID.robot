@@ -3,12 +3,13 @@ Resource    ../../../Configurations/Party_Import_File.robot
 
 *** Keywords ***
 Create Party ID Successfully in Quick Party Onboarding
-        [Documentation]    This keyword is used to create party successfully via quick party Onboarding screen.
+    [Documentation]    This keyword is used to create party successfully via quick party Onboarding screen.
     ...    @author: javinzon    22OCT2020    - initial create
     ...    @update: javinzon    26OCT2020    - Added Write Data To Excel for PTY010_DuplicateShortName_AcrossEntities
     ...    @update: javinzon    27OCT2020    - Added condition for writing data to excel, Added Write Data To Excel keyword 
     ...                                        for PTY008_DuplicateEnterpriseName_AcrossEntities, Added ELSE condition to Close Browser
     ...	   @update: javinzon	29OCT2020	 - Added Write Data To Excel keyword of PartyID for PTY020_PartyCrossReferenceDetails
+
     [Arguments]    ${ExcelPath}
     
     ### INPUTTER ###

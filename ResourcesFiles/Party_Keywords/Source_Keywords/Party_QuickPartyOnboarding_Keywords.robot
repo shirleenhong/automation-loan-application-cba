@@ -597,14 +597,8 @@ Populate Pre-Existence Check and Validate the Duplicate Enterprise Name
     ...    AND    Mx Click Element    ${Party_PreExistenceCheck_View_Button}     
     ...    ELSE    Run Keyword and Continue on Failure    Fail    No duplicate found for Enterprise Name
     
-    Wait Until Page Contains   ${PARTY_ENQUIREENTERPRISEPARTY_PAGETITLE}
-    Capture Page Screenshot    ${screenshot_path}/Screenshots/Party/DuplicateEnterpriseName-{index}.png
-    ${Existing_EnterpriseName}    Get Value    ${Party_EnquirePartyDetails_EnterpriseName_TextBox}
-    Log    ${Existing_EnterpriseName}
-    ${isMatched}    Run Keyword And Return Status    Should Be Equal    ${Existing_EnterpriseName}    ${Party_Name}
-    Run Keyword If    ${isMatched}==${True}    Logout User on Party    
-    ...    ELSE    Run Keyword and Continue on Failure    Fail    Party details displayed are not for Party:${Party_Name}
-
+    Validate Enterprise Name in Enquire Enterprise Party    ${Party_Name}
+    
 Validate Disabled Fields in Quick Enterprise Party Page
     [Documentation]    This keyword validates disabled fields in Quick Enterprise Party page and Address details dialog
     ...    @author: javinzon    08OCT2020    - initial create
@@ -799,3 +793,85 @@ Validate Error Message in Quick Enterprise Party
     ${isMatched}    Run Keyword And Return Status    Should Contain    ${ErrorMessage}    ${sExpected_Error_Message}
     Run Keyword If    ${isMatched}==${True}    Mx Click Element    ${Party_QuickEnterpriseParty_ErrorsDialog_GoBack_Button}
     ...    ELSE    Run Keyword and Continue on Failure    Fail   Error message: '${sExpected_Error_Message}' is expected.
+
+Validate Enterprise Name in Enquire Enterprise Party
+    [Documentation]    This keyword is used to get and validate Enterprise name in Enquire Enterprise Party Page.
+    ...    @author: javinzon    29OCT2020    - intial create
+    [Arguments]    ${sEnterprise_Name}
+    
+    Capture Page Screenshot    ${screenshot_path}/Screenshots/Party/EnterpriseName-{index}.png
+    ${Existing_EnterpriseName}    Get Value    ${Party_EnquirePartyDetails_EnterpriseName_TextBox}
+    Log    ${Existing_EnterpriseName}
+    ${isMatched}    Run Keyword And Return Status    Should Be Equal    ${Existing_EnterpriseName}    ${sEnterprise_Name}
+    Run Keyword If    ${isMatched}==${True}    Run Keywords    Log    Enterprise Name '${sEnterprise_Name}' is already existing.
+    ...    AND    Logout User on Party    
+    ...    ELSE    Run Keyword and Continue on Failure    Fail    Party details displayed are not for '${sEnterprise_Name}'.
+             
+Populate Pre-Existence Check and Validate Duplicate Enterprise Name Across Entities
+    [Documentation]    This keyword populates pre-existence with Duplicate Enterprise Name, checks if Entity and Action are correct, 
+    ...    then switch to other entity to view the existing Party details.
+    ...    @author: javinzon    29OCT2020    - initial create
+    [Arguments]    ${sEnterprise_Name}    ${sParty_ID}    ${sSwitch_UserZone}    ${sSwitch_UserBranch}    ${sEntity_Expected}
+
+    Mx Click Element     ${Party_PreExistenceCheck_EnterpriseName_TextBox} 
+    Set Focus To Element    ${Party_PreExistenceCheck_EnterpriseName_TextBox}
+    Mx Activate And Input Text    ${Party_PreExistenceCheck_EnterpriseName_TextBox}    ${sEnterprise_Name}  
+    Capture Page Screenshot    ${screenshot_path}/Screenshots/Party/DuplicateEnterpriseNameAcrossEntities-{index}.png 
+    Mx Click Element    ${Party_Footer_Next_Button}
+
+    Wait Until Element Is Not Visible    ${PARTY_GLOBALDEDUPRESULT_PAGETITLE}    ${PARTY_TIMEOUT} 
+    ${Entity_Result}    Get Table Value Containing Row Value in Party    ${Party_PreExistenceCheck_SearchResultTableHeader}    ${Party_PreExistenceCheck_SearchResultTableRow}    Party ID    ${sParty_ID}    Entity  
+    ${Action_Result}    Get Table Value Containing Row Value in Party    ${Party_PreExistenceCheck_SearchResultTableHeader}    ${Party_PreExistenceCheck_SearchResultTableRow}    Party ID    ${sParty_ID}    Action  
+    
+    ${isMatched}    Run Keyword And Return Status    Should Be Equal    ${sEntity_Expected}    ${Entity_Result}
+    Run Keyword If    ${isMatched}==${True} and '${Action_Result}'=='Reject'    Run Keywords    Log    Enterprise Name:'${sEnterprise_Name}' is already existing in Party ID '${sParty_ID}' created from '${sEntity_Expected}' Entity.
+    ...   AND    Capture Page Screenshot    ${screenshot_path}/Screenshots/Party/DuplicateEnterpriseNameAcrossEntities-{index}.png
+    ...   AND    Mx Click Element    ${Party_CloseTab_Button}
+    ...   AND    Configure Zone and Branch    ${sSwitch_UserZone}    ${sSwitch_UserBranch}
+    ...   AND    Navigate Party Details Enquiry    ${sParty_ID}
+    ...   AND    Validate Enterprise Name in Enquire Enterprise Party    ${sEnterprise_Name}
+    ...   ELSE    Run Keyword and Continue on Failure    Fail    There is no Duplicate Enterprise Name   
+    
+Get the Available Business Activity Options 
+    [Documentation]    This keyword is used to compare and validate if the available Business Activity Options are correct.
+    ...    @author: javinzon    06OCT2020    - initial create
+    ...    @update: clanding    06NOV2020    - removed \ in the \    ...
+    [Arguments]    ${sIndustry_Sector}
+     
+    ${Industry_Sector_FileName}    Replace String    ${sIndustry_Sector}    ${SPACE}    _  
+    ${Industry_Sector_FileName}    Remove String    ${Industry_Sector_FileName}    ,    and_
+    ${Expected_BusinessActivity}    OperatingSystem.Get File    ${BUSINESSACTIVITY_DIRECTORY}\\${Industry_Sector_FileName}.txt
+    ${Expected_BusinessActivity_Line_Count}    Get Line Count    ${Expected_BusinessActivity}
+    :FOR    ${LineCount}    IN RANGE    ${Expected_BusinessActivity_Line_Count}
+    \    ${BusinessActivity_List_Line_Content}    Get Line    ${Expected_BusinessActivity}    ${LineCount}
+    \    ${BusinessActivity_Dropdown_Content}    Get Text    ${Party_QuickEnterpriseParty_EnterpriseBusinessActivity_BusinessActivity_Dropdown_List}//div[contains(@item, "${LineCount}")]
+    \    ${isMatched}    Run Keyword And Return Status    Should Be Equal    ${BusinessActivity_List_Line_Content}    ${BusinessActivity_Dropdown_Content}       
+    \    Run Keyword If    ${isMatched}==${True}    Log    Business Activity '${BusinessActivity_Dropdown_Content}' is matched in Valid Business Activty List with value:${\n}${BusinessActivity_List_Line_Content}.
+         ...    ELSE    Run Keyword And Continue On Failure    Fail    Business Activity '${BusinessActivity_Dropdown_Content}' is NOT matched in Valid Business Activty List with value:${\n}${BusinessActivity_List_Line_Content}. 
+    
+Validate Available Options in Business Activity Field
+    [Documentation]    This keyword validates the Available Options in Business Activity Field across All Industry Sectors. 
+    ...    @author: javinzon    02OCT2020    - initial create
+    [Arguments]    ${sBusiness_Country}    
+    
+    Wait Until Page Contains Element    ${Party_QuickEnterpriseParty_BusinessActivity_CheckBox}
+    Click Element    ${Party_QuickEnterpriseParty_BusinessActivity_CheckBox}
+    Wait Until Loading Page Is Not Visible    ${PARTY_TIMEOUT}
+    Wait Until Page Contains    Create Enterprise Business Activity  
+    Mx Click Element    ${Party_QuickEnterpriseParty_EnterpriseBusinessActivity_NewRow_Button}
+    Mx Input Text    ${Party_QuickEnterpriseParty_EnterpriseBusinessActivity_Country_Dropdown}    ${sBusiness_Country}
+    Wait Until Browser Ready State
+    
+    ${IndustrySector_List_Content}    OperatingSystem.Get File    ${INDUSTRYSECTOR_LIST}
+    ${IndustrySector_List_Count}    Get Line Count    ${IndustrySector_List_Content}
+    :FOR    ${LineCount}    IN RANGE    ${IndustrySector_List_Count}
+    \    ${IndustrySector_List_Line_Content}    Get Line    ${IndustrySector_List_Content}    ${LineCount}
+    \    Mx Input Text    ${Party_QuickEnterpriseParty_EnterpriseBusinessActivity_IndustrySector_Dropdown}    ${IndustrySector_List_Line_Content}
+    \    Click Element    ${Party_QuickEnterpriseParty_EnterpriseBusinessActivity_BusinessActivity_Arrow}
+    \    Capture Page Screenshot    ${screenshot_path}/Screenshots/Party/BusinessActivityOptions-{index}.png 
+    \    Get the Available Business Activity Options   ${IndustrySector_List_Line_Content}
+    \    Click Element    ${Party_QuickEnterpriseParty_EnterpriseBusinessActivity_IndustrySector_Label}
+    
+    Mx Click Element    ${Party_CloseDialog_Button}
+    
+    

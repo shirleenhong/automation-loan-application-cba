@@ -55,17 +55,20 @@ Validate FXRate in LoanIQ
 Validate FXRate Not Updated in LoanIQ
     [Documentation]    This keyword is used to validate FX Rates in LoanIQ does not contain the new rate expected
     ...    @author: cfrancis    07AUG19    initial create
+    ...    @update: ccarriedo   28OCT20    added '${subEntity}'=='EUR' in start of pre-requisite and compute for FX rate, and added '${Funding_Desk_Currency}'=='EUR' in validate currency pair if existing steps
     [Arguments]    ${From_Currency}    ${To_Currency}    ${subEntity}    ${Mid_Rate}    ${Effective_Date}
     ###START OF PRE-REQUISITES###
     ${Exchange_Currency}    Run Keyword If    '${subEntity}'=='AUD'    Catenate    ${From_Currency}    to    ${To_Currency}
     ...    ELSE IF    '${subEntity}'=='NY'    Catenate    ${To_Currency}    to    ${From_Currency}
+    ...    ELSE IF    '${subEntity}'=='EUR'    Catenate    ${From_Currency}    to    ${To_Currency}
     ${Exchange_Currency_Global}    Set Variable    ${Exchange_Currency}
     Set Global Variable    ${Exchange_Currency_Global}  
     ###compute for FX rate###
     ${FXRate_float}    Compute for FX Rate from Mid Rate    ${Mid_Rate}
     ${FX_Rate_no_0}    ${FXRate_whole_no_0}    ${FXRate_dec_no_0}    Run Keyword If    '${subEntity}'=='AUD'    Convert Mid Rate    ${Mid_Rate}
     ...    ELSE IF    '${subEntity}'=='NY'    Get Significant Mid Rate    ${Mid_Rate}
-   ### convert days to be used in execution###
+    ...    ELSE IF    '${subEntity}'=='EUR'    Convert Mid Rate    ${Mid_Rate}
+    ### convert days to be used in execution###
     ${Conv_Eff_Date_With_0}    Convert Date    ${Effective_Date}    result_format=%d-%b-%Y
     ${Backdated_Day}    Subtract Time From Date    ${Effective_Date}    1 d
     ${Conv_Backdated_Day_With_0}    Convert Date    ${Backdated_Day}    result_format=%d-%b-%Y
@@ -80,6 +83,7 @@ Validate FXRate Not Updated in LoanIQ
     ${Funding_Desk_Desc}    ${Funding_Desk_Currency}    Get Funding Desk Details from Table Maintenance    ${subEntity}
     # validate currency pair if existing
     Run Keyword If    '${Funding_Desk_Currency}'=='AUD'    Validate Currency Pairs    ${To_Currency}    ${From_Currency}
+    ...    ELSE IF    '${Funding_Desk_Currency}'=='EUR'    Validate Currency Pairs By Funding Desk    ${To_Currency}    ${From_Currency}    ${Funding_Desk_Currency}
     ###END OF PRE-REQUISITES###
     # TREASURY NAVIGATION WINDOW
     Select Treasury Navigation    Currency Exchange Rates

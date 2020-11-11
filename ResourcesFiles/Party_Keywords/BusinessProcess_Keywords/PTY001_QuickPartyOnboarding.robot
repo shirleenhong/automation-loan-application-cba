@@ -33,6 +33,9 @@ Create Party in Quick Party Onboarding
     ...    @update: javinzon    20OCT2020    - Added Write Data To Excel keyword for Shortname of PTY009_DuplicateShortName    
     ...    @update: makcamps    22OCT2020    - Updated Write Data To Excel keyword for Party ID of Scenario 1
     ...    @update: javinzon    22OCT2020    - Updated Documentation and removed Write Data To Excel for PTY009_DuplicateShortName and PTY007_DuplicateEnterpriseName
+    ...    @update: javinzon    30OCT2020    - Added ELSE condition to Close Browser
+    ...    @update: fluberio    03NOV2020    - Added Write Date to Excel for Scenario 4 in EU
+    ...    @update: makcamps    04NOV2020    - Added Write Data To Excel keyword for EU E2E Scenario 1 (Correspondence)
     [Arguments]    ${ExcelPath}
     
     ### INPUTTER ###
@@ -66,9 +69,8 @@ Create Party in Quick Party Onboarding
     ...    &{ExcelPath}[GST_Number]    &{ExcelPath}[Address_Line_1]    &{ExcelPath}[Address_Line_2]    &{ExcelPath}[Address_Line_3]    &{ExcelPath}[Address_Line_4]
     ...    &{ExcelPath}[Town_City]    &{ExcelPath}[State_Province]    &{ExcelPath}[Business_Country]    &{ExcelPath}[Is_Primary_Activity]    &{ExcelPath}[Registered_Number]    ${Short_Name}    
    
-
     Run Keyword If    '${SSO_ENABLED}'=='NO'    Logout User on Party
-    Close Browser
+    ...    ELSE    Close Browser
     
     ### SUPERVISOR ###
     ${Task_ID_From_Supervisor}    Approve Party via Supervisor Account    ${Party_ID}    &{ExcelPath}[UserZone]    &{ExcelPath}[UserBranch]
@@ -109,14 +111,20 @@ Create Party in Quick Party Onboarding
     ...    AND    Write Data To Excel    CRED02_FacilitySetup    Entity    ${rowid}    ${Entity_Name}
     ...    AND    Write Data To Excel    CRED08_OngoingFeeSetup    Entity    ${rowid}    ${Entity_Name}
     ...    AND    Write Data To Excel    SYND02_PrimaryAllocation    Entity    ${rowid}    ${Entity_Name}
-    ...    AND    Write Data To Excel    TLCAL01_CalendarLoad    Entity    ${rowid}    ${Entity_Name}
+    ...    AND    Write Data To Excel    Calendar_Fields    Entity    ${rowid}    ${Entity_Name}
     ...    AND    Write Data To Excel    SERV01_LoanDrawdown    Entity    ${rowid}    ${Entity_Name}
     ...    AND    Write Data To Excel    SERV18_Payments    Entity    ${rowid}    ${Entity_Name}
     ...    AND    Write Data To Excel    SERV21_InterestPayments    Entity    ${rowid}    ${Entity_Name}
     ...    AND    Write Data To Excel    SERV29_PaymentFees    Entity    ${rowid}    ${Entity_Name}
     ...    AND    Write Data To Excel    AMCH06_PricingChangeTransaction    Entity    ${rowid}    ${Entity_Name}
     ...    AND    Write Data To Excel    AMCH04_DealChangeTransaction    Entity    ${rowid}    ${Entity_Name}
-  
+
+	###Writing for E2E EU scenario 1 Corro### 
+    Run Keyword If    '${SCENARIO}'=='1' and '&{ExcelPath}[Entity]' == 'EU'    Run Keywords    Write Data To Excel    Correspondence    Notice_Customer_LegalName    ${rowid}    ${Enterprise_Name}
+    ...  AND    Write Data To Excel    Correspondence    Notice_Customer_LegalName    2    ${Enterprise_Name}    bTestCaseColumn=True    sColumnReference=rowid
+    ...  AND    Write Data To Excel    Correspondence    Notice_Customer_LegalName    3    ${Enterprise_Name}    bTestCaseColumn=True    sColumnReference=rowid
+    ...  AND    Write Data To Excel    Correspondence    Notice_Customer_LegalName    4    ${Enterprise_Name}    bTestCaseColumn=True    sColumnReference=rowid 
+    
     Run Keyword If    '${SCENARIO}'=='2'    Run Keywords    Write Data To Excel    SERV08_ComprehensiveRepricing    Borrower_ShortName    ${rowid}    ${Enterprise_Name}
     ...    AND    Write Data To Excel    SERV08_ComprehensiveRepricing    Customer_Legal_Name    ${rowid}    ${Enterprise_Name}
     ...    AND    Write Data To Excel    SERV29_PaymentFees    Borrower_ShortName    ${rowid}    ${Enterprise_Name}
@@ -149,8 +157,21 @@ Create Party in Quick Party Onboarding
     ...    AND    Write Data To Excel    SERV18_FeeOnLenderSharesPayment    Borrower1_ShortName    ${rowid}    ${Enterprise_Name}
     ...    AND    Write Data To Excel    SERV24_CreateCashflow    Borrower1_ShortName    ${rowid}    ${Enterprise_Name}
     ...    AND    Write Data To Excel    MTAM05A_CycleShareAdjustment    Borrower1_ShortName    ${rowid}    ${Enterprise_Name}
-
-   Run Keyword If    '${SCENARIO}'=='4'    Run Keywords    Write Data To Excel    CRED01_DealSetup    Borrower_ShortName    ${rowid}    ${Enterprise_Name}
+   
+    Run Keyword If    '${SCENARIO}'=='4' and '${Entity_Name}'=='EU'    Run Keywords    Write Data To Excel    CRED01_DealSetup    Borrower_ShortName    ${rowid}    ${Short_Name}
+    ...    AND    Write Data To Excel    ORIG03_Customer    LIQCustomer_ShortName    ${rowid}    ${Short_Name}
+    ...    AND    Write Data To Excel    ORIG03_Customer    LIQCustomer_LegalName    ${rowid}    ${Enterprise_Name}
+    ...    AND    Write Data To Excel    ORIG03_Customer    LIQCustomer_ID    ${rowid}    ${Party_ID}
+    ...    AND    Write Data To Excel    PTY001_QuickPartyOnboarding    Enterprise_Name    ${rowid}    ${Enterprise_Name}
+    ...    AND    Write Data To Excel    CRED01_DealSetup    Borrower_ShortName    ${rowid}    ${Short_Name}
+    ...    AND    Write Data To Excel    CRED10_EventFee    Borrower_ShortName    ${rowid}    ${Short_Name}
+    ...    AND    Write Data To Excel    CRED02_FacilitySetup    Borrower_ShortName    ${rowid}    ${Short_Name}
+    ...    AND    Write Data To Excel    SERV30_AdminFeePayment    Borrower_ShortName    ${rowid}    ${Short_Name}
+    ...    AND    Write Data To Excel    SYND05_UpfrontFee_Payment    Borrower_ShortName    ${rowid}    ${Short_Name}
+    ...    AND    Write Data To Excel    CRED09_AdminFee    Borrower_ShortName    ${rowid}    ${Short_Name}
+    ...    AND    Write Data To Excel    SERV01_LoanDrawdown    Borrower_ShortName    ${rowid}    ${Short_Name}
+    ...    AND    Write Data To Excel    SERV22_InterestPayments    Borrower_ShortName    ${rowid}    ${Short_Name}
+    ...    ELSE IF    '${SCENARIO}'=='4' and '${Entity_Name}'=='AU'    Run Keywords    Write Data To Excel    CRED01_DealSetup    Borrower_ShortName    ${rowid}    ${Enterprise_Name}
     ...    AND    Write Data To Excel    ORIG03_Customer    LIQCustomer_ShortName    ${rowid}    ${Enterprise_Name}
     ...    AND    Write Data To Excel    ORIG03_Customer    LIQCustomer_LegalName    ${rowid}    ${Enterprise_Name}
     ...    AND    Write Data To Excel    PTY001_QuickPartyOnboarding    Enterprise_Name    ${rowid}    ${Enterprise_Name}

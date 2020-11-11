@@ -219,6 +219,11 @@ SET_FX_RATE_TRANSACTION = "Set F/X Rate"
 MANUALTRANS_TRANSACTION = "ManualTrans"
 MANUAL_GL_TRANSACTION = "Manual GL Transaction"
 MANUAL_CASHFLOW_TRANSACTION = "Manual Cashflow Transaction"
+FACILITIES = "Facilities"
+PORTFOLIO_SETTLED_DISCOUNT_ADJUSTMENT = "Portfolio Settled Discount Adjustment"
+ONGOING_FEE_PAYMENT_TRANSACTION= "Ongoing Fee Payment"
+LOAN_PRINCIPAL_PREPAYMENT_TRANSACTION = "Loan Principal Prepayment"
+RATE_SETTING_TRANSACTION = "Rate Setting"
 
 ### Bank Role ###
 REFERENCE_BANK_ROLE = "Reference Bank"
@@ -309,6 +314,7 @@ USE_SPOT_AUD_TO_USD_RATE = "Use Spot AUD to USD Rate"
 ### LOAN SEARCH BY OPTIONS ###
 DEAL_FACILITY_OPTION = "Deal/Facility"
 
+
 ### Y/N ###
 Y = "Y"
 N = "N"
@@ -322,3 +328,7 @@ WORK_IN_PROCESS_ACTIONS = '[Actions];Work In Process'
 
 ### PARTY ERROR MESSAGES ###
 DUPLICATE_SHORTNAME_ERROR_MESSAGE = 'Entered Short Name is already in use for Different Party'
+
+### PARTY VARIABLES ###
+TESTCASE_NAME_PARTY = ""
+DUPLICATE_SHORT_NAME = ""

@@ -59,14 +59,19 @@ Setup Deal Upfront Fees
     ...    @author: fmamaril
     ...    @update: dahijara    21OCT2020    - Added writing for scenario 4 - CRED07_UpfrontFee_Payment
     ...    @update: mcastro     23OCT2020    - Added Computation and writing of new upfront fee amount for Scenario 1
+    ...    @update: mcastro     28OCT2020    - Added Computation and writing of new upfront fee amount for Scenario 2
+    ...    @update: dahijara    04NOV2020    - Added writing for scenario 5 - CRED07_UpfrontFee_Payment
     [Arguments]    ${ExcelPath}
     Set Deal Upfront Fees    &{ExcelPath}[UpfrontFee_Category]    &{ExcelPath}[UpfrontFee_Type]    &{ExcelPath}[UpfrontFee_RateBasis]    &{ExcelPath}[UpfrontFee_CategoryType]    &{ExcelPath}[UpfrontFee_Amount]    &{ExcelPath}[UpfrontFee_SpreadType]
     Validate Upfront Fee Pricing    &{ExcelPath}[UpfrontFee_Category]
     Validate Upfront Fee Pricing    &{ExcelPath}[UpfrontFee_Type]
     Validate Upfront Fee Pricing    &{ExcelPath}[UpfrontFee_Amount]    
-    Run Keyword If    '${SCENARIO}'=='4'    Write Data To Excel    CRED07_UpfrontFee_Payment    UpfrontFee_Amount    ${rowid}    &{ExcelPath}[UpfrontFee_Amount]
+    Run Keyword If    '${SCENARIO}'=='4' or '${SCENARIO}'=='5'    Write Data To Excel    CRED07_UpfrontFee_Payment    UpfrontFee_Amount    ${rowid}    &{ExcelPath}[UpfrontFee_Amount]
     
     ${New_Upfrontfee_Amount}    Run Keyword If    '${SCENARIO}'=='1' and '${ExcelPath}[UpfrontFee_CategoryType]'=='Formula'    Compute Upfront Fee Amount Based On Percentage    &{ExcelPath}[UpfrontFee_Amount]
+    Run Keyword If    '${SCENARIO}'=='1' and '${ExcelPath}[UpfrontFee_CategoryType]'=='Formula'    Write Data To Excel    CRED07_UpfrontFee_Payment    UpfrontFee_Amount    ${rowid}    ${New_Upfrontfee_Amount}
+
+    ${New_Upfrontfee_Amount}    Run Keyword If    '${SCENARIO}'=='2' and '${ExcelPath}[UpfrontFee_CategoryType]'=='Formula'    Compute Upfront Fee Amount Based On Percentage    &{ExcelPath}[UpfrontFee_Amount]
     Run Keyword If    '${SCENARIO}'=='1' and '${ExcelPath}[UpfrontFee_CategoryType]'=='Formula'    Write Data To Excel    CRED07_UpfrontFee_Payment    UpfrontFee_Amount    ${rowid}    ${New_Upfrontfee_Amount}
     
    

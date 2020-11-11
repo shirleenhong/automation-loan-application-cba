@@ -130,6 +130,7 @@ Setup a Primary Notebook - ComSee
 Write Post Deal Details for ComSee
     [Documentation]    This keyword is used to write all the Post Deal Details needed for Commsee fields.    
     ...    @author: rtaryao    12AUG2019    - Initial Create
+    ...    @update: shirhong   04NOV2020    - Change Get Facility and Borrower Count delimiter from Empty to |
     [Arguments]    ${ExcelPath}
     ###LIQ Desktop
     Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
@@ -187,8 +188,8 @@ Write Post Deal Details for ComSee
     
     ###Lender, Facility, Borrower, and Facility Outstanding Count Writing
     ${LenderCount}    Get Lender Count    &{ExcelPath}[Primary_Lender1]    ,
-    ${FacilityCount}    Get Facility Count    &{ExcelPath}[Facility_Name]    ${EMPTY}
-    ${BorrowerCount}    Get Borrower Count    &{ExcelPath}[Borrower1_ShortName]    ${EMPTY}
+    ${FacilityCount}    Get Facility Count    &{ExcelPath}[Facility_Name]    |
+    ${BorrowerCount}    Get Borrower Count    &{ExcelPath}[Borrower1_ShortName]    |
     ${OutstandingCount}    Get Facility Outstanding Count    ${EMPTY}    ${EMPTY}
     
     Write Data To Excel    ComSee_SC1_Deal    Deal_NoOfLenders    ${rowid}    ${LenderCount}    ${ComSeeDataSet}
@@ -779,9 +780,11 @@ Approve and Close Syndicated Deal - ComSee
 Write Post Deal Details for Scenario 2 ComSee
     [Documentation]    This keyword is used to write all the Post Deal Details needed for Commsee fields for a Syndicated Deal.    
     ...    @author: rtaryao    12AUG2019    - Initial Create
+    ...    @update: clanding    06NOV2020    - Updated ${EMPTY} delimiter to |
     [Arguments]    ${ExcelPath}
     ###LIQ Desktop
-    # Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
+    Logout from Loan IQ
+    Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
     
     ###Deal Notebook - Global and Host Bank's Current and Closing Cmt Amt Validation###
     Open Existing Deal    &{ExcelPath}[Deal_Name]
@@ -837,8 +840,8 @@ Write Post Deal Details for Scenario 2 ComSee
     ###Lender, Facility, Borrower, and Facility Outstanding Count Writing
     
     ${LenderCount}    Get Lender Count    &{ExcelPath}[Primary_Lender1],&{ExcelPath}[Primary_Lender2],&{ExcelPath}[Primary_Lender3]    ,
-    ${FacilityCount}    Get Facility Count    &{ExcelPath}[Facility_Name]    ${EMPTY}
-    ${BorrowerCount}    Get Borrower Count    &{ExcelPath}[Borrower_ShortName]    ${EMPTY}
+    ${FacilityCount}    Get Facility Count    &{ExcelPath}[Facility_Name]    |
+    ${BorrowerCount}    Get Borrower Count    &{ExcelPath}[Borrower_ShortName]    |
     ${OutstandingCount}    Get Facility Outstanding Count    ${EMPTY}    ${EMPTY}
     
     Write Data To Excel    ComSee_SC2_Deal    Deal_NoOfLenders    ${rowid}    ${LenderCount}    ${ComSeeDataSet}

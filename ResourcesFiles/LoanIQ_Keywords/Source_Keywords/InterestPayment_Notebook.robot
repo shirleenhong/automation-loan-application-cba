@@ -85,7 +85,8 @@ Initiate Loan Interest Payment
     Mx LoanIQ Enter    ${LIQ_Loan_CyclesforLoan_ProRateType_RadioButton}    ON
 
     Get Loan Interest Cycle Dates    ${CycleNumber}
-    Mx LoanIQ Click    ${LIQ_Loan_CyclesforLoan_OK_Button}
+    Mx PressTab    ${LIQ_Loan_CyclesforLoan_OK_Button}  
+    Mx LoanIQ Click    ${LIQ_Loan_CyclesforLoan_OK_Button}        
     Mx LoanIQ Click Element If Present    ${LIQ_Warning_Yes_Button}     
     Mx LoanIQ Activate Window    ${LIQ_Payment_Window}
     Take Screenshot    ${Screenshot_Path}/Screenshots/LoanIQ/InterestPaymentWindow
@@ -95,20 +96,28 @@ Initiate Loan Interest Payment (Scenario 8)
     ...    This keyword also validates the Projected Cycle Due of the Loan Interest.
     ...    @author: rtarayao
     ...    <update> @ghabal - commented 'Validate Loan Interest Projected Due' since the projected due date is not equal to cycle due date for Scenario 8
-    [Arguments]    ${rowid}    ${CycleNumber}    ${Pro_Rate}
+    ...    @update: dahijara    12OCT2020    - Added pre-processing keywords and screenshot. Removed unused argument. Removed hard coded sleep.
+    [Arguments]    ${sCycleNumber}    ${sPro_Rate}
 
+
+    ### GetRuntime Keyword Pre-processing ###
+    ${CycleNumber}    Acquire Argument Value    ${sCycleNumber}
+    ${Pro_Rate}    Acquire Argument Value    ${sPro_Rate}
     mx LoanIQ activate window    ${LIQ_Loan_Window}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LoanWindow
     mx LoanIQ select    ${LIQ_Loan_Options_Payment}
     mx LoanIQ activate window    ${LIQ_Loan_ChoosePayment_Window}
     mx LoanIQ enter    ${LIQ_Loan_ChoosePayment_InterestPayment_RadioButton}    ON
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LoanWindow
     mx LoanIQ click    ${LIQ_Loan_ChoosePayment_OK_Button}
     
     mx LoanIQ activate window    ${LIQ_Loan_CyclesforLoan_Window}   
     mx LoanIQ enter    JavaWindow("title:=Cycles for Loan.*").JavaRadioButton("attached text:=${Pro_Rate}")    ON
-    Sleep    5s    
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LoanWindow
     mx LoanIQ click    ${LIQ_Loan_CyclesforLoan_OK_Button}
     mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}     
     mx LoanIQ activate window    ${LIQ_Payment_Window}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LoanWindow
 
 Validate Interest Repayment Details
     [Documentation]    This keyword validates the interest repayment details for a Fixed Principal and Interest type of payment.
@@ -159,10 +168,29 @@ Get Loan Interest Cycle Dates
     ${UI_InterestCycleDueDate}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_Loan_CyclesforLoan_List}    ${CycleNumber}%Due Date%test  
     ${UI_InterestCycleStartDate}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_Loan_CyclesforLoan_List}    ${CycleNumber}%Start Date%test  
     
+Get Notice Details in Loan Notebook 
+    [Documentation]    This keyword returns Pricing Option and All In Rate in Loan Notebook
+    ...    @author:    makcamps    03NOV2020    Initial Create
+    Mx LoanIQ Select Window Tab    ${LIQ_Loan_Tab}    General
+    ${PricingOption}    Mx LoanIQ Get Data    ${LIQ_Loan_PricingOption_Text}    text%PricingOption
+    Mx LoanIQ Select Window Tab    ${LIQ_Loan_Tab}    Rates
+    ${AllInRate}    Mx LoanIQ Get Data    ${LIQ_Loan_AllInRate}    text%AllInRate
+    [Return]    ${PricingOption}    ${AllInRate}
+
+Get Notice Details in Interest Payment Notebook 
+    [Documentation]    This keyword returns Effective Date, All In Rate Amount, and Currency in Interest Payment Notebook
+    ...    @author:    makcamps    03NOV2020    Initial Create
+    
+    ${Effective_Date}    Mx LoanIQ Get Data    ${LIQ_InterestPayment_EffectiveDate_Textfield}    text%Effective_Date
+    ${AllInRate_Amount}    Mx LoanIQ Get Data    ${LIQ_InterestPayment_RequestedAmount_Textfield}    text%AllInRate_Amount
+    ${Loan_Currency}    Mx LoanIQ Get Data    ${LIQ_InterestPayment_Currency_Textfield}    text%Loan_Currency
+    [Return]    ${Effective_Date}    ${AllInRate_Amount}    ${Loan_Currency}
+    
 Compute Interest Payment Amount Per Cycle - Zero Cycle Due
     [Documentation]    This keyword is used in computing the first Projected Cycle Due of the Interest Payment and saves it to Excel.
     ...    @author: rtarayao
     ...    @update: amansuet    01JUN2020    - updated to align with automation standards, removed unused keywords, added take screenshot and added keyword pre-processing  
+    ...    @update: dahijara    12OCT2020    - Added screenshot
     [Arguments]    ${sCycleNumber}    ${sSystemDate}    ${sRuntime_Variable}=None
     
     ### Keyword Pre-processing ###
@@ -184,6 +212,7 @@ Compute Interest Payment Amount Per Cycle - Zero Cycle Due
     ${RateBasis}    Remove String    ${RateBasis}    Actual/
     ${RateBasis}    Convert To Integer    ${RateBasis}
     Mx LoanIQ Select Window Tab    ${LIQ_Loan_Tab}    Accrual
+    Take Screenshot    ${Screenshot_Path}/Screenshots/LoanIQ/LoanWindow_AcrualTab
     ${CycleDue}    Evaluate Interest Fee - Zero Cycle Due    ${PrincipalAmount}    ${Rate}    ${RateBasis}    ${CycleNumber}    ${SystemDate}
     Log    ${CycleDue}
     ${CycleDue}    Convert To Number    ${CycleDue}    2
@@ -285,6 +314,7 @@ Input Effective Date and Requested Amount for Loan Interest Payment
     [Documentation]    This keyword inputs the Effective date for the Loan Interest Payment.
     ...    @author: rtarayao
     ...    @update: amansuet    01JUN2020    - updated to align with automation standards, added take screenshot and added keyword pre-processing
+    ...    @update: dahijara    12OCT2020    - Added Tab action after entering effective date.
     [Arguments]    ${sInterestPayment_EffectiveDate}    ${sPayment_Amount}
     
     ### Keyword Pre-processing ###
@@ -296,6 +326,7 @@ Input Effective Date and Requested Amount for Loan Interest Payment
     Mx LoanIQ Click Element If Present    ${LIQ_Warning_OK_Button}
     Mx LoanIQ Click Element If Present    ${LIQ_Warning_Yes_Button}
     Mx LoanIQ Enter    ${LIQ_Payment_EffectiveDate_Textfield}    ${InterestPayment_EffectiveDate}
+    Mx Press Combination    Key.TAB
     Mx LoanIQ Click Element If Present    ${LIQ_Warning_Yes_Button} 
     Mx LoanIQ Click Element If Present    ${LIQ_Warning_Yes_Button}
     Take Screenshot    ${Screenshot_Path}/Screenshots/LoanIQ/InterestPaymentWindow
@@ -373,32 +404,24 @@ Generate Intent Notices for Payment
         
 Generate Intent Notices of an Interest Payment
     [Documentation]    This keyword generates Intent Notices of an Interest Payment
-    ...    @author: ghabal    
-    [Arguments]    ${LIQCustomer_ShortName}    ${Contact_Email}    ${Lender_LegalName}    ${InterestPaymentNotice_Status}   
+    ...    @author:		ghabal    
+    ...    @updated:	makcamps	03NOV2020	Updated to All Caps Legal Name for LIQ Field    
+    [Arguments]    ${LIQCustomer_ShortName}    ${Contact_Email}    ${Lender_LegalName}    ${InterestPaymentNotice_Status}
 
     mx LoanIQ activate    ${LIQ_Payment_Window}    
     Mx LoanIQ Select Window Tab    ${LIQ_Payment_Tab}    Workflow
     Mx LoanIQ Verify Text In Javatree    ${LIQ_Payment_WorkflowItems}    Generate Intent Notices%yes    
     Mx LoanIQ DoubleClick    ${LIQ_Payment_WorkflowItems}    Generate Intent Notices
     
-    ${status}    Run Keyword And Return Status    Mx LoanIQ Verify Runtime Property    ${LIQ_Notices_BorrowerDepositor_Checkbox}       value%1
-    Run Keyword If    ${status}==True    mx LoanIQ click element if present    ${LIQ_Notices_OK_Button}
-    
-    mx LoanIQ click element if present    ${LIQ_Notices_OK_Button}
-      
+    mx LoanIQ click element if present    ${LIQ_Question_Yes_Button}
     mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
     
-    ${status}    Run Keyword And Return Status    Mx LoanIQ Verify Runtime Property    ${LIQ_Notices_BorrowerDepositor_Checkbox}       value%1
-    Run Keyword If    ${status}==True    mx LoanIQ click element if present    ${LIQ_Notices_OK_Button}    
-        
-    mx LoanIQ click element if present    ${LIQ_Notices_OK_Button}
-      
-    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}    
-    
+    ${status}    Run Keyword And Return Status    Mx LoanIQ Verify Runtime Property    ${LIQ_Notices_BorrowerDepositor_Checkbox}       value%1    
+    Run Keyword If    ${status}==True    mx LoanIQ click element if present    ${LIQ_Notices_OK_Button}
     mx LoanIQ activate window    ${LIQ_Notice_Window}
-    ${NoticeStatus}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_Notice_Information_Table}    ${LIQCustomer_ShortName}%Status%test    
+    ${NoticeStatus}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_Notice_Information_Table}    ${LIQCustomer_ShortName.upper()}%Status%test    
     Log    ${NoticeStatus}
-    Mx LoanIQ Select Or Doubleclick In Tree By Text    ${LIQ_Notice_Information_Table}    ${LIQCustomer_ShortName}%s 
+    Mx LoanIQ Select Or Doubleclick In Tree By Text    ${LIQ_Notice_Information_Table}    ${LIQCustomer_ShortName.upper()}%s 
     
     mx LoanIQ click    ${LIQ_Notice_EditHighlightedNotice_Button}
     mx LoanIQ activate window    ${LIQ_Notice_IntentNotice_Window}   
@@ -407,8 +430,8 @@ Generate Intent Notices of an Interest Payment
     Should Be Equal    ${Contact_Email}    ${ContactEmail}          
     mx LoanIQ activate window    ${LIQ_Notice_IntentNotice_Window}
     
-    ${Verified_Customer}    Mx LoanIQ Get Data    JavaWindow("title:=Interest Payment Notice created.*","displayed:=1").JavaEdit("text:=${Lender_LegalName}")    Verified_Customer    
-    Should Be Equal As Strings    ${Lender_LegalName}    ${Verified_Customer}
+    ${Verified_Customer}    Mx LoanIQ Get Data    JavaWindow("title:=Interest Payment Notice created.*","displayed:=1").JavaEdit("text:=${Lender_LegalName.upper()}")    Verified_Customer    
+    Should Be Equal As Strings    ${Lender_LegalName.upper()}    ${Verified_Customer}
     Log    ${Verified_Customer}    
     ${Verified_Status}    Mx LoanIQ Get Data    JavaWindow("title:=Interest Payment Notice created.*","displayed:=1").JavaObject("tagname:=Group","text:=Status").JavaStaticText("text:=${InterestPaymentNotice_Status}")    Verified_Status    
     Should Be Equal As Strings    ${InterestPaymentNotice_Status}    ${Verified_Status}
@@ -472,9 +495,11 @@ Send Loan Interest Payment to Approval (Scenario 8)
     [Documentation]    This keyword is used to Send the Loan Payment for Approval.
     ...    @author: rtarayao
     ...    <update> @ghabal - updated keyword to accomodate new locators for Interest Payment window
+    ...    @update: dahijara    12OCT2020    - Added screenshot
     
     mx LoanIQ activate    ${LIQ_InterestPayment_Window}    
     Mx LoanIQ Select Window Tab    ${LIQ_InterestPayment_Tab}    Workflow
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/InterestPayment_Workflow
     Mx LoanIQ Select Or DoubleClick In Javatree    ${LIQ_Interest_WorkflowItems}    Send to Approval%s
     Mx LoanIQ DoubleClick    ${LIQ_Interest_WorkflowItems}    Send to Approval
                  
@@ -482,6 +507,7 @@ Send Loan Interest Payment to Approval (Scenario 8)
      \    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
      \    ${Warning_Status}    Run Keyword And Return Status    Mx LoanIQ Verify Object Exist    ${LIQ_Warning_Window}     VerificationData="Yes"
      \    Exit For Loop If    ${Warning_Status}==False
+     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/InterestPayment_Workflow
      
      Run Keyword And Continue On Failure    Verify Window    ${LIQ_Payment_AwaitingApproval_Status_Window} 
 
@@ -708,10 +734,12 @@ Approve Interest Payment (Scenario 8)
     [Documentation]    This keyword approves the Loan Interest Payment.
     ...    @author: rtarayao
     ...    <update> @ghabal - updated keyword to accomodate new locators for Interest Payment window     
+    ...    @update: dahijara    13OCT2020    - Added screenshot
    
     mx LoanIQ activate window    ${LIQ_InterestPayment_Window}    
     Mx LoanIQ Select Window Tab    ${LIQ_InterestPayment_Tab}    Workflow
     Mx LoanIQ Verify Text In Javatree    ${LIQ_Interest_WorkflowItems}    Approval%yes 
+    Take Screenshot    ${Screenshot_Path}/Screenshots/LoanIQ/InterestPaymentWindow_WorkflowTab
     Mx LoanIQ DoubleClick    ${LIQ_Interest_WorkflowItems}    Approval  
    
     mx LoanIQ click element if present    ${LIQ_Question_Yes_Button}
@@ -720,6 +748,7 @@ Approve Interest Payment (Scenario 8)
      \    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
      \    ${Warning_Status}    Run Keyword And Return Status    Mx LoanIQ Verify Object Exist    ${LIQ_Warning_Window}     VerificationData="Yes"
      \    Exit For Loop If    ${Warning_Status}==False  
+    Take Screenshot    ${Screenshot_Path}/Screenshots/LoanIQ/InterestPaymentWindow_WorkflowTab
 
 Navigate to Interest Payment Notebook from Loan Notebook
     [Documentation]    This keyword navigates the User to the Interest Payment Notebook from the Loan Notebook.
@@ -830,19 +859,22 @@ Release Payment (Scenario 8)
     [Documentation]    This keyword is used to Release the Payment made.
     ...    @author: rtarayao
     ...    <update> @ghabal - updated keyword to accomodate new locators for Interest Payment window
+    ...    @update: dahijara    13OCT2020    - Added sccreenshot
     
     mx LoanIQ activate    ${LIQ_InterestPayment_Window}
     Mx LoanIQ Select Window Tab    ${LIQ_InterestPayment_Tab}    Workflow
     Mx LoanIQ Verify Text In Javatree    ${LIQ_Interest_WorkflowItems}    Release%yes 
+    Take Screenshot    ${Screenshot_Path}/Screenshots/LoanIQ/Payment_WorkflowTab
     Mx LoanIQ DoubleClick    ${LIQ_Interest_WorkflowItems}    Release
     mx LoanIQ click element if present    ${LIQ_Question_Yes_Button}
     :FOR    ${i}    IN RANGE    1
      \    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
      \    ${Warning_Status}    Run Keyword And Return Status    Mx LoanIQ Verify Object Exist    ${LIQ_Warning_Window}     VerificationData="Yes"
      \    Exit For Loop If    ${Warning_Status}==False 
-     Run Keyword And Continue On Failure    Verify Window    ${LIQ_Payment_Released_Status_Window}
+    Run Keyword And Continue On Failure    Verify Window    ${LIQ_Payment_Released_Status_Window}
      
-     Run Keyword And Continue On Failure    Mx LoanIQ Verify Object Exist    ${LIQ_Payment_WorkflowItems_Release_Null}     VerificationData="Yes"
+    Run Keyword And Continue On Failure    Mx LoanIQ Verify Object Exist    ${LIQ_Payment_WorkflowItems_Release_Null}     VerificationData="Yes"
+    Take Screenshot    ${Screenshot_Path}/Screenshots/LoanIQ/Payment_WorkflowTab
    
 ### Scenario 2 & 4
 Initiate Loan Interest Payment - S2/S4
@@ -1026,10 +1058,12 @@ Open Loan Interest Payment Notebook (Scenario 8)
 Validation on Interest Payment Notebook - Events Tab
     [Documentation]    This keyword is for validates Interest Payment Notebook Events Tab.
     ...    @author: ghabal
+    ...    @update: dahijara    13OCT2020    - Added screenshot
     
     mx LoanIQ activate    ${LIQ_InterestPayment_Window}
     Mx LoanIQ Select Window Tab    ${LIQ_InterestPayment_Tab}    Events
     Mx LoanIQ Verify Text In Javatree    ${LIQ_Payment_Events_JavaTree}    Released%yes 
+    Take Screenshot    ${Screenshot_Path}/Screenshots/LoanIQ/Payment_EventsTab
 
 Navigate to Payment Workflow and Proceed With Transaction
     [Documentation]    This keyword is used in select an item in workflow for Payment Notebook.
@@ -1152,3 +1186,8 @@ Release Reverse Interest Payment
     Validate if Question or Warning Message is Displayed
 
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/ReverseInterestPayment_WorkflowTab_Release
+
+Close Interest Payment Notice Window
+    [Documentation]    This keyword closes Interest Payment Notice Window. 
+    ...    @author: dahijara    12OCT2020    - Initial create
+    mx LoanIQ click    ${LIQ_InterestPayment_Notice_Exit_Button}
