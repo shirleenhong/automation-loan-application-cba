@@ -1,0 +1,4 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<executeUpdateFundingRate xmlns="http://api.ws.liq.misys.com/">
+  <UpdateFundingRate baseRate="LIBOR" currency="EUR" effectiveDate="14-Jan-2020" fundingDesk="AUD" rate="0.0424" repricingFrequency="1M" version="1.0" xmlns="" />
+</executeUpdateFundingRate>

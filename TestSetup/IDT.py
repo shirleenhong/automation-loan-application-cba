@@ -79,6 +79,7 @@ RESPONSE_MECHANISM_INSTANCE = "responsemechanism_1.3.0"
 DWE_NOTIFICATION_INSTANCE = "dwe_notification_1.3.0"
 SAPWUL_INSTANCE = 'CustomCBAPush_1.3.0'
 TL_CAL_ACK_MESSAGE_SOURCENAME = 'tl_ack_message_splitter_cal'
+TL_BASE_ACK_MESSAGE_SOURCENAME = 'tl_ack_message_splitter_base'
 CBACorrespUpdateMQ_Instance = 'CustomCBAPush_v1.3.0'
 FFC1CMUpdateSourceMQ_Instance = 'CustomInterface'
 
@@ -110,6 +111,14 @@ PARTY_SUPERVISOR_USERNAME  = 'superit'
 PARTY_SUPERVISOR_PASSWORD = 'superit'
 PARTY_HTML_USER_CREDENTIALS = 'misysroot%5Cbrad:welcome%4099'
 PARTY_HTML_APPROVER_CREDENTIALS = 'misysroot%5Csuperit:welcome%4099'
+
+### IDT PARTY SERVER ###
+DBSERVICENAME_PTY = 'PTY203R'
+DBUSERNAME_PTY = 'system'
+DBPASSWORD_PTY = 'password'
+DBHOST_PTY = 'mancsleverg0017'
+DBPORT_PTY = '1521'
+DBUR_PTY = 'jdbc:oracle:thin:@mancsleverg0017:1521:PTY203R'
 
 ###FFC Credential###
 MDM_FFC_Username ='admin'

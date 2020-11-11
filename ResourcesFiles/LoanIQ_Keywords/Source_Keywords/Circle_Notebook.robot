@@ -15,6 +15,7 @@ Add Lender and Location
     ...    @update: amansuet    23APR2020    Updated to align with automation standards and added keyword pre processing
     ...    @update: dahijara    01JUL2020    - added keyword processing.
     ...    @update: dahijara    08JUL2020    - Added optional argument for runtime variable
+    ...    @update: clanding    10NOV2020    - added mx LoanIQ activate    ${LIQ_DealNotebook_Window} after clicking ${LIQ_InquiryMode_Button}
     [Arguments]    ${sDeal_Name}    ${sLender_Name}    ${sLenderLocation}    ${sRiskBook_ExpenseCode}    ${sPrimaries_TransactionType}    ${sRunTimeVar_ExpCodeDescription}=None
 
     ### GetRuntime Keyword Pre-processing ###
@@ -26,6 +27,7 @@ Add Lender and Location
     
     mx LoanIQ activate window    ${LIQ_DealNotebook_Window}
     mx LoanIQ click element if present    ${LIQ_InquiryMode_Button}
+    mx LoanIQ activate    ${LIQ_DealNotebook_Window}
     mx LoanIQ select    ${LIQ_DealNotebook_DistributionPrimaries_Menu}
     mx LoanIQ activate window    ${LIQ_PrimariesList_Window}
     mx LoanIQ click    ${LIQ_PrimariesList_AddButton}

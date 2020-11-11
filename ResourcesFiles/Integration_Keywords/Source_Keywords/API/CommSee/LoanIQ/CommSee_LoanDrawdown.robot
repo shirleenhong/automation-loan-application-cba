@@ -6,6 +6,8 @@ Create Loan Drawdown for Syndicated Deal - ComSee
     [Documentation]    This will serve as a High Level keyword for the creation of Loan Drawdown specific fow Syndicated Deal
     ...    @author: rtarayao    16SEP2019    - Duplicate high level keyword from Functional Scenario 2.
     ...    @update: cfrancis    14OCT2020    - moved getting system date before Search for Deal keyword
+    ...    @update: clanding    10NOV2020    - added argument &{ExcelPath}[Outstanding_Currency] in Get Host Bank Cash in Cashflow
+    ...                                      - fix releasing of cashflow
     [Arguments]    ${ExcelPath}
 
     ##Login to Original User###
@@ -35,7 +37,7 @@ Create Loan Drawdown for Syndicated Deal - ComSee
     Verify if Status is set to Do It    &{ExcelPath}[Lender1_ShortName]
     
     ##Get Transaction Amount for Cashflow###
-    ${HostBankShare}    Get Host Bank Cash in Cashflow
+    ${HostBankShare}    Get Host Bank Cash in Cashflow    &{ExcelPath}[Outstanding_Currency]
     ${BorrowerTranAmount}    Get Transaction Amount in Cashflow    &{ExcelPath}[Borrower_ShortName]
     ${Lend1TranAmount}    Get Transaction Amount in Cashflow    &{ExcelPath}[Lender1_ShortName]
     ${Lend2TranAmount}    Get Transaction Amount in Cashflow    &{ExcelPath}[Lender2_ShortName]
@@ -84,7 +86,6 @@ Create Loan Drawdown for Syndicated Deal - ComSee
     ##Cashflow Notebook - Release Cashflows###
     Navigate Notebook Workflow    ${LIQ_InitialDrawdown_Window}    ${LIQ_InitialDrawdown_Tab}    ${LIQ_Drawdown_WorkflowItems}    Release 
     Release Cashflow Based on Remittance Instruction    &{ExcelPath}[Remittance_Instruction]    &{ExcelPath}[Borrower_ShortName]|&{ExcelPath}[Lender1_ShortName]|&{ExcelPath}[Lender2_ShortName]
-    # # Release Cashflow    &{ExcelPath}[Borrower_ShortName]|&{ExcelPath}[Lender1_ShortName]
     Release Loan Drawdown
     
     ###Cashflow Notebook - Complete Cashflows###
@@ -93,8 +94,8 @@ Create Loan Drawdown for Syndicated Deal - ComSee
     Verify if Method has Remittance Instruction    &{ExcelPath}[Lender2_ShortName]    &{ExcelPath}[Remittance3_Description]    &{ExcelPath}[Remittance3_Instruction]
     Verify if Status is set to Do It    &{ExcelPath}[Borrower_ShortName]  
     Verify if Status is set to Do It    &{ExcelPath}[Lender1_ShortName]
-    # Release Cashflow    &{ExcelPath}[Lender2_ShortName]
-    # Release Cashflow Based on Remittance Instruction    &{ExcelPath}[Borrower1_RemittanceInstruction]    &{ExcelPath}[Borrower1_ShortName]|&{ExcelPath}[Lender1_ShortName]
+    Release Cashflow    &{ExcelPath}[Lender1_ShortName]    release
+    Navigate Notebook Workflow    ${LIQ_InitialDrawdown_Window}    ${LIQ_InitialDrawdown_Tab}    ${LIQ_Drawdown_WorkflowItems}    Release
     
     Close All Windows on LIQ
     Logout from Loan IQ
