@@ -170,6 +170,7 @@ Setup Multi-Currency SBLC Facility - ComSee
 Setup Fees for Term Facility - ComSee
     [Documentation]    Sets up the Ongoing Fees and Interests in a Term Facility.
     ...    @author: rtarayao    26AUG2019    - initial create
+    ...    @update: clanding    10NOV2020    - added closing of Option Condition
     [Arguments]    ${ComSeeDataSet}
     mx LoanIQ activate    ${LIQ_FacilityNotebook_Window}
     Mx LoanIQ Select Window Tab    ${LIQ_FacilityNotebook_Tab}    Pricing
@@ -195,7 +196,7 @@ Setup Fees for Term Facility - ComSee
     Validate Ongoing Fee or Interest
     mx LoanIQ click element if present    ${LIQ_FacilityPricing_OngoingFeeInterest_OK_Button}
     
-    ##Interest Pricing###
+    ###Interest Pricing###
     mx LoanIQ click element if present    ${LIQ_FacilityPricing_ModifyInterestPricing_Button}
     Validate Facility Pricing Window    &{ComSeeDataSet}[Facility_Name]    Interest
     Add Facility Interest    &{ComSeeDataSet}[Interest_AddItem]    &{ComSeeDataSet}[Interest_OptionName1]    &{ComSeeDataSet}[Interest_RateBasis]
@@ -204,6 +205,8 @@ Setup Fees for Term Facility - ComSee
     ...    &{ComSeeDataSet}[Interest_SpreadType1]    &{ComSeeDataSet}[Interest_SpreadValue2]    &{ComSeeDataSet}[Interest_BaseRateCode2]
     Add Facility Interest    &{ComSeeDataSet}[Interest_AddItem]    &{ComSeeDataSet}[Interest_OptionName3]    &{ComSeeDataSet}[Interest_RateBasis]
     ...    &{ComSeeDataSet}[Interest_SpreadType1]    &{ComSeeDataSet}[Interest_SpreadValue1]    &{ComSeeDataSet}[Interest_BaseRateCode3]
+    Close Option Condition Window
+    
     Validate Ongoing Fee or Interest
     mx LoanIQ click element if present    ${LIQ_FacilityPricing_OngoingFeeInterest_OK_Button}
     Validate Facility Pricing Rule Items    &{ComSeeDataSet}[Facility_PricingRuleOption1]
