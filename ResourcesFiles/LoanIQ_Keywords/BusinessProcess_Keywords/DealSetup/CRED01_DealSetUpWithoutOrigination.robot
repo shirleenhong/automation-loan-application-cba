@@ -1354,6 +1354,7 @@ Setup RPA Internal Deal
     Run Keyword If    '${SCENARIO}'=='4'    Write Data To Excel    CRED07_UpfrontFee_Payment    Deal_Name    ${rowid}    ${Deal_Name}
     Run Keyword If    '${SCENARIO}'=='5'    Run Keywords    Write Data To Excel    CRED07_UpfrontFee_Payment    Deal_Name    ${rowid}    ${Deal_Name}
     ...    AND    Write Data To Excel    TRPO06_ExternalParticipation    Deal_Name    ${rowid}    ${Deal_Name}
+    ...    AND    Write Data To Excel    TRPO06_ExternalParticipation    Expected_CloseDate    ${rowid}    ${SystemDate}
           
     ###New Deal Screen###   
     Create New Deal    ${Deal_Name}    ${Deal_Alias}    &{ExcelPath}[Deal_Currency]    &{ExcelPath}[Deal_Department]    &{ExcelPath}[Deal_SalesGroup]
