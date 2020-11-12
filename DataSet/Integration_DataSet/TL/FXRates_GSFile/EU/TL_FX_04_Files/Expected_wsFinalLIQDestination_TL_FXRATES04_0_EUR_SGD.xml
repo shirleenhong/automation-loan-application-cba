@@ -1,4 +1,0 @@
-<?xml version='1.0' encoding='UTF-8'?>
-<executeUpdateCrossCurrency xmlns="http://api.ws.liq.misys.com/">
-  <UpdateCrossCurrency currency="SGD" date="16-Oct-2021" fundingDesk="EUR" rate="0.008951508069516" version="1.0" xmlns="" />
-</executeUpdateCrossCurrency>

@@ -167,7 +167,7 @@ Validate FFC for TL FX Rate Success with Multiple Files
     ${InputGSFile_Count}    Get Length    ${InputGSFile_List}
     Wait Until Element Is Visible    ${FFC_Dashboard}    30s
     ${aHeaderRefNameList}    Create List    ${REQUESTS_ID}
-    ${aExpectedRefList}    Create List
+    ${aExpectedRefList}    Create List    ${GSFILENAME_WITHTIMESTAMP}
     Append to List    ${aExpectedRefList}    ${FileNameWithTimeStamp}
     Go to Dashboard and Click Source API Name    ${FXRATES_ACK_MESSAGE_SPLITTER}    ${CUSTOM_INTERFACE_INSTANCE}
     ${ColumnIndex}    Filter by Multiple Reference Headers and Values and Return Column Index    ${aHeaderRefNameList}    ${aExpectedRefList}
@@ -223,7 +223,7 @@ Validate Multiple Files for Success on TL FX Rates in FFC
     @{XMLExcelFile_NoExt}    Split String    ${sXMLExcelFile}    .
     ${sXMLExcelFile_NoExt}    Set Variable    @{XMLExcelFile_NoExt}[0]
     :FOR    ${Index}    IN RANGE    ${InputGSFile_Count}
-    \    ${FileNameWithTimeStamp}    Get From List    ${GSFILENAME_WITHTIMESTAMP}    ${Index}
+    \    ${FileNameWithTimeStamp}    Get From List    ${ARCHIVE_GSFILENAME_LIST}    ${Index}
     \    Validate FFC for TL FX Rate Success with Multiple Files    ${sInputFilePath}    ${sInputFileName}_${Index}    ${sInputXML}_${Index}    ${sOutputFilePath}    ${sOutputFileName}_${Index}    ${sOutputXML}_${Index}
          ...    ${sXMLExcelFile_NoExt}${Index}.${XLSX}    ${fundingDeskStatus}    ${sResponse}_${Index}    ${sResponseMechanism}_${Index}    ${Index}    ${sInputGSFile}    ${FileNameWithTimeStamp}    ${sFundingDesk}
     Set Global Variable    ${COUNTER}    ${Index}
