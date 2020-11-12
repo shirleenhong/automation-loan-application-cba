@@ -52,6 +52,7 @@ Transform Base Rate CSV Data to XLS File Readable for JSON Creation
     ...    @update: jdelacru    29SEP2020    - revert to the original steps in transforming csv to xls
     ...    @update: mcastro     09OCT2020    - added condition for Empty ${Row_Val_List}
     ...    @update: jdelacru    16OCT2020    - added condition in writing LIBOR Baserate Code for EU Entity
+    ...    @update: fluberio    10NOV2020    - added condition to handle multiple currency 
     [Arguments]    ${sCSV_FilePath}    ${sTransformedData_FilePath}    ${sTransformedDataTemplate_FilePath}    
     
     ${CSV_Content_List}    Read Csv As List    ${dataset_path}${sCSVFilePath}
@@ -59,6 +60,7 @@ Transform Base Rate CSV Data to XLS File Readable for JSON Creation
     ${BaseRateCode_prev}    Set Variable
     ${GS_INSTR_TENOR_prev}    Set Variable
     ${GS_VENDOR_PUBLISH_DATE_prev}    Set Variable
+    ${GS_INSTR_CCY_prev}    Set Variable
     
     ${Zone2_Curr_Date}    Get LoanIQ Business Date per Zone and Return    Zone2
     ${Zone3_Curr_Date}    Get LoanIQ Business Date per Zone and Return    Zone3
@@ -96,37 +98,39 @@ Transform Base Rate CSV Data to XLS File Readable for JSON Creation
     \    ${GS_VENDOR_PUBLISH_DATE_curr}    Get From Dictionary    ${ROW_${INDEX}}    GS_VENDOR_PUBLISH_DATE
     \    ${GS_VALUE_DATE}    Get From Dictionary    ${ROW_${INDEX}}    GS_VALUE_DATE
     \    ${GS_PROCESSING_DATE}    Get From Dictionary    ${ROW_${INDEX}}    GS_PROCESSING_DATE
-    \    ${GS_INSTR_CCY}    Get From Dictionary    ${ROW_${INDEX}}    GS_INSTR_CCY
+    \    ${GS_INSTR_CCY_curr}    Get From Dictionary    ${ROW_${INDEX}}    GS_INSTR_CCY
     \
     \    ${Same_Rate_Code}    Run Keyword And Return Status    Should Be Equal    ${BaseRateCode_prev}    ${BaseRateCode_curr}
     \    ${Same_Tenor}    Run Keyword And Return Status    Should Be Equal    ${GS_INSTR_TENOR_prev}    ${GS_INSTR_TENOR_curr} 
-    \    ${Same_Date}    Run Keyword And Return Status    Should Be Equal    ${GS_VENDOR_PUBLISH_DATE_prev}    ${GS_VENDOR_PUBLISH_DATE_curr}          
+    \    ${Same_Date}    Run Keyword And Return Status    Should Be Equal    ${GS_VENDOR_PUBLISH_DATE_prev}    ${GS_VENDOR_PUBLISH_DATE_curr}   
+    \    ${Same_Currency}    Run Keyword And Return Status    Should Be Equal    ${GS_INSTR_CCY_prev}    ${GS_INSTR_CCY_curr}        
     \    
     \    ${BaseRateCode_prev}    Set Variable    ${BaseRateCode_curr}
     \    ${GS_INSTR_TENOR_prev}    Set Variable    ${GS_INSTR_TENOR_curr}
     \    ${GS_VENDOR_PUBLISH_DATE_prev}    Set Variable    ${GS_VENDOR_PUBLISH_DATE_curr}
+    \    ${GS_INSTR_CCY_prev}    Set Variable    ${GS_INSTR_CCY_curr}
     \    
     \    ${CONFIG_PRICE_TYPE}    Convert Input Price Type to Config Price Type and Return Config Price Type    ${GS_INSTR_PRC_TYPE}
     \    
-    \    ${Counter}    Run Keyword If    ${Same_Rate_Code}==True and ${Same_Tenor}==True and ${Same_Date}==True    Evaluate    ${Counter}+1
+    \    ${Counter}    Run Keyword If    ${Same_Rate_Code}==True and ${Same_Tenor}==True and ${Same_Date}==True and '${Same_Currency}'==True    Evaluate    ${Counter}+1
          ...    ELSE    Set Variable    ${Counter}
     \    
-    \    ${New_INDEX}    Run Keyword If    ${Same_Rate_Code}==True and ${Same_Tenor}==True and ${Same_Date}==True and '${CONFIG_PRICE_TYPE}'=='MIDRATE'    Set Variable    ${INDEX_ForGrouping}    
-         ...    ELSE IF    ${Same_Rate_Code}==True and ${Same_Tenor}==True and ${Same_Date}==True and '${CONFIG_PRICE_TYPE}'=='BUYRATE'    Set Variable    ${INDEX_ForGrouping}
-         ...    ELSE IF    ${Same_Rate_Code}==True and ${Same_Tenor}==True and ${Same_Date}==True and '${CONFIG_PRICE_TYPE}'=='SELLRATE'    Set Variable    ${INDEX_ForGrouping}
-         ...    ELSE IF    ${Same_Rate_Code}==True and ${Same_Tenor}==True and ${Same_Date}==True and '${CONFIG_PRICE_TYPE}'=='LASTRATE'    Set Variable    ${INDEX_ForGrouping}
+    \    ${New_INDEX}    Run Keyword If    ${Same_Rate_Code}==True and ${Same_Tenor}==True and ${Same_Date}==True and '${CONFIG_PRICE_TYPE}'=='MIDRATE' and '${Same_Currency}'==True    Set Variable    ${INDEX_ForGrouping}    
+         ...    ELSE IF    ${Same_Rate_Code}==True and ${Same_Tenor}==True and ${Same_Date}==True and '${CONFIG_PRICE_TYPE}'=='BUYRATE' and '${Same_Currency}'==True    Set Variable    ${INDEX_ForGrouping}
+         ...    ELSE IF    ${Same_Rate_Code}==True and ${Same_Tenor}==True and ${Same_Date}==True and '${CONFIG_PRICE_TYPE}'=='SELLRATE' and '${Same_Currency}'==True    Set Variable    ${INDEX_ForGrouping}
+         ...    ELSE IF    ${Same_Rate_Code}==True and ${Same_Tenor}==True and ${Same_Date}==True and '${CONFIG_PRICE_TYPE}'=='LASTRATE' and '${Same_Currency}'==True    Set Variable    ${INDEX_ForGrouping}
          ...    ELSE IF    '${INDEX}'=='1'    Set Variable    ${INDEX}
          ...    ELSE    Evaluate    ${INDEX}-${Counter}-${Offset}
     \   
-    \    Run Keyword If    ${Same_Rate_Code}==True and ${Same_Tenor}==True and ${Same_Date}==True and '${CONFIG_PRICE_TYPE}'=='MIDRATE'    Write Data to Excel Using Row Index    Transformed_BaseRate    midRate    ${New_INDEX}    ${GS_INSTR_PRICE}    ${dataset_path}${sTransformedData_FilePath}
-         ...    ELSE IF    ${Same_Rate_Code}==True and ${Same_Tenor}==True and ${Same_Date}==True and '${CONFIG_PRICE_TYPE}'=='BUYRATE'    Write Data to Excel Using Row Index    Transformed_BaseRate    buyRate    ${New_INDEX}    ${GS_INSTR_PRICE}    ${dataset_path}${sTransformedData_FilePath}
-         ...    ELSE IF    ${Same_Rate_Code}==True and ${Same_Tenor}==True and ${Same_Date}==True and '${CONFIG_PRICE_TYPE}'=='SELLRATE'    Write Data to Excel Using Row Index    Transformed_BaseRate    sellRate    ${New_INDEX}    ${GS_INSTR_PRICE}    ${dataset_path}${sTransformedData_FilePath}
-         ...    ELSE IF    ${Same_Rate_Code}==True and ${Same_Tenor}==True and ${Same_Date}==True and '${CONFIG_PRICE_TYPE}'=='LASTRATE'    Write Data to Excel Using Row Index    Transformed_BaseRate    lastRate    ${New_INDEX}    ${GS_INSTR_PRICE}    ${dataset_path}${sTransformedData_FilePath}
+    \    Run Keyword If    ${Same_Rate_Code}==True and ${Same_Tenor}==True and ${Same_Date}==True and '${CONFIG_PRICE_TYPE}'=='MIDRATE' and '${Same_Currency}'==True    Write Data to Excel Using Row Index    Transformed_BaseRate    midRate    ${New_INDEX}    ${GS_INSTR_PRICE}    ${dataset_path}${sTransformedData_FilePath}
+         ...    ELSE IF    ${Same_Rate_Code}==True and ${Same_Tenor}==True and ${Same_Date}==True and '${CONFIG_PRICE_TYPE}'=='BUYRATE' and '${Same_Currency}'==True    Write Data to Excel Using Row Index    Transformed_BaseRate    buyRate    ${New_INDEX}    ${GS_INSTR_PRICE}    ${dataset_path}${sTransformedData_FilePath}
+         ...    ELSE IF    ${Same_Rate_Code}==True and ${Same_Tenor}==True and ${Same_Date}==True and '${CONFIG_PRICE_TYPE}'=='SELLRATE' and '${Same_Currency}'==True    Write Data to Excel Using Row Index    Transformed_BaseRate    sellRate    ${New_INDEX}    ${GS_INSTR_PRICE}    ${dataset_path}${sTransformedData_FilePath}
+         ...    ELSE IF    ${Same_Rate_Code}==True and ${Same_Tenor}==True and ${Same_Date}==True and '${CONFIG_PRICE_TYPE}'=='LASTRATE' and '${Same_Currency}'==True    Write Data to Excel Using Row Index    Transformed_BaseRate    lastRate    ${New_INDEX}    ${GS_INSTR_PRICE}    ${dataset_path}${sTransformedData_FilePath}
          ...    ELSE IF    ${Row_Val_List} != [',,,,,,,,,,']   Get Single Row value from CSV File and Write to Excel for Base Rate    ${ROW_${INDEX}}    ${New_INDEX}    ${Zone2_Curr_Date}    ${Zone3_Curr_Date}    ${CONFIG_PRICE_TYPE}    ${dataset_path}${sTransformedData_FilePath}
     \    
     \    ${Index_LMIR}    Evaluate    ${New_INDEX}+1
     \    
-    \    Run Keyword If    '${BaseRateCode_curr}'=='LIBOR' and '${CONFIG_PRICE_TYPE}'=='BUYRATE' and '${GS_INSTR_TENOR_curr}'=='001MNTH' and '${GS_INSTR_CCY}'=='AUD'    Get Single Row value from CSV File and Write to Excel for Base Rate    ${ROW_${INDEX}}    
+    \    Run Keyword If    '${BaseRateCode_curr}'=='LIBOR' and '${CONFIG_PRICE_TYPE}'=='BUYRATE' and '${GS_INSTR_TENOR_curr}'=='001MNTH' and '${GS_INSTR_CCY_curr}'=='AUD'    Get Single Row value from CSV File and Write to Excel for Base Rate    ${ROW_${INDEX}}    
          ...    ${Index_LMIR}    ${Zone2_Curr_Date}    ${Zone3_Curr_Date}    ${CONFIG_PRICE_TYPE}    ${dataset_path}${sTransformedData_FilePath}    LMIR
     \    
     \    ${INDEX_ForGrouping}    Set Variable    ${New_INDEX}
@@ -544,12 +548,13 @@ Update Expected XML Elements for wsFinalLIQDestination - Base Rate TL
     ...    @update: jdelacru    11AUG2020    - added new argument ${sTemplateFilePath}
     ...    @update: jdelacru    21SEP2020    - using division method in evaluating the iRate instead of multiplying it to 0.01
     ...    @update: jdelacru    06OCT2020    - used the keyword Multiply Two Values With Exact Precision to get the actual value of rates
+    ...    @update: fluberio    10NOV2020    - added currency in XML File name
     [Arguments]    ${sInputFilePath}    ${sFileName}    ${sBaseCode}    ${sCurrency}    ${sRateEffDate}    ${sRateTenor}    ${sSubentityVal}    ${iRate}    ${sTemplateFilePath}
     
     ${sRateTenor}    Run Keyword If    '${sRateTenor}'==''    Set Variable    None
     ...    ELSE    Set Variable    ${sRateTenor}    
     
-    ${Expected_wsFinalLIQDestination}    Set Variable    ${dataset_path}${sInputFilePath}${sFileName}_${sBaseCode}_${sRateTenor}_${sSubentityVal}.xml
+    ${Expected_wsFinalLIQDestination}    Set Variable    ${dataset_path}${sInputFilePath}${sFileName}_${sBaseCode}_${sRateTenor}_${sSubentityVal}_${sCurrency}.xml
     ${template}    Set Variable    ${dataset_path}${sTemplateFilePath}template_TextJMS_baserate_tl.xml
     Delete File If Exist    ${Expected_wsFinalLIQDestination}
     Create File    ${Expected_wsFinalLIQDestination}    
@@ -620,6 +625,7 @@ Create Individual Expected JSON for Base Rate TL
     ...    @author: clanding    18MAR2019    - initial create
     ...    @update: jdelacru    21SEP2020    - added ${val_subEntity} variable to correct the filename of generated json file
     ...    @update: mcastro     09OCT2020    - added condition for empty row on TransformedDataFile_BaseRate
+    ...    @update: fluberio    10NOV2020    - added currency upon creation of Json File
     [Arguments]    ${sTransformedData_FilePath}    ${sInputJsonFile}
     
     Open Excel    ${dataset_path}${sTransformedData_FilePath}    
@@ -630,6 +636,7 @@ Create Individual Expected JSON for Base Rate TL
     \    ${dTransformedData}    Create Dictionary Using Transformed Data and Return    ${dataset_path}${sTransformedData_FilePath}    ${INDEX}
     \    ${val_baseRateCode}    Get From Dictionary    ${dTransformedData}    baseRateCode
     \    ${val_rateTenor}    Get From Dictionary    ${dTransformedData}    rateTenor
+    \    ${val_currency}    Get From Dictionary    ${dTransformedData}    currency
     \    ${val_rateTenor}    Run Keyword If    '${val_rateTenor}'==''    Set Variable    None
          ...    ELSE    Set Variable    ${val_rateTenor}
     \
@@ -639,7 +646,7 @@ Create Individual Expected JSON for Base Rate TL
     \    Log    ${converted_json}
     \    
     \    Delete File If Exist    ${dataset_path}${sInputJsonFile}_${val_baseRateCode}_${val_rateTenor}.json
-    \    Run Keyword If    '${val_baseRateCode}'!='None' and '${val_rateTenor}'!='None'    Create File    ${dataset_path}${sInputJsonFile}_${val_baseRateCode}_${val_rateTenor}.json    ${converted_json}
+    \    Run Keyword If    '${val_baseRateCode}'!='None' and '${val_rateTenor}'!='None'    Create File    ${dataset_path}${sInputJsonFile}_${val_baseRateCode}_${val_rateTenor}_${val_currency}.json    ${converted_json}
     \    
     \    Exit For Loop If    ${INDEX}==${Row_Count}
     
