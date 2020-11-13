@@ -20,3 +20,7 @@ Primary Allocation - CRED01
 Close Deal - CRED01
     [Tags]    03 Close Deal - CRED01
     Mx Execute Template With Multiple Data    RPA Deal Approval and Close    ${ExcelPath}    ${rowid}    SYND02_PrimaryAllocation
+
+Charge Upfront Fee - CRED07
+    [Tags]    03 Charge Upfront Fee - CRED07
+    Mx Execute Template With Multiple Data    Initiate Upfront Fee Payment    ${ExcelPath}    ${rowid}    CRED07_UpfrontFee_Payment
