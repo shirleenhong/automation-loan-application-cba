@@ -522,11 +522,14 @@ Compute Lender Share Transaction Amount - Repricing
     [Documentation]    This keyword will compute the Lender Share transaction based on the defined percentage in Primaries
     ...    @author: amansuet    17JUN2020    - initial create
     ...    @update: amansuet    18JUN2020    - added keyword pre-processing
-    [Arguments]    ${iTranAmount}    ${iLenderSharePct}    ${sRuntimeVar_LenderShareTranAmt}=None
+    [Arguments]    ${iTranAmount}    ${iLenderSharePct}    ${sRuntimeVar_LenderShareTranAmt}=None    ${sScenario}=None    ${sEntity}=None    ${sCurrency}=None
     
     ### Keyword Pre-processing ###
     ${TranAmount}    Acquire Argument Value    ${iTranAmount}
     ${LenderSharePct}    Acquire Argument Value    ${iLenderSharePct}
+    ${Scenario}    Acquire Argument Value    ${sSCENARIO}
+    ${Entity}    Acquire Argument Value    ${sEntity}
+    ${Currency}    Acquire Argument Value    ${sCurrency}
 
     Log    ${TranAmount}
     Log    ${LenderSharePct}
@@ -535,6 +538,8 @@ Compute Lender Share Transaction Amount - Repricing
     ${LenderSharePct}    Remove Comma and Convert to Number    ${LenderSharePct}
     ${LenderSharePct}    Evaluate    ${LenderSharePct}/100
     ${iLenderShareTranAmt}    Evaluate    ${TranAmount}*${LenderSharePct}
+    ${iLenderShareTranAmt}    Run Keyword If   '${Scenario}'=='4' and '${Entity}' == 'EU' and '${Currency}'=='GBP'    Return Given Number with Specific Decimal Places without Rounding    ${iLenderShareTranAmt}    2
+    ...    ELSE    Set Variable    ${iLenderShareTranAmt}
     ${iLenderShareTranAmtTwoDecimalPlaces}    Evaluate    "{0:,.2f}".format(${iLenderShareTranAmt})
     ${sLenderShareTranAmt}    Convert To String    ${iLenderShareTranAmtTwoDecimalPlaces}
     Log    ${sLenderShareTranAmt}

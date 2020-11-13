@@ -24,6 +24,7 @@ Create Comprehensive Repricing for Non-Agent Syndicated Deal
     ...    @update: amansuet    18JUN2020    - Replaced hardcoded values and added new keyword to get accurate Cycle Due for trans amount calculation
     ...    @update: amansuet    22JUN2020    - Updated base on the 'Release Cashflow Based on Remittance Instruction' keyword updates
     ...    @update: clanding    13AUG2020    - Updated hard coded values to global variables/dataset value
+    ...    @update: fluberio    11NOV2020    - Added Condition for Scenario 4 of EU
     [Arguments]    ${ExcelPath}
     
     ###Login to Original User###
@@ -49,15 +50,18 @@ Create Comprehensive Repricing for Non-Agent Syndicated Deal
     ${NewLoanAlias}    ${IncreaseAmount}    Add Rollover Conversion to New    &{ExcelPath}[Pricing_Option]    &{ExcelPath}[Base_Rate]    &{ExcelPath}[Loan_NewOutstanding]
     
     ### Compute Lender Share Trans Amount for Cash Flow ###
-    ${ComputedLender_InterestPaymentTransAmount}    Compute Lender Share Transaction Amount - Repricing    ${Calculated_CycleDue}    &{ExcelPath}[LenderSharePc1]
+    ${ComputedLender_InterestPaymentTransAmount}    Run Keyword If   '${SCENARIO}'=='4' and '&{ExcelPath}[Entity]' == 'EU'    Compute Lender Share Transaction Amount - Repricing    ${Calculated_CycleDue}    &{ExcelPath}[LenderSharePc1]    sScenario=${SCENARIO}    sEntity=&{ExcelPath}[Entity]    sCurrency=&{ExcelPath}[Loan_Currency]
+    ...    ELSE    Compute Lender Share Transaction Amount - Repricing    ${Calculated_CycleDue}    &{ExcelPath}[LenderSharePc1]    sScenario=${SCENARIO}    sEntity=&{ExcelPath}[Entity]
     ${ComputedLender_IncreaseTransAmount}    Compute Lender Share Transaction Amount - Repricing    ${IncreaseAmount}    &{ExcelPath}[LenderSharePc1]
     
-    ### Cashflows Notebook - Create Cashflows ###
+    # ### Cashflows Notebook - Create Cashflows ###
     Navigate to Create Cashflow for Loan Repricing
     Verify if Method has Remittance Instruction    &{ExcelPath}[Lender1_ShortName]    &{ExcelPath}[Remittance1_Description]    &{ExcelPath}[Remittance1_Instruction]    ${ComputedLender_IncreaseTransAmount}    &{ExcelPath}[Loan_Currency]
     Verify if Method has Remittance Instruction    &{ExcelPath}[Lender1_ShortName]    &{ExcelPath}[Remittance1_Description]    &{ExcelPath}[Remittance1_Instruction]    ${ComputedLender_InterestPaymentTransAmount}    &{ExcelPath}[Loan_Currency]
     
     Create Cashflow    &{ExcelPath}[Lender1_ShortName]    ${RELEASE_TRANSACTION}
+    
+    ${rowid}    Run Keyword If   '${SCENARIO}'=='4' and '&{ExcelPath}[Entity]' == 'EU'    Get the Row Id for Given Pricing Option    &{ExcelPath}[Pricing_Option]
 
     ${SysDate}    Get System Date
     ${AdjustedDueDate}    Add Time from From Date and Returns Weekday    ${SysDate}    &{ExcelPath}[Add_To_SysDate]
@@ -66,26 +70,30 @@ Create Comprehensive Repricing for Non-Agent Syndicated Deal
     Write Data To Excel    SERV22_InterestPayments    New_Loan_Alias    ${rowid}    ${NewLoanAlias}
     Write Data To Excel    AMCH02_LenderShareAdjustment    New_Loan_Alias    ${rowid}    ${NewLoanAlias}
     Send Loan Repricing for Approval
+    Run Keyword If   '${SCENARIO}'=='4' and '&{ExcelPath}[Entity]' == 'EU' and '&{ExcelPath}[Pricing_Option]' != 'Euro LIBOR Option'    Set FX Rates Loan Repricing    &{ExcelPath}[Loan_Currency]    Spot
     
     ### Loan Repricing: Approval and Send to Rate Approval ###
     Logout from Loan IQ
     Login to Loan IQ    ${SUPERVISOR_USERNAME}    ${SUPERVISOR_PASSWORD}
     Navigate to Facility Notebook    &{ExcelPath}[Deal_Name]    &{ExcelPath}[Facility_Name]
     Navigate to Outstanding Select Window
-    Navigate to Existing Loan    &{ExcelPath}[OutstandingSelect_Type]     &{ExcelPath}[Facility_Name]    &{ExcelPath}[Loan_Alias]
+    Run Keyword If   '${SCENARIO}'=='4' and '&{ExcelPath}[Entity]' == 'EU'    Navigate to Existing Loan    &{ExcelPath}[OutstandingSelect_Type]     &{ExcelPath}[Facility_Name]    &{ExcelPath}[Loan_Alias]    Alias
+    ...    ELSE    Navigate to Existing Loan    &{ExcelPath}[OutstandingSelect_Type]     &{ExcelPath}[Facility_Name]    &{ExcelPath}[Loan_Alias]
     Navigate to Loan Pending Tab and Proceed with the Transaction     ${LOAN_REPRICING_FOR_THE_DEAL} &{ExcelPath}[Deal_Name].
     Navigate to Loan Repricing Workflow and Proceed With Transaction    ${APPROVAL_STATUS}
     Send to Rate Approval
-    
+        
     ### Loan Repricing: Rate Approval, Release Cashflows and Release Loan Repricing ###
     Logout from Loan IQ
     Login to Loan IQ    ${MANAGER_USERNAME}    ${MANAGER_PASSWORD}
     Navigate to Facility Notebook    &{ExcelPath}[Deal_Name]    &{ExcelPath}[Facility_Name]
     Navigate to Outstanding Select Window
-    Navigate to Existing Loan    &{ExcelPath}[OutstandingSelect_Type]     &{ExcelPath}[Facility_Name]    &{ExcelPath}[Loan_Alias]
+    Run Keyword If   '${SCENARIO}'=='4' and '&{ExcelPath}[Entity]' == 'EU'    Navigate to Existing Loan    &{ExcelPath}[OutstandingSelect_Type]     &{ExcelPath}[Facility_Name]    &{ExcelPath}[Loan_Alias]    Alias
+    ...    ELSE    Navigate to Existing Loan    &{ExcelPath}[OutstandingSelect_Type]     &{ExcelPath}[Facility_Name]    &{ExcelPath}[Loan_Alias]
     Navigate to Loan Pending Tab and Proceed with the Transaction     ${LOAN_REPRICING_FOR_THE_DEAL} &{ExcelPath}[Deal_Name].
     Close Facility Notebook and Navigator Windows
     Navigate to Loan Repricing Workflow and Proceed With Transaction    ${RATE_APPROVAL_TRANSACTION}
+    #Run Keyword If   '${SCENARIO}'=='4' and '&{ExcelPath}[Entity]' == 'EU' and '&{ExcelPath}[Pricing_Option]' != 'Euro LIBOR Option'    Navigate to Loan Repricing Workflow and Proceed With Transaction    ${RATE_APPROVAL_TRANSACTION}    
 
     ### Release Cashflows ###
     Release Cashflow Based on Remittance Instruction    &{ExcelPath}[Remittance1_Instruction]    ${ComputedLender_InterestPaymentTransAmount}|${ComputedLender_IncreaseTransAmount}    &{ExcelPath}[Cashflow_DataType]    ${LOAN_REPRICING}
