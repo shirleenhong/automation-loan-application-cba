@@ -38,6 +38,7 @@ Party_CloseDialog_Button = '//span[contains(@title,"Cancel") and @role="button"]
 Party_Dialog_SaveRow_Button = '//div[@role="dialog"]//button[contains(@id, "saveRow")]'
 Party_Dialog_Next_Button = '//div[@role="dialog"]//input[contains(@id, "Next")]'
 Party_Footer_Next_Button = '//div[contains(@class,"Visible")]//child::input[contains(@id,"Next")]'
+Party_Footer_Previous_Button = '//div[contains(@class,"Visible")]//child::input[contains(@id,"Previous")]'
 
 Party_RaisedMessage_Notification = '//div[@class="message" and contains(text(),"Referral raised")]'
 Party_Approve_Button = '//input[contains(@id, "Approve")]'
