@@ -329,6 +329,7 @@ Add Borrower
     ...    Added conditional script for the currency text validation.
     ...    Added conditional argument to handle two risktypes.
     ...    @update: clanding    28JUL2020    - added pre-processing keywords; refactor arguments
+    ...    @update: makcamps    15OCT2020    - added upper case method for borrower name in facility notebook
     [Arguments]    ${sCurrency}    ${sFacility_BorrowerSGName}    ${sFacility_BorrowerPercent}    ${sFacility_Borrower}    ${sFacility_GlobalLimit}    ${sFacility_BorrowerMaturity}    ${sFacility_EffectiveDate}=None
     ...    ${sAdd_All}=Y    ${sRiskType}=None    ${sCurrency_Name}=None    ${sSublimitName}=None
     
@@ -355,7 +356,7 @@ Add Borrower
     ${status}    Run Keyword And Return Status    Verify If Text Value Exist as Static Text on Page    Borrower/Depositor Select    ${Currency}
     Run Keyword If    ${status}==True    Log    Currency text is validated.
     ...    ELSE IF    ${status}==False    Mx LoanIQ Verify Object Exist    JavaWindow("title:=.*Borrower/Depositor Select.*").JavaStaticText("text:=.*${Currency}.*")                    VerificationData="Yes"
-    Run Keyword And Continue On Failure    Verify If Text Value Exist as Static Text on Page    Borrower/Depositor Select    ${Facility_BorrowerSGName}
+    Run Keyword And Continue On Failure    Verify If Text Value Exist as Static Text on Page    Borrower/Depositor Select    ${Facility_BorrowerSGName.upper()}
     Run Keyword And Continue On Failure    Mx LoanIQ Verify Object Exist    JavaWindow("title:=Borrower/Depositor Select").JavaEdit("value:=${Facility_BorrowerPercent}","attached text:=Percent:")    VerificationData="Yes"
     Validate Loan IQ Details    ${Facility_Borrower}   ${LIQ_BorrowerDepositorSelect_AddBorrower_Name_Field}    
     Validate Loan IQ Details    ${Facility_GlobalLimit}   ${LIQ_BorrowerDepositorSelect_AddBorrower_GlobalLimit_Field}   
@@ -643,7 +644,8 @@ Add New Facility
     ${Facility_Currency}    Acquire Argument Value    ${sFacility_Currency}
     
     mx LoanIQ activate window    ${LIQ_DealNotebook_Window}
-    mx LoanIQ select    ${LIQ_DealNotebook_Options_Facilities}
+    Select Menu Item    ${LIQ_DealNotebook_Window}    Options    Facilities...
+	
     ${status}    Run Keyword And Return Status    Wait Until Keyword Succeeds    3x    5s    Mx LoanIQ Verify Object Exist    ${LIQ_FacilityNavigator_Window}    VerificationData="Yes"
     ${verify}    Run Keyword And Return Status    Run Keyword If    ${status}==True
     ...    Mx LoanIQ Verify Runtime Property    JavaWindow("title:=Facility Navigator - ${Deal_Name} in ${Deal_Currency}")    title%Facility Navigator - ${Deal_Name} in ${Deal_Currency}
@@ -2235,10 +2237,19 @@ Validate Facility Events Tab after Payment Transaction
 Validate Updated Facility Amounts After Payment - Capitalized Ongoing Fee
     [Documentation]    This keyword validates the new data on Loan Amounts Section.
     ...    @author:rtarayao
-    [Arguments]    ${Orig_FacilityCurrentCmt}    ${Orig_FacilityOutstandings}    ${Orig_FacilityAvailableToDraw}    ${Capitalization_PctofPayment}    ${CycleDue}    
+    ...    @update: dahijara    16OCT2020    - Added screenshot and pre-processing keywords
+    [Arguments]    ${sOrig_FacilityCurrentCmt}    ${sOrig_FacilityOutstandings}    ${sOrig_FacilityAvailableToDraw}    ${sCapitalization_PctofPayment}    ${sCycleDue}    
+    
+    ### GetRuntime Keyword Pre-processing ###
+    ${Orig_FacilityCurrentCmt}    Acquire Argument Value    ${sOrig_FacilityCurrentCmt}
+    ${Orig_FacilityOutstandings}    Acquire Argument Value    ${sOrig_FacilityOutstandings}
+    ${Orig_FacilityAvailableToDraw}    Acquire Argument Value    ${sOrig_FacilityAvailableToDraw}
+    ${Capitalization_PctofPayment}    Acquire Argument Value    ${sCapitalization_PctofPayment}
+    ${CycleDue}    Acquire Argument Value    ${sCycleDue}
+	
     mx LoanIQ activate window    ${LIQ_FacilityNotebook_Window}
     Mx LoanIQ Select Window Tab    ${LIQ_FacilityNotebook_Tab}    Summary  
-    
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/Facility_SummaryTab
     ####### Validate 'Current Commitment' Amount
     ${Orig_FacilityCurrentCmt}    Convert To Number    ${Orig_FacilityCurrentCmt}    2
     
@@ -2278,6 +2289,7 @@ Validate Updated Facility Amounts After Payment - Capitalized Ongoing Fee
     ${TotalAmount}    Evaluate    ${New_FacilityOutstandings}+${New_FacilityAvailableToDraw} 
     Should Be Equal    ${New_FacilityCurrentCmt}    ${TotalAmount}   
     Log    Total Amount for 'Outstanding' and 'Available to Draw' is confirmed equal to the current Facility commitment amount
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/Facility_SummaryTab
 
 Get Global Facility Amounts
     [Documentation]    This keyword returns the Current Cmt, Outstandings amount, and Avail To Draw amount from the Facility Notebook's Summary Tab "Global Facility Amounts"
@@ -3762,3 +3774,32 @@ Retrieve Facility Notebook Amounts prior to Loan Merge
 
     [Return]    ${GlobalFacility_ProposedCmtBeforeMerge}    ${GlobalFacility_CurrentCmtBeforeMerge}    ${GlobalFacility_OutstandingsBeforeMerge}    ${GlobalFacility_AvailToDrawBeforeMerge}
     ...    ${HostBank_ProposedCmtBeforeMerge}    ${HostBank_ContrGrossBeforeMerge}    ${HostBank_OutstandingsBeforeMerge}    ${HostBank_AvailToDrawBeforeMerge}
+
+Close Option Condition Window
+    [Documentation]    This keyword is used to close Option Condition dialog window.
+    ...    @author: clanding    09NOV2020    - initial create
+    
+    ${IsDisplayed}    Run Keyword And Return Status    Mx LoanIQ Verify Object Exist    ${LIQ_FacilityPricing_Interest_OptionCondition_Cancel_Button}    VerificationData="Yes"
+    Run Keyword If    ${IsDisplayed}==${True}    mx LoanIQ click    ${LIQ_FacilityPricing_Interest_OptionCondition_Cancel_Button}
+    ...    ELSE    Log    No Option Condition window is displayed.
+
+Update Branch and Processing Area of a Facility
+    [Documentation]    This keyword updates Branch and Processing Area in Facility Notebook.
+    ...    @author: mcastro    11NOV2020    - initial create
+    [Arguments]    ${sBranchName}    ${sProcessingArea}
+
+    ### Keyword Pre-processing ###
+    ${BranchName}    Acquire Argument Value    ${sBranchName}
+    ${ProcessingArea}    Acquire Argument Value    ${sProcessingArea}
+
+    mx LoanIQ activate window     ${LIQ_FacilityNotebook_Window}
+    mx LoanIQ click element if present    ${LIQ_InquiryMode_Button}    
+    mx LoanIQ select   ${LIQ_FacilityNotebook_Options_ChangeBranch_ProcArea}
+    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
+    mx LoanIQ activate window     ${LIQ_ChangeBranchProcArea_Window}
+    Mx LoanIQ select combo box value    ${LIQ_ChangeBranchProcArea_Branch_Combobox}    ${BranchName}
+    Mx LoanIQ select combo box value    ${LIQ_ChangeBranchProcArea_ProcessingArea_Combobox}    ${ProcessingArea}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/ChangeBranchProcArea_Window
+    mx LoanIQ click    ${LIQ_ChangeBranchProcArea_OK_Button}
+    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/ChangeBranchProcArea_Window

@@ -14,9 +14,10 @@ Get All Holiday Calendar Dates Records for Calendar ID
 Get LIQ Business Date from Database
     [Documentation]    This keyword is used to get Loan IQ current business date and return.
     ...    @author: clanding    28JUN2019    - initial create
+    ...    @update: clanding    23OCT2020    - adding user to the table
     [Arguments]    ${sZone}
     
-    ${Query}    Catenate    SELECT ${ENV_TXT_VAR_VALUE} FROM ${TLS_ENVIRONMENT_TABLE} WHERE ${ENV_NME_VAR_CLASS} = '${sZone}' AND ${ENV_NME_VAR_NAME} = 'Current Business Date'
+    ${Query}    Catenate    SELECT ${ENV_TXT_VAR_VALUE} FROM ${LIQ7474_USER}.${TLS_ENVIRONMENT_TABLE} WHERE ${ENV_NME_VAR_CLASS} = '${sZone}' AND ${ENV_NME_VAR_NAME} = 'Current Business Date'
     
     ${Query_Res_EnvDate}    Connect to LIQ Database and Return Results    ${Query}
     ${SQL_EnvDate_Result_List}    Convert SQL Result to List and Return    ${Query_Res_EnvDate}

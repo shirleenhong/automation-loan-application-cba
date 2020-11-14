@@ -3,18 +3,15 @@ Resource    ../../../../../Configurations/Integration_Import_File.robot
 
 
 *** Test Cases ***
-DWELIQ_FuncVal19_Zone2
-    [Tags]    Zone2_VLS_SCHEDULE
+DWELIQ_FuncVal19
 	[Documentation]    This keyword is used to validate fields from CSV to LIQ Screen for VLS_SCHEDULE.
-    ...    @author: mgaling    25SEP2019
+    ...    @author: mgaling    25SEP2019    - initial create
+    ...    @update: mgaling    22OCT2020    - added keyword to handle multi entity test case 
     
-    Set Test Variable    ${rowid}    1    
-    Mx Execute Template With Multiple Data    Validate VLS_SCHEDULE Extract    ${DWELIQFunc_Dataset}    ${rowid}    FuncVal19
+    Set Global Variable    ${TestCase_Name}    DWELIQ_Multi_E2E_001|DWELIQ_Multi_E2E_002
+    Set Global Variable    ${TestCase_Name_FuncVal}    DWELIQ_FuncVal19_Z3|DWELIQ_FuncVal19_Z2
+    Set Global Variable    ${DWELIQFunc_Dataset_SheetName}    FuncVal19
+    Mx Execute Template With Multiple Test Case Name    Get Business Date of Decrypted Files    ${DWE_DATASET}    Test_Case    ${TestCase_Name}    DWE
 
-DWELIQ_FuncVal19_Zone3
-    [Tags]    Zone3_VLS_SCHEDULE
-	[Documentation]    This keyword is used to validate fields from CSV to LIQ Screen for VLS_SCHEDULE.
-    ...    @author: mgaling    25SEP2019
-    
-    Set Test Variable    ${rowid}    1    
-    Mx Execute Template With Multiple Data    Validate VLS_SCHEDULE Extract    ${DWELIQFunc_Dataset}    ${rowid}    FuncVal19
+    Set Global Variable    ${TestCase_Name}    DWELIQ_FuncVal19_Z3|DWELIQ_FuncVal19_Z2       
+    Mx Execute Template With Multiple Test Case Name    Validate VLS_SCHEDULE Extract    ${DWELIQFunc_Dataset}    Test_Case    ${TestCase_Name}    FuncVal19

@@ -7,7 +7,7 @@ Issue LC D00000476
     ...    @author: ritragel    29JUL2019
     [Arguments]    ${ExcelPath}
     
-    ##LIQ Window###
+    ###LIQ Window###
     Logout from Loan IQ
     Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
     
@@ -16,7 +16,7 @@ Issue LC D00000476
 
     ###Outstanding Select Window###
     ${Alias}    Create New Outstanding Select - SBLC    &{ExcelPath}[OutstandingSelect_Type]    &{ExcelPath}[Facility_Name]    &{ExcelPath}[Amount_Requested]
-    ...    &{ExcelPath}[Effective_Date]   &{ExcelPath}[Pricing_Option]    &{ExcelPath}[Expiry_Date]
+    ...    &{ExcelPath}[Effective_Date]   &{ExcelPath}[Pricing_Option]    &{ExcelPath}[Expiry_Date]    &{ExcelPath}[Deal_Name]
     Write Data To Excel    SERV05_SBLCIssuance    SBLC_Alias    &{ExcelPath}[rowid]    ${Alias}    ${CBAUAT_ExcelPath}
     Write Data To Excel    SERV18_FeeOnLenderSharesPayment    SBLC_Alias    &{ExcelPath}[rowid]    ${Alias}    ${CBAUAT_ExcelPath}
     Run Keyword If    '&{ExcelPath}[rowid]'=='1'    Write Data To Excel    SERV18_FeeOnLenderSharesPayment    SBLC_Alias    3    ${Alias}    ${CBAUAT_ExcelPath}

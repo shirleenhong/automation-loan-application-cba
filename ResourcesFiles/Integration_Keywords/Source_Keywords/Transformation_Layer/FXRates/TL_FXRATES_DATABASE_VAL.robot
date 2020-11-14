@@ -33,8 +33,11 @@ Get Future Date Record in Holding Table for TL FXRates
     ...    @update: cfrancis    07AUG2019    - updated query to only use filename for AUD funding desk for Group 1 file
     ...    @update: cfrancis    08AUG2019    - updated query where paramater to select both files but refer to AUD funding desk for Group 1 file
     ...    @update: clanding    09OCT2020    - updated global variable for ${FILE_NAME} to ${FILE_NAME_QUERY}
-    [Arguments]    ${sFilename}    ${sTransformedData_FilePath}
+    ...    @update: ccarriedo   04NOV2020    - added ${sSUB_ENTITY_NAME} as Argument which will be used for ${subEntity}
+    [Arguments]    ${sFilename}    ${sTransformedData_FilePath}    ${sSUB_ENTITY_NAME}=None    
     
+    ${subEntity}    Run Keyword If    '${sSUB_ENTITY_NAME}'=='None'    Set Variable    AUD
+    ...    ELSE    Set Variable    ${sSUB_ENTITY_NAME}
     ${QUERY_BASE_HOLDING}    Catenate    ${SELECT_Q}    
     ...    ${GS_FX_RATE_TABLE}.${GS_BASE_CCY},
     ...    ${GS_FX_RATE_TABLE}.${GS_INSTR_PRC_TYPE},
@@ -45,7 +48,7 @@ Get Future Date Record in Holding Table for TL FXRates
     ...    ${FROM_Q}    ${GS_FX_RATE_TABLE}
     ...    ${INNERJOIN_Q}    ${MASTER_MAPPING_TABLE}
     ...    ${ON_Q}    ${GS_FX_RATE_TABLE}.${MAP_ID}    =    ${MASTER_MAPPING_TABLE}.${MAP_ID}
-    ...    ${WHERE_Q}    ${FILE_NAME_QUERY}    IN    ('${sFilename}_0','${sFilename}_1')    AND    ${MASTER_MAPPING_TABLE}.${SUB_ENTITY_NAME}    =    'AUD'
+    ...    ${WHERE_Q}    ${FILE_NAME_QUERY}    IN    ('${sFilename}_0','${sFilename}_1')    AND    ${MASTER_MAPPING_TABLE}.${SUB_ENTITY_NAME}    =    '${subEntity}'
     ${Query_Results_List}    Connect to MCH Oracle Database and Execute Query    ${QUERY_BASE_HOLDING}
     ${List_for_Query}    Create List    
     ${QueryResult_Count}    Get Length    ${Query_Results_List}

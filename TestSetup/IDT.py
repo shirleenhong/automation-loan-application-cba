@@ -1,5 +1,5 @@
 ###Dataset###
-dataset_path = "C:\\Git_Evergreen\\fms_scotia"
+dataset_path = "C:\\Git_Evergreen\\fms_cba"
 ExcelPath = "C:\\fms_scotia\\DataSet\\LoanIQ_DataSet\\EVG_PTYLIQ07_BilateralFacilityTermination.xlsx"
 CBAUAT_ExcelPath = "C:\\Git_Evergreen\\evergreen_projects\\CBA_Evergreen\\DataSet\\CBA_UAT_DataSet\\EVG_CBAUAT05.xlsx"
 APIDataSet = "..\\DataSet\\Integration_DataSet\\API\\\\API_Data_Set.xlsx"
@@ -16,6 +16,9 @@ SAPWUL_DATASET = "C:\\Git_evergreen\\evergreen_projects\\CBA_Evergreen\\DataSet\
 DWELIQFunc_Dataset = "C:\\Git_Evergreen\\fms_cba\\DataSet\\Integration_DataSet\\Extracts\\DWE_LIQ\\DWELIQ_Functional_TestData.xlsx"
 PTY_DATASET = "C:\\Git_Evergreen\\fms_cba\\DataSet\\Party_DataSet\\PTY_DataSet.xlsx"
 DNA_DATASET = "C:\\Git_Evergreen\\fms_cba\\DataSet\\Integration_DataSet\\Extracts\\DNA\\EVG_DNA_TestData.xlsx"
+INDUSTRYSECTOR_LIST = "C:\\Git_Evergreen\\fms_cba\\DataSet\\Party_DataSet\\Industry_Sector\\Industry_Sector_Values.txt"
+BUSINESSACTIVITY_DIRECTORY = "C:\\Git_Evergreen\\fms_cba\\DataSet\\Party_DataSet\\Business_Activity"
+DNR_DATASET = "C:\\Git_Evergreen\\fms_cba\\DataSet\\Integration_DataSet\\Extracts\\DNR\\DNR_Dataset_AU.xlsx"
 
 FBTIDataset = 'C:\\Git_Evergreen\\evergreen_projects\\CBA_Evergreen\\DataSet\\FBTI_DataSet\\FBTI_User_Data_Set.xlsx'
 FBTIDataset_ILC = 'C:\\Git_Evergreen\\evergreen_projects\\CBA_Evergreen\\DataSet\\FBTI_DataSet\\FBTI_ILC_Data_Set.xlsx'
@@ -75,6 +78,10 @@ CUSTOM_INTERFACE_INSTANCE = "CustomInterface_1.3.0"
 RESPONSE_MECHANISM_INSTANCE = "responsemechanism_1.3.0"
 DWE_NOTIFICATION_INSTANCE = "dwe_notification_1.3.0"
 SAPWUL_INSTANCE = 'CustomCBAPush_1.3.0'
+TL_CAL_ACK_MESSAGE_SOURCENAME = 'tl_ack_message_splitter_cal'
+TL_BASE_ACK_MESSAGE_SOURCENAME = 'tl_ack_message_splitter_base'
+CBACorrespUpdateMQ_Instance = 'CustomCBAPush_v1.3.0'
+FFC1CMUpdateSourceMQ_Instance = 'CustomInterface'
 
 ###SFTP###
 SFTP_HOST = "mancsleverg0022"
@@ -105,6 +112,14 @@ PARTY_SUPERVISOR_PASSWORD = 'superit'
 PARTY_HTML_USER_CREDENTIALS = 'misysroot%5Cbrad:welcome%4099'
 PARTY_HTML_APPROVER_CREDENTIALS = 'misysroot%5Csuperit:welcome%4099'
 
+### IDT PARTY SERVER ###
+DBSERVICENAME_PTY = 'PTY203R'
+DBUSERNAME_PTY = 'system'
+DBPASSWORD_PTY = 'password'
+DBHOST_PTY = 'mancsleverg0017'
+DBPORT_PTY = '1521'
+DBUR_PTY = 'jdbc:oracle:thin:@mancsleverg0017:1521:PTY203R'
+
 ###FFC Credential###
 MDM_FFC_Username ='admin'
 MDM_FFC_Password = 'admin'
@@ -127,6 +142,7 @@ SSO_URL = ""
 
 ###COMSEE###
 COM_HOST = 'http://mancsleverg0022:9150'
+ENTITY = 'AU'
 
 ##CORRESPONDENCE##
 CORRES_SERVER = 'http://mancsleverg0022'
@@ -207,6 +223,7 @@ DWE_PASSPHRASE = 'password'
 DWE_TAR_GZ_EXT = '.tar.gz'
 DWE_TAR_GZ_GPG_EXT = '.tar.gz.gpg'
 DWE_CCB_LIQ_ZONE_FILENAME = 'CCB_LIQ_'
+DWE_CCB_LIQ_ZONE_FILENAME = 'CCB_LIQ_SYD_'
 
 ### Batch EOD ###
 PUTTY_PATH = "C:\\Program Files\\PuTTY\\putty.exe"
@@ -224,6 +241,7 @@ DNA_SERVER_PASSWORD = 'luckyroll76'
 DNA_EXTRACTION_AREA_PATH = '/evgdata/STREAMSETS/workspace/extraction_area/COMRLENDING/'
 DNA_CCB_LIQ_FILENAME = 'CCB_LIQ_'
 DNA_DATAASSURANCE_FILENAME = 'DATAASSURANCE_'
+DNA_DAT_EXT = '.DAT'
 
 ### IDT LIQ SERVER ###
 DBSERVICENAME_LIQ = 'MLLOANIQ.misys.global.ad'

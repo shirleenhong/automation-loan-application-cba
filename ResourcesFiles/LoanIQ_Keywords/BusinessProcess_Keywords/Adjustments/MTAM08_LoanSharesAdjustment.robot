@@ -9,7 +9,13 @@ Loan Share Adjustment
     ...    @update: dahijara    20AUG2020    Refactored keywords.
     ...                                      Moved writing in test case level. And modified keywords to return needed values.
     ...                                      Updated hard coded values with global variables.
+    ...    @update: aramos      29OCT2020    Added Login to LoanIQ
     [Arguments]    ${ExcelPath}    
+    
+    ###Loan IQ Desktop###
+    Logout from Loan IQ
+    Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
+    
     ###Manual Share Adjustment Notebook###
     Launch Loan Notebook    &{ExcelPath}[Deal_Name]    &{ExcelPath}[Facility_Name]    &{ExcelPath}[Loan_Alias]
     Launch Manual Share Adjustment Notebook    &{ExcelPath}[Loan_PricingOption]

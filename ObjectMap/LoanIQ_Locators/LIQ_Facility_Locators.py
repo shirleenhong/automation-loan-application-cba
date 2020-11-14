@@ -78,6 +78,7 @@ LIQ_FacilitySummary_Outstandings_Button = 'JavaWindow("title:=Facility -.*").Jav
 LIQ_FacilitySummary_Currency_StaticText = 'JavaWindow("title:=Facility -.*").JavaStaticText("labeled_containers_path:=Tab:Summary;","index:=5")'
 LIQ_FacilitySummary_FCN_Text = 'JavaWindow("title:=Facility -.*").JavaStaticText("labeled_containers_path:=Tab:Summary;", "Index:=7")'
 LIQ_FacilitySummary_FacilityType_Text = 'JavaWindow("title:=Facility -.*").JavaStaticText("labeled_containers_path:=Tab:Summary;", "Label:=Term")'
+LIQ_FacilitySummary_FacilityName_Text= 'JavaWindow("title:=Facility -.*").JavaStaticText("labeled_containers_path:=Tab:Summary;","index:=0")'
 
 ###Facility Notebook - Outstanding for Facility###    
 LIQ_OutstandingForFacility_Window = 'JavaWindow("title:=Outstanding for Facility.*")'     
@@ -334,7 +335,7 @@ LIQ_FacilityPricing_OngoingFeeInterest_Tree = 'JavaWindow("title:=Facility.*Pric
 LIQ_FacilityPricing_OngoingFeeInterest_NoItems_JavaTree = 'JavaWindow("title:=Facility.*Pricing").JavaTree("items count:=0")'
 LIQ_FacilityPricing_OngoingFeeInterest_OK_Button = 'JavaWindow("title:=Facility.*Pricing").JavaButton("attached text:=OK")'    
 LIQ_FacilityPricing_OngoingFeeInterest_Add_Button = 'JavaWindow("title:=Facility.*Pricing").JavaButton("label:=Add")'    
-LIQ_FacilityPricing_OngoingFeeInterest_After_Button = 'JavaWindow("title:=Facility.*Pricing").JavaButton("label:=After")'    
+LIQ_FacilityPricing_OngoingFeeInterest_After_Button = 'JavaWindow("title:=.*Pricing").JavaButton("label:=After")'  
 LIQ_FacilityPricing_OngoingFeeInterest_Validate_Button = 'JavaWindow("title:=Facility.*Pricing").JavaButton("label:=Validate")'    
     
 LIQ_FacilityPricing_Interest_OptionCondition_Window = 'JavaWindow("title:=Option Condition")'    

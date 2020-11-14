@@ -4,6 +4,7 @@ LIQ_CircleNotebook_File_Save = 'JavaWindow("title:=.*Orig Primary.*").JavaMenu("
 LIQ_CircleNotebook_File_Exit = 'JavaWindow("title:=.*Orig Primary.*").JavaMenu("label:=File").JavaMenu("label:=Exit")'
 LIQ_CircleNotebook_Tab = 'JavaWindow("title:=Closed Orig Primary.*").JavaTab("tagname:=TabFolder")'
 LIQ_CircleNotebook_Window = 'JavaWindow("title:=Closed Orig Primary.*")'
+LIQ_CircleNotebook_InquiryMode_Button = 'JavaWindow("title:=.*Orig Primary.*").JavaButton("attached text:=Notebook in Inquiry Mode - F7")'
 
 ### Circle Notebook - Summary Tab ###
 LIQ_Circle_PortfolioAllocations_Button = 'JavaWindow("title:=.*Orig Primary.*").JavaObject("tagname:=Group","text:=Other Amendments").JavaButton("label:=Portfolio Allocations")'
@@ -27,6 +28,18 @@ LIQ_CircleSelection_RiskBookDropdownList = 'JavaWindow("title:=Circle Selection"
 LIQ_CircleSelection_TransactionTypeDropdownList = 'JavaWindow("title:=Circle Selection").JavaList("attached text:=Transaction Type:")'
 LIQ_CircleSelection_AssignFeeDecisionDropdownList = 'JavaWindow("title:=Circle Selection").JavaList("attached text:=Assignment Fee Decision:")'
 LIQ_CircleSelection_OKButton = 'JavaWindow("title:=Circle Selection").JavaButton("label:=OK")'
+
+LIQ_CircleSelection_NewInternalOption = 'JavaWindow("title:=Circle Selection").JavaRadioButton("attached text:=New Internal")'
+LIQ_CircleSelection_NewExternalOption = 'JavaWindow("title:=Circle Selection").JavaRadioButton("attached text:=New External")'
+LIQ_CircleSelection_BuyerLegalEntity='JavaWindow("title:=Circle Selection").JavaObject("text:=Buyer:").JavaList("attached text:=Legal Entity:")'
+LIQ_CircleSelection_BuyerRiskBook='JavaWindow("title:=Circle Selection").JavaObject("text:=Buyer:").JavaButton("attached text:=Risk Book:")'
+LIQ_CircleSelection_BuyerRiskBookDropdownList='JavaWindow("title:=Circle Selection").JavaObject("text:=Buyer:").JavaList("tagname:=Combo","index:=2")'
+
+LIQ_CircleSelection_SellerLegalEntity='JavaWindow("title:=Circle Selection").JavaObject("text:=Seller:").JavaList("attached text:=Legal Entity:")'
+LIQ_CircleSelection_SellerRiskBook='JavaWindow("title:=Circle Selection").JavaObject("text:=Seller:").JavaButton("attached text:=Risk Book:")'
+LIQ_CircleSelection_SellerRiskBookDropdownList='JavaWindow("title:=Circle Selection").JavaObject("text:=Seller:").JavaList("tagname:=Combo","index:=2")'
+
+LIQ_CircleSelection_Lender_Button = 'JavaWindow("title:=Circle Selection").JavaButton("attached text:=Lender:")'
 
 ### Lender Selection ###
 LIQ_LenderSelect_SearchWindow = 'JavaWindow("title:=Lender Select.*")'
@@ -56,6 +69,7 @@ LIQ_PrimariesList_JavaTree = 'JavaWindow("title:=Primaries List .*").JavaTree("a
 LIQ_Cirlce_PortfolioAllocation_Window = 'JavaWindow("text:=Portfolio allocations for .*")'
 LIQ_PortfolioAllocation_Facilities_JavaTree = 'JavaWindow("text:=Portfolio allocations for .*").JavaTree("labeled_containers_path:=Group:Facilities;")'
 LIQ_PortfolioAllocation_Exit_Button = 'JavaWindow("text:=Portfolio allocations for .*").JavaButton("attached text:=Exit")'
+LIQ_PortfolioAllocation_PortfolioExpense_JavaTree = 'JavaWindow("text:=Portfolio allocations for .*").JavaTree("labeled_containers_path:=Group:Portfolio Allocations;")'
 
 ### Circle Notebook - Amts/Dates Tab ###
 LIQ_Circle_Amounts_CurrentAmount = 'JavaWindow("title:=.*Orig Primary.*").JavaEdit("attached text:=Current:", "labeled_containers_path:=Tab:Amts/Dates;Group:Amounts;")'

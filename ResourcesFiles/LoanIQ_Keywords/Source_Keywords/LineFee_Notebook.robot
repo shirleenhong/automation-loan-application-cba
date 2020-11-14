@@ -78,12 +78,17 @@ Save and Exit Line Fee Notebook
 Navigate to Existing Ongoing Fee Notebook
     [Documentation]    This keyword is used for navigating to Line Fee Notebook
     ...    @author:ritragel    8AUG2019
+    ...    @update: added pre-processing keyword and screenshot
     [Arguments]    ${sOngoingFee_Type}    
-    
+    ### GetRuntime Keyword Pre-processing ###
+    ${OngoingFee_Type}    Acquire Argument Value    ${sOngoingFee_Type}
+
     mx LoanIQ activate window    ${LIQ_FacilityNotebook_Window}
     mx LoanIQ select    ${LIQ_FacilityNotebook_Queries_OngoingFeeList}
     mx LoanIQ activate window    ${LIQ_Facility_FeeList}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/FacilityWindow
     Mx LoanIQ Select Or DoubleClick In Javatree    ${LIQ_Facility_FeeList_JavaTree}    ${sOngoingFee_Type}%d
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/FacilityWindow
     
 Select Payment in Choose a Payment Window
     [Documentation]    This will allow the user to select Payment if it is a Fee Payment of a Paper Clip
@@ -488,7 +493,7 @@ Navigate to Cashflow - Reverse Fee
     mx LoanIQ activate window    ${LIQ_ReverseFee_Window}
     Mx LoanIQ Select Window Tab    ${LIQ_LineFee_ReversePayment_Tab}    Workflow
     Run Keyword And Continue On Failure     Mx LoanIQ Click Button On Window    .* Line Fee.*;Warning;Yes    strProcessingObj="JavaWindow(\"title:=Processing.*\")"    WaitForProcessing=500
-    Mx LoanIQ DoubleClick    ${LIQ_LineFee_ReversePayment__WorkflowItems}    Create Cashflows
+    Mx LoanIQ DoubleClick    ${LIQ_LineFee_ReversePayment_WorkflowItems}    Create Cashflows
     Run Keyword And Continue On Failure     Mx LoanIQ Click Button On Window    .* Line Fee.*;Warning;Yes    strProcessingObj="JavaWindow(\"title:=Processing.*\")"    WaitForProcessing=500
     mx LoanIQ activate window    ${LIQ_LineFee_ReversePayment_Cashflows_Window}                 
     Run Keyword And Continue On Failure    Mx LoanIQ Verify Object Exist    ${LIQ_LineFee_ReversePayment_Cashflows_Window}    VerificationData="Yes"
@@ -499,7 +504,7 @@ Send Reverse Fee Payment to Approval
 
     mx LoanIQ click element if present     ${LIQ_LineFee_ReversePayment_Cashflow_OK_Button} 
     mx LoanIQ activate window    ${LIQ_ReverseFee_Window}
-    Mx LoanIQ Select Or DoubleClick In Javatree    ${LIQ_LineFee_ReversePayment__WorkflowItems}    Send to Approval%d
+    Mx LoanIQ Select Or DoubleClick In Javatree    ${LIQ_LineFee_ReversePayment_WorkflowItems}    Send to Approval%d
     mx LoanIQ click element if present    ${LIQ_Question_Yes_Button}
     mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
     mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
@@ -513,7 +518,7 @@ Approve Reverse Fee Payment
     mx LoanIQ activate window    ${LIQ_ReverseFee_Window}
     Mx LoanIQ Select Window Tab    ${LIQ_LineFee_ReversePayment_Tab}    Workflow
     Run Keyword And Continue On Failure    mx LoanIQ click element if present    ${LIQ_InquiryMode_Button}
-    Mx LoanIQ Select Or DoubleClick In Javatree    ${LIQ_LineFee_ReversePayment__WorkflowItems}    Approval%d
+    Mx LoanIQ Select Or DoubleClick In Javatree    ${LIQ_LineFee_ReversePayment_WorkflowItems}    Approval%d
     Run Keyword And Continue On Failure     Mx LoanIQ Click Button On Window    Commitment Fee.*;Question;Yes    strProcessingObj="JavaWindow(\"title:=Processing.*\")"    WaitForProcessing=500
     Run Keyword And Continue On Failure     Mx LoanIQ Click Button On Window    Commitment Fee.*;Warning;Yes    strProcessingObj="JavaWindow(\"title:=Processing.*\")"    WaitForProcessing=500
 
@@ -526,7 +531,7 @@ Release Reverse Fee Payment
     mx LoanIQ activate window    ${LIQ_ReverseFee_Window}
     Mx LoanIQ Select Window Tab    ${LIQ_LineFee_ReversePayment_Tab}    Workflow
     Run Keyword And Continue On Failure    mx LoanIQ click element if present    ${LIQ_InquiryMode_Button}
-    Mx LoanIQ Select Or DoubleClick In Javatree    ${LIQ_LineFee_ReversePayment__WorkflowItems}    Release%d
+    Mx LoanIQ Select Or DoubleClick In Javatree    ${LIQ_LineFee_ReversePayment_WorkflowItems}    Release%d
     Validate if Question or Warning Message is Displayed
 
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LineFeeReverseWindow_WorkflowTab_Release
@@ -544,3 +549,36 @@ Change Expiry Date of Line Fee
     mx LoanIQ click element if present    ${LIQ_LineFee_ExpiryDate_OK_Button}
     
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LineFeeWindow_ChangeExpiryDate
+
+Initiate Line Fee Payment
+    [Documentation]    This keyword selects a cycle fee payment for projected Due amount.
+    ...    @author: dahijara    15OCT2020    Initial Create 
+    [Arguments]    ${sCycle_Number} 
+
+    ### GetRuntime Keyword Pre-processing ###
+    ${Cycle_Number}    Acquire Argument Value    ${sCycle_Number}
+
+    mx LoanIQ activate window    ${LIQ_LineFee_Window}    
+    mx LoanIQ select    ${LIQ_LineFee_General_OptionsPayment_Menu}
+    mx LoanIQ enter    ${LIQ_ChoosePayment_Fee_RadioButton}    ON
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LineFeePayment
+    mx LoanIQ click    ${LIQ_ChoosePayment_OK_Button}
+
+    mx LoanIQ enter    ${LIQ_CommitmentFee_Cycles_ProjectedDue_RadioButton}    ON   
+
+    ${CycleDueAmount}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_CommitmentFee_Cyces_Javatree}    ${Cycle_Number}%Cycle Due%value
+    ${CycleDueAmount}    Remove comma and convert to number - Cycle Due    ${CycleDueAmount}
+    Write Data To Excel    CAP02_CapitalizedFeePayment    OngoingFee_CycleDue    ${rowid}    ${CycleDueAmount}   
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LineFeePayment
+    mx LoanIQ click    ${LIQ_CommitmentFee_Cycles_OK_Button} 
+    ${SystemDate}    Get System Date
+    mx LoanIQ activate window    ${LIQ_Payment_Window}
+    mx LoanIQ click element if present    ${LIQ_LineFee_InquiryMode_Button} 
+    mx LoanIQ enter    ${LIQ_OngoingFeePayment_EffectiveDate_DateField}    ${SystemDate} 
+    mx LoanIQ enter    ${LIQ_OngoingFeePayment_RequestedAmount_Textfield}    ${CycleDueAmount}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LineFeePayment
+
+Close Fee Payment Notice Window
+    [Documentation]    This keyword closes Fee Payment Notice Window. 
+    ...    @author: dahijara    15OCT2020    - Initial create
+    mx LoanIQ click    ${LIQ_FeePayment_Notice_Exit_Button}

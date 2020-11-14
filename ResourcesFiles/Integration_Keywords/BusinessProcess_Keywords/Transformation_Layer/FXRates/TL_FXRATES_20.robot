@@ -7,9 +7,10 @@ Send FXRates GS Group 1 File for Future Date
     ...    Then validate that rates have been moved to hold table and rates have not been updated in LIQ
     ...    @author: cfrancis    06AUG2019    - initial create
     ...    @update: clanding    06OCT2020    - updated InputFilePath for templates to TemplateFilePath; added TemplateFilePath to Template File
+    ...    @update: ccarriedo   04NOV2020    - added ${subEntity} as argument in keyword Get Future Date Record in Holding Table for TL FXRates
     [Arguments]    ${ExcelPath}
     ###PREREQUISITE###
-    # Login to Loan IQ    ${TL_USERNAME}    ${TL_PASSWORD}
+    Login to Loan IQ    ${TL_USERNAME}    ${TL_PASSWORD}
     ${fundingDeskStatus}    Get Funding Desk Status from Table Maintenance    &{ExcelPath}[FundingDesk_1]
     ${CSVFile}    Set Variable    &{ExcelPath}[InputFilePath]&{ExcelPath}[InputGSFile]
     ${TransformedDataFile_FXRates}    Set Variable    &{ExcelPath}[InputFilePath]${TL_Transformed_Data_FXRates}
@@ -28,6 +29,6 @@ Send FXRates GS Group 1 File for Future Date
     
     Send Single File to SFTP and Validate If File is Processed    &{ExcelPath}[InputFilePath]    &{ExcelPath}[InputGSFile]    ${TL_FX_FOLDER}
     Validate File If Moved to Archive Folder    ${TL_FX_ARCHIVE_FOLDER}    &{ExcelPath}[InputGSFile]
-    ${QueryList}    Get Future Date Record in Holding Table for TL FXRates   ${GSFILENAME_WITHTIMESTAMP}    ${TransformedDataFile_FXRates} 
+    ${QueryList}    Get Future Date Record in Holding Table for TL FXRates   ${GSFILENAME_WITHTIMESTAMP}    ${TransformedDataFile_FXRates}    ${subEntity} 
     Run Keyword And Continue On Failure    Validate Future Date Record in Holding Table for TL FXRates    ${QueryList}    ${TransformedDataFile_FXRates}   
     Run Keyword And Continue On Failure    Validate FXRate Not Updated in LoanIQ     ${From_Currency}    ${To_Currency}    ${subEntity}    ${Mid_Rate}    ${Effective_Date}

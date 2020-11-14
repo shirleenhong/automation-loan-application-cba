@@ -95,9 +95,9 @@ Enter Effective Date for Ongoing Fee Payment
 
     mx LoanIQ activate window    ${LIQ_OngoingFeePayment_Window}
     mx LoanIQ enter    ${LIQ_OngoingFeePayment_EffectiveDate_Field}    ${FeePayment_EffectiveDate}
-    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
+    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}    
     Run Keyword If    "${ProjectedCycleDue}" != "null"    mx LoanIQ enter    ${LIQ_Payment_RequestedAmount_Textfield}    ${ProjectedCycleDue}     
-    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
+
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/OngoingFeePaymentWindow_EffectiveDate
 
 Send Ongoing Fee Payment to Approval
@@ -259,7 +259,10 @@ Run Online Acrual to Commitment Fee
     ...    @update: fmamaril    18SEP2019    Add click to toogle inquiry mode
     ...    @update: ehugo    04JUN2020    - added screenshot
     ...    @update: dahijara    16JUL2020    - Fix warnings - too many variables assigned in Mx LoanIQ Click Button On Window
+    ...    @update: makcamps	22OCT2020	 - added click warning buttons if present
     mx LoanIQ activate window    ${LIQ_CommitmentFee_Window}
+    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
+    mx LoanIQ click element if present    ${LIQ_Warning_OK_Button}
     Mx LoanIQ Select Window Tab    ${LIQ_CommitmentFee_Tab}    Workflow
     mx LoanIQ click element if present    ${LIQ_OngoingFee_InquiryMode_Button}
     mx LoanIQ select    ${LIQ_CommitmentFee_OnlineAcrual_Menu}
@@ -303,7 +306,7 @@ Compute Commitment Fee Amount Per Cycle
     ...                                      Added Get data for the Balance Amount.
     ...    @update: fmamaril    11SEP2019    
     ...    @update: ehugo    04JUN2020    - added keyword pre-processing and post-processing; added optional runtime argument; added screenshot
-    [Arguments]    ${sPrincipalAmount}    ${sRateBasis}    ${sCycleNumber}    ${sSystemDate}    ${sTotal}=None    ${sRunTimeVar_ProjectedCycleDue}=None
+    [Arguments]    ${sPrincipalAmount}    ${sRateBasis}    ${sCycleNumber}    ${sSystemDate}    ${sTotal}=None    ${sRunTimeVar_ProjectedCycleDue}=None    ${sAccrualRule}=Pay in Arrears
 
     ### GetRuntime Keyword Pre-processing ###
     ${PrincipalAmount}    Acquire Argument Value    ${sPrincipalAmount}
@@ -1597,11 +1600,13 @@ Get Fee Cycle Due Amount
 Get Fee Paid to Date Amount
     [Documentation]    This keyword returns the Fee total paid to date amount.
     ...    @author: cfrancis    18SEP2020    - Initial Create
+    ...    @update: clanding    28OCT2020    - added condition for EU entity
     [Arguments]    ${sLIQ_Fee_Window}    ${sLIQ_Fee_Tab_Locator}    ${sLIQ_Fee_Accrual_Cycles_JavaTree_Locator}
     mx LoanIQ activate window    ${sLIQ_Fee_Window}
-    # Mx LoanIQ Select Window Tab    ${sLIQ_Fee_Tab_Locator}    Accrual
     ${rowcount}    Mx LoanIQ Get Data    ${sLIQ_Fee_Accrual_Cycles_JavaTree_Locator}    input=items count%value
     ${rowcount}    Evaluate    ${rowcount} - 2
+    ${rowcount}    Run Keyword If    '${ENTITY}'=='EU'    Set Variable    1
+    ...    ELSE    Set Variable    ${rowcount}
     Log    The total rowcount is ${rowcount}
     ${PaidtodateAmount}    Mx LoanIQ Store TableCell To Clipboard    ${sLIQ_Fee_Accrual_Cycles_JavaTree_Locator}    ${rowcount}%Paid to date%amount
     Log    The Fee Paid to Date amount is ${PaidtodateAmount} 

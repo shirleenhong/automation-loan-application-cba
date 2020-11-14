@@ -19,10 +19,13 @@ ${Status}
 ${MESSAGE_OBJECTNOTFOUND}    Object not found
 ${MESSAGE_NOTAVALIDCODE}    not a valid code
 ${MESSAGE_USERIDNOTONFILE}    User ID not on file
+${MESSAGE_LOGINIDNOTONFILE}    Login ID not on file
+${MESSAGE_USERIDNOTEXIST}    User does not exist:
 ${MESSAGE_EXCEPTION}    Exception
 ${MESSAGE_EMPTYARRAY}    Payload must contain at least 1 Riskbook
 ${MESSAGE_ITEMNOTASSIGNED}    ITEM NOT ASSIGNED TO THE USER
 ${MESSAGE_DATASOURCEERROR}    The DataSource is not a subscriber to the API
+${MESSAGE_PROFILEIDMISSING}    ProfileId field is missing
 
 ### Browser Setup Names ###
 ${CHROME_BROWSER}    Chrome
@@ -142,8 +145,6 @@ ${CBAINTERFACE_SOURCENAME}    CCBCorrespUpdateMQ_base
 ${CBAINTERFACE_INSTANCE}    CustomCBAInterface_Transformation1.1.6
 ${CBAINTERFACE_SOURCENAME_FXRATES}    CCBCorrespUpdateMQ_notf
 ${CBAPUSH_SOURCENAME}    CCBCorrespUpdateMQ_notf
-${TL_BASE_ACK_MESSAGE_SOURCENAME}    ccb_source_base
-${TL_CAL_ACK_MESSAGE_SOURCENAME}	ccb_source_cal
 ${RESPONSE_MECHANISM_SOURCENAME}    MessageResponseProcessor
 
 ###FFC Summary Headers###
@@ -453,6 +454,21 @@ ${404_LOGIN_INVALID}     Incorrect response from API Server
 ${400_EMAIL_INVALID}     Value provided for email field is incorrect
 ${400_LOGIN_MISMATCH}     Login ID at http link and the payload mismatch
 ${400_STATUS_INVALID}     No enum constant com.finastra.mdm.model.v1.UserLob.StatusEnum
+${400_ROLE_INVALID}    The Role
+${400_BRANCH_INVALID}    The Default Branch
+${400_BUSINESS_ENTITY_INVALID}    The Business Entity Name
+${400_USER_TYPE_INVALID}    The User Type
+${400_CENTRAL_USER_TYPE_INVALID}    The CentralUserType
+${400_COUNTRY_INVALID}    The Country code
+${400_LOCALE_INVALID}    The Locale
+${400_OSUSERID_INVALID}    The OSUserId
+${400_JOB_TITLE_INVALID}    The JobTitle
+${400_LOCATION_INVALID}    The Location
+${400_DEPT_CODE_INVALID}    The Department Code
+${400_PROC_AREA_INVALID}    The Processing Area
+${400_PROFILE_ID_INVALID}    The ProfileId
+${400_INVALID}    - is invalid
+${400_USER_LOCK_STATUS_INVALID}    No enum constant com.finastra.mdm.model.v1.UserLob.UserLockStatusEnum.
 
 ###PARTY API###
 ${PARTY_ZONE}    AU

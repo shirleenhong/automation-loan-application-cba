@@ -1,0 +1,4 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<api:executeUpdateFundingRate xmlns:api='http://api.ws.liq.misys.com/'>
+  <UpdateFundingRate version='1.0' baseRate='CDOR' currency='CAD' rate='0.0135' effectiveDate='06-Jun-2018' fundingDesk='AUD' repricingFrequency='12M' />
+</api:executeUpdateFundingRate>

@@ -27,8 +27,8 @@ LIQ_IndemnityFee_RateBasis_Text = 'JavaWindow("title:=Indemnity Fee.*").JavaStat
 LIQ_IndemnityFee_OnlineAcrual_Menu = 'JavaWindow("title:=Indemnity Fee.*").JavaMenu("label:=Options").JavaMenu("label:=Perform Online Accrual")'
 LIQ_IndemnityFee_Save_Menu = 'JavaWindow("title:=Indemnity Fee.*").JavaMenu("label:=File").JavaMenu("label:=Save")'
 LIQ_IndemnityFee_AdjustedDueDate = 'JavaWindow("title:=Indemnity Fee.*").JavaEdit("attached text:=Adjusted Due Date:.*")'
-LIQ_IndemnityFee_Currency_Text = 'JavaWindow("title:=Indemnity Fee.*").JavaStaticText("labeled_containers_path:=Tab:General;", "x:=185", "y:=168")'
-LIQ_IndemnityFee_ActualExpiryDate_Text = 'JavaWindow("title:=Indemnity Fee.*").JavaStaticText("labeled_containers_path:=Tab:General;", "x:=567", "y:=152")'
+LIQ_IndemnityFee_Currency_Text = 'JavaWindow("title:=Indemnity Fee.*").JavaStaticText("Index:=17")'
+LIQ_IndemnityFee_ActualExpiryDate_Text = 'JavaWindow("title:=Indemnity Fee.*").JavaStaticText("Index:=1")'
 
 ###Indemnity Fee - Events###   
 LIQ_IndemnityFee_Events_Javatree = 'JavaWindow("title:=Indemnity Fee.*").JavaTree("tagname:=Select event to view details")'   

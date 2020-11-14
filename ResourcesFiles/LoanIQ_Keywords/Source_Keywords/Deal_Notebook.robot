@@ -184,7 +184,8 @@ Select Deal Borrower Location and Servicing Group
     [Documentation]    This keyword selects a borrower location and servicing group.
     ...    @author: fmamaril
     ...    @update: amansuet    02APR2020    Updated to align with automation standards and added keyword pre-processing
-    ...    @update: ehugo    28MAY2020    - added keyword pre-processing for other arguments; added screenshot
+    ...    @update: ehugo       28MAY2020    - added keyword pre-processing for other arguments; added screenshot
+    ...    @update: makcamps    15OCT2020    - added upper case method for borrower name in deal notebook
     [Arguments]    ${sBorrower_Location}    ${sBorrower_SGAlias}    ${sBorrower_SG_GroupMembers}    ${sBorrower_SG_Method}    ${sDeal_Borrower}    ${sBorrower_SG_Name}   
 
     ### GetRuntime Keyword Pre-processing ###
@@ -205,7 +206,7 @@ Select Deal Borrower Location and Servicing Group
     Mx LoanIQ Select String    ${LIQ_ServicingGroups_RemittanceInctructions_JavaTree}   ${Borrower_SG_Method}
     mx LoanIQ click    ${LIQ_ServicingGroup_OK_Button}
     mx LoanIQ activate window    ${LIQ_DealBorrower_Window}
-    Run Keyword And Continue On Failure    Mx LoanIQ Verify Object Exist    JavaWindow("title:=.*${Deal_Borrower}.*").JavaStaticText("label:=${Borrower_SG_Name}")    VerificationData="Yes"
+    Run Keyword And Continue On Failure    Mx LoanIQ Verify Object Exist    JavaWindow("title:=.*${Deal_Borrower}.*").JavaStaticText("label:=${Borrower_SG_Name.upper()}")    VerificationData="Yes"
 
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/DealNotebook_BorrowerLocation
     

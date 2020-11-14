@@ -56,7 +56,9 @@ Variables    ../ObjectMap/LoanIQ_Locators/LIQ_User_Administration_Locators.py
 ### Fusion Banking Essence - Locators ###
 Variables    ../ObjectMap/FBE_Locators/Essence_AdhocExtraction_Locators.py
 Variables    ../ObjectMap/FBE_Locators/Essence_ChangeOfBusinessDate_Locators.py
+Variables    ../ObjectMap/FBE_Locators/Essence_CreateUser_Locators.py
 Variables    ../ObjectMap/FBE_Locators/Essence_Dashboard_Locators.py
+Variables    ../ObjectMap/FBE_Locators/Essence_EnquireUser_Locators.py
 Variables    ../ObjectMap/FBE_Locators/Essence_EODControlAndStatusEnquiry_Locators.py
 Variables    ../ObjectMap/FBE_Locators/Essence_ZoneBranchConfig_Locators.py
 
@@ -88,15 +90,195 @@ Resource    ../ResourcesFiles/Integration_Keywords/Source_Keywords/API/Correspon
 Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Correspondence/API_COR_TC01.robot
 
 ### Integration Resource Files - User - Business Keywords ###
-Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/Users/API_SSO_CRE01.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Users/User_Create/API_SSO_CRE00.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Users/User_Create/API_SSO_CRE01.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Users/User_Create/API_SSO_CRE02.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Users/User_Create/API_SSO_CRE03.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Users/User_Create/API_SSO_CRE04.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Users/User_Create/API_SSO_CRE05.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Users/User_Create/API_SSO_CRE06.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Users/User_Create/API_SSO_CRE07.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Users/User_Create/API_SSO_CRE08.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Users/User_Create/API_SSO_CRE09.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Users/User_Create/API_SSO_CRE12.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Users/User_Create/API_SSO_CRE13.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Users/User_Create/API_SSO_CRE14.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Users/User_Create/API_SSO_CRE15.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Users/User_Create/API_SSO_CRE16.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Users/User_Create/API_SSO_CRE17.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Users/User_Create/API_SSO_CRE18.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Users/User_Create/API_SSO_CRE19.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Users/User_Create/API_SSO_CRE20.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Users/User_Create/API_SSO_CRE21.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Users/User_Create/API_SSO_CRE22.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Users/User_Create/API_SSO_CRE23.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Users/User_Create/API_SSO_CRE24.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Users/User_Create/API_SSO_CRE25.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Users/User_Create/API_SSO_CRE26.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Users/User_Delete/API_SSO_DEL01.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Users/User_Delete/API_SSO_DEL02.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Users/User_Delete/API_SSO_DEL03.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Users/User_Delete/API_SSO_DEL04.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Users/User_Delete/API_SSO_DEL05.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Users/User_Delete/API_SSO_DEL06.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Users/User_Delete/API_SSO_DEL07.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Users/User_Delete/API_SSO_DEL11.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Users/User_Get/API_SSO_GET00.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Users/User_Get/API_SSO_GET01.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Users/User_Get/API_SSO_GET02.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Users/User_Get/API_SSO_GET05.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Users/User_Get/API_SSO_GET06.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Users/User_Get/API_SSO_GET07.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Users/User_Get/API_SSO_GET08.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Users/User_Get/API_SSO_GET09.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Users/User_Get/API_SSO_GET14.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Users/User_Get/API_SSO_GET15.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Users/User_Get/API_SSO_GET16.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Users/User_Get/API_SSO_GET17.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Users/User_Get/API_SSO_GET18.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Users/User_Get/API_SSO_GET19.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Users/User_Get/API_SSO_GET21.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Users/User_Get/API_SSO_GET22.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Users/User_Get/API_SSO_GET23.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Users/User_Get/API_SSO_GET24.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Users/User_Get/API_SSO_GET25.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Users/User_Get/API_SSO_GET26.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Users/User_Get/API_SSO_GET27.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Users/User_Get/API_SSO_GET32.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Users/User_Get/API_SSO_GET33.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Users/User_Get/API_SSO_GET34.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Users/User_Get/API_SSO_GET35.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Users/User_Get/API_SSO_GET36.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Users/User_Get/API_SSO_GET37.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Users/User_Get/API_SSO_GET41.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Users/User_Get/API_SSO_GET42.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Users/User_Get/API_SSO_GET45.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Users/User_Get/API_SSO_GET46.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Users/User_Get/API_SSO_GET47.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Users/User_Get/API_SSO_GET50.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Users/User_Negative/API_SSO_NEG01.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Users/User_Negative/API_SSO_NEG02.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Users/User_Negative/API_SSO_NEG03.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Users/User_Negative/API_SSO_NEG04.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Users/User_Negative/API_SSO_NEG05.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Users/User_Negative/API_SSO_NEG06.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Users/User_Negative/API_SSO_NEG07.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Users/User_Negative/API_SSO_NEG08.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Users/User_Negative/API_SSO_NEG09.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Users/User_Negative/API_SSO_NEG10.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Users/User_Negative/API_SSO_NEG11.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Users/User_Negative/API_SSO_NEG12.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Users/User_Negative/API_SSO_NEG13.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Users/User_Negative/API_SSO_NEG14.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Users/User_Negative/API_SSO_NEG15.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Users/User_Negative/API_SSO_NEG16.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Users/User_Negative/API_SSO_NEG17.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Users/User_Negative/API_SSO_NEG18.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Users/User_Negative/API_SSO_NEG19.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Users/User_Negative/API_SSO_NEG20.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Users/User_Negative/API_SSO_NEG21.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Users/User_Negative/API_SSO_NEG22.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Users/User_Negative/API_SSO_NEG23.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Users/User_Negative/API_SSO_NEG24.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Users/User_Negative/API_SSO_NEG25.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Users/User_Negative/API_SSO_NEG26.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Users/User_Negative/API_SSO_NEG27.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Users/User_Negative/API_SSO_NEG28.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Users/User_Negative/API_SSO_NEG36.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Users/User_Negative/API_SSO_NEG37.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Users/User_Update/API_SSO_UPD00.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Users/User_Update/API_SSO_UPD01.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Users/User_Update/API_SSO_UPD02.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Users/User_Update/API_SSO_UPD03.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Users/User_Update/API_SSO_UPD04.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Users/User_Update/API_SSO_UPD05.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Users/User_Update/API_SSO_UPD06.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Users/User_Update/API_SSO_UPD07.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Users/User_Update/API_SSO_UPD08.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Users/User_Update/API_SSO_UPD10.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Users/User_Update/API_SSO_UPD13.robot
 
 ### Integration Resource Files - User - Source Keywords ###
-Resource    ../ResourcesFiles/Integration_Keywords/Source_Keywords/Users/API_SSO_API_VAL.robot
-Resource    ../ResourcesFiles/Integration_Keywords/Source_Keywords/Users/API_SSO_DATABASE_VAL.robot
-Resource    ../ResourcesFiles/Integration_Keywords/Source_Keywords/Users/API_SSO_FFC_VAL.robot
-Resource    ../ResourcesFiles/Integration_Keywords/Source_Keywords/Users/API_SSO_LOANIQ_VAL.robot
-Resource    ../ResourcesFiles/Integration_Keywords/Source_Keywords/Users/API_SSO_PREREQUISITE.robot
-Resource    ../ResourcesFiles/Integration_Keywords/Source_Keywords/Users/API_SSO_VAL.robot
+Resource    ../ResourcesFiles/Integration_Keywords/Source_Keywords/API/Users/API_SSO_API_VAL.robot
+Resource    ../ResourcesFiles/Integration_Keywords/Source_Keywords/API/Users/API_SSO_DATABASE_VAL.robot
+Resource    ../ResourcesFiles/Integration_Keywords/Source_Keywords/API/Users/API_SSO_ESSENCE_VAL.robot
+Resource    ../ResourcesFiles/Integration_Keywords/Source_Keywords/API/Users/API_SSO_FFC_VAL.robot
+Resource    ../ResourcesFiles/Integration_Keywords/Source_Keywords/API/Users/API_SSO_LOANIQ_VAL.robot
+Resource    ../ResourcesFiles/Integration_Keywords/Source_Keywords/API/Users/API_SSO_PARTY_VAL.robot
+Resource    ../ResourcesFiles/Integration_Keywords/Source_Keywords/API/Users/API_SSO_PREREQUISITE.robot
+Resource    ../ResourcesFiles/Integration_Keywords/Source_Keywords/API/Users/API_SSO_VAL.robot
+
+### Integration Resource Files - User - Business Keywords ###
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Riskbook/Update/API_RISKBOOK_UPD00.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Riskbook/Update/API_RISKBOOK_UPD01.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Riskbook/Update/API_RISKBOOK_UPD02.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Riskbook/Update/API_RISKBOOK_UPD03.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Riskbook/Update/API_RISKBOOK_UPD04.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Riskbook/Update/API_RISKBOOK_UPD05.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Riskbook/Update/API_RISKBOOK_UPD06.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Riskbook/Update/API_RISKBOOK_UPD07.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Riskbook/Update/API_RISKBOOK_UPD08.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Riskbook/Update/API_RISKBOOK_UPD09.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Riskbook/Update/API_RISKBOOK_UPD10.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Riskbook/Update/API_RISKBOOK_UPD11.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Riskbook/Update/API_RISKBOOK_UPD12.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Riskbook/Update/API_RISKBOOK_UPD13.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Riskbook/Update/API_RISKBOOK_UPD14.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Riskbook/Update/API_RISKBOOK_UPD15.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Riskbook/Update/API_RISKBOOK_UPD16.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Riskbook/Update/API_RISKBOOK_UPD17.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Riskbook/Update/API_RISKBOOK_UPD18.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Riskbook/Update/API_RISKBOOK_UPD19.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Riskbook/Update/API_RISKBOOK_UPD20.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Riskbook/Update/API_RISKBOOK_UPD21.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Riskbook/Update/API_RISKBOOK_UPD22.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Riskbook/Update/API_RISKBOOK_UPD25.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Riskbook/Update/API_RISKBOOK_UPD26.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Riskbook/Delete/API_RISKBOOK_DEL01.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Riskbook/Delete/API_RISKBOOK_DEL02.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Riskbook/Delete/API_RISKBOOK_DEL03.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Riskbook/Delete/API_RISKBOOK_DEL04.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Riskbook/Delete/API_RISKBOOK_DEL05.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Riskbook/Delete/API_RISKBOOK_DEL06.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Riskbook/Delete/API_RISKBOOK_DEL07.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Riskbook/Delete/API_RISKBOOK_DEL08.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Riskbook/Delete/API_RISKBOOK_DEL09.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Riskbook/Delete/API_RISKBOOK_DEL10.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Riskbook/Delete/API_RISKBOOK_DEL11.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Riskbook/Delete/API_RISKBOOK_DEL12.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Riskbook/Delete/API_RISKBOOK_DEL13.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Riskbook/Delete/API_RISKBOOK_DEL14.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Riskbook/Delete/API_RISKBOOK_DEL15.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Riskbook/Delete/API_RISKBOOK_DEL16.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Riskbook/Delete/API_RISKBOOK_DEL17.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Riskbook/Get/API_RISKBOOK_GET01.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Riskbook/Get/API_RISKBOOK_GET02.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Riskbook/Get/API_RISKBOOK_GET03.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Riskbook/Get/API_RISKBOOK_GET04.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Riskbook/Get/API_RISKBOOK_GET05.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Riskbook/Get/API_RISKBOOK_GET06.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Riskbook/Get/API_RISKBOOK_GET07.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Riskbook/Get/API_RISKBOOK_GET08.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Riskbook/Get/API_RISKBOOK_GET09.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Riskbook/Get/API_RISKBOOK_GET10.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Riskbook/Get/API_RISKBOOK_GET11.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Riskbook/Get/API_RISKBOOK_GET12.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Riskbook/Get/API_RISKBOOK_GET13.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Riskbook/Get/API_RISKBOOK_GET14.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Riskbook/Get/API_RISKBOOK_GET15.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Riskbook/Get/API_RISKBOOK_GET16.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Riskbook/Get/API_RISKBOOK_GET18.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Riskbook/Get/API_RISKBOOK_GET19.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Riskbook/Get/API_RISKBOOK_GET20.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Riskbook/Get/API_RISKBOOK_GET21.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Riskbook/Get/API_RISKBOOK_GET22.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Riskbook/Get/API_RISKBOOK_GET23.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Riskbook/Get/API_RISKBOOK_GET26.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/Riskbook/Get/API_RISKBOOK_GET27.robot
+
+### Integration Resource Files - User - Source Keywords ###
+Resource    ../ResourcesFiles/Integration_Keywords/Source_Keywords/API/Riskbook/API_RISKBOOK_API_VAL.robot
+Resource    ../ResourcesFiles/Integration_Keywords/Source_Keywords/API/Riskbook/API_RISKBOOK_VAL.robot
 
 ### Integration Resource Files - TL Calendar - Business Keywords ###
 Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/Transformation_Layer/Calendar/TL_CAL_01.robot
@@ -184,6 +366,9 @@ Resource    ../ResourcesFiles/Integration_Keywords/Source_Keywords/Transformatio
 Resource    ../ResourcesFiles/Integration_Keywords/Source_Keywords/Transformation_Layer/BaseRates/TL_BASE_FFC_VAL.robot
 Resource    ../ResourcesFiles/Integration_Keywords/Source_Keywords/Transformation_Layer/BaseRates/TL_BASE_LIQ_VAL.robot
 Resource    ../ResourcesFiles/Integration_Keywords/Source_Keywords/Transformation_Layer/BaseRates/TL_BASE_PREREQUISITE.robot
+
+### Integration Resource Files - API Base Rates - Business Keywords ###
+
 
 ### Integration Resource Files - API Base Rates - Source Keywords ###
 Resource    ../ResourcesFiles/Integration_Keywords/Source_Keywords/API/BaseRates/API_BIR_PREREQUISITE.robot
@@ -277,6 +462,7 @@ Resource    ../ResourcesFiles/Integration_Keywords/Source_Keywords/API/CommSee/L
 Resource    ../ResourcesFiles/Integration_Keywords/Source_Keywords/API/CommSee/LoanIQ/CommSee_AdminFeeSetup.robot
 Resource    ../ResourcesFiles/Integration_Keywords/Source_Keywords/API/CommSee/LoanIQ/CommSee_LoanDrawdown.robot
 Resource    ../ResourcesFiles/Integration_Keywords/Source_Keywords/API/CommSee/LoanIQ/CommSee_InterestPayment.robot
+
 ### Integration Resource Files - GL Extracts - Source Keywords ###
 Resource    ../ResourcesFiles/Integration_Keywords/Source_Keywords/Extracts/GL/GLEssence_Extracts_Validation.robot
 
@@ -286,8 +472,10 @@ Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/Extr
 Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/Extracts/GL_Essence/GLPOST_15.robot
 
 ### Integration Resource Files - Essence - Source Keywords ###
-Resource    ../ResourcesFiles/Essence_Keywords/Source_Keywords/EssenceCommon_Keywords.robot
 Resource    ../ResourcesFiles/Essence_Keywords/Source_Keywords/Essence_EODControlAndStatusEnquiry_Keywords.robot
+Resource    ../ResourcesFiles/Essence_Keywords/Source_Keywords/EssenceCommon_Keywords.robot
+Resource    ../ResourcesFiles/Essence_Keywords/Source_Keywords/EssenceDeleteUser_Keywords.robot
+Resource    ../ResourcesFiles/Essence_Keywords/Source_Keywords/EssenceEnquireUser_Keywords.robot
 
 ### Integration Resource Files - SAPWUL - Business Keywords ###
 Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/API/SAPWUL/SAPWUL_DealSetup.robot
@@ -309,3 +497,12 @@ Resource    ../ResourcesFiles/Integration_Keywords/Source_Keywords/Extracts/DNA/
 Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/Extracts/DNA_LIQ/DNA_01.robot
 Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/Extracts/DNA_LIQ/DNA_03.robot
 Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/Extracts/DNA_LIQ/DNA_04.robot
+
+### Integration Resource Files - DNR - Source Keywords ###
+Resource    ../ResourcesFiles/Integration_Keywords/Source_Keywords/Extracts/DNR/DNR_Extract/DNR_Extract_Validation.robot
+Resource    ../ResourcesFiles/Integration_Keywords/Source_Keywords/Extracts/DNR/DNR_LIQ/DNR_DealSetup.robot
+Resource    ../ResourcesFiles/Integration_Keywords/Source_Keywords/Extracts/DNR/DNR_LIQ/DNR_FacilityFeeSetup.robot
+Resource    ../ResourcesFiles/Integration_Keywords/Source_Keywords/Extracts/DNR/DNR_LIQ/DNR_FacilitySetup.robot
+Resource    ../ResourcesFiles/Integration_Keywords/Source_Keywords/Extracts/DNR/DNR_LIQ/DNR_LoanDrawdown.robot
+
+### Integration Resource Files - DNR - Business Process Keywords ###

@@ -15,6 +15,7 @@ Update Commitment Fee Cycle
     ...    @update: dahijara    09JUL2020    Updated Writing for Serv29 data set.
     ...    @update: dahijara    05AUG2020    Added writing for fee alias for scenario 5
     ...    @update: dfajardo    13AUG2020    Change hardcoded value 30
+    ...    @update: aramos      27OCT2020    Updated to add click Warning Message before Online Accrual
     [Arguments]    ${ExcelPath}
 
     ###LoanIQ Window###
@@ -44,7 +45,9 @@ Update Commitment Fee Cycle
     ...    AND    Write Data To Excel    SERV29_PaymentFees    ScheduledActivity_ThruDate    ${rowid}    ${ScheduledActivity_ThruDate}
     ...    AND    Write Data To Excel    SERV29_PaymentFees    ScheduledActivityReport_Date    ${rowid}    ${AdjustedDueDate}
     ...    AND    Write Data To Excel    SERV29_PaymentFees    FeePayment_EffectiveDate    ${rowid}    ${SystemDate}
-
+    
+    Mx Click Element If Present    ${LIQ_Warning_OK_Button}    
+    
     Run Online Acrual to Commitment Fee
     
     ###Loan IQ Desktop###
@@ -96,15 +99,24 @@ Update Indemnity Fee Cycle
 Pay Commitment Fee Amount
     [Documentation]    This keyword will pay Commitment Fee Amount on a deal
     ...    @author: fmamaril
-    ...    @update: fmamaril    23APR2019    Apply cashflow handling based on standards and removed notices validation for correspondence testing
-    ...    @update: fmamaril    29APR2019    Remove commented steps
-    ...    @update: ehugo    05JUN2020    - used 'Navigate to Payment Workflow and Proceed With Transaction' instead of 'Navigate Notebook Workflow'
-    [Arguments]    ${ExcelPath}    
-
-    ###Return to Scheduled Activity Fiter###
+    ...    @update: fmamaril    23APR2019	Apply cashflow handling based on standards and removed notices validation for correspondence testing
+    ...    @update: fmamaril    29APR2019	Remove commented steps
+    ...    @update: ehugo   	05JUN2020	Used 'Navigate to Payment Workflow and Proceed With Transaction' instead of 'Navigate Notebook Workflow'
+    ...    @update: makcamps    22OCT2020	Added relogin for system date reset, write method condition for EU,
+    ...										deleted Release Cashflow method before Release Ongoing Fee Payment
+    ...    @update: makcamps    30OCT2020	Added generate intent notice steps
+    [Arguments]    ${ExcelPath}   
+     
+    ##Re-login to reset date###
+    Logout from Loan IQ
+    Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
+    
+    ##Return to Scheduled Activity Fiter###
     ${SystemDate}    Get System Date
     Set Global Variable    ${SystemDate}
-    ${RemittanceDescription}    Read Data From Excel    ORIG03_Customer    RemittanceInstruction_RTGSDescriptionAUD   ${rowid}               
+    
+    ${RemittanceDescription}    Run Keyword If    '${ExcelPath}[Entity]'=='EU'    Read Data From Excel    ORIG03_Customer    RemittanceInstruction_IMTDescriptionUSD   ${rowid} 
+    ...    ELSE    Read Data From Excel    ORIG03_Customer    RemittanceInstruction_RTGSDescriptionAUD   ${rowid}            
     Navigate to Scheduled Activity Filter
 
     ###Scheduled Activity Filter###
@@ -131,7 +143,9 @@ Pay Commitment Fee Amount
     Verify if Status is set to Do It    &{ExcelPath}[Borrower1_ShortName]  
     
     ###Get Transaction Amount for Cashflow###
-    ${HostBankShare}    Get Host Bank Cash in Cashflow
+    
+    ${HostBankShare}    Run Keyword If    '${ExcelPath}[Entity]'=='EU'    Get Host Bank Cash in Cashflow    &{ExcelPath}[Currency]
+    ...    ELSE    Get Host Bank Cash in Cashflow
     ${BorrowerTranAmount}    Get Transaction Amount in Cashflow    &{ExcelPath}[Borrower1_ShortName]
     ${ComputedHBTranAmount}    Compute Lender Share Transaction Amount    ${ProjectedCycleDue}    &{ExcelPath}[HostBankSharePct]
     
@@ -166,8 +180,9 @@ Pay Commitment Fee Amount
     Login to Loan IQ    ${MANAGER_USERNAME}    ${MANAGER_PASSWORD}
     ###Generation of Intent Notice is skipped - Customer Notice Method must be updated###
     Select Item in Work in Process    Payments    Release Cashflows    Ongoing Fee Payment     &{ExcelPath}[Facility_Name]
+    Run Keyword If    '${ExcelPath}[Entity]'=='EU'    Run Keywords    Generate Intent Notices for Ongoing Fee Payment
+    ...    AND    Mx LoanIQ Close    ${LIQ_Notice_PaymentIntentNotice_Window}
     Navigate to Payment Workflow and Proceed With Transaction    Release Cashflows
-    Release Cashflow    &{ExcelPath}[Borrower1_ShortName]    release
     Release Ongoing Fee Payment
     
     ###Loan IQ Desktop###
@@ -511,6 +526,7 @@ Pay Commitment Fee Amount - Syndicated with Secondary Sale
     ###Ongoing Fee Notebook###
     Release Ongoing Fee Payment
     
+    Mx Click Element If Present    LIQ_Warning_OK_Button    
     ###Loan IQ Desktop###
     Close All Windows on LIQ
     Open Existing Deal    &{ExcelPath}[Deal_Name]
@@ -531,7 +547,15 @@ Pay Commitment Fee Amount - Syndicated with Secondary Sale
 Capitalized Ongoing Fee Payment
     [Documentation]    This keyword is used to pay the Capitalized Ongoing Fee - Fee Level.
     ...    @author: rtarayao
+    ...    @Update:     16OCT2020    - Revised script to accomodate Line fee payment.
+    ...                              - Removed commented lines.
+    
     [Arguments]    ${ExcelPath}
+
+    ##LIQ Window###
+    Logout from Loan IQ
+    Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
+
     ### <update> 12Dec18 - bernchua : Scenario 8 integration. Get data from Excel of previous transactions / test scripts
     ${Lender1}    Read Data From Excel    TRP002_SecondarySale    Buyer_Lender    &{ExcelPath}[rowid]
     ${Lender2}    Read Data From Excel    TRP002_SecondarySale    Buyer_Lender_2    &{ExcelPath}[rowid]
@@ -554,8 +578,6 @@ Capitalized Ongoing Fee Payment
     
     Navigate to Facility Notebook from Deal Notebook    &{ExcelPath}[Facility_Name]
     
-    # Navigate to Facility Notebook    &{ExcelPath}[Deal_Name]    &{ExcelPath}[Facility_Name]
-    
     ${Orig_FacilityProposedcmt}    ${Orig_FacilityClosingCmt}    ${Orig_FacilityCurrentCmt}    ${Orig_FacilityOutstandings}    ${Orig_FacilityAvailableToDraw}    Get Original Data on Global Facility Amounts Section
     Write Data To Excel    CAP02_CapitalizedFeePayment    Orig_FacilityCurrentCmt    ${rowid}    ${Orig_FacilityCurrentCmt}
     Write Data To Excel    CAP02_CapitalizedFeePayment    Orig_FacilityOutstandings    ${rowid}    ${Orig_FacilityOutstandings}
@@ -569,106 +591,93 @@ Capitalized Ongoing Fee Payment
     Write Data To Excel    CAP02_CapitalizedFeePayment    Orig_LoanHostBankGross    ${rowid}    ${Orig_LoanHostBankGross}
     Write Data To Excel    CAP02_CapitalizedFeePayment    Orig_LoanHostBankNet    ${rowid}    ${Orig_LoanHostBankNet}
     
-    ###Step 1 & 2 : Naviagtion to Commitment Notebook###
+    ### Ongoing Fee Payment###
     Navigate to Facility Notebook    &{ExcelPath}[Deal_Name]    &{ExcelPath}[Facility_Name] 
-    Open Ongoing Fee from Facility Notebook    &{ExcelPath}[Facility_Name]    &{ExcelPath}[Fee_Type]
-    
-    ###Step 3 - 6: Fee Payment Initiation###
-    Initiate Ongoing Fee Payment    &{ExcelPath}[Cycle_Number]
-    
-    ###Step 7 - 8: Lender Share Validation####
+    Navigate to Existing Ongoing Fee Notebook    &{ExcelPath}[Fee_Type]
+    Initiate Line Fee Payment    &{ExcelPath}[Cycle_Number]
     ${CycleDue}    Read Data From Excel    CAP02_CapitalizedFeePayment    OngoingFee_CycleDue    ${rowid}
-    # Validate Lender Shares - Ongoing Fee Payment    ${HostBank}    ${Lender1}    ${Lender2}    ${HostBankShare}    
-    # ...    ${LenderShare1}    ${LenderShare2}    ${CycleDue}
+
+    ### Create Cashflows ###
+    Navigate to Payment Workflow and Proceed With Transaction    ${CREATE_CASHFLOWS_TYPE}
+    Verify if Method has Remittance Instruction    &{ExcelPath}[Borrower_ShortName]    ${Borrower_RIDescription}    &{ExcelPath}[Remittance_Instruction]
+    Verify if Method has Remittance Instruction    ${Lender1}    ${Lender1_RIDescription}    &{ExcelPath}[Remittance_Instruction]
+    Verify if Method has Remittance Instruction    ${Lender2}    ${Lender2_RIDescription}    &{ExcelPath}[Remittance_Instruction]
+    Verify if Status is set to Do It    &{ExcelPath}[Borrower_ShortName]
+    Verify if Status is set to Do It    ${Lender1}
+    Verify if Status is set to Do It    ${Lender2}
+    Close GL Entries and Cashflow Window
+
+    ### Generate Intent Notices ###
+    ${Borrower_LegalName}    Read Data From Excel    ORIG03_Customer    LIQCustomer_LegalName    ${rowid}
+    Navigate to Payment Workflow and Proceed With Transaction    ${GENERATE_INTENT_NOTICES}
+    Click OK In Notices Window
+    Verify Customer Notice Method    ${Lender1_LegalName}    &{ExcelPath}[Lender1_IntenNoticeContact]    &{ExcelPath}[IntentNoticeStatus]    ${INPUTTER_USERNAME}    &{ExcelPath}[Lender1_IntentNoticeMethod]    &{ExcelPath}[Lender1_ContactEmail]
+    Verify Customer Notice Method    ${Lender2_LegalName}    &{ExcelPath}[Lender2_IntenNoticeContact]    &{ExcelPath}[IntentNoticeStatus]    ${INPUTTER_USERNAME}    &{ExcelPath}[Lender2_IntentNoticeMethod]    &{ExcelPath}[Lender2_ContactEmail]
+    Verify Customer Notice Method    ${Borrower_LegalName}    &{ExcelPath}[Borrower_IntenNoticeContact]    &{ExcelPath}[IntentNoticeStatus]    ${INPUTTER_USERNAME}    &{ExcelPath}[Borrower_IntentNoticeMethod]    &{ExcelPath}[Borrower_ContactEmail]
+    Close Fee Payment Notice Window
+
+    ### Sending Payment For Approval ###
+    Navigate to Payment Workflow and Proceed With Transaction    ${SEND_TO_APPROVAL_STATUS}
+    Close All Windows on LIQ
+
+    ###Loan IQ Desktop###
+    Logout from Loan IQ
+    Login to Loan IQ    ${SUPERVISOR_USERNAME}    ${SUPERVISOR_PASSWORD}
     
-    # ###Step 9 - 13 Cashflows and GL Entries Validation####
-    # Navigate to Payment Cashflow Window
-    # # Validate Capitalized Ongoing Fee (Amounts) Cashflow Details    &{ExcelPath}[Capitalization_RemainingFeePercentage]    ${CycleDue}    ${HostBankShare}    ${LenderShare1}    
-    # # ...        ${LenderShare2}    &{ExcelPath}[Borrower_ShortName]    ${Lender1}    ${Lender2}
-    # Validate Remittance Instructions in Cashflow - Ongoing Fee Payment with Three Lenders    &{ExcelPath}[Borrower_ShortName]    ${Lender1}    ${Lender2}    ${Borrower_RIDescription}
-    # ...    ${Lender1_RIDescription}    ${Lender2_RIDescription}
-    # Click OK In Cashflows
-    # Get Transaction Amount and Validate GL Entries - Capitalized Ongoing Fee    &{ExcelPath}[Borrower_ShortName]    ${Lender1}    ${Lender2}    &{ExcelPath}[HostBank_PrincipalLoanGLAcct]    &{ExcelPath}[HostBank_LendingFeeGLAcct]        
-    # ...    &{ExcelPath}[Capitalization_PctofPayment]    ${HostBankShare}    ${LenderShare1}    ${LenderShare2}    ${CycleDue}
-    
-    ###Step 15: Sending of Payment Approval###
-    Send Payment to Approval
+    ### Payment Approval ####
+    Navigate Transaction in WIP     ${PAYMENTS_TRANSACTION}    ${AWAITING_APPROVAL_STATUS}    ${ONGOING_FEE_PAYMENT_TRANSACTION}    &{ExcelPath}[Facility_Name]
+    Navigate to Payment Workflow and Proceed With Transaction    ${APPROVAL_STATUS}
+    Close All Windows on LIQ
     
     ###Loan IQ Desktop###
     Logout from Loan IQ
-    Login to Loan IQ    &{ExcelPath}[ApproverUserName]    &{ExcelPath}[ApproverPassword]
-    
-   ###Step 16: Payment Approval#####
-   Open Payment Notebook via WIP - Awaiting Approval    &{ExcelPath}[WIP_TransactionType]    &{ExcelPath}[WIP_AwaitingApprovalStatus]    &{ExcelPath}[WIP_PaymentType]    &{ExcelPath}[Facility_Name]
-   Approve Payment
-    
-   ###Loan IQ Desktop###
-   Logout from Loan IQ
-   Login to Loan IQ    &{ExcelPath}[UserName_Original]    &{ExcelPath}[Password_Original]
-   
-   ###Sending of Intent Notices###
-   Open Fee Payment Notebook via WIP - Awaiting Generate Intent Notices    &{ExcelPath}[WIP_TransactionType]    &{ExcelPath}[WIP_AwaitingGenerateIntentNotices]    &{ExcelPath}[WIP_PaymentType]    &{ExcelPath}[Facility_Name]
-   Navigate to Payment Intent Notices Window
-   Verify Customer Notice Method    &{ExcelPath}[Borrower_ShortName]    &{ExcelPath}[Borrower_IntenNoticeContact]    &{ExcelPath}[IntentNoticeStatus]    &{ExcelPath}[UserName_Original]    Email    &{ExcelPath}[Borrower_ContactEmail]
-   Verify Customer Notice Method    ${Lender1_LegalName}    &{ExcelPath}[Lender1_IntenNoticeContact]    &{ExcelPath}[IntentNoticeStatus]    &{ExcelPath}[UserName_Original]    Email    &{ExcelPath}[Lender1_ContactEmail]
-   Verify Customer Notice Method    ${Lender2_LegalName}    &{ExcelPath}[Lender2_IntenNoticeContact]    &{ExcelPath}[IntentNoticeStatus]    &{ExcelPath}[UserName_Original]    External Notice Method    &{ExcelPath}[Lender2_ContactEmail]
-   Verify Customer Notice Method    ${Lender2_LegalName}    &{ExcelPath}[Lender2_IntenNoticeContact]    &{ExcelPath}[IntentNoticeStatus]    &{ExcelPath}[UserName_Original]    Email    &{ExcelPath}[Lender2_ContactEmail]
-   mx LoanIQ close window     ${LIQ_IntentNotice_Window}
-   
-   ####Loan IQ Desktop#####
-   Logout from Loan IQ
-   Login to Loan IQ    &{ExcelPath}[ApproverUserName]    &{ExcelPath}[ApproverPassword]
-   
-   ###Step 17: Release Payment###
-   # Open Payment Notebook via WIP - Awaiting Release    &{ExcelPath}[WIP_TransactionType]    &{ExcelPath}[WIP_AwaitingRelease]    &{ExcelPath}[WIP_PaymentType]    &{ExcelPath}[Facility_Name]
-   Navigate to Payment Workflow Tab
-   ${ReleaseCashflow_Status}    Run Keyword And Return Status    Mx LoanIQ Select Or DoubleClick In Javatree    ${LIQ_Payment_WorkflowItems}    Release Cashflows%s   
-   # Run Keyword If    ${ReleaseCashflow_Status}==True    Run Keywords    Open Payment Notebook via WIP - Awaiting Release Cashflow    &{ExcelPath}[WIP_TransactionType]    &{ExcelPath}[WIP_AwaitingReleaseCashflowsStatus]    &{ExcelPath}[WIP_PaymentType]    &{ExcelPath}[Facility_Name]
-   # ...    AND    Release Fee Payment Cashflows with Three Lenders    &{ExcelPath}[Borrower_ShortName]    ${Lender1}    ${Lender2}
-   Release Payment
-   Close All Windows on LIQ
+    Login to Loan IQ    ${MANAGER_USERNAME}    ${MANAGER_PASSWORD}
+
+    ### Release Payment ###
+    Navigate Transaction in WIP     ${PAYMENTS_TRANSACTION}    ${AWAITING_RELEASE_STATUS}    ${ONGOING_FEE_PAYMENT_TRANSACTION}    &{ExcelPath}[Facility_Name]
+    Navigate to Payment Workflow and Proceed With Transaction    ${RELEASE_STATUS}
+    Close All Windows on LIQ
    
    #############POST VALIDATIONS#################
-   
-   ###Deal Notebook###
-   Search Existing Deal    &{ExcelPath}[Deal_Name]
-    
-   ###Step 18 - Lender validation###
-   Open Ongoing Fee from Deal Notebook    &{ExcelPath}[Facility_Name]    &{ExcelPath}[Fee_Type]
-   Navigate to Ongoing Fee Payment Notebook from Commitment Fee Notebook
-  mx LoanIQ close window    ${LIQ_CommitmentFeeNotebook_Window}
-   # Validate Lender Shares - Ongoing Fee Payment    ${HostBank}    ${Lender1}    ${Lender2}    ${HostBankShare}    
-    # ...    ${LenderShare1}    ${LenderShare2}    ${CycleDue}
-   Close All Windows on LIQ
-   
-   ###Step 19 - Loan Validation###
-   ${Orig_LoanGlobalOriginal}    Read Data From Excel    CAP02_CapitalizedFeePayment    Orig_LoanGlobalOriginal    ${rowid}
-   ${Orig_LoanGlobalCurrent}    Read Data From Excel    CAP02_CapitalizedFeePayment    Orig_LoanGlobalCurrent    ${rowid}
-   ${Orig_LoanHostBankGross}    Read Data From Excel    CAP02_CapitalizedFeePayment    Orig_LoanHostBankGross    ${rowid}
-   ${Orig_LoanHostBankNet}    Read Data From Excel    CAP02_CapitalizedFeePayment    Orig_LoanHostBankNet    ${rowid}
-   
-   Navigate to Facility Notebook    &{ExcelPath}[Deal_Name]    &{ExcelPath}[Facility_Name]    
-   Navigate to Outstanding Select Window
-   Navigate to Existing Loan    &{ExcelPath}[Outstanding_Type]    &{ExcelPath}[Facility_Name]    &{ExcelPath}[Loan_Alias]
-   Validate Updated Loan Amount After Payment - Capitalized Ongoing Fee    ${Orig_LoanGlobalOriginal}    ${Orig_LoanGlobalCurrent}    ${Orig_LoanHostBankGross}    ${Orig_LoanHostBankNet}    &{ExcelPath}[Capitalization_PctofPayment]    ${HostBankShare}    ${CycleDue}
+    Logout from Loan IQ
+    Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
 
-   ###Step 21 - Events Tab and Pending Tab Validation###
-   Validate Loan Events Tab after Payment - Capiltalized Ongoing Fee
-   Validate Loan Pending Tab- Capitalized Ongoing Fee
+    Navigate to Facility Notebook    &{ExcelPath}[Deal_Name]    &{ExcelPath}[Facility_Name] 
+    Navigate to Existing Ongoing Fee Notebook    &{ExcelPath}[Fee_Type]
+    Validate Release of Ongoing Line Fee Payment
+    Close All Windows on LIQ
    
-   Close All Windows on LIQ
-   
-   ###Step 22 - Facility Validation###
-   ${Orig_FacilityCurrentCmt}    Read Data From Excel    CAP02_CapitalizedFeePayment    Orig_FacilityCurrentCmt    ${rowid}
-   ${Orig_FacilityOutstandings}    Read Data From Excel    CAP02_CapitalizedFeePayment    Orig_FacilityOutstandings    ${rowid}
-   ${Orig_FacilityAvailableToDraw}    Read Data From Excel    CAP02_CapitalizedFeePayment    Orig_FacilityAvailableToDraw    ${rowid}
-   
-   # Navigate to Facility Notebook    &{ExcelPath}[Deal_Name]    &{ExcelPath}[Facility_Name]
-   # Validate Updated Facility Amounts After Payment - Capitalized Ongoing Fee    ${Orig_FacilityCurrentCmt}    ${Orig_FacilityOutstandings}    ${Orig_FacilityAvailableToDraw}    &{ExcelPath}[Capitalization_PctofPayment]
-   
-   ### <update> 13Dec18 - bernchua : Return to original user
-   Logout from Loan IQ
-   Login to Loan IQ    &{ExcelPath}[UserName_Original]    &{ExcelPath}[Password_Original]
+   ### Loan Validation ###
+    ${Orig_LoanGlobalOriginal}    Read Data From Excel    CAP02_CapitalizedFeePayment    Orig_LoanGlobalOriginal    ${rowid}
+    ${Orig_LoanGlobalCurrent}    Read Data From Excel    CAP02_CapitalizedFeePayment    Orig_LoanGlobalCurrent    ${rowid}
+    ${Orig_LoanHostBankGross}    Read Data From Excel    CAP02_CapitalizedFeePayment    Orig_LoanHostBankGross    ${rowid}
+    ${Orig_LoanHostBankNet}    Read Data From Excel    CAP02_CapitalizedFeePayment    Orig_LoanHostBankNet    ${rowid}
+
+    ${LenderShare1}    Read Data From Excel    TRP002_SecondarySale    PctofDeal    &{ExcelPath}[rowid]
+    ${LenderShare2}    Read Data From Excel    TRP002_SecondarySale    PctofDeal2    &{ExcelPath}[rowid]
+    ${HostBankShare}    Evaluate    100-(${LenderShare1}+${LenderShare2})
+    ${CycleDue}    Read Data From Excel    CAP02_CapitalizedFeePayment    OngoingFee_CycleDue    ${rowid}
+    ${Capitalization_PctofPayment}    Read Data From Excel    CAP03_OngoingFeeCapitalization    Capitalization_PctofPayment    ${rowid}
+
+    Navigate to Facility Notebook    &{ExcelPath}[Deal_Name]    &{ExcelPath}[Facility_Name]    
+    Navigate to Outstanding Select Window
+    Navigate to Existing Loan    &{ExcelPath}[Outstanding_Type]    &{ExcelPath}[Facility_Name]    &{ExcelPath}[Loan_Alias]
+    Validate Updated Loan Amount After Payment - Capitalized Ongoing Fee    ${Orig_LoanGlobalOriginal}    ${Orig_LoanGlobalCurrent}    ${Orig_LoanHostBankGross}    ${Orig_LoanHostBankNet}    ${Capitalization_PctofPayment}    ${HostBankShare}    ${CycleDue}
+
+    Validate Loan Events Tab after Payment - Capiltalized Ongoing Fee
+    Validate Loan Pending Tab- Capitalized Ongoing Fee
+    Close All Windows on LIQ
+
+    ${Orig_FacilityCurrentCmt}    Read Data From Excel    CAP02_CapitalizedFeePayment    Orig_FacilityCurrentCmt    ${rowid}
+    ${Orig_FacilityOutstandings}    Read Data From Excel    CAP02_CapitalizedFeePayment    Orig_FacilityOutstandings    ${rowid}
+    ${Orig_FacilityAvailableToDraw}    Read Data From Excel    CAP02_CapitalizedFeePayment    Orig_FacilityAvailableToDraw    ${rowid}
+    
+    Navigate to Facility Notebook    &{ExcelPath}[Deal_Name]    &{ExcelPath}[Facility_Name]
+    Validate Updated Facility Amounts After Payment - Capitalized Ongoing Fee    ${Orig_FacilityCurrentCmt}    ${Orig_FacilityOutstandings}    ${Orig_FacilityAvailableToDraw}    ${Capitalization_PctofPayment}    ${CycleDue}
+    
+    Close All Windows on LIQ
+    Logout from Loan IQ
+    Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
    
 Interest Capitalization Payment 
     [Documentation]    This keyword is used to setup Interest Capitalization

@@ -1,5 +1,5 @@
 dataset_path = "C:\\Git_Evergreen\\fms_cba"
-ExcelPath = "C:\\Git_Evergreen\\fms_cba\\DataSet\\Party_DataSet\\PTY_DataSet_EU.xlsx"
+ExcelPath = "C:\\Git_Evergreen\\fms_cba\\DataSet\\LoanIQ_DataSet\\EU_Entity\\EVG_PTYLIQ04_EU_BaselineNonAgentSyndication.xlsx"
 CBAUAT_ExcelPath = "C:\\Git_Evergreen\\evergreen_projects\\CBA_Evergreen\\DataSet\\CBA_UAT_DataSet\\EVG_CBAUAT01.xls"
 APIDataSet = "C:\\Git_Evergreen\\fms_cba\\DataSet\\Integration_DataSet\\API\\API_Data_Set.xlsx"
 APIDataSet_EU = "C:\\Git_Evergreen\\fms_cba\\DataSet\\Integration_DataSet\\API\\API_Data_Set.xlsx"
@@ -9,6 +9,9 @@ SAPWUL_DATASET = "C:\\Git_evergreen\\evergreen_projects\\CBA_Evergreen\\DataSet\
 ComSeeDataSet = 'C:\\Git_Evergreen\\evergreen_projects\\CBA_Evergreen\\DataSet\\Downstream_DataSet\\ComSee\\COMSEE_Data_Set.xls'
 GLExcelPath = 'C:\\Git_Evergreen\\fms_cba\\DataSet\\Integration_DataSet\Extracts\\GL\\EVG_GL_TestData_EU.xlsx'
 PTY_DATASET = "C:\\Git_Evergreen\\fms_cba\\DataSet\\Party_DataSet\\PTY_DataSet_EU.xlsx"
+INDUSTRYSECTOR_LIST = "C:\\Git_Evergreen\\fms_cba\\DataSet\\Party_DataSet\\Industry_Sector\\Industry_Sector_Values.txt"
+BUSINESSACTIVITY_DIRECTORY = "C:\\Git_Evergreen\\fms_cba\\DataSet\\Party_DataSet\\Business_Activity"
+DNR_DATASET = "C:\\Git_Evergreen\\fms_cba\\DataSet\\Integration_DataSet\\Extracts\\DNR\\DNR_Dataset_EU.xlsx"
 
 SERVER = "http://mancsleverg0007"
 PORT = "9090"
@@ -26,7 +29,7 @@ MDM_HOST = "http://mancsleverg0007:8081"
 MDM_HOST_PARTY = 'http://mancsleverg0007:8081'
 MDM_User_API = "/corporate/v1/users"
 
-TL_USERNAME = "DONATELO"
+TL_USERNAME = "CESSINP1"
 TL_PASSWORD = "password"
 INPUTTER_USERNAME = "FJUSRAM"
 INPUTTER_PASSWORD = "password"
@@ -78,6 +81,7 @@ LIQ_ADMIN_PASSWORD = "password"
 
 ###COMSEE###
 COM_HOST = 'http://mancsleverg0007:9150'
+ENTITY = 'AU'
 
 ###SAPWUL###
 SAPWUL_INSTANCE = 'CustomCBAPush_v1.2.9'
@@ -155,12 +159,16 @@ OPEAPI_INSTANCE_TL = "openAPI_1.4.1.1"
 OPEAPI_INSTANCE = "openAPI_1.4.1.1"
 TEXTJMS_INSTANCE = "distributor_1.4.1.1"
 GETTEXTJMS_INSTANCE = "distributor_1.4.1.1"
-CBAINTERFACE_INSTANCE = "CustomInterface_v1.3.3"
+CBAINTERFACE_INSTANCE = "CustomInterface_v1.4.0"
 CBAPUSH_INSTANCE = "CustomCBAPush_v1.4.0"
-CUSTOM_INTERFACE_INSTANCE = "CustomInterface_v1.3.3"
+CUSTOM_INTERFACE_INSTANCE = "CustomInterface_v1.4.0"
 RESPONSE_MECHANISM_INSTANCE = "responsemechanism_1.4.1.0"
 DWE_NOTIFICATION_INSTANCE = "dwe_notification_1.3.0"
 SAPWUL_INSTANCE = 'CustomCBAPush_1.3.0'
+TL_CAL_ACK_MESSAGE_SOURCENAME = 'ccb_source_cal'
+TL_BASE_ACK_MESSAGE_SOURCENAME = 'ccb_source_base'
+CBACorrespUpdateMQ_Instance = 'CustomCBAPush_v1.4.0'
+FFC1CMUpdateSourceMQ_Instance = 'CustomInterface_v1.4.0'
 
 ### New Framework ###
 RUNTIME_EXCEL_FILE = "C:\\fms_scotia\\Customization\\Temp\\RUNTIME_VALUES.xlsx"
@@ -184,3 +192,21 @@ GL_CSV_GPG_FILEEXTENSION = '.csv.gpg'
 ESS_EUWASADMIN_SCHEMA = "EUWASADMIN"
 GL_VALIDATION_TOOL_PATH = 'C:\\Git_Evergreen\\fms_cba\\DataSet\\Integration_DataSet\Extracts\\GL\\Validation_Tool'
 GL_VALIDATION_TOOL_JAR_EU = 'gpgCheck-1.0.3-jar-with-dependencies-EU.jar'
+
+### Batch EOD ###
+PUTTY_PATH = "C:\\Program Files\\PuTTY\\putty.exe"
+PUTTY_HOSTNAME = "mancsleverg0005"
+PUTTY_PORT = "22"
+PUTTY_USERNAME = "micloud"
+PUTTY_PASSWORD = "misys123"
+
+### DNA ###
+DNA_SERVER = 'mancsleverg0021'
+DNA_SERVER_LIQ = 'mancsleverg0022'
+DNA_PORT = '22'
+DNA_SERVER_USER = 'sftpuser2'
+DNA_SERVER_PASSWORD = 'luckyroll76'
+DNA_EXTRACTION_AREA_PATH = '/evgdata/STREAMSETS/workspace/extraction_area/COMRLENDING/'
+DNA_CCB_LIQ_FILENAME = 'CCB_LIQ_'
+DNA_DATAASSURANCE_FILENAME = 'DATAASSURANCE_'
+DNA_DAT_EXT = '.DAT'
