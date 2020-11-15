@@ -279,6 +279,19 @@ Compare Two Arguments
     Run Keyword And Continue On Failure    Should Be Equal   ${value_from_sheet}    ${value_from_ui}        
     Log    ${value_from_sheet} - This is the data retrieved from Excel Sheet
     Log    ${value_from_ui} - This is the data saved in the UI/application
+    
+Compare Two Normalized Arguments
+    [Documentation]    This keyword compares two normalized arguments from web app and excel if they are equal.
+    ...    @author: nbautist 
+    [Arguments]    ${value_from_sheet}    ${value_from_ui}
+    
+    Wait Until Page Contains Element    ${value_from_ui}    
+    ${value_from_ui}    Get Value    ${value_from_ui}
+    ${value_from_ui}    Strip String    ${value_from_ui}
+    Log    ${value_from_ui}
+    ${value_from_sheet}    Convert To Uppercase    ${value_from_sheet}
+    ${value_from_ui}    Convert To Uppercase    ${value_from_ui}
+    Run Keyword And Continue On Failure    Should Be Equal   ${value_from_sheet}    ${value_from_ui}
             
 Generate Name Test Data
     [Documentation]    This keyword generates value that can be added to a variable to make it unique.
