@@ -547,6 +547,7 @@ Create Initial Loan Drawdown for RPA Deal
     ...    @author: dahijara    28OCT2020    - Initial create
     ...    @update: mcastro     03NOV2020    - Added Writing to SERV08_ComprehensiveRepricing for RPA Scenario 1
     ...    @update: dahijara    04NOV2020    - Added writing for SERV08_ComprehensiveRepricing-Loan_Alias
+    ...    @update: mcastro     16NOV2020    - Added condition for RPA scenario 3
     [Arguments]    ${ExcelPath}    
     
     Logout from Loan IQ
@@ -565,7 +566,7 @@ Create Initial Loan Drawdown for RPA Deal
     Write Data To Excel    SERV01_LoanDrawdown   Loan_Alias    ${rowid}    ${Loan_Alias}
 
     ###For RPA Scenario 1###
-    Run Keyword If    '${SCENARIO}'=='1' or '${SCENARIO}'=='4'    Write Data To Excel    SERV08_ComprehensiveRepricing   Loan_Alias    ${rowid}    ${Loan_Alias}
+    Run Keyword If    '${SCENARIO}'=='1' or '${SCENARIO}'=='3' or '${SCENARIO}'=='4'    Write Data To Excel    SERV08_ComprehensiveRepricing   Loan_Alias    ${rowid}    ${Loan_Alias}
         
     ###Initial Loan Drawdown###
     Validate Initial Loan Dradown Details    &{ExcelPath}[Loan_FacilityName]    &{ExcelPath}[Borrower1_ShortName]    &{ExcelPath}[Loan_Currency]
@@ -581,6 +582,10 @@ Create Initial Loan Drawdown for RPA Deal
     ### GL Entries ###
     Navigate to GL Entries
     Close GL Entries and Cashflow Window
+
+    ### Set FX Rates for RPA Scenario 3###
+    Run Keyword If    '${SCENARIO}'=='3' and '${rowid}'=='2'  Run Keywords    Navigate to Loan Drawdown Workflow and Proceed With Transaction    ${SET_FX_RATE_TRANSACTION}
+    ...   AND   Complete Set FX Rate
 
     ###Approval of Loan###
     Send Initial Drawdown to Approval

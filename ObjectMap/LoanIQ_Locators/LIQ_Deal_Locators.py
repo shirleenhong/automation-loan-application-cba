@@ -456,6 +456,7 @@ LIQ_OutstandingSelect_Inactive_Checkbox = 'JavaWindow("label:=Outstanding Select
 LIQ_OutstandingSelect_Pending_Checkbox = 'JavaWindow("label:=Outstanding Select").JavaCheckBox("attached text:=Pending")'
 LIQ_OutstandingSelect_Window = 'JavaWindow("title:=Outstanding Select")'
 LIQ_OutstandingSelect_Deal_TextField = 'JavaWindow("title:=Outstanding Select").JavaEdit("displayed:=1")'
+LIQ_OutstandingSelect_Alias_TextField = 'JavaWindow("label:=Outstanding Select.*").JavaEdit("attached text:=Alias:")'
 
 
 
