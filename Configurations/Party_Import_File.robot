@@ -28,6 +28,7 @@ Library    PdfToText
 Library    MathLibrary  
 
 ###Party Variable Files###
+Variables    ../ObjectMap/PTY_Locators/PTY_BulkPartyUpload_Locators.py
 Variables    ../ObjectMap/PTY_Locators/PTY_CreateUser_Locators.py
 Variables    ../ObjectMap/PTY_Locators/PTY_DeleteUser_Locators.py
 Variables    ../ObjectMap/PTY_Locators/PTY_EnquireUser_Locators.py
@@ -44,6 +45,7 @@ Resource    ../ResourcesFiles/Party_Keywords/BusinessProcess_Keywords/PTY001_Qui
 Resource    ../ResourcesFiles/Party_Keywords/BusinessProcess_Keywords/PTY002_UpdatePartyDetails.robot
 Resource    ../ResourcesFiles/Party_Keywords/BusinessProcess_Keywords/PTY004_PartyDetailsEnquiry.robot
 Resource    ../ResourcesFiles/Party_Keywords/BusinessProcess_Keywords/PTY005_QuickPartyOnboarding_Reject.robot
+Resource    ../ResourcesFiles/Party_Keywords/BusinessProcess_Keywords/PTY006_BulkPartyUpload.robot
 Resource    ../ResourcesFiles/Party_Keywords/BusinessProcess_Keywords/PTY007_DuplicateEnterpriseName.robot
 Resource    ../ResourcesFiles/Party_Keywords/BusinessProcess_Keywords/PTY008_DuplicateEnterpriseName_AcrossEntities.robot
 Resource    ../ResourcesFiles/Party_Keywords/BusinessProcess_Keywords/PTY009_DuplicateShortName.robot
@@ -66,6 +68,7 @@ Resource    ../ResourcesFiles/Party_Keywords/Source_Keywords/Party_EnquirePartyD
 Resource    ../ResourcesFiles/Party_Keywords/Source_Keywords/Party_EnquireUser_Keywords.robot
 Resource    ../ResourcesFiles/Party_Keywords/Source_Keywords/Party_DeleteUser_Keywords.robot
 Resource    ../ResourcesFiles/Party_Keywords/Source_Keywords/Party_DatabaseValidation_Keywords.robot
+Resource    ../ResourcesFiles/Party_Keywords/Source_Keywords/Party_BulkPartyUpload_Keywords.robot
 
 ##Party Global Variables##
 Resource    ../Variables/Party_Properties.txt
