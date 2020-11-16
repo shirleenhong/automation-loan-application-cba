@@ -852,4 +852,4 @@ Write Post Deal Details for Scenario 2 ComSee
     Write Data To Excel    ComSee_SC2_FacSetup    Facility_NoOfOutstanding    ${rowid}    ${OutstandingCount}    ${ComSeeDataSet}
     
     Close All Windows on LIQ
-    Logout from LoanIQ  
+    Logout from Loan IQ  

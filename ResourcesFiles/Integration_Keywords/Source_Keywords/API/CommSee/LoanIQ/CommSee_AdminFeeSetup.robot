@@ -29,13 +29,13 @@ Setup Deal Administrative Fees - ComSee
     mx LoanIQ click element if present    ${LIQ_Warning_OK_Button}
        
     ###Approve Admin Fee###
-    Logout from LoanIQ
+    Logout from Loan IQ
     Login to Loan IQ    ${MANAGER_USERNAME}    ${MANAGER_PASSWORD}
     Navigate Transaction in WIP    Deals    Awaiting Approval    Amortizing Admin Fee    &{ExcelPath}[Deal_Name]
     Navigate Notebook Workflow    ${LIQ_AdminFeeNotebook_Window}    ${LIQ_AdminFeeNotebook_JavaTab}    ${LIQ_AdminFeeNotebook_Workflow_JavaTree}    Approval
     
     ###Verify Admin Fee if successfully Added###
-    Logout from LoanIQ
+    Logout from Loan IQ
     Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
     Open Existing Deal    &{ExcelPath}[Deal_Name]
     
