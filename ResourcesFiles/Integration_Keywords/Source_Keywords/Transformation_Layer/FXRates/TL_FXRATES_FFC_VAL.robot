@@ -215,6 +215,7 @@ Validate Multiple Files for Success on TL FX Rates in FFC
     ...    @author: cfrancis    01AUG2019    - initial create
     ...    @update: nbautist    08OCT2020    - updated extension
     ...    @update: jdelacru    26OCT2020    - added getting the value from list for GSFILENAME_WITHTIMESTAMP to be assigned to new argument FileNameWithTimeStamp
+    ...    @update: ccarriedo   16NOV2020    - updated ${GSFILENAME_WITHTIMESTAMP} to ${ARCHIVE_GSFILENAME_LIST} in FOR loop Get From List keyword
     [Arguments]    ${sInputFilePath}    ${sInputFileName}    ${sInputXML}    ${sOutputFilePath}    ${sOutputFileName}    ${sOutputXML}
     ...    ${sXMLExcelFile}    ${sfundingDeskStatus}    ${sResponse}    ${sResponseMechanism}    ${sInputGSFile}    ${sFundingDesk}    ${Delimiter}=None
     @{InputGSFile_List}    Run Keyword If    '${Delimiter}'=='None'    Split String    ${sInputGSFile}    ,
