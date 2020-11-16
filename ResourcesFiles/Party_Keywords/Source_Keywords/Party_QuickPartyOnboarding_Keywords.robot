@@ -939,7 +939,7 @@ Populate and Validate Length of Fields in Quick Enterprise Party
     ${ShortName_MaxLength}    SeleniumLibraryExtended.Get Element Attribute   ${Party_QuickEnterpriseParty_ShortName_TextBox}    maxlength
     ${isMaximum}    Run Keyword And Return Status    Should Contain    ${ShortName_MaxLength}    25
     Run Keyword If    ${isMaximum}==${True}    Log    Maximum Length of Short Name field is 25 characters only.  
-    ...   ELSE    Run Keyword and Continue on Failure    Fail    Length of Shortn Name field should not be more than 25 characters.     
+    ...   ELSE    Run Keyword and Continue on Failure    Fail    Length of Short Name field should not be more than 25 characters.     
     
    
     
