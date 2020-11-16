@@ -57,6 +57,7 @@ Resource    ../ResourcesFiles/Party_Keywords/BusinessProcess_Keywords/PTY015_Qui
 Resource    ../ResourcesFiles/Party_Keywords/BusinessProcess_Keywords/PTY016_PartyOnboarding_Validation_Branch.robot
 Resource    ../ResourcesFiles/Party_Keywords/BusinessProcess_Keywords/PTY017_QuickPartyOnboarding_FieldsValidationForSIC.robot  
 Resource    ../ResourcesFiles/Party_Keywords/BusinessProcess_Keywords/PTY018_AU_Party_Navigation.robot
+Resource    ../ResourcesFiles/Party_Keywords/BusinessProcess_Keywords/PTY019_GLTBCrossReference_ColumnsValidation.robot
 Resource    ../ResourcesFiles/Party_Keywords/BusinessProcess_Keywords/PTY020_PartyCrossReferenceDetails.robot
 
 ###Party Resource Files - Source###
