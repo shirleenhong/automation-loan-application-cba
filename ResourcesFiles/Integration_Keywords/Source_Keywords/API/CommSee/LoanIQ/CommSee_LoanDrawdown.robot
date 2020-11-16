@@ -6,6 +6,8 @@ Create Loan Drawdown for Syndicated Deal - ComSee
     [Documentation]    This will serve as a High Level keyword for the creation of Loan Drawdown specific fow Syndicated Deal
     ...    @author: rtarayao    16SEP2019    - Duplicate high level keyword from Functional Scenario 2.
     ...    @update: cfrancis    14OCT2020    - moved getting system date before Search for Deal keyword
+    ...    @update: clanding    10NOV2020    - added argument &{ExcelPath}[Outstanding_Currency] in Get Host Bank Cash in Cashflow
+    ...                                      - fix releasing of cashflow
     [Arguments]    ${ExcelPath}
 
     ##Login to Original User###
@@ -35,7 +37,7 @@ Create Loan Drawdown for Syndicated Deal - ComSee
     Verify if Status is set to Do It    &{ExcelPath}[Lender1_ShortName]
     
     ##Get Transaction Amount for Cashflow###
-    ${HostBankShare}    Get Host Bank Cash in Cashflow
+    ${HostBankShare}    Get Host Bank Cash in Cashflow    &{ExcelPath}[Outstanding_Currency]
     ${BorrowerTranAmount}    Get Transaction Amount in Cashflow    &{ExcelPath}[Borrower_ShortName]
     ${Lend1TranAmount}    Get Transaction Amount in Cashflow    &{ExcelPath}[Lender1_ShortName]
     ${Lend2TranAmount}    Get Transaction Amount in Cashflow    &{ExcelPath}[Lender2_ShortName]
@@ -84,7 +86,6 @@ Create Loan Drawdown for Syndicated Deal - ComSee
     ##Cashflow Notebook - Release Cashflows###
     Navigate Notebook Workflow    ${LIQ_InitialDrawdown_Window}    ${LIQ_InitialDrawdown_Tab}    ${LIQ_Drawdown_WorkflowItems}    Release 
     Release Cashflow Based on Remittance Instruction    &{ExcelPath}[Remittance_Instruction]    &{ExcelPath}[Borrower_ShortName]|&{ExcelPath}[Lender1_ShortName]|&{ExcelPath}[Lender2_ShortName]
-    # # Release Cashflow    &{ExcelPath}[Borrower_ShortName]|&{ExcelPath}[Lender1_ShortName]
     Release Loan Drawdown
     
     ###Cashflow Notebook - Complete Cashflows###
@@ -93,8 +94,8 @@ Create Loan Drawdown for Syndicated Deal - ComSee
     Verify if Method has Remittance Instruction    &{ExcelPath}[Lender2_ShortName]    &{ExcelPath}[Remittance3_Description]    &{ExcelPath}[Remittance3_Instruction]
     Verify if Status is set to Do It    &{ExcelPath}[Borrower_ShortName]  
     Verify if Status is set to Do It    &{ExcelPath}[Lender1_ShortName]
-    # Release Cashflow    &{ExcelPath}[Lender2_ShortName]
-    # Release Cashflow Based on Remittance Instruction    &{ExcelPath}[Borrower1_RemittanceInstruction]    &{ExcelPath}[Borrower1_ShortName]|&{ExcelPath}[Lender1_ShortName]
+    Release Cashflow    &{ExcelPath}[Lender1_ShortName]    release
+    Navigate Notebook Workflow    ${LIQ_InitialDrawdown_Window}    ${LIQ_InitialDrawdown_Tab}    ${LIQ_Drawdown_WorkflowItems}    Release
     
     Close All Windows on LIQ
     Logout from Loan IQ
@@ -343,6 +344,8 @@ Write Repriced Loan Details for ComSee - Scenario 2
 Create Initial Loan Drawdown with no Repayment Schedule - Scenario 7 ComSee
     [Documentation]    This keyword is used to create a Loan Drawdown without selecting a Payment Schedule.
     ...    @author: rtarayao    11SEP2019    - Duplicate of Scenario 7 from Functional Scenarios
+    ...    @author: songchan    06NOV2020    - Added Loan Currency as an argument to Get Host Bank in Cashflow
+    ...    @update: clanding    03NOV2020    - Updated hard coded value CB001 to input dataset
     [Arguments]    ${ExcelPath}
     
     ###Facility###
@@ -372,9 +375,9 @@ Create Initial Loan Drawdown with no Repayment Schedule - Scenario 7 ComSee
     Navigate to Drawdown Cashflow Window
     Verify if Method has Remittance Instruction    &{ExcelPath}[Borrower1_ShortName]    &{ExcelPath}[Remittance_Description]    &{ExcelPath}[Remittance_Instruction]
     Verify if Status is set to Do It    &{ExcelPath}[Borrower1_ShortName]  
- 
+     
     ##Get Transaction Amount for Cashflow###
-    ${HostBankShare}    Get Host Bank Cash in Cashflow
+    ${HostBankShare}    Get Host Bank Cash in Cashflow    &{ExcelPath}[Loan_Currency]
     ${BorrowerTranAmount}    Get Transaction Amount in Cashflow    &{ExcelPath}[Borrower1_ShortName]
     ${ComputedHBTranAmount}    Compute Lender Share Transaction Amount    &{ExcelPath}[Loan_RequestedAmount]    &{ExcelPath}[HostBankSharePct]
     
@@ -384,8 +387,8 @@ Create Initial Loan Drawdown with no Repayment Schedule - Scenario 7 ComSee
     Navigate to GL Entries
     ${HostBank_Debit}    Get GL Entries Amount    &{ExcelPath}[Host_Bank]    Debit Amt
     ${Borrower_Credit}    Get GL Entries Amount    &{ExcelPath}[Borrower1_ShortName]    Credit Amt
-    ${UITotalCreditAmt}    Get GL Entries Amount    ${SPACE}Total For: CB001     Credit Amt
-    ${UITotalDebitAmt}    Get GL Entries Amount    ${SPACE}Total For: CB001     Debit Amt
+    ${UITotalCreditAmt}    Get GL Entries Amount    ${SPACE}Total For: &{ExcelPath}[Facility_BranchCode]     Credit Amt
+    ${UITotalDebitAmt}    Get GL Entries Amount    ${SPACE}Total For: &{ExcelPath}[Facility_BranchCode]     Debit Amt
     
     Compare UIAmount versus Computed Amount    ${HostBankShare}    ${HostBank_Debit}
     Validate if Debit and Credit Amt is Balanced    ${HostBank_Debit}    ${Borrower_Credit}

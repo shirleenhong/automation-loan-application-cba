@@ -124,6 +124,7 @@ Verify DAT File is in CSV Format
 Verify Trailer Record of DAT File
     [Documentation]    This keyword is used to verify Trailer row format of DAT file.
     ...    @author: clanding    14OCT2020    - initial create
+    ...    @update: clanding    05NOV2020    - added handling for negative control value
     [Arguments]    ${sDAT_File_Content}
     
     ${LineCount}    Get Line Count    ${sDAT_File_Content}
@@ -144,8 +145,14 @@ Verify Trailer Record of DAT File
     \    ${DAT_File_Content_List}    Split String    ${DAT_File_Line_Content}    ,
     \    ${Record_Count}    Evaluate    ${Record_Count}+1
     \    Exit For Loop If    '@{DAT_File_Content_List}[0]'=='T'
-    \    ${Total_Control_Value}    Run Keyword If    '@{DAT_File_Content_List}[${Index_H}]'=='CONTROL_VALUE'    Set Variable    ${Total_Control_Value}
-         ...    ELSE    Evaluate    ${Total_Control_Value}+@{DAT_File_Content_List}[${Index_H}]
+    \    Log    Current Control Value: @{DAT_File_Content_List}[${Index_H}]
+    \    ${Contains_Negative}    Run Keyword And Return Status    Should Contain    @{DAT_File_Content_List}[${Index_H}]    -
+    \    ${Control_Value}    Run Keyword If    ${Contains_Negative}==${True}    Remove String    @{DAT_File_Content_List}[${Index_H}]    -
+         ...    ELSE    Set Variable    @{DAT_File_Content_List}[${Index_H}]
+    \    ${Total_Control_Value}    Run Keyword If    '${Control_Value}'=='CONTROL_VALUE'    Set Variable    ${Total_Control_Value}
+         ...    ELSE IF    ${Contains_Negative}==${True}    Evaluate    ${Total_Control_Value}-${Control_Value}
+         ...    ELSE    Evaluate    ${Total_Control_Value}+${Control_Value}
+    \    Log    Running Total: ${Total_Control_Value}
     Log    Total Record Count: ${Record_Count}
     Log    Control Value Sum: ${Total_Control_Value}
 
@@ -160,7 +167,8 @@ Verify Trailer Record of DAT File
     
     Compare Two Strings    ${Record_Count}    @{DAT_File_Content_List}[1]
     ${Total_Control_Value}    Evaluate  "%.2f" % (${Total_Control_Value})
-    Compare Two Strings    ${Total_Control_Value}    @{DAT_File_Content_List}[2]
+    ${Actual_Control_Value}    Evaluate  "%.2f" % (@{DAT_File_Content_List}[2])
+    Compare Two Strings    ${Total_Control_Value}    ${Actual_Control_Value}
     
     ### Validate Trailer row does not have CRLF ###
     ${IsContains_CRLF}    Run Keyword And Return Status    Should Contain    ${DAT_File_Line_Content}    \r\n

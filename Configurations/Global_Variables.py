@@ -223,6 +223,8 @@ PORTFOLIO_SETTLED_DISCOUNT_ADJUSTMENT = "Portfolio Settled Discount Adjustment"
 ONGOING_FEE_PAYMENT_TRANSACTION= "Ongoing Fee Payment"
 LOAN_PRINCIPAL_PREPAYMENT_TRANSACTION = "Loan Principal Prepayment"
 RATE_SETTING_TRANSACTION = "Rate Setting"
+AWAITING_SEND_TO_SETTLEMENT_APPROVAL_TRANSACTION = "Awaiting Send to Settlement Approval"
+AWAITING_CLOSE_TRANSACTION= "Awaiting Close"
 
 ### Bank Role ###
 REFERENCE_BANK_ROLE = "Reference Bank"
@@ -287,6 +289,7 @@ HOST_BANK = "Host Bank"
 ASSIGNMENT = "Assignment"
 MATURITY_DATE = "Maturity Date"
 MULTIPLE_REFERENCE = "False"
+PARTICIPATION = "Participation"
 
 ### GL Posting ###
 ZONEBRANCH_SUCCESSMESSAGE = "Zone/Branch Switched Successfully"
@@ -312,7 +315,6 @@ USE_SPOT_AUD_TO_USD_RATE = "Use Spot AUD to USD Rate"
 
 ### LOAN SEARCH BY OPTIONS ###
 DEAL_FACILITY_OPTION = "Deal/Facility"
-FACILITY_COUNT = ""
 
 
 ### Y/N ###

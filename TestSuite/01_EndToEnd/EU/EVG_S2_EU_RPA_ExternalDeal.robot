@@ -39,3 +39,13 @@ Charge Upfront Fee - CRED07
 Complete Portfolio Settled Discount - TRPO12
     [Tags]    05 Portfolio Settled Discount - TRPO12 
     Mx Execute Template With Multiple Data    Portfolio Settled Discount Changes    ${ExcelPath}    ${rowid}    TRPO12_PortfolioSettledDisc
+
+Complete External Participation - TRPO06
+    [Tags]    06 External Participation - TRPO06 
+    Mx Execute Template With Multiple Data    Complete External Participation    ${ExcelPath}    ${rowid}    TRPO06_ExternalParticipation  
+    
+Create Initial Loan Drawdown - SERV01
+    [Tags]    07 Loan Drawdown - SERV01 
+    Mx Execute Template With Multiple Data    Create Initial Loan Drawdown for RPA Deal    ${ExcelPath}    ${rowid}    SERV01_LoanDrawdown
+    Set Test Variable    ${rowid}    2
+    Mx Execute Template With Multiple Data    Create Initial Loan Drawdown for RPA Deal    ${ExcelPath}    ${rowid}    SERV01_LoanDrawdown

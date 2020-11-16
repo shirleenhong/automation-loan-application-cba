@@ -21,3 +21,15 @@ Primary Allocation - SYND02
 Charge Upfront Fee - CRED07
     [Tags]    03 Charge Upfront Fee - CRED07
     Mx Execute Template With Multiple Data    Initiate Upfront Fee Payment    ${ExcelPath}    ${rowid}    CRED07_UpfrontFee_Payment
+
+Complete Portfolio Settled Discount - TRPO12
+    [Tags]    04    Portfolio Settled Discount - TRPO12 
+    Mx Execute Template With Multiple Data    Complete Portfolio Settled Discount    ${ExcelPath}    ${rowid}    TRPO12_PortfolioSettledDisc
+
+Complete External Participation without Premiun/Discount - TRPO06
+    [Tags]    05    Complete External Participation without Premiun/Discount - TRPO06
+    Mx Execute Template With Multiple Data    Complete External Participation without Premiun/Discount    ${ExcelPath}    ${rowid}    TRPO06_ExternalParticipation    Mx Execute Template With Multiple Data    Complete Portfolio Settled Discount    ${ExcelPath}    ${rowid}    TRPO12_PortfolioSettledDisc
+
+Create Initial Loan Drawdown - SERV01
+    [Tags]    06    Loan Drawdown - SERV01 
+    Mx Execute Template With Multiple Data    Create Initial Loan Drawdown for RPA Deal    ${ExcelPath}    ${rowid}    SERV01_LoanDrawdown

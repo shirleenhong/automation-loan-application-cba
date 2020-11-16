@@ -1,6 +1,6 @@
 ###Dataset###
 dataset_path = "C:\\Git_Evergreen\\fms_cba"
-ExcelPath = "C:\\Git_Evergreen\\fms_cba\\DataSet\\LoanIQ_DataSet\\EU_Entity\\EVG_PTYLIQ01_EU_BaselineBilateralCustomer.xlsx"
+ExcelPath = "C:\\Git_Evergreen\\fms_cba\\DataSet\\LoanIQ_DataSet\\EU_Entity\\EVG_PTYLIQ04_EU_BaselineNonAgentSyndication.xlsx"
 CBAUAT_ExcelPath = "C:\\Git_Evergreen\\fms_cba\\DataSet\\CBA_UAT_DataSet\\EVG_CBAUAT05.xlsx"
 APIDataSet = "C:\\Git_Evergreen\\fms_cba\\DataSet\\Integration_DataSet\\API\\API_Data_Set.xlsx"
 Countries_Codes = '..\\fms_scotia\\DataSet\\Integration_DataSet\\API\\Countries_Codes.xlsx'
@@ -18,6 +18,7 @@ DWELIQFunc_Dataset = "C:\\Git_Evergreen\\fms_cba\\DataSet\\Integration_DataSet\\
 DNA_DATASET = "C:\\Git_Evergreen\\fms_cba\\DataSet\\Integration_DataSet\\Extracts\\DNA\\EVG_DNA_TestData_EU.xlsx"
 INDUSTRYSECTOR_LIST = "C:\\Git_Evergreen\\fms_cba\\DataSet\\Party_DataSet\\Industry_Sector\\Industry_Sector_Values.txt"
 BUSINESSACTIVITY_DIRECTORY = "C:\\Git_Evergreen\\fms_cba\\DataSet\\Party_DataSet\\Business_Activity"
+DNR_DATASET = "C:\\Git_Evergreen\\fms_cba\\DataSet\\Integration_DataSet\\Extracts\\DNR\\DNR_Dataset_EU.xlsx"
 
 FBTIDataset = 'C:\\Git_Evergreen\\evergreen_projects\\CBA_Evergreen\\DataSet\\FBTI_DataSet\\FBTI_User_Data_Set.xlsx'
 FBTIDataset_ILC = 'C:\\Git_Evergreen\\evergreen_projects\\CBA_Evergreen\\DataSet\\FBTI_DataSet\\FBTI_ILC_Data_Set.xlsx'
@@ -72,12 +73,13 @@ OPEAPI_INSTANCE = "openAPI_1.3.0"
 TEXTJMS_INSTANCE = "distributor_1.3.0"
 GETTEXTJMS_INSTANCE = "distributor_1.3.0"
 CBAINTERFACE_INSTANCE = "CustomInterface_1.3.0"
-CBAPUSH_INSTANCE = "CustomCBAPush_1.3.0"
+CBAPUSH_INSTANCE = "CustomCBAPush_1.4.0"
 CUSTOM_INTERFACE_INSTANCE = "CustomInterface"
 RESPONSE_MECHANISM_INSTANCE = "responsemechanism_1.3.0"
 DWE_NOTIFICATION_INSTANCE = "dwe_notification_1.3.0"
 SAPWUL_INSTANCE = 'CustomCBAPush_1.3.0'
 TL_CAL_ACK_MESSAGE_SOURCENAME = 'tl_ack_message_splitter_cal'
+TL_BASE_ACK_MESSAGE_SOURCENAME = 'tl_ack_message_splitter_base'
 CBACorrespUpdateMQ_Instance = 'CustomCBAPush_v1.3.0'
 FFC1CMUpdateSourceMQ_Instance = 'CustomInterface'
 
@@ -88,11 +90,11 @@ SFTP_USER = "sftpuser2"
 SFTP_PASSWORD = "luckyroll76"
 
 ###LIQ Credential###
-INPUTTER_USERNAME = "DJRHINPT"
+INPUTTER_USERNAME = "CESSINP3"
 INPUTTER_PASSWORD = "password"
-SUPERVISOR_USERNAME = "JOBSUPER"
+SUPERVISOR_USERNAME = "CESSSUP2"
 SUPERVISOR_PASSWORD = "password"
-MANAGER_USERNAME = "JOBMANGR"
+MANAGER_USERNAME = "CESSMNG2"
 MANAGER_PASSWORD = "password"
 LIQ_ADMIN_USERNAME = "ADMIN1"
 LIQ_ADMIN_PASSWORD = "password"
@@ -220,4 +222,22 @@ DBHOST_LIQ = 'MANCSLEVERG0017'
 DBPORT_LIQ = '1521'
 DBUR_LIQ = 'jdbc:oracle:thin:@//mancsleverg0017:1521/MLLOANIQ.misys.global.ad'
 LIQDBSCHEMA = 'LIQIDT'
+
+### Batch EOD ###
+PUTTY_PATH = "C:\\Program Files\\PuTTY\\putty.exe"
+PUTTY_HOSTNAME = "mancsleverg0005"
+PUTTY_PORT = "22"
+PUTTY_USERNAME = "micloud"
+PUTTY_PASSWORD = "misys123"
+
+### DNA ###
+DNA_SERVER = 'mancsleverg0021'
+DNA_SERVER_LIQ = 'mancsleverg0022'
+DNA_PORT = '22'
+DNA_SERVER_USER = 'sftpuser2'
+DNA_SERVER_PASSWORD = 'luckyroll76'
+DNA_EXTRACTION_AREA_PATH = '/evgdata/STREAMSETS/workspace/extraction_area/COMRLENDING/'
+DNA_CCB_LIQ_FILENAME = 'CCB_LIQ_'
+DNA_DATAASSURANCE_FILENAME = 'DATAASSURANCE_'
+DNA_DAT_EXT = '.DAT'
 LIQ7474_USER = 'LIQIDT'

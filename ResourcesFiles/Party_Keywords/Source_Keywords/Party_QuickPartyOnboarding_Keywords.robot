@@ -342,6 +342,7 @@ Validate Enterprise Summary Details
     [Documentation]    This keyword validates the Party details from Enterprise summary details page.
     ...    @author: dahijara    05MAY2020     - initial create
     ...    @update: javinzon    16SEP2020     - changed parameter from ${sAssignedBranch} to ${sUserBranch}
+    ...    @update: javinzon    11NOV2020     - updated validation for Country of Tax and GST Number
     [Arguments]    ${sLocality}    ${sEntity}    ${sUserBranch}    ${sParty_Type}    ${sParty_Sub_Type}    ${sParty_Category}    ${sParty_ID}    
     ...    ${sEnterprise_Name}    ${sRegistered_Number}    ${sCountryOfRegistration}    ${sCountryOfTaxDomicile}    ${sShortName}    ${sGTS_Number}
 
@@ -360,16 +361,16 @@ Validate Enterprise Summary Details
     Compare Two Arguments    ${sCountryOfRegistration}    ${Party_QuickEnterpriseParty_CountryOfRegistration_Dropdown}
     Compare Two Arguments    ${sCountryOfTaxDomicile}    ${Party_QuickEnterpriseParty_CountryOfTaxDomicile_Dropdown}
 
-    ${GST_Number}    Get Text    ${Party_EnterpriseDetailsSummary_TaxNumber_Cell}
+    ${GST_Number}    Get Table Value Containing Row Value in Party    ${Party_EnterpriseDetailsSummary_GeographicLocationsAndTaxNumbers_TableHeader}    ${Party_EnterpriseDetailsSummary_GeographicLocationsAndTaxNumbers_TableRow}    Country    ${sCountryOfTaxDomicile}    Goods & Service Tax Number
     ${isMatched}    Run Keyword And Return Status    Should Be Equal    ${sGTS_Number}    ${GST_Number}
-    Run Keyword If    ${isMatched}==${True}    Log    Goods & Service Tax Number value is correct! Party ID:${GST_Number}    level=INFO
+    Run Keyword If    ${isMatched}==${True}    Log    Goods & Service Tax Number value is correct! GST Number:${GST_Number}    level=INFO
     ...    ELSE    Run Keyword And Continue On Failure    Fail    Goods & Service Tax Number value is incorrect! Goods & Service Tax Number:${GST_Number}, Expected Goods & Service Tax Number:${sGTS_Number}       
 
-    ${TaxCountry}    Get Text    ${Party_EnterpriseDetailsSummary_TaxCountry_Cell}
-    ${isMatched}    Run Keyword And Return Status    Should Be Equal    ${sGTS_Number}    ${GST_Number}
-    Run Keyword If    ${isMatched}==${True}    Log    Country of Tax value is correct! Party ID:${TaxCountry}    level=INFO
+    ${TaxCountry}    Get Table Value Containing Row Value in Party    ${Party_EnterpriseDetailsSummary_GeographicLocationsAndTaxNumbers_TableHeader}    ${Party_EnterpriseDetailsSummary_GeographicLocationsAndTaxNumbers_TableRow}    Goods & Service Tax Number    ${sGTS_Number}    Country
+    ${isMatched}    Run Keyword And Return Status    Should Be Equal    ${sCountryOfTaxDomicile}    ${TaxCountry}
+    Run Keyword If    ${isMatched}==${True}    Log    Country of Tax value is correct! Country of Tax:${TaxCountry}    level=INFO
     ...    ELSE    Run Keyword And Continue On Failure    Fail    Country of Tax value is incorrect! Country of Tax:${TaxCountry}, Expected Country of Tax:${sCountryOfTaxDomicile}     
-
+        
 Validate Enterprise Business Activity Details
     [Documentation]    This keyword validates the Enterprise Business Activity Details from Enterprise summary details page.
     ...    @author: dahijara    05MAY2020     - initial create
@@ -846,6 +847,7 @@ Populate Pre-Existence Check and Validate Duplicate Enterprise Name Across Entit
 Get the Available Business Activity Options 
     [Documentation]    This keyword is used to compare and validate if the available Business Activity Options are correct.
     ...    @author: javinzon    06OCT2020    - initial create
+    ...    @update: clanding    06NOV2020    - removed \ in the \    ...
     [Arguments]    ${sIndustry_Sector}
      
     ${Industry_Sector_FileName}    Replace String    ${sIndustry_Sector}    ${SPACE}    _  
