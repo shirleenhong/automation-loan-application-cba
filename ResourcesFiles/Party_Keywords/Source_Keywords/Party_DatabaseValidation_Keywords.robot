@@ -28,8 +28,11 @@ Validate GL Application Column in GLTB_CROSSREFERENCE Table if Correct
     ...    ELSE    Run Keyword And Continue on Failure    Fail    Only '${Valid_GLAPPLICATION_List}' are expected in GL Application column.
 
 Get and Return Actual Value of GLHOSTREFID in GLTB_CROSSREFERENCE Table
+    [Documentation]    This test case is used to get and return value of GLHOSTREFID in GLTB_CROSSREFERENCE Table. 
+    ...    @author: javinzon    16NOV2020    - initial create
     [Arguments]    ${sParty_ID}
-    ${QUERY_GLREFERENCEID}    Catenate    ${SELECT_Q}    ${GLREFERENCEID}    ${FROM_Q}    ${GLOBALCBS_SCHEMA}.${GLTB_CROSSREFERENCE_TABLE} ${WHERE_Q} ${GLREFERENCEID} = '5049500'
+    
+    ${QUERY_GLREFERENCEID}    Catenate    ${SELECT_Q}    ${GLREFERENCEID}    ${FROM_Q}    ${GLOBALCBS_SCHEMA}.${GLTB_CROSSREFERENCE_TABLE} ${WHERE_Q} ${GLREFERENCEID} = '${sParty_ID}'
     ${DBQuery_GLREFREENCEID_List}    Connect to Party Database and Execute Query and Return List    ${QUERY_GLREFERENCEID}
     ${DBQuery_GLREFREENCEID_List_0}    Get From List    ${DBQuery_GLREFREENCEID_List}    0
     ${Actual_GLREFERENCEID}    Get From List    ${DBQuery_GLREFREENCEID_List_0}    0
@@ -52,11 +55,6 @@ Validate Columns in GLTB_CROSSREFERENCE Table if Correct
     ${DBQuery_COLUMNS_List}    Connect to Party Database and Execute Query and Return List    ${QUERY_COLUMNS}
     ${Length_Columns_List}    Get Length    ${DBQuery_COLUMNS_List}
     
-    ${Record_Values_List}    Create List
-    ${Expected_Values_List}    Create List
-    Append To List    ${Expected_Values_List}    ${sParty_ID}    ${sDefault_GLActivated}    ${sDefault_GLStatus}    ${sEntity}
-    Log    ${Expected_Values_List}
-    
     :FOR    ${index}    IN RANGE    ${Length_Columns_List}
     \    ${Record}    Get From List    ${DBQuery_COLUMNS_List}    ${index}
     \    Get Each Value From Record and Compare Lists    ${Record}    ${sParty_ID}    ${sDefault_GLActivated}    ${sDefault_GLStatus}    ${sEntity}  
@@ -66,7 +64,7 @@ Get Each Value From Record and Compare Lists
     ...    @author: javinzon    13NOV2020    - intial create 
     [Arguments]    ${sRecord}      ${sParty_ID}    ${sDefault_GLActivated}    ${sDefault_GLStatus}    ${sEntity} 
     
-    ${Record_Values_List}    Create List
+    ${Actual_Values_List}    Create List
     ${Expected_Values_List}    Create List
     Append To List    ${Expected_Values_List}    ${sParty_ID}    ${sDefault_GLActivated}    ${sDefault_GLStatus}    ${sEntity}
     Log    ${Expected_Values_List}
@@ -74,19 +72,10 @@ Get Each Value From Record and Compare Lists
     ${Record_Length}    Get Length    ${sRecord}
     :FOR    ${index}    IN RANGE    ${Record_Length}
     \    ${Record_List}    Get From List    ${sRecord}    ${index}
-    \    Append To List    ${Record_Values_List}    ${Record_List} 
-    \    Log       ${Record_Values_List}
+    \    Append To List    ${Actual_Values_List}    ${Record_List} 
+    \    Log       ${Actual_Values_List}
         
-    Log    ${Record_Values_List}
-    ${isMatched}    Run Keyword and Return Status    Lists Should Be Equal    ${Record_Values_List}    ${Expected_Values_List}   
+    ${isMatched}    Run Keyword and Return Status    Lists Should Be Equal    ${Actual_Values_List}    ${Expected_Values_List}   
     Run Keyword If    ${isMatched}==${True}    Log    Actual results are matched with expected values.   
-    ...    ELSE    Run Keyword And Continue on Failure    Fail    Actual result: '${Record_Values_List}' should be equal with '${Expected_Values_List}'. 
+    ...    ELSE    Run Keyword And Continue on Failure    Fail    Actual result: '${Actual_Values_List}' should be equal with '${Expected_Values_List}'. 
     
-
-    
-   
-    
-    
-    
-
- 
