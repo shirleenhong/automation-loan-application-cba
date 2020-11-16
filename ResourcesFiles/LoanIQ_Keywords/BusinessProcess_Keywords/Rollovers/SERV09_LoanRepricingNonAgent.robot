@@ -54,7 +54,7 @@ Create Comprehensive Repricing for Non-Agent Syndicated Deal
     ...    ELSE    Compute Lender Share Transaction Amount - Repricing    ${Calculated_CycleDue}    &{ExcelPath}[LenderSharePc1]    sScenario=${SCENARIO}    sEntity=&{ExcelPath}[Entity]
     ${ComputedLender_IncreaseTransAmount}    Compute Lender Share Transaction Amount - Repricing    ${IncreaseAmount}    &{ExcelPath}[LenderSharePc1]
     
-    # ### Cashflows Notebook - Create Cashflows ###
+    ### Cashflows Notebook - Create Cashflows ###
     Navigate to Create Cashflow for Loan Repricing
     Verify if Method has Remittance Instruction    &{ExcelPath}[Lender1_ShortName]    &{ExcelPath}[Remittance1_Description]    &{ExcelPath}[Remittance1_Instruction]    ${ComputedLender_IncreaseTransAmount}    &{ExcelPath}[Loan_Currency]
     Verify if Method has Remittance Instruction    &{ExcelPath}[Lender1_ShortName]    &{ExcelPath}[Remittance1_Description]    &{ExcelPath}[Remittance1_Instruction]    ${ComputedLender_InterestPaymentTransAmount}    &{ExcelPath}[Loan_Currency]
@@ -93,7 +93,6 @@ Create Comprehensive Repricing for Non-Agent Syndicated Deal
     Navigate to Loan Pending Tab and Proceed with the Transaction     ${LOAN_REPRICING_FOR_THE_DEAL} &{ExcelPath}[Deal_Name].
     Close Facility Notebook and Navigator Windows
     Navigate to Loan Repricing Workflow and Proceed With Transaction    ${RATE_APPROVAL_TRANSACTION}
-    #Run Keyword If   '${SCENARIO}'=='4' and '&{ExcelPath}[Entity]' == 'EU' and '&{ExcelPath}[Pricing_Option]' != 'Euro LIBOR Option'    Navigate to Loan Repricing Workflow and Proceed With Transaction    ${RATE_APPROVAL_TRANSACTION}    
 
     ### Release Cashflows ###
     Release Cashflow Based on Remittance Instruction    &{ExcelPath}[Remittance1_Instruction]    ${ComputedLender_InterestPaymentTransAmount}|${ComputedLender_IncreaseTransAmount}    &{ExcelPath}[Cashflow_DataType]    ${LOAN_REPRICING}
