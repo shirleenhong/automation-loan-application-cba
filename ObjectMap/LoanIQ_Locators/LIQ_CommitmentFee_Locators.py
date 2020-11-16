@@ -104,8 +104,8 @@ LIQ_CommitmentFee_CapitalizationEditor_PctofPayment_Textfield = 'JavaWindow("tit
 LIQ_CommitmentFee_CapitalizationEditor_ToFacility_DropdownList = 'JavaWindow("title:=Facility Ongoing Fee Capitalization Editor").JavaList("attached text:=To Facility")'
 LIQ_CommitmentFee_CapitalizationEditor_ToLoan_DropdownList = 'JavaWindow("title:=Facility Ongoing Fee Capitalization Editor").JavaList("attached text:=Currency :")'
 LIQ_CommitmentFee_CapitalizationEditor_OK_Button = 'JavaWindow("title:=Facility Ongoing Fee Capitalization Editor").JavaButton("attached text:=OK")'
-LIQ_CommitmentFee_Currency_Text = 'JavaWindow("title:=Commitment Fee.*").JavaStaticText("labeled_containers_path:=Tab:General;", "x:=185", "y:=168")'
-LIQ_CommitmentFee_ActualExpiryDate_Text = 'JavaWindow("title:=Commitment Fee.*").JavaStaticText("labeled_containers_path:=Tab:General;", "x:=567", "y:=152")'
+LIQ_CommitmentFee_Currency_Text = 'JavaWindow("title:=Commitment Fee.*").JavaStaticText("Index:=17")'
+LIQ_CommitmentFee_ActualExpiryDate_Text = 'JavaWindow("title:=Commitment Fee.*").JavaStaticText("Index:=1")'
 
 ###Commitment Fee - Lender Shares###
 LIQ_CommitmentFee_LenderShares_Window = 'JavaWindow("title:=Shares for.*")'

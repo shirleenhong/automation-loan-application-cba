@@ -3,11 +3,13 @@ Resource    ../../../Configurations/Party_Import_File.robot
 
 *** Keywords ***
 Create Party ID Successfully in Quick Party Onboarding
-        [Documentation]    This keyword is used to create party successfully via quick party Onboarding screen.
+    [Documentation]    This keyword is used to create party successfully via quick party Onboarding screen.
     ...    @author: javinzon    22OCT2020    - initial create
     ...    @update: javinzon    26OCT2020    - Added Write Data To Excel for PTY010_DuplicateShortName_AcrossEntities
     ...    @update: javinzon    27OCT2020    - Added condition for writing data to excel, Added Write Data To Excel keyword 
     ...                                        for PTY008_DuplicateEnterpriseName_AcrossEntities, Added ELSE condition to Close Browser
+    ...	   @update: javinzon	29OCT2020	 - Added Write Data To Excel keyword of PartyID for PTY020_PartyCrossReferenceDetails
+
     [Arguments]    ${ExcelPath}
     
     ### INPUTTER ###
@@ -29,6 +31,7 @@ Create Party ID Successfully in Quick Party Onboarding
     ...    AND    Write Data To Excel    QuickPartyOnboarding    Party_ID    PTY008_DuplicateEnterpriseName_AcrossEntities    ${Party_ID}    ${PTY_DATASET}        bTestCaseColumn=True
     ...    ELSE IF    '${TestCase_Name}'=='PTY009_CreatePartyID_DuplicateShortName'    Write Data To Excel    QuickPartyOnboarding    Short_Name    PTY009_DuplicateShortName    ${Short_Name}    ${PTY_DATASET}    bTestCaseColumn=True
     ...    ELSE IF    '${TestCase_Name}'=='PTY010_CreatePartyID_DuplicateShortName_AcrossEntities'    Write Data To Excel    QuickPartyOnboarding    Short_Name    PTY010_DuplicateShortName_AcrossEntities    ${Short_Name}    ${PTY_DATASET}    bTestCaseColumn=True
+    ...    ELSE IF    '${TestCase_Name}'=='PTY020_PartyCrossReferenceDetails'    Write Data To Excel    QuickPartyOnboarding    Party_ID    ${TestCase_Name}    ${Party_ID}    ${PTY_DATASET}    bTestCaseColumn=True
     
     Populate Quick Enterprise Party    ${Party_ID}    &{ExcelPath}[Country_of_Tax_Domicile]    &{ExcelPath}[Country_of_Registration]
     ...    &{ExcelPath}[Address_Type]    &{ExcelPath}[Country_Region]    &{ExcelPath}[Post_Code]    &{ExcelPath}[Document_Collection_Status]
@@ -46,4 +49,4 @@ Create Party ID Successfully in Quick Party Onboarding
     Accept Approved Party and Validate Details in Enterprise Summary Details Screen    ${Task_ID_From_Supervisor}    ${Party_ID}    &{ExcelPath}[Locality]    ${Entity}    ${Assigned_Branch}    &{ExcelPath}[Party_Type]    &{ExcelPath}[Party_Sub_Type]
     ...    &{ExcelPath}[Party_Category]    ${Enterprise_Name}    &{ExcelPath}[Registered_Number]    &{ExcelPath}[Country_of_Registration]    &{ExcelPath}[Country_of_Tax_Domicile]    ${Short_Name}    
     ...    &{ExcelPath}[Business_Country]    &{ExcelPath}[Industry_Sector]    &{ExcelPath}[Business_Activity]    &{ExcelPath}[Is_Main_Activity]    &{ExcelPath}[Is_Primary_Activity]    &{ExcelPath}[GST_Number]
-    ...    &{ExcelPath}[UserZone]    &{ExcelPath}[UserBranch]    
+    ...    &{ExcelPath}[UserZone]    &{ExcelPath}[UserBranch] 

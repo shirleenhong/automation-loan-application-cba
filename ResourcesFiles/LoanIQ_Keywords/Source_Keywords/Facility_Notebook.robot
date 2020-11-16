@@ -3774,3 +3774,32 @@ Retrieve Facility Notebook Amounts prior to Loan Merge
 
     [Return]    ${GlobalFacility_ProposedCmtBeforeMerge}    ${GlobalFacility_CurrentCmtBeforeMerge}    ${GlobalFacility_OutstandingsBeforeMerge}    ${GlobalFacility_AvailToDrawBeforeMerge}
     ...    ${HostBank_ProposedCmtBeforeMerge}    ${HostBank_ContrGrossBeforeMerge}    ${HostBank_OutstandingsBeforeMerge}    ${HostBank_AvailToDrawBeforeMerge}
+
+Close Option Condition Window
+    [Documentation]    This keyword is used to close Option Condition dialog window.
+    ...    @author: clanding    09NOV2020    - initial create
+    
+    ${IsDisplayed}    Run Keyword And Return Status    Mx LoanIQ Verify Object Exist    ${LIQ_FacilityPricing_Interest_OptionCondition_Cancel_Button}    VerificationData="Yes"
+    Run Keyword If    ${IsDisplayed}==${True}    mx LoanIQ click    ${LIQ_FacilityPricing_Interest_OptionCondition_Cancel_Button}
+    ...    ELSE    Log    No Option Condition window is displayed.
+
+Update Branch and Processing Area of a Facility
+    [Documentation]    This keyword updates Branch and Processing Area in Facility Notebook.
+    ...    @author: mcastro    11NOV2020    - initial create
+    [Arguments]    ${sBranchName}    ${sProcessingArea}
+
+    ### Keyword Pre-processing ###
+    ${BranchName}    Acquire Argument Value    ${sBranchName}
+    ${ProcessingArea}    Acquire Argument Value    ${sProcessingArea}
+
+    mx LoanIQ activate window     ${LIQ_FacilityNotebook_Window}
+    mx LoanIQ click element if present    ${LIQ_InquiryMode_Button}    
+    mx LoanIQ select   ${LIQ_FacilityNotebook_Options_ChangeBranch_ProcArea}
+    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
+    mx LoanIQ activate window     ${LIQ_ChangeBranchProcArea_Window}
+    Mx LoanIQ select combo box value    ${LIQ_ChangeBranchProcArea_Branch_Combobox}    ${BranchName}
+    Mx LoanIQ select combo box value    ${LIQ_ChangeBranchProcArea_ProcessingArea_Combobox}    ${ProcessingArea}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/ChangeBranchProcArea_Window
+    mx LoanIQ click    ${LIQ_ChangeBranchProcArea_OK_Button}
+    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/ChangeBranchProcArea_Window
