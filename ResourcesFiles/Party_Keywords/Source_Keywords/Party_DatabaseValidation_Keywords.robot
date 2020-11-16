@@ -57,9 +57,9 @@ Validate Columns in GLTB_CROSSREFERENCE Table if Correct
     
     :FOR    ${index}    IN RANGE    ${Length_Columns_List}
     \    ${Record}    Get From List    ${DBQuery_COLUMNS_List}    ${index}
-    \    Get Each Value From Record and Compare Lists    ${Record}    ${sParty_ID}    ${sDefault_GLActivated}    ${sDefault_GLStatus}    ${sEntity}  
+    \    Get Each Value from Record and Compare Lists    ${Record}    ${sParty_ID}    ${sDefault_GLActivated}    ${sDefault_GLStatus}    ${sEntity}  
     
-Get Each Value From Record and Compare Lists
+Get Each Value from Record and Compare Lists
     [Documentation]    This test case is used to get each value, add to a list and compare to expected list.
     ...    @author: javinzon    13NOV2020    - intial create 
     [Arguments]    ${sRecord}      ${sParty_ID}    ${sDefault_GLActivated}    ${sDefault_GLStatus}    ${sEntity} 
