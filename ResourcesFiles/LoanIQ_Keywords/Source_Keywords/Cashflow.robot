@@ -539,7 +539,7 @@ Compute Lender Share Transaction Amount - Repricing
     ${LenderSharePct}    Remove Comma and Convert to Number    ${LenderSharePct}
     ${LenderSharePct}    Evaluate    ${LenderSharePct}/100
     ${iLenderShareTranAmt}    Evaluate    ${TranAmount}*${LenderSharePct}
-    ### Line 543 to 544 will be deleted once the confirmation in Email is received ###
+    ### This is an issue for this currency and entity, As per confirmation of Chris this is not an issue to them  ###
     ${iLenderShareTranAmt}    Run Keyword If   '${Scenario}'=='4' and '${Entity}' == 'EU' and '${Currency}'=='GBP'    Return Given Number with Specific Decimal Places without Rounding    ${iLenderShareTranAmt}    2
     ...    ELSE    Set Variable    ${iLenderShareTranAmt}
     ${iLenderShareTranAmtTwoDecimalPlaces}    Evaluate    "{0:,.2f}".format(${iLenderShareTranAmt})
