@@ -62,3 +62,7 @@ Create Pricing Change Transaction - AMCH06
     Log to Console    Pause Execution - Run Monthly EOD
     Pause Execution
     ###SCENARIO 4 WILL NOT HAVE ITS DAY 2 SINCE THE NEXT TEST CASE IS COMPREHENSIVE REPRICING WHICH WILL OCCUR AFTER 30DAYS EOD###
+    
+Create Comprehensive Repricing - SERV09
+    [Tags]    10 Loan Repricing - Other Bank is Agent
+    Mx Execute Template With Multiple Data    Create Comprehensive Repricing for Non-Agent Syndicated Deal    ${ExcelPath}   1    SERV09_LoanRepricing

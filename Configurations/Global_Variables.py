@@ -38,7 +38,6 @@ TL_DATASET = ""
 COMSEE_DATASET = "${dataset_path}\\DataSet\\COM_DataSet\\"
 headers = ""
 TEMPLATE_TEXTFILE = "TEMPLATE_TEXTFILE.txt"
-
 Err_Master_List = "${dataset_path}\\DataSet\\API_DataSet\\API_Error_List.xlsx"
 Expected_Err_List = "${dataset_path}\\DataSet\\API_DataSet\\Expected_Err_List.txt"
 Actual_Err_List = "${dataset_path}\\DataSet\\API_DataSet\\Actual_Err_List.txt"
@@ -331,6 +330,10 @@ WORK_IN_PROCESS_ACTIONS = '[Actions];Work In Process'
 
 ### PARTY ERROR MESSAGES ###
 DUPLICATE_SHORTNAME_ERROR_MESSAGE = 'Entered Short Name is already in use for Different Party'
+FIELDLENGTH_ENTERPRISENAME_ERROR_MESSAGE = 'Enterprise Name Field cannot have greater than 140 Characters'
+FIELDLENGTH_POSTCODE_ERROR_MESSAGE = 'Postal Code Field cannot have greater than 10 Characters'
+FIELDLENGTH_ADDRESSLINE_ERROR_MESSAGE = 'Address Line(s) Field cannot have greater than 36 Characters'
+FIELDLENGTH_ADDRESSCITY_ERROR_MESSAGE = 'Town or City Field cannot have greater than 35 Characters'
 BULK_PARTY_UPLOAD_FAILED_ERROR_MESSAGE = 'Bulk Party Upload file was not uploaded successfully'
 PARTY_UPLOAD_FAILED_ERROR_MESSAGE = 'Party from Bulk Party Upload file was not uploaded successfully'
 
