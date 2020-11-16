@@ -3863,3 +3863,15 @@ Delete Repayment Schedule in the Loan
      \    ${Warning_Status}    Run Keyword And Return Status    Mx LoanIQ Verify Object Exist    ${LIQ_Warning_Window}     VerificationData="Yes"
      \    Exit For Loop If    ${Warning_Status}==False
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LoanNotebook_RepaymentSchedule
+
+Complete Set FX Rate
+    [Documentation]    This keyword completes the FX Rates in the Initial Drawdown Notebook.
+    ...    @author: mcastro    16NOV2020    - Initial Create  
+
+    mx LoanIQ activate    ${LIQ_FXRate_Window}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/FxRate_Window
+    mx LoanIQ click    ${LIQ_FXRate_UserSpotRate_Button}  
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/FxRate_Window 
+    mx LoanIQ click    ${LIQ_FXRate_OK_Button}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/FxRate_Window
+    Validate if Question or Warning Message is Displayed
