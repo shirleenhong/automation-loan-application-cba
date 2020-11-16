@@ -6,6 +6,7 @@ Resource    ../../../../../../Configurations/LoanIQ_Import_File.robot
 Setup Deal Administrative Fees - ComSee
     [Documentation]    This keyword is for adding Administrative Fees from the Deal Notebook's Admin/Event Fees tab.
     ...    @author: rtarayao    26AUG2019    - initial create
+    ...    @update: shirhong    16NOV2020    - Update Logout from Loan IQ keyword
     [Arguments]    ${ExcelPath}
     
     ###Deal Notebook###

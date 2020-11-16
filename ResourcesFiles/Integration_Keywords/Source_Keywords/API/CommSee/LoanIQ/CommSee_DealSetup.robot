@@ -781,6 +781,7 @@ Write Post Deal Details for Scenario 2 ComSee
     [Documentation]    This keyword is used to write all the Post Deal Details needed for Commsee fields for a Syndicated Deal.    
     ...    @author: rtaryao    12AUG2019    - Initial Create
     ...    @update: clanding    06NOV2020    - Updated ${EMPTY} delimiter to |
+    ...    @update: shirhong    16NOV2020    - Update Logout from Loan IQ keyword
     [Arguments]    ${ExcelPath}
     ###LIQ Desktop
     Logout from Loan IQ
