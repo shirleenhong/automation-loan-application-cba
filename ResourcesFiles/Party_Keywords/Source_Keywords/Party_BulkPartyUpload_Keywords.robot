@@ -7,7 +7,7 @@ Resource       ../../../Configurations/Party_Import_File.robot
 Create Bulk File for Upload
     [Documentation]    This keyword is used to create the bulk party upload file for the Bulk Party Upload feature
     ...    @author: nbautist    03NOV2020    - initial create
-    [Arguments]    ${sParty_Category}    ${sParty_Type}    ${sParty_Sub_Type}    ${bIs_Tax_Payer}    ${sAssigned_Branch_Code}    ${bIs_Internet}    ${bIs_Mobile}
+    [Arguments]    ${sParty_Category}    ${sParty_Type}    ${sParty_Sub_Type}    ${bGST_Liable}    ${sAssigned_Branch_Code}    ${bDigital_Banking_Via_Internet}    ${bDigital_Banking_Via_Mobile}
     ...    ${sAlternate_Party_ID}    ${sBusiness_Country}    ${bIs_Main_Activity}    ${bIs_Primary_Activity}    ${sFranchise_Affinity}    ${sBusiness_Activity}    ${sImport_Export}    
     ...    ${sIndustry_Sector}    ${sTax_ID_GST_Number}    ${sGST_Number}    ${sParent}    ${sNon_Resident_License_Permit}    ${sAddress_Type}    
     ...    ${sAddress_Line_1}    ${sAddress_Line_2}    ${sDefault_Address}    ${sAddress_Line_3}    ${sAddress_Line_4}    ${sTown_City}    ${sState_Province}    ${sPost_Code}    
@@ -15,7 +15,7 @@ Create Bulk File for Upload
     ...    ${sAddress_Type_Code}    ${sIndustry_Sector_Code}    ${sBusiness_Activity_Code}    ${sSave_Path}
 
     ### Prepare containers for party data ###
-    ${Bulk_Upload}    Create List
+    ${Bulk_Upload_List}    Create List
     ${Bulk_List}    Create List 
     ${BULK_DICTIONARY}    Create Dictionary  
     ${Parties}    Convert To Integer    ${iNumber_of_Parties}
@@ -32,13 +32,14 @@ Create Bulk File for Upload
     \    ### Add party data to container list ###
     \    Append To List    ${Bulk_List}    ${PARTY_BULK_UNIQUE_ID}${Party_ID};\n
     \    Append To List    ${Bulk_List}    ${PARTY_BULK_PARTY_PARTYID}${Party_ID};\n
+    \    ${sParty_Category}    Convert To Uppercase    ${sParty_Category}
     \    Append To List    ${Bulk_List}    ${PARTY_BULK_PARTY_PARTYCATEGORY}${sParty_Category};\n
     \    Append To List    ${Bulk_List}    ${PARTY_BULK_PARTY_PARTYTYPE}${sParty_Type_Code};\n    
     \    Append To List    ${Bulk_List}    ${PARTY_BULK_PARTY_PARTYSUBTYPE}${sParty_Sub_Type_Code};\n
-    \    Append To List    ${Bulk_List}    ${PARTY_BULK_PARTY_ISTAXPAYER}${bIs_Tax_Payer};\n
+    \    Append To List    ${Bulk_List}    ${PARTY_BULK_PARTY_ISTAXPAYER}${bGST_Liable};\n
     \    Append To List    ${Bulk_List}    ${PARTY_BULK_PARTY_ASSIGNEDBRANCHCODE}${sAssigned_Branch_Code};\n
-    \    Append To List    ${Bulk_List}    ${PARTY_BULK_PARTY_ISINTERNET}${bIs_Internet};\n
-    \    Append To List    ${Bulk_List}    ${PARTY_BULK_PARTY_ISMOBILE}${bIs_Mobile};\n
+    \    Append To List    ${Bulk_List}    ${PARTY_BULK_PARTY_ISINTERNET}${bDigital_Banking_Via_Internet};\n
+    \    Append To List    ${Bulk_List}    ${PARTY_BULK_PARTY_ISMOBILE}${bDigital_Banking_Via_Mobile};\n
     \    Append To List    ${Bulk_List}    ${PARTY_BULK_PARTY_ALTERNATECUSTOMERID}${sAlternate_Party_ID};\n
     \    Append To List    ${Bulk_List}    ${PARTY_BULK_PARTY_ENTERPRISENAME}${Enterprise_Name};\n
     \    Append To List    ${Bulk_List}    ${PARTY_BULK_PARTY_SHORTNAME}${Short_Name};\n
@@ -46,8 +47,10 @@ Create Bulk File for Upload
     \    Append To List    ${Bulk_List}    {${PARTY_BULK_BA_COUNTRY}${sCountry_Code};\n
     \    Append To List    ${Bulk_List}    ${PARTY_BULK_BA_ISMAINACTIVITY}${bIs_Main_Activity};\n
     \    Append To List    ${Bulk_List}    ${PARTY_BULK_BA_ISPRIMARYACTIVITY}${bIs_Primary_Activity};\n
+    \    ${sFranchise_Affinity}    Convert To Uppercase    ${sFranchise_Affinity}
     \    Append To List    ${Bulk_List}    ${PARTY_BULK_BA_FRANCHISEAFFINITY}${sFranchise_Affinity};\n
     \    Append To List    ${Bulk_List}    ${PARTY_BULK_BA_BUSINESSACTIVITY}${sBusiness_Activity_Code};\n
+    \    ${sImport_Export}    Convert To Uppercase    ${sImport_Export}
     \    Append To List    ${Bulk_List}    ${PARTY_BULK_BA_IMPORTEXPORT}${sImport_Export};\n
     \    Append To List    ${Bulk_List}    ${PARTY_BULK_BA_INDUSTRYSECTOR}${sIndustry_Sector_Code};}\n
     \    Append To List    ${Bulk_List}    \n
@@ -72,7 +75,7 @@ Create Bulk File for Upload
     \    Append To List    ${Bulk_List}    {${PARTY_BULK_LINEOFBUSINESS_}${sLine_Of_Business};}\n
     \
     \    ### Add container list data to formatted list ###
-    \    ${Bulk_Upload}    Combine Lists    ${Bulk_Upload}    ${Bulk_List}
+    \    ${Bulk_Upload_List}    Combine Lists    ${Bulk_Upload_List}    ${Bulk_List}
     \
     \    ### Add party data to reference dictionary ###
     \    Set To Dictionary    ${BULK_DICTIONARY}    ${Party_ID}    ${Bulk_List}
@@ -80,14 +83,14 @@ Create Bulk File for Upload
     \    ### Cleanup and preparation for next party ###
     \    ${Bulk_List}    Create List
     \    Exit For Loop If    ${INDEX}==${Parties}
-    \    Append To List    ${Bulk_Upload}    |\n
+    \    Append To List    ${Bulk_Upload_List}    |\n
 
     ### Generate and save the actual file. The format "BulkPartyUpload_%Y%m%d%H%M%S.xml" is the specified format for bulk party upload files.  ###
     ${Filename_Value}    Generate Unique Number or Text with Format for Party    Format=%Y%m%d%H%M%S
     ${BULK_FILENAME}    Set Variable    BulkPartyUpload_${Filename_Value}.xml
     ${Filename_Path}    Set Variable    ${sSave_Path}${BULK_FILENAME}
     Create File    ${Filename_Path}
-    :FOR    ${Line}    IN    @{Bulk_Upload}
+    :FOR    ${Line}    IN    @{Bulk_Upload_List}
     \    ${Append_Line}    Convert To String    ${Line}
     \    Append To File    ${Filename_Path}    ${Append_Line}
     
@@ -145,8 +148,11 @@ Verify Bulk Party Upload Successful
     ...    @author: nbautist    03NOV2020    - initial create
     [Arguments]    ${sFilename_Path}    
     
+    ### Verify if the bulk upload file in the File table is present ###
     ${Party_BulkPartyUploadEnquiry_UploadedFile}    Replace Variables    ${Party_BulkPartyUploadEnquiry_UploadedFile}
-    Element Should Be Visible    ${Party_BulkPartyUploadEnquiry_UploadedFile}    ${BULK_PARTY_UPLOAD_FAILED_ERROR_MESSAGE}
+    Run Keyword And Continue On Failure    Element Should Be Visible    ${Party_BulkPartyUploadEnquiry_UploadedFile}    ${BULK_PARTY_UPLOAD_FAILED_ERROR_MESSAGE}
+    
+    ### Verify if the parties in the Party table were added successfully ###
     :FOR    ${key}    IN    @{BULK_DICTIONARY}
     \    ${Unique_Id}    Set Variable    ${key}
     \    ${Party_BulkPartyUploadEnquiry_Party_Row}    Replace Variables    ${Party_BulkPartyUploadEnquiry_Party_Row}
@@ -175,55 +181,55 @@ Verify Correct Party Details From Bulk Upload
     \
     \    ### Open Party Details and verify data from bulk file ###
     \    ${Party_List}    Get From Dictionary    ${BULK_DICTIONARY}    ${key}
-    \    ${iParty_ID}    Get Info From Party Details From List    ${Party_List}    ${PARTY_BULK_PARTY_PARTYID}
-    \    ${sPartyType}    Get Info From Party Details From List    ${Party_List}    ${PARTY_BULK_PARTY_PARTYTYPE}
-    \    ${sPartyType}    Get From Dictionary    ${PARTY_BULK_MAPPING_PARTYTYPE}    ${sPartyType}
-    \    ${sPartySubtype}    Get Info From Party Details From List    ${Party_List}    ${PARTY_BULK_PARTY_PARTYSUBTYPE}
-    \    ${sPartySubtype}    Get From Dictionary    ${PARTY_BULK_MAPPING_PARTYSUBTYPE}    ${sPartySubtype}
-    \    ${sPartyCategory}    Get Info From Party Details From List    ${Party_List}    ${PARTY_BULK_PARTY_PARTYCATEGORY}
-    \    ${sEnterpriseName}    Get Info From Party Details From List    ${Party_List}    ${PARTY_BULK_PARTY_ENTERPRISENAME}
-    \    ${iRegistered_Number}    Get Info From Party Details From List    ${Party_List}    ${PARTY_BULK_ED_REGISTEREDNUMBER}
-    \    ${sCountry_of_Registration}    Get Info From Party Details From List    ${Party_List}    ${PARTY_BULK_ED_COUNTRYOFREGISTRATION}
-    \    ${sCountry_of_Registration}    Get From Dictionary    ${PARTY_BULK_MAPPING_COUNTRYCODE}    ${sCountry_of_Registration}
-    \    ${sShort_Name}    Get Info From Party Details From List    ${Party_List}    ${PARTY_BULK_PARTY_SHORTNAME}
-    \    ${iGSTNumber}    Get Info From Party Details From List    ${Party_List}    ${PARTY_BULK_PTD_GSTREGISTRATIONNUMBER}
-    \    Validate Enquire Enterprise Party For Bulk Party    ${iParty_ID}    ${sLocality}    ${sEntity}    ${sPartyType}    ${sPartySubtype}    ${sPartyCategory}    ${sEnterpriseName}    ${iRegistered_Number}    ${sCountry_of_Tax_Domicile}    ${sCountry_of_Registration}    ${sShort_Name}    ${iGSTNumber}
+    \    ${Party_ID}    Get Info From Party Details From List    ${Party_List}    ${PARTY_BULK_PARTY_PARTYID}
+    \    ${PartyType}    Get Info From Party Details From List    ${Party_List}    ${PARTY_BULK_PARTY_PARTYTYPE}
+    \    ${PartyType}    Get From Dictionary    ${PARTY_BULK_MAPPING_PARTYTYPE}    ${PartyType}
+    \    ${PartySubtype}    Get Info From Party Details From List    ${Party_List}    ${PARTY_BULK_PARTY_PARTYSUBTYPE}
+    \    ${PartySubtype}    Get From Dictionary    ${PARTY_BULK_MAPPING_PARTYSUBTYPE}    ${PartySubtype}
+    \    ${PartyCategory}    Get Info From Party Details From List    ${Party_List}    ${PARTY_BULK_PARTY_PARTYCATEGORY}
+    \    ${EnterpriseName}    Get Info From Party Details From List    ${Party_List}    ${PARTY_BULK_PARTY_ENTERPRISENAME}
+    \    ${Registered_Number}    Get Info From Party Details From List    ${Party_List}    ${PARTY_BULK_ED_REGISTEREDNUMBER}
+    \    ${Country_of_Registration}    Get Info From Party Details From List    ${Party_List}    ${PARTY_BULK_ED_COUNTRYOFREGISTRATION}
+    \    ${Country_of_Registration}    Get From Dictionary    ${PARTY_BULK_MAPPING_COUNTRYCODE}    ${Country_of_Registration}
+    \    ${Short_Name}    Get Info From Party Details From List    ${Party_List}    ${PARTY_BULK_PARTY_SHORTNAME}
+    \    ${GSTNumber}    Get Info From Party Details From List    ${Party_List}    ${PARTY_BULK_PTD_GSTREGISTRATIONNUMBER}
+    \    Validate Enquire Enterprise Party For Bulk Party    ${Party_ID}    ${sLocality}    ${sEntity}    ${PartyType}    ${PartySubtype}    ${PartyCategory}    ${EnterpriseName}    ${Registered_Number}    ${sCountry_of_Tax_Domicile}    ${Country_of_Registration}    ${Short_Name}    ${GSTNumber}
     \
     \    Capture Page Screenshot    ${screenshot_path}/Screenshots/Party/PartyDetailsEnquiryPage-{index}.png
     \
     \    ### Open Party Address Details and verify data from bulk file ###
     \    Mx Click Element    ${Party_EnquirePartyDetails_EnterpriseParty_RelatedItems_Menu}
     \    Mx Click Element    ${Party_EnquirePartyDetails_EnterpriseParty_Addresses_MenuItem}
-    \    ${sAddressType}    Get Info From Party Details From List    ${Party_List}    ${PARTY_BULK_ADDRESS_ADDRESSTYPE}
-    \    ${sAddressType}    Get From Dictionary    ${PARTY_BULK_MAPPING_ADDRESSTYPE}    ${sAddressType}    
-    \    ${sCountry}    Get Info From Party Details From List    ${Party_List}    ${PARTY_BULK_ADDRESS_COUNTRYCODE}
-    \    ${sCountry}    Get From Dictionary    ${PARTY_BULK_MAPPING_COUNTRYCODE}    ${sCountry}    
-    \    ${sStateProvince}    Get Info From Party Details From List    ${Party_List}    ${PARTY_BULK_ADDRESS_ADDRESSLINE10}
-    \    ${sStateProvince}    Get From Dictionary   ${PARTY_BULK_MAPPING_PROVINCE}    ${sStateProvince}    
-	\    ${sTownCity}    Get Info From Party Details From List    ${Party_List}    ${PARTY_BULK_ADDRESS_TOWNORCITY}
-	\    ${sAddressLine1}    Get Info From Party Details From List    ${Party_List}    ${PARTY_BULK_ADDRESS_ADDRESSLINE1}
-	\    ${sAddressLine2}    Get Info From Party Details From List    ${Party_List}    ${PARTY_BULK_ADDRESS_ADDRESSLINE2}
-	\    ${sAddressLine3}    Get Info From Party Details From List    ${Party_List}    ${PARTY_BULK_ADDRESS_ADDRESSLINE3}
-	\    ${sAddressLine4}    Get Info From Party Details From List    ${Party_List}    ${PARTY_BULK_ADDRESS_ADDRESSLINE4}
-	\    ${sPostalCode}    Get Info From Party Details From List    ${Party_List}    ${PARTY_BULK_ADDRESS_POSTALCODE}
-    \    Validate Address Details For Bulk Party    ${sAddressType}    ${sCountry}    ${sStateProvince}    ${sTownCity}    ${sAddressLine1}    ${sAddressLine2}    ${sAddressLine3}    ${sAddressLine4}    ${sPostalCode}
+    \    ${AddressType}    Get Info From Party Details From List    ${Party_List}    ${PARTY_BULK_ADDRESS_ADDRESSTYPE}
+    \    ${AddressType}    Get From Dictionary    ${PARTY_BULK_MAPPING_ADDRESSTYPE}    ${AddressType}    
+    \    ${Country}    Get Info From Party Details From List    ${Party_List}    ${PARTY_BULK_ADDRESS_COUNTRYCODE}
+    \    ${Country}    Get From Dictionary    ${PARTY_BULK_MAPPING_COUNTRYCODE}    ${Country}    
+    \    ${StateProvince}    Get Info From Party Details From List    ${Party_List}    ${PARTY_BULK_ADDRESS_ADDRESSLINE10}
+    \    ${StateProvince}    Get From Dictionary   ${PARTY_BULK_MAPPING_PROVINCE}    ${StateProvince}    
+	\    ${TownCity}    Get Info From Party Details From List    ${Party_List}    ${PARTY_BULK_ADDRESS_TOWNORCITY}
+	\    ${AddressLine1}    Get Info From Party Details From List    ${Party_List}    ${PARTY_BULK_ADDRESS_ADDRESSLINE1}
+	\    ${AddressLine2}    Get Info From Party Details From List    ${Party_List}    ${PARTY_BULK_ADDRESS_ADDRESSLINE2}
+	\    ${AddressLine3}    Get Info From Party Details From List    ${Party_List}    ${PARTY_BULK_ADDRESS_ADDRESSLINE3}
+	\    ${AddressLine4}    Get Info From Party Details From List    ${Party_List}    ${PARTY_BULK_ADDRESS_ADDRESSLINE4}
+	\    ${PostalCode}    Get Info From Party Details From List    ${Party_List}    ${PARTY_BULK_ADDRESS_POSTALCODE}
+    \    Validate Address Details For Bulk Party    ${AddressType}    ${Country}    ${StateProvince}    ${TownCity}    ${AddressLine1}    ${AddressLine2}    ${AddressLine3}    ${AddressLine4}    ${PostalCode}
     \
     \    Capture Page Screenshot    ${screenshot_path}/Screenshots/Party/PartyDetailsAddressPage-{index}.png
     \
     \    ### Open Party Enterprise Business Details and verify data from bulk file ###
     \    Mx Click Element    ${Party_CloseDialog_Button}
     \    Mx Click Element    ${Party_EnquirePartyDetails_BusinessActivity_Viewbutton}
-    \    ${sBusinessCountry}    Get Info From Party Details From List    ${Party_List}    ${PARTY_BULK_BA_COUNTRY}
-    \    ${sBusinessCountry}    Get From Dictionary    ${PARTY_BULK_MAPPING_COUNTRYCODE}    ${sBusinessCountry}    
-    \    ${sIndustrySector}    Get Info From Party Details From List    ${Party_List}    ${PARTY_BULK_BA_INDUSTRYSECTOR}
-    \    ${sIndustrySector}    Get From Dictionary    ${PARTY_BULK_MAPPING_INDUSTRYSECTOR}    ${sIndustrySector}
-    \    ${sBusinessActivity}    Get Info From Party Details From List    ${Party_List}    ${PARTY_BULK_BA_BUSINESSACTIVITY}
-	\    ${sBusinessActivity}    Get From Dictionary    ${PARTY_BULK_MAPPING_BUSINESSACTIVITY}    ${sBusinessActivity}
-    \    ${bIsMainActivity}    Get Info From Party Details From List    ${Party_List}    ${PARTY_BULK_BA_ISMAINACTIVITY}
-	\    ${bIsMainActivity}    Get From Dictionary    ${PARTY_BULK_MAPPING_CHECKBOXVALUES}    ${bIsMainActivity}
-    \    ${bIsPrimaryActivity}    Get Info From Party Details From List    ${Party_List}    ${PARTY_BULK_BA_ISPRIMARYACTIVITY}
-	\    ${bIsPrimaryActivity}    Get From Dictionary    ${PARTY_BULK_MAPPING_CHECKBOXVALUES}    ${bIsPrimaryActivity}
-    \    Validate Enquire Business Activity For Bulk Party    ${sBusinessCountry}    ${sIndustrySector}    ${sBusinessActivity}    ${bIsMainActivity}    ${bIsPrimaryActivity}
+    \    ${BusinessCountry}    Get Info From Party Details From List    ${Party_List}    ${PARTY_BULK_BA_COUNTRY}
+    \    ${BusinessCountry}    Get From Dictionary    ${PARTY_BULK_MAPPING_COUNTRYCODE}    ${BusinessCountry}    
+    \    ${IndustrySector}    Get Info From Party Details From List    ${Party_List}    ${PARTY_BULK_BA_INDUSTRYSECTOR}
+    \    ${IndustrySector}    Get From Dictionary    ${PARTY_BULK_MAPPING_INDUSTRYSECTOR}    ${IndustrySector}
+    \    ${BusinessActivity}    Get Info From Party Details From List    ${Party_List}    ${PARTY_BULK_BA_BUSINESSACTIVITY}
+	\    ${BusinessActivity}    Get From Dictionary    ${PARTY_BULK_MAPPING_BUSINESSACTIVITY}    ${BusinessActivity}
+    \    ${IsMainActivity}    Get Info From Party Details From List    ${Party_List}    ${PARTY_BULK_BA_ISMAINACTIVITY}
+	\    ${IsMainActivity}    Get From Dictionary    ${PARTY_BULK_MAPPING_CHECKBOXVALUES}    ${IsMainActivity}
+    \    ${IsPrimaryActivity}    Get Info From Party Details From List    ${Party_List}    ${PARTY_BULK_BA_ISPRIMARYACTIVITY}
+	\    ${IsPrimaryActivity}    Get From Dictionary    ${PARTY_BULK_MAPPING_CHECKBOXVALUES}    ${IsPrimaryActivity}
+    \    Validate Enquire Business Activity For Bulk Party    ${BusinessCountry}    ${IndustrySector}    ${BusinessActivity}    ${IsMainActivity}    ${IsPrimaryActivity}
     \
     \    Capture Page Screenshot    ${screenshot_path}/Screenshots/Party/PartyDetailsEnterpriseBusinessPage-{index}.png
     \

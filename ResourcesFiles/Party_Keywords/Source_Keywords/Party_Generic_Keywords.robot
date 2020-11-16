@@ -93,7 +93,9 @@ Generate Unique Number or Text for Party
     
 Generate Unique Number or Text with Format for Party 
     [Documentation]    This keyword generates a unique number or text for Party app based on a specified format. If no format is specified , a default format is used.
-    ...    The default format is the format used for the Bulk Party Upload file. 
+    ...    Example: 
+    ...    Format=%Y%m%d%H%M%S is used as a suffix for bulk file upload files, i.e., BulkPartyUpload_20201116103024.xml
+    ...    Format=%H8%M%S is used as a unique identifier for IDs, i.e., Party ID = 1183605
     ...    @author: nbautist    4NOV2020    - initial create
     [Arguments]    ${sName_Prefix}=None    ${Format}=%y%m%d%f
     

@@ -3,13 +3,13 @@ Resource    ../../../Configurations/Party_Import_File.robot
 
 *** Keywords ***
 Perform Bulk Party Upload and Verify If Successful
-    [Documentation]    This test case is used to create Party in Quick Party Onboarding and validate duplicate shortname
+    [Documentation]    This test case is used to check for successful bulk party uploads.
     ...    @author: nbautist    03NOV2020    - initial create
     [Arguments]    ${ExcelPath}
     
     ### PREREQUISITE ###
     ${Filename_Path}    Create Bulk File for Upload    &{ExcelPath}[Party_Category]    &{ExcelPath}[Party_Type]
-    ...    &{ExcelPath}[Party_Sub_Type]    &{ExcelPath}[Is_Tax_Payer]    &{ExcelPath}[Assigned_Branch_Code]    &{ExcelPath}[Is_Internet]    &{ExcelPath}[Is_Mobile]
+    ...    &{ExcelPath}[Party_Sub_Type]    &{ExcelPath}[GST_Liable]    &{ExcelPath}[Assigned_Branch_Code]    &{ExcelPath}[Digital_Banking_Via_Internet]    &{ExcelPath}[Digital_Banking_Via_Mobile]
     ...    &{ExcelPath}[Alternate_Party_ID]    &{ExcelPath}[Business_Country]    &{ExcelPath}[Is_Main_Activity]    &{ExcelPath}[Is_Primary_Activity]    &{ExcelPath}[Franchise_Affinity]
     ...    &{ExcelPath}[Business_Activity]    &{ExcelPath}[Import_Export]    &{ExcelPath}[Industry_Sector]    &{ExcelPath}[Tax_ID_GST_Number]    &{ExcelPath}[GST_Number]    
     ...    &{ExcelPath}[Parent]    &{ExcelPath}[Non_Resident_License_Permit]    &{ExcelPath}[Address_Type]    &{ExcelPath}[Address_Line_1]    
@@ -31,4 +31,3 @@ Perform Bulk Party Upload and Verify If Successful
     Verify Correct Party Details From Bulk Upload    &{ExcelPath}[Locality]    &{ExcelPath}[Entity]    &{ExcelPath}[Country_of_Tax_Domicile]
     Logout User on Party
     Verify Correct Bulk Party Details In LoanIQ
-    Logout from Loan IQ

@@ -331,8 +331,8 @@ WORK_IN_PROCESS_ACTIONS = '[Actions];Work In Process'
 
 ### PARTY ERROR MESSAGES ###
 DUPLICATE_SHORTNAME_ERROR_MESSAGE = 'Entered Short Name is already in use for Different Party'
-BULK_PARTY_UPLOAD_FAILED_ERROR_MESSAGE = 'FAIL: Bulk Party Upload file was not uploaded successfully'
-PARTY_UPLOAD_FAILED_ERROR_MESSAGE = 'FAIL: Party from Bulk Party Upload file was not uploaded successfully'
+BULK_PARTY_UPLOAD_FAILED_ERROR_MESSAGE = 'Bulk Party Upload file was not uploaded successfully'
+PARTY_UPLOAD_FAILED_ERROR_MESSAGE = 'Party from Bulk Party Upload file was not uploaded successfully'
 
 ### PARTY VARIABLES ###
 TESTCASE_NAME_PARTY = ""

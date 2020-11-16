@@ -281,8 +281,9 @@ Compare Two Arguments
     Log    ${value_from_ui} - This is the data saved in the UI/application
     
 Compare Two Normalized Arguments
-    [Documentation]    This keyword compares two normalized arguments from web app and excel if they are equal.
-    ...    @author: nbautist 
+    [Documentation]    This keyword compares two normalized arguments from web app and excel if they are equal. Both expected and actual text values are
+    ...    both converted to upper case before comparison.
+    ...    @author: nbautist    16NOV2020    - initial create
     [Arguments]    ${value_from_sheet}    ${value_from_ui}
     
     Wait Until Page Contains Element    ${value_from_ui}    
