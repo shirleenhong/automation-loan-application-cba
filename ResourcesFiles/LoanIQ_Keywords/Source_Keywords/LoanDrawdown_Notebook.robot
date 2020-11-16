@@ -3317,6 +3317,7 @@ Set FX Rates Loan Repricing
     [Documentation]    This keyword set the FX rates of any currency repricing from workflow before Rate Approval
     ...    @author: xmiranda    27SEP2019    - initial draft
     ...    @update: shirhong    16OCT2020    Added condition for Set FX Rate "Use Spot"
+    ...    @update: fluberio    12NOV2020    added click Yes Button if Present
     [Arguments]    ${sCurrency}    ${FxRate_Origin}=None
     mx LoanIQ activate window    ${LIQ_LoanRepricingForDeal_Window}
     Mx LoanIQ Select Window Tab    ${LIQ_LoanRepricingForDeal_Tab}    Workflow
@@ -3330,6 +3331,7 @@ Set FX Rates Loan Repricing
     ...    ELSE    mx LoanIQ click    JavaWindow("title:=Facility Currency.*","displayed:=1").JavaButton("attached text:=Use Facility.*to ${sCurrency} Rate")
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/FXLoanRepricing_Workflow
     mx LoanIQ click    ${LIQ_FacilityCurrency_Facility_Rate_Ok_Button}
+    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/FXLoanRepricing_Workflow
 
 Navigate to Rates Tab

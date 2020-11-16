@@ -66,7 +66,7 @@ Setup Deal Upfront Fees
     Validate Upfront Fee Pricing    &{ExcelPath}[UpfrontFee_Category]
     Validate Upfront Fee Pricing    &{ExcelPath}[UpfrontFee_Type]
     Validate Upfront Fee Pricing    &{ExcelPath}[UpfrontFee_Amount]    
-    Run Keyword If    '${SCENARIO}'=='4' or '${SCENARIO}'=='5'    Write Data To Excel    CRED07_UpfrontFee_Payment    UpfrontFee_Amount    ${rowid}    &{ExcelPath}[UpfrontFee_Amount]
+    Run Keyword If    '${SCENARIO}'=='4' or '${SCENARIO}'=='5' or '${SCENARIO}'=='3'    Write Data To Excel    CRED07_UpfrontFee_Payment    UpfrontFee_Amount    ${rowid}    &{ExcelPath}[UpfrontFee_Amount]
     
     ${New_Upfrontfee_Amount}    Run Keyword If    '${SCENARIO}'=='1' and '${ExcelPath}[UpfrontFee_CategoryType]'=='Formula'    Compute Upfront Fee Amount Based On Percentage    &{ExcelPath}[UpfrontFee_Amount]
     Run Keyword If    '${SCENARIO}'=='1' and '${ExcelPath}[UpfrontFee_CategoryType]'=='Formula'    Write Data To Excel    CRED07_UpfrontFee_Payment    UpfrontFee_Amount    ${rowid}    ${New_Upfrontfee_Amount}
