@@ -167,7 +167,7 @@ Validate FFC for TL FX Rate Success with Multiple Files
     ${InputGSFile_Count}    Get Length    ${InputGSFile_List}
     Wait Until Element Is Visible    ${FFC_Dashboard}    30s
     ${aHeaderRefNameList}    Create List    ${REQUESTS_ID}
-    ${aExpectedRefList}    Create List    ${GSFILENAME_WITHTIMESTAMP}
+    ${aExpectedRefList}    Create List
     Append to List    ${aExpectedRefList}    ${FileNameWithTimeStamp}
     Go to Dashboard and Click Source API Name    ${FXRATES_ACK_MESSAGE_SPLITTER}    ${CUSTOM_INTERFACE_INSTANCE}
     ${ColumnIndex}    Filter by Multiple Reference Headers and Values and Return Column Index    ${aHeaderRefNameList}    ${aExpectedRefList}
