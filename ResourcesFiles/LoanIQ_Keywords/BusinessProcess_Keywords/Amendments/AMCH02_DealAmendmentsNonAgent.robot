@@ -6,6 +6,7 @@ Perform Lender Share Adjustment
     [Documentation]    This keyword performs lender share adjustment to a deal
     ...    @author: ghabal
     ...    @update: amansuet    26JUN2020    - added new keywords and update existing to handle correct flow
+    ...    @update: fluberio    17NOV2020    - added conditions for Scenario 4 of EU
     [Arguments]    ${ExcelPath}
     
     ###Logout and Relogin in Inputter Level###
@@ -57,7 +58,8 @@ Perform Lender Share Adjustment
     
     ###Open Sell Assignment notebook - Worfklow tab###
     Process Funding Memo    &{ExcelPath}[WIPTransaction_Type]    &{ExcelPath}[Lender_Host]    &{ExcelPath}[CircleTransaction_Type]    &{ExcelPath}[Deal_Name]  
-    Complete Funding Memo for Lender Share Adjustment    &{ExcelPath}[New_Loan_Alias]
+    Run Keyword If   '${SCENARIO}'=='4' and '&{ExcelPath}[Entity]' == 'EU'    Complete Funding Memo for Lender Share Adjustment    &{ExcelPath}[New_Loan_Alias]    sScenrio=${SCENARIO}    sEntity=&{ExcelPath}[Entity]    sFile_Location=&{ExcelPath}[File_Location]  
+    ...    ELSE      Complete Funding Memo for Lender Share Adjustment    &{ExcelPath}[New_Loan_Alias]
      
     ###Open Sell Assignment notebook - Worfklow tab###
     Send to Settlement Approval for Open Assignment Sell

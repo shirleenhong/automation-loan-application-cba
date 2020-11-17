@@ -1623,30 +1623,29 @@ Complete Funding Memo for Lender Share Adjustment
     ...    @update: jdelacru    26MAR2019    - Remove completing funding memo for first loan since it is in inactive status
     ...    @update: amansuet    22JUN2020    - updated to align with automation standards, added take screenshot and added keyword pre-processing
     ...    @update: clanding    14AUG2020    - replaced 'Mx Native Type' to 'Mx Press Combination'
-    [Arguments]    ${sNew_Loan_Alias}
+    ...    @update: fluberio    17NOV2020    - added condition upon Setting the funding Memo with multiple Loans
+    [Arguments]    ${sNew_Loan_Alias}    ${sScenrio}=None    ${sEntity}=None    ${sFile_Location}=None
 
     ### Keyword Pre-processing ###
     ${New_Loan_Alias}    Acquire Argument Value    ${sNew_Loan_Alias}
-
-    Mx LoanIQ Activate Window   ${LIQ_FundingMemo_Outstanding_Window}   
-    Mx LoanIQ Click Javatree Cell    ${LIQ_FundingMemo_JavaTree}    ${New_Loan_Alias}%${New_Loan_Alias}%Alias  
-    Mx Press Combination    Key.ENTER
-    Mx LoanIQ Activate Window    ${LIQ_FundingMemo_NewAmount_Window}
-    Mx LoanIQ Enter    ${LIQ_FundingMemo_NewAmount_Window_AmountField}    0.00
-    Mx LoanIQ Click    ${LIQ_FundingMemo_NewAmount_Window_OKButton}
-        
+    ${Scenario}    Acquire Argument Value    ${sScenrio}
+    ${Entity}    Acquire Argument Value    ${sEntity}
+    ${File_Location}    Acquire Argument Value    ${sFile_Location}
+    
+    Run Keyword If   '${Scenario}'=='4' and '${Entity}' == 'EU'    Set Funding Memo For Lender Share Adjustment with Multiple Loan    ${File_Location}
+    ...    ELSE    Set Funding Memo For Lender Share Adjustment with Specific Loan    ${New_Loan_Alias}
+  
     Mx LoanIQ Click    ${LIQ_FundingMemo_FreezeAll_Button}
     Run Keyword And Continue On Failure    Mx LoanIQ Verify Text In Javatree    ${LIQ_FundingMemo_JavaTree}    float%no                               
-    
+
     ${DecisionValue}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_FundingMemo_JavaTree}    ${New_Loan_Alias}%Decision%value  
     
     Should Be Equal    ${DecisionValue}    0.00    
     
     Mx LoanIQ Select    ${LIQ_FundingMemo_Create}
- 
     Mx LoanIQ Click Element If Present    ${LIQ_Question_Yes_Button}
     Mx LoanIQ Click Element If Present    ${LIQ_Warning_Yes_Button}    
-    
+    Sleep    10s
     Mx LoanIQ Activate Window    ${LIQ_FundingMemo_Window}
     Take Screenshot    ${Screenshot_Path}/Screenshots/LoanIQ/FundingMemoOutstandingWindow
     Mx LoanIQ Click    ${LIQ_FundingMemo_OK_Button}
@@ -1654,6 +1653,44 @@ Complete Funding Memo for Lender Share Adjustment
     Mx LoanIQ Activate Window    ${LIQ_FundingMemo_Outstanding_Window}
     Mx LoanIQ Click    ${LIQ_FundingMemo_Outstanding_OK_Button}                          
    
+Set Funding Memo For Lender Share Adjustment with Multiple Loan
+    [Documentation]    This keyword is Setting Funding Memo of the Lender Share Adjust for Multiple Loans
+    ...    @author: fluberio    17NOV2020    - initial Create
+    [Arguments]    ${sFile_Location}
+
+    ### Keyword Pre-processing ###
+    ${File_Location}    Acquire Argument Value    ${sFile_Location}
+    ${First_Alias}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_FundingMemo_JavaTree}    Active%Alias%alias    
+ 
+    Mx LoanIQ Copy Content And Save To File    ${LIQ_FundingMemo_JavaTree}    ${File_Location}LOAN.txt      
+    ${data}    OperatingSystem.Get File    ${File_Location}LOAN.txt
+    ${lineCount}    Get Line Count    ${data}
+    Mx LoanIQ Activate Window   ${LIQ_FundingMemo_Outstanding_Window}   
+    Mx LoanIQ Click Javatree Cell    ${LIQ_FundingMemo_JavaTree}    ${First_Alias}%${First_Alias}%Alias
+    ${lineCount}    Evaluate    ${lineCount}-2
+    :FOR    ${INDEX}    IN RANGE    0    ${lineCount}
+    \    Mx Press Combination    Key.ENTER
+    \    Mx LoanIQ Activate Window    ${LIQ_FundingMemo_NewAmount_Window}
+    \    Mx LoanIQ Enter    ${LIQ_FundingMemo_NewAmount_Window_AmountField}    0.00
+    \    Mx LoanIQ Click    ${LIQ_FundingMemo_NewAmount_Window_OKButton}
+    \    Mx Press Combination    Key.DOWN  
+
+Set Funding Memo For Lender Share Adjustment with Specific Loan
+    [Documentation]    This keyword is Setting Funding Memo of the Lender Share Adjust with Specific Loan
+    ...    @author: fluberio    17NOV2020    - initial Create
+    [Arguments]    ${sNew_Loan_Alias}
+
+    ### Keyword Pre-processing ###
+    ${New_Loan_Alias}    Acquire Argument Value    ${sNew_Loan_Alias}
+
+    ### Keyword Pre-processing ###
+    Mx LoanIQ Activate Window   ${LIQ_FundingMemo_Outstanding_Window} 
+    Mx LoanIQ Click Javatree Cell    ${LIQ_FundingMemo_JavaTree}    ${New_Loan_Alias}%${New_Loan_Alias}%Alias
+    Mx Press Combination    Key.ENTER
+    Mx LoanIQ Activate Window    ${LIQ_FundingMemo_NewAmount_Window}
+    Mx LoanIQ Enter    ${LIQ_FundingMemo_NewAmount_Window_AmountField}    0.00
+    Mx LoanIQ Click    ${LIQ_FundingMemo_NewAmount_Window_OKButton}
+
 Assignment Send to Settlement Approval
     [Documentation]    This keyword is for processing Send to Settlement Approval using Original User.
     ...    @author:mgaling
