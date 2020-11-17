@@ -352,15 +352,16 @@ Validate Enterprise Summary Details
     Compare Two Arguments    ${sCountryOfRegistration}    ${Party_QuickEnterpriseParty_CountryOfRegistration_Dropdown}
     Compare Two Arguments    ${sCountryOfTaxDomicile}    ${Party_QuickEnterpriseParty_CountryOfTaxDomicile_Dropdown}
 
-    ${GST_Number}    Get Text    ${Party_EnterpriseDetailsSummary_TaxNumber_Cell}
+     ${GST_Number}    Get Table Value Containing Row Value in Party    ${Party_EnterpriseDetailsSummary_GeographicLocationsAndTaxNumbers_TableHeader}    ${Party_EnterpriseDetailsSummary_GeographicLocationsAndTaxNumbers_TableRow}    Country    ${sCountryOfTaxDomicile}    Goods & Service Tax Number
     ${isMatched}    Run Keyword And Return Status    Should Be Equal    ${sGTS_Number}    ${GST_Number}
-    Run Keyword If    ${isMatched}==${True}    Log    Goods & Service Tax Number value is correct! Party ID:${GST_Number}    level=INFO
+    Run Keyword If    ${isMatched}==${True}    Log    Goods & Service Tax Number value is correct! GST Number:${GST_Number}    level=INFO
     ...    ELSE    Run Keyword And Continue On Failure    Fail    Goods & Service Tax Number value is incorrect! Goods & Service Tax Number:${GST_Number}, Expected Goods & Service Tax Number:${sGTS_Number}       
 
-    ${TaxCountry}    Get Text    ${Party_EnterpriseDetailsSummary_TaxCountry_Cell}
+    ${TaxCountry}    Get Table Value Containing Row Value in Party    ${Party_EnterpriseDetailsSummary_GeographicLocationsAndTaxNumbers_TableHeader}    ${Party_EnterpriseDetailsSummary_GeographicLocationsAndTaxNumbers_TableRow}    Goods & Service Tax Number    ${sGTS_Number}    Country
     ${isMatched}    Run Keyword And Return Status    Should Be Equal    ${sCountryOfTaxDomicile}    ${TaxCountry}
-    Run Keyword If    ${isMatched}==${True}    Log    Country of Tax value is correct! Party ID:${TaxCountry}    level=INFO
-    ...    ELSE    Run Keyword And Continue On Failure    Fail    Country of Tax value is incorrect! Country of Tax:${TaxCountry}, Expected Country of Tax:${sCountryOfTaxDomicile}     
+    Run Keyword If    ${isMatched}==${True}    Log    Country of Tax value is correct! Country of Tax:${TaxCountry}    level=INFO
+    ...    ELSE    Run Keyword And Continue On Failure    Fail    Country of Tax value is incorrect! Country of Tax:${TaxCountry}, Expected Country of Tax:${sCountryOfTaxDomicile}
+        
     
 Validate Enquire Enterprise Business Activity Details
     [Documentation]    This keyword validates the Enterprise Business Activity Details from Enterprise summary details page.
@@ -773,10 +774,11 @@ Validate Error Message in Quick Enterprise Party
     ...	   @update: javinzon	23OCT2020	 - removed white space in Keyword name
     ...    @update: javinzon    26OCT2020    - updated keyword name from 'Validate Duplicate Short Name' to 'Validate Error Message in Quick 
     ...                                        Enterprise Party', updated documentation, added argument ${sExpected_Error_Message}.
+    ...    @update: javinzon    17NOV2020    - updated screenshot name from 'DuplicateShortName' to 'ErrorMessage'
     [Arguments]    ${sExpected_Error_Message}
     
     ${isErrorDisplayed}    Run Keyword And Return Status    Wait Until Page Contains Element    ${Party_QuickEnterpriseParty_Errors_Dialog}    30s
-    Capture Page Screenshot    ${screenshot_path}/Screenshots/Party/DuplicateShortName-{index}.png
+    Capture Page Screenshot    ${screenshot_path}/Screenshots/Party/ErrorMessage-{index}.png
     ${ErrorMessage}    Get Element Attribute    ${Party_QuickEnterpriseParty_ErrorsDialog_TextArea}    value
     ${isMatched}    Run Keyword And Return Status    Should Contain    ${ErrorMessage}    ${sExpected_Error_Message}
     Run Keyword If    ${isMatched}==${True}    Mx Click Element    ${Party_QuickEnterpriseParty_ErrorsDialog_GoBack_Button}

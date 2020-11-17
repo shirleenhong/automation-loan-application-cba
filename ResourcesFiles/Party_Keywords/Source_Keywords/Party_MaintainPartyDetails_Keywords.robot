@@ -237,43 +237,6 @@ Approve Updated Party via Supervisor Account
 
     [Return]    ${TaskID_ForAddress}    ${TaskID_ForPartyDetails}
 
-Select Approval For Party Details Using Task ID
-    [Documentation]    This keyword is used to Select and accept the Approval for Party Details Using Task ID
-    ...    @author: javinzon    04NOV2020    - intial create
-    [Arguments]    ${sTaskID_ForPartyDetails}    ${isSupervisor}=${False}
-    
-    ${ApprovalCount}    SeleniumLibraryExtended.Get Element Count    ${Party_Referrals_ReferralRow_Table}
-    :FOR    ${index}    IN RANGE    1    ${ApprovalCount}+1
-    \    Mx Click Element    ${Party_Referrals_ReferralRow_Table}\[${index}]${Party_TableRadioButton_RadioButton}
-    \    Run Keyword If   ${isSupervisor}==${True}    Focus on Last Row of the Table    ${Party_Referrals_Details_Row}
-    \    ${status}    Run Keyword And Return Status    Wait Until Page Contains    ${sTaskID_ForPartyDetails}    5s
-    \    Run Keyword If    ${status}==${True}    Log    Approval For Party Details is found      
-    \    Exit For Loop If    ${status}==${True}
-    
-    ${IsPresent}    Run Keyword And Return Status    Wait Until Page Contains    ${PARTY_ENTERPRISEPARTYDETAILSCHANGE_DESCRIPTION}    5s
-    Run Keyword If    ${isPresent}==${True}    Run Keywords    Capture Page Screenshot    ${screenshot_path}/Screenshots/Party/PartyApprovalPage-{index}.png
-    ...    AND    Mx Click Element    ${Party_Footer_Next_Button} 
-
-Select Approval For Address Details Using Task ID
-    [Documentation]    This keyword is used to Select and accept the Approval for Party Details Using Task ID
-    ...    @author: javinzon    04NOV2020    - intial create
-    [Arguments]    ${sTaskID_ForAddress}    ${isSupervisor}=${False}
-    
-    Wait Until Loading Page Is Not Visible    ${PARTY_TIMEOUT}
-    Validate Page Screen is Displayed    ${PARTY_APPROVALS_PAGETITLE}
-    
-    ${ApprovalCount}    SeleniumLibraryExtended.Get Element Count    ${Party_Referrals_ReferralRow_Table}
-    :FOR    ${index}    IN RANGE    1    ${ApprovalCount}+1
-    \    Mx Click Element    ${Party_Referrals_ReferralRow_Table}\[${index}]${Party_TableRadioButton_RadioButton}
-    \    Run Keyword If   ${isSupervisor}==${True}    Focus on Last Row of the Table    ${Party_Referrals_Details_Row}
-    \    ${status}    Run Keyword And Return Status    Wait Until Page Contains    ${sTaskID_ForAddress}    5s
-    \    Run Keyword If    ${status}==${True}    Log    Approval For Address Details is found      
-    \    Exit For Loop If    ${status}==${True}
-    
-    ${IsPresent}    Run Keyword And Return Status    Wait Until Page Contains    ${PARTY_ADDRESSESCHANGE_DESCRIPTION}    5s
-    Run Keyword If    ${isPresent}==${True}    Run Keywords    Capture Page Screenshot    ${screenshot_path}/Screenshots/Party/PartyApprovalPage-{index}.png
-    ...    AND    Mx Click Element    ${Party_Footer_Next_Button} 
-
 Validate Enquire Enterprise Party After Amendment
     [Documentation]    This keyword is used to validate all amended party details via Party details enquiry.
     ...    @author: javinzon    04NOV2020    - intial create
@@ -286,14 +249,14 @@ Validate Enquire Enterprise Party After Amendment
     Validate Enterprise Party Details if Correct    ${sLocality}    ${sEntity}    ${sAssigned_Branch}    ${sParty_Type}    ${sParty_Sub_Type}    ${sParty_Category}    ${sParty_ID}    
     ...    ${sEnterprise_Name}    ${sRegistered_Number}    ${sCountry_of_Registration}    ${sCountry_of_Tax_Domicile}    ${sShort_Name}
     
-    ${GST_Number}    Get Text    ${Party_EnterpriseDetailsSummary_TaxNumber_Cell}
+    ${GST_Number}    Get Table Value Containing Row Value in Party    ${Party_EnterpriseDetailsSummary_GeographicLocationsAndTaxNumbers_TableHeader}    ${Party_EnterpriseDetailsSummary_GeographicLocationsAndTaxNumbers_TableRow}    Country    ${sCountryOfTaxDomicile}    Goods & Service Tax Number
     ${isMatched}    Run Keyword And Return Status    Should Be Equal    ${sGTS_Number}    ${GST_Number}
-    Run Keyword If    ${isMatched}==${True}    Log    Goods & Service Tax Number value is correct! Party ID:${GST_Number}    level=INFO
+    Run Keyword If    ${isMatched}==${True}    Log    Goods & Service Tax Number value is correct! GST Number:${GST_Number}    level=INFO
     ...    ELSE    Run Keyword And Continue On Failure    Fail    Goods & Service Tax Number value is incorrect! Goods & Service Tax Number:${GST_Number}, Expected Goods & Service Tax Number:${sGTS_Number}       
 
-    ${TaxCountry}    Get Text    ${Party_EnterpriseDetailsSummary_TaxCountry_Cell}
+    ${TaxCountry}    Get Table Value Containing Row Value in Party    ${Party_EnterpriseDetailsSummary_GeographicLocationsAndTaxNumbers_TableHeader}    ${Party_EnterpriseDetailsSummary_GeographicLocationsAndTaxNumbers_TableRow}    Goods & Service Tax Number    ${sGTS_Number}    Country
     ${isMatched}    Run Keyword And Return Status    Should Be Equal    ${sCountry_of_Tax_Domicile}    ${TaxCountry}
-    Run Keyword If    ${isMatched}==${True}    Log    Country of Tax value is correct! Party ID:${TaxCountry}    level=INFO
+    Run Keyword If    ${isMatched}==${True}    Log    Country of Tax value is correct! Country of Tax:${TaxCountry}    level=INFO
     ...    ELSE    Run Keyword And Continue On Failure    Fail    Country of Tax value is incorrect! Country of Tax:${TaxCountry}, Expected Country of Tax:${sCountry_of_Tax_Domicile}
     
     Validate Party Address Details in Related Items if Correct     ${sAddress_Type}    ${sAddress_Line_1}    ${sAddress_Line_2}    ${sAddress_Line_3}    ${sAddress_Line_4}    ${sTown_City}    ${sState_Province}    
@@ -322,16 +285,22 @@ Accept Approved Updated Party
     Wait Until Browser Ready State
     Wait Until Loading Page Is Not Visible    ${PARTY_TIMEOUT}
     Validate Page Screen is Displayed    ${PARTY_APPROVALS_PAGETITLE}
-    Select Approval For Party Details Using Task ID    ${sTaskID_ForPartyDetails}    ${True}
-    Select Approval For Address Details Using Task ID    ${sTaskID_ForAddress}    ${True}
+    
+    ${TaskId_ForPartyDetails}    Select Referral Using Reference ID    ${sTaskID_ForPartyDetails}    
+    ${IsPresent}    Run Keyword And Return Status    Wait Until Page Contains    ${PARTY_ENTERPRISEPARTYDETAILSCHANGE_DESCRIPTION}    5s
+    Run Keyword If    ${isPresent}==${True}    Run Keywords    Capture Page Screenshot    ${screenshot_path}/Screenshots/Party/PartyApprovalPage-{index}.png
+    ...    AND    Mx Click Element    ${Party_Footer_Next_Button} 
+    ...    ELSE    Run Keyword And Continue On Failure    Fail    Approved Referral must be for Enterprise Party Details Changed.
+    
+    ${TaskId_ForPartyDetails}    Select Referral Using Reference ID    ${sTaskID_ForAddress}   
+    ${IsPresent}    Run Keyword And Return Status    Wait Until Page Contains    ${PARTY_ADDRESSESCHANGE_DESCRIPTION}    5s
+    Run Keyword If    ${isPresent}==${True}    Run Keywords    Capture Page Screenshot    ${screenshot_path}/Screenshots/Party/PartyApprovalPage-{index}.png
+    ...    AND    Mx Click Element    ${Party_Footer_Next_Button} 
+    ...    ELSE    Run Keyword And Continue On Failure    Fail    Approved Referral must be for Addresses Changed.
     
     Wait Until Browser Ready State
     Wait Until Loading Page Is Not Visible    ${PARTY_TIMEOUT}
     Validate Page Screen is Displayed    ${PARTY_AMENDSUCCESSFUL_PAGETITLE}
-    ${isSuccessful}    Run Keyword And Return Status    Wait Until Page Contains    ${PARTY_AMENDSUCCESSFUL_MESSAGE}    5s
-    Run Keyword If    ${isSuccessful}==${True}   Log    Amendment is successful.
+    ${isSuccessful}    Run Keyword And Return Status    Wait Until Page Contains    ${PARTY_AMENDSUCCESSFUL_MESSAGE}    10s
+    Run Keyword If    ${isSuccessful}==${True}   Capture Page Screenshot    ${screenshot_path}/Screenshots/Party/PartyAmendment-{index}.png
     ...    ELSE    Run Keyword And Continue On Failure    Fail    Amendment is unsuccessful.        
-    
-      
-
-    
