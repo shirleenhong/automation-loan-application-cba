@@ -48,7 +48,7 @@ Upfront Fee Notices
 Create Initial Loan Drawdown - SERV02
     [Documentation]    Creation of Initial Loan Drawdown
     [Tags]    07 Create Initial Loan Drawdown - SERV02
-    Mx Execute Template With Multiple Data    Create Initial Loan Drawdown for Non Agent Syndication    ${ExcelPath}    1-4    SERV02_LoanDrawdownNonAgent      
+    Mx Execute Template With Multiple Data    Create Initial Loan Drawdown for Non Agent Syndication    ${ExcelPath}    1    SERV02_LoanDrawdownNonAgent      
 
 Variable Rates Load using TL_BASE_19   
     [Documentation]    Variable Rates Load using TL_BASE_19
@@ -66,3 +66,8 @@ Create Pricing Change Transaction - AMCH06
 Create Comprehensive Repricing - SERV09
     [Tags]    10 Loan Repricing - Other Bank is Agent
     Mx Execute Template With Multiple Data    Create Comprehensive Repricing for Non-Agent Syndicated Deal    ${ExcelPath}   1    SERV09_LoanRepricing
+    
+Perform Lender Share Adjustment - AMCH02
+    [Documentation]    This keyword performs lender share adjustment to a deal
+    [Tags]    11 Perform Lender Share Adjustment - AMCH02 
+    Mx Execute Template With Multiple Data    Perform Lender Share Adjustment    ${ExcelPath}    ${rowid}    AMCH02_LenderShareAdjustment
