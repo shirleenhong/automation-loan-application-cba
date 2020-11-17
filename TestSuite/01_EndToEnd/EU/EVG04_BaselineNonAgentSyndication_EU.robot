@@ -66,3 +66,7 @@ Create Pricing Change Transaction - AMCH06
 Create Comprehensive Repricing - SERV09
     [Tags]    10 Loan Repricing - Other Bank is Agent
     Mx Execute Template With Multiple Data    Create Comprehensive Repricing for Non-Agent Syndicated Deal    ${ExcelPath}   1    SERV09_LoanRepricing
+    
+Extend Facility Maturity Date - AMCH05
+    [Tags]    12 Facility Change Transaction - Extend Maturity Exp Date
+    Mx Execute Template With Multiple Data    Extend Maturity Date    ${ExcelPath}   ${rowid}    AMCH05_ExtendMaturityDate
