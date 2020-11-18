@@ -597,7 +597,7 @@ LIQ_ServicingGroupDetails_Ok_Button = 'JavaWindow("title:=Deal Servicing Group D
 LIQ_ServicingGroupDetails_JavaTree = 'JavaWindow("title:=Deal Servicing Group Details.*").JavaObject("tagname:=Group","text:=Preferred Remittance Instructions").JavaTree("attached text:=Drill down to view Remittance Instructions details")'
 
 ###Preferred Remittance Instruction Window###
-LIQ_PreferredRemittanceInstructions_MarkAll_Checkbox = 'JavaWindow("title:=Choose Preferred Remittance Instructions.*").JavaCheckBox("x:=36","y:=102")'
+LIQ_PreferredRemittanceInstructions_MarkAll_Checkbox = 'JavaWindow("title:=Choose Preferred Remittance Instructions.*").JavaCheckBox("index:=0")'
 LIQ_PreferredRemittanceInstructions_Window = 'JavaWindow("title:=Choose Preferred Remittance Instructions.*")'
 LIQ_PreferredRemittanceInstructions_Ok_Button = 'JavaWindow("title:=Choose Preferred Remittance Instructions.*").JavaButton("attached text:=OK")'
 

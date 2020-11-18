@@ -33,12 +33,12 @@ Setup Term Facility for Syndicated Deal - ComSee
     Set Facility Risk Type    &{ExcelPath}[Facility_RiskType2]
     Set Facility Loan Purpose Type    &{ExcelPath}[Facility_LoanPurposeType]
     Add Facility Currency    &{ExcelPath}[Facility_Currency1]
-    Add Facility Currency    &{ExcelPath}[Facility_Currency2]
+    Run Keyword If    '${ENTITY}'!='EU'    Add Facility Currency    &{ExcelPath}[Facility_Currency2]
     Add Facility Borrower - Add All    &{ExcelPath}[Facility_Borrower]
     Validate Risk Type in Borrower Select    &{ExcelPath}[Facility_RiskType1]
     Validate Risk Type in Borrower Select    &{ExcelPath}[Facility_RiskType2]
     Validate Currency Limit in Borrower Select    &{ExcelPath}[Facility_Currency1]
-    Validate Currency Limit in Borrower Select    &{ExcelPath}[Facility_Currency2]
+    Run Keyword If    '${ENTITY}'!='EU'    Validate Currency Limit in Borrower Select    &{ExcelPath}[Facility_Currency2]
     Complete Facility Borrower Setup
     
     ###Get necessary data from created Facility and store to Excel to be used in other transactions###
@@ -201,18 +201,18 @@ Setup Fees for Term Facility - ComSee
     Validate Facility Pricing Window    &{ComSeeDataSet}[Facility_Name]    Interest
     Add Facility Interest    &{ComSeeDataSet}[Interest_AddItem]    &{ComSeeDataSet}[Interest_OptionName1]    &{ComSeeDataSet}[Interest_RateBasis]
     ...    &{ComSeeDataSet}[Interest_SpreadType1]    &{ComSeeDataSet}[Interest_SpreadValue1]    &{ComSeeDataSet}[Interest_BaseRateCode1]
-    Add Facility Interest    &{ComSeeDataSet}[Interest_AddItem]    &{ComSeeDataSet}[Interest_OptionName2]    &{ComSeeDataSet}[Interest_RateBasis]
+    Run Keyword If    '${ENTITY}'!='EU'    Add Facility Interest    &{ComSeeDataSet}[Interest_AddItem]    &{ComSeeDataSet}[Interest_OptionName2]    &{ComSeeDataSet}[Interest_RateBasis]
     ...    &{ComSeeDataSet}[Interest_SpreadType1]    &{ComSeeDataSet}[Interest_SpreadValue2]    &{ComSeeDataSet}[Interest_BaseRateCode2]
-    Add Facility Interest    &{ComSeeDataSet}[Interest_AddItem]    &{ComSeeDataSet}[Interest_OptionName3]    &{ComSeeDataSet}[Interest_RateBasis]
+    Run Keyword If    '${ENTITY}'!='EU'    Add Facility Interest    &{ComSeeDataSet}[Interest_AddItem]    &{ComSeeDataSet}[Interest_OptionName3]    &{ComSeeDataSet}[Interest_RateBasis]
     ...    &{ComSeeDataSet}[Interest_SpreadType1]    &{ComSeeDataSet}[Interest_SpreadValue1]    &{ComSeeDataSet}[Interest_BaseRateCode3]
     Close Option Condition Window
     
     Validate Ongoing Fee or Interest
     mx LoanIQ click element if present    ${LIQ_FacilityPricing_OngoingFeeInterest_OK_Button}
     Validate Facility Pricing Rule Items    &{ComSeeDataSet}[Facility_PricingRuleOption1]
-    Validate Facility Pricing Rule Items    &{ComSeeDataSet}[Facility_PricingRuleOption2]
-    Validate Facility Pricing Rule Items    &{ComSeeDataSet}[Facility_PricingRuleOption3]
-    Validate Facility Pricing Rule Items    &{ComSeeDataSet}[Facility_PricingRuleOption4]
+    Run Keyword If    '${ENTITY}'!='EU'    Validate Facility Pricing Rule Items    &{ComSeeDataSet}[Facility_PricingRuleOption2]
+    Run Keyword If    '${ENTITY}'!='EU'    Validate Facility Pricing Rule Items    &{ComSeeDataSet}[Facility_PricingRuleOption3]
+    Run Keyword If    '${ENTITY}'!='EU'    Validate Facility Pricing Rule Items    &{ComSeeDataSet}[Facility_PricingRuleOption4]
     
     ###Facility Validation and close###
     Validate Facility

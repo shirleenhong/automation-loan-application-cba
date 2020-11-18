@@ -71,3 +71,7 @@ Perform Lender Share Adjustment - AMCH02
     [Documentation]    This keyword performs lender share adjustment to a deal
     [Tags]    11 Perform Lender Share Adjustment - AMCH02 
     Mx Execute Template With Multiple Data    Perform Lender Share Adjustment    ${ExcelPath}    ${rowid}    AMCH02_LenderShareAdjustment
+    
+Extend Facility Maturity Date - AMCH05
+    [Tags]    12 Facility Change Transaction - Extend Maturity Exp Date
+    Mx Execute Template With Multiple Data    Extend Maturity Date    ${ExcelPath}   ${rowid}    AMCH05_ExtendMaturityDate

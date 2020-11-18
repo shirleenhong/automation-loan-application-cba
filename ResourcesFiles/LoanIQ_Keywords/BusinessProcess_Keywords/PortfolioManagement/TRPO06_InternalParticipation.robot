@@ -147,7 +147,8 @@ Complete External Participation
 Complete External Participation without Premiun/Discount
     [Documentation]    This keyword is used to Complete an external participation with no premium or discount for a closed deal
     ...    This keyword completes 2 external participations
-    ...    @author:    dahijara    09NOV2020    initial create 
+    ...    @author: dahijara    09NOV2020    initial create 
+    ...    @update: dahijara    17NOV2020    updated keyword name for Navigate Portfolio Allocations Workflow for Pending Participation
     [Arguments]    ${ExcelPath}
 
     Logout from Loan IQ
@@ -172,7 +173,7 @@ Complete External Participation without Premiun/Discount
 
     ### Circle Notebook - Workflow Tab ###
     Complete Circling for Pending Participation Sell    &{ExcelPath}[Expected_CloseDate]  
-    Navigate Portfolio Allocations Workflow for Pending Participation Sell
+    Navigate Portfolio Allocations Workflow for Pending Participation
     Populate Portfolio Allocations For A Facility    &{ExcelPath}[Facility_Name]
     Close Portfolio Allocation Notebook
     Send to Approval Internal Participation Sell
@@ -196,7 +197,7 @@ Complete External Participation without Premiun/Discount
 
     ### Circle Notebook - Workflow Tab ###
     Complete Circling for Pending Participation Sell    &{ExcelPath}[Expected_CloseDate]  
-    Navigate Portfolio Allocations Workflow for Pending Participation Sell
+    Navigate Portfolio Allocations Workflow for Pending Participation
     Populate Portfolio Allocations For A Facility    &{ExcelPath}[Facility_Name]
     Close Portfolio Allocation Notebook
     Send to Approval Internal Participation Sell

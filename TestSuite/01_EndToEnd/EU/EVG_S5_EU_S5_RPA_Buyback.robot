@@ -33,3 +33,9 @@ Complete External Participation without Premiun/Discount - TRPO06
 Create Initial Loan Drawdown - SERV01
     [Tags]    06    Loan Drawdown - SERV01 
     Mx Execute Template With Multiple Data    Create Initial Loan Drawdown for RPA Deal    ${ExcelPath}    ${rowid}    SERV01_LoanDrawdown
+    Log to Console    Pause Execution - 5 Days EOD
+    Pause Execution
+
+Complete Participation Buyback - TRPO05
+    [Tags]    07    Participation Buyback - TRPO05
+    Mx Execute Template With Multiple Data    Complete External Participation Buyback without Premiun/Discount    ${ExcelPath}    ${rowid}    TRPO05_ExtParticipationBuyBack

@@ -40,6 +40,7 @@ LIQ_CircleSelection_SellerRiskBook='JavaWindow("title:=Circle Selection").JavaOb
 LIQ_CircleSelection_SellerRiskBookDropdownList='JavaWindow("title:=Circle Selection").JavaObject("text:=Seller:").JavaList("tagname:=Combo","index:=2")'
 
 LIQ_CircleSelection_Lender_Button = 'JavaWindow("title:=Circle Selection").JavaButton("attached text:=Lender:")'
+LIQ_CircleSelection_LegalEntity = 'JavaWindow("title:=Circle Selection").JavaList("attached text:=Legal Entity:")'
 
 ### Lender Selection ###
 LIQ_LenderSelect_SearchWindow = 'JavaWindow("title:=Lender Select.*")'
