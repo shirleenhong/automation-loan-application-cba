@@ -39,3 +39,7 @@ Create Initial Loan Drawdown - SERV01
 Complete Participation Buyback - TRPO05
     [Tags]    07    Participation Buyback - TRPO05
     Mx Execute Template With Multiple Data    Complete External Participation Buyback without Premiun/Discount    ${ExcelPath}    ${rowid}    TRPO05_ExtParticipationBuyBack
+
+Complete Internal Participation - TRPO06
+    [Tags]    08    Participation Internal - TRPO06
+    Mx Execute Template With Multiple Data    Complete Internal Participation without Premiun/Discount    ${ExcelPath}    ${rowid}    TRPO06_InternalParticipation
