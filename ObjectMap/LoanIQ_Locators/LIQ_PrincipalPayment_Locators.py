@@ -15,6 +15,8 @@ LIQ_PrincipalPayment_EffectiveDate_Field = 'JavaWindow("title:=.* Principal Paym
 LIQ_PrincipalPayment_Reason_Field = 'JavaWindow("title:=.* Principal Payment .*","displayed:=1").JavaEdit("attached text:=Reason:")'
 LIQ_PrincipalPayment_Prepayment_Checkbox = 'JavaWindow("title:=.* Principal Payment .*","displayed:=1").JavaCheckBox("label:=Prepayment")'
 LIQ_PrincipalPayment_Outstanding_Field = 'JavaWindow("title:=.* Principal Payment .*","displayed:=1").JavaEdit("attached text:=Outstanding:")'
+LIQ_PrincipalPayment_Currency_Field = 'JavaWindow("title:=.* Principal Payment .*","displayed:=1").JavaStaticText("labeled_containers_path:=Tab:General;Group: Amounts ;", "index:=")'
+LIQ_PrincipalPayment_PricingOption_Field = 'JavaWindow("title:=.* Principal Payment .*","displayed:=1").JavaStaticText("labeled_containers_path:=Tab:General;", "x:=188", "y:=161")'
 
 ###Principal Payment Notebook - Events Tab###
 LIQ_PrincipalPayment_Events_JavaTree = 'JavaWindow("title:=.* Principal Payment .*","displayed:=1").JavaTree("attached text:=Select event to view details")'

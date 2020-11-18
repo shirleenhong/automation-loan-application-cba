@@ -14,6 +14,7 @@ Create Initial Loan Drawdown with Repayment Schedule
     ...    @update: makcamps    23OCT2020    - Added EU conditions for Rate Approval and updated Release Cashflow method
     ...    @update: kduenas     27OCT2020    - Added writing of loan alias to correspondence dataset for API_COR_TC21
     ...    @update: makcamps    04NOV2020    - Added writing of loan alias to correspondence dataset for EU E2E Scenario 1
+    ...    @update: makcamps    10NOV2020    - Added writing of loan alias to serv29 and serv18
     [Arguments]    ${ExcelPath}
     
     ##Close all windows###
@@ -33,6 +34,8 @@ Create Initial Loan Drawdown with Repayment Schedule
     ${Loan_Alias}    Input Initial Loan Drawdown Details    &{ExcelPath}[Outstanding_Type]    &{ExcelPath}[Facility_Name]    &{ExcelPath}[Borrower1_ShortName]    &{ExcelPath}[Loan_PricingOption]    &{ExcelPath}[Loan_Currency]
     Write Data To Excel    SERV01_LoanDrawdown   Loan_Alias    ${rowid}    ${Loan_Alias}
     Write Data To Excel    SERV21_InterestPayments   Loan_Alias    ${rowid}    ${Loan_Alias}
+    Write Data To Excel    SERV29_PaymentFees   Loan_Alias    ${rowid}    ${Loan_Alias}
+    Write Data To Excel    SERV18_Payments   Loan_Alias    ${rowid}    ${Loan_Alias}
     
     ###Writing for E2E EU scenario 1 Corro### 
     Run Keyword If    '${SCENARIO}'=='1' and '&{ExcelPath}[Entity]' == 'EU'    Run Keywords    Write Data To Excel    Correspondence    Loan_Alias    ${rowid}    ${Loan_Alias}
