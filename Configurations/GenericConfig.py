@@ -252,6 +252,19 @@ DNA_CCB_LIQ_FILENAME= ""
 DNA_DATAASSURANCE_FILENAME = ""
 DNA_DAT_EXT = ""
 
+### COGNOS ###
+COGNOS_SERVER = ""
+COGNOS_PORT = ""
+COGNOS_URL = ""
+COGNOS_USERNAME = ""
+COGNOS_PASSWORD = ""
+COGNOS_NAMESPACE =""
+CBA_ALERTS_REPORTFILE = ""
+CBA_COMMENTS_REPORTFILE = ""
+
+### DNR ###
+ALERTS_REPORT = ""
+
 import os
 project_path = os.path.dirname(os.path.realpath(__file__)).replace("MDM_ConfigFile","")
 dataset_path = os.path.dirname(os.path.abspath('.//Data_Set'))

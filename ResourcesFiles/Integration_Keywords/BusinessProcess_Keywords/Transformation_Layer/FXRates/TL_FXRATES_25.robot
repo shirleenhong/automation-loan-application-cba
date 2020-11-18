@@ -8,6 +8,7 @@ Send FXRates GS Group 2 File and Verify Triangulation
     ...    Then validate FFC if file is sent to CCB OpenAPI, distributor and CustomCBAInterface. Then validate in LoanIQ if FX Rate
     ...    Code is updated correctly and triangulation is computed correctly.
     ...    @author: cfrancis    12AUG2019    - initial create
+    ...    @update: clanding    18NOV2020    - added missing argument for Create Expected TextJMS XML for FXRates TL
     [Arguments]    ${ExcelPath}
     ###START OF PREREQUISITE###
     # Login to Loan IQ    ${TL_USERNAME}    ${TL_PASSWORD}
@@ -19,7 +20,7 @@ Send FXRates GS Group 2 File and Verify Triangulation
     ${row}    Generate Single Random Number and Return    1    19
     # Transform FXRates CSV Data to XLS File Readable for JSON Creation    ${CSVFile}    ${TransformedDataFile_FXRates}    ${TransformedDataFile_Template_FXRates}    ${TransformedDataFileXML_FXRates}    &{ExcelPath}[FundingDesk_1]
     Create Expected JSON for FXRates TL    ${TransformedDataFile_FXRates}    &{ExcelPath}[InputFilePath]&{ExcelPath}[InputJson]    ${dataset_path}${TransformedDataFile_FXRates}    ${dataset_path}${TransformedDataFileXML_FXRates}    
-    Create Expected TextJMS XML for FXRates TL    ${TransformedDataFileXML_FXRates}    &{ExcelPath}[InputFilePath]    &{ExcelPath}[Expected_wsFinalLIQDestination]
+    Create Expected TextJMS XML for FXRates TL    ${TransformedDataFileXML_FXRates}    &{ExcelPath}[InputFilePath]    &{ExcelPath}[Expected_wsFinalLIQDestination]    ${TransformedDataFile_Template_FXRates}
     ${From_Currency}    Read Data From Excel    Transformed_FXRates    fromCurrency    ${row}   ${dataset_path}${TransformedDataFileXML_FXRates}
     ${To_Currency}    Read Data From Excel    Transformed_FXRates    toCurrency    ${row}   ${dataset_path}${TransformedDataFileXML_FXRates}
     ${subEntity}    Read Data From Excel    Transformed_FXRates    subEntity    ${row}   ${dataset_path}${TransformedDataFileXML_FXRates}
