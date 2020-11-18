@@ -587,9 +587,11 @@ Write Post Deal Details after Loan Creation for Scenario 7 ComSee
 Setup Primaries for Syndicated Deal - ComSee
     [Documentation]    This keyword adds Lenders in a Syndicated Deal. Specifically, 1 Host Bank and 2 Non-Host Banks.
     ...    @author: rtarayao    23AUG2019    - initial create
+    ...    @update: songchan    17NOV2020    - Added Searching of Existing deal
     [Arguments]    ${ExcelPath}
     
     ###Primary Lender - Host Bank###
+    Search Existing Deal    &{ExcelPath}[Deal_Name]
     Add Lender and Location    &{ExcelPath}[Deal_Name]    &{ExcelPath}[Primary_Lender1]    &{ExcelPath}[Primary_LenderLoc1]    &{ExcelPath}[Primary_RiskBook]    &{ExcelPath}[Primary_TransactionType]
     Set Sell Amount and Percent of Deal    &{ExcelPath}[Primary_PctOfDeal1]
     Add Pro Rate    &{ExcelPath}[Primary_BuySellPrice]
@@ -642,6 +644,7 @@ Setup Syndicated Deal - ComSee
     ...    This syndicated deal is used for ComSee test validations.
     ...    @author: rtarayao    23AUG2019    - Initial Create
     ...    @update: jloretiz    07NOV2019    - Add 'Add Banks' keywords for the approval of loan outstandings
+    ...    @update: songchan    17NOV2020    - Select All Remittance Method
     [Arguments]    ${ExcelPath}
 
     ###Data Generation###
@@ -678,7 +681,7 @@ Setup Syndicated Deal - ComSee
     Add Deal Borrower    &{ExcelPath}[Borrower_ShortName]
     Set Deal Borrower Servicing Group    &{ExcelPath}[Borrower_SGAlias]    &{ExcelPath}[Borrower_SG_Name]    &{ExcelPath}[Borrower_SG_GroupMembers]    &{ExcelPath}[Borrower_PreferredRIMthd1]
     Go To Deal Borrower Preferred RI Window
-    Add Preferred Remittance Instruction    ${Deal_Name}    &{ExcelPath}[Borrower_ShortName]    &{ExcelPath}[Borrower_PreferredRIMthd1]
+    Mark All Preferred Remittance Instruction
     Complete Deal Borrower Setup
     
     Select Deal Classification    &{ExcelPath}[Deal_ClassificationCode]    &{ExcelPath}[Deal_ClassificationDesc]
@@ -687,7 +690,7 @@ Setup Syndicated Deal - ComSee
     Select Admin Agent    &{ExcelPath}[Deal_AdminAgent]    &{ExcelPath}[AdminAgent_Location]
     Set Deal Admin Agent Servicing Group    &{ExcelPath}[AdminAgent_SGAlias]    &{ExcelPath}[AdminAgent_ServicingGroup]    &{ExcelPath}[AdminAgent_ContactName]    &{ExcelPath}[AdminAgent_PreferredRIMthd1]
     Go To Admin Agent Preferred RI Window
-    Add Preferred Remittance Instruction    ${Deal_Name}    &{ExcelPath}[Deal_AdminAgent]    &{ExcelPath}[AdminAgent_PreferredRIMthd1]
+    Mark All Preferred Remittance Instruction
     Complete Deal Admin Agent Setup
     ${Deal_AgreementDate}    Get System Date
     Write Data To Excel    ComSee_SC2_Deal    Deal_AgreementDate    ${rowid}    ${Deal_AgreementDate}    ${ComSeeDataSet}   
@@ -712,9 +715,9 @@ Setup Syndicated Deal - ComSee
     ...    &{ExcelPath}[NonBusinessDayRule]    &{ExcelPath}[PricingOption_BillNoOfDays]    &{ExcelPath}[PricingOption_MatrixChangeAppMthd]    &{ExcelPath}[PricingOption_RateChangeAppMthd]
     Add Deal Pricing Options    &{ExcelPath}[Deal_PricingOption2]    &{ExcelPath}[InitialFractionRate_Round]    &{ExcelPath}[RoundingDecimal_Round]    
     ...    &{ExcelPath}[NonBusinessDayRule]    &{ExcelPath}[PricingOption_BillNoOfDays]    &{ExcelPath}[PricingOption_MatrixChangeAppMthd]    &{ExcelPath}[PricingOption_RateChangeAppMthd]
-    Add Deal Pricing Options    &{ExcelPath}[Deal_PricingOption3]    &{ExcelPath}[InitialFractionRate_Round]    &{ExcelPath}[RoundingDecimal_Round]    
+    Run Keyword If    '${ENTITY}'!='EU'    Add Deal Pricing Options    &{ExcelPath}[Deal_PricingOption3]    &{ExcelPath}[InitialFractionRate_Round]    &{ExcelPath}[RoundingDecimal_Round]
     ...    &{ExcelPath}[NonBusinessDayRule]    &{ExcelPath}[PricingOption_BillNoOfDays]    &{ExcelPath}[PricingOption_MatrixChangeAppMthd]    &{ExcelPath}[PricingOption_RateChangeAppMthd]
-    Add Deal Pricing Options    &{ExcelPath}[Deal_PricingOption4]    &{ExcelPath}[InitialFractionRate_Round]    &{ExcelPath}[RoundingDecimal_Round]    
+    Run Keyword If    '${ENTITY}'!='EU'    Add Deal Pricing Options    &{ExcelPath}[Deal_PricingOption4]    &{ExcelPath}[InitialFractionRate_Round]    &{ExcelPath}[RoundingDecimal_Round]    
     ...    &{ExcelPath}[NonBusinessDayRule]    &{ExcelPath}[PricingOption_BillNoOfDays]    &{ExcelPath}[PricingOption_MatrixChangeAppMthd]    &{ExcelPath}[PricingOption_RateChangeAppMthd]
     
     ###Pricing Rules###
@@ -781,6 +784,7 @@ Write Post Deal Details for Scenario 2 ComSee
     [Documentation]    This keyword is used to write all the Post Deal Details needed for Commsee fields for a Syndicated Deal.    
     ...    @author: rtaryao    12AUG2019    - Initial Create
     ...    @update: clanding    06NOV2020    - Updated ${EMPTY} delimiter to |
+    ...    @update: shirhong    16NOV2020    - Update Logout from Loan IQ keyword
     [Arguments]    ${ExcelPath}
     ###LIQ Desktop
     Logout from Loan IQ
@@ -852,4 +856,4 @@ Write Post Deal Details for Scenario 2 ComSee
     Write Data To Excel    ComSee_SC2_FacSetup    Facility_NoOfOutstanding    ${rowid}    ${OutstandingCount}    ${ComSeeDataSet}
     
     Close All Windows on LIQ
-    Logout from LoanIQ  
+    Logout from Loan IQ  

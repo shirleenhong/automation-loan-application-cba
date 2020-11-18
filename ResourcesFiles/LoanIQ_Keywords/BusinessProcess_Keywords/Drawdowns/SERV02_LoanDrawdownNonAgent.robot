@@ -49,7 +49,7 @@ Create Initial Loan Drawdown for Non Agent Syndication
     ...    &{ExcelPath}[Loan_RepricingFrequency]    &{ExcelPath}[Loan_IntCycleFrequency]    ${TO_THE_ACTUAL_DUE_DATE}
 
     Input Loan Drawdown Rates    &{ExcelPath}[Borrower_BaseRate]    &{ExcelPath}[Facility_Spread]
-    Run Keyword If   '${SCENARIO}'=='4' and '&{ExcelPath}[Entity]' == 'EU' and '&{ExcelPath}[Loan_PricingOption]' != 'Euro LIBOR Option'    Set FX Rates Loan Drawdown    &{ExcelPath}[Loan_Currency]
+    Run Keyword If   '${SCENARIO}'=='4' and '&{ExcelPath}[Entity]' == 'EU' and '&{ExcelPath}[Loan_PricingOption]' != 'Euro LIBOR Option'    Set FX Rates Loan Drawdown    &{ExcelPath}[Loan_Currency]    Spot
     
     ###Cashflows###
     Navigate to Drawdown Cashflow Window

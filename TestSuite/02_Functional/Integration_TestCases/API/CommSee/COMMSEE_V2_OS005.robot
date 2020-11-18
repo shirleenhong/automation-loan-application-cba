@@ -13,6 +13,7 @@ Verify Loan Outstanding for Zero Cycle Due and Accrual, PaidToDate
      ...    and verify paid to date values after EOD and Payment transaction
      ...    this also validates GET API for the updated values. pre-requisite for OS004 - Outsanding and verify Cycledue
      ...    author: sacuisia    02OCT2020
+     ...    update: shirhong    16NOV2020    - Updated the first test case keyword from 'Write Loan' to 'Pay Loan'
 
-      Mx Execute Template with Multiple Data    Write Loan Outstanding Accrual Zero Cycle Due    ${ComSeeDataSet}     ${rowid}    ComSee_SC2_Loan
+      Mx Execute Template with Multiple Data    Pay Loan Outstanding Accrual Zero Cycle Due    ${ComSeeDataSet}     ${rowid}    ComSee_SC2_Loan
       Mx Execute Template with Multiple Data    Get and Validate API Outstanding Response   ${ComSeeDataSet}    ${rowid}    ComSee_SC2_Loan

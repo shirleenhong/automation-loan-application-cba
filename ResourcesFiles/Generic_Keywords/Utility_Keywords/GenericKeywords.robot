@@ -279,6 +279,20 @@ Compare Two Arguments
     Run Keyword And Continue On Failure    Should Be Equal   ${value_from_sheet}    ${value_from_ui}        
     Log    ${value_from_sheet} - This is the data retrieved from Excel Sheet
     Log    ${value_from_ui} - This is the data saved in the UI/application
+    
+Compare Two Normalized Arguments
+    [Documentation]    This keyword compares two normalized arguments from web app and excel if they are equal. Both expected and actual text values are
+    ...    both converted to upper case before comparison.
+    ...    @author: nbautist    16NOV2020    - initial create
+    [Arguments]    ${value_from_sheet}    ${value_from_ui}
+    
+    Wait Until Page Contains Element    ${value_from_ui}    
+    ${value_from_ui}    Get Value    ${value_from_ui}
+    ${value_from_ui}    Strip String    ${value_from_ui}
+    Log    ${value_from_ui}
+    ${value_from_sheet}    Convert To Uppercase    ${value_from_sheet}
+    ${value_from_ui}    Convert To Uppercase    ${value_from_ui}
+    Run Keyword And Continue On Failure    Should Be Equal   ${value_from_sheet}    ${value_from_ui}
             
 Generate Name Test Data
     [Documentation]    This keyword generates value that can be added to a variable to make it unique.
@@ -728,6 +742,7 @@ Navigate Notebook Workflow
     ...    @update: aramos      30SEP2020    Updated mx LOANIQ click element if present LIQ_Breakfunding_Yes_Button
     ...    @update: aramos      05OCT2020    Updated to insert new code for Transaction - Release Cashflows
     ...    @update: dahijara    09OCT2020    Added screenshot
+    ...    @update: fluberio    12NOV2020    Added click element if present to handle EU scenario with multiple pricing options
     [Arguments]    ${sNotebook_Locator}    ${sNotebookTab_Locator}    ${sNotebookWorkflow_Locator}    ${sTransaction}    
 
     ###Pre-processing Keyword##
@@ -742,12 +757,13 @@ Navigate Notebook Workflow
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/NotebookWorkflow
     Mx LoanIQ Select Or DoubleClick In Javatree    ${NotebookWorkflow_Locator}    ${Transaction}%d
     Validate if Question or Warning Message is Displayed
+    mx LoanIQ click element if present    ${LIQ_Question_Yes_Button}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/NotebookWorkflow
     Run Keyword if     '${Transaction}'=='Release Cashflows'    Run Keywords    Mx Click    ${LIQ_Cashflows_MarkSelectedItemForRelease_Button}
     ...   AND    Mx Click    ${LIQ_Cashflows_OK_Button}
     ...   AND     mx LoanIQ click element if present    ${LIQ_Question_Yes_Button}
     Run Keyword If    '${Transaction}'=='Release'    Run Keywords
-    ...    Repeat Keyword    2 times    mx LoanIQ click element if present    ${LIQ_BreakFunding_Yes_Button}
+    ...    Repeat Keyword    3 times    mx LoanIQ click element if present    ${LIQ_BreakFunding_Yes_Button}
     ...    AND    mx LoanIQ click element if present    ${LIQ_Information_OK_Button}
     ...    ELSE IF    '${Transaction}'=='Close'    mx LoanIQ click element if present    ${LIQ_Information_OK_Button}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/NotebookWorkflow
@@ -2656,3 +2672,18 @@ Get the Row Id for Given Pricing Option
     ...    ELSE IF    '${sPricing_Option}' == 'GBP LIBOR Option'    Set Variable    4
     
     [Return]    ${rowId}
+ 
+Return Given Number with Specific Decimal Places without Rounding
+    [Documentation]    This keyword return the given number with the given number of Decimal Places without roundinf off the number
+    ...    @author: fluberio    12MAY2020    - initial create
+    [Arguments]     ${sNumberToBeConverted}    ${sNumberOfDecimalPlaces}
+    ${sContainer}    Convert To String    ${sNumberToBeConverted}
+    ${sContainer}    Remove String    ${sContainer}    ,
+    ${Container_List}    Split String    ${sContainer}    .
+    ${sWholeNum_Value}    Set Variable    @{Container_List}[0]
+    ${sDecimal_Value}    Set Variable    @{Container_List}[1]
+    
+    ${sDecimal_Value}    Get Substring    ${sDecimal_Value}    0    ${sNumberOfDecimalPlaces}
+    ${result}    Evaluate    ${sWholeNum_Value}.${sDecimal_Value}
+
+    [Return]    ${result}
