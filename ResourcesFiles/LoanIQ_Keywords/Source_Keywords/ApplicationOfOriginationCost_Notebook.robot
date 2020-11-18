@@ -80,6 +80,7 @@ GLOffset Details
     [Documentation]    This keyword is used to input details to GLOffset details
     ...    @author: Archana 13Jul2020
     ...    @update: mcastro    29OCT2020    - Added additional handling of warning pop-up when saving the details
+    ...    @update: mcastro    18NOV2020    - Updated keyword for Selecting Deal Javatree
     [Arguments]    ${sGL_ShortName}    ${sAwaitingDispose}
     
     ###Pre-processing Keyword###
@@ -91,7 +92,7 @@ GLOffset Details
     Mx LoanIQ Select Combo Box Value    ${LIQ_DebitGLOffsetDetails_GLShortName}    ${GL_ShortName}
     Mx LoanIQ Click    ${LIQ_DebitGLOffsetDetails_WIPButton}
     Mx LoanIQ Activate Window    ${LIQ_FeesHeldAwaitingDispose_Window}
-    Mx LoanIQ Select Or DoubleClick In Javatree    ${LIQ_FeesHeldAwaitingDispose_List}    ${AwaitingDispose}%s
+    Mx LoanIQ Select Or Doubleclick In Tree By Text    ${LIQ_FeesHeldAwaitingDispose_List}    ${AwaitingDispose}%s
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/OffsetDetails
     Mx LoanIQ Click    ${LIQ_FeesHeldAwaitingDispose_Use_Button}
     mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}

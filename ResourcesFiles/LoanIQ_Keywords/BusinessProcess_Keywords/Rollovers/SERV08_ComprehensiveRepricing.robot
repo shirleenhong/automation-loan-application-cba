@@ -242,9 +242,10 @@ Create Quick Repricing for Syndicated Deal - Secondary Sale
     Logout from Loan IQ
     Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
 
-Create Comprehensive Repricing for RPA Scenario
-    [Documentation]    This is a high-level keyword to Create Comprehensive Repricing for RPA Scenario
-    ...    @author: mcastro    03NOV2020    - Initial Create    
+Create Comprehensive Repricing for RPA Deal
+    [Documentation]    This is a high-level keyword to Create Comprehensive Repricing for RPA Deal
+    ...    @author: mcastro    03NOV2020    - Initial Create  
+    ...    @update: mcastro    18NOV2020    - Added Send F/X rate workflow for scenario 3, Fixed duplicate login  
     [Arguments]    ${ExcelPath}
 
     ###Login to Original User###
@@ -298,6 +299,8 @@ Create Comprehensive Repricing for RPA Scenario
     Navigate to Loan Repricing Workflow and Proceed With Transaction    ${APPROVAL_STATUS}
     Send to Rate Setting Approval
     Set Base Rate Details    &{ExcelPath}[Base_Rate]
+    Run Keyword If    '${SCENARIO}'=='3' and '${rowid}'=='2'    Run Keywords    Navigate to Loan Repricing Workflow and Proceed With Transaction    ${SET_FX_RATE_TRANSACTION}
+    ...    AND    Complete Set FX Rate
     Send to Rate Approval
 
     ### Loan Repricing: Rate Approval, Release Cashflows and Release Loan Repricing ###
@@ -317,7 +320,7 @@ Create Comprehensive Repricing for RPA Scenario
 
     ###Login to Original User###
     Logout from Loan IQ
-    Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}    Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
+    Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
 
 Complete Comprehensive Repricing, Principal Payment and Interest Payment
     [Documentation]    This is a high-level keyword to Completion of Comprehensive Repricing, Principal Payment and Interest Payment for RPA Deal
