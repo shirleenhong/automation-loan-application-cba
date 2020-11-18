@@ -1288,6 +1288,7 @@ Setup RPA Internal Deal
     ...    @update: dahijara    10NOV2020    - added writing for scenario 5 - TRPO06_ExternalParticipation
     ...    @update: mcastro    16NOV2020    - remove writing of AwaitingDispose to TRPO12_PortfolioSettledDisc for RPA Scenario 3
     ...    @update: dahijara    18NOV2020    - added writing for scenario 5 - TRPO05_ExtParticipationBuyBack & TRPO06_InternalParticipation
+    ...    @update: mcastro    17NOV2020    - Updated writing of Deal names for RPA Scenario 1, 2, and 3
     [Arguments]    ${ExcelPath}
     ###Set Dates for transactions###
     ${SystemDate}    Get System Date
@@ -1330,7 +1331,7 @@ Setup RPA Internal Deal
     ...    AND    Write Data To Excel    SERV01_LoanDrawdown    Loan_EffectiveDate    2    ${SystemDate}
     ...    AND    Write Data To Excel    SERV01_LoanDrawdown    Repayment_TriggerDate    2    ${SystemDate}
     ...    AND    Write Data To Excel    CRED07_UpfrontFee_Payment    Deal_Name    ${rowid}    ${Deal_Name}
-    ...    AND    Write Data To Excel    SERV08_ComprehensiveRepricing    Deal_Name    ${rowid}    ${Deal_Name}
+    ...    AND    Write Data To Excel    SERV08_ComprehensiveRepricing    Deal_Name    ${rowid}    ${Deal_Name}    multipleValue=Y
 
     ###For RPA Scenario 2###
     Run Keyword If    '${SCENARIO}'=='2' and '${rowid}'=='1'    Run Keywords    Write Data To Excel    TRPO12_PortfolioSettledDisc    Deal_Name    ${rowid}    ${Deal_Name}
@@ -1342,7 +1343,7 @@ Setup RPA Internal Deal
     ...    AND    Write Data To Excel    SERV01_LoanDrawdown    Loan_EffectiveDate    2    ${SystemDate}
     ...    AND    Write Data To Excel    SERV01_LoanDrawdown    Repayment_TriggerDate    2    ${SystemDate}
     ...    AND    Write Data To Excel    CRED07_UpfrontFee_Payment    Deal_Name    ${rowid}    ${Deal_Name}
-    ...    AND    Write Data To Excel    SERV08_ComprehensiveRepricing    Deal_Name    ${rowid}    ${Deal_Name}
+    ...    AND    Write Data To Excel    SERV08_ComprehensiveRepricing    Deal_Name    ${rowid}    ${Deal_Name}    multipleValue=Y
 
     ###For RPA Scenario 3###
     Run Keyword If    '${SCENARIO}'=='3' and '${rowid}'=='1'    Run Keywords    Write Data To Excel    TRPO12_PortfolioSettledDisc    Deal_Name    ${rowid}    ${Deal_Name}
@@ -1351,6 +1352,7 @@ Setup RPA Internal Deal
     ...    AND    Write Data To Excel    SERV01_LoanDrawdown    Loan_EffectiveDate    2    ${SystemDate}
     ...    AND    Write Data To Excel    SERV01_LoanDrawdown    Repayment_TriggerDate    2    ${SystemDate}
     ...    AND    Write Data To Excel    CRED07_UpfrontFee_Payment    Deal_Name    ${rowid}    ${Deal_Name}
+    ...    AND    Write Data To Excel    SERV08_ComprehensiveRepricing    Deal_Name    ${rowid}    ${Deal_Name}    multipleValue=Y
 
     Run Keyword If    '${SCENARIO}'=='4'    Write Data To Excel    CRED07_UpfrontFee_Payment    Deal_Name    ${rowid}    ${Deal_Name}
     Run Keyword If    '${SCENARIO}'=='5'    Run Keywords    Write Data To Excel    CRED07_UpfrontFee_Payment    Deal_Name    ${rowid}    ${Deal_Name}
@@ -1414,17 +1416,18 @@ Create Facility for RPA Deal
     ...    @update: mcastro    05NOV2020    - Added writing for RPA Scenario 3
     ...    @update: dahijara    06NOV2020    - Added data writing for Scenario 5
     ...    @update: dahijara    10NOV2020    - Added data writing for Scenario 5 - TRPO06_ExternalParticipation
-    ...    @update: mcastro    16NOV2020    - Updated writing to SERV01_Loandrawdown, added condition for RPA scenario 3
+    ...    @update: mcastro    16NOV2020    - Updated writing to SERV01_Loandrawdown and SERV29_PaymentFees, added condition for RPA scenario 3
     ...    @update: dahijara    18NOV2020    - added writing for scenario 5 - TRPO05_ExtParticipationBuyBack & TRPO06_InternalParticipation
+    ...    @update: mcastro    17NOV2020    - Updated writing of Facility names in SERV29_PaymentFees
     [Arguments]    ${ExcelPath}
     Log    ${rowid}       
     ###Data Generation###
     ${Facility_Name}    Auto Generate Name Test Data    &{ExcelPath}[Facility_NamePrefix]    
     Write Data To Excel    CRED01_DealSetup    Facility_Name    ${rowid}    ${Facility_Name}    bTestCaseColumn=True    sColumnReference=rowid
-
     Write Data To Excel    CRED02_FacilitySetup    Facility_Name    ${rowid}    ${Facility_Name}    bTestCaseColumn=True    sColumnReference=rowid
     Write Data To Excel    CRED08_OngoingFeeSetup    Facility_Name    ${rowid}    ${Facility_Name}    bTestCaseColumn=True    sColumnReference=rowid
     Write Data To Excel    SYND02_PrimaryAllocation    Facility_Name    ${rowid}    ${Facility_Name}    bTestCaseColumn=True    sColumnReference=rowid
+    Write Data To Excel    SERV29_PaymentFees    Facility_Name    ${rowid}    ${Facility_Name}    bTestCaseColumn=True    sColumnReference=rowid
     
     ###For RPA Scenario 1###
     Run Keyword If    '${SCENARIO}'=='1' and '${rowid}'=='1'    Run Keywords    Write Data To Excel    TRPO12_PortfolioSettledDisc    Facility_Name    ${rowid}    ${Facility_Name}    bTestCaseColumn=True    sColumnReference=rowid
@@ -1450,7 +1453,7 @@ Create Facility for RPA Deal
     ...    AND    Write Data To Excel    CRED07_UpfrontFee_Payment    Facility_Name    ${rowid}    ${Facility_Name}    bTestCaseColumn=True    sColumnReference=rowid  
     ...    AND    Write Data To Excel    SERV01_LoanDrawdown    Facility_Name    ${rowid}    ${Facility_Name}    multipleValue=Y
     ...    AND    Write Data To Excel    SERV01_LoanDrawdown    Loan_FacilityName    ${rowid}    ${Facility_Name}    multipleValue=Y 
-    ...    AND    Write Data To Excel    SERV08_ComprehensiveRepricing    Facility_Name    ${rowid}    ${Facility_Name}    bTestCaseColumn=True    sColumnReference=rowid
+    ...    AND    Write Data To Excel    SERV08_ComprehensiveRepricing    Facility_Name    ${rowid}    ${Facility_Name}    multipleValue=Y
 
     ###Open Deal Notebook If Not present###
     ${Status}    Run Keyword And Return Status    Mx LoanIQ Verify Object Exist    ${LIQ_DealNotebook_Window}    VerificationData="Yes"
