@@ -695,6 +695,7 @@ Transform Base Rate CSV Data to XLS File Readable for JSON Creation for On Hold 
 Transform Base Rate CSV Data to XLS File for On Hold Rates
     [Documentation]    This keyword is used to transform GS File for Base Rate CSV into XLS
     ...    @author: jdelacru    29OCT2020    - initial create
+    ...    @update: clanding    18NOV2020    - updated to correct keyword name 'Get Single Row value from CSV File and Write to Excel for Base Rate for On Hold Rates'
     [Arguments]    ${sCSV_FilePath}    ${sTransformedData_FilePath}    ${sTransformedDataTemplate_FilePath}    ${sSubEntity}    ${New_INDEX}    ${CSV_Content_List}    ${Zone2_Curr_Date}    ${Zone3_Curr_Date}
     
     ${BaseRateCode_prev}    Set Variable
@@ -749,7 +750,7 @@ Transform Base Rate CSV Data to XLS File for On Hold Rates
     \    
     \    ${Index_LMIR}    Evaluate    ${New_INDEX}+1
     \    
-    \    Run Keyword If    '${BaseRateCode_curr}'=='LIBOR' and '${CONFIG_PRICE_TYPE}'=='BUYRATE' and '${GS_INSTR_TENOR_curr}'=='001MNTH'    Get Single Row value from CSV File and Write to Excel for Future Date Rates On Hold Rates    ${ROW_${INDEX}}    
+    \    Run Keyword If    '${BaseRateCode_curr}'=='LIBOR' and '${CONFIG_PRICE_TYPE}'=='BUYRATE' and '${GS_INSTR_TENOR_curr}'=='001MNTH'    Get Single Row value from CSV File and Write to Excel for Base Rate for On Hold Rates    ${ROW_${INDEX}}    
          ...    ${Index_LMIR}    ${Zone2_Curr_Date}    ${Zone3_Curr_Date}    ${CONFIG_PRICE_TYPE}    ${dataset_path}${sTransformedData_FilePath}    sSubEntity=${sSubEntity}    sBaseRateCode=LMIR
     \    
     \    ${INDEX_ForGrouping}    Set Variable    ${New_INDEX}

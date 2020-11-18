@@ -288,6 +288,16 @@ FBTI_PASSWORD_AUTHORISER = 'Password15'
 IDC_DOCUMENT_UPLOAD_PATH = 'C:\\Git_Evergreen\\evergreen_projects\\CBA_Evergreen\\DataSet\\FBTI_DataSet\\Uploads\\'
 IDC_DOCUMENT_DOWNLOAD_PATH = 'C:\\Git_Evergreen\\evergreen_projects\\CBA_Evergreen\\DataSet\\FBTI_DataSet\\Downloads\\'
 
+### COGNOS ###
+COGNOS_SERVER = 'mancsweverg0006'
+COGNOS_PORT = '9305'
+COGNOS_URL = '/bi/?perspective=home'
+COGNOS_USERNAME = "CGLINP01"
+COGNOS_PASSWORD = "Finastra2020"
+COGNOS_NAMESPACE = 'FinastraRoot'
+CBA_ALERTS_REPORTFILE = "Alerts_Report_V1.3.4"
+CBA_COMMENTS_REPORTFILE = "Comments_Report_v5"
+
 import os
 project_path = os.path.dirname(os.path.realpath(__file__)).replace("MDM_ConfigFile","")
 dataset_path = os.path.dirname(os.path.abspath('.//Data_Set'))

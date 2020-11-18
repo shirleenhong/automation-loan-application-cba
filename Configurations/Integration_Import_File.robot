@@ -3,7 +3,8 @@ Library    ArchiveLibrary
 Library    BaselineComparator
 Library    Collections
 Library    CSVLib    
-Library    CSVLibrary    
+Library    CSVLibrary   
+Library    CustomExcelLibrary     
 Library    SeleniumLibraryExtended
 Library    DatabaseLibrary
 Library    DateTime
@@ -68,6 +69,10 @@ Variables    ../ObjectMap/FFC_Locators/Dashboard_Locators.py
 ### SSO Variable Files - Locators ###
 Variables    ../ObjectMap/SSO_Locators/SSO_EnquireUser_Locators.py
 Variables    ../ObjectMap/SSO_Locators/SSO_Global_Locators.py
+
+### Data Net Report - Locators ###
+Variables    ../ObjectMap/DNR_Locators/DNR_Cognos_Locators.py
+
 
 ### Generic Resource Files - Utility ###
 Resource    ../ResourcesFiles/Generic_Keywords/Utility_Keywords/API_UtilityKeywords.robot
@@ -496,10 +501,15 @@ Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/Extr
 Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/Extracts/DNA_LIQ/DNA_03.robot
 
 ### Integration Resource Files - DNR - Source Keywords ###
-Resource    ../ResourcesFiles/Integration_Keywords/Source_Keywords/Extracts/DNR/DNR_Extract/DNR_Extract_Validation.robot
+Resource    ../ResourcesFiles/Integration_Keywords/Source_Keywords/Extracts/DNR/DNR_Extract/DNR_ExtractValidation_Keywords.robot
+Resource    ../ResourcesFiles/Integration_Keywords/Source_Keywords/Extracts/DNR/DNR_Extract/DNR_Generic_Keywords.robot
 Resource    ../ResourcesFiles/Integration_Keywords/Source_Keywords/Extracts/DNR/DNR_LIQ/DNR_DealSetup.robot
 Resource    ../ResourcesFiles/Integration_Keywords/Source_Keywords/Extracts/DNR/DNR_LIQ/DNR_FacilityFeeSetup.robot
 Resource    ../ResourcesFiles/Integration_Keywords/Source_Keywords/Extracts/DNR/DNR_LIQ/DNR_FacilitySetup.robot
+Resource    ../ResourcesFiles/Integration_Keywords/Source_Keywords/Extracts/DNR/DNR_LIQ/DNR_FeeSetup.robot
 Resource    ../ResourcesFiles/Integration_Keywords/Source_Keywords/Extracts/DNR/DNR_LIQ/DNR_LoanDrawdown.robot
+Resource    ../ResourcesFiles/Integration_Keywords/Source_Keywords/Extracts/DNR/DNR_LIQ/DNR_PrimaryAllocation.robot
 
 ### Integration Resource Files - DNR - Business Process Keywords ###
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/Extracts/DNR_LIQ/DNR_Cognos.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/Extracts/DNR_LIQ/DNR_CommentsRepots.robot
