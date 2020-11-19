@@ -1909,7 +1909,8 @@ Read Data From Excel
     [Documentation]    This keyword will be used for dynamically reading of Excel File supported by Python 3
     ...    @author: ritragel    25OCT2019    Initial Create
     ...    @update: hstone      16MAR2020    Code Optimization: Replaced Keyw
-    [Arguments]    ${sSheetName}    ${sColumnName}    ${rowid}   ${sFilePath}=${ExcelPath}    ${readAllData}=N    ${bTestCaseColumn}=True    ${sTestCaseColReference}=rowid
+    ...    @update: shirhong    17NOV2020    Update Read Data From Cell: add Header Index for reading diff rows. Default is 1
+    [Arguments]    ${sSheetName}    ${sColumnName}    ${rowid}   ${sFilePath}=${ExcelPath}    ${readAllData}=N    ${bTestCaseColumn}=True    ${sTestCaseColReference}=rowid    ${iHeaderIndex}=1
     ### Open Excel
     Open Excel Document    ${sFilePath}    0
     
@@ -1917,7 +1918,7 @@ Read Data From Excel
 
     ### Read Values
     ${sData}    Run Keyword If    '${readAllData}'=='Y'    Read Data From All Column Rows    ${sSheetName}    ${sColumnName}
-    ...    ELSE IF    '${readAllData}'=='N'    Read Data From Cell    ${sSheetName}    ${sColumnName}    ${rowid}    ${bTestCaseColumn}    ${sTestCaseColReference}
+    ...    ELSE IF    '${readAllData}'=='N'    Read Data From Cell    ${sSheetName}    ${sColumnName}    ${rowid}    ${bTestCaseColumn}    ${sTestCaseColReference}    ${iHeaderIndex}
 
     Log    Excel Date Read from Excel : '${sData}'
     ### Close File and Return Value
@@ -1938,11 +1939,13 @@ Read Data From All Column Rows
 Read Data From Cell
     [Documentation]    This keyword will be used for reading data from single excel cell.
     ...    @author: hstone    16MAR2020    Initial Create
-    [Arguments]    ${sSheetName}    ${sColumnName}    ${rowid}    ${bTestCaseColumn}    ${sTestCaseColReference}=None
+    ...    @author: shirhong    17NOV2020    Add condition for reading of diff rows not equal to first row
+    [Arguments]    ${sSheetName}    ${sColumnName}    ${rowid}    ${bTestCaseColumn}    ${sTestCaseColReference}=None    ${iHeaderIndex}=1
 
     Log    (Read Data From Cell) sTestCaseColReference = '${sTestCaseColReference}'
 
     ${TestCaseHeader_Index}    ${ColumnHeader_Index}    Run Keyword If    '${sTestCaseColReference}'=='None'    Get Column Header Index    ${sSheetName}    ${sColumnName}    ${bTestCaseColumn}
+    ...    ELSE IF    '${iHeaderIndex}'!='1'    Get Column Header Index Using Dynamic Header    ${sSheetName}    ${sColumnName}    ${bTestCaseColumn}    ${sTestCaseColReference}    ${iHeaderIndex}
     ...    ELSE    Get Column Header Index    ${sSheetName}    ${sColumnName}    ${bTestCaseColumn}    ${sTestCaseColReference}
     ${RowId_Index}    Get Index of a Row Value using a Reference Header Index    ${sSheetName}    ${rowid}    ${TestCaseHeader_Index}
     ${Cell_Data}    Read Excel Cell    ${RowId_Index}    ${ColumnHeader_Index}    ${sSheetName}
@@ -2687,3 +2690,34 @@ Return Given Number with Specific Decimal Places without Rounding
     ${result}    Evaluate    ${sWholeNum_Value}.${sDecimal_Value}
 
     [Return]    ${result}
+    
+Get Column Header Index Using Dynamic Header
+    [Documentation]    This keyword is used to get the Column Header Index of Test_Case and given Column Name at the Excel Sheet using dynamic header or row. Default is 1.
+    ...    @author: shirhong    17NOV2020    Initial Create
+    [Arguments]    ${sSheetName}    ${sColumnName}    ${bTestCaseColumn}=False    ${sTestCaseColReference}=Test_Case    ${iHeaderIndex}=1
+
+    Log    (Get Column Header Index) sTestCaseColReference = '${sTestCaseColReference}'
+
+    ${DataColumn_List}    Read Excel Row    ${iHeaderIndex}    sheet_name=${sSheetName}
+    Log    Data Set Sheet Name: '${sSheetName}'
+    Log    Data Set Sheet Column Names: '${DataColumn_List}'
+
+    ### Get Test Case Header Count/Index ###
+    ${TestCaseHeaderName_Index}    Get Index From List    ${DataColumn_List}    ${sTestCaseColReference}
+    Log    Fetched Test Case Column Index : '${TestCaseHeaderName_Index}'
+
+    ### Set Default Test Case Column Header Index
+    ${TestCaseHeaderName_Index}    Run Keyword If    ${TestCaseHeaderName_Index}<0 or '${bTestCaseColumn}'=='False'   Set Variable    2
+    ### Set Test Case Column Header Index Based on Actual Index on Excel Data Column Name List
+    ...    ELSE    Evaluate    ${TestCaseHeaderName_Index}+1
+    Log    Evaluated Test Case Column Index : '${TestCaseHeaderName_Index}'
+
+    ### Get Target Column Value Index ###
+    ${ColumnName_Index}    Get Index From List    ${DataColumn_List}    ${sColumnName}
+    Log    Column Name Index : '${ColumnName_Index}'
+
+    ### Verify if Target Column Value can be found on the data column list acquired
+    Run Keyword If    ${ColumnName_Index}<0    Fail    '${sColumnName}' is not found at '${DataColumn_List}' Data Column Values.
+    ${ColumnName_Index}    Evaluate    ${ColumnName_Index}+1
+
+    [Return]    ${TestCaseHeaderName_Index}    ${ColumnName_Index}
