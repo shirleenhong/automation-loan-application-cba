@@ -246,6 +246,7 @@ Create Comprehensive Repricing for RPA Deal
     [Documentation]    This is a high-level keyword to Create Comprehensive Repricing for RPA Deal
     ...    @author: mcastro    03NOV2020    - Initial Create  
     ...    @update: mcastro    18NOV2020    - Added Send F/X rate workflow for scenario 3, Fixed duplicate login  
+    ...    @update: mcastro    19NOV2020    - Removed validation of remittance method for lenders since this is not needed
     [Arguments]    ${ExcelPath}
 
     ###Login to Original User###
@@ -277,8 +278,6 @@ Create Comprehensive Repricing for RPA Deal
     ###Cashflows - Create Cashflows###
     Navigate to Create Cashflow for Loan Repricing
     Verify if Method has Remittance Instruction    &{ExcelPath}[Borrower_ShortName]    &{ExcelPath}[Remittance_Description]    &{ExcelPath}[Remittance_Instruction]
-    Verify if Method has Remittance Instruction    &{ExcelPath}[Lender1_ShortName]    &{ExcelPath}[Remittance1_Description]    &{ExcelPath}[Remittance1_Instruction]
-    Verify if Method has Remittance Instruction    &{ExcelPath}[Lender2_ShortName]    &{ExcelPath}[Remittance2_Description]    &{ExcelPath}[Remittance2_Instruction]
     Verify if Status is set to Do It    &{ExcelPath}[Borrower_ShortName]  
     
     ### GL Entries ###
