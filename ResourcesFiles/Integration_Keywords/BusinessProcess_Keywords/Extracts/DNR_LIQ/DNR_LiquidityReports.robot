@@ -12,6 +12,3 @@ Validate Summary and Details from Liquidity Report
     
     Validate Multiple Value if Existing in Excel Sheet    &{ExcelPath}[Report_Path]${CBA_LIQUIDITY_REPORTFILE}.xlsx    &{ExcelPath}[Sheet_Name]
     ...    &{ExcelPath}[Columns_To_Validate]    &{ExcelPath}[Delimiter]
-    
-        Validate Multiple Value if Existing in Excel Sheet    &{ExcelPath}[Report_Path]${CBA_LIQUIDITY_REPORTFILE}.xlsx    &{ExcelPath}[Sheet_Name2]
-    ...    &{ExcelPath}[Columns_To_Validate2]    &{ExcelPath}[Delimiter]

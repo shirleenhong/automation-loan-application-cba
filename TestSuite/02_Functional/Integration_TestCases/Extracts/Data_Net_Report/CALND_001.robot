@@ -1,9 +1,6 @@
 *** Settings ***
 Resource    ../../../../../Configurations/LoanIQ_Import_File.robot
 
-*** Variables ***
-${rowid}    1
-
 *** Test Cases ***
 CALND_001
     [Documentation]    This Keyword is for Scenario 1 of DNR - Validate Calendar Report based on the Filters of Branch, Proc Area and Financial Center - CLAND_001
