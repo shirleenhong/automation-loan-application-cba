@@ -502,6 +502,7 @@ Validate Ongoing Fee List
 Generate Intent Notices for Ongoing Fee Payment
     [Documentation]    This keyword sends Payment Notices to the Borrower and Lender.
     ...    @author: fmamaril
+    ...    @update: makcamps	11Nov2020	Added closing of Notice Window
     mx LoanIQ activate window   ${LIQ_OngoingFeePayment_Window}    
     Mx LoanIQ Select Window Tab    ${LIQ_OngoingFeePayment_Tab}    Workflow   
     Mx LoanIQ DoubleClick    ${LIQ_OngoingFeePayment_WorkflowItems}    Generate Intent Notices
@@ -514,7 +515,8 @@ Generate Intent Notices for Ongoing Fee Payment
     \    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
     \    ${Warning_Status}    Run Keyword And Return Status    Mx LoanIQ Verify Object Exist    ${LIQ_Warning_Window}        VerificationData="Yes"
     \    Exit For Loop If    ${Warning_Status}==False
-
+    mx LoanIQ click element if present    ${LIQ_OngoingFeePayment_Notice_Exit_Button}
+    
 Verify Status and Notice Method in Notices
     [Documentation]    This keyword verifies the status and notice method in notices for all ongoing fee payments
     ...    @author: fmamaril
@@ -1627,7 +1629,8 @@ Navigate Directly to Commitment Fee Notebook from Deal Notebook
     
 Select Cycle Due Fee Payment 
     [Documentation]    This keyword selects a cycle fee payment for Cycle Due amount.
-    ...    @author: mgaling   
+    ...    @author: mgaling
+    ...    @update: makcamps    17Nov2020    Added clicking of warning buttons and changed screenshot path.
     
     mx LoanIQ activate window    ${LIQ_CommitmentFee_Window}    
     mx LoanIQ select    ${LIQ_CommitmentFee_General_OptionsPayment_Menu}
@@ -1635,7 +1638,9 @@ Select Cycle Due Fee Payment
     mx LoanIQ click    ${LIQ_ChoosePayment_OK_Button} 
     mx LoanIQ enter    ${LIQ_CommitmentFee_Cycles_CycleDue_RadioButton}    ON   
     mx LoanIQ click    ${LIQ_CommitmentFee_Cycles_OK_Button}
-    Take Screenshot    CycleDueAmount
+    Run Keyword And Ignore Error     Mx LoanIQ Click Button On Window    .* Commitment Fee.*;Warning;Yes    strProcessingObj="JavaWindow(\"title:=Processing.*\")"    WaitForProcessing=500
+    Run Keyword And Ignore Error     Mx LoanIQ Click Button On Window    .* Indemnity Fee.*;Warning;Yes    strProcessingObj="JavaWindow(\"title:=Processing.*\")"         WaitForProcessing=500
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/CommitmentFeeWindow_CycleDueAmount
     
 Enter Effective Date for Ongoing Fee-Cycle Due Payment
     [Documentation]    This keywod populates the effective date for ongoing fee-cycle dues payment.

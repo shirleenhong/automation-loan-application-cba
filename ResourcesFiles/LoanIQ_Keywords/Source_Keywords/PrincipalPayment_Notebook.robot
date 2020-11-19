@@ -320,6 +320,15 @@ Open Scheduled Principal Payment Notebook from Repayment Flex Schedule
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/RepaymentSchedule
     mx LoanIQ click    ${LIQ_RepaymentSchedule_Transaction_NB_Button}
 
+Get Notice Details in Principal Payment Notebook 
+    [Documentation]    This keyword returns Effective Date, All In Rate Amount, and Currency in Principal Payment Notebook
+    ...    @author:    makcamps    05NOV2020    Initial Create
+    
+    ${Effective_Date}    Mx LoanIQ Get Data    ${LIQ_PrincipalPayment_EffectiveDate_Field}    text%Effective_Date
+    ${Request_Amount}    Mx LoanIQ Get Data    ${LIQ_PrincipalPayment_Requested_Amount}    text%Request_Amount
+    ${Loan_Currency}    Mx LoanIQ Get Data    ${LIQ_PrincipalPayment_Currency_Field}    text%Loan_Currency
+    [Return]    ${Effective_Date}    ${Request_Amount}    ${Loan_Currency}
+
 Get Current Commitment, Outstanding and Available to Draw on Facility Before Payment
     [Documentation]    This keyword gets the current value for Commitment, Outstanding and Available to Draw on Facility
     ...    This only handles Bilateral deal with one drawdown.
@@ -785,17 +794,22 @@ Generate Intent Notices for Principal Payment
 Generate Intent Notices for Scheduled Principal Payment
     [Documentation]    This keyword sends Payment Notices to the Borrower and Lender.
     ...    @author: rtarayao
+    ...    @update: makcamps    Added clicking of warning ok buttons if present
     mx LoanIQ activate window   ${LIQ_ScheduledPrincipalPayment_Window}    
     Mx LoanIQ Select Window Tab    ${LIQ_ScheduledPrincipalPayment_Tab}    Workflow
     # Mx LoanIQ Verify Text In Javatree    ${LIQ_Payment_WorkflowItems}    Generate Intent Notices%yes    
     Mx LoanIQ DoubleClick    ${LIQ_ScheduledPrincipalPayment_Workflow_JavaTree}    Generate Intent Notices
+    mx LoanIQ click element if present    ${LIQ_Question_Yes_Button} 
+    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
     ${status}    Run Keyword And Return Status    Mx LoanIQ Verify Runtime Property    ${LIQ_Notices_BorrowerDepositor_Checkbox}       value%1
     Run Keyword If    ${status}==True    mx LoanIQ click element if present    ${LIQ_Notices_OK_Button}
     :FOR    ${i}    IN RANGE    1
+    \    mx LoanIQ click element if present    ${LIQ_Question_Yes_Button}
     \    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
     \    ${Warning_Status}    Run Keyword And Return Status    Mx LoanIQ Verify Object Exist    ${LIQ_Warning_Window}        VerificationData="Yes"
     \    Exit For Loop If    ${Warning_Status}==False
-
+    mx LoanIQ click element if present    ${LIQ_PrincipalPayment_NoticeGroup_Exit_Button}
+    
 Validate Payment on GL Entries - Scheduled Principal Payment
     [Documentation]    This keyword validates the GL Entries for Principal Payment.
     ...    @author: fmamaril
