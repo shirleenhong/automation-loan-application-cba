@@ -40,8 +40,9 @@ Send Notice For Principal Payment
     
     ${NoticeIdentifier}    Read Data From Excel    Correspondence    Notice_Identifier    ${rowid}
     ${NoticeCustomerLegalName}    Read Data From Excel    Correspondence    Notice_Customer_LegalName    ${rowid}
+    ${Notice_Method}    Read Data From Excel    Correspondence    Notice_Method   ${rowid}
     
-    Send Notice via WIP in LIQ    ${NoticeIdentifier}    ${NoticeCustomerLegalName}    &{ExcelPath}[Notice_Method]    Awaiting release        
+    Send Notice via WIP in LIQ    ${NoticeIdentifier}    ${NoticeCustomerLegalName}    ${Notice_Method}    Awaiting release        
    
     ${CurrentDate}    ${FieldValue}    Validate Notice in Business Event Output Window in LIQ    ${rowid}    &{ExcelPath}[Customer_IdentifiedBy]    
     ...    ${NoticeCustomerLegalName}    ${NoticeIdentifier}
@@ -67,15 +68,19 @@ Send Notice For Principal Payment
     
     Validate FFC FFC1CMUpdateSourceMQ    ${dataset_path}&{ExcelPath}[OutputFilePath]&{ExcelPath}[OutputAPIResponse].json    ${CorrelationID}    &{ExcelPath}[OutputFilePath]    ${TEMPLATE_TEXTFILE} 
     
+    ${Search_By}    Read Data From Excel    Correspondence    Search_By   ${rowid}
     ${Contact}    Read Data From Excel    Correspondence    Contact   ${rowid}
-    ${Notice_AllInRate}    Read Data From Excel    Correspondence    Notice_AllInRate   ${rowid}
-    ${Notice_Amount}    Read Data From Excel    Correspondence    Notice_Amount   ${rowid}
-    ${Balance_Amount}    Read Data From Excel    Correspondence    Balance_Amount   ${rowid}
-    ${Rate_Basis}    Read Data From Excel    Correspondence    Rate_Basis   ${rowid}
-    
-    Validate the Notice Window in LIQ    &{ExcelPath}[Search_By]    ${NoticeIdentifier}    ${FromDate}    ${ThruDate}    &{ExcelPath}[Notice_Status]    ${NoticeCustomerLegalName}    ${Contact}
-    ...    &{ExcelPath}[NoticeGroup_UserID]    &{ExcelPath}[Notice_Method]    &{ExcelPath}[Notice_Type]    ${dataset_path}&{ExcelPath}[InputFilePath]&{ExcelPath}[XML_File].xml    &{ExcelPath}[Deal_Name]    
-    ...    &{ExcelPath}[XML_NoticeType]    &{ExcelPath}[Fee_Type]    &{ExcelPath}[Loan_BaseRate]    &{ExcelPath}[Loan_Spread]    None
-    ...    &{ExcelPath}[OngoingFee_Type]    &{ExcelPath}[Principal_Amount]    None    None    &{ExcelPath}[Loan_EffectiveDate]    &{ExcelPath}[Loan_MaturityDate]
-    ...    &{ExcelPath}[Loan_GlobalOriginal]    &{ExcelPath}[Loan_RateSetting_DueDate]    &{ExcelPath}[Loan_RepricingDate]
-    ...    &{ExcelPath}[EffectiveDate_PrincipalPayment]    &{ExcelPath}[Principal_Amount]    &{ExcelPath}[Fee_Type]    &{ExcelPath}[Currency]    &{ExcelPath}[Notice_Customer_LegalName]
+    ${Notice_Status}    Read Data From Excel    Correspondence    Notice_Status   ${rowid}
+    ${NoticeGroup_UserID}    Read Data From Excel    Correspondence    NoticeGroup_UserID   ${rowid}
+    ${XML_NoticeType}    Read Data From Excel    Correspondence    XML_NoticeType   ${rowid}
+    ${EffectiveDate_PrincipalPayment}    Read Data From Excel    Correspondence    EffectiveDate_PrincipalPayment   ${rowid}
+    ${Principal_Amount}    Read Data From Excel    Correspondence    Principal_Amount   ${rowid}
+    ${Fee_Type}    Read Data From Excel    Correspondence    Fee_Type   ${rowid}
+    ${Currency}    Read Data From Excel    Correspondence    Currency   ${rowid}
+
+    Validate the Notice Window in LIQ    ${Search_By}    ${NoticeIdentifier}    ${FromDate}    ${ThruDate}    ${Notice_Status}    ${NoticeCustomerLegalName}
+    ...    ${Contact}    ${NoticeGroup_UserID}    ${Notice_Method}
+    ...    None    ${dataset_path}&{ExcelPath}[InputFilePath]&{ExcelPath}[XML_File].xml    &{ExcelPath}[Deal_Name]    ${XML_NoticeType}    ${Fee_Type}
+    ...    None    None    None    None    ${Principal_Amount}    None    None
+    ...    None    None    None    None    None
+    ...    ${EffectiveDate_PrincipalPayment}    ${Principal_Amount}    ${Fee_Type}    ${Currency}    ${NoticeCustomerLegalName}
