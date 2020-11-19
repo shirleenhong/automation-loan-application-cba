@@ -4,7 +4,8 @@ Resource    ../../../../../Configurations/Integration_Import_File.robot
 *** Keywords ***
 
 Validation of Report and Dataset Value for Agency Host Bank Cash Out for Host Bank Share Amount
-    [Documentation]    This keyword is used for reading and validating the values from the downloaded excel file in Cognos.
+    [Documentation]    This keyword is used for reading the downloaded Agency Host Bank Cashout Report 
+    ...    and validating the value Host_Bank_Share_Amount from the dataset.
     ...    @author: shirhong    17NOV2020    - Initial create
     [Arguments]    ${ExcelPath}
     
