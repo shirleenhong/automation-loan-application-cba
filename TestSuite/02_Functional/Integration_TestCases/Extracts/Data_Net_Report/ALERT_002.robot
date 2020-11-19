@@ -3,7 +3,7 @@ Resource    ../../../../../Configurations/Integration_Import_File.robot
 
 *** Test Cases ***
 ALERT_002
-    [Documentation]    This test case used to validate report tab in the DNR Alert Reports 
+    [Documentation]    This test case is used to validate Deal sheet in the DNR Alert Reports 
     ...    Fields should be available to validate in sequence: Deal Name, Deal Tracking Number, Alert Heading, 
     ...    Alert Content, User Name, Date Added / Amended
     ...    NOTE: Alert Report should be available already in the report path
