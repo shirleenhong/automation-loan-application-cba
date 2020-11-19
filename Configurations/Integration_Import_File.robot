@@ -26,7 +26,7 @@ Library    Dialogs
 Library    XML
 Library    base64
 Library    PdfToText
-Library    MathLibrary    
+Library    MathLibrary  
 
 ### Global Variables ###
 Resource    ../Variables/Global_Variables.txt
@@ -513,3 +513,4 @@ Resource    ../ResourcesFiles/Integration_Keywords/Source_Keywords/Extracts/DNR/
 ### Integration Resource Files - DNR - Business Process Keywords ###
 Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/Extracts/DNR_LIQ/DNR_Cognos.robot
 Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/Extracts/DNR_LIQ/DNR_CommentsRepots.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/Extracts/DNR_LIQ/DNR_AgencyHostBankCashOutReport.robot

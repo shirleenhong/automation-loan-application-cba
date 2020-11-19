@@ -20,6 +20,13 @@
 		<nature>org.robotframework.ide.eclipse.main.plugin.robotNature</nature>
 		<nature>org.python.pydev.pythonNature</nature>
 	</natures>
+	<linkedResources>
+		<link>
+			<name>libspecs/log-20201110-140750.html</name>
+			<type>1</type>
+			<location>C:/Users/u723453/Desktop/Logs/11102020/9_8237/log-20201110-140750.html</location>
+		</link>
+	</linkedResources>
 	<filteredResources>
 		<filter>
 			<id>0</id>
