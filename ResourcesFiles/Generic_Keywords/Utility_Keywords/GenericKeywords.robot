@@ -743,6 +743,7 @@ Navigate Notebook Workflow
     ...    @update: aramos      05OCT2020    Updated to insert new code for Transaction - Release Cashflows
     ...    @update: dahijara    09OCT2020    Added screenshot
     ...    @update: fluberio    12NOV2020    Added click element if present to handle EU scenario with multiple pricing options
+    ...    @update: dahijara    19NOV2020    Added click element if present to handle RPA scenario for Loan repricing release
     [Arguments]    ${sNotebook_Locator}    ${sNotebookTab_Locator}    ${sNotebookWorkflow_Locator}    ${sTransaction}    
 
     ###Pre-processing Keyword##
@@ -765,6 +766,7 @@ Navigate Notebook Workflow
     Run Keyword If    '${Transaction}'=='Release'    Run Keywords
     ...    Repeat Keyword    3 times    mx LoanIQ click element if present    ${LIQ_BreakFunding_Yes_Button}
     ...    AND    mx LoanIQ click element if present    ${LIQ_Information_OK_Button}
+    ...    AND    mx LoanIQ click element if present    ${LIQ_Cashflows_OK_Button}
     ...    ELSE IF    '${Transaction}'=='Close'    mx LoanIQ click element if present    ${LIQ_Information_OK_Button}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/NotebookWorkflow
         
