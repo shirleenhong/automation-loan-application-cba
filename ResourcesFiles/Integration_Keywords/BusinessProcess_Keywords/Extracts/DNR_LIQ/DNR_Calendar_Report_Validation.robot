@@ -2,13 +2,13 @@
 Resource    ../../../../../Configurations/Integration_Import_File.robot
 
 *** Keywords ***
-Validate The Branch Process Area and Deal Calendar of Calendar Report
+Validate Branch and Process Area and Deal Calendar of Calendar Report
     [Documentation]    This Keyword is for Scenario 1 of DNR - Validate Calendar Report based on the Filters of Branch, Proc Area and Financial Center - CLAND_001
     ...    @author: fluberio    18NOV2020    - initial create
     [Arguments]    ${ExcelPath}
 
     ### Get The Total Number of Row in the Given Excel Sheet ###
-    ${Row_Count}    Get the Row Count of Excel Sheet    &{ExcelPath}[Report_Path]${CBA_CALENDAR_REPORTFILE}.xlsx    &{ExcelPath}[Sheet_Name]
+    ${Row_Count}    Get Total Row Count of Excel Sheet    &{ExcelPath}[Report_Path]${CBA_CALENDAR_REPORTFILE}.xlsx    &{ExcelPath}[Sheet_Name]
     
     ### Get the Branch Value in the Generated Report ###
     ${Actual_Branch}    Read Data From Excel    &{ExcelPath}[Sheet_Name]    Branch    1    sFilePath=&{ExcelPath}[Report_Path]${CBA_CALENDAR_REPORTFILE}.xlsx    readAllData=Y   

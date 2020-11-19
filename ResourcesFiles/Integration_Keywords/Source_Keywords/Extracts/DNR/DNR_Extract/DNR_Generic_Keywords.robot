@@ -101,11 +101,12 @@ Validate Multiple Value if Existing in Excel Sheet
     :FOR    ${Expected_Value}    IN    @{Expected_ValueList}
     \    ${Sheet_ColumnValue}    Validate Value if Existing in Excel Sheet    ${sExcelFile}    ${sSheetName}    ${Expected_Value}
 
-Get the Row Count of Excel Sheet
+Get Total Row Count of Excel Sheet
     [Documentation]    This Keyword is used to get the row count of the specific sheet in the Excel
     ...    @author: fluberio    19NOV2020    - initial create
     [Arguments]    ${sFile_Path}    ${sSheet_Name}
 
+    ### note that sFile_Path includes file path and extension ###
     ${File_Path}    Acquire Argument Value    ${sFile_Path}
     ${Sheet_Name}    Acquire Argument Value    ${sSheet_Name}
     
