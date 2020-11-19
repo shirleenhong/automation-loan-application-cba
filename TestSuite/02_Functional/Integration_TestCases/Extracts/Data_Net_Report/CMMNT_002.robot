@@ -9,7 +9,7 @@ CMMNT_002
     ...    Deal Tracking Number
     ...    Comment Heading
     ...    Comment Detail
-    ...    User Name
+    ...    User ID
     ...    Date Added / Amended
     ...    NOTE: Comments Report should be available already in the report path.
     ...    @author: clanding    19NOV2020    - initial create
