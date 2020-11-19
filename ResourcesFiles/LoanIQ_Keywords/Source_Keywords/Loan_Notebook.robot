@@ -707,13 +707,14 @@ Navigate to Existing Loan
 	...    @update: sahalder    26JUN2020    - moved the keyword from LoanDrawdown_Notebook to Loan_Notebook
 	...    @update: clanding    13AUG2020    - updated hard coded values to global variables
 	...    @update: fluberio    12NOV2020    - added Search By Alis upon Searching Existing Loan
+    ...    @update: mcastro     18NOV2020    - Fixed typo error in keyword pre-processing steps
     [Arguments]    ${sOutstanding_Type}    ${sLoan_FacilityName}    ${sLoan_Alias}    ${sSearch_By}=None
     
     ### Keyword Pre-processing ###
     ${Outstanding_Type}    Acquire Argument Value    ${sOutstanding_Type}
     ${Loan_FacilityName}    Acquire Argument Value    ${sLoan_FacilityName}
     ${Loan_Alias}    Acquire Argument Value    ${sLoan_Alias}
-    ${Search_By}    Acquired Argument Value    ${sSearch_By}
+    ${Search_By}    Acquire Argument Value    ${sSearch_By}
 
     Mx LoanIQ Activate Window    ${LIQ_OutstandingSelect_Window}
     Mx LoanIQ Set    ${LIQ_OutstandingSelect_Existing_RadioButton}    ${ON}

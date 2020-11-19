@@ -3,8 +3,9 @@ Resource     ../../../../Configurations/LoanIQ_Import_File.robot
 
 *** Keywords ***
 Get Notice Details for Interest Payment LIQ
-    [Documentation]    Get Notice Details (Pricing Option, All in Rate, Currency, Amount and Effective Date) for Interest Payment in LIQ
+    [Documentation]    Get Notice Details (All in Rate, Currency, Amount and Effective Date) for Interest Payment in LIQ
     ...    @author:    makcamps    03NOV2020    Initial Create
+    ...    @update:    makcamps    10NOV2020    updated writing methods
     [Arguments]    ${rowid}    ${sDealName}    ${sFacilityName}    ${sLoanAlias}
     
     ###Switch to Original User###
@@ -21,15 +22,13 @@ Get Notice Details for Interest Payment LIQ
     ### Get the Values of Effective Date, All In Rate Amount, Currency, All in Rate, Pricing Option###
     ${Effective_Date}    ${AllInRate_Amount}    ${Loan_Currency}    Get Notice Details in Interest Payment Notebook
     mx LoanIQ activate    ${LIQ_FixedRateOptionLoan_Window}
-    ${PricingOption}    ${AllInRate}    Get Notice Details in Loan Notebook
+    ${AllInRate}    Get Notice Details in Loan Notebook
     Close All Windows on LIQ
     
-    Write Data To Excel    Correspondence    EffectiveDate_InterestPayment    ${rowid}    ${Effective_Date}
-    Write Data To Excel    Correspondence    ProjectedCycleDue_InterestPayment    ${rowid}    ${AllInRate_Amount}
-    Write Data To Excel    Correspondence    Currency    ${rowid}    ${Loan_Currency}
-    Write Data To Excel    Correspondence    Notice_AllInRate    ${rowid}    ${AllInRate}
-    Run Keyword If    '${PricingOption}'=='FIXED'    Write Data To Excel    Correspondence    Fee_Type    ${rowid}    Fixed Rate Option Interest Payment
-    ...    ELSE    Write Data To Excel    Correspondence    Fee_Type    ${rowid}    PricingOption
+    Write Data To Excel    Correspondence    EffectiveDate_InterestPayment    ${rowid}    ${Effective_Date}    bTestCaseColumn=True    sColumnReference=rowid
+    Write Data To Excel    Correspondence    ProjectedCycleDue_InterestPayment    ${rowid}    ${AllInRate_Amount}    bTestCaseColumn=True    sColumnReference=rowid
+    Write Data To Excel    Correspondence    Currency    ${rowid}    ${Loan_Currency}    bTestCaseColumn=True    sColumnReference=rowid
+    Write Data To Excel    Correspondence    Notice_AllInRate    ${rowid}    ${AllInRate}    bTestCaseColumn=True    sColumnReference=rowid
 
 Send Notice For Interest Payment
     [Documentation]    This keyword is use to successfully sent out a Interenst Payment Notice via WIP
@@ -53,9 +52,9 @@ Send Notice For Interest Payment
     ...    ${dataset_path}&{ExcelPath}[InputFilePath]&{ExcelPath}[XML_File].xml
     ...    ${dataset_path}&{ExcelPath}[InputFilePath]&{ExcelPath}[Temp_File].json    &{ExcelPath}[Field_Name]
            
-    Write Data To Excel    Correspondence    BEO_StartDate    ${rowid}    ${CurrentDate}
-    Write Data To Excel    Correspondence    BEO_EndDate    ${rowid}    ${CurrentDate}
-    Write Data To Excel    Correspondence    Correlation_ID    ${rowid}    ${FieldValue}
+    Write Data To Excel    Correspondence    BEO_StartDate    ${rowid}    ${CurrentDate}    bTestCaseColumn=True    sColumnReference=rowid
+    Write Data To Excel    Correspondence    BEO_EndDate    ${rowid}    ${CurrentDate}    bTestCaseColumn=True    sColumnReference=rowid
+    Write Data To Excel    Correspondence    Correlation_ID    ${rowid}    ${FieldValue}    bTestCaseColumn=True    sColumnReference=rowid
     
     ${BEOStartDate}    Read Data From Excel    Correspondence    BEO_StartDate    ${rowid}
     ${BEOEndDate}    Read Data From Excel    Correspondence    BEO_EndDate    ${rowid}
@@ -84,10 +83,11 @@ Send Notice For Interest Payment
     ${Notice_Amount}    Read Data From Excel    Correspondence    ProjectedCycleDue_InterestPayment   ${rowid}
     ${Balance_Amount}    Read Data From Excel    Correspondence    Balance_Amount   ${rowid}
     ${Rate_Basis}    Read Data From Excel    Correspondence    Rate_Basis   ${rowid}
+    ${EffectiveDate_InterestPayment}    Read Data From Excel    Correspondence    EffectiveDate_InterestPayment   ${rowid}
     
     Validate the Notice Window in LIQ    ${Search_By}    ${NoticeIdentifier}    ${FromDate}    ${ThruDate}    ${Notice_Status}    ${NoticeCustomerLegalName}
     ...    ${Contact}    ${NoticeGroup_UserID}    ${Notice_Method}
     ...    ${Notice_Type}    ${dataset_path}&{ExcelPath}[InputFilePath]&{ExcelPath}[XML_File].xml    ${Deal_Name}    ${XML_NoticeType}    None
     ...    None    None    ${Notice_AllInRate}    None    ${Notice_Amount}    None    None
     ...    None    None    None    None    None
-    ...    &{ExcelPath}[EffectiveDate_InterestPayment]    None    &{ExcelPath}[Fee_Type]    &{ExcelPath}[Currency]    ${NoticeCustomerLegalName}
+    ...    ${EffectiveDate_InterestPayment}    None    &{ExcelPath}[Fee_Type]    &{ExcelPath}[Currency]    ${NoticeCustomerLegalName}

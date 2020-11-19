@@ -1,8 +1,8 @@
 ###Dataset###
 dataset_path = "C:\\Git_Evergreen\\fms_cba"
-ExcelPath = "C:\\Git_Evergreen\\fms_cba\\DataSet\\LoanIQ_DataSet\\EU_Entity\\EVG_PTYLIQ04_EU_BaselineNonAgentSyndication.xlsx"
+ExcelPath = "C:\\Git_Evergreen\\fms_cba\\DataSet\\LoanIQ_DataSet\\EU_Entity\\EVG_PTYLIQ01_EU_BaselineBilateralCustomer.xlsx"
 CBAUAT_ExcelPath = "C:\\Git_Evergreen\\fms_cba\\DataSet\\CBA_UAT_DataSet\\EVG_CBAUAT05.xlsx"
-APIDataSet = "C:\\Git_Evergreen\\fms_cba\\DataSet\\Integration_DataSet\\API\\API_Data_Set.xlsx"
+APIDataSet = "C:\\Git_Evergreen\\fms_cba\\DataSet\\LoanIQ_DataSet\\EU_Entity\\EVG_PTYLIQ01_EU_BaselineBilateralCustomer.xlsx"
 Countries_Codes = '..\\fms_scotia\\DataSet\\Integration_DataSet\\API\\Countries_Codes.xlsx'
 TL_DATASET = "C:\\Git_Evergreen\\fms_cba\\DataSet\\Integration_DataSet\\TL\\TL_Data_Set_EU.xlsx"
 SAPWUL_DATASET = "C:\\Git_evergreen\\fms_cba\\DataSet\\Downstream_DataSet\\SAPWUL\\SAPWUL_Data_Set.xlsx"
@@ -80,7 +80,7 @@ DWE_NOTIFICATION_INSTANCE = "dwe_notification_1.3.0"
 SAPWUL_INSTANCE = 'CustomCBAPush_1.3.0'
 TL_CAL_ACK_MESSAGE_SOURCENAME = 'tl_ack_message_splitter_cal'
 TL_BASE_ACK_MESSAGE_SOURCENAME = 'tl_ack_message_splitter_base'
-CBACorrespUpdateMQ_Instance = 'CustomCBAPush_v1.3.0'
+CBACorrespUpdateMQ_Instance = 'CustomCBAPush_1.4.0'
 FFC1CMUpdateSourceMQ_Instance = 'CustomInterface'
 
 ###SFTP###
@@ -241,3 +241,14 @@ DNA_CCB_LIQ_FILENAME = 'CCB_LIQ_'
 DNA_DATAASSURANCE_FILENAME = 'DATAASSURANCE_'
 DNA_DAT_EXT = '.DAT'
 LIQ7474_USER = 'LIQIDT'
+
+### COGNOS ###
+COGNOS_SERVER = 'mancsweverg0006'
+COGNOS_PORT = '9305'
+COGNOS_URL = '/bi/?perspective=home'
+COGNOS_USERNAME = "CGLINP01"
+COGNOS_PASSWORD = "Finastra2020"
+COGNOS_NAMESPACE = 'FinastraRoot'
+CBA_ALERTS_REPORTFILE = "Alerts_Report_V1.3.4"
+CBA_COMMENTS_REPORTFILE = "Comments_Report_v5"
+CBA_CALENDAR_REPORTFILE = "Calendar Report_v1.0"

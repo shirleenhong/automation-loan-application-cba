@@ -8,6 +8,7 @@ Complete Internal Participation
     [Documentation]    This keyword is used to Complete Internal Participation For A Closed Deal with 3 facilities
     ...    @author:    mcastro    14OCT2020    initial create 
     ...    @update:    mcastro    10NOV2020    Updated steps to read and write data from this business process keyword, deleted unecessary validation
+    ...    @update:    mcastro    17NOV2020    Removed unecessary validation
     [Arguments]    ${ExcelPath}
     Logout from Loan IQ
     Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
@@ -44,7 +45,6 @@ Complete Internal Participation
     
     ### Pending Participation Buy Workflow ###
     Complete Portfolio Allocations Workflow for Pending Participation Buy    &{ExcelPath}[Buyer_Portfolio]    &{ExcelPath}[Buyer_ExpenseCode]    &{ExcelPath}[Buyer_Branch]    ${Facility1}|${Facility2}|${Facility3}
-    Validate Fee Decisions For All Facilities
     
     ### Send To Approval ###
     Send to Approval Internal Participation Buy
