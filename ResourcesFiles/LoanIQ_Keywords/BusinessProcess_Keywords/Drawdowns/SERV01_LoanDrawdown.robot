@@ -548,6 +548,7 @@ Create Initial Loan Drawdown for RPA Deal
     ...    @update: mcastro     03NOV2020    - Added Writing to SERV08_ComprehensiveRepricing for RPA Scenario 1
     ...    @update: dahijara    04NOV2020    - Added writing for SERV08_ComprehensiveRepricing-Loan_Alias
     ...    @update: mcastro     16NOV2020    - Added condition for RPA scenario 3
+    ...    @update: dahijara    19NOV2020    - Added condition for RPA Scenario 5 Loan_Alias data writing to excel
     [Arguments]    ${ExcelPath}    
     
     Logout from Loan IQ
