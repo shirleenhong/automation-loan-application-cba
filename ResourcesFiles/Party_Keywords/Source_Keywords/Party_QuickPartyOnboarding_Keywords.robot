@@ -106,7 +106,7 @@ Populate Pre-Existence Check
     Validate Page Screen is Displayed    ${PARTY_QUICKENTERPRISEPARTY_PAGETITLE}
     
     [Return]    ${Enterprise_Name}    ${Party_ID}
-   
+  
 
 Select Referral Using Reference ID
     [Documentation]    This keyword is used to select referral row on Open referrals section based on the reference ID and Return referral Task ID
@@ -171,7 +171,7 @@ Populate Quick Enterprise Party
     ...    @update: javinzon	21OCT2020	 - Updated Warning Popup to Warning Dialog, Updated Approval Required scripts, Added Validate Duplicate Short Name 
     ...    @update: javinzon    26OCT2020    - Updated keyword name from 'Validate Duplicate Short Name' to 'Validate Error Message in Quick Enterprise Party',
     ...                                        Added optional argument ${sExpected_Error_Message}.
-                                               
+    ...	   @update: javinzon	12NOV2020	 - Updated keywords for Warning Dialog and Approval Required Dialog                                           
     [Arguments]    ${sParty_ID}    ${sCountry_of_Tax_Domicile}    ${sCountry_of_Registration}    ${sAddress_Type}    ${sCountry_Region}    ${iPost_Code}
     ...    ${sDocument_Collection_Status}    ${sIndustry_Sector}    ${sBusiness_Activity}    ${bIs_Main_Activity}    ${iGST_Number}
     ...    ${sAddress_Line_1}    ${sAddress_Line_2}    ${sAddress_Line_3}    ${sAddress_Line_4}    ${sTown_City}    ${sState_Province}    
@@ -202,14 +202,24 @@ Populate Quick Enterprise Party
     # Focus    ${Party_QuickEnterpriseParty_ErrorUnderlay_Box}
     # Mx Native Type    {ESC}
     # Wait Until Keyword Succeeds    10x    2s    Mx Click Element    ${Party_Next_Button}
-
-    ### Warning Dialog ###
+    
+    Proceed with Warning Dialog
+    Proceed with Approval Required Dialog    ${sExpected_Error_Message}
+    
+Proceed with Warning Dialog
+    [Documentation]    This keyword will proceed user to the Warning Dialog.
+    ...    @author: javinzon    - initial create
+    
     Wait Until Loading Page Is Not Visible    ${PARTY_TIMEOUT}
     ${isWarningDisplayed}    Run Keyword And Return Status    Wait Until Page Contains Element    ${Party_QuickEnterpriseParty_BiometricsWarning_Dialog}    30s
     Run Keyword If    ${isWarningDisplayed}==${True}    Mx Click Element    ${Party_QuickEnterpriseParty_ProceedWarning_Button}
     Wait Until Loading Page Is Not Visible    ${PARTY_TIMEOUT}
    
-    ### Approval Required Dialog ###
+Proceed with Approval Required Dialog
+    [Documentation]    This keyword will proceed user to Approval Required Dialog and validate if there is an error.
+    ...    @author: javinzon    - initial create
+    [Arguments]    ${sExpected_Error_Message}
+    
     ${isApprovalRequired}    Run Keyword And Return Status    Wait Until Page Contains Element    ${Party_QuickEnterpriseParty_ApprovalRequired_Dialog}    30s
     Run Keyword If    ${isApprovalRequired}==${True}    Run Keywords	Capture Page Screenshot    ${screenshot_path}/Screenshots/Party/PartyApprovalDialog-{index}.png
     ...	AND	    Mx Click Element    ${Party_QuickEnterpriseParty_AskForApproval_Button}
@@ -248,7 +258,8 @@ Populate Address Details
     [Documentation]    This keyword populates address details modal.
     ...    @author: jcdelacruz
     ...    @update: amansuet    18MAR2020    - updated keyword and added conditional argument address 3 and 4
-    ...    @author: javinzon    17SEP2020    - - Updated arguments for Address 3 and 4 to be mandatory
+    ...    @update: javinzon    17SEP2020    - updated arguments for Address 3 and 4 to be mandatory
+    ...    @update: javinzon    12NOV2020    - added Capture Page Screenshot Keyword
     [Arguments]    ${sAddress_Line_1}    ${sAddress_Line_2}    ${sTown_City}    ${sState_Province}    ${sAddress_Line_3}    ${sAddress_Line_4}
 
     Mx Click Element    ${Party_QuickEnterpriseParty_RecordAddress_Button}   
@@ -259,8 +270,8 @@ Populate Address Details
     Mx Input Text    ${Party_QuickEnterpriseParty_AddressDetails_AddressLineFour_TextBox}     ${sAddress_Line_4}
     Mx Input Text    ${Party_QuickEnterpriseParty_AddressDetails_TownCity_TextBox}   ${sTown_City}
     Mx Input Text    ${Party_QuickEnterpriseParty_AddressDetails_StateProvince_Dropdown}    ${sState_Province}
+    Capture Page Screenshot    ${screenshot_path}/Screenshots/Party/PartyAddressDetailsDialog-{index}.png
     Mx Click Element    ${Party_QuickEnterpriseParty_AddressDetails_Next_Button}
-
 
 Approve Party via Supervisor Account
     [Documentation]    This keyword is used to approve created party via Quick Party Onboarding
@@ -334,6 +345,7 @@ Validate Enterprise Summary Details
     ...    @update: javinzon    16SEP2020     - changed parameter from ${sAssignedBranch} to ${sUserBranch}
     ...    @update: javinzon    04NOV2020     - added Run Keyword And Ignore Error for Page screen validation,
     ...                                         updated validation for Tax Country cell
+    ...    @update: javinzon    11NOV2020     - updated validation for Country of Tax and GST Number
     [Arguments]    ${sLocality}    ${sEntity}    ${sUserBranch}    ${sParty_Type}    ${sParty_Sub_Type}    ${sParty_Category}    ${sParty_ID}    
     ...    ${sEnterprise_Name}    ${sRegistered_Number}    ${sCountryOfRegistration}    ${sCountryOfTaxDomicile}    ${sShortName}    ${sGTS_Number}
 
@@ -361,7 +373,7 @@ Validate Enterprise Summary Details
     ${isMatched}    Run Keyword And Return Status    Should Be Equal    ${sCountryOfTaxDomicile}    ${TaxCountry}
     Run Keyword If    ${isMatched}==${True}    Log    Country of Tax value is correct! Country of Tax:${TaxCountry}    level=INFO
     ...    ELSE    Run Keyword And Continue On Failure    Fail    Country of Tax value is incorrect! Country of Tax:${TaxCountry}, Expected Country of Tax:${sCountryOfTaxDomicile}
-    
+     
 Validate Enquire Enterprise Business Activity Details
     [Documentation]    This keyword validates the Enterprise Business Activity Details from Enterprise summary details page.
     ...    @author: javinzon    17SEP2020    - initial create
@@ -773,12 +785,14 @@ Validate Error Message in Quick Enterprise Party
     ...	   @update: javinzon	23OCT2020	 - removed white space in Keyword name
     ...    @update: javinzon    26OCT2020    - updated keyword name from 'Validate Duplicate Short Name' to 'Validate Error Message in Quick 
     ...                                        Enterprise Party', updated documentation, added argument ${sExpected_Error_Message}.
-    ...    @update: javinzon    17NOV2020    - updated screenshot name from 'DuplicateShortName' to 'ErrorMessage'
+    ...    @update: javinzon	09NOV2020	 - added SeleniumLibraryExtended in Get Element Attirbute keyword
+    ...    @update: javinzon    17NOV2020    - updated screenshot name from 'DuplicateShortName' to 'ErrorMessage' 
     [Arguments]    ${sExpected_Error_Message}
     
     ${isErrorDisplayed}    Run Keyword And Return Status    Wait Until Page Contains Element    ${Party_QuickEnterpriseParty_Errors_Dialog}    30s
-    Capture Page Screenshot    ${screenshot_path}/Screenshots/Party/ErrorMessage-{index}.png
-    ${ErrorMessage}    Get Element Attribute    ${Party_QuickEnterpriseParty_ErrorsDialog_TextArea}    value
+    Capture Page Screenshot    ${screenshot_path}/Screenshots/Party/DuplicateShortName-{index}.png
+    ${ErrorMessage}    SeleniumLibraryExtended.Get Element Attribute    ${Party_QuickEnterpriseParty_ErrorsDialog_TextArea}    value
+
     ${isMatched}    Run Keyword And Return Status    Should Contain    ${ErrorMessage}    ${sExpected_Error_Message}
     Run Keyword If    ${isMatched}==${True}    Mx Click Element    ${Party_QuickEnterpriseParty_ErrorsDialog_GoBack_Button}
     ...    ELSE    Run Keyword and Continue on Failure    Fail   Error message: '${sExpected_Error_Message}' is expected.
@@ -821,6 +835,104 @@ Populate Pre-Existence Check and Validate Duplicate Enterprise Name Across Entit
     ...   AND    Validate Enterprise Name in Enquire Enterprise Party    ${sEnterprise_Name}
     ...   ELSE    Run Keyword and Continue on Failure    Fail    There is no Duplicate Enterprise Name   
     
-
+Get the Available Business Activity Options 
+    [Documentation]    This keyword is used to compare and validate if the available Business Activity Options are correct.
+    ...    @author: javinzon    06OCT2020    - initial create
+    ...    @update: clanding    06NOV2020    - removed \ in the \    ...
+    [Arguments]    ${sIndustry_Sector}
+     
+    ${Industry_Sector_FileName}    Replace String    ${sIndustry_Sector}    ${SPACE}    _  
+    ${Industry_Sector_FileName}    Remove String    ${Industry_Sector_FileName}    ,    and_
+    ${Expected_BusinessActivity}    OperatingSystem.Get File    ${BUSINESSACTIVITY_DIRECTORY}\\${Industry_Sector_FileName}.txt
+    ${Expected_BusinessActivity_Line_Count}    Get Line Count    ${Expected_BusinessActivity}
+    :FOR    ${LineCount}    IN RANGE    ${Expected_BusinessActivity_Line_Count}
+    \    ${BusinessActivity_List_Line_Content}    Get Line    ${Expected_BusinessActivity}    ${LineCount}
+    \    ${BusinessActivity_Dropdown_Content}    Get Text    ${Party_QuickEnterpriseParty_EnterpriseBusinessActivity_BusinessActivity_Dropdown_List}//div[contains(@item, "${LineCount}")]
+    \    ${isMatched}    Run Keyword And Return Status    Should Be Equal    ${BusinessActivity_List_Line_Content}    ${BusinessActivity_Dropdown_Content}       
+    \    Run Keyword If    ${isMatched}==${True}    Log    Business Activity '${BusinessActivity_Dropdown_Content}' is matched in Valid Business Activty List with value:${\n}${BusinessActivity_List_Line_Content}.
+         ...    ELSE    Run Keyword And Continue On Failure    Fail    Business Activity '${BusinessActivity_Dropdown_Content}' is NOT matched in Valid Business Activty List with value:${\n}${BusinessActivity_List_Line_Content}. 
     
+Validate Available Options in Business Activity Field
+    [Documentation]    This keyword validates the Available Options in Business Activity Field across All Industry Sectors. 
+    ...    @author: javinzon    02OCT2020    - initial create
+    [Arguments]    ${sBusiness_Country}    
+    
+    Wait Until Page Contains Element    ${Party_QuickEnterpriseParty_BusinessActivity_CheckBox}
+    Click Element    ${Party_QuickEnterpriseParty_BusinessActivity_CheckBox}
+    Wait Until Loading Page Is Not Visible    ${PARTY_TIMEOUT}
+    Wait Until Page Contains    Create Enterprise Business Activity  
+    Mx Click Element    ${Party_QuickEnterpriseParty_EnterpriseBusinessActivity_NewRow_Button}
+    Mx Input Text    ${Party_QuickEnterpriseParty_EnterpriseBusinessActivity_Country_Dropdown}    ${sBusiness_Country}
+    Wait Until Browser Ready State
+    
+    ${IndustrySector_List_Content}    OperatingSystem.Get File    ${INDUSTRYSECTOR_LIST}
+    ${IndustrySector_List_Count}    Get Line Count    ${IndustrySector_List_Content}
+    :FOR    ${LineCount}    IN RANGE    ${IndustrySector_List_Count}
+    \    ${IndustrySector_List_Line_Content}    Get Line    ${IndustrySector_List_Content}    ${LineCount}
+    \    Mx Input Text    ${Party_QuickEnterpriseParty_EnterpriseBusinessActivity_IndustrySector_Dropdown}    ${IndustrySector_List_Line_Content}
+    \    Click Element    ${Party_QuickEnterpriseParty_EnterpriseBusinessActivity_BusinessActivity_Arrow}
+    \    Capture Page Screenshot    ${screenshot_path}/Screenshots/Party/BusinessActivityOptions-{index}.png 
+    \    Get the Available Business Activity Options   ${IndustrySector_List_Line_Content}
+    \    Click Element    ${Party_QuickEnterpriseParty_EnterpriseBusinessActivity_IndustrySector_Label}
+    
+    Mx Click Element    ${Party_CloseDialog_Button}
+    
+Populate and Validate Length of Fields in Quick Enterprise Party
+    [Documentation]    This test case is used to populate and validate field length of the following fields in Quick Enterprise Party:
+    ...    Post Code, Address Line 1, Address Line 2, Address Line 3, Address Line 4, Address City, Short Name.
+    ...    @author:    javinzon    06NOV2020    - initial create
+    [Arguments]    ${sParty_ID}    ${sCountry_of_Tax_Domicile}    ${sCountry_of_Registration}    ${sAddress_Type}    ${sCountry_Region}    ${iPost_Code}    ${iInvalid_Post_Code}
+    ...    ${sDocument_Collection_Status}    ${sIndustry_Sector}    ${sBusiness_Activity}    ${bIs_Main_Activity}    ${iGST_Number}
+    ...    ${sAddress_Line_1}    ${sAddress_Line_2}    ${sAddress_Line_3}    ${sAddress_Line_4}    ${sInvalid_Address_Line_1}    ${sInvalid_Address_Line_2}    ${sInvalid_Address_Line_3}    
+    ...    ${sInvalid_Address_Line_4}    ${sTown_City}    ${sInvalid_Town_City}    ${sState_Province}    ${sBusiness_Country}    ${bIs_Primary_Activity}    ${iRegistered_Number}    ${sShort_Name}    
+    ...    ${sPostCode_Error_Message}    ${sAddressLine_Error_Message}    ${sAddressCity_Error_Message}
+    
+    ### Validate Post Code Field Length ###
+    Populate Quick Enterprise Party    ${sParty_ID}    ${sCountry_of_Tax_Domicile}    ${sCountry_of_Registration}    ${sAddress_Type}    ${sCountry_Region}    ${iInvalid_Post_Code}    
+    ...    ${sDocument_Collection_Status}    ${sIndustry_Sector}    ${sBusiness_Activity}    ${bIs_Main_Activity}    ${iGST_Number}    ${sAddress_Line_1}    ${sAddress_Line_2}
+    ...    ${sAddress_Line_3}    ${sAddress_Line_4}    ${sTown_City}    ${sState_Province}    ${sBusiness_Country}    ${bIs_Primary_Activity}    ${iRegistered_Number}    ${sShort_Name}    ${sPostCode_Error_Message}
+    Mx Scroll Element Into View    ${Party_PartyOnboarding_AssignedBranch_Dropdown}
+    Mx Input Text    ${Party_QuickEnterpriseParty_PostCode_TextBox}    ${iPost_Code}   
+        
+    ### Validate Address Line 1 Field Length ###
+    Populate Address Details    ${sInvalid_Address_Line_1}    ${sAddress_Line_2}    ${sTown_City}    ${sState_Province}    ${sAddress_Line_3}    ${sAddress_Line_4}
+    Mx Click Element    ${Party_Footer_Next_Button}
+    Proceed with Warning Dialog
+    Proceed with Approval Required Dialog    ${sAddressLine_Error_Message}
+    
+    ### Validate Address Line 2 Field Length ###
+    Mx Scroll Element Into View    ${Party_PartyOnboarding_AssignedBranch_Dropdown}
+    Populate Address Details    ${sAddress_Line_1}    ${sInvalid_Address_Line_2}    ${sTown_City}    ${sState_Province}    ${sAddress_Line_3}    ${sAddress_Line_4}
+    Mx Click Element    ${Party_Footer_Next_Button}
+    Proceed with Warning Dialog
+    Proceed with Approval Required Dialog    ${sAddressLine_Error_Message}
+    
+    ### Validate Address Line 3 Field Length ###
+    Mx Scroll Element Into View    ${Party_PartyOnboarding_AssignedBranch_Dropdown}
+    Populate Address Details    ${sAddress_Line_1}    ${sAddress_Line_2}    ${sTown_City}    ${sState_Province}    ${sInvalid_Address_Line_3}    ${sAddress_Line_4}
+    Mx Click Element    ${Party_Footer_Next_Button}
+    Proceed with Warning Dialog
+    Proceed with Approval Required Dialog    ${sAddressLine_Error_Message}
+    
+    ### Validate Address Line 4 Field Length ###
+    Mx Scroll Element Into View    ${Party_PartyOnboarding_AssignedBranch_Dropdown}
+    Populate Address Details    ${sAddress_Line_1}    ${sAddress_Line_2}    ${sTown_City}    ${sState_Province}    ${sAddress_Line_3}    ${sInvalid_Address_Line_4}
+    Mx Click Element    ${Party_Footer_Next_Button}
+    Proceed with Warning Dialog
+    Proceed with Approval Required Dialog    ${sAddressLine_Error_Message}
+    
+    ### Validate Address City Field Length ###
+    Mx Scroll Element Into View    ${Party_PartyOnboarding_AssignedBranch_Dropdown}
+    Populate Address Details    ${sAddress_Line_1}    ${sAddress_Line_2}    ${sInvalid_Town_City}    ${sState_Province}    ${sAddress_Line_3}    ${sAddress_Line_4}
+    Mx Click Element    ${Party_Footer_Next_Button}
+    Proceed with Warning Dialog
+    Proceed with Approval Required Dialog    ${sAddressCity_Error_Message}
+    
+    ### Validate ShortName Field Length ###
+    ${ShortName_MaxLength}    SeleniumLibraryExtended.Get Element Attribute   ${Party_QuickEnterpriseParty_ShortName_TextBox}    maxlength
+    ${isMaximum}    Run Keyword And Return Status    Should Contain    ${ShortName_MaxLength}    25
+    Run Keyword If    ${isMaximum}==${True}    Log    Maximum Length of Short Name field is 25 characters only.  
+    ...   ELSE    Run Keyword and Continue on Failure    Fail    Length of Short Name field should not be more than 25 characters.     
+    
+   
     

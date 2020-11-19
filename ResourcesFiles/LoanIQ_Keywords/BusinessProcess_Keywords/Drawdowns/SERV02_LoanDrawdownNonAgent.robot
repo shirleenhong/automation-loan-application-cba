@@ -10,6 +10,9 @@ Create Initial Loan Drawdown for Non Agent Syndication
     ...    @update: hstone    22MAY2020    - Removed '${Loan_Alias}    Read Data From Excel    SERV02_LoanDrawdownNonAgent    Loan_Alias    ${rowid}'
     ...    @update: clanding    10AUG2020    - updated hard coded values to dataset/global variables; removed Create Principal Repayment Schedule as per scenario review
     ...    @update: clanding    13AUG2020    - added writing of Loan_Alias and Loan_EffectiveDate to SERV09_LoanRepricing
+    ...    @update: fluberio    29OCT2020    - added condition for setting the RowId based on the given pricing option, Added the Set FX Rates
+    ...    @update: fluberio    30OCT2020    - added condition for EU to get the latest value in Excel, added the conversion of the Request amount based on the Loan Currency
+    ...                                      - added keywords to removed decimals number upon comparing actual and expected amounts 
     [Arguments]    ${ExcelPath}
     
     ###Upfront Fee Payment Workflow Tab- Release Item###
@@ -24,6 +27,9 @@ Create Initial Loan Drawdown for Non Agent Syndication
 
     ${AvailToDrawAmount}    Get Facility Global Available to Draw Amount
     ${GlobalOutstandings}    Get Facility Global Outstandings
+    
+    ${rowid}    Run Keyword If   '${SCENARIO}'=='4' and '&{ExcelPath}[Entity]' == 'EU'    Get the Row Id for Given Pricing Option    &{ExcelPath}[Loan_PricingOption]
+    
     Write Data To Excel    SERV02_LoanDrawdownNonAgent    Facility_CurrentAvailToDraw    ${rowid}    ${AvailToDrawAmount}
     Write Data To Excel    SERV02_LoanDrawdownNonAgent    Facility_CurrentGlobalOutstandings    ${rowid}    ${GlobalOutstandings}
     Write Data To Excel    SERV02_LoanDrawdownNonAgent    Loan_EffectiveDate    ${rowid}    ${Loan_EffectiveDate}
@@ -43,6 +49,7 @@ Create Initial Loan Drawdown for Non Agent Syndication
     ...    &{ExcelPath}[Loan_RepricingFrequency]    &{ExcelPath}[Loan_IntCycleFrequency]    ${TO_THE_ACTUAL_DUE_DATE}
 
     Input Loan Drawdown Rates    &{ExcelPath}[Borrower_BaseRate]    &{ExcelPath}[Facility_Spread]
+    Run Keyword If   '${SCENARIO}'=='4' and '&{ExcelPath}[Entity]' == 'EU' and '&{ExcelPath}[Loan_PricingOption]' != 'Euro LIBOR Option'    Set FX Rates Loan Drawdown    &{ExcelPath}[Loan_Currency]    Spot
     
     ###Cashflows###
     Navigate to Drawdown Cashflow Window
@@ -75,19 +82,32 @@ Create Initial Loan Drawdown for Non Agent Syndication
     
     Release Loan Initial Drawdown
     
+    Run Keyword If   '${SCENARIO}'=='4' and '&{ExcelPath}[Entity]' == 'EU'    Close All Windows on LIQ
+    
     ##Facility###
     Navigate to Facility Notebook    &{ExcelPath}[Deal_Name]    &{ExcelPath}[Facility_Name]
 
     ${CurrentCmtAmt}    Get Current Commitment Amount
+    ${Loan_Alias}    Read Data From Excel    SERV02_LoanDrawdownNonAgent    Loan_Alias    ${rowid}
+    ${CovertedLoanRequested_Amount}    Run Keyword If   '${SCENARIO}'=='4' and '&{ExcelPath}[Entity]' == 'EU' and '&{ExcelPath}[Loan_PricingOption]' != 'Euro LIBOR Option'    Convert Loan Requested Amount Based On Currency FX Rate    &{ExcelPath}[Facility_Currency]    &{ExcelPath}[Loan_Currency]    &{ExcelPath}[Loan_RequestedAmount]    ${Loan_Alias}    &{ExcelPath}[Outstanding_Type]    &{ExcelPath}[Facility_Name]    ${Loan_EffectiveDate}
+    ...    ELSE    Read Data From Excel    SERV02_LoanDrawdownNonAgent    Loan_RequestedAmount    ${rowid}
+    ${Excel_FacilityCurrentGlobalOutstandings}    Read Data From Excel    SERV02_LoanDrawdownNonAgent    Facility_CurrentGlobalOutstandings    ${rowid}
     
     ###Facility Global Outstandings Validation#####
     ${NewGlobalOutstandings}    Get New Facility Global Outstandings
-    ${Computed_GlobalOutstandings}    Compute New Global Outstandings     &{ExcelPath}[Facility_CurrentGlobalOutstandings]    &{ExcelPath}[Loan_RequestedAmount]
+    ${Computed_GlobalOutstandings}    Run Keyword If   '${SCENARIO}'=='4' and '&{ExcelPath}[Entity]' == 'EU'    Compute New Global Outstandings     ${Excel_FacilityCurrentGlobalOutstandings}    ${CovertedLoanRequested_Amount}
+    ...    ELSE    Compute New Global Outstandings     &{ExcelPath}[Facility_CurrentGlobalOutstandings]    &{ExcelPath}[Loan_RequestedAmount]
+    ${NewGlobalOutstandings}    Run Keyword If   '${SCENARIO}'=='4' and '&{ExcelPath}[Entity]' == 'EU'    Split the Value with Decimal and Return the Whole Number    ${NewGlobalOutstandings}
+    ${Computed_GlobalOutstandings}    Run Keyword If   '${SCENARIO}'=='4' and '&{ExcelPath}[Entity]' == 'EU'    Split the Value with Decimal and Return the Whole Number    ${Computed_GlobalOutstandings}
     Compare Two Numbers    ${Computed_GlobalOutstandings}    ${NewGlobalOutstandings}
     
+    ${Excel_FacilityCurrentAvailToDraw}    Read Data From Excel    SERV02_LoanDrawdownNonAgent    Facility_CurrentAvailToDraw    ${rowid}
     ####Facility Available to Draw Validation####
     ${NewAvailToDrawAmount}    Get New Facility Available to Draw Amount
-    ${Computed_AvailToDrawAmt}    Compute New Facility Available to Draw Amount    &{ExcelPath}[Facility_CurrentAvailToDraw]    &{ExcelPath}[Loan_RequestedAmount]
+    ${Computed_AvailToDrawAmt}    Run Keyword If   '${SCENARIO}'=='4' and '&{ExcelPath}[Entity]' == 'EU'    Compute New Facility Available to Draw Amount    ${Excel_FacilityCurrentAvailToDraw}    ${CovertedLoanRequested_Amount}
+    ...    ELSE    Compute New Facility Available to Draw Amount    &{ExcelPath}[Facility_CurrentAvailToDraw]    &{ExcelPath}[Loan_RequestedAmount]
+    ${NewAvailToDrawAmount}    Run Keyword If   '${SCENARIO}'=='4' and '&{ExcelPath}[Entity]' == 'EU'    Split the Value with Decimal and Return the Whole Number    ${NewAvailToDrawAmount}
+    ${Computed_AvailToDrawAmt}    Run Keyword If   '${SCENARIO}'=='4' and '&{ExcelPath}[Entity]' == 'EU'    Split the Value with Decimal and Return the Whole Number    ${Computed_AvailToDrawAmt}
     Compare Two Numbers    ${Computed_AvailToDrawAmt}    ${NewAvailToDrawAmount}    
     
     Close All Windows on LIQ

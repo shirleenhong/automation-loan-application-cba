@@ -116,6 +116,9 @@ Party_QuickEnterpriseParty_EnterpriseBusinessActivity_IsMainActivity_CheckBox = 
 Party_QuickEnterpriseParty_EnterpriseBusinessActivity_IsPrimaryActivity_CheckBox = '//input[contains(@id, "isPrimaryActivity")]'
 Party_QuickEnterpriseParty_EnterpriseBusinessActivity_Next_Button = '//div[@role="dialog"]//input[contains(@id, "Next")]'
 Party_QuickEnterpriseParty_EnterpriseBusinessActivity_EnquireEntBusinessAct_Next_Button = '//div[contains(@id,"EnquireEntBusActivity")]//input[@name="Next"]'
+Party_QuickEnterpriseParty_EnterpriseBusinessActivity_BusinessActivity_Arrow = '//div[contains(@id,"businessActivityDtls:businessActivity") and contains(@role,"combo")]//input[contains(@class,"ArrowButtonInner")]'
+Party_QuickEnterpriseParty_EnterpriseBusinessActivity_BusinessActivity_Dropdown_List = '//div[contains(@role,"listbox") and contains (@id, "businessActivityDtls:businessActivity")]'
+Party_QuickEnterpriseParty_EnterpriseBusinessActivity_IndustrySector_Label = '//div[contains(@uitype, "Label") and contains(@id, "IndustrySector_Label")]'
 
 ### Quick Enterprise Party Page - Text Box Error ###
 Party_QuickEnterpriseParty_Error_TextBox = '//div[contains(@class,"TextBoxError")]'

@@ -1,0 +1,1 @@
+{"baseRateCode": "NIBOR", "currency": "NOK", "buyRate": null, "midRate": null, "sellRate": null, "lastRate": 4.24, "rateEffectiveDate": "2020-01-14", "spreadRate": null, "spreadEffectiveDate": null, "rateTenor": "001M", "instrumentType": "IBOR", "lobs": [{"lineOfBusiness": "COMRLENDING", "businessEntityName": [], "subEntity": ["AUD", "EUR"]}]}

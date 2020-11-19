@@ -18,11 +18,11 @@ LIQ_IntentNotice_Edit_Window = 'JavaWindow("title:=.* Notice created.*")'
 LIQ_IntentNotice_Edit_Email = 'JavaWindow("title:=.* Notice created.*").JavaEdit("attached text:=E-mail:")' 
 
 LIQ_Notice_Exit_Button = 'JavaWindow("title:=.* Notice.*", "displayed:=1").JavaButton("attached text:=Exit")'
-LIQ_Notice_Information_Table = 'JavaWindow("title:=.* Notice.*").JavaTree("attached text:=Drill down to mark notices")'
+LIQ_Notice_Information_Table = 'JavaWindow("title:=.* Notice.*", "displayed:=1").JavaTree("attached text:=Drill down to mark notices")'
 LIQ_Notice_Send_Button = 'JavaWindow("title:=.* Notice.*").JavaButton("attached text:=Send")'
-LIQ_Notice_EditHighlightedNotice_Button = 'JavaWindow("title:=.* Notice Group.*").JavaButton("attached text:=.*Highlighted Notices")'
-LIQ_Notice_IntentNotice_Window = 'JavaWindow("title:=.* Payment Notice created.*")'
-LIQ_Notice_IntentNotice_Email = 'JavaWindow("title:=.* Payment Notice created.*").JavaEdit("attached text:=E-mail:")'
+LIQ_Notice_EditHighlightedNotice_Button = 'JavaWindow("title:=.* Notice Group.*", "displayed:=1").JavaButton("attached text:=.*Highlighted Notices")'
+LIQ_Notice_IntentNotice_Window = 'JavaWindow("title:=.* Payment Notice created.*", "displayed:=1")'
+LIQ_Notice_IntentNotice_Email = 'JavaWindow("title:=.* Payment Notice created.*", "displayed:=1").JavaEdit("attached text:=E-mail:")'
 
 ####Payment Window######
 LIQ_Payment_Window = 'JavaWindow("title:=.* .* Payment .*")'
@@ -53,6 +53,7 @@ LIQ_InterestPayment_RequestedAmount_Textfield = 'JavaWindow("title:=.* Interest 
 LIQ_InterestPayment_CycleDueDate_Text = 'JavaWindow("title:=.* Interest Payment.*").JavaStaticText("labeled_containers_path:=.*Cycle.*","Index:=5")'
 ##Interest Payment-- FROM CIELO###
 LIQ_InterestPayment_RequestedAmount_field = 'JavaWindow("title:=.* Interest Payment.*").JavaEdit("labeled_containers_path:=Tab:General;Group: Amounts ;","index:=0")'
+LIQ_InterestPayment_Currency_Textfield = 'JavaWindow("title:=.* Interest Payment.*").JavaStaticText("labeled_containers_path:=Tab:General;Group: Amounts ;","index:=0")'
 ###GL Entries####
 LIQ_Payment_GLEntries_Table = 'JavaWindow("title:=GL Entries.*").JavaTree("attached text:=Drill down to view details")'
 LIQ_Payment_GLEntries_Window = 'JavaWindow("title:=GL Entries.*")'

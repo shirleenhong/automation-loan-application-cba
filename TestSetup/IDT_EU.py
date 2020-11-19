@@ -2,7 +2,7 @@
 dataset_path = "C:\\Git_Evergreen\\fms_cba"
 ExcelPath = "C:\\Git_Evergreen\\fms_cba\\DataSet\\LoanIQ_DataSet\\EU_Entity\\EVG_PTYLIQ01_EU_BaselineBilateralCustomer.xlsx"
 CBAUAT_ExcelPath = "C:\\Git_Evergreen\\fms_cba\\DataSet\\CBA_UAT_DataSet\\EVG_CBAUAT05.xlsx"
-APIDataSet = "C:\\Git_Evergreen\\fms_cba\\DataSet\\Integration_DataSet\\API\\API_Data_Set.xlsx"
+APIDataSet = "C:\\Git_Evergreen\\fms_cba\\DataSet\\LoanIQ_DataSet\\EU_Entity\\EVG_PTYLIQ01_EU_BaselineBilateralCustomer.xlsx"
 Countries_Codes = '..\\fms_scotia\\DataSet\\Integration_DataSet\\API\\Countries_Codes.xlsx'
 TL_DATASET = "C:\\Git_Evergreen\\fms_cba\\DataSet\\Integration_DataSet\\TL\\TL_Data_Set_EU.xlsx"
 SAPWUL_DATASET = "C:\\Git_evergreen\\fms_cba\\DataSet\\Downstream_DataSet\\SAPWUL\\SAPWUL_Data_Set.xlsx"
@@ -16,6 +16,9 @@ Downstream_DataSet = '..\\CBA_Evergreen\\DataSet\\Downstream_DataSet\\ComSee\\Co
 COMMSEEDataSet= '..\\CBA_Evergreen\\DataSet\\COM_DataSet\\Com_Data_Set.xls'
 DWELIQFunc_Dataset = "C:\\Git_Evergreen\\fms_cba\\DataSet\\Integration_DataSet\\Extracts\\DWE_LIQ\\DWELIQ_Functional_TestData.xlsx"
 DNA_DATASET = "C:\\Git_Evergreen\\fms_cba\\DataSet\\Integration_DataSet\\Extracts\\DNA\\EVG_DNA_TestData_EU.xlsx"
+INDUSTRYSECTOR_LIST = "C:\\Git_Evergreen\\fms_cba\\DataSet\\Party_DataSet\\Industry_Sector\\Industry_Sector_Values.txt"
+BUSINESSACTIVITY_DIRECTORY = "C:\\Git_Evergreen\\fms_cba\\DataSet\\Party_DataSet\\Business_Activity"
+DNR_DATASET = "C:\\Git_Evergreen\\fms_cba\\DataSet\\Integration_DataSet\\Extracts\\DNR\\DNR_Dataset_EU.xlsx"
 
 FBTIDataset = 'C:\\Git_Evergreen\\evergreen_projects\\CBA_Evergreen\\DataSet\\FBTI_DataSet\\FBTI_User_Data_Set.xlsx'
 FBTIDataset_ILC = 'C:\\Git_Evergreen\\evergreen_projects\\CBA_Evergreen\\DataSet\\FBTI_DataSet\\FBTI_ILC_Data_Set.xlsx'
@@ -70,13 +73,14 @@ OPEAPI_INSTANCE = "openAPI_1.3.0"
 TEXTJMS_INSTANCE = "distributor_1.3.0"
 GETTEXTJMS_INSTANCE = "distributor_1.3.0"
 CBAINTERFACE_INSTANCE = "CustomInterface_1.3.0"
-CBAPUSH_INSTANCE = "CustomCBAPush_1.3.0"
+CBAPUSH_INSTANCE = "CustomCBAPush_1.4.0"
 CUSTOM_INTERFACE_INSTANCE = "CustomInterface"
 RESPONSE_MECHANISM_INSTANCE = "responsemechanism_1.3.0"
 DWE_NOTIFICATION_INSTANCE = "dwe_notification_1.3.0"
 SAPWUL_INSTANCE = 'CustomCBAPush_1.3.0'
 TL_CAL_ACK_MESSAGE_SOURCENAME = 'tl_ack_message_splitter_cal'
-CBACorrespUpdateMQ_Instance = 'CustomCBAPush_v1.3.0'
+TL_BASE_ACK_MESSAGE_SOURCENAME = 'tl_ack_message_splitter_base'
+CBACorrespUpdateMQ_Instance = 'CustomCBAPush_1.4.0'
 FFC1CMUpdateSourceMQ_Instance = 'CustomInterface'
 
 ###SFTP###
@@ -86,11 +90,11 @@ SFTP_USER = "sftpuser2"
 SFTP_PASSWORD = "luckyroll76"
 
 ###LIQ Credential###
-INPUTTER_USERNAME = "DJRHINPT"
+INPUTTER_USERNAME = "CESSINP3"
 INPUTTER_PASSWORD = "password"
-SUPERVISOR_USERNAME = "JOBSUPER"
+SUPERVISOR_USERNAME = "CESSSUP2"
 SUPERVISOR_PASSWORD = "password"
-MANAGER_USERNAME = "JOBMANGR"
+MANAGER_USERNAME = "CESSMNG2"
 MANAGER_PASSWORD = "password"
 LIQ_ADMIN_USERNAME = "ADMIN1"
 LIQ_ADMIN_PASSWORD = "password"
@@ -218,4 +222,33 @@ DBHOST_LIQ = 'MANCSLEVERG0017'
 DBPORT_LIQ = '1521'
 DBUR_LIQ = 'jdbc:oracle:thin:@//mancsleverg0017:1521/MLLOANIQ.misys.global.ad'
 LIQDBSCHEMA = 'LIQIDT'
+
+### Batch EOD ###
+PUTTY_PATH = "C:\\Program Files\\PuTTY\\putty.exe"
+PUTTY_HOSTNAME = "mancsleverg0005"
+PUTTY_PORT = "22"
+PUTTY_USERNAME = "micloud"
+PUTTY_PASSWORD = "misys123"
+
+### DNA ###
+DNA_SERVER = 'mancsleverg0021'
+DNA_SERVER_LIQ = 'mancsleverg0022'
+DNA_PORT = '22'
+DNA_SERVER_USER = 'sftpuser2'
+DNA_SERVER_PASSWORD = 'luckyroll76'
+DNA_EXTRACTION_AREA_PATH = '/evgdata/STREAMSETS/workspace/extraction_area/COMRLENDING/'
+DNA_CCB_LIQ_FILENAME = 'CCB_LIQ_'
+DNA_DATAASSURANCE_FILENAME = 'DATAASSURANCE_'
+DNA_DAT_EXT = '.DAT'
 LIQ7474_USER = 'LIQIDT'
+
+### COGNOS ###
+COGNOS_SERVER = 'mancsweverg0006'
+COGNOS_PORT = '9305'
+COGNOS_URL = '/bi/?perspective=home'
+COGNOS_USERNAME = "CGLINP01"
+COGNOS_PASSWORD = "Finastra2020"
+COGNOS_NAMESPACE = 'FinastraRoot'
+CBA_ALERTS_REPORTFILE = "Alerts_Report_V1.3.4"
+CBA_COMMENTS_REPORTFILE = "Comments_Report_v5"
+CBA_CALENDAR_REPORTFILE = "Calendar Report_v1.0"

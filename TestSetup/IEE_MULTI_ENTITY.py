@@ -122,6 +122,7 @@ RESPONSE_MECHANISM_INSTANCE = "responsemechanism_1.3.0"
 DWE_NOTIFICATION_INSTANCE = "dwe_notification_1.3.0"
 SAPWUL_INSTANCE = 'CustomCBAPush_1.3.0'
 TL_CAL_ACK_MESSAGE_SOURCENAME = 'ccb_source_cal'
+TL_BASE_ACK_MESSAGE_SOURCENAME = 'ccb_source_base'
 CBACorrespUpdateMQ_Instance = 'CustomCBAPush_v1.4.0'
 FFC1CMUpdateSourceMQ_Instance = 'CustomInterface_v1.4.0'
 
@@ -142,6 +143,24 @@ ESS_EUWASADMIN_SCHEMA = "EUWASADMIN"
 GL_VALIDATION_TOOL_PATH = 'C:\\Git_Evergreen\\fms_cba\\DataSet\\Integration_DataSet\Extracts\\GL\\Validation_Tool'
 GL_VALIDATION_TOOL_JAR_AU = 'gpgCheck-1.0.3-jar-with-dependencies.jar'
 GL_VALIDATION_TOOL_JAR_EU = 'gpgCheck-1.0.3-jar-with-dependencies-EU.jar'
+
+### Batch EOD ###
+PUTTY_PATH = "C:\\Program Files\\PuTTY\\putty.exe"
+PUTTY_HOSTNAME = "mancsleverg0005"
+PUTTY_PORT = "22"
+PUTTY_USERNAME = "micloud"
+PUTTY_PASSWORD = "misys123"
+
+### DNA ###
+DNA_SERVER = 'mancsleverg0021'
+DNA_SERVER_LIQ = 'mancsleverg0022'
+DNA_PORT = '22'
+DNA_SERVER_USER = 'sftpuser2'
+DNA_SERVER_PASSWORD = 'luckyroll76'
+DNA_EXTRACTION_AREA_PATH = '/evgdata/STREAMSETS/workspace/extraction_area/COMRLENDING/'
+DNA_CCB_LIQ_FILENAME = 'CCB_LIQ_'
+DNA_DATAASSURANCE_FILENAME = 'DATAASSURANCE_'
+DNA_DAT_EXT = '.DAT'
 
 ###Screenshots###
 screenshot_path = "C:\\Git_Evergreen\\fms_cba\\Results"

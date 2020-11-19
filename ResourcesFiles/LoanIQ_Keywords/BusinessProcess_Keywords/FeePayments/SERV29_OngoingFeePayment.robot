@@ -15,6 +15,7 @@ Update Commitment Fee Cycle
     ...    @update: dahijara    09JUL2020    Updated Writing for Serv29 data set.
     ...    @update: dahijara    05AUG2020    Added writing for fee alias for scenario 5
     ...    @update: dfajardo    13AUG2020    Change hardcoded value 30
+    ...    @update: aramos      27OCT2020    Updated to add click Warning Message before Online Accrual
     [Arguments]    ${ExcelPath}
 
     ###LoanIQ Window###
@@ -44,7 +45,9 @@ Update Commitment Fee Cycle
     ...    AND    Write Data To Excel    SERV29_PaymentFees    ScheduledActivity_ThruDate    ${rowid}    ${ScheduledActivity_ThruDate}
     ...    AND    Write Data To Excel    SERV29_PaymentFees    ScheduledActivityReport_Date    ${rowid}    ${AdjustedDueDate}
     ...    AND    Write Data To Excel    SERV29_PaymentFees    FeePayment_EffectiveDate    ${rowid}    ${SystemDate}
-
+    
+    Mx Click Element If Present    ${LIQ_Warning_OK_Button}    
+    
     Run Online Acrual to Commitment Fee
     
     ###Loan IQ Desktop###
@@ -129,7 +132,8 @@ Pay Commitment Fee Amount
     Run Keyword If    '${SCENARIO}'=='6'    Write Data To Excel    SERV29_PaymentFees    Computed_ProjectedCycleDue    &{ExcelPath}[rowid]    ${ProjectedCycleDue}  
 
     ###Cycles for Commitment Fee###
-    Select Cycle Fee Payment
+    Run Keyword If    '${ExcelPath}[Entity]'=='EU' and '${SCENARIO}'=='1'    Select Cycle Due Fee Payment
+    ...    ELSE    Select Cycle Fee Payment
     
     ###Ongoing Fee Payment Notebook - General Tab### 
     Enter Effective Date for Ongoing Fee Payment    ${SystemDate}    ${ProjectedCycleDue}
@@ -177,8 +181,7 @@ Pay Commitment Fee Amount
     Login to Loan IQ    ${MANAGER_USERNAME}    ${MANAGER_PASSWORD}
     ###Generation of Intent Notice is skipped - Customer Notice Method must be updated###
     Select Item in Work in Process    Payments    Release Cashflows    Ongoing Fee Payment     &{ExcelPath}[Facility_Name]
-    Run Keyword If    '${ExcelPath}[Entity]'=='EU'    Run Keywords    Generate Intent Notices for Ongoing Fee Payment
-    ...    AND    Mx LoanIQ Close    ${LIQ_Notice_PaymentIntentNotice_Window}
+    Run Keyword If    '${ExcelPath}[Entity]'=='EU'    Generate Intent Notices for Ongoing Fee Payment    
     Navigate to Payment Workflow and Proceed With Transaction    Release Cashflows
     Release Ongoing Fee Payment
     
@@ -523,6 +526,7 @@ Pay Commitment Fee Amount - Syndicated with Secondary Sale
     ###Ongoing Fee Notebook###
     Release Ongoing Fee Payment
     
+    Mx Click Element If Present    LIQ_Warning_OK_Button    
     ###Loan IQ Desktop###
     Close All Windows on LIQ
     Open Existing Deal    &{ExcelPath}[Deal_Name]

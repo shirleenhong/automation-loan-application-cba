@@ -87,9 +87,10 @@ Validate Customer SIC
 Validate Customer Legal Address Details in Textbox
     [Documentation]    This keywords validates Customer Legal Address Details of the given Party User Details against Loan IQ that are in Textbox fields
     ...    @author: dahijara    06MAY2020    - initial create
-    ...    @author: javinzon    16SEP2020    - updated arguments for value verification of Address Lines 3 and 4 in Loan IQ
-    ...    @author: javinzon    01OCT2020    - Added False argument to City validation. Updated the documentation.
+    ...    @update: javinzon    16SEP2020    - updated arguments for value verification of Address Lines 3 and 4 in Loan IQ
+    ...    @update: javinzon    01OCT2020    - Added False argument to City validation. Updated the documentation.
     ...                                        Added "Textbox" in keyword name; Removed Listbox field verification
+    ...    @update: makcamps    18NOV2020    - updated Line 4 to exact value (false)
     [Arguments]    ${sEnterpriseName}    ${sAddressCode}    ${sAddressLine1}    ${sAddressLine2}    ${sAddressLine3}   ${sAddressLine4}    ${sCity}    ${sPostalCode}    
     
     Take Screenshot    ${screenshot_path}/Screenshots/Party/PartyLIQActiveCustomerLegalAddressPage
@@ -99,7 +100,7 @@ Validate Customer Legal Address Details in Textbox
     Verify If Value Exists in Loan IQ    Line1    ${sAddressLine1}    View Address    Textbox
     Verify If Value Exists in Loan IQ    Line2    ${sAddressLine2}    View Address    Textbox
     Verify If Value Exists in Loan IQ    Line3    ${sAddressLine3}    View Address    Textbox
-    Verify If Value Exists in Loan IQ    Line4    ${sAddressLine4}    View Address    Textbox
+    Verify If Value Exists in Loan IQ    Line4    ${sAddressLine4}    View Address    Textbox    False
     Verify If Value Exists in Loan IQ    City    ${sCity}    View Address    Textbox    False
     Verify If Value Exists in Loan IQ    Postal Code    ${sPostalCode}    View Address    Textbox
     Mx LoanIQ Click    ${LIQ_ViewAddress_Ok_CancelButton}
@@ -114,9 +115,15 @@ Validate Party Details in Loan IQ
     ...										   Updated label from PARTY SUBTYPE to Classification
     ...	   @update: javinzon	09OCT2020	 - Added comments for SIC, Country of Tax Domicile, and Province Validation
     ...    @update: makcamps    22OCT2020    - Updated conditions for EU setup.
+    ...    @update: makcamps    18NOV2020    - Added conditions for Netherlands country and tax domicile
     [Arguments]    ${sPartyID}    ${sShortName}    ${sEnterpriseName}    ${sGSTID}    ${sPartySubType}    ${sPartyBusinessActivity}    ${sBusinessCountry}    
     ...    ${sAddressCode}    ${sAddressLine1}    ${sAddressLine2}    ${sAddressLine3}    ${sAddressLine4}    ${sCity}    ${sCountry}    ${sCountryOfTaxDomicile}
     ...    ${sProvince}    ${sPostalCode}    ${sEntity}=AU
+    
+    ${sCountry}    Run Keyword If    '${sCountry}'=='Netherlands Holland' or '${sCountry}'=='Netherlands Antilles'   Set Variable    Netherlands
+    ...    ELSE    Set Variable    ${sCountry}
+    ${sCountryOfTaxDomicile}    Run Keyword If    '${sCountryOfTaxDomicile}'=='Netherlands Holland' or '${sCountryOfTaxDomicile}'=='Netherlands Antilles'   Set Variable    Netherlands
+    ...    ELSE    Set Variable    ${sCountryOfTaxDomicile}
     
     Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
     Navigate to Customer Notebook via Customer ID    ${sPartyID}

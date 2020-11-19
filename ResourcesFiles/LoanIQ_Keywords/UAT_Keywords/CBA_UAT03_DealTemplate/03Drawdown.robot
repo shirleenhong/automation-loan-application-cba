@@ -29,8 +29,9 @@ Create Drawdown D00000476
     ...    None    None    &{ExcelPath}[Loan_PaymentMode]    &{ExcelPath}[Loan_Accrue]    &{ExcelPath}[Loan_AccrueEndDate]
   
     ###Accept Loan Drawdown Rates for Term Facility    &{ExcelPath}[Borrower_BaseRate]
-    Mx Click Element If Present    ${LIQ_Warning_Yes_Button}    
-    Input Loan Drawdown Rates    &{ExcelPath}[Borrower_BaseRate]    &{ExcelPath}[Facility_Spread]
+    Mx Click Element If Present    ${LIQ_Warning_Yes_Button}
+    Run Keyword If    '&{ExcelPath}[rowid]'=='8'    Enter Initial Loan Drawdown Spread Rate    &{ExcelPath}[Facility_Spread]
+    Input Loan Drawdown Rates    &{ExcelPath}[Borrower_BaseRate]    &{ExcelPath}[Facility_Spread_Actual]
     Set Outstanding Servicing Group Details    &{ExcelPath}[Borrower_ShortName]    &{ExcelPath}[Remittance_Instruction]
     
     ###Cashflow Notebook - Create Cashflows###
@@ -58,7 +59,7 @@ Create Drawdown D00000476
     Navigate Transaction in WIP    Outstandings    Awaiting Rate Approval    Loan Initial Drawdown    ${Loan_Alias}
     Navigate Notebook Workflow    ${LIQ_InitialDrawdown_Window}    ${LIQ_InitialDrawdown_Tab}    ${LIQ_InitialDrawdown_WorkflowAction}    Rate Approval
     Navigate Notebook Workflow    ${LIQ_InitialDrawdown_Window}    ${LIQ_InitialDrawdown_Tab}    ${LIQ_InitialDrawdown_WorkflowAction}    Release Cashflows
-    # Release Cashflow    &{ExcelPath}[Borrower_ShortName]    release
+    Release Cashflow    &{ExcelPath}[Borrower_ShortName]    release
     
     ###Release Drawdown###
     Navigate Notebook Workflow    ${LIQ_InitialDrawdown_Window}    ${LIQ_InitialDrawdown_Tab}    ${LIQ_InitialDrawdown_WorkflowAction}    Release

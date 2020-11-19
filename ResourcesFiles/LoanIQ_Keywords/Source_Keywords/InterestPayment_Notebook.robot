@@ -85,7 +85,8 @@ Initiate Loan Interest Payment
     Mx LoanIQ Enter    ${LIQ_Loan_CyclesforLoan_ProRateType_RadioButton}    ON
 
     Get Loan Interest Cycle Dates    ${CycleNumber}
-    Mx LoanIQ Click    ${LIQ_Loan_CyclesforLoan_OK_Button}
+    Mx PressTab    ${LIQ_Loan_CyclesforLoan_OK_Button}  
+    Mx LoanIQ Click    ${LIQ_Loan_CyclesforLoan_OK_Button}        
     Mx LoanIQ Click Element If Present    ${LIQ_Warning_Yes_Button}     
     Mx LoanIQ Activate Window    ${LIQ_Payment_Window}
     Take Screenshot    ${Screenshot_Path}/Screenshots/LoanIQ/InterestPaymentWindow
@@ -166,6 +167,22 @@ Get Loan Interest Cycle Dates
       
     ${UI_InterestCycleDueDate}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_Loan_CyclesforLoan_List}    ${CycleNumber}%Due Date%test  
     ${UI_InterestCycleStartDate}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_Loan_CyclesforLoan_List}    ${CycleNumber}%Start Date%test  
+    
+Get Notice Details in Loan Notebook 
+    [Documentation]    This keyword returns All In Rate in Loan Notebook
+    ...    @author:    makcamps    03NOV2020    Initial Create
+    Mx LoanIQ Select Window Tab    ${LIQ_Loan_Tab}    Rates
+    ${AllInRate}    Mx LoanIQ Get Data    ${LIQ_Loan_AllInRate}    text%AllInRate
+    [Return]    ${AllInRate}
+
+Get Notice Details in Interest Payment Notebook 
+    [Documentation]    This keyword returns Effective Date, All In Rate Amount, and Currency in Interest Payment Notebook
+    ...    @author:    makcamps    03NOV2020    Initial Create
+    
+    ${Effective_Date}    Mx LoanIQ Get Data    ${LIQ_InterestPayment_EffectiveDate_Textfield}    text%Effective_Date
+    ${AllInRate_Amount}    Mx LoanIQ Get Data    ${LIQ_InterestPayment_RequestedAmount_Textfield}    text%AllInRate_Amount
+    ${Loan_Currency}    Mx LoanIQ Get Data    ${LIQ_InterestPayment_Currency_Textfield}    text%Loan_Currency
+    [Return]    ${Effective_Date}    ${AllInRate_Amount}    ${Loan_Currency}
     
 Compute Interest Payment Amount Per Cycle - Zero Cycle Due
     [Documentation]    This keyword is used in computing the first Projected Cycle Due of the Interest Payment and saves it to Excel.
@@ -385,32 +402,24 @@ Generate Intent Notices for Payment
         
 Generate Intent Notices of an Interest Payment
     [Documentation]    This keyword generates Intent Notices of an Interest Payment
-    ...    @author: ghabal    
-    [Arguments]    ${LIQCustomer_ShortName}    ${Contact_Email}    ${Lender_LegalName}    ${InterestPaymentNotice_Status}   
+    ...    @author:		ghabal    
+    ...    @updated:	makcamps	03NOV2020	Updated to All Caps Legal Name for LIQ Field    
+    [Arguments]    ${LIQCustomer_ShortName}    ${Contact_Email}    ${Lender_LegalName}    ${InterestPaymentNotice_Status}
 
     mx LoanIQ activate    ${LIQ_Payment_Window}    
     Mx LoanIQ Select Window Tab    ${LIQ_Payment_Tab}    Workflow
     Mx LoanIQ Verify Text In Javatree    ${LIQ_Payment_WorkflowItems}    Generate Intent Notices%yes    
     Mx LoanIQ DoubleClick    ${LIQ_Payment_WorkflowItems}    Generate Intent Notices
     
-    ${status}    Run Keyword And Return Status    Mx LoanIQ Verify Runtime Property    ${LIQ_Notices_BorrowerDepositor_Checkbox}       value%1
-    Run Keyword If    ${status}==True    mx LoanIQ click element if present    ${LIQ_Notices_OK_Button}
-    
-    mx LoanIQ click element if present    ${LIQ_Notices_OK_Button}
-      
+    mx LoanIQ click element if present    ${LIQ_Question_Yes_Button}
     mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
     
-    ${status}    Run Keyword And Return Status    Mx LoanIQ Verify Runtime Property    ${LIQ_Notices_BorrowerDepositor_Checkbox}       value%1
-    Run Keyword If    ${status}==True    mx LoanIQ click element if present    ${LIQ_Notices_OK_Button}    
-        
-    mx LoanIQ click element if present    ${LIQ_Notices_OK_Button}
-      
-    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}    
-    
+    ${status}    Run Keyword And Return Status    Mx LoanIQ Verify Runtime Property    ${LIQ_Notices_BorrowerDepositor_Checkbox}       value%1    
+    Run Keyword If    ${status}==True    mx LoanIQ click element if present    ${LIQ_Notices_OK_Button}
     mx LoanIQ activate window    ${LIQ_Notice_Window}
-    ${NoticeStatus}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_Notice_Information_Table}    ${LIQCustomer_ShortName}%Status%test    
+    ${NoticeStatus}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_Notice_Information_Table}    ${LIQCustomer_ShortName.upper()}%Status%test    
     Log    ${NoticeStatus}
-    Mx LoanIQ Select Or Doubleclick In Tree By Text    ${LIQ_Notice_Information_Table}    ${LIQCustomer_ShortName}%s 
+    Mx LoanIQ Select Or Doubleclick In Tree By Text    ${LIQ_Notice_Information_Table}    ${LIQCustomer_ShortName.upper()}%s 
     
     mx LoanIQ click    ${LIQ_Notice_EditHighlightedNotice_Button}
     mx LoanIQ activate window    ${LIQ_Notice_IntentNotice_Window}   
@@ -419,8 +428,8 @@ Generate Intent Notices of an Interest Payment
     Should Be Equal    ${Contact_Email}    ${ContactEmail}          
     mx LoanIQ activate window    ${LIQ_Notice_IntentNotice_Window}
     
-    ${Verified_Customer}    Mx LoanIQ Get Data    JavaWindow("title:=Interest Payment Notice created.*","displayed:=1").JavaEdit("text:=${Lender_LegalName}")    Verified_Customer    
-    Should Be Equal As Strings    ${Lender_LegalName}    ${Verified_Customer}
+    ${Verified_Customer}    Mx LoanIQ Get Data    JavaWindow("title:=Interest Payment Notice created.*","displayed:=1").JavaEdit("text:=${Lender_LegalName.upper()}")    Verified_Customer    
+    Should Be Equal As Strings    ${Lender_LegalName.upper()}    ${Verified_Customer}
     Log    ${Verified_Customer}    
     ${Verified_Status}    Mx LoanIQ Get Data    JavaWindow("title:=Interest Payment Notice created.*","displayed:=1").JavaObject("tagname:=Group","text:=Status").JavaStaticText("text:=${InterestPaymentNotice_Status}")    Verified_Status    
     Should Be Equal As Strings    ${InterestPaymentNotice_Status}    ${Verified_Status}

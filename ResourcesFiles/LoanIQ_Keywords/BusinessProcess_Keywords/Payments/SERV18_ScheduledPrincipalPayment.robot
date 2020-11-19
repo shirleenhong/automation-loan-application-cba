@@ -10,6 +10,7 @@ Manual Schedule Principal Payment
     ...    @update: bernchua    25JUN2019    Updated condition logic during post validation of amounts
     ...    @update: ehugo       01JUN2020    - updated keyword 'Navigate Notebook Workflow' to 'Navigate to Payment Workflow and Proceed With Transaction'
     ...    @update: makcamps    26OCT2020    Updated get host bank cash in cashflow with EU currency and added release cashflow based on remittance instruction
+    ...    @update: makcamps    11NOV2020    Added Generation of intent notice
     [Arguments]    ${ExcelPath}
     
     ###Loan IQ Desktop###
@@ -73,6 +74,7 @@ Manual Schedule Principal Payment
     Login to Loan IQ    ${MANAGER_USERNAME}    ${MANAGER_PASSWORD}
     
     Select Item in Work in Process    Payments    Awaiting Release    Scheduled Loan Principal Payment     &{ExcelPath}[Deal_Name]    
+    Run Keyword If    '${ExcelPath}[Entity]'=='EU'    Generate Intent Notices for Scheduled Principal Payment
     Release Cashflow Based on Remittance Instruction    &{ExcelPath}[Remittance_Instruction]    &{ExcelPath}[Borrower1_ShortName]    &{ExcelPath}[Cashflow_DataType]    Payment
     Release Scheduled Principal Payment
         
@@ -222,7 +224,7 @@ Initiate Fee On Lender Shares Payment
     Navigate Existing Standby Letters of Credit    &{ExcelPath}[SBLC_Alias]
         
     ###Cycles for Bank Guarantee Window###    
-    ${ComputedCycleDue}    Compute SBLC Issuance Fee Amount Per Cycle    &{ExcelPath}[CycleNumber]    ${SystemDate}
+    ${ComputedCycleDue}    Compute SBLC Issuance Fee Amount Per Cycle    &{ExcelPath}[CycleNumber]    ${SystemDate}    None    &{ExcelPath}[AccrualRule_PayInAdvance]
     Write Data To Excel    SERV18_FeeOnLenderSharesPayment    Computed_ProjectedCycleDue    &{ExcelPath}[rowid]    ${ComputedCycleDue}
     Write Data To Excel    SERV24_CreateCashflow    Computed_ProjectedCycleDue    &{ExcelPath}[rowid]    ${ComputedCycleDue}
     
@@ -230,6 +232,7 @@ Initiate Fee On Lender Shares Payment
     Navigate To Fees On Lender Shares
     Initiate Issuance Fee Payment    &{ExcelPath}[SBLC_Alias]    ${SystemDate}
     ...    &{ExcelPath}[Deal_Name]    &{ExcelPath}[Facility_Name]    &{ExcelPath}[Borrower1_ShortName]    ${ComputedCycleDue}
+
     
 Workflow Navigation For Fee On Lender Shares Payment
     [Documentation]    This high-level keyword will cater the workflow navigation of Fee on Lender Shares Payment

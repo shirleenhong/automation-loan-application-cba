@@ -97,3 +97,16 @@ LIQ_Participation_Outstanding_FundingMemo_Create = 'JavaWindow("title:=Outstandi
 LIQ_Participation_Funding_Window = 'JavaWindow("title:=Funding Memo for.*")'
 LIQ_Participation_Funding_Ok_Button = 'JavaWindow("title:=Funding Memo for.*").JavaButton("attached text:=OK.*")'
 
+### Generic Participation Objects ###
+LIQ_Participation_Window = 'JavaWindow("title:=.*Participation.*")'
+LIQ_Participation_Tab = 'JavaWindow("title:=.*Participation.*","displayed:=1").JavaTab("tagname:=TabFolder")'
+LIQ_Participation_Workflow_JavaTree = 'JavaWindow("title:=.*Participation.*").JavaTree("attached text:=Drill down to perform.*")'
+LIQ_Participation_PctofDeal_Textbox = 'JavaWindow("title:=.*Participation.*").JavaEdit("attached text:=Pct of Deal:")'
+LIQ_Participation_IntFeeDropdownList = 'JavaWindow("title:=.*Participation.*").JavaList("attached text:=Int/Fee.*")'
+LIQ_Participation_ProRate_Button = 'JavaWindow("title:=.*Participation.*").JavaButton("attached text:=Pro Rate")'
+LIQ_Participation_AmtsTab_CurrentAmount = 'JavaWindow("title:=.*Participation.*").JavaEdit("attached text:=Current:")'
+LIQ_Participation_AmtsTab_ExpectedClose = 'JavaWindow("title:=.*Participation.*").JavaEdit("attached text:=Expected Close:")'
+LIQ_Participation_DealAmount_Textfield = 'JavaWindow("title:=.*Participation.*").JavaEdit("labeled_containers_path:=.*Aggregate Amounts.*","Index:=2")'
+LIQ_Participation_PctofDeal_InputField = 'JavaWindow("title:=.*Participation.*").JavaEdit("attached text:=Pct of Deal:")'
+LIQ_Participation_BuyAmount_Textfield = 'JavaWindow("title:=.*Participation.*").JavaEdit("attached text:=Buyer.*","index:=0")'
+LIQ_Participation_FacilityList = 'JavaWindow("title:=.*Participation.*").JavaTree("attached text:=Drill down to change details.*")'

@@ -45,3 +45,33 @@ Upfront Fee Notices
     [Tags]    06 Notices_Upfront_Fee
     Mx Execute Template With Multiple Data    Send Notice For Upfront Fee    ${ExcelPath}    ${rowid}    Correspondence
     
+Create Initial Loan Drawdown - SERV02
+    [Documentation]    Creation of Initial Loan Drawdown
+    [Tags]    07 Create Initial Loan Drawdown - SERV02
+    Mx Execute Template With Multiple Data    Create Initial Loan Drawdown for Non Agent Syndication    ${ExcelPath}    1-4    SERV02_LoanDrawdownNonAgent      
+
+Variable Rates Load using TL_BASE_19   
+    [Documentation]    Variable Rates Load using TL_BASE_19
+    [Tags]    08 Variable Rates Load using TL_BASE_19
+    Mx Execute Template With Multiple Data    Send GS File with removed Floating Rates    ${ExcelPath}    ${rowid}    BaseRate_Fields   
+
+Create Pricing Change Transaction - AMCH06
+    [Documentation]    Change Interest Pricing Matrix from Debt Service Cover Ratio (DSCR) into Loan to Value Ratio (LVR).
+    [Tags]    09 Create Interest Pricing Change via Facility Notebook - AMCH11
+    Mx Execute Template With Multiple Data    Create Interest Pricing Change via Facility Notebook    ${ExcelPath}    ${rowid}    AMCH06_PricingChangeTransaction
+    Log to Console    Pause Execution - Run Monthly EOD
+    Pause Execution
+    ###SCENARIO 4 WILL NOT HAVE ITS DAY 2 SINCE THE NEXT TEST CASE IS COMPREHENSIVE REPRICING WHICH WILL OCCUR AFTER 30DAYS EOD###
+    
+Create Comprehensive Repricing - SERV09
+    [Tags]    10 Loan Repricing - Other Bank is Agent
+    Mx Execute Template With Multiple Data    Create Comprehensive Repricing for Non-Agent Syndicated Deal    ${ExcelPath}   1-4    SERV09_LoanRepricing
+    
+Perform Lender Share Adjustment - AMCH02
+    [Documentation]    This keyword performs lender share adjustment to a deal
+    [Tags]    11 Perform Lender Share Adjustment - AMCH02 
+    Mx Execute Template With Multiple Data    Perform Lender Share Adjustment    ${ExcelPath}    ${rowid}    AMCH02_LenderShareAdjustment
+    
+Extend Facility Maturity Date - AMCH05
+    [Tags]    12 Facility Change Transaction - Extend Maturity Exp Date
+    Mx Execute Template With Multiple Data    Extend Maturity Date    ${ExcelPath}   ${rowid}    AMCH05_ExtendMaturityDate

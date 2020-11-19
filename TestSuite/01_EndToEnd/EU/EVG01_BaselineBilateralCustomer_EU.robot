@@ -11,11 +11,11 @@ Scenario 1 EU - Create Quick Party Onboarding
     Mx Launch UFT    Visibility=True    UFTAddins=Java    Processtimeout=300
     Mx LoanIQ Launch    Processtimeout=300
     Mx Execute Template With Multiple Data    Create Party in Quick Party Onboarding    ${ExcelPath}    ${rowid}    PTY001_QuickPartyOnboarding
-    
+
 Scenario 1 EU - Search Customer and Complete its Borrower Profile Creation
     [Tags]    02 Create Customer within Loan IQ - ORIG03
     Mx Execute Template With Multiple Data    Search Customer and Complete its Borrower Profile Creation with default values    ${ExcelPath}    ${rowid}    ORIG03_Customer
-     
+
 Scenario 1 EU - Deal Setup
     [Tags]    03 Deal Setup - CRED01
     Mx Execute Template With Multiple Data    Setup a Bilateral Deal    ${ExcelPath}    ${rowid}    CRED01_DealSetup
@@ -30,36 +30,46 @@ Scenario 1 EU - Calendar Load
 Scenario 1 EU - Create Initial Loan Drawdown
     [Tags]    05 Create Initial Loan Drawdown - SERV01
     Mx Execute Template With Multiple Data    Create Initial Loan Drawdown with Repayment Schedule    ${ExcelPath}    ${rowid}    SERV01_LoanDrawdown
-    
+
 Scenario 1 EU - Send Drawdown Notices
     [Tags]    06 Send Drawdown Notices - API_COR_TC01
     Set Test Variable    ${rowid}    1
     Mx Execute Template With Multiple Data    Send Notice via Notice Application    ${ExcelPath}    ${rowid}    Correspondence
-    
+
 Scenario 1 EU - Initiate Ongoing Fee Payment
     [Tags]    07 Initiate Ongoing Fee Payment - SERV29
     Mx Execute Template With Multiple Data    Update Commitment Fee Cycle    ${ExcelPath}    ${rowid}    SERV29_PaymentFees   
     Log to Console    Pause Execution - Run Daily EOD
     Pause Execution
     Mx Execute Template With Multiple Data    Pay Commitment Fee Amount    ${ExcelPath}    ${rowid}    SERV29_PaymentFees
-    
+
 Scenario 1 EU - Send Ongoing Fee Payment Notices
     [Tags]    08 Send Ongoing Fee Payment Notices - API_COR_TC05
-    Set Test Variable    ${rowid}    5
+    Set Test Variable    ${rowid}    2
     Mx Execute Template With Multiple Data    Send a SENT Callback for Notice for BILATERAL Deal via WIP    ${ExcelPath}    ${rowid}    Correspondence
-        
+  
 Scenario 1 EU - Create Pricing Change Transaction
     [Tags]    09 Create Pricing Change Transaction - AMCH06
     Mx Execute Template With Multiple Data    Create Pricing Change Transaction    ${ExcelPath}    ${rowid}    AMCH06_PricingChangeTransaction
-    
+
 Scenario 1 EU - Initiate Loan Interest Payment
     [Tags]    10 Initiate Loan Interest Payment - SERV21
     Mx Execute Template With Multiple Data    Initiate Interest Payment    ${ExcelPath}    ${rowid}    SERV21_InterestPayments
-    
+
+Scenario 1 EU - Send Interest Payment notices
+    [Tags]    11 Send Interest Payment Notices
+    Set Test Variable    ${rowid}    3
+    Mx Execute Template With Multiple Data    Send Notice For Interest Payment    ${ExcelPath}    ${rowid}    Correspondence
+
 Scenario 1 EU - Manual Scheduled Principal Payment
     [Tags]    12 Manual Scheduled Principal Payment - SERV18
-    Mx Execute Template With Multiple Data    Manual Schedule Principal Payment    ${ExcelPath}    ${rowid}    SERV18_Payments    
-    
+    Mx Execute Template With Multiple Data    Manual Schedule Principal Payment    ${ExcelPath}    ${rowid}    SERV18_Payments
+
+Scenario 1 EU - Send Scheduled Principal Payment notices
+    [Tags]    13 Send Principal Payment Notices
+    Set Test Variable    ${rowid}    4
+    Mx Execute Template With Multiple Data    Send Notice For Principal Payment    ${ExcelPath}    ${rowid}    Correspondence 
+
 Scenario 1 EU - Deal Change Transaction
     [Tags]    14 Deal Change Transaction - AMCH04
-    Mx Execute Template With Multiple Data    Deal Change Transaction on Financial Ratio    ${ExcelPath}    ${rowid}    AMCH04_DealChangeTransaction   
+    Mx Execute Template With Multiple Data    Deal Change Transaction on Financial Ratio    ${ExcelPath}    ${rowid}    AMCH04_DealChangeTransaction

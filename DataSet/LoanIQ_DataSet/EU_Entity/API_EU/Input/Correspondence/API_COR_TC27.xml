@@ -1,0 +1,41 @@
+<liqInfo>
+    {"event_schema_id":"2148","event":{"header":{"correlationId":"LIQ-TDEJV83X-T=EJV7AP-2","processPath":{"array":[{"source":"FINASTRA_CCB","timestamp":"2020-11-18T22:01:21.088+08:00"}]}},"sourceSystem":{"string":"FINASTRA_CCB"},"ttl":{"au.com.cba.avro.customermanagement.noticesnotify.ttl":{"ttlDuration":"300","ttlSourceTime":"2020-11-18T22:01:21.088+08:00"}},"cifIds":{"array":[{"string":"1513536"}]},"documentInfo":{"documentPackage":{"businessChannel":"LOANIQ","name":null,"version":null,"templateId":null,"fileType":null,"content":"
+    <FinastraApplication>
+        <StandardNotice>
+            <ProcessingArea>EUOPS</ProcessingArea>
+            <Address>
+                <line>Date: 18-Nov-2020</line>
+                <line>TO  : Sanseera Electronics Ltd 1513536</line>
+                <line>ATTN: Makee Campomanes</line>
+                <line>Re  : CBAEU_18112020160654TWL CEU_FAC_18112020161637RKP</line>
+            </Address>
+            <BodyContent>
+                <section>
+                    <line>           Description: Fixed Rate Option Interest Payment  </line>
+                    <line> The all-in rate is: 15.000000% </line>
+                </section>
+                <section>
+                    <line>Effective 10-Nov-2020 Sanseera Electronics Ltd 1513536 will pay interest under the Fixed Rate Option totaling EUR 4.11.</line>
+                </section>
+                <section>
+                    <line/>
+                    <line/>
+                    <line>Please remit EUR 4.11 into our nominated account below for value on the effective date.</line>
+                </section>
+                <section>
+                    <line>For: Sanseera Electronics Ltd 1513536</line>
+                    <line>Correspondent Bank: BANK OF NEW YORK MELLON SA/NV, AMSTERDAM BRANCH (Swift ID: BNYMNL22XXX) </line>
+                    <line>Account Name: CBA Amsterdam</line>
+                </section>
+                <section>
+                    <line>Reference: EUOPS1000899</line>
+                </section>
+                <section>
+                    <line/>
+                </section>
+            </BodyContent>
+        </StandardNotice>
+    </FinastraApplication>
+    "},"documentStorage":{"status":null,"fileName":null,"inputSource":null,"inputSourceDetail":null,"scanDate":null,"departmentId":{"string":"BP_CML"},"retrievalId":null,"documentumType":null,"applicationNumber":null,"purgeDate":null,"boxLocation":null,"recordManager":null,"description":null,"processes":{"array":[{"string":"T=EJV7AP"}]},"services":{"array":[{"string":"1000899"}]},"accountNumbers":{"array":[{"source":{"string":"LOANIQ"},"productCode":{"string":"OST"},"number":{"string":"60001111"}}]},"processFlags":{"array":[{"name":null,"value":null}]}}},"emailSecureMessageDetails":{"subject":"1000899 CBAEU_18112020160654TWL","senderEmail":"NON-AGENCY@CBA.AU.COM","toRecipientEmail":"{BACKSPACE}makee.campomanes@abc.com","ccRecipientEmail":{"string":"JOHN.DOE_1@CBA.AU.COM"},"mimeType":null,"messageID":"LIQ-TDEJV83X-T=EJV7AP-2","body":null,"attachment":null,"inBandAttachment":null,"deliveredToEmail":null,"undeliveredToEmail":null,"systemCode":null,"systemName":null,"identifier":{"string":"EUOPS"},"digitalSignature":null}}}
+
+</liqInfo>

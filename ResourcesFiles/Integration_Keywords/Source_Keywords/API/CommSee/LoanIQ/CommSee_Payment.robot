@@ -307,6 +307,7 @@ Create Cycle Share Adjustment for Fee Accrual - Scenario 7 ComSee
 Create Payment Reversal - Scenario 7 ComSee
     [Documentation]    This keyword initiates payment reversal after Fee Payment is released.
     ...    @author: cfrancis    01OCT2020    - initial create
+    ...    @update: makcamps    17NOV2020    - removed extra release cashflow keyword
     [Arguments]    ${ExcelPath}
     
     ###Launch Facility Notebook###
@@ -329,8 +330,9 @@ Create Payment Reversal - Scenario 7 ComSee
     Verify if Status is set to Do It    ${Borrower}
     
     ###Get Transaction Amount for Cashflow###
-    ${HostBankSharePct}    Read Data From Excel    ComSee_SC7_OngoingFeePayment    HostBankSharePct    ${rowid}    ${ComSeeDataSet}  
-    ${HostBankShare}    Get Host Bank Cash in Cashflow
+    ${HostBankSharePct}    Read Data From Excel    ComSee_SC7_OngoingFeePayment    HostBankSharePct    ${rowid}    ${ComSeeDataSet}
+    ${HostBankShare}    Run Keyword If    '${ExcelPath}[Entity]'=='EU'    Get Host Bank Cash in Cashflow    &{ExcelPath}[Currency]
+    ...    ELSE    Get Host Bank Cash in Cashflow
     ${BorrowerTranAmount}    Get Transaction Amount in Cashflow    ${Borrower}
     ${ComputedHBTranAmount}    Compute Lender Share Transaction Amount    ${ProjectedCycleDue}    ${HostBankSharePct}
     
@@ -367,8 +369,7 @@ Create Payment Reversal - Scenario 7 ComSee
 
     ###Release Reverse Fee Payment###       
     Select Item in Work in Process    Payments    Awaiting Release Cashflows   Reverse Fee Payment     ${FacilityName}
-    Navigate Notebook Workflow    ${LIQ_ReverseFee_Window}    ${LIQ_LineFee_ReversePayment_Tab}    ${LIQ_LineFee_ReversePayment_WorkflowItems}    Release Cashflows   
-    Release Cashflow    ${Borrower}    release    
+    Navigate Notebook Workflow    ${LIQ_ReverseFee_Window}    ${LIQ_LineFee_ReversePayment_Tab}    ${LIQ_LineFee_ReversePayment_WorkflowItems}    Release Cashflows
     Release Reverse Fee Payment
     Close All Windows on LIQ
     Logout from Loan IQ

@@ -3267,7 +3267,9 @@ Enter Initial Loan Drawdown Spread Rate
     [Documentation]    This keyword will enter a spread rate on initial loan drawdown rates.
     ...    @author: mnanquil
     ...    Jan-07-2018
+    ...    @update: added navigation to rates tab
     [Arguments]    ${spreadRate}
+    Mx LoanIQ Select Window Tab    ${LIQ_InitialDrawdown_Tab}    ${RATES_TAB}
     mx LoanIQ click    ${LIQ_InitialDrawdown_SpreadRate_Button}
     mx LoanIQ enter    ${LIQ_InitialDrawdown_SpreadRate_TextField}    ${spreadRate}
     mx LoanIQ click    ${LIQ_InitialDrawdown_SpreadRate_OKButton}
@@ -3315,6 +3317,7 @@ Set FX Rates Loan Repricing
     [Documentation]    This keyword set the FX rates of any currency repricing from workflow before Rate Approval
     ...    @author: xmiranda    27SEP2019    - initial draft
     ...    @update: shirhong    16OCT2020    Added condition for Set FX Rate "Use Spot"
+    ...    @update: fluberio    12NOV2020    added click Yes Button if Present
     [Arguments]    ${sCurrency}    ${FxRate_Origin}=None
     mx LoanIQ activate window    ${LIQ_LoanRepricingForDeal_Window}
     Mx LoanIQ Select Window Tab    ${LIQ_LoanRepricingForDeal_Tab}    Workflow
@@ -3328,6 +3331,7 @@ Set FX Rates Loan Repricing
     ...    ELSE    mx LoanIQ click    JavaWindow("title:=Facility Currency.*","displayed:=1").JavaButton("attached text:=Use Facility.*to ${sCurrency} Rate")
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/FXLoanRepricing_Workflow
     mx LoanIQ click    ${LIQ_FacilityCurrency_Facility_Rate_Ok_Button}
+    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/FXLoanRepricing_Workflow
 
 Navigate to Rates Tab
@@ -3861,3 +3865,15 @@ Delete Repayment Schedule in the Loan
      \    ${Warning_Status}    Run Keyword And Return Status    Mx LoanIQ Verify Object Exist    ${LIQ_Warning_Window}     VerificationData="Yes"
      \    Exit For Loop If    ${Warning_Status}==False
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LoanNotebook_RepaymentSchedule
+
+Complete Set FX Rate
+    [Documentation]    This keyword completes the FX Rates in the Initial Drawdown Notebook.
+    ...    @author: mcastro    16NOV2020    - Initial Create  
+
+    mx LoanIQ activate    ${LIQ_FXRate_Window}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/FxRate_Window
+    mx LoanIQ click    ${LIQ_FXRate_UserSpotRate_Button}  
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/FxRate_Window 
+    mx LoanIQ click    ${LIQ_FXRate_OK_Button}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/FxRate_Window
+    Validate if Question or Warning Message is Displayed
