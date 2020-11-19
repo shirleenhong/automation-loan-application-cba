@@ -43,3 +43,9 @@ Complete Participation Buyback - TRPO05
 Complete Internal Participation - TRPO06
     [Tags]    08    Participation Internal - TRPO06
     Mx Execute Template With Multiple Data    Complete Internal Participation without Premiun/Discount    ${ExcelPath}    ${rowid}    TRPO06_InternalParticipation
+
+Complete Comprehensive Repricing, Principal Payment and Interest Payment - SERV08
+    [Tags]    09    Loan Repricing - SERV08 
+    Log to Console    Pause Execution - 1 month EOD or EOD until repricing date
+    Pause Execution
+    Mx Execute Template With Multiple Data    Complete Comprehensive Repricing, Principal Payment and Interest Payment    ${ExcelPath}    ${rowid}    SERV08_ComprehensiveRepricing
