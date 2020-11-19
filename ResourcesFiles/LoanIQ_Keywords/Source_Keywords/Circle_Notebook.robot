@@ -2391,6 +2391,7 @@ Complete Portfolio Allocations Workflow for Pending Participation Sell
 Populate Portfolio Allocations For a Facility
     [Documentation]    This keyword completes the Portfolio Allocation Workflow Item of one facility
     ...    @author: mcastro    15OCT202    0initial create
+    ...    @update: dahijara    18NOV2020    - Added optional clicking for Warking popup window.
     [Arguments]    ${sFacility_Name}
 
     ### Pre-processing keywords ###
@@ -2398,6 +2399,7 @@ Populate Portfolio Allocations For a Facility
     
     Mx LoanIQ Select String    ${LIQ_AssignmentSell_PortfolioAllocations_Facilities_List}    ${Facility_Name}
     Mx LoanIQ DoubleClick    ${LIQ_PortfolioAllocations_PortfolioExpense_JavaTree}    0.00
+    Mx LoanIQ Click Element If Present    ${LIQ_Warning_Yes_Button}
     Take Screenshot    ${Screenshot_Path}/Screenshots/LoanIQ/PorfolioAllocationsWindow
     
     mx LoanIQ click    ${AssignmentSell_Allocations_OKButton}
@@ -2634,6 +2636,7 @@ Approval For Internal Participation Sell
 Funding Memo For Pending Participation
     [Documentation]    This keyword completes Funding Memo for Pending participation
     ...    @author: mcastro    22OCT2020    Initial Create
+    ...    @update: dahijara    18NOV2020    added optional clicking for warning and question window
     [Arguments]    ${sDeal_Name}
     ### Keyword Pre-processing ###
     ${Deal_Name}    Acquire Argument Value    ${sDeal_Name}
@@ -2657,6 +2660,8 @@ Funding Memo For Pending Participation
     Take Screenshot    ${Screenshot_Path}/Screenshots/LoanIQ/FundingMemoWindow
     Mx LoanIQ activate window    ${LIQ_Participation_Outstanding_Window}
     Mx LoanIQ select    ${LIQ_Participation_Outstanding_FundingMemo_Create}
+    Mx LoanIQ Click Element If Present    ${LIQ_Warning_Yes_Button}
+    Mx LoanIQ Click Element If Present    ${LIQ_Question_Yes_Button}
     Mx LoanIQ activate window    ${LIQ_Participation_Funding_Window}
     Take Screenshot    ${Screenshot_Path}/Screenshots/LoanIQ/FundingMemoWindow
     Mx LoanIQ Click    ${LIQ_Participation_Funding_Ok_Button}
