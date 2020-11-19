@@ -53,7 +53,7 @@ Create Initial Loan Drawdown - SERV01
     Pause Execution
 
 Comprehensive Repricing - SERV08
-    [Tags]    07 Comprehensive Repricing - SERV08
+    [Tags]    08 Comprehensive Repricing - SERV08
     Mx Execute Template With Multiple Data    Create Comprehensive Repricing for RPA Deal    ${ExcelPath}    ${rowid}    SERV08_ComprehensiveRepricing
     Set Test Variable    ${rowid}    2
-    Mx Execute Template With Multiple Data    Create Comprehensive Repricing for RPA Deal    ${ExcelPath}    ${rowid}    SERV08_ComprehensiveRepricing
+    Mx Execute Template With Multiple Data    Create Comprehensive Repricing for RPA Deal    ${ExcelPath}    ${rowid}    SERV08_ComprehensiveRepricing 
