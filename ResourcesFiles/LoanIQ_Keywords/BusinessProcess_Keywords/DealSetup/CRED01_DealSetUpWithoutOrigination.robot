@@ -1288,6 +1288,7 @@ Setup RPA Internal Deal
     ...    @update: dahijara    10NOV2020    - added writing for scenario 5 - TRPO06_ExternalParticipation
     ...    @update: mcastro    16NOV2020    - remove writing of AwaitingDispose to TRPO12_PortfolioSettledDisc for RPA Scenario 3
     ...    @update: dahijara    18NOV2020    - added writing for scenario 5 - TRPO05_ExtParticipationBuyBack & TRPO06_InternalParticipation
+    ...    @update: dahijara    19NOV2020    - added writing for scenario 4 & 5 - SERV08_ComprehensiveRepricing
     [Arguments]    ${ExcelPath}
     ###Set Dates for transactions###
     ${SystemDate}    Get System Date
@@ -1352,12 +1353,15 @@ Setup RPA Internal Deal
     ...    AND    Write Data To Excel    SERV01_LoanDrawdown    Repayment_TriggerDate    2    ${SystemDate}
     ...    AND    Write Data To Excel    CRED07_UpfrontFee_Payment    Deal_Name    ${rowid}    ${Deal_Name}
 
-    Run Keyword If    '${SCENARIO}'=='4'    Write Data To Excel    CRED07_UpfrontFee_Payment    Deal_Name    ${rowid}    ${Deal_Name}
+    Run Keyword If    '${SCENARIO}'=='4'    Run Keywords    Write Data To Excel    CRED07_UpfrontFee_Payment    Deal_Name    ${rowid}    ${Deal_Name}
+    ...    AND    Write Data To Excel    SERV08_ComprehensiveRepricing    Deal_Name    ${rowid}    ${Deal_Name}
+
     Run Keyword If    '${SCENARIO}'=='5'    Run Keywords    Write Data To Excel    CRED07_UpfrontFee_Payment    Deal_Name    ${rowid}    ${Deal_Name}
     ...    AND    Write Data To Excel    TRPO06_ExternalParticipation    Deal_Name    ${rowid}    ${Deal_Name}
     ...    AND    Write Data To Excel    TRPO06_ExternalParticipation    Expected_CloseDate    ${rowid}    ${SystemDate}
     ...    AND    Write Data To Excel    TRPO05_ExtParticipationBuyBack    Deal_Name    ${rowid}    ${Deal_Name}
     ...    AND    Write Data To Excel    TRPO06_InternalParticipation    Deal_Name    ${rowid}    ${Deal_Name}
+    ...    AND    Write Data To Excel    SERV08_ComprehensiveRepricing    Deal_Name    ${rowid}    ${Deal_Name}
           
     ###New Deal Screen###   
     Create New Deal    ${Deal_Name}    ${Deal_Alias}    &{ExcelPath}[Deal_Currency]    &{ExcelPath}[Deal_Department]    &{ExcelPath}[Deal_SalesGroup]
@@ -1416,6 +1420,7 @@ Create Facility for RPA Deal
     ...    @update: dahijara    10NOV2020    - Added data writing for Scenario 5 - TRPO06_ExternalParticipation
     ...    @update: mcastro    16NOV2020    - Updated writing to SERV01_Loandrawdown, added condition for RPA scenario 3
     ...    @update: dahijara    18NOV2020    - added writing for scenario 5 - TRPO05_ExtParticipationBuyBack & TRPO06_InternalParticipation
+    ...    @update: dahijara    19NOV2020    - added writing for scenario 4 & 5 - SERV08_ComprehensiveRepricing
     [Arguments]    ${ExcelPath}
     Log    ${rowid}       
     ###Data Generation###
@@ -1501,6 +1506,7 @@ Create Facility for RPA Deal
     ...    AND    Write Data To Excel    SERV01_LoanDrawdown    Loan_FacilityName    ${rowid}    ${Facility_Name}    bTestCaseColumn=True    sColumnReference=rowid
     ...    AND    Write Data To Excel    SERV01_LoanDrawdown    Loan_EffectiveDate    ${rowid}    ${Facility_EffectiveDate}    bTestCaseColumn=True    sColumnReference=rowid
     ...    AND    Write Data To Excel    SERV01_LoanDrawdown    Loan_MaturityDate    ${rowid}    ${Facility_MaturityDate}
+    ...    AND    Write Data To Excel    SERV08_ComprehensiveRepricing    Facility_Name    ${rowid}    ${Facility_Name}    bTestCaseColumn=True    sColumnReference=rowid
 
     Run Keyword If    '${SCENARIO}'=='5'    Run Keywords    Write Data To Excel    CRED02_FacilitySetup    Facility_AgreementDate    ${rowid}    ${Facility_EffectiveDate}
     ...    AND    Write Data To Excel    CRED02_FacilitySetup    Facility_EffectiveDate    ${rowid}    ${Facility_EffectiveDate}
@@ -1516,6 +1522,7 @@ Create Facility for RPA Deal
     ...    AND    Write Data To Excel    TRPO06_ExternalParticipation    Facility_Name    ${rowid}    ${Facility_Name}    bTestCaseColumn=True    sColumnReference=rowid
     ...    AND    Write Data To Excel    TRPO05_ExtParticipationBuyBack    Facility_Name    ${rowid}    ${Facility_Name}    bTestCaseColumn=True    sColumnReference=rowid
     ...    AND    Write Data To Excel    TRPO06_InternalParticipation    Facility_Name    ${rowid}    ${Facility_Name}    bTestCaseColumn=True    sColumnReference=rowid
+    ...    AND    Write Data To Excel    SERV08_ComprehensiveRepricing    Facility_Name    ${rowid}    ${Facility_Name}    bTestCaseColumn=True    sColumnReference=rowid
 
     Verify Main SG Details    &{ExcelPath}[Facility_ServicingGroup]    &{ExcelPath}[Facility_Customer]    &{ExcelPath}[Facility_SGLocation]
     

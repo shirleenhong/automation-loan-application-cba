@@ -566,7 +566,7 @@ Create Initial Loan Drawdown for RPA Deal
     Write Data To Excel    SERV01_LoanDrawdown   Loan_Alias    ${rowid}    ${Loan_Alias}
 
     ###For RPA Scenario 1###
-    Run Keyword If    '${SCENARIO}'=='1' or '${SCENARIO}'=='3' or '${SCENARIO}'=='4'    Write Data To Excel    SERV08_ComprehensiveRepricing   Loan_Alias    ${rowid}    ${Loan_Alias}
+    Run Keyword If    '${SCENARIO}'=='1' or '${SCENARIO}'=='3' or '${SCENARIO}'=='4' or '${SCENARIO}'=='5'    Write Data To Excel    SERV08_ComprehensiveRepricing   Loan_Alias    ${rowid}    ${Loan_Alias}
         
     ###Initial Loan Drawdown###
     Validate Initial Loan Dradown Details    &{ExcelPath}[Loan_FacilityName]    &{ExcelPath}[Borrower1_ShortName]    &{ExcelPath}[Loan_Currency]
