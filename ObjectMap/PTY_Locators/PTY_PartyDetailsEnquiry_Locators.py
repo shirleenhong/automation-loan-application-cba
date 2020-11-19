@@ -44,6 +44,8 @@ Party_EnquirePartyDetails_TaxLiable_Textbox = '//input[contains(@id,"taxWhtLiabl
 Party_EnquirePartyDetails_webURL_Textbox = '//input[contains(@id,"webURL")]'
 Party_EnquirePartyDetails_TradingNames_Textbox = '//input[contains(@id,"businessType")]'
 Party_EnquirePartyDetails_TradeNames_View_Button = '//td[contains(@class,"layoutContainer")]//input[contains(@onclick,"Enquire Trade Name Details")]'
+Party_EnquirePartyDetails_GeographicLocationsAndTaxNumbers_Country_Row_Locator = '//td[text()="${sCountry_of_Tax_Domicile}"]'
+Party_EnquirePartyDetails_GeographicLocationsAndTaxNumbers_GSTNumber_Row_Locator = '//td[text()="${sGTS_Number}"]'
 
 ### Party Address Dialog ###
 Party_EnquirePartyDetails_PartyAddress_AddressType_Dropdown = '//input[contains (@id, "partyAddressSpecDetails:addressType")]'

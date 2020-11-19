@@ -153,7 +153,16 @@ Get Text From Row and Compare
     
     ${sRowValue}    Get Text    ${sLocator}
     Compare Two Strings    ${sRowValue}    ${sKnownValue}
-   
+
+Generate New Enterprise Name And Return Values
+    [Documentation]    This keyword is used to generate unique enterprise name and return values
+    ...    @author: javinzon    22SEP2020    - intial create 
+    [Arguments]        ${sEnterprise_Prefix}
+    
+    ${Generated_Value}    Generate Unique Number or Text for Party
+    ${New_Enterprise_Name}    Catenate    ${sEnterprise_Prefix}    ${Generated_Value}
+    [return]    ${New_Enterprise_Name}    ${Generated_Value}
+    
     
 
 ###Updated Party Status Test Case
