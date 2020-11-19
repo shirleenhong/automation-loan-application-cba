@@ -352,7 +352,7 @@ Validate Enterprise Summary Details
     Compare Two Arguments    ${sCountryOfRegistration}    ${Party_QuickEnterpriseParty_CountryOfRegistration_Dropdown}
     Compare Two Arguments    ${sCountryOfTaxDomicile}    ${Party_QuickEnterpriseParty_CountryOfTaxDomicile_Dropdown}
 
-     ${GST_Number}    Get Table Value Containing Row Value in Party    ${Party_EnterpriseDetailsSummary_GeographicLocationsAndTaxNumbers_TableHeader}    ${Party_EnterpriseDetailsSummary_GeographicLocationsAndTaxNumbers_TableRow}    Country    ${sCountryOfTaxDomicile}    Goods & Service Tax Number
+    ${GST_Number}    Get Table Value Containing Row Value in Party    ${Party_EnterpriseDetailsSummary_GeographicLocationsAndTaxNumbers_TableHeader}    ${Party_EnterpriseDetailsSummary_GeographicLocationsAndTaxNumbers_TableRow}    Country    ${sCountryOfTaxDomicile}    Goods & Service Tax Number
     ${isMatched}    Run Keyword And Return Status    Should Be Equal    ${sGTS_Number}    ${GST_Number}
     Run Keyword If    ${isMatched}==${True}    Log    Goods & Service Tax Number value is correct! GST Number:${GST_Number}    level=INFO
     ...    ELSE    Run Keyword And Continue On Failure    Fail    Goods & Service Tax Number value is incorrect! Goods & Service Tax Number:${GST_Number}, Expected Goods & Service Tax Number:${sGTS_Number}       
@@ -361,7 +361,6 @@ Validate Enterprise Summary Details
     ${isMatched}    Run Keyword And Return Status    Should Be Equal    ${sCountryOfTaxDomicile}    ${TaxCountry}
     Run Keyword If    ${isMatched}==${True}    Log    Country of Tax value is correct! Country of Tax:${TaxCountry}    level=INFO
     ...    ELSE    Run Keyword And Continue On Failure    Fail    Country of Tax value is incorrect! Country of Tax:${TaxCountry}, Expected Country of Tax:${sCountryOfTaxDomicile}
-        
     
 Validate Enquire Enterprise Business Activity Details
     [Documentation]    This keyword validates the Enterprise Business Activity Details from Enterprise summary details page.

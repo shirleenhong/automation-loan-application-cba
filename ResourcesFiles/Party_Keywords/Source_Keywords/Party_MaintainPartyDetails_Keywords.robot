@@ -3,15 +3,6 @@ Resource    ../../../Configurations/LoanIQ_Import_File.robot
 Resource    ../../../Configurations/Party_Import_File.robot
 
 *** Keywords ***
-Search Party ID in Party Details Page
-    [Documentation]    This keyword will get the newly created Party ID from PTY001 and use it to search in Maintain Party Details
-    ...    @author: javinzon    21SEP2020    - initial create
-    [Arguments]    ${sParty_ID}
-    
-    Mx Input Text    ${Party_EnquirePartyDetails_PartyDetails_PartyId_TextBox}    ${sParty_ID}
-    Capture Page Screenshot    ${screenshot_path}/Screenshots/Party/Update_SearchPartyID.png
-    Mx Click Element    ${Party_Footer_Next_Button}
-    
 Validate Enterprise Party Details if Correct
 	[Documentation]    This keyword is used to validate if all existing field values are correct.
     ...    @author: javinzon    22SEP2020    - initial create
@@ -133,7 +124,7 @@ Update Enterprise Party Details And Return Values
     Mx Input Text    ${Party_QuickEnterpriseParty_CountryOfRegistration_Dropdown}    ${sCountry_of_Registration}
     Capture Page Screenshot    ${screenshot_path}/Screenshots/Party/Update_EnterprisePartyDetailsPage--{index}.png
     
-    [return]    ${New_Enterprise_Name}    ${Short_Name}
+    [Return]    ${New_Enterprise_Name}    ${Short_Name}
     
 Update Enterprise Party Address Details
     [Documentation]    This keyword is used to update Party address details
@@ -211,6 +202,8 @@ Update Party Details in Enterprise Party Page
     
     ${New_Enterprise_Name}    ${Short_Name}    Update Enterprise Party Details And Return Values   ${sLocality}    ${sParty_Sub_Type}    ${sParty_Category}    ${sEnterprise_Prefix}    ${sRegistered_Number}    ${sShort_Name_Prefix}
     ...    ${sCountry_of_Tax_Domicile}   ${sCountry_of_Registration} 
+    Mx Scroll Element Into View    ${Party_Footer_Next_Button}
+    Wait Until Page Contains Element    ${Party_Footer_Next_Button}    60s
     Double Click Element    ${Party_Footer_Next_Button}
     Wait Until Page Contains Element    ${Party_QuickEnterpriseParty_ApprovalRequired_Dialog}    60s 
     Capture Page Screenshot    ${screenshot_path}/Screenshots/Party/PartyApprovalDialog-{index}.png
@@ -234,33 +227,48 @@ Approve Updated Party via Supervisor Account
     
     Run Keyword If    '${SSO_ENABLED}'=='NO'    Logout User on Party
     ...    ELSE    Close Browser
-
+    
     [Return]    ${TaskID_ForAddress}    ${TaskID_ForPartyDetails}
-
+    
 Validate Enquire Enterprise Party After Amendment
     [Documentation]    This keyword is used to validate all amended party details via Party details enquiry.
     ...    @author: javinzon    04NOV2020    - intial create
     [Arguments]    ${sCountry}    ${sIndustrySector}    ${sBusinessActivity}    ${bIsMainActivity}    ${bIsPrimaryActivity}    ${sLocality}    ${sEntity}    ${sAssigned_Branch}    ${sParty_Type}    ${sParty_Sub_Type}    ${sParty_Category}    ${sParty_ID}    
     ...    ${sEnterprise_Name}    ${sRegistered_Number}    ${sCountry_of_Registration}    ${sCountry_of_Tax_Domicile}    ${sShort_Name}    ${sAddress_Type}    ${sAddress_Line_1}    ${sAddress_Line_2}    ${sAddress_Line_3}    ${sAddress_Line_4}    ${sTown_City}    
     ...    ${sState_Province}    ${iPost_Code}    ${sCountry_Region}    ${sGTS_Number}
-        
+    
     Navigate Party Details Enquiry    ${sParty_ID}
-    Validate Enquire Enterprise Business Activity Details    ${sCountry}    ${sIndustrySector}    ${sBusinessActivity}    ${bIsMainActivity}    ${bIsPrimaryActivity}
-    Validate Enterprise Party Details if Correct    ${sLocality}    ${sEntity}    ${sAssigned_Branch}    ${sParty_Type}    ${sParty_Sub_Type}    ${sParty_Category}    ${sParty_ID}    
-    ...    ${sEnterprise_Name}    ${sRegistered_Number}    ${sCountry_of_Registration}    ${sCountry_of_Tax_Domicile}    ${sShort_Name}
     
-    ${GST_Number}    Get Table Value Containing Row Value in Party    ${Party_EnterpriseDetailsSummary_GeographicLocationsAndTaxNumbers_TableHeader}    ${Party_EnterpriseDetailsSummary_GeographicLocationsAndTaxNumbers_TableRow}    Country    ${sCountryOfTaxDomicile}    Goods & Service Tax Number
-    ${isMatched}    Run Keyword And Return Status    Should Be Equal    ${sGTS_Number}    ${GST_Number}
-    Run Keyword If    ${isMatched}==${True}    Log    Goods & Service Tax Number value is correct! GST Number:${GST_Number}    level=INFO
-    ...    ELSE    Run Keyword And Continue On Failure    Fail    Goods & Service Tax Number value is incorrect! Goods & Service Tax Number:${GST_Number}, Expected Goods & Service Tax Number:${sGTS_Number}       
+    Compare Two Arguments    ${sLocality}    ${Party_EnquirePartyDetails_Locality_Textbox}
+    Compare Two Arguments    ${sEntity}    ${Party_EnquirePartyDetails_Entity_Textbox}
+    Compare Two Arguments    ${sAssigned_Branch}    ${Party_EnquirePartyDetails_AssignedBranch_Textbox}
+    Compare Two Arguments    ${sParty_Type}    ${Party_EnquirePartyDetails_Partytype_Textbox}
+    Compare Two Arguments    ${sParty_Sub_Type}    ${Party_EnquirePartyDetails_PartySubType_Textbox}
+    Compare Two Arguments    ${sParty_Category}    ${Party_EnquirePartyDetails_PartyCategory_Textbox}
+    Compare Two Arguments    ${sParty_ID}    ${Party_EnquirePartyDetails_PartyId_Textbox}
+    Compare Two Arguments    ${sEnterprise_Name}    ${Party_EnquirePartyDetails_EnterpriseName_Textbox}
+    Compare Two Arguments    ${sRegistered_Number}    ${Party_EnquirePartyDetails_Registernumber_Textbox}
+    Compare Two Arguments    ${sCountry_of_Registration}    ${Party_EnquirePartyDetails_CountryOfRegistration_Textbox}
+    Compare Two Arguments    ${sCountry_of_Tax_Domicile}    ${Party_EnquirePartyDetails_CountryOfTaxDomicile_Textbox}
+    Compare Two Arguments    ${sShort_Name}    ${Party_EnquirePartyDetails_ShortName_Textbox}
 
-    ${TaxCountry}    Get Table Value Containing Row Value in Party    ${Party_EnterpriseDetailsSummary_GeographicLocationsAndTaxNumbers_TableHeader}    ${Party_EnterpriseDetailsSummary_GeographicLocationsAndTaxNumbers_TableRow}    Goods & Service Tax Number    ${sGTS_Number}    Country
-    ${isMatched}    Run Keyword And Return Status    Should Be Equal    ${sCountry_of_Tax_Domicile}    ${TaxCountry}
-    Run Keyword If    ${isMatched}==${True}    Log    Country of Tax value is correct! Country of Tax:${TaxCountry}    level=INFO
-    ...    ELSE    Run Keyword And Continue On Failure    Fail    Country of Tax value is incorrect! Country of Tax:${TaxCountry}, Expected Country of Tax:${sCountry_of_Tax_Domicile}
+    ${sGTS_Number}    Replace Variables    ${sGTS_Number}
+    ${Party_EnquirePartyDetails_GeographicLocationsAndTaxNumbers_GSTNumber_Row_Locator}    Replace Variables    ${Party_EnquirePartyDetails_GeographicLocationsAndTaxNumbers_GSTNumber_Row_Locator}
+    ${isVisible}    Run Keyword And Return Status    Element Should Be Visible    ${Party_EnquirePartyDetails_GeographicLocationsAndTaxNumbers_GSTNumber_Row_Locator}    
+    Run Keyword If    ${isVisible}==${True}    Log    Goods & Service Tax Number value is correct! GST Number:${sGTS_Number}    level=INFO
+    ...    ELSE    Run Keyword And Continue On Failure    Fail    Goods & Service Tax Number value is incorrect! Expected Goods & Service Tax Number:${sGTS_Number}       
     
+    ${sCountry_of_Tax_Domicile}    Replace Variables    ${sCountry_of_Tax_Domicile}
+    ${Party_EnquirePartyDetails_GeographicLocationsAndTaxNumbers_Country_Row_Locator}    Replace Variables    ${Party_EnquirePartyDetails_GeographicLocationsAndTaxNumbers_Country_Row_Locator}
+    ${isVisible}    Run Keyword And Return Status    Element Should Be Visible    ${Party_EnquirePartyDetails_GeographicLocationsAndTaxNumbers_Country_Row_Locator}    
+    Run Keyword If    ${isVisible}==${True}    Log    Country value is correct! Country is:${sCountry_of_Tax_Domicile}    level=INFO
+    ...    ELSE    Run Keyword And Continue On Failure    Fail    Country value is incorrect! Expected Country:${sCountry_of_Tax_Domicile}
+    
+    Capture Page Screenshot    ${screenshot_path}/Screenshots/Party/PartyDetailsEnquiryPage-{index}.png
     Validate Party Address Details in Related Items if Correct     ${sAddress_Type}    ${sAddress_Line_1}    ${sAddress_Line_2}    ${sAddress_Line_3}    ${sAddress_Line_4}    ${sTown_City}    ${sState_Province}    
     ...    ${iPost_Code}    ${sCountry_Region}
+    
+    Validate Enquire Enterprise Business Activity Details    ${sCountry}    ${sIndustrySector}    ${sBusinessActivity}    ${bIsMainActivity}    ${bIsPrimaryActivity}
     
     Run Keyword If    '${SSO_ENABLED}'=='NO'    Logout User on Party
     ...    ELSE    Close Browser
@@ -304,3 +312,5 @@ Accept Approved Updated Party
     ${isSuccessful}    Run Keyword And Return Status    Wait Until Page Contains    ${PARTY_AMENDSUCCESSFUL_MESSAGE}    10s
     Run Keyword If    ${isSuccessful}==${True}   Capture Page Screenshot    ${screenshot_path}/Screenshots/Party/PartyAmendment-{index}.png
     ...    ELSE    Run Keyword And Continue On Failure    Fail    Amendment is unsuccessful.        
+    
+    Mx Click Element    ${Party_CloseTab_Button}

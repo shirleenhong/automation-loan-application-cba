@@ -58,6 +58,7 @@ Verify If Value Exists in Loan IQ
     ...    @update: javinzon    18SEP2020    - updated keyword "Set List Text with 1 word to Locator" to  "Set List Text with 2 words to Locator"
     ...    @update: javinzon    01OCT2020    - updated keyword "Set List Text with 2 words to Locator" to  "Set List Text with 1 word to Locator",
     ...                                        added ${bWildCard} argument, updated ELSE condition to remove "Set List Text with 1 word to Locator"
+    ...    @update: javinzon    18NOV2020    - updated Log message from 'Location' to 'Value'
     
     [Arguments]    ${sFieldName}    ${sFieldValue}    ${sLIQWindowName}    ${sFieldType}    ${bWildCard}=True
 
@@ -66,8 +67,8 @@ Verify If Value Exists in Loan IQ
     #'${sFieldType}'=='Listbox'    Set List Text with 1 word to Locator   ${sLIQWindowName}    ${index}
     Run Keyword And Continue On Failure    Mx LoanIQ Verify Object Exist    ${Location_Locator}    VerificationData="Yes"
     ${location_stat}    Run Keyword And Return Status    Mx LoanIQ Verify Object Exist    ${Location_Locator}    VerificationData="Yes"
-    Run Keyword If    ${location_stat}==True    Log    Location is correct!! ${sFieldName}: '${sFieldValue}' is found
-    ...    ELSE    Log    Location is incorrect! ${sFieldName}: '${sFieldValue}' is not found    level=ERROR
+    Run Keyword If    ${location_stat}==True    Log    Value is correct!! ${sFieldName}: '${sFieldValue}' is found
+    ...    ELSE    Log    Value is incorrect! ${sFieldName}: '${sFieldValue}' is not found    level=ERROR
 
 Validate Customer SIC
     [Documentation]    This keyword validates primary SIC value based from Party Details against Loan IQ 
