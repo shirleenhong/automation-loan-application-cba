@@ -18,11 +18,11 @@ LIQ_IntentNotice_Edit_Window = 'JavaWindow("title:=.* Notice created.*")'
 LIQ_IntentNotice_Edit_Email = 'JavaWindow("title:=.* Notice created.*").JavaEdit("attached text:=E-mail:")' 
 
 LIQ_Notice_Exit_Button = 'JavaWindow("title:=.* Notice.*", "displayed:=1").JavaButton("attached text:=Exit")'
-LIQ_Notice_Information_Table = 'JavaWindow("title:=.* Notice.*").JavaTree("attached text:=Drill down to mark notices")'
+LIQ_Notice_Information_Table = 'JavaWindow("title:=.* Notice.*", "displayed:=1").JavaTree("attached text:=Drill down to mark notices")'
 LIQ_Notice_Send_Button = 'JavaWindow("title:=.* Notice.*").JavaButton("attached text:=Send")'
-LIQ_Notice_EditHighlightedNotice_Button = 'JavaWindow("title:=.* Notice Group.*").JavaButton("attached text:=.*Highlighted Notices")'
-LIQ_Notice_IntentNotice_Window = 'JavaWindow("title:=.* Payment Notice created.*")'
-LIQ_Notice_IntentNotice_Email = 'JavaWindow("title:=.* Payment Notice created.*").JavaEdit("attached text:=E-mail:")'
+LIQ_Notice_EditHighlightedNotice_Button = 'JavaWindow("title:=.* Notice Group.*", "displayed:=1").JavaButton("attached text:=.*Highlighted Notices")'
+LIQ_Notice_IntentNotice_Window = 'JavaWindow("title:=.* Payment Notice created.*", "displayed:=1")'
+LIQ_Notice_IntentNotice_Email = 'JavaWindow("title:=.* Payment Notice created.*", "displayed:=1").JavaEdit("attached text:=E-mail:")'
 
 ####Payment Window######
 LIQ_Payment_Window = 'JavaWindow("title:=.* .* Payment .*")'

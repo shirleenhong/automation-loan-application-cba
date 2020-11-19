@@ -297,6 +297,7 @@ COGNOS_PASSWORD = "Finastra2020"
 COGNOS_NAMESPACE = 'FinastraRoot'
 CBA_ALERTS_REPORTFILE = "Alerts_Report_V1.3.4"
 CBA_COMMENTS_REPORTFILE = "Comments_Report_v5"
+CBA_CALENDAR_REPORTFILE = "Calendar Report_v1.0"
 
 import os
 project_path = os.path.dirname(os.path.realpath(__file__)).replace("MDM_ConfigFile","")
