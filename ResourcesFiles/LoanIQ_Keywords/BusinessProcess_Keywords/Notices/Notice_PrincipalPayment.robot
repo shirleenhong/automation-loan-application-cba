@@ -16,7 +16,6 @@ Get Notice Details for Principal Payment LIQ
     
     ###Navigate to Loan Window and Events Tab###
     Mx LoanIQ Select Window Tab    ${LIQ_FixedRateOptionLoan_Pending_Tab}    Events
-    # Pause Execution
     Mx LoanIQ Select Or DoubleClick In Javatree    ${LIQ_FixedRateOptionLoan_Events_JavaTree}    Principal Payment Applied%d
     
     ## Get the Values of Effective Date, All In Rate Amount, Currency, All in Rate, Pricing Option###
