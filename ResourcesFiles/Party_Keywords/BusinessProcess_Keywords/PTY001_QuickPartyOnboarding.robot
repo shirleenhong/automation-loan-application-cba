@@ -103,6 +103,7 @@ Create Party in Quick Party Onboarding
     ...    AND    Write Data To Excel    SERV18_Payments    Borrower1_ShortName    ${rowid}    ${Short_Name}
     ...    AND    Write Data To Excel    SERV18_Payments    Borrower1_LegalName    ${rowid}    ${Enterprise_Name}
     ...    AND    Write Data To Excel    SERV21_InterestPayments    Loan_Borrower    ${rowid}    ${Enterprise_Name}
+    ...    AND    Write Data To Excel    SERV21_InterestPayments    Borrower1_LegalName    ${rowid}    ${Enterprise_Name}
     ...    AND    Write Data To Excel    SERV21_InterestPayments    LIQCustomer_ShortName    ${rowid}    ${Short_Name}
     ...    AND    Write Data To Excel    SERV21_InterestPayments    Borrower1_ShortName    ${rowid}    ${Short_Name}
     ...    AND    Write Data To Excel    SERV29_PaymentFees    Borrower1_ShortName    ${rowid}    ${Short_Name}
