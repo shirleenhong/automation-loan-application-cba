@@ -32,4 +32,10 @@ Create Initial Loan Drawdown - SERV01
 
 Complete Comprehensive Repricing, Principal Payment and Interest Payment - SERV08
     [Tags]    06    Loan Repricing - SERV08 
+    Log to Console    Pause Execution - 1 Month EOD
+    Pause Execution
     Mx Execute Template With Multiple Data    Complete Comprehensive Repricing, Principal Payment and Interest Payment    ${ExcelPath}    ${rowid}    SERV08_ComprehensiveRepricing
+
+Ongoing Fee Payment - SERV29
+    [Tags]    07    Ongoing Fee Payment - SERV29
+    Mx Execute Template With Multiple Data    Pay Usage Fee for RPA Deal    ${ExcelPath}    ${rowid}    SERV29_PaymentFees
