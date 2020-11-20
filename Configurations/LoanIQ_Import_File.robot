@@ -109,6 +109,7 @@ Variables    ../ObjectMap/LoanIQ_Locators/LIQ_UnscheduledCommitmentDecrease_Loca
 Variables    ../ObjectMap/LoanIQ_Locators/LIQ_UnscheduledCommitmentIncrease_Locators.py
 Variables    ../ObjectMap/LoanIQ_Locators/LIQ_UnscheduledPrincipalPayment_Locators.py
 Variables    ../ObjectMap/LoanIQ_Locators/LIQ_UpfrontFeePayment_Locators.py
+Variables    ../ObjectMap/LoanIQ_Locators/LIQ_UsageFee_Locators.py
 Variables    ../ObjectMap/LoanIQ_Locators/LIQ_User_Administration_Locators.py
 Variables    ../ObjectMap/LoanIQ_Locators/LIQ_WorkInProcess_Locators.py
 Variables    ../ObjectMap/LoanIQ_Locators/LIQ_UpfrontFeeDistribution_Locators.py
@@ -378,6 +379,7 @@ Resource    ../ResourcesFiles/LoanIQ_Keywords/Source_Keywords/UnscheduledCommitm
 Resource    ../ResourcesFiles/LoanIQ_Keywords/Source_Keywords/UnscheduledPrincipalPayment_Notebook.robot
 Resource    ../ResourcesFiles/LoanIQ_Keywords/Source_Keywords/UnscheduledCommitmentDecrease_Notebook.robot
 Resource    ../ResourcesFiles/LoanIQ_Keywords/Source_Keywords/UpfrontFeePayment_Notebook.robot
+Resource    ../ResourcesFiles/LoanIQ_Keywords/Source_Keywords/UsageFee_Notebook.robot
 Resource    ../ResourcesFiles/LoanIQ_Keywords/Source_Keywords/UserAdministration_Notebook.robot
 Resource    ../ResourcesFiles/LoanIQ_Keywords/Source_Keywords/UpfrontFeeDistribution_Notebook.robot
 
