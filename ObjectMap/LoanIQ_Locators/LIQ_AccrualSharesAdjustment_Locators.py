@@ -4,7 +4,7 @@
 LIQ_AccrualSharesAdjustment_InquiryMode_Button = 'JavaWindow("title:=Accrual Shares Adjustment -.*").JavaButton("attached text:=Notebook in Inquiry Mode - F7")'
 LIQ_AccrualSharesAdjustment_UpdateMode_Button = 'JavaWindow("title:=Accrual Shares Adjustment -.*").JavaButton("attached text:=Notebook in Update Mode - F7")'
 LIQ_AccrualSharesAdjustment_Pending_Window = 'JavaWindow("title:=Accrual Shares Adjustment - Pending")'
-LIQ_AccrualSharesAdjustment_RequestedAmount_Textfield = 'JavaWindow("title:=Accrual Shares Adjustment -.*").JavaEdit("attached text:=AUD","index:=0")'
+LIQ_AccrualSharesAdjustment_RequestedAmount_Textfield = 'JavaWindow("title:=Accrual Shares Adjustment -.*").JavaEdit("labeled_containers_path:=Tab:General;Group: Amounts ;","index:=0")'
 LIQ_AccrualSharesAdjustment_EffectiveDate_Textfield = 'JavaWindow("title:=Accrual Shares Adjustment -.*").JavaEdit("attached text:=Effective Date:")'
 LIQ_AccrualSharesAdjustment_Comment_Textfield = 'JavaWindow("title:=Accrual Shares Adjustment -.*").JavaEdit("attached text:=Comment:")'
 LIQ_AccrualSharesAdjustment_Window_Tab = 'JavaWindow("title:=Accrual Shares Adjustment -.*").JavaTab("tagname:=TabFolder")'

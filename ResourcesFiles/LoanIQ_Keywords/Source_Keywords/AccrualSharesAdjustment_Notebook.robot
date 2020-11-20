@@ -60,6 +60,7 @@ Save the Requested Amount, Effective Date, and Comment
     [Documentation]    This keyword is used to save and validate the Requested Amount, Effective Date, and Comment within the Accrual Shares Adjustment Notebook. 
     ...    @author: rtarayao
     ...    @update: dahijara    15JUL2020    - added preprocessing and screenshot; adjusted keywords indention
+    ...    @update: makcamps    20NOV2020    - changed locators dependent on AU data
     [Arguments]    ${sRequested_Amount}    ${sAccrual_EffectiveDate}    ${sAccrual_Comment}
     ### GetRuntime Keyword Pre-processing ###
     ${Requested_Amount}    Acquire Argument Value    ${sRequested_Amount}
@@ -68,7 +69,7 @@ Save the Requested Amount, Effective Date, and Comment
 
     mx LoanIQ select    ${LIQ_AccrualSharesAdjustment_File_Save}
     mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
-    Mx LoanIQ Verify Object Exist    JavaWindow("title:=Accrual Shares Adjustment -.*").JavaEdit("attached text:=AUD","index:=0", "value:=${Requested_Amount}.*")    VerificationData="Yes"
+    Mx LoanIQ Verify Object Exist    JavaWindow("title:=Accrual Shares Adjustment -.*").JavaEdit("labeled_containers_path:=Tab:General;Group: Amounts ;","index:=0", "value:=${Requested_Amount}.*")    VerificationData="Yes"
     Mx LoanIQ Verify Object Exist    JavaWindow("title:=Accrual Shares Adjustment -.*").JavaEdit("attached text:=Effective Date:", "value:=${Accrual_EffectiveDate}")               VerificationData="Yes"
     Mx LoanIQ Verify Object Exist    JavaWindow("title:=Accrual Shares Adjustment -.*").JavaEdit("attached text:=Comment:", "value:=${Accrual_Comment}")    VerificationData="Yes"
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/AccrualSharesAdjustment
