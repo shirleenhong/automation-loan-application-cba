@@ -549,6 +549,7 @@ Create Initial Loan Drawdown for RPA Deal
     ...    @update: dahijara    04NOV2020    - Added writing for SERV08_ComprehensiveRepricing-Loan_Alias
     ...    @update: mcastro     16NOV2020    - Added condition for RPA scenario 3
     ...    @update: dahijara    19NOV2020    - Added condition for RPA Scenario 5 Loan_Alias data writing to excel
+    ...    @update: mcastro     19NOV2020    - Removed condition on writing of Loan_Alias
     [Arguments]    ${ExcelPath}    
     
     Logout from Loan IQ
@@ -565,10 +566,8 @@ Create Initial Loan Drawdown for RPA Deal
     Navigate to Outstanding Select Window
     ${Loan_Alias}    Input Initial Loan Drawdown Details    &{ExcelPath}[Outstanding_Type]    &{ExcelPath}[Loan_FacilityName]    &{ExcelPath}[Borrower1_ShortName]    &{ExcelPath}[Loan_PricingOption]    &{ExcelPath}[Loan_Currency]
     Write Data To Excel    SERV01_LoanDrawdown   Loan_Alias    ${rowid}    ${Loan_Alias}
-
-    ###For RPA Scenario 1###
-    Run Keyword If    '${SCENARIO}'=='1' or '${SCENARIO}'=='3' or '${SCENARIO}'=='4' or '${SCENARIO}'=='5'    Write Data To Excel    SERV08_ComprehensiveRepricing   Loan_Alias    ${rowid}    ${Loan_Alias}
-        
+    Write Data To Excel    SERV08_ComprehensiveRepricing   Loan_Alias    ${rowid}    ${Loan_Alias}
+      
     ###Initial Loan Drawdown###
     Validate Initial Loan Dradown Details    &{ExcelPath}[Loan_FacilityName]    &{ExcelPath}[Borrower1_ShortName]    &{ExcelPath}[Loan_Currency]
     ${AdjustedDueDate}    Input General Loan Drawdown Details    &{ExcelPath}[Loan_RequestedAmount]    &{ExcelPath}[Loan_EffectiveDate]    &{ExcelPath}[Loan_MaturityDate]    &{ExcelPath}[Loan_RepricingFrequency]    &{ExcelPath}[Loan_IntCycleFrequency]    &{ExcelPath}[Loan_Accrue]    

@@ -116,3 +116,29 @@ Get Total Row Count of Excel Sheet
     Close Current Excel Document
 
     [Return]    ${Row_Count}
+
+Validate Sequencing of Columns if Correct in Excel Sheet
+    [Documentation]    This keyword is used validate sequencing of columns if correct in sSheetName in sExcelFile.
+    ...    NOTE: sExcelFile=includes file path and extension.
+    ...    @author: clanding    19NOV2020    - initial create
+    [Arguments]    ${sExcelFile}    ${sSheetName}    ${sExpectedValue}    ${sDelimiter}
+    
+    CustomExcelLibrary.Open Excel    ${sExcelFile}    0
+    
+    ### Get Column Header Total Count ###
+    ${Sheet_ValueList}    CustomExcelLibrary.Get Row Values    ${sSheetName}    0    ${False}
+    ${Sheet_ValueList_Count}    Get Length    ${Sheet_ValueList}
+    
+    ### Get Expected Column Header Total Count ###
+    ${Expected_ValueList}    Split String    ${sExpectedValue}    ${sDelimiter}
+    ${Expected_ValueList_Count}    Get Length    ${Expected_ValueList}
+
+    ### Validate if actual and expected column counts are equal ###
+    Compare Two Strings    ${Expected_ValueList_Count}    ${Sheet_ValueList_Count}
+    
+    :FOR    ${Index}    IN RANGE    ${Expected_ValueList_Count}
+    \    ${Expected_Value}    Get From List    ${Expected_ValueList}    ${Index}
+    \    ${Sheet_ValueList_0}    Get From List    ${Sheet_ValueList}    ${Index}
+    \    ${Sheet_Value}    Get From List    ${Sheet_ValueList_0}    1    ###Get Cell Value
+    \    Compare Two Strings    ${Expected_Value}    ${Sheet_Value}
+
