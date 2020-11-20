@@ -299,6 +299,7 @@ CBA_ALERTS_REPORTFILE = "Alerts_Report_V1.3.4"
 CBA_COMMENTS_REPORTFILE = "Comments_Report_v5"
 CBA_CALENDAR_REPORTFILE = "Calendar Report_v1.0"
 CBA_LIQUIDITY_REPORTFILE= "CBA Liquidity Report"
+CBA_CASHOUT_REPORTFILE = "AHBCO_001_Report"
 CBA_DE_REPORTFILE= "Agency Host Bank DE Extract"
 
 import os
