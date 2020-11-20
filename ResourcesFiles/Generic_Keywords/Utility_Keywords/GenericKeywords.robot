@@ -744,6 +744,8 @@ Navigate Notebook Workflow
     ...    @update: dahijara    09OCT2020    Added screenshot
     ...    @update: fluberio    12NOV2020    Added click element if present to handle EU scenario with multiple pricing options
     ...    @update: dahijara    19NOV2020    Added click element if present to handle RPA scenario for Loan repricing release
+    ...    @update: dahijara    20NOV2020    Replaced Mx Click    ${LIQ_Cashflows_MarkSelectedItemForRelease_Button} to Mx LoanIQ select    ${LIQ_Cashflow_Options_MarkAllRelease}
+    ...                                      Inserted Release Cashflow condition under Run Keyword If statement.
     [Arguments]    ${sNotebook_Locator}    ${sNotebookTab_Locator}    ${sNotebookWorkflow_Locator}    ${sTransaction}    
 
     ###Pre-processing Keyword##
@@ -760,13 +762,13 @@ Navigate Notebook Workflow
     Validate if Question or Warning Message is Displayed
     mx LoanIQ click element if present    ${LIQ_Question_Yes_Button}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/NotebookWorkflow
-    Run Keyword if     '${Transaction}'=='Release Cashflows'    Run Keywords    Mx Click    ${LIQ_Cashflows_MarkSelectedItemForRelease_Button}
-    ...   AND    Mx Click    ${LIQ_Cashflows_OK_Button}
-    ...   AND     mx LoanIQ click element if present    ${LIQ_Question_Yes_Button}
     Run Keyword If    '${Transaction}'=='Release'    Run Keywords
     ...    Repeat Keyword    3 times    mx LoanIQ click element if present    ${LIQ_BreakFunding_Yes_Button}
     ...    AND    mx LoanIQ click element if present    ${LIQ_Information_OK_Button}
     ...    AND    mx LoanIQ click element if present    ${LIQ_Cashflows_OK_Button}
+    ...    ELSE IF    '${Transaction}'=='Release Cashflows'    Run Keywords    Mx LoanIQ select    ${LIQ_Cashflow_Options_MarkAllRelease}
+    ...    AND    Mx Click    ${LIQ_Cashflows_OK_Button}
+    ...    AND     mx LoanIQ click element if present    ${LIQ_Question_Yes_Button}
     ...    ELSE IF    '${Transaction}'=='Close'    mx LoanIQ click element if present    ${LIQ_Information_OK_Button}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/NotebookWorkflow
         
