@@ -1424,6 +1424,7 @@ Create Facility for RPA Deal
     ...    @update: dahijara    18NOV2020    - added writing for scenario 5 - TRPO05_ExtParticipationBuyBack & TRPO06_InternalParticipation
     ...    @update: mcastro    17NOV2020    - Updated writing of Facility names in SERV29_PaymentFees
     ...    @update: dahijara    19NOV2020    - added writing for scenario 4 & 5 - SERV08_ComprehensiveRepricing
+    ...    @update: dahijara    19NOV2020    - added writing for scenario 4 & 5 SERV29_PaymentFees
     [Arguments]    ${ExcelPath}
     Log    ${rowid}       
     ###Data Generation###
@@ -1510,6 +1511,7 @@ Create Facility for RPA Deal
     ...    AND    Write Data To Excel    SERV01_LoanDrawdown    Loan_EffectiveDate    ${rowid}    ${Facility_EffectiveDate}    bTestCaseColumn=True    sColumnReference=rowid
     ...    AND    Write Data To Excel    SERV01_LoanDrawdown    Loan_MaturityDate    ${rowid}    ${Facility_MaturityDate}
     ...    AND    Write Data To Excel    SERV08_ComprehensiveRepricing    Facility_Name    ${rowid}    ${Facility_Name}    bTestCaseColumn=True    sColumnReference=rowid
+    ...    AND    Write Data To Excel    SERV29_PaymentFees    Facility_Name    ${rowid}    ${Facility_Name}    
 
     Run Keyword If    '${SCENARIO}'=='5'    Run Keywords    Write Data To Excel    CRED02_FacilitySetup    Facility_AgreementDate    ${rowid}    ${Facility_EffectiveDate}
     ...    AND    Write Data To Excel    CRED02_FacilitySetup    Facility_EffectiveDate    ${rowid}    ${Facility_EffectiveDate}
@@ -1526,6 +1528,7 @@ Create Facility for RPA Deal
     ...    AND    Write Data To Excel    TRPO05_ExtParticipationBuyBack    Facility_Name    ${rowid}    ${Facility_Name}    bTestCaseColumn=True    sColumnReference=rowid
     ...    AND    Write Data To Excel    TRPO06_InternalParticipation    Facility_Name    ${rowid}    ${Facility_Name}    bTestCaseColumn=True    sColumnReference=rowid
     ...    AND    Write Data To Excel    SERV08_ComprehensiveRepricing    Facility_Name    ${rowid}    ${Facility_Name}    bTestCaseColumn=True    sColumnReference=rowid
+    ...    AND    Write Data To Excel    SERV29_PaymentFees    Facility_Name    ${rowid}    ${Facility_Name}    
 
     Verify Main SG Details    &{ExcelPath}[Facility_ServicingGroup]    &{ExcelPath}[Facility_Customer]    &{ExcelPath}[Facility_SGLocation]
     
