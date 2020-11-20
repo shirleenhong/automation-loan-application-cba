@@ -718,3 +718,54 @@ Interest Capitalization Payment
     Close All Windows on LIQ
        
    
+Pay Usage Fee for RPA Deal
+    [Documentation]    This keyword is used for usage fee payment
+    ...    @author: dahijara    19NOV2020    - initial create
+    [Arguments]    ${ExcelPath} 
+
+    ### LIQ Window ###
+    Logout from Loan IQ
+    Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
+
+    ${EffectiveDate}    Get System Date
+    ### Ongoing Fee Payment ###
+    Navigate to Facility Notebook    &{ExcelPath}[Deal_Name]    &{ExcelPath}[Facility_Name] 
+    Navigate to Existing Ongoing Fee Notebook    &{ExcelPath}[Fee_Type1]
+    ${CycleDue}    Initiate Usage Fee Payment    &{ExcelPath}[Cycle_Number]    ${EffectiveDate}
+    Write Data To Excel    SERV29_PaymentFees    RequestedAmount1    ${rowid}    ${CycleDue}
+
+    ### Create Cashflows ###
+    Navigate to Payment Workflow and Proceed With Transaction    ${CREATE_CASHFLOWS_TYPE}
+    Verify if Method has Remittance Instruction    &{ExcelPath}[Borrower1_ShortName]    &{ExcelPath}[Borrower_RIDescription]    &{ExcelPath}[Remittance_Instruction]
+    Verify if Method has Remittance Instruction    &{ExcelPath}[Lender1_ShortName]    &{ExcelPath}[Lender1_RIDescription]    &{ExcelPath}[Remittance_Instruction]
+    Verify if Method has Remittance Instruction    &{ExcelPath}[Lender2_ShortName]    &{ExcelPath}[Lender2_RIDescription]    &{ExcelPath}[Remittance_Instruction]
+    Verify if Method has Remittance Instruction    &{ExcelPath}[Lender3_ShortName]    &{ExcelPath}[Lender3_RIDescription]    &{ExcelPath}[Remittance_Instruction]
+    Verify if Method has Remittance Instruction    &{ExcelPath}[Lender4_ShortName]    &{ExcelPath}[Lender4_RIDescription]    &{ExcelPath}[Remittance_Instruction]
+    Set All Items to Do It
+
+    ### Sending Payment For Approval ###
+    Navigate to Payment Workflow and Proceed With Transaction    ${SEND_TO_APPROVAL_STATUS}
+    Close All Windows on LIQ
+
+    ###Loan IQ Desktop###
+    Logout from Loan IQ
+    Login to Loan IQ    ${SUPERVISOR_USERNAME}    ${SUPERVISOR_PASSWORD}
+    
+    ### Payment Approval ####
+    Navigate Transaction in WIP     ${PAYMENTS_TRANSACTION}    ${AWAITING_APPROVAL_STATUS}    ${ONGOING_FEE_PAYMENT_TRANSACTION}    &{ExcelPath}[Facility_Name]
+    Navigate to Payment Workflow and Proceed With Transaction    ${APPROVAL_STATUS}
+    Close All Windows on LIQ
+    
+    ###Loan IQ Desktop###
+    Logout from Loan IQ
+    Login to Loan IQ    ${MANAGER_USERNAME}    ${MANAGER_PASSWORD}
+
+    ### Release Payment ###
+    Navigate Transaction in WIP     ${PAYMENTS_TRANSACTION}    ${AWAITING_RELEASE_STATUS}    ${ONGOING_FEE_PAYMENT_TRANSACTION}    &{ExcelPath}[Facility_Name]
+    Release Cashflow Based on Remittance Instruction    &{ExcelPath}[Remittance_Instruction]    &{ExcelPath}[Borrower1_ShortName]    sNavigateToWorkflow=${PAYMENT_TRANSACTION}
+    Navigate to Payment Workflow and Proceed With Transaction    ${RELEASE_STATUS}
+    Validate Release of Usage Fee Payment
+    Close All Windows on LIQ
+   
+    Logout from Loan IQ
+    Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
