@@ -787,9 +787,9 @@ Pay Usage Fee for RPA Deal
     ### Release Payment ###
     Navigate Transaction in WIP     ${PAYMENTS_TRANSACTION}    ${AWAITING_RELEASE_STATUS}    ${ONGOING_FEE_PAYMENT_TRANSACTION}    &{ExcelPath}[Facility_Name]
     Release Cashflow Based on Remittance Instruction    &{ExcelPath}[Remittance_Instruction]    &{ExcelPath}[Borrower1_ShortName]    sNavigateToWorkflow=${PAYMENT_TRANSACTION}
-    # Navigate to Payment Workflow and Proceed With Transaction    ${RELEASE_STATUS}
-    # Validate Release of Usage Fee Payment
-    # Close All Windows on LIQ
+    Navigate to Payment Workflow and Proceed With Transaction    ${RELEASE_STATUS}
+    Validate Release of Usage Fee Payment
+    Close All Windows on LIQ
    
-    # Logout from Loan IQ
-    # Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
+    Logout from Loan IQ
+    Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
