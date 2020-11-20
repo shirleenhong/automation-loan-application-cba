@@ -9,7 +9,7 @@ Validate Columns In LIQ Performance Report
     ...    @author: clanding    19NOV2020    - initial create
     [Arguments]    ${ExcelPath}
 
-    ${LIQFerformance_Report}    Set Variable    &{ExcelPath}[Report_Path]${CBA_LIQPERFORMANCE_REPORTFILE}.xlsx
-    Set Global Variable    ${rowid}    5
-    Create Dictionary Using Report File and Validate Values    ${LIQFerformance_Report}    ${rowid}    &{ExcelPath}[Columns_To_Validate]    &{ExcelPath}[Delimiter]        
+    ${LIQPerformance_Report}    Set Variable    &{ExcelPath}[Report_Path]${CBA_LIQPERFORMANCE_REPORTFILE}.xlsx
+    Set Global Variable    ${column_header_names}    5    ### The report file does not start at row 1 so the column headers are at row 5 ###
+    Update to Create Dictionary Using Report File and Validate Values if Existing    ${LIQPerformance_Report}    ${column_header_names}    &{ExcelPath}[Columns_To_Validate]    &{ExcelPath}[Sheet_Name]    &{ExcelPath}[Delimiter]        
     
