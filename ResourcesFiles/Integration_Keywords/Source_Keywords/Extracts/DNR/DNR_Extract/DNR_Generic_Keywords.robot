@@ -142,3 +142,34 @@ Validate Sequencing of Columns if Correct in Excel Sheet
     \    ${Sheet_Value}    Get From List    ${Sheet_ValueList_0}    1    ###Get Cell Value
     \    Compare Two Strings    ${Expected_Value}    ${Sheet_Value}
 
+Create Dictionary Using Report File and Validate Values if Existing
+    [Documentation]    This keyword is used to create dictionary from the DNR report file columns and validate if the required columns exist.
+    ...    NOTE: This is applicable for reports where the columns does not start at row 1 and reports with too many records
+    ...    @author: ccarriedo    20NOV2020    - initial create
+    [Arguments]    ${sExcelFile}    ${iColumn_RowID}    ${sExpectedValue}    ${sSheetName}    ${sDelimiter}
+    
+    Open Excel    ${sExcelFile}
+    
+    ### Create Dictionary and Get Column Header Total Count of the Report File ###
+    ${RowData_Dictionary}    Create Dictionary 
+    Set Variable    ${RowData_Dictionary}   
+    ${ReportColumn_TotalCount}    Get Column Count    ${sSheetName}
+    
+    ${Expected_ValueList}    Split String    ${sExpectedValue}    ${sDelimiter}
+    ${Expected_Values_TotalCount}    Get Length    ${Expected_ValueList}
+    Append To List    ${Expected_ValueList}
+
+    ### Store Values To Dictionary ###
+    :FOR    ${Index_Column}    IN RANGE    ${ReportColumn_TotalCount}
+    \    ${Column_Header}    Read Cell Data By Coordinates    ${sSheetName}    ${Index_Column}    ${iColumn_RowID}
+    \    ${Column_Value}    Read Cell Data By Coordinates    ${sSheetName}    ${Index_Column}    ${iColumn_RowID}
+    \    Set To Dictionary    ${RowData_Dictionary}    ${Column_Header}=${Column_Value}    
+    \    Log    ${RowData_Dictionary}
+
+    ### Checking if Columns To Validate Exists in The Report File  ###
+    :FOR    ${INDEX}    IN RANGE    ${Expected_Values_TotalCount}
+    \    ${Expected_Value}    Get From List    ${Expected_ValueList}    ${INDEX}
+    \    ${Actual_Value}    Get From Dictionary    ${RowData_Dictionary}    ${Expected_Value}
+    \    Log    ${Expected_Value}
+    \    Log    ${Actual_Value}
+    \    Compare Two Strings    ${Actual_Value}    ${Expected_Value}

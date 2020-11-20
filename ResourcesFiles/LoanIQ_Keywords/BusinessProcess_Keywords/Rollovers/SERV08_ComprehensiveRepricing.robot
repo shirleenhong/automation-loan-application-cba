@@ -325,6 +325,7 @@ Complete Comprehensive Repricing, Principal Payment and Interest Payment
     [Documentation]    This is a high-level keyword to Completion of Comprehensive Repricing, Principal Payment and Interest Payment for RPA Deal
     ...    @author: dahijara    04NOV2020    - Initial create
     ...    @update: dahijara    19NOV2020    - Added additional argument for Release Cashflow Based on Remittance Instruction
+    ...    @update: dahijara    20NOV2020    - Updated keyword for Set Items to Do It and GL Navigation.
     [Arguments]    ${ExcelPath}
     
     ###LIQ Window###
@@ -354,10 +355,10 @@ Complete Comprehensive Repricing, Principal Payment and Interest Payment
     ### Create Cashflow ###
     Navigate to Loan Repricing Workflow and Proceed With Transaction    Create Cashflows
     Verify if Method has Remittance Instruction    &{ExcelPath}[Borrower1_ShortName]    &{ExcelPath}[Borrower1_RemittanceDescription]    &{ExcelPath}[Borrower1_RemittanceInstruction]
-    Verify if Status is set to Do It    &{ExcelPath}[Borrower1_ShortName]
+    Set All Items to Do It
 
     ### GL Entries ###
-    Navigate to GL Entries
+    Navigate to GL Entries from Loan Rerpricing Notebook
     Close GL Entries and Cashflow Window
     Navigate to Loan Repricing Workflow and Proceed With Transaction    ${SEND_TO_APPROVAL_STATUS}
     
