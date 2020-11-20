@@ -20,3 +20,12 @@ Validate Deal Columns from Comments Report
     
     Validate Sequencing of Columns if Correct in Excel Sheet    &{ExcelPath}[Report_Path]${CBA_COMMENTS_REPORTFILE}.xlsx    &{ExcelPath}[Sheet_Name]
     ...    &{ExcelPath}[Columns_To_Validate]    &{ExcelPath}[Delimiter]
+
+Validate Facility Columns from Comments Report
+    [Documentation]    This keyword is used to validate columns in Facility_3 sheet name if existing and if in correct sequence in the Comments Report.
+    ...    Columns to Validate: Deal Name, Deal Tracking Number, Facility Name, Facility FCN, Comment Heading, Comment Detail, User ID, Date Added / Amended
+    ...    @author: clanding    19NOV2020    - initial create
+    [Arguments]    ${ExcelPath}
+    
+    Validate Sequencing of Columns if Correct in Excel Sheet    &{ExcelPath}[Report_Path]${CBA_COMMENTS_REPORTFILE}.xlsx    &{ExcelPath}[Sheet_Name]
+    ...    &{ExcelPath}[Columns_To_Validate]    &{ExcelPath}[Delimiter]

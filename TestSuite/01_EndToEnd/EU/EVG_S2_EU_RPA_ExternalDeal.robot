@@ -49,3 +49,11 @@ Create Initial Loan Drawdown - SERV01
     Mx Execute Template With Multiple Data    Create Initial Loan Drawdown for RPA Deal    ${ExcelPath}    ${rowid}    SERV01_LoanDrawdown
     Set Test Variable    ${rowid}    2
     Mx Execute Template With Multiple Data    Create Initial Loan Drawdown for RPA Deal    ${ExcelPath}    ${rowid}    SERV01_LoanDrawdown
+    Log to Console    Pause Execution - Run Monthly EOD
+    Pause Execution
+
+Comprehensive Repricing - SERV08
+    [Tags]    08 Comprehensive Repricing - SERV08
+    Mx Execute Template With Multiple Data    Create Comprehensive Repricing for RPA Deal    ${ExcelPath}    ${rowid}    SERV08_ComprehensiveRepricing
+    Set Test Variable    ${rowid}    2
+    Mx Execute Template With Multiple Data    Create Comprehensive Repricing for RPA Deal    ${ExcelPath}    ${rowid}    SERV08_ComprehensiveRepricing 
