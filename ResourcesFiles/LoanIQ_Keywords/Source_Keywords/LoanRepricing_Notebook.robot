@@ -1767,3 +1767,13 @@ Navigate to Loan Repricing Notebook Workflow
     ...    AND    mx LoanIQ click element if present    ${LIQ_Information_OK_Button}
     ...    ELSE IF    '${Transaction}'=='Close'    mx LoanIQ click element if present    ${LIQ_Information_OK_Button}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/NotebookWorkflow
+
+Navigate to GL Entries from Loan Rerpricing Notebook
+    [Documentation]    This keyword will be used to navigate to GL Entries from Ongoing Fee Payment Window
+    ...    @author: fmamaril    05SEP2019    Initial Create
+    ...    @update: dahijara    20NOV2020    Added screenshot
+    mx LoanIQ activate window    ${LIQ_LoanRepricingForDeal_Window}   
+    mx LoanIQ select    ${LIQ_LoanRepricing_GLEntries_Menu} 
+    mx LoanIQ activate window  ${LIQ_GL_Entries_Window}   
+    mx LoanIQ maximize    ${LIQ_GL_Entries_Window}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/GLEntriesWindow
