@@ -267,6 +267,7 @@ Pay Line Fee Amount - Scenario 7 ComSee
 Create Cycle Share Adjustment for Fee Accrual - Scenario 7 ComSee
     [Documentation]    This keyword is for creating cycle share adjustment for Bilateral Deal (MTAM06B).
     ...    @author: cfrancis    28SEP2020    - Initial create
+    ...    @update: makcamps    20NOV2020    - added conversion to number for requested amount computation
     [Arguments]    ${ExcelPath}
    
     ###Launch Facility Notebook###
@@ -283,7 +284,10 @@ Create Cycle Share Adjustment for Fee Accrual - Scenario 7 ComSee
     
     ###Accrual Share Adjustment Notebook###
     Navigate Line Fee and Verify Accrual Share Adjustment Notebook    ${StartDate}    ${DealName}    ${FacilityName}    ${LineFee}    ${CycleDue}    ${ProjectedCycleDue}
-    ${RequestedAmount}    Evaluate    ${CycleDue} - 10
+    ${CycleDue}    Remove Comma and Evaluate to Number    ${CycleDue}
+    ${RequestedAmount}    Evaluate    ${CycleDue}-10
+    ${RequestedAmount}    Evaluate    "%.2f" % ${RequestedAmount}
+    ${RequestedAmount}    Convert Number With Comma Separators    ${RequestedAmount}
     Input Requested Amount, Effective Date, and Comment    ${RequestedAmount}    ${StartDate}     Adjustment
     Save the Requested Amount, Effective Date, and Comment    ${RequestedAmount}    ${StartDate}     Adjustment
     
