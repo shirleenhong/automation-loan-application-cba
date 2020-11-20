@@ -49,3 +49,7 @@ Complete Comprehensive Repricing, Principal Payment and Interest Payment - SERV0
     Log to Console    Pause Execution - 1 month EOD or EOD until repricing date
     Pause Execution
     Mx Execute Template With Multiple Data    Complete Comprehensive Repricing, Principal Payment and Interest Payment    ${ExcelPath}    ${rowid}    SERV08_ComprehensiveRepricing
+
+Ongoing Fee Payment - SERV29
+    [Tags]    10    Ongoing Fee Payment - SERV29
+    Mx Execute Template With Multiple Data    Pay Usage Fee for RPA Deal    ${ExcelPath}    ${rowid}    SERV29_PaymentFees
