@@ -142,7 +142,7 @@ Validate Sequencing of Columns if Correct in Excel Sheet
     \    ${Sheet_Value}    Get From List    ${Sheet_ValueList_0}    1    ###Get Cell Value
     \    Compare Two Strings    ${Expected_Value}    ${Sheet_Value}
 
-Update to Create Dictionary Using Report File and Validate Values if Existing
+Create Dictionary Using Report File and Validate Values if Existing
     [Documentation]    This keyword is used to create dictionary from the DNR report file columns and validate if the required columns exist.
     ...    NOTE: This is applicable for reports where the columns does not start at row 1 and reports with too many records
     ...    @author: ccarriedo    20NOV2020    - initial create
