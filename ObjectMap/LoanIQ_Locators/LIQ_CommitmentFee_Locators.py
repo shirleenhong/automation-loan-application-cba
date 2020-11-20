@@ -57,7 +57,7 @@ LIQ_OngoingFee_CycleShareOverview_Button = 'JavaWindow("title:=.*Fee /.*").JavaB
 
 ###Commitment Fee - Ongoing Fee Payment - Workflow###  
 LIQ_OngoingFeePaymentNotebook_Workflow_JavaTree = 'JavaWindow("title:=.*Fee.*Ongoing Fee Payment.*","displayed:=1").JavaTree("tagname:=Drill down to perform.*")' 
-LIQ_OngoingFeePaymentNotebook_Window = 'JavaWindow("title:=.*Fee Ongoing Fee Payment.*")'
+LIQ_OngoingFeePaymentNotebook_Window = 'JavaWindow("title:=.*Fee .* Ongoing Fee Payment.*")'
 
 ###Fee List### 
 LIQ_Facility_FeeList = 'JavaWindow("label:=Fee List for.*")' 
