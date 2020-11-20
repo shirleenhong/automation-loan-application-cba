@@ -1650,3 +1650,34 @@ Enter Effective Date for Ongoing Fee-Cycle Due Payment
     mx LoanIQ enter    ${LIQ_OngoingFeePayment_EffectiveDate_Field}    ${sFeePayment_EffectiveDate}
     mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
     Take Screenshot    EffectiveDate
+
+Update Cycle on Usage Fee
+    [Documentation]    This keyword populates Usage effective and float rate start date.
+    ...    @author: mcastro    18NOV2020    - Initial Create
+    [Arguments]    ${sFee_Cycle}
+
+    ### GetRuntime Keyword Pre-processing ###
+    ${Fee_Cycle}    Acquire Argument Value    ${sFee_Cycle}
+
+    mx LoanIQ activate window    ${LIQ_OngoingFee_Window}
+    Mx LoanIQ Select Window Tab    ${LIQ_OngoingFee_Tab}    General
+    Run Keyword And Continue On Failure    mx LoanIQ click element if present    ${LIQ_OngoingFee_InquiryMode_Button}
+    Mx LoanIQ select combo box value    ${LIQ_OngoingFee_Cycle_List}    ${Fee_Cycle}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/UsageFeeWindow_FeeCycle
+    mx LoanIQ select    ${LIQ_OngoingFee_Save_Menu}
+    mx LoanIQ click element if present    ${LIQ_Warning_OK_Button}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/UsageFeeWindow_FeeCycle
+
+Run Online Acrual to Usage Fee
+    [Documentation]    This keyword runs the online accrual for Usage fee.
+    ...    @author: mcastro    18NOV2020    - Initial Create
+    mx LoanIQ activate window    ${LIQ_OngoingFee_Window}
+    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
+    mx LoanIQ click element if present    ${LIQ_Warning_OK_Button}
+    mx LoanIQ click element if present    ${LIQ_OngoingFee_InquiryMode_Button}
+    mx LoanIQ select    ${LIQ_OngoingFee_OnlineAcrual_Menu}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/UsageFeeWindow_WorkflowTab_OnlineAccrual
+    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
+    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
+    mx LoanIQ click element if present    ${LIQ_Warning_OK_Button}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/UsageFeeWindow_WorkflowTab_OnlineAccrual
