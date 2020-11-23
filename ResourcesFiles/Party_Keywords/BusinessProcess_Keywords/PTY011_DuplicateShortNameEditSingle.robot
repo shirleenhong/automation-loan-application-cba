@@ -1,8 +1,6 @@
 *** Settings ***
 Resource    ../../../Configurations/Party_Import_File.robot
 
-*** Variables ***
-
 *** Keywords ***
 Create Party For Duplicate Short Name Validation
     [Documentation]    This test case is used to check for duplicate short name for Quick Enterprise Party Page

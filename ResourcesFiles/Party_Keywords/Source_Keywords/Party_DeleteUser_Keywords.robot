@@ -2,7 +2,6 @@
 Resource       ../../../Configurations/Party_Import_File.robot
 
 *** Keywords ***
-
 Delete User in Party Using LoginId
     [Documentation]    This keyword is used to delete single user in Party application
     ...    @author: dahijara    18SEP2019    - initial create
