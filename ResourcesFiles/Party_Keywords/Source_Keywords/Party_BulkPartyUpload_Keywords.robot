@@ -2,8 +2,6 @@
 Resource       ../../../Configurations/Party_Import_File.robot
 
 *** Keywords ***
-
-
 Create Bulk File for Upload
     [Documentation]    This keyword is used to create the bulk party upload file for the Bulk Party Upload feature
     ...    @author: nbautist    03NOV2020    - initial create

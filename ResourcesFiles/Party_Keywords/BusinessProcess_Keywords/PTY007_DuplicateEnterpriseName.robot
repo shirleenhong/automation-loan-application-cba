@@ -1,8 +1,6 @@
 *** Settings ***
 Resource    ../../../Configurations/Party_Import_File.robot
 
-*** Variables ***
-
 *** Keywords ***
 Check and Reject a Duplicate Enterprise Name 
     [Documentation]    This test case is used to check and reject a Duplicate Enterprise Name
