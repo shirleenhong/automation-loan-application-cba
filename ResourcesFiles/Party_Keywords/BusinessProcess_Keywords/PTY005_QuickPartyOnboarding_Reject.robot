@@ -8,7 +8,9 @@ Create Party in Quick Party Onboarding and Reject Referral
     ...    @author: bagregado   08OCT2020    - Create Party in Quick Party Onboarding and Reject Referral, updated the target test case name for generating data
     ...    @update: javinzon    15OCT2020    - Added UserZone and UserBranch arguments in 'Reject Party via Supervisor Account' keyword.
     ...                                        Added UserZone and UserBranch arguments in 'Accept Rejected Party' keyword.
+    ...    @update: javinzon    20NOV2020    - Added condition for Logout User and Close Browser keywords
     [Arguments]    ${ExcelPath}
+    
     ### INPUTTER ###
     Login User to Party    ${PARTY_USERNAME}    ${PARTY_PASSWORD}    ${USER_LINK}    ${USER_PORT}    ${PARTY_SSO_URL_SUFFIX}    ${PARTY_HTML_USER_CREDENTIALS}    ${SSO_ENABLED}    ${PARTY_URL} 
     Configure Zone and Branch    &{ExcelPath}[UserZone]    &{ExcelPath}[UserBranch]
@@ -32,7 +34,8 @@ Create Party in Quick Party Onboarding and Reject Referral
     ...    &{ExcelPath}[GST_Number]    &{ExcelPath}[Address_Line_1]    &{ExcelPath}[Address_Line_2]    &{ExcelPath}[Address_Line_3]    &{ExcelPath}[Address_Line_4]
     ...    &{ExcelPath}[Town_City]    &{ExcelPath}[State_Province]    &{ExcelPath}[Business_Country]    &{ExcelPath}[Is_Primary_Activity]    &{ExcelPath}[Registered_Number]    ${Short_Name}    
    
-    Logout User on Party
+    Run Keyword If    '${SSO_ENABLED}'=='NO'    Logout User on Party
+    ...    ELSE    Close Browser 
  
     ### SUPERVISOR ###
     ${Task_ID_From_Supervisor}    Reject Party via Supervisor Account    ${Party_ID}    &{ExcelPath}[UserZone]    &{ExcelPath}[UserBranch]

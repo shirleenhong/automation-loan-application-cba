@@ -3,7 +3,6 @@ Resource    ../../../Configurations/LoanIQ_Import_File.robot
 Resource    ../../../Configurations/Party_Import_File.robot
 
 *** Keywords ***
-
 Login User to Party
     [Documentation]    This keyword used to launch browser and login user to Party app.
     ...    @author: jcdelacruz
@@ -64,7 +63,6 @@ Search Process in Party
     Wait Until Element Is Visible    ${Party_HomePage_ProcessName_Tab}
     Display Message    Successfully searched ${sProcess_Name}
     Capture Page Screenshot
-
 
 Validate Page Screen is Displayed
     [Documentation]    This keyword is used to validate page screen if successfully displayed.
