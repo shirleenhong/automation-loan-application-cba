@@ -2,7 +2,6 @@
 Resource    ../../../Configurations/Party_Import_File.robot
 
 *** Keywords ***
-
 Populate Party Onboarding and Return Values
     [Documentation]    This keyword populates required fields in Party Onboarding.
     ...    @author: jcdelacruz
@@ -107,7 +106,6 @@ Populate Pre-Existence Check
     
     [Return]    ${Enterprise_Name}    ${Party_ID}
   
-
 Select Referral Using Reference ID
     [Documentation]    This keyword is used to select referral row on Open referrals section based on the reference ID and Return referral Task ID
     ...    @author: dahijara    30APR2020    - initial create
@@ -131,7 +129,6 @@ Focus on Last Row of the Table
 
     ${iRowCount}    SeleniumLibraryExtended.Get Element Count    ${eTableRowLocator}
     ${status}    Run Keyword And Return Status    Mx Scroll Element Into View    ${eTableRowLocator}\[${iRowCount}]
-
 
 Approve Registered Party
     [Documentation]    This Keyword approves the created party from Quick Party Onboarding using supervisor account.
@@ -465,6 +462,7 @@ Accept Rejected Party and Validate Details in Quick Enterprise Details Screen
     ...    @author: dahijara    07MAY2020    - initial create
     ...    @author: gagregado   08OCT2020    - changed Party URL suffix to SSO  
     ...    @update: javinzon    15OCT2020    - added Configure Zone and Branch Keyword  
+    ...    @update: javinzon    20NOV2020    - added ELSE condition for Close Browser Keyword
     [Arguments]    ${sUserZone}    ${sUserBranch}    ${sTask_ID_From_Supervisor}    ${sParty_ID}    ${sCountry_of_Tax_Domicile}    ${sCountry_of_Registration}    ${sAddress_Type}    ${sCountry_Region}    ${iPost_Code}
     ...    ${sDocument_Collection_Status}    ${sIndustry_Sector}    ${sBusiness_Activity}    ${bIs_Main_Activity}    ${iGST_Number}
     ...    ${sAddress_Line_1}    ${sAddress_Line_2}    ${sTown_City}    ${sState_Province}    ${sBusiness_Country}    ${bIs_Primary_Activity}    ${iRegistered_Number}    ${sShort_Name}
@@ -482,7 +480,7 @@ Accept Rejected Party and Validate Details in Quick Enterprise Details Screen
     ...    ${sAddress_Line_3}    ${sAddress_Line_4}
 
     Run Keyword If    '${SSO_ENABLED}'=='NO'    Logout User on Party
-    Close Browser    
+    ...    ELSE    Close Browser    
 
 Accept Rejected Party
     [Documentation]    This keyword accepts the rejected party of the supervisor account.

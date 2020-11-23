@@ -128,9 +128,12 @@ Update Enterprise Party Details And Return Values
     
 Update Enterprise Party Address Details
     [Documentation]    This keyword is used to update Party address details
-    ...    @author: javinzon    22SEP2020    - intial create 
+    ...    @author: javinzon    22SEP2020    - initial create
+    ...    @update: javinzon    19NOV2020    - removed old scripts of Approval required and replaced with keywords
+    ...                                        'Proceed with Approval Required Dialog' 
     [Arguments]    ${sAddress_Type}    ${sAddress_Line_1}    ${sAddress_Line_2}    ${sAddress_Line_3}    ${sAddress_Line_4}    ${sTown_City}
     ...    ${sState_Province}    ${sPost_Code}    ${sCountry_Region}    ${sExpected_Error_Message}=None
+    
     Mx Click Element    ${Party_MaintainPartyDetails_EnterpriseParty_RelatedItems_Menu}    
     Mx Click Element    ${Party_EnquirePartyDetails_EnterpriseParty_Addresses_MenuItem}    
     Wait Until Page Contains    Party Address
@@ -147,17 +150,13 @@ Update Enterprise Party Address Details
     Capture Page Screenshot    ${screenshot_path}/Screenshots/Party/Update_EnterprisePartyDetailsPage--{index}.png
     Mx Click Element    ${Party_QuickEnterpriseParty_AddressDetails_Next_Button}
     
-    ### Approval Required Dialog ###
-    ${isApprovalRequired}    Run Keyword And Return Status    Wait Until Page Contains Element    ${Party_QuickEnterpriseParty_ApprovalRequired_Dialog}    30s
-    Run Keyword If    ${isApprovalRequired}==${True}    Run Keywords	Capture Page Screenshot    ${screenshot_path}/Screenshots/Party/PartyApprovalDialog-{index}.png
-    ...	AND	    Mx Click Element    ${Party_QuickEnterpriseParty_AskForApproval_Button}
-    ...	AND	    Wait Until Page Contains Element    ${Party_RaisedMessage_Notification}
-    ...	ELSE    Validate Error Message in Quick Enterprise Party    ${sExpected_Error_Message}
+    Proceed with Approval Required Dialog    ${sExpected_Error_Message}
     
 Update Enterprise Business Activity Details
     [Documentation]    This keyword is used to update all details in Business Activity Details Dialog
-    ...    @author: javinzon    22SEP2020    - intial create
+    ...    @author: javinzon    22SEP2020    - initial create
     [Arguments]    ${sBusiness_Country}    ${sIndustry_Sector}    ${sBusiness_Activity}    ${sExpected_Error_Message}=None
+    
     Wait Until Page Contains Element    ${Party_MaintainPartyDetails_EnterpriseParty_BusinessActivity_Checkbox}
     Double Click Element    ${Party_MaintainPartyDetails_EnterpriseParty_BusinessActivity_Checkbox}
     Wait Until Loading Page Is Not Visible    ${PARTY_TIMEOUT}
@@ -174,8 +173,9 @@ Update Enterprise Business Activity Details
     
 Update Goods and Service Tax Details
     [Documentation]    This keyword is used to update GST Number in Goods and Service Tax Dialog
-    ...    @author: javinzon    22SEP2020    - intial create
+    ...    @author: javinzon    22SEP2020    - initial create
     [Arguments]    ${sCountry_of_Tax_Domicile}    ${sGST_Number}
+    
     Wait Until Page Contains Element    ${Party_MaintainPartyDetails_EnterpriseParty_GTS_AddChange_Button}
     Click Button    ${Party_MaintainPartyDetails_EnterpriseParty_GTS_AddChange_Button}
     Mx Click Element    ${Party_TableRadioButton_RadioButton}
@@ -187,7 +187,7 @@ Update Goods and Service Tax Details
     
 Update Party Details in Enterprise Party Page
     [Documentation]    This keyword is used to update all party details in Enterprise Party Page
-    ...    @author: javinzon    22SEP2020    - intial create 
+    ...    @author: javinzon    22SEP2020    - initial create 
     [Arguments]        ${sLocality}    ${sParty_Sub_Type}    ${sParty_Category}    ${sEnterprise_Prefix}    ${sRegistered_Number}    ${sShort_Name_Prefix}
     ...    ${sCountry_of_Tax_Domicile}   ${sCountry_of_Registration}    ${sAddress_Type}    ${sAddress_Line_1}    ${sAddress_Line_2}    ${sAddress_Line_3}    
     ...    ${sAddress_Line_4}    ${sTown_City}   ${sState_Province}    ${sPost_Code}    ${sCountry_Region}    ${sBusiness_Country}    ${sIndustry_Sector}    ${sBusiness_Activity}
@@ -215,7 +215,7 @@ Update Party Details in Enterprise Party Page
     
 Approve Updated Party via Supervisor Account
     [Documentation]    This keyword is used to Approve updated party details via Maintain Party Details
-    ...    @author: javinzon    04NOV2020    - intial create 
+    ...    @author: javinzon    04NOV2020    - initial create 
     [Arguments]    ${sPartyID}    ${sUserZone}    ${sUserBranch}
 
     Login User to Party    ${PARTY_SUPERVISOR_USERNAME}    ${PARTY_SUPERVISOR_PASSWORD}    ${USER_LINK}    ${USER_PORT}    ${PARTY_URL_SUFFIX}    ${PARTY_HTML_APPROVER_CREDENTIALS}    ${SSO_ENABLED}    ${PARTY_URL}
@@ -232,7 +232,8 @@ Approve Updated Party via Supervisor Account
     
 Validate Enquire Enterprise Party After Amendment
     [Documentation]    This keyword is used to validate all amended party details via Party details enquiry.
-    ...    @author: javinzon    04NOV2020    - intial create
+    ...    @author: javinzon    04NOV2020    - initial create
+    ...	   @update: javinzon	20NOV2020	 - moved the approval keywords for party address details and validation for amendment successful page.
     [Arguments]    ${sCountry}    ${sIndustrySector}    ${sBusinessActivity}    ${bIsMainActivity}    ${bIsPrimaryActivity}    ${sLocality}    ${sEntity}    ${sAssigned_Branch}    ${sParty_Type}    ${sParty_Sub_Type}    ${sParty_Category}    ${sParty_ID}    
     ...    ${sEnterprise_Name}    ${sRegistered_Number}    ${sCountry_of_Registration}    ${sCountry_of_Tax_Domicile}    ${sShort_Name}    ${sAddress_Type}    ${sAddress_Line_1}    ${sAddress_Line_2}    ${sAddress_Line_3}    ${sAddress_Line_4}    ${sTown_City}    
     ...    ${sState_Province}    ${iPost_Code}    ${sCountry_Region}    ${sGTS_Number}
@@ -294,17 +295,29 @@ Accept Approved Updated Party
     Wait Until Loading Page Is Not Visible    ${PARTY_TIMEOUT}
     Validate Page Screen is Displayed    ${PARTY_APPROVALS_PAGETITLE}
     
+    ${TaskId_ForAddress}    Select Referral Using Reference ID    ${sTaskID_ForAddress}   
+    ${IsPresent}    Run Keyword And Return Status    Wait Until Page Contains    ${PARTY_ADDRESSESCHANGE_DESCRIPTION}    5s
+    Run Keyword If    ${isPresent}==${True}    Run Keywords    Capture Page Screenshot    ${screenshot_path}/Screenshots/Party/PartyApprovalPage-{index}.png
+    ...    AND    Mx Click Element    ${Party_Footer_Next_Button} 
+    ...    ELSE    Run Keyword And Continue On Failure    Fail    Approved Referral must be for Addresses Changed.
+    
+    Mx Click Element    ${Party_HomePage_Notification_Icon}    
+    Wait Until Loading Page Is Not Visible    ${PARTY_TIMEOUT}
+    Validate Page Screen is Displayed    ${PARTY_NOTIFICATIONTYPES_PAGETITLE}
+    Mx Input Text    ${Party_NotificationTypes_TaskType_TextBox}    Approval
+    Mx Click Element    ${Party_ProcessNotification_NotificationTypes_Approval_RadioButton}
+    Capture Page Screenshot    ${screenshot_path}/Screenshots/Party/PartyNotificationTypesPage-{index}.png
+    Mx Click Element    ${Party_Next_Button}
+    
+    Wait Until Browser Ready State
+    Wait Until Loading Page Is Not Visible    ${PARTY_TIMEOUT}
+    Validate Page Screen is Displayed    ${PARTY_APPROVALS_PAGETITLE}
+    
     ${TaskId_ForPartyDetails}    Select Referral Using Reference ID    ${sTaskID_ForPartyDetails}    
     ${IsPresent}    Run Keyword And Return Status    Wait Until Page Contains    ${PARTY_ENTERPRISEPARTYDETAILSCHANGE_DESCRIPTION}    5s
     Run Keyword If    ${isPresent}==${True}    Run Keywords    Capture Page Screenshot    ${screenshot_path}/Screenshots/Party/PartyApprovalPage-{index}.png
     ...    AND    Mx Click Element    ${Party_Footer_Next_Button} 
     ...    ELSE    Run Keyword And Continue On Failure    Fail    Approved Referral must be for Enterprise Party Details Changed.
-    
-    ${TaskId_ForPartyDetails}    Select Referral Using Reference ID    ${sTaskID_ForAddress}   
-    ${IsPresent}    Run Keyword And Return Status    Wait Until Page Contains    ${PARTY_ADDRESSESCHANGE_DESCRIPTION}    5s
-    Run Keyword If    ${isPresent}==${True}    Run Keywords    Capture Page Screenshot    ${screenshot_path}/Screenshots/Party/PartyApprovalPage-{index}.png
-    ...    AND    Mx Click Element    ${Party_Footer_Next_Button} 
-    ...    ELSE    Run Keyword And Continue On Failure    Fail    Approved Referral must be for Addresses Changed.
     
     Wait Until Browser Ready State
     Wait Until Loading Page Is Not Visible    ${PARTY_TIMEOUT}
