@@ -2,7 +2,6 @@
 Resource    ../../../Configurations/Party_Import_File.robot
 
 *** Keywords ***
-
 Enquire Party Details Search
     [Documentation]    This keyword is used input party ID to start SEARCH
     ...    @author: gagregado    28SEPT2020    - initial create
@@ -76,7 +75,6 @@ Validate Enterprise Business Activity Page
     Capture Page Screenshot    ${screenshot_path}/Screenshots/Party/PartyEnterpriseBusinessActivityPage-{index}.png
     Mx Click Element    ${Party_Footer_Next_Button}
     Wait Until Loading Page Is Not Visible    ${PARTY_TIMEOUT}
-
 
 Verify Party Detail Enquiry Search Row Value
     [Documentation]    This keyword is used get row value of and compare with the know value from dataset

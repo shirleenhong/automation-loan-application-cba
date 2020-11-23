@@ -11,7 +11,6 @@ Create Party ID Successfully in Quick Party Onboarding
     ...	   @update: javinzon	29OCT2020	 - Added Write Data To Excel keyword of PartyID for PTY020_PartyCrossReferenceDetails
     ...    @update: javinzon    03NOV2020    - Added Write Data To Excel for PTY002_CreatePartyID_MaintainPartyDetails
     ...    @update: javinzon    13NOV2020    - Added Write Data To Excel for PTY019_GLTBCrossReference_ColumnsValidation
-
     [Arguments]    ${ExcelPath}
     
     ### INPUTTER ###
