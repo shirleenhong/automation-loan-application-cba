@@ -312,7 +312,6 @@ Create Payment Reversal - Scenario 7 ComSee
     [Documentation]    This keyword initiates payment reversal after Fee Payment is released.
     ...    @author: cfrancis    01OCT2020    - initial create
     ...    @update: makcamps    17NOV2020    - removed extra release cashflow keyword
-    ...    @update: makcamps    17NOV2020    - removed release cashflow keyword
     [Arguments]    ${ExcelPath}
     
     ###Launch Facility Notebook###
@@ -373,7 +372,8 @@ Create Payment Reversal - Scenario 7 ComSee
     Login to Loan IQ    ${MANAGER_USERNAME}    ${MANAGER_PASSWORD}
 
     ###Release Reverse Fee Payment###       
-    Select Item in Work in Process    Payments    Awaiting Release   Reverse Fee Payment     ${FacilityName}
+    Select Item in Work in Process    Payments    Awaiting Release Cashflows   Reverse Fee Payment     ${FacilityName}
+    Navigate Notebook Workflow    ${LIQ_ReverseFee_Window}    ${LIQ_LineFee_ReversePayment_Tab}    ${LIQ_LineFee_ReversePayment_WorkflowItems}    Release Cashflows
     Release Reverse Fee Payment
     Close All Windows on LIQ
     Logout from Loan IQ
