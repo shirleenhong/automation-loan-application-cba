@@ -60,7 +60,7 @@ LIQ_LineFee_Cycles_CancelButton = 'JavaWindow("title:=Cycles for Line Fee.*")Jav
 LIQ_LineFee_Events_Javatree = 'JavaWindow("title:=Line Fee.*").JavaTree("tagname:=Select event to view details")' 
 
 ###Line Fee - GL Entries###
-LIQ_LineFee_Queries_GLEntries = 'JavaWindow("title:=Line Fee Ongoing Fee Payment.*").JavaMenu("label:=Queries").JavaMenu("label:=GL Entries")'
+LIQ_LineFee_Queries_GLEntries = 'JavaWindow("title:=Line Fee.* Ongoing Fee Payment.*").JavaMenu("label:=Queries").JavaMenu("label:=GL Entries")'
 
 ###Line Fee - Reverse Payment###
 LIQ_LineFee_ReversePayment = 'JavaWindow("title:=Line Fee.* Ongoing Fee Payment.*").JavaMenu("label:=Options").JavaMenu("label:=Reverse Payment")'
