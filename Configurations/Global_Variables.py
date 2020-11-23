@@ -225,6 +225,7 @@ LOAN_PRINCIPAL_PREPAYMENT_TRANSACTION = "Loan Principal Prepayment"
 RATE_SETTING_TRANSACTION = "Rate Setting"
 AWAITING_SEND_TO_SETTLEMENT_APPROVAL_TRANSACTION = "Awaiting Send to Settlement Approval"
 AWAITING_CLOSE_TRANSACTION= "Awaiting Close"
+FEE_PAYMENT_RELEASED_STATUS = "Fee Payment Released"
 
 ### Bank Role ###
 REFERENCE_BANK_ROLE = "Reference Bank"
