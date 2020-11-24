@@ -10,9 +10,9 @@ Validate Columns from Loans and Accruals Report
     ...    Outstanding Global projected EOC Accrual, Outstanding Global Projected EOC Due, Outstanding Global Accrued to Date, Branch Code, Business Date, Risk Book, Portfolio, Expense Code, Deal Number, Facility Number, 
     ...    Facility Start Date, Facility Maturity Date, Facility Currency Code, Lender Commitment, Outstanding Alias, Outstanding Borrower CIF, Outstanding Type, Pricing Option, Rate Basis, OST Currency Code, OST Host Bank Net, 
     ...    OST All-In Rate, OST Base Rate Percentage, OST Spread Percentage, OST Rate Basis, OST Effective Date, OST Repricing Frequency, OST Repricing Date
-    ...    NOTE: Liquidity Report should be available already in the report path.
+    ...    NOTE: Loans and Accruals Report should be available already in the report path.
     ...    @author: ccarriedo    23NOV2020    - initial create
     [Arguments]    ${ExcelPath}
     
-    ${LIQPerformance_Report}    Set Variable    &{ExcelPath}[Report_Path]${CBA_LOANSACCRUALS_REPORTFILE}.xlsx
-    Validate Sequencing of Columns if Correct in Excel Sheet    ${LIQPerformance_Report}    &{ExcelPath}[Sheet_Name]    &{ExcelPath}[Columns_To_Validate]    &{ExcelPath}[Delimiter]
+    ${LoanAccrual_Report}    Set Variable    &{ExcelPath}[Report_Path]${CBA_LOANSACCRUALS_REPORTFILE}.xlsx
+    Validate Sequencing of Columns if Correct in Excel Sheet    ${LoanAccrual_Report}    &{ExcelPath}[Sheet_Name]    &{ExcelPath}[Columns_To_Validate]    &{ExcelPath}[Delimiter]
