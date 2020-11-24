@@ -5,6 +5,7 @@ Resource    ../../../Configurations/Party_Import_File.robot
 Create Party in Quick Party Onboarding and Validate Duplicate Short Name Across Entities
     [Documentation]    This test case is used to create Party in Quick Party Onboarding and validate duplicate shortname across entities
     ...    @author: javinzon    23OCT2020    - initial create
+    ...    @update: javinzon    20NOV2020    - Added condition for Logout User and Close Browser keywords
     [Arguments]    ${ExcelPath}
   
     Login User to Party    ${PARTY_USERNAME}    ${PARTY_PASSWORD}    ${USER_LINK}    ${USER_PORT}    ${PARTY_URL_SUFFIX}    ${PARTY_HTML_USER_CREDENTIALS}    ${SSO_ENABLED}    ${PARTY_URL} 
@@ -23,4 +24,5 @@ Create Party in Quick Party Onboarding and Validate Duplicate Short Name Across 
     ...    &{ExcelPath}[Address_Line_2]    &{ExcelPath}[Address_Line_3]    &{ExcelPath}[Address_Line_4]    &{ExcelPath}[Town_City]    &{ExcelPath}[State_Province]    &{ExcelPath}[Business_Country]    &{ExcelPath}[Is_Primary_Activity]
     ...    &{ExcelPath}[Registered_Number]    &{Excelpath}[Short_Name]    ${DUPLICATE_SHORTNAME_ERROR_MESSAGE}
     
-    Logout User on Party
+    Run Keyword If    '${SSO_ENABLED}'=='NO'    Logout User on Party
+    ...    ELSE    Close Browser
