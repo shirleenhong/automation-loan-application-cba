@@ -144,12 +144,13 @@ Read Excel Data and Validate Customer ID, Short Name and Legal Name fields
     [Documentation]    This keyword validates the Customer ID, Short Name and Legal Name fields against from excel data 
     ...    @author: ghabal
     ...    @update: amansuet    21MAY2020    - removed unused keywords and updated to align with automation standards
+    ...    @update: mcastro     25NOV2020    - Updated Shortname from data set to all caps
     [Arguments]    ${sLIQCustomer_ID}     ${sLIQCustomer_ShortName}    ${sLIQCustomer_LegalName}
 
     Mx LoanIQ Select Window Tab    ${LIQ_Active_Customer_Notebook_TabSelection}    General
     Run Keyword And Continue On Failure    Run Keyword And Continue On Failure    Validate Loan IQ Details    ${sLIQCustomer_ID}     ${LIQ_ActiveCustomer_Window_CustomerID}
     Validate if Element is Disabled    ${LIQ_ActiveCustomer_Window_CustomerID}    Customer ID 
-    Run Keyword And Continue On Failure    Validate Loan IQ Details    ${sLIQCustomer_ShortName}    ${LIQ_ActiveCustomer_Window_ShortName}
+    Run Keyword And Continue On Failure    Validate Loan IQ Details    ${sLIQCustomer_ShortName.upper()}    ${LIQ_ActiveCustomer_Window_ShortName}
     Validate if Element is Disabled    ${LIQ_ActiveCustomer_Window_ShortName}    Short Name
     Run Keyword And Continue On Failure    Validate Loan IQ Details    ${sLIQCustomer_LegalName}    ${LIQ_ActiveCustomer_Window_LegalName}
     Validate if Element is Disabled    ${LIQ_ActiveCustomer_Window_LegalName}    Legal Name
