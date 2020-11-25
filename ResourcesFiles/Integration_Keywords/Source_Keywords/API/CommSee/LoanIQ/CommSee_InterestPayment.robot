@@ -8,6 +8,7 @@ Resource     ../../../../../../Configurations/LoanIQ_Import_File.robot
 Validate Payment Manual Adjustment Transaction
     [Documentation]    Verify the cycleDue and paidToDate values from the payload response after the manual adjustment transaction is made in Loan Oustanding
     ...    @author: sacuisia 16OCT2020
+    ...	   @update: makcamps 25NOV2020	-added release cashflows and release steps, used generate intent notice keyword, and used data set for currency
     [Arguments]    ${ExcelPath}
     
     ${Outstanding_Alias}    Read Data From Excel    ComSee_SC2_Loan    Outstanding_Alias    ${rowid}    ${ComSeeDataSet}
@@ -24,7 +25,7 @@ Validate Payment Manual Adjustment Transaction
     
     ###Get Transaction Amount for Cashflow###
     ${HostBankSharePct}    Read Data From Excel    ComSee_SC2_Loan    HostBankSharePct    ${rowid}    ${ComSeeDataSet}  
-    ${HostBankShare}    Get Host Bank Cash in Cashflow
+    ${HostBankShare}    Get Host Bank Cash in Cashflow    &{ExcelPath}[Outstanding_Currency]
     ${BorrowerTranAmount}    Get Transaction Amount in Cashflow    ${Borrower}
     ${ComputedHBTranAmount}    Compute Lender Share Transaction Amount    ${CycleDue}    ${HostBankSharePct}
     
@@ -51,30 +52,18 @@ Validate Payment Manual Adjustment Transaction
     Login to Loan IQ    ${SUPERVISOR_USERNAME}    ${SUPERVISOR_PASSWORD}
    
     ###Work in Process#####
-    Select Item in Work in Process    Payments    Awaiting Release    Reverse Interest Payment     &{ExcelPath}[Facility_Name]
-    
-    Mx LoanIQ Verify Text In Javatree    ${LIQ_Payment_WorkflowItems}    Generate Intent Notices%yes    
-    Mx LoanIQ DoubleClick    ${LIQ_Payment_WorkflowItems}    Generate Intent Notices
-    
-    ${status}    Run Keyword And Return Status    Mx LoanIQ Verify Runtime Property    ${LIQ_Notices_BorrowerDepositor_Checkbox}       value%1
-    Run Keyword If    ${status}==True    mx LoanIQ click element if present    ${LIQ_Notices_OK_Button}
-    
-    mx LoanIQ click element if present    ${LIQ_Notices_OK_Button}
-      
-    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
-    
-    ${status}    Run Keyword And Return Status    Mx LoanIQ Verify Runtime Property    ${LIQ_Notices_BorrowerDepositor_Checkbox}       value%1
-    Run Keyword If    ${status}==True    mx LoanIQ click element if present    ${LIQ_Notices_OK_Button}    
-        
-    mx LoanIQ click element if present    ${LIQ_Notices_OK_Button}
-    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}    
-    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
-     
+    Select Item in Work in Process    Payments    Awaiting Approval    Reverse Interest Payment     &{ExcelPath}[Facility_Name]
+
+    Approve Interest Payment
+    Generate Intent Notices of an Interest Payment-CommSee    ${ExcelPath}[Borrower_ShortName]
+
     ###Release Reverse Interest Payment###
-    Release Payment
+    Navigate Notebook Workflow    ${LIQ_Payment_Window}    ${LIQ_Payment_Tab}    ${LIQ_Payment_WorkflowItems}    Release Cashflows
+	Release Payment
+	Release Interest Payment
     
-    ##Validate Cycle Due paidToDate after EOD
-    Navigate to Share Accrual Cycle    &{ExcelPath}[HostBank_Lender]
+    #Validate Cycle Due paidToDate after EOD
+    Navigate to Share Accrual Cycle    &{ExcelPath}[Lender1_ShortName]
     
     ${LoanCycleDueAmount}    Get Cycle Due Amount
     Write Data To Excel    ComSee_SC2_Loan    Outstanding_cycleDue    ${rowid}    ${LoanCycleDueAmount}    ${ComSeeDataSet}
@@ -85,9 +74,7 @@ Validate Payment Manual Adjustment Transaction
     ###Loan IQ Desktop###
     Close All Windows on LIQ
     Logout from Loan IQ
-    
-  
-     
+
 Navigate to Accruals Share Adjustment Loans
      [Documentation]    This keyword navigates the LIQ User to the Accruals Share Adjustment Notebook and validates the information displayed in the notebook.
     ...    @author: rtarayao
@@ -223,12 +210,15 @@ Release Interest Payment
     [Documentation]    This keyword will release the Loan Drawdown
     ...    @author: ritragel
     ...    @update: ritragel    06MAR19    Added handling of closing Cashflows window
+    ...    @update: makcamps	25NOV20    Added handling of closing Cashflows window at the end
     mx LoanIQ click element if present    ${LIQ_Cashflows_OK_Button}
     mx LoanIQ click element if present    ${LIQ_Question_Yes_Button}   
     mx LoanIQ activate    ${LIQ_Payment_Window}    
     Mx LoanIQ Select Window Tab    ${LIQ_Payment_Tab}    Workflow 
     Mx LoanIQ DoubleClick    ${LIQ_Payment_WorkflowItems}    Complete Cashflows 
     mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
+    mx LoanIQ click element if present    ${LIQ_Question_Yes_Button}
+    mx LoanIQ click element if present    ${LIQ_Cashflows_OK_Button}
     mx LoanIQ click element if present    ${LIQ_Question_Yes_Button}
     
 Initiate Interest Payment - Scenario 7 ComSee
