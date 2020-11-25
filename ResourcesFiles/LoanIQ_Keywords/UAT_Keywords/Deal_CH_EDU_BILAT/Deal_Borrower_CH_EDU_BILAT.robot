@@ -7,7 +7,7 @@ ${SCENARIO}
 
 *** Keywords ***
 
-Create Deal Borrower initial details in Quick Party Onboarding for CH EDU Bilateral Deal
+Create Deal Borrower Initial Details in Quick Party Onboarding for CH EDU Bilateral Deal
     [Documentation]    This keyword creates a Deal Borrower in Quick Party Onboarding for CH EDU Bilateral Deal.
     ...    @author:    dahijara    24NOV2020    Initial Create
     [Arguments]    ${ExcelPath}
@@ -25,11 +25,8 @@ Create Deal Borrower initial details in Quick Party Onboarding for CH EDU Bilate
     
     Validate Pre-Existence Check Page Values and Field State    &{ExcelPath}[Locality]    ${Entity}    ${Assigned_Branch}    &{ExcelPath}[Party_Type]    &{ExcelPath}[Party_Sub_Type]    &{ExcelPath}[Party_Category]
     ${Enterprise_Name}    ${Party_ID}    Populate Pre-Existence Check    &{ExcelPath}[Enterprise_Prefix]
-    # ${Party_ID}    Generate Unique Number or Text for Party
-    # Populate Pre-Existence Check with No Suffix    &{ExcelPath}[Enterprise_Prefix]
     ${Short_Name}    Get Short Name Value and Return    &{ExcelPath}[Short_Name_Prefix]    ${Party_ID}
-    # Run Keyword If    '${SCENARIO}'=='0'    Write Data To Excel    QuickPartyOnboarding    Party_ID    PTY001_QuickPartyOnboarding    ${Party_ID}    ${PTY_DATASET}        bTestCaseColumn=True
-    
+
     Populate Quick Enterprise Party    ${Party_ID}    &{ExcelPath}[Country_of_Tax_Domicile]    &{ExcelPath}[Country_of_Registration]
     ...    &{ExcelPath}[Address_Type]    &{ExcelPath}[Country_Region]    &{ExcelPath}[Post_Code]    &{ExcelPath}[Document_Collection_Status]
     ...    &{ExcelPath}[Industry_Sector]    &{ExcelPath}[Business_Activity]    &{ExcelPath}[Is_Main_Activity]
@@ -56,7 +53,7 @@ Create Deal Borrower initial details in Quick Party Onboarding for CH EDU Bilate
     Write Data To Excel    PTY001_QuickPartyOnboarding    LIQCustomer_ShortName    ${rowid}    ${Short_Name.upper()}
     Write Data To Excel    PTY001_QuickPartyOnboarding    LIQBorrower_LegalName    ${rowid}    ${Enterprise_Name}
 
-Search Customer and Complete its Borrower Profile Creation with default values for CH EDU Bilateral Deal
+Search Customer and Complete Borrower Profile Creation with Default Values for CH EDU Bilateral Deal
     [Documentation]    This keyword searches a customer and complete its Borrower Profile creation with default values
     ...    @author: dahijara    25NOV2020
     [Arguments]    ${ExcelPath}
