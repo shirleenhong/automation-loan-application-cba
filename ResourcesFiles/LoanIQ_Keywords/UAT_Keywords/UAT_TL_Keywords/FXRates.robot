@@ -7,6 +7,7 @@ ${row}    1
 *** Keywords ***
 Load FX Rates To Funding Desks
     [Documentation]    Load FX Rates to Funding Desk for New UAT Deals
+    ...    @author:    mcastro    26NOV2020    - Initial Create
     [Arguments]    ${ExcelPath}
 
     Login to Loan IQ    ${TL_USERNAME}    ${TL_PASSWORD}
