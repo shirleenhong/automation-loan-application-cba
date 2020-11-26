@@ -303,6 +303,7 @@ CBA_LIQUIDITY_REPORTFILE= "CBA Liquidity Report"
 CBA_CASHOUT_REPORTFILE = "AHBCO_001_Report"
 CBA_DE_REPORTFILE= "Agency Host Bank DE Extract"
 CBA_LIQPERFORMANCE_REPORTFILE = "LIQFacilityPerformance_V3.0"
+CBA_LOANSACCRUALS_REPORTFILE = "LoansAndAccrualsReport_V2.2.1"
 
 import os
 project_path = os.path.dirname(os.path.realpath(__file__)).replace("MDM_ConfigFile","")
