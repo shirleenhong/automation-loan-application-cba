@@ -438,6 +438,9 @@ Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/CBA_UAT05_DealTemplat
 Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/CBA_UAT05_DealTemplate/05FacilityNotebook.robot
 Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/CBA_UAT05_DealTemplate/05Outstandings.robot
 
+### Deal CH EDU BILAT ###
+Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/Deal_CH_EDU_BILAT/Deal_Borrower_CH_EDU_BILAT.robot
+
 ### NEW UAT Deal LBT BILAT ###
 Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/Deal_LBT_BILAT/Deal_Borrower_LBT_BILAT.robot
 

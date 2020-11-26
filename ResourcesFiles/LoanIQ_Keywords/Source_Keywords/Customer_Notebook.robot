@@ -774,6 +774,7 @@ Select Notification Method in the Contact Details under Profile Tab
     [Documentation]    This keyword adds Notification Method to the Details of a Contact of a Customer
     ...    @author: ghabal
     ...    @update: amansuet    22MAY2020    - updated to align with automation standards
+    ...    @update: dahijara    25NOV2020    - Replaced Mx Native Type with Mx Press Combination
     [Arguments]    ${sContactNotice_Method}=None    ${sContact_Email}=None
     
     Mx LoanIQ Click    ${ContactDetailWindow_Notification_AddButton}
@@ -781,7 +782,7 @@ Select Notification Method in the Contact Details under Profile Tab
     Validate Contact Notice Method(s) Selection Window
     Run Keyword If    '${sContactNotice_Method}' != 'None'    Mx LoanIQ Select Combo Box Value    ${ContactNoticeWindow_AvailableMethod_Field}    ${sContactNotice_Method}
     Run Keyword If    '${sContact_Email}' != 'None'    mx LoanIQ enter    ${ContactNoticeWindow_Email_Field}    ${sContact_Email}   
-    Mx Native Type    {BACKSPACE}
+    Mx Press Combination    Key.BACKSPACE
     Mx LoanIQ Click    ${ContactNoticeWindow_OkButton} 
     Mx LoanIQ Activate    ${ContactDetailWindow}
         
@@ -2509,3 +2510,11 @@ Get Customer ID
     mx LoanIQ activate window    ${LIQ_ActiveCustomer_Window}        
     ${LIQCustomer_ID}    Mx LoanIQ Get Data    ${LIQ_ActiveCustomer_Window_CustomerID}    testdata
     [Return]    ${LIQCustomer_ID}
+
+Activate and Close Remittance List Window
+    [Documentation]    This keyword closes Remittance List Window
+    ...    @author: dahijara    25NOV2020    - Initial Create
+    mx LoanIQ activate window    ${LIQ_ActiveCustomer_RemittanceList_Window}
+    Take Screenshot    ${Screenshot_Path}/Screenshots/LoanIQ/RemittanceListWindow
+    mx LoanIQ click    ${LIQ_ActiveCustomer_Remittance_List_Exit_Button}
+    mx LoanIQ activate window    ${LIQ_ActiveCustomer_Window}
