@@ -93,7 +93,7 @@ Create Loan Drawdown for Syndicated Deal - ComSee
 Pay Loan Outstanding Accrual Zero Cycle Due
     [Documentation]    This keyword update the PaidToDate value after Payment transaction has been made. 
     ...    @author: sacuisia 02OCT2020	-initialCreate
-    ...	   @update: makcamps 25NOV2020	-added release cashflow and release steps
+    ...	   @update: makcamps 25NOV2020	-added release cashflow, release, and closing liq windows steps
     [Arguments]    ${ExcelPath}    ${sCyclesForLoan}=None    
     
     ${CyclesForLoan}    Acquire Argument Value    ${sCyclesForLoan}
@@ -144,7 +144,6 @@ Pay Loan Outstanding Accrual Zero Cycle Due
     Approve Interest Payment
     Navigate Notebook Workflow    ${LIQ_Payment_Window}    ${LIQ_Payment_Tab}    ${LIQ_Payment_WorkflowItems}    Release Cashflows
 	Release Payment
-	Release Interest Payment
     
     Launch Loan Notebook    &{ExcelPath}[Deal_Name]    &{ExcelPath}[Facility_Name]    &{ExcelPath}[Outstanding_Alias]
     
@@ -164,6 +163,7 @@ Pay Loan Outstanding Accrual Zero Cycle Due
     ${LoanPaidDueAmount}   Get PaidToDate   
     Write Data To Excel    ComSee_SC2_Loan   Outstanding_paidToDate    ${rowid}    ${LoanPaidDueAmount}    ${ComSeeDataSet}
     
+    Close All Windows on LIQ
  
 Write Loan Outstanding Accrual Non Zero Cycle
     [Documentation]    This test case writes the updated Loan Outstanding details after EOD for comsee use.

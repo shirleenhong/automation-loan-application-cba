@@ -60,7 +60,6 @@ Validate Payment Manual Adjustment Transaction
     ###Release Reverse Interest Payment###
     Navigate Notebook Workflow    ${LIQ_Payment_Window}    ${LIQ_Payment_Tab}    ${LIQ_Payment_WorkflowItems}    Release Cashflows
 	Release Payment
-	Release Interest Payment
     
     #Validate Cycle Due paidToDate after EOD
     Navigate to Share Accrual Cycle    &{ExcelPath}[Lender1_ShortName]
@@ -175,6 +174,7 @@ Store Cycle Start Date, End Date, and Paid Fee for Loan Outstanding
 Generate Intent Notices of an Interest Payment-CommSee
     [Documentation]    This keyword generates Intent Notices of an Interest Payment
     ...    @author: ghabal    
+    ...	   @update: makcamps 26NOV2020	- change Exit notice button to dynamic
     [Arguments]    ${LIQCustomer_ShortName}    
 
     mx LoanIQ activate    ${LIQ_Payment_Window}    
@@ -202,9 +202,8 @@ Generate Intent Notices of an Interest Payment-CommSee
     ${NoticeStatus}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_Notice_Information_Table}    ${LIQCustomer_ShortName}%Status%test    
     Log    ${NoticeStatus}
     Mx LoanIQ Select Or Doubleclick In Tree By Text    ${LIQ_Notice_Information_Table}    ${LIQCustomer_ShortName}%s 
-    
-
-    mx LoanIQ click    ${LIQ_InterestPayment_Notice_Exit_Button}
+	
+    mx LoanIQ click    ${LIQ_Notice_Exit_Button}
 
 Release Interest Payment
     [Documentation]    This keyword will release the Loan Drawdown
