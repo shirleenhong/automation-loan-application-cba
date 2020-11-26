@@ -57,7 +57,7 @@ Create Deal Borrower in Quick Party Onboarding for PIM Future BILAT
     Close All Windows on LIQ
     Logout from Loan IQ
 
-Search Customer and Complete its Borrower Profile in LIQ
+Search Customer and Complete its Borrower Profile in LIQ for PIM Future BILAT
     [Documentation]    This keyword searches a customer and complete its Borrower Profile creation.
     ...    @author: mcastro     24NOV2020    - Initial Create
     [Arguments]    ${ExcelPath}	
