@@ -51,14 +51,13 @@ MANAGER_USERNAME = "MGRRON01"
 MANAGER_PASSWORD = "password"
 
 SSO_USERLINK = "mancsleverg0028"
-SSO_PORT = "7080"
+SSO_PORT = "8080"
 USER_LINK = "mancsleverg0031"
-USER_PORT = "7080"
+USER_PORT = "8080"
 PARTY_SSO_URL_SUFFIX = "/uxp/rt/html/login.html"
 DOMAIN = "http://misysroot"
 SSO_URL_LINK = "/bfweb/servlet/GetServiceTicketForUser?redirectTo=http://"
 SSO_ENABLED = "NO"
-PARTY_URL_SUFFIX = "/uxp/rt/html/login.html"
 
 SSO_SERVER = 'mancsleverg0031'
 SSO_PORT_NUMBER = '7080'
