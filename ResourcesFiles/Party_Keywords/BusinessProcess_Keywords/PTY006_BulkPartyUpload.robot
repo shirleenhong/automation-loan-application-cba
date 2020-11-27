@@ -5,6 +5,7 @@ Resource    ../../../Configurations/Party_Import_File.robot
 Perform Bulk Party Upload and Verify If Successful
     [Documentation]    This test case is used to check for successful bulk party uploads.
     ...    @author: nbautist    03NOV2020    - initial create
+    ...    @update: javinzon    20NOV2020    - Added condition for Logout User and Close Browser keywords
     [Arguments]    ${ExcelPath}
     
     ### PREREQUISITE ###
@@ -29,5 +30,6 @@ Perform Bulk Party Upload and Verify If Successful
     Search Process In Party    ${PARTY_BULKPARTYUPLOADENQUIRY_PAGETITLE}
     Verify Bulk Party Upload Successful    ${Filename_Path}
     Verify Correct Party Details From Bulk Upload    &{ExcelPath}[Locality]    &{ExcelPath}[Entity]    &{ExcelPath}[Country_of_Tax_Domicile]
-    Logout User on Party
+    Run Keyword If    '${SSO_ENABLED}'=='NO'    Logout User on Party
+    ...    ELSE    Close Browser
     Verify Correct Bulk Party Details In LoanIQ

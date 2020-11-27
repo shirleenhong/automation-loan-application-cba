@@ -5,13 +5,17 @@ Resource    ../../../Configurations/Party_Import_File.robot
 Validate Party Details in Maintain Party Details Module
     [Documentation]    This keyword is used to Navigate to Maintain Party Details Module and validate existing details.
     ...    @author: javinzon    24SEP2020    - initial create.
+    ...    @update: javinzon    20NOV2020    - added configure Zone and Branch keyword
+    ...    @update: javinzon    20NOV2020    - updated reference of keyword 'Validate Enterprise Party Summary in Maintain Party Details' for Branch
     [Arguments]    ${ExcelPath}    
     
     Login User to Party    ${PARTY_USERNAME}    ${PARTY_PASSWORD}    ${USER_LINK}    ${USER_PORT}    ${PARTY_URL_SUFFIX}    ${PARTY_HTML_USER_CREDENTIALS}    ${SSO_ENABLED}    ${PARTY_URL} 
 
+    Configure Zone and Branch    &{ExcelPath}[UserZone]    &{ExcelPath}[UserBranch]
+    
     Navigate Maintain Party Details    &{ExcelPath}[Party_ID]
     
-    Validate Enterprise Party Summary in Maintain Party Details    &{ExcelPath}[Locality]    &{ExcelPath}[Entity]    &{ExcelPath}[Assigned_Branch]    &{ExcelPath}[Party_Type]    &{ExcelPath}[Party_Sub_Type]    
+    Validate Enterprise Party Summary in Maintain Party Details    &{ExcelPath}[Locality]    &{ExcelPath}[Entity]    &{ExcelPath}[UserBranch]    &{ExcelPath}[Party_Type]    &{ExcelPath}[Party_Sub_Type]    
     ...    &{ExcelPath}[Party_Category]  &{ExcelPath}[Party_ID]    &{ExcelPath}[Enterprise_Name]    &{ExcelPath}[Registered_Number]    &{ExcelPath}[Country_of_Registration]    &{ExcelPath}[Country_of_Tax_Domicile]   
     ...    &{ExcelPath}[Short_Name]    &{ExcelPath}[Address_Type]    &{ExcelPath}[Address_Line_1]    &{ExcelPath}[Address_Line_2]    &{ExcelPath}[Address_Line_3]    &{ExcelPath}[Address_Line_4]    
     ...    &{ExcelPath}[Town_City]    &{ExcelPath}[State_Province]    &{ExcelPath}[Post_Code]    &{ExcelPath}[Country_Region]    &{ExcelPath}[Business_Country]    &{ExcelPath}[Industry_Sector]
@@ -35,7 +39,6 @@ Update Party Details in Maintain Party Details Module
     ...    ELSE    Close Browser
     
     ### SUPERVISOR ###
-    ${TaskID_ForPartyDetails}    Approve Updated Party via Supervisor Account    &{ExcelPath}[Party_ID]    &{ExcelPath}[UserZone]    &{ExcelPath}[UserBranch]
     ${TaskID_ForAddress}    ${TaskID_ForPartyDetails}    Approve Updated Party via Supervisor Account    &{ExcelPath}[Party_ID]    &{ExcelPath}[UserZone]    &{ExcelPath}[UserBranch]
     
     ### INPUTTER ###

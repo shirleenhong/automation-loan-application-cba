@@ -144,12 +144,13 @@ Read Excel Data and Validate Customer ID, Short Name and Legal Name fields
     [Documentation]    This keyword validates the Customer ID, Short Name and Legal Name fields against from excel data 
     ...    @author: ghabal
     ...    @update: amansuet    21MAY2020    - removed unused keywords and updated to align with automation standards
+    ...    @update: mcastro     25NOV2020    - Updated Shortname from data set to all caps
     [Arguments]    ${sLIQCustomer_ID}     ${sLIQCustomer_ShortName}    ${sLIQCustomer_LegalName}
 
     Mx LoanIQ Select Window Tab    ${LIQ_Active_Customer_Notebook_TabSelection}    General
     Run Keyword And Continue On Failure    Run Keyword And Continue On Failure    Validate Loan IQ Details    ${sLIQCustomer_ID}     ${LIQ_ActiveCustomer_Window_CustomerID}
     Validate if Element is Disabled    ${LIQ_ActiveCustomer_Window_CustomerID}    Customer ID 
-    Run Keyword And Continue On Failure    Validate Loan IQ Details    ${sLIQCustomer_ShortName}    ${LIQ_ActiveCustomer_Window_ShortName}
+    Run Keyword And Continue On Failure    Validate Loan IQ Details    ${sLIQCustomer_ShortName.upper()}    ${LIQ_ActiveCustomer_Window_ShortName}
     Validate if Element is Disabled    ${LIQ_ActiveCustomer_Window_ShortName}    Short Name
     Run Keyword And Continue On Failure    Validate Loan IQ Details    ${sLIQCustomer_LegalName}    ${LIQ_ActiveCustomer_Window_LegalName}
     Validate if Element is Disabled    ${LIQ_ActiveCustomer_Window_LegalName}    Legal Name
@@ -773,6 +774,7 @@ Select Notification Method in the Contact Details under Profile Tab
     [Documentation]    This keyword adds Notification Method to the Details of a Contact of a Customer
     ...    @author: ghabal
     ...    @update: amansuet    22MAY2020    - updated to align with automation standards
+    ...    @update: dahijara    25NOV2020    - Replaced Mx Native Type with Mx Press Combination
     [Arguments]    ${sContactNotice_Method}=None    ${sContact_Email}=None
     
     Mx LoanIQ Click    ${ContactDetailWindow_Notification_AddButton}
@@ -780,7 +782,7 @@ Select Notification Method in the Contact Details under Profile Tab
     Validate Contact Notice Method(s) Selection Window
     Run Keyword If    '${sContactNotice_Method}' != 'None'    Mx LoanIQ Select Combo Box Value    ${ContactNoticeWindow_AvailableMethod_Field}    ${sContactNotice_Method}
     Run Keyword If    '${sContact_Email}' != 'None'    mx LoanIQ enter    ${ContactNoticeWindow_Email_Field}    ${sContact_Email}   
-    Mx Native Type    {BACKSPACE}
+    Mx Press Combination    Key.BACKSPACE
     Mx LoanIQ Click    ${ContactNoticeWindow_OkButton} 
     Mx LoanIQ Activate    ${ContactDetailWindow}
         
@@ -2508,3 +2510,11 @@ Get Customer ID
     mx LoanIQ activate window    ${LIQ_ActiveCustomer_Window}        
     ${LIQCustomer_ID}    Mx LoanIQ Get Data    ${LIQ_ActiveCustomer_Window_CustomerID}    testdata
     [Return]    ${LIQCustomer_ID}
+
+Activate and Close Remittance List Window
+    [Documentation]    This keyword closes Remittance List Window
+    ...    @author: dahijara    25NOV2020    - Initial Create
+    mx LoanIQ activate window    ${LIQ_ActiveCustomer_RemittanceList_Window}
+    Take Screenshot    ${Screenshot_Path}/Screenshots/LoanIQ/RemittanceListWindow
+    mx LoanIQ click    ${LIQ_ActiveCustomer_Remittance_List_Exit_Button}
+    mx LoanIQ activate window    ${LIQ_ActiveCustomer_Window}

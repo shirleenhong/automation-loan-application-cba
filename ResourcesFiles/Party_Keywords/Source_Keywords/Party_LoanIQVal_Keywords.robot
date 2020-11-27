@@ -3,7 +3,6 @@ Resource    ../../../Configurations/LoanIQ_Import_File.robot
 Resource    ../../../Configurations/Party_Import_File.robot
 
 *** Keywords ***
-
 Navigate to Customer Notebook via Customer ID
     [Documentation]    This keyword searches customer in Customer notebook using Customer/PartyID
     ...    @author: dahijara    06MAY2020    - Initial Create
@@ -31,7 +30,6 @@ Return Customer Details from Active Customer General Tab
     ${CustomerID}    Mx LoanIQ Get Data    ${LIQ_ActiveCustomer_Window_CustomerID}    text
     ${ShortName}    Mx LoanIQ Get Data    ${LIQ_ActiveCustomer_Window_ShortName}    text
     ${LegalName}    Mx LoanIQ Get Data    ${LIQ_ActiveCustomer_Window_LegalName}    text
-    # ${Classification}    Mx LoanIQ Get Data    ${LIQ_ActiveCustomer_Window_CustomerID}    text
     ${GSTID}    Run Keyword If    '${sEntity}'=='EU'    Log    No GST since not australia
     ...    ELSE    Mx LoanIQ Get Data    ${LIQ_ActiveCustomer_Window_GSTID_Textbox}    text
 
@@ -49,7 +47,6 @@ Return Customer Address Details from Active Customer Listbox fields
     ${Province}     Run Keyword If    '${sEntity}'=='EU'    Log    No Province since not australia
     ...    ELSE    Mx LoanIQ Get Data    ${LIQ_ViewAddress_Province}    text
    
-
     [Return]    ${Country}    ${CountryOfTaxDomicile}    ${Province}
     
 Verify If Value Exists in Loan IQ
@@ -64,7 +61,6 @@ Verify If Value Exists in Loan IQ
 
     ${Location_Locator}    Run Keyword If    '${sFieldType}'=='Textbox'    Set Edit Text to Locator Single Text    ${sLIQWindowName}    ${sFieldValue}    ${bWildCard}   
     ...    ELSE     Log    FieldType is not a Textbox    
-    #'${sFieldType}'=='Listbox'    Set List Text with 1 word to Locator   ${sLIQWindowName}    ${index}
     Run Keyword And Continue On Failure    Mx LoanIQ Verify Object Exist    ${Location_Locator}    VerificationData="Yes"
     ${location_stat}    Run Keyword And Return Status    Mx LoanIQ Verify Object Exist    ${Location_Locator}    VerificationData="Yes"
     Run Keyword If    ${location_stat}==True    Log    Value is correct!! ${sFieldName}: '${sFieldValue}' is found
@@ -91,6 +87,7 @@ Validate Customer Legal Address Details in Textbox
     ...    @update: javinzon    01OCT2020    - Added False argument to City validation. Updated the documentation.
     ...                                        Added "Textbox" in keyword name; Removed Listbox field verification
     ...    @update: makcamps    18NOV2020    - updated Line 4 to exact value (false)
+    ...    @update: mcastro     25NOV2020    - Added condition for blank line addresses
     [Arguments]    ${sEnterpriseName}    ${sAddressCode}    ${sAddressLine1}    ${sAddressLine2}    ${sAddressLine3}   ${sAddressLine4}    ${sCity}    ${sPostalCode}    
     
     Take Screenshot    ${screenshot_path}/Screenshots/Party/PartyLIQActiveCustomerLegalAddressPage
@@ -98,13 +95,12 @@ Validate Customer Legal Address Details in Textbox
     Verify If Value Exists in Loan IQ    Enterprise Name    ${sEnterpriseName}    View Address    Textbox
     Verify If Value Exists in Loan IQ    Address Code    ${sAddressCode.upper()}    View Address    Textbox
     Verify If Value Exists in Loan IQ    Line1    ${sAddressLine1}    View Address    Textbox
-    Verify If Value Exists in Loan IQ    Line2    ${sAddressLine2}    View Address    Textbox
-    Verify If Value Exists in Loan IQ    Line3    ${sAddressLine3}    View Address    Textbox
-    Verify If Value Exists in Loan IQ    Line4    ${sAddressLine4}    View Address    Textbox    False
+    Run Keyword If    '${sAddressLine2}'!='${EMPTY}'    Verify If Value Exists in Loan IQ    Line2    ${sAddressLine2}    View Address    Textbox
+    Run Keyword If    '${sAddressLine3}'!='${EMPTY}'    Verify If Value Exists in Loan IQ    Line3    ${sAddressLine3}    View Address    Textbox
+    Run Keyword If    '${sAddressLine4}'!='${EMPTY}'    Verify If Value Exists in Loan IQ    Line4    ${sAddressLine4}    View Address    Textbox    False
     Verify If Value Exists in Loan IQ    City    ${sCity}    View Address    Textbox    False
     Verify If Value Exists in Loan IQ    Postal Code    ${sPostalCode}    View Address    Textbox
-    Mx LoanIQ Click    ${LIQ_ViewAddress_Ok_CancelButton}
-    #${LIQ_Active_Customer_Notebook_ViewAddressWindow_CancelButton}     
+    Mx LoanIQ Click    ${LIQ_ViewAddress_Ok_CancelButton}    
 
 Validate Party Details in Loan IQ
     [Documentation]    This keyword navigates active customer and validates party details in Loan IQ
