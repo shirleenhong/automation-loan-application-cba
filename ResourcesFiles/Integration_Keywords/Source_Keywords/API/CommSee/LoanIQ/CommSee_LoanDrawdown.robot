@@ -158,9 +158,11 @@ Pay Loan Outstanding Accrual Zero Cycle Due
     Navigate to Share Accrual Cycle    &{ExcelPath}[Lender1_ShortName]
     
     ${LoanCycleDueAmount}    Get Cycle Due Amount
+    ${LoanCycleDueAmount}    Remove comma and convert to number - Cycle Due    ${LoanCycleDueAmount}
     Write Data To Excel    ComSee_SC2_Loan    Outstanding_cycleDue    ${rowid}    ${LoanCycleDueAmount}    ${ComSeeDataSet}
     
     ${LoanPaidDueAmount}   Get PaidToDate   
+    ${LoanPaidDueAmount}    Remove comma and convert to number - Paid to Date    ${LoanPaidDueAmount}
     Write Data To Excel    ComSee_SC2_Loan   Outstanding_paidToDate    ${rowid}    ${LoanPaidDueAmount}    ${ComSeeDataSet}
     
     Close All Windows on LIQ
@@ -169,6 +171,8 @@ Write Loan Outstanding Accrual Non Zero Cycle
     [Documentation]    This test case writes the updated Loan Outstanding details after EOD for comsee use.
     ...    @author:    sacuisia    29SEPT2020    -InitialCreate
     [Arguments]    ${ExcelPath}
+    
+    Run Keyword And Continue On Failure    mx LoanIQ activate window    ${LIQ_DealSelect_Window}    60
     
     Launch Loan Notebook    &{ExcelPath}[Deal_Name]    &{ExcelPath}[Facility_Name]    &{ExcelPath}[Outstanding_Alias]
     
@@ -185,9 +189,11 @@ Write Loan Outstanding Accrual Non Zero Cycle
     Navigate to Share Accrual Cycle    &{ExcelPath}[Host_Bank]
     
     ${LoanCycleDueAmount}    Get Cycle Due Amount
+    ${LoanCycleDueAmount}    Remove comma and convert to number - Cycle Due    ${LoanCycleDueAmount}
     Write Data To Excel    ComSee_SC2_Loan    Outstanding_cycleDue    ${rowid}    ${LoanCycleDueAmount}    ${ComSeeDataSet}
     
-    ${LoanPaidDueAmount}   Get PaidToDate   
+    ${LoanPaidDueAmount}   Get PaidToDate    
+    ${LoanPaidDueAmount}    Remove comma and convert to number - Paid to Date    ${LoanPaidDueAmount}
     Write Data To Excel    ComSee_SC2_Loan   Outstanding_paidToDate    ${rowid}    ${LoanPaidDueAmount}    ${ComSeeDataSet}
     
    
