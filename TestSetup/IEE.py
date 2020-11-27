@@ -3,7 +3,7 @@ APIDataSet = "C:\\Git_Evergreen\\fms_cba\\DataSet\\Integration_DataSet\\API\\API
 ExcelPath_API_temp = 'C:\\Git_Evergreen\\fms_cba\\DataSet\\Integration_DataSet\\API\\temp.xlsx'
 ExcelPath = "C:\\Git_Evergreen\\fms_cba\DataSet\\LoanIQ_DataSet\\EVG_PTYLIQ04_BaselineNonAgentSyndication.xlsx"
 dataset_path = "C:\\Git_Evergreen\\fms_cba"
-CBAUAT_ExcelPath = "C:\\Git_Evergreen\\fms_cba\\DataSet\\CBAUATDeal_DataSet\\EVG_CBAUAT03.xlsx"
+CBAUAT_ExcelPath = "C:\\Git_Evergreen\\fms_cba\\DataSet\\NewUATDeals_DataSet\\Deal_CH_EDU_BILAT.xlsx"
 TL_DATASET = "C:\\Git_Evergreen\\fms_cba\\DataSet\\Integration_DataSet\\TL\\TL_Data_Set_AU.xlsx"
 SAPWUL_DATASET = "C:\\Git_evergreen\\evergreen_projects\\CBA_Evergreen\\DataSet\\Downstream_DataSet\\SAPWUL\\SAPWUL_Data_Set.xlsx"
 ComSeeDataSet = "C:\\Git_Evergreen\\fms_cba\DataSet\\Integration_DataSet\\CommSee\\COMMSEE_Data_Set.xlsx"
@@ -14,6 +14,7 @@ DWELIQFunc_Dataset = "C:\\Git_Evergreen\\fms_cba\\DataSet\\Integration_DataSet\\
 INDUSTRYSECTOR_LIST = "C:\\Git_Evergreen\\fms_cba\\DataSet\\Party_DataSet\\Industry_Sector\\Industry_Sector_Values.txt"
 BUSINESSACTIVITY_DIRECTORY = "C:\\Git_Evergreen\\fms_cba\\DataSet\\Party_DataSet\\Business_Activity"
 DNR_DATASET = "C:\\Git_Evergreen\\fms_cba\\DataSet\\Integration_DataSet\\Extracts\\DNR\\DNR_Dataset_AU.xlsx"
+NEWUAT_TL_DATASET = "C:\\Git_Evergreen\\fms_cba\\DataSet\\NewUATDeals_DataSet\\Transformation_Layer\\TL_Data_Set_New_UAT.xlsx"
 
 SERVER = "http://mancsleverg0007"
 PORT = "9090"
@@ -43,11 +44,11 @@ MDM_FFC_Password = 'admin'
 ### TL Credentials ###
 TL_USERNAME = "JCUSR01"
 TL_PASSWORD = "password"
-INPUTTER_USERNAME = "INPAMT01"
-INPUTTER_PASSWORD = "password"
-SUPERVISOR_USERNAME = "SUPAMT01"
+INPUTTER_USERNAME = "DJRHINPT"
+INPUTTER_PASSWORD = "djrhinpt"
+SUPERVISOR_USERNAME = "DJRHSUPP"
 SUPERVISOR_PASSWORD = "password"
-MANAGER_USERNAME = "MGRRON01"
+MANAGER_USERNAME = "DJRHMNGR"
 MANAGER_PASSWORD = "password"
 
 SSO_USERLINK = "mancsleverg0028"
@@ -64,13 +65,13 @@ SSO_PORT_NUMBER = '7080'
 PARTY_SSO_URL = 'http://${PARTY_HTML_CREDENTIALS}@${SSO_SERVER}:${SSO_PORT_NUMBER}/bfweb/servlet/GetServiceTicketForUser?redirectTo=http://${PARTY_SERVER}/uxp/rt/html/login.html                   '
 PARTY_HTML_USER_CREDENTIALS = 'misysroot%5Cbrad:welcome%4099'
 PARTY_HTML_APPROVER_CREDENTIALS = 'misysroot%5Csuperit:welcome%4099'
-PARTY_SUPERVISOR_USERNAME  = 'superit'
-PARTY_SUPERVISOR_PASSWORD = 'superit'
+PARTY_SUPERVISOR_USERNAME  = 'sdhijara'
+PARTY_SUPERVISOR_PASSWORD = 'password'
 PARTY_SERVER = 'mancsleverg0031:7080'
 PARTY_URL = 'mancsleverg0031:7080/uxp/rt/html/login.html'
 
 ###Party Credential###
-PARTY_USERNAME = 'amipac'
+PARTY_USERNAME = 'ndhijara'
 PARTY_PASSWORD = 'password'
 
 ###Transformation Layer###

@@ -245,7 +245,9 @@ Get Option Name from Option Name and Base Rate Association
     Run Keyword If    ${optionname_length}>1     Log    Correct!! Option Name ${sBaseRateCode_From_JSON} is existing.    
     ...    ELSE    Fatal Error    Incorrect!! Option Name ${sBaseRateCode_From_JSON} is NOT existing.    
     Log    ${OptionName}\t${BaseRateName}
-    Run Keyword And Continue On Failure    Mx LoanIQ DoubleClick    ${LIQ_OptionNameBaseRateAssoc_Tree}    ${OptionName}\t${BaseRateName}    15            
+    # Run Keyword And Continue On Failure    Mx LoanIQ DoubleClick    ${LIQ_OptionNameBaseRateAssoc_Tree}    ${OptionName}\t${BaseRateName}    15            
+    Run Keyword And Continue On Failure    Mx LoanIQ Select String    ${LIQ_OptionNameBaseRateAssoc_Tree}    ${OptionName}\t${BaseRateName}
+    Mx Press Combination    Key.Enter
     mx LoanIQ activate window    ${LIQ_OptionNameBaseRateAssocUpd_Window}
     ${OptionNameDesc}    Mx LoanIQ Get Data    ${LIQ_OptionNameBaseRateAssocUpd_OptionName_JavaList}    input=value%OptionNameDesc
     mx LoanIQ click    ${LIQ_OptionNameBaseRateAssocUpd_Cancel_Button}

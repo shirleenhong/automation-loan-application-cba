@@ -385,6 +385,8 @@ Resource    ../ResourcesFiles/LoanIQ_Keywords/Source_Keywords/UpfrontFeeDistribu
 
 
 ### CBA UAT Keywords ###
+Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/UAT_TL_Keywords/UAT_TL_BASE.robot
+
 # ### UAT Deal 1 ###
 Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/CBA_UAT01_DealTemplate/01CommitmentFeeNotebook.robot
 Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/CBA_UAT01_DealTemplate/01DealBorrower.robot
