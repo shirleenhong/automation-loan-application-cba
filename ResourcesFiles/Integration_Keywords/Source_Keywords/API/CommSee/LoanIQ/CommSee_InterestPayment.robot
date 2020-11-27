@@ -307,6 +307,7 @@ Initiate Interest Payment - Scenario 7 ComSee
 Initiate Latest Cycle Interest Payment - Scenario 7 ComSee
    [Documentation]    This keyword will pay Interest Fees on a bilateral deal
    ...    @author: rtarayao    13SEP2019    - Duplicate from Scenario 7 of the Functional Scenarios
+   ...	  @update: makcamps	   26NOV2020	- added configuration for getting currency from data
    [Arguments]    ${ExcelPath}
    
    ###Navigate to Existing Loan###
@@ -338,7 +339,8 @@ Initiate Latest Cycle Interest Payment - Scenario 7 ComSee
    Verify if Status is set to Do It    &{ExcelPath}[Borrower1_ShortName]  
     
    ##Get Transaction Amount for Cashflow###
-   ${HostBankShare}    Get Host Bank Cash in Cashflow
+    ${HostBankShare}    Run Keyword If    '&{ExcelPath}[Entity]'=='EU'    Get Host Bank Cash in Cashflow    &{ExcelPath}[Loan_Currency]
+    ...    ELSE    Get Host Bank Cash in Cashflow
    ${BorrowerTranAmount}    Get Transaction Amount in Cashflow    &{ExcelPath}[Borrower1_ShortName]
    ${ComputedHBTranAmount}    Compute Lender Share Transaction Amount    ${CycleDue}    &{ExcelPath}[HostBankSharePct]
     
