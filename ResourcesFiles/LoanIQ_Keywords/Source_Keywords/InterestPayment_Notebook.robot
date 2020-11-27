@@ -843,7 +843,9 @@ Release Payment
     [Documentation]    This keyword is used to Release the Payment made.
     ...    @author: rtarayao
     ...    @update: cfrancis    - added clicking question button for confirming release
-   
+    ...	   @update: makcamps	- added closing of cashflow if open
+
+    mx LoanIQ click element if present    ${LIQ_Cashflows_OK_Button}
     mx LoanIQ activate    ${LIQ_Payment_Window}
     Mx LoanIQ Verify Text In Javatree    ${LIQ_Payment_WorkflowItems}    Release%yes
     Mx LoanIQ DoubleClick    ${LIQ_Payment_WorkflowItems}    Release
