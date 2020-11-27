@@ -92,7 +92,8 @@ Create Loan Drawdown for Syndicated Deal - ComSee
     
 Pay Loan Outstanding Accrual Zero Cycle Due
     [Documentation]    This keyword update the PaidToDate value after Payment transaction has been made. 
-    ...    @author: sacuisia 02OCT2020    -initialCreate
+    ...    @author: sacuisia 02OCT2020	-initialCreate
+    ...	   @update: makcamps 25NOV2020	-added release cashflow, release, and closing liq windows steps
     [Arguments]    ${ExcelPath}    ${sCyclesForLoan}=None    
     
     ${CyclesForLoan}    Acquire Argument Value    ${sCyclesForLoan}
@@ -141,7 +142,8 @@ Pay Loan Outstanding Accrual Zero Cycle Due
     Navigate Transaction in WIP    Payments    Awaiting Approval    Interest Payment    &{ExcelPath}[Deal_Name]
     
     Approve Interest Payment
-    Release Interest Payment
+    Navigate Notebook Workflow    ${LIQ_Payment_Window}    ${LIQ_Payment_Tab}    ${LIQ_Payment_WorkflowItems}    Release Cashflows
+	Release Payment
     
     Launch Loan Notebook    &{ExcelPath}[Deal_Name]    &{ExcelPath}[Facility_Name]    &{ExcelPath}[Outstanding_Alias]
     
@@ -153,7 +155,7 @@ Pay Loan Outstanding Accrual Zero Cycle Due
     ${AccruedtoDateAmt}    Remove Comma and Convert to Number    ${AccruedtoDateAmt}
     Write Data To Excel    ComSee_SC2_Loan    Outstanding_AccruedInterest    ${rowid}    ${LoanAccruedtodateAmount}    ${ComSeeDataSet}
     
-    Navigate to Share Accrual Cycle    &{ExcelPath}[Host_Bank]
+    Navigate to Share Accrual Cycle    &{ExcelPath}[Lender1_ShortName]
     
     ${LoanCycleDueAmount}    Get Cycle Due Amount
     Write Data To Excel    ComSee_SC2_Loan    Outstanding_cycleDue    ${rowid}    ${LoanCycleDueAmount}    ${ComSeeDataSet}
@@ -161,6 +163,7 @@ Pay Loan Outstanding Accrual Zero Cycle Due
     ${LoanPaidDueAmount}   Get PaidToDate   
     Write Data To Excel    ComSee_SC2_Loan   Outstanding_paidToDate    ${rowid}    ${LoanPaidDueAmount}    ${ComSeeDataSet}
     
+    Close All Windows on LIQ
  
 Write Loan Outstanding Accrual Non Zero Cycle
     [Documentation]    This test case writes the updated Loan Outstanding details after EOD for comsee use.
@@ -484,6 +487,7 @@ Write Loan Details for ComSee - Scenario 7
 Create Initial Loan Drawdown with Repricing - Scenario 7 ComSee
     [Documentation]    This keyword is used to create a Loan Drawdown without selecting a Payment Schedule.
     ...    @author: rtarayao    11SEP2019    - Duplicate of Scenario 7 from Functional Scenarios
+	...    @update: makcamps	25NOV2020	 - added condition for eu
     [Arguments]    ${ExcelPath}
     
     ###Facility###
@@ -516,7 +520,8 @@ Create Initial Loan Drawdown with Repricing - Scenario 7 ComSee
     Verify if Status is set to Do It    &{ExcelPath}[Borrower1_ShortName]  
  
     ##Get Transaction Amount for Cashflow###
-    ${HostBankShare}    Get Host Bank Cash in Cashflow
+    ${HostBankShare}    Run Keyword If    '&{ExcelPath}[Entity]'=='EU'    Get Host Bank Cash in Cashflow    &{ExcelPath}[Loan_Currency]
+    ...    ELSE    Get Host Bank Cash in Cashflow
     ${BorrowerTranAmount}    Get Transaction Amount in Cashflow    &{ExcelPath}[Borrower1_ShortName]
     ${ComputedHBTranAmount}    Compute Lender Share Transaction Amount    &{ExcelPath}[Loan_RequestedAmount]    &{ExcelPath}[HostBankSharePct]
     

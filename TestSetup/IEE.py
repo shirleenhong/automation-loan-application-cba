@@ -14,6 +14,7 @@ DWELIQFunc_Dataset = "C:\\Git_Evergreen\\fms_cba\\DataSet\\Integration_DataSet\\
 INDUSTRYSECTOR_LIST = "C:\\Git_Evergreen\\fms_cba\\DataSet\\Party_DataSet\\Industry_Sector\\Industry_Sector_Values.txt"
 BUSINESSACTIVITY_DIRECTORY = "C:\\Git_Evergreen\\fms_cba\\DataSet\\Party_DataSet\\Business_Activity"
 DNR_DATASET = "C:\\Git_Evergreen\\fms_cba\\DataSet\\Integration_DataSet\\Extracts\\DNR\\DNR_Dataset_AU.xlsx"
+NEWUAT_TL_DATASET = "C:\\Git_Evergreen\\fms_cba\\DataSet\\NewUATDeals_DataSet\\Transformation_Layer\\TL_Data_Set_New_UAT.xlsx"
 
 SERVER = "http://mancsleverg0007"
 PORT = "9090"
