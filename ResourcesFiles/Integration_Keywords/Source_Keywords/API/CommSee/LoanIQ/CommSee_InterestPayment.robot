@@ -61,7 +61,7 @@ Validate Payment Manual Adjustment Transaction
     Navigate Notebook Workflow    ${LIQ_Payment_Window}    ${LIQ_Payment_Tab}    ${LIQ_Payment_WorkflowItems}    Release Cashflows
 	Release Payment
     
-    #Validate Cycle Due paidToDate after EOD
+    ###Validate Cycle Due paidToDate after EOD###
     Navigate to Share Accrual Cycle    &{ExcelPath}[Lender1_ShortName]
     
     ${LoanCycleDueAmount}    Get Cycle Due Amount
