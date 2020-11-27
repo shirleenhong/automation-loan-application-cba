@@ -395,6 +395,7 @@ Initiate Latest Cycle Interest Payment - Scenario 7 ComSee
 Create Loan Interest Payment Reversal - Scenario 7 ComSee
     [Documentation]    This keyword initiates payment reversal after Fee Payment is released.
     ...    @author: cfrancis    16OCT2020    - initial create
+    ...    @update: makcamps    26NOV2020    - added condition for currency to be from excel path
     [Arguments]    ${ExcelPath}
     
     ###Navigate to Existing Loan###    
@@ -412,8 +413,9 @@ Create Loan Interest Payment Reversal - Scenario 7 ComSee
     Verify if Status is set to Do It    ${Borrower}
     
     ###Get Transaction Amount for Cashflow###
-    ${HostBankSharePct}    Read Data From Excel    ComSee_SC7_LoanInterestPayment    HostBankSharePct    ${rowid}    ${ComSeeDataSet}  
-    ${HostBankShare}    Get Host Bank Cash in Cashflow
+    ${HostBankSharePct}    Read Data From Excel    ComSee_SC7_LoanInterestPayment    HostBankSharePct    ${rowid}    ${ComSeeDataSet}
+    ${HostBankShare}    Run Keyword If    '&{ExcelPath}[Entity]'=='EU'    Get Host Bank Cash in Cashflow    &{ExcelPath}[Loan_Currency]
+    ...    ELSE    Get Host Bank Cash in Cashflow
     ${BorrowerTranAmount}    Get Transaction Amount in Cashflow    ${Borrower}
     ${ComputedHBTranAmount}    Compute Lender Share Transaction Amount    ${CycleDue}    ${HostBankSharePct}
     
