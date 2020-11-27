@@ -44,11 +44,11 @@ MDM_FFC_Password = 'admin'
 ### TL Credentials ###
 TL_USERNAME = "JCUSR01"
 TL_PASSWORD = "password"
-INPUTTER_USERNAME = "DJRHINPT"
-INPUTTER_PASSWORD = "djrhinpt"
-SUPERVISOR_USERNAME = "DJRHSUPP"
+INPUTTER_USERNAME = "INPAMT01"
+INPUTTER_PASSWORD = "password"
+SUPERVISOR_USERNAME = "SUPAMT01"
 SUPERVISOR_PASSWORD = "password"
-MANAGER_USERNAME = "DJRHMNGR"
+MANAGER_USERNAME = "MGRRON01"
 MANAGER_PASSWORD = "password"
 
 SSO_USERLINK = "mancsleverg0028"
@@ -65,13 +65,13 @@ SSO_PORT_NUMBER = '7080'
 PARTY_SSO_URL = 'http://${PARTY_HTML_CREDENTIALS}@${SSO_SERVER}:${SSO_PORT_NUMBER}/bfweb/servlet/GetServiceTicketForUser?redirectTo=http://${PARTY_SERVER}/uxp/rt/html/login.html                   '
 PARTY_HTML_USER_CREDENTIALS = 'misysroot%5Cbrad:welcome%4099'
 PARTY_HTML_APPROVER_CREDENTIALS = 'misysroot%5Csuperit:welcome%4099'
-PARTY_SUPERVISOR_USERNAME  = 'sdhijara'
-PARTY_SUPERVISOR_PASSWORD = 'password'
+PARTY_SUPERVISOR_USERNAME  = 'superit'
+PARTY_SUPERVISOR_PASSWORD = 'superit'
 PARTY_SERVER = 'mancsleverg0031:7080'
 PARTY_URL = 'mancsleverg0031:7080/uxp/rt/html/login.html'
 
 ###Party Credential###
-PARTY_USERNAME = 'ndhijara'
+PARTY_USERNAME = 'amipac'
 PARTY_PASSWORD = 'password'
 
 ###Transformation Layer###
