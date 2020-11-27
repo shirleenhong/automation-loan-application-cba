@@ -5,7 +5,7 @@ Resource    ../../../../Configurations/LoanIQ_Import_File.robot
 ${row}    1
 
 *** Keywords ***
-Load FX Rates To Funding Desks
+Load FX Rates to Funding Desks for UAT Deals
     [Documentation]    Load FX Rates to Funding Desk for New UAT Deals
     ...    @author:    mcastro    26NOV2020    - Initial Create
     [Arguments]    ${ExcelPath}
