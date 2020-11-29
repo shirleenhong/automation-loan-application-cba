@@ -216,6 +216,8 @@ Verify DAT File Control Value and DB Record are Matched
 Validate DAT File Line Value and Compare to DB Result
     [Documentation]    This keyword is used to connect in Loan IQ database and execute query designed for each row of DAT file
     ...    and validate amount value is correct.
+    ...    @author: clanding    19OCT2020    - initial create
+    ...    @update: clanding    29NOV2020    - added conversion to whole number for the control values
     [Arguments]    ${sZone}    ${sBranch_Code}    ${sDAT_File_Line}    ${iCONTROL_MATRIX_Index}    ${iBUSINESS_DATE_Index}    ${iCONTROL_VALUE_Index}
     ...    ${iCURRENCY_Index}
     
@@ -260,14 +262,24 @@ Validate DAT File Line Value and Compare to DB Result
     ...    ELSE IF    '${Control_Matrix}'=='TOTAL_ACTIVE_OST_COUNT'    Get Total Active OST Count from LIQ Database    ${DB_Branch_Code}
     ...    ELSE    Set Variable    0
 
-    ${IsEqual}    Run Keyword And Return Status    Should Be Equal As Integers    @{DAT_File_List}[${iCONTROL_VALUE_Index}]    ${DB_Control_Value}
-    Run Keyword If    ${IsEqual}==${True}    Log    DAT File Control Value: '@{DAT_File_List}[${iCONTROL_VALUE_Index}]' is equal to DB Control Value: ${DB_Control_Value}
-    ...    ELSE    Run Keyword and Continue On Failure    FAIL    DAT File Control Value: '@{DAT_File_List}[${iCONTROL_VALUE_Index}]' is NOT equal to DB Control Value: ${DB_Control_Value}
+    ${DB_Control_Value}    Run Keyword If    '${DB_Control_Value}'=='None'    Set Variable    0
+    ...    ELSE    Set Variable    ${DB_Control_Value}
+
+    ${DB_Control_Value}    Convert To Number    ${DB_Control_Value}
+    ${DB_Control_Value}    Run Keyword If    '${DB_Control_Value}'=='0'    Set Variable    ${DB_Control_Value}
+    ...    ELSE    Evaluate    "%.0f" % (${DB_Control_Value})
+    
+    ${DAT_File_ControlValue}    Evaluate    "%.0f" % (@{DAT_File_List}[${iCONTROL_VALUE_Index}])
+
+    ${IsEqual}    Run Keyword And Return Status    Should Be Equal As Numbers    ${DAT_File_ControlValue}    ${DB_Control_Value}
+    Run Keyword If    ${IsEqual}==${True}    Log    DAT File Control Value: '${DAT_File_ControlValue}' is equal to DB Control Value: ${DB_Control_Value}
+    ...    ELSE    Run Keyword and Continue On Failure    FAIL    DAT File Control Value: '${DAT_File_ControlValue}' is NOT equal to DB Control Value: ${DB_Control_Value}
 
 Verify DAT File Control Value and CSV Files are Matched
     [Documentation]    This keyword is used to validate DAT file content matched CSV files record.
     ...    @author: clanding    19OCT2020    - initial create
-    [Arguments]    ${sZone}    ${sExtract_Path}    ${sDAT_File}    ${sBranch_Code}    ${sDWE_Extract_Path}    ${sBus_Date}
+    ...    @update: clanding    29NOV2020    - added conversion to whole number for the control values
+    [Arguments]    ${sZone}    ${sExtract_Path}    ${sDAT_File}    ${sBranch_Code}    ${sDWE_Extract_Path}    ${sBus_Date}        ${sDelimiter}
     
     ${DAT_File_Content}    OperatingSystem.Get File    ${sExtract_Path}${sZone}/${sDAT_File}
     ${DAT_File_Content_Count}    Get Line Count    ${DAT_File_Content}
@@ -306,18 +318,27 @@ Verify DAT File Control Value and CSV Files are Matched
          ...    ELSE IF    '${sZone}'=='ZONE2'    Set Variable    EUR
     \
     \    ${Control_Matrix}    Set Variable    @{DAT_File_Line_Content_List}[${CONTROL_MATRIX_Index}]
-    \    ${CSV_Control_Value}    Run Keyword If    '${Control_Matrix}'=='SUM_NEW_FUNDING_AMOUNT'    Access GL Entry CSV File for New Funding Amount and Return Sum of Amount    ${sDWE_Extract_Path}    ${sZone}    ${sBus_Date}
-         ...    ELSE IF    '${Control_Matrix}'=='SUM_OF_ACCRUED_FEES'    Access Balance Subledger CSV File and Return Sum of Amount    ${sDWE_Extract_Path}    ${sZone}    ${sBus_Date}    ${Expected_Currency}    FEERC
-         ...    ELSE IF    '${Control_Matrix}'=='SUM_OF_ACCRUED_INTEREST'    Access Balance Subledger CSV File and Return Sum of Amount    ${sDWE_Extract_Path}    ${sZone}    ${sBus_Date}    ${Expected_Currency}    INTRC
-         ...    ELSE IF    '${Control_Matrix}'=='SUM_OF_HB_DEAL_LIMITS_GROSS'    Access Deal and Prod Pos Current CSV Files and Return Sum    ${sDWE_Extract_Path}    ${sZone}    ${sBus_Date}    ${Expected_Currency}    ${Control_Matrix}
-         ...    ELSE IF    '${Control_Matrix}'=='SUM_OF_HB_DEAL_LIMITS_NET'    Access Deal and Prod Pos Current CSV Files and Return Sum    ${sDWE_Extract_Path}    ${sZone}    ${sBus_Date}    ${Expected_Currency}    ${Control_Matrix}
-         ...    ELSE IF    '${Control_Matrix}'=='SUM_OF_PRINCIPAL_BALANCES'    Access Balance Subledger CSV File and Return Sum of Amount    ${sDWE_Extract_Path}    ${sZone}    ${sBus_Date}    ${Expected_Currency}    PRINC
-         ...    ELSE IF    '${Control_Matrix}'=='SUM_TRANSACTION_AMOUNT'    Access GL Entry CSV File for Transaction Amount and Return Sum of Amount    ${sDWE_Extract_Path}    ${sZone}    ${sBus_Date}    ${Expected_Currency}
-         ...    ELSE IF    '${Control_Matrix}'=='TOTAL_ACTIVE_DEAL_BORROWERS'    Access Deal and Borrower CSV Files and Return Sum    ${sDWE_Extract_Path}    ${sZone}    ${sBus_Date}
-         ...    ELSE IF    '${Control_Matrix}'=='TOTAL_ACTIVE_DEAL_COUNT'    Access Deal CSV File and Return Sum    ${sDWE_Extract_Path}    ${sZone}    ${sBus_Date}    ${sBranch_Code}
+    \    ${CSV_Control_Value}    Run Keyword If    '${Control_Matrix}'=='SUM_NEW_FUNDING_AMOUNT'    Access GL Entry CSV File for New Funding Amount and Return Sum of Amount    ${sDWE_Extract_Path}    ${sZone}    ${sBus_Date}    ${sDelimiter}
+         ...    ELSE IF    '${Control_Matrix}'=='SUM_OF_ACCRUED_FEES'    Access Balance Subledger CSV File and Return Sum of Amount    ${sDWE_Extract_Path}    ${sZone}    ${sBus_Date}    ${Expected_Currency}    FEERC    ${sDelimiter}
+         ...    ELSE IF    '${Control_Matrix}'=='SUM_OF_ACCRUED_INTEREST'    Access Balance Subledger CSV File and Return Sum of Amount    ${sDWE_Extract_Path}    ${sZone}    ${sBus_Date}    ${Expected_Currency}    INTRC    ${sDelimiter}
+         ...    ELSE IF    '${Control_Matrix}'=='SUM_OF_HB_DEAL_LIMITS_GROSS'    Access Deal and Prod Pos Current CSV Files and Return Sum    ${sDWE_Extract_Path}    ${sZone}    ${sBus_Date}    ${Expected_Currency}    ${Control_Matrix}    ${sDelimiter}
+         ...    ELSE IF    '${Control_Matrix}'=='SUM_OF_HB_DEAL_LIMITS_NET'    Access Deal and Prod Pos Current CSV Files and Return Sum    ${sDWE_Extract_Path}    ${sZone}    ${sBus_Date}    ${Expected_Currency}    ${Control_Matrix}    ${sDelimiter}
+         ...    ELSE IF    '${Control_Matrix}'=='SUM_OF_PRINCIPAL_BALANCES'    Access Balance Subledger CSV File and Return Sum of Amount    ${sDWE_Extract_Path}    ${sZone}    ${sBus_Date}    ${Expected_Currency}    PRINC    ${sDelimiter}
+         ...    ELSE IF    '${Control_Matrix}'=='SUM_TRANSACTION_AMOUNT'    Access GL Entry CSV File for Transaction Amount and Return Sum of Amount    ${sDWE_Extract_Path}    ${sZone}    ${sBus_Date}    ${Expected_Currency}    ${sDelimiter}
+         ...    ELSE IF    '${Control_Matrix}'=='TOTAL_ACTIVE_DEAL_BORROWERS'    Access Deal and Borrower CSV Files and Return Sum    ${sDWE_Extract_Path}    ${sZone}    ${sBus_Date}    ${sDelimiter}
+         ...    ELSE IF    '${Control_Matrix}'=='TOTAL_ACTIVE_DEAL_COUNT'    Access Deal CSV File and Return Sum    ${sDWE_Extract_Path}    ${sZone}    ${sBus_Date}    ${sBranch_Code}    ${sDelimiter}
          ...    ELSE    Log    Control Matrix '${Control_Matrix}' is not yet handled.    level=WARN
     \    Continue For Loop If    '${CSV_Control_Value}'=='None'
     \    
-    \    ${IsEqual}    Run Keyword And Return Status    Should Be Equal As Integers    @{DAT_File_Line_Content_List}[${CONTROL_VALUE_Index}]    ${CSV_Control_Value}
-    \    Run Keyword If    ${IsEqual}==${True}    Log    Control Matrix '${Control_Matrix}' - DAT File Control Value: '@{DAT_File_Line_Content_List}[${CONTROL_VALUE_Index}]' is equal to CSV Control Value: '${CSV_Control_Value}'
-         ...    ELSE    Run Keyword and Continue On Failure    FAIL    Control Matrix '${Control_Matrix}' - DAT File Control Value: '@{DAT_File_Line_Content_List}[${CONTROL_VALUE_Index}]' is NOT equal to CSV Control Value: '${CSV_Control_Value}'
+    \    ${CSV_Control_Value}    Run Keyword If    '${CSV_Control_Value}'=='None'    Set Variable    0
+	\    ...    ELSE    Set Variable    ${CSV_Control_Value}
+	\
+	\    ${CSV_Control_Value}    Convert To Number    ${CSV_Control_Value}
+	\    ${CSV_Control_Value}    Run Keyword If    '${CSV_Control_Value}'=='0'    Set Variable    ${CSV_Control_Value}
+	\    ...    ELSE    Evaluate    "%.0f" % (${CSV_Control_Value})
+	\   
+	\    ${DAT_File_ControlValue}    Evaluate    "%.0f" % (@{DAT_File_Line_Content_List}[${CONTROL_VALUE_Index}])
+    \    
+    \    ${IsEqual}    Run Keyword And Return Status    Should Be Equal As Integers    ${DAT_File_ControlValue}    ${CSV_Control_Value}
+    \    Run Keyword If    ${IsEqual}==${True}    Log    Control Matrix '${Control_Matrix}' - DAT File Control Value: '${DAT_File_ControlValue}' is equal to CSV Control Value: '${CSV_Control_Value}'
+         ...    ELSE    Run Keyword and Continue On Failure    FAIL    Control Matrix '${Control_Matrix}' - DAT File Control Value: '${DAT_File_ControlValue}' is NOT equal to CSV Control Value: '${CSV_Control_Value}'

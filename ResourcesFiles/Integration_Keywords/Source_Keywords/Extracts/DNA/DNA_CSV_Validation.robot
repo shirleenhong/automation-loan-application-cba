@@ -7,16 +7,18 @@ Access GL Entry CSV File for New Funding Amount and Return Sum of Amount
     [Documentation]    This keyword is used to access VLS_GL_ENTRY csv file and return sum of GL_AMT_ENTRY column.
     ...    NOTE: sBus_Date format should be 2020-01-02
     ...    @author: clanding    19OCT2020    - initial create
-    [Arguments]    ${sDWE_Extract_Path}    ${sZone}    ${sBus_Date}
+    ...    @update: clanding    29NOV2020    - added handling for Zone 2, added delimiter argument
+    [Arguments]    ${sDWE_Extract_Path}    ${sZone}    ${sBus_Date}    ${sDelimiter}
     
     ${Bus_Date_Converted}    Remove String    ${sBus_Date}    -
     
     ${CSV_File}    Run Keyword If    '${sZone}'=='ZONE3'    Set Variable    ${DNA_CCB_LIQ_FILENAME}SYD_VLS_GL_ENTRY_${Bus_Date_Converted}.csv
     ...    ELSE IF    '${sZone}'=='ZONE2'    Set Variable    ${DNA_CCB_LIQ_FILENAME}EUR_VLS_GL_ENTRY_${Bus_Date_Converted}.csv
-    ${CSV_File_Content}    OperatingSystem.Get File    ${sDWE_Extract_Path}/${DNA_CCB_LIQ_FILENAME}SYD_${Bus_Date_Converted}/${CSV_File}
+    ${CSV_File_Content}    Run Keyword If    '${sZone}'=='ZONE3'    OperatingSystem.Get File    ${sDWE_Extract_Path}/${DNA_CCB_LIQ_FILENAME}SYD_${Bus_Date_Converted}/${CSV_File}
+    ...    ELSE IF    '${sZone}'=='ZONE2'    OperatingSystem.Get File    ${sDWE_Extract_Path}/${DNA_CCB_LIQ_FILENAME}EUR_${Bus_Date_Converted}/${CSV_File}
     
     ### Get Column header list ###    
-    ${Column_List}    Split String    ${CSV_File_Content}    |
+    ${Column_List}    Split String    ${CSV_File_Content}    ${sDelimiter}
     ${Column_List_Count}    Get Length    ${Column_List}
 
     ### Get GLE_CDE_BUS_TRAN index ###
@@ -47,7 +49,7 @@ Access GL Entry CSV File for New Funding Amount and Return Sum of Amount
     ${CSV_File_Content_LineCount}    Get Line Count    ${CSV_File_Content}
     :FOR    ${Index}    IN RANGE    1    ${CSV_File_Content_LineCount}
     \    ${CSV_Line}    Get Line    ${CSV_File_Content}    ${Index}
-    \    ${CSV_Line_List}    Split String    ${CSV_Line}    |
+    \    ${CSV_Line_List}    Split String    ${CSV_Line}    ${sDelimiter}
     \    Log    GLE_CDE_BUS_TRAN : @{CSV_Line_List}[${GLE_CDE_BUS_TRAN_Index}]
     \    Log    GLE_CDE_ACCTG_OPER : @{CSV_Line_List}[${GLE_CDE_ACCTG_OPER_Index}]
     \    Log    GLE_DTE_POSTING : @{CSV_Line_List}[${GLE_DTE_POSTING_Index}]
@@ -69,7 +71,8 @@ Access Balance Subledger CSV File and Return Sum of Amount
     [Documentation]    This keyword is used to access VLS_BAL_SUBLEDGER csv file and return sum of BSG_AMT_PRIOR_EOD column.
     ...    NOTE: sPosting_Date format should be %d-%b-%Y (21-MAY-2020)
     ...    @author: clanding    19OCT2020    - initial create
-    [Arguments]    ${sDWE_Extract_Path}    ${sZone}    ${sBus_Date}    ${sCurrency}    ${sShort_Name}
+    ...    @update: clanding    29NOV2020    - added delimiter argument
+    [Arguments]    ${sDWE_Extract_Path}    ${sZone}    ${sBus_Date}    ${sCurrency}    ${sShort_Name}    ${sDelimiter}
     
     ${Bus_Date_Converted}    Remove String    ${sBus_Date}    -
     
@@ -78,7 +81,7 @@ Access Balance Subledger CSV File and Return Sum of Amount
     ${CSV_File_Content}    OperatingSystem.Get File    ${sDWE_Extract_Path}/${DNA_CCB_LIQ_FILENAME}SYD_${Bus_Date_Converted}/${CSV_File}
     
     ### Get Column header list ###    
-    ${Column_List}    Split String    ${CSV_File_Content}    |
+    ${Column_List}    Split String    ${CSV_File_Content}    ${sDelimiter}
     ${Column_List_Count}    Get Length    ${Column_List}
 
     ### Get BSG_CDE_GL_SHTNAME index ###
@@ -103,7 +106,7 @@ Access Balance Subledger CSV File and Return Sum of Amount
     ${CSV_File_Content_LineCount}    Get Line Count    ${CSV_File_Content}
     :FOR    ${Index}    IN RANGE    1    ${CSV_File_Content_LineCount}
     \    ${CSV_Line}    Get Line    ${CSV_File_Content}    ${Index}
-    \    ${CSV_Line_List}    Split String    ${CSV_Line}    |
+    \    ${CSV_Line_List}    Split String    ${CSV_Line}    ${sDelimiter}
     \    Log    BSG_CDE_GL_SHTNAME : @{CSV_Line_List}[${BSG_CDE_GL_SHTNAME_Index}]
     \    Log    BSG_CDE_CURRENCY : @{CSV_Line_List}[${BSG_CDE_CURRENCY_Index}]
     \    ${BSG_CDE_GL_SHTNAME_Value}    Remove String    @{CSV_Line_List}[${BSG_CDE_GL_SHTNAME_Index}]    "
@@ -122,7 +125,8 @@ Access GL Entry CSV File for Transaction Amount and Return Sum of Amount
     [Documentation]    This keyword is used to access VLS_GL_ENTRY csv file and return sum of GL_AMT_ENTRY column.
     ...    NOTE: sBus_Date format should be 2020-01-02
     ...    @author: clanding    19OCT2020    - initial create
-    [Arguments]    ${sDWE_Extract_Path}    ${sZone}    ${sBus_Date}    ${sCurrency}
+    ...    @update: clanding    29NOV2020    - added delimiter argument
+    [Arguments]    ${sDWE_Extract_Path}    ${sZone}    ${sBus_Date}    ${sCurrency}    ${sDelimiter}
     
     ${Bus_Date_Converted}    Remove String    ${sBus_Date}    -
     
@@ -131,7 +135,7 @@ Access GL Entry CSV File for Transaction Amount and Return Sum of Amount
     ${CSV_File_Content}    OperatingSystem.Get File    ${sDWE_Extract_Path}/${DNA_CCB_LIQ_FILENAME}SYD_${Bus_Date_Converted}/${CSV_File}
     
     ### Get Column header list ###    
-    ${Column_List}    Split String    ${CSV_File_Content}    |
+    ${Column_List}    Split String    ${CSV_File_Content}    ${sDelimiter}
     ${Column_List_Count}    Get Length    ${Column_List}
 
     ### Get GLE_CDE_CURRENCY index ###
@@ -156,7 +160,7 @@ Access GL Entry CSV File for Transaction Amount and Return Sum of Amount
     ${CSV_File_Content_LineCount}    Get Line Count    ${CSV_File_Content}
     :FOR    ${Index}    IN RANGE    1    ${CSV_File_Content_LineCount}
     \    ${CSV_Line}    Get Line    ${CSV_File_Content}    ${Index}
-    \    ${CSV_Line_List}    Split String    ${CSV_Line}    |
+    \    ${CSV_Line_List}    Split String    ${CSV_Line}    ${sDelimiter}
     \    Log    GLE_CDE_CURRENCY : @{CSV_Line_List}[${GLE_CDE_CURRENCY_Index}]
     \    Log    GLE_DTE_POSTING : @{CSV_Line_List}[${GLE_DTE_POSTING_Index}]
     \    Log    GLE_AMT_ENTRY : @{CSV_Line_List}[${GLE_AMT_ENTRY_Index}]
@@ -176,7 +180,8 @@ Access Deal CSV File and Return Sum
     [Documentation]    This keyword is used to access VLS_DEAL csv file and return sum of DEA_PID_DEAL column.
     ...    NOTE: sBus_Date format should be 2020-01-02
     ...    @author: clanding    19OCT2020    - initial create
-    [Arguments]    ${sDWE_Extract_Path}    ${sZone}    ${sBus_Date}    ${sBranch_Code}
+    ...    @update: clanding    29NOV2020    - added delimiter argument
+    [Arguments]    ${sDWE_Extract_Path}    ${sZone}    ${sBus_Date}    ${sBranch_Code}    ${sDelimiter}
     
     ${Bus_Date_Converted}    Remove String    ${sBus_Date}    -
     
@@ -185,7 +190,7 @@ Access Deal CSV File and Return Sum
     ${CSV_File_Content}    OperatingSystem.Get File    ${sDWE_Extract_Path}/${DNA_CCB_LIQ_FILENAME}SYD_${Bus_Date_Converted}/${CSV_File}
     
     ### Get Column header list ###    
-    ${Column_List}    Split String    ${CSV_File_Content}    |
+    ${Column_List}    Split String    ${CSV_File_Content}    ${sDelimiter}
     ${Column_List_Count}    Get Length    ${Column_List}
 
     ### Get DEA_IND_ACTIVE index ###
@@ -204,7 +209,7 @@ Access Deal CSV File and Return Sum
     ${CSV_File_Content_LineCount}    Get Line Count    ${CSV_File_Content}
     :FOR    ${Index}    IN RANGE    1    ${CSV_File_Content_LineCount}
     \    ${CSV_Line}    Get Line    ${CSV_File_Content}    ${Index}
-    \    ${CSV_Line_List}    Split String    ${CSV_Line}    |
+    \    ${CSV_Line_List}    Split String    ${CSV_Line}    ${sDelimiter}
     \    Log    DEA_IND_ACTIVE : @{CSV_Line_List}[${DEA_IND_ACTIVE_Index}]
     \    Log    DEA_CDE_BRANCH : @{CSV_Line_List}[${DEA_CDE_BRANCH_Index}]
     \    ${DEA_IND_ACTIVE_Value}    Remove String    @{CSV_Line_List}[${DEA_IND_ACTIVE_Index}]    "
@@ -234,7 +239,8 @@ Access Deal and Prod Pos Current CSV Files and Return Sum
     ...    VLS_PROD_POS_CUR: Filter PDC_CDE_PROD_TYPE by DEA and PDC_PID_PRODUCT_ID value should be equal to DEA_PID_DEAL and get sum of PDC_AMT_BNK_GR_CMT.
     ...    NOTE: sBus_Date format should be 2020-01-02
     ...    @author: clanding    19OCT2020    - initial create
-    [Arguments]    ${sDWE_Extract_Path}    ${sZone}    ${sBus_Date}    ${sCurrency}    ${sControl_Matrix}
+    ...    @update: clanding    29NOV2020    - added delimiter argument
+    [Arguments]    ${sDWE_Extract_Path}    ${sZone}    ${sBus_Date}    ${sCurrency}    ${sControl_Matrix}    ${sDelimiter}
     
     ${Amount_Type}    Run Keyword If    '${sControl_Matrix}'=='SUM_OF_HB_DEAL_LIMITS_GROSS'    Set Variable    PDC_AMT_BNK_GR_CMT
     ...    ELSE IF    '${sControl_Matrix}'=='SUM_OF_HB_DEAL_LIMITS_NET'    Set Variable    PDC_AMT_BNK_GR_CMT
@@ -247,7 +253,7 @@ Access Deal and Prod Pos Current CSV Files and Return Sum
     ${VLS_DEAL_CSV_File_Content}    OperatingSystem.Get File    ${sDWE_Extract_Path}/${DNA_CCB_LIQ_FILENAME}SYD_${Bus_Date_Converted}/${VLS_DEAL_CSV_File}
     
     ### Get Column header list - VLS_DEAL ###    
-    ${VLS_DEAL_Column_List}    Split String    ${VLS_DEAL_CSV_File_Content}    |
+    ${VLS_DEAL_Column_List}    Split String    ${VLS_DEAL_CSV_File_Content}    ${sDelimiter}
     ${VLS_DEAL_Column_List_Count}    Get Length    ${VLS_DEAL_Column_List}
 
     ### Get DEA_CDE_ORIG_CCY index ###
@@ -266,7 +272,7 @@ Access Deal and Prod Pos Current CSV Files and Return Sum
     ${VLS_DEAL_CSV_File_Content_LineCount}    Get Line Count    ${VLS_DEAL_CSV_File_Content}
     :FOR    ${Index}    IN RANGE    1    ${VLS_DEAL_CSV_File_Content_LineCount}
     \    ${CSV_Line}    Get Line    ${VLS_DEAL_CSV_File_Content}    ${Index}
-    \    ${CSV_Line_List}    Split String    ${CSV_Line}    |
+    \    ${CSV_Line_List}    Split String    ${CSV_Line}    ${sDelimiter}
     \    Log    DEA_CDE_ORIG_CCY : @{CSV_Line_List}[${DEA_CDE_ORIG_CCY_Index}]
     \    Log    DEA_PID_DEAL : @{CSV_Line_List}[${DEA_PID_DEAL_Index}]
     \    ${DEA_CDE_ORIG_CCY_Value}    Remove String    @{CSV_Line_List}[${DEA_CDE_ORIG_CCY_Index}]    "
@@ -283,11 +289,11 @@ Access Deal and Prod Pos Current CSV Files and Return Sum
     ${VLS_PROD_POS_CUR_CSV_File_Content}    OperatingSystem.Get File    ${sDWE_Extract_Path}/${DNA_CCB_LIQ_FILENAME}SYD_${Bus_Date_Converted}/${VLS_PROD_POS_CUR_CSV_File}
 
     ### Get Column header list - VLS_PROD_POS_CUR ###    
-    ${VLS_PROD_POS_CUR_Column_List}    Split String    ${VLS_PROD_POS_CUR_CSV_File_Content}    |
+    ${VLS_PROD_POS_CUR_Column_List}    Split String    ${VLS_PROD_POS_CUR_CSV_File_Content}    ${sDelimiter}
     ${VLS_PROD_POS_CUR_Column_List_Count}    Get Length    ${VLS_PROD_POS_CUR_Column_List}
     
     ### Get Column header list - VLS_PROD_POS_CUR ###    
-    ${VLS_PROD_POS_CUR_Column_List}    Split String    ${VLS_PROD_POS_CUR_CSV_File_Content}    |
+    ${VLS_PROD_POS_CUR_Column_List}    Split String    ${VLS_PROD_POS_CUR_CSV_File_Content}    ${sDelimiter}
     ${VLS_PROD_POS_CUR_Column_List_Count}    Get Length    ${VLS_PROD_POS_CUR_Column_List}
 
     ### Get PDC_CDE_PROD_TYPE index ###
@@ -312,7 +318,7 @@ Access Deal and Prod Pos Current CSV Files and Return Sum
     ${VLS_PROD_POS_CUR_CSV_File_Content_LineCount}    Get Line Count    ${VLS_PROD_POS_CUR_CSV_File_Content}
     :FOR    ${Index}    IN RANGE    1    ${VLS_PROD_POS_CUR_CSV_File_Content_LineCount}
     \    ${CSV_Line}    Get Line    ${VLS_PROD_POS_CUR_CSV_File_Content}    ${Index}
-    \    ${CSV_Line_List}    Split String    ${CSV_Line}    |
+    \    ${CSV_Line_List}    Split String    ${CSV_Line}    ${sDelimiter}
     \    Log    PDC_CDE_PROD_TYPE : @{CSV_Line_List}[${PDC_CDE_PROD_TYPE_Index}]
     \    Log    PDC_PID_PRODUCT_ID : @{CSV_Line_List}[${PDC_PID_PRODUCT_ID_Index}]
     \    Log    PDC_AMT_BNK_GR_NT_CMT : @{CSV_Line_List}[${PDC_AMT_BNK_GR_NT_CMT_Index}]
@@ -334,7 +340,8 @@ Access Deal and Borrower CSV Files and Return Sum
     ...    VLS_DEAL_BORROWERS: Validate DBR_PID_DEAL
     ...    NOTE: sBus_Date format should be 2020-01-02
     ...    @author: clanding    20OCT2020    - initial create
-    [Arguments]    ${sDWE_Extract_Path}    ${sZone}    ${sBus_Date}
+    ...    @update: clanding    29NOV2020    - added delimiter argument
+    [Arguments]    ${sDWE_Extract_Path}    ${sZone}    ${sBus_Date}    ${sDelimiter}
     
     ${Bus_Date_Converted}    Remove String    ${sBus_Date}    -
     
@@ -344,7 +351,7 @@ Access Deal and Borrower CSV Files and Return Sum
     ${VLS_DEAL_CSV_File_Content}    OperatingSystem.Get File    ${sDWE_Extract_Path}/${DNA_CCB_LIQ_FILENAME}SYD_${Bus_Date_Converted}/${VLS_DEAL_CSV_File}
     
     ### Get Column header list - VLS_DEAL ###    
-    ${VLS_DEAL_Column_List}    Split String    ${VLS_DEAL_CSV_File_Content}    |
+    ${VLS_DEAL_Column_List}    Split String    ${VLS_DEAL_CSV_File_Content}    ${sDelimiter}
     ${VLS_DEAL_Column_List_Count}    Get Length    ${VLS_DEAL_Column_List}
 
     ### Get DEA_DTE_DEAL_CLSD index ###
@@ -363,7 +370,7 @@ Access Deal and Borrower CSV Files and Return Sum
     ${VLS_DEAL_CSV_File_Content_LineCount}    Get Line Count    ${VLS_DEAL_CSV_File_Content}
     :FOR    ${Index}    IN RANGE    1    ${VLS_DEAL_CSV_File_Content_LineCount}
     \    ${CSV_Line}    Get Line    ${VLS_DEAL_CSV_File_Content}    ${Index}
-    \    ${CSV_Line_List}    Split String    ${CSV_Line}    |
+    \    ${CSV_Line_List}    Split String    ${CSV_Line}    ${sDelimiter}
     \    Log    DEA_DTE_DEAL_CLSD : @{CSV_Line_List}[${DEA_DTE_DEAL_CLSD_Index}]
     \    Log    DEA_PID_DEAL : @{CSV_Line_List}[${DEA_PID_DEAL_Index}]
     \    ${DEA_DTE_DEAL_CLSD_Value}    Remove String    @{CSV_Line_List}[${DEA_DTE_DEAL_CLSD_Index}]    "
@@ -380,11 +387,11 @@ Access Deal and Borrower CSV Files and Return Sum
     ${VLS_DEAL_BORROWER_CSV_File_Content}    OperatingSystem.Get File    ${sDWE_Extract_Path}/${DNA_CCB_LIQ_FILENAME}SYD_${Bus_Date_Converted}/${VLS_DEAL_BORROWER_CSV_File}
 
     ### Get Column header list - VLS_DEAL_BORROWER ###    
-    ${VLS_DEAL_BORROWER_Column_List}    Split String    ${VLS_DEAL_BORROWER_CSV_File_Content}    |
+    ${VLS_DEAL_BORROWER_Column_List}    Split String    ${VLS_DEAL_BORROWER_CSV_File_Content}    ${sDelimiter}
     ${VLS_DEAL_BORROWER_Column_List_Count}    Get Length    ${VLS_DEAL_BORROWER_Column_List}
     
     ### Get Column header list - VLS_DEAL_BORROWER ###    
-    ${VLS_DEAL_BORROWER_Column_List}    Split String    ${VLS_DEAL_BORROWER_CSV_File_Content}    |
+    ${VLS_DEAL_BORROWER_Column_List}    Split String    ${VLS_DEAL_BORROWER_CSV_File_Content}    ${sDelimiter}
     ${VLS_DEAL_BORROWER_Column_List_Count}    Get Length    ${VLS_DEAL_BORROWER_Column_List}
 
     ### Get DBR_PID_DEAL index ###
@@ -397,7 +404,7 @@ Access Deal and Borrower CSV Files and Return Sum
     ${VLS_DEAL_BORROWER_CSV_File_Content_LineCount}    Get Line Count    ${VLS_DEAL_BORROWER_CSV_File_Content}
     :FOR    ${Index}    IN RANGE    1    ${VLS_DEAL_BORROWER_CSV_File_Content_LineCount}
     \    ${CSV_Line}    Get Line    ${VLS_DEAL_BORROWER_CSV_File_Content}    ${Index}
-    \    ${CSV_Line_List}    Split String    ${CSV_Line}    |
+    \    ${CSV_Line_List}    Split String    ${CSV_Line}    ${sDelimiter}
     \    Log    DBR_PID_DEAL : @{CSV_Line_List}[${DBR_PID_DEAL_Index}]
     \    ${DBR_PID_DEAL_Value}    Remove String    @{CSV_Line_List}[${DBR_PID_DEAL_Index}]    "
     \    ${IsEqual_DBR_PID_DEAL}    Verify If CSV File Have Expected Value    ${Deal_List}    ${DBR_PID_DEAL_Value.strip()}    ${True}
