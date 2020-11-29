@@ -20,9 +20,10 @@ Test Setup for DNA
 Validate Extracted Data Assurance File is Generated and Return
     [Documentation]    This keyword is used to go to Extraction folder and verify DAT file is existing.
     ...    @author: clanding    13OCT2020    - initial create
+    ...    @update: clanding    29NOV2020    - updated DAT file location, from server '${DNA_SERVER}:${DNA_PORT}' to '\\MANCSWEVERG0006\out\'
     [Arguments]    ${sZone}    ${sExtract_Path}    ${sBus_Date}
 
-    @{ExtractionArea_Files}    SSHLibrary.List Directory    ${DNA_EXTRACTION_AREA_PATH}${sZone}
+    @{ExtractionArea_Files}    OperatingSystem.List Files In Directory    \\\\${DAT_FILE_SERVER}\\${DNA_DAT_FILE_EXTRACTION_AREA_PATH}\\${sZone}
     ${Bus_Date_Converted}    Remove String    ${sBus_Date}    -
     
     ${DAT_File}    Run Keyword If    '${sZone}'=='ZONE3'    Set Variable    ${DNA_CCB_LIQ_FILENAME}SYD_${DNA_DATAASSURANCE_FILENAME}
@@ -31,7 +32,7 @@ Validate Extracted Data Assurance File is Generated and Return
     ### Validate DAT File is existing and download DAT File ###
     ${DAT_File_Exist}    Run Keyword And Return Status    Should Contain    ${ExtractionArea_Files}    ${DAT_File}${Bus_Date_Converted}${DNA_DAT_EXT}
     Run Keyword If    ${DAT_File_Exist}==${True}    Run Keywords    Delete File If Exist    ${sExtract_Path}${sZone}/${DAT_File}${Bus_Date_Converted}${DNA_DAT_EXT}
-    ...    AND    SSHLibrary.Get File    ${DNA_EXTRACTION_AREA_PATH}${sZone}/${DAT_File}${Bus_Date_Converted}${DNA_DAT_EXT}    ${sExtract_Path}${sZone}\\
+    ...    AND    OperatingSystem.Copy File    \\\\${DAT_FILE_SERVER}\\${DNA_DAT_FILE_EXTRACTION_AREA_PATH}\\${sZone}\\${DAT_File}${Bus_Date_Converted}${DNA_DAT_EXT}    ${sExtract_Path}${sZone}\\${DAT_File}${Bus_Date_Converted}${DNA_DAT_EXT}
     ...    AND    Log    ${DAT_File}${Bus_Date_Converted}${DNA_DAT_EXT} is EXISTING in Extraction Area.
     ...    AND    Log To Console    ${DAT_File}${Bus_Date_Converted}${DNA_DAT_EXT} is EXISTING in Extraction Area.
     ...    ELSE    Run Keyword and Continue On Failure    FAIL    ${DAT_File}${Bus_Date_Converted}${DNA_DAT_EXT} is NOT EXISTING in Extraction Area:${\n}${ExtractionArea_Files}

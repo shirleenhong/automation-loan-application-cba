@@ -14,6 +14,7 @@ DWELIQFunc_Dataset = "C:\\Git_Evergreen\\fms_cba\\DataSet\\Integration_DataSet\\
 INDUSTRYSECTOR_LIST = "C:\\Git_Evergreen\\fms_cba\\DataSet\\Party_DataSet\\Industry_Sector\\Industry_Sector_Values.txt"
 BUSINESSACTIVITY_DIRECTORY = "C:\\Git_Evergreen\\fms_cba\\DataSet\\Party_DataSet\\Business_Activity"
 DNR_DATASET = "C:\\Git_Evergreen\\fms_cba\\DataSet\\Integration_DataSet\\Extracts\\DNR\\DNR_Dataset_AU.xlsx"
+DNA_DATASET = "C:\\Git_Evergreen\\fms_cba\\DataSet\\Integration_DataSet\\Extracts\\DNA\\EVG_DNA_TestData.xlsx"
 
 SERVER = "http://mancsleverg0007"
 PORT = "9090"
@@ -245,6 +246,8 @@ DNA_PORT = '22'
 DNA_SERVER_USER = 'sftpuser2'
 DNA_SERVER_PASSWORD = 'luckyroll76'
 DNA_EXTRACTION_AREA_PATH = '/evgdata/STREAMSETS/workspace/extraction_area/COMRLENDING/'
+DAT_FILE_SERVER = 'MANCSWEVERG0006'
+DNA_DAT_FILE_EXTRACTION_AREA_PATH = 'out'
 DNA_CCB_LIQ_FILENAME = 'CCB_LIQ_'
 DNA_DATAASSURANCE_FILENAME = 'DATAASSURANCE_'
 DNA_DAT_EXT = '.DAT'
