@@ -10,4 +10,4 @@ Validate Control Value of Control Matrix for Existing Records
     
     Verify DAT File Control Value and DB Record are Matched    &{ExcelPath}[Zone]    &{ExcelPath}[Extract_Files_Path]    &{ExcelPath}[DAT_File]    &{ExcelPath}[Branch_Code]
     Verify DAT File Control Value and CSV Files are Matched    &{ExcelPath}[Zone]    &{ExcelPath}[Extract_Files_Path]    &{ExcelPath}[DAT_File]    &{ExcelPath}[Branch_Code]
-    ...    &{ExcelPath}[DWE_Extract_Files_Path]    &{ExcelPath}[Business_Date]
+    ...    &{ExcelPath}[DWE_Extract_Files_Path]    &{ExcelPath}[Business_Date]    &{ExcelPath}[Delimiter]
