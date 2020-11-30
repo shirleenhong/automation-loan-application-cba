@@ -339,6 +339,6 @@ Verify DAT File Control Value and CSV Files are Matched
 	\   
 	\    ${DAT_File_ControlValue}    Evaluate    "%.0f" % (@{DAT_File_Line_Content_List}[${CONTROL_VALUE_Index}])
     \    
-    \    ${IsEqual}    Run Keyword And Return Status    Should Be Equal As Integers    ${DAT_File_ControlValue}    ${CSV_Control_Value}
+    \    ${IsEqual}    Run Keyword And Return Status    Should Be Equal As Numbers    ${DAT_File_ControlValue}    ${CSV_Control_Value}
     \    Run Keyword If    ${IsEqual}==${True}    Log    Control Matrix '${Control_Matrix}' - DAT File Control Value: '${DAT_File_ControlValue}' is equal to CSV Control Value: '${CSV_Control_Value}'
          ...    ELSE    Run Keyword and Continue On Failure    FAIL    Control Matrix '${Control_Matrix}' - DAT File Control Value: '${DAT_File_ControlValue}' is NOT equal to CSV Control Value: '${CSV_Control_Value}'

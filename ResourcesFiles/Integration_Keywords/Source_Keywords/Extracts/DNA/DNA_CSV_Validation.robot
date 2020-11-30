@@ -78,7 +78,8 @@ Access Balance Subledger CSV File and Return Sum of Amount
     
     ${CSV_File}    Run Keyword If    '${sZone}'=='ZONE3'    Set Variable    ${DNA_CCB_LIQ_FILENAME}SYD_VLS_BAL_SUBLEDGER_${Bus_Date_Converted}.csv
     ...    ELSE IF    '${sZone}'=='ZONE2'    Set Variable    ${DNA_CCB_LIQ_FILENAME}EUR_VLS_BAL_SUBLEDGER_${Bus_Date_Converted}.csv
-    ${CSV_File_Content}    OperatingSystem.Get File    ${sDWE_Extract_Path}/${DNA_CCB_LIQ_FILENAME}SYD_${Bus_Date_Converted}/${CSV_File}
+    ${CSV_File_Content}    Run Keyword If    '${sZone}'=='ZONE3'    OperatingSystem.Get File    ${sDWE_Extract_Path}/${DNA_CCB_LIQ_FILENAME}SYD_${Bus_Date_Converted}/${CSV_File}
+    ...    ELSE IF    '${sZone}'=='ZONE2'    OperatingSystem.Get File    ${sDWE_Extract_Path}/${DNA_CCB_LIQ_FILENAME}EUR_${Bus_Date_Converted}/${CSV_File}
     
     ### Get Column header list ###    
     ${Column_List}    Split String    ${CSV_File_Content}    ${sDelimiter}
@@ -132,7 +133,8 @@ Access GL Entry CSV File for Transaction Amount and Return Sum of Amount
     
     ${CSV_File}    Run Keyword If    '${sZone}'=='ZONE3'    Set Variable    ${DNA_CCB_LIQ_FILENAME}SYD_VLS_GL_ENTRY_${Bus_Date_Converted}.csv
     ...    ELSE IF    '${sZone}'=='ZONE2'    Set Variable    ${DNA_CCB_LIQ_FILENAME}EUR_VLS_GL_ENTRY_${Bus_Date_Converted}.csv
-    ${CSV_File_Content}    OperatingSystem.Get File    ${sDWE_Extract_Path}/${DNA_CCB_LIQ_FILENAME}SYD_${Bus_Date_Converted}/${CSV_File}
+    ${CSV_File_Content}    Run Keyword If    '${sZone}'=='ZONE3'    OperatingSystem.Get File    ${sDWE_Extract_Path}/${DNA_CCB_LIQ_FILENAME}SYD_${Bus_Date_Converted}/${CSV_File}
+    ...    ELSE IF    '${sZone}'=='ZONE2'    OperatingSystem.Get File    ${sDWE_Extract_Path}/${DNA_CCB_LIQ_FILENAME}EUR_${Bus_Date_Converted}/${CSV_File}
     
     ### Get Column header list ###    
     ${Column_List}    Split String    ${CSV_File_Content}    ${sDelimiter}
@@ -187,7 +189,8 @@ Access Deal CSV File and Return Sum
     
     ${CSV_File}    Run Keyword If    '${sZone}'=='ZONE3'    Set Variable    ${DNA_CCB_LIQ_FILENAME}SYD_VLS_DEAL_${Bus_Date_Converted}.csv
     ...    ELSE IF    '${sZone}'=='ZONE2'    Set Variable    ${DNA_CCB_LIQ_FILENAME}EUR_VLS_DEAL_${Bus_Date_Converted}.csv
-    ${CSV_File_Content}    OperatingSystem.Get File    ${sDWE_Extract_Path}/${DNA_CCB_LIQ_FILENAME}SYD_${Bus_Date_Converted}/${CSV_File}
+    ${CSV_File_Content}    Run Keyword If    '${sZone}'=='ZONE3'    OperatingSystem.Get File    ${sDWE_Extract_Path}/${DNA_CCB_LIQ_FILENAME}SYD_${Bus_Date_Converted}/${CSV_File}
+    ...    ELSE IF    '${sZone}'=='ZONE2'    OperatingSystem.Get File    ${sDWE_Extract_Path}/${DNA_CCB_LIQ_FILENAME}EUR_${Bus_Date_Converted}/${CSV_File}
     
     ### Get Column header list ###    
     ${Column_List}    Split String    ${CSV_File_Content}    ${sDelimiter}
@@ -250,7 +253,8 @@ Access Deal and Prod Pos Current CSV Files and Return Sum
     ### VLS_DEAL csv file ###
     ${VLS_DEAL_CSV_File}    Run Keyword If    '${sZone}'=='ZONE3'    Set Variable    ${DNA_CCB_LIQ_FILENAME}SYD_VLS_DEAL_${Bus_Date_Converted}.csv
     ...    ELSE IF    '${sZone}'=='ZONE2'    Set Variable    ${DNA_CCB_LIQ_FILENAME}EUR_VLS_DEAL_${Bus_Date_Converted}.csv
-    ${VLS_DEAL_CSV_File_Content}    OperatingSystem.Get File    ${sDWE_Extract_Path}/${DNA_CCB_LIQ_FILENAME}SYD_${Bus_Date_Converted}/${VLS_DEAL_CSV_File}
+    ${VLS_DEAL_CSV_File_Content}    Run Keyword If    '${sZone}'=='ZONE3'    OperatingSystem.Get File    ${sDWE_Extract_Path}/${DNA_CCB_LIQ_FILENAME}SYD_${Bus_Date_Converted}/${VLS_DEAL_CSV_File}
+    ...    ELSE IF    '${sZone}'=='ZONE2'    OperatingSystem.Get File    ${sDWE_Extract_Path}/${DNA_CCB_LIQ_FILENAME}EUR_${Bus_Date_Converted}/${VLS_DEAL_CSV_File}
     
     ### Get Column header list - VLS_DEAL ###    
     ${VLS_DEAL_Column_List}    Split String    ${VLS_DEAL_CSV_File_Content}    ${sDelimiter}
@@ -286,7 +290,8 @@ Access Deal and Prod Pos Current CSV Files and Return Sum
     ### VLS_PROD_POS_CUR csv file ###
     ${VLS_PROD_POS_CUR_CSV_File}    Run Keyword If    '${sZone}'=='ZONE3'    Set Variable    ${DNA_CCB_LIQ_FILENAME}SYD_VLS_PROD_POS_CUR_${Bus_Date_Converted}.csv
     ...    ELSE IF    '${sZone}'=='ZONE2'    Set Variable    ${DNA_CCB_LIQ_FILENAME}EUR_VLS_PROD_POS_CUR_${Bus_Date_Converted}.csv
-    ${VLS_PROD_POS_CUR_CSV_File_Content}    OperatingSystem.Get File    ${sDWE_Extract_Path}/${DNA_CCB_LIQ_FILENAME}SYD_${Bus_Date_Converted}/${VLS_PROD_POS_CUR_CSV_File}
+    ${VLS_PROD_POS_CUR_CSV_File_Content}    Run Keyword If    '${sZone}'=='ZONE3'    OperatingSystem.Get File    ${sDWE_Extract_Path}/${DNA_CCB_LIQ_FILENAME}SYD_${Bus_Date_Converted}/${VLS_PROD_POS_CUR_CSV_File}
+    ...    ELSE IF    '${sZone}'=='ZONE2'    OperatingSystem.Get File    ${sDWE_Extract_Path}/${DNA_CCB_LIQ_FILENAME}EUR_${Bus_Date_Converted}/${VLS_PROD_POS_CUR_CSV_File}
 
     ### Get Column header list - VLS_PROD_POS_CUR ###    
     ${VLS_PROD_POS_CUR_Column_List}    Split String    ${VLS_PROD_POS_CUR_CSV_File_Content}    ${sDelimiter}
@@ -348,7 +353,8 @@ Access Deal and Borrower CSV Files and Return Sum
     ### VLS_DEAL csv file ###
     ${VLS_DEAL_CSV_File}    Run Keyword If    '${sZone}'=='ZONE3'    Set Variable    ${DNA_CCB_LIQ_FILENAME}SYD_VLS_DEAL_${Bus_Date_Converted}.csv
     ...    ELSE IF    '${sZone}'=='ZONE2'    Set Variable    ${DNA_CCB_LIQ_FILENAME}EUR_VLS_DEAL_${Bus_Date_Converted}.csv
-    ${VLS_DEAL_CSV_File_Content}    OperatingSystem.Get File    ${sDWE_Extract_Path}/${DNA_CCB_LIQ_FILENAME}SYD_${Bus_Date_Converted}/${VLS_DEAL_CSV_File}
+    ${VLS_DEAL_CSV_File_Content}    Run Keyword If    '${sZone}'=='ZONE3'    OperatingSystem.Get File    ${sDWE_Extract_Path}/${DNA_CCB_LIQ_FILENAME}SYD_${Bus_Date_Converted}/${VLS_DEAL_CSV_File}
+    ...    ELSE IF    '${sZone}'=='ZONE2'    OperatingSystem.Get File    ${sDWE_Extract_Path}/${DNA_CCB_LIQ_FILENAME}EUR_${Bus_Date_Converted}/${VLS_DEAL_CSV_File}
     
     ### Get Column header list - VLS_DEAL ###    
     ${VLS_DEAL_Column_List}    Split String    ${VLS_DEAL_CSV_File_Content}    ${sDelimiter}
@@ -384,7 +390,8 @@ Access Deal and Borrower CSV Files and Return Sum
     ### VLS_DEAL_BORROWER csv file ###
     ${VLS_DEAL_BORROWER_CSV_File}    Run Keyword If    '${sZone}'=='ZONE3'    Set Variable    ${DNA_CCB_LIQ_FILENAME}SYD_VLS_DEAL_BORROWER_${Bus_Date_Converted}.csv
     ...    ELSE IF    '${sZone}'=='ZONE2'    Set Variable    ${DNA_CCB_LIQ_FILENAME}EUR_VLS_DEAL_BORROWER_${Bus_Date_Converted}.csv
-    ${VLS_DEAL_BORROWER_CSV_File_Content}    OperatingSystem.Get File    ${sDWE_Extract_Path}/${DNA_CCB_LIQ_FILENAME}SYD_${Bus_Date_Converted}/${VLS_DEAL_BORROWER_CSV_File}
+    ${VLS_DEAL_BORROWER_CSV_File_Content}    Run Keyword If    '${sZone}'=='ZONE3'    OperatingSystem.Get File    ${sDWE_Extract_Path}/${DNA_CCB_LIQ_FILENAME}SYD_${Bus_Date_Converted}/${VLS_DEAL_BORROWER_CSV_File}
+    ...    ELSE IF    '${sZone}'=='ZONE2'    OperatingSystem.Get File    ${sDWE_Extract_Path}/${DNA_CCB_LIQ_FILENAME}EUR_${Bus_Date_Converted}/${VLS_DEAL_BORROWER_CSV_File}
 
     ### Get Column header list - VLS_DEAL_BORROWER ###    
     ${VLS_DEAL_BORROWER_Column_List}    Split String    ${VLS_DEAL_BORROWER_CSV_File_Content}    ${sDelimiter}
