@@ -185,6 +185,8 @@ TL_CAL_ACK_MESSAGE_SOURCENAME = 'ccb_source_cal'
 TL_BASE_ACK_MESSAGE_SOURCENAME = 'ccb_source_base'
 CBACorrespUpdateMQ_Instance = 'CustomCBAPush_v1.4.0'
 FFC1CMUpdateSourceMQ_Instance = 'CustomInterface_v1.4.0'
+NOTIFICATIONSOURCEJMS_SOURCENAME = 'NotificationSourceJMS'
+DWE_NOTIFICATION_INSTANCE = 'dwe_notification_1.3.0'
 
 ### DWE ###
 DWE_SERVER = 'mancsleverg0007'

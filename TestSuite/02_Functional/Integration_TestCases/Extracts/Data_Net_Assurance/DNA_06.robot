@@ -5,7 +5,7 @@ Test Teardown    Close All Connections
 *** Test Cases ***
 
 DNA_06
-    [Documentation]    This test case is used to verify that the Data Net Assurance File is extracted once Data Net Assurance job is triggered.
+    [Documentation]    This test case is used to verify that the Data Net Assurance File is not existing in FFC.
     ...    @author: clanding    30NOV2020    - initial create
 
     Set Global Variable    ${TestCase_Name}    DNA_06
