@@ -24,7 +24,7 @@ LIQ_Loan_Currency_Text = 'JavaWindow("title:=.*Loan.*Active").JavaStaticText("la
 LIQ_Loan_EffectiveDate_Text = 'JavaWindow("title:=.*Loan.*Active").JavaStaticText("labeled_containers_path:=Tab:General;","Index:=3")'
 LIQ_Loan_MaturityDate_Text = 'JavaWindow("title:=.*Loan.*Active").JavaEdit("labeled_containers_path:=Tab:General;", "index:=0")'
 LIQ_Loan_PaymentMode_List = 'JavaWindow("title:=.*Loan.*ctive").JavaList("attached text:=Payment Mode:")'
-LIQ_Loan_PricingOption_Text = 'JavaWindow("title:=.*Loan.*Active").JavaStaticText("labeled_containers_path:=Tab:General;","Index:=15")'
+LIQ_Loan_PricingOption_Text = 'JavaWindow("title:=.*Loan.*Active").JavaStaticText("labeled_containers_path:=Tab:General;","Index:=12")'
 LIQ_Loan_RatesTab_PenaltySpread_Status_OFF = 'JavaWindow("title:=.*Loan.*Active").JavaStaticText("labeled_containers_path:=Tab:Rates;Group:Interest Rates;Group:Penalty Spread;","attached text:=OFF")'
 LIQ_Loan_RatesTab_BaseRate_Field = 'JavaWindow("title:=.*Loan.*Active").JavaEdit("attached text:=Current","index:=0")'
 LIQ_Loan_RatesTab_Spread_Field = 'JavaWindow("title:=.*Loan.*Active").JavaEdit("attached text:=Spread:")'
