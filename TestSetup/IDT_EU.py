@@ -82,6 +82,8 @@ TL_CAL_ACK_MESSAGE_SOURCENAME = 'tl_ack_message_splitter_cal'
 TL_BASE_ACK_MESSAGE_SOURCENAME = 'tl_ack_message_splitter_base'
 CBACorrespUpdateMQ_Instance = 'CustomCBAPush_1.4.0'
 FFC1CMUpdateSourceMQ_Instance = 'CustomInterface'
+NOTIFICATIONSOURCEJMS_SOURCENAME = 'NotificationSourceJMS'
+DWE_NOTIFICATION_INSTANCE = 'dwe_notification_1.3.0'
 
 ###SFTP###
 SFTP_HOST = "mancsleverg0021"
