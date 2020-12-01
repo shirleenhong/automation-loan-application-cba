@@ -244,3 +244,18 @@ DWE_PASSPHRASE = 'oracle'
 DWE_TAR_GZ_EXT = '.tar.gz'
 DWE_TAR_GZ_GPG_EXT = '.tar.gz.gpg'
 DWE_CCB_LIQ_ZONE_FILENAME = 'CCB_LIQ_'
+
+### COGNOS ###
+COGNOS_SERVER = 'mancsweverg0006'
+COGNOS_PORT = '9305'
+COGNOS_URL = '/bi/?perspective=home'
+COGNOS_USERNAME = "CGLINP01"
+COGNOS_PASSWORD = "Finastra2020"
+COGNOS_NAMESPACE = 'FinastraRoot'
+CBA_ALERTS_REPORTFILE = "Alerts_Report_V1.3.4"
+CBA_COMMENTS_REPORTFILE = "Comments_Report_v5"
+CBA_CALENDAR_REPORTFILE = "Calendar Report_v1.0"
+CBA_LIQUIDITY_REPORTFILE= "CBA Liquidity Report"
+CBA_DE_REPORTFILE= "Agency Host Bank DE Extract"
+CBA_LIQPERFORMANCE_REPORTFILE = "LIQFacilityPerformance_V3.0"
+CBA_LOANSACCRUALS_REPORTFILE = "LoansAndAccrualsReport_V2.2.1"

@@ -8,6 +8,7 @@ Create Loan Drawdown for Syndicated Deal - ComSee
     ...    @update: cfrancis    14OCT2020    - moved getting system date before Search for Deal keyword
     ...    @update: clanding    10NOV2020    - added argument &{ExcelPath}[Outstanding_Currency] in Get Host Bank Cash in Cashflow
     ...                                      - fix releasing of cashflow
+    ...    @update: songchan    17NOV2020    - Remove Verification of Remittance and Status to Do it
     [Arguments]    ${ExcelPath}
 
     ##Login to Original User###
@@ -84,25 +85,15 @@ Create Loan Drawdown for Syndicated Deal - ComSee
     Approve Initial Drawdown Rate
     
     ##Cashflow Notebook - Release Cashflows###
-    Navigate Notebook Workflow    ${LIQ_InitialDrawdown_Window}    ${LIQ_InitialDrawdown_Tab}    ${LIQ_Drawdown_WorkflowItems}    Release 
     Release Cashflow Based on Remittance Instruction    &{ExcelPath}[Remittance_Instruction]    &{ExcelPath}[Borrower_ShortName]|&{ExcelPath}[Lender1_ShortName]|&{ExcelPath}[Lender2_ShortName]
-    Release Loan Drawdown
-    
-    ###Cashflow Notebook - Complete Cashflows###
-    Verify if Method has Remittance Instruction    &{ExcelPath}[Borrower_ShortName]    &{ExcelPath}[Remittance_Description]    &{ExcelPath}[Remittance_Instruction]
-    Verify if Method has Remittance Instruction    &{ExcelPath}[Lender1_ShortName]    &{ExcelPath}[Remittance2_Description]    &{ExcelPath}[Remittance2_Instruction]
-    Verify if Method has Remittance Instruction    &{ExcelPath}[Lender2_ShortName]    &{ExcelPath}[Remittance3_Description]    &{ExcelPath}[Remittance3_Instruction]
-    Verify if Status is set to Do It    &{ExcelPath}[Borrower_ShortName]  
-    Verify if Status is set to Do It    &{ExcelPath}[Lender1_ShortName]
-    Release Cashflow    &{ExcelPath}[Lender1_ShortName]    release
-    Navigate Notebook Workflow    ${LIQ_InitialDrawdown_Window}    ${LIQ_InitialDrawdown_Tab}    ${LIQ_Drawdown_WorkflowItems}    Release
-    
+    Navigate to Loan Drawdown Workflow and Proceed With Transaction    ${RELEASE_STATUS}
     Close All Windows on LIQ
     Logout from Loan IQ
     
 Pay Loan Outstanding Accrual Zero Cycle Due
     [Documentation]    This keyword update the PaidToDate value after Payment transaction has been made. 
-    ...    @author: sacuisia 02OCT2020    -initialCreate
+    ...    @author: sacuisia 02OCT2020	-initialCreate
+    ...	   @update: makcamps 25NOV2020	-added release cashflow, release, and closing liq windows steps
     [Arguments]    ${ExcelPath}    ${sCyclesForLoan}=None    
     
     ${CyclesForLoan}    Acquire Argument Value    ${sCyclesForLoan}
@@ -151,7 +142,8 @@ Pay Loan Outstanding Accrual Zero Cycle Due
     Navigate Transaction in WIP    Payments    Awaiting Approval    Interest Payment    &{ExcelPath}[Deal_Name]
     
     Approve Interest Payment
-    Release Interest Payment
+    Navigate Notebook Workflow    ${LIQ_Payment_Window}    ${LIQ_Payment_Tab}    ${LIQ_Payment_WorkflowItems}    Release Cashflows
+	Release Payment
     
     Launch Loan Notebook    &{ExcelPath}[Deal_Name]    &{ExcelPath}[Facility_Name]    &{ExcelPath}[Outstanding_Alias]
     
@@ -163,19 +155,24 @@ Pay Loan Outstanding Accrual Zero Cycle Due
     ${AccruedtoDateAmt}    Remove Comma and Convert to Number    ${AccruedtoDateAmt}
     Write Data To Excel    ComSee_SC2_Loan    Outstanding_AccruedInterest    ${rowid}    ${LoanAccruedtodateAmount}    ${ComSeeDataSet}
     
-    Navigate to Share Accrual Cycle    &{ExcelPath}[Host_Bank]
+    Navigate to Share Accrual Cycle    &{ExcelPath}[Lender1_ShortName]
     
     ${LoanCycleDueAmount}    Get Cycle Due Amount
+    ${LoanCycleDueAmount}    Remove comma and convert to number - Cycle Due    ${LoanCycleDueAmount}
     Write Data To Excel    ComSee_SC2_Loan    Outstanding_cycleDue    ${rowid}    ${LoanCycleDueAmount}    ${ComSeeDataSet}
     
     ${LoanPaidDueAmount}   Get PaidToDate   
+    ${LoanPaidDueAmount}    Remove comma and convert to number - Paid to Date    ${LoanPaidDueAmount}
     Write Data To Excel    ComSee_SC2_Loan   Outstanding_paidToDate    ${rowid}    ${LoanPaidDueAmount}    ${ComSeeDataSet}
     
+    Close All Windows on LIQ
  
 Write Loan Outstanding Accrual Non Zero Cycle
     [Documentation]    This test case writes the updated Loan Outstanding details after EOD for comsee use.
     ...    @author:    sacuisia    29SEPT2020    -InitialCreate
     [Arguments]    ${ExcelPath}
+    
+    Run Keyword And Continue On Failure    mx LoanIQ activate window    ${LIQ_DealSelect_Window}    60
     
     Launch Loan Notebook    &{ExcelPath}[Deal_Name]    &{ExcelPath}[Facility_Name]    &{ExcelPath}[Outstanding_Alias]
     
@@ -192,16 +189,19 @@ Write Loan Outstanding Accrual Non Zero Cycle
     Navigate to Share Accrual Cycle    &{ExcelPath}[Host_Bank]
     
     ${LoanCycleDueAmount}    Get Cycle Due Amount
+    ${LoanCycleDueAmount}    Remove comma and convert to number - Cycle Due    ${LoanCycleDueAmount}
     Write Data To Excel    ComSee_SC2_Loan    Outstanding_cycleDue    ${rowid}    ${LoanCycleDueAmount}    ${ComSeeDataSet}
     
-    ${LoanPaidDueAmount}   Get PaidToDate   
+    ${LoanPaidDueAmount}   Get PaidToDate    
+    ${LoanPaidDueAmount}    Remove comma and convert to number - Paid to Date    ${LoanPaidDueAmount}
     Write Data To Excel    ComSee_SC2_Loan   Outstanding_paidToDate    ${rowid}    ${LoanPaidDueAmount}    ${ComSeeDataSet}
     
    
     
 Write Loan Details for ComSee - Scenario 2
     [Documentation]    This test case writes the Outstanding(Loan) details for comsee use.
-    ...    @author: rtarayao    05SEP2019    - Initial create
+    ...    @author: rtarayao    05SEP2019    - Initial create\
+    ...    @update: songchan    17NOV2020    - Convert decimal 0.00 to integer 0 since payload returns integer value of 0 for LoanAccruedAmount
     [Arguments]    ${ExcelPath}
     ###LIQ login
     Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
@@ -256,6 +256,9 @@ Write Loan Details for ComSee - Scenario 2
     ${AccruedtoDateAmt}    Compute Total Accruals for Fee    ${TotalRowCount}    ${LIQ_Loan_Tab}    ${LIQ_Loan_AccrualTab_Cycles_Table}
     ${AccruedtoDateAmt}    Remove Comma and Convert to Number    ${AccruedtoDateAmt}
     Validate Accrued to Date Amount    ${AccruedtoDateAmt}    ${LoanAccruedtodateAmount}
+    ${LoanAccruedtodateAmount}    Run Keyword If    '${LoanAccruedtodateAmount}'=='0.00'    Set Variable    0
+    ...    ELSE    Set Variable    ${LoanAccruedtodateAmount}
+    Log    ${LoanAccruedtodateAmount}
     Write Data To Excel    ComSee_SC2_Loan    Outstanding_AccruedInterest    ${rowid}    ${LoanAccruedtodateAmount}    ${ComSeeDataSet}
 
     ###Get and Write Accrual Tab Details for Comsee
@@ -490,6 +493,7 @@ Write Loan Details for ComSee - Scenario 7
 Create Initial Loan Drawdown with Repricing - Scenario 7 ComSee
     [Documentation]    This keyword is used to create a Loan Drawdown without selecting a Payment Schedule.
     ...    @author: rtarayao    11SEP2019    - Duplicate of Scenario 7 from Functional Scenarios
+	...    @update: makcamps	25NOV2020	 - added condition for eu
     [Arguments]    ${ExcelPath}
     
     ###Facility###
@@ -522,7 +526,8 @@ Create Initial Loan Drawdown with Repricing - Scenario 7 ComSee
     Verify if Status is set to Do It    &{ExcelPath}[Borrower1_ShortName]  
  
     ##Get Transaction Amount for Cashflow###
-    ${HostBankShare}    Get Host Bank Cash in Cashflow
+    ${HostBankShare}    Run Keyword If    '&{ExcelPath}[Entity]'=='EU'    Get Host Bank Cash in Cashflow    &{ExcelPath}[Loan_Currency]
+    ...    ELSE    Get Host Bank Cash in Cashflow
     ${BorrowerTranAmount}    Get Transaction Amount in Cashflow    &{ExcelPath}[Borrower1_ShortName]
     ${ComputedHBTranAmount}    Compute Lender Share Transaction Amount    &{ExcelPath}[Loan_RequestedAmount]    &{ExcelPath}[HostBankSharePct]
     

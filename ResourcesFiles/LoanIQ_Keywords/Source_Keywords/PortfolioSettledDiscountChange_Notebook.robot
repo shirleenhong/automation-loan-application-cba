@@ -79,6 +79,7 @@ Update GLOffset Details
     [Documentation]    This keyword is used to input details to GLOffset details
     ...    @author: dahijara 26OCT2020
     ...    @update: dahijara    29OCT2020    - Added handling for warning messages when saving data.
+    ...    @update: mcastro     20NOV2020    - Update keyword used for selecting dealname in FHAD window
     [Arguments]    ${sGL_ShortName}    ${sGL_Offset_Type}    ${sAwaitingDispose}
     
     ###Pre-processing Keyword###
@@ -95,7 +96,7 @@ Update GLOffset Details
     Mx LoanIQ Select Combo Box Value    ${LIQ_DebitGLOffsetDetails_GLShortName}    ${GL_ShortName}
     Mx LoanIQ Click    ${LIQ_DebitGLOffsetDetails_WIPButton}
     Mx LoanIQ Activate Window    ${LIQ_FeesHeldAwaitingDispose_Window}
-    Mx LoanIQ Select Or DoubleClick In Javatree    ${LIQ_FeesHeldAwaitingDispose_List}    ${AwaitingDispose}%s
+    Mx LoanIQ Select Or Doubleclick In Tree By Text    ${LIQ_FeesHeldAwaitingDispose_List}    ${AwaitingDispose}%s
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/OffsetDetails
     Mx LoanIQ Click    ${LIQ_FeesHeldAwaitingDispose_Use_Button}
     mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}

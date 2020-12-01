@@ -14,7 +14,7 @@ Send FXRates GS Group Multiple Files
     ...    @update: nbautist    07OCT2020    - added argument to prerequisite;updated file paths and extension
     [Arguments]    ${ExcelPath}
     ###START OF PREREQUISITE###
-    # Login to Loan IQ    ${TL_USERNAME}    ${TL_PASSWORD}
+    Login to Loan IQ    ${TL_USERNAME}    ${TL_PASSWORD}
     ${fundingDeskStatus}    Get Funding Desk Status from Table Maintenance    &{ExcelPath}[FundingDesk_1]
     ${CSVFile}    Set Variable    &{ExcelPath}[InputGSFile]
     ${TransformedDataFile_FXRates}    Set Variable    &{ExcelPath}[InputFilePath]${TL_Transformed_Data_FXRates}

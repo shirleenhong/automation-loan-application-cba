@@ -267,6 +267,7 @@ Pay Line Fee Amount - Scenario 7 ComSee
 Create Cycle Share Adjustment for Fee Accrual - Scenario 7 ComSee
     [Documentation]    This keyword is for creating cycle share adjustment for Bilateral Deal (MTAM06B).
     ...    @author: cfrancis    28SEP2020    - Initial create
+    ...    @update: makcamps    20NOV2020    - added conversion to number for requested amount computation
     [Arguments]    ${ExcelPath}
    
     ###Launch Facility Notebook###
@@ -283,7 +284,10 @@ Create Cycle Share Adjustment for Fee Accrual - Scenario 7 ComSee
     
     ###Accrual Share Adjustment Notebook###
     Navigate Line Fee and Verify Accrual Share Adjustment Notebook    ${StartDate}    ${DealName}    ${FacilityName}    ${LineFee}    ${CycleDue}    ${ProjectedCycleDue}
-    ${RequestedAmount}    Evaluate    ${CycleDue} - 10
+    ${CycleDue}    Remove Comma and Evaluate to Number    ${CycleDue}
+    ${RequestedAmount}    Evaluate    ${CycleDue}-10
+    ${RequestedAmount}    Evaluate    "%.2f" % ${RequestedAmount}
+    ${RequestedAmount}    Convert Number With Comma Separators    ${RequestedAmount}
     Input Requested Amount, Effective Date, and Comment    ${RequestedAmount}    ${StartDate}     Adjustment
     Save the Requested Amount, Effective Date, and Comment    ${RequestedAmount}    ${StartDate}     Adjustment
     
@@ -307,6 +311,7 @@ Create Cycle Share Adjustment for Fee Accrual - Scenario 7 ComSee
 Create Payment Reversal - Scenario 7 ComSee
     [Documentation]    This keyword initiates payment reversal after Fee Payment is released.
     ...    @author: cfrancis    01OCT2020    - initial create
+    ...    @update: makcamps    17NOV2020    - removed extra release cashflow keyword
     [Arguments]    ${ExcelPath}
     
     ###Launch Facility Notebook###
@@ -329,8 +334,9 @@ Create Payment Reversal - Scenario 7 ComSee
     Verify if Status is set to Do It    ${Borrower}
     
     ###Get Transaction Amount for Cashflow###
-    ${HostBankSharePct}    Read Data From Excel    ComSee_SC7_OngoingFeePayment    HostBankSharePct    ${rowid}    ${ComSeeDataSet}  
-    ${HostBankShare}    Get Host Bank Cash in Cashflow
+    ${HostBankSharePct}    Read Data From Excel    ComSee_SC7_OngoingFeePayment    HostBankSharePct    ${rowid}    ${ComSeeDataSet}
+    ${HostBankShare}    Run Keyword If    '${ExcelPath}[Entity]'=='EU'    Get Host Bank Cash in Cashflow    &{ExcelPath}[Currency]
+    ...    ELSE    Get Host Bank Cash in Cashflow
     ${BorrowerTranAmount}    Get Transaction Amount in Cashflow    ${Borrower}
     ${ComputedHBTranAmount}    Compute Lender Share Transaction Amount    ${ProjectedCycleDue}    ${HostBankSharePct}
     
@@ -367,8 +373,7 @@ Create Payment Reversal - Scenario 7 ComSee
 
     ###Release Reverse Fee Payment###       
     Select Item in Work in Process    Payments    Awaiting Release Cashflows   Reverse Fee Payment     ${FacilityName}
-    Navigate Notebook Workflow    ${LIQ_ReverseFee_Window}    ${LIQ_LineFee_ReversePayment_Tab}    ${LIQ_LineFee_ReversePayment_WorkflowItems}    Release Cashflows   
-    Release Cashflow    ${Borrower}    release    
+    Navigate Notebook Workflow    ${LIQ_ReverseFee_Window}    ${LIQ_LineFee_ReversePayment_Tab}    ${LIQ_LineFee_ReversePayment_WorkflowItems}    Release Cashflows
     Release Reverse Fee Payment
     Close All Windows on LIQ
     Logout from Loan IQ

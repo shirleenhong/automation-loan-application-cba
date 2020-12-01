@@ -3,7 +3,6 @@ Resource    ../../../Configurations/LoanIQ_Import_File.robot
 Resource    ../../../Configurations/Party_Import_File.robot
 
 *** Keywords ***
-
 Login User to Party
     [Documentation]    This keyword used to launch browser and login user to Party app.
     ...    @author: jcdelacruz
@@ -65,7 +64,6 @@ Search Process in Party
     Display Message    Successfully searched ${sProcess_Name}
     Capture Page Screenshot
 
-
 Validate Page Screen is Displayed
     [Documentation]    This keyword is used to validate page screen if successfully displayed.
     ...    @author: amansuet    20MAR2020    - initial create
@@ -85,6 +83,21 @@ Generate Unique Number or Text for Party
     [Arguments]    ${sName_Prefix}=None
     
     ${Result_In_Numbers}    Get Current Date    result_format=%H1%M%S  
+
+    ${Generated_Value}    Run Keyword If    '${sName_Prefix}'!='None'    Catenate    SEPARATOR=    ${sName_Prefix}    ${Result_In_Numbers}
+    ...    ELSE IF    '${sName_Prefix}'=='None'    Set Variable    ${Result_In_Numbers}
+
+    [Return]    ${Generated_Value}
+    
+Generate Unique Number or Text with Format for Party 
+    [Documentation]    This keyword generates a unique number or text for Party app based on a specified format. If no format is specified , a default format is used.
+    ...    Example: 
+    ...    Format=%Y%m%d%H%M%S is used as a suffix for bulk file upload files, i.e., BulkPartyUpload_20201116103024.xml
+    ...    Format=%H8%M%S is used as a unique identifier for IDs, i.e., Party ID = 1183605
+    ...    @author: nbautist    4NOV2020    - initial create
+    [Arguments]    ${sName_Prefix}=None    ${Format}=%y%m%d%f
+    
+    ${Result_In_Numbers}    Get Current Date    result_format=${Format}
 
     ${Generated_Value}    Run Keyword If    '${sName_Prefix}'!='None'    Catenate    SEPARATOR=    ${sName_Prefix}    ${Result_In_Numbers}
     ...    ELSE IF    '${sName_Prefix}'=='None'    Set Variable    ${Result_In_Numbers}
@@ -147,3 +160,9 @@ Verify Zone Visibility In Zone Dropdown List
     Run Keyword If    ${status}==${bShouldBeVisible} and ${bShouldBeVisible}==${True}    Log    Correct. ${sZone} is visibile in ${PARTY_ZONEANDBRANCHSELECTION_PAGETITLE}.
     ...    ELSE IF    ${status}==${bShouldBeVisible} and ${bShouldBeVisible}==${False}    Log    Correct. ${sZone} is not visibile in ${PARTY_ZONEANDBRANCHSELECTION_PAGETITLE}.
     ...    ELSE    Fail   Zone changes were not applied correctly.
+
+Close Active Tab
+    [Documentation]    This keyword is used to close the active tab in Fusion Party.
+    ...    @author: nbautist    03NOV2020    - initial create
+    
+    Mx Click Element    ${Party_CloseTab_Button}

@@ -706,19 +706,23 @@ Navigate to Existing Loan
 	...    @update: amansuet    01JUN2020    - updated to align with automation standards, added take screenshot and added keyword pre-processing
 	...    @update: sahalder    26JUN2020    - moved the keyword from LoanDrawdown_Notebook to Loan_Notebook
 	...    @update: clanding    13AUG2020    - updated hard coded values to global variables
-    [Arguments]    ${sOutstanding_Type}    ${sLoan_FacilityName}    ${sLoan_Alias}
+	...    @update: fluberio    12NOV2020    - added Search By Alis upon Searching Existing Loan
+    ...    @update: mcastro     18NOV2020    - Fixed typo error in keyword pre-processing steps
+    [Arguments]    ${sOutstanding_Type}    ${sLoan_FacilityName}    ${sLoan_Alias}    ${sSearch_By}=None
     
     ### Keyword Pre-processing ###
     ${Outstanding_Type}    Acquire Argument Value    ${sOutstanding_Type}
     ${Loan_FacilityName}    Acquire Argument Value    ${sLoan_FacilityName}
     ${Loan_Alias}    Acquire Argument Value    ${sLoan_Alias}
+    ${Search_By}    Acquire Argument Value    ${sSearch_By}
 
     Mx LoanIQ Activate Window    ${LIQ_OutstandingSelect_Window}
     Mx LoanIQ Set    ${LIQ_OutstandingSelect_Existing_RadioButton}    ${ON}
     Mx LoanIQ Select Combo Box Value    ${LIQ_OutstandingSelect_Type_Dropdown}    ${Outstanding_Type}
-    Mx LoanIQ Select Combo Box Value    ${LIQ_OutstandingSelect_Facility_Dropdown}    ${Loan_FacilityName}
+    Run Keyword If    '${Search_By}'=='Alias'    Run Keywords    Mx LoanIQ Select Combo Box Value    ${LIQ_OutstandingSelect_SearchBy_Dropdown}    ${Search_By}
+    ...    AND    mx LoanIQ enter    ${LIQ_OutstandingSelect_Alias_TextField}    ${Loan_Alias}
+    ...    ELSE    Mx LoanIQ Select Combo Box Value    ${LIQ_OutstandingSelect_Facility_Dropdown}    ${Loan_FacilityName}
     Mx LoanIQ Click    ${LIQ_OutstandingSelect_Search_Button}
-    Sleep    2s
     Mx LoanIQ Activate Window    ${LIQ_ExistingOutstandings_Window}
     Mx LoanIQ Maximize    ${LIQ_ExistingOutstandings_Window}    
     Mx LoanIQ Select Or DoubleClick In Javatree    ${LIQ_ExistingOutstandings_Table}    ${Loan_Alias}%d

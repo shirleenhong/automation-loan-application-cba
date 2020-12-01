@@ -9,6 +9,7 @@ Send FXRates GS Group Multiple Files for FIFO
     ...    @update: mnanquil    11APR2019    - added Login to LoanIQ keyword.
     ...    @update: cfrancis    08AUG2019    - modified keywords to fit scenario and documentation
     ...    @update: jdelacru    26OCT2020    - used templateFilePath variable for the location of temaplate files
+    ...    @update: ccarriedo   19NOV2020    - changed ${GSFILENAME_WITHTIMESTAMP} to ${ARCHIVE_GSFILENAME_LIST} in the after EOD workaround and added more comments
     [Arguments]    ${ExcelPath}
     ###START OF PREREQUISITE###
     Login to Loan IQ    ${TL_USERNAME}    ${TL_PASSWORD}
@@ -34,10 +35,11 @@ Send FXRates GS Group Multiple Files for FIFO
     ###END OF EOD###
     
     ### Below commented script is a workaround while EOD - Daily is not yet integrated in this highlevel keyword
-    # ${GSFilename_ArchiveList}    Create List
-    # Append To List    ${GSFilename_ArchiveList}    FINASTRA_CCB_FX_NY_FX05_1_1603333807956_1.csv
-    # Append To List    ${GSFilename_ArchiveList}    FINASTRA_CCB_FX_NY_FX05_2_1603333814075_1.csv
-    # Set Global Variable    ${GSFILENAME_WITHTIMESTAMP}    ${GSFilename_ArchiveList}
+    ### Change the csv files below after EOD that were used after the SFTP step
+    # ${ARCHIVE_GSFILENAME_LIST}    Create List
+    # Append To List    ${ARCHIVE_GSFILENAME_LIST}    FINASTRA_CCB_FX_NY_FX05_1_1603333807956_1.csv
+    # Append To List    ${ARCHIVE_GSFILENAME_LIST}    FINASTRA_CCB_FX_NY_FX05_2_1603333814075_1.csv
+    # Set Global Variable    ${ARCHIVE_GSFILENAME_LIST}
     
     Run Keyword And Continue On Failure    Validate Multiple Files for Success on TL FX Rates in FFC    &{ExcelPath}[InputFilePath]    &{ExcelPath}[InputJson]    &{ExcelPath}[Expected_wsFinalLIQDestination]    &{ExcelPath}[OutputFilePath]    &{ExcelPath}[OutputFFCResponse]    &{ExcelPath}[Actual_wsFinalLIQDestination]
     ...    ${dataset_path}&{ExcelPath}[InputFilePath]${TL_Transformed_Data_XMLFXRates}    ${fundingDeskStatus}    &{ExcelPath}[Actual_CustomCBAPush_Response]    &{ExcelPath}[Actual_ResponseMechanism]    &{ExcelPath}[InputGSFile]    &{ExcelPath}[FundingDesk_1]

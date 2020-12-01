@@ -242,9 +242,11 @@ Create Quick Repricing for Syndicated Deal - Secondary Sale
     Logout from Loan IQ
     Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
 
-Create Comprehensive Repricing for RPA Scenario
-    [Documentation]    This is a high-level keyword to Create Comprehensive Repricing for RPA Scenario
-    ...    @author: mcastro    03NOV2020    - Initial Create    
+Create Comprehensive Repricing for RPA Deal
+    [Documentation]    This is a high-level keyword to Create Comprehensive Repricing for RPA Deal
+    ...    @author: mcastro    03NOV2020    - Initial Create  
+    ...    @update: mcastro    18NOV2020    - Added Send F/X rate workflow for scenario 3, Fixed duplicate login  
+    ...    @update: mcastro    19NOV2020    - Removed validation of remittance method for lenders since this is not needed
     [Arguments]    ${ExcelPath}
 
     ###Login to Original User###
@@ -276,8 +278,6 @@ Create Comprehensive Repricing for RPA Scenario
     ###Cashflows - Create Cashflows###
     Navigate to Create Cashflow for Loan Repricing
     Verify if Method has Remittance Instruction    &{ExcelPath}[Borrower_ShortName]    &{ExcelPath}[Remittance_Description]    &{ExcelPath}[Remittance_Instruction]
-    Verify if Method has Remittance Instruction    &{ExcelPath}[Lender1_ShortName]    &{ExcelPath}[Remittance1_Description]    &{ExcelPath}[Remittance1_Instruction]
-    Verify if Method has Remittance Instruction    &{ExcelPath}[Lender2_ShortName]    &{ExcelPath}[Remittance2_Description]    &{ExcelPath}[Remittance2_Instruction]
     Verify if Status is set to Do It    &{ExcelPath}[Borrower_ShortName]  
     
     ### GL Entries ###
@@ -298,6 +298,8 @@ Create Comprehensive Repricing for RPA Scenario
     Navigate to Loan Repricing Workflow and Proceed With Transaction    ${APPROVAL_STATUS}
     Send to Rate Setting Approval
     Set Base Rate Details    &{ExcelPath}[Base_Rate]
+    Run Keyword If    '${SCENARIO}'=='3' and '${rowid}'=='2'    Run Keywords    Navigate to Loan Repricing Workflow and Proceed With Transaction    ${SET_FX_RATE_TRANSACTION}
+    ...    AND    Complete Set FX Rate
     Send to Rate Approval
 
     ### Loan Repricing: Rate Approval, Release Cashflows and Release Loan Repricing ###
@@ -317,11 +319,13 @@ Create Comprehensive Repricing for RPA Scenario
 
     ###Login to Original User###
     Logout from Loan IQ
-    Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}    Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
+    Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
 
 Complete Comprehensive Repricing, Principal Payment and Interest Payment
     [Documentation]    This is a high-level keyword to Completion of Comprehensive Repricing, Principal Payment and Interest Payment for RPA Deal
     ...    @author: dahijara    04NOV2020    - Initial create
+    ...    @update: dahijara    19NOV2020    - Added additional argument for Release Cashflow Based on Remittance Instruction
+    ...    @update: dahijara    20NOV2020    - Updated keyword for Set Items to Do It and GL Navigation.
     [Arguments]    ${ExcelPath}
     
     ###LIQ Window###
@@ -351,10 +355,10 @@ Complete Comprehensive Repricing, Principal Payment and Interest Payment
     ### Create Cashflow ###
     Navigate to Loan Repricing Workflow and Proceed With Transaction    Create Cashflows
     Verify if Method has Remittance Instruction    &{ExcelPath}[Borrower1_ShortName]    &{ExcelPath}[Borrower1_RemittanceDescription]    &{ExcelPath}[Borrower1_RemittanceInstruction]
-    Verify if Status is set to Do It    &{ExcelPath}[Borrower1_ShortName]
+    Set All Items to Do It
 
     ### GL Entries ###
-    Navigate to GL Entries
+    Navigate to GL Entries from Loan Rerpricing Notebook
     Close GL Entries and Cashflow Window
     Navigate to Loan Repricing Workflow and Proceed With Transaction    ${SEND_TO_APPROVAL_STATUS}
     
@@ -376,7 +380,7 @@ Complete Comprehensive Repricing, Principal Payment and Interest Payment
     Navigate to Loan Repricing Workflow and Proceed With Transaction    ${RATE_APPROVAL_STATUS}
     
     ###Release###
-    Release Cashflow Based on Remittance Instruction    &{ExcelPath}[Borrower1_RemittanceInstruction]    &{ExcelPath}[Borrower1_ShortName]
+    Release Cashflow Based on Remittance Instruction    &{ExcelPath}[Borrower1_RemittanceInstruction]    &{ExcelPath}[Borrower1_ShortName]    sNavigateToWorkflow=${LOAN_REPRICING}
     Navigate to Loan Repricing Workflow and Proceed With Transaction    ${RELEASE_STATUS}
     
     Close All Windows on LIQ

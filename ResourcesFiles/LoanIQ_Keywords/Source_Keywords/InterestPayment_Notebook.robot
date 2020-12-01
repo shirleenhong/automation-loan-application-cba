@@ -169,13 +169,11 @@ Get Loan Interest Cycle Dates
     ${UI_InterestCycleStartDate}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_Loan_CyclesforLoan_List}    ${CycleNumber}%Start Date%test  
     
 Get Notice Details in Loan Notebook 
-    [Documentation]    This keyword returns Pricing Option and All In Rate in Loan Notebook
+    [Documentation]    This keyword returns All In Rate in Loan Notebook
     ...    @author:    makcamps    03NOV2020    Initial Create
-    Mx LoanIQ Select Window Tab    ${LIQ_Loan_Tab}    General
-    ${PricingOption}    Mx LoanIQ Get Data    ${LIQ_Loan_PricingOption_Text}    text%PricingOption
     Mx LoanIQ Select Window Tab    ${LIQ_Loan_Tab}    Rates
     ${AllInRate}    Mx LoanIQ Get Data    ${LIQ_Loan_AllInRate}    text%AllInRate
-    [Return]    ${PricingOption}    ${AllInRate}
+    [Return]    ${AllInRate}
 
 Get Notice Details in Interest Payment Notebook 
     [Documentation]    This keyword returns Effective Date, All In Rate Amount, and Currency in Interest Payment Notebook
@@ -845,7 +843,9 @@ Release Payment
     [Documentation]    This keyword is used to Release the Payment made.
     ...    @author: rtarayao
     ...    @update: cfrancis    - added clicking question button for confirming release
-   
+    ...	   @update: makcamps	- added closing of cashflow if open
+
+    mx LoanIQ click element if present    ${LIQ_Cashflows_OK_Button}
     mx LoanIQ activate    ${LIQ_Payment_Window}
     Mx LoanIQ Verify Text In Javatree    ${LIQ_Payment_WorkflowItems}    Release%yes
     Mx LoanIQ DoubleClick    ${LIQ_Payment_WorkflowItems}    Release

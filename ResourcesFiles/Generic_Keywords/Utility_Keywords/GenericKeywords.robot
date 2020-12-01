@@ -279,6 +279,20 @@ Compare Two Arguments
     Run Keyword And Continue On Failure    Should Be Equal   ${value_from_sheet}    ${value_from_ui}        
     Log    ${value_from_sheet} - This is the data retrieved from Excel Sheet
     Log    ${value_from_ui} - This is the data saved in the UI/application
+    
+Compare Two Normalized Arguments
+    [Documentation]    This keyword compares two normalized arguments from web app and excel if they are equal. Both expected and actual text values are
+    ...    both converted to upper case before comparison.
+    ...    @author: nbautist    16NOV2020    - initial create
+    [Arguments]    ${value_from_sheet}    ${value_from_ui}
+    
+    Wait Until Page Contains Element    ${value_from_ui}    
+    ${value_from_ui}    Get Value    ${value_from_ui}
+    ${value_from_ui}    Strip String    ${value_from_ui}
+    Log    ${value_from_ui}
+    ${value_from_sheet}    Convert To Uppercase    ${value_from_sheet}
+    ${value_from_ui}    Convert To Uppercase    ${value_from_ui}
+    Run Keyword And Continue On Failure    Should Be Equal   ${value_from_sheet}    ${value_from_ui}
             
 Generate Name Test Data
     [Documentation]    This keyword generates value that can be added to a variable to make it unique.
@@ -728,6 +742,10 @@ Navigate Notebook Workflow
     ...    @update: aramos      30SEP2020    Updated mx LOANIQ click element if present LIQ_Breakfunding_Yes_Button
     ...    @update: aramos      05OCT2020    Updated to insert new code for Transaction - Release Cashflows
     ...    @update: dahijara    09OCT2020    Added screenshot
+    ...    @update: fluberio    12NOV2020    Added click element if present to handle EU scenario with multiple pricing options
+    ...    @update: dahijara    19NOV2020    Added click element if present to handle RPA scenario for Loan repricing release
+    ...    @update: dahijara    20NOV2020    Replaced Mx Click    ${LIQ_Cashflows_MarkSelectedItemForRelease_Button} to Mx LoanIQ select    ${LIQ_Cashflow_Options_MarkAllRelease}
+    ...                                      Inserted Release Cashflow condition under Run Keyword If statement.
     [Arguments]    ${sNotebook_Locator}    ${sNotebookTab_Locator}    ${sNotebookWorkflow_Locator}    ${sTransaction}    
 
     ###Pre-processing Keyword##
@@ -742,13 +760,15 @@ Navigate Notebook Workflow
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/NotebookWorkflow
     Mx LoanIQ Select Or DoubleClick In Javatree    ${NotebookWorkflow_Locator}    ${Transaction}%d
     Validate if Question or Warning Message is Displayed
+    mx LoanIQ click element if present    ${LIQ_Question_Yes_Button}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/NotebookWorkflow
-    Run Keyword if     '${Transaction}'=='Release Cashflows'    Run Keywords    Mx Click    ${LIQ_Cashflows_MarkSelectedItemForRelease_Button}
-    ...   AND    Mx Click    ${LIQ_Cashflows_OK_Button}
-    ...   AND     mx LoanIQ click element if present    ${LIQ_Question_Yes_Button}
     Run Keyword If    '${Transaction}'=='Release'    Run Keywords
-    ...    Repeat Keyword    2 times    mx LoanIQ click element if present    ${LIQ_BreakFunding_Yes_Button}
+    ...    Repeat Keyword    3 times    mx LoanIQ click element if present    ${LIQ_BreakFunding_Yes_Button}
     ...    AND    mx LoanIQ click element if present    ${LIQ_Information_OK_Button}
+    ...    AND    mx LoanIQ click element if present    ${LIQ_Cashflows_OK_Button}
+    ...    ELSE IF    '${Transaction}'=='Release Cashflows'    Run Keywords    Mx LoanIQ select    ${LIQ_Cashflow_Options_MarkAllRelease}
+    ...    AND    Mx Click    ${LIQ_Cashflows_OK_Button}
+    ...    AND     mx LoanIQ click element if present    ${LIQ_Question_Yes_Button}
     ...    ELSE IF    '${Transaction}'=='Close'    mx LoanIQ click element if present    ${LIQ_Information_OK_Button}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/NotebookWorkflow
         
@@ -1893,7 +1913,8 @@ Read Data From Excel
     [Documentation]    This keyword will be used for dynamically reading of Excel File supported by Python 3
     ...    @author: ritragel    25OCT2019    Initial Create
     ...    @update: hstone      16MAR2020    Code Optimization: Replaced Keyw
-    [Arguments]    ${sSheetName}    ${sColumnName}    ${rowid}   ${sFilePath}=${ExcelPath}    ${readAllData}=N    ${bTestCaseColumn}=True    ${sTestCaseColReference}=rowid
+    ...    @update: shirhong    17NOV2020    Update Read Data From Cell: add Header Index for reading diff rows. Default is 1
+    [Arguments]    ${sSheetName}    ${sColumnName}    ${rowid}   ${sFilePath}=${ExcelPath}    ${readAllData}=N    ${bTestCaseColumn}=True    ${sTestCaseColReference}=rowid    ${iHeaderIndex}=1
     ### Open Excel
     Open Excel Document    ${sFilePath}    0
     
@@ -1901,7 +1922,7 @@ Read Data From Excel
 
     ### Read Values
     ${sData}    Run Keyword If    '${readAllData}'=='Y'    Read Data From All Column Rows    ${sSheetName}    ${sColumnName}
-    ...    ELSE IF    '${readAllData}'=='N'    Read Data From Cell    ${sSheetName}    ${sColumnName}    ${rowid}    ${bTestCaseColumn}    ${sTestCaseColReference}
+    ...    ELSE IF    '${readAllData}'=='N'    Read Data From Cell    ${sSheetName}    ${sColumnName}    ${rowid}    ${bTestCaseColumn}    ${sTestCaseColReference}    ${iHeaderIndex}
 
     Log    Excel Date Read from Excel : '${sData}'
     ### Close File and Return Value
@@ -1922,11 +1943,13 @@ Read Data From All Column Rows
 Read Data From Cell
     [Documentation]    This keyword will be used for reading data from single excel cell.
     ...    @author: hstone    16MAR2020    Initial Create
-    [Arguments]    ${sSheetName}    ${sColumnName}    ${rowid}    ${bTestCaseColumn}    ${sTestCaseColReference}=None
+    ...    @author: shirhong    17NOV2020    Add condition for reading of diff rows not equal to first row
+    [Arguments]    ${sSheetName}    ${sColumnName}    ${rowid}    ${bTestCaseColumn}    ${sTestCaseColReference}=None    ${iHeaderIndex}=1
 
     Log    (Read Data From Cell) sTestCaseColReference = '${sTestCaseColReference}'
 
     ${TestCaseHeader_Index}    ${ColumnHeader_Index}    Run Keyword If    '${sTestCaseColReference}'=='None'    Get Column Header Index    ${sSheetName}    ${sColumnName}    ${bTestCaseColumn}
+    ...    ELSE IF    '${iHeaderIndex}'!='1'    Get Column Header Index Using Dynamic Header    ${sSheetName}    ${sColumnName}    ${bTestCaseColumn}    ${sTestCaseColReference}    ${iHeaderIndex}
     ...    ELSE    Get Column Header Index    ${sSheetName}    ${sColumnName}    ${bTestCaseColumn}    ${sTestCaseColReference}
     ${RowId_Index}    Get Index of a Row Value using a Reference Header Index    ${sSheetName}    ${rowid}    ${TestCaseHeader_Index}
     ${Cell_Data}    Read Excel Cell    ${RowId_Index}    ${ColumnHeader_Index}    ${sSheetName}
@@ -2656,3 +2679,49 @@ Get the Row Id for Given Pricing Option
     ...    ELSE IF    '${sPricing_Option}' == 'GBP LIBOR Option'    Set Variable    4
     
     [Return]    ${rowId}
+ 
+Return Given Number with Specific Decimal Places without Rounding
+    [Documentation]    This keyword return the given number with the given number of Decimal Places without roundinf off the number
+    ...    @author: fluberio    12MAY2020    - initial create
+    [Arguments]     ${sNumberToBeConverted}    ${sNumberOfDecimalPlaces}
+    ${sContainer}    Convert To String    ${sNumberToBeConverted}
+    ${sContainer}    Remove String    ${sContainer}    ,
+    ${Container_List}    Split String    ${sContainer}    .
+    ${sWholeNum_Value}    Set Variable    @{Container_List}[0]
+    ${sDecimal_Value}    Set Variable    @{Container_List}[1]
+    
+    ${sDecimal_Value}    Get Substring    ${sDecimal_Value}    0    ${sNumberOfDecimalPlaces}
+    ${result}    Evaluate    ${sWholeNum_Value}.${sDecimal_Value}
+
+    [Return]    ${result}
+    
+Get Column Header Index Using Dynamic Header
+    [Documentation]    This keyword is used to get the Column Header Index of Test_Case and given Column Name at the Excel Sheet using dynamic header or row. Default is 1.
+    ...    @author: shirhong    17NOV2020    Initial Create
+    [Arguments]    ${sSheetName}    ${sColumnName}    ${bTestCaseColumn}=False    ${sTestCaseColReference}=Test_Case    ${iHeaderIndex}=1
+
+    Log    (Get Column Header Index) sTestCaseColReference = '${sTestCaseColReference}'
+
+    ${DataColumn_List}    Read Excel Row    ${iHeaderIndex}    sheet_name=${sSheetName}
+    Log    Data Set Sheet Name: '${sSheetName}'
+    Log    Data Set Sheet Column Names: '${DataColumn_List}'
+
+    ### Get Test Case Header Count/Index ###
+    ${TestCaseHeaderName_Index}    Get Index From List    ${DataColumn_List}    ${sTestCaseColReference}
+    Log    Fetched Test Case Column Index : '${TestCaseHeaderName_Index}'
+
+    ### Set Default Test Case Column Header Index
+    ${TestCaseHeaderName_Index}    Run Keyword If    ${TestCaseHeaderName_Index}<0 or '${bTestCaseColumn}'=='False'   Set Variable    2
+    ### Set Test Case Column Header Index Based on Actual Index on Excel Data Column Name List
+    ...    ELSE    Evaluate    ${TestCaseHeaderName_Index}+1
+    Log    Evaluated Test Case Column Index : '${TestCaseHeaderName_Index}'
+
+    ### Get Target Column Value Index ###
+    ${ColumnName_Index}    Get Index From List    ${DataColumn_List}    ${sColumnName}
+    Log    Column Name Index : '${ColumnName_Index}'
+
+    ### Verify if Target Column Value can be found on the data column list acquired
+    Run Keyword If    ${ColumnName_Index}<0    Fail    '${sColumnName}' is not found at '${DataColumn_List}' Data Column Values.
+    ${ColumnName_Index}    Evaluate    ${ColumnName_Index}+1
+
+    [Return]    ${TestCaseHeaderName_Index}    ${ColumnName_Index}

@@ -132,7 +132,8 @@ Pay Commitment Fee Amount
     Run Keyword If    '${SCENARIO}'=='6'    Write Data To Excel    SERV29_PaymentFees    Computed_ProjectedCycleDue    &{ExcelPath}[rowid]    ${ProjectedCycleDue}  
 
     ###Cycles for Commitment Fee###
-    Select Cycle Fee Payment
+    Run Keyword If    '${ExcelPath}[Entity]'=='EU' and '${SCENARIO}'=='1'    Select Cycle Due Fee Payment
+    ...    ELSE    Select Cycle Fee Payment
     
     ###Ongoing Fee Payment Notebook - General Tab### 
     Enter Effective Date for Ongoing Fee Payment    ${SystemDate}    ${ProjectedCycleDue}
@@ -180,8 +181,7 @@ Pay Commitment Fee Amount
     Login to Loan IQ    ${MANAGER_USERNAME}    ${MANAGER_PASSWORD}
     ###Generation of Intent Notice is skipped - Customer Notice Method must be updated###
     Select Item in Work in Process    Payments    Release Cashflows    Ongoing Fee Payment     &{ExcelPath}[Facility_Name]
-    Run Keyword If    '${ExcelPath}[Entity]'=='EU'    Run Keywords    Generate Intent Notices for Ongoing Fee Payment
-    ...    AND    Mx LoanIQ Close    ${LIQ_Notice_PaymentIntentNotice_Window}
+    Run Keyword If    '${ExcelPath}[Entity]'=='EU'    Generate Intent Notices for Ongoing Fee Payment    
     Navigate to Payment Workflow and Proceed With Transaction    Release Cashflows
     Release Ongoing Fee Payment
     
@@ -716,5 +716,81 @@ Interest Capitalization Payment
     #Workflow Tab - Release###   
     Release Payment
     Close All Windows on LIQ
-       
+
+Update Usage Fee Cycle for RPA Deal
+    [Documentation]    This keyword will update the existing commitment fee cycle in RPA Deal
+    ...    @author: mcastro    18NOV2020    - Initial Create
+    [Arguments]    ${ExcelPath}
+
+    ###LoanIQ Window###
+    Logout from Loan IQ
+    Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
+    
+    ###Loan IQ Desktop###
+    ${SystemDate}    Get System Date
+    Open Existing Deal    &{ExcelPath}[Deal_Name]
+    
+    ###Deal Notebook - Summary Tab###  
+    ${Fee_Alias}    Open Ongoing Fee from Deal Notebook    &{ExcelPath}[Facility_Name]    &{ExcelPath}[Fee_Type1]
+    Write Data To Excel    SERV29_PaymentFees    Fee_Alias    ${rowid}    ${Fee_Alias}
+    
+    ###Usage Fee Notebook - General Tab###  
+    Update Cycle on Usage Fee   &{ExcelPath}[Fee_Cycle] 
+    Run Online Acrual to Usage Fee
+    
+    ###Loan IQ Desktop###
+    Close All Windows on LIQ
    
+Pay Usage Fee for RPA Deal
+    [Documentation]    This keyword is used for usage fee payment
+    ...    @author: dahijara    19NOV2020    - initial create
+    ...    @update: mcastro     20NOV2020    - Added condition for specific steps for Scenario 5
+    ...    @update: dahijara    20NOV2020    - Added condition for specific steps for Scenario 4
+    [Arguments]    ${ExcelPath} 
+
+    ### LIQ Window ###
+    Logout from Loan IQ
+    Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
+
+    ${EffectiveDate}    Get System Date
+    ### Ongoing Fee Payment ###
+    Navigate to Facility Notebook    &{ExcelPath}[Deal_Name]    &{ExcelPath}[Facility_Name] 
+    Navigate to Existing Ongoing Fee Notebook    &{ExcelPath}[Fee_Type1]
+    ${CycleDue}    Initiate Usage Fee Payment    &{ExcelPath}[Cycle_Number]    ${EffectiveDate}
+    Write Data To Excel    SERV29_PaymentFees    RequestedAmount1    ${rowid}    ${CycleDue}
+
+    ### Create Cashflows ###
+    Navigate to Payment Workflow and Proceed With Transaction    ${CREATE_CASHFLOWS_TYPE}
+    Verify if Method has Remittance Instruction    &{ExcelPath}[Borrower1_ShortName]    &{ExcelPath}[Borrower_RIDescription]    &{ExcelPath}[Remittance_Instruction]
+    Verify if Method has Remittance Instruction    &{ExcelPath}[Lender1_ShortName]    &{ExcelPath}[Lender1_RIDescription]    &{ExcelPath}[Remittance_Instruction]
+    Run Keyword If    '${SCENARIO}'=='4' or '${SCENARIO}'=='5'    Verify if Method has Remittance Instruction    &{ExcelPath}[Lender2_ShortName]    &{ExcelPath}[Lender2_RIDescription]    &{ExcelPath}[Remittance_Instruction]
+    Run Keyword If    '${SCENARIO}'=='5'    Run Keywords    Verify if Method has Remittance Instruction    &{ExcelPath}[Lender3_ShortName]    &{ExcelPath}[Lender3_RIDescription]    &{ExcelPath}[Remittance_Instruction]
+    ...    AND    Verify if Method has Remittance Instruction    &{ExcelPath}[Lender4_ShortName]    &{ExcelPath}[Lender4_RIDescription]    &{ExcelPath}[Remittance_Instruction]
+    Set All Items to Do It
+
+    ### Sending Payment For Approval ###
+    Navigate to Payment Workflow and Proceed With Transaction    ${SEND_TO_APPROVAL_STATUS}
+    Close All Windows on LIQ
+
+    ###Loan IQ Desktop###
+    Logout from Loan IQ
+    Login to Loan IQ    ${SUPERVISOR_USERNAME}    ${SUPERVISOR_PASSWORD}
+    
+    ### Payment Approval ####
+    Navigate Transaction in WIP     ${PAYMENTS_TRANSACTION}    ${AWAITING_APPROVAL_STATUS}    ${ONGOING_FEE_PAYMENT_TRANSACTION}    &{ExcelPath}[Facility_Name]
+    Navigate to Payment Workflow and Proceed With Transaction    ${APPROVAL_STATUS}
+    Close All Windows on LIQ
+    
+    ###Loan IQ Desktop###
+    Logout from Loan IQ
+    Login to Loan IQ    ${MANAGER_USERNAME}    ${MANAGER_PASSWORD}
+
+    ### Release Payment ###
+    Navigate Transaction in WIP     ${PAYMENTS_TRANSACTION}    ${AWAITING_RELEASE_STATUS}    ${ONGOING_FEE_PAYMENT_TRANSACTION}    &{ExcelPath}[Facility_Name]
+    Release Cashflow Based on Remittance Instruction    &{ExcelPath}[Remittance_Instruction]    &{ExcelPath}[Borrower1_ShortName]    sNavigateToWorkflow=${PAYMENT_TRANSACTION}
+    Navigate to Payment Workflow and Proceed With Transaction    ${RELEASE_STATUS}
+    Validate Release of Usage Fee Payment
+    Close All Windows on LIQ
+   
+    Logout from Loan IQ
+    Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}

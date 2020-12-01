@@ -8,6 +8,7 @@ Complete Internal Participation
     [Documentation]    This keyword is used to Complete Internal Participation For A Closed Deal with 3 facilities
     ...    @author:    mcastro    14OCT2020    initial create 
     ...    @update:    mcastro    10NOV2020    Updated steps to read and write data from this business process keyword, deleted unecessary validation
+    ...    @update:    mcastro    17NOV2020    Removed unecessary validation
     [Arguments]    ${ExcelPath}
     Logout from Loan IQ
     Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
@@ -44,7 +45,6 @@ Complete Internal Participation
     
     ### Pending Participation Buy Workflow ###
     Complete Portfolio Allocations Workflow for Pending Participation Buy    &{ExcelPath}[Buyer_Portfolio]    &{ExcelPath}[Buyer_ExpenseCode]    &{ExcelPath}[Buyer_Branch]    ${Facility1}|${Facility2}|${Facility3}
-    Validate Fee Decisions For All Facilities
     
     ### Send To Approval ###
     Send to Approval Internal Participation Buy
@@ -147,7 +147,8 @@ Complete External Participation
 Complete External Participation without Premiun/Discount
     [Documentation]    This keyword is used to Complete an external participation with no premium or discount for a closed deal
     ...    This keyword completes 2 external participations
-    ...    @author:    dahijara    09NOV2020    initial create 
+    ...    @author: dahijara    09NOV2020    initial create 
+    ...    @update: dahijara    17NOV2020    updated keyword name for Navigate Portfolio Allocations Workflow for Pending Participation
     [Arguments]    ${ExcelPath}
 
     Logout from Loan IQ
@@ -172,7 +173,7 @@ Complete External Participation without Premiun/Discount
 
     ### Circle Notebook - Workflow Tab ###
     Complete Circling for Pending Participation Sell    &{ExcelPath}[Expected_CloseDate]  
-    Navigate Portfolio Allocations Workflow for Pending Participation Sell
+    Navigate Portfolio Allocations Workflow for Pending Participation
     Populate Portfolio Allocations For A Facility    &{ExcelPath}[Facility_Name]
     Close Portfolio Allocation Notebook
     Send to Approval Internal Participation Sell
@@ -196,7 +197,7 @@ Complete External Participation without Premiun/Discount
 
     ### Circle Notebook - Workflow Tab ###
     Complete Circling for Pending Participation Sell    &{ExcelPath}[Expected_CloseDate]  
-    Navigate Portfolio Allocations Workflow for Pending Participation Sell
+    Navigate Portfolio Allocations Workflow for Pending Participation
     Populate Portfolio Allocations For A Facility    &{ExcelPath}[Facility_Name]
     Close Portfolio Allocation Notebook
     Send to Approval Internal Participation Sell
@@ -233,3 +234,77 @@ Complete External Participation without Premiun/Discount
     Navigate to Participation Workflow and Proceed With Transaction    ${AWAITING_CLOSE_TRANSACTION}    &{ExcelPath}[Buyer_Lender]    ${CLOSE_WORKFLOW}    &{ExcelPath}[Expected_CloseDate]    &{ExcelPath}[Cust_Portfolio]
     ### Lender 2 ###
     Navigate to Participation Workflow and Proceed With Transaction    ${AWAITING_CLOSE_TRANSACTION}    &{ExcelPath}[Buyer_Lender2]    ${CLOSE_WORKFLOW}    &{ExcelPath}[Expected_CloseDate]    &{ExcelPath}[Cust_Portfolio]
+
+Complete Internal Participation without Premiun/Discount
+    [Documentation]    This keyword is used to Complete an internal participation with no premium or discount for a closed deal
+    ...    This keyword completes 1 internal participation.
+    ...    @author: dahijara    18NOV2020    initial create
+    [Arguments]    ${ExcelPath}
+    Logout from Loan IQ
+    Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
+    ${Expected_CloseDate}    Get System Date
+    Search for Deal    &{ExcelPath}[Deal_Name]
+
+    ### Complete Participation ###
+    Launch Circle Select    &{ExcelPath}[CircleSelection_Transaction]
+    Create New Internal Participation    &{ExcelPath}[LenderShare_Type]    &{ExcelPath}[Buyer_Lender]    &{ExcelPath}[Seller_LegalEntity]    &{ExcelPath}[Buyer_RiskBook]    &{ExcelPath}[Seller_RiskBook]
+    Populate Pending Participation Sell    &{ExcelPath}[Pct_of_Deal]    &{ExcelPath}[Int_Fee]    &{ExcelPath}[Buy_Sell_Price]
+    ${Buy_Sell_Amount}    Validate Displayed Sell Amount From Participation Sell
+    Write Data To Excel    TRPO06_InternalParticipation    Buy_Sell_Amount    ${rowid}    ${Buy_Sell_Amount}
+    Validate Buy/Sell Price For a Facility    &{ExcelPath}[Facility_Name]    &{ExcelPath}[Buy_Sell_Price]
+
+    ### Complete Amts/Debts tab ###
+    Populate Pending Participation Amts/Debts    ${Expected_CloseDate}    ${Buy_Sell_Amount}
+    
+    ### Complete Contacts Tab ###
+    Add Contacts For Participation Sell    &{ExcelPath}[Buyer_Lender]    &{ExcelPath}[Seller_LegalEntity]
+
+    ### Circle Notebook - Workflow Tab ###
+    Complete Circling for Pending Participation Sell    ${Expected_CloseDate}
+    Navigate Portfolio Allocations Workflow for Pending Participation
+    Populate Portfolio Allocations For A Facility    &{ExcelPath}[Facility_Name]
+    Close Portfolio Allocation Notebook
+
+    ### Participation Buy Window ###
+    Navigate To Participation Buy
+    Validate Pending Participation Buy    &{ExcelPath}[Buyer_Lender]    ${Buy_Sell_Amount}    ${Expected_CloseDate}
+    
+    ### Pending Participation Buy Workflow ###
+    Complete Portfolio Allocations Workflow for Pending Participation Buy    &{ExcelPath}[Buyer_Portfolio]    &{ExcelPath}[Buyer_ExpenseCode]    &{ExcelPath}[Buyer_Branch]    &{ExcelPath}[Facility_Name]
+    
+    ### Send To Approval ###
+    Send to Approval Internal Participation Buy
+    Close All Windows on LIQ    
+    
+    ### Internal Participation Buy Approval ###
+    Logout from Loan IQ
+    Login to Loan IQ    ${SUPERVISOR_USERNAME}    ${SUPERVISOR_PASSWORD}
+    Approval For Internal Participation Buy    &{ExcelPath}[Deal_Name]
+    
+    ### Internal Participation Sell Approval ###
+    Logout from Loan IQ
+    Login to Loan IQ    ${MANAGER_USERNAME}    ${MANAGER_PASSWORD}
+    Approval For Internal Participation Sell    &{ExcelPath}[Deal_Name]
+    Close All Windows on LIQ
+
+    ### Send to Settlement Approval For Participation ###
+    Logout from Loan IQ
+    Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
+    Funding Memo for Pending Participation    &{ExcelPath}[Deal_Name]
+    Send to Settlement Approval For Pending Participation    ${ExcelPath}[Deal_Name]  
+   
+    ### Settlement Approval Participation Buy ###
+    Logout from Loan IQ
+    Login to Loan IQ    ${SUPERVISOR_USERNAME}    ${SUPERVISOR_PASSWORD}
+    Settlement Approval For Internal Participation Buy    &{ExcelPath}[Deal_Name]
+    
+    ### Settlement Approval For Participation Sell ###
+    Logout from Loan IQ
+    Login to Loan IQ    ${MANAGER_USERNAME}    ${MANAGER_PASSWORD}
+    Settlement Approval For Internal Participation Sell    ${ExcelPath}[Deal_Name]
+    
+    ### Close Transaction ###
+    Logout from Loan IQ
+    Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
+    Close For Internal Participation    &{ExcelPath}[Deal_Name]    ${Expected_CloseDate} 
+    Validate GL Entries For Internal Participation    &{ExcelPath}[Buyer_Lender]    &{ExcelPath}[Seller_LegalEntity]

@@ -109,6 +109,7 @@ Variables    ../ObjectMap/LoanIQ_Locators/LIQ_UnscheduledCommitmentDecrease_Loca
 Variables    ../ObjectMap/LoanIQ_Locators/LIQ_UnscheduledCommitmentIncrease_Locators.py
 Variables    ../ObjectMap/LoanIQ_Locators/LIQ_UnscheduledPrincipalPayment_Locators.py
 Variables    ../ObjectMap/LoanIQ_Locators/LIQ_UpfrontFeePayment_Locators.py
+Variables    ../ObjectMap/LoanIQ_Locators/LIQ_UsageFee_Locators.py
 Variables    ../ObjectMap/LoanIQ_Locators/LIQ_User_Administration_Locators.py
 Variables    ../ObjectMap/LoanIQ_Locators/LIQ_WorkInProcess_Locators.py
 Variables    ../ObjectMap/LoanIQ_Locators/LIQ_UpfrontFeeDistribution_Locators.py
@@ -197,12 +198,14 @@ Resource    ../ResourcesFiles/LoanIQ_Keywords/BusinessProcess_Keywords/Miscellan
 Resource    ../ResourcesFiles/LoanIQ_Keywords/BusinessProcess_Keywords/Miscellaneous/MTAM14_ManualCashflow_Outgoing_NewOrExistingWIPItem.robot
 Resource    ../ResourcesFiles/LoanIQ_Keywords/BusinessProcess_Keywords/Notices/Notice_UpfrontFeePayment.robot
 Resource    ../ResourcesFiles/LoanIQ_Keywords/BusinessProcess_Keywords/Notices/Notice_InterestPayment.robot
+Resource    ../ResourcesFiles/LoanIQ_Keywords/BusinessProcess_Keywords/Notices/Notice_PrincipalPayment.robot
 Resource    ../ResourcesFiles/LoanIQ_Keywords/BusinessProcess_Keywords/Payments/SERV18_ScheduledPrincipalPayment.robot
 Resource    ../ResourcesFiles/LoanIQ_Keywords/BusinessProcess_Keywords/Payments/SERV19_UnscheduledPrincipalPaymentNoSchedule.robot
 Resource    ../ResourcesFiles/LoanIQ_Keywords/BusinessProcess_Keywords/Payments/SERV20_UnschedulePrincipalPayment.robot
 Resource    ../ResourcesFiles/LoanIQ_Keywords/BusinessProcess_Keywords/Payments/SERV21_InterestPayment.robot
 Resource    ../ResourcesFiles/LoanIQ_Keywords/BusinessProcess_Keywords/Payments/SERV22_InterestPaymentNonAgent.robot
 Resource    ../ResourcesFiles/LoanIQ_Keywords/BusinessProcess_Keywords/Payments/SERV23_PaperClipPayment.robot
+Resource    ../ResourcesFiles/LoanIQ_Keywords/BusinessProcess_Keywords/PortfolioManagement/TRPO05_ParticipationBuyback.robot
 Resource    ../ResourcesFiles/LoanIQ_Keywords/BusinessProcess_Keywords/PortfolioManagement/TRPO06_InternalParticipation.robot
 Resource    ../ResourcesFiles/LoanIQ_Keywords/BusinessProcess_Keywords/PortfolioManagement/TRPO11_PortfolioTransfer.robot
 Resource    ../ResourcesFiles/LoanIQ_Keywords/BusinessProcess_Keywords/PortfolioManagement/TRPO12_PortfolioSettledDiscountChange.robot
@@ -376,11 +379,14 @@ Resource    ../ResourcesFiles/LoanIQ_Keywords/Source_Keywords/UnscheduledCommitm
 Resource    ../ResourcesFiles/LoanIQ_Keywords/Source_Keywords/UnscheduledPrincipalPayment_Notebook.robot
 Resource    ../ResourcesFiles/LoanIQ_Keywords/Source_Keywords/UnscheduledCommitmentDecrease_Notebook.robot
 Resource    ../ResourcesFiles/LoanIQ_Keywords/Source_Keywords/UpfrontFeePayment_Notebook.robot
+Resource    ../ResourcesFiles/LoanIQ_Keywords/Source_Keywords/UsageFee_Notebook.robot
 Resource    ../ResourcesFiles/LoanIQ_Keywords/Source_Keywords/UserAdministration_Notebook.robot
 Resource    ../ResourcesFiles/LoanIQ_Keywords/Source_Keywords/UpfrontFeeDistribution_Notebook.robot
 
 
 ### CBA UAT Keywords ###
+Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/UAT_TL_Keywords/UAT_TL_BASE.robot
+
 # ### UAT Deal 1 ###
 Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/CBA_UAT01_DealTemplate/01CommitmentFeeNotebook.robot
 Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/CBA_UAT01_DealTemplate/01DealBorrower.robot
@@ -433,3 +439,15 @@ Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/CBA_UAT05_DealTemplat
 Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/CBA_UAT05_DealTemplate/05DealNotebook.robot
 Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/CBA_UAT05_DealTemplate/05FacilityNotebook.robot
 Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/CBA_UAT05_DealTemplate/05Outstandings.robot
+
+### Deal CH EDU BILAT ###
+Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/Deal_CH_EDU_BILAT/Deal_Borrower_CH_EDU_BILAT.robot
+
+### NEW UAT Deal LBT BILAT ###
+Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/Deal_LBT_BILAT/Deal_Borrower_LBT_BILAT.robot
+
+### NEW UAT Deal PIM Future BILAT ###
+Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/Deal_PIM_Future_BILAT/Deal_Borrower_PIM_Future_BILAT.robot
+
+### NEW UAT Deal TL ###
+Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/UAT_TL_Keywords/TL_FX_Rates.robot

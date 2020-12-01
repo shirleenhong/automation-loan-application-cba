@@ -3,7 +3,7 @@ APIDataSet = "C:\\Git_Evergreen\\fms_cba\\DataSet\\Integration_DataSet\\API\\API
 ExcelPath_API_temp = 'C:\\Git_Evergreen\\fms_cba\\DataSet\\Integration_DataSet\\API\\temp.xlsx'
 ExcelPath = "C:\\Git_Evergreen\\fms_cba\DataSet\\LoanIQ_DataSet\\EVG_PTYLIQ04_BaselineNonAgentSyndication.xlsx"
 dataset_path = "C:\\Git_Evergreen\\fms_cba"
-CBAUAT_ExcelPath = "C:\\Git_Evergreen\\fms_cba\\DataSet\\CBAUATDeal_DataSet\\EVG_CBAUAT03.xlsx"
+CBAUAT_ExcelPath = "C:\\Git_Evergreen\\fms_cba\\DataSet\\NewUATDeals_DataSet\\Deal_CH_EDU_BILAT.xlsx"
 TL_DATASET = "C:\\Git_Evergreen\\fms_cba\\DataSet\\Integration_DataSet\\TL\\TL_Data_Set_AU.xlsx"
 SAPWUL_DATASET = "C:\\Git_evergreen\\evergreen_projects\\CBA_Evergreen\\DataSet\\Downstream_DataSet\\SAPWUL\\SAPWUL_Data_Set.xlsx"
 ComSeeDataSet = "C:\\Git_Evergreen\\fms_cba\DataSet\\Integration_DataSet\\CommSee\\COMMSEE_Data_Set.xlsx"
@@ -14,6 +14,7 @@ DWELIQFunc_Dataset = "C:\\Git_Evergreen\\fms_cba\\DataSet\\Integration_DataSet\\
 INDUSTRYSECTOR_LIST = "C:\\Git_Evergreen\\fms_cba\\DataSet\\Party_DataSet\\Industry_Sector\\Industry_Sector_Values.txt"
 BUSINESSACTIVITY_DIRECTORY = "C:\\Git_Evergreen\\fms_cba\\DataSet\\Party_DataSet\\Business_Activity"
 DNR_DATASET = "C:\\Git_Evergreen\\fms_cba\\DataSet\\Integration_DataSet\\Extracts\\DNR\\DNR_Dataset_AU.xlsx"
+NEWUAT_TL_DATASET = "C:\\Git_Evergreen\\fms_cba\\DataSet\\NewUATDeals_DataSet\\Transformation_Layer\\TL_Data_Set_New_UAT.xlsx"
 DNA_DATASET = "C:\\Git_Evergreen\\fms_cba\\DataSet\\Integration_DataSet\\Extracts\\DNA\\EVG_DNA_TestData.xlsx"
 
 SERVER = "http://mancsleverg0007"
@@ -291,6 +292,22 @@ FBTI_PASSWORD_AUTHORISER = 'Password15'
 
 IDC_DOCUMENT_UPLOAD_PATH = 'C:\\Git_Evergreen\\evergreen_projects\\CBA_Evergreen\\DataSet\\FBTI_DataSet\\Uploads\\'
 IDC_DOCUMENT_DOWNLOAD_PATH = 'C:\\Git_Evergreen\\evergreen_projects\\CBA_Evergreen\\DataSet\\FBTI_DataSet\\Downloads\\'
+
+### COGNOS ###
+COGNOS_SERVER = 'mancsweverg0006'
+COGNOS_PORT = '9305'
+COGNOS_URL = '/bi/?perspective=home'
+COGNOS_USERNAME = "CGLINP01"
+COGNOS_PASSWORD = "Finastra2020"
+COGNOS_NAMESPACE = 'FinastraRoot'
+CBA_ALERTS_REPORTFILE = "Alerts_Report_V1.3.4"
+CBA_COMMENTS_REPORTFILE = "Comments_Report_v5"
+CBA_CALENDAR_REPORTFILE = "Calendar Report_v1.0"
+CBA_LIQUIDITY_REPORTFILE= "CBA Liquidity Report"
+CBA_CASHOUT_REPORTFILE = "AHBCO_001_Report"
+CBA_DE_REPORTFILE= "Agency Host Bank DE Extract"
+CBA_LIQPERFORMANCE_REPORTFILE = "LIQFacilityPerformance_V3.0"
+CBA_LOANSACCRUALS_REPORTFILE = "LoansAndAccrualsReport_V2.2.1"
 
 import os
 project_path = os.path.dirname(os.path.realpath(__file__)).replace("MDM_ConfigFile","")
