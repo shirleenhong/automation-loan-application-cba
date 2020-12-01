@@ -644,7 +644,7 @@ Write Loan Details for ComSee with Repricing - Scenario 7
 Create Loan Repricing for ComSee - Scenario 7
     [Documentation]    This will serve as a High Level keyword for the creation of Comprehensive Loan Repricing.
     ...    @author: cfrancis    18OCT2020    - Initial Create
-    ...    @update: makcamps    01DEC2020    - remove create cashflow keyword
+    ...    @update: makcamps    01DEC2020    - added condition for creating cashflows for eu
     [Arguments]    ${ExcelPath}
     
     ###Deal Notebook###
