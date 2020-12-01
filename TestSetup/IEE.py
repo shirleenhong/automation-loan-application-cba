@@ -15,6 +15,7 @@ INDUSTRYSECTOR_LIST = "C:\\Git_Evergreen\\fms_cba\\DataSet\\Party_DataSet\\Indus
 BUSINESSACTIVITY_DIRECTORY = "C:\\Git_Evergreen\\fms_cba\\DataSet\\Party_DataSet\\Business_Activity"
 DNR_DATASET = "C:\\Git_Evergreen\\fms_cba\\DataSet\\Integration_DataSet\\Extracts\\DNR\\DNR_Dataset_AU.xlsx"
 NEWUAT_TL_DATASET = "C:\\Git_Evergreen\\fms_cba\\DataSet\\NewUATDeals_DataSet\\Transformation_Layer\\TL_Data_Set_New_UAT.xlsx"
+DNA_DATASET = "C:\\Git_Evergreen\\fms_cba\\DataSet\\Integration_DataSet\\Extracts\\DNA\\EVG_DNA_TestData.xlsx"
 
 SERVER = "http://mancsleverg0007"
 PORT = "9090"
@@ -123,6 +124,7 @@ DBHOST_LIQ = 'MANCSLEVERG0023'
 DBPORT_LIQ = '1539'
 DBUR_LIQ = 'jdbc:oracle:thin:@//mancsleverg0023:1539/MLLIQ.misys.global.ad'
 LIQ7474_USER = 'LIQ7512UPG'
+LIQDBSCHEMA = 'LIQ7512UPG'
 
 ###AU User###
 BFBANKFUSION_USER = 'AUBANKFUSION'
@@ -246,6 +248,8 @@ DNA_PORT = '22'
 DNA_SERVER_USER = 'sftpuser2'
 DNA_SERVER_PASSWORD = 'luckyroll76'
 DNA_EXTRACTION_AREA_PATH = '/evgdata/STREAMSETS/workspace/extraction_area/COMRLENDING/'
+DAT_FILE_SERVER = 'MANCSWEVERG0006'
+DNA_DAT_FILE_EXTRACTION_AREA_PATH = 'out'
 DNA_CCB_LIQ_FILENAME = 'CCB_LIQ_'
 DNA_DATAASSURANCE_FILENAME = 'DATAASSURANCE_'
 DNA_DAT_EXT = '.DAT'
