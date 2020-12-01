@@ -675,10 +675,13 @@ Create Loan Repricing for ComSee - Scenario 7
     Validate Loan Repricing Effective Date    ${Effective_Date}
     Validate Loan Repricing New Outstanding Amount    ${New_Outstanding}    ${Loan_Alias}    &{ExcelPath}[Rollover_RequestedAmount]
 
+    ###Create Cashflow###
+    Run Keyword If    '${ENTITY}'!='EU'    Navigate Notebook Workflow    ${LIQ_LoanRepricingForDeal_Window}    ${LIQ_LoanRepricingForDeal_Workflow_Tab}    ${LIQ_LoanRepricingForDeal_Workflow_JavaTree}    Create Cashflows
+    
     ###Send to Approval###
     Navigate Notebook Workflow    ${LIQ_LoanRepricingForDeal_Window}    ${LIQ_LoanRepricingForDeal_Workflow_Tab}    ${LIQ_LoanRepricingForDeal_Workflow_JavaTree}    Send to Approval
-
     Logout from Loan IQ
+    
     Login to Loan IQ    ${SUPERVISOR_USERNAME}    ${SUPERVISOR_PASSWORD}
     Navigate Transaction in WIP    Outstandings    Awaiting Generate Rate Setting Notices    Loan Repricing    &{ExcelPath}[Deal_Name]
     Navigate Notebook Workflow    ${LIQ_LoanRepricingForDeal_Window}    ${LIQ_LoanRepricingForDeal_Workflow_Tab}    ${LIQ_LoanRepricingForDeal_Workflow_JavaTree}    Approval
