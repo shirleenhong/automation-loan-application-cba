@@ -327,7 +327,7 @@ Verify DAT File Control Value and CSV Files are Matched
          ...    ELSE IF    '${Control_Matrix}'=='SUM_TRANSACTION_AMOUNT'    Access GL Entry CSV File for Transaction Amount and Return Sum of Amount    ${sDWE_Extract_Path}    ${sZone}    ${sBus_Date}    ${Expected_Currency}    ${sDelimiter}
          ...    ELSE IF    '${Control_Matrix}'=='TOTAL_ACTIVE_DEAL_BORROWERS'    Access Deal and Borrower CSV Files and Return Sum    ${sDWE_Extract_Path}    ${sZone}    ${sBus_Date}    ${sDelimiter}
          ...    ELSE IF    '${Control_Matrix}'=='TOTAL_ACTIVE_DEAL_COUNT'    Access Deal CSV File and Return Sum    ${sDWE_Extract_Path}    ${sZone}    ${sBus_Date}    ${sBranch_Code}    ${sDelimiter}
-         ...    ELSE    Log    Control Matrix '${Control_Matrix}' is not yet handled.    level=WARN
+         ...    ELSE    Log    Control Matrix '${Control_Matrix}' and Currency '${Expected_Currency}' is not yet handled.    level=WARN
     \    Continue For Loop If    '${CSV_Control_Value}'=='None'
     \    
     \    ${CSV_Control_Value}    Run Keyword If    '${CSV_Control_Value}'=='None'    Set Variable    0
@@ -340,5 +340,5 @@ Verify DAT File Control Value and CSV Files are Matched
 	\    ${DAT_File_ControlValue}    Evaluate    "%.0f" % (@{DAT_File_Line_Content_List}[${CONTROL_VALUE_Index}])
     \    
     \    ${IsEqual}    Run Keyword And Return Status    Should Be Equal As Numbers    ${DAT_File_ControlValue}    ${CSV_Control_Value}
-    \    Run Keyword If    ${IsEqual}==${True}    Log    Control Matrix '${Control_Matrix}' - DAT File Control Value: '${DAT_File_ControlValue}' is equal to CSV Control Value: '${CSV_Control_Value}'
-         ...    ELSE    Run Keyword and Continue On Failure    FAIL    Control Matrix '${Control_Matrix}' - DAT File Control Value: '${DAT_File_ControlValue}' is NOT equal to CSV Control Value: '${CSV_Control_Value}'
+    \    Run Keyword If    ${IsEqual}==${True}    Log    Control Matrix '${Control_Matrix}' and Currency '${Expected_Currency}'. DAT File Control Value: '${DAT_File_ControlValue}' is equal to CSV Control Value: '${CSV_Control_Value}'
+         ...    ELSE    Run Keyword and Continue On Failure    FAIL    Control Matrix '${Control_Matrix}' and Currency '${Expected_Currency}'. DAT File Control Value: '${DAT_File_ControlValue}' is NOT equal to CSV Control Value: '${CSV_Control_Value}'
