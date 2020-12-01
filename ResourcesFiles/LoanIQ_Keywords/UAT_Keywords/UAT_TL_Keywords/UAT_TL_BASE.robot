@@ -2,12 +2,9 @@
 Resource    ../../../../Configurations/LoanIQ_Import_File.robot
 Resource    ../../../../Configurations/Party_Import_File.robot
 
-*** Variables ***
-${SCENARIO}
-
 *** Keywords ***
 
-Send a Valid GS File for Base Rates
+Load Base Rate for UAT Deal 27DEC2019
     [Documentation]    Used to send a valid Golden Source file to SFTP site. Then validate if GS file is processed and moved to Archive folder.
     ...    Then validate in LoanIQ if Base Rate Code is updated correctly.
     ...    @author: dahijara    26NOV2020    - initial create

@@ -1,8 +1,8 @@
 *** Settings ***
 Resource    ../../../Configurations/LoanIQ_Import_File.robot
 *** Variables ***
-${rowid}    1
+${rowid}    1-4
 
 *** Test Cases ***
 Load Base Rate 
-    Mx Execute Template With Multiple Data    Send a Valid GS File for Base Rates    ${NEWUAT_TL_DATASET}    1   BaseRate_Fields
+    Mx Execute Template With Multiple Data    Load Base Rate for UAT Deal 27DEC2019    ${NEWUAT_TL_DATASET}    ${rowid}    BaseRate_Fields
