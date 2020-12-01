@@ -1,6 +1,5 @@
 *** Settings ***
 Resource    ../../../../../Configurations/Integration_Import_File.robot
-Test Teardown    Close All Connections
 
 *** Test Cases ***
 

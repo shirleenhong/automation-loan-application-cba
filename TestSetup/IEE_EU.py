@@ -12,6 +12,8 @@ PTY_DATASET = "C:\\Git_Evergreen\\fms_cba\\DataSet\\Party_DataSet\\PTY_DataSet_E
 INDUSTRYSECTOR_LIST = "C:\\Git_Evergreen\\fms_cba\\DataSet\\Party_DataSet\\Industry_Sector\\Industry_Sector_Values.txt"
 BUSINESSACTIVITY_DIRECTORY = "C:\\Git_Evergreen\\fms_cba\\DataSet\\Party_DataSet\\Business_Activity"
 DNR_DATASET = "C:\\Git_Evergreen\\fms_cba\\DataSet\\Integration_DataSet\\Extracts\\DNR\\DNR_Dataset_EU.xlsx"
+DWE_DATASET = 'C:\\Git_Evergreen\\fms_cba\\DataSet\\Integration_DataSet\Extracts\\DWE_LIQ\\EVG_DWE_LIQEXTRACT_TestData.xlsx'
+DNA_DATASET = "C:\\Git_Evergreen\\fms_cba\\DataSet\\Integration_DataSet\\Extracts\\DNA\\EVG_DNA_TestData_EU.xlsx"
 
 SERVER = "http://mancsleverg0007"
 PORT = "9090"
@@ -107,6 +109,7 @@ DBHOST_LIQ = 'MANCSLEVERG0023'
 DBPORT_LIQ = '1539'
 DBUR_LIQ = 'jdbc:oracle:thin:@//mancsleverg0023:1539/MLLIQ.misys.global.ad'
 LIQ7474_USER = 'LIQ7512UPG'
+LIQDBSCHEMA = 'LIQ7512UPG'
 
 ###EU User###
 BFBANKFUSION_USER = 'EUBANKFUSION'
@@ -209,9 +212,40 @@ DNA_PORT = '22'
 DNA_SERVER_USER = 'sftpuser2'
 DNA_SERVER_PASSWORD = 'luckyroll76'
 DNA_EXTRACTION_AREA_PATH = '/evgdata/STREAMSETS/workspace/extraction_area/COMRLENDING/'
+DAT_FILE_SERVER = 'MANCSWEVERG0006'
+DNA_DAT_FILE_EXTRACTION_AREA_PATH = 'out'
 DNA_CCB_LIQ_FILENAME = 'CCB_LIQ_'
 DNA_DATAASSURANCE_FILENAME = 'DATAASSURANCE_'
 DNA_DAT_EXT = '.DAT'
+
+### DWE ###
+DWE_SERVER = 'mancsleverg0007'
+DWE_SERVER_LIQ = 'mancsleverg0005'
+DWE_PORT = '22'
+DWE_SERVER_USER = 'sftpuser'
+DWE_SERVER_PASSWORD = 't3stOnly?'
+DWE_LANDING_AREA_PATH = '/evgdata/misys/loaniq/server/data/release/'
+DWE_EXTRACTION_PATH = '/evgdata/STREAMSETS/workspace/extraction_area/COMRLENDING/'
+DWE_DATASET = 'C:\\Git_Evergreen\\fms_cba\\DataSet\\Integration_DataSet\Extracts\\DWE_LIQ\\EVG_DWE_LIQEXTRACT_TestData.xlsx'
+DWE_EXCEL_DATASET = 'C:\\Git_Evergreen\\fms_cba\\DataSet\\Integration_DataSet\Extracts\\DWE_LIQ\\EVG_DWE_LIQEXTRACT_TestData.xlsx'
+DWE_TABLE_LIST = 'C:\\Git_Evergreen\\fms_cba\\DataSet\\Integration_DataSet\Extracts\\DWE_LIQ\\DWE_Table.txt'
+DWE_LIQ_USER = 'INPCHER'
+DWE_LIQ_PASSWORD = 'password'
+DWE_BATCH_NET = 'TEST_DE'
+DWE_DECRYPT_TOOL_PATH = 'C:\\Git_Evergreen\\fms_cba\\DataSet\\Integration_DataSet\Extracts\\DWE_LIQ\\Decryptor_Tool'
+DWE_EXTRACTION_AREA_PATH = '/evgdata/STREAMSETS/workspace/extraction_area/COMRLENDING/'
+DWE_DECRYPTOR_JAR = 'Decryptor-1.0.0-jar-with-dependencies.jar'
+DWE_CSV_FILES_COUNT = '186'
+DWE_MANIFEST_FILE_FIELDLIST = 'C:\\Git_Evergreen\\fms_cba\\DataSet\\Integration_DataSet\Extracts\\DWE_LIQ\\Manifest_Fields.txt'
+DWE_DECRYPTION_PART1 = 'C:/Git_Evergreen/fms_cba/DataSet/Integration_DataSet/Extracts/DWE_LIQ/Decryptor_Tool/DWE_DECRYPTION_PART1.vbs'
+DWE_DECRYPTION_PART2 = 'C:/Git_Evergreen/fms_cba/DataSet/Integration_DataSet/Extracts/DWE_LIQ/Decryptor_Tool/DWE_DECRYPTION_PART2.vbs'
+DWE_DECRYPTION_PART3 = 'C:/Git_Evergreen/fms_cba/DataSet/Integration_DataSet/Extracts/DWE_LIQ/Decryptor_Tool/DWE_DECRYPTION_PART3.vbs'
+DWE_LIQ_EXTRACT_PATH = 'C:\\Git_Evergreen\\fms_cba\\DataSet\\Integration_DataSet\Extracts\\DWE_LIQ\\DWE_LIQ_Extracts\\'
+DWE_PGP_SECRET_KEY = 'secret.skr'
+DWE_PASSPHRASE = 'oracle'
+DWE_TAR_GZ_EXT = '.tar.gz'
+DWE_TAR_GZ_GPG_EXT = '.tar.gz.gpg'
+DWE_CCB_LIQ_ZONE_FILENAME = 'CCB_LIQ_'
 
 ### COGNOS ###
 COGNOS_SERVER = 'mancsweverg0006'
