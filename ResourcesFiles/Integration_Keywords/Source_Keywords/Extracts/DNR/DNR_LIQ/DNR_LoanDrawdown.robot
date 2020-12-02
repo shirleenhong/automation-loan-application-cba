@@ -226,4 +226,33 @@ Write Loan Details from Facility for DNR
     Write Data To Excel    SC1_LoanDrawdown    Facility_Name    ${TestCase_Name}    &{ExcelPath}[Facility_Name]    ${DNR_DATASET}    bTestCaseColumn=True
     Write Data To Excel    SC1_LoanDrawdown    Loan_FacilityName    ${TestCase_Name}    &{ExcelPath}[Facility_Name]    ${DNR_DATASET}    bTestCaseColumn=True
     Write Data To Excel    SC1_LoanDrawdown   Loan_MaturityDate    ${TestCase_Name}     &{ExcelPath}[Facility_MaturityDate]    ${DNR_DATASET}    bTestCaseColumn=True
+
+Get Loan Details and Write in DNR Dataset for Alerts and Comments
+    [Documentation]    This keyword is used to get details for each report and write in dataset.
+    ...    @author: clanding    01DECV2020    - initial create
+    [Arguments]    ${ExcelPath}
+    
+    Open Existing Deal    &{ExcelPath}[Deal_Name]
+    ${TrackingNumber}    Get Deal Tracking Number
+    ${FName_UI}    ${LName_UI}    Get First Name of a User    &{ExcelPath}[User_ID]
+    
+    ### Writing for Comments Report ###
+    Write Data To Excel    CMMNT    Deal_Name    CMMNT_009    &{ExcelPath}[Deal_Name]    ${DNR_DATASET}    bTestCaseColumn=True
+    Write Data To Excel    CMMNT    Deal_Tracking_Number    CMMNT_009    ${TrackingNumber}    ${DNR_DATASET}    bTestCaseColumn=True
+    Write Data To Excel    CMMNT    Alias_Number    CMMNT_009    &{ExcelPath}[Loan_Alias]    ${DNR_DATASET}    bTestCaseColumn=True
+    Write Data To Excel    CMMNT    Comment_Heading    CMMNT_009    &{ExcelPath}[Comments_Subject]    ${DNR_DATASET}    bTestCaseColumn=True
+    Write Data To Excel    CMMNT    Comment_Detail    CMMNT_009    &{ExcelPath}[Comments_Details]    ${DNR_DATASET}    bTestCaseColumn=True
+    Write Data To Excel    CMMNT    User_ID    CMMNT_009    &{ExcelPath}[User_ID]    ${DNR_DATASET}    bTestCaseColumn=True
+    Write Data To Excel    CMMNT    Date_Added_Amended    CMMNT_009    &{ExcelPath}[Comments_DateAddedAmended]    ${DNR_DATASET}    bTestCaseColumn=True
+
+    ### Writing for Alerts Report ###
+    Write Data To Excel    ALERT    Deal_Name    ALERT_009    &{ExcelPath}[Deal_Name]    ${DNR_DATASET}    bTestCaseColumn=True
+    Write Data To Excel    ALERT    Deal_Tracking_Number    ALERT_009    ${TrackingNumber}    ${DNR_DATASET}    bTestCaseColumn=True
+    Write Data To Excel    ALERT    Alias_Number    ALERT_009    &{ExcelPath}[Loan_Alias]    ${DNR_DATASET}    bTestCaseColumn=True
+    Write Data To Excel    ALERT    Alert_Heading    ALERT_009    &{ExcelPath}[Alerts_ShortDescription]    ${DNR_DATASET}    bTestCaseColumn=True
+    Write Data To Excel    ALERT    Alert_Content    ALERT_009    &{ExcelPath}[Alerts_Details]    ${DNR_DATASET}    bTestCaseColumn=True
+    Write Data To Excel    ALERT    User_Name    ALERT_009    ${FName_UI}${SPACE}${LName_UI}    ${DNR_DATASET}    bTestCaseColumn=True
+    Write Data To Excel    ALERT    Date_Added_Amended    ALERT_009    &{ExcelPath}[Alerts_DateAddedAmended]    ${DNR_DATASET}    bTestCaseColumn=True
+
+    Close All Windows on LIQ
     
