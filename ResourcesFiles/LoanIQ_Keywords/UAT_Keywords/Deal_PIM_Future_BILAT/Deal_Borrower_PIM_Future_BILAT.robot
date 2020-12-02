@@ -60,6 +60,7 @@ Create Deal Borrower in Quick Party Onboarding for PIM Future BILAT
 Search Customer and Complete its Borrower Profile in LIQ for PIM Future BILAT
     [Documentation]    This keyword searches a customer and complete its Borrower Profile creation.
     ...    @author: mcastro     24NOV2020    - Initial Create
+    ...    @update: mcastro     02DEC2020    - Added updating of Servicing group Alias
     [Arguments]    ${ExcelPath}	
     ### Login To LIQ ###
     Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
@@ -135,7 +136,7 @@ Search Customer and Complete its Borrower Profile in LIQ for PIM Future BILAT
     Logout from Loan IQ
     Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
 
-    ### Searche Customer ### 	
+    ### Search Customer ### 	
     Search Customer    &{ExcelPath}[Customer_Search]    &{ExcelPath}[LIQCustomer_ID]    &{ExcelPath}[LIQCustomer_ShortName]
     Switch Customer Notebook to Update Mode    
     Access Remittance List upon Login    &{ExcelPath}[Profile_Type]    &{ExcelPath}[Customer_Location]
@@ -144,10 +145,10 @@ Search Customer and Complete its Borrower Profile in LIQ for PIM Future BILAT
     
     ### Add Servicing Group ### 
     Add Servicing Groups Details    &{ExcelPath}[LIQCustomer_ShortName]    &{ExcelPath}[Group_Contact]   &{ExcelPath}[Contact_LastName]  
-    Add Remittance Instruction to Servicing Group    &{ExcelPath}[RemittanceInstruction_DDADescriptionAUD]   
-  
+    Add Remittance Instruction to Servicing Group    &{ExcelPath}[RemittanceInstruction_DDADescriptionAUD] 
     Close Servicing Group Remittance Instructions Selection List Window    &{ExcelPath}[LIQCustomer_ShortName]
-        
+    Update Borrower Servicing Group Alias    &{ExcelPath}[Borrower_SGAlias]
+
     ### Save Customer Details ###
     Save Customer Details
     
