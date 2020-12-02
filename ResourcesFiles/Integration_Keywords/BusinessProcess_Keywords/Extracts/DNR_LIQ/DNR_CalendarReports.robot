@@ -25,3 +25,13 @@ Validate Branch and Process Area and Deal Calendar of Calendar Report
     \    Compare Two Strings    &{ExcelPath}[Branch]    @{Actual_Branch}[${INDEX}]   
     \    Compare Two Strings    &{ExcelPath}[Processing_Area]    @{Actual_Processing_Area}[${INDEX}]
     \    Compare Two Strings    &{ExcelPath}[Deal_Calender]    @{Actual_Deal_Calendar}[${INDEX}]
+
+Write Details for Calendar Report
+    [Documentation]    This keyword is used to write needed details in Calendar Report sheet.
+    ...    @author: clanding    25NOV2020    - initial create
+    [Arguments]    ${ExcelPath}
+
+    Delete File If Exist    &{ExcelPath}[Report_Path]&{ExcelPath}[File_Name]${CBA_CALENDAR_REPORTFILE}.xlsx
+    Copy File    &{ExcelPath}[Report_Path]${CBA_CALENDAR_REPORTFILE}.xlsx    &{ExcelPath}[Report_Path]&{ExcelPath}[File_Name]${CBA_CALENDAR_REPORTFILE}.xlsx
+    Write Data To Excel    DNR    Report_File_Name    ${TestCase_Name}    &{ExcelPath}[File_Name]${CBA_CALENDAR_REPORTFILE}.xlsx    ${DNR_DATASET}    bTestCaseColumn=True
+    Write Data To Excel    CALND    Report_File_Name    ${TestCase_Name}    &{ExcelPath}[File_Name]${CBA_CALENDAR_REPORTFILE}.xlsx    ${DNR_DATASET}    bTestCaseColumn=True
