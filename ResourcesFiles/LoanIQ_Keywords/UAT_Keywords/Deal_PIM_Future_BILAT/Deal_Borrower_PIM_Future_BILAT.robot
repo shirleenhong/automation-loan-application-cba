@@ -98,8 +98,8 @@ Search Customer and Complete its Borrower Profile in LIQ for PIM Future BILAT
 
     ### Add Remittance Instruction ###
     Navigate to Remittance List Page
-    Add DDA Remittance Instruction    &{ExcelPath}[Customer_Location]    &{ExcelPath}[RemittanceInstruction_DDAMethod]    &{ExcelPath}[RemittanceInstruction_DDADescriptionAUD]    &{ExcelPath}[RemittanceInstruction_DDAAccountName]    &{ExcelPath}[RemittanceInstruction_DDAAccountNumber] 
-    ...    &{ExcelPath}[RemittanceInstruction_DDACurrencyAUD]    &{ExcelPath}[RI_ProductLoan_Checkbox]    &{ExcelPath}[RI_ProductSBLC_Checkbox]    &{ExcelPath}[RI_FromCust_Checkbox]    &{ExcelPath}[RI_ToCust_Checkbox]    &{ExcelPath}[RI_BalanceType_Principal_Checkbox]    
+    Add DDA Remittance Instruction    &{ExcelPath}[Customer_Location]    &{ExcelPath}[RemittanceInstruction_Method]    &{ExcelPath}[Remittance_Description]    &{ExcelPath}[RemittanceInstruction_AccountName]    &{ExcelPath}[RemittanceInstruction_AccountNumber] 
+    ...    &{ExcelPath}[RemittanceInstruction_Currency]    &{ExcelPath}[RI_ProductLoan_Checkbox]    &{ExcelPath}[RI_ProductSBLC_Checkbox]    &{ExcelPath}[RI_FromCust_Checkbox]    &{ExcelPath}[RI_ToCust_Checkbox]    &{ExcelPath}[RI_BalanceType_Principal_Checkbox]    
     ...    &{ExcelPath}[RI_BalanceType_Interest_Checkbox]    &{ExcelPath}[RI_BalanceType_Fees_Checkbox]    &{ExcelPath}[RI_AutoDoIt_Checkbox]     
                 
     ### Login as Supervisor ####
@@ -113,7 +113,7 @@ Search Customer and Complete its Borrower Profile in LIQ for PIM Future BILAT
     
     ### Approve Added Remittance Instructions ###  
     Access Remittance List upon Login    &{ExcelPath}[Profile_Type]    &{ExcelPath}[Customer_Location]
-    Approving Remittance Instruction    &{ExcelPath}[RemittanceInstruction_DDADescriptionAUD]   &{ExcelPath}[Customer_Location]
+    Approving Remittance Instruction    &{ExcelPath}[Remittance_Description]   &{ExcelPath}[Customer_Location]
         
     ### Login as Manager ###
     Close All Windows on LIQ
@@ -126,10 +126,10 @@ Search Customer and Complete its Borrower Profile in LIQ for PIM Future BILAT
     
     ###Approve Added Remittance Instructions - Second Approval ###   
     Access Remittance List upon Login    &{ExcelPath}[Profile_Type]    &{ExcelPath}[Customer_Location]
-    Approving Remittance Instruction    &{ExcelPath}[RemittanceInstruction_DDADescriptionAUD]   &{ExcelPath}[Customer_Location]
+    Approving Remittance Instruction    &{ExcelPath}[Remittance_Description]   &{ExcelPath}[Customer_Location]
   
     ### ReleaseAdded Remittance Instructions ###
-    Releasing Remittance Instruction    &{ExcelPath}[RemittanceInstruction_DDADescriptionAUD]    &{ExcelPath}[Customer_Location]
+    Releasing Remittance Instruction    &{ExcelPath}[Remittance_Description]    &{ExcelPath}[Customer_Location]
                        
     ### Login as Inputter ###
     Close All Windows on LIQ
@@ -140,12 +140,12 @@ Search Customer and Complete its Borrower Profile in LIQ for PIM Future BILAT
     Search Customer    &{ExcelPath}[Customer_Search]    &{ExcelPath}[LIQCustomer_ID]    &{ExcelPath}[LIQCustomer_ShortName]
     Switch Customer Notebook to Update Mode    
     Access Remittance List upon Login    &{ExcelPath}[Profile_Type]    &{ExcelPath}[Customer_Location]
-    Read Excel Data and Validate Remittance Instructions Data Added in the Remittance List Window    &{ExcelPath}[RemittanceInstruction_DDADescriptionAUD]    &{ExcelPath}[Customer_Location]
+    Read Excel Data and Validate Remittance Instructions Data Added in the Remittance List Window    &{ExcelPath}[Remittance_Description]    &{ExcelPath}[Customer_Location]
     Mx LoanIQ click    ${RemittanceList_Window_ExitButton}
     
     ### Add Servicing Group ### 
     Add Servicing Groups Details    &{ExcelPath}[LIQCustomer_ShortName]    &{ExcelPath}[Group_Contact]   &{ExcelPath}[Contact_LastName]  
-    Add Remittance Instruction to Servicing Group    &{ExcelPath}[RemittanceInstruction_DDADescriptionAUD] 
+    Add Remittance Instruction to Servicing Group    &{ExcelPath}[Remittance_Description] 
     Close Servicing Group Remittance Instructions Selection List Window    &{ExcelPath}[LIQCustomer_ShortName]
     Update Borrower Servicing Group Alias    &{ExcelPath}[Borrower_SGAlias]
 
