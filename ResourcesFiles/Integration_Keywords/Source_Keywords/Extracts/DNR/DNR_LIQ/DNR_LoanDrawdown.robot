@@ -8,7 +8,7 @@ Create Revolver Facility Drawdown for DNR
     [Arguments]    ${ExcelPath}
     
     ${Current_Date}    Get System Date
-    ${BaseRatePercentage}    Get Base Rate from Funding Rate Details    LIBOR    &{ExcelPath}[Loan_RepricingFrequency]    &{ExcelPath}[Loan_Currency]
+    ${BaseRatePercentage}    Get Base Rate from Funding Rate Details    BBSY    &{ExcelPath}[Loan_RepricingFrequency]    &{ExcelPath}[Loan_Currency]
     ${ExchangeRate}    Get Currency Exchange Rate from Treasury Navigation    &{ExcelPath}[CurrencyExchange]
     
     ### Get data from Secondary Sale test case ###
@@ -88,11 +88,9 @@ Create Revolver Facility Drawdown for DNR
     Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
     
     ### Set FX Rates ###
-    Navigate Transaction in WIP    ${OUTSTANDINGS_TRANSACTION}    ${AWAITING_SET_FX_RATE_STATUS}    ${LOAN_INITIAL_DRAWDOWN_TYPE}    ${Loan_Alias}    ### commented out in IEE testing
-    Navigate to Loan Drawdown Workflow and Proceed With Transaction    ${SET_FX_RATE_TRANSACTION}
-    Set Initial Drawdown Spot FX Rate    &{ExcelPath}[CurrencyExchange]    ${ExchangeRate}
+    Navigate Transaction in WIP    ${OUTSTANDINGS_TRANSACTION}    ${SEND_TO_RATE_APPROVAL_STATUS}    ${LOAN_INITIAL_DRAWDOWN_TYPE}    ${Loan_Alias}    ### commented out in IEE testing
     
-    ### Send to Rate Approval ###
+    
     Navigate to Loan Drawdown Workflow and Proceed With Transaction    ${SEND_TO_RATE_APPROVAL_STATUS}
     Validate Window Title Status    ${INITIAL_DRAWDOWN_TITLE}    ${AWAITING_RATE_APPROVAL_STATUS}
     Logout from Loan IQ
