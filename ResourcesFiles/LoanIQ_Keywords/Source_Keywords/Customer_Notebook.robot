@@ -2518,3 +2518,19 @@ Activate and Close Remittance List Window
     Take Screenshot    ${Screenshot_Path}/Screenshots/LoanIQ/RemittanceListWindow
     mx LoanIQ click    ${LIQ_ActiveCustomer_Remittance_List_Exit_Button}
     mx LoanIQ activate window    ${LIQ_ActiveCustomer_Window}
+
+Update Borrower Servicing Group Alias
+    [Documentation]    This keyword updates the borrower servicing group alias
+    ...    @author:    mcastro    02DEC2020    - Initial Create
+    [Arguments]    ${sBorrower_SGAlias}
+    ### Keyword Pre-processing ###
+    ${Borrower_SGAlias}    Acquire Argument Value    ${sBorrower_SGAlias}
+
+    Mx LoanIQ Click    ${ServicingGroups_Button}
+    Mx LoanIQ Click    ${LIQ_ServicingGroups_Alias_Button}
+    Mx LoanIQ activate window    ${LIQ_ServicingGroups_Alias_Window}
+    Mx LoanIQ Enter    ${LIQ_ServicingGroups_Alias_Textfield}    ${Borrower_SGAlias}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/ServicingGroup_Alias
+    Mx LoanIQ Click    ${LIQ_ServicingGroups_Alias_OK_Button}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/ServicingGroup_Alias
+    Mx LoanIQ click    ${ServicingGroupWindow_ExitButton}

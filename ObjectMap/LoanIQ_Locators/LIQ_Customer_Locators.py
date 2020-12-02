@@ -386,6 +386,10 @@ ServicingGroupWindow_ServicingGroupsFor_DrillDownToChangeGroupMembers = 'JavaWin
 ServicingGroupWindow_RemittanceInstructionDetails_DDADescription = 'JavaWindow("title:=Servicing Groups.*For.*").JavaTree("attached text:=Drill Down For Remittance Instruction Details","developer name:=.*description=${RemittanceInstruction_DDADescriptionAUD}.*")'
 ServicingGroupWindow_RemittanceInstructionDetails_IMTDescription = 'JavaWindow("title:=Servicing Groups.*For.*").JavaTree("attached text:=Drill Down For Remittance Instruction Details","developer name:=.*description=${RemittanceInstruction_IMTDescriptionUSD}.*")'
 ServicingGroupWindow_RemittanceInstructionDetails_RTGSDescription = 'JavaWindow("title:=Servicing Groups.*For.*").JavaTree("attached text:=Drill Down For Remittance Instruction Details","developer name:=.*description=${RemittanceInstruction_RTGSDescriptionAUD}.*")'
+LIQ_ServicingGroups_Alias_Button = 'JavaWindow("title:=Servicing Groups For:.*").JavaButton("attached text:=Alias.*")'
+LIQ_ServicingGroups_Alias_Window = 'JavaWindow("title:=Servicing Groups For:.*").JavaWindow("title:=Alias For.*")'
+LIQ_ServicingGroups_Alias_Textfield = 'JavaWindow("title:=Servicing Groups For:.*").JavaWindow("title:=Alias For.*").JavaEdit("attached text:=Alias:")'
+LIQ_ServicingGroups_Alias_OK_Button = 'JavaWindow("title:=Servicing Groups For:.*").JavaWindow("title:=Alias For.*").JavaButton("label:=OK")'
 
 ###Active Customer_ProfileTab_ServicingGroup_ContactsSelectionList_Window###
 ContactsSelectionList_Window = 'JavaWindow("title:=Servicing Group Contacts Selection List.*")'
