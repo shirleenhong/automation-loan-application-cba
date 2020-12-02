@@ -14,5 +14,5 @@ Reverse Loan Advanced Interest Payment and Get Outstanding Details
     ...    @ update: makcamps    02DEC2020    - updated writing keywords for loan window
 
     Mx Execute Template With Multiple Data    Create Loan Interest Payment Reversal - Scenario 7 ComSee    ${ComSeeDataSet}    ${rowid}    ComSee_SC7_LoanInterestPayment 
-    Mx Execute Template With Multiple Data    Write Repricing Loan Details for ComSee - Scenario 7    ${ComSeeDataSet}    ${rowid}    ComSee_SC7_Loan
+    Mx Execute Template With Multiple Data    Write Loan Details for ComSee - Scenario 7    ${ComSeeDataSet}    ${rowid}    ComSee_SC7_Loan
     Mx Execute Template With Multiple Data    Get and Validate API Outstanding Response    ${ComSeeDataSet}    ${rowid}    ComSee_SC7_Loan
