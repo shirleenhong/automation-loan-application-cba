@@ -33,12 +33,18 @@ LIQ_Loan_AnyStatus_Window = 'JavaWindow("title:=.*Loan \(.*")'
 LIQ_Loan_AnyStatus_Tab = 'JavaWindow("title:=.*Loan \(.*").JavaTab("tagname:=TabFolder")'
 LIQ_Loan_AnyStatus_RatesTab_BaseRate_Field = 'JavaWindow("title:=.*Loan \(.*").JavaEdit("attached text:=Current","index:=0")'
 LIQ_Loan_AnyStatus_RatesTab_Spread_Field = 'JavaWindow("title:=.*Loan \(.*").JavaEdit("attached text:=Spread:")'
-LIQ_Loan_RepricingFrequency_JavaList = 'JavaWindow("title:=.*Loan.*Active").JavaList("attached text:=Repricing Frequency:")'
-LIQ_Loan_RepricingDate_Text = 'JavaWindow("title:=.*Loan.*Active").JavaStaticText("Index:=1")'
 LIQ_Loan_Options_LoanChangeTransaction_Menu = 'JavaWindow("title:=.*Loan.*Active").JavaMenu("label:=Options").JavaMenu("label:=Loan Change Transaction")'
 LIQ_Loan_Queries_FeeActivityLIst_Menu = 'JavaWindow("title:=.*Loan.*Active").JavaMenu("label:=Queries").JavaMenu("label:=Fee Activity List")'
 LIQ_Loan_CyclesforLoan_ProRateType_RadioButton = 'JavaWindow("title:=Cycles for Loan.*").JavaRadioButton("attached text:=${Pro_Rate}")'
 LIQ_Loan_ChoosePayment_Cancel_Button = 'JavaWindow("title:=Choose a Payment").JavaButton("attached text:=Cancel")'
+
+###Repricing Loan Notebook - General Tab###
+LIQ_Repricing_Loan_RiskType_Text = 'JavaWindow("title:=.*Loan.*Active").JavaStaticText("labeled_containers_path:=Tab:General;", "Index:=2")'
+LIQ_Repricing_Loan_EffectiveDate_Text = 'JavaWindow("title:=.*Loan.*Active").JavaStaticText("labeled_containers_path:=Tab:General;","Index:=4")'
+LIQ_Repricing_Loan_MaturityDate_Text = 'JavaWindow("title:=.*Loan.*Active").JavaEdit("labeled_containers_path:=Tab:General;", "index:=0")'
+LIQ_Repricing_Loan_PricingOption_Text = 'JavaWindow("title:=.*Loan.*Active").JavaStaticText("labeled_containers_path:=Tab:General;","Index:=15")'
+LIQ_Loan_RepricingFrequency_JavaList = 'JavaWindow("title:=.*Loan.*Active").JavaList("attached text:=Repricing Frequency:")'
+LIQ_Loan_RepricingDate_Text = 'JavaWindow("title:=.*Loan.*Active").JavaStaticText("Index:=1")'
 
 ####Loan Notebook - Rate Tab#####
 LIQ_Loan_AllInRate = 'JavaWindow("title:=.*Loan.*Active").JavaEdit("attached text:=All-In Rate:")'
