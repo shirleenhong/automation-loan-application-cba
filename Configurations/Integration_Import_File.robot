@@ -494,11 +494,16 @@ Resource    ../ResourcesFiles/Integration_Keywords/Source_Keywords/API/SAPWUL/SA
 Resource    ../ResourcesFiles/Integration_Keywords/Source_Keywords/API/SAPWUL/SAPWUL_TableMaintenance.robot
 
 ### Integration Resource Files - Datanet Assurance - Source Keywords ###
+Resource    ../ResourcesFiles/Integration_Keywords/Source_Keywords/Extracts/DNA/DNA_CSV_Validation.robot
+Resource    ../ResourcesFiles/Integration_Keywords/Source_Keywords/Extracts/DNA/DNA_Database_Validation.robot
 Resource    ../ResourcesFiles/Integration_Keywords/Source_Keywords/Extracts/DNA/DNA_Extract_Validation.robot
+Resource    ../ResourcesFiles/Integration_Keywords/Source_Keywords/Extracts/DNA/DNA_FFC_Validation.robot
 
 ### Integration Resource Files - Datanet Assurance - Business Process Keywords ###
 Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/Extracts/DNA_LIQ/DNA_01.robot
 Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/Extracts/DNA_LIQ/DNA_03.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/Extracts/DNA_LIQ/DNA_04.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/Extracts/DNA_LIQ/DNA_06.robot
 
 ### Integration Resource Files - DNR - Source Keywords ###
 Resource    ../ResourcesFiles/Integration_Keywords/Source_Keywords/Extracts/DNR/DNR_Extract/DNR_ExtractValidation_Keywords.robot
