@@ -54,9 +54,6 @@ Create Revolver Facility Drawdown for DNR
     ### Set Rates in Initial Drawdown notebook ###
     Set Base Rate In Drawdown Notebook With API Validations    ${BaseRatePercentage}
     
-    ### Verify info in Events Tab of Drawdown Notebook ###
-    Validate Drawdown Rate Change Event    ${BaseRatePercentage}
-    
     ### Cashflow Notebook - Create Cashflows ###
     Navigate to Loan Drawdown Workflow and Proceed With Transaction    ${CREATE_CASHFLOWS_TYPE}
     Verify if Method has Remittance Instruction    ${Borrower_ShortName}    &{ExcelPath}[Remittance_Description]    &{ExcelPath}[Remittance_Instruction]

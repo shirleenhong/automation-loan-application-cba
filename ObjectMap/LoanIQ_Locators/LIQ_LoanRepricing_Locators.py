@@ -29,7 +29,7 @@ LIQ_RepricingDetail_RolloverExisting_RadioButton = 'JavaWindow("title:=Repricing
 LIQ_RepricingDetail_Principal_RadioButton = 'JavaWindow("title:=Repricing Detail.*").JavaRadioButton("label:=Principal Payment")'
 LIQ_RepricingDetail_Interest_RadioButton = 'JavaWindow("title:=Repricing Detail.*").JavaRadioButton("label:=Interest Payment")'
 LIQ_RepricingDetail_AutoGenerateInvidualRepayment_RadioButton = 'JavaWindow("title:=Repricing Detail.*").JavaRadioButton("label:=Auto Generate Individual Repayment")'
-LIQ_RepricingDetail_AutoGenerateInterestPayment_RadioButton = 'JavaWindow("title:=Repricing Detail.*").JavaRadioButton("label:=Auto Generate Interest Payment")'
+LIQ_RepricingDetail_AutoGenerateInterestPayment_RadioButton = 'JavaWindow("title:=Repricing Detail.*").JavaRadioButton("label:=Auto Generate Interest Payments")'
 LIQ_RepricingDetail_ScheduledItems_RadioButton = 'JavaWindow("title:=Repricing Detail.*").JavaRadioButton("label:=Scheduled Items")'
 LIQ_RepricingDetail_OK_Button = 'JavaWindow("title:=Repricing Detail.*").JavaButton("label:=OK")'
 LIQ_RepricingDetail_Facility = 'JavaWindow("title:=Repricing Detail.*").JavaList("attached text:=Facility:")'
