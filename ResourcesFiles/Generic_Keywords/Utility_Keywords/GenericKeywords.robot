@@ -2726,6 +2726,16 @@ Get Column Header Index Using Dynamic Header
 
     [Return]    ${TestCaseHeaderName_Index}    ${ColumnName_Index}
 
+Generate Deal Name and Alias with 5 Numeric Test Data
+    [Documentation]    This keyword generates deal name and alias.
+    ...    @author:    mcastro    27NOV2020    - Initial Create
+    [Arguments]   ${Deal_NamePrefix}    ${Deal_AliasPrefix}
+    ${Deal_Name}    Auto Generate Only 5 Numeric Test Data    ${Deal_NamePrefix}
+    log    Deal Name: ${Deal_Name}
+    ${Deal_Alias}    Auto Generate Only 5 Numeric Test Data    ${Deal_AliasPrefix}
+    log    Deal Alias: ${Deal_Alias}
+    [Return]    ${Deal_Name}    ${Deal_Alias}
+
 Check if File Exist
     [Documentation]    This keyword is used to check if the file exists in the specified path with multiple retries.
     ...    @author: clanding    27NOV2020    - initial Create

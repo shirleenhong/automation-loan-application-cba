@@ -92,7 +92,8 @@ Create Loan Drawdown for Syndicated Deal - ComSee
     
 Pay Loan Outstanding Accrual Zero Cycle Due
     [Documentation]    This keyword update the PaidToDate value after Payment transaction has been made. 
-    ...    @author: sacuisia 02OCT2020    -initialCreate
+    ...    @author: sacuisia 02OCT2020	-initialCreate
+    ...	   @update: makcamps 25NOV2020	-added release cashflow, release, and closing liq windows steps
     [Arguments]    ${ExcelPath}    ${sCyclesForLoan}=None    
     
     ${CyclesForLoan}    Acquire Argument Value    ${sCyclesForLoan}
@@ -141,7 +142,8 @@ Pay Loan Outstanding Accrual Zero Cycle Due
     Navigate Transaction in WIP    Payments    Awaiting Approval    Interest Payment    &{ExcelPath}[Deal_Name]
     
     Approve Interest Payment
-    Release Interest Payment
+    Navigate Notebook Workflow    ${LIQ_Payment_Window}    ${LIQ_Payment_Tab}    ${LIQ_Payment_WorkflowItems}    Release Cashflows
+	Release Payment
     
     Launch Loan Notebook    &{ExcelPath}[Deal_Name]    &{ExcelPath}[Facility_Name]    &{ExcelPath}[Outstanding_Alias]
     
@@ -153,19 +155,24 @@ Pay Loan Outstanding Accrual Zero Cycle Due
     ${AccruedtoDateAmt}    Remove Comma and Convert to Number    ${AccruedtoDateAmt}
     Write Data To Excel    ComSee_SC2_Loan    Outstanding_AccruedInterest    ${rowid}    ${LoanAccruedtodateAmount}    ${ComSeeDataSet}
     
-    Navigate to Share Accrual Cycle    &{ExcelPath}[Host_Bank]
+    Navigate to Share Accrual Cycle    &{ExcelPath}[Lender1_ShortName]
     
     ${LoanCycleDueAmount}    Get Cycle Due Amount
+    ${LoanCycleDueAmount}    Remove comma and convert to number - Cycle Due    ${LoanCycleDueAmount}
     Write Data To Excel    ComSee_SC2_Loan    Outstanding_cycleDue    ${rowid}    ${LoanCycleDueAmount}    ${ComSeeDataSet}
     
     ${LoanPaidDueAmount}   Get PaidToDate   
+    ${LoanPaidDueAmount}    Remove comma and convert to number - Paid to Date    ${LoanPaidDueAmount}
     Write Data To Excel    ComSee_SC2_Loan   Outstanding_paidToDate    ${rowid}    ${LoanPaidDueAmount}    ${ComSeeDataSet}
     
+    Close All Windows on LIQ
  
 Write Loan Outstanding Accrual Non Zero Cycle
     [Documentation]    This test case writes the updated Loan Outstanding details after EOD for comsee use.
     ...    @author:    sacuisia    29SEPT2020    -InitialCreate
     [Arguments]    ${ExcelPath}
+    
+    Run Keyword And Continue On Failure    mx LoanIQ activate window    ${LIQ_DealSelect_Window}    60
     
     Launch Loan Notebook    &{ExcelPath}[Deal_Name]    &{ExcelPath}[Facility_Name]    &{ExcelPath}[Outstanding_Alias]
     
@@ -182,9 +189,11 @@ Write Loan Outstanding Accrual Non Zero Cycle
     Navigate to Share Accrual Cycle    &{ExcelPath}[Host_Bank]
     
     ${LoanCycleDueAmount}    Get Cycle Due Amount
+    ${LoanCycleDueAmount}    Remove comma and convert to number - Cycle Due    ${LoanCycleDueAmount}
     Write Data To Excel    ComSee_SC2_Loan    Outstanding_cycleDue    ${rowid}    ${LoanCycleDueAmount}    ${ComSeeDataSet}
     
-    ${LoanPaidDueAmount}   Get PaidToDate   
+    ${LoanPaidDueAmount}   Get PaidToDate    
+    ${LoanPaidDueAmount}    Remove comma and convert to number - Paid to Date    ${LoanPaidDueAmount}
     Write Data To Excel    ComSee_SC2_Loan   Outstanding_paidToDate    ${rowid}    ${LoanPaidDueAmount}    ${ComSeeDataSet}
     
    
@@ -484,6 +493,7 @@ Write Loan Details for ComSee - Scenario 7
 Create Initial Loan Drawdown with Repricing - Scenario 7 ComSee
     [Documentation]    This keyword is used to create a Loan Drawdown without selecting a Payment Schedule.
     ...    @author: rtarayao    11SEP2019    - Duplicate of Scenario 7 from Functional Scenarios
+	...    @update: makcamps	25NOV2020	 - added condition for eu
     [Arguments]    ${ExcelPath}
     
     ###Facility###
@@ -516,7 +526,8 @@ Create Initial Loan Drawdown with Repricing - Scenario 7 ComSee
     Verify if Status is set to Do It    &{ExcelPath}[Borrower1_ShortName]  
  
     ##Get Transaction Amount for Cashflow###
-    ${HostBankShare}    Get Host Bank Cash in Cashflow
+    ${HostBankShare}    Run Keyword If    '&{ExcelPath}[Entity]'=='EU'    Get Host Bank Cash in Cashflow    &{ExcelPath}[Loan_Currency]
+    ...    ELSE    Get Host Bank Cash in Cashflow
     ${BorrowerTranAmount}    Get Transaction Amount in Cashflow    &{ExcelPath}[Borrower1_ShortName]
     ${ComputedHBTranAmount}    Compute Lender Share Transaction Amount    &{ExcelPath}[Loan_RequestedAmount]    &{ExcelPath}[HostBankSharePct]
     
@@ -633,6 +644,7 @@ Write Loan Details for ComSee with Repricing - Scenario 7
 Create Loan Repricing for ComSee - Scenario 7
     [Documentation]    This will serve as a High Level keyword for the creation of Comprehensive Loan Repricing.
     ...    @author: cfrancis    18OCT2020    - Initial Create
+    ...    @update: makcamps    01DEC2020    - added condition for creating cashflows for eu
     [Arguments]    ${ExcelPath}
     
     ###Deal Notebook###
@@ -664,10 +676,12 @@ Create Loan Repricing for ComSee - Scenario 7
     Validate Loan Repricing New Outstanding Amount    ${New_Outstanding}    ${Loan_Alias}    &{ExcelPath}[Rollover_RequestedAmount]
 
     ###Create Cashflow###
-    Navigate Notebook Workflow    ${LIQ_LoanRepricingForDeal_Window}    ${LIQ_LoanRepricingForDeal_Workflow_Tab}    ${LIQ_LoanRepricingForDeal_Workflow_JavaTree}    Create Cashflows
+    Run Keyword If    '${ENTITY}'!='EU'    Navigate Notebook Workflow    ${LIQ_LoanRepricingForDeal_Window}    ${LIQ_LoanRepricingForDeal_Workflow_Tab}    ${LIQ_LoanRepricingForDeal_Workflow_JavaTree}    Create Cashflows
+    
+    ###Send to Approval###
     Navigate Notebook Workflow    ${LIQ_LoanRepricingForDeal_Window}    ${LIQ_LoanRepricingForDeal_Workflow_Tab}    ${LIQ_LoanRepricingForDeal_Workflow_JavaTree}    Send to Approval
-
     Logout from Loan IQ
+    
     Login to Loan IQ    ${SUPERVISOR_USERNAME}    ${SUPERVISOR_PASSWORD}
     Navigate Transaction in WIP    Outstandings    Awaiting Generate Rate Setting Notices    Loan Repricing    &{ExcelPath}[Deal_Name]
     Navigate Notebook Workflow    ${LIQ_LoanRepricingForDeal_Window}    ${LIQ_LoanRepricingForDeal_Workflow_Tab}    ${LIQ_LoanRepricingForDeal_Workflow_JavaTree}    Approval

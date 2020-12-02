@@ -82,6 +82,8 @@ TL_CAL_ACK_MESSAGE_SOURCENAME = 'tl_ack_message_splitter_cal'
 TL_BASE_ACK_MESSAGE_SOURCENAME = 'tl_ack_message_splitter_base'
 CBACorrespUpdateMQ_Instance = 'CustomCBAPush_v1.3.0'
 FFC1CMUpdateSourceMQ_Instance = 'CustomInterface'
+NOTIFICATIONSOURCEJMS_SOURCENAME = 'NotificationSourceJMS'
+DWE_NOTIFICATION_INSTANCE = 'dwe_notification_1.3.0'
 
 ###SFTP###
 SFTP_HOST = "mancsleverg0022"
@@ -196,11 +198,11 @@ FBTI_PASSWORD_AUTHORISER = 'Password6'
 RUNTIME_EXCEL_FILE = "C:\\fms_scotia\\Customization\\Temp\\RUNTIME_VALUES.xlsx"
 
 ### DWE ###
-DWE_SERVER = 'mancsleverg0007'
-DWE_SERVER_LIQ = 'mancsleverg0007'
+DWE_SERVER = 'mancsleverg0021'
+DWE_SERVER_LIQ = 'mancsleverg0022'
 DWE_PORT = '22'
-DWE_SERVER_USER = 'micloud'
-DWE_SERVER_PASSWORD = 'misys123'
+DWE_SERVER_USER = 'sftpuser2'
+DWE_SERVER_PASSWORD = 'luckyroll76'
 DWE_LANDING_AREA_PATH = '/evgdata/STREAMSETS/workspace/landing_area/COMRLENDING/'
 DWE_EXTRACTION_PATH = '/evgdata/STREAMSETS/workspace/extraction_area/COMRLENDING/'
 DWE_DATASET = 'C:\\Git_Evergreen\\fms_cba\\DataSet\\Integration_DataSet\Extracts\\DWE_LIQ\\EVG_DWE_LIQEXTRACT_TestData.xlsx'
@@ -216,11 +218,13 @@ DWE_CSV_FILES_COUNT = '186'
 DWE_MANIFEST_FILE_FIELDLIST = 'C:\\Git_Evergreen\\fms_cba\\DataSet\\Integration_DataSet\Extracts\\DWE_LIQ\\Manifest_Fields.txt'
 DWE_DECRYPTION_PART1 = 'C:/Git_Evergreen/fms_cba/DataSet/Integration_DataSet/Extracts/DWE_LIQ/Decryptor_Tool/DWE_DECRYPTION_PART1.vbs'
 DWE_DECRYPTION_PART2 = 'C:/Git_Evergreen/fms_cba/DataSet/Integration_DataSet/Extracts/DWE_LIQ/Decryptor_Tool/DWE_DECRYPTION_PART2.vbs'
+DWE_DECRYPTION_PART3 = 'C:/Git_Evergreen/fms_cba/DataSet/Integration_DataSet/Extracts/DWE_LIQ/Decryptor_Tool/DWE_DECRYPTION_PART3.vbs'
 DWE_LIQ_EXTRACT_PATH = 'C:\\Git_Evergreen\\fms_cba\\DataSet\\Integration_DataSet\Extracts\\DWE_LIQ\\DWE_LIQ_Extracts\\'
-DWE_PGP_SECRET_KEY = 'OMNIA_CCB_DEV_KEY_pub.asc'
-DWE_PASSPHRASE = '0mn1@d@v'
+DWE_PGP_SECRET_KEY = 'secret.skr'
+DWE_PASSPHRASE = 'password'
 DWE_TAR_GZ_EXT = '.tar.gz'
 DWE_TAR_GZ_GPG_EXT = '.tar.gz.gpg'
+DWE_CCB_LIQ_ZONE_FILENAME = 'CCB_LIQ_'
 DWE_CCB_LIQ_ZONE_FILENAME = 'CCB_LIQ_SYD_'
 
 ### Batch EOD ###
@@ -237,6 +241,8 @@ DNA_PORT = '22'
 DNA_SERVER_USER = 'sftpuser2'
 DNA_SERVER_PASSWORD = 'luckyroll76'
 DNA_EXTRACTION_AREA_PATH = '/evgdata/STREAMSETS/workspace/extraction_area/COMRLENDING/'
+DAT_FILE_SERVER = 'MANCSWEVERG0006'
+DNA_DAT_FILE_EXTRACTION_AREA_PATH = 'out'
 DNA_CCB_LIQ_FILENAME = 'CCB_LIQ_'
 DNA_DATAASSURANCE_FILENAME = 'DATAASSURANCE_'
 DNA_DAT_EXT = '.DAT'
@@ -255,3 +261,13 @@ CBA_CALENDAR_REPORTFILE = "Calendar Report_v1.0"
 CBA_LIQUIDITY_REPORTFILE= "CBA Liquidity Report"
 CBA_DE_REPORTFILE= "Agency Host Bank DE Extract"
 CBA_LIQPERFORMANCE_REPORTFILE = "LIQFacilityPerformance_V3.0"
+CBA_LOANSACCRUALS_REPORTFILE = "LoansAndAccrualsReport_V2.2.1"
+
+### IDT LIQ SERVER ###
+DBSERVICENAME_LIQ = 'MLLOANIQ.misys.global.ad'
+DBUSERNAME_LIQ = 'system'
+DBPASSWORD_LIQ = 'Ch2vr4n_M1r1th4n'
+DBHOST_LIQ = 'MANCSLEVERG0017'
+DBPORT_LIQ = '1521'
+DBUR_LIQ = 'jdbc:oracle:thin:@//mancsleverg0017:1521/MLLOANIQ.misys.global.ad'
+LIQDBSCHEMA = 'LIQIDT'

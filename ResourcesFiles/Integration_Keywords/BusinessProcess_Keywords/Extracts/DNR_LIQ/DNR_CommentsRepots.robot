@@ -39,6 +39,15 @@ Validate Outstanding Columns from Comments Report
     Validate Sequencing of Columns if Correct in Excel Sheet    &{ExcelPath}[Report_Path]${CBA_COMMENTS_REPORTFILE}.xlsx    &{ExcelPath}[Sheet_Name]
     ...    &{ExcelPath}[Columns_To_Validate]    &{ExcelPath}[Delimiter]
 
+Validate Customer Columns from Comments Report
+    [Documentation]    This keyword is used to validate columns in Customer_5 sheet name if existing and if in correct sequence in the Comments Report.
+    ...    Columns to Validate: Customer Name, CIF Number, Comment Heading, Comment Detail, User ID, Date Added / Amended
+    ...    @author: fluberio    23NOV2020    - initial create
+    [Arguments]    ${ExcelPath}
+    
+    Validate Sequencing of Columns if Correct in Excel Sheet    &{ExcelPath}[Report_Path]${CBA_COMMENTS_REPORTFILE}.xlsx    &{ExcelPath}[Sheet_Name]
+    ...    &{ExcelPath}[Columns_To_Validate]    &{ExcelPath}[Delimiter]
+
 Write Details for Comments Report
     [Documentation]    This keyword is used to write needed details in Comments Report sheet.
     ...    @author: clanding    01DEC2020    - initial create
@@ -68,4 +77,3 @@ Validate Comments Details are Correct from Comments Report
     ${Report_Date_Value}    Get Date Value from Date Added or Amended Column    ${Date_Added_Amended}    %d-%b-%Y
     ${Dataset_Date_Value}    Get Date Value from Date Added or Amended Column    &{ExcelPath}[Date_Added_Amended]
     Compare Two Strings    ${Dataset_Date_Value}    ${Report_Date_Value.strip()}
-

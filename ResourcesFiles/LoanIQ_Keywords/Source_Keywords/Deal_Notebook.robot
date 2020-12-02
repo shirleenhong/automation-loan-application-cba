@@ -56,7 +56,8 @@ Create New Deal
     ...    @update: bernchua    21AUG2019    Added Take Screnshot keyword
     ...    @update: amansuet    02APR2020    Updated to align with automation standards and added keyword pre and post processing
     ...    @update: ehugo    28MAY2020    - added keyword pre-processing for non-unique arguments
-    [Arguments]    ${sDeal_Name}    ${sDeal_Alias}    ${sDeal_Currency}    ${sDeal_Department}    ${sDeal_SalesGroup}
+    ...    @update: mcastro    26NOV2020     - Added conditon for Deal not requiring Sales Group
+    [Arguments]    ${sDeal_Name}    ${sDeal_Alias}    ${sDeal_Currency}    ${sDeal_Department}    ${sDeal_SalesGroup}=None
 
     ### Keyword Pre-processing ###
     ${Deal_Name}    Acquire Argument Value    ${sDeal_Name}    ${ARG_TYPE_UNIQUE_NAME_VALUE}
@@ -75,11 +76,11 @@ Create New Deal
     Mx LoanIQ select combo box value    ${LIQ_DealSelect_Currenrcy_SelectBox}    ${Deal_Currency}
     Mx LoanIQ select combo box value    ${LIQ_DealSelect_Department_SelectBox}    ${Deal_Department}
     Run Keyword And Continue On Failure    Validate Input on Create New Deal    ${Deal_Name}    ${Deal_Department}    ${Deal_Currency}   ${Deal_Alias} 
-    mx LoanIQ click    ${LIQ_DealSelect_SalesGroups_Button}
-    Mx LoanIQ Select String    ${LIQ_SalesGroup_Available_JavaTree}    ${Deal_SalesGroup}
-    mx LoanIQ click    ${LIQ_SalesGroup_OK_Button}
-    Run Keyword And Continue On Failure    Mx LoanIQ Select String    ${LIQ_DealSelect_SalesGroups_JavaTree}    ${Deal_SalesGroup}
-    Run Keyword And Continue On Failure    Mx LoanIQ Select String   ${LIQ_DealSelect_SalesGroups_JavaTree}    Yes
+    Run Keyword If    '${Deal_SalesGroup}'!='None'    Run Keywords    mx LoanIQ click    ${LIQ_DealSelect_SalesGroups_Button}
+    ...    AND    Mx LoanIQ Select String    ${LIQ_SalesGroup_Available_JavaTree}    ${Deal_SalesGroup}
+    ...    AND    Mx LoanIQ click    ${LIQ_SalesGroup_OK_Button}
+    ...    AND    Run Keyword And Continue On Failure    Mx LoanIQ Select String    ${LIQ_DealSelect_SalesGroups_JavaTree}    ${Deal_SalesGroup}
+    ...    AND    Run Keyword And Continue On Failure    Mx LoanIQ Select String   ${LIQ_DealSelect_SalesGroups_JavaTree}    Yes
     ${Status}    Run Keyword And Return Status    Mx LoanIQ Verify Runtime Property    ${LIQ_DealSelect_DropInFolder_Checkbox}    value%1
     Run Keyword If    ${Status}==False    Mx LoanIQ Set    ${LIQ_DealSelect_DropInFolder_Checkbox}    ON                
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/Deal_Select
@@ -215,12 +216,14 @@ Select Deal Borrower Remmitance Instruction
     ...    @author: fmamaril
     ...    @update: amansuet    02APR2020    Updated to align with automation standards and added keyword pre-processing
     ...    @update: ehugo    28MAY2020    - added keyword pre-processing for other arguments; added screenshot
-    [Arguments]    ${sDeal_Borrower}    ${sDeal_Name}    ${sBorrower_Location}
+    ...    @update: mcastro    27NOV2020    - Added argument for ${Borrower_Depositor_Indicator} to handle required unchecked Depositor Indicator
+    [Arguments]    ${sDeal_Borrower}    ${sDeal_Name}    ${sBorrower_Location}    ${sBorrower_Depositor_Indicator}=None
     
     ### GetRuntime Keyword Pre-processing ###
     ${Deal_Borrower}    Acquire Argument Value    ${sDeal_Borrower}
     ${Deal_Name}    Acquire Argument Value    ${sDeal_Name}
     ${Borrower_Location}    Acquire Argument Value    ${sBorrower_Location}
+    ${Borrower_Depositor_Indicator}    Acquire Argument Value    ${sBorrower_Depositor_Indicator}
 
     ### Keyword Process ###
     mx LoanIQ click    ${LIQ_DealBorrower_PreferredRemittanceInstructions_Button}
@@ -233,8 +236,8 @@ Select Deal Borrower Remmitance Instruction
     mx LoanIQ click    ${LIQ_PreferredRemittanceInstructions_Ok_Button}
     mx LoanIQ click    ${LIQ_ServicingGroupDetails_Ok_Button}
     Run Keyword And Continue On Failure    Mx LoanIQ Verify Object Exist    ${LIQ_DealBorrower_Window}    VerificationData="Yes"
-    Mx LoanIQ Set    ${LIQ_DealBorrower_DepositorIndicator_Checkbox}    ON
-    Run Keyword And Continue On Failure    Validate if Element is Checked    ${LIQ_DealBorrower_DepositorIndicator_Checkbox}    Deal Borrower Indicator
+    Run Keyword If    '${Borrower_Depositor_Indicator}'=='None'    Run Keywords    Mx LoanIQ Set    ${LIQ_DealBorrower_DepositorIndicator_Checkbox}    ON
+    ...    AND    Run Keyword And Continue On Failure    Validate if Element is Checked    ${LIQ_DealBorrower_DepositorIndicator_Checkbox}    Deal Borrower Indicator
     Run Keyword And Continue On Failure    Validate if Element is Checked    ${LIQ_DealBorrower_BorrowerIndicator_Checkbox}    Deal Borrower Indicator
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/DealNotebook_BorrowerRemittanceInstruction
     mx LoanIQ click    ${LIQ_DealBorrower_Ok_Button}
@@ -2919,6 +2922,18 @@ Get Financial Ratio Type Effective Date and Return
     Save Values of Runtime Execution on Excel File    ${sRuntime_Variable_EffectiveDate}    ${EffectiveDate}
     [Return]    ${EffectiveDate} 
 
+Enter Agreement Date
+    [Documentation]    This keyword populates the Agreement Date
+    ...    @author:    mcastro    27NOV2020    - Initial Create
+    [Arguments]    ${sDeal_AgreementDate}
+
+    ### Keyword Pre-processing ###
+    ${Deal_AgreementDate}    Acquire Argument Value    ${sDeal_AgreementDate}
+
+    Mx LoanIQ Select Window Tab    ${LIQ_DealNotebook_Tab}    ${SUMMARY_TAB}
+    Mx LoanIQ enter    ${LIQ_DealSummaryAgreementDate_Textfield}    ${Deal_AgreementDate}  
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/DealNotebook_AgreementDate
+
 Add Alerts in Deal Notebook
     [Documentation]    This keyword is used to add Alerts details in Deal Notebook.
     ...    @author: clanding    24NOV2020    - initial create
@@ -2982,3 +2997,4 @@ Add Details in Comments Tab in Deal Notebook
     ${Comment_Date}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_DealNotebook_CommentsTab_JavaTree}    ${Subject}%Date%Comment_Date
     
     [Return]    ${Comment_Author}    ${Comment_Date}    ${Comment}${SPACE}${Current_Local_Date}    ${Current_Local_Date}
+    
