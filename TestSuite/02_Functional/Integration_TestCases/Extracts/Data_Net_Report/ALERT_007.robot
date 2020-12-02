@@ -13,4 +13,4 @@ ALERT_007
     Set Global Variable    ${TestCase_Name}    ALERT_007
     Mx Execute Template With Specific Test Case Name    Generate DNR Report for Alerts    ${DNR_DATASET}    Test_Case    ${TestCase_Name}    DNR
     Mx Execute Template With Specific Test Case Name    Write Details for Alert Report    ${DNR_DATASET}    Test_Case    ${TestCase_Name}    DNR
-    Mx Execute Template With Specific Test Case Name    Validate Alert Details for Deal are Correct from Alert Report    ${DNR_DATASET}    Test_Case    ${TestCase_Name}    ALERT
+    Mx Execute Template With Specific Test Case Name    Validate Alert Details for Facility are Correct from Alert Report    ${DNR_DATASET}    Test_Case    ${TestCase_Name}    ALERT
