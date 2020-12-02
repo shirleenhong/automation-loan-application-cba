@@ -805,6 +805,7 @@ Verify Status on Circle and Facility and Deal
     ...    Added a for loop and array to handle multiple facility validation.
     ...    @update: amansuet    24APR2020    - updated keyword name for New Framework , added keyword pre-processing and replaced ${FacilityName} to ${Facility_Name}
     ...    @update: clanding    17JUL2020    - refactor arguments and updated condition in validating if Deal is closed
+    ...    @update: clanding    26NOV2020    - added mx LoanIQ click element if present    ${LIQ_Alerts_OK_Button}
     [Tags]    Validation
     [Arguments]    ${sFundReceiverDetailCustomer}    ${sFacility_Name}
 
@@ -830,6 +831,7 @@ Verify Status on Circle and Facility and Deal
     \    Mx LoanIQ Select Or DoubleClick In Javatree    ${LIQ_FacilityNavigator_Tree }    ${Facility_Name}%d
     \    Run Keyword And Continue On Failure    Mx LoanIQ Verify Object Exist    JavaWindow("title:=Facility - .*In Closed Deal.*")    VerificationData="Yes"
     \    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/Facility_Window
+    \    mx LoanIQ click element if present    ${LIQ_Alerts_OK_Button}
     \    Mx LoanIQ Close    ${LIQ_FacilityNotebook_Window} 
     Mx LoanIQ Close    ${LIQ_FacilityNavigator_Window}
     Run Keyword And Continue On Failure    Mx LoanIQ Verify Object Exist    JavaWindow("title:=Deal Notebook - Closed Deal.*")    VerificationData="Yes"
@@ -2916,4 +2918,67 @@ Get Financial Ratio Type Effective Date and Return
     
     Save Values of Runtime Execution on Excel File    ${sRuntime_Variable_EffectiveDate}    ${EffectiveDate}
     [Return]    ${EffectiveDate} 
+
+Add Alerts in Deal Notebook
+    [Documentation]    This keyword is used to add Alerts details in Deal Notebook.
+    ...    @author: clanding    24NOV2020    - initial create
+    [Arguments]    ${sShortDescription}    ${sDetail}
     
+    ### Keyword Pre-processing ###
+    ${ShortDescription}    Acquire Argument Value    ${sShortDescription}
+    ${Detail}    Acquire Argument Value    ${sDetail}
+
+    mx LoanIQ activate window    ${LIQ_DealNotebook_Window}
+    Select Menu Item    ${LIQ_DealNotebook_Window}    Options    Alerts
+    ${IsExist}    Run Keyword And Return Status    Mx LoanIQ Verify Object Exist    ${LIQ_Question_Yes_Button}
+    Run Keyword If    ${IsExist}==${True}    mx LoanIQ click    ${LIQ_Question_Yes_Button}
+    ...    ELSE    Run Keywords    mx LoanIQ activate window    ${LIQ_DealNotebook_AlertManagementScreen_Window}
+    ...    AND    mx LoanIQ click    ${LIQ_DealNotebook_AlertManagementScreen_Create_Button}
+    
+    mx LoanIQ activate window    ${LIQ_DealNotebook_AlertManagementScreen_AlertEditor_Window}
+    mx LoanIQ enter    ${LIQ_DealNotebook_AlertManagementScreen_AlertEditor_ShortDescription_Textbox}    ${ShortDescription}
+    
+    ${Current_Local_Date}    Get Current Date    result_format=%d-%b-%Y %H:%M:%S
+    mx LoanIQ enter    ${LIQ_DealNotebook_AlertManagementScreen_AlertEditor_Details_Textbox}    ${Detail}${SPACE}${Current_Local_Date}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/AlertEditor_Window
+    mx LoanIQ click    ${LIQ_DealNotebook_AlertManagementScreen_AlertEditor_OK_Button}
+    mx LoanIQ activate window    ${LIQ_DealNotebook_AlertManagementScreen_Window}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/AlertManagementScreen_Window
+
+    mx LoanIQ close window    ${LIQ_DealNotebook_AlertManagementScreen_Window}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/CloseAlertManagementScreen_Window
+    [Return]    ${Detail}${SPACE}${Current_Local_Date}    ${Current_Local_Date}
+
+Add Details in Comments Tab in Deal Notebook
+    [Documentation]    This keyword is used to add details in the Comments tab of a Deal.
+    ...    @author: clanding    25NOV2020    - initial create
+    [Arguments]    ${sSubject}    ${sComment}
+    
+    ### Keyword Pre-processing ###
+    ${Subject}    Acquire Argument Value    ${sSubject}
+    ${Comment}    Acquire Argument Value    ${sComment}
+
+    ### Input Comment ###
+    mx LoanIQ activate window    ${LIQ_DealNotebook_Window}
+    mx LoanIQ click element if present    ${LIQ_InquiryMode_Button}
+    Mx LoanIQ Select Window Tab     ${LIQ_DealNotebook_Tab}    Comments
+    mx LoanIQ click    ${LIQ_DealNotebook_CommentsTab_Add_Button}
+    mx LoanIQ activate window    ${LIQ_DealNotebook_CommentEdit_Window}
+    mx LoanIQ enter    ${LIQ_DealNotebook_CommentEdit_Subject_Textbox}    ${Subject}
+    ${Current_Local_Date}    Get Current Date    result_format=%d-%b-%Y %H:%M:%S
+    mx LoanIQ enter    ${LIQ_DealNotebook_CommentEdit_Comment_Textbox}    ${Comment}${SPACE}${Current_Local_Date}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/CommentsEdit_Window
+    mx LoanIQ click    ${LIQ_DealNotebook_CommentEdit_OK_Button}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/CommentsEdit_Window
+    
+    ### Validate Comment if added ###
+    mx LoanIQ activate window    ${LIQ_DealNotebook_Window}
+    ${IsSelected}    Run Keyword And Return Status    Mx LoanIQ Select String    ${LIQ_DealNotebook_CommentsTab_JavaTree}    ${Subject}
+    Run Keyword If    ${IsSelected}==${True}    Log    ${Subject} is successfully added in the Comments tab.
+    ...    ELSE     Run Keyword And Continue On Failure    FAIL    ${Subject} is NOT successfully added in the Comments tab.
+
+    ### Get Author and Date ###
+    ${Comment_Author}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_DealNotebook_CommentsTab_JavaTree}    ${Subject}%Author%Comment_Author
+    ${Comment_Date}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_DealNotebook_CommentsTab_JavaTree}    ${Subject}%Date%Comment_Date
+    
+    [Return]    ${Comment_Author}    ${Comment_Date}    ${Comment}${SPACE}${Current_Local_Date}    ${Current_Local_Date}

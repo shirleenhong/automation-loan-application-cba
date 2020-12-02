@@ -45,6 +45,7 @@ Open Existing Deal
     ...    @update: bernchua    28SEP2018    Added - Mx Click Element If Present    ${LIQ_DealNotebook_InquiryMode_Button}
     ...    @update: amansuet    08APR2020    Moved from Generic to LoanIQ file and added Keyword Pre-processing
     ...    @update: hstone      11JUN2020    - Added Take Screenshot
+    ...    @update: clanding    26NOV2020    - added mx LoanIQ click element if present    ${LIQ_Alerts_OK_Button}
     [Arguments]    ${sDeal_Name}
 
     ### GetRuntime Keyword Pre-processing ###
@@ -55,7 +56,8 @@ Open Existing Deal
     Select Actions    [Actions];Deal   
     mx LoanIQ enter    ${LIQ_DealSelect_DealIdentifyBy_Textfield}    ${Deal_Name}   
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/DealSelect
-    mx LoanIQ click    ${LIQ_DealSelect_Ok_Button}   
+    mx LoanIQ click    ${LIQ_DealSelect_Ok_Button}  
+    mx LoanIQ click element if present    ${LIQ_Alerts_OK_Button}
     mx LoanIQ click element if present    ${LIQ_DealNotebook_InquiryMode_Button}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/DealNotebook
 
