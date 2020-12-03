@@ -623,11 +623,14 @@ Add Pricing Option
     ...    Changed verify text in java tree on line 540 to mx loaniq select string.
     ...    Added an optional argument to handle pricing options that does not tick on Bill Borrower checkbox.
     ...    @update: ehugo    28MAY2020    - added keyword Pre-processing; added screenshot
-    [Arguments]    ${sPricingRule_Option}    ${sInitialFractionRate_Round}    ${sRoundingDecimal_Round}    ${sNonBusinessDayRule}    ${iPricingOption_BillNoOfDays}    ${sMatrixChangeAppMethod}    ${sRateChangeAppMethod}    ${PricingOption_InitialFractionRate}=None
-    ...    ${PricingOption_RoundingDecimalPrecision}=None    ${PricingOption_RoundingApplicationMethod}=None    ${PricingOption_PercentOfRateFormulaUsage}=None    ${PricingOption_RepricingNonBusinessDayRule}=None    ${PricingOption_FeeOnLenderShareFunding}=None
-    ...    ${PricingOption_InterestDueUponPrincipalPayment}=None    ${PricingOption_InterestDueUponRepricing}=None    ${PricingOption_ReferenceBanksApply}=None    ${PricingOption_IntentNoticeDaysInAdvance}=None    ${PricingOption_IntentNoticeTime}=None
-    ...    ${PricingOption_12HrPeriodOption}=None    ${PricingOption_MaximumDrawdownAmount}=None    ${PricingOption_MinimumDrawdownAmount}=None    ${PricingOption_MinimumPaymentAmount}=None    ${PricingOption_MinimumAmountMultiples}=None    ${PricingOption_CCY}=None
-    ...    ${PricingOption_BillBorrower}=Y
+    ...    @update: dahijara    03DEC2020    - added two optional arguments ${PricingOption_RateSettingTime}=None    ${PricingOption_RateSettingPeriodOption}=None
+    ...                                      - added optional steps to handle Rate setting time and Rate setting period population.
+    ...                                      - rename arguments by appending arg type. added pre-processing for all arguments.
+    [Arguments]    ${sPricingRule_Option}    ${sInitialFractionRate_Round}    ${sRoundingDecimal_Round}    ${sNonBusinessDayRule}    ${iPricingOption_BillNoOfDays}    ${sMatrixChangeAppMethod}    ${sRateChangeAppMethod}    ${sPricingOption_InitialFractionRate}=None
+    ...    ${sPricingOption_RoundingDecimalPrecision}=None    ${sPricingOption_RoundingApplicationMethod}=None    ${sPricingOption_PercentOfRateFormulaUsage}=None    ${sPricingOption_RepricingNonBusinessDayRule}=None    ${sPricingOption_FeeOnLenderShareFunding}=None
+    ...    ${sPricingOption_InterestDueUponPrincipalPayment}=None    ${sPricingOption_InterestDueUponRepricing}=None    ${sPricingOption_ReferenceBanksApply}=None    ${sPricingOption_IntentNoticeDaysInAdvance}=None    ${sPricingOption_IntentNoticeTime}=None
+    ...    ${sPricingOption_12HrPeriodOption}=None    ${sPricingOption_MaximumDrawdownAmount}=None    ${sPricingOption_MinimumDrawdownAmount}=None    ${sPricingOption_MinimumPaymentAmount}=None    ${sPricingOption_MinimumAmountMultiples}=None    ${sPricingOption_CCY}=None
+    ...    ${sPricingOption_BillBorrower}=Y    ${sPricingOption_RateSettingTime}=None    ${sPricingOption_RateSettingPeriodOption}=None
 
     ### GetRuntime Keyword Pre-processing ###
     ${PricingRule_Option}    Acquire Argument Value    ${sPricingRule_Option}
@@ -637,6 +640,26 @@ Add Pricing Option
     ${PricingOption_BillNoOfDays}    Acquire Argument Value    ${iPricingOption_BillNoOfDays}
     ${MatrixChangeAppMethod}    Acquire Argument Value    ${sMatrixChangeAppMethod}
     ${RateChangeAppMethod}    Acquire Argument Value    ${sRateChangeAppMethod}
+    ${PricingOption_InitialFractionRate}    Acquire Argument Value    ${sPricingOption_InitialFractionRate}
+    ${PricingOption_RoundingDecimalPrecision}    Acquire Argument Value    ${sPricingOption_RoundingDecimalPrecision}
+    ${PricingOption_RoundingApplicationMethod}    Acquire Argument Value    ${sPricingOption_RoundingApplicationMethod}
+    ${PricingOption_PercentOfRateFormulaUsage}    Acquire Argument Value    ${sPricingOption_PercentOfRateFormulaUsage}
+    ${PricingOption_RepricingNonBusinessDayRule}    Acquire Argument Value    ${sPricingOption_RepricingNonBusinessDayRule}
+    ${PricingOption_FeeOnLenderShareFunding}    Acquire Argument Value    ${sPricingOption_FeeOnLenderShareFunding}
+    ${PricingOption_InterestDueUponPrincipalPayment}    Acquire Argument Value    ${sPricingOption_InterestDueUponPrincipalPayment}
+    ${PricingOption_InterestDueUponRepricing}    Acquire Argument Value    ${sPricingOption_InterestDueUponRepricing}
+    ${PricingOption_ReferenceBanksApply}    Acquire Argument Value    ${sPricingOption_ReferenceBanksApply}
+    ${PricingOption_IntentNoticeDaysInAdvance}    Acquire Argument Value    ${sPricingOption_IntentNoticeDaysInAdvance}
+    ${PricingOption_IntentNoticeTime}    Acquire Argument Value    ${sPricingOption_IntentNoticeTime}
+    ${PricingOption_12HrPeriodOption}    Acquire Argument Value    ${sPricingOption_12HrPeriodOption}
+    ${PricingOption_MaximumDrawdownAmount}    Acquire Argument Value    ${sPricingOption_MaximumDrawdownAmount}
+    ${PricingOption_MinimumDrawdownAmount}    Acquire Argument Value    ${sPricingOption_MinimumDrawdownAmount}
+    ${PricingOption_MinimumPaymentAmount}    Acquire Argument Value    ${sPricingOption_MinimumPaymentAmount}
+    ${PricingOption_MinimumAmountMultiples}    Acquire Argument Value    ${sPricingOption_MinimumAmountMultiples}
+    ${PricingOption_CCY}    Acquire Argument Value    ${sPricingOption_CCY}
+    ${PricingOption_BillBorrower}    Acquire Argument Value    ${sPricingOption_BillBorrower}
+    ${PricingOption_RateSettingTime}    Acquire Argument Value    ${sPricingOption_RateSettingTime}
+    ${PricingOption_RateSettingPeriodOption}    Acquire Argument Value    ${sPricingOption_RateSettingPeriodOption}
 
     Mx LoanIQ Select Window Tab    ${LIQ_DealNotebook_Tab}    Pricing Rules
     mx LoanIQ click    ${LIQ_PricingRules_AddOption_Button}
@@ -669,6 +692,9 @@ Add Pricing Option
     Run Keyword If    '${PricingOption_MinimumDrawdownAmount}' != 'None'    mx LoanIQ enter    ${LIQ_InterestPricingOption_MinimumDrawdownAmount_Textfield}    ${PricingOption_MinimumDrawdownAmount}
     Run Keyword If    '${PricingOption_MinimumPaymentAmount}' != 'None'    mx LoanIQ enter    ${LIQ_InterestPricingOption_MinimumPaymentAmount_Textfield}    ${PricingOption_MinimumPaymentAmount}    
     Run Keyword If    '${PricingOption_MinimumAmountMultiples}' != 'None'    mx LoanIQ enter    ${LIQ_InterestPricingOption_MinimumAmountMultiples_Textfield}    ${PricingOption_MinimumAmountMultiples}
+    Run Keyword If    '${PricingOption_RateSettingTime}' != 'None'    mx LoanIQ enter    ${LIQ_InterestPricingOption_RateSettingTimeInAdvance_Textfield}    ${PricingOption_RateSettingTime}
+    Run Keyword If    '${PricingOption_RateSettingPeriodOption}' != 'None'    mx LoanIQ enter    JavaWindow("title:=Interest Pricing Option.*").JavaRadioButton("labeled_containers_path:=.*Rate Setting.*","attached text:=${PricingOption_RateSettingPeriodOption}")    ON
+
     mx LoanIQ click    ${LIQ_InterestPricingOption_Ok_Button}
     Run Keyword And Continue On Failure    Mx LoanIQ Select String   ${LIQ_PricingRules_AllowedPricingOption_JavaTree}    ${PricingRule_Option}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/DealNotebook_PricingRulesTab_PricingOption

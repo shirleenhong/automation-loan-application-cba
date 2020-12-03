@@ -411,6 +411,18 @@ Get Loan Risk Type
     Take Screenshot    ${SCREENSHOT_FILENAME}
     [Return]    ${LoanRiskType}
 
+Get Repricing Loan Risk Type
+    [Documentation]    This keyword gets the Repricing Loan Risk type and returns the value.
+    ...    @author: makcamps    02DEC2020    - Initial Create
+    mx LoanIQ activate window    ${LIQ_Loan_Window}
+    Mx LoanIQ Select Window Tab    ${LIQ_Loan_Tab}    General 
+    ${LoanRiskType}    Mx LoanIQ Get Data    ${LIQ_Repricing_Loan_RiskType_Text}    value%Loan Risk Type 
+    Log    The Loan fee type is ${LoanRiskType}
+    Screenshot.Set Screenshot Directory    ${Screenshot_Path}
+    Set Test Variable    ${SCREENSHOT_FILENAME}    Loan Risk Type
+    Take Screenshot    ${SCREENSHOT_FILENAME}
+    [Return]    ${LoanRiskType}
+
 Get Loan Currency
     [Documentation]    This keyword gets the Loan Currency and returns the value.
     ...    @author: rtarayao    26AUG2019    - Initial Create
@@ -431,6 +443,17 @@ Get Loan Effective and Maturity Expiry Dates
     Mx LoanIQ Select Window Tab    ${LIQ_Loan_Tab}    General
     ${LoanEffectiveDate}    Mx LoanIQ Get Data    ${LIQ_Loan_EffectiveDate_Text}    text%EffectiveDate 
      ${LoanMaturityDate}    Mx LoanIQ Get Data    ${LIQ_Loan_MaturityDate_Text}    text%MaturityDate
+    Log    The Loan Effective and Maturity Dates are ${LoanEffectiveDate} and ${LoanMaturityDate} respectively.  
+    Take Screenshot    ${Screenshot_Path}/Screenshots/LoanIQ/Loan_Effective_and_Maturity_Date
+    [Return]    ${LoanEffectiveDate}    ${LoanMaturityDate}
+    
+Get Repricing Loan Effective and Maturity Expiry Dates
+    [Documentation]    This keyword gets the Repricing Loan Effective Date and returns the value.
+    ...    @author: makcamps    02DEC2020    - Initial Create
+    mx LoanIQ activate window    ${LIQ_Loan_Window}
+    Mx LoanIQ Select Window Tab    ${LIQ_Loan_Tab}    General
+    ${LoanEffectiveDate}    Mx LoanIQ Get Data    ${LIQ_Repricing_Loan_EffectiveDate_Text}    text%EffectiveDate 
+     ${LoanMaturityDate}    Mx LoanIQ Get Data    ${LIQ_Repricing_Loan_MaturityDate_Text}    text%MaturityDate
     Log    The Loan Effective and Maturity Dates are ${LoanEffectiveDate} and ${LoanMaturityDate} respectively.  
     Take Screenshot    ${Screenshot_Path}/Screenshots/LoanIQ/Loan_Effective_and_Maturity_Date
     [Return]    ${LoanEffectiveDate}    ${LoanMaturityDate}
@@ -481,6 +504,18 @@ Get Loan Pricing Option Code
     mx LoanIQ activate window    ${LIQ_Loan_Window}
     Mx LoanIQ Select Window Tab    ${LIQ_Loan_Tab}    General 
     ${PricingOptionCode}    Mx LoanIQ Get Data    ${LIQ_Loan_PricingOption_Text}    text%PricingOption  
+    Log    The Pricing Option Code is ${PricingOptionCode}  
+    Screenshot.Set Screenshot Directory    ${Screenshot_Path}
+    Set Test Variable    ${SCREENSHOT_FILENAME}    Loan Pricing Option
+    Take Screenshot    ${SCREENSHOT_FILENAME}
+    [Return]    ${PricingOptionCode}
+    
+Get Repricing Loan Pricing Option Code
+    [Documentation]    This keyword gets the Repricing Loan Pricing Option and returns the value.
+    ...    @author: makcamps    02DEC2020    - Initial Create
+    mx LoanIQ activate window    ${LIQ_Loan_Window}
+    Mx LoanIQ Select Window Tab    ${LIQ_Loan_Tab}    General 
+    ${PricingOptionCode}    Mx LoanIQ Get Data    ${LIQ_Repricing_Loan_PricingOption_Text}    text%PricingOption  
     Log    The Pricing Option Code is ${PricingOptionCode}  
     Screenshot.Set Screenshot Directory    ${Screenshot_Path}
     Set Test Variable    ${SCREENSHOT_FILENAME}    Loan Pricing Option
