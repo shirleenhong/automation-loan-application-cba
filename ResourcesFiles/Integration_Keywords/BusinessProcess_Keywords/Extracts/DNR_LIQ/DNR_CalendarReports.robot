@@ -36,15 +36,15 @@ Write Details for Calendar Report
     Write Data To Excel    DNR    Report_File_Name    ${TestCase_Name}    &{ExcelPath}[File_Name]${CBA_CALENDAR_REPORTFILE}.xlsx    ${DNR_DATASET}    bTestCaseColumn=True
     Write Data To Excel    CALND    Report_File_Name    ${TestCase_Name}    &{ExcelPath}[File_Name]${CBA_CALENDAR_REPORTFILE}.xlsx    ${DNR_DATASET}    bTestCaseColumn=True
     
-Validate that the Calendar Report is generated for Outstanding with RELEASED status
+Validate that the Calendar Report is Generated for Outstanding with RELEASED status
     [Documentation]    This keyword is used to extract details from Calendar Reports and validate the Specific Outsanding with RELEASED Status
     ...    @author: fluberio    01DEC2020    - initial create
     [Arguments]    ${ExcelPath}
     
     ### Get Expected Details ###
-    ${Outstanding_Alias}    Read Data From Excel    SC1_LoanDrawdown    Loan_Alias    1    ${DNR_DATASET}
-    ${Deal_Name}    Read Data From Excel    SC1_LoanDrawdown    Deal_Name    1    ${DNR_DATASET}
-    ${Facility_Name}    Read Data From Excel    SC1_LoanDrawdown    Facility_Name    1    ${DNR_DATASET}
+    ${Outstanding_Alias}    Read Data From Excel    SC1_LoanDrawdown    Loan_Alias    ${rowid}    ${DNR_DATASET}
+    ${Deal_Name}    Read Data From Excel    SC1_LoanDrawdown    Deal_Name    ${rowid}    ${DNR_DATASET}
+    ${Facility_Name}    Read Data From Excel    SC1_LoanDrawdown    Facility_Name    ${rowid}    ${DNR_DATASET}
    
     ### Get Actual Details in the Report
     ${Outstanding_Status}    Read Data From Excel    Outstandings    Outstanding Status    ${Outstanding_Alias}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}    &{ExcelPath}[Report_Path]&{ExcelPath}[Report_File_Name]    bTestCaseColumn=True    sTestCaseColReference=Outstanding Number
@@ -52,7 +52,7 @@ Validate that the Calendar Report is generated for Outstanding with RELEASED sta
     ${Deal_Name_Report}    Read Data From Excel    Outstandings    Deal Name    ${Outstanding_Alias}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}    &{ExcelPath}[Report_Path]&{ExcelPath}[Report_File_Name]    bTestCaseColumn=True    sTestCaseColReference=Outstanding Number
     ${Facility_Name_Report}    Read Data From Excel    Outstandings    Facility Name    ${Outstanding_Alias}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}    &{ExcelPath}[Report_Path]&{ExcelPath}[Report_File_Name]    bTestCaseColumn=True    sTestCaseColReference=Outstanding Number
        
-    Compare Two Strings    ${Outstanding_Status}    LRELS
+    Compare Two Strings    &{ExcelPath}[Outstanding_Status]    ${Outstanding_Status}
     Compare Two Strings    ${Outstanding_Alias}    ${Oustanding_Alias_Report}
     Compare Two Strings    ${Deal_Name}    ${Deal_Name_Report.strip()}
     Compare Two Strings    ${Facility_Name}    ${Facility_Name_Report.strip()}

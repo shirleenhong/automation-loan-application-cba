@@ -121,6 +121,7 @@ Set Branch and Download Report
 Set Filter Using Branch Description and Processing Area and Financial Centre and From and To Date and Download Report
     [Documentation]    This keyword is used to set filter for report and download excel file report.
     ...    @author: clanding    27NOV2020    - initial create
+    ...    @update: fluberio    03DEC2020    - added filters for sFromMonth sToMonth sFromYear and sToYear
     [Arguments]    ${sFromDay}    ${sToDay}    ${sBranchDescription}    ${sProcessingArea}    ${sReport_Name}    ${sReport_Path}    ${sFinancialCentre}=SELECT ALL    ${sFromMonth}=None
     ...    ${sToMonth}=None    ${sFromYear}=None    ${sToYear}=None
  
