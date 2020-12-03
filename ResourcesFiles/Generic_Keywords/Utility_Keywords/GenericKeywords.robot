@@ -2746,7 +2746,6 @@ Check if File Exist
     \    Exit For Loop If    ${IsFileExist}==${True}
     Run Keyword If    ${IsFileExist}==${True}    Log    '${sPath}\\${sFile_Name}.${sFile_Type}' is found.
     ...    ELSE    Run Keyword And Continue on Failure    Fail    '${sFile_Name}' is not found at '${sPath}'.
-    [Return]    ${Deal_Name}    ${Deal_Alias}
 
 Generate Deal Name and Alias with Numeric Test Data
     [Documentation]    This keyword generates deal name and alias by appending numeric characters.
