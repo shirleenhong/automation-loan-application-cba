@@ -2736,13 +2736,17 @@ Generate Deal Name and Alias with 5 Numeric Test Data
     log    Deal Alias: ${Deal_Alias}
     [Return]    ${Deal_Name}    ${Deal_Alias}
 
-Generate Deal Name and Alias with 4 Numeric Test Data
-    [Documentation]    This keyword generates deal name and alias by appending 4 numeric characters.
-    ...    @author:    dahijara    02DEC2020    - Initial Create
-    [Arguments]   ${Deal_NamePrefix}    ${Deal_AliasPrefix}
-    ${Deal_Name}    Auto Generate Only 4 Numeric Test Data    ${Deal_NamePrefix}
-    log    Deal Name: ${Deal_Name}
-    ${Deal_Alias}    Auto Generate Only 4 Numeric Test Data    ${Deal_AliasPrefix}
-    log    Deal Alias: ${Deal_Alias}
+Generate Deal Name and Alias with Numeric Test Data
+    [Documentation]    This keyword generates deal name and alias by appending numeric characters.
+    ...    Add additional condition if  there is a need for another specific number of numeric characters.
+    ...    @author:    dahijara    03DEC2020    - Initial Create
+    [Arguments]   ${sDeal_NamePrefix}    ${sDeal_AliasPrefix}    ${sNumofSuffix}
+    ${Deal_Name}    Run Keyword If    '${sNumofSuffix}'=='4'    Auto Generate Only 4 Numeric Test Data    ${sDeal_NamePrefix}
+    ...    ELSE IF    '${sNumofSuffix}'=='5'    Auto Generate Only 5 Numeric Test Data    ${sDeal_NamePrefix}
+    Log    Deal Name: ${Deal_Name}
+
+    ${Deal_Alias}    Run Keyword If    '${sNumofSuffix}'=='4'    Auto Generate Only 4 Numeric Test Data    ${sDeal_AliasPrefix}
+    ...    ELSE IF    '${sNumofSuffix}'=='5'    Auto Generate Only 5 Numeric Test Data    ${sDeal_AliasPrefix}
+    Log    Deal Alias: ${Deal_Alias}
     [Return]    ${Deal_Name}    ${Deal_Alias}
 
