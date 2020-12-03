@@ -121,7 +121,9 @@ Set Branch and Download Report
 Set Filter Using Branch Description and Processing Area and Financial Centre and From and To Date and Download Report
     [Documentation]    This keyword is used to set filter for report and download excel file report.
     ...    @author: clanding    27NOV2020    - initial create
-    [Arguments]    ${sFromDay}    ${sToDay}    ${sBranchDescription}    ${sProcessingArea}    ${sReport_Name}    ${sReport_Path}    ${sFinancialCentre}=SELECT ALL
+    ...    @update: fluberio    03DEC2020    - added filters for sFromMonth sToMonth sFromYear and sToYear
+    [Arguments]    ${sFromDay}    ${sToDay}    ${sBranchDescription}    ${sProcessingArea}    ${sReport_Name}    ${sReport_Path}    ${sFinancialCentre}=SELECT ALL    ${sFromMonth}=None
+    ...    ${sToMonth}=None    ${sFromYear}=None    ${sToYear}=None
  
     Delete File If Exist    ${sReport_Path}${sReport_Name}.xlsx
  
@@ -147,11 +149,23 @@ Set Filter Using Branch Description and Processing Area and Financial Centre and
     ...    ELSE    Click Element    ${DNR_TeamContent_CBAReports_FinancialCentre_Row_Locator}
  
     ### Select From Date ###
+    Run Keyword If    '${sFromYear}'!='None'    Run Keywords    Click Element    ${DNR_TeamContent_CBAReports_FromMonthYear_Calendar_Locator}
+    ...    AND    Setup Year for From and To Filter    ${DNR_TeamContent_CBAReports_FromMonthYear_Calendar_Locator}    ${sFromYear}
+    ...    AND    Click Element    ${DNR_TeamContent_CBAReports_FromMonthYear_Calendar_Locator}
+    ${sFromMonth}    Replace Variables    ${sFromMonth}
+    ${DNR_TeamContent_CBAReports_FromMonth_Calendar_Locator}    Replace Variables    ${DNR_TeamContent_CBAReports_FromMonth_Calendar_Locator}
+    Run Keyword If    '${sFromMonth}'!='None'    Click Element    ${DNR_TeamContent_CBAReports_FromMonth_Calendar_Locator}
     ${sFromDay}    Replace Variables    ${sFromDay}
     ${DNR_TeamContent_CBAReports_FromDate_Calendar_Locator}    Replace Variables    ${DNR_TeamContent_CBAReports_FromDate_Calendar_Locator}
     Click Element    ${DNR_TeamContent_CBAReports_FromDate_Calendar_Locator}
     
     ### Select To Date ###
+    Run Keyword If    '${sToYear}'!='None'    Run Keywords    Click Element    ${DNR_TeamContent_CBAReports_ToMonthYear_Calendar_Locator}
+    ...    AND    Setup Year for From and To Filter    ${DNR_TeamContent_CBAReports_ToMonthYear_Calendar_Locator}    ${sToYear}
+    ...    AND    Click Element    ${DNR_TeamContent_CBAReports_ToMonthYear_Calendar_Locator}
+    ${sToMonth}    Replace Variables    ${sToMonth}
+    ${DNR_TeamContent_CBAReports_ToMonth_Calendar_Locator}    Replace Variables    ${DNR_TeamContent_CBAReports_ToMonth_Calendar_Locator}
+    Run Keyword If    '${sToMonth}'!='None'    Click Element    ${DNR_TeamContent_CBAReports_ToMonth_Calendar_Locator}
     ${sToDay}    Replace Variables    ${sToDay}
     ${DNR_TeamContent_CBAReports_ToDate_Calendar_Locator}    Replace Variables    ${DNR_TeamContent_CBAReports_ToDate_Calendar_Locator}
     Click Element    ${DNR_TeamContent_CBAReports_ToDate_Calendar_Locator}
