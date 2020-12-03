@@ -197,4 +197,24 @@ Update Alerts in Deal for DNR
 
     Close All Windows on LIQ
 
+Update Comments in Deal for DNR
+    [Documentation]    This keyword is used to update Comments details for Deal level.
+    ...    @author: clanding    03DEC2020    - initial create
+    [Arguments]    ${ExcelPath}
+    
+    ${Current_Comment_Heading}    Read Data From Excel    CMMNT    Comment_Heading    CMMNT_006    ${DNR_DATASET}    bTestCaseColumn=True    sTestCaseColReference=Test_Case
+    ${Deal_Name}    Read Data From Excel    CMMNT    Deal_Name    CMMNT_006    ${DNR_DATASET}    bTestCaseColumn=True    sTestCaseColReference=Test_Case
+    ${Deal_Tracking_Number}    Read Data From Excel    CMMNT    Deal_Tracking_Number    CMMNT_006    ${DNR_DATASET}    bTestCaseColumn=True    sTestCaseColReference=Test_Case
+
+    Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
+    Open Existing Deal    ${Deal_Name}
+    ${Comment_Details}    ${Comment_DateWithTime}    Update Details in Comments Tab in Deal Notebook    ${Current_Comment_Heading}    &{ExcelPath}[Comment_Heading]
+    Write Data To Excel    CMMNT    User_ID    ${TestCase_Name}    ${INPUTTER_USERNAME}    ${DNR_DATASET}    bTestCaseColumn=True
+    Write Data To Excel    CMMNT    Date_Added_Amended    ${TestCase_Name}    ${Comment_DateWithTime}    ${DNR_DATASET}    bTestCaseColumn=True
+    Write Data To Excel    CMMNT    Comment_Detail    ${TestCase_Name}    ${Comment_Details}    ${DNR_DATASET}    bTestCaseColumn=True
+    Write Data To Excel    CMMNT    Deal_Name    ${TestCase_Name}    ${Deal_Name}    ${DNR_DATASET}    bTestCaseColumn=True
+    Write Data To Excel    CMMNT    Deal_Tracking_Number    ${TestCase_Name}    ${Deal_Tracking_Number}    ${DNR_DATASET}    bTestCaseColumn=True
+
+    Close All Windows on LIQ
+
 
