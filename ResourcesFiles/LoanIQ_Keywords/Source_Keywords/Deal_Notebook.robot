@@ -3024,3 +3024,27 @@ Add Details in Comments Tab in Deal Notebook
     
     [Return]    ${Comment_Author}    ${Comment_Date}    ${Comment}${SPACE}${Current_Local_Date}    ${Current_Local_Date}
     
+Update Alerts in Deal Notebook
+    [Documentation]    This keyword is used to update Alerts details in Deal Notebook.
+    ...    @author: clanding    03DEC2020    - initial create
+    [Arguments]    ${sNew_ShortDescription}
+    
+    ### Keyword Pre-processing ###
+    ${New_ShortDescription}    Acquire Argument Value    ${sNew_ShortDescription}
+
+    mx LoanIQ activate window    ${LIQ_DealNotebook_Window}
+    Select Menu Item    ${LIQ_DealNotebook_Window}    Options    Alerts   
+    mx LoanIQ activate window    ${LIQ_DealNotebook_AlertManagementScreen_AlertEditor_Window}
+    mx LoanIQ click    ${LIQ_DealNotebook_AlertManagementScreen_Modify_Button}
+
+    ${Current_Local_Date}    Get Current Date    result_format=%d-%b-%Y %H:%M:%S
+    mx LoanIQ enter    ${LIQ_DealNotebook_AlertManagementScreen_AlertEditor_ShortDescription_Textbox}    ${New_ShortDescription}
+    mx LoanIQ enter    ${LIQ_DealNotebook_AlertManagementScreen_AlertEditor_Details_Textbox}    ${New_ShortDescription}${SPACE}${Current_Local_Date}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/AlertEditor_Window
+    mx LoanIQ click    ${LIQ_DealNotebook_AlertManagementScreen_AlertEditor_OK_Button}
+    mx LoanIQ activate window    ${LIQ_DealNotebook_AlertManagementScreen_Window}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/AlertManagementScreen_Window
+
+    mx LoanIQ close window    ${LIQ_DealNotebook_AlertManagementScreen_Window}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/CloseAlertManagementScreen_Window
+    [Return]    ${New_ShortDescription}${SPACE}${Current_Local_Date}    ${Current_Local_Date}
