@@ -316,6 +316,7 @@ LIQ_InterestPricingOption_MinimumDrawdownAmount_Textfield = 'JavaWindow("title:=
 LIQ_InterestPricingOption_MinimumPaymentAmount_Textfield = 'JavaWindow("title:=Interest Pricing Option.*").JavaEdit("index:=2")'
 LIQ_InterestPricingOption_MinimumAmountMultiples_Textfield = 'JavaWindow("title:=Interest Pricing Option.*").JavaEdit("index:=3")'
 LIQ_InterestPricingOption_MinimumLenderShareMultiples_Textfield = 'JavaWindow("title:=Interest Pricing Option.*").JavaEdit("index:=4")'
+LIQ_InterestPricingOption_RateSettingTimeInAdvance_Textfield = 'JavaWindow("title:=Interest Pricing Option.*").JavaEdit("labeled_containers_path:=.*Rate Setting.*","attached text:=Time.*")'
 
 ### Interest Pricing Option - Frequency Selection List Window ###
 LIQ_FrequencySelectionList_Window = 'JavaWindow("title:=Frequency Selection List")'
