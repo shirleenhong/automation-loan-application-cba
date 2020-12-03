@@ -316,6 +316,7 @@ LIQ_InterestPricingOption_MinimumDrawdownAmount_Textfield = 'JavaWindow("title:=
 LIQ_InterestPricingOption_MinimumPaymentAmount_Textfield = 'JavaWindow("title:=Interest Pricing Option.*").JavaEdit("index:=2")'
 LIQ_InterestPricingOption_MinimumAmountMultiples_Textfield = 'JavaWindow("title:=Interest Pricing Option.*").JavaEdit("index:=3")'
 LIQ_InterestPricingOption_MinimumLenderShareMultiples_Textfield = 'JavaWindow("title:=Interest Pricing Option.*").JavaEdit("index:=4")'
+LIQ_InterestPricingOption_RateSettingTimeInAdvance_Textfield = 'JavaWindow("title:=Interest Pricing Option.*").JavaEdit("labeled_containers_path:=.*Rate Setting.*","attached text:=Time.*")'
 
 ### Interest Pricing Option - Frequency Selection List Window ###
 LIQ_FrequencySelectionList_Window = 'JavaWindow("title:=Frequency Selection List")'
@@ -772,3 +773,38 @@ LIQ_ChangeBranchProcArea_OK_Button = 'JavaWindow("title:=Change Branch / Process
 
 ###Deal Notebook - Pending Transactions ###
 LIQ_DealNotebook_Pending_ListItem = 'JavaWindow("title:=Deal Notebook -.*","displayed:=1").JavaTree("attached text:=Pending Transactions")'   
+
+### Alerts ###
+LIQ_DealNotebook_AlertManagementScreen_Window = 'JavaWindow("title:=Alert Management Screen")'
+LIQ_DealNotebook_AlertManagementScreen_JavaTree = 'JavaWindow("title:=Alert Management Screen").JavaTree("labeled_containers_path:=Group:Customer/Deal/Facility/Outstanding;")'
+LIQ_DealNotebook_AlertManagementScreen_Alerts_JavaList = 'JavaWindow("title:=Alert Management Screen").JavaList("labeled_containers_path:=Group:Alerts;")'
+LIQ_DealNotebook_AlertManagementScreen_Create_Button = 'JavaWindow("label:=Alert Management Screen").JavaButton("attached text:=Create")'
+LIQ_DealNotebook_AlertManagementScreen_ChooseAnEntity_Customer_RadioButton = 'JavaWindow("title:=Choose an Entity").JavaRadioButton("attached text:=Customer")'
+LIQ_DealNotebook_AlertManagementScreen_ChooseAnEntity_Deal_RadioButton = 'JavaWindow("title:=Choose an Entity").JavaRadioButton("attached text:=Deal")'
+LIQ_DealNotebook_AlertManagementScreen_ChooseAnEntity_Facility_RadioButton = 'JavaWindow("title:=Choose an Entity").JavaRadioButton("attached text:=Facility")'
+LIQ_DealNotebook_AlertManagementScreen_ChooseAnEntity_Outstanding_RadioButton = 'JavaWindow("title:=Choose an Entity").JavaRadioButton("attached text:=Outstanding")'
+LIQ_DealNotebook_AlertManagementScreen_ChooseAnEntity_OK_Button = 'JavaWindow("title:=Choose an Entity").JavaButton("attached text:=OK")'
+LIQ_DealNotebook_AlertManagementScreen_FacilitySelect_Window = 'JavaWindow("title:=Facility Select")'
+LIQ_DealNotebook_AlertManagementScreen_FacilitySelect_Deal_Textbox = 'JavaWindow("title:=Facility Select").JavaEdit("index:=0")'
+LIQ_DealNotebook_AlertManagementScreen_FacilitySelect_IdentifyByValue_Textbox = 'JavaWindow("title:=Facility Select").JavaEdit("index:=1")'
+LIQ_DealNotebook_AlertManagementScreen_FacilitySelect_OK_Button = 'JavaWindow("title:=Facility Select").JavaButton("attached text:=OK")'
+LIQ_DealNotebook_AlertManagementScreen_FacilitySelect_Search_Button = 'JavaWindow("title:=Facility Select").JavaButton("attached text:=Search")'
+LIQ_DealNotebook_AlertManagementScreen_FacilityListByName_OK_Button = 'JavaWindow("text:=Facility Select").JavaWindow("text:=Facility List By Name").JavaButton("attached text:=OK")'
+LIQ_DealNotebook_AlertManagementScreen_AlertEditor_Window = 'JavaWindow("title:=Alert Editor")'
+LIQ_DealNotebook_AlertManagementScreen_AlertEditor_ShortDescription_Textbox = 'JavaWindow("title:=Alert Editor").JavaEdit("attached text:=Short Description:")'
+LIQ_DealNotebook_AlertManagementScreen_AlertEditor_Details_Textbox = 'JavaWindow("title:=Alert Editor").JavaEdit("attached text:=Details:")'
+LIQ_DealNotebook_AlertManagementScreen_AlertEditor_OK_Button = 'JavaWindow("title:=Alert Editor").JavaButton("attached text:=OK")'
+
+### Comments Tab ###
+LIQ_DealNotebook_CommentsTab_JavaTree = 'JavaWindow("label:=Deal Notebook.*").JavaTree("attached text:=Drill down to update")'
+LIQ_DealNotebook_CommentsTab_Add_Button = 'JavaWindow("title:=Deal Notebook.*").JavaButton("label:=Add.*")'
+LIQ_DealNotebook_CommentEdit_Window = 'JavaWindow("title:=Comment Edit")'
+LIQ_DealNotebook_CommentEdit_CreatedOn_Textbox = 'JavaWindow("title:=Comment Edit").JavaEdit("attached text:=Created on:")'
+LIQ_DealNotebook_CommentEdit_CreatedBy_Textbox = 'JavaWindow("title:=Comment Edit").JavaEdit("attached text:=by:","Index:=0")'
+LIQ_DealNotebook_CommentEdit_ModifiedOn_Textbox = 'JavaWindow("title:=Comment Edit").JavaEdit("attached text:=Modified on:")'
+LIQ_DealNotebook_CommentEdit_ModifiedBy_Textbox = 'JavaWindow("title:=Comment Edit").JavaEdit("attached text:=by:","Index:=1")'
+LIQ_DealNotebook_CommentEdit_Subject_Textbox = 'JavaWindow("title:=Comment Edit").JavaEdit("attached text:=Subject:")'
+LIQ_DealNotebook_CommentEdit_Comment_Textbox = 'JavaWindow("title:=Comment Edit").JavaEdit("attached text:=Comment:")'
+LIQ_DealNotebook_CommentEdit_OK_Button = 'JavaWindow("title:=Comment Edit").JavaButton("attached text:=OK")'
+LIQ_DealNotebook_CommentEdit_Cancel_Button = 'JavaWindow("title:=Comment Edit").JavaButton("attached text:=Cancel")'
+LIQ_DealNotebook_CommentEdit_Delete_Button = 'JavaWindow("title:=Comment Edit").JavaButton("attached text:=Delete")'

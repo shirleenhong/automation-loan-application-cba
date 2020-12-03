@@ -102,7 +102,7 @@ Navigate to Accruals Share Adjustment Loans
 Create Cycle Share Adjustment for Loan Outstanding
     [Documentation]    This keyword is for creating cycle share adjustment for Bilateral Deal
     ...    @author: sacuisia    10OCT2021
-    [Arguments]    ${ExcelPath}    ${sCyclesForLoan}=None
+    [Arguments]    ${ExcelPath}
     
    
     ${SBLC_EffectiveDate}    Get System Date
@@ -118,10 +118,19 @@ Create Cycle Share Adjustment for Loan Outstanding
     ${AccruedtoDateAmt}    Remove Comma and Convert to Number    ${AccruedtoDateAmt}
     Write Data To Excel    ComSee_SC2_Loan    Outstanding_AccruedInterest    ${rowid}    ${LoanAccruedtodateAmount}    ${ComSeeDataSet}
     
+    ##Validate Cycle Due paidToDate after EOD
+    Navigate to Share Accrual Cycle    &{ExcelPath}[Host_Bank]
     
-    ${Current_Cycle_Due}    ${Paid_to_Date}    Store Cycle Start Date, End Date, and Paid Fee for Loan Outstanding    &{ExcelPath}[CycleNumber]
+    ${Current_Cycle_Due}    Get Cycle Due Amount
+    ${Current_Cycle_Due}    Remove comma and convert to number - Cycle Due    ${Current_Cycle_Due}
     Write Data To Excel    ComSee_SC2_Loan    Outstanding_cycleDue    ${rowid}    ${Current_Cycle_Due}    ${ComSeeDataSet}
-    Write Data To Excel    ComSee_SC2_Loan    Outstanding_paidToDate    ${rowid}    ${Paid_to_Date}    ${ComSeeDataSet}
+    
+    ${Paid_to_Date}   Get PaidToDate    
+    ${Paid_to_Date}    Remove comma and convert to number - Paid to Date    ${Paid_to_Date}
+    Write Data To Excel    ComSee_SC2_Loan   Outstanding_paidToDate    ${rowid}    ${Paid_to_Date}    ${ComSeeDataSet}
+    
+    Mx LoanIQ click    ${LIQ_ServicingGroup_Exit_Button}
+    Mx LoanIQ click    ${LIQ_SharesFor_Cancel_Button}
     
     Navigate to Accruals Share Adjustment Loans    &{ExcelPath}[CycleNumber]    &{ExcelPath}[Deal_Name]    &{ExcelPath}[Facility_Name]    &{ExcelPath}[Borrower_ShortName]    &{ExcelPath}[Outstanding_Alias]    
     Input Requested Amount, Effective Date, and Comment    ${Paid_to_Date}    ${SBLC_EffectiveDate}    &{ExcelPath}[Accrual_Comment]
@@ -223,6 +232,7 @@ Release Interest Payment
 Initiate Interest Payment - Scenario 7 ComSee
    [Documentation]    This keyword will pay Interest Fees on a bilateral deal
    ...    @author: rtarayao    13SEP2019    - Duplicate from Scenario 7 of the Functional Scenarios
+   ...    @author: makcamps    01DEC2020    - added condition for currency in eu
    [Arguments]    ${ExcelPath}
    
    ###Navigate to Existing Loan###
@@ -252,7 +262,8 @@ Initiate Interest Payment - Scenario 7 ComSee
    Verify if Status is set to Do It    &{ExcelPath}[Borrower1_ShortName]  
     
    ##Get Transaction Amount for Cashflow###
-   ${HostBankShare}    Get Host Bank Cash in Cashflow
+   ${HostBankShare}    Run Keyword If    '${ENTITY}'!='EU'    Get Host Bank Cash in Cashflow
+   ...    ELSE    Get Host Bank Cash in Cashflow    &{ExcelPath}[Loan_Currency]
    ${BorrowerTranAmount}    Get Transaction Amount in Cashflow    &{ExcelPath}[Borrower1_ShortName]
    ${ComputedHBTranAmount}    Compute Lender Share Transaction Amount    ${CycleDue}    &{ExcelPath}[HostBankSharePct]
     
