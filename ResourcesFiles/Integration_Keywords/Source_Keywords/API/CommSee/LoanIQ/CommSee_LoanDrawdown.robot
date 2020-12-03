@@ -155,7 +155,7 @@ Pay Loan Outstanding Accrual Zero Cycle Due
     ${AccruedtoDateAmt}    Remove Comma and Convert to Number    ${AccruedtoDateAmt}
     Write Data To Excel    ComSee_SC2_Loan    Outstanding_AccruedInterest    ${rowid}    ${LoanAccruedtodateAmount}    ${ComSeeDataSet}
     
-    Navigate to Share Accrual Cycle    &{ExcelPath}[Lender1_ShortName]
+    Navigate to Share Accrual Cycle    &{ExcelPath}[Host_Bank]
     
     ${LoanCycleDueAmount}    Get Cycle Due Amount
     ${LoanCycleDueAmount}    Remove comma and convert to number - Cycle Due    ${LoanCycleDueAmount}

@@ -38,6 +38,7 @@ Generate DNR Report for Calendar
     Run As Report Type    ${CBA_CALENDAR_REPORTFILE}    ${EXCEL_REPORTTYPE}
     Set Filter Using Branch Description and Processing Area and Financial Centre and From and To Date and Download Report    &{ExcelPath}[From_Date]
     ...    &{ExcelPath}[To_Date]    &{ExcelPath}[Branch_Description]    &{ExcelPath}[Processing_Area]    ${CBA_CALENDAR_REPORTFILE}    &{ExcelPath}[Report_Path]    &{ExcelPath}[Financial_Centre]
+    ...    &{ExcelPath}[From_Month]    &{ExcelPath}[To_Month]    &{ExcelPath}[From_Year]    &{ExcelPath}[To_Year]
     Check if File Exist    &{ExcelPath}[Report_Path]    ${CBA_CALENDAR_REPORTFILE}
     Logout from Cognos    ${True}
  
