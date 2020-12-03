@@ -217,3 +217,17 @@ Select Loan IQ Java Window Tab
     ...    locator, input, Processtimeout=180
     [Arguments]    ${sJavaWindow_Locator}    ${sInput}    ${sTimeout}=180    
     Mx LoanIQ Select Window Tab    ${sJavaWindow_Locator}    ${sInput}    ${sTimeout}    
+
+Open Deal Notebook If Not Present
+    [Documentation]    This keyword opens an existing deal on LIQ if the Deal notebook does not exists.
+    ...    @author: dahijara    - Initial create
+    [Arguments]    ${sDeal_Name}
+
+    ### GetRuntime Keyword Pre-processing ###
+    ${Deal_Name}    Acquire Argument Value    ${sDeal_Name}
+
+    ### Keyword Process ###
+    ###Open Deal Notebook If Not present###
+    ${Status}    Run Keyword And Return Status    Mx LoanIQ Verify Object Exist    ${LIQ_DealNotebook_Window}    VerificationData="Yes"
+    Run Keyword If    ${Status}!=${True}    Open Existing Deal    ${Deal_Name}
+    ...    ELSE    Log    Deal Notebook Is Already Displayed
