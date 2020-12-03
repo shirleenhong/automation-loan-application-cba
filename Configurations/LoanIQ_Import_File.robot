@@ -381,6 +381,7 @@ Resource    ../ResourcesFiles/LoanIQ_Keywords/Source_Keywords/UnscheduledCommitm
 Resource    ../ResourcesFiles/LoanIQ_Keywords/Source_Keywords/UpfrontFeePayment_Notebook.robot
 Resource    ../ResourcesFiles/LoanIQ_Keywords/Source_Keywords/UsageFee_Notebook.robot
 Resource    ../ResourcesFiles/LoanIQ_Keywords/Source_Keywords/UserAdministration_Notebook.robot
+Resource    ../ResourcesFiles/LoanIQ_Keywords/Source_Keywords/UserAdministrationProfile_Notebook.robot
 Resource    ../ResourcesFiles/LoanIQ_Keywords/Source_Keywords/UpfrontFeeDistribution_Notebook.robot
 
 

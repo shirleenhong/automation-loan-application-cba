@@ -2736,6 +2736,18 @@ Generate Deal Name and Alias with 5 Numeric Test Data
     log    Deal Alias: ${Deal_Alias}
     [Return]    ${Deal_Name}    ${Deal_Alias}
 
+Check if File Exist
+    [Documentation]    This keyword is used to check if the file exists in the specified path with multiple retries.
+    ...    @author: clanding    27NOV2020    - initial Create
+    [Arguments]    ${sPath}    ${sFile_Name}    ${sFile_Type}=xlsx    ${iRange}=300
+    
+    :FOR    ${Index}    IN RANGE    ${iRange}
+    \    ${IsFileExist}    Run Keyword And Return Status    OperatingSystem.File Should Exist    ${sPath}\\${sFile_Name}.${sFile_Type}
+    \    Exit For Loop If    ${IsFileExist}==${True}
+    Run Keyword If    ${IsFileExist}==${True}    Log    '${sPath}\\${sFile_Name}.${sFile_Type}' is found.
+    ...    ELSE    Run Keyword And Continue on Failure    Fail    '${sFile_Name}' is not found at '${sPath}'.
+    [Return]    ${Deal_Name}    ${Deal_Alias}
+
 Generate Deal Name and Alias with Numeric Test Data
     [Documentation]    This keyword generates deal name and alias by appending numeric characters.
     ...    Add additional condition if  there is a need for another specific number of numeric characters.

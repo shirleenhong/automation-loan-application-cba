@@ -330,6 +330,7 @@ Add Borrower
     ...    Added conditional argument to handle two risktypes.
     ...    @update: clanding    28JUL2020    - added pre-processing keywords; refactor arguments
     ...    @update: makcamps    15OCT2020    - added upper case method for borrower name in facility notebook
+    ...    @update: makcamps    25NOV2020    - updated java window name to Borrower/Depositor.*
     [Arguments]    ${sCurrency}    ${sFacility_BorrowerSGName}    ${sFacility_BorrowerPercent}    ${sFacility_Borrower}    ${sFacility_GlobalLimit}    ${sFacility_BorrowerMaturity}    ${sFacility_EffectiveDate}=None
     ...    ${sAdd_All}=Y    ${sRiskType}=None    ${sCurrency_Name}=None    ${sSublimitName}=None
     
@@ -355,9 +356,9 @@ Add Borrower
     Validation on Borrower Window
     ${status}    Run Keyword And Return Status    Verify If Text Value Exist as Static Text on Page    Borrower/Depositor Select    ${Currency}
     Run Keyword If    ${status}==True    Log    Currency text is validated.
-    ...    ELSE IF    ${status}==False    Mx LoanIQ Verify Object Exist    JavaWindow("title:=.*Borrower/Depositor Select.*").JavaStaticText("text:=.*${Currency}.*")                    VerificationData="Yes"
+    ...    ELSE IF    ${status}==False    Mx LoanIQ Verify Object Exist    JavaWindow("title:=.*Borrower/Depositor.*").JavaStaticText("text:=.*${Currency}.*")                    VerificationData="Yes"
     Run Keyword And Continue On Failure    Verify If Text Value Exist as Static Text on Page    Borrower/Depositor Select    ${Facility_BorrowerSGName.upper()}
-    Run Keyword And Continue On Failure    Mx LoanIQ Verify Object Exist    JavaWindow("title:=Borrower/Depositor Select").JavaEdit("value:=${Facility_BorrowerPercent}","attached text:=Percent:")    VerificationData="Yes"
+    Run Keyword And Continue On Failure    Mx LoanIQ Verify Object Exist    JavaWindow("title:=Borrower/Depositor.*").JavaEdit("value:=${Facility_BorrowerPercent}","attached text:=Percent:")    VerificationData="Yes"
     Validate Loan IQ Details    ${Facility_Borrower}   ${LIQ_BorrowerDepositorSelect_AddBorrower_Name_Field}    
     Validate Loan IQ Details    ${Facility_GlobalLimit}   ${LIQ_BorrowerDepositorSelect_AddBorrower_GlobalLimit_Field}   
     Validate Loan IQ Details    ${Facility_BorrowerMaturity}   ${LIQ_BorrowerDepositorSelect_AddBorrower_Maturity_Field}
@@ -981,6 +982,7 @@ Navigate to Facility Notebook
     ...    @author: rtarayao
     ...    @update: amansuet    24APR2020    Updated to align with automation standards and added keyword pre-processing
     ...    @update: hstone      22MAY2020    - Added Take Screenshot
+    ...    @update: clanding    26NOV2020    - added mx LoanIQ click element if present    ${LIQ_Alerts_OK_Button}
     [Arguments]    ${sDeal_Name}    ${sFacility_Name}   
 
     ### GetRuntime Keyword Pre-processing ###
@@ -989,6 +991,7 @@ Navigate to Facility Notebook
 
     Open Existing Deal    ${Deal_Name}
     Navigate to Facility Notebook from Deal Notebook    ${Facility_Name}
+    mx LoanIQ click element if present    ${LIQ_Alerts_OK_Button}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/FacilityNotebook
      
 Check Pending Transaction in Facility
@@ -3803,3 +3806,75 @@ Update Branch and Processing Area of a Facility
     mx LoanIQ click    ${LIQ_ChangeBranchProcArea_OK_Button}
     mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/ChangeBranchProcArea_Window
+
+Add Details in Comments Tab in Facility Notebook
+    [Documentation]    This keyword is used to add details in the Comments tab of a Facility.
+    ...    @author: clanding    24NOV2020    - initial create
+    [Arguments]    ${sSubject}    ${sComment}
+    
+    ### Keyword Pre-processing ###
+    ${Subject}    Acquire Argument Value    ${sSubject}
+    ${Comment}    Acquire Argument Value    ${sComment}
+
+    ### Input Comment ###
+    mx LoanIQ activate window    ${LIQ_FacilityNotebook_Window}
+    mx LoanIQ click element if present    ${LIQ_InquiryMode_Button}
+    Mx LoanIQ Select Window Tab     ${LIQ_FacilityNotebook_Tab}    Comments
+    mx LoanIQ click    ${LIQ_FacilityNotebook_CommentsTab_Add_Button}
+    mx LoanIQ activate window    ${LIQ_FacilityNotebook_CommentEdit_Window}
+    mx LoanIQ enter    ${LIQ_FacilityNotebook_CommentEdit_Subject_Textbox}    ${Subject}
+    mx LoanIQ enter    ${LIQ_FacilityNotebook_CommentEdit_Comment_Textbox}    ${Comment}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/CommentsEdit_Window
+    mx LoanIQ click    ${LIQ_FacilityNotebook_CommentEdit_OK_Button}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/CommentsEdit_Window
+    
+    ### Validate Comment if added ###
+    mx LoanIQ activate window    ${LIQ_FacilityNotebook_Window}
+    ${IsSelected}    Run Keyword And Return Status    Mx LoanIQ Select String    ${LIQ_FacilityNotebook_CommentsTab_JavaTree}    ${Subject}
+    Run Keyword If    ${IsSelected}==${True}    Log    ${Subject} is successfully added in the Comments tab.
+    ...    ELSE     Run Keyword And Continue On Failure    FAIL    ${Subject} is NOT successfully added in the Comments tab.
+
+    ### Get Author and Date ###
+    ${Comment_Author}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_FacilityNotebook_CommentsTab_JavaTree}    ${Subject}%Author%Comment_Author
+    ${Comment_Date}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_FacilityNotebook_CommentsTab_JavaTree}    ${Subject}%Date%Comment_Date
+    
+    [Return]    ${Comment_Author}    ${Comment_Date}
+
+Add Alerts in Facility Notebook
+    [Documentation]    This keyword is used to add Alerts details in Facility Notebook.
+    ...    @author: clanding    24NOV2020    - initial create
+    [Arguments]    ${sDealName}    ${sFacilityName}    ${sShortDescription}    ${sDetail}
+    
+    ### Keyword Pre-processing ###
+    ${DealName}    Acquire Argument Value    ${sDealName}
+    ${FacilityName}    Acquire Argument Value    ${sFacilityName}
+    ${ShortDescription}    Acquire Argument Value    ${sShortDescription}
+    ${Detail}    Acquire Argument Value    ${sDetail}
+    
+    ${Current_Local_Date}    Get Current Date    result_format=%d-%b-%Y %H:%M:%S
+    mx LoanIQ activate window    ${LIQ_FacilityNotebook_Window}
+    Select Menu Item    ${LIQ_FacilityNotebook_Window}    Options    Alerts
+    ${IsExist}    Run Keyword And Return Status    Mx LoanIQ Verify Object Exist    ${LIQ_Question_Yes_Button}
+    Run Keyword If    ${IsExist}==${True}    mx LoanIQ click    ${LIQ_Question_Yes_Button}
+    ...    ELSE    Run Keywords    mx LoanIQ activate window    ${LIQ_FacilityNotebook_AlertManagementScreen_Window}
+    ...    AND    mx LoanIQ click    ${LIQ_FacilityNotebook_AlertManagementScreen_Create_Button}
+    ...    AND    mx LoanIQ enter    ${LIQ_FacilityNotebook_AlertManagementScreen_ChooseAnEntity_Facility_RadioButton}    ON
+    ...    AND    mx LoanIQ click    ${LIQ_FacilityNotebook_AlertManagementScreen_ChooseAnEntity_OK_Button}
+    ...    AND    mx LoanIQ activate window    ${LIQ_FacilityNotebook_AlertManagementScreen_FacilitySelect_Window}
+    ...    AND    mx LoanIQ enter    ${LIQ_FacilityNotebook_AlertManagementScreen_FacilitySelect_Deal_Textbox}    ${DealName}
+    ...    AND    mx LoanIQ enter    ${LIQ_FacilityNotebook_AlertManagementScreen_FacilitySelect_IdentifyByValue_Textbox}    ${FacilityName}
+    ...    AND    mx LoanIQ click    ${LIQ_FacilityNotebook_AlertManagementScreen_FacilitySelect_Search_Button}
+    ...    AND    mx LoanIQ click    ${LIQ_FacilityNotebook_AlertManagementScreen_FacilityListByName_OK_Button}
+    
+    mx LoanIQ activate window    ${LIQ_FacilityNotebook_AlertManagementScreen_AlertEditor_Window}
+    mx LoanIQ enter    ${LIQ_FacilityNotebook_AlertManagementScreen_AlertEditor_ShortDescription_Textbox}    ${ShortDescription}
+    ${Current_Local_Date}    Get Current Date    result_format=%d-%b-%Y %H:%M:%S
+    mx LoanIQ enter    ${LIQ_FacilityNotebook_AlertManagementScreen_AlertEditor_Details_Textbox}    ${Detail}${SPACE}${Current_Local_Date}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/AlertEditor_Window
+    mx LoanIQ click    ${LIQ_FacilityNotebook_AlertManagementScreen_AlertEditor_OK_Button}
+    mx LoanIQ activate window    ${LIQ_FacilityNotebook_AlertManagementScreen_Window}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/AlertManagementScreen_Window
+
+    mx LoanIQ close window    ${LIQ_FacilityNotebook_AlertManagementScreen_Window}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/CloseAlertManagementScreen_Window
+    [Return]    ${Detail}${SPACE}${Current_Local_Date}    ${Current_Local_Date}

@@ -52,7 +52,9 @@ Run As Report Type
 Set User Range Filter Using From and To and Branch and Download Report
     [Documentation]    This keyword is used to set filter for report and download excel file report.
     ...    @author: clanding    16NOV2020    - initial create
-    [Arguments]    ${sFromDay}    ${sToDay}    ${sBranchCode}
+    [Arguments]    ${sFromMonth}    ${sToMonth}    ${sFromDay}    ${sToDay}    ${sBranchCode}    ${sReport_Name}    ${sReport_Path}
+
+    Delete File If Exist    ${sReport_Path}${sReport_Name}.xlsx
 
     ### Select User Range ###
     Wait Until Browser Ready State
@@ -63,11 +65,19 @@ Set User Range Filter Using From and To and Branch and Download Report
     Click Element    ${DNR_TeamContent_CBAReports_UserRange_RadioButton_Locator}
     
     ### Select From Date ###
+    Click Element    ${DNR_TeamContent_CBAReports_FromMonthYear_Calendar_Locator}
+    ${sFromMonth}    Replace Variables    ${sFromMonth}
+    ${DNR_TeamContent_CBAReports_FromMonth_Calendar_Locator}    Replace Variables    ${DNR_TeamContent_CBAReports_FromMonth_Calendar_Locator}
+    Click Element    ${DNR_TeamContent_CBAReports_FromMonth_Calendar_Locator}
     ${sFromDay}    Replace Variables    ${sFromDay}
     ${DNR_TeamContent_CBAReports_FromDate_Calendar_Locator}    Replace Variables    ${DNR_TeamContent_CBAReports_FromDate_Calendar_Locator}
     Click Element    ${DNR_TeamContent_CBAReports_FromDate_Calendar_Locator}
     
     ### Select To Date ###
+    Click Element    ${DNR_TeamContent_CBAReports_ToMonthYear_Calendar_Locator}
+    ${sToMonth}    Replace Variables    ${sToMonth}
+    ${DNR_TeamContent_CBAReports_ToMonth_Calendar_Locator}    Replace Variables    ${DNR_TeamContent_CBAReports_ToMonth_Calendar_Locator}
+    Click Element    ${DNR_TeamContent_CBAReports_ToMonth_Calendar_Locator}
     ${sToDay}    Replace Variables    ${sToDay}
     ${DNR_TeamContent_CBAReports_ToDate_Calendar_Locator}    Replace Variables    ${DNR_TeamContent_CBAReports_ToDate_Calendar_Locator}
     Click Element    ${DNR_TeamContent_CBAReports_ToDate_Calendar_Locator}
@@ -77,8 +87,79 @@ Set User Range Filter Using From and To and Branch and Download Report
     ${DNR_TeamContent_CBAReports_Branch_Row_Locator}    Replace Variables    ${DNR_TeamContent_CBAReports_Branch_Row_Locator}
     Click Element    ${DNR_TeamContent_CBAReports_Branch_Row_Locator}
 
+    Capture Page Screenshot    ${screenshot_path}/Screenshots/DNR/Download-{index}.png
     Click Element    ${DNR_TeamContent_CBAReports_Finish_Button_Locator}
+        
     UnSelect Frame
     Capture Page Screenshot    ${screenshot_path}/Screenshots/DNR/Download-{index}.png
 
+Set Branch and Download Report
+    [Documentation]    This keyword is used to set filter for report and download excel file report.
+    ...    @author: clanding    25NOV2020    - initial create
+    [Arguments]    ${sBranchCode}    ${sReport_Name}    ${sReport_Path}
+    
+    Delete File If Exist    ${sReport_Path}${sReport_Name}.xlsx
 
+    ### Select User Range ###
+    Wait Until Browser Ready State
+    Wait Until Keyword Succeeds    10x    5s    Wait Until Element Is Visible    ${DNR_TeamContent_CBAReports_ReportType_Frame_Locator}
+    Select Frame    ${DNR_TeamContent_CBAReports_ReportType_Frame_Locator}
+    Repeat Keyword    10 times    Wait Until Browser Ready State
+        
+    ### Select Branch ###
+    ${sBranchCode}    Replace Variables    ${sBranchCode}
+    ${DNR_TeamContent_CBAReports_Branch_Row_Locator}    Replace Variables    ${DNR_TeamContent_CBAReports_Branch_Row_Locator}
+    Wait Until Keyword Succeeds    10x    5s    Wait Until Element Is Visible    ${DNR_TeamContent_CBAReports_Branch_Row_Locator}
+    Click Element    ${DNR_TeamContent_CBAReports_Branch_Row_Locator}
+
+    Capture Page Screenshot    ${screenshot_path}/Screenshots/DNR/Download-{index}.png
+    Click Element    ${DNR_TeamContent_CBAReports_Finish_Button_Locator}
+    UnSelect Frame
+    
+    Capture Page Screenshot    ${screenshot_path}/Screenshots/DNR/Download-{index}.png
+
+Set Filter Using Branch Description and Processing Area and Financial Centre and From and To Date and Download Report
+    [Documentation]    This keyword is used to set filter for report and download excel file report.
+    ...    @author: clanding    27NOV2020    - initial create
+    [Arguments]    ${sFromDay}    ${sToDay}    ${sBranchDescription}    ${sProcessingArea}    ${sReport_Name}    ${sReport_Path}    ${sFinancialCentre}=SELECT ALL
+ 
+    Delete File If Exist    ${sReport_Path}${sReport_Name}.xlsx
+ 
+    ### Select Branch Description ###
+    Wait Until Browser Ready State
+    Wait Until Keyword Succeeds    10x    5s    Wait Until Element Is Visible    ${DNR_TeamContent_CBAReports_ReportType_Frame_Locator}
+    Select Frame    ${DNR_TeamContent_CBAReports_ReportType_Frame_Locator}
+    Repeat Keyword    10 times    Wait Until Browser Ready State
+    ${sBranchDescription}    Replace Variables    ${sBranchDescription}
+    ${DNR_TeamContent_CBAReports_BranchDescription_Row_Locator}    Replace Variables    ${DNR_TeamContent_CBAReports_BranchDescription_Row_Locator}
+    Wait Until Keyword Succeeds    10x    5s    Wait Until Element Is Visible    ${DNR_TeamContent_CBAReports_BranchDescription_Row_Locator}
+    Click Element    ${DNR_TeamContent_CBAReports_BranchDescription_Row_Locator}
+ 
+    ### Select Processing Area ###
+    ${sProcessingArea}    Replace Variables    ${sProcessingArea}
+    ${DNR_TeamContent_CBAReports_ProcessingArea_Row_Locator}    Replace Variables    ${DNR_TeamContent_CBAReports_ProcessingArea_Row_Locator}
+    Click Element    ${DNR_TeamContent_CBAReports_ProcessingArea_Row_Locator}
+ 
+    ### Select Financial Centre ###
+    ${sFinancialCentre}    Replace Variables    ${sFinancialCentre}
+    ${DNR_TeamContent_CBAReports_FinancialCentre_Row_Locator}    Replace Variables    ${DNR_TeamContent_CBAReports_FinancialCentre_Row_Locator}
+    Run Keyword If    '${sFinancialCentre.upper()}'=='SELECT ALL'    Click Element    ${DNR_TeamContent_CBAReports_FinancialCentre_SelectAll_Button_Locator}
+    ...    ELSE    Click Element    ${DNR_TeamContent_CBAReports_FinancialCentre_Row_Locator}
+ 
+    ### Select From Date ###
+    ${sFromDay}    Replace Variables    ${sFromDay}
+    ${DNR_TeamContent_CBAReports_FromDate_Calendar_Locator}    Replace Variables    ${DNR_TeamContent_CBAReports_FromDate_Calendar_Locator}
+    Click Element    ${DNR_TeamContent_CBAReports_FromDate_Calendar_Locator}
+    
+    ### Select To Date ###
+    ${sToDay}    Replace Variables    ${sToDay}
+    ${DNR_TeamContent_CBAReports_ToDate_Calendar_Locator}    Replace Variables    ${DNR_TeamContent_CBAReports_ToDate_Calendar_Locator}
+    Click Element    ${DNR_TeamContent_CBAReports_ToDate_Calendar_Locator}
+    
+    Capture Page Screenshot    ${screenshot_path}/Screenshots/DNR/Download-{index}.png
+    Click Element    ${DNR_TeamContent_CBAReports_Finish_Button_Locator}
+ 
+    UnSelect Frame
+    Capture Page Screenshot    ${screenshot_path}/Screenshots/DNR/Download-{index}.png
+
+    

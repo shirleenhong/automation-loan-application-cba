@@ -435,13 +435,15 @@ Write Loan Details for ComSee - Scenario 7
     Launch Loan Notebook    &{ExcelPath}[Deal_Name]    &{ExcelPath}[Facility_Name]    &{ExcelPath}[Outstanding_Alias]
     
     ###Get and Write General Tab Details for Comsee##
-    ${LoanRiskType}    Get Loan Risk Type 
+    ${LoanRiskType}    Run Keyword If    '${ENTITY}'!='EU'    Get Loan Risk Type
+    ...    ELSE    Get Repricing Loan Risk Type
     Write Data To Excel    ComSee_SC7_Loan    Outstanding_RiskType    ${rowid}    ${LoanRiskType}    ${ComSeeDataSet}
     
     ${LoanCCY}    Get Loan Currency
     Write Data To Excel    ComSee_SC7_Loan    Outstanding_Currency    ${rowid}    ${LoanCCY}    ${ComSeeDataSet}
     
-    ${LoanEffectiveDate}    ${LoanMaturityDate}    Get Loan Effective and Maturity Expiry Dates
+    ${LoanEffectiveDate}    ${LoanMaturityDate}    Run Keyword If    '${ENTITY}'!='EU'    Get Loan Effective and Maturity Expiry Dates
+    ...    ELSE    Get Repricing Loan Effective and Maturity Expiry Dates
     ${LoanEffectiveDate}    Convert LIQ Date to Year-Month-Day Format    ${LoanEffectiveDate}
     ${LoanMaturityDate}    Convert LIQ Date to Year-Month-Day Format    ${LoanMaturityDate}
     Write Data To Excel    ComSee_SC7_Loan    Outstanding_EffectiveDate    ${rowid}    ${LoanEffectiveDate}    ${ComSeeDataSet}
@@ -469,7 +471,6 @@ Write Loan Details for ComSee - Scenario 7
     Write Data To Excel    ComSee_SC7_Loan    Outstanding_Margin    ${rowid}    ${SpreadRate}    ${ComSeeDataSet}
     Write Data To Excel    ComSee_SC7_Loan    Outstanding_AllInRate    ${rowid}    ${AllInRate}    ${ComSeeDataSet}
     
-    
     ###Get and Write Accrual Tab Details for Comsee
     ${LoanAccruedtodateAmount}    Get Loan Accrued to Date Amount
     ${LoanAccruedtodateAmount}    Remove Comma and Convert to Number    ${LoanAccruedtodateAmount}
@@ -484,12 +485,13 @@ Write Loan Details for ComSee - Scenario 7
     Write Data To Excel    ComSee_SC7_Loan   Outstanding_paidToDate    ${rowid}    ${LoanPaidDueAmount}    ${ComSeeDataSet}
 
     ###Get and Write Accrual Tab Details for Comsee
-    ${PricingOptionCode}    Get Loan Pricing Option Code
+    ${PricingOptionCode}    Run Keyword If    '${ENTITY}'!='EU'    Get Loan Pricing Option Code
+    ...    ELSE    Get Repricing Loan Pricing Option Code
     ${LoanPricingDescription}    Get Pricing Option Description from Table Maintenance    ${PricingOptionCode}
     ${LoanPricingOption}    Get Pricing Code and Description Combined    ${PricingOptionCode}    ${LoanPricingDescription}
     Write Data To Excel    ComSee_SC7_Loan    Outstanding_PricingOption    ${rowid}    ${LoanPricingOption}    ${ComSeeDataSet}
     Close All Windows on LIQ
-    
+
 Create Initial Loan Drawdown with Repricing - Scenario 7 ComSee
     [Documentation]    This keyword is used to create a Loan Drawdown without selecting a Payment Schedule.
     ...    @author: rtarayao    11SEP2019    - Duplicate of Scenario 7 from Functional Scenarios
@@ -700,6 +702,7 @@ Create Loan Repricing for ComSee - Scenario 7
 Write Repriced Loan Details for ComSee - Scenario 7
     [Documentation]    This test case writes the Repriced Outstanding(Loan) details for comsee use.
     ...    @author: cfrancis    19OCT2020    - Initial create
+    ...    @update: makcamps    02DEC2020    - updated getting risk type, effective and maturity date, and pricing option keyword since locator is different
     [Arguments]    ${ExcelPath}
     
     ${New_OutstandingAlias}    Read Data From Excel    ComSee_SC7_LoanRepricing    NewOutstanding_Alias    ${rowid}    ${ComSeeDataSet}
@@ -710,13 +713,15 @@ Write Repriced Loan Details for ComSee - Scenario 7
     Write Data To Excel    ComSee_SC7_Loan    Outstanding_Alias    ${rowid}    &{ExcelPath}[Outstanding_Alias],${New_OutstandingAlias}    ${ComSeeDataSet}
 
     ###Get and Write General Tab Details for Comsee##
-    ${LoanRiskType}    Get Loan Risk Type 
+    ${LoanRiskType}    Run Keyword If    '${ENTITY}'!='EU'    Get Loan Risk Type
+    ...    ELSE    Get Repricing Loan Risk Type
     Write Data To Excel    ComSee_SC7_Loan    Outstanding_RiskType    ${rowid}    &{ExcelPath}[Outstanding_RiskType],${LoanRiskType}    ${ComSeeDataSet}
     
     ${LoanCCY}    Get Loan Currency
     Write Data To Excel    ComSee_SC7_Loan    Outstanding_Currency    ${rowid}    &{ExcelPath}[Outstanding_Currency],${LoanCCY}    ${ComSeeDataSet}
     
-    ${LoanEffectiveDate}    ${LoanMaturityDate}    Get Loan Effective and Maturity Expiry Dates
+    ${LoanEffectiveDate}    ${LoanMaturityDate}    Run Keyword If    '${ENTITY}'!='EU'    Get Loan Effective and Maturity Expiry Dates
+    ...    ELSE    Get Repricing Loan Effective and Maturity Expiry Dates
     ${RepricngFrequency}    ${RepricingDate}    Get Loan Repricing Frequency and Date
     ${LoanEffectiveDate}    Convert LIQ Date to Year-Month-Day Format    ${LoanEffectiveDate}
     ${LoanMaturityDate}    Convert LIQ Date to Year-Month-Day Format    ${LoanMaturityDate}
@@ -763,7 +768,8 @@ Write Repriced Loan Details for ComSee - Scenario 7
     Write Data To Excel    ComSee_SC7_Loan   Outstanding_paidToDate    ${rowid}    &{ExcelPath}[Outstanding_paidToDate],${LoanPaidDueAmount}    ${ComSeeDataSet}
 
     ###Get and Write Accrual Tab Details for Comsee
-    ${PricingOptionCode}    Get Loan Pricing Option Code
+    ${PricingOptionCode}    Run Keyword If    '${ENTITY}'!='EU'    Get Loan Pricing Option Code
+    ...    ELSE    Get Repricing Loan Pricing Option Code
     ${LoanPricingDescription}    Get Pricing Option Description from Table Maintenance    ${PricingOptionCode}
     ${LoanPricingOption}    Get Pricing Code and Description Combined    ${PricingOptionCode}    ${LoanPricingDescription}
     Write Data To Excel    ComSee_SC7_Loan    Outstanding_PricingOption    ${rowid}    &{ExcelPath}[Outstanding_PricingOption],${LoanPricingOption}    ${ComSeeDataSet}
