@@ -353,6 +353,7 @@ Create Loan Drawdown TERM and SBLC for Syndicated Deal for DNR
     
 Create Loan Drawdown TERM and SBLC for Syndicated Deal With Backdated Effective Date for DNR
     [Documentation]    This will serve as a High Level keyword for the creation of Loan Drawdown specific for Syndicated Deal with backdated Effective Date
+    ...    Take note and update [NumberOfDays_ToBackdate] column to change the number of days to be backdated from Loan IQ System Date
     ...    @author: shirhong    04DEC2020    - initial create
     [Arguments]    ${ExcelPath}
 
@@ -361,7 +362,7 @@ Create Loan Drawdown TERM and SBLC for Syndicated Deal With Backdated Effective 
     Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
 
     ###Deal Notebook###
-    ${LoanEffectiveDate}    Get Back Dated Current Date    2    #for AHBCO_004
+    ${LoanEffectiveDate}    Get Back Dated Current Date    &{ExcelPath}[NumberOfDays_ToBackdate]    #for AHBCO_004
     Search for Deal    &{ExcelPath}[Deal_Name]
     
     ###Creation of Initial Loan Drawdown in Loan NoteBook###
