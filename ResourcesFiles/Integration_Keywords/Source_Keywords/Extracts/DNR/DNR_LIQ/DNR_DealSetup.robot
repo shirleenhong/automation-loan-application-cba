@@ -7,12 +7,27 @@ Setup Syndicated Deal for DNR
     [Documentation]    This keyword is used to create a Syndicated Deal.
     ...    Primarily entering data in multiple tabs of the Deal Notebook and adding Pricing Options.
     ...    @author: clanding    09NOV2020    - initial create
+    ...    @update: shirhong    04DEC2020    - updated keywords for DNR deal setup
     [Arguments]    ${ExcelPath}
 
     ###Data Generation###
     ${Deal_Name}    Auto Generate Name Test Data    &{ExcelPath}[Deal_NamePrefix]
     ${Deal_Alias}    Auto Generate Name Test Data    &{ExcelPath}[Deal_AliasPrefix]  
-      
+	 
+    Write Data To Excel    SC2_DealSetup    Deal_Name    ${rowid}    ${Deal_Name}    ${DNR_DATASET}    	
+    Write Data To Excel    SC2_DealSetup    Deal_Alias    ${rowid}    ${Deal_Alias}    ${DNR_DATASET}	
+    Write Data To Excel    SC2_AdminFee    Deal_Name    ${rowid}    ${Deal_Name}    ${DNR_DATASET}	
+    Write Data To Excel    SC2_EventFee    Deal_Name    ${rowid}    ${Deal_Name}    ${DNR_DATASET}
+    Write Data To Excel    SC2_FacilitySetup    Deal_Name    ${rowid}    ${Deal_Name}    ${DNR_DATASET}	
+    Write Data To Excel    SC2_PrimaryAllocation    Deal_Name    ${rowid}    ${Deal_Name}    ${DNR_DATASET} 
+    Write Data To Excel    SC2_LoanDrawdown    Deal_Name    ${rowid}    ${Deal_Name}    ${DNR_DATASET}
+    Write Data To Excel    SC2_PaymentFees    Deal_Name    ${rowid}    ${Deal_Name}    ${DNR_DATASET}
+    Write Data To Excel    SC2_CycleShareAdjustment    Deal_Name    ${rowid}    ${Deal_Name}    ${DNR_DATASET}
+    Write Data To Excel    SC2_AdminFeePayment    Deal_Name    ${rowid}    ${Deal_Name}    ${DNR_DATASET}	
+    Write Data To Excel    SC2_LoanDrawdownNonAgent    Deal_Name    ${rowid}    ${Deal_Name}    ${DNR_DATASET}
+    Write Data To Excel    SC2_FacilityShareAdjustment    Deal_Name    ${rowid}    ${Deal_Name}    ${DNR_DATASET}
+    Write Data To Excel    SC2_LoanRepricing    Deal_Name    ${rowid}    ${Deal_Name}    ${DNR_DATASET}
+
     ###Deal Select Window###
     Create New Deal    ${Deal_Name}    ${Deal_Alias}    &{ExcelPath}[Deal_Currency]    &{ExcelPath}[Deal_Department]    &{ExcelPath}[Deal_SalesGroup]
     
@@ -29,7 +44,7 @@ Setup Syndicated Deal for DNR
     ${Borrower_Name}    Get Borrower Name From Deal Notebook
     ${Customer_LegalName}    Get Customer Legal Name From Customer Notebook Via Deal Notebook
     
-    Write Data To Excel    CRED10_EventFee    Borrower_Name    ${rowid}    ${Borrower_Name}
+    Write Data To Excel    SC2_EventFee    Borrower_Name    ${rowid}    ${Borrower_Name}    ${DNR_DATASET}
     
     Select Deal Classification    &{ExcelPath}[Deal_ClassificationCode]    &{ExcelPath}[Deal_ClassificationDesc]
     
@@ -40,7 +55,7 @@ Setup Syndicated Deal for DNR
     Add Preferred Remittance Instruction    ${Deal_Name}    &{ExcelPath}[Deal_AdminAgent]    &{ExcelPath}[AdminAgent_PreferredRIMthd1]
     Complete Deal Admin Agent Setup
     ${Deal_AgreementDate}    Get System Date
-    Write Data To Excel    CRED01_DealSetup    Deal_AgreementDate    ${rowid}    ${Deal_AgreementDate}   
+    Write Data To Excel    SC2_DealSetup    Deal_AgreementDate    ${rowid}    ${Deal_AgreementDate}    ${DNR_DATASET}
     
     Enter Agreement Date and Proposed Commitment Amount    ${Deal_AgreementDate}    &{ExcelPath}[Deal_ProposedCmt]
     
@@ -56,33 +71,24 @@ Setup Syndicated Deal for DNR
     ###Pricing Options###
     Add Deal Pricing Options    &{ExcelPath}[Deal_PricingOption1]    &{ExcelPath}[InitialFractionRate_Round]    &{ExcelPath}[RoundingDecimal_Round]    
     ...    &{ExcelPath}[NonBusinessDayRule]    &{ExcelPath}[PricingOption_BillNoOfDays]    &{ExcelPath}[PricingOption_MatrixChangeAppMthd]    &{ExcelPath}[PricingOption_RateChangeAppMthd]
-    Add Deal Pricing Options    &{ExcelPath}[Deal_PricingOption2]    &{ExcelPath}[InitialFractionRate_Round]    &{ExcelPath}[RoundingDecimal_Round]    
-    ...    &{ExcelPath}[NonBusinessDayRule]    &{ExcelPath}[PricingOption_BillNoOfDays]    &{ExcelPath}[PricingOption_MatrixChangeAppMthd]    &{ExcelPath}[PricingOption_RateChangeAppMthd]
-    Add Deal Pricing Options    &{ExcelPath}[Deal_PricingOption3]    &{ExcelPath}[InitialFractionRate_Round]    &{ExcelPath}[RoundingDecimal_Round]    
-    ...    &{ExcelPath}[NonBusinessDayRule]    &{ExcelPath}[PricingOption_BillNoOfDays]    &{ExcelPath}[PricingOption_MatrixChangeAppMthd]    &{ExcelPath}[PricingOption_RateChangeAppMthd]
-    Add Deal Pricing Options    &{ExcelPath}[Deal_PricingOption4]    &{ExcelPath}[InitialFractionRate_Round]    &{ExcelPath}[RoundingDecimal_Round]    
-    ...    &{ExcelPath}[NonBusinessDayRule]    &{ExcelPath}[PricingOption_BillNoOfDays]    &{ExcelPath}[PricingOption_MatrixChangeAppMthd]    &{ExcelPath}[PricingOption_RateChangeAppMthd]
-    
+   
     ###Pricing Rules###
     Add Fee Pricing Rules    &{ExcelPath}[PricingRule_Fee1]    &{ExcelPath}[PricingRule_MatrixChangeAppMthd1]    &{ExcelPath}[PricingRule_NonBussDayRule1]
     ...    ON    &{ExcelPath}[PricingRule_BillNoOfDays1]
-    Add Fee Pricing Rules    &{ExcelPath}[PricingRule_Fee2]    &{ExcelPath}[PricingRule_MatrixChangeAppMthd1]    &{ExcelPath}[PricingRule_NonBussDayRule1]
-    ...    ON    &{ExcelPath}[PricingRule_BillNoOfDays1]
-    
+   
     Save Changes on Deal Notebook 
     
     ###Get necessary data from created Deal to be used in succeeding transactions###
     ${Date}    Get Data From LoanIQ    ${LIQ_DealNotebook_Window}    ${LIQ_DealNotebook_Tab}    Summary    ${LIQ_DealSummaryAgreementDate_Textfield}
     ${AdminFee_DueDate}    Add Days to Date    ${Date}    30
-    Write Data To Excel    CRED09_AdminFee    AdminFee_EffectiveDate    ${rowid}    ${Date}
-    Write Data To Excel    CRED09_AdminFee    AdminFee_ActualDueDate    ${rowid}    ${AdminFee_DueDate}
-    Write Data To Excel    CRED02_FacilitySetup    Facility_AgreementDate    ${rowid}    ${Date}
-    Write Data To Excel    CRED02_FacilitySetup    Facility_EffectiveDate    ${rowid}    ${Date}
-    Write Data To Excel    SERV30_AdminFeePayment    AdminFee_DueDate    &{ExcelPath}[rowid]    ${AdminFee_DueDate}
+    Write Data To Excel    SC2_AdminFee    AdminFee_EffectiveDate    ${rowid}    ${Date}    ${DNR_DATASET} 
+    Write Data To Excel    SC2_AdminFee    AdminFee_ActualDueDate    ${rowid}    ${AdminFee_DueDate}    ${DNR_DATASET} 
+    Write Data To Excel    SC2_FacilitySetup    Facility_AgreementDate    ${rowid}    ${Date}    ${DNR_DATASET} 
+    Write Data To Excel    SC2_FacilitySetup    Facility_EffectiveDate    ${rowid}    ${Date}    ${DNR_DATASET}
     ${ScheduledActivityFilter_FromDate}    Subtract Days to Date    ${Date}    30
-    ${ScheduledActivityFilter_ThruDate}    Add Days to Date    ${Date}    30
-    Write Data To Excel    SERV30_AdminFeePayment    ScheduledActivityFilter_FromDate    &{ExcelPath}[rowid]    ${ScheduledActivityFilter_FromDate}
-    Write Data To Excel    SERV30_AdminFeePayment    ScheduledActivityFilter_ThruDate    &{ExcelPath}[rowid]    ${ScheduledActivityFilter_ThruDate}
+    ${ScheduledActivityFilter_ThruDate}    Add Days to Date ${Date}    30
+    Write Data To Excel SC2_AdminFeePayment    ScheduledActivityFilter_FromDate     &{ExcelPath}[rowid]    ${ScheduledActivityFilter_FromDate}    ${DNR_DATASET}
+    Write Data To Excel SC2_AdminFeePayment    ScheduledActivityFilter_ThruDate
 
 Setup a Bilateral Deal for DNR
     [Documentation]    Create a Bilateral Deal with no Origination System
@@ -236,3 +242,79 @@ Delete Comments in Deal for DNR
     Close All Windows on LIQ
 
 
+Setup Deal Administrative Fees for DNR
+    [Documentation]    This keyword is for adding Administrative Fees from the Deal Notebook's Admin/Event Fees tab.
+    ...    @author: shirhong    04DEC2020    - initial create
+    [Arguments]    ${ExcelPath}
+        
+    ###Deal Notebook###
+    ${AdminFee_EffectiveDate}    Get System Date
+    Write Data To Excel    SC2_AdminFee    AdminFee_EffectiveDate    ${rowid}    ${AdminFee_EffectiveDate}    ${DNR_DATASET}
+    
+    Search Existing Deal    &{ExcelPath}[Deal_Name]
+    Add Admin Fee in Deal Notebook    &{ExcelPath}[AdminFee_IncomeMethod]
+    Set General Tab Details in Admin Fee Notebook    &{ExcelPath}[AdminFee_FlatAmount]    ${AdminFee_EffectiveDate}    &{ExcelPath}[AdminFee_PeriodFrequency]
+    ...    &{ExcelPath}[AdminFee_ActualDueDate]    &{ExcelPath}[AdminFee_BillNoOfDays]
+    Set Distribution Details in Admin Fee Notebook    &{ExcelPath}[Borrower_ShortName]    &{ExcelPath}[AdminFee_CustomerLocation]    &{ExcelPath}[AdminFee_ExpenseCode]    &{ExcelPath}[AdminFee_PercentOfFee]
+    
+    ${AdminFee_Alias}    Copy Alias To Clipboard and Get Data    ${LIQ_AdminFeeNotebook_Window}
+    ${AdminFee_DueDate}    Get Admin Fee Due Date
+    Write Data To Excel    SC2_AdminFee    AdminFee_Alias    ${rowid}    ${AdminFee_Alias}    ${DNR_DATASET}
+    Write Data To Excel    SC2_AdminFeePayment    AdminFee_Alias    ${​​rowid}​​    ${​​AdminFee_Alias}​​    ${​​DNR_DATASET}​​
+    Write Data To Excel    SC2_AdminFeePayment    AdminFee_DueDate    ${​​rowid}​​    ${​​AdminFee_DueDate}​​    ${​​DNR_DATASET}​​
+
+    ###Send to Approval###
+    Navigate Notebook Workflow    ${LIQ_AdminFeeNotebook_Window}    ${LIQ_AdminFeeNotebook_JavaTab}    ${LIQ_AdminFeeNotebook_Workflow_JavaTree}    Send to Approval
+    mx LoanIQ close window    ${LIQ_AdminFeeNotebook_Window}
+    Save Notebook Transaction    ${LIQ_DealNotebook_Window}    ${LIQ_DealNotebook_File_Save}
+       
+    ###Approve Admin Fee###
+    Logout from Loan IQ
+    Login to Loan IQ    ${MANAGER_USERNAME}    ${MANAGER_PASSWORD}
+    Navigate Transaction in WIP    Deals    Awaiting Approval    Amortizing Admin Fee    &{ExcelPath}[Deal_Name]
+    Navigate Notebook Workflow    ${LIQ_AdminFeeNotebook_Window}    ${LIQ_AdminFeeNotebook_JavaTab}    ${LIQ_AdminFeeNotebook_Workflow_JavaTree}    Approval
+    
+    ###Verify Admin Fee if successfully Added###
+    Logout from Loan IQ
+    Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
+    Open Existing Deal    &{ExcelPath}[Deal_Name]
+    ${AdminFee_Alias}    Read Data From Excel    SC2_AdminFee    AdminFee_Alias    &{ExcelPath}[rowid]    ${DNR_DATASET}
+    Validate Admin Fee If Added    ${AdminFee_Alias}
+    Save Notebook Transaction    ${LIQ_DealNotebook_Window}    ${LIQ_DealNotebook_File_Save}
+
+Setup Deal Event Fees for DNR
+    [Documentation]    This keyword is for adding Event Fees from the Deal Notebook's Admin/Event Fees tab.
+    ...    @author: shirhong    04DEC2020    - initial create
+    [Arguments]    ${ExcelPath}
+    Add Event Fees in Deal Notebook    &{ExcelPath}[EventFee]    &{ExcelPath}[EventFee_Amount]    &{ExcelPath}[EventFee_Type]
+    
+Syndicated Deal Approval and Close for DNR
+    [Documentation]    This keywords Approves and Closes the created Syndicated Deal for DNR.
+    ...    @author: shirhong    04DEC2020    - initial create
+    [Arguments]    ${ExcelPath}
+    
+    ###Close all windows and Login as original user###
+    Close All Windows on LIQ
+    Logout from Loan IQ
+    Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
+    
+    ###Deal Notebook###
+    Search Existing Deal    &{ExcelPath}[Deal_Name]
+    Navigate Notebook Workflow    ${LIQ_DealNotebook_Window}    ${LIQ_DealNotebook_Tab}    ${LIQ_DealNotebook_Workflow_JavaTree}    ${SEND_TO_APPROVAL_STATUS}
+    Logout from Loan IQ
+    Login to Loan IQ    ${SUPERVISOR_USERNAME}    ${SUPERVISOR_PASSWORD}
+    Open Existing Deal    &{ExcelPath}[Deal_Name]
+    Approve the Deal    &{ExcelPath}[ApproveDate]
+    Close the Deal    &{ExcelPath}[CloseDate]
+
+    ###Validate Deal, Facility and Circle Notebooks status after Deal Close.
+    Verify Circle Notebook Status After Deal Close    &{ExcelPath}[Primary_Lender1]
+    Verify Facility Status After Deal Close    &{ExcelPath}[Facility_Name]
+    Verify Deal Status After Deal Close
+    Validate Deal Closing Cmt With Facility Total Global Current Cmt
+    ${Deal_ClosingCmt}    Get Deal Closing Cmt
+    
+    Close All Windows on LIQ
+    Logout from Loan IQ
+    Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
+    
