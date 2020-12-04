@@ -2735,3 +2735,11 @@ Generate Deal Name and Alias with 5 Numeric Test Data
     ${Deal_Alias}    Auto Generate Only 5 Numeric Test Data    ${Deal_AliasPrefix}
     log    Deal Alias: ${Deal_Alias}
     [Return]    ${Deal_Name}    ${Deal_Alias}
+
+Generate Facility Name with 5 Numeric Test Data
+    [Documentation]    This keyword generates facility name with 5 numeric text.
+    ...    @author: mcastro    02DEC2020    - Initial Create
+    [Arguments]   ${Facility_NamePrefix}
+    
+    ${Facility_Name}    Auto Generate Only 5 Numeric Test Data     ${Facility_NamePrefix}
+    [Return]    ${Facility_Name}

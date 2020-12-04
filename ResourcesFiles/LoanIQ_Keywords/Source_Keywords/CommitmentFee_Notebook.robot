@@ -1681,3 +1681,29 @@ Run Online Acrual to Usage Fee
     mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
     mx LoanIQ click element if present    ${LIQ_Warning_OK_Button}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/UsageFeeWindow_WorkflowTab_OnlineAccrual
+
+Update Commitment Fee
+    [Documentation]    This keyword updates the values on the commitment fee notebook
+    ...    @author: mcastro    03DEC2020    - Initial Create
+    [Arguments]    ${sFeePayment_EffectiveDate}    ${sFeePayment_ActualDate}    ${sFeePayment_AdjustedDueDate}    ${sAccrue}    ${sFeePayment_AccrualEndDate}    
+
+    ### Keyword Pre-processing ###
+    ${FeePayment_EffectiveDate}    Acquire Argument Value    ${sFeePayment_EffectiveDate}
+    ${FeePayment_ActualDate}    Acquire Argument Value    ${sFeePayment_ActualDate}
+    ${FeePayment_AdjustedDueDate}    Acquire Argument Value    ${sFeePayment_AdjustedDueDate}
+    ${Accrue}    Acquire Argument Value    ${sAccrue}
+    ${FeePayment_AccrualEndDate}    Acquire Argument Value    ${sFeePayment_AccrualEndDate}
+
+    mx LoanIQ activate window    ${LIQ_CommitmentFee_Window}
+    Mx LoanIQ Select Window Tab    ${LIQ_CommitmentFee_Tab}    ${GENERAL_TAB}
+    Run Keyword And Continue On Failure    Mx LoanIQ click element if present    ${LIQ_CommitmentFee_InquiryMode_Button}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/CommitmentFeeNotebook_General
+    Mx LoanIQ Enter    ${LIQ_CommitmentFee_EffectiveDate_Field}    ${FeePayment_EffectiveDate}
+    Mx LoanIQ Enter    ${LIQ_CommitmentFee_FloatRateStartDate_Field}    ${FeePayment_EffectiveDate}
+    Mx LoanIQ Enter    ${LIQ_CommitmentFee_ActualDueDate_Field}    ${FeePayment_ActualDate}
+    Mx LoanIQ Enter    ${LIQ_CommitmentFee_AdjustedDueDate}    ${FeePayment_AdjustedDueDate}
+    Mx LoanIQ select combo box value    ${LIQ_CommitmentFee_Accrue_Dropdown}    ${Accrue}
+    Mx LoanIQ Enter    ${LIQ_CommitmentFee_AccrualEndDate_Field}    ${FeePayment_AccrualEndDate}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/CommitmentFeeNotebook_General
+    Mx LoanIQ select    ${LIQ_CommitmentFee_Save_Menu}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/CommitmentFeeNotebook_General

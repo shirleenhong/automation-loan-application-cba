@@ -3803,3 +3803,21 @@ Update Branch and Processing Area of a Facility
     mx LoanIQ click    ${LIQ_ChangeBranchProcArea_OK_Button}
     mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/ChangeBranchProcArea_Window
+
+Add Item to Facility Ongoing Fee
+    [Documentation]    Adds an Item to an Ongoing Fee in the Facility Notebook
+    ...    @author: mcastro    03DEC2020    - Initial Create
+    [Arguments]    ${sOngoingFee_Type}    ${sOngoingFee_Item}    ${sOngoingFee_Item_Type}
+    
+    ### Keyword Pre-processing ###
+    ${OngoingFee_Type}    Acquire Argument Value    ${sOngoingFee_Type}
+    ${OngoingFee_Item}    Acquire Argument Value    ${sOngoingFee_Item}
+    ${OngoingFee_Item_Type}    Acquire Argument Value    ${sOngoingFee_Item_Type}
+
+    Mx LoanIQ Select Or DoubleClick In Javatree    ${LIQ_FacilityPricing_OngoingFeeInterest_Tree}    ${OngoingFee_Type}%s
+    mx LoanIQ click    ${LIQ_FacilityPricing_OngoingFeeInterest_Add_Button}
+    Mx LoanIQ Optional Select    ${LIQ_AddItem_List}    ${OngoingFee_Item}
+    Mx LoanIQ Optional Select    ${LIQ_AddItemType_List}    ${OngoingFee_Item_Type}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/FacilityNotebook_FacilityPricing
+    mx LoanIQ click    ${LIQ_AddItem_OK_Button}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/FacilityNotebook_FacilityPricing

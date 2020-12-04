@@ -443,12 +443,10 @@ Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/CBA_UAT05_DealTemplat
 ### Deal CH EDU BILAT ###
 Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/Deal_CH_EDU_BILAT/Deal_Borrower_CH_EDU_BILAT.robot
 
-### NEW UAT Deal LBT BILAT ###
-Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/Deal_LBT_BILAT/Deal_Borrower_LBT_BILAT.robot
-
 ### NEW UAT Deal PIM Future BILAT ###
 Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/Deal_PIM_Future_BILAT/Deal_Borrower_PIM_Future_BILAT.robot
 Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/Deal_PIM_Future_BILAT/Deal_Notebook_PIM_Future_BILAT.robot
+Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/Deal_PIM_Future_BILAT/Facility_Notebook_PIM_Future_BILAT.robot
 
 ### NEW UAT Deal TL ###
 Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/UAT_TL_Keywords/TL_FX_Rates.robot
