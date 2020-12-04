@@ -22,3 +22,15 @@ Write Details for Facility Performance
     Copy File    &{ExcelPath}[Report_Path]${CBA_LIQPERFORMANCE_REPORTFILE}.xlsx    &{ExcelPath}[Report_Path]&{ExcelPath}[File_Name]${CBA_LIQPERFORMANCE_REPORTFILE}.xlsx
     Write Data To Excel    DNR    Report_File_Name    ${TestCase_Name}    &{ExcelPath}[File_Name]${CBA_LIQPERFORMANCE_REPORTFILE}.xlsx    ${DNR_DATASET}    bTestCaseColumn=True
     Write Data To Excel    FACPF    Report_File_Name    ${TestCase_Name}    &{ExcelPath}[File_Name]${CBA_LIQPERFORMANCE_REPORTFILE}.xlsx    ${DNR_DATASET}    bTestCaseColumn=True
+    
+Validate Facility Performance Report File with Pending Status
+    [Documentation]    This keyword is used to validate facility performance report files where the Facility Name value does not exists.
+    ...    @author: ccarriedo    04DEC2020    - initial create
+    [Arguments]    ${ExcelPath}
+
+    ${LIQPerformance_Report}    Set Variable    &{ExcelPath}[Report_Path]&{ExcelPath}[Report_File_Name]
+    ${Sheet_Name}    Set Variable    &{ExcelPath}[Sheet_Name]
+    ${Facility_Name}    Set Variable    &{ExcelPath}[Facility_Name]
+    
+    Validate Facility Name Value if Existing    ${LIQPerformance_Report}    ${Sheet_Name}    ${Facility_Name}        
+    
