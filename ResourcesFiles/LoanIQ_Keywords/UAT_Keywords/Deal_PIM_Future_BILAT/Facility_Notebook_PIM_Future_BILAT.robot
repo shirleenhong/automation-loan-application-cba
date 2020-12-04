@@ -44,7 +44,7 @@ Setup Facility Ongoing Fee for PIM Future BILAT
     [Arguments]    ${ExcelPath}
 
     Navigate to Modify Ongoing Fee Window
-    Validate Facility Pricing Window    &{ExcelPath}[Facility_Name]    Ongoing Fee
+    Validate Facility Pricing Window    &{ExcelPath}[Facility_Name]    &{ExcelPath}[Pricing_Type]
 
     ### Ongoing Fee ###
     Add Facility Ongoing Fee - Matrix    &{ExcelPath}[OngoingFee_Category]    &{ExcelPath}[OngoingFee_Type1]    &{ExcelPath}[OngoingFee_RateBasis1]    &{ExcelPath}[OngoingFee_Item]    &{ExcelPath}[OngoingFee_ItemType]
@@ -98,8 +98,8 @@ Setup Primary for PIM Future BILAT
     Mx LoanIQ close window    ${LIQ_OrigPrimaries_Window}
     
     ### Circle Notebook Complete Portfolio Allocation, Circling, and Sending to Settlement Approval ###
-    Circle Notebook Workflow Navigation    &{ExcelPath}[Primary_Lender]    &{ExcelPath}[Primary_CircledDate]
-    ...    Yes    &{ExcelPath}[Primary_Portfolio]    &{ExcelPath}[Primary_PortfolioBranch]    ${SellAmount}    &{ExcelPath}[Primary_ExpiryDate]    &{ExcelPath}[Primary_RiskBook]
+    Circle Notebook Workflow Navigation    &{ExcelPath}[Primary_Lender]    &{ExcelPath}[Primary_CircledDate]    &{ExcelPath}[Lender_Hostbank]    &{ExcelPath}[Primary_Portfolio]
+    ...    &{ExcelPath}[Primary_PortfolioBranch]    ${SellAmount}    &{ExcelPath}[Primary_ExpiryDate]    &{ExcelPath}[Primary_RiskBook]
 
     Close All Windows on LIQ
 
