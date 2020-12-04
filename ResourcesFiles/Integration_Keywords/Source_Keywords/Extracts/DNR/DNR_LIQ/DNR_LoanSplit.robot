@@ -26,7 +26,7 @@ Create Loan Split For DNR
     ${Borrower_ShortName}    Read Data From Excel    SC2_DealSetup    Borrower_ShortName    &{ExcelPath}[rowid]    ${DNR_DATASET}
     ${HostBankLender_Share}    Evaluate    100-(${Lender1_Share}+${Lender2_Share})
     
-    ${BaseRatePercentage}    Get Base Rate from Funding Rate Details    LIBOR    &{ExcelPath}[Repricing_Frequency]    &{ExcelPath}[Currency1]
+    ${BaseRatePercentage}    Get Base Rate from Funding Rate Details    BBSY    &{ExcelPath}[Repricing_Frequency]    &{ExcelPath}[Currency1]
     ${ExchangeRate}    Get Currency Exchange Rate from Treasury Navigation    ${AUD_TO_USD}        
 	${baseRateCode}    Read Data From Excel    SC2_DealSetup    Deal_PricingOption3    &{ExcelPath}[rowid]    ${DNR_DATASET}        
                
@@ -48,20 +48,16 @@ Create Loan Split For DNR
     
     ### Setup for Repricing for 10MM ###  
     ${Loan_Alias}    Setup Repricing    &{ExcelPath}[Repricing_Add_Option_Setup]    ${BaseRatePercentage}    ${baseRateCode}    &{ExcelPath}[LoanAmount_1]    &{ExcelPath}[Repricing_Frequency]    ${Y}    ${ADD_LOAN_REPRICING}        
-    
-    ${rate}    Set Currency FX Rate    &{ExcelPath}[Currency1]    &{ExcelPath}[Currency2]    ${USE_SPOT_AUD_TO_USD_RATE}    ${ExchangeRate}
-    
-            
+           
     ### Setup for Repricing for 5MM ###
     Setup Repricing    &{ExcelPath}[Repricing_Add_Option_Setup]    ${BaseRatePercentage}    ${baseRateCode}    &{ExcelPath}[LoanAmount_2]    &{ExcelPath}[Repricing_Frequency]    ${Y}    ${ADD_LOAN_REPRICING}
-        
-    ${rate}    Set Currency FX Rate    &{ExcelPath}[Currency1]    &{ExcelPath}[Currency2]    ${USE_SPOT_AUD_TO_USD_RATE}    ${ExchangeRate}
+     
     Mx LoanIQ Close    ${LIQ_PendingRollover_Window}
     Setup Repricing    &{ExcelPath}[Repricing_Add_Option_Setup_2]    ${BaseRatePercentage}    ${baseRateCode}    &{ExcelPath}[LoanAmount_2]    &{ExcelPath}[Repricing_Frequency]    ${Y}    ${ADD_LOAN_REPRICING}        
     
-
     ### Cashflows Notebook - Create Cashflows ###
     Navigate to Create Cashflow for Loan Repricing
+    ${HostBankShare}    Get Host Bank Cash in Cashflow
     Verify if Method has Remittance Instruction    ${Borrower_ShortName}    &{ExcelPath}[Remittance_Description]    &{ExcelPath}[Remittance_Instruction]
     Verify if Method has Remittance Instruction    ${Lender1_ShortName}    &{ExcelPath}[Remittance2_Description]    &{ExcelPath}[Remittance2_Instruction]
     Verify if Method has Remittance Instruction    ${Lender2_ShortName}    &{ExcelPath}[Remittance3_Description]    &{ExcelPath}[Remittance3_Instruction]
@@ -69,6 +65,10 @@ Create Loan Split For DNR
     Create Cashflow    &{ExcelPath}[Lender1_ShortName]    ${RELEASE_TRANSACTION}
     ###Sending the transaction to approval###
     Navigate to Loan Repricing Workflow and Proceed With Transaction    ${SEND_TO_APPROVAL_STATUS}
+    
+    Write Data To Excel    SC2_LoanSplit    Effective_Date    &{ExcelPath}[rowid]    ${CurrentDate}    ${DNR_DATASET}
+    Write Data To Excel    SC2_LoanSplit    Borrower_Name    &{ExcelPath}[rowid]    ${Borrower_ShortName}    ${DNR_DATASET}
+    Write Data To Excel    SC2_LoanSplit    HostBank_Share    &{ExcelPath}[rowid]    ${HostBankShare}    ${DNR_DATASET}
     
     Logout from Loan IQ
     Login to Loan IQ    ${MANAGER_USERNAME}    ${MANAGER_PASSWORD}

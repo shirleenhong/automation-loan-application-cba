@@ -173,3 +173,17 @@ Create Dictionary Using Report File and Validate Values if Existing
     \    Log    ${Expected_Value}
     \    Log    ${Actual_Value}
     \    Compare Two Strings    ${Actual_Value}    ${Expected_Value}
+
+Get Specific Detail in Given Date
+    [Documentation]    This Keyword is used to get the specific detail in date having format of %d-%b-%Y
+    ...    @author: fluberio    04DEC2020    - initial create
+    [Arguments]    ${sDate}    ${sFormat}    ${sDelimiter}
+
+    ### note that sDate mus be in %d-%b-%Y ###
+    ${Date}    Acquire Argument Value    ${sDate}
+    ${Date_DetailList}    Split String    ${Date}    ${sDelimiter}
+    ${Date_Specific Detail}    Run keyword if    '${sFormat}'=='D'    Set Variable    @{Date_DetailList}[0]
+    ...    ELSE IF    '${sFormat}'=='M'    Set Variable    @{Date_DetailList}[1]
+    ...    ELSE IF    '${sFormat}'=='Y'    Set Variable    @{Date_DetailList}[2]    
+ 
+    [Return]    ${Date_Specific Detail}
