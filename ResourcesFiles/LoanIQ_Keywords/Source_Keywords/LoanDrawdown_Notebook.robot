@@ -858,6 +858,7 @@ Input General Loan Drawdown Details with Accrual End Date
     ...                                      - This is needed when Multiple Risk types are selected in the Deal level
     ...                                      - Added optional argument for Fixed and Loan Risk Type
     ...    @update: ritragel    13SETP20    Added additional arguments for UAT Deals and Added Preprocessing
+    ...    @update: shirhong    01DEC2020    Added additional handling for warning messages
     [Arguments]    ${sLoan_RequestedAmount}    ${sLoan_MaturityDate}    ${sLoan_RepricingFrequency}    ${sLoan_EffectiveDate}
     ...    ${sLoan_RepricingDate}=None    ${sLoan_RiskType}=None    ${sFixedandLoanRiskType}=None
     ...    ${sLoan_PaymentMode}=None    ${sLoan_Accrue}=None    ${sLoan_AccrueEndDate}=None
@@ -887,12 +888,15 @@ Input General Loan Drawdown Details with Accrual End Date
     mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
     Run Keyword If    '${Loan_Accrue}'!='None'    Mx LoanIQ Select Combo Box Value    ${LIQ_InitialDrawdown_Accrue_Dropdown}    ${Loan_Accrue}
     Run Keyword If    '${Loan_PaymentMode}'!='None'    Mx LoanIQ Select Combo Box Value    ${LIQ_InitialDrawdown_PaymentMode_Dropdown}    ${Loan_PaymentMode}
+    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
     ${AdjustedDueDate}    Mx LoanIQ Get Data    ${LIQ_InitialDrawdown_AdjustedDueDate_Datefield}    value%test
     Run Keyword If    '${Loan_AccrueEndDate}'=='None'    mx LoanIQ enter    ${LIQ_InitialDrawdown_AccrualEndDate_Datefield}    ${AdjustedDueDate}
     Run Keyword If    '${Loan_AccrueEndDate}'!='None'    mx LoanIQ enter    ${LIQ_InitialDrawdown_AccrualEndDate_Datefield}    ${sLoan_AccrueEndDate}    
     mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/InitialDrawdown_General
     Select Menu Item    ${LIQ_InitialDrawdown_Window}    File    Save
+    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
+    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
     mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
     mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
 
