@@ -99,3 +99,11 @@ Validate Comments Details for Outstanding are Correct from Comments Report
     ${Report_Date_Value}    Get Date Value from Date Added or Amended Column    ${Date_Added_Amended}    %d-%b-%Y
     ${Dataset_Date_Value}    Get Date Value from Date Added or Amended Column    &{ExcelPath}[Date_Added_Amended]
     Compare Two Strings    ${Dataset_Date_Value}    ${Report_Date_Value.strip()}
+
+Validate Comments for Deal is Not Existing in the Comments Report
+    [Documentation]    This keyword is used to extract details from Comments Report and verify if deleted comment is not existing.
+    ...    @author: clanding    04DEC2020    - initial create
+    [Arguments]    ${ExcelPath}
+    
+    ${IsExist_Comment_Details}    Run Keyword And Return Status    Read Data From Excel    &{ExcelPath}[Sheet_Name]    Comment Detail    ${ExcelPath}[Comment_Detail]    &{ExcelPath}[Report_Path]&{ExcelPath}[Report_File_Name]    bTestCaseColumn=True    sTestCaseColReference=Comment Detail
+    Compare Two Strings    ${False}    ${IsExist_Comment_Details}

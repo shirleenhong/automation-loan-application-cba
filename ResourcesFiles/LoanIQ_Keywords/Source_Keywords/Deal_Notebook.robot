@@ -3065,10 +3065,10 @@ Update Details in Comments Tab in Deal Notebook
     ### Tabs with highlight does not return any text and method is not working ###
     Log To Console    Manually click Comments tab.
     Pause Execution    Click Comments tab then click OK.
-    # Mx LoanIQ Select Window Tab     ${LIQ_DealNotebook_Tab}    Comments    ### Raised TACOE-1193 for the issue
+    # Mx LoanIQ Select Window Tab     ${LIQ_DealNotebook_Tab}    Comments    ### Raised TACOE-1193/GDE-9343 for the issue
     mx LoanIQ activate window    ${LIQ_DealNotebook_Window}
     ${IsSelected}    Run Keyword And Return Status    Mx LoanIQ Select String    ${LIQ_DealNotebook_CommentsTab_JavaTree}    ${Current_Subject}
-    Run Keyword If    ${IsSelected}==${True}    Log    ${Current_Subject} is successfully added in the Comments tab.
+    Run Keyword If    ${IsSelected}==${True}    Log    ${Current_Subject} is existing in the Comments tab.
     ...    ELSE    FAIL    ${Current_Subject} is NOT existing in the Comments tab.
 
     ### Update Comment ###
@@ -3082,10 +3082,46 @@ Update Details in Comments Tab in Deal Notebook
     mx LoanIQ click    ${LIQ_DealNotebook_CommentEdit_OK_Button}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/CommentsEdit_Window
     
-    ### Validate Comment if added ###
+    ### Validate Comment if updated ###
     mx LoanIQ activate window    ${LIQ_DealNotebook_Window}
     ${IsSelected}    Run Keyword And Return Status    Mx LoanIQ Select String    ${LIQ_DealNotebook_CommentsTab_JavaTree}    ${New_Subject}
-    Run Keyword If    ${IsSelected}==${True}    Log    ${New_Subject} is successfully added in the Comments tab.
-    ...    ELSE     Run Keyword And Continue On Failure    FAIL    ${New_Subject} is NOT successfully added in the Comments tab.
+    Run Keyword If    ${IsSelected}==${True}    Log    ${New_Subject} is successfully updated in the Comments tab.
+    ...    ELSE     Run Keyword And Continue On Failure    FAIL    ${New_Subject} is NOT successfully updated in the Comments tab.
     
     [Return]    ${New_Subject}${SPACE}${Current_Local_Date}    ${Current_Local_Date}
+
+Delete Details in Comments Tab in Deal Notebook
+    [Documentation]    This keyword is used to delete details in the Comments tab of a Deal.
+    ...    @author: clanding    04DEC2020    - initial create
+    [Arguments]    ${sSubject}
+
+    ### Keyword Pre-processing ###
+    ${Subject}    Acquire Argument Value    ${sSubject}
+
+    mx LoanIQ activate window    ${LIQ_DealNotebook_Window}
+    mx LoanIQ click element if present    ${LIQ_InquiryMode_Button}
+
+    ### Search existing Comment ###
+    ### Tabs with highlight does not return any text and method is not working ###
+    Log To Console    Manually click Comments tab.
+    Pause Execution    Click Comments tab then click OK.
+    # Mx LoanIQ Select Window Tab     ${LIQ_DealNotebook_Tab}    Comments    ### Raised TACOE-1193/GDE-9343 for the issue
+    mx LoanIQ activate window    ${LIQ_DealNotebook_Window}
+    ${IsSelected}    Run Keyword And Return Status    Mx LoanIQ Select String    ${LIQ_DealNotebook_CommentsTab_JavaTree}    ${Subject}
+    Run Keyword If    ${IsSelected}==${True}    Log    ${Subject} is existing in the Comments tab.
+    ...    ELSE    FAIL    ${Subject} is NOT existing in the Comments tab.
+
+    ### Delete Comment ###
+    Mx LoanIQ Select Or DoubleClick In Javatree    ${LIQ_DealNotebook_CommentsTab_JavaTree}    ${Subject}%d
+    mx LoanIQ activate window    ${LIQ_DealNotebook_CommentEdit_Window}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/CommentsEdit_Window
+    mx LoanIQ click    ${LIQ_DealNotebook_CommentEdit_Delete_Button}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/CommentsEdit_Window
+    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/CommentsEdit_Window
+    
+    ### Validate Comment if deleted ###
+    mx LoanIQ activate window    ${LIQ_DealNotebook_Window}
+    ${IsSelected}    Run Keyword And Return Status    Mx LoanIQ Select String    ${LIQ_DealNotebook_CommentsTab_JavaTree}    ${Subject}
+    Run Keyword If    ${IsSelected}==${False}    Log    ${Subject} is successfully deleted in the Comments tab.
+    ...    ELSE     Run Keyword And Continue On Failure    FAIL    ${Subject} is NOT successfully deleted in the Comments tab.
