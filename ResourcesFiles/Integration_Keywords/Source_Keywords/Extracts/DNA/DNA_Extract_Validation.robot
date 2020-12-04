@@ -279,6 +279,7 @@ Verify DAT File Control Value and CSV Files are Matched
     [Documentation]    This keyword is used to validate DAT file content matched CSV files record.
     ...    @author: clanding    19OCT2020    - initial create
     ...    @update: clanding    29NOV2020    - added conversion to whole number for the control values
+    ...    @update: clanding    02DEC2020    - removed \ in ... inside for loop
     [Arguments]    ${sZone}    ${sExtract_Path}    ${sDAT_File}    ${sBranch_Code}    ${sDWE_Extract_Path}    ${sBus_Date}        ${sDelimiter}
     
     ${DAT_File_Content}    OperatingSystem.Get File    ${sExtract_Path}${sZone}/${sDAT_File}
@@ -331,11 +332,11 @@ Verify DAT File Control Value and CSV Files are Matched
     \    Continue For Loop If    '${CSV_Control_Value}'=='None'
     \    
     \    ${CSV_Control_Value}    Run Keyword If    '${CSV_Control_Value}'=='None'    Set Variable    0
-	\    ...    ELSE    Set Variable    ${CSV_Control_Value}
+	     ...    ELSE    Set Variable    ${CSV_Control_Value}
 	\
 	\    ${CSV_Control_Value}    Convert To Number    ${CSV_Control_Value}
 	\    ${CSV_Control_Value}    Run Keyword If    '${CSV_Control_Value}'=='0'    Set Variable    ${CSV_Control_Value}
-	\    ...    ELSE    Evaluate    "%.0f" % (${CSV_Control_Value})
+	     ...    ELSE    Evaluate    "%.0f" % (${CSV_Control_Value})
 	\   
 	\    ${DAT_File_ControlValue}    Evaluate    "%.0f" % (@{DAT_File_Line_Content_List}[${CONTROL_VALUE_Index}])
     \    

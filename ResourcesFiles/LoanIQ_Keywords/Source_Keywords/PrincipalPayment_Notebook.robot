@@ -7,6 +7,7 @@ Open Existing Loan
     ...    @author: fmamaril
     ...    @update: hstone    28AUG2019    Added option to select existing loan using the current amount value
     ...    @update: fmamaril    03JUNE2020    Updated to align with automation standards and added keyword pre processing
+    ...    @update: clanding    03DEC2020    - added mx LoanIQ click element if present    ${LIQ_Alerts_OK_Button}
     [Arguments]    ${sLoan_Alias}    ${sCurrrentAmt}=None
     
     ### Keyword Pre-processing ###
@@ -19,6 +20,7 @@ Open Existing Loan
     Run Keyword If    '${CurrrentAmt}'!='None'    Mx LoanIQ Select Or Doubleclick In Tree By Text    ${LIQ_ExistingLoanForFacility_Tree}    ${sCurrrentAmt}%d    
     ...    ELSE    Mx LoanIQ Select Or Doubleclick In Tree By Text    ${LIQ_ExistingLoanForFacility_Tree}    ${Loan_Alias}%d
     mx LoanIQ activate window    ${LIQ_Loan_Window}
+    mx LoanIQ click element if present    ${LIQ_Alerts_OK_Button}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LoanWindow
     
 Navigate from Loan to Repayment Schedule
@@ -238,6 +240,7 @@ Navigate to Oustanding Facility Window
     ...    @author: fmamaril
     ...    @update: ehugo    01JUN2020    - added keyword pre-processing; added screenshot
     ...                                   - removed Sleep
+    ...    @update: clanding    03DEC2020    - added mx LoanIQ click element if present    ${LIQ_Alerts_OK_Button}
     [Arguments]    ${sDeal_Name}    ${sFacility_Name}
 
     ### GetRuntime Keyword Pre-processing ###
@@ -249,6 +252,7 @@ Navigate to Oustanding Facility Window
     mx LoanIQ activate window     ${LIQ_FacilityNavigator_Window}
     Mx LoanIQ Select Or DoubleClick In Javatree    ${LIQ_FacilityNavigator_Tree}    ${Facility_Name}%d  
     mx LoanIQ activate window    ${LIQ_FacilityNotebook_Window}
+    mx LoanIQ click element if present    ${LIQ_Alerts_OK_Button}
     mx LoanIQ click    ${LIQ_FacilitySummary_Outstandings_Button}
     mx LoanIQ activate window    ${LIQ_OutstandingForFacility_Window}
 

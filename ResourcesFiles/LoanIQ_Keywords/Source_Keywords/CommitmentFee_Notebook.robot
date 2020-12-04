@@ -49,6 +49,7 @@ Select Fee Due
     ...    @author: fmamaril
     ...    @update: rtarayao    11APR2019    Updated the input for Click Javatree Cell, then deleted Deal_Name as argument.
     ...    @update: ehugo    04JUN2020    - added keyword pre-processing; added screenshot; removed Sleep
+    ...    @update: clanding    01DEC2020    - updated Mx Native Type    {ENTER}
     [Arguments]    ${sFeeType}    ${sScheduledActivityReport_Date}    ${sFacility_Name}
 
     ### GetRuntime Keyword Pre-processing ###
@@ -61,7 +62,7 @@ Select Fee Due
     Mx Loaniq Expand    ${LIQ_ScheduledActivityReport_List}    ${ScheduledActivityReport_Date}
     Mx Loaniq Expand    ${LIQ_ScheduledActivityReport_List}    ${ScheduledActivityReport_Date};${FeeType}  
     Mx LoanIQ Click Javatree Cell   ${LIQ_ScheduledActivityReport_List}    ${Facility_Name}%${Facility_Name}%Facility
-    Mx Native Type    {ENTER}
+    Mx Press Combination    KEY.ENTER
 
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/ScheduledActivityReportWindow_Fee
     
@@ -450,6 +451,7 @@ Validate GL Entries for Ongoing Fee Payment - Bilateral Deal
     ...    @update: ehugo    05JUN2020    - added keyword pre-processing; added screenshot
     ...                                   - converted 'Loan_RequestedAmount' to number
     ...    @update: dahijara    16JUL2020    - Fix warnings - too many variables assigned in Mx LoanIQ Click Button On Window
+    ...    @update: clanding    01DEC2020    - added removing of comma in ${Loan_RequestedAmount}
     [Arguments]    ${sHost_Bank}    ${sBorrower_ShortName}    ${sLoan_RequestedAmount}         
 
     ### GetRuntime Keyword Pre-processing ###
@@ -471,6 +473,7 @@ Validate GL Entries for Ongoing Fee Payment - Bilateral Deal
     ${CreditAmount1}    Remove String    ${CreditAmount1}    ,     
     ${DebitAmount}    Convert To Number    ${DebitAmount}
     ${CreditAmount1}    Convert To Number    ${CreditAmount1}
+    ${Loan_RequestedAmount}    Remove String    ${Loan_RequestedAmount}    ,
     ${Loan_RequestedAmount}    Convert To Number    ${Loan_RequestedAmount}                         
     Should Be Equal    ${DebitAmount}    ${CreditAmount1}
     Should Be Equal    ${Loan_RequestedAmount}    ${DebitAmount}
@@ -1707,3 +1710,38 @@ Update Commitment Fee
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/CommitmentFeeNotebook_General
     Mx LoanIQ select    ${LIQ_CommitmentFee_Save_Menu}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/CommitmentFeeNotebook_General
+    
+Get Actual and Adjusted Due Date
+    [Documentation]    This keyword is used to get Actual and Adjusted Due Date.
+    ...    @author: clanding    27NOV2020    - initial create
+
+    ${ActualDueDate}    Mx LoanIQ Get Data    ${LIQ_CommitmentFee_ActualDueDate_Field}    ActualDueDate
+    ${AdjustedDueDate}    Mx LoanIQ Get Data    ${LIQ_CommitmentFee_AdjustedDueDate}    AdjustedDueDate
+    [Return]    ${ActualDueDate}    ${AdjustedDueDate}
+
+Update Adjusted Due Date on Commitment Fee
+    [Documentation]    This keyword is used to update Adjusted Due Date on Commitment Fee.
+    ...    @author: clanding    01DEC2020    - initial create
+    [Arguments]    ${sAdd_To_AdjustedDueDate}    ${sRunTimeVar_New_AdjustedDueDate}=None
+
+    ### GetRuntime Keyword Pre-processing ###
+    ${Add_To_AdjustedDueDate}    Acquire Argument Value    ${sAdd_To_AdjustedDueDate}
+
+    mx LoanIQ activate window    ${LIQ_CommitmentFee_Window}
+    Mx LoanIQ Select Window Tab    ${LIQ_CommitmentFee_Tab}    General
+    Run Keyword And Continue On Failure    mx LoanIQ click element if present    ${LIQ_CommitmentFee_InquiryMode_Button}
+
+    ${AdjustedDueDate}    Mx LoanIQ Get Data    ${LIQ_CommitmentFee_AdjustedDueDate}    AdjustedDueDate
+    ${New_AdjustedDueDate}    Add Days to Date    ${AdjustedDueDate}    ${Add_To_AdjustedDueDate}
+
+    mx LoanIQ enter    ${LIQ_CommitmentFee_AdjustedDueDate}    ${New_AdjustedDueDate}
+    mx LoanIQ select    ${LIQ_CommitmentFee_Save_Menu}
+    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
+    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
+    mx LoanIQ click element if present    ${LIQ_Warning_OK_Button}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/CommitmentFeeWindow_GeneralTab
+
+    ### Keyword Post-processing ###
+    Save Values of Runtime Execution on Excel File    ${sRunTimeVar_New_AdjustedDueDate}    ${New_AdjustedDueDate}
+
+    [Return]    ${New_AdjustedDueDate}    

@@ -3234,6 +3234,24 @@ Navigate to Pending Loan
     mx LoanIQ close window    ${LIQ_PendingLoanTransactions_Window}
     mx LoanIQ close window    ${LIQ_FacilityNavigator_Window}
     mx LoanIQ close window    ${LIQ_FacilityNotebook_Window}
+
+Navigate to Active Loan from Outstandings
+    [Documentation]    This keyword navigates the LIQ User to the Pending Loan Notebook.     
+    ...    @author: clanding    26NOV2020    - initial create
+    [Arguments]    ${Outstanding_Type}    ${Loan_FacilityName}    ${Loan_Alias}
+
+    Select Actions    [Actions];
+    mx LoanIQ activate window    ${LIQ_OutstandingSelect_Window}
+    mx LoanIQ enter    ${LIQ_OutstandingSelect_Pending_RadioButton}    ON 
+    Mx LoanIQ Select Combo Box Value    ${LIQ_OutstandingSelect_Type_Dropdown}    ${Outstanding_Type}
+    Mx LoanIQ Select Combo Box Value    ${LIQ_OutstandingSelect_Facility_Dropdown}    ${Loan_FacilityName}
+    mx LoanIQ click    ${LIQ_OutstandingSelect_Search_Button}
+    mx LoanIQ activate window    ${LIQ_PendingLoanTransactions_Window}
+    Mx LoanIQ Select String    ${LIQ_PendingLoanTransactions_JavaTree}    ${Loan_Alias}
+    Mx LoanIQ Select Or DoubleClick In Javatree    ${LIQ_PendingLoanTransactions_JavaTree}    ${Loan_Alias}%d
+    mx LoanIQ close window    ${LIQ_PendingLoanTransactions_Window}
+    mx LoanIQ close window    ${LIQ_FacilityNavigator_Window}
+    mx LoanIQ close window    ${LIQ_FacilityNotebook_Window}
  
 Input Loan Drawdown Rates for Agency One Deal
     [Documentation]    This keyword is used to input Loan Drawdown Base Rate within the Rates tab on Agency One Deal.

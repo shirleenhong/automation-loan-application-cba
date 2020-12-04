@@ -498,7 +498,6 @@ Release Cashflow Based on Remittance Instruction
     ...    @update: fluberio    21OCT2020    - Added Condition to add Release Cashflow when Remittance Instruction is Set to IMT
     ...    @update: makcamps    28OCT2020    - Added Condition to add Release Cashflow when Remittance Instruction is Set to IMT and Transaction is Loan Drawdown
     ...    @update: amitp       26OCT2020    - Remove Relase Cashflow Keyword and Add Log for Remittance Instruction RTGS.
-
     [Arguments]    ${sRemittanceInstruction}    ${sCashflowReference}    ${sDataType}=default    ${sNavigateToWorkflow}=Loan Drawdown
 
     ### Keyword Pre-processing ###
