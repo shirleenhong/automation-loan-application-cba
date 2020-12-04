@@ -267,7 +267,6 @@ Create Loan Drawdown TERM and SBLC for Syndicated Deal for DNR
 
     ###Deal Notebook###
     ${LoanEffectiveDate}    Get System Date
-    # ${LoanEffectiveDate}    Get Back Dated Current Date    7    #for AHBCO_004
     Search for Deal    &{ExcelPath}[Deal_Name]
     
     ###Creation of Initial Loan Drawdown in Loan NoteBook###
@@ -277,9 +276,7 @@ Create Loan Drawdown TERM and SBLC for Syndicated Deal for DNR
     
     ###Write Data to Other TestCases###
     Write Data To Excel    SC2_LoanDrawdown    Loan_Alias    ${rowid}    ${Alias}    ${DNR_DATASET}
-    # Write Data To Excel    SERV08_ComprehensiveRepricing    Loan_Alias    ${rowid}    ${Alias}
     Write Data To Excel    SC2_PaymentFees    Loan_Alias    ${rowid}    ${Alias}    ${DNR_DATASET}
-    # Write Data To Excel    SERV21_InterestPayments    Loan_Alias    ${rowid}    ${Alias}
     ${Alias}    Read Data From Excel    SC2_LoanDrawdown    Loan_Alias    ${rowid}    ${DNR_DATASET}
     Input General Loan Drawdown Details with Accrual End Date    &{ExcelPath}[Loan_RequestedAmount]    &{ExcelPath}[Loan_MaturityDate]   &{ExcelPath}[Loan_RepricingFrequency]    ${LoanEffectiveDate}    None    None    None    None    &{ExcelPath}[Loan_Accrue]
     Input Loan Drawdown Rates for Term Drawdown    &{ExcelPath}[Borrower_BaseRate]
@@ -351,7 +348,6 @@ Create Loan Drawdown TERM and SBLC for Syndicated Deal for DNR
     Verify if Status is set to Do It    &{ExcelPath}[Borrower_ShortName]  
     Verify if Status is set to Do It    &{ExcelPath}[Lender1_ShortName]
     Verify if Status is set to Do It    &{ExcelPath}[Lender2_ShortName]
-    # Release Cashflow    &{ExcelPath}[Lender2_ShortName]    release
     mx LoanIQ click    ${LIQ_Cashflows_OK_Button}
     Close All Windows on LIQ
     
@@ -385,7 +381,6 @@ Create Loan Drawdown TERM and SBLC for Syndicated Deal With Backdated Effective 
     Get Data from Automatic Schedule Setup
     ${CaculatedFixedPayment}    Verify Select Fixed Payment Amount
     
-    # Write Data To Excel    SERV21_InterestPayments    Loan_CalculatedFixedPayment    ${rowid}    ${CaculatedFixedPayment}
     ###Cashflow Notebook - Create Cashflows###
     Navigate to Drawdown Cashflow Window
     Verify if Method has Remittance Instruction    &{ExcelPath}[Borrower_ShortName]    &{ExcelPath}[Remittance_Description]    &{ExcelPath}[Remittance_Instruction]
@@ -447,63 +442,8 @@ Create Loan Drawdown TERM and SBLC for Syndicated Deal With Backdated Effective 
     Verify if Status is set to Do It    &{ExcelPath}[Borrower_ShortName]  
     Verify if Status is set to Do It    &{ExcelPath}[Lender1_ShortName]
     Verify if Status is set to Do It    &{ExcelPath}[Lender2_ShortName]
-    # Release Cashflow    &{ExcelPath}[Lender2_ShortName]    release
     mx LoanIQ click    ${LIQ_Cashflows_OK_Button}
     Close All Windows on LIQ
-    
-Write Cashflow ID for DNR Report Validation
-    [Documentation]    This will serve as a High Level keyword for reopening of the loans's cashflow
-    ...    and getting the cashflow ID to be written in the Report Validation sheet.
-    ...    NOTE: Modify this column [RowId_ToWriteCashflowId_ForReportValidation] if needed, 
-    ...    to specify which row will the value be written in your report validation sheet for AHBCO_003, AHBCO_004, AHBCO_005.
-    ...    @author: shirhong    04DEC2020    - initial create
-    [Arguments]    ${ExcelPath}
-    ###Login to Inputter and Open the Loan After Released###
-    Logout from Loan IQ
-    Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
-    
-    Launch Loan Notebook    &{ExcelPath}[Deal_Name]    &{ExcelPath}[Facility_Name]    &{ExcelPath}[Loan_Alias]
-    Mx LoanIQ Select Window Tab    ${LIQ_Loan_Tab}    Events
-    Mx LoanIQ Select Or DoubleClick In Javatree    ${LIQ_Loan_Events_List}    Released%d
-    
-    ###Open Cashflow Details From Released Initial Loan Drawdown###
-    Open Cashflows Window from Notebook Menu    ${LIQ_InitialDrawdown_Released_Status_Window}    ${LIQ_InitialDrawdown_Options_Cashflow}
-    mx LoanIQ activate window    ${LIQ_Cashflows_Window}
-    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/InitialLoanDrawdown_CashflowWindow
-    Mx LoanIQ Select Or DoubleClick In Javatree    ${LIQ_Cashflows_Tree}    &{ExcelPath}[Borrower_ShortName]%d
-    mx LoanIQ activate window    ${LIQ_Cashflows_DetailsForCashflow_Window}
-    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/CashflowDetails
-    mx LoanIQ send keys    {F8}
-    
-    ###Get the Actual Cashflow ID and Return to Loan###
-    mx LoanIQ activate window    ${LIQ_UpdateInformation_Window}
-    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/Cashflow_UpdateDetails
-    mx LoanIQ click    ${LIQ_Cashflows_UpdateInformation_CopyRID_Button}
-    mx LoanIQ click    ${LIQ_UpdateInformation_Exit_Button}
-    mx LoanIQ click    ${LIQ_Payment_Cashflows_DetailsforCashflow_Exit_Button}
-    mx LoanIQ close window    ${LIQ_Cashflows_Window}
-    mx LoanIQ close window    ${LIQ_InitialDrawdown_Window}
-    mx LoanIQ activate window    ${LIQ_Loan_Window}
-       
-    ###Set The Cashflow ID in Variable and Write To Report Validation Sheet###
-    Mx LoanIQ Select Window Tab    ${LIQ_Loan_Tab}    Comments
-    mx LoanIQ click    ${LIQ_LoanNotebook_CommentsTab_Add_Button}
-    mx LoanIQ enter    ${LIQ_CommentsEdit_Comment_Textfield}    /
-    mx LoanIQ send keys    ^{V}
-    ${CashflowID}    Mx LoanIQ Get Data    ${LIQ_CommentsEdit_Comment_Textfield}    value%rid
-    mx LoanIQ close window    ${LIQ_CommentsEdit_Window}    
-    ${CashflowID}    Remove String    ${CashflowID}    /
-    ${CashflowID}    Strip String    ${CashflowID}    mode=both
-    Log To Console    ${CashflowID}
-    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/Cashflow_ID
-    
-    ###Write Cashflow ID to AHBCO_001 and AHBCO_002 Report Validation Sheet###
-    Write Data To Excel    AHBCO    Cashflow_ID    1    ${CashflowID}    ${DNR_DATASET}
-    Write Data To Excel    AHBCO    Cashflow_ID    2    ${CashflowID}    ${DNR_DATASET}
-    
-    ###Write Cashflow ID to Specific Report Validation Sheet###
-    Write Data To Excel    AHBCO    Cashflow_ID    &{ExcelPath}[RowId_ToWriteCashflowId_ForReportValidation]    ${CashflowID}    ${DNR_DATASET}
-    Close All Windows on LIQ    
     
 
     

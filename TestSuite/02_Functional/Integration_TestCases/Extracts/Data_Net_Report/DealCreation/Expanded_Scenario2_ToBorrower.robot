@@ -7,7 +7,7 @@ ${rowid}    1
 *** Test Case ***
 
 Create Syndicated Deal for Agent Host Bank Cashout Report
-    [Documentation]   This DNR test case is used to create a Syndicated Deal for and creation of initial Loan Drawdown Agent Host Bank Cashout Report generation
+    [Documentation]   This DNR test case is used to create a Syndicated Deal for creation of initial Loan Drawdown and Agent Host Bank Cashout Report generation
     ...    author: shirhong    24NOV2020    - Initial Create
 
     Mx Execute Template With Multiple Data    Setup Syndicated Deal for DNR    ${DNR_DATASET}    ${rowid}    SC2_DealSetup
