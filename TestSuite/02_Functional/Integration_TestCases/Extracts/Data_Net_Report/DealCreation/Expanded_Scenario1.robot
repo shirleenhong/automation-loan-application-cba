@@ -94,15 +94,11 @@ Create Initial Loan Drawdown for Active Facility Expanded Scenario 1
     Set Global Variable    ${rowid}    1
     Set Global Variable    ${TestCase_Name}    Expanded_Scenario1_ActiveFac1_Repayment
     Mx Execute Template With Specific Test Case Name    Get Loan Details and Write in DNR Dataset for Alerts and Comments    ${DNR_DATASET}    Test_Case    ${TestCase_Name}    SC1_LoanDrawdown
-    
-
-    ### add update comment code
-    ### add delete comment code
 
 Create Initial Loan Drawdown with no Repayment Schedule for Active Facility Expanded Scenario 1
     [Tags]    06 Create Initial Loan Drawdown for Expanded Scenario 1
     Set Global Variable    ${rowid}    3
-    Set Global Variable    ${TestCase_Name}    Expanded_Scenario1_ExpiredFac2
+    Set Global Variable    ${TestCase_Name}    Expanded_Scenario1_ActiveFac1_NoRepayment
     Mx Execute Template With Multiple Data    Create Initial Loan Drawdown with no Repayment Schedule for DNR    ${DNR_DATASET}    ${rowid}    SC1_LoanDrawdown
 
 Create Initial Loan Drawdown for Expired Facility Expanded Scenario 1
@@ -155,6 +151,6 @@ Unscheduled Principal Payment for Active Facility Expanded Scenario 1
     Set Global Variable    ${TestCase_Name}    Expanded_Scenario1_ActiveFac1_NoRepayment
     Mx Execute Template With Multiple Data    Unscheduled Principal Payment - No Schedule for DNR    ${DNR_DATASET}    ${rowid}    SC1_UnscheduledPayments
 
-    ### EOD
-    ### Unscheduled Principal Payment - No Schedule
-    ### LQDTY_005
+    Set Global Variable    ${TestCase_Name}    LQDTY_005
+    Mx Execute Template With Specific Test Case Name    Generate DNR Report for Liquidity    ${DNR_DATASET}    Test_Case    ${TestCase_Name}    DNR
+    Mx Execute Template With Specific Test Case Name    Write Details for Liquidity Report    ${DNR_DATASET}    Test_Case    ${TestCase_Name}    DNR

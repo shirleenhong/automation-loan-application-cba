@@ -3024,3 +3024,68 @@ Add Details in Comments Tab in Deal Notebook
     
     [Return]    ${Comment_Author}    ${Comment_Date}    ${Comment}${SPACE}${Current_Local_Date}    ${Current_Local_Date}
     
+Update Alerts in Deal Notebook
+    [Documentation]    This keyword is used to update Alerts details in Deal Notebook.
+    ...    @author: clanding    03DEC2020    - initial create
+    [Arguments]    ${sNew_ShortDescription}
+    
+    ### Keyword Pre-processing ###
+    ${New_ShortDescription}    Acquire Argument Value    ${sNew_ShortDescription}
+
+    mx LoanIQ activate window    ${LIQ_DealNotebook_Window}
+    Select Menu Item    ${LIQ_DealNotebook_Window}    Options    Alerts   
+    mx LoanIQ activate window    ${LIQ_DealNotebook_AlertManagementScreen_AlertEditor_Window}
+    mx LoanIQ click    ${LIQ_DealNotebook_AlertManagementScreen_Modify_Button}
+
+    ${Current_Local_Date}    Get Current Date    result_format=%d-%b-%Y %H:%M:%S
+    mx LoanIQ enter    ${LIQ_DealNotebook_AlertManagementScreen_AlertEditor_ShortDescription_Textbox}    ${New_ShortDescription}
+    mx LoanIQ enter    ${LIQ_DealNotebook_AlertManagementScreen_AlertEditor_Details_Textbox}    ${New_ShortDescription}${SPACE}${Current_Local_Date}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/AlertEditor_Window
+    mx LoanIQ click    ${LIQ_DealNotebook_AlertManagementScreen_AlertEditor_OK_Button}
+    mx LoanIQ activate window    ${LIQ_DealNotebook_AlertManagementScreen_Window}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/AlertManagementScreen_Window
+
+    mx LoanIQ close window    ${LIQ_DealNotebook_AlertManagementScreen_Window}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/CloseAlertManagementScreen_Window
+    [Return]    ${New_ShortDescription}${SPACE}${Current_Local_Date}    ${Current_Local_Date}
+
+Update Details in Comments Tab in Deal Notebook
+    [Documentation]    This keyword is used to update details in the Comments tab of a Deal.
+    ...    @author: clanding    03DEC2020    - initial create
+    [Arguments]    ${sCurrent_Subject}    ${sNew_Subject}
+
+    ### Keyword Pre-processing ###
+    ${Current_Subject}    Acquire Argument Value    ${sCurrent_Subject}
+    ${New_Subject}    Acquire Argument Value    ${sNew_Subject}
+
+    mx LoanIQ activate window    ${LIQ_DealNotebook_Window}
+    mx LoanIQ click element if present    ${LIQ_InquiryMode_Button}
+
+    ### Search existing Comment ###
+    ### Tabs with highlight does not return any text and method is not working ###
+    Log To Console    Manually click Comments tab.
+    Pause Execution    Click Comments tab then click OK.
+    # Mx LoanIQ Select Window Tab     ${LIQ_DealNotebook_Tab}    Comments    ### Raised TACOE-1193 for the issue
+    mx LoanIQ activate window    ${LIQ_DealNotebook_Window}
+    ${IsSelected}    Run Keyword And Return Status    Mx LoanIQ Select String    ${LIQ_DealNotebook_CommentsTab_JavaTree}    ${Current_Subject}
+    Run Keyword If    ${IsSelected}==${True}    Log    ${Current_Subject} is successfully added in the Comments tab.
+    ...    ELSE    FAIL    ${Current_Subject} is NOT existing in the Comments tab.
+
+    ### Update Comment ###
+    Mx LoanIQ Select Or DoubleClick In Javatree    ${LIQ_DealNotebook_CommentsTab_JavaTree}    ${Current_Subject}%d
+    mx LoanIQ activate window    ${LIQ_DealNotebook_CommentEdit_Window}
+
+    ${Current_Local_Date}    Get Current Date    result_format=%d-%b-%Y %H:%M:%S
+    mx LoanIQ enter    ${LIQ_DealNotebook_CommentEdit_Subject_Textbox}    ${New_Subject}
+    mx LoanIQ enter    ${LIQ_DealNotebook_CommentEdit_Comment_Textbox}    ${New_Subject}${SPACE}${Current_Local_Date}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/CommentsEdit_Window
+    mx LoanIQ click    ${LIQ_DealNotebook_CommentEdit_OK_Button}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/CommentsEdit_Window
+    
+    ### Validate Comment if added ###
+    mx LoanIQ activate window    ${LIQ_DealNotebook_Window}
+    ${IsSelected}    Run Keyword And Return Status    Mx LoanIQ Select String    ${LIQ_DealNotebook_CommentsTab_JavaTree}    ${New_Subject}
+    Run Keyword If    ${IsSelected}==${True}    Log    ${New_Subject} is successfully added in the Comments tab.
+    ...    ELSE     Run Keyword And Continue On Failure    FAIL    ${New_Subject} is NOT successfully added in the Comments tab.
+    
+    [Return]    ${New_Subject}${SPACE}${Current_Local_Date}    ${Current_Local_Date}

@@ -779,6 +779,8 @@ LIQ_DealNotebook_AlertManagementScreen_Window = 'JavaWindow("title:=Alert Manage
 LIQ_DealNotebook_AlertManagementScreen_JavaTree = 'JavaWindow("title:=Alert Management Screen").JavaTree("labeled_containers_path:=Group:Customer/Deal/Facility/Outstanding;")'
 LIQ_DealNotebook_AlertManagementScreen_Alerts_JavaList = 'JavaWindow("title:=Alert Management Screen").JavaList("labeled_containers_path:=Group:Alerts;")'
 LIQ_DealNotebook_AlertManagementScreen_Create_Button = 'JavaWindow("label:=Alert Management Screen").JavaButton("attached text:=Create")'
+LIQ_DealNotebook_AlertManagementScreen_Modify_Button = 'JavaWindow("label:=Alert Management Screen").JavaButton("attached text:=Modify")'
+LIQ_DealNotebook_AlertManagementScreen_Delete_Button = 'JavaWindow("label:=Alert Management Screen").JavaButton("attached text:=Delete")'
 LIQ_DealNotebook_AlertManagementScreen_ChooseAnEntity_Customer_RadioButton = 'JavaWindow("title:=Choose an Entity").JavaRadioButton("attached text:=Customer")'
 LIQ_DealNotebook_AlertManagementScreen_ChooseAnEntity_Deal_RadioButton = 'JavaWindow("title:=Choose an Entity").JavaRadioButton("attached text:=Deal")'
 LIQ_DealNotebook_AlertManagementScreen_ChooseAnEntity_Facility_RadioButton = 'JavaWindow("title:=Choose an Entity").JavaRadioButton("attached text:=Facility")'
