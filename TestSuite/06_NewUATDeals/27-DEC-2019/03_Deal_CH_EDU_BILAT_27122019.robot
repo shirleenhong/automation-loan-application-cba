@@ -12,3 +12,6 @@ Create Quick Party Onboarding for CH EDU Bilateral Deal - PTY001
 
 Establish Deal with LVR Effective 30/6/2019
     Mx Execute Template With Multiple Data    Setup Deal for CH EDU BILAT Deal    ${ExcelPath}    ${rowid}    CRED01_DealSetup
+
+Establish Capitalisation Facility
+    Mx Execute Template With Multiple Data    Create Capitalisation Facility for CH EDU Bilateral Deal    ${ExcelPath}    ${rowid}    CRED02_FacilitySetup_A
