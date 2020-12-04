@@ -217,4 +217,22 @@ Update Comments in Deal for DNR
 
     Close All Windows on LIQ
 
+Delete Comments in Deal for DNR
+    [Documentation]    This keyword is used to deleteComments details for Deal level.
+    ...    @author: clanding    04DEC2020    - initial create
+    [Arguments]    ${ExcelPath}
+    
+    ${Comment_Heading}    Read Data From Excel    CMMNT    Comment_Heading    CMMNT_008    ${DNR_DATASET}    bTestCaseColumn=True    sTestCaseColReference=Test_Case
+    ${Comment_Detail}    Read Data From Excel    CMMNT    Comment_Detail    CMMNT_008    ${DNR_DATASET}    bTestCaseColumn=True    sTestCaseColReference=Test_Case
+    ${Deal_Name}    Read Data From Excel    CMMNT    Deal_Name    CMMNT_006    ${DNR_DATASET}    bTestCaseColumn=True    sTestCaseColReference=Test_Case
+
+    Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
+    Open Existing Deal    ${Deal_Name}
+    Delete Details in Comments Tab in Deal Notebook    ${Comment_Heading}
+    Write Data To Excel    CMMNT    Comment_Heading    ${TestCase_Name}    ${Comment_Heading}    ${DNR_DATASET}    bTestCaseColumn=True
+    Write Data To Excel    CMMNT    Comment_Detail    ${TestCase_Name}    ${Comment_Detail}    ${DNR_DATASET}    bTestCaseColumn=True
+    Write Data To Excel    CMMNT    Deal_Name    ${TestCase_Name}    ${Deal_Name}    ${DNR_DATASET}    bTestCaseColumn=True
+
+    Close All Windows on LIQ
+
 
