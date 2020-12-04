@@ -141,8 +141,8 @@ Setup Term Facility for Syndicated Deal for DNR
     
     ${Facility_AgreementDate}    Get System Date
     ${Facility_EffectiveDate}    Get System Date
-    ${Facility_ExpiryDate}    Add Days to Date    ${​​​​Facility_EffectiveDate}​​​​    &{ExcelPath}[Add_To_Facility_ExpiryDate]
-    ${Facility_MaturityDate}    Add Days to Date    ${​​​​Facility_EffectiveDate}​​​​    &{ExcelPath}[Add_To_Facility_MaturityDate]
+    ${Facility_ExpiryDate}    Add Days to Date    ${Facility_EffectiveDate}    &{ExcelPath}[Add_To_Facility_ExpiryDate]
+    ${Facility_MaturityDate}    Add Days to Date    ${Facility_EffectiveDate}    &{ExcelPath}[Add_To_Facility_MaturityDate]
 
     Write Data To Excel    SC2_LoanDrawdown    Loan_MaturityDate    ${rowid}    ${Facility_MaturityDate}    ${DNR_DATASET}
     Write Data To Excel    SC2_LoanDrawdownNonAgent    Loan_MaturityDate    ${rowid}    ${Facility_MaturityDate}    ${DNR_DATASET}
