@@ -141,8 +141,8 @@ Setup Term Facility for Syndicated Deal for DNR
     
     ${Facility_AgreementDate}    Get System Date
     ${Facility_EffectiveDate}    Get System Date
-    ${Facility_ExpiryDate}    Add Days to Date    ${Facility_EffectiveDate}    365
-    ${Facility_MaturityDate}    Add Days to Date    ${Facility_EffectiveDate}    395
+    ${Facility_ExpiryDate}    Add Days to Date    ${​​​​Facility_EffectiveDate}​​​​    &{ExcelPath}[Add_To_Facility_ExpiryDate]
+    ${Facility_MaturityDate}    Add Days to Date    ${​​​​Facility_EffectiveDate}​​​​    &{ExcelPath}[Add_To_Facility_MaturityDate]
 
     Write Data To Excel    SC2_LoanDrawdown    Loan_MaturityDate    ${rowid}    ${Facility_MaturityDate}    ${DNR_DATASET}
     Write Data To Excel    SC2_LoanDrawdownNonAgent    Loan_MaturityDate    ${rowid}    ${Facility_MaturityDate}    ${DNR_DATASET}
@@ -170,6 +170,6 @@ Setup Term Facility for Syndicated Deal for DNR
     Write Data To Excel    SC2_DealSetup    Primary_CircledDate    ${rowid}    ${EffectiveDate}    ${DNR_DATASET}
     Write Data To Excel    SC2_DealSetup    Primary_PortfolioExpiryDate    ${rowid}    ${ExpiryDate}    ${DNR_DATASET}
     Write Data To Excel    SC2_EventFee    EventFee_EffectiveDate    ${rowid}    ${EffectiveDate}    ${DNR_DATASET}
-    ${EventFee_NoRecurrencesAfterDate}    Get Back Dated Current Date    -365
+    ${EventFee_NoRecurrencesAfterDate}    Get Back Dated Current Date    -&{ExcelPath}[Backdated_Days]
     Write Data To Excel    SC2_EventFee    EventFee_NoRecurrencesAfterDate    ${rowid}    ${EventFee_NoRecurrencesAfterDate}    ${DNR_DATASET}
         

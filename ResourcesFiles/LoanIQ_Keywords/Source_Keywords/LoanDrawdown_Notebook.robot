@@ -3898,21 +3898,15 @@ Complete Set FX Rate
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/FxRate_Window 
     mx LoanIQ click    ${LIQ_FXRate_OK_Button}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/FxRate_Window
-    Validate if Question or Warning Message is Displayed
+    Validate if Question or Warning Message is Displayed    
     
-
-Write Cashflow ID for DNR Report Validation
-    [Documentation]    This will serve as a High Level keyword for reopening of the loans's cashflow
-    ...    and getting the cashflow ID to be written in the AHBCO Report Validation sheet.
-    ...    NOTE: Modify this column [RowId_ToWriteCashflowId_ForReportValidation] if needed, 
-    ...    to specify which row will the value be written in your report validation sheet for AHBCO_003, AHBCO_004, AHBCO_005.
+Get Cashflow Details from Released Initial Loan Drawdown
+    [Documentation]    This keyword is used to get the cashflow ID and write the value in the dataset
     ...    @author: shirhong    04DEC2020    - initial create
-    [Arguments]    ${ExcelPath}
-    ###Login to Inputter and Open the Loan After Released###
-    Logout from Loan IQ
-    Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
+    [Arguments]    ${sBorrower_ShortName}
     
-    Launch Loan Notebook    &{ExcelPath}[Deal_Name]    &{ExcelPath}[Facility_Name]    &{ExcelPath}[Loan_Alias]
+    ${Borrower_Shortname}    Acquire Argument Value    ${sBorrower_ShortName}
+
     Mx LoanIQ Select Window Tab    ${LIQ_Loan_Tab}    Events
     Mx LoanIQ Select Or DoubleClick In Javatree    ${LIQ_Loan_Events_List}    Released%d
     
@@ -3920,7 +3914,7 @@ Write Cashflow ID for DNR Report Validation
     Open Cashflows Window from Notebook Menu    ${LIQ_InitialDrawdown_Released_Status_Window}    ${LIQ_InitialDrawdown_Options_Cashflow}
     mx LoanIQ activate window    ${LIQ_Cashflows_Window}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/InitialLoanDrawdown_CashflowWindow
-    Mx LoanIQ Select Or DoubleClick In Javatree    ${LIQ_Cashflows_Tree}    &{ExcelPath}[Borrower_ShortName]%d
+    Mx LoanIQ Select Or DoubleClick In Javatree    ${LIQ_Cashflows_Tree}    ${Borrower_Shortname}%d
     mx LoanIQ activate window    ${LIQ_Cashflows_DetailsForCashflow_Window}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/CashflowDetails
     mx LoanIQ send keys    {F8}
@@ -3946,12 +3940,6 @@ Write Cashflow ID for DNR Report Validation
     ${CashflowID}    Strip String    ${CashflowID}    mode=both
     Log To Console    ${CashflowID}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/Cashflow_ID
+    [Return]    ${CashflowID}
     
-    ###Write Cashflow ID to AHBCO_001 and AHBCO_002 Report Validation Sheet###
-    Write Data To Excel    AHBCO    Cashflow_ID    1    ${CashflowID}    ${DNR_DATASET}
-    Write Data To Excel    AHBCO    Cashflow_ID    2    ${CashflowID}    ${DNR_DATASET}
-    
-    ###Write Cashflow ID to Specific Report Validation Sheet###
-    Write Data To Excel    AHBCO    Cashflow_ID    &{ExcelPath}[RowId_ToWriteCashflowId_ForReportValidation]    ${CashflowID}    ${DNR_DATASET}
-    Close All Windows on LIQ    
     

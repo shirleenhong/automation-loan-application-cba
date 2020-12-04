@@ -362,7 +362,7 @@ Create Loan Drawdown TERM and SBLC for Syndicated Deal With Backdated Effective 
     Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
 
     ###Deal Notebook###
-    ${LoanEffectiveDate}    Get Back Dated Current Date    &{ExcelPath}[NumberOfDays_ToBackdate]    #for AHBCO_004
+    ${LoanEffectiveDate}    Get Back Dated Current Date    &{ExcelPath}[NumberOfDays_ToBackdate]
     Search for Deal    &{ExcelPath}[Deal_Name]
     
     ###Creation of Initial Loan Drawdown in Loan NoteBook###
@@ -447,5 +447,6 @@ Create Loan Drawdown TERM and SBLC for Syndicated Deal With Backdated Effective 
     Close All Windows on LIQ
     
 
+    
     
     
