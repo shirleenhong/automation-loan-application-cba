@@ -124,12 +124,14 @@ Validate 'Active Customer' Window
     ...    @author: ghabal
     ...    @update: amansuet    21MAY2020    - added acquire argument and take screenshot keywords
     ...                                      - fixed hardcoded locators
+    ...    @update: clanding    05DEC2020    - added mx LoanIQ click element if present    ${LIQ_Alerts_OK_Button}
     [Arguments]    ${sLIQCustomer_ShortName}
 
     ### Keyword Pre-processing ###
     ${LIQCustomer_ShortName}    Acquire Argument Value    ${sLIQCustomer_ShortName}
 
     Mx LoanIQ Activate Window    ${LIQ_ActiveCustomer_Window}
+    mx LoanIQ click element if present    ${LIQ_Alerts_OK_Button}
 
     ${LIQCustomer_ShortName}    Replace Variables    ${LIQCustomer_ShortName}
     ${LIQ_ActiveCustomer_ShortName_Window}    Replace Variables    ${LIQ_ActiveCustomer_ShortName_Window}
@@ -2534,3 +2536,60 @@ Update Borrower Servicing Group Alias
     Mx LoanIQ Click    ${LIQ_ServicingGroups_Alias_OK_Button}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/ServicingGroup_Alias
     Mx LoanIQ click    ${ServicingGroupWindow_ExitButton}
+
+Add Alerts in Active Customer
+    [Documentation]    This keyword is used to add Alerts details in Active Customer.
+    ...    @author: clanding    05DEC2020    - initial create
+    [Arguments]    ${sShortDescription}    ${sDetail}
+    
+    ### Keyword Pre-processing ###
+    ${ShortDescription}    Acquire Argument Value    ${sShortDescription}
+    ${Detail}    Acquire Argument Value    ${sDetail}
+
+    mx LoanIQ activate window    ${LIQ_ActiveCustomer_Window}
+    Select Menu Item    ${LIQ_ActiveCustomer_Window}    Options    Alerts
+    ${IsExist}    Run Keyword And Return Status    Mx LoanIQ Verify Object Exist    ${LIQ_Question_Yes_Button}
+    Run Keyword If    ${IsExist}==${True}    mx LoanIQ click    ${LIQ_Question_Yes_Button}
+    ...    ELSE    Run Keywords    mx LoanIQ activate window    ${LIQ_ActiveCustomer_AlertManagementScreen_Window}
+    ...    AND    mx LoanIQ click    ${LIQ_ActiveCustomer_AlertManagementScreen_Create_Button}
+    
+    mx LoanIQ activate window    ${LIQ_ActiveCustomer_AlertManagementScreen_AlertEditor_Window}
+    mx LoanIQ enter    ${LIQ_ActiveCustomer_AlertManagementScreen_AlertEditor_ShortDescription_Textbox}    ${ShortDescription}
+    
+    ${Current_Local_Date}    Get Current Date    result_format=%d-%b-%Y %H:%M:%S
+    mx LoanIQ enter    ${LIQ_ActiveCustomer_AlertManagementScreen_AlertEditor_Details_Textbox}    ${Detail}${SPACE}${Current_Local_Date}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/AlertEditor_Window
+    mx LoanIQ click    ${LIQ_ActiveCustomer_AlertManagementScreen_AlertEditor_OK_Button}
+    mx LoanIQ activate window    ${LIQ_ActiveCustomer_AlertManagementScreen_Window}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/AlertManagementScreen_Window
+
+    mx LoanIQ close window    ${LIQ_ActiveCustomer_AlertManagementScreen_Window}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/CloseAlertManagementScreen_Window
+    ${Current_Local_Date_WithoutTime}    Get Current Date    result_format=%d-%b-%Y
+    [Return]    ${Detail}${SPACE}${Current_Local_Date}    ${Current_Local_Date}    ${Current_Local_Date_WithoutTime}
+
+Update Alerts in Active Customer
+    [Documentation]    This keyword is used to update Alerts details in Active Customer.
+    ...    @author: clanding    03DEC2020    - initial create
+    [Arguments]    ${sNew_ShortDescription}
+    
+    ### Keyword Pre-processing ###
+    ${New_ShortDescription}    Acquire Argument Value    ${sNew_ShortDescription}
+
+    mx LoanIQ activate window    ${LIQ_ActiveCustomer_Window}
+    Select Menu Item    ${LIQ_ActiveCustomer_Window}    Options    Alerts   
+    mx LoanIQ activate window    ${LIQ_ActiveCustomer_AlertManagementScreen_AlertEditor_Window}
+    mx LoanIQ click    ${LIQ_ActiveCustomer_AlertManagementScreen_Modify_Button}
+
+    ${Current_Local_Date}    Get Current Date    result_format=%d-%b-%Y %H:%M:%S
+    mx LoanIQ enter    ${LIQ_ActiveCustomer_AlertManagementScreen_AlertEditor_ShortDescription_Textbox}    ${New_ShortDescription}
+    mx LoanIQ enter    ${LIQ_ActiveCustomer_AlertManagementScreen_AlertEditor_Details_Textbox}    ${New_ShortDescription}${SPACE}${Current_Local_Date}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/AlertEditor_Window
+    mx LoanIQ click    ${LIQ_ActiveCustomer_AlertManagementScreen_AlertEditor_OK_Button}
+    mx LoanIQ activate window    ${LIQ_ActiveCustomer_AlertManagementScreen_Window}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/AlertManagementScreen_Window
+
+    mx LoanIQ close window    ${LIQ_ActiveCustomer_AlertManagementScreen_Window}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/CloseAlertManagementScreen_Window
+    ${Current_Local_Date_WithoutTime}    Get Current Date    result_format=%d-%b-%Y
+    [Return]    ${New_ShortDescription}${SPACE}${Current_Local_Date}    ${Current_Local_Date}    ${Current_Local_Date_WithoutTime}
