@@ -98,9 +98,6 @@ Search Customer and Complete its Borrower Profile Creation Until Location for DN
     ###Validating Buttons if Enabled 
     Validate If All Buttons are Enabled
     
-    ###Validating Legal Address Details
-    ###Check Legal Address Details Under Profiles Tab    &{ExcelPath}[Customer_Location]    &{ExcelPath}[Address_Code]    &{ExcelPath}[Address_Line1]    &{ExcelPath}[Address_Line2]    &{ExcelPath}[Address_City]    &{ExcelPath}[Address_ZipPostalCode]    &{ExcelPath}[LIQCustomer_ShortName]    
-	
 	###Adding Fax Details                 
     Add Fax Details under Profiles Tab    &{ExcelPath}[Customer_Location]    &{ExcelPath}[Fax_Number]    &{ExcelPath}[Fax_Description]
 
@@ -128,6 +125,31 @@ Add Comments in Customer for DNR
     Write Data To Excel    CMMNT    Comment_Detail    CMMNT_010    ${Comment_Details}    ${DNR_DATASET}    bTestCaseColumn=True
     Write Data To Excel    CMMNT    User_ID    CMMNT_010    ${INPUTTER_USERNAME}    ${DNR_DATASET}    bTestCaseColumn=True
     Write Data To Excel    CMMNT    Date_Added_Amended    CMMNT_010    ${Comment_DateWithTime}    ${DNR_DATASET}    bTestCaseColumn=True
+
+    Close All Windows on LIQ
+    Logout from Loan IQ
+
+Update Comments in Customer for DNR
+    [Documentation]    This keyword is used to update comments in active customer.
+    ...    @author: clanding    05DEC2020    - initial create.
+    [Arguments]    ${ExcelPath}
+
+    Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
+    Search Customer    &{ExcelPath}[Customer_Search]    &{ExcelPath}[LIQCustomer_ID]    &{ExcelPath}[LIQCustomer_ShortName]          
+    ${Status_UI}    Get Profile Status from Profiles Tab    &{ExcelPath}[Profile_Type]
+    Compare Two Strings    Not In Use    ${Status_UI}
+    ${New_Subect}    ${New_Comment_Details}    ${Comment_DateWithTime}    Update Details in Comments Tab in Active Customer    &{ExcelPath}[Comments_Subject]
+    Write Data To Excel    SC1_PrimaryAllocation    User_ID    ${rowid}    ${INPUTTER_USERNAME}    ${DNR_DATASET}
+    Write Data To Excel    SC1_PrimaryAllocation    Comments_DateAddedAmended    ${rowid}    ${Comment_DateWithTime}    ${DNR_DATASET}
+    Write Data To Excel    SC1_PrimaryAllocation    Comments_Details    ${rowid}    ${New_Comment_Details}    ${DNR_DATASET}
+
+    ### Writing for Comments Report ###
+    Write Data To Excel    CMMNT    Customer_Name    CMMNT_010_Update    &{ExcelPath}[LIQCustomer_LegalName]    ${DNR_DATASET}    bTestCaseColumn=True
+    Write Data To Excel    CMMNT    CIF_Number    CMMNT_010_Update    &{ExcelPath}[LIQCustomer_ID]    ${DNR_DATASET}    bTestCaseColumn=True
+    Write Data To Excel    CMMNT    Comment_Heading    CMMNT_010_Update    ${New_Subect}    ${DNR_DATASET}    bTestCaseColumn=True
+    Write Data To Excel    CMMNT    Comment_Detail    CMMNT_010_Update    ${New_Comment_Details}    ${DNR_DATASET}    bTestCaseColumn=True
+    Write Data To Excel    CMMNT    User_ID    CMMNT_010_Update    ${INPUTTER_USERNAME}    ${DNR_DATASET}    bTestCaseColumn=True
+    Write Data To Excel    CMMNT    Date_Added_Amended    CMMNT_010_Update    ${Comment_DateWithTime}    ${DNR_DATASET}    bTestCaseColumn=True
 
     Close All Windows on LIQ
     Logout from Loan IQ

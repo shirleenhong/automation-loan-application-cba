@@ -2577,3 +2577,45 @@ Add Details in Comments Tab in Active Customer
     ...    ELSE     Run Keyword And Continue On Failure    FAIL    ${Subject} is NOT successfully added in the Comments tab.
     
     [Return]    ${Comment}${SPACE}${Current_Local_Date}    ${Current_Local_Date}
+
+Update Details in Comments Tab in Active Customer
+    [Documentation]    This keyword is used to update details in the Comments tab of a Customer.
+    ...    @author: clanding    04DEC2020    - initial create
+    [Arguments]    ${sCurrent_Subject}
+    
+    ### Keyword Pre-processing ###
+    ${Current_Subject}    Acquire Argument Value    ${sCurrent_Subject}
+
+    ### Input Comment ###
+    mx LoanIQ activate window    ${LIQ_ActiveCustomer_Window}
+    mx LoanIQ click element if present    ${LIQ_InquiryMode_Button}
+
+    ### Tabs with highlight does not return any text and method is not working ###
+    Log To Console    Manually click Comments tab.
+    Pause Execution    Click Comments tab then click OK.
+    # Mx LoanIQ Select Window Tab     ${LIQ_Active_Customer_Notebook_TabSelection}    Comments    ### Raised TACOE-1193 for the issue
+
+    ${IsSelected}    Run Keyword And Return Status    Mx LoanIQ Select String    ${LIQ_ActiveCustomer_CommentsTab_JavaTree}    ${Current_Subject}
+    Run Keyword If    ${IsSelected}==${True}    Log    ${Current_Subject} is successfully added in the Comments tab.
+    ...    ELSE    FAIL    ${Current_Subject} is NOT existing in the Comments tab.
+
+    ### Update Comment ###
+    Mx LoanIQ Select Or DoubleClick In Javatree    ${LIQ_ActiveCustomer_CommentsTab_JavaTree}    ${Current_Subject}%d
+    mx LoanIQ activate window    ${LIQ_ActiveCustomer_CommentEdit_Window}
+
+    mx LoanIQ enter    ${LIQ_ActiveCustomer_CommentEdit_Subject_Textbox}    ${Current_Subject}_Update
+    
+    ${Current_Local_Date}    Get Current Date    result_format=%d-%b-%Y %H:%M:%S
+    mx LoanIQ enter    ${LIQ_ActiveCustomer_CommentEdit_Comment_Textbox}    ${Current_Subject}_Update${SPACE}${Current_Local_Date}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/CommentsEdit_Window
+    mx LoanIQ click    ${LIQ_ActiveCustomer_CommentEdit_OK_Button}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/CommentsEdit_Window
+    
+    ### Validate Comment if added ###
+    mx LoanIQ activate window    ${LIQ_ActiveCustomer_Window}
+    ${IsSelected}    Run Keyword And Return Status    Mx LoanIQ Select String    ${LIQ_ActiveCustomer_CommentsTab_JavaTree}    ${Current_Subject}_Update
+    Run Keyword If    ${IsSelected}==${True}    Log    ${Current_Subject}_Update is successfully added in the Comments tab.
+    ...    ELSE     Run Keyword And Continue On Failure    FAIL    ${Current_Subject}_Update is NOT successfully added in the Comments tab.
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/CommentsEdit_Window
+    
+    [Return]    ${Current_Subject}_Update    ${Current_Subject}_Update${SPACE}${Current_Local_Date}    ${Current_Local_Date}
