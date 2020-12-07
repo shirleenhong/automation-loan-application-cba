@@ -18,3 +18,6 @@ Establish Capitalisation Facility
 
 Establish Commitment Fee
     Mx Execute Template With Multiple Data    Setup Commitment Fee for CH EDU Bilateral Deal    ${ExcelPath}    ${rowid}    CRED08_OngoingFeeSetup_A
+
+Establish Cash Advance Facility
+    Mx Execute Template With Multiple Data    Create Cash Advance Facility for CH EDU Bilateral Deal    ${ExcelPath}    ${rowid}    CRED02_FacilitySetup_B
