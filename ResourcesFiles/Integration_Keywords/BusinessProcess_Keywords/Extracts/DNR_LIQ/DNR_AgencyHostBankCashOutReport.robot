@@ -31,3 +31,51 @@ Validation of Report and Dataset Value for Agency Host Bank Cash Out for Cashflo
     ### Verify the Data from Dataset File ###
     Compare Two Strings    &{ExcelPath}[Cashflow_Status]    ${ActualCashflowStatus}
     
+Validation of Report and Dataset Value for Agency Host Bank Cash Out for Processing Date
+    [Documentation]    This keyword is used for reading the downloaded Agency Host Bank Cashout Report 
+    ...    and validating the value Processing_Date from the dataset. AHBCO_0003
+    ...    @author: shirhong    20NOV2020    - Initial create
+    [Arguments]    ${ExcelPath}
+        
+    Log    ${ExcelPath}
+    
+    ### Extract the Data from Downloaded Excel File ###
+    ${ActualProcessingDate}    Read Data From Excel    Agency_CashOut    Processing Date    ${ExcelPath}[Cashflow_ID]    &{ExcelPath}[Report_Path]${CBA_CASHOUT_REPORTFILE}.xlsx    bTestCaseColumn=True    sTestCaseColReference=Cashflow ID    iHeaderIndex=2
+
+    ### Verify the Data from Dataset File ###
+    Compare Two Strings    &{ExcelPath}[Processing_Date]    ${ActualProcessingDate}
+    
+Validation of Report and Dataset Value for Agency Host Bank Cash Out for Effective Date
+    [Documentation]    This keyword is used for reading the downloaded Agency Host Bank Cashout Report 
+    ...    and validating the value Effective_Date from the dataset. AHBCO_0003
+    ...    @author: shirhong    20NOV2020    - Initial create
+    [Arguments]    ${ExcelPath}
+        
+    Log    ${ExcelPath}
+    
+    ### Extract the Data from Downloaded Excel File ###
+    ${ActualEffectiveDate}    Read Data From Excel    Agency_CashOut    Effective Date    ${ExcelPath}[Cashflow_ID]    &{ExcelPath}[Report_Path]${CBA_CASHOUT_REPORTFILE}.xlsx    bTestCaseColumn=True    sTestCaseColReference=Cashflow ID    iHeaderIndex=2
+
+    ### Verify the Data from Dataset File ###
+    Compare Two Strings    &{ExcelPath}[Effective_Date]    ${ActualEffectiveDate}
+
+Write Cashflow ID for Agency Cashout Report
+    [Documentation]    This will serve as a High Level keyword for reopening of the loans's cashflow
+    ...    and getting the cashflow ID to be written in the AHBCO Report Validation sheet.
+    ...    @author: shirhong    04DEC2020    - initial create
+    [Arguments]    ${ExcelPath}
+    ###Login to Inputter and Open the Loan After Released###
+    Logout from Loan IQ
+    Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
+    
+    Launch Loan Notebook    &{ExcelPath}[Deal_Name]    &{ExcelPath}[Facility_Name]    &{ExcelPath}[Loan_Alias]
+    
+    ${CashflowID}   Get Cashflow Details from Released Initial Loan Drawdown    &{ExcelPath}[Borrower_Shortname]
+     
+    ###Write Cashflow ID to AHBCO_001 and AHBCO_002 Report Validation Sheet###
+    Write Data To Excel    AHBCO    Cashflow_ID    1    ${CashflowID}    ${DNR_DATASET}
+    Write Data To Excel    AHBCO    Cashflow_ID    2    ${CashflowID}    ${DNR_DATASET}
+    
+    ###Write Cashflow ID to Specific Report Validation Sheet###
+    Write Data To Excel    AHBCO    Cashflow_ID    &{ExcelPath}[RowId_ToWriteCashflowId_ForReportValidation]    ${CashflowID}    ${DNR_DATASET}
+    Close All Windows on LIQ   
