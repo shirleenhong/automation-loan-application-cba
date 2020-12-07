@@ -508,6 +508,7 @@ Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/Extr
 ### Integration Resource Files - DNR - Source Keywords ###
 Resource    ../ResourcesFiles/Integration_Keywords/Source_Keywords/Extracts/DNR/DNR_Extract/DNR_ExtractValidation_Keywords.robot
 Resource    ../ResourcesFiles/Integration_Keywords/Source_Keywords/Extracts/DNR/DNR_Extract/DNR_Generic_Keywords.robot
+Resource    ../ResourcesFiles/Integration_Keywords/Source_Keywords/Extracts/DNR/DNR_LIQ/DNR_Customer.robot
 Resource    ../ResourcesFiles/Integration_Keywords/Source_Keywords/Extracts/DNR/DNR_LIQ/DNR_DealSetup.robot
 Resource    ../ResourcesFiles/Integration_Keywords/Source_Keywords/Extracts/DNR/DNR_LIQ/DNR_FacilityFeeSetup.robot
 Resource    ../ResourcesFiles/Integration_Keywords/Source_Keywords/Extracts/DNR/DNR_LIQ/DNR_FacilitySetup.robot
