@@ -27,6 +27,7 @@ LIQ_Cashflows_ChooseRemittanceInstructions_Details_Button = 'JavaWindow("title:=
 
 LIQ_Cashflows_RemittanceInstructionsDetail_Window = 'JavaWindow("title:=Remittance Instructions Detail.*")'
 
+LIQ_Cashflows_UpdateInformation_CopyRID_Button = 'JavaWindow("title:=Update Information.*").JavaButton("attached text:=Copy RID To Clipboard")'
 
 ### GL Entries ###
 LIQ_GL_Entries_Window = 'JavaWindow("title:=GL Entries For.*")'

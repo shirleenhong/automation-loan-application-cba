@@ -176,4 +176,20 @@ Set Filter Using Branch Description and Processing Area and Financial Centre and
     UnSelect Frame
     Capture Page Screenshot    ${screenshot_path}/Screenshots/DNR/Download-{index}.png
 
+Validate Facility Name Value if Existing
+    [Documentation]    This keyword is used to validate facility performance report files where the Facility Name value does not exists.
+    ...    @author: ccarriedo    04DEC2020    - initial create
+    [Arguments]    ${LIQPerformance_Report}    ${Sheet_Name}    ${Facility_Name}
+
+    ### Open report excel file ###
+    CustomExcelLibrary.Open Excel    ${LIQPerformance_Report}
     
+    ### Get all sheet values ###
+    ${Report_Sheet_Values_List}    CustomExcelLibrary.Get Sheet Values    ${Sheet_Name}
+    ${Report_Sheet_Values_List_String}    Convert To String    ${Report_Sheet_Values_List}
+    
+    ### Search the facility name value in the string ###
+    ${Status_Contains_Column_Header}    Run Keyword and Return Status    Should Contain    ${Report_Sheet_Values_List_String}    ${Facility_Name}
+    Run Keyword If    '${Status_Contains_Column_Header}'=='${False}'    Log    Expected: Facility Name ${Facility_Name} is not present in report file ${LIQPerformance_Report}.
+    ...    ELSE    FAIL    Facility Name ${Facility_Name} is present in report file ${LIQPerformance_Report}.
+ 
