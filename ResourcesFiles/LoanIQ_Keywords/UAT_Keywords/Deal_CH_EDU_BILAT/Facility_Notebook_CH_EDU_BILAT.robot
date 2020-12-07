@@ -67,7 +67,7 @@ Create Cash Advance Facility for CH EDU Bilateral Deal
     Add Risk Type    &{ExcelPath}[Facility_RiskType]    &{ExcelPath}[Facility_RiskTypeLimit]   &{ExcelPath}[Facility_Currency]
     Add Loan Purpose Type    &{ExcelPath}[Facility_LoanPurposeType]
    
-    ## Facility Notebook - Restrictions Tab ###
+    ### Facility Notebook - Restrictions Tab ###
     Add Currency Limit    &{ExcelPath}[Facility_Currency]    &{ExcelPath}[Facility_GlobalLimit]   &{ExcelPath}[Facility_CustomerServicingGroup]    &{ExcelPath}[Facility_SGAlias]
 
     ### Facility Notebook - Sublimit/Cust Tab ###
