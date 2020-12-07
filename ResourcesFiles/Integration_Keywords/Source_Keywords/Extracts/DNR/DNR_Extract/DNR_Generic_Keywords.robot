@@ -219,3 +219,12 @@ Setup Year for From and To Filter
     Press Keys    ${slocator}    ${sText}
     Press Keys    ${slocator}    RETURN
     Wait Until Browser Ready State
+
+Verify List Values if Correct
+    [Documentation]    This keyword is used to verify if all list values are correct compared to sExpectedValue
+    ...    @author: clanding    07DEC2020    - initial create
+    [Arguments]    ${aList}    ${sExpectedValue}
+
+    ${List_Count}    Get Length    ${aList}
+    :FOR    ${Index}    IN RANGE    0    ${List_Count}
+    \    Compare Two Strings    ${sExpectedValue}    @{aList}[${Index}]   
