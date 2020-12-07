@@ -52,6 +52,7 @@ Run As Report Type
 Set User Range Filter Using From and To and Branch and Download Report
     [Documentation]    This keyword is used to set filter for report and download excel file report.
     ...    @author: clanding    16NOV2020    - initial create
+    ...    @update: clanding    05DEC2020    - added condition when Month and Date are empty
     [Arguments]    ${sFromMonth}    ${sToMonth}    ${sFromDay}    ${sToDay}    ${sBranchCode}    ${sReport_Name}    ${sReport_Path}
 
     Delete File If Exist    ${sReport_Path}${sReport_Name}.xlsx
@@ -65,22 +66,22 @@ Set User Range Filter Using From and To and Branch and Download Report
     Click Element    ${DNR_TeamContent_CBAReports_UserRange_RadioButton_Locator}
     
     ### Select From Date ###
-    Click Element    ${DNR_TeamContent_CBAReports_FromMonthYear_Calendar_Locator}
+    Run Keyword If    '${sFromMonth}'!=''    Click Element    ${DNR_TeamContent_CBAReports_FromMonthYear_Calendar_Locator}
     ${sFromMonth}    Replace Variables    ${sFromMonth}
     ${DNR_TeamContent_CBAReports_FromMonth_Calendar_Locator}    Replace Variables    ${DNR_TeamContent_CBAReports_FromMonth_Calendar_Locator}
-    Click Element    ${DNR_TeamContent_CBAReports_FromMonth_Calendar_Locator}
+    Run Keyword If    '${sFromMonth}'!=''    Click Element    ${DNR_TeamContent_CBAReports_FromMonth_Calendar_Locator}
     ${sFromDay}    Replace Variables    ${sFromDay}
     ${DNR_TeamContent_CBAReports_FromDate_Calendar_Locator}    Replace Variables    ${DNR_TeamContent_CBAReports_FromDate_Calendar_Locator}
-    Click Element    ${DNR_TeamContent_CBAReports_FromDate_Calendar_Locator}
+    Run Keyword If    '${sFromDay}'!=''    Click Element    ${DNR_TeamContent_CBAReports_FromDate_Calendar_Locator}
     
     ### Select To Date ###
-    Click Element    ${DNR_TeamContent_CBAReports_ToMonthYear_Calendar_Locator}
+    Run Keyword If    '${sToMonth}'!=''    Click Element    ${DNR_TeamContent_CBAReports_ToMonthYear_Calendar_Locator}
     ${sToMonth}    Replace Variables    ${sToMonth}
     ${DNR_TeamContent_CBAReports_ToMonth_Calendar_Locator}    Replace Variables    ${DNR_TeamContent_CBAReports_ToMonth_Calendar_Locator}
-    Click Element    ${DNR_TeamContent_CBAReports_ToMonth_Calendar_Locator}
+    Run Keyword If    '${sToMonth}'!=''    Click Element    ${DNR_TeamContent_CBAReports_ToMonth_Calendar_Locator}
     ${sToDay}    Replace Variables    ${sToDay}
     ${DNR_TeamContent_CBAReports_ToDate_Calendar_Locator}    Replace Variables    ${DNR_TeamContent_CBAReports_ToDate_Calendar_Locator}
-    Click Element    ${DNR_TeamContent_CBAReports_ToDate_Calendar_Locator}
+    Run Keyword If    '${sToDay}'!=''    Click Element    ${DNR_TeamContent_CBAReports_ToDate_Calendar_Locator}
     
     ### Select Branch ###
     ${sBranchCode}    Replace Variables    ${sBranchCode}

@@ -5,7 +5,8 @@ Resource    ../../../../Configurations/LoanIQ_Import_File.robot
 *** Keywords ***
 Create Capitalisation Facility for CH EDU Bilateral Deal
     [Documentation]    This keyword creates Capitalization Facility for CH EDU Bilateral Deal
-    ...    @author:dahijara    03DEC2020    Intial Create
+    ...    @author: dahijara    03DEC2020    - Intial Create
+    ...    @update: dahijara    04DEC2020    - Added reading of Deal Name from CRED01_DealSetup sheet.
     [Arguments]    ${ExcelPath}
 
     ${Facility_Name}    Auto Generate Only 5 Numeric Test Data    &{ExcelPath}[Facility_NamePrefix]
@@ -15,12 +16,13 @@ Create Capitalisation Facility for CH EDU Bilateral Deal
     ${Facility_SGLocation}    Read Data From Excel    CRED01_DealSetup    AdminAgent_Location    &{ExcelPath}[rowid] 
     ${Facility_BorrowerSGName}    Read Data From Excel    PTY001_QuickPartyOnboarding    Borrower_SG_Name    &{ExcelPath}[rowid]
     ${Facility_Borrower}    Read Data From Excel    PTY001_QuickPartyOnboarding    LIQCustomer_ShortName    &{ExcelPath}[rowid]
+    ${Deal_Name}    Read Data From Excel    CRED01_DealSetup    Deal_Name    &{ExcelPath}[rowid]
 
     ###Open Deal Notebook If Not present###
-    Open Deal Notebook If Not Present    &{ExcelPath}[Deal_Name]
+    Open Deal Notebook If Not Present    ${Deal_Name}
 
     ###New Facility Screen###
-    ${Facility_ProposedCmtAmt}    New Facility Select    &{ExcelPath}[Deal_Name]    ${Facility_Name}    &{ExcelPath}[Facility_Type]    &{ExcelPath}[Facility_ProposedCmtAmt]    &{ExcelPath}[Facility_Currency]
+    ${Facility_ProposedCmtAmt}    New Facility Select    ${Deal_Name}    ${Facility_Name}    &{ExcelPath}[Facility_Type]    &{ExcelPath}[Facility_ProposedCmtAmt]    &{ExcelPath}[Facility_Currency]
     
     ###Facility Notebook - Summary Tab###
     Enter Dates on Facility Summary    &{ExcelPath}[Facility_AgreementDate]    &{ExcelPath}[Facility_EffectiveDate]    &{ExcelPath}[Facility_ExpiryDate]    &{ExcelPath}[Facility_MaturityDate]

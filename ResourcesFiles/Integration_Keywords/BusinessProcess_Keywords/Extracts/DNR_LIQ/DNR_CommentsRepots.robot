@@ -100,6 +100,26 @@ Validate Comments Details for Outstanding are Correct from Comments Report
     ${Dataset_Date_Value}    Get Date Value from Date Added or Amended Column    &{ExcelPath}[Date_Added_Amended]
     Compare Two Strings    ${Dataset_Date_Value}    ${Report_Date_Value.strip()}
 
+Validate Comments Details for Customer are Correct from Comments Report
+    [Documentation]    This keyword is used to extract details from Comments Report and verify if details are correct.
+    ...    @author: clanding    04DEC2020    - initial create
+    [Arguments]    ${ExcelPath}
+    
+    ${Customer_Name}    Read Data From Excel    &{ExcelPath}[Sheet_Name]    Customer Name    ${ExcelPath}[Comment_Detail]    &{ExcelPath}[Report_Path]&{ExcelPath}[Report_File_Name]    bTestCaseColumn=True    sTestCaseColReference=Comment Detail
+    ${CIF_Number}    Read Data From Excel    &{ExcelPath}[Sheet_Name]    CIF Number    ${ExcelPath}[Comment_Detail]    &{ExcelPath}[Report_Path]&{ExcelPath}[Report_File_Name]    bTestCaseColumn=True    sTestCaseColReference=Comment Detail
+    ${Comment_Heading}    Read Data From Excel    &{ExcelPath}[Sheet_Name]    Comment Heading    ${ExcelPath}[Comment_Detail]    &{ExcelPath}[Report_Path]&{ExcelPath}[Report_File_Name]    bTestCaseColumn=True    sTestCaseColReference=Comment Detail
+    ${User_ID}    Read Data From Excel    &{ExcelPath}[Sheet_Name]    User ID    ${ExcelPath}[Comment_Detail]    &{ExcelPath}[Report_Path]&{ExcelPath}[Report_File_Name]    bTestCaseColumn=True    sTestCaseColReference=Comment Detail
+    ${Date_Added_Amended}    Read Data From Excel    &{ExcelPath}[Sheet_Name]    Date Added / Amended    ${ExcelPath}[Comment_Detail]    &{ExcelPath}[Report_Path]&{ExcelPath}[Report_File_Name]    bTestCaseColumn=True    sTestCaseColReference=Comment Detail
+    
+    Compare Two Strings    &{ExcelPath}[Customer_Name]    ${Customer_Name.strip()}
+    Compare Two Strings    &{ExcelPath}[CIF_Number]    ${CIF_Number.strip()}
+    Compare Two Strings    &{ExcelPath}[Comment_Heading]    ${Comment_Heading.strip()}
+    Compare Two Strings    &{ExcelPath}[User_ID]    ${User_ID.strip()}
+    
+    ${Report_Date_Value}    Get Date Value from Date Added or Amended Column    ${Date_Added_Amended}    %d-%b-%Y
+    ${Dataset_Date_Value}    Get Date Value from Date Added or Amended Column    &{ExcelPath}[Date_Added_Amended]
+    Compare Two Strings    ${Dataset_Date_Value}    ${Report_Date_Value.strip()}
+
 Validate Comments for Deal is Not Existing in the Comments Report
     [Documentation]    This keyword is used to extract details from Comments Report and verify if deleted comment is not existing.
     ...    @author: clanding    04DEC2020    - initial create
