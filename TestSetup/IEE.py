@@ -310,6 +310,14 @@ CBA_CASHOUT_REPORTFILE = "Agency Host Bank Cash Out Report"
 CBA_DE_REPORTFILE= "Agency Host Bank DE Extract"
 CBA_LIQPERFORMANCE_REPORTFILE = "LIQFacilityPerformance_V1.3.4"
 CBA_LOANSACCRUALS_REPORTFILE = "LoansAndAccrualsReport_V1.3.4"
+CBA_PAYMENT_AHBCO_REPORTFILE = "Agency Host Bank Cash Out Report"
+CBA_PAYMENT_AHBDE_REPORTFILE = "Agency Host Bank DE Extract"
+CBA_PAYMENT_CIR_REPORTFILE = "Cash In Report_V1.2"
+CBA_PAYMENT_CORAS_REPORTFILE = "Cash Out Report Approved Status_V1.2"
+CBA_PAYMENT_CORRS_REPORTFILE = "Cash Out Report Released Status_V1.2"
+CBA_PAYMENT_DE_REPORTFILE = "DE Extract_V1.2"
+
+
 
 import os
 project_path = os.path.dirname(os.path.realpath(__file__)).replace("MDM_ConfigFile","")
