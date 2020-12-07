@@ -126,3 +126,23 @@ Validate Alert Details for Outstandings are Correct from Alert Report
     ${Report_Date_Value}    Get Date Value from Date Added or Amended Column    ${Date_Added_Amended}    %d-%b-%Y
     ${Dataset_Date_Value}    Get Date Value from Date Added or Amended Column    &{ExcelPath}[Date_Added_Amended]
     Compare Two Strings    ${Dataset_Date_Value}    ${Report_Date_Value.strip()}
+
+Validate Alert Details for Customer are Correct from Alert Report
+    [Documentation]    This keyword is used to extract details from Alert Report and verify if details are correct.
+    ...    @author: clanding    01DEC2020    - initial create
+    [Arguments]    ${ExcelPath}
+    
+    ${Customer_Name}    Read Data From Excel    &{ExcelPath}[Sheet_Name]    Customer Name    ${ExcelPath}[Alert_Content]    &{ExcelPath}[Report_Path]&{ExcelPath}[Report_File_Name]    bTestCaseColumn=True    sTestCaseColReference=Alert Content
+    ${CIF_Number}    Read Data From Excel    &{ExcelPath}[Sheet_Name]    CIF Number    ${ExcelPath}[Alert_Content]    &{ExcelPath}[Report_Path]&{ExcelPath}[Report_File_Name]    bTestCaseColumn=True    sTestCaseColReference=Alert Content
+    ${Alert_Heading}    Read Data From Excel    &{ExcelPath}[Sheet_Name]    Alert Heading    ${ExcelPath}[Alert_Content]    &{ExcelPath}[Report_Path]&{ExcelPath}[Report_File_Name]    bTestCaseColumn=True    sTestCaseColReference=Alert Content
+    ${User_Name}    Read Data From Excel    &{ExcelPath}[Sheet_Name]    User Name    ${ExcelPath}[Alert_Content]    &{ExcelPath}[Report_Path]&{ExcelPath}[Report_File_Name]    bTestCaseColumn=True    sTestCaseColReference=Alert Content
+    ${Date_Added_Amended}    Read Data From Excel    &{ExcelPath}[Sheet_Name]    Date Added / Amended    ${ExcelPath}[Alert_Content]    &{ExcelPath}[Report_Path]&{ExcelPath}[Report_File_Name]    bTestCaseColumn=True    sTestCaseColReference=Alert Content
+    
+    Compare Two Strings    &{ExcelPath}[Customer_Name]    ${Customer_Name.strip()}
+    Compare Two Strings    &{ExcelPath}[CIF_Number]    ${CIF_Number.strip()}
+    Compare Two Strings    &{ExcelPath}[Alert_Heading]    ${Alert_Heading.strip()}
+    Compare Two Strings    &{ExcelPath}[User_Name]    ${User_Name.strip()}
+    
+    ${Report_Date_Value}    Get Date Value from Date Added or Amended Column    ${Date_Added_Amended}    %d-%b-%Y
+    ${Dataset_Date_Value}    Get Date Value from Date Added or Amended Column    &{ExcelPath}[Date_Added_Amended]
+    Compare Two Strings    ${Dataset_Date_Value}    ${Report_Date_Value.strip()}
