@@ -3005,6 +3005,7 @@ Enter Initial Loan Drawdown General Details
     ...                @author: bernchua
     ...                @update: bernchua    07JAN2019    Set default values for some arguments
     ...                @update: bernchua    07JAN2019    Added conditions for variables with default values
+    ...                @update: fluberio    27NOV2020    Added condition for maturity date
     [Arguments]    ${Requested_Amount}    ${Effective_Date}    ${Maturity_Date}    ${Accrue}    ${Drawdown_Currency}
     ...    ${Repricing_Frequency}=${EMPTY}    ${Repricing_Date}=${EMPTY}    ${NBD_Reason}=${EMPTY}    ${IntCycleFreq}=${EMPTY}
     mx LoanIQ activate    ${LIQ_InitialDrawdown_Window}
@@ -3012,8 +3013,9 @@ Enter Initial Loan Drawdown General Details
     mx LoanIQ enter    ${LIQ_InitialDrawdown_RequestedAmt_Textfield}    ${Requested_Amount}
     mx LoanIQ enter    ${LIQ_InitialDrawdown_EffectiveDate_Datefield}    ${Effective_Date}
     mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
-    mx LoanIQ enter    ${LIQ_InitialDrawdown_MaturityDate_Datefield}    ${Maturity_Date}
-    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
+    Run Keyword If    '${Maturity_Date}'!='${EMPTY}'    Run Keywords    mx LoanIQ enter    ${LIQ_InitialDrawdown_MaturityDate_Datefield}    ${Maturity_Date}
+    ...    AND    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
+    ...    AND    mx LoanIQ click element if present    ${LIQ_Question_Yes_Button} 
     :FOR    ${i}    IN RANGE    3
     \    Run Keyword If    '${Repricing_Frequency}'!='${EMPTY}'    Mx LoanIQ Select Combo Box Value    ${LIQ_InitialDrawdown_Repricing_Dropdownlist}    ${Repricing_Frequency}
     \    ${errorDisplayed}    Run Keyword If    '${Repricing_Frequency}'!='${EMPTY}'    Run Keyword And Return Status    Mx LoanIQ Verify Object Exist    ${LIQ_Error_Window}    VerificationData="Yes"
@@ -3024,7 +3026,8 @@ Enter Initial Loan Drawdown General Details
     Mx LoanIQ Select Combo Box Value    ${LIQ_InitialDrawdown_Accrue_Dropdown}    ${Accrue}
     mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}    
     ${Drawdown_ActualDueDate}    Mx LoanIQ Get Data    ${LIQ_InitialDrawdown_ActualDueDate_Datefield}    value%date
-    mx LoanIQ enter    ${LIQ_InitialDrawdown_AccrualEndDate_Datefield}    ${Drawdown_ActualDueDate}        
+    mx LoanIQ enter    ${LIQ_InitialDrawdown_AccrualEndDate_Datefield}    ${Drawdown_ActualDueDate}    
+   
     ${Drawdown_ActualCCY}    Mx LoanIQ Get Data    ${LIQ_InitialDrawdown_ActualCCY_StaticText}    value%ccy
     Run Keyword If    '${Drawdown_ActualCCY}'=='${Drawdown_Currency}'    Log    Initial Drawdown Actual CCY ${Drawdown_Currency} verified.
     ...    ELSE    Fail    Initial Drawdown currency validation failed.
