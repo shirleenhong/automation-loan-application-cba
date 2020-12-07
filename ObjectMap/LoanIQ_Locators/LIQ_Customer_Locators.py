@@ -146,6 +146,7 @@ LIQ_Active_Customer_Notebook_ProfileTab_AddressListforLocation_Window = 'JavaWin
 LIQ_Active_Customer_Notebook_ProfileTab_FaxListforLocation_Window = 'JavaWindow("title:=Fax List for ${Customer_Location}","tagname:=Fax List for ${Customer_Location}")'
 LIQ_Active_Customer_Notebook_ProfileTab_ContactListforLocation_Window = 'JavaWindow("title:=Contact List for ${Customer_Location}","tagname:=Contact List for ${Customer_Location}")'
 LIQ_Active_Customer_Notebook_ProfileTab_CompleteLocationStatus_Grid = 'JavaWindow("title:=Active Customer -.*").JavaTree("attached text:=Drill down for details.*","developer name:=.*status=.*locationDescription=${Customer_Location}.*Complete.*")'
+LIQ_Active_Customer_Notebook_ProfileTab_JavaTree = 'JavaWindow("title:=Active Customer -.*").JavaTree("attached text:=Drill down for details.*")'
 
 ###Active Customer_BorrowerProfileDetails_Window###
 LIQ_BorrowerProfileDetails_Window  = 'JavaWindow("title:=Borrower Profile Details.*")'
@@ -505,6 +506,19 @@ LIQ_ContactChangeTransaction_Workflow_Tab = 'JavaWindow("title:=.*Contact Change
 LIQ_ContactChangeTransaction_Warning_Yes_Button = 'JavaWindow("title:=Warning.*","displayed:=1").JavaButton("label:=Yes.*")'
 LIQ_ContactChangeTransaction_ListItem = 'JavaWindow("title:=.*Contact Change Transaction").JavaTree("attached text:=Drill down to perform Workflow item")'
 
+### Comments tab ###
+LIQ_ActiveCustomer_CommentsTab_JavaTree = 'JavaWindow("title:=Active Customer.*").JavaTree("attached text:=Drill down for details")'
+LIQ_ActiveCustomer_CommentsTab_AddGenericComment_Button = 'JavaWindow("title:=Active Customer.*").JavaButton("attached text:=Add Generic Comment")'
+LIQ_ActiveCustomer_CommentEdit_Window = 'JavaWindow("title:=Comment Edit")'
+LIQ_ActiveCustomer_CommentEdit_CreatedOn_Textbox = 'JavaWindow("title:=Comment Edit").JavaEdit("attached text:=Created on:")'
+LIQ_ActiveCustomer_CommentEdit_CreatedBy_Textbox = 'JavaWindow("title:=Comment Edit").JavaEdit("attached text:=by:","Index:=0")'
+LIQ_ActiveCustomer_CommentEdit_ModifiedOn_Textbox = 'JavaWindow("title:=Comment Edit").JavaEdit("attached text:=Modified on:")'
+LIQ_ActiveCustomer_CommentEdit_ModifiedBy_Textbox = 'JavaWindow("title:=Comment Edit").JavaEdit("attached text:=by:","Index:=1")'
+LIQ_ActiveCustomer_CommentEdit_Subject_Textbox = 'JavaWindow("title:=Comment Edit").JavaEdit("attached text:=Subject:")'
+LIQ_ActiveCustomer_CommentEdit_Comment_Textbox = 'JavaWindow("title:=Comment Edit").JavaEdit("attached text:=Comment:")'
+LIQ_ActiveCustomer_CommentEdit_OK_Button = 'JavaWindow("title:=Comment Edit").JavaButton("attached text:=OK")'
+LIQ_ActiveCustomer_CommentEdit_Cancel_Button = 'JavaWindow("title:=Comment Edit").JavaButton("attached text:=Cancel")'
+LIQ_ActiveCustomer_CommentEdit_Delete_Button = 'JavaWindow("title:=Comment Edit").JavaButton("attached text:=Delete")'
 
 ### Alerts ###
 LIQ_ActiveCustomer_AlertManagementScreen_Window = 'JavaWindow("title:=Alert Management Screen")'
@@ -528,4 +542,3 @@ LIQ_ActiveCustomer_AlertManagementScreen_AlertEditor_Window = 'JavaWindow("title
 LIQ_ActiveCustomer_AlertManagementScreen_AlertEditor_ShortDescription_Textbox = 'JavaWindow("title:=Alert Editor").JavaEdit("attached text:=Short Description:")'
 LIQ_ActiveCustomer_AlertManagementScreen_AlertEditor_Details_Textbox = 'JavaWindow("title:=Alert Editor").JavaEdit("attached text:=Details:")'
 LIQ_ActiveCustomer_AlertManagementScreen_AlertEditor_OK_Button = 'JavaWindow("title:=Alert Editor").JavaButton("attached text:=OK")'
-
