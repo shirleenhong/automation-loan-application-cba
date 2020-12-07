@@ -155,7 +155,7 @@ Pay Loan Outstanding Accrual Zero Cycle Due
     ${AccruedtoDateAmt}    Remove Comma and Convert to Number    ${AccruedtoDateAmt}
     Write Data To Excel    ComSee_SC2_Loan    Outstanding_AccruedInterest    ${rowid}    ${LoanAccruedtodateAmount}    ${ComSeeDataSet}
     
-    Navigate to Share Accrual Cycle    &{ExcelPath}[Lender1_ShortName]
+    Navigate to Share Accrual Cycle    &{ExcelPath}[Host_Bank]
     
     ${LoanCycleDueAmount}    Get Cycle Due Amount
     ${LoanCycleDueAmount}    Remove comma and convert to number - Cycle Due    ${LoanCycleDueAmount}
@@ -262,7 +262,8 @@ Write Loan Details for ComSee - Scenario 2
     Write Data To Excel    ComSee_SC2_Loan    Outstanding_AccruedInterest    ${rowid}    ${LoanAccruedtodateAmount}    ${ComSeeDataSet}
 
     ###Get and Write Accrual Tab Details for Comsee
-    ${PricingOptionCode}    Get Loan Pricing Option Code
+    ${PricingOptionCode}    Run Keyword If    '${ENTITY}'!='EU'    Get Loan Pricing Option Code
+    ...    ELSE    Get Repricing Loan Pricing Option Code
     ${LoanPricingDescription}    Get Pricing Option Description from Table Maintenance    ${PricingOptionCode}
     ${LoanPricingOption}    Get Pricing Code and Description Combined    ${PricingOptionCode}    ${LoanPricingDescription}
     Write Data To Excel    ComSee_SC2_Loan    Outstanding_PricingOption    ${rowid}    ${LoanPricingOption}    ${ComSeeDataSet}

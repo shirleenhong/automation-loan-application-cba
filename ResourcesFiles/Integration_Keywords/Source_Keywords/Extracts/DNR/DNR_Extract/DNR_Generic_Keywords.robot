@@ -191,3 +191,16 @@ Get Date Value from Date Added or Amended Column
     ...    ELSE    Set Variable    ${Date_Value}
 
     [Return]    ${Date_Value}
+    
+Setup Year for From and To Filter
+    [Documentation]    This keyword is used to Input Year in From and To Filters.
+    ...    @author: fluberio    03DEC2020    - initial create
+    [Arguments]    ${slocator}    ${sText}
+    
+    Press Keys    ${slocator}    BACKSPACE
+    Press Keys    ${slocator}    BACKSPACE
+    Press Keys    ${slocator}    BACKSPACE
+    Press Keys    ${slocator}    BACKSPACE
+    Press Keys    ${slocator}    ${sText}
+    Press Keys    ${slocator}    RETURN
+    Wait Until Browser Ready State
