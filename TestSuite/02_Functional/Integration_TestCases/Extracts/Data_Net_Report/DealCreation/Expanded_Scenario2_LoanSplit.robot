@@ -24,4 +24,6 @@ Expanded Scenario2 Loan Split
     
     ### Report Generation for Payment - Agency ( Agency Host Bank DE Report) ###
     Set Global Variable    ${TestCase_Name}    AHBDE_005
+    Mx Execute Template With Specific Test Case Name    Write Filter Details for Agency Host Bank DE Extract Report in DNR Data Set    ${DNR_DATASET}    Test_Case    ${TestCase_Name}    DNR 
+    ### Report Generation ###
     Mx Execute Template With Specific Test Case Name    Write Details for Agency Host Bank DE Extract Report    ${DNR_DATASET}    Test_Case    ${TestCase_Name}    DNR 

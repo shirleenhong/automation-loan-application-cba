@@ -24,9 +24,9 @@ Create Loan Split For DNR
     ${Lender1_Share}    Read Data From Excel    SC2_SecondarySale    PctofDeal    &{ExcelPath}[rowid]    ${DNR_DATASET}
     ${Lender2_Share}    Read Data From Excel    SC2_SecondarySale    PctofDeal2    &{ExcelPath}[rowid]    ${DNR_DATASET}
     ${Borrower_ShortName}    Read Data From Excel    SC2_DealSetup    Borrower_ShortName    &{ExcelPath}[rowid]    ${DNR_DATASET}
-    ${HostBankLender_Share}    Evaluate    100-(${Lender1_Share}+${Lender2_Share})
+    ${HostBankLender_Share}    Evaluate    &{ExcelPath}[Total_Share]-(${Lender1_Share}+${Lender2_Share})
     
-    ${BaseRatePercentage}    Get Base Rate from Funding Rate Details    BBSY    &{ExcelPath}[Repricing_Frequency]    &{ExcelPath}[Currency1]
+    ${BaseRatePercentage}    Get Base Rate from Funding Rate Details    &{ExcelPath}[FundingRate_Alias]    &{ExcelPath}[Repricing_Frequency]    &{ExcelPath}[Currency1]
     ${ExchangeRate}    Get Currency Exchange Rate from Treasury Navigation    ${AUD_TO_USD}        
 	${baseRateCode}    Read Data From Excel    SC2_DealSetup    Deal_PricingOption3    &{ExcelPath}[rowid]    ${DNR_DATASET}        
                

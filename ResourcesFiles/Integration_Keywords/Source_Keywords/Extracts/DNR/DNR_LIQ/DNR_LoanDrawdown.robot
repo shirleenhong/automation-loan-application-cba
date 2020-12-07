@@ -8,7 +8,7 @@ Create Revolver Facility Drawdown for DNR
     [Arguments]    ${ExcelPath}
     
     ${Current_Date}    Get System Date
-    ${BaseRatePercentage}    Get Base Rate from Funding Rate Details    BBSY    &{ExcelPath}[Loan_RepricingFrequency]    &{ExcelPath}[Loan_Currency]
+    ${BaseRatePercentage}    Get Base Rate from Funding Rate Details    &{ExcelPath}[FundingRate_Alias]    &{ExcelPath}[Loan_RepricingFrequency]    &{ExcelPath}[Loan_Currency]
     ${ExchangeRate}    Get Currency Exchange Rate from Treasury Navigation    &{ExcelPath}[CurrencyExchange]
     
     ### Get data from Secondary Sale test case ###

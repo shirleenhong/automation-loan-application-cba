@@ -13,7 +13,7 @@ Setup Primaries for Syndicated Deal for DNR
     Add Pro Rate    &{ExcelPath}[Primary_BuySellPrice]
     Verify Buy/Sell Price in Circle Notebook
     Add Contact in Primary    &{ExcelPath}[Primary_Contact1]
-    Select Servicing Group on Primaries    None    &{ExcelPath}[AdminAgent_SGAlias]
+    Select Servicing Group on Primaries    &{ExcelPath}[servicingGroupMember]    &{ExcelPath}[AdminAgent_SGAlias]
     ${SellAmount}    Get Circle Notebook Sell Amount
     Write Data To Excel    SC2_DealSetup    Primary_PortfolioAllocation    &{ExcelPath}[rowid]    ${SellAmount}    ${DNR_DATASET}
     mx LoanIQ close window    ${LIQ_OrigPrimaries_Window}
@@ -24,7 +24,7 @@ Setup Primaries for Syndicated Deal for DNR
     Add Pro Rate    &{ExcelPath}[Primary_BuySellPrice]
     Verify Buy/Sell Price in Circle Notebook
     Add Contact in Primary    &{ExcelPath}[Primary_Contact2]
-    Select Servicing Group on Primaries    None    &{ExcelPath}[AdminAgent_SGAlias_Secondary]
+    Select Servicing Group on Primaries    &{ExcelPath}[servicingGroupMember]    &{ExcelPath}[AdminAgent_SGAlias_Secondary]
     mx LoanIQ close window    ${LIQ_OrigPrimaries_Window}
     
     ###Secondary Lender - Non Host Bank###
@@ -33,13 +33,13 @@ Setup Primaries for Syndicated Deal for DNR
     Add Pro Rate    &{ExcelPath}[Primary_BuySellPrice]
     Verify Buy/Sell Price in Circle Notebook
     Add Contact in Primary    &{ExcelPath}[Primary_Contact3]
-    Select Servicing Group on Primaries    None    &{ExcelPath}[AdminAgent_SGAlias_Third]
+    Select Servicing Group on Primaries    &{ExcelPath}[servicingGroupMember]    &{ExcelPath}[AdminAgent_SGAlias_Third]
     mx LoanIQ close window    ${LIQ_OrigPrimaries_Window}
     
     
     ##Circle Notebook Complete Portfolio Allocation, Circling, and Sending to Settlement Approval###
     ${CircleDate}    Get System Date
-    ${PortfolioExpiry}    Add Days to Date    ${CircleDate}    365
+    ${PortfolioExpiry}    Add Days to Date    ${CircleDate}    &{ExcelPath}[NumberOfDaysToAdd]
     Write Data To Excel    SC2_PrimaryAllocation    Primary_PortfolioExpiryDate    ${rowid}    ${PortfolioExpiry}    ${DNR_DATASET}
     Write Data To Excel    SC2_PrimaryAllocation    Primary_CircledDate    ${rowid}    ${CircleDate}    ${DNR_DATASET}
  
