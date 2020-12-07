@@ -155,7 +155,7 @@ Update Comments in Customer for DNR
     Logout from Loan IQ
 
 Add Alerts in Customer for DNR
-    [Documentation]    This keyword is used to add comments in active customer.
+    [Documentation]    This keyword is used to add alerts in active customer.
     ...    @author: clanding    05DEC2020    - initial create.
     [Arguments]    ${ExcelPath}
 
@@ -181,7 +181,7 @@ Add Alerts in Customer for DNR
     Logout from Loan IQ
 
 Update Alerts in Customer for DNR
-    [Documentation]    This keyword is used to update comments in active customer.
+    [Documentation]    This keyword is used to update alerts in active customer.
     ...    @author: clanding    05DEC2020    - initial create.
     [Arguments]    ${ExcelPath}
 
