@@ -9,8 +9,6 @@ CMMNT_010_Add
     
     Set Global Variable    ${rowid}    1
     Set Global Variable    ${TestCase_Name}    CMMNT_010
-    Mx Execute Template With Multiple Data    Create Customer within Loan IQ for DNR   ${DNR_DATASET}    ${rowid}    SC1_Customer
-    Mx Execute Template With Multiple Data    Search Customer and Complete its Borrower Profile Creation Until Location for DNR   ${DNR_DATASET}    ${rowid}    SC1_Customer
     Mx Execute Template With Multiple Data    Add Comments in Customer for DNR   ${DNR_DATASET}    ${rowid}    SC1_Customer
     Mx Execute Template With Specific Test Case Name    Generate DNR Report for Comments    ${DNR_DATASET}    Test_Case    ${TestCase_Name}    DNR
     Mx Execute Template With Specific Test Case Name    Write Details for Comments Report    ${DNR_DATASET}    Test_Case    ${TestCase_Name}    DNR

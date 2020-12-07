@@ -520,10 +520,25 @@ LIQ_ActiveCustomer_CommentEdit_OK_Button = 'JavaWindow("title:=Comment Edit").Ja
 LIQ_ActiveCustomer_CommentEdit_Cancel_Button = 'JavaWindow("title:=Comment Edit").JavaButton("attached text:=Cancel")'
 LIQ_ActiveCustomer_CommentEdit_Delete_Button = 'JavaWindow("title:=Comment Edit").JavaButton("attached text:=Delete")'
 
-
-
-
-
-
-
-
+### Alerts ###
+LIQ_ActiveCustomer_AlertManagementScreen_Window = 'JavaWindow("title:=Alert Management Screen")'
+LIQ_ActiveCustomer_AlertManagementScreen_JavaTree = 'JavaWindow("title:=Alert Management Screen").JavaTree("labeled_containers_path:=Group:Customer/Deal/Facility/Outstanding;")'
+LIQ_ActiveCustomer_AlertManagementScreen_Alerts_JavaList = 'JavaWindow("title:=Alert Management Screen").JavaList("labeled_containers_path:=Group:Alerts;")'
+LIQ_ActiveCustomer_AlertManagementScreen_Create_Button = 'JavaWindow("label:=Alert Management Screen").JavaButton("attached text:=Create")'
+LIQ_ActiveCustomer_AlertManagementScreen_Modify_Button = 'JavaWindow("label:=Alert Management Screen").JavaButton("attached text:=Modify")'
+LIQ_ActiveCustomer_AlertManagementScreen_Delete_Button = 'JavaWindow("label:=Alert Management Screen").JavaButton("attached text:=Delete")'
+LIQ_ActiveCustomer_AlertManagementScreen_ChooseAnEntity_Customer_RadioButton = 'JavaWindow("title:=Choose an Entity").JavaRadioButton("attached text:=Customer")'
+LIQ_ActiveCustomer_AlertManagementScreen_ChooseAnEntity_Deal_RadioButton = 'JavaWindow("title:=Choose an Entity").JavaRadioButton("attached text:=Deal")'
+LIQ_ActiveCustomer_AlertManagementScreen_ChooseAnEntity_Facility_RadioButton = 'JavaWindow("title:=Choose an Entity").JavaRadioButton("attached text:=Facility")'
+LIQ_ActiveCustomer_AlertManagementScreen_ChooseAnEntity_Outstanding_RadioButton = 'JavaWindow("title:=Choose an Entity").JavaRadioButton("attached text:=Outstanding")'
+LIQ_ActiveCustomer_AlertManagementScreen_ChooseAnEntity_OK_Button = 'JavaWindow("title:=Choose an Entity").JavaButton("attached text:=OK")'
+LIQ_ActiveCustomer_AlertManagementScreen_FacilitySelect_Window = 'JavaWindow("title:=Facility Select")'
+LIQ_ActiveCustomer_AlertManagementScreen_FacilitySelect_Deal_Textbox = 'JavaWindow("title:=Facility Select").JavaEdit("index:=0")'
+LIQ_ActiveCustomer_AlertManagementScreen_FacilitySelect_IdentifyByValue_Textbox = 'JavaWindow("title:=Facility Select").JavaEdit("index:=1")'
+LIQ_ActiveCustomer_AlertManagementScreen_FacilitySelect_OK_Button = 'JavaWindow("title:=Facility Select").JavaButton("attached text:=OK")'
+LIQ_ActiveCustomer_AlertManagementScreen_FacilitySelect_Search_Button = 'JavaWindow("title:=Facility Select").JavaButton("attached text:=Search")'
+LIQ_ActiveCustomer_AlertManagementScreen_FacilityListByName_OK_Button = 'JavaWindow("text:=Facility Select").JavaWindow("text:=Facility List By Name").JavaButton("attached text:=OK")'
+LIQ_ActiveCustomer_AlertManagementScreen_AlertEditor_Window = 'JavaWindow("title:=Alert Editor")'
+LIQ_ActiveCustomer_AlertManagementScreen_AlertEditor_ShortDescription_Textbox = 'JavaWindow("title:=Alert Editor").JavaEdit("attached text:=Short Description:")'
+LIQ_ActiveCustomer_AlertManagementScreen_AlertEditor_Details_Textbox = 'JavaWindow("title:=Alert Editor").JavaEdit("attached text:=Details:")'
+LIQ_ActiveCustomer_AlertManagementScreen_AlertEditor_OK_Button = 'JavaWindow("title:=Alert Editor").JavaButton("attached text:=OK")'
