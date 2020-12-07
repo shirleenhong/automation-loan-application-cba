@@ -858,6 +858,7 @@ Input General Loan Drawdown Details with Accrual End Date
     ...                                      - This is needed when Multiple Risk types are selected in the Deal level
     ...                                      - Added optional argument for Fixed and Loan Risk Type
     ...    @update: ritragel    13SETP20    Added additional arguments for UAT Deals and Added Preprocessing
+    ...    @update: shirhong    01DEC2020    Added additional handling for warning messages
     [Arguments]    ${sLoan_RequestedAmount}    ${sLoan_MaturityDate}    ${sLoan_RepricingFrequency}    ${sLoan_EffectiveDate}
     ...    ${sLoan_RepricingDate}=None    ${sLoan_RiskType}=None    ${sFixedandLoanRiskType}=None
     ...    ${sLoan_PaymentMode}=None    ${sLoan_Accrue}=None    ${sLoan_AccrueEndDate}=None
@@ -887,12 +888,15 @@ Input General Loan Drawdown Details with Accrual End Date
     mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
     Run Keyword If    '${Loan_Accrue}'!='None'    Mx LoanIQ Select Combo Box Value    ${LIQ_InitialDrawdown_Accrue_Dropdown}    ${Loan_Accrue}
     Run Keyword If    '${Loan_PaymentMode}'!='None'    Mx LoanIQ Select Combo Box Value    ${LIQ_InitialDrawdown_PaymentMode_Dropdown}    ${Loan_PaymentMode}
+    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
     ${AdjustedDueDate}    Mx LoanIQ Get Data    ${LIQ_InitialDrawdown_AdjustedDueDate_Datefield}    value%test
     Run Keyword If    '${Loan_AccrueEndDate}'=='None'    mx LoanIQ enter    ${LIQ_InitialDrawdown_AccrualEndDate_Datefield}    ${AdjustedDueDate}
     Run Keyword If    '${Loan_AccrueEndDate}'!='None'    mx LoanIQ enter    ${LIQ_InitialDrawdown_AccrualEndDate_Datefield}    ${sLoan_AccrueEndDate}    
     mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/InitialDrawdown_General
     Select Menu Item    ${LIQ_InitialDrawdown_Window}    File    Save
+    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
+    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
     mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
     mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
 
@@ -3237,6 +3241,24 @@ Navigate to Pending Loan
     mx LoanIQ close window    ${LIQ_PendingLoanTransactions_Window}
     mx LoanIQ close window    ${LIQ_FacilityNavigator_Window}
     mx LoanIQ close window    ${LIQ_FacilityNotebook_Window}
+
+Navigate to Active Loan from Outstandings
+    [Documentation]    This keyword navigates the LIQ User to the Pending Loan Notebook.     
+    ...    @author: clanding    26NOV2020    - initial create
+    [Arguments]    ${Outstanding_Type}    ${Loan_FacilityName}    ${Loan_Alias}
+
+    Select Actions    [Actions];
+    mx LoanIQ activate window    ${LIQ_OutstandingSelect_Window}
+    mx LoanIQ enter    ${LIQ_OutstandingSelect_Pending_RadioButton}    ON 
+    Mx LoanIQ Select Combo Box Value    ${LIQ_OutstandingSelect_Type_Dropdown}    ${Outstanding_Type}
+    Mx LoanIQ Select Combo Box Value    ${LIQ_OutstandingSelect_Facility_Dropdown}    ${Loan_FacilityName}
+    mx LoanIQ click    ${LIQ_OutstandingSelect_Search_Button}
+    mx LoanIQ activate window    ${LIQ_PendingLoanTransactions_Window}
+    Mx LoanIQ Select String    ${LIQ_PendingLoanTransactions_JavaTree}    ${Loan_Alias}
+    Mx LoanIQ Select Or DoubleClick In Javatree    ${LIQ_PendingLoanTransactions_JavaTree}    ${Loan_Alias}%d
+    mx LoanIQ close window    ${LIQ_PendingLoanTransactions_Window}
+    mx LoanIQ close window    ${LIQ_FacilityNavigator_Window}
+    mx LoanIQ close window    ${LIQ_FacilityNotebook_Window}
  
 Input Loan Drawdown Rates for Agency One Deal
     [Documentation]    This keyword is used to input Loan Drawdown Base Rate within the Rates tab on Agency One Deal.
@@ -3879,4 +3901,48 @@ Complete Set FX Rate
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/FxRate_Window 
     mx LoanIQ click    ${LIQ_FXRate_OK_Button}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/FxRate_Window
-    Validate if Question or Warning Message is Displayed
+    Validate if Question or Warning Message is Displayed    
+    
+Get Cashflow Details from Released Initial Loan Drawdown
+    [Documentation]    This keyword is used to get the cashflow ID and write the value in the dataset
+    ...    @author: shirhong    04DEC2020    - initial create
+    [Arguments]    ${sBorrower_ShortName}
+    
+    ${Borrower_Shortname}    Acquire Argument Value    ${sBorrower_ShortName}
+
+    Mx LoanIQ Select Window Tab    ${LIQ_Loan_Tab}    Events
+    Mx LoanIQ Select Or DoubleClick In Javatree    ${LIQ_Loan_Events_List}    Released%d
+    
+    ###Open Cashflow Details From Released Initial Loan Drawdown###
+    Open Cashflows Window from Notebook Menu    ${LIQ_InitialDrawdown_Released_Status_Window}    ${LIQ_InitialDrawdown_Options_Cashflow}
+    mx LoanIQ activate window    ${LIQ_Cashflows_Window}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/InitialLoanDrawdown_CashflowWindow
+    Mx LoanIQ Select Or DoubleClick In Javatree    ${LIQ_Cashflows_Tree}    ${Borrower_Shortname}%d
+    mx LoanIQ activate window    ${LIQ_Cashflows_DetailsForCashflow_Window}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/CashflowDetails
+    mx LoanIQ send keys    {F8}
+    
+    ###Get the Actual Cashflow ID and Return to Loan###
+    mx LoanIQ activate window    ${LIQ_UpdateInformation_Window}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/Cashflow_UpdateDetails
+    mx LoanIQ click    ${LIQ_Cashflows_UpdateInformation_CopyRID_Button}
+    mx LoanIQ click    ${LIQ_UpdateInformation_Exit_Button}
+    mx LoanIQ click    ${LIQ_Payment_Cashflows_DetailsforCashflow_Exit_Button}
+    mx LoanIQ close window    ${LIQ_Cashflows_Window}
+    mx LoanIQ close window    ${LIQ_InitialDrawdown_Window}
+    mx LoanIQ activate window    ${LIQ_Loan_Window}
+       
+    ###Set The Cashflow ID in Variable and Write To Report Validation Sheet###
+    Mx LoanIQ Select Window Tab    ${LIQ_Loan_Tab}    Comments
+    mx LoanIQ click    ${LIQ_LoanNotebook_CommentsTab_Add_Button}
+    mx LoanIQ enter    ${LIQ_CommentsEdit_Comment_Textfield}    /
+    mx LoanIQ send keys    ^{V}
+    ${CashflowID}    Mx LoanIQ Get Data    ${LIQ_CommentsEdit_Comment_Textfield}    value%rid
+    mx LoanIQ close window    ${LIQ_CommentsEdit_Window}    
+    ${CashflowID}    Remove String    ${CashflowID}    /
+    ${CashflowID}    Strip String    ${CashflowID}    mode=both
+    Log To Console    ${CashflowID}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/Cashflow_ID
+    [Return]    ${CashflowID}
+    
+    

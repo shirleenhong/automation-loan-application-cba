@@ -38,3 +38,72 @@ Validate Outstanding Columns from Comments Report
     
     Validate Sequencing of Columns if Correct in Excel Sheet    &{ExcelPath}[Report_Path]${CBA_COMMENTS_REPORTFILE}.xlsx    &{ExcelPath}[Sheet_Name]
     ...    &{ExcelPath}[Columns_To_Validate]    &{ExcelPath}[Delimiter]
+
+Validate Customer Columns from Comments Report
+    [Documentation]    This keyword is used to validate columns in Customer_5 sheet name if existing and if in correct sequence in the Comments Report.
+    ...    Columns to Validate: Customer Name, CIF Number, Comment Heading, Comment Detail, User ID, Date Added / Amended
+    ...    @author: fluberio    23NOV2020    - initial create
+    [Arguments]    ${ExcelPath}
+    
+    Validate Sequencing of Columns if Correct in Excel Sheet    &{ExcelPath}[Report_Path]${CBA_COMMENTS_REPORTFILE}.xlsx    &{ExcelPath}[Sheet_Name]
+    ...    &{ExcelPath}[Columns_To_Validate]    &{ExcelPath}[Delimiter]
+
+Write Details for Comments Report
+    [Documentation]    This keyword is used to write needed details in Comments Report sheet.
+    ...    @author: clanding    01DEC2020    - initial create
+    [Arguments]    ${ExcelPath}
+
+    Delete File If Exist    &{ExcelPath}[Report_Path]&{ExcelPath}[File_Name]${CBA_COMMENTS_REPORTFILE}.xlsx
+    Copy File    &{ExcelPath}[Report_Path]${CBA_COMMENTS_REPORTFILE}.xlsx    &{ExcelPath}[Report_Path]&{ExcelPath}[File_Name]${CBA_COMMENTS_REPORTFILE}.xlsx
+    Write Data To Excel    DNR    Report_File_Name    ${TestCase_Name}    &{ExcelPath}[File_Name]${CBA_COMMENTS_REPORTFILE}.xlsx    ${DNR_DATASET}    bTestCaseColumn=True
+    Write Data To Excel    CMMNT    Report_File_Name    ${TestCase_Name}    &{ExcelPath}[File_Name]${CBA_COMMENTS_REPORTFILE}.xlsx    ${DNR_DATASET}    bTestCaseColumn=True
+
+Validate Comments Details for Deal are Correct from Comments Report
+    [Documentation]    This keyword is used to extract details from Comments Report and verify if details are correct.
+    ...    @author: clanding    01DEC2020    - initial create
+    [Arguments]    ${ExcelPath}
+    
+    ${Deal_Name}    Read Data From Excel    &{ExcelPath}[Sheet_Name]    Deal Name    ${ExcelPath}[Comment_Detail]    &{ExcelPath}[Report_Path]&{ExcelPath}[Report_File_Name]    bTestCaseColumn=True    sTestCaseColReference=Comment Detail
+    ${Deal_Tracking_Number}    Read Data From Excel    &{ExcelPath}[Sheet_Name]    Deal Tracking Number    ${ExcelPath}[Comment_Detail]    &{ExcelPath}[Report_Path]&{ExcelPath}[Report_File_Name]    bTestCaseColumn=True    sTestCaseColReference=Comment Detail
+    ${Comment_Heading}    Read Data From Excel    &{ExcelPath}[Sheet_Name]    Comment Heading    ${ExcelPath}[Comment_Detail]    &{ExcelPath}[Report_Path]&{ExcelPath}[Report_File_Name]    bTestCaseColumn=True    sTestCaseColReference=Comment Detail
+    ${User_ID}    Read Data From Excel    &{ExcelPath}[Sheet_Name]    User ID    ${ExcelPath}[Comment_Detail]    &{ExcelPath}[Report_Path]&{ExcelPath}[Report_File_Name]    bTestCaseColumn=True    sTestCaseColReference=Comment Detail
+    ${Date_Added_Amended}    Read Data From Excel    &{ExcelPath}[Sheet_Name]    Date Added / Amended    ${ExcelPath}[Comment_Detail]    &{ExcelPath}[Report_Path]&{ExcelPath}[Report_File_Name]    bTestCaseColumn=True    sTestCaseColReference=Comment Detail
+    
+    Compare Two Strings    &{ExcelPath}[Deal_Name]    ${Deal_Name.strip()}
+    Compare Two Strings    &{ExcelPath}[Deal_Tracking_Number]    ${Deal_Tracking_Number.strip()}
+    Compare Two Strings    &{ExcelPath}[Comment_Heading]    ${Comment_Heading.strip()}
+    Compare Two Strings    &{ExcelPath}[User_ID]    ${User_ID.strip()}
+    
+    ${Report_Date_Value}    Get Date Value from Date Added or Amended Column    ${Date_Added_Amended}    %d-%b-%Y
+    ${Dataset_Date_Value}    Get Date Value from Date Added or Amended Column    &{ExcelPath}[Date_Added_Amended]
+    Compare Two Strings    ${Dataset_Date_Value}    ${Report_Date_Value.strip()}
+
+Validate Comments Details for Outstanding are Correct from Comments Report
+    [Documentation]    This keyword is used to extract details from Comments Report and verify if details are correct.
+    ...    @author: clanding    01DEC2020    - initial create
+    [Arguments]    ${ExcelPath}
+    
+    ${Deal_Name}    Read Data From Excel    &{ExcelPath}[Sheet_Name]    Deal Name    ${ExcelPath}[Comment_Detail]    &{ExcelPath}[Report_Path]&{ExcelPath}[Report_File_Name]    bTestCaseColumn=True    sTestCaseColReference=Comment Detail
+    ${Deal_Tracking_Number}    Read Data From Excel    &{ExcelPath}[Sheet_Name]    Deal Tracking Number    ${ExcelPath}[Comment_Detail]    &{ExcelPath}[Report_Path]&{ExcelPath}[Report_File_Name]    bTestCaseColumn=True    sTestCaseColReference=Comment Detail
+    ${Comment_Heading}    Read Data From Excel    &{ExcelPath}[Sheet_Name]    Comment Heading    ${ExcelPath}[Comment_Detail]    &{ExcelPath}[Report_Path]&{ExcelPath}[Report_File_Name]    bTestCaseColumn=True    sTestCaseColReference=Comment Detail
+    ${Alias_Number}    Read Data From Excel    &{ExcelPath}[Sheet_Name]    Alias Number    ${ExcelPath}[Comment_Detail]    &{ExcelPath}[Report_Path]&{ExcelPath}[Report_File_Name]    bTestCaseColumn=True    sTestCaseColReference=Comment Detail
+    ${User_ID}    Read Data From Excel    &{ExcelPath}[Sheet_Name]    User ID    ${ExcelPath}[Comment_Detail]    &{ExcelPath}[Report_Path]&{ExcelPath}[Report_File_Name]    bTestCaseColumn=True    sTestCaseColReference=Comment Detail
+    ${Date_Added_Amended}    Read Data From Excel    &{ExcelPath}[Sheet_Name]    Date Added / Amended    ${ExcelPath}[Comment_Detail]    &{ExcelPath}[Report_Path]&{ExcelPath}[Report_File_Name]    bTestCaseColumn=True    sTestCaseColReference=Comment Detail
+    
+    Compare Two Strings    &{ExcelPath}[Deal_Name]    ${Deal_Name.strip()}
+    Compare Two Strings    &{ExcelPath}[Deal_Tracking_Number]    ${Deal_Tracking_Number.strip()}
+    Compare Two Strings    &{ExcelPath}[Alias_Number]    ${Alias_Number.strip()}
+    Compare Two Strings    &{ExcelPath}[Comment_Heading]    ${Comment_Heading.strip()}
+    Compare Two Strings    &{ExcelPath}[User_ID]    ${User_ID.strip()}
+    
+    ${Report_Date_Value}    Get Date Value from Date Added or Amended Column    ${Date_Added_Amended}    %d-%b-%Y
+    ${Dataset_Date_Value}    Get Date Value from Date Added or Amended Column    &{ExcelPath}[Date_Added_Amended]
+    Compare Two Strings    ${Dataset_Date_Value}    ${Report_Date_Value.strip()}
+
+Validate Comments for Deal is Not Existing in the Comments Report
+    [Documentation]    This keyword is used to extract details from Comments Report and verify if deleted comment is not existing.
+    ...    @author: clanding    04DEC2020    - initial create
+    [Arguments]    ${ExcelPath}
+    
+    ${IsExist_Comment_Details}    Run Keyword And Return Status    Read Data From Excel    &{ExcelPath}[Sheet_Name]    Comment Detail    ${ExcelPath}[Comment_Detail]    &{ExcelPath}[Report_Path]&{ExcelPath}[Report_File_Name]    bTestCaseColumn=True    sTestCaseColReference=Comment Detail
+    Compare Two Strings    ${False}    ${IsExist_Comment_Details}

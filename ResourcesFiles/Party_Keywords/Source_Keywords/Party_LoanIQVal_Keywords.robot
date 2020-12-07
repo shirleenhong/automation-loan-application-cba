@@ -87,6 +87,7 @@ Validate Customer Legal Address Details in Textbox
     ...    @update: javinzon    01OCT2020    - Added False argument to City validation. Updated the documentation.
     ...                                        Added "Textbox" in keyword name; Removed Listbox field verification
     ...    @update: makcamps    18NOV2020    - updated Line 4 to exact value (false)
+    ...    @update: mcastro     25NOV2020    - Added condition for blank line addresses
     [Arguments]    ${sEnterpriseName}    ${sAddressCode}    ${sAddressLine1}    ${sAddressLine2}    ${sAddressLine3}   ${sAddressLine4}    ${sCity}    ${sPostalCode}    
     
     Take Screenshot    ${screenshot_path}/Screenshots/Party/PartyLIQActiveCustomerLegalAddressPage
@@ -94,9 +95,9 @@ Validate Customer Legal Address Details in Textbox
     Verify If Value Exists in Loan IQ    Enterprise Name    ${sEnterpriseName}    View Address    Textbox
     Verify If Value Exists in Loan IQ    Address Code    ${sAddressCode.upper()}    View Address    Textbox
     Verify If Value Exists in Loan IQ    Line1    ${sAddressLine1}    View Address    Textbox
-    Verify If Value Exists in Loan IQ    Line2    ${sAddressLine2}    View Address    Textbox
-    Verify If Value Exists in Loan IQ    Line3    ${sAddressLine3}    View Address    Textbox
-    Verify If Value Exists in Loan IQ    Line4    ${sAddressLine4}    View Address    Textbox    False
+    Run Keyword If    '${sAddressLine2}'!='${EMPTY}'    Verify If Value Exists in Loan IQ    Line2    ${sAddressLine2}    View Address    Textbox
+    Run Keyword If    '${sAddressLine3}'!='${EMPTY}'    Verify If Value Exists in Loan IQ    Line3    ${sAddressLine3}    View Address    Textbox
+    Run Keyword If    '${sAddressLine4}'!='${EMPTY}'    Verify If Value Exists in Loan IQ    Line4    ${sAddressLine4}    View Address    Textbox    False
     Verify If Value Exists in Loan IQ    City    ${sCity}    View Address    Textbox    False
     Verify If Value Exists in Loan IQ    Postal Code    ${sPostalCode}    View Address    Textbox
     Mx LoanIQ Click    ${LIQ_ViewAddress_Ok_CancelButton}    

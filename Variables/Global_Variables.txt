@@ -17,7 +17,8 @@ ${MESSAGESTATUS_FAILURE}    FAILURE
 ${MESSAGESTATUS_PARTIAL}    PARTIAL
 ${Status}
 ${MESSAGE_OBJECTNOTFOUND}    Object not found
-${MESSAGE_NOTAVALIDCODE}    not a valid code
+# ${MESSAGE_NOTAVALIDCODE}    not a valid code
+${MESSAGE_NOTAVALIDCODE}    riskBookCode is not a code in table Risk Book
 ${MESSAGE_USERIDNOTONFILE}    User ID not on file
 ${MESSAGE_LOGINIDNOTONFILE}    Login ID not on file
 ${MESSAGE_USERIDNOTEXIST}    User does not exist:
@@ -190,6 +191,7 @@ ${HEADER_ROUTEROPERATION}    ROUTEROPERATION
 ${HEADER_CATEGORY}    CATEGORY
 ${HEADER_ID}    ID
 ${HEADER_QUEUENAME}    QUEUENAME
+${RESTNOTIFICATIONDEST}    RestNotificationDest
 ${HEADER_HTTP_OPERATION}    OPERATION
 
 ###FFC Results Headers - MessageResponseProcessor###
@@ -420,6 +422,8 @@ ${friday}
 ${user_comment}
 ${file}    File (
 ${filename}    File name (
+
+${invalid}    invalid
 
 ### Technical Error Message ###
 ${400_FNAME_FIELD_LENGTH_MISMATCH}     Field Length mismatch for First Name field

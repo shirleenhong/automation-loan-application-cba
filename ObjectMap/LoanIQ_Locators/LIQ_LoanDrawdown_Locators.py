@@ -167,6 +167,7 @@ LIQ_Accrual_CycleDueOverview_Button = 'JavaWindow("title:=.*Loan.*Active").JavaB
 LIQ_ServicingGroup_AccrualCycle = 'JavaWindow("title:=Servicing Group Accrual Cycle Detail")'
 LIQ_ServicingGroup_CycleDue = 'JavaWindow("title:=Servicing Group Accrual Cycle Detail").JavaEdit("attached text:=Cycle due:")'
 LIQ_ServicingGroup_Paid = 'JavaWindow("title:=Servicing Group Accrual Cycle Detail").JavaEdit("attached text:=Paid to date:")'
+LIQ_ServicingGroup_Exit_Button = 'JavaWindow("title:=.*Servicing Group Accrual Cycle Detail").JavaButton("attached text:=Exit")'
 ####Interest Payment Notebook####
 LIQ_Payment_Window = 'JavaWindow("title:=.* Payment.*")'
 LIQ_Payment_Options_Payment = 'JavaWindow("title:=.* Payment.*").JavaMenu("label:=Queries").JavaMenu("label:=GL Entries")'

@@ -27,6 +27,9 @@ Login to Cognos
 Logout from Cognos
     [Documentation]    This keyword is used to logout from Cognos application.
     ...    @author: clanding    16NOV2020    - initial create
+    [Arguments]    ${bHeadless}=${False}
+
+    Return From Keyword If    ${bHeadless}==${True}    Close Browser
 
     Repeat Keyword    10 times    Wait Until Browser Ready State
     Click Element    ${DNR_PersonalMenu_Button_Locator}
@@ -174,6 +177,7 @@ Create Dictionary Using Report File and Validate Values if Existing
     \    Log    ${Actual_Value}
     \    Compare Two Strings    ${Actual_Value}    ${Expected_Value}
 
+
 Get Specific Detail in Given Date
     [Documentation]    This Keyword is used to get the specific detail in date having format of %d-%b-%Y
     ...    @author: fluberio    04DEC2020    - initial create
@@ -187,3 +191,31 @@ Get Specific Detail in Given Date
     ...    ELSE IF    '${sFormat}'=='Y'    Set Variable    @{Date_DetailList}[2]    
  
     [Return]    ${Date_Specific Detail}
+
+Get Date Value from Date Added or Amended Column
+    [Documentation]    This keyword is used to get date only from Date Added or Amended Column colum.
+    ...    Sample sFormat %d-%b-%Y = 30-Nov-2020
+    ...    @author: clanding    02DEC2020    - initial create
+    [Arguments]    ${sValue}    ${sFormat}=None
+    
+    ${Value}    Convert To String    ${sValue}
+    ${Value_List}    Split String    ${Value}
+    ${Date_Value}    Set Variable    @{Value_List}[0]
+    
+    ${Date_Value}    Run Keyword If    '${sFormat}'!='None'    Convert Date    ${Date_Value}    result_format=${sFormat}
+    ...    ELSE    Set Variable    ${Date_Value}
+
+    [Return]    ${Date_Value}
+    
+Setup Year for From and To Filter
+    [Documentation]    This keyword is used to Input Year in From and To Filters.
+    ...    @author: fluberio    03DEC2020    - initial create
+    [Arguments]    ${slocator}    ${sText}
+    
+    Press Keys    ${slocator}    BACKSPACE
+    Press Keys    ${slocator}    BACKSPACE
+    Press Keys    ${slocator}    BACKSPACE
+    Press Keys    ${slocator}    BACKSPACE
+    Press Keys    ${slocator}    ${sText}
+    Press Keys    ${slocator}    RETURN
+    Wait Until Browser Ready State

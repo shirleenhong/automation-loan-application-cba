@@ -3,7 +3,7 @@ APIDataSet = "C:\\Git_Evergreen\\fms_cba\\DataSet\\Integration_DataSet\\API\\API
 ExcelPath_API_temp = 'C:\\Git_Evergreen\\fms_cba\\DataSet\\Integration_DataSet\\API\\temp.xlsx'
 ExcelPath = "C:\\Git_Evergreen\\fms_cba\DataSet\\LoanIQ_DataSet\\EVG_PTYLIQ04_BaselineNonAgentSyndication.xlsx"
 dataset_path = "C:\\Git_Evergreen\\fms_cba"
-CBAUAT_ExcelPath = "C:\\Git_Evergreen\\fms_cba\\DataSet\\CBAUATDeal_DataSet\\EVG_CBAUAT03.xlsx"
+CBAUAT_ExcelPath = "C:\\Git_Evergreen\\fms_cba\\DataSet\\NewUATDeals_DataSet\\Deal_CH_EDU_BILAT.xlsx"
 TL_DATASET = "C:\\Git_Evergreen\\fms_cba\\DataSet\\Integration_DataSet\\TL\\TL_Data_Set_AU.xlsx"
 SAPWUL_DATASET = "C:\\Git_evergreen\\evergreen_projects\\CBA_Evergreen\\DataSet\\Downstream_DataSet\\SAPWUL\\SAPWUL_Data_Set.xlsx"
 ComSeeDataSet = "C:\\Git_Evergreen\\fms_cba\DataSet\\Integration_DataSet\\CommSee\\COMMSEE_Data_Set.xlsx"
@@ -14,6 +14,8 @@ DWELIQFunc_Dataset = "C:\\Git_Evergreen\\fms_cba\\DataSet\\Integration_DataSet\\
 INDUSTRYSECTOR_LIST = "C:\\Git_Evergreen\\fms_cba\\DataSet\\Party_DataSet\\Industry_Sector\\Industry_Sector_Values.txt"
 BUSINESSACTIVITY_DIRECTORY = "C:\\Git_Evergreen\\fms_cba\\DataSet\\Party_DataSet\\Business_Activity"
 DNR_DATASET = "C:\\Git_Evergreen\\fms_cba\\DataSet\\Integration_DataSet\\Extracts\\DNR\\DNR_Dataset_AU.xlsx"
+NEWUAT_TL_DATASET = "C:\\Git_Evergreen\\fms_cba\\DataSet\\NewUATDeals_DataSet\\Transformation_Layer\\TL_Data_Set_New_UAT.xlsx"
+DNA_DATASET = "C:\\Git_Evergreen\\fms_cba\\DataSet\\Integration_DataSet\\Extracts\\DNA\\EVG_DNA_TestData.xlsx"
 
 SERVER = "http://mancsleverg0007"
 PORT = "9090"
@@ -41,13 +43,13 @@ MDM_FFC_Username ='admin'
 MDM_FFC_Password = 'admin'
 
 ### TL Credentials ###
-TL_USERNAME = "JCUSR01"
+TL_USERNAME = "CGLINP00"
 TL_PASSWORD = "password"
-INPUTTER_USERNAME = "INPAMT01"
+INPUTTER_USERNAME = "CGLINP00"
 INPUTTER_PASSWORD = "password"
-SUPERVISOR_USERNAME = "SUPAMT01"
+SUPERVISOR_USERNAME = "CGLSUP01"
 SUPERVISOR_PASSWORD = "password"
-MANAGER_USERNAME = "MGRRON01"
+MANAGER_USERNAME = "CGLMGR01"
 MANAGER_PASSWORD = "password"
 
 SSO_USERLINK = "mancsleverg0028"
@@ -122,6 +124,7 @@ DBHOST_LIQ = 'MANCSLEVERG0023'
 DBPORT_LIQ = '1539'
 DBUR_LIQ = 'jdbc:oracle:thin:@//mancsleverg0023:1539/MLLIQ.misys.global.ad'
 LIQ7474_USER = 'LIQ7512UPG'
+LIQDBSCHEMA = 'LIQ7512UPG'
 
 ###AU User###
 BFBANKFUSION_USER = 'AUBANKFUSION'
@@ -184,6 +187,8 @@ TL_CAL_ACK_MESSAGE_SOURCENAME = 'ccb_source_cal'
 TL_BASE_ACK_MESSAGE_SOURCENAME = 'ccb_source_base'
 CBACorrespUpdateMQ_Instance = 'CustomCBAPush_v1.4.0'
 FFC1CMUpdateSourceMQ_Instance = 'CustomInterface_v1.4.0'
+NOTIFICATIONSOURCEJMS_SOURCENAME = 'NotificationSourceJMS'
+DWE_NOTIFICATION_INSTANCE = 'dwe_notification_1.3.0'
 
 ### DWE ###
 DWE_SERVER = 'mancsleverg0007'
@@ -245,6 +250,8 @@ DNA_PORT = '22'
 DNA_SERVER_USER = 'sftpuser2'
 DNA_SERVER_PASSWORD = 'luckyroll76'
 DNA_EXTRACTION_AREA_PATH = '/evgdata/STREAMSETS/workspace/extraction_area/COMRLENDING/'
+DAT_FILE_SERVER = 'MANCSWEVERG0006'
+DNA_DAT_FILE_EXTRACTION_AREA_PATH = 'out'
 DNA_CCB_LIQ_FILENAME = 'CCB_LIQ_'
 DNA_DATAASSURANCE_FILENAME = 'DATAASSURANCE_'
 DNA_DAT_EXT = '.DAT'
@@ -296,12 +303,13 @@ COGNOS_USERNAME = "CGLINP01"
 COGNOS_PASSWORD = "Finastra2020"
 COGNOS_NAMESPACE = 'FinastraRoot'
 CBA_ALERTS_REPORTFILE = "Alerts_Report_V1.3.4"
-CBA_COMMENTS_REPORTFILE = "Comments_Report_v5"
+CBA_COMMENTS_REPORTFILE = "Comments_Report_V1.3.4"
 CBA_CALENDAR_REPORTFILE = "Calendar Report_v1.0"
 CBA_LIQUIDITY_REPORTFILE= "CBA Liquidity Report"
-CBA_CASHOUT_REPORTFILE = "AHBCO_001_Report"
+CBA_CASHOUT_REPORTFILE = "Agency Host Bank Cash Out Report"
 CBA_DE_REPORTFILE= "Agency Host Bank DE Extract"
-CBA_LIQPERFORMANCE_REPORTFILE = "LIQFacilityPerformance_V3.0"
+CBA_LIQPERFORMANCE_REPORTFILE = "LIQFacilityPerformance_V1.3.4"
+CBA_LOANSACCRUALS_REPORTFILE = "LoansAndAccrualsReport_V1.3.4"
 
 import os
 project_path = os.path.dirname(os.path.realpath(__file__)).replace("MDM_ConfigFile","")

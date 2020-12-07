@@ -170,3 +170,6 @@ LIQ_SelectByRID_Window = 'JavaWindow("title:=Select by RID")'
 LIQ_SelectByRID_DataObject_Field = 'JavaWindow("title:=Select by RID").JavaList("attached text:=Data Object:")'
 LIQ_SelectByRID_RID_Field = 'JavaWindow("title:=Select by RID").JavaEdit("attached text:=RID:")'
 LIQ_SelectByRID_OK_Button = 'JavaWindow("title:=Select by RID").JavaButton("attached text:=OK")'
+
+### Alerts ###
+LIQ_Alerts_OK_Button = 'JavaWindow("text:=Alerts").JavaButton("attached text:=OK")'
