@@ -21,12 +21,12 @@ Generate DNR Report for Facility Performance
     ...    @author: clanding    25NOV2020    - initial create
     [Arguments]    ${ExcelPath}
     
-    Login to Cognos    &{ExcelPath}[Report_Path]    ${False}
+    Login to Cognos    &{ExcelPath}[Report_Path]    ${True}
     Go to Specific Report from Team Content Menu CBA Reports    ${FACILITY_PERFORMANCE_REPORTS}
     Run As Report Type    ${CBA_LIQPERFORMANCE_REPORTFILE}    ${EXCEL_REPORTTYPE}
     Set Branch and Download Report    &{ExcelPath}[Branch_Code]    &{ExcelPath}[File_Name]${CBA_LIQPERFORMANCE_REPORTFILE}    &{ExcelPath}[Report_Path]
-    # Check if File Exist    &{ExcelPath}[Report_Path]    ${CBA_LIQPERFORMANCE_REPORTFILE}
-    # Logout from Cognos    ${True}
+    Check if File Exist    &{ExcelPath}[Report_Path]    ${CBA_LIQPERFORMANCE_REPORTFILE}
+    Logout from Cognos    ${True}
 
 Generate DNR Report for Calendar
     [Documentation]    This keyword is used to login to Cognos and download DNR report.
