@@ -2,9 +2,6 @@
 Resource    ../../../../Configurations/LoanIQ_Import_File.robot
 Resource    ../../../../Configurations/Party_Import_File.robot
 
-*** Variables ***
-${SCENARIO}
-
 *** Keywords ***
 
 Create Deal Borrower Initial Details in Quick Party Onboarding for New Life Bilateral Deal
