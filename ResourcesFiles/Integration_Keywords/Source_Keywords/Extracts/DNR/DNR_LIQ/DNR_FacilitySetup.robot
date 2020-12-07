@@ -132,9 +132,9 @@ Setup Term Facility for Syndicated Deal for DNR
     Write Data To Excel    SC2_FacilityShareAdjustment    Facility_Name    ${rowid}    ${Facility_Name}    ${DNR_DATASET}
     Write Data To Excel    SC2_CycleShareAdjustment    Facility_Name    ${rowid}    ${Facility_Name}    ${DNR_DATASET}
     Write Data To Excel    SC2_PaymentFees    Facility_Name    ${rowid}    ${Facility_Name}    ${DNR_DATASET}
-
-    ${FacilityName}    Read Data From Excel    SC2_FacilitySetup    Facility_Name    ${rowid}    ${DNR_DATASET}
     
+    ${FacilityName}    Read Data From Excel    SC2_FacilitySetup    Facility_Name    ${rowid}    ${DNR_DATASET}
+
     ###Facility Creation###
     Add New Facility    &{ExcelPath}[Deal_Name]    &{ExcelPath}[Deal_Currency]    ${FacilityName}
     ...    &{ExcelPath}[Facility_Type]    &{ExcelPath}[Facility_ProposedCmtAmt]    &{ExcelPath}[Facility_Currency]
@@ -170,6 +170,6 @@ Setup Term Facility for Syndicated Deal for DNR
     Write Data To Excel    SC2_DealSetup    Primary_CircledDate    ${rowid}    ${EffectiveDate}    ${DNR_DATASET}
     Write Data To Excel    SC2_DealSetup    Primary_PortfolioExpiryDate    ${rowid}    ${ExpiryDate}    ${DNR_DATASET}
     Write Data To Excel    SC2_EventFee    EventFee_EffectiveDate    ${rowid}    ${EffectiveDate}    ${DNR_DATASET}
+
     ${EventFee_NoRecurrencesAfterDate}    Get Back Dated Current Date    -&{ExcelPath}[Backdated_Days]
     Write Data To Excel    SC2_EventFee    EventFee_NoRecurrencesAfterDate    ${rowid}    ${EventFee_NoRecurrencesAfterDate}    ${DNR_DATASET}
-        

@@ -6,6 +6,7 @@ LIQ_Dashboard_Facilities_Link =    'JavaWindow("title:=Fusion Loan IQ.*").JavaLi
 LIQ_Dashboard_AdditionalInformation_Tree = 'JavaWindow("title:=Fusion Loan IQ.*").JavaTree("attached text:=Additional Information")'
 LIQ_Actions_Button = 'JavaWindow("title:=Fusion Loan IQ.*").JavaButton("Index:=3")'  
 LIQ_Tree = 'JavaWindow("title:=Fusion Loan IQ.*").JavaTree("tagname:=Tree","index:=0")'    
+LIQ_UpdateMode_Button = 'JavaWindow("title:=Deal.*").JavaButton("attached text:=Notebook in Update Mode.*")'    
 LIQ_InquiryMode_Button = 'JavaWindow("title:=Deal.*").JavaButton("attached text:=Notebook in Inquiry Mode.*")'    
 LIQ_Exiting_SaveExit_Button = 'JavaWindow("title:=Exiting").JavaButton("attached text:=Save & Exit")'    
 LIQ_Logout_AsDifferentUser_RadioButton = 'JavaWindow("title:=.*LoanIQ.*7.*").JavaRadioButton("label:=.*Log on as.*")'   
