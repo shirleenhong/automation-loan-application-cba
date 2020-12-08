@@ -41,6 +41,7 @@ TEMPLATE_TEXTFILE = "TEMPLATE_TEXTFILE.txt"
 Err_Master_List = "${dataset_path}\\DataSet\\API_DataSet\\API_Error_List.xlsx"
 Expected_Err_List = "${dataset_path}\\DataSet\\API_DataSet\\Expected_Err_List.txt"
 Actual_Err_List = "${dataset_path}\\DataSet\\API_DataSet\\Actual_Err_List.txt"
+Currency_Codes = 'C:\\Git_Evergreen\\fms_cba\\DataSet\\Integration_DataSet\\Extracts\\DNR\\Currency_Codes.xlsx'
 
 
 ### API Session Keywords ###
