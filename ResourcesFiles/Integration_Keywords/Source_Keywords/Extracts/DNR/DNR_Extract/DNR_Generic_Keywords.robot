@@ -104,6 +104,26 @@ Validate Multiple Value if Existing in Excel Sheet
     :FOR    ${Expected_Value}    IN    @{Expected_ValueList}
     \    ${Sheet_ColumnValue}    Validate Value if Existing in Excel Sheet    ${sExcelFile}    ${sSheetName}    ${Expected_Value}
 
+Validate List Value if Existing in Excel Sheet Column
+    [Documentation]    This keyword is used validate aList Value is existing in the sSheetColumn from sExcelFile.
+    ...    NOTE: sExcelFile=includes file path and extension.
+    ...    @author: kaustero    07DEC2020    - initial create
+    [Arguments]    ${sExcelFile}    ${sSheetName}    ${sColumnName}    ${aList}
+    
+    Open Excel    ${sExcelFile}
+    ${sColumnData}    Read Data From All Column Rows    ${sSheetName}    ${sColumnName}
+    Log    ${sColumnData}
+    Close Current Excel Document
+
+    ${sColumnData_String}    Convert To String    ${sColumnData}
+    Log    ${sColumnData_String}
+
+    ${List_Count}    Get Length    ${aList}
+    :FOR    ${Index}    IN RANGE    0    ${List_Count}
+    \    ${IsContain}  Run Keyword and Return Status    Should Contain    ${sColumnData_String}    @{aList}[${Index}]
+    \    Run Keyword If    '${IsContain}'=='${True}'    Log    Expected: @{aList}[${Index}] is present in sheet ${sColumnData_String}.
+         ...    ELSE    FAIL    Expected: @{aList}[${Index}] is NOT present in sheet ${sColumnData_String}.  
+
 Get Total Row Count of Excel Sheet
     [Documentation]    This Keyword is used to get the row count of the specific sheet in the Excel
     ...    @author: fluberio    19NOV2020    - initial create

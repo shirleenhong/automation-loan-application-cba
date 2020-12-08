@@ -37,3 +37,14 @@ Validate Data Type Column if Correct from Loans and Accruals Report
 
     ${Actual_DataType_Outstanding}    Read Data From Excel    Outstandings    Data Type    1    &{ExcelPath}[Report_Path]&{ExcelPath}[Report_File_Name]    readAllData=Y
     Verify List Values if Correct    ${Actual_DataType_Outstanding}    Outstanding
+
+Validate Currency Column if Correct from Loans and Accruals Report
+    [Documentation]    This keyword is used to validate if Currency values are correct for Facility and Outstanding sheet.
+    ...    @author: kaustero    07DEC2020    - initial create
+    [Arguments]    ${ExcelPath}
+
+    ${Actual_FacilityCurrency}    Read Data From Excel    Facilities    Facility Currency    1    &{ExcelPath}[Report_Path]&{ExcelPath}[Report_File_Name]    readAllData=Y
+    Validate List Value if Existing in Excel Sheet Column    ${Currency_Codes}    Currency_Codes    Currency_Code    ${Actual_FacilityCurrency}
+
+    ${Actual_OutstandingCurrency}    Read Data From Excel    Outstandings    Outstanding Currency    1    &{ExcelPath}[Report_Path]&{ExcelPath}[Report_File_Name]    readAllData=Y
+    Validate List Value if Existing in Excel Sheet Column    ${Currency_Codes}    Currency_Codes    Currency_Code    ${Actual_OutstandingCurrency}
