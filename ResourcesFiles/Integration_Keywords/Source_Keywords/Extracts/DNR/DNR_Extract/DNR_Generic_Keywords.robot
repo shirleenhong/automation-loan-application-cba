@@ -124,6 +124,42 @@ Validate List Value if Existing in Excel Sheet Column
     \    Run Keyword If    ${IsContain}==${True}    Log    Expected: @{aList}[${Index}] is present in sheet ${ColumnData_String}.
          ...    ELSE    Run Keyword And Continue On Failure    FAIL    Expected: @{aList}[${Index}] is NOT present in sheet ${ColumnData_String}.  
 
+Validate Text Value if Existing in Excel Sheet Column
+    [Documentation]    This keyword is used validate sTextValue is existing in the sSheetColumn from sExcelFile.
+    ...    NOTE: sExcelFile=includes file path and extension.
+    ...    @author: clanding    08DEC2020    - initial create
+    [Arguments]    ${sExcelFile}    ${sSheetName}    ${sColumnName}    ${sTextValue}    ${iColumnIndex}=1
+    
+    Open Excel    ${sExcelFile}
+    ${ColumnData}    Read Data From All Column Rows    ${sSheetName}    ${sColumnName}    ${iColumnIndex}
+    Log    ${ColumnData}
+    Close Current Excel Document
+
+    ${ColumnData_String}    Convert To String    ${ColumnData}
+    Log    ${ColumnData_String}
+
+    ${IsContain}    Run Keyword and Return Status    Should Contain    ${ColumnData_String}    ${sTextValue}
+    Run Keyword If    ${IsContain}==${True}    Log    Expected: '${sTextValue}' is present in column '${sColumnName}' with values '${ColumnData}'
+    ...    ELSE    Run Keyword And Continue On Failure    FAIL    Expected: '${sTextValue}' is NOT present in column '${sColumnName}' with values '${ColumnData}'
+
+Validate Text Value if Not Existing in Excel Sheet Column
+    [Documentation]    This keyword is used validate sTextValue is not existing in the sSheetColumn from sExcelFile.
+    ...    NOTE: sExcelFile=includes file path and extension.
+    ...    @author: clanding    08DEC2020    - initial create
+    [Arguments]    ${sExcelFile}    ${sSheetName}    ${sColumnName}    ${sTextValue}    ${iColumnIndex}=1
+    
+    Open Excel    ${sExcelFile}
+    ${ColumnData}    Read Data From All Column Rows    ${sSheetName}    ${sColumnName}    ${iColumnIndex}
+    Log    ${ColumnData}
+    Close Current Excel Document
+
+    ${ColumnData_String}    Convert To String    ${ColumnData}
+    Log    ${ColumnData_String}
+
+    ${IsContain}    Run Keyword and Return Status    Should Contain    ${ColumnData_String}    ${sTextValue}
+    Run Keyword If    ${IsContain}==${False}    Log    Expected: '${sTextValue}' is not present in column '${sColumnName}' with values '${ColumnData}'
+    ...    ELSE    Run Keyword And Continue On Failure    FAIL    Expected: '${sTextValue}' is present in column '${sColumnName}' with values '${ColumnData}'
+
 Get Total Row Count of Excel Sheet
     [Documentation]    This Keyword is used to get the row count of the specific sheet in the Excel
     ...    @author: fluberio    19NOV2020    - initial create
