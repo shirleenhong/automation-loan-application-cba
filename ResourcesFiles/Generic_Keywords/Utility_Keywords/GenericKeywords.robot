@@ -1813,9 +1813,13 @@ Write Data To Cell
 Get Index of a Column Header Value
     [Documentation]    This keyword is used to get the index of a column header value at the Excel Sheet.
     ...    @author: hstone    19FEB2020    Initial Create
-    [Arguments]    ${sSheetName}    ${sColumnName}    ${bTestCaseColumn}=False
+    ...    @update: clanding    08DEC2020    Added optional argument for column index: ${iColumnIndex}
+    [Arguments]    ${sSheetName}    ${sColumnName}    ${bTestCaseColumn}=False    ${iColumnIndex}=1
 
-    ${DataColumn_List}    Read Excel Row    1    sheet_name=${sSheetName}
+    ${ColumnIndex}    Run Keyword If    '${iColumnIndex}'=='1'    Set Variable    1
+    ...     ELSE    Set Variable    ${iColumnIndex}
+
+    ${DataColumn_List}    Read Excel Row    ${ColumnIndex}    sheet_name=${sSheetName}
     Log    Data Set Sheet Name: '${sSheetName}'
     Log    Data Set Sheet Column Names: '${DataColumn_List}'
 
@@ -1932,9 +1936,10 @@ Read Data From Excel
 Read Data From All Column Rows
     [Documentation]    This keyword will be used for reading data from all rows of a specified column.
     ...    @author: hstone    16MAR2020    Initial Create
-    [Arguments]    ${sSheetName}    ${sColumnName}
+    ...    @update: clanding    08DEC2020    Added optional argument for column index: ${iColumnIndex}
+    [Arguments]    ${sSheetName}    ${sColumnName}     ${iColumnIndex}=1
 
-    ${ColumnHeader_Index}    Get Index of a Column Header Value    ${sSheetName}    ${sColumnName}
+    ${ColumnHeader_Index}    Get Index of a Column Header Value    ${sSheetName}    ${sColumnName}    iColumnIndex=${iColumnIndex}
     ${Column_Data}    Read Excel Column    ${ColumnHeader_Index}    0    ${sSheetName}
     Remove Values From List    ${Column_Data}    ${sColumnName}
 
