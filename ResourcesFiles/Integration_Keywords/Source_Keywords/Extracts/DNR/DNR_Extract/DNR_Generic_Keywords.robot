@@ -111,18 +111,18 @@ Validate List Value if Existing in Excel Sheet Column
     [Arguments]    ${sExcelFile}    ${sSheetName}    ${sColumnName}    ${aList}
     
     Open Excel    ${sExcelFile}
-    ${sColumnData}    Read Data From All Column Rows    ${sSheetName}    ${sColumnName}
-    Log    ${sColumnData}
+    ${ColumnData}    Read Data From All Column Rows    ${sSheetName}    ${sColumnName}
+    Log    ${ColumnData}
     Close Current Excel Document
 
-    ${sColumnData_String}    Convert To String    ${sColumnData}
-    Log    ${sColumnData_String}
+    ${ColumnData_String}    Convert To String    ${ColumnData}
+    Log    ${ColumnData_String}
 
     ${List_Count}    Get Length    ${aList}
     :FOR    ${Index}    IN RANGE    0    ${List_Count}
-    \    ${IsContain}  Run Keyword and Return Status    Should Contain    ${sColumnData_String}    @{aList}[${Index}]
-    \    Run Keyword If    '${IsContain}'=='${True}'    Log    Expected: @{aList}[${Index}] is present in sheet ${sColumnData_String}.
-         ...    ELSE    FAIL    Expected: @{aList}[${Index}] is NOT present in sheet ${sColumnData_String}.  
+    \    ${IsContain}    Run Keyword and Return Status    Should Contain    ${ColumnData_String}    @{aList}[${Index}]
+    \    Run Keyword If    ${IsContain}==${True}    Log    Expected: @{aList}[${Index}] is present in sheet ${ColumnData_String}.
+         ...    ELSE    Run Keyword And Continue On Failure    FAIL    Expected: @{aList}[${Index}] is NOT present in sheet ${ColumnData_String}.  
 
 Get Total Row Count of Excel Sheet
     [Documentation]    This Keyword is used to get the row count of the specific sheet in the Excel
