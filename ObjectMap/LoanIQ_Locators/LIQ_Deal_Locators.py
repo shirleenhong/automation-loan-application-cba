@@ -278,6 +278,8 @@ LIQ_DealNotebook_ExpenseCode_OK_Button = 'JavaWindow("title:=Select Expense Code
 LIQ_FundReceiverDetails_Location_JavaTree = 'JavaWindow("title:=Locations.*").JavaTree("tagname:=Drill Down To Select Location")'    
 LIQ_Locations_OK_Button = 'JavaWindow("title:=Locations.*").JavaButton("attached text:=OK")'    
 LIQ_Locations_Cancel_Button = 'JavaWindow("title:=Locations.*").JavaButton("attached text:=Cancel")'    
+LIQ_Locations_Window = 'JavaWindow("title:=Locations.*")'
+LIQ_Locations_JavaTree = 'JavaWindow("title:=Locations.*").JavaTree("tagname:=Drill Down To Select Location")'
     
 ###Deal Notebook - Pricing Rules Tab###    
 LIQ_PricingRules_AddOption_Button = 'JavaWindow("title:=Deal Notebook.*").JavaButton("attached text:=Add Option","enabled:=1")'    

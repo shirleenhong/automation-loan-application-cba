@@ -438,9 +438,10 @@ Validate Facility
     ...    @update: bernchua    20AUG2019    Used generic keyword for warning messages
     ...    @update: ritragel    09SEP2019    Added another Warning message for Non Business Dates
     ...    @update: ehugo    30JUN2020    - added screenshot; added another handling for warning message for Non Business Dates
-
+    ...    @update: fluberio    27NOV2020    - added clicking of warning Yes button if present
     mx LoanIQ activate window    ${LIQ_FacilityNotebook_Window}
     Select Menu Item    ${LIQ_FacilityNotebook_Window}    File    Save
+    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
     mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
     Select Menu Item    ${LIQ_FacilityNotebook_Window}    Options    Validate for Deal Close
     mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}

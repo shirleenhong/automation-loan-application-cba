@@ -866,6 +866,7 @@ Close the Deal
     mx LoanIQ enter    ${LIQ_DealNotebook_CloseDate}    ${CloseDate}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/DealNotebook_Workflow
     mx LoanIQ click    ${LIQ_CloseDeal_OKButton}
+    mx LoanIQ click element if present    ${LIQ_Warning_OK_Button}
     Verify If Warning Is Displayed
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/DealNotebook_Workflow
     

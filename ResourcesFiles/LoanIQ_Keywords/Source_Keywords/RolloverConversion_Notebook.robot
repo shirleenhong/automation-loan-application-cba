@@ -37,24 +37,24 @@ Setup Repricing
     Select Repricing Detail Add Options    ${RepricingType}    ${Pricing_Option}
     mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}    
     mx LoanIQ click element if present    ${LIQ_Information_OK_Button} 
-    mx LoanIQ activate window    ${LIQ_PendingRollover_Window}
     
-    ${NewLoanAlias}    Mx LoanIQ Get Data    ${LIQ_RolloverConversion_Alias_Textfield}    NewLoanAlias 
-    mx LoanIQ enter    ${LIQ_PendingRollover_RequestedAmt_JavaEdit}    ${Rollover_Amount}
-    Log    ${Repricing_Frequency}
-    Mx LoanIQ Select Combo Box Value   ${LIQ_PendingRollover_RepricingFrequency_Dropdown}    ${Repricing_Frequency}
-    Mx LoanIQ Select Combo Box Value    ${LIQ_PendingRollover_Accrue_Dropdown}    to the actual due date
-    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
-    mx LoanIQ select    ${LIQ_PendingRollover_Save_Submenu}
-    Verify If Warning Is Displayed
-    Mx LoanIQ Select Window Tab    ${LIQ_PendingRollover_Tab}    Rates
-    mx LoanIQ click    ${LIQ_PendingRollover_BaseRate_Button}
-    Verify If Warning Is Displayed
+    Run Keyword If    '${RepricingType}'!='Auto Generate Interest Payment'    mx LoanIQ activate window    ${LIQ_PendingRollover_Window}
+    ${NewLoanAlias}    Run Keyword If    '${RepricingType}'!='Auto Generate Interest Payment'    Mx LoanIQ Get Data    ${LIQ_RolloverConversion_Alias_Textfield}    NewLoanAlias 
+    Run Keyword If    '${RepricingType}'!='Auto Generate Interest Payment'    Run Keywords    mx LoanIQ enter    ${LIQ_PendingRollover_RequestedAmt_JavaEdit}    ${Rollover_Amount}
+    ...    AND    Log    ${Repricing_Frequency}
+    ...    AND    Mx LoanIQ Select Combo Box Value   ${LIQ_PendingRollover_RepricingFrequency_Dropdown}    ${Repricing_Frequency}
+    ...    AND    Mx LoanIQ Select Combo Box Value    ${LIQ_PendingRollover_Accrue_Dropdown}    to the actual due date
+    ...    AND    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
+    ...    AND    mx LoanIQ select    ${LIQ_PendingRollover_Save_Submenu}
+    ...    AND    Verify If Warning Is Displayed
+    ...    AND    Mx LoanIQ Select Window Tab    ${LIQ_PendingRollover_Tab}    Rates
+    ...    AND    mx LoanIQ click    ${LIQ_PendingRollover_BaseRate_Button}
+    ...    AND    Verify If Warning Is Displayed
     
-    Run keyword if    '${acceptRepricingFrequency}'=='Y'    mx LoanIQ click    ${LIQ_InitialDrawdown_AcceptBaseRate}
+    Run keyword if    '${acceptRepricingFrequency}'=='Y' and '${RepricingType}'!='Auto Generate Interest Payment'    mx LoanIQ click    ${LIQ_InitialDrawdown_AcceptBaseRate}
     Log    ${Base_Rate}        
     
-    ${UIBaseRate}    Run keyword if    '${acceptRepricingFrequency}'=='Y'    Get and Validate Borrower Base Rate    ${Base_Rate}
+    ${UIBaseRate}    Run keyword if    '${acceptRepricingFrequency}'=='Y' and '${RepricingType}'!='Auto Generate Interest Payment'    Get and Validate Borrower Base Rate    ${Base_Rate}
     ...    ELSE IF    '${acceptRepricingFrequency}'=='N'    Set Base Rate    ${Base_Rate}
 
     ### Keyword Post-processing ###
@@ -162,7 +162,6 @@ Send to Rate Approval
     Mx LoanIQ DoubleClick    ${LIQ_LoanRepricingForDeal_Workflow_JavaTree}    ${SEND_TO_RATE_APPROVAL_STATUS}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LoanRepricingWindow_WorkflowTab_Approval
     
-     
 Approve Rate Setting Notice
     [Documentation]    This keyword is used to Approved Rate Setting Notice
     ...    @author: ritragel
