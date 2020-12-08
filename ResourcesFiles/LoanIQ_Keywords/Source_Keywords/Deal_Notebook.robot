@@ -589,6 +589,48 @@ Add Financial Ratio
     Run Keyword And Continue On Failure    Mx LoanIQ Select String   ${LIQ_FinantialRatio_JavaTree}    ${RatioType}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/DealWindow_RatiosConditions
 
+Add Outside Conditions
+    [Documentation]    This keyword adds a outside condition in Ratios/Conds
+    ...    @author: kmagday    08DEC2020    initial create
+    [Arguments]    ${sIndex}    ${sOutsideCondition}    ${sStartDate}    ${sTrue}=OFF    
+
+    ### Keyword Pre-processing ###
+    ${Index}    Acquire Argument Value  ${sIndex}
+    ${OutsideCondition}    Acquire Argument Value    ${sOutsideCondition}
+    ${True}    Acquire Argument Value    ${sTrue}
+    ${startDate}    Acquire Argument Value    ${sStartDate}
+
+    Mx LoanIQ Select Window Tab    ${LIQ_DealNotebook_Tab}    Ratios/Conds
+
+    ### Populating textfield
+    ${LIQ_OutsideConditions_TextField}    Replace Variables    ${LIQ_OutsideConditions_TextField}
+    mx LoanIQ enter    ${LIQ_OutsideConditions_TextField}    ${sOutsideCondition}
+
+    ### Populating the true or false radio button
+    Run Keyword If    '${Index}'=='1' and '${True}'=='ON'    mx LoanIQ click    ${LIQ_OutsideConditions_First_TrueRadioButton}    ELSE    mx LoanIQ click    ${LIQ_OutsideConditions_First_FalseRadioButton}
+    Run Keyword If    '${Index}'=='2' and '${True}'=='ON'    mx LoanIQ click    ${LIQ_OutsideConditions_Second_TrueRadioButton}    ELSE    mx LoanIQ click    ${LIQ_OutsideConditions_Second_FalseRadioButton}
+    Run Keyword If    '${Index}'=='3' and '${True}'=='ON'    mx LoanIQ click    ${LIQ_OutsideConditions_Third_TrueRadioButton}    ELSE    mx LoanIQ click    ${LIQ_OutsideConditions_Third_FalseRadioButton}
+
+
+    mx LoanIQ click    ${LIQ_OutsideConditions_History_Button}
+    mx LoanIQ click element if present   ${LIQ_Warning_Yes_Button}
+
+    ${dropdownVal}    Set Variable If    '${Index}'=='1'    Outside Condition 1
+    ...    '${Index}'=='2'    Outside Condition 2
+    ...    '${Index}'=='3'    Outside Condition 3
+
+    Mx LoanIQ select combo box value    ${LIQ_OutsideConditions_SelectConditionDropdown}    ${dropdownVal}
+    mx LoanIQ click    ${LIQ_OutsideConditions_Insert_Button}
+
+    mx LoanIQ enter    ${LIQ_Edit_OutsideConditions_StartDate}    ${startDate}
+    mx LoanIQ click    ${LIQ_Edit_OutsideConditions_OK_Button}
+
+
+    # mx LoanIQ activate window    ${LIQ_Edit_OutsideConditions_Question_Window}
+    mx LoanIQ click    ${LIQ_Edit_OutsideConditions_Question_Yes_Button}
+    mx LoanIQ click    ${LIQ_OutsideConditions_OK_Button}
+
+
 Modify Upfront Fees
     [Documentation]    This keyword adds a financial ratio in a deal.
     ...    @author: fmamaril
