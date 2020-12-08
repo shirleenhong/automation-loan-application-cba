@@ -112,6 +112,7 @@ Validate Equal Fee Cycle and Adjusted Due Date if Correct
     ### Get Actual Details in the Report
     ${FeeCycleDueDate}    Read Data From Excel    Fees    Fee Cycle Due Date    ${Facility_Name}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}    &{ExcelPath}[Report_Path]&{ExcelPath}[Report_File_Name]    bTestCaseColumn=True    sTestCaseColReference=Facility Name
     ${FeeAdjustedDueDate}    Read Data From Excel    Fees    Fee Adjusted Due Date    ${Facility_Name}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}    &{ExcelPath}[Report_Path]&{ExcelPath}[Report_File_Name]    bTestCaseColumn=True    sTestCaseColReference=Facility Name
+    ${EventsStatus}    Read Data From Excel    Fees    Events Status    ${Facility_Name}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}    &{ExcelPath}[Report_Path]&{ExcelPath}[Report_File_Name]    bTestCaseColumn=True    sTestCaseColReference=Facility Name
     
     ${Report_FeeCycleDueDate}    Get Date Value from Date Added or Amended Column    ${FeeCycleDueDate}    %d-%b-%Y
     ${Report_FeeAdjustedDueDate}    Get Date Value from Date Added or Amended Column    ${FeeAdjustedDueDate}    %d-%b-%Y
@@ -119,6 +120,8 @@ Validate Equal Fee Cycle and Adjusted Due Date if Correct
     ${Dataset_AdjustedDueDate}    Get Date Value from Date Added or Amended Column    ${LIQ_AdjustedDueDate}
     Compare Two Strings    ${Dataset_ActualDueDate}    ${Report_FeeCycleDueDate.strip()}
     Compare Two Strings    ${Dataset_AdjustedDueDate}    ${Report_FeeAdjustedDueDate.strip()}
+    Compare Two Strings    ${Dataset_AdjustedDueDate}    ${Report_FeeAdjustedDueDate.strip()}
+    Compare Two Strings    ${DNR_RELEASED_STATUS}    ${EventsStatus.strip()}
 
 Validate Different Fee Cycle and Adjusted Due Date if Correct
     [Documentation]    This keyword is used to extract details from Calendar Reports and validate the in Fee sheet if Fee Cycle and Adjustd Due Date are correct.
@@ -133,6 +136,7 @@ Validate Different Fee Cycle and Adjusted Due Date if Correct
     ### Get Actual Details in the Report
     ${FeeCycleDueDate}    Read Data From Excel    Fees    Fee Cycle Due Date    ${Facility_Name}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}    &{ExcelPath}[Report_Path]&{ExcelPath}[Report_File_Name]    bTestCaseColumn=True    sTestCaseColReference=Facility Name
     ${FeeAdjustedDueDate}    Read Data From Excel    Fees    Fee Adjusted Due Date    ${Facility_Name}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}    &{ExcelPath}[Report_Path]&{ExcelPath}[Report_File_Name]    bTestCaseColumn=True    sTestCaseColReference=Facility Name
+    ${EventsStatus}    Read Data From Excel    Fees    Events Status    ${Facility_Name}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}    &{ExcelPath}[Report_Path]&{ExcelPath}[Report_File_Name]    bTestCaseColumn=True    sTestCaseColReference=Facility Name
     
     ${Report_FeeCycleDueDate}    Get Date Value from Date Added or Amended Column    ${FeeCycleDueDate}    %d-%b-%Y
     ${Report_FeeAdjustedDueDate}    Get Date Value from Date Added or Amended Column    ${FeeAdjustedDueDate}    %d-%b-%Y
@@ -140,3 +144,4 @@ Validate Different Fee Cycle and Adjusted Due Date if Correct
     ${Dataset_AdjustedDueDate}    Get Date Value from Date Added or Amended Column    ${LIQ_AdjustedDueDate}
     Compare Two Strings    ${Dataset_ActualDueDate}    ${Report_FeeCycleDueDate.strip()}
     Compare Two Strings    ${Dataset_AdjustedDueDate}    ${Report_FeeAdjustedDueDate.strip()}
+    Compare Two Strings    ${DNR_RELEASED_STATUS}    ${EventsStatus.strip()}
