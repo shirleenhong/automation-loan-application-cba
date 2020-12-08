@@ -63,7 +63,7 @@ Create Initial Loan Drawdown for Active Facility Expanded Scenario 1
     Set Global Variable    ${TestCase_Name}    Expanded_Scenario1_ActiveFac1_Repayment
     Mx Execute Template With Multiple Data    Create Initial Loan Drawdown with Repayment Schedule for DNR    ${DNR_DATASET}    ${rowid}    SC1_LoanDrawdown
 
-    ### add code for liquidity for pending loan - LQDTY_003
+    ### Generate Liquidity Report for Pending Loan ###
     Set Global Variable    ${TestCase_Name}    LQDTY_003
     Mx Execute Template With Specific Test Case Name    Generate DNR Report for Liquidity    ${DNR_DATASET}    Test_Case    ${TestCase_Name}    DNR
     Mx Execute Template With Specific Test Case Name    Write Details for Liquidity Report    ${DNR_DATASET}    Test_Case    ${TestCase_Name}    DNR
@@ -77,16 +77,17 @@ Create Initial Loan Drawdown for Active Facility Expanded Scenario 1
     Mx Execute Template With Specific Test Case Name    Generate DNR Report for Facility Performance    ${DNR_DATASET}    Test_Case    ${TestCase_Name}    DNR
     Mx Execute Template With Specific Test Case Name    Write Details for Facility Performance    ${DNR_DATASET}    Test_Case    ${TestCase_Name}    DNR
 
-    ### Generate Calendar report after drawdown
-    Set Global Variable    ${TestCase_Name}    CALND_002
-    Mx Execute Template With Specific Test Case Name    Generate DNR Report for Calendar    ${DNR_DATASET}    Test_Case    ${TestCase_Name}    DNR
-    Mx Execute Template With Specific Test Case Name    Write Details for Calendar Report    ${DNR_DATASET}    Test_Case    ${TestCase_Name}    DNR  
-
-    ### Ongoing Fee - adjusted due date
+    ### Generate Calendar Report for Equal Fee Date ###
     Set Global Variable    ${TestCase_Name}    CALND_003_EqualFeeDate
+    Mx Execute Template With Specific Test Case Name    Get Equal Due and Ajdusted Due Date and Write in Filter for Calendar Report    ${DNR_DATASET}    Test_Case    ${TestCase_Name}    DNR
+    Mx Execute Template With Specific Test Case Name    Generate DNR Report for Calendar    ${DNR_DATASET}    Test_Case    ${TestCase_Name}    DNR
     Mx Execute Template With Specific Test Case Name    Write Details for Calendar Report    ${DNR_DATASET}    Test_Case    ${TestCase_Name}    DNR
 
-    ### add code for liquidity for active loan - LQDTY_002
+    ### Generate Calendar Report for Active Loan ###
+    Set Global Variable    ${TestCase_Name}    CALND_002
+    Mx Execute Template With Specific Test Case Name    Write Details for Calendar Report    ${DNR_DATASET}    Test_Case    ${TestCase_Name}    DNR  
+
+    ### Generate Liquidity Report for Active Loan ###
     Set Global Variable    ${TestCase_Name}    LQDTY_002
     Mx Execute Template With Specific Test Case Name    Generate DNR Report for Liquidity    ${DNR_DATASET}    Test_Case    ${TestCase_Name}    DNR
     Mx Execute Template With Specific Test Case Name    Write Details for Liquidity Report    ${DNR_DATASET}    Test_Case    ${TestCase_Name}    DNR
@@ -118,10 +119,6 @@ Create Initial Loan Drawdown for Expired Facility Expanded Scenario 1
     Set Global Variable    ${TestCase_Name}    FACPF_004
     Mx Execute Template With Specific Test Case Name    Generate DNR Report for Facility Performance    ${DNR_DATASET}    Test_Case    ${TestCase_Name}    DNR
     Mx Execute Template With Specific Test Case Name    Write Details for Facility Performance    ${DNR_DATASET}    Test_Case    ${TestCase_Name}    DNR
-
-    Set Global Variable    ${TestCase_Name}    CALND_003_UpdateFeeDate
-    Mx Execute Template With Specific Test Case Name    Generate DNR Report for Calendar    ${DNR_DATASET}    Test_Case    ${TestCase_Name}    DNR
-    Mx Execute Template With Specific Test Case Name    Write Details for Calendar Report    ${DNR_DATASET}    Test_Case    ${TestCase_Name}    DNR
     
 Update Adjusted Due Date for Active Facility Expanded Scenario 1
     [Tags]    08 Update Adjusted Due Date for Active Facility Expanded Scenario 1
@@ -130,8 +127,9 @@ Update Adjusted Due Date for Active Facility Expanded Scenario 1
     Mx Execute Template With Multiple Data    Update Adjusted Due Date for DNR    ${DNR_DATASET}    ${rowid}    SC1_PaymentFees
     Mx Execute Template With Multiple Data    Get Fee Alias for Payment from Ongoing Fee Setup for DNR    ${DNR_DATASET}    ${rowid}    SC1_PaymentFees
 
-    ### CALND_003 - generate  calendar report
+    ### Generate Calendar Report for Different Fee Date ###
     Set Global Variable    ${TestCase_Name}    CALND_003_UpdateFeeDate
+    Mx Execute Template With Specific Test Case Name    Get Different Due and Ajdusted Due Date and Write in Filter for Calendar Report    ${DNR_DATASET}    Test_Case    ${TestCase_Name}    DNR
     Mx Execute Template With Specific Test Case Name    Generate DNR Report for Calendar    ${DNR_DATASET}    Test_Case    ${TestCase_Name}    DNR
     Mx Execute Template With Specific Test Case Name    Write Details for Calendar Report    ${DNR_DATASET}    Test_Case    ${TestCase_Name}    DNR
 
