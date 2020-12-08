@@ -22,3 +22,11 @@ Write Details for Liquidity Report
     Copy File    &{ExcelPath}[Report_Path]${CBA_LIQUIDITY_REPORTFILE}.xlsx    &{ExcelPath}[Report_Path]&{ExcelPath}[File_Name]${CBA_LIQUIDITY_REPORTFILE}.xlsx
     Write Data To Excel    DNR    Report_File_Name    ${TestCase_Name}    &{ExcelPath}[File_Name]${CBA_LIQUIDITY_REPORTFILE}.xlsx    ${DNR_DATASET}    bTestCaseColumn=True
     Write Data To Excel    LQDTY    Report_File_Name    ${TestCase_Name}    &{ExcelPath}[File_Name]${CBA_LIQUIDITY_REPORTFILE}.xlsx    ${DNR_DATASET}    bTestCaseColumn=True
+
+Validate Ongoing Fee Payment is Not Existing in Liquidity Report
+    [Documentation]    This keyword is used to validate Ongoing Fee Payment transactions are not existing in the liquidity report.
+    ...    @author: clanding    08DEC2020    - initial create
+    [Arguments]    ${ExcelPath}
+    
+    Validate Text Value if Not Existing in Excel Sheet Column    &{ExcelPath}[Report_Path]&{ExcelPath}[Report_File_Name]    &{ExcelPath}[Sheet_Name]    &{ExcelPath}[Columns_To_Validate]    ${DNR_ONGOINGFEEPAYMENT_TRANSACTION}    2
+    
