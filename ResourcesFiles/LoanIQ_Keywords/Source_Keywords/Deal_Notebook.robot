@@ -125,7 +125,13 @@ Unrestrict Deal
     ${Status}    Run Keyword And Return Status    Mx LoanIQ Verify Object Exist    ${LIQ_DealNotebook_Restrict_Label}    VerificationData="Yes"
     Run Keyword And Continue On Failure    Should Not Be True   ${Status}==True
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/DealWindow_Summary
-    
+
+Click OK Button To Close Borrowers Notebook
+    [Documentation]    Clicking Ok button to close/save deal borrowers notebook
+    ...    @author: kmagday    09DEC2020    - initial create
+
+    mx LoanIQ click    ${LIQ_DealBorrower_Ok_Button}
+
 Add Deal Borrower
     [Documentation]    It adds the borrower name in a deal
     ...    @author: fmamaril
@@ -600,16 +606,19 @@ Add Outside Conditions
     ${True}    Acquire Argument Value    ${sTrue}
     ${startDate}    Acquire Argument Value    ${sStartDate}
 
-    Mx LoanIQ Select Window Tab    ${LIQ_DealNotebook_Tab}    Ratios/Conds
+    Mx LoanIQ Select Window Tab    ${LIQ_DealNotebook_Tab}    ${RATIOS_CONDS_TAB}
 
-    ### Populating textfield
+    ### Populating textfield ###
     ${LIQ_OutsideConditions_TextField}    Replace Variables    ${LIQ_OutsideConditions_TextField}
     mx LoanIQ enter    ${LIQ_OutsideConditions_TextField}    ${sOutsideCondition}
 
-    ### Populating the true or false radio button
-    Run Keyword If    '${Index}'=='1' and '${True}'=='ON'    mx LoanIQ click    ${LIQ_OutsideConditions_First_TrueRadioButton}    ELSE    mx LoanIQ click    ${LIQ_OutsideConditions_First_FalseRadioButton}
-    Run Keyword If    '${Index}'=='2' and '${True}'=='ON'    mx LoanIQ click    ${LIQ_OutsideConditions_Second_TrueRadioButton}    ELSE    mx LoanIQ click    ${LIQ_OutsideConditions_Second_FalseRadioButton}
-    Run Keyword If    '${Index}'=='3' and '${True}'=='ON'    mx LoanIQ click    ${LIQ_OutsideConditions_Third_TrueRadioButton}    ELSE    mx LoanIQ click    ${LIQ_OutsideConditions_Third_FalseRadioButton}
+    ### Populating the true or false radio button ###
+    Run Keyword If    '${Index}'=='1' and '${True}'=='ON'    mx LoanIQ click    ${LIQ_OutsideConditions_First_TrueRadioButton}    
+    ...    ELSE    mx LoanIQ click    ${LIQ_OutsideConditions_First_FalseRadioButton}
+    Run Keyword If    '${Index}'=='2' and '${True}'=='ON'    mx LoanIQ click    ${LIQ_OutsideConditions_Second_TrueRadioButton}    
+    ...    ELSE    mx LoanIQ click    ${LIQ_OutsideConditions_Second_FalseRadioButton}
+    Run Keyword If    '${Index}'=='3' and '${True}'=='ON'    mx LoanIQ click    ${LIQ_OutsideConditions_Third_TrueRadioButton}    
+    ...    ELSE    mx LoanIQ click    ${LIQ_OutsideConditions_Third_FalseRadioButton}
 
 
     mx LoanIQ click    ${LIQ_OutsideConditions_History_Button}
@@ -625,9 +634,7 @@ Add Outside Conditions
     mx LoanIQ enter    ${LIQ_Edit_OutsideConditions_StartDate}    ${startDate}
     mx LoanIQ click    ${LIQ_Edit_OutsideConditions_OK_Button}
 
-
-    # mx LoanIQ activate window    ${LIQ_Edit_OutsideConditions_Question_Window}
-    mx LoanIQ click    ${LIQ_Edit_OutsideConditions_Question_Yes_Button}
+    mx LoanIQ click element if present    ${LIQ_Edit_OutsideConditions_Question_Yes_Button}
     mx LoanIQ click    ${LIQ_OutsideConditions_OK_Button}
 
 

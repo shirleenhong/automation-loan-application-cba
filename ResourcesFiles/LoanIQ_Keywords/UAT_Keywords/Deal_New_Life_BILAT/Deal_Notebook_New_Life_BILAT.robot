@@ -24,21 +24,22 @@ Setup Deal for New Life BILAT
     Create New Deal    ${Deal_Name}    ${Deal_Alias}    &{ExcelPath}[Deal_Currency]    &{ExcelPath}[Deal_Department]    ${ExcelPath}[Deal_SalesGroup]
 
     ### Summary Tab ###   
-    ### Add borrower
+    ### Add borrower ###
     Add Deal Borrower    &{ExcelPath}[Borrower_ShortName]  
-    mx LoanIQ click    ${LIQ_DealBorrower_Ok_Button}
+    Click OK Button To Close Borrowers Notebook
+    
 
-    ### Check Sole Lender checkbox
+    ### Check Sole Lender checkbox ###
     Set Deal as Sole Lender
     
-    ### Deal Classification
+    ### Deal Classification ###
     Select Deal Classification    &{ExcelPath}[Deal_ClassificationCode]    &{ExcelPath}[Deal_ClassificationDesc]
     
-    ### Admin Agent
+    ### Admin Agent ###
     Select Admin Agent    &{ExcelPath}[Deal_AdminAgent]    &{ExcelPath}[AdminAgent_Location]
     Select Servicing group and Remittance Instrucion for Admin Agent    &{ExcelPath}[AdminAgent_SGAlias]    &{ExcelPath}[AdminAgent_RIMethod]    &{ExcelPath}[AdminAgent_SGName]
     
-    ### Agreement date and propose amount
+    ### Agreement date and propose amount ###
     Enter Agreement Date and Proposed Commitment Amount    ${ExcelPath}[Deal_AgreementDate]    ${ExcelPath}[Deal_ProposedCmt]
     Unrestrict Deal
 
@@ -58,6 +59,6 @@ Setup Deal for New Life BILAT
 
     Add Fee Pricing Rules    &{ExcelPath}[PricingRule_Fee]    &{ExcelPath}[PricingRule_MatrixChangeAppMthd]    &{ExcelPath}[PricingRule_NonBussDayRule]
 
-    # ### Ratios/Conds Tab ###
-    Add Outside Conditions    1    average unfunded committed account >40%    19-Sep-2015    ON
+    ### Ratios/Conds Tab ###
+    Add Outside Conditions    &{ExcelPath}[Ratios_And_Cons_Index]    &{ExcelPath}[Ratios_And_Cons_Description]    &{ExcelPath}[Ratios_And_Cons_StartDate]    &{ExcelPath}[Ratios_And_Cons_RadioButton]
 
