@@ -49,6 +49,11 @@ Primary Setup for Expanded Scenario 1
     Mx Execute Template With Specific Test Case Name    Generate DNR Report for Facility Performance    ${DNR_DATASET}    Test_Case    ${TestCase_Name}    DNR
     Mx Execute Template With Specific Test Case Name    Write Details for Facility Performance    ${DNR_DATASET}    Test_Case    ${TestCase_Name}    DNR
 
+    ### Generate Loans & Accruals Report with Pending Facility ###
+    Set Global Variable    ${TestCase_Name}    LOACC_007
+    Mx Execute Template With Specific Test Case Name    Generate DNR Report for Loans and Accruals    ${DNR_DATASET}    Test_Case    ${TestCase_Name}    DNR
+    Mx Execute Template With Specific Test Case Name    Write Details for Loans and Accruals Report    ${DNR_DATASET}    Test_Case    ${TestCase_Name}    DNR
+
     Mx Execute Template With Multiple Data    Close Deal for DNR    ${DNR_DATASET}    ${rowid}    SC1_PrimaryAllocation
     Mx Execute Template With Multiple Data    Get Deal Details and Write in DNR Dataset    ${DNR_DATASET}    ${rowid}    SC1_PrimaryAllocation
 
@@ -91,6 +96,11 @@ Create Initial Loan Drawdown for Active Facility Expanded Scenario 1
     Set Global Variable    ${TestCase_Name}    LQDTY_002
     Mx Execute Template With Specific Test Case Name    Generate DNR Report for Liquidity    ${DNR_DATASET}    Test_Case    ${TestCase_Name}    DNR
     Mx Execute Template With Specific Test Case Name    Write Details for Liquidity Report    ${DNR_DATASET}    Test_Case    ${TestCase_Name}    DNR
+
+    ### Generate Loans & Accruals Report with Active Facility and Outstanding ###
+    Set Global Variable    ${TestCase_Name}    LOACC_008
+    Mx Execute Template With Specific Test Case Name    Generate DNR Report for Loans and Accruals    ${DNR_DATASET}    Test_Case    ${TestCase_Name}    DNR
+    Mx Execute Template With Specific Test Case Name    Write Details for Loans and Accruals Report    ${DNR_DATASET}    Test_Case    ${TestCase_Name}    DNR
 
     Set Global Variable    ${rowid}    1
     Set Global Variable    ${TestCase_Name}    Expanded_Scenario1_ActiveFac1_Repayment
