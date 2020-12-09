@@ -3938,6 +3938,7 @@ New Facility Select for Pending Status
 Get Host Bank Share Gross Amounts Outstandings Amount
     [Documentation]    This keyword returns the Facility Host Bank Share Gross Amounts Outstandings Amount.
     ...    @author: ccarriedo    09DEC2020    Initial Create
+
     mx LoanIQ activate window    ${LIQ_FacilityNotebook_Window}
     Mx LoanIQ Select Window Tab    ${LIQ_FacilityNotebook_Tab}    Summary
     ${Facility_Outstandings}    Mx LoanIQ Get Data    ${LIQ_FacilitySummary_HostBank_Outstandings}    value%Amount
