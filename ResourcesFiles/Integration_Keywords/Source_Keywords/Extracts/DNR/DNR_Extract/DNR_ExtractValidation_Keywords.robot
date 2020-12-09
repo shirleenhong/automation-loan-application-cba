@@ -194,6 +194,76 @@ Validate Facility Name Value if Existing
     Run Keyword If    '${Status_Contains_Column_Header}'=='${False}'    Log    Expected: Facility Name ${Facility_Name} is not present in report file ${LIQPerformance_Report}.
     ...    ELSE    FAIL    Facility Name ${Facility_Name} is present in report file ${LIQPerformance_Report}.
  
+Go to Payment Report from Team Content Menu CBA Reports
+    [Documentation]    This keyword is used to go to Team Content menu > CBA Reports folder and select specific Payment Report based on specified Payment Report Type.
+    ...    @author: clanding    05DEC2020    - initial create
+    [Arguments]    ${sPayment_Report_Type}
+ 
+    Click Element    ${DNR_TeamContent_Menu_Button_Locator}
+    Wait Until Keyword Succeeds    50x    5s    Wait Until Element Is Visible    ${DNR_TeamContent_RootFolder_Locator}
+    ${IsVisible}    Run Keyword And Return Status    Element Should Be Visible    ${DNR_TeamContent_RootFolder_Locator}
+    Run Keyword If    ${IsVisible}==${True}    Log    Root Folder '${TEAM_CONTENT_TEXT}' is displayed.
+    ...    ELSE    FAIL    Root Folder '${TEAM_CONTENT_TEXT}' is NOT displayed.    
+    Capture Page Screenshot    ${screenshot_path}/Screenshots/DNR/CBAReports_RootFolderIsDisplayed-{index}.png
+    
+    Wait Until Keyword Succeeds    20x    5s    Wait Until Element Is Visible    ${DNR_TeamContent_CBAReports_FolderLink_Locator}
+    Click Element    ${DNR_TeamContent_CBAReports_FolderLink_Locator}
+    Verify if Root Folder is Displayed in Cognos    ${CBA_REPORTS}
+    
+    ${sReport_Name}    Replace Variables    ${PAYMENT_REPORTS}
+    ${DNR_ReportFolder_Link_Locator}    Replace Variables    ${DNR_ReportFolder_Link_Locator}
+    Click Element    ${DNR_ReportFolder_Link_Locator}
+    Verify if Root Folder is Displayed in Cognos    ${sReport_Name}
+ 
+    Run Keyword If   '${sPayment_Report_Type}'=='AHBCO'    Set Global Variable    ${CBA_PAYMENT_REPORTFILE}    ${CBA_PAYMENT_AHBCO_REPORTFILE}   
+    ...    ELSE IF   '${sPayment_Report_Type}'=='AHBDE'    Set Global Variable    ${CBA_PAYMENT_REPORTFILE}    ${CBA_PAYMENT_AHBDE_REPORTFILE}
+    ...    ELSE IF   '${sPayment_Report_Type}'=='CIR'    Set Global Variable    ${CBA_PAYMENT_REPORTFILE}    ${CBA_PAYMENT_CIR_REPORTFILE}
+    ...    ELSE IF   '${sPayment_Report_Type}'=='CORAS'    Set Global Variable    ${CBA_PAYMENT_REPORTFILE}    ${CBA_PAYMENT_CORAS_REPORTFILE}
+    ...    ELSE IF   '${sPayment_Report_Type}'=='CORRS'    Set Global Variable    ${CBA_PAYMENT_REPORTFILE}    ${CBA_PAYMENT_CORRS_REPORTFILE}
+    ...    ELSE IF   '${sPayment_Report_Type}'=='DE'    Set Global Variable    ${CBA_PAYMENT_REPORTFILE}    ${CBA_PAYMENT_DE_REPORTFILE}
+ 
+    ${sPayment_Type}    Run Keyword If    '${sPayment_Report_Type}'=='AHBCO' or '${sPayment_Report_Type}'=='AHBDE'    Set Variable    Agency
+    ...    ELSE    Set Variable    Non Agency
+ 
+    ${sPayment_Type}    Replace Variables    ${sPayment_Type}
+    ${DNR_PaymentReportFolder_Link_Locator}    Replace Variables    ${DNR_PaymentReportFolder_Link_Locator}
+    Click Element    ${DNR_PaymentReportFolder_Link_Locator}
+    Verify if Root Folder is Displayed in Cognos    ${sPayment_Type}
+
+Set Filter Using Payment Date and Download Report
+    [Documentation]    This keyword is used to set filter for report and download excel file report.
+    ...    @author: clanding    05DEC2020    - initial create
+    [Arguments]    ${sPaymentMonth}    ${sPaymentDay}    ${sReport_Name}    ${sReport_Path}    ${sPaymentYear}=${EMPTY}
+ 
+    Delete File If Exist    ${sReport_Path}${sReport_Name}.xlsx
+    Wait Until Browser Ready State
+ 
+    ${CashOutApproved}    Run Keyword And Return Status    Should Contain    ${sReport_Name}    ${PAYMENT_CASHOUTAPPROVED_REPORTS}
+    Return From Keyword If    ${CashOutApproved}==${True}
+ 
+    Wait Until Keyword Succeeds    10x    5s    Wait Until Element Is Visible    ${DNR_TeamContent_CBAReports_ReportType_Frame_Locator}
+    Select Frame    ${DNR_TeamContent_CBAReports_ReportType_Frame_Locator}
+    Repeat Keyword    10 times    Wait Until Browser Ready State
+    Wait Until Keyword Succeeds    10x    5s    Wait Until Element Is Visible    ${DNR_TeamContent_CBAReports_PaymentMonthYear_Calendar_Locator}
+    
+    ### Select Payment Date ###
+    Run Keyword If    '${sPaymentYear}'!='${EMPTY}'    Run Keywords    Click Element    ${DNR_TeamContent_CBAReports_PaymentMonthYear_Calendar_Locator}
+    ...    AND    Setup Year for From and To Filter    ${DNR_TeamContent_CBAReports_PaymentMonthYear_Calendar_Locator}    ${sPaymentYear}
+ 
+    ${sPaymentMonth}    Replace Variables    ${sPaymentMonth}
+    ${DNR_TeamContent_CBAReports_PaymentMonth_Calendar_Locator}    Replace Variables    ${DNR_TeamContent_CBAReports_PaymentMonth_Calendar_Locator}
+    Click Element    ${DNR_TeamContent_CBAReports_PaymentMonth_Calendar_Locator}
+ 
+    ${sPaymentDay}    Replace Variables    ${sPaymentDay}
+    ${DNR_TeamContent_CBAReports_PaymentDate_Calendar_Locator}    Replace Variables    ${DNR_TeamContent_CBAReports_PaymentDate_Calendar_Locator}
+    Click Element    ${DNR_TeamContent_CBAReports_PaymentDate_Calendar_Locator}
+ 
+    Capture Page Screenshot    ${screenshot_path}/Screenshots/DNR/Download-{index}.png
+    Click Element    ${DNR_TeamContent_CBAReports_Finish_Button_Locator}
+        
+    UnSelect Frame
+    Capture Page Screenshot    ${screenshot_path}/Screenshots/DNR/Download-{index}.png
+
 Validate Facility Performance Report File with Active Status
     [Documentation]    This keyword is used to validate facility name row values in the facility performance report file with active status.
     ...    Columns to Validate: Facility Name, FCN, Total Utilization Amount, Facility Status

@@ -14,6 +14,13 @@ Create Term and SBLC Loan Drawdown for Syndicated Deal - AHBCO_003
     Mx Execute Template With Multiple Data    Create Loan Drawdown TERM and SBLC for Syndicated Deal for DNR    ${DNR_DATASET}    ${rowid}    SC2_LoanDrawdown
     Mx Execute Template With Multiple Data    Write Cashflow ID for Agency Cashout Report    ${DNR_DATASET}    ${rowid}    SC2_LoanDrawdown
  
+Write Filter Details for Agency Host Bank Cashout Report in DNR Data Set
+    [Documentation]   This DNR test case is used to get the value of the Loan Drawdown's processing date and to generate the Agency Host Bank Cashout Report
+    ...    @author: shirhong    07DEC2020    - initial create
+    Set Global Variable    ${TestCase_Name}    AHBCO_003
+    Mx Execute Template With Specific Test Case Name    Write Filter Details for Agency Host Bank Cashout Report in DNR Data Set    ${DNR_DATASET}    Test_Case    ${TestCase_Name}    DNR 
+    Mx Execute Template With Specific Test Case Name    Generate DNR Report for Payment    ${DNR_DATASET}    Test_Case    ${TestCase_Name}    DNR     
+
 Report Validation for AHBCO_003
     [Documentation]    This test case is for Scenario 1- Verify that Report is displaying a freshly done Drawdown Cashflow on the report when Processing Date & Effective dates are same
     ...    NOTE: Agency Host Bank Cashout Report should be available already in the report path.
