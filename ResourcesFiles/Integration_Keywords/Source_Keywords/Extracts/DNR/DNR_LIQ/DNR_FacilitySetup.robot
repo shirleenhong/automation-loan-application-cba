@@ -17,6 +17,7 @@ Create Facility for DNR
     Write Data To Excel    SC1_OngoingFeeSetup    Facility_Name    ${rowid}    ${Facility_Name}    ${DNR_DATASET}
     Write Data To Excel    SC1_PaymentFees    Facility_Name    ${rowid}    ${Facility_Name}    ${DNR_DATASET}    ${DNR_DATASET}
     Write Data To Excel    SC1_UnscheduledPayments    Facility_Name    ${rowid}    ${Facility_Name}    ${DNR_DATASET}    ${DNR_DATASET}
+    Write Data To Excel    SC1_UnscheduledPayments    Facility_Name    3    ${Facility_Name}    ${DNR_DATASET}    ${DNR_DATASET}
 
     ###New Facility Screen###
     ${Facility_ProposedCmtAmt}    New Facility Select    &{ExcelPath}[Deal_Name]    ${FacilityName}    &{ExcelPath}[Facility_Type]    &{ExcelPath}[Facility_ProposedCmtAmt]    &{ExcelPath}[Facility_Currency]    
@@ -96,6 +97,10 @@ Get Active Facility Details for Active Outstanding and Write in DNR Dataset
     Write Data To Excel    FACPF    Facility_Name    FACPF_005    &{ExcelPath}[Facility_Name]    ${DNR_DATASET}    bTestCaseColumn=True
     Write Data To Excel    FACPF    Facility_FCN    FACPF_005    ${FacilityControlNumber}    ${DNR_DATASET}    bTestCaseColumn=True
     Write Data To Excel    FACPF    Deal_Name    FACPF_005    &{ExcelPath}[Deal_Name]    ${DNR_DATASET}    bTestCaseColumn=True
+
+    ### Writing for Loan & Accrual Report ###
+    Write Data To Excel    LOACC    FCN    LOACC_007    ${FacilityControlNumber}    ${DNR_DATASET}    bTestCaseColumn=True
+    Write Data To Excel    LOACC    FCN    LOACC_008    ${FacilityControlNumber}    ${DNR_DATASET}    bTestCaseColumn=True
 
     Close All Windows on LIQ
 

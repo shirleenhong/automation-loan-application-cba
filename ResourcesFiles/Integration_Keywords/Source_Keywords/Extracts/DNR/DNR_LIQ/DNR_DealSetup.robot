@@ -124,7 +124,8 @@ Setup a Bilateral Deal for DNR
     Write Data To Excel    SC1_PaymentFees    Fee_EffectiveDate    ${rowid}    ${SystemDate}    ${DNR_DATASET}
     Write Data To Excel    SC1_PaymentFees    Fee_FloatRateStartDate    ${rowid}    ${SystemDate}    ${DNR_DATASET}
     Write Data To Excel    SC1_PaymentFees    FeePayment_EffectiveDate    ${rowid}    ${SystemDate}    ${DNR_DATASET}
-    Write Data To Excel    SC1_UnscheduledPayments    Loan_EffectiveDate    ${rowid}    ${SystemDate}    ${DNR_DATASET}    
+    Write Data To Excel    SC1_UnscheduledPayments    Loan_EffectiveDate    ${rowid}    ${SystemDate}    ${DNR_DATASET}
+    Write Data To Excel    SC1_UnscheduledPayments    Loan_EffectiveDate    3    ${SystemDate}    ${DNR_DATASET}
 
     ##Generate Deal Name and Alias###    
     ${Deal_Name}    ${Deal_Alias}    Generate Deal Name and Alias    &{ExcelPath}[Deal_NamePrefix]    &{ExcelPath}[Deal_AliasPrefix]    ${rowid}
@@ -136,6 +137,7 @@ Setup a Bilateral Deal for DNR
     Write Data To Excel    SC1_PaymentFees    Deal_Name    ${rowid}    ${Deal_Name}    ${DNR_DATASET}
     Write Data To Excel    SC1_PaymentFees    ScheduledActivity_DealName    ${rowid}    ${Deal_Name}    ${DNR_DATASET}
     Write Data To Excel    SC1_UnscheduledPayments    Deal_Name    ${rowid}    ${Deal_Name}    ${DNR_DATASET}
+    Write Data To Excel    SC1_UnscheduledPayments    Deal_Name    3    ${Deal_Name}    ${DNR_DATASET}
     
     ###For Scenario 1 Deal Setup###
     Write Data To Excel    SC1_FacilitySetup    Facility_Currency1    ${rowid}    ${ExcelPath}[Deal_Currency]    ${DNR_DATASET}
