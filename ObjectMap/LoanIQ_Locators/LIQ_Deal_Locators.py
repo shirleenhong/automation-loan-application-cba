@@ -338,8 +338,25 @@ LIQ_FinantialRatio_RatioType_List = 'JavaWindow("title:=Financial Ratio Add").Ja
 LIQ_FinantialRatio_Field = 'JavaWindow("title:=Financial Ratio Add").JavaEdit("attached text:=Financial Ratio:","enabled:=1")'    
 LIQ_FinantialRatio_Date = 'JavaWindow("title:=Financial Ratio Add").JavaEdit("tagname:=Text","index:=1")'    
 LIQ_FinantialRatio_Ok_Button = 'JavaWindow("title:=Financial Ratio Add").JavaButton("attached text:=OK")'    
-LIQ_FinantialRatio_JavaTree = 'JavaWindow("title:=Deal Notebook -.*").JavaTab("text:=Ratios/Conds").JavaTree("tagname:=Drill down to update")'    
-    
+LIQ_FinantialRatio_JavaTree = 'JavaWindow("title:=Deal Notebook -.*").JavaTab("text:=Ratios/Conds").JavaTree("tagname:=Drill down to update")'  
+
+LIQ_OutsideConditions_TextField = 'JavaWindow("title:=Deal Notebook -.*").JavaTab("text:=Ratios/Conds").JavaEdit("attached_text:=${Index}:")'
+LIQ_OutsideConditions_First_TrueRadioButton = 'JavaWindow("title:=Deal Notebook -.*").JavaTab("text:=Ratios/Conds").JavaRadioButton("index:=0")'
+LIQ_OutsideConditions_First_FalseRadioButton = 'JavaWindow("title:=Deal Notebook -.*").JavaTab("text:=Ratios/Conds").JavaRadioButton("index:=1")'
+LIQ_OutsideConditions_Second_TrueRadioButton = 'JavaWindow("title:=Deal Notebook -.*").JavaTab("text:=Ratios/Conds").JavaRadioButton("index:=2")'
+LIQ_OutsideConditions_Second_FalseRadioButton = 'JavaWindow("title:=Deal Notebook -.*").JavaTab("text:=Ratios/Conds").JavaRadioButton("index:=3")'
+LIQ_OutsideConditions_Third_TrueRadioButton = 'JavaWindow("title:=Deal Notebook -.*").JavaTab("text:=Ratios/Conds").JavaRadioButton("index:=4")'
+LIQ_OutsideConditions_Third_FalseRadioButton = 'JavaWindow("title:=Deal Notebook -.*").JavaTab("text:=Ratios/Conds").JavaRadioButton("index:=5")'
+LIQ_OutsideConditions_History_Button = 'JavaWindow("title:=Deal Notebook -.*").JavaTab("text:=Ratios/Conds").JavaButton("label:=History", "index:=1")'
+LIQ_OutsideConditions_Insert_Button = 'JavaWindow("label:=.*Outside Conditions History").JavaButton("attached text:=Insert")'
+LIQ_OutsideConditions_OK_Button = 'JavaWindow("label:=.*Outside Conditions History").JavaButton("label:=OK")'
+LIQ_OutsideConditions_SelectConditionDropdown = 'JavaWindow("label:=.*Outside Conditions History").JavaList("attached text:=Select Condition")'
+LIQ_Edit_OutsideConditions_StartDate = 'JavaWindow("label:=.*Outside Condition").JavaEdit("index:=0")'
+LIQ_Edit_OutsideConditions_OK_Button = 'JavaWindow("label:=.*Outside Condition").JavaButton("attached text:=OK")'
+LIQ_Edit_OutsideConditions_Question_Window = 'JavaWindow("text:=Question")'
+LIQ_Edit_OutsideConditions_Question_Yes_Button = 'JavaWindow("title:=Question","displayed:=1").JavaButton("label:=Yes")'
+
+
 ###Deal Notebook - Fees Tab###    
     
 LIQ_Fees_ModifyUpfrontFees_Button = 'JavaWindow("title:=Deal Notebook.*").JavaButton("attached text:=Modify Upfront Fees.*")'    
