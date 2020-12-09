@@ -178,3 +178,25 @@ Setup Term Facility for Syndicated Deal for DNR
 
     ${EventFee_NoRecurrencesAfterDate}    Get Back Dated Current Date    -&{ExcelPath}[Backdated_Days]
     Write Data To Excel    SC2_EventFee    EventFee_NoRecurrencesAfterDate    ${rowid}    ${EventFee_NoRecurrencesAfterDate}    ${DNR_DATASET}
+
+Add Pending Facility for DNR
+    [Documentation]    This keyword is used to create a Facility and not complete it.
+    ...    @author: clanding     09DEC2020    - initial create
+    [Arguments]    ${ExcelPath}
+    
+    ${Deal_Name}    Read Data From Excel    SC1_DealSetup    Deal_Name    1    ${DNR_DATASET}
+    Open Existing Deal    ${Deal_Name}
+
+    ###Data Generation###
+    ${Facility_Name}    Auto Generate Name Test Data    &{ExcelPath}[Facility_NamePrefix]
+    Write Data To Excel    SC1_FacilitySetup    Facility_Name    ${rowid}    ${Facility_Name}    ${DNR_DATASET}
+
+    ###New Facility Screen###
+    New Facility Select for Pending Status    ${Deal_Name}    ${FacilityName}    &{ExcelPath}[Facility_Type]    &{ExcelPath}[Facility_Currency]    
+    Close All Windows on LIQ
+    Navigate to Facility Notebook    ${Deal_Name}    ${Facility_Name}
+    ${FacilityControlNumber}    Get Facility Control Number
+    Validate Facility Status    ${Facility_Name}    Pending
+
+    Write Data To Excel    LOACC    FCN    LOACC_007    ${FacilityControlNumber}    ${DNR_DATASET}    bTestCaseColumn=True
+    Close All Windows on LIQ
