@@ -92,6 +92,11 @@ Create Initial Loan Drawdown for Active Facility Expanded Scenario 1
     Mx Execute Template With Specific Test Case Name    Generate DNR Report for Liquidity    ${DNR_DATASET}    Test_Case    ${TestCase_Name}    DNR
     Mx Execute Template With Specific Test Case Name    Write Details for Liquidity Report    ${DNR_DATASET}    Test_Case    ${TestCase_Name}    DNR
 
+    ### Generate Loans & Accruals Report with Active Facility and Outstanding ###
+    Set Global Variable    ${TestCase_Name}    LOACC_008
+    Mx Execute Template With Specific Test Case Name    Generate DNR Report for Loans and Accruals    ${DNR_DATASET}    Test_Case    ${TestCase_Name}    DNR
+    Mx Execute Template With Specific Test Case Name    Write Details for Loans and Accruals Report    ${DNR_DATASET}    Test_Case    ${TestCase_Name}    DNR
+
     Set Global Variable    ${rowid}    1
     Set Global Variable    ${TestCase_Name}    Expanded_Scenario1_ActiveFac1_Repayment
     Mx Execute Template With Specific Test Case Name    Get Loan Details and Write in DNR Dataset for Alerts and Comments    ${DNR_DATASET}    Test_Case    ${TestCase_Name}    SC1_LoanDrawdown
