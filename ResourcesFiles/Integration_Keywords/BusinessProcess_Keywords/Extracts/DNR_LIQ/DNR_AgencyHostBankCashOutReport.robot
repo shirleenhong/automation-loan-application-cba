@@ -35,29 +35,43 @@ Validation of Report and Dataset Value for Agency Host Bank Cash Out for Process
     [Documentation]    This keyword is used for reading the downloaded Agency Host Bank Cashout Report 
     ...    and validating the value Processing_Date from the dataset. AHBCO_0003
     ...    @author: shirhong    20NOV2020    - Initial create
+    ...    @update: shirhong    09DEC2020    - Updated writing and assertion of values
     [Arguments]    ${ExcelPath}
         
     Log    ${ExcelPath}
     
+    ### Read and Write Values to be Asserted from Loan Drawdown Dataset ###
+    ${Processing_Date}    Read Data From Excel    &{ExcelPath}[LIQ_Sheet_Name]    Loan_ProcessingDate    ${rowid}    ${DNR_DATASET}
+    Write Data To Excel    AHBCO    Processing_Date    ${TestCase_Name}    ${Processing_Date}    ${DNR_DATASET}
+    ${Dataset_Date_Value}    Get Date Value from Date Added or Amended Column    &{ExcelPath}[Processing_Date]
+    
     ### Extract the Data from Downloaded Excel File ###
     ${ActualProcessingDate}    Read Data From Excel    Agency_CashOut    Processing Date    ${ExcelPath}[Cashflow_ID]    &{ExcelPath}[Report_Path]${CBA_CASHOUT_REPORTFILE}.xlsx    bTestCaseColumn=True    sTestCaseColReference=Cashflow ID    iHeaderIndex=2
-
+    ${Report_Date_Value}    Get Date Value from Date Added or Amended Column    ${ActualProcessingDate}    %d-%b-%Y
+    
     ### Verify the Data from Dataset File ###
-    Compare Two Strings    &{ExcelPath}[Processing_Date]    ${ActualProcessingDate}
+    Compare Two Strings    ${Dataset_Date_Value}    ${Report_Date_Value.strip()}
     
 Validation of Report and Dataset Value for Agency Host Bank Cash Out for Effective Date
     [Documentation]    This keyword is used for reading the downloaded Agency Host Bank Cashout Report 
     ...    and validating the value Effective_Date from the dataset. AHBCO_0003
     ...    @author: shirhong    20NOV2020    - Initial create
+    ...    @update: shirhong    09DEC2020    - Updated writing and assertion of values
     [Arguments]    ${ExcelPath}
         
     Log    ${ExcelPath}
     
+    ### Read and Write Values to be Asserted from Loan Drawdown Dataset ###
+    ${Effective_Date}    Read Data From Excel    &{ExcelPath}[LIQ_Sheet_Name]    Loan_EffectiveDate    ${rowid}    ${DNR_DATASET}
+    Write Data To Excel    AHBCO    Effective_Date    ${TestCase_Name}    ${Effective_Date}    ${DNR_DATASET}
+    ${Dataset_Date_Value}    Get Date Value from Date Added or Amended Column    &{ExcelPath}[Effective_Date]
+    
     ### Extract the Data from Downloaded Excel File ###
     ${ActualEffectiveDate}    Read Data From Excel    Agency_CashOut    Effective Date    ${ExcelPath}[Cashflow_ID]    &{ExcelPath}[Report_Path]${CBA_CASHOUT_REPORTFILE}.xlsx    bTestCaseColumn=True    sTestCaseColReference=Cashflow ID    iHeaderIndex=2
-
+    ${Report_Date_Value}    Get Date Value from Date Added or Amended Column    ${ActualEffectiveDate}    %d-%b-%Y
+    
     ### Verify the Data from Dataset File ###
-    Compare Two Strings    &{ExcelPath}[Effective_Date]    ${ActualEffectiveDate}
+    Compare Two Strings    ${Dataset_Date_Value}    ${Report_Date_Value.strip()}
 
 Write Cashflow ID for Agency Cashout Report
     [Documentation]    This will serve as a High Level keyword for reopening of the loans's cashflow
@@ -93,5 +107,4 @@ Write Filter Details for Agency Host Bank Cashout Report in DNR Data Set
     Write Data To Excel    DNR    From_Month    ${TestCase_Name}    ${From_Month}    ${DNR_DATASET}    bTestCaseColumn=True
     Write Data To Excel    DNR    From_Year    ${TestCase_Name}    ${From_Year}    ${DNR_DATASET}    bTestCaseColumn=True
     
-
 
