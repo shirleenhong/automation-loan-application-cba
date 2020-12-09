@@ -126,12 +126,6 @@ Unrestrict Deal
     Run Keyword And Continue On Failure    Should Not Be True   ${Status}==True
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/DealWindow_Summary
 
-Click OK Button To Close Borrowers Notebook
-    [Documentation]    Clicking Ok button to close/save deal borrowers notebook
-    ...    @author: kmagday    09DEC2020    - initial create
-
-    mx LoanIQ click    ${LIQ_DealBorrower_Ok_Button}
-
 Add Deal Borrower
     [Documentation]    It adds the borrower name in a deal
     ...    @author: fmamaril
@@ -3175,3 +3169,9 @@ Delete Details in Comments Tab in Deal Notebook
     ${IsSelected}    Run Keyword And Return Status    Mx LoanIQ Select String    ${LIQ_DealNotebook_CommentsTab_JavaTree}    ${Subject}
     Run Keyword If    ${IsSelected}==${False}    Log    ${Subject} is successfully deleted in the Comments tab.
     ...    ELSE     Run Keyword And Continue On Failure    FAIL    ${Subject} is NOT successfully deleted in the Comments tab.
+
+Click OK Button To Close Borrowers Notebook
+    [Documentation]    Clicking Ok button to close/save deal borrowers notebook
+    ...    @author: kmagday    09DEC2020    - initial create
+
+    mx LoanIQ click    ${LIQ_DealBorrower_Ok_Button}
