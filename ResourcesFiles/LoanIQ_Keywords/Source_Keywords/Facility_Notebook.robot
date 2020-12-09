@@ -3934,3 +3934,18 @@ New Facility Select for Pending Status
     Run Keyword And Continue On Failure    Verify If Text Value Exist as Static Text on Page    Facility -    ${Facility_Type}
     Run Keyword And Continue On Failure    Verify If Text Value Exist as Static Text on Page    Facility -    ${Facility_Type}  
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/Facility_Window
+
+Get Outstandings Amount from Facility Notebook
+    [Documentation]    This keyword returns the Facility Host Bank Share Gross Amounts Outstandings Amount.
+    ...    @author: ccarriedo    09DEC2020    Initial Create
+
+    mx LoanIQ activate window    ${LIQ_FacilityNotebook_Window}
+    Mx LoanIQ Select Window Tab    ${LIQ_FacilityNotebook_Tab}    Summary
+    ${Facility_Outstandings}    Mx LoanIQ Get Data    ${LIQ_FacilitySummary_HostBank_Outstandings}    value%Amount
+    ${Facility_Outstandings_Amount}    Remove Comma and Convert to Number    ${Facility_Outstandings} 
+    Log    The Facility ost Bank Share Gross Amounts Outstandings Amount is ${Facility_Outstandings_Amount} 
+    Screenshot.Set Screenshot Directory    ${Screenshot_Path}
+    Set Test Variable    ${SCREENSHOT_FILENAME}    Outstandings Amount
+    Take Screenshot    ${SCREENSHOT_FILENAME}
+    
+    [Return]    ${Facility_Outstandings_Amount}

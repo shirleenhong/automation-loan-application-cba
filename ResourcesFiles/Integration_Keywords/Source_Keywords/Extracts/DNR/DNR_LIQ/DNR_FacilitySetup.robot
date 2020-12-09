@@ -71,10 +71,16 @@ Create Facility for DNR
 Get Active Facility Details for Active Outstanding and Write in DNR Dataset
     [Documentation]    This keyword is used to get details for each report and write in dataset.
     ...    @author: clanding    25NOV2020    - initial create
+    ...    @update: ccarriedo    09DEC2020    - added get facility status is active, get facility outstandings amount in LIQ and write to data excel Outstandings_Amount
     [Arguments]    ${ExcelPath}
 
     Navigate to Facility Notebook    &{ExcelPath}[Deal_Name]    &{ExcelPath}[Facility_Name]
     ${FacilityControlNumber}    Get Facility Control Number
+    ### Get Facility Status Active ###
+    ${Facility_Status}    Read Data From Excel    FACPF    Facility_Status    ${rowid}    ${DNR_DATASET}
+    Run Keyword And Continue On Failure    Validate Facility Status    &{ExcelPath}[Facility_Name]    ${Facility_Status}
+    ### Get Facility Outstanding amount in LIQ ###
+    ${Facility_Outstandings_Amount}    Get Outstandings Amount from Facility Notebook
     ${FName_UI}    ${LName_UI}    Get First Name of a User    &{ExcelPath}[User_ID]
 
     ### Writing for Alerts Report ###
@@ -89,6 +95,7 @@ Get Active Facility Details for Active Outstanding and Write in DNR Dataset
     Write Data To Excel    FACPF    Facility_Name    FACPF_002    &{ExcelPath}[Facility_Name]    ${DNR_DATASET}    bTestCaseColumn=True
     Write Data To Excel    FACPF    Facility_FCN    FACPF_002    ${FacilityControlNumber}    ${DNR_DATASET}    bTestCaseColumn=True
     Write Data To Excel    FACPF    Deal_Name    FACPF_002    &{ExcelPath}[Deal_Name]    ${DNR_DATASET}    bTestCaseColumn=True
+    Write Data To Excel    FACPF    Facility_Outstandings    FACPF_002    ${Facility_Outstandings_Amount}    ${DNR_DATASET}    bTestCaseColumn=True
 
     Write Data To Excel    FACPF    Facility_Name    FACPF_003    &{ExcelPath}[Facility_Name]    ${DNR_DATASET}    bTestCaseColumn=True
     Write Data To Excel    FACPF    Facility_FCN    FACPF_003    ${FacilityControlNumber}    ${DNR_DATASET}    bTestCaseColumn=True
