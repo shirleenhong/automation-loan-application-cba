@@ -43,7 +43,7 @@ Validation of Report and Dataset Value for Agency Host Bank Cash Out for Process
     ### Read and Write Values to be Asserted from Loan Drawdown Dataset ###
     ${Processing_Date}    Read Data From Excel    &{ExcelPath}[LIQ_Sheet_Name]    Loan_ProcessingDate    ${rowid}    ${DNR_DATASET}
     Write Data To Excel    AHBCO    Processing_Date    ${TestCase_Name}    ${Processing_Date}    ${DNR_DATASET}
-    ${Dataset_Date_Value}    Get Date Value from Date Added or Amended Column    &{ExcelPath}[Processing_Date]
+    ${Dataset_Date_Value}    Get Date Value from Date Added or Amended Column    ${ProcessingDate}
     
     ### Extract the Data from Downloaded Excel File ###
     ${ActualProcessingDate}    Read Data From Excel    Agency_CashOut    Processing Date    ${ExcelPath}[Cashflow_ID]    &{ExcelPath}[Report_Path]${CBA_CASHOUT_REPORTFILE}.xlsx    bTestCaseColumn=True    sTestCaseColReference=Cashflow ID    iHeaderIndex=2
@@ -64,7 +64,7 @@ Validation of Report and Dataset Value for Agency Host Bank Cash Out for Effecti
     ### Read and Write Values to be Asserted from Loan Drawdown Dataset ###
     ${Effective_Date}    Read Data From Excel    &{ExcelPath}[LIQ_Sheet_Name]    Loan_EffectiveDate    ${rowid}    ${DNR_DATASET}
     Write Data To Excel    AHBCO    Effective_Date    ${TestCase_Name}    ${Effective_Date}    ${DNR_DATASET}
-    ${Dataset_Date_Value}    Get Date Value from Date Added or Amended Column    &{ExcelPath}[Effective_Date]
+    ${Dataset_Date_Value}    Get Date Value from Date Added or Amended Column    ${Effective_Date}
     
     ### Extract the Data from Downloaded Excel File ###
     ${ActualEffectiveDate}    Read Data From Excel    Agency_CashOut    Effective Date    ${ExcelPath}[Cashflow_ID]    &{ExcelPath}[Report_Path]${CBA_CASHOUT_REPORTFILE}.xlsx    bTestCaseColumn=True    sTestCaseColReference=Cashflow ID    iHeaderIndex=2
