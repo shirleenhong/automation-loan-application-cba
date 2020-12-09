@@ -17,7 +17,9 @@ Create Facility for PIM Future BILAT
     Write Data To Excel    CRED08_OngoingFeeSetup    Facility_Name    ${rowid}    ${Facility_Name}
     Write Data To Excel    SERV01_LoanDrawdown    Facility_Name    ${rowid}    ${Facility_Name} 
     Write Data To Excel    SERV29_CommitmentFeePayment    Facility_Name    ${rowid}    ${Facility_Name}
-    Write Data To Excel    SYND02_PrimaryAllocation    Facility_Name    ${rowid}    ${Facility_Name}      
+    Write Data To Excel    SYND02_PrimaryAllocation    Facility_Name    ${rowid}    ${Facility_Name} 
+    Write Data To Excel    Correspondence    Facility_Name    ${rowid}    ${Facility_Name}
+    Write Data To Excel    Correspondence    Facility_Name    2    ${Facility_Name}     
          
     ###New Facility Screen###
     ${Facility_ProposedCmtAmt}    New Facility Select    &{ExcelPath}[Deal_Name]    ${FacilityName}    &{ExcelPath}[Facility_Type]    &{ExcelPath}[Facility_ProposedCmtAmt]    &{ExcelPath}[Facility_Currency]

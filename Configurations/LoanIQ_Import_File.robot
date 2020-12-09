@@ -450,6 +450,7 @@ Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/Deal_CH_EDU_BILAT/Fac
 Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/Deal_PIM_Future_BILAT/Deal_Borrower_PIM_Future_BILAT.robot
 Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/Deal_PIM_Future_BILAT/Deal_Notebook_PIM_Future_BILAT.robot
 Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/Deal_PIM_Future_BILAT/Facility_Notebook_PIM_Future_BILAT.robot
+Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/Deal_PIM_Future_BILAT/Outstandings_PIM_Future_BILAT.robot
 
 ### NEW UAT Deal TL ###
 Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/UAT_TL_Keywords/TL_FX_Rates.robot

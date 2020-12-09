@@ -21,6 +21,12 @@ Setup Deal for PIM Future BILAT
     Write Data To Excel    CRED02_FacilitySetup    Facility_Borrower    ${rowid}    ${Borrower_ShortName}
     Write Data To Excel    SERV29_CommitmentFeePayment    Deal_Name    ${rowid}    ${Deal_Name}
     Write Data To Excel    SYND02_PrimaryAllocation    Deal_Name    ${rowid}    ${Deal_Name}
+    Write Data To Excel    SERV01_LoanDrawdown    Deal_Name    ${rowid}    ${Deal_Name}
+    Write Data To Excel    SERV01_LoanDrawdown    Borrower_Name    ${rowid}    ${Borrower_ShortName}
+    Write Data To Excel    Correspondence    Notice_Customer_LegalName    ${rowid}    ${Borrower_ShortName}
+    Write Data To Excel    Correspondence    Notice_Customer_LegalName    ${rowid}    ${Borrower_ShortName}
+    Write Data To Excel    Correspondence    Deal_Name    ${rowid}    ${Deal_Name}
+    Write Data To Excel    Correspondence    Deal_Name    2    ${Deal_Name}
 
     Create New Deal    ${Deal_Name}    ${Deal_Alias}    &{ExcelPath}[Deal_Currency]    &{ExcelPath}[Deal_Department]
 
