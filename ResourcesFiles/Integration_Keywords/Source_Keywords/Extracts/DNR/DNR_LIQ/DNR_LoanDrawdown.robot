@@ -397,6 +397,7 @@ Create Loan Drawdown TERM and SBLC for Syndicated Deal for DNR
     
     ###Creation of Initial Loan Drawdown in Loan NoteBook###
     Write Data To Excel    SC2_LoanDrawdown    Loan_EffectiveDate    ${rowid}    ${LoanEffectiveDate}    ${DNR_DATASET}
+    Write Data To Excel	   SC2_LoanDrawdown    Loan_ProcessingDate    ${rowid}    ${LoanEffectiveDate}   ${DNR_DATASET}
     Navigate to Outstanding Select Window from Deal
     ${Alias}    Create Loan Outstanding    &{ExcelPath}[Outstanding_Type]    &{ExcelPath}[Facility_Name]    &{ExcelPath}[Borrower_ShortName]    &{ExcelPath}[Loan_PricingOption]    &{ExcelPath}[Loan_Currency]  
     

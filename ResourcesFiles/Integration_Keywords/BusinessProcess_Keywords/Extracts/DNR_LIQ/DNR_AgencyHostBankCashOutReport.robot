@@ -70,7 +70,7 @@ Write Cashflow ID for Agency Cashout Report
     
     Launch Loan Notebook    &{ExcelPath}[Deal_Name]    &{ExcelPath}[Facility_Name]    &{ExcelPath}[Loan_Alias]
     
-    ${CashflowID}   Get Cashflow Details from Released Initial Loan Drawdown    &{ExcelPath}[Borrower_Shortname]
+    ${CashflowID}   Get Cashflow Details from Released Initial Loan Drawdown    &{ExcelPath}[Borrower_ShortName]
      
     ###Write Cashflow ID to AHBCO_001 and AHBCO_002 Report Validation Sheet###
     Write Data To Excel    AHBCO    Cashflow_ID    1    ${CashflowID}    ${DNR_DATASET}
@@ -79,3 +79,19 @@ Write Cashflow ID for Agency Cashout Report
     ###Write Cashflow ID to Specific Report Validation Sheet###
     Write Data To Excel    AHBCO    Cashflow_ID    &{ExcelPath}[RowId_ToWriteCashflowId_ForReportValidation]    ${CashflowID}    ${DNR_DATASET}
     Close All Windows on LIQ   
+    
+Write Filter Details for Agency Host Bank Cashout Report in DNR Data Set
+    [Documentation]    This keyword is used to write needed filter details for Agency Host Bank Cashout Report sheet in DNR Date Set.
+    ...    @author: shirhong    07DEC2020    - initial create
+    [Arguments]    ${ExcelPath}
+
+    ${Effective_Date}    Read Data From Excel    &{ExcelPath}[LIQ_Sheet_Name]    Loan_ProcessingDate    ${rowid}    ${DNR_DATASET}
+    ${From_Date}    Get Specific Detail in Given Date    ${Effective_Date}    D    -
+    ${From_Month}    Get Specific Detail in Given Date    ${Effective_Date}    M    -
+    ${From_Year}    Get Specific Detail in Given Date    ${Effective_Date}    Y    -    
+    Write Data To Excel    DNR    From_Date    ${TestCase_Name}    ${From_Date}    ${DNR_DATASET}    bTestCaseColumn=True
+    Write Data To Excel    DNR    From_Month    ${TestCase_Name}    ${From_Month}    ${DNR_DATASET}    bTestCaseColumn=True
+    Write Data To Excel    DNR    From_Year    ${TestCase_Name}    ${From_Year}    ${DNR_DATASET}    bTestCaseColumn=True
+    
+
+
