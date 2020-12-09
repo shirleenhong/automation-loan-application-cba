@@ -48,3 +48,17 @@ Validate Currency Column if Correct from Loans and Accruals Report
 
     ${Actual_OutstandingCurrency}    Read Data From Excel    Outstandings    Outstanding Currency    1    &{ExcelPath}[Report_Path]&{ExcelPath}[Report_File_Name]    readAllData=Y
     Validate List Value if Existing in Excel Sheet Column    ${Currency_Codes}    Currency_Codes    Currency_Code    ${Actual_OutstandingCurrency}
+    
+Validate Amount Columns Displays Numbers in 2 Decimal Places from Loans and Accruals Report
+    [Documentation]    This keyword is used to validate if the Amount Columns in Facility and Outstanding sheet display number in 2 Decimal Places.
+    ...    @author: kaustero    08DEC2020    - initial create
+    [Arguments]    ${ExcelPath}
+
+    ${Actual_FacilityLenderCommitment}    Read Data From Excel    Facilities    Lender Commitment    1    &{ExcelPath}[Report_Path]&{ExcelPath}[Report_File_Name]    readAllData=Y
+    Verify List Values Displays Numbers in N Decimal Places    ${Actual_FacilityLenderCommitment}
+
+    ${Actual_OutstandingLenderCommitment}    Read Data From Excel    Outstandings    Lender Commitment    1    &{ExcelPath}[Report_Path]&{ExcelPath}[Report_File_Name]    readAllData=Y
+    Verify List Values Displays Numbers in N Decimal Places    ${Actual_OutstandingLenderCommitment}
+
+    ${Actual_OutstandingAmount}    Read Data From Excel    Outstandings    Outstanding Amount    1    &{ExcelPath}[Report_Path]&{ExcelPath}[Report_File_Name]    readAllData=Y
+    Verify List Values Displays Numbers in N Decimal Places    ${Actual_OutstandingAmount}

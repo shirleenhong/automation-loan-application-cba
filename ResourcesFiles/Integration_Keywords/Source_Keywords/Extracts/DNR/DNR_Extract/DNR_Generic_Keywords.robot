@@ -247,4 +247,31 @@ Verify List Values if Correct
 
     ${List_Count}    Get Length    ${aList}
     :FOR    ${Index}    IN RANGE    0    ${List_Count}
-    \    Compare Two Strings    ${sExpectedValue}    @{aList}[${Index}]   
+    \    Compare Two Strings    ${sExpectedValue}    @{aList}[${Index}]
+
+Verify List Values Displays Numbers in N Decimal Places
+    [Documentation]    This keyword is used to verify if all list values displays numbers in ${iDecimalPlaces} Decimal Places.
+    ...    @author: kaustero    08DEC2020    - initial create
+    [Arguments]    ${aList}    ${iDecimalPlaces}=2
+
+    ${List_Count}    Get Length    ${aList}
+    :FOR    ${Index}    IN RANGE    0    ${List_Count}
+    \    ${Value}    Convert To String    @{aList}[${Index}]
+    \
+    \    ### Check if value contains a decimal point ###
+    \    ${IsContain}    Run Keyword and Return Status    Should Contain    ${Value}   .
+    \    Run Keyword If    ${IsContain}==${False}    Run Keyword And Continue On Failure    FAIL    Expected: ${Value} does not contain a decimal number.
+         ...    ELSE    Log    Expected: ${Value} contains a decimal number.
+    \  
+    \    ### Skip current iteration if value does not contain a decimal point ###
+    \    Continue For Loop If    ${IsContain}==${False}
+    \
+    \    ${Container_List}    Split String    ${Value}    .
+    \    ${WholeNum_Value}    Set Variable    @{Container_List}[0]
+    \    ${Decimal_Value}    Set Variable    @{Container_List}[1]
+    \    ${Count}    Get Length    ${Decimal_Value}
+    \    ${IsEqual}    Run Keyword And Return Status    Should Be Equal As Integers    ${Count}    ${iDecimalPlaces}
+    \    Run Keyword If    ${IsEqual}==${True}    Log    Expected: ${Value} contains ${iDecimalPlaces} decimal places.
+         ...    ELSE    Run Keyword And Continue On Failure    FAIL    Expected: ${Value} contains ${Count} decimal places instead of ${iDecimalPlaces}.
+
+
