@@ -50,7 +50,7 @@ Generate DNR Report for Liquidity
     Login to Cognos    &{ExcelPath}[Report_Path]    ${True}
     Go to Specific Report from Team Content Menu CBA Reports    ${LIQUIDITY_REPORTS}
     Run As Report Type    ${CBA_LIQUIDITY_REPORTFILE}    ${EXCEL_REPORTTYPE}
-    Delete File If Exist    &{ExcelPath}[Report_Path]${CBA_LIQUIDITY_REPORTFILE}.xlsx
+    Set Branch and Download Report    &{ExcelPath}[Branch_Code]    ${CBA_LIQUIDITY_REPORTFILE}    &{ExcelPath}[Report_Path]
     Check if File Exist    &{ExcelPath}[Report_Path]    ${CBA_LIQUIDITY_REPORTFILE}
     Logout from Cognos    ${True}
 

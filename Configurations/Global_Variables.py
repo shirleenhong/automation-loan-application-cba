@@ -41,6 +41,7 @@ TEMPLATE_TEXTFILE = "TEMPLATE_TEXTFILE.txt"
 Err_Master_List = "${dataset_path}\\DataSet\\API_DataSet\\API_Error_List.xlsx"
 Expected_Err_List = "${dataset_path}\\DataSet\\API_DataSet\\Expected_Err_List.txt"
 Actual_Err_List = "${dataset_path}\\DataSet\\API_DataSet\\Actual_Err_List.txt"
+Currency_Codes = 'C:\\Git_Evergreen\\fms_cba\\DataSet\\Integration_DataSet\\Extracts\\DNR\\Currency_Codes.xlsx'
 
 
 ### API Session Keywords ###
@@ -375,5 +376,7 @@ PAYMENT_CASHOUTAPPROVED_REPORTS = 'Cash Out Report Approved Status'
 CBA_PAYMENT_REPORTFILE = ''
 EXCEL_REPORTTYPE = 'Excel'
 DOWNLOAD_PATH = ''
+DNR_RELEASED_STATUS = 'RELSD'
+DNR_ONGOINGFEEPAYMENT_TRANSACTION = 'Ongoing Fee Payment'
 
 

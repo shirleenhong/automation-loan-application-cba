@@ -104,6 +104,62 @@ Validate Multiple Value if Existing in Excel Sheet
     :FOR    ${Expected_Value}    IN    @{Expected_ValueList}
     \    ${Sheet_ColumnValue}    Validate Value if Existing in Excel Sheet    ${sExcelFile}    ${sSheetName}    ${Expected_Value}
 
+Validate List Value if Existing in Excel Sheet Column
+    [Documentation]    This keyword is used validate aList Value is existing in the sSheetColumn from sExcelFile.
+    ...    NOTE: sExcelFile=includes file path and extension.
+    ...    @author: kaustero    07DEC2020    - initial create
+    [Arguments]    ${sExcelFile}    ${sSheetName}    ${sColumnName}    ${aList}
+    
+    Open Excel    ${sExcelFile}
+    ${ColumnData}    Read Data From All Column Rows    ${sSheetName}    ${sColumnName}
+    Log    ${ColumnData}
+    Close Current Excel Document
+
+    ${ColumnData_String}    Convert To String    ${ColumnData}
+    Log    ${ColumnData_String}
+
+    ${List_Count}    Get Length    ${aList}
+    :FOR    ${Index}    IN RANGE    0    ${List_Count}
+    \    ${IsContain}    Run Keyword and Return Status    Should Contain    ${ColumnData_String}    @{aList}[${Index}]
+    \    Run Keyword If    ${IsContain}==${True}    Log    Expected: @{aList}[${Index}] is present in sheet ${ColumnData_String}.
+         ...    ELSE    Run Keyword And Continue On Failure    FAIL    Expected: @{aList}[${Index}] is NOT present in sheet ${ColumnData_String}.  
+
+Validate Text Value if Existing in Excel Sheet Column
+    [Documentation]    This keyword is used validate sTextValue is existing in the sSheetColumn from sExcelFile.
+    ...    NOTE: sExcelFile=includes file path and extension.
+    ...    @author: clanding    08DEC2020    - initial create
+    [Arguments]    ${sExcelFile}    ${sSheetName}    ${sColumnName}    ${sTextValue}    ${iColumnIndex}=1
+    
+    Open Excel    ${sExcelFile}
+    ${ColumnData}    Read Data From All Column Rows    ${sSheetName}    ${sColumnName}    ${iColumnIndex}
+    Log    ${ColumnData}
+    Close Current Excel Document
+
+    ${ColumnData_String}    Convert To String    ${ColumnData}
+    Log    ${ColumnData_String}
+
+    ${IsContain}    Run Keyword and Return Status    Should Contain    ${ColumnData_String}    ${sTextValue}
+    Run Keyword If    ${IsContain}==${True}    Log    Expected: '${sTextValue}' is present in column '${sColumnName}' with values '${ColumnData}'
+    ...    ELSE    Run Keyword And Continue On Failure    FAIL    Expected: '${sTextValue}' is NOT present in column '${sColumnName}' with values '${ColumnData}'
+
+Validate Text Value if Not Existing in Excel Sheet Column
+    [Documentation]    This keyword is used validate sTextValue is not existing in the sSheetColumn from sExcelFile.
+    ...    NOTE: sExcelFile=includes file path and extension.
+    ...    @author: clanding    08DEC2020    - initial create
+    [Arguments]    ${sExcelFile}    ${sSheetName}    ${sColumnName}    ${sTextValue}    ${iColumnIndex}=1
+    
+    Open Excel    ${sExcelFile}
+    ${ColumnData}    Read Data From All Column Rows    ${sSheetName}    ${sColumnName}    ${iColumnIndex}
+    Log    ${ColumnData}
+    Close Current Excel Document
+
+    ${ColumnData_String}    Convert To String    ${ColumnData}
+    Log    ${ColumnData_String}
+
+    ${IsContain}    Run Keyword and Return Status    Should Contain    ${ColumnData_String}    ${sTextValue}
+    Run Keyword If    ${IsContain}==${False}    Log    Expected: '${sTextValue}' is not present in column '${sColumnName}' with values '${ColumnData}'
+    ...    ELSE    Run Keyword And Continue On Failure    FAIL    Expected: '${sTextValue}' is present in column '${sColumnName}' with values '${ColumnData}'
+
 Get Total Row Count of Excel Sheet
     [Documentation]    This Keyword is used to get the row count of the specific sheet in the Excel
     ...    @author: fluberio    19NOV2020    - initial create
@@ -219,3 +275,12 @@ Setup Year for From and To Filter
     Press Keys    ${slocator}    ${sText}
     Press Keys    ${slocator}    RETURN
     Wait Until Browser Ready State
+
+Verify List Values if Correct
+    [Documentation]    This keyword is used to verify if all list values are correct compared to sExpectedValue
+    ...    @author: clanding    07DEC2020    - initial create
+    [Arguments]    ${aList}    ${sExpectedValue}
+
+    ${List_Count}    Get Length    ${aList}
+    :FOR    ${Index}    IN RANGE    0    ${List_Count}
+    \    Compare Two Strings    ${sExpectedValue}    @{aList}[${Index}]   
