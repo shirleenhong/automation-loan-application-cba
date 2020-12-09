@@ -78,3 +78,15 @@ Generate DNR Report for Loans and Accruals
     Set Branch and Download Report    &{ExcelPath}[Branch_Code]    ${CBA_LOANSACCRUALS_REPORTFILE}    &{ExcelPath}[Report_Path]
     Check if File Exist    &{ExcelPath}[Report_Path]    ${CBA_LOANSACCRUALS_REPORTFILE}
     Logout from Cognos    ${True}
+
+Generate DNR Report for Payment
+    [Documentation]    This keyword is used to login to Cognos and download DNR report.
+    ...    @author: clanding    05DEC2020    - initial create
+    [Arguments]    ${ExcelPath}
+ 
+    Login to Cognos    &{ExcelPath}[Report_Path]    ${True}
+    Go to Payment Report from Team Content Menu CBA Reports    &{ExcelPath}[Payment_Report_Type]
+    Run As Report Type     ${CBA_PAYMENT_REPORTFILE}    ${EXCEL_REPORTTYPE}
+    Set Filter Using Payment Date and Download Report    &{ExcelPath}[From_Month]    &{ExcelPath}[From_Date]    ${CBA_PAYMENT_REPORTFILE}    &{ExcelPath}[Report_Path]    &{ExcelPath}[From_Year]
+    Check if File Exist    &{ExcelPath}[Report_Path]    ${CBA_PAYMENT_REPORTFILE}
+    Logout from Cognos    ${True}
