@@ -56,3 +56,10 @@ Validate Pending Facility is Existing in Loans and Accruals Report
     
     Validate Text Value if Existing in Excel Sheet Column    &{ExcelPath}[Report_Path]&{ExcelPath}[Report_File_Name]    &{ExcelPath}[Sheet_Name]    &{ExcelPath}[Columns_To_Validate]    &{ExcelPath}[FCN]${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}
     
+Validate Facility is Not Existing in Facilities Sheet and Existing in Oustandings Sheet in Loans and Accruals Report
+    [Documentation]    This keyword is used to validate active facility with active outstanding is not existing in Facilities but existing in Outstandings in Loans and Accruals Report.
+    ...    @author: clanding    09DEC2020    - initial create
+    [Arguments]    ${ExcelPath}
+    
+    Validate Text Value if Not Existing in Excel Sheet Column    &{ExcelPath}[Report_Path]&{ExcelPath}[Report_File_Name]    Facilities    &{ExcelPath}[Columns_To_Validate]    &{ExcelPath}[FCN]${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}
+    Validate Text Value if Existing in Excel Sheet Column    &{ExcelPath}[Report_Path]&{ExcelPath}[Report_File_Name]    Outstandings    &{ExcelPath}[Columns_To_Validate]    &{ExcelPath}[FCN]${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}

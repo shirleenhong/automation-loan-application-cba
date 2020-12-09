@@ -237,6 +237,7 @@ Create Dictionary Using Report File and Validate Values if Existing
 Get Specific Detail in Given Date
     [Documentation]    This Keyword is used to get the specific detail in date having format of %d-%b-%Y
     ...    @author: fluberio    04DEC2020    - initial create
+    ...    @update: clanding    09DEC2020    - added removing of 0 on the left of day
     [Arguments]    ${sDate}    ${sFormat}    ${sDelimiter}
 
     ### note that sDate mus be in %d-%b-%Y ###
@@ -246,6 +247,8 @@ Get Specific Detail in Given Date
     ...    ELSE IF    '${sFormat}'=='M'    Set Variable    @{Date_DetailList}[1]
     ...    ELSE IF    '${sFormat}'=='Y'    Set Variable    @{Date_DetailList}[2]    
  
+    ${Date_Specific Detail}    Strip String    ${Date_Specific Detail}    mode=left    characters=0
+
     [Return]    ${Date_Specific Detail}
 
 Get Date Value from Date Added or Amended Column
