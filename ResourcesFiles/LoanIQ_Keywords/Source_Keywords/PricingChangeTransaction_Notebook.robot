@@ -153,18 +153,24 @@ Add After Option Item - Second
     [Documentation]    Select the value for the Second Option.
     ...    @author: mgaling
     ...    @update: clanding    10AUG2020    - Added screenshot; added pre processing keyword
-    [Arguments]    ${sOptionName}    ${sRateBasisInterestPricing}    ${sSpread}    ${sRateFormulaUsage}=None
+    ...    @update: dahijara    09DEC2020    - Added optional condition for inputting Formula Text
+    [Arguments]    ${sOptionName}    ${sRateBasisInterestPricing}    ${sSpread}    ${sRateFormulaUsage}=None    ${sFormulaText}=None
     
     ### Keyword Pre-processing ###
     ${OptionName}    Acquire Argument Value    ${sOptionName}
     ${RateBasisInterestPricing}    Acquire Argument Value    ${sRateBasisInterestPricing}
     ${Spread}    Acquire Argument Value    ${sSpread}
     ${RateFormulaUsage}    Acquire Argument Value    ${sRateFormulaUsage}
+    ${FormulaText}    Acquire Argument Value    ${sFormulaText}
     
     mx LoanIQ activate    ${LIQ_FacilityPricing_Interest_OptionCondition_Window}    
     Mx LoanIQ Select Combo Box Value    ${LIQ_OptionCondition_OptionName_List}    ${OptionName}
     Mx LoanIQ Select Combo Box Value    ${LIQ_OptionCondition_RateBasis_List}    ${RateBasisInterestPricing}
     mx LoanIQ click    ${LIQ_Facility_InterestPricing_OptionCondition_OK_Button}
+    Run Keyword If    '${FormulaText}' != 'None'    Run Keywords    Mx LoanIQ click    ${LIQ_Facility_InterestPricing_FormulaCategoryFormulaText_TextField}
+    ...    AND    Mx Press Combination    Key.CTRL    Key.A
+    ...    AND    Mx Press Combination    Key.BACKSPACE
+    ...    AND    mx LoanIQ enter    ${LIQ_Facility_InterestPricing_FormulaCategoryFormulaText_TextField}    ${FormulaText}
     mx LoanIQ enter    ${LIQ_Facility_InterestPricing_FormulaCategory_Percent_Radiobutton}    ${ON}
     mx LoanIQ enter    ${LIQ_Facility_InterestPricing_FormulaCategory_Percent_Textfield}    ${Spread}
     Run Keyword If    '${RateFormulaUsage}' != 'None'    Mx LoanIQ Select Combo Box Value    ${LIQ_Facility_InterestPricing_RateFormulaUsage_List}    ${RateFormulaUsage}

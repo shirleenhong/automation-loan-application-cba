@@ -223,6 +223,7 @@ LIQ_Facility_InterestPricing_FormulaCategory_OK_Button = 'JavaWindow("title:=For
 LIQ_Facility_InterestPricing_FormulaCategory_Cancel_Button = 'JavaWindow("title:=Formula Category").JavaButton("attached text:=Cancel")'     
 LIQ_Facility_InterestPricing_FormulaCategory_JavaTree = 'JavaWindow("title:=Formula Category").JavaTree("tagname:=Search:")'    
 LIQ_Facility_InterestPricing_RateFormulaUsage_List = 'JavaWindow("title:=Formula Category").JavaList("attached text:=Percent of Rate Formula Usage")'  
+LIQ_Facility_InterestPricing_FormulaCategoryFormulaText_TextField = 'JavaWindow("title:=Formula Category").JavaEdit("labeled_containers_path:=.*Formula Text.*")'
 LIQ_Facility_InterestPricing_AllInRateCapHistory_Button = 'JavaWindow("title:=.*Interest Pricing.*").JavaButton("attached text:=All-In Rate Cap History.*")'
 LIQ_Facility_InterestPricing_AllInRateFloorHistory_Button = 'JavaWindow("title:=.*Interest Pricing.*").JavaButton("attached text:=All-In Rate Floor History")'
 LIQ_Facility_InterestPricing_AllInRateCapHistory_Window = 'JavaWindow("title:=.*All-In Rate Cap  History")'

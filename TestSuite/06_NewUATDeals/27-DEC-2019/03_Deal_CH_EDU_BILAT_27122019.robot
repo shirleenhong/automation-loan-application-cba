@@ -21,3 +21,6 @@ Establish Commitment Fee
 
 Establish Cash Advance Facility
     Mx Execute Template With Multiple Data    Create Cash Advance Facility for CH EDU Bilateral Deal    ${ExcelPath}    ${rowid}    CRED02_FacilitySetup_B
+
+Establish Line Fee in Arrears
+    Mx Execute Template With Multiple Data    Setup Line Fee in Arrears for CH EDU Bilateral Deal    ${ExcelPath}    ${rowid}    CRED08_OngoingFeeSetup_B
