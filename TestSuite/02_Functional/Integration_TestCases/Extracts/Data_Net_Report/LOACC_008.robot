@@ -8,4 +8,4 @@ LOACC_008
     ...    @author: clanding    09DEC2020    - initial create
 
     Set Global Variable    ${TestCase_Name}    LOACC_008
-    Mx Execute Template With Specific Test Case Name    Validate Pending Facility is Not Existing in Loans and Accruals Report    ${DNR_DATASET}    Test_Case    ${TestCase_Name}    LOACC
+    Mx Execute Template With Specific Test Case Name    Validate Facility is Not Existing in Facilities Sheet and Existing in Oustandings Sheet in Loans and Accruals Report    ${DNR_DATASET}    Test_Case    ${TestCase_Name}    LOACC

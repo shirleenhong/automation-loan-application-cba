@@ -49,11 +49,6 @@ Primary Setup for Expanded Scenario 1
     Mx Execute Template With Specific Test Case Name    Generate DNR Report for Facility Performance    ${DNR_DATASET}    Test_Case    ${TestCase_Name}    DNR
     Mx Execute Template With Specific Test Case Name    Write Details for Facility Performance    ${DNR_DATASET}    Test_Case    ${TestCase_Name}    DNR
 
-    ### Generate Loans & Accruals Report with Pending Facility ###
-    Set Global Variable    ${TestCase_Name}    LOACC_007
-    Mx Execute Template With Specific Test Case Name    Generate DNR Report for Loans and Accruals    ${DNR_DATASET}    Test_Case    ${TestCase_Name}    DNR
-    Mx Execute Template With Specific Test Case Name    Write Details for Loans and Accruals Report    ${DNR_DATASET}    Test_Case    ${TestCase_Name}    DNR
-
     Mx Execute Template With Multiple Data    Close Deal for DNR    ${DNR_DATASET}    ${rowid}    SC1_PrimaryAllocation
     Mx Execute Template With Multiple Data    Get Deal Details and Write in DNR Dataset    ${DNR_DATASET}    ${rowid}    SC1_PrimaryAllocation
 
