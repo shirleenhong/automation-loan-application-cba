@@ -3935,7 +3935,7 @@ New Facility Select for Pending Status
     Run Keyword And Continue On Failure    Verify If Text Value Exist as Static Text on Page    Facility -    ${Facility_Type}  
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/Facility_Window
 
-Get Host Bank Share Gross Amounts Outstandings Amount
+Get Outstandings Amount from Facility Notebook
     [Documentation]    This keyword returns the Facility Host Bank Share Gross Amounts Outstandings Amount.
     ...    @author: ccarriedo    09DEC2020    Initial Create
 

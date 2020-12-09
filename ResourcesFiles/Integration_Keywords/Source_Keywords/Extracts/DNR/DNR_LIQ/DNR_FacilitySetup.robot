@@ -80,7 +80,7 @@ Get Active Facility Details for Active Outstanding and Write in DNR Dataset
     ${Facility_Status}    Read Data From Excel    FACPF    Facility_Status    ${rowid}    ${DNR_DATASET}
     Run Keyword And Continue On Failure    Validate Facility Status    &{ExcelPath}[Facility_Name]    ${Facility_Status}
     ### Get Facility Outstanding amount in LIQ ###
-    ${Facility_Outstandings_Amount}    Get Host Bank Share Gross Amounts Outstandings Amount
+    ${Facility_Outstandings_Amount}    Get Outstandings Amount from Facility Notebook
     ${FName_UI}    ${LName_UI}    Get First Name of a User    &{ExcelPath}[User_ID]
 
     ### Writing for Alerts Report ###
