@@ -252,6 +252,7 @@ Verify List Values if Correct
 Verify List Values Displays Numbers in N Decimal Places
     [Documentation]    This keyword is used to verify if all list values displays numbers in ${iDecimalPlaces} Decimal Places.
     ...    @author: kaustero    08DEC2020    - initial create
+    ...    @update: clanding    09DEC2020    - added handling of .00 and .60 decimal places
     [Arguments]    ${aList}    ${iDecimalPlaces}=2
 
     ${List_Count}    Get Length    ${aList}
@@ -269,9 +270,12 @@ Verify List Values Displays Numbers in N Decimal Places
     \    ${Container_List}    Split String    ${Value}    .
     \    ${WholeNum_Value}    Set Variable    @{Container_List}[0]
     \    ${Decimal_Value}    Set Variable    @{Container_List}[1]
+    \    ${DecimalPlaces}    Run Keyword If    '${Decimal_Value}'=='0'    Set Variable    1
+         ...    ELSE IF    ${Decimal_Value}>1 and ${Decimal_Value}<10    Set Variable    1
+         ...    ELSE    Set Variable    ${iDecimalPlaces}
     \    ${Count}    Get Length    ${Decimal_Value}
-    \    ${IsEqual}    Run Keyword And Return Status    Should Be Equal As Integers    ${Count}    ${iDecimalPlaces}
-    \    Run Keyword If    ${IsEqual}==${True}    Log    Expected: ${Value} contains ${iDecimalPlaces} decimal places.
-         ...    ELSE    Run Keyword And Continue On Failure    FAIL    Expected: ${Value} contains ${Count} decimal places instead of ${iDecimalPlaces}.
+    \    ${IsEqual}    Run Keyword And Return Status    Should Be Equal As Integers    ${Count}    ${DecimalPlaces}
+    \    Run Keyword If    ${IsEqual}==${True}    Log    Expected: ${Value} contains ${DecimalPlaces} decimal places.
+         ...    ELSE    Run Keyword And Continue On Failure    FAIL    Expected: ${Value} contains ${Count} decimal places instead of ${DecimalPlaces}.
 
 
