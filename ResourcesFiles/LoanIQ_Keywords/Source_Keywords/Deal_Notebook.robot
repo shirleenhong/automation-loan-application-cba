@@ -3139,7 +3139,7 @@ Add Outside Conditions in Deal Notebook
     ${History_StartDate}    Acquire Argument Value    ${sHistory_StartDate}
 
     mx LoanIQ activate window    ${LIQ_DealNotebook_Window}    
-    Mx LoanIQ Select Window Tab    ${LIQ_DealNotebook_Tab}    Ratios/Conds
+    Mx LoanIQ Select Window Tab    ${LIQ_DealNotebook_Tab}    ${RATIOS_CONDS}
     mx LoanIQ enter    ${LIQ_OutsideConditions_OutsideCondition1_Textfield}    ${OutsideCondition1}
     
     mx LoanIQ click    ${LIQ_OutsideConditions_History_Button}
@@ -3154,8 +3154,8 @@ Add Outside Conditions in Deal Notebook
     mx LoanIQ click    ${LIQ_OutsideConditions_History_OK_Button}
     mx LoanIQ click element if present   ${LIQ_Warning_Yes_Button}
 
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/DealWindow_OutsideConditions
     ${isPresent}    Run Keyword And Return Status    Validate if Element is Checked    ${LIQ_OutsideConditions_OutsideCondition1_True_RadioButton}    True    
     Run Keyword If    ${isPresent}==True    Run Keywords    Log    History Start Date is successfully updated.
-    ...    AND    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/DealWindow_OutsideConditions
     ...    AND    Mx LoanIQ Close Window    ${LIQ_DealNotebook_Window}
-    ...    ELSE      Run Keyword And Continue On Failure    FAIL    History Start Date is NOT successfully updated.
+    ...    ELSE   Run Keyword And Continue On Failure    FAIL    History Start Date is NOT successfully updated.

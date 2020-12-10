@@ -1,9 +1,6 @@
 *** Settings ***
 Resource    ../../../../Configurations/LoanIQ_Import_File.robot
 
-*** Variables ***
-${SCENARIO}
-
 *** Keywords ***
 Setup Deal for LBT BILAT Deal
     [Documentation]    This keyword is for setting up Deal for LBT Bilateral Deal with outside condition
@@ -43,13 +40,13 @@ Setup Deal for LBT BILAT Deal
     Delete Existing Holiday on Calendar Table
     Add Holiday on Calendar    &{ExcelPath}[HolidayCalendar]
     
-    ## Pricing Rules Tab ###
+    ### Pricing Rules Tab ###
     Add Pricing Option    &{ExcelPath}[Deal_PricingOption]    &{ExcelPath}[InitialFractionRate_Round]    &{ExcelPath}[RoundingDecimal_Round]    &{ExcelPath}[NonBusinessDayRule]    &{ExcelPath}[PricingOption_BillNoOfDays]    
     ...    &{ExcelPath}[PricingOption_MatrixChangeAppMthd]    &{ExcelPath}[PricingOption_RateChangeAppMthd]    None    None    &{ExcelPath}[PricingOption_RoundingApplicationMethod]      
     ...    &{ExcelPath}[PricingOption_PercentOfRateFormulaUsage]    &{ExcelPath}[PricingOption_RepricingNonBusinessDayRule]    None    &{ExcelPath}[PricingOption_InterestDueUponPrincipalPayment]    &{ExcelPath}[PricingOption_InterestDueUponRepricing]
     ...    None    &{ExcelPath}[PricingOption_IntentNoticeDaysInAdvance]    None    None    None    None    None    None    None    &{ExcelPath}[PricingOption_BillBorrower]     &{ExcelPath}[PricingOption_RateSettingTime]    &{ExcelPath}[PricingOption_RateSettingPeriodOption]
 
-    Add Fee Pricing Rules    &{ExcelPath}[PricingRule_Fee1]    &{ExcelPath}[PricingRule_MatrixChangeAppMthd1]    &{ExcelPath}[PricingRule_NonBussDayRule1]
+    Add Fee Pricing Rules    &{ExcelPath}[PricingRule_Fee]    &{ExcelPath}[PricingRule_MatrixChangeAppMthd]    &{ExcelPath}[PricingRule_NonBussDayRule]
     
     ### Ratios/Conds Tab ###
     Add Outside Conditions in Deal Notebook    &{ExcelPath}[OutsideCondition1]    &{ExcelPath}[History_StartDate]
