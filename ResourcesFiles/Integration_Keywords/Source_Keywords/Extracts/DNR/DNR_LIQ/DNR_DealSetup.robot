@@ -8,6 +8,7 @@ Setup Syndicated Deal for DNR
     ...    Primarily entering data in multiple tabs of the Deal Notebook and adding Pricing Options.
     ...    @author: clanding    09NOV2020    - initial create
     ...    @update: shirhong    04DEC2020    - updated keywords for DNR deal setup
+    ...    @update: makcamps    10DEC2020    - updated sheet name for repricing and loandrawdownnonagent
     [Arguments]    ${ExcelPath}
 
     ###Data Generation###
@@ -26,7 +27,7 @@ Setup Syndicated Deal for DNR
     Write Data To Excel    SC2_AdminFeePayment    Deal_Name    ${rowid}    ${Deal_Name}    ${DNR_DATASET}	
     Write Data To Excel    SC2_LoanDrawdownNonAgent    Deal_Name    ${rowid}    ${Deal_Name}    ${DNR_DATASET}
     Write Data To Excel    SC2_FacilityShareAdjustment    Deal_Name    ${rowid}    ${Deal_Name}    ${DNR_DATASET}
-    Write Data To Excel    SC2_LoanRepricing    Deal_Name    ${rowid}    ${Deal_Name}    ${DNR_DATASET}
+    Write Data To Excel    SC2_ComprehensiveRepricing    Deal_Name    ${rowid}    ${Deal_Name}    ${DNR_DATASET}
 
     ###Deal Select Window###
     Create New Deal    ${Deal_Name}    ${Deal_Alias}    &{ExcelPath}[Deal_Currency]    &{ExcelPath}[Deal_Department]    &{ExcelPath}[Deal_SalesGroup]
@@ -45,6 +46,8 @@ Setup Syndicated Deal for DNR
     ${Customer_LegalName}    Get Customer Legal Name From Customer Notebook Via Deal Notebook
     
     Write Data To Excel    SC2_EventFee    Borrower_Name    ${rowid}    ${Borrower_Name}    ${DNR_DATASET}
+    Write Data To Excel    SC2_LoanDrawdownNonAgent    Borrower_ShortName    ${rowid}    ${Borrower_Name}    ${DNR_DATASET}
+    Write Data To Excel    SC2_ComprehensiveRepricing    Borrower_ShortName    ${rowid}    ${Borrower_Name}    ${DNR_DATASET}
     
     Select Deal Classification    &{ExcelPath}[Deal_ClassificationCode]    &{ExcelPath}[Deal_ClassificationDesc]
     
@@ -124,7 +127,8 @@ Setup a Bilateral Deal for DNR
     Write Data To Excel    SC1_PaymentFees    Fee_EffectiveDate    ${rowid}    ${SystemDate}    ${DNR_DATASET}
     Write Data To Excel    SC1_PaymentFees    Fee_FloatRateStartDate    ${rowid}    ${SystemDate}    ${DNR_DATASET}
     Write Data To Excel    SC1_PaymentFees    FeePayment_EffectiveDate    ${rowid}    ${SystemDate}    ${DNR_DATASET}
-    Write Data To Excel    SC1_UnscheduledPayments    Loan_EffectiveDate    ${rowid}    ${SystemDate}    ${DNR_DATASET}    
+    Write Data To Excel    SC1_UnscheduledPayments    Loan_EffectiveDate    ${rowid}    ${SystemDate}    ${DNR_DATASET}
+    Write Data To Excel    SC1_UnscheduledPayments    Loan_EffectiveDate    3    ${SystemDate}    ${DNR_DATASET}
 
     ##Generate Deal Name and Alias###    
     ${Deal_Name}    ${Deal_Alias}    Generate Deal Name and Alias    &{ExcelPath}[Deal_NamePrefix]    &{ExcelPath}[Deal_AliasPrefix]    ${rowid}
@@ -136,6 +140,7 @@ Setup a Bilateral Deal for DNR
     Write Data To Excel    SC1_PaymentFees    Deal_Name    ${rowid}    ${Deal_Name}    ${DNR_DATASET}
     Write Data To Excel    SC1_PaymentFees    ScheduledActivity_DealName    ${rowid}    ${Deal_Name}    ${DNR_DATASET}
     Write Data To Excel    SC1_UnscheduledPayments    Deal_Name    ${rowid}    ${Deal_Name}    ${DNR_DATASET}
+    Write Data To Excel    SC1_UnscheduledPayments    Deal_Name    3    ${Deal_Name}    ${DNR_DATASET}
     
     ###For Scenario 1 Deal Setup###
     Write Data To Excel    SC1_FacilitySetup    Facility_Currency1    ${rowid}    ${ExcelPath}[Deal_Currency]    ${DNR_DATASET}
@@ -329,4 +334,3 @@ Syndicated Deal Approval and Close for DNR
     Close All Windows on LIQ
     Logout from Loan IQ
     Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
-
