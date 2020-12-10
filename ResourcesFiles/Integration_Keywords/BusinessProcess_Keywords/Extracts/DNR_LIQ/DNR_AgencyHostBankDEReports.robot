@@ -57,3 +57,46 @@ Validate that the Agency Host Bank DE Report Net Amount is Correct
     Compare Two Strings    ${HostBank_Share}    ${HostBank_Share_Amount}
     Compare Two Strings    &{ExcelPath}[Cashflow_Direction]    ${Cashflow_Direction.strip()}
     Compare Two Strings    ${Customer_Name}    ${Customer_Name_Report.strip()}
+    
+Validate that the Agency Host Bank DE Report DDA Transaction Desc is Correct 
+    [Documentation]    This keyword is used to verify DDA Transaction Description is correct when completing a loan drawdown rollover with comprehensive repricing
+    ...    @author: makcamps    09DEC2020    - initial create
+    [Arguments]    ${ExcelPath}
+    
+    ### Get Expected Details ###
+    ${HostBank_Share}    Read Data From Excel    AHBDE    HostBankCashNet    ${rowid}    ${DNR_DATASET}
+    ${Customer_Name}    Read Data From Excel    AHBDE    Customer_Name    ${rowid}    ${DNR_DATASET}
+    ${Cashflow_Direction}    Read Data From Excel    AHBDE    Cashflow_Direction    ${rowid}    ${DNR_DATASET}
+    ${DDATransaction_Desc}    Read Data From Excel    AHBDE    DDA_Transaction_Description    ${rowid}    ${DNR_DATASET}
+    ${Transaction_Code}    Read Data From Excel    AHBDE    Transaction_Code    ${rowid}    ${DNR_DATASET}
+   
+    ### Get Actual Details in the Report
+    ${HostBank_Share_Extract}    Read Data From Excel    Agency_DE Extract    Host Bank Share Amount    &{ExcelPath}[Cashflow_ID]    &{ExcelPath}[Report_Path]&{ExcelPath}[Report_File_Name]    bTestCaseColumn=True    sTestCaseColReference=Cashflow ID    iHeaderIndex=&{ExcelPath}[Column_Row_Index]
+    ${Customer_Name_Extract}    Read Data From Excel    Agency_DE Extract    Customer Short Name    &{ExcelPath}[Cashflow_ID]    &{ExcelPath}[Report_Path]&{ExcelPath}[Report_File_Name]    bTestCaseColumn=True    sTestCaseColReference=Cashflow ID    iHeaderIndex=&{ExcelPath}[Column_Row_Index]
+    ${Cashflow_Direction_Extract}    Read Data From Excel    Agency_DE Extract    Cashflow Direction    &{ExcelPath}[Cashflow_ID]    &{ExcelPath}[Report_Path]&{ExcelPath}[Report_File_Name]    bTestCaseColumn=True    sTestCaseColReference=Cashflow ID    iHeaderIndex=&{ExcelPath}[Column_Row_Index]
+    ${DDATransaction_Desc_Extract}    Read Data From Excel    Agency_DE Extract    DDA Transaction Description    &{ExcelPath}[Cashflow_ID]    &{ExcelPath}[Report_Path]&{ExcelPath}[Report_File_Name]    bTestCaseColumn=True    sTestCaseColReference=Cashflow ID    iHeaderIndex=&{ExcelPath}[Column_Row_Index]
+    ${Transaction_Code_Extract}    Read Data From Excel    Agency_DE Extract    Transaction Code    &{ExcelPath}[Cashflow_ID]    &{ExcelPath}[Report_Path]&{ExcelPath}[Report_File_Name]    bTestCaseColumn=True    sTestCaseColReference=Cashflow ID    iHeaderIndex=&{ExcelPath}[Column_Row_Index]
+    
+    Compare Two Strings    ${HostBank_Share}    ${HostBank_Share_Extract}
+    Compare Two Strings    ${Customer_Name}    ${Customer_Name_Extract.strip()}
+    Compare Two Strings    ${Cashflow_Direction}    ${Cashflow_Direction_Extract.strip()}
+    Compare Two Strings    ${Transaction_Code}    ${Transaction_Code_Extract}
+    Compare Two Strings    ${DDATransaction_Desc}    ${DDATransaction_Desc_Extract.strip()}
+    
+Write Cashflow ID for Agency DE Report
+    [Documentation]    This will serve as a High Level keyword for reopening of the loans's cashflow
+    ...    and getting the cashflow ID to be written in the AHBDE Report Validation sheet.
+    ...    @author: makcamps    09DEC2020    - initial create
+    [Arguments]    ${ExcelPath}
+    ###Login to Inputter and Open the Loan After Released###
+    Logout from Loan IQ
+    Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
+    
+    Launch Loan Notebook    &{ExcelPath}[Deal_Name]    &{ExcelPath}[Facility_Name]    &{ExcelPath}[New_Loan_Alias]
+    
+    ${CashflowID}   Get Cashflow Details from Released Loan Repricing    &{ExcelPath}[Borrower_ShortName]
+     
+    ###Write Cashflow ID for Report Validation Sheet###
+    Write Data To Excel    AHBDE    Cashflow_ID    ${rowid}    ${CashflowID}    ${DNR_DATASET}
+    
+    Close All Windows on LIQ

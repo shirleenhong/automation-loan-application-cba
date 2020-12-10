@@ -129,6 +129,7 @@ Get Expired Facility Details for Active Outstanding and Write in DNR Dataset
 Setup Term Facility for Syndicated Deal for DNR
     [Documentation]    This keyword is used to create a Term Facility for DNR.
     ...    @author: shirhong    04DEC2020    - initial create
+    ...    @author: makcamps    10DEC2020    - updated sheet name for repricing
     [Arguments]    ${ExcelPath}
     
     ###Data Generation###
@@ -140,7 +141,7 @@ Setup Term Facility for Syndicated Deal for DNR
     Write Data To Excel    SC2_PrimaryAllocation    Facility_Name    ${rowid}    ${Facility_Name}    ${DNR_DATASET}    
     Write Data To Excel    SC2_LoanDrawdown    Facility_Name    ${rowid}    ${Facility_Name}    ${DNR_DATASET}
     Write Data To Excel    SC2_LoanDrawdownNonAgent    Facility_Name    ${rowid}    ${Facility_Name}    ${DNR_DATASET}  
-    Write Data To Excel    SC2_LoanRepricing    Facility_Name    ${rowid}    ${Facility_Name}    ${DNR_DATASET}
+    Write Data To Excel    SC2_ComprehensiveRepricing    Facility_Name    ${rowid}    ${Facility_Name}    ${DNR_DATASET}
     Write Data To Excel    SC2_FacilityShareAdjustment    Facility_Name    ${rowid}    ${Facility_Name}    ${DNR_DATASET}
     Write Data To Excel    SC2_CycleShareAdjustment    Facility_Name    ${rowid}    ${Facility_Name}    ${DNR_DATASET}
     Write Data To Excel    SC2_PaymentFees    Facility_Name    ${rowid}    ${Facility_Name}    ${DNR_DATASET}
