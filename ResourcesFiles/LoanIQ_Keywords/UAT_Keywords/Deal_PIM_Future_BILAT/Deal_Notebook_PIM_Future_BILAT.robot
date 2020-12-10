@@ -7,7 +7,8 @@ Resource    ../../../../Configurations/LoanIQ_Import_File.robot
 *** Keywords ***
 Setup Deal for PIM Future BILAT
     [Documentation]    This keyword is for setting up Deal for PIM Future Bilateral Deal
-    ...    @author:    mcastro    26NOV2020    - Initial create 
+    ...    @author: mcastro    26NOV2020    - Initial create 
+    ...    @update: mcastro    09DEC2020    - Added writing of Borrower_Shortname and Deal_Name to SERV01_LoanDrawdown and Correspondence
     [Arguments]    ${ExcelPath}
     
     ${Deal_Name}    ${Deal_Alias}    Generate Deal Name and Alias with 5 Numeric Test Data    &{ExcelPath}[Deal_NamePrefix]    &{ExcelPath}[Deal_AliasPrefix]
@@ -21,6 +22,12 @@ Setup Deal for PIM Future BILAT
     Write Data To Excel    CRED02_FacilitySetup    Facility_Borrower    ${rowid}    ${Borrower_ShortName}
     Write Data To Excel    SERV29_CommitmentFeePayment    Deal_Name    ${rowid}    ${Deal_Name}
     Write Data To Excel    SYND02_PrimaryAllocation    Deal_Name    ${rowid}    ${Deal_Name}
+    Write Data To Excel    SERV01_LoanDrawdown    Deal_Name    ${rowid}    ${Deal_Name}
+    Write Data To Excel    SERV01_LoanDrawdown    Borrower_Name    ${rowid}    ${Borrower_ShortName}
+    Write Data To Excel    Correspondence    Notice_Customer_LegalName    ${rowid}    ${Borrower_ShortName}
+    Write Data To Excel    Correspondence    Notice_Customer_LegalName    ${rowid}    ${Borrower_ShortName}
+    Write Data To Excel    Correspondence    Deal_Name    ${rowid}    ${Deal_Name}
+    Write Data To Excel    Correspondence    Deal_Name    2    ${Deal_Name}
 
     Create New Deal    ${Deal_Name}    ${Deal_Alias}    &{ExcelPath}[Deal_Currency]    &{ExcelPath}[Deal_Department]
 

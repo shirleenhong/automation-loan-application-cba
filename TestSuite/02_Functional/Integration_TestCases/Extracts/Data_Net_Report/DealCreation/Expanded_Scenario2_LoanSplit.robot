@@ -10,6 +10,7 @@ ${SCENARIO}    2
 Expanded Scenario2 Loan Split
     [Documentation]    This keyword creates the Pre requisite of Data Net Report AHBDE_005
     ...    @author: fluberio    24NOV2020    - initial create
+    ...    @update: clanding    09DEC2020    - added generation of report
     Mx Execute Template With Multiple Data    Setup Syndicated Deal for DNR    ${DNR_DATASET}    ${rowid}    SC2_DealSetup
     Mx Execute Template With Multiple Data    Setup Deal Administrative Fees for DNR    ${DNR_DATASET}	${rowid}    SC2_AdminFee
     Mx Execute Template With Multiple Data    Setup Deal Event Fees    ${DNR_DATASET}    ${rowid}    SC2_EventFee
@@ -25,5 +26,5 @@ Expanded Scenario2 Loan Split
     ### Report Generation for Payment - Agency ( Agency Host Bank DE Report) ###
     Set Global Variable    ${TestCase_Name}    AHBDE_005
     Mx Execute Template With Specific Test Case Name    Write Filter Details for Agency Host Bank DE Extract Report in DNR Data Set    ${DNR_DATASET}    Test_Case    ${TestCase_Name}    DNR 
-    ### Report Generation ###
+    Mx Execute Template With Specific Test Case Name    Generate DNR Report for Payment    ${DNR_DATASET}    Test_Case    ${TestCase_Name}    DNR
     Mx Execute Template With Specific Test Case Name    Write Details for Agency Host Bank DE Extract Report    ${DNR_DATASET}    Test_Case    ${TestCase_Name}    DNR 

@@ -15,8 +15,9 @@ Create Facility for DNR
     Run Keyword If    '${rowid}'=='1'    Write Data To Excel    SC1_DealSetup    Facility_Name    ${rowid}    ${Facility_Name}    ${DNR_DATASET}
     Write Data To Excel    SC1_FacilitySetup    Facility_Name    ${rowid}    ${Facility_Name}    ${DNR_DATASET}
     Write Data To Excel    SC1_OngoingFeeSetup    Facility_Name    ${rowid}    ${Facility_Name}    ${DNR_DATASET}
-    Write Data To Excel    SC1_PaymentFees    Facility_Name    ${rowid}    ${Facility_Name}    ${DNR_DATASET}    ${DNR_DATASET}    bTestCaseColumn=True
-    Write Data To Excel    SC1_UnscheduledPayments    Facility_Name    ${rowid}    ${Facility_Name}    ${DNR_DATASET}    ${DNR_DATASET}    bTestCaseColumn=True
+    Write Data To Excel    SC1_PaymentFees    Facility_Name    ${rowid}    ${Facility_Name}    ${DNR_DATASET}    ${DNR_DATASET}
+    Write Data To Excel    SC1_UnscheduledPayments    Facility_Name    ${rowid}    ${Facility_Name}    ${DNR_DATASET}    ${DNR_DATASET}
+    Write Data To Excel    SC1_UnscheduledPayments    Facility_Name    3    ${Facility_Name}    ${DNR_DATASET}    ${DNR_DATASET}
 
     ###New Facility Screen###
     ${Facility_ProposedCmtAmt}    New Facility Select    &{ExcelPath}[Deal_Name]    ${FacilityName}    &{ExcelPath}[Facility_Type]    &{ExcelPath}[Facility_ProposedCmtAmt]    &{ExcelPath}[Facility_Currency]    
@@ -57,7 +58,7 @@ Create Facility for DNR
     ${Facility_Name_Primary}    Read Data From Excel    SC1_PrimaryAllocation    Facility_Name    ${row_previous}    ${DNR_DATASET}
     ${Facility_Name_Primary}    Run Keyword If    '${rowid}'=='1' or '${rowid}'=='4'    Set Variable    ${Facility_Name}
     ...    ELSE    Set Variable    ${Facility_Name_Primary}|${Facility_Name}
-    Write Data To Excel    SC1_PrimaryAllocation    Facility_Name    Expanded_Scenario1_ActiveFac1_Repayment    ${Facility_Name_Primary}    ${DNR_DATASET}    bTestCaseColumn=True
+    Write Data To Excel    SC1_PrimaryAllocation    Facility_Name    Expanded_Scenario1_ActiveFac1_Repayment    ${Facility_Name_Primary}    ${DNR_DATASET}
 
     ${row_previous}    Run Keyword If    '${rowid}'=='1' or '${rowid}'=='4'    Set Variable    ${rowid}
     ...    ELSE    Evaluate    ${rowid}-1
@@ -65,15 +66,21 @@ Create Facility for DNR
     ${Facility_ExpiryDate_Primary}    Read Data From Excel    SC1_PrimaryAllocation    Primary_PortfolioExpiryDate    ${row_previous}    ${DNR_DATASET}
     ${Facility_ExpiryDate_Primary}    Run Keyword If    '${rowid}'=='1' or '${rowid}'=='4'    Set Variable    ${Facility_ExpiryDate}
     ...    ELSE    Set Variable    ${Facility_ExpiryDate_Primary}|${Facility_ExpiryDate}
-    Write Data To Excel    SC1_PrimaryAllocation    Primary_PortfolioExpiryDate    Expanded_Scenario1_ActiveFac1_Repayment    ${Facility_ExpiryDate_Primary}    ${DNR_DATASET}    bTestCaseColumn=True
+    Write Data To Excel    SC1_PrimaryAllocation    Primary_PortfolioExpiryDate    Expanded_Scenario1_ActiveFac1_Repayment    ${Facility_ExpiryDate_Primary}    ${DNR_DATASET}
     
 Get Active Facility Details for Active Outstanding and Write in DNR Dataset
     [Documentation]    This keyword is used to get details for each report and write in dataset.
     ...    @author: clanding    25NOV2020    - initial create
+    ...    @update: ccarriedo    09DEC2020    - added get facility status is active, get facility outstandings amount in LIQ and write to data excel Outstandings_Amount
     [Arguments]    ${ExcelPath}
 
     Navigate to Facility Notebook    &{ExcelPath}[Deal_Name]    &{ExcelPath}[Facility_Name]
     ${FacilityControlNumber}    Get Facility Control Number
+    ### Get Facility Status Active ###
+    ${Facility_Status}    Read Data From Excel    FACPF    Facility_Status    ${rowid}    ${DNR_DATASET}
+    Run Keyword And Continue On Failure    Validate Facility Status    &{ExcelPath}[Facility_Name]    ${Facility_Status}
+    ### Get Facility Outstanding amount in LIQ ###
+    ${Facility_Outstandings_Amount}    Get Outstandings Amount from Facility Notebook
     ${FName_UI}    ${LName_UI}    Get First Name of a User    &{ExcelPath}[User_ID]
 
     ### Writing for Alerts Report ###
@@ -88,6 +95,7 @@ Get Active Facility Details for Active Outstanding and Write in DNR Dataset
     Write Data To Excel    FACPF    Facility_Name    FACPF_002    &{ExcelPath}[Facility_Name]    ${DNR_DATASET}    bTestCaseColumn=True
     Write Data To Excel    FACPF    Facility_FCN    FACPF_002    ${FacilityControlNumber}    ${DNR_DATASET}    bTestCaseColumn=True
     Write Data To Excel    FACPF    Deal_Name    FACPF_002    &{ExcelPath}[Deal_Name]    ${DNR_DATASET}    bTestCaseColumn=True
+    Write Data To Excel    FACPF    Facility_Outstandings    FACPF_002    ${Facility_Outstandings_Amount}    ${DNR_DATASET}    bTestCaseColumn=True
 
     Write Data To Excel    FACPF    Facility_Name    FACPF_003    &{ExcelPath}[Facility_Name]    ${DNR_DATASET}    bTestCaseColumn=True
     Write Data To Excel    FACPF    Facility_FCN    FACPF_003    ${FacilityControlNumber}    ${DNR_DATASET}    bTestCaseColumn=True
@@ -96,6 +104,10 @@ Get Active Facility Details for Active Outstanding and Write in DNR Dataset
     Write Data To Excel    FACPF    Facility_Name    FACPF_005    &{ExcelPath}[Facility_Name]    ${DNR_DATASET}    bTestCaseColumn=True
     Write Data To Excel    FACPF    Facility_FCN    FACPF_005    ${FacilityControlNumber}    ${DNR_DATASET}    bTestCaseColumn=True
     Write Data To Excel    FACPF    Deal_Name    FACPF_005    &{ExcelPath}[Deal_Name]    ${DNR_DATASET}    bTestCaseColumn=True
+
+    ### Writing for Loan & Accrual Report ###
+    Write Data To Excel    LOACC    FCN    LOACC_007    ${FacilityControlNumber}    ${DNR_DATASET}    bTestCaseColumn=True
+    Write Data To Excel    LOACC    FCN    LOACC_008    ${FacilityControlNumber}    ${DNR_DATASET}    bTestCaseColumn=True
 
     Close All Windows on LIQ
 
@@ -173,3 +185,25 @@ Setup Term Facility for Syndicated Deal for DNR
 
     ${EventFee_NoRecurrencesAfterDate}    Get Back Dated Current Date    -&{ExcelPath}[Backdated_Days]
     Write Data To Excel    SC2_EventFee    EventFee_NoRecurrencesAfterDate    ${rowid}    ${EventFee_NoRecurrencesAfterDate}    ${DNR_DATASET}
+
+Add Pending Facility for DNR
+    [Documentation]    This keyword is used to create a Facility and not complete it.
+    ...    @author: clanding     09DEC2020    - initial create
+    [Arguments]    ${ExcelPath}
+    
+    ${Deal_Name}    Read Data From Excel    SC1_DealSetup    Deal_Name    1    ${DNR_DATASET}
+    Open Existing Deal    ${Deal_Name}
+
+    ###Data Generation###
+    ${Facility_Name}    Auto Generate Name Test Data    &{ExcelPath}[Facility_NamePrefix]
+    Write Data To Excel    SC1_FacilitySetup    Facility_Name    ${rowid}    ${Facility_Name}    ${DNR_DATASET}
+
+    ###New Facility Screen###
+    New Facility Select for Pending Status    ${Deal_Name}    ${FacilityName}    &{ExcelPath}[Facility_Type]    &{ExcelPath}[Facility_Currency]    
+    Close All Windows on LIQ
+    Navigate to Facility Notebook    ${Deal_Name}    ${Facility_Name}
+    ${FacilityControlNumber}    Get Facility Control Number
+    Validate Facility Status    ${Facility_Name}    Pending
+
+    Write Data To Excel    LOACC    FCN    LOACC_007    ${FacilityControlNumber}    ${DNR_DATASET}    bTestCaseColumn=True
+    Close All Windows on LIQ
