@@ -8,6 +8,7 @@ Setup Syndicated Deal for DNR
     ...    Primarily entering data in multiple tabs of the Deal Notebook and adding Pricing Options.
     ...    @author: clanding    09NOV2020    - initial create
     ...    @update: shirhong    04DEC2020    - updated keywords for DNR deal setup
+    ...    @update: makcamps    10DEC2020    - updated sheet name for repricing and loandrawdownnonagent
     [Arguments]    ${ExcelPath}
 
     ###Data Generation###
@@ -26,7 +27,7 @@ Setup Syndicated Deal for DNR
     Write Data To Excel    SC2_AdminFeePayment    Deal_Name    ${rowid}    ${Deal_Name}    ${DNR_DATASET}	
     Write Data To Excel    SC2_LoanDrawdownNonAgent    Deal_Name    ${rowid}    ${Deal_Name}    ${DNR_DATASET}
     Write Data To Excel    SC2_FacilityShareAdjustment    Deal_Name    ${rowid}    ${Deal_Name}    ${DNR_DATASET}
-    Write Data To Excel    SC2_LoanRepricing    Deal_Name    ${rowid}    ${Deal_Name}    ${DNR_DATASET}
+    Write Data To Excel    SC2_ComprehensiveRepricing    Deal_Name    ${rowid}    ${Deal_Name}    ${DNR_DATASET}
 
     ###Deal Select Window###
     Create New Deal    ${Deal_Name}    ${Deal_Alias}    &{ExcelPath}[Deal_Currency]    &{ExcelPath}[Deal_Department]    &{ExcelPath}[Deal_SalesGroup]
@@ -45,6 +46,8 @@ Setup Syndicated Deal for DNR
     ${Customer_LegalName}    Get Customer Legal Name From Customer Notebook Via Deal Notebook
     
     Write Data To Excel    SC2_EventFee    Borrower_Name    ${rowid}    ${Borrower_Name}    ${DNR_DATASET}
+    Write Data To Excel    SC2_LoanDrawdownNonAgent    Borrower_ShortName    ${rowid}    ${Borrower_Name}    ${DNR_DATASET}
+    Write Data To Excel    SC2_ComprehensiveRepricing    Borrower_ShortName    ${rowid}    ${Borrower_Name}    ${DNR_DATASET}
     
     Select Deal Classification    &{ExcelPath}[Deal_ClassificationCode]    &{ExcelPath}[Deal_ClassificationDesc]
     
@@ -331,4 +334,3 @@ Syndicated Deal Approval and Close for DNR
     Close All Windows on LIQ
     Logout from Loan IQ
     Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
-
