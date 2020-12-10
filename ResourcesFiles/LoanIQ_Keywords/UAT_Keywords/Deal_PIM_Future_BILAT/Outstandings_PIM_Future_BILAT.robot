@@ -1,8 +1,6 @@
 *** Settings ***
 Resource    ../../../../Configurations/LoanIQ_Import_File.robot
 
-*** Variables ***
-
 
 *** Keywords ***
 Create Initial Loan Drawdown for PIM Future BILAT

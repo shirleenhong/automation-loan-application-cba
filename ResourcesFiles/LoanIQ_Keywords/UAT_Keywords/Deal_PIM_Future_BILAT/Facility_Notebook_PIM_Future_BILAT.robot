@@ -8,6 +8,7 @@ ${SCENARIO}
 Create Facility for PIM Future BILAT
     [Documentation]    This keyword is used to create a Facility for PIM Future Bilateral deal
     ...    @author: mcastro    02DEC2020    - Initial Create
+    ...    @update: mcastro    09DEC2020    - Added writing of Facility_name to Correspondence
     [Arguments]    ${ExcelPath}
     
     ${Facility_NamePrefix}    Read Data From Excel    CRED02_FacilitySetup    Facility_NamePrefix    ${rowid}

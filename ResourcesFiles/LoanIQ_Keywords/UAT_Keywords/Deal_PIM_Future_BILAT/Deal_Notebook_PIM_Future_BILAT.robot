@@ -7,7 +7,8 @@ Resource    ../../../../Configurations/LoanIQ_Import_File.robot
 *** Keywords ***
 Setup Deal for PIM Future BILAT
     [Documentation]    This keyword is for setting up Deal for PIM Future Bilateral Deal
-    ...    @author:    mcastro    26NOV2020    - Initial create 
+    ...    @author: mcastro    26NOV2020    - Initial create 
+    ...    @update: mcastro    09DEC2020    - Added writing of Borrower_Shortname and Deal_Name to SERV01_LoanDrawdown and Correspondence
     [Arguments]    ${ExcelPath}
     
     ${Deal_Name}    ${Deal_Alias}    Generate Deal Name and Alias with 5 Numeric Test Data    &{ExcelPath}[Deal_NamePrefix]    &{ExcelPath}[Deal_AliasPrefix]
