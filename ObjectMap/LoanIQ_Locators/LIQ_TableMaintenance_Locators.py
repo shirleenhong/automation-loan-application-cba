@@ -376,3 +376,14 @@ LIQ_AutomatedTransaction_LeadDays_TextField = 'JavaWindow("title:=Automated Tran
 LIQ_AutomatedTransaction_GeneratedStatus_Dropdown = 'JavaWindow("title:=Automated Transaction").JavaList("attached text:=Generated Status:")'
 LIQ_AutomatedTransaction_AutoRelease_Checkbox = 'JavaWindow("title:=Automated Transaction").JavaCheckBox("attached text:=Auto Release")'
 LIQ_AutomatedTransaction_Ok_Button = 'JavaWindow("title:=Automated Transaction").JavaButton("attached text:=OK")'
+
+### Browse data from Business Transactions ###
+LIQ_BusinessTransaction_Window = 'JavaWindow("title:=.*Business Transaction")'
+LIQ_BusinessTransaction_ShowAll_Button = 'JavaWindow("title:=.*Business Transaction").JavaRadioButton("attached text:=Show all")'
+LIQ_BusinessTransaction_ShowActive_Button = 'JavaWindow("title:=.*Business Transaction").JavaRadioButton("attached text:=Show active only")'
+LIQ_BusinessTransaction_ShowInactive_Button = 'JavaWindow("title:=.*Business Transaction").JavaRadioButton("attached text:=Show inactive only")'
+LIQ_BusinessTransaction_JavaTree = 'JavaWindow("title:=.*Business Transaction").JavaTree("attached text:=Table is NOT Updateable")'
+LIQ_BusinessTransaction_Events_Button = 'JavaWindow("title:=.*Business Transaction").JavaButton("attached text:=Events")'
+LIQ_BusinessTransaction_Add_Button = 'JavaWindow("title:=.*Business Transaction").JavaButton("attached text:=Add")'
+LIQ_BusinessTransaction_Sort_Button = 'JavaWindow("title:=.*Business Transaction").JavaButton("attached text:=Sort Option")'
+LIQ_BusinessTransaction_Exit_Button = 'JavaWindow("title:=.*Business Transaction").JavaButton("attached text:=Exit")'

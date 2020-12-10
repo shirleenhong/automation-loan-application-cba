@@ -582,3 +582,68 @@ Create Loan Drawdown TERM and SBLC for Syndicated Deal With Backdated Effective 
     Verify if Status is set to Do It    &{ExcelPath}[Lender2_ShortName]
     mx LoanIQ click    ${LIQ_Cashflows_OK_Button}
     Close All Windows on LIQ
+
+Create Initial Loan Drawdown for Agency Syndication for DNR
+        [Documentation]    This keyword is used to create an initial loan drawdown with repayment schedule for an agency syndication
+    ...    @author: makcamps    03DEC2020    - Initial create
+    [Arguments]    ${ExcelPath}
+    
+    ###LIQ Logout-Login###
+    Close All Windows on LIQ
+    Logout from Loan IQ
+    Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
+        
+    ###Get Facility Details###
+    ${Loan_EffectiveDate}    Get System Date
+    ${Loan_TriggerDate}    Add Time from From Date and Returns Weekday    ${Loan_EffectiveDate}    &{ExcelPath}[Add_To_Loan_EffectiveDate]
+    Navigate to Facility Notebook    &{ExcelPath}[Deal_Name]    &{ExcelPath}[Facility_Name]
+    ${AvailToDrawAmount}    Get Facility Global Available to Draw Amount
+    ${GlobalOutstandings}    Get Facility Global Outstandings
+    Write Data To Excel    SC2_LoanDrawdownNonAgent    Facility_CurrentAvailToDraw    ${rowid}    ${AvailToDrawAmount}    ${DNR_DATASET}
+    Write Data To Excel    SC2_LoanDrawdownNonAgent    Facility_CurrentGlobalOutstandings    ${rowid}    ${GlobalOutstandings}    ${DNR_DATASET}
+    Write Data To Excel    SC2_LoanDrawdownNonAgent    Loan_EffectiveDate    ${rowid}    ${Loan_EffectiveDate}    ${DNR_DATASET}
+    Write Data To Excel    SC2_ComprehensiveRepricing    Loan_EffectiveDate    ${rowid}    ${Loan_EffectiveDate}    ${DNR_DATASET}
+    
+    ###Get Loan Details###
+    Navigate to Outstanding Select Window
+    ${Loan_Alias}    Input Initial Loan Drawdown Details    &{ExcelPath}[Outstanding_Type]    &{ExcelPath}[Facility_Name]    &{ExcelPath}[Borrower_ShortName]    &{ExcelPath}[Loan_PricingOption]    &{ExcelPath}[Loan_Currency]    
+    Write Data To Excel    SC2_LoanDrawdownNonAgent    Loan_Alias    ${rowid}    ${Loan_Alias}    ${DNR_DATASET}
+    Write Data To Excel    SC2_InterestPayments    Loan_Alias    ${rowid}    ${Loan_Alias}    ${DNR_DATASET}
+    Write Data To Excel    SC2_ComprehensiveRepricing    Loan_Alias    ${rowid}    ${Loan_Alias}    ${DNR_DATASET}
+    
+    ###Create Initial Loan Drawdown###
+    Validate Initial Loan Dradown Details    &{ExcelPath}[Facility_Name]    &{ExcelPath}[Borrower_ShortName]    &{ExcelPath}[Loan_Currency]
+    Input General Loan Drawdown Details    &{ExcelPath}[Loan_RequestedAmount]    ${Loan_EffectiveDate}    &{ExcelPath}[Loan_MaturityDate]
+    ...    &{ExcelPath}[Loan_RepricingFrequency]    &{ExcelPath}[Loan_IntCycleFrequency]    ${TO_THE_ACTUAL_DUE_DATE}
+    ${AllInRate_Value}    Input Loan Drawdown Rates    &{ExcelPath}[Borrower_BaseRate]    &{ExcelPath}[Facility_Spread]
+    Write Data To Excel    SC2_ComprehensiveRepricing    AllInRate_Value    ${rowid}    ${AllInRate_Value}    ${DNR_DATASET}
+
+    ###Verify Cashflows###
+    Navigate to Drawdown Cashflow Window
+    Verify if Method has Remittance Instruction    &{ExcelPath}[Lender_ShortName]    &{ExcelPath}[Remittance_Description]    &{ExcelPath}[Lender_Remittance_Instruction]
+    Verify if Method has Remittance Instruction    &{ExcelPath}[Borrower_ShortName]    &{ExcelPath}[Remittance_Description]    &{ExcelPath}[Lender_Remittance_Instruction]
+    Create Cashflow   &{ExcelPath}[Lender_ShortName]    ${RELEASE_TRANSACTION}
+    
+    ###Send Loan to Approval####
+    Send Loan Drawdown to Approval
+    
+    ###Approve Loan####
+    Approve Loan Drawdown via WIP LIQ Icon    ${MANAGER_USERNAME}    ${MANAGER_PASSWORD}    &{ExcelPath}[WIP_TransactionType]    &{ExcelPath}[WIP_AwaitingApprovalStatus]    &{ExcelPath}[WIP_OutstandingType]    ${Loan_Alias}
+
+    ###Rate Loan to Approval###
+    Logout from Loan IQ
+    Login to Loan IQ    ${MANAGER_USERNAME}    ${MANAGER_PASSWORD}
+    Select Item in Work in Process    ${OUTSTANDINGS_TRANSACTION}    ${AWAITING_SEND_TO_RATE_APPROVAL_STATUS}    ${LOAN_INITIAL_DRAWDOWN_TYPE}     ${Loan_Alias}
+    Send Loan Drawdown Rates to Approval
+    
+    ###Release Loan####
+    Logout from Loan IQ
+    Login to Loan IQ    ${SUPERVISOR_USERNAME}    ${SUPERVISOR_PASSWORD}
+	Open Loan Initial Drawdown Notebook via WIP - Awaiting Rate Approval    &{ExcelPath}[WIP_TransactionType]    &{ExcelPath}[WIP_AwaitingRateApprovalStatus]    &{ExcelPath}[WIP_OutstandingType]    ${Loan_Alias}
+	Navigate to Loan Drawdown Workflow and Proceed With Transaction    ${RATE_APPROVAL_TRANSACTION}
+    Release Loan Initial Drawdown
+    
+    ###LIQ Logout-Login####
+    Close All Windows on LIQ
+    Logout from Loan IQ
+    Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
