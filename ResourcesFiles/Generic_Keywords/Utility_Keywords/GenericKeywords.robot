@@ -2774,3 +2774,9 @@ Generate Deal Name and Alias with Numeric Test Data
     Log    Deal Alias: ${Deal_Alias}
     [Return]    ${Deal_Name}    ${Deal_Alias}
 
+Get Correct Dataset From Dataset List
+    [Documentation]    This keyword gets the correct dataset file for new UAT deals
+    ...    @author:    nbautist    09DEC2020    - Initial Create
+    [Arguments]    ${lValues}
+    
+    Set Global Variable    ${ExcelPath}    ${dataset_path}&{lValues}[Path]&{lValues}[Filename]
