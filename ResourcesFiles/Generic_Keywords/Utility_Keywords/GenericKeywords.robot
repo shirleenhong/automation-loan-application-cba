@@ -2776,4 +2776,27 @@ Generate Deal Name and Alias with Numeric Test Data
     Log    Deal Alias: ${Deal_Alias}
     [Return]    ${Deal_Name}    ${Deal_Alias}
 
+Remove Comma Separators in Numbers
+    [Documentation]    This keyword is used to remove , in the number. 
+    ...    @author: clanding    10DEC2020    - initial create
+    [Arguments]    ${sNumber}    ${bInclude_Decimal}=${True}    ${sRunTimeVar_Result}=None
+
+    ### Keyword Pre-processing ###
+    ${Number}    Acquire Argument Value    ${sNumber}
+
+    ${String}    Convert To String    ${Number}
+    ${Number}    Remove String    ${String}    ,
+
+    ${Container_List}    Split String    ${Number}    .
+    ${WholeNum_Value}    Set Variable    @{Container_List}[0]
+    ${Decimal_Value}    Set Variable    @{Container_List}[1]
     
+    ${Include_Decimal}    Run Keyword If    '${Decimal_Value}'=='00'    Set Variable    ${False}
+    ...    ELSE    Set Variable    ${bInclude_Decimal}
+
+    ${Number}    Run Keyword If    ${Include_Decimal}==${True}    Set Variable    ${WholeNum_Value}.${Decimal_Value}
+    ...    ELSE    Set Variable    ${WholeNum_Value}
+
+    ### Keyword Post-processing ###
+    Save Values of Runtime Execution on Excel File    ${sRunTimeVar_Result}    ${Number}
+    [Return]    ${Number}
