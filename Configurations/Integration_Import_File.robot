@@ -530,3 +530,4 @@ Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/Extr
 Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/Extracts/DNR_LIQ/DNR_AgencyHostBankDEReports.robot
 Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/Extracts/DNR_LIQ/DNR_LIQPerformanceReports.robot
 Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/Extracts/DNR_LIQ/DNR_LoansAccrualsReports.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/Extracts/DNR_LIQ/DNR_PaymentNonAgencyReports.robot

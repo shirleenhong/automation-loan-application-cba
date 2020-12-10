@@ -185,7 +185,7 @@ Setup a Bilateral Deal for DNR
     ${PricingOption_CCY}    Run Keyword If    '&{ExcelPath}[Deal_PricingOption1_CCY]' == '${EMPTY}' or '&{ExcelPath}[Deal_PricingOption1_CCY]' == '${None}'    Set Variable    None
     ...    ELSE    Set Variable    &{ExcelPath}[Deal_PricingOption1_CCY]
     Add Pricing Option    &{ExcelPath}[Deal_PricingOption1]    &{ExcelPath}[InitialFractionRate_Round]    &{ExcelPath}[RoundingDecimal_Round]    &{ExcelPath}[NonBusinessDayRule]
-    ...    &{ExcelPath}[PricingOption_BillNoOfDays]    &{ExcelPath}[PricingOption_MatrixChangeAppMthd]    &{ExcelPath}[PricingOption_RateChangeAppMthd]    PricingOption_CCY=${PricingOption_CCY}
+    ...    &{ExcelPath}[PricingOption_BillNoOfDays]    &{ExcelPath}[PricingOption_MatrixChangeAppMthd]    &{ExcelPath}[PricingOption_RateChangeAppMthd]    sPricingOption_CCY=${PricingOption_CCY}
     Add Fee Pricing Rules    &{ExcelPath}[PricingRule_Fee1]    &{ExcelPath}[PricingRule_MatrixChangeAppMthd1]    &{ExcelPath}[PricingRule_NonBussDayRule1]    &{ExcelPath}[PricingRule_BillBorrowerStatus1]    &{ExcelPath}[PricingRule_BillNoOfDays1]
     
     ##Deal Notebook - Events Tab###    

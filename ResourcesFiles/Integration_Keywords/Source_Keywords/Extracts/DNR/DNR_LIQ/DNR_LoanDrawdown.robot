@@ -2,7 +2,7 @@
 Resource    ../../../../../../Configurations/Integration_Import_File.robot
 
 *** Keywords ***
-Create Revolver Facility Drawdown for DNR
+Create Revolver Facility Drawdown for DNR Syndicated Deal
     [Documentation]    This high-level keyword for creating an initial Loan Drawdown from a Revolver Facility with Different Currency, and API validation.
     ...    @author: fluberio    26NOV2020    - initial Create    
     [Arguments]    ${ExcelPath}
@@ -571,3 +571,76 @@ Create Loan Drawdown TERM and SBLC for Syndicated Deal With Backdated Effective 
     Verify if Status is set to Do It    &{ExcelPath}[Lender2_ShortName]
     mx LoanIQ click    ${LIQ_Cashflows_OK_Button}
     Close All Windows on LIQ
+
+Create Revolver Facility Drawdown for DNR Bilateral Deal until Awaiting Send to Rate Approval
+    [Documentation]    This high-level keyword for creating an initial Loan Drawdown from a Revolver Facility until Awaiting Send to Rate Approval
+    ...    @author: fluberio    26NOV2020    - initial Create    
+    [Arguments]    ${ExcelPath}
+    
+    ${Current_Date}    Get System Date
+    ${BaseRatePercentage}    Get Base Rate from Funding Rate Details    &{ExcelPath}[FundingRate_Alias]    &{ExcelPath}[Loan_RepricingFrequency]    &{ExcelPath}[Loan_Currency]
+   
+    ### Get data from Secondary Sale test case ###
+    ${Borrower_ShortName}    Read Data From Excel    SC1_DealSetup    Borrower1_ShortName    &{ExcelPath}[rowid]    ${DNR_DATASET}
+    Open Table Maintenance
+    ${FacilityProcessingArea}    Read Data From Excel    SC1_DealSetup    ProcessingArea    &{ExcelPath}[rowid]    ${DNR_DATASET}
+    ${FacilityProcessingAreaCode}    Get Facility Processing Area Code from Table Maintenance    ${FacilityProcessingArea}
+    Close Table Maintenance
+    
+    ### Open existing Deal and go to Facility Notebook ###
+    Open Existing Deal    &{ExcelPath}[Deal_Name]
+    ${TrackingNumber}    Get Deal Tracking Number
+    
+    Open Facility From Deal Notebook    &{ExcelPath}[Facility_Name]
+    mx LoanIQ click element if present    ${LIQ_Alerts_OK_Button}
+    ${Facility_Expiry}            Get Data From LoanIQ    ${LIQ_FacilityNotebook_Window}    ${LIQ_FacilityNotebook_Tab}    Summary    ${LIQ_FacilitySummary_ExpiryDate_Datefield}
+    ${Facililty_Currency}         Get Data From LoanIQ    ${LIQ_FacilityNotebook_Window}    ${LIQ_FacilityNotebook_Tab}    Summary    ${LIQ_FacilitySummary_Currency_StaticText}
+    ${PreOutstandingAmt_GFA}      Get Data From LoanIQ    ${LIQ_FacilityNotebook_Window}    ${LIQ_FacilityNotebook_Tab}    Summary    ${LIQ_FacilitySummary_GlobalFacilityAmount_Outstandings}
+    ${PreOutstandingAmt_HBG}      Get Data From LoanIQ    ${LIQ_FacilityNotebook_Window}    ${LIQ_FacilityNotebook_Tab}    Summary    ${LIQ_FacilitySummary_HostBankOutstanding}
+    ${PreOutstandingAmt_HBN}      Get Data From LoanIQ    ${LIQ_FacilityNotebook_Window}    ${LIQ_FacilityNotebook_Tab}    Summary    ${LIQ_FacilitySummary_HostBankNet_Outstandings}
+    ${PreAvailToDraw_GFA}         Get Data From LoanIQ    ${LIQ_FacilityNotebook_Window}    ${LIQ_FacilityNotebook_Tab}    Summary    ${LIQ_FacilitySummary_HostBankAvailToDraw}
+    ${PreAvailToDraw_HBG}         Get Data From LoanIQ    ${LIQ_FacilityNotebook_Window}    ${LIQ_FacilityNotebook_Tab}    Summary    ${LIQ_FacilitySummary_GlobalFacAmt_AvailToDraw_Amount}
+    ${PreAvailToDraw_HBN}         Get Data From LoanIQ    ${LIQ_FacilityNotebook_Window}    ${LIQ_FacilityNotebook_Tab}    Summary    ${LIQ_FacilitySummary_HostBankNet_AvailToDrawNet}
+    
+    ### Go to Outstanding Select and create new Loan Drawdown ###
+    Navigate to Outstanding Select Window
+    ${Loan_Alias}    New Outstanding Select    &{ExcelPath}[Deal_Name]    &{ExcelPath}[Facility_Name]    ${Borrower_ShortName}    &{ExcelPath}[Outstanding_Type]    &{ExcelPath}[Loan_PricingOption]    &{ExcelPath}[Loan_Currency]
+    Write Data To Excel    SC1_LoanDrawdown    Loan_Alias    &{ExcelPath}[rowid]    ${Loan_Alias}    ${DNR_DATASET}
+    #Write Data To Excel    SC1_LoanSplit    Loan_Alias    &{ExcelPath}[rowid]    ${Loan_Alias}    ${DNR_DATASET}
+    
+    Enter Initial Loan Drawdown General Details    &{ExcelPath}[Loan_RequestedAmount]    ${Current_Date}    ${EMPTY}    &{ExcelPath}[Loan_Accrue]    &{ExcelPath}[Loan_Currency]    &{ExcelPath}[Loan_RepricingFrequency]
+    
+    ### Set Rates in Initial Drawdown notebook ###
+    Set Base Rate In Drawdown Notebook With API Validations    ${BaseRatePercentage}
+    
+    ### Cashflow Notebook - Create Cashflows ###
+    Navigate to Loan Drawdown Workflow and Proceed With Transaction    ${CREATE_CASHFLOWS_TYPE}
+    Verify if Method has Remittance Instruction    ${Borrower_ShortName}    &{ExcelPath}[Remittance_Description]    &{ExcelPath}[Remittance_Instruction]
+    Verify if Status is set to Do It    ${Borrower_ShortName}
+    
+    ### Get Transaction Amount for Cashflow ###
+    ${HostBankShare}    Get Host Bank Cash in Cashflow    &{ExcelPath}[Loan_Currency]
+    ${BorrowerTranAmount}    Get Transaction Amount in Cashflow    ${Borrower_ShortName}
+    
+    ${CashFlowID}    Get Cashflow Details Before Sending to Approval in Initial Loan Drawdown    ${Borrower_ShortName}
+    ### Send to Approval ###
+    Navigate to Loan Drawdown Workflow and Proceed With Transaction    ${SEND_TO_APPROVAL_STATUS}
+    Validate Window Title Status    ${INITIAL_DRAWDOWN_TITLE}    ${AWAITING_APPROVAL_STATUS}
+    Logout from Loan IQ
+    Login to Loan IQ    ${MANAGER_USERNAME}    ${MANAGER_PASSWORD}
+    Navigate Transaction in WIP    ${OUTSTANDINGS_TRANSACTION}    ${AWAITING_APPROVAL_STATUS}    ${LOAN_INITIAL_DRAWDOWN_TYPE}    ${Loan_Alias}
+    Navigate to Loan Drawdown Workflow and Proceed With Transaction    ${APPROVAL_STATUS}
+    Validate Window Title Status    ${INITIAL_DRAWDOWN_TITLE}    ${AWAITING_SEND_TO_RATE_APPROVAL_STATUS}
+    
+    Write Data To Excel    SC1_LoanDrawdown    Transaction_Date    &{ExcelPath}[rowid]    ${Current_Date}    ${DNR_DATASET}
+    Write Data To Excel    SC1_LoanDrawdown    Deal_TrackingNumber    &{ExcelPath}[rowid]    ${TrackingNumber}    ${DNR_DATASET}
+    Write Data To Excel    SC1_LoanDrawdown    Cashflow_Amount    &{ExcelPath}[rowid]    ${BorrowerTranAmount}    ${DNR_DATASET}
+    Write Data To Excel    SC1_LoanDrawdown    Transaction_Status    &{ExcelPath}[rowid]    ${AWAITING_SEND_TO_RATE_APPROVAL_STATUS}    ${DNR_DATASET}
+    Write Data To Excel    SC1_LoanDrawdown    Processing_Area_Code    &{ExcelPath}[rowid]    ${FacilityProcessingAreaCode}    ${DNR_DATASET}
+    Write Data To Excel    SC1_LoanDrawdown    Cashflow_ID    &{ExcelPath}[rowid]    ${CashFlowID}    ${DNR_DATASET}
+    
+    ### Go back to original user ###
+    Logout from Loan IQ
+    Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
+    
+    

@@ -2845,6 +2845,7 @@ Update Branch and Processing Area
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/ChangeBranchProcArea_Window
     mx LoanIQ click    ${LIQ_ChangeBranchProcArea_OK_Button}
     mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
+    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
 
 Validate and Update Branch and Processing Area in MIS Codes Tab
     [Documentation]    This keyword validates and update Branch and Processing Area in MIS Codes tab if Branch and Processing Area does not match.
