@@ -3949,3 +3949,61 @@ Get Outstandings Amount from Facility Notebook
     Take Screenshot    ${SCREENSHOT_FILENAME}
     
     [Return]    ${Facility_Outstandings_Amount}
+
+Add Ongoing Fee - Matrix - Outside Condition
+    [Documentation]    This keyword adds ongoing fee - after on facility.
+    ...    @author: kmagday
+    [Arguments]    ${FacilityItemAfter}    ${FacilityItem}    ${OutsideCondition_RadioButton}=OFF  
+    mx LoanIQ click    ${LIQ_FacilityPricing_OngoingFees_After_Button}
+    Mx LoanIQ Select Combo Box Value    ${LIQ_Facility_InterestPricing_AddItem_List}    ${FacilityItemAfter}
+    Mx LoanIQ Select Combo Box Value    ${LIQ_Facility_InterestPricing_Type_List}    ${FacilityItem}
+    Run Keyword And Continue On Failure    Mx LoanIQ Verify Object Exist    ${LIQ_FacilityPricing_OngoingFees_AddItem_OK_Button}    VerificationData="Yes"
+    Run Keyword And Continue On Failure    Mx LoanIQ Verify Object Exist    ${LIQ_FacilityPricing_OngoingFees_AddItem_Cancel_Button}       VerificationData="Yes"
+    mx LoanIQ click    ${LIQ_FacilityPricing_OngoingFees_AddItem_OK_Button}
+
+    Run Keyword If    '${OutsideCondition_RadioButton}'=='ON'    mx LoanIQ click    ${LIQ_OutsideConditions_Matrix_RadioButton_True}
+    ...    ELSE    mx LoanIQ click    ${LIQ_OutsideConditions_Matrix_RadioButton_False}
+
+    mx LoanIQ click    ${LIQ_Edit_OutsideConditions_OK_Button}
+
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/FacilityWindow_Pricing
+
+Add Ongoing Fee - Matrix - Outside Condition - Insert After
+    [Documentation]    This keyword adds ongoing fee - after on facility.
+    ...    @author: kmagday
+    [Arguments]    ${FacilityItemAfter}    ${FacilityItem}    ${OutsideCondition_RadioButton}=OFF  
+    mx LoanIQ click    ${LIQ_FacilityPricing_OngoingFees_Add_Button}
+    Mx LoanIQ Select Combo Box Value    ${LIQ_Facility_InterestPricing_AddItem_List}    ${FacilityItemAfter}
+    Mx LoanIQ Select Combo Box Value    ${LIQ_Facility_InterestPricing_Type_List}    ${FacilityItem}
+    Run Keyword And Continue On Failure    Mx LoanIQ Verify Object Exist    ${LIQ_FacilityPricing_OngoingFees_AddItem_OK_Button}    VerificationData="Yes"
+    Run Keyword And Continue On Failure    Mx LoanIQ Verify Object Exist    ${LIQ_FacilityPricing_OngoingFees_AddItem_Cancel_Button}       VerificationData="Yes"
+    mx LoanIQ click    ${LIQ_FacilityPricing_OngoingFees_AddItem_OK_Button}
+
+    Run Keyword If    '${OutsideCondition_RadioButton}'=='ON'    mx LoanIQ click    ${LIQ_OutsideConditions_Matrix_RadioButton_True}
+    ...    ELSE    mx LoanIQ click    ${LIQ_OutsideConditions_Matrix_RadioButton_False}
+
+    mx LoanIQ click    ${LIQ_Edit_OutsideConditions_OK_Button}
+
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/FacilityWindow_Pricing
+
+Add Ongoing Fee Pricing - Insert After - Outside Condition
+    [Documentation]    This keyword adds ongoing fee - after on facility.
+    ...    @author: kmagday
+    [Arguments]    ${FacilityItemAfter}    ${Facility_PercentWhole}    ${FacilityItem}    ${Facility_Percent}  
+    mx LoanIQ click    ${LIQ_FacilityPricing_OngoingFees_After_Button}
+    Mx LoanIQ Select Combo Box Value    ${LIQ_Facility_InterestPricing_AddItem_List}    ${FacilityItemAfter}
+    Run Keyword And Continue On Failure    Mx LoanIQ Verify Object Exist    ${LIQ_FacilityPricing_OngoingFees_AddItem_OK_Button}    VerificationData="Yes"
+    Run Keyword And Continue On Failure    Mx LoanIQ Verify Object Exist    ${LIQ_FacilityPricing_OngoingFees_AddItem_Cancel_Button}       VerificationData="Yes"
+    mx LoanIQ click    ${LIQ_FacilityPricing_OngoingFees_AddItem_OK_Button}
+    mx LoanIQ enter    ${LIQ_FacilityPricing_FormulaCategory_Percent_Radiobutton}    ON
+    mx LoanIQ activate window    ${LIQ_FormulaCategory_Window}
+    mx LoanIQ enter    ${LIQ_FacilityPricing_FormulaCategory_Percent_Textfield}    ${Facility_Percent}
+    mx LoanIQ click    ${LIQ_FacilityPricing_FormulaCategory_OK_Button}
+    mx LoanIQ activate window    ${LIQ_Warning_Window}
+    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}    
+    Run Keyword And Continue On Failure    Mx LoanIQ Verify Object Exist    JavaWindow("title:=.*Ongoing Fee Pricing.*").JavaTree("developer name:=.*${Facility_PercentWhole}.*")    VerificationData="Yes"
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/FacilityWindow_Pricing
+
+Select Text In Ongoing Fee Pricing List 
+    [Arguments]    ${sText}
+    Mx LoanIQ Select Or DoubleClick In Javatree   ${LIQ_FacilityPricing_OngoingFeeInterest_Tree}    ${sText}%s

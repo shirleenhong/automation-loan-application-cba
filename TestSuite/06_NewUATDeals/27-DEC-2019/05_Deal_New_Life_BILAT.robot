@@ -12,3 +12,8 @@ Create Deal Borrower Initial Details in Quick Party Onboarding for New Life Bila
 
 Establish Deal - CRED01
     Mx Execute Template With Multiple Data    Setup Deal for New Life BILAT    ${CBAUAT_ExcelPath}    ${rowid}    CRED01_DealSetup
+
+Establish Facility - CRED01
+    Mx Execute Template With Multiple Data    Create Facility for New Life BILAT    ${CBAUAT_ExcelPath}     ${rowid}    CRED02_FacilitySetup
+	Mx Execute Template With Multiple Data    Setup Facility Ongoing Fee for New Life BILAT    ${ExcelPath}    ${rowid}    CRED08_OngoingFeeSetup
+

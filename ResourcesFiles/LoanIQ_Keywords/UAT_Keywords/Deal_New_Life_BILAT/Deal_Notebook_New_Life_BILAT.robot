@@ -14,6 +14,7 @@ Setup Deal for New Life BILAT
     ${Borrower_ShortName}    Read Data From Excel    PTY001_QuickPartyOnboarding    LIQCustomer_ShortName    ${rowid}  
     ${Borrower_Location}    Read Data From Excel    PTY001_QuickPartyOnboarding    Customer_Location    ${rowid} 
     Write Data To Excel    CRED01_DealSetup    Deal_Name    ${rowid}    ${Deal_Name}
+    Write Data To Excel    CRED01_DealSetup    Deal_Alias    ${rowid}    ${Deal_Alias}
     Write Data To Excel    CRED01_DealSetup    Borrower_ShortName    ${rowid}    ${Borrower_ShortName}
     Write Data To Excel    CRED01_DealSetup    Borrower_Location    ${rowid}    ${Borrower_Location}
     Write Data To Excel    CRED02_FacilitySetup    Deal_Name    ${rowid}    ${Deal_Name}

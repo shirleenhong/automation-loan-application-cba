@@ -1,0 +1,61 @@
+*** Settings ***
+Resource    ../../../../Configurations/LoanIQ_Import_File.robot
+
+*** Variables ***
+${rowid}    1
+
+*** Keywords ***
+Create Facility for New Life BILAT
+    [Documentation]    This keyword is used to create a Facility for PIM Future Bilateral deal
+    ...    @author: kmagday    10DEC2020    - Initial Create
+    [Arguments]    ${ExcelPath}
+    
+    ${Facility_NamePrefix}    Read Data From Excel    CRED02_FacilitySetup    Facility_NamePrefix    ${rowid}
+    ${Facility_Name}    Generate Facility Name with 5 Numeric Test Data    ${Facility_NamePrefix}
+    Write Data To Excel    CRED01_DealSetup    Facility_Name    ${rowid}    ${Facility_Name}
+    Write Data To Excel    CRED02_FacilitySetup    Facility_Name    ${rowid}    ${Facility_Name}
+    Write Data To Excel    CRED08_OngoingFeeSetup    Facility_Name    ${rowid}    ${Facility_Name}
+    Write Data To Excel    SERV01_LoanDrawdown    Facility_Name    ${rowid}    ${Facility_Name} 
+    Write Data To Excel    SERV29_CommitmentFeePayment    Facility_Name    ${rowid}    ${Facility_Name}
+    Write Data To Excel    SYND02_PrimaryAllocation    Facility_Name    ${rowid}    ${Facility_Name}    
+
+    ###Open Deal Notebook If Not present###
+    Open Deal Notebook If Not Present    &{ExcelPath}[Deal_Name]
+         
+    ###New Facility Screen###
+    ${Facility_ProposedCmtAmt}    New Facility Select    &{ExcelPath}[Deal_Name]    ${FacilityName}    &{ExcelPath}[Facility_Type]    &{ExcelPath}[Facility_ProposedCmtAmt]    &{ExcelPath}[Facility_Currency]
+    
+    ##Facility Notebook - Summary Tab###
+    Enter Dates on Facility Summary    &{ExcelPath}[Facility_AgreementDate]    &{ExcelPath}[Facility_EffectiveDate]    &{ExcelPath}[Facility_ExpiryDate]    &{ExcelPath}[Facility_MaturityDate]
+    Verify Main SG Details    &{ExcelPath}[Facility_ServicingGroup]    &{ExcelPath}[Facility_Customer]    &{ExcelPath}[Facility_SGLocation]
+    Write Data To Excel    SERV01_LoanDrawdown   Loan_MaturityDate    ${rowid}     &{ExcelPath}[Facility_MaturityDate]
+
+    ###Facility Notebook - Types/Purpose Tab###
+    Add Risk Type    &{ExcelPath}[Facility_RiskType]    &{ExcelPath}[Facility_RiskTypeLimit]   &{ExcelPath}[Facility_Currency]
+    Add Loan Purpose Type    &{ExcelPath}[Facility_LoanPurposeType]
+   
+    ###Facility Notebook - Restrictions Tab###
+    Add Currency Limit    &{ExcelPath}[Facility_Currency]    &{ExcelPath}[Facility_GlobalLimit]   &{ExcelPath}[Facility_CustomerServicingGroup]    &{ExcelPath}[Facility_ServicingGroup]
+    
+    ###Facility Notebook - Sublimit/Cust Tab###
+    Add Borrower    &{ExcelPath}[Facility_Currency]    &{ExcelPath}[Facility_BorrowerSGName]    &{ExcelPath}[Facility_BorrowerPercent]    &{ExcelPath}[Facility_Borrower]
+    ...    &{ExcelPath}[Facility_GlobalLimit]    &{ExcelPath}[Facility_BorrowerMaturity]    &{ExcelPath}[Facility_EffectiveDate]
+
+   
+   
+Setup Facility Ongoing Fee for New Life BILAT
+    [Documentation]    This high-level keyword sets up Ongoing Fee from the Deal Notebook
+    ...    @author: kmagday    12DE2020    - Initial Create
+    [Arguments]    ${ExcelPath}
+    
+    ### Ongoing Fee ###
+    Modify Ongoing Fee Pricing - Insert Add    &{ExcelPath}[OngoingFee_Category]    &{ExcelPath}[OngoingFee_Type]    &{ExcelPath}[OngoingFee_RateBasis]
+    Add Ongoing Fee - Matrix - Outside Condition   &{ExcelPath}[OngoingFee_AfterItem]    &{ExcelPath}[OngoingFee_AfterItemType]    &{ExcelPath}[OutsideCondition_RadioButton]
+    Add Ongoing Fee Pricing - Insert After - Outside Condition   &{ExcelPath}[OngoingFee_AfterItem1]    &{ExcelPath}[Facility_PercentWhole1]    &{ExcelPath}[OngoingFee_Category]    &{ExcelPath}[Facility_Percent1] 
+    Select Text In Ongoing Fee Pricing List     If( &{ExcelPath}[OngoingFee_Type1]1 )
+    Add Ongoing Fee - Matrix - Outside Condition - Insert After  &{ExcelPath}[OngoingFee_AfterItem]    &{ExcelPath}[OngoingFee_AfterItemType]
+    Add Ongoing Fee Pricing - Insert After - Outside Condition   &{ExcelPath}[OngoingFee_AfterItem1]    &{ExcelPath}[Facility_PercentWhole2]    &{ExcelPath}[OngoingFee_Category]    &{ExcelPath}[Facility_Percent2] 
+    Validate Ongoing Fee or Interest
+    Modify Interest Pricing - Insert Add    &{ExcelPath}[Interest_AddItem]    &{ExcelPath}[Interest_OptionName]    &{ExcelPath}[Interest_RateBasis]    &{ExcelPath}[Interest_SpreadAmt]    &{ExcelPath}[Interest_BaseRateCode]
+
+    
