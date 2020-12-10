@@ -3158,4 +3158,4 @@ Add Outside Conditions in Deal Notebook
     ${isPresent}    Run Keyword And Return Status    Validate if Element is Checked    ${LIQ_OutsideConditions_OutsideCondition1_True_RadioButton}    True    
     Run Keyword If    ${isPresent}==True    Run Keywords    Log    History Start Date is successfully updated.
     ...    AND    Mx LoanIQ Close Window    ${LIQ_DealNotebook_Window}
-    ...    ELSE   Run Keyword And Continue On Failure    FAIL    History Start Date is NOT successfully updated.
+    ...    ELSE    Run Keyword And Continue On Failure    FAIL    History Start Date is NOT successfully updated.
