@@ -45,6 +45,7 @@ Open Existing Deal
     ...    @update: bernchua    28SEP2018    Added - Mx Click Element If Present    ${LIQ_DealNotebook_InquiryMode_Button}
     ...    @update: amansuet    08APR2020    Moved from Generic to LoanIQ file and added Keyword Pre-processing
     ...    @update: hstone      11JUN2020    - Added Take Screenshot
+    ...    @update: clanding    26NOV2020    - added mx LoanIQ click element if present    ${LIQ_Alerts_OK_Button}
     [Arguments]    ${sDeal_Name}
 
     ### GetRuntime Keyword Pre-processing ###
@@ -55,7 +56,8 @@ Open Existing Deal
     Select Actions    [Actions];Deal   
     mx LoanIQ enter    ${LIQ_DealSelect_DealIdentifyBy_Textfield}    ${Deal_Name}   
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/DealSelect
-    mx LoanIQ click    ${LIQ_DealSelect_Ok_Button}   
+    mx LoanIQ click    ${LIQ_DealSelect_Ok_Button}  
+    mx LoanIQ click element if present    ${LIQ_Alerts_OK_Button}
     mx LoanIQ click element if present    ${LIQ_DealNotebook_InquiryMode_Button}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/DealNotebook
 
@@ -215,3 +217,17 @@ Select Loan IQ Java Window Tab
     ...    locator, input, Processtimeout=180
     [Arguments]    ${sJavaWindow_Locator}    ${sInput}    ${sTimeout}=180    
     Mx LoanIQ Select Window Tab    ${sJavaWindow_Locator}    ${sInput}    ${sTimeout}    
+
+Open Deal Notebook If Not Present
+    [Documentation]    This keyword opens an existing deal on LIQ if the Deal notebook does not exists.
+    ...    @author: dahijara    - Initial create
+    [Arguments]    ${sDeal_Name}
+
+    ### GetRuntime Keyword Pre-processing ###
+    ${Deal_Name}    Acquire Argument Value    ${sDeal_Name}
+
+    ### Keyword Process ###
+    ###Open Deal Notebook If Not present###
+    ${Status}    Run Keyword And Return Status    Mx LoanIQ Verify Object Exist    ${LIQ_DealNotebook_Window}    VerificationData="Yes"
+    Run Keyword If    ${Status}!=${True}    Open Existing Deal    ${Deal_Name}
+    ...    ELSE    Log    Deal Notebook Is Already Displayed

@@ -124,12 +124,14 @@ Validate 'Active Customer' Window
     ...    @author: ghabal
     ...    @update: amansuet    21MAY2020    - added acquire argument and take screenshot keywords
     ...                                      - fixed hardcoded locators
+    ...    @update: clanding    05DEC2020    - added mx LoanIQ click element if present    ${LIQ_Alerts_OK_Button}
     [Arguments]    ${sLIQCustomer_ShortName}
 
     ### Keyword Pre-processing ###
     ${LIQCustomer_ShortName}    Acquire Argument Value    ${sLIQCustomer_ShortName}
 
     Mx LoanIQ Activate Window    ${LIQ_ActiveCustomer_Window}
+    mx LoanIQ click element if present    ${LIQ_Alerts_OK_Button}
 
     ${LIQCustomer_ShortName}    Replace Variables    ${LIQCustomer_ShortName}
     ${LIQ_ActiveCustomer_ShortName_Window}    Replace Variables    ${LIQ_ActiveCustomer_ShortName_Window}
@@ -144,12 +146,13 @@ Read Excel Data and Validate Customer ID, Short Name and Legal Name fields
     [Documentation]    This keyword validates the Customer ID, Short Name and Legal Name fields against from excel data 
     ...    @author: ghabal
     ...    @update: amansuet    21MAY2020    - removed unused keywords and updated to align with automation standards
+    ...    @update: mcastro     25NOV2020    - Updated Shortname from data set to all caps
     [Arguments]    ${sLIQCustomer_ID}     ${sLIQCustomer_ShortName}    ${sLIQCustomer_LegalName}
 
     Mx LoanIQ Select Window Tab    ${LIQ_Active_Customer_Notebook_TabSelection}    General
     Run Keyword And Continue On Failure    Run Keyword And Continue On Failure    Validate Loan IQ Details    ${sLIQCustomer_ID}     ${LIQ_ActiveCustomer_Window_CustomerID}
     Validate if Element is Disabled    ${LIQ_ActiveCustomer_Window_CustomerID}    Customer ID 
-    Run Keyword And Continue On Failure    Validate Loan IQ Details    ${sLIQCustomer_ShortName}    ${LIQ_ActiveCustomer_Window_ShortName}
+    Run Keyword And Continue On Failure    Validate Loan IQ Details    ${sLIQCustomer_ShortName.upper()}    ${LIQ_ActiveCustomer_Window_ShortName}
     Validate if Element is Disabled    ${LIQ_ActiveCustomer_Window_ShortName}    Short Name
     Run Keyword And Continue On Failure    Validate Loan IQ Details    ${sLIQCustomer_LegalName}    ${LIQ_ActiveCustomer_Window_LegalName}
     Validate if Element is Disabled    ${LIQ_ActiveCustomer_Window_LegalName}    Legal Name
@@ -773,6 +776,7 @@ Select Notification Method in the Contact Details under Profile Tab
     [Documentation]    This keyword adds Notification Method to the Details of a Contact of a Customer
     ...    @author: ghabal
     ...    @update: amansuet    22MAY2020    - updated to align with automation standards
+    ...    @update: dahijara    25NOV2020    - Replaced Mx Native Type with Mx Press Combination
     [Arguments]    ${sContactNotice_Method}=None    ${sContact_Email}=None
     
     Mx LoanIQ Click    ${ContactDetailWindow_Notification_AddButton}
@@ -780,7 +784,7 @@ Select Notification Method in the Contact Details under Profile Tab
     Validate Contact Notice Method(s) Selection Window
     Run Keyword If    '${sContactNotice_Method}' != 'None'    Mx LoanIQ Select Combo Box Value    ${ContactNoticeWindow_AvailableMethod_Field}    ${sContactNotice_Method}
     Run Keyword If    '${sContact_Email}' != 'None'    mx LoanIQ enter    ${ContactNoticeWindow_Email_Field}    ${sContact_Email}   
-    Mx Native Type    {BACKSPACE}
+    Mx Press Combination    Key.BACKSPACE
     Mx LoanIQ Click    ${ContactNoticeWindow_OkButton} 
     Mx LoanIQ Activate    ${ContactDetailWindow}
         
@@ -2508,3 +2512,169 @@ Get Customer ID
     mx LoanIQ activate window    ${LIQ_ActiveCustomer_Window}        
     ${LIQCustomer_ID}    Mx LoanIQ Get Data    ${LIQ_ActiveCustomer_Window_CustomerID}    testdata
     [Return]    ${LIQCustomer_ID}
+
+Activate and Close Remittance List Window
+    [Documentation]    This keyword closes Remittance List Window
+    ...    @author: dahijara    25NOV2020    - Initial Create
+    mx LoanIQ activate window    ${LIQ_ActiveCustomer_RemittanceList_Window}
+    Take Screenshot    ${Screenshot_Path}/Screenshots/LoanIQ/RemittanceListWindow
+    mx LoanIQ click    ${LIQ_ActiveCustomer_Remittance_List_Exit_Button}
+    mx LoanIQ activate window    ${LIQ_ActiveCustomer_Window}
+
+Update Borrower Servicing Group Alias
+    [Documentation]    This keyword updates the borrower servicing group alias
+    ...    @author:    mcastro    02DEC2020    - Initial Create
+    [Arguments]    ${sBorrower_SGAlias}
+    ### Keyword Pre-processing ###
+    ${Borrower_SGAlias}    Acquire Argument Value    ${sBorrower_SGAlias}
+
+    Mx LoanIQ Click    ${ServicingGroups_Button}
+    Mx LoanIQ Click    ${LIQ_ServicingGroups_Alias_Button}
+    Mx LoanIQ activate window    ${LIQ_ServicingGroups_Alias_Window}
+    Mx LoanIQ Enter    ${LIQ_ServicingGroups_Alias_Textfield}    ${Borrower_SGAlias}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/ServicingGroup_Alias
+    Mx LoanIQ Click    ${LIQ_ServicingGroups_Alias_OK_Button}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/ServicingGroup_Alias
+    Mx LoanIQ click    ${ServicingGroupWindow_ExitButton}
+
+Get Profile Status from Profiles Tab
+    [Documentation]    This keyword is used to get Status of Borrower from Profile Tab
+    ...    @author: clanding    04DEC2020    - initial create
+    [Arguments]    ${sProfile_Type}=None
+
+    ### Keyword Pre-processing ###
+    ${Profile_Type}    Acquire Argument Value    ${sProfile_Type}
+
+    Mx LoanIQ Select Window Tab    ${LIQ_Active_Customer_Notebook_TabSelection}    Profiles
+    ${Status_UI}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_Active_Customer_Notebook_ProfileTab_JavaTree}    ${Profile_Type}%Status%Status_UI
+    Take Screenshot    ${Screenshot_Path}/Screenshots/LoanIQ/ProfileDetailsWindow
+    [Return]    ${Status_UI}
+
+Add Details in Comments Tab in Active Customer
+    [Documentation]    This keyword is used to add details in the Comments tab of a Customer.
+    ...    @author: clanding    04DEC2020    - initial create
+    [Arguments]    ${sSubject}    ${sComment}
+    
+    ### Keyword Pre-processing ###
+    ${Subject}    Acquire Argument Value    ${sSubject}
+    ${Comment}    Acquire Argument Value    ${sComment}
+
+    ### Input Comment ###
+    mx LoanIQ activate window    ${LIQ_ActiveCustomer_Window}
+    mx LoanIQ click element if present    ${LIQ_InquiryMode_Button}
+    Mx LoanIQ Select Window Tab     ${LIQ_Active_Customer_Notebook_TabSelection}    Comments
+    mx LoanIQ click    ${LIQ_ActiveCustomer_CommentsTab_AddGenericComment_Button}
+    mx LoanIQ activate window    ${LIQ_ActiveCustomer_CommentEdit_Window}
+    mx LoanIQ enter    ${LIQ_ActiveCustomer_CommentEdit_Subject_Textbox}    ${Subject}
+    ${Current_Local_Date}    Get Current Date    result_format=%d-%b-%Y %H:%M:%S
+    mx LoanIQ enter    ${LIQ_ActiveCustomer_CommentEdit_Comment_Textbox}    ${Comment}${SPACE}${Current_Local_Date}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/CommentsEdit_Window
+    mx LoanIQ click    ${LIQ_ActiveCustomer_CommentEdit_OK_Button}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/CommentsEdit_Window
+    
+    ### Validate Comment if added ###
+    mx LoanIQ activate window    ${LIQ_ActiveCustomer_Window}
+    ${IsSelected}    Run Keyword And Return Status    Mx LoanIQ Select String    ${LIQ_ActiveCustomer_CommentsTab_JavaTree}    ${Subject}
+    Run Keyword If    ${IsSelected}==${True}    Log    ${Subject} is successfully added in the Comments tab.
+    ...    ELSE     Run Keyword And Continue On Failure    FAIL    ${Subject} is NOT successfully added in the Comments tab.
+    
+    [Return]    ${Comment}${SPACE}${Current_Local_Date}    ${Current_Local_Date}
+
+Update Details in Comments Tab in Active Customer
+    [Documentation]    This keyword is used to update details in the Comments tab of a Customer.
+    ...    @author: clanding    04DEC2020    - initial create
+    [Arguments]    ${sCurrent_Subject}
+    
+    ### Keyword Pre-processing ###
+    ${Current_Subject}    Acquire Argument Value    ${sCurrent_Subject}
+
+    ### Input Comment ###
+    mx LoanIQ activate window    ${LIQ_ActiveCustomer_Window}
+    mx LoanIQ click element if present    ${LIQ_InquiryMode_Button}
+
+    ### Tabs with highlight does not return any text and method is not working ###
+    Log To Console    Manually click Comments tab.
+    Pause Execution    Click Comments tab then click OK.
+    # Mx LoanIQ Select Window Tab     ${LIQ_Active_Customer_Notebook_TabSelection}    Comments    ### Raised TACOE-1193 for the issue
+
+    ${IsSelected}    Run Keyword And Return Status    Mx LoanIQ Select String    ${LIQ_ActiveCustomer_CommentsTab_JavaTree}    ${Current_Subject}
+    Run Keyword If    ${IsSelected}==${True}    Log    ${Current_Subject} is successfully added in the Comments tab.
+    ...    ELSE    FAIL    ${Current_Subject} is NOT existing in the Comments tab.
+
+    ### Update Comment ###
+    Mx LoanIQ Select Or DoubleClick In Javatree    ${LIQ_ActiveCustomer_CommentsTab_JavaTree}    ${Current_Subject}%d
+    mx LoanIQ activate window    ${LIQ_ActiveCustomer_CommentEdit_Window}
+
+    mx LoanIQ enter    ${LIQ_ActiveCustomer_CommentEdit_Subject_Textbox}    ${Current_Subject}_Update
+    
+    ${Current_Local_Date}    Get Current Date    result_format=%d-%b-%Y %H:%M:%S
+    mx LoanIQ enter    ${LIQ_ActiveCustomer_CommentEdit_Comment_Textbox}    ${Current_Subject}_Update${SPACE}${Current_Local_Date}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/CommentsEdit_Window
+    mx LoanIQ click    ${LIQ_ActiveCustomer_CommentEdit_OK_Button}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/CommentsEdit_Window
+    
+    ### Validate Comment if added ###
+    mx LoanIQ activate window    ${LIQ_ActiveCustomer_Window}
+    ${IsSelected}    Run Keyword And Return Status    Mx LoanIQ Select String    ${LIQ_ActiveCustomer_CommentsTab_JavaTree}    ${Current_Subject}_Update
+    Run Keyword If    ${IsSelected}==${True}    Log    ${Current_Subject}_Update is successfully added in the Comments tab.
+    ...    ELSE     Run Keyword And Continue On Failure    FAIL    ${Current_Subject}_Update is NOT successfully added in the Comments tab.
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/CommentsEdit_Window
+    
+    [Return]    ${Current_Subject}_Update    ${Current_Subject}_Update${SPACE}${Current_Local_Date}    ${Current_Local_Date}
+    
+Add Alerts in Active Customer
+    [Documentation]    This keyword is used to add Alerts details in Active Customer.
+    ...    @author: clanding    05DEC2020    - initial create
+    [Arguments]    ${sShortDescription}    ${sDetail}
+    
+    ### Keyword Pre-processing ###
+    ${ShortDescription}    Acquire Argument Value    ${sShortDescription}
+    ${Detail}    Acquire Argument Value    ${sDetail}
+
+    mx LoanIQ activate window    ${LIQ_ActiveCustomer_Window}
+    Select Menu Item    ${LIQ_ActiveCustomer_Window}    Options    Alerts
+    ${IsExist}    Run Keyword And Return Status    Mx LoanIQ Verify Object Exist    ${LIQ_Question_Yes_Button}
+    Run Keyword If    ${IsExist}==${True}    mx LoanIQ click    ${LIQ_Question_Yes_Button}
+    ...    ELSE    Run Keywords    mx LoanIQ activate window    ${LIQ_ActiveCustomer_AlertManagementScreen_Window}
+    ...    AND    mx LoanIQ click    ${LIQ_ActiveCustomer_AlertManagementScreen_Create_Button}
+    
+    mx LoanIQ activate window    ${LIQ_ActiveCustomer_AlertManagementScreen_AlertEditor_Window}
+    mx LoanIQ enter    ${LIQ_ActiveCustomer_AlertManagementScreen_AlertEditor_ShortDescription_Textbox}    ${ShortDescription}
+    
+    ${Current_Local_Date}    Get Current Date    result_format=%d-%b-%Y %H:%M:%S
+    mx LoanIQ enter    ${LIQ_ActiveCustomer_AlertManagementScreen_AlertEditor_Details_Textbox}    ${Detail}${SPACE}${Current_Local_Date}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/AlertEditor_Window
+    mx LoanIQ click    ${LIQ_ActiveCustomer_AlertManagementScreen_AlertEditor_OK_Button}
+    mx LoanIQ activate window    ${LIQ_ActiveCustomer_AlertManagementScreen_Window}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/AlertManagementScreen_Window
+
+    mx LoanIQ close window    ${LIQ_ActiveCustomer_AlertManagementScreen_Window}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/CloseAlertManagementScreen_Window
+    ${Current_Local_Date_WithoutTime}    Get Current Date    result_format=%d-%b-%Y
+    [Return]    ${Detail}${SPACE}${Current_Local_Date}    ${Current_Local_Date}    ${Current_Local_Date_WithoutTime}
+
+Update Alerts in Active Customer
+    [Documentation]    This keyword is used to update Alerts details in Active Customer.
+    ...    @author: clanding    03DEC2020    - initial create
+    [Arguments]    ${sNew_ShortDescription}
+    
+    ### Keyword Pre-processing ###
+    ${New_ShortDescription}    Acquire Argument Value    ${sNew_ShortDescription}
+
+    mx LoanIQ activate window    ${LIQ_ActiveCustomer_Window}
+    Select Menu Item    ${LIQ_ActiveCustomer_Window}    Options    Alerts   
+    mx LoanIQ activate window    ${LIQ_ActiveCustomer_AlertManagementScreen_AlertEditor_Window}
+    mx LoanIQ click    ${LIQ_ActiveCustomer_AlertManagementScreen_Modify_Button}
+
+    ${Current_Local_Date}    Get Current Date    result_format=%d-%b-%Y %H:%M:%S
+    mx LoanIQ enter    ${LIQ_ActiveCustomer_AlertManagementScreen_AlertEditor_ShortDescription_Textbox}    ${New_ShortDescription}
+    mx LoanIQ enter    ${LIQ_ActiveCustomer_AlertManagementScreen_AlertEditor_Details_Textbox}    ${New_ShortDescription}${SPACE}${Current_Local_Date}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/AlertEditor_Window
+    mx LoanIQ click    ${LIQ_ActiveCustomer_AlertManagementScreen_AlertEditor_OK_Button}
+    mx LoanIQ activate window    ${LIQ_ActiveCustomer_AlertManagementScreen_Window}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/AlertManagementScreen_Window
+
+    mx LoanIQ close window    ${LIQ_ActiveCustomer_AlertManagementScreen_Window}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/CloseAlertManagementScreen_Window
+    ${Current_Local_Date_WithoutTime}    Get Current Date    result_format=%d-%b-%Y
+    [Return]    ${New_ShortDescription}${SPACE}${Current_Local_Date}    ${Current_Local_Date}    ${Current_Local_Date_WithoutTime}

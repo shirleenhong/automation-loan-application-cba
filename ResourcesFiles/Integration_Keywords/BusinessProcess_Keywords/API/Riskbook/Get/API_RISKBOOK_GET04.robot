@@ -10,6 +10,6 @@ Get RiskBook Collection for a Newly Created RiskBook Code using User Id
     [Arguments]    ${APIDataSet}
     
     
-    Run Keyword And Continue On Failure    GET Request API for Riskbook   &{APIDataSet}[OutputFilePath]    &{APIDataSet}[OutputAPIResponse]    &{APIDataSet}[userId]    &{APIDataSet}[loginId]
+    Run Keyword And Continue On Failure    GET Request API for Riskbook   &{APIDataSet}[OutputFilePath]    &{APIDataSet}[OutputAPIResponse]    sUserId=&{APIDataSet}[userId]
     
     Run Keyword And Continue On Failure    Validate Risk Book Details to an Existing User in LoanIQ for PUT        &{APIDataSet}[userId]    &{APIDataSet}[riskBookCode]    &{APIDataSet}[buySellIndicator]    &{APIDataSet}[markIndicator]    &{APIDataSet}[viewPricesIndicator]    &{APIDataSet}[updateUserId]

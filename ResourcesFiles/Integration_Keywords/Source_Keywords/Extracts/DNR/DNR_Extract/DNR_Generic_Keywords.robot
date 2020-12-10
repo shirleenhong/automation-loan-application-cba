@@ -27,6 +27,9 @@ Login to Cognos
 Logout from Cognos
     [Documentation]    This keyword is used to logout from Cognos application.
     ...    @author: clanding    16NOV2020    - initial create
+    [Arguments]    ${bHeadless}=${False}
+
+    Return From Keyword If    ${bHeadless}==${True}    Close Browser
 
     Repeat Keyword    10 times    Wait Until Browser Ready State
     Click Element    ${DNR_PersonalMenu_Button_Locator}
@@ -101,6 +104,62 @@ Validate Multiple Value if Existing in Excel Sheet
     :FOR    ${Expected_Value}    IN    @{Expected_ValueList}
     \    ${Sheet_ColumnValue}    Validate Value if Existing in Excel Sheet    ${sExcelFile}    ${sSheetName}    ${Expected_Value}
 
+Validate List Value if Existing in Excel Sheet Column
+    [Documentation]    This keyword is used validate aList Value is existing in the sSheetColumn from sExcelFile.
+    ...    NOTE: sExcelFile=includes file path and extension.
+    ...    @author: kaustero    07DEC2020    - initial create
+    [Arguments]    ${sExcelFile}    ${sSheetName}    ${sColumnName}    ${aList}
+    
+    Open Excel    ${sExcelFile}
+    ${ColumnData}    Read Data From All Column Rows    ${sSheetName}    ${sColumnName}
+    Log    ${ColumnData}
+    Close Current Excel Document
+
+    ${ColumnData_String}    Convert To String    ${ColumnData}
+    Log    ${ColumnData_String}
+
+    ${List_Count}    Get Length    ${aList}
+    :FOR    ${Index}    IN RANGE    0    ${List_Count}
+    \    ${IsContain}    Run Keyword and Return Status    Should Contain    ${ColumnData_String}    @{aList}[${Index}]
+    \    Run Keyword If    ${IsContain}==${True}    Log    Expected: @{aList}[${Index}] is present in sheet ${ColumnData_String}.
+         ...    ELSE    Run Keyword And Continue On Failure    FAIL    Expected: @{aList}[${Index}] is NOT present in sheet ${ColumnData_String}.  
+
+Validate Text Value if Existing in Excel Sheet Column
+    [Documentation]    This keyword is used validate sTextValue is existing in the sSheetColumn from sExcelFile.
+    ...    NOTE: sExcelFile=includes file path and extension.
+    ...    @author: clanding    08DEC2020    - initial create
+    [Arguments]    ${sExcelFile}    ${sSheetName}    ${sColumnName}    ${sTextValue}    ${iColumnIndex}=1
+    
+    Open Excel    ${sExcelFile}
+    ${ColumnData}    Read Data From All Column Rows    ${sSheetName}    ${sColumnName}    ${iColumnIndex}
+    Log    ${ColumnData}
+    Close Current Excel Document
+
+    ${ColumnData_String}    Convert To String    ${ColumnData}
+    Log    ${ColumnData_String}
+
+    ${IsContain}    Run Keyword and Return Status    Should Contain    ${ColumnData_String}    ${sTextValue}
+    Run Keyword If    ${IsContain}==${True}    Log    Expected: '${sTextValue}' is present in column '${sColumnName}' with values '${ColumnData}'
+    ...    ELSE    Run Keyword And Continue On Failure    FAIL    Expected: '${sTextValue}' is NOT present in column '${sColumnName}' with values '${ColumnData}'
+
+Validate Text Value if Not Existing in Excel Sheet Column
+    [Documentation]    This keyword is used validate sTextValue is not existing in the sSheetColumn from sExcelFile.
+    ...    NOTE: sExcelFile=includes file path and extension.
+    ...    @author: clanding    08DEC2020    - initial create
+    [Arguments]    ${sExcelFile}    ${sSheetName}    ${sColumnName}    ${sTextValue}    ${iColumnIndex}=1
+    
+    Open Excel    ${sExcelFile}
+    ${ColumnData}    Read Data From All Column Rows    ${sSheetName}    ${sColumnName}    ${iColumnIndex}
+    Log    ${ColumnData}
+    Close Current Excel Document
+
+    ${ColumnData_String}    Convert To String    ${ColumnData}
+    Log    ${ColumnData_String}
+
+    ${IsContain}    Run Keyword and Return Status    Should Contain    ${ColumnData_String}    ${sTextValue}
+    Run Keyword If    ${IsContain}==${False}    Log    Expected: '${sTextValue}' is not present in column '${sColumnName}' with values '${ColumnData}'
+    ...    ELSE    Run Keyword And Continue On Failure    FAIL    Expected: '${sTextValue}' is present in column '${sColumnName}' with values '${ColumnData}'
+
 Get Total Row Count of Excel Sheet
     [Documentation]    This Keyword is used to get the row count of the specific sheet in the Excel
     ...    @author: fluberio    19NOV2020    - initial create
@@ -173,3 +232,55 @@ Create Dictionary Using Report File and Validate Values if Existing
     \    Log    ${Expected_Value}
     \    Log    ${Actual_Value}
     \    Compare Two Strings    ${Actual_Value}    ${Expected_Value}
+
+
+Get Specific Detail in Given Date
+    [Documentation]    This Keyword is used to get the specific detail in date having format of %d-%b-%Y
+    ...    @author: fluberio    04DEC2020    - initial create
+    [Arguments]    ${sDate}    ${sFormat}    ${sDelimiter}
+
+    ### note that sDate mus be in %d-%b-%Y ###
+    ${Date}    Acquire Argument Value    ${sDate}
+    ${Date_DetailList}    Split String    ${Date}    ${sDelimiter}
+    ${Date_Specific Detail}    Run keyword if    '${sFormat}'=='D'    Set Variable    @{Date_DetailList}[0]
+    ...    ELSE IF    '${sFormat}'=='M'    Set Variable    @{Date_DetailList}[1]
+    ...    ELSE IF    '${sFormat}'=='Y'    Set Variable    @{Date_DetailList}[2]    
+ 
+    [Return]    ${Date_Specific Detail}
+
+Get Date Value from Date Added or Amended Column
+    [Documentation]    This keyword is used to get date only from Date Added or Amended Column colum.
+    ...    Sample sFormat %d-%b-%Y = 30-Nov-2020
+    ...    @author: clanding    02DEC2020    - initial create
+    [Arguments]    ${sValue}    ${sFormat}=None
+    
+    ${Value}    Convert To String    ${sValue}
+    ${Value_List}    Split String    ${Value}
+    ${Date_Value}    Set Variable    @{Value_List}[0]
+    
+    ${Date_Value}    Run Keyword If    '${sFormat}'!='None'    Convert Date    ${Date_Value}    result_format=${sFormat}
+    ...    ELSE    Set Variable    ${Date_Value}
+
+    [Return]    ${Date_Value}
+    
+Setup Year for From and To Filter
+    [Documentation]    This keyword is used to Input Year in From and To Filters.
+    ...    @author: fluberio    03DEC2020    - initial create
+    [Arguments]    ${slocator}    ${sText}
+    
+    Press Keys    ${slocator}    BACKSPACE
+    Press Keys    ${slocator}    BACKSPACE
+    Press Keys    ${slocator}    BACKSPACE
+    Press Keys    ${slocator}    BACKSPACE
+    Press Keys    ${slocator}    ${sText}
+    Press Keys    ${slocator}    RETURN
+    Wait Until Browser Ready State
+
+Verify List Values if Correct
+    [Documentation]    This keyword is used to verify if all list values are correct compared to sExpectedValue
+    ...    @author: clanding    07DEC2020    - initial create
+    [Arguments]    ${aList}    ${sExpectedValue}
+
+    ${List_Count}    Get Length    ${aList}
+    :FOR    ${Index}    IN RANGE    0    ${List_Count}
+    \    Compare Two Strings    ${sExpectedValue}    @{aList}[${Index}]   

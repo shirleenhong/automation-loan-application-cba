@@ -68,8 +68,8 @@ Pay Line Fee Amount - Syndicated for DNR
     ${SysDate}    Get System Date
     ${FromDate}    Subtract Days to Date    ${SysDate}    &{ExcelPath}[Days]
     ${ThruDate}    Add Days to Date    ${SysDate}    &{ExcelPath}[Days]
-    Write Data To Excel    SC2_PaymentFees    ScheduleActivity_FromDate    ${rowid}    ${FromDate}    sFilePath=${DNR_DATASET}
-    Write Data To Excel    SC2_PaymentFees    ScheduledActivity_ThruDate    ${rowid}    ${ThruDate}    sFilePath=${DNR_DATASET}
+    Write Data To Excel    SC2_PaymentFees    ScheduleActivity_FromDate    ${rowid}    ${FromDate}    ${DNR_DATASET}
+    Write Data To Excel    SC2_PaymentFees    ScheduledActivity_ThruDate    ${rowid}    ${ThruDate}    ${DNR_DATASET}
     ###Scheduled Activity Filter###
     Set Scheduled Activity Filter    ${FromDate}    ${ThruDate}    &{ExcelPath}[ScheduledActivity_Department]    &{ExcelPath}[ScheduledActivity_Branch]    &{ExcelPath}[Deal_Name]
 
@@ -95,6 +95,7 @@ Pay Line Fee Amount - Syndicated for DNR
 
     ${ProjectedCycleDue}    Read Data From Excel    SC2_PaymentFees    Computed_ProjectedCycleDue    ${rowid}    sFilePath=${DNR_DATASET}
     ${HostBankShare}    Get Host Bank Cash in Cashflow
+    Write Data to Excel    SC2_PaymentFees    Host_BankShare    ${rowid}    ${HostBankShare}    ${DNR_DATASET}
     ${BorrowerTranAmount}    Get Transaction Amount in Cashflow    &{ExcelPath}[Borrower_ShortName]
     ${Lend1TranAmount}    Get Transaction Amount in Cashflow    &{ExcelPath}[Lender1_ShortName]
     ${Lend2TranAmount}    Get Transaction Amount in Cashflow    &{ExcelPath}[Lender2_ShortName]

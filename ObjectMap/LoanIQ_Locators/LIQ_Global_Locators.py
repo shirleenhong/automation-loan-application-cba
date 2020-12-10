@@ -6,6 +6,7 @@ LIQ_Dashboard_Facilities_Link =    'JavaWindow("title:=Fusion Loan IQ.*").JavaLi
 LIQ_Dashboard_AdditionalInformation_Tree = 'JavaWindow("title:=Fusion Loan IQ.*").JavaTree("attached text:=Additional Information")'
 LIQ_Actions_Button = 'JavaWindow("title:=Fusion Loan IQ.*").JavaButton("Index:=3")'  
 LIQ_Tree = 'JavaWindow("title:=Fusion Loan IQ.*").JavaTree("tagname:=Tree","index:=0")'    
+LIQ_UpdateMode_Button = 'JavaWindow("title:=Deal.*").JavaButton("attached text:=Notebook in Update Mode.*")'    
 LIQ_InquiryMode_Button = 'JavaWindow("title:=Deal.*").JavaButton("attached text:=Notebook in Inquiry Mode.*")'    
 LIQ_Exiting_SaveExit_Button = 'JavaWindow("title:=Exiting").JavaButton("attached text:=Save & Exit")'    
 LIQ_Logout_AsDifferentUser_RadioButton = 'JavaWindow("title:=.*LoanIQ.*7.*").JavaRadioButton("label:=.*Log on as.*")'   
@@ -169,3 +170,6 @@ LIQ_SelectByRID_Window = 'JavaWindow("title:=Select by RID")'
 LIQ_SelectByRID_DataObject_Field = 'JavaWindow("title:=Select by RID").JavaList("attached text:=Data Object:")'
 LIQ_SelectByRID_RID_Field = 'JavaWindow("title:=Select by RID").JavaEdit("attached text:=RID:")'
 LIQ_SelectByRID_OK_Button = 'JavaWindow("title:=Select by RID").JavaButton("attached text:=OK")'
+
+### Alerts ###
+LIQ_Alerts_OK_Button = 'JavaWindow("text:=Alerts").JavaButton("attached text:=OK")'

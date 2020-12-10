@@ -1813,9 +1813,13 @@ Write Data To Cell
 Get Index of a Column Header Value
     [Documentation]    This keyword is used to get the index of a column header value at the Excel Sheet.
     ...    @author: hstone    19FEB2020    Initial Create
-    [Arguments]    ${sSheetName}    ${sColumnName}    ${bTestCaseColumn}=False
+    ...    @update: clanding    08DEC2020    Added optional argument for column index: ${iColumnIndex}
+    [Arguments]    ${sSheetName}    ${sColumnName}    ${bTestCaseColumn}=False    ${iColumnIndex}=1
 
-    ${DataColumn_List}    Read Excel Row    1    sheet_name=${sSheetName}
+    ${ColumnIndex}    Run Keyword If    '${iColumnIndex}'=='1'    Set Variable    1
+    ...     ELSE    Set Variable    ${iColumnIndex}
+
+    ${DataColumn_List}    Read Excel Row    ${ColumnIndex}    sheet_name=${sSheetName}
     Log    Data Set Sheet Name: '${sSheetName}'
     Log    Data Set Sheet Column Names: '${DataColumn_List}'
 
@@ -1932,9 +1936,10 @@ Read Data From Excel
 Read Data From All Column Rows
     [Documentation]    This keyword will be used for reading data from all rows of a specified column.
     ...    @author: hstone    16MAR2020    Initial Create
-    [Arguments]    ${sSheetName}    ${sColumnName}
+    ...    @update: clanding    08DEC2020    Added optional argument for column index: ${iColumnIndex}
+    [Arguments]    ${sSheetName}    ${sColumnName}     ${iColumnIndex}=1
 
-    ${ColumnHeader_Index}    Get Index of a Column Header Value    ${sSheetName}    ${sColumnName}
+    ${ColumnHeader_Index}    Get Index of a Column Header Value    ${sSheetName}    ${sColumnName}    iColumnIndex=${iColumnIndex}
     ${Column_Data}    Read Excel Column    ${ColumnHeader_Index}    0    ${sSheetName}
     Remove Values From List    ${Column_Data}    ${sColumnName}
 
@@ -2725,3 +2730,47 @@ Get Column Header Index Using Dynamic Header
     ${ColumnName_Index}    Evaluate    ${ColumnName_Index}+1
 
     [Return]    ${TestCaseHeaderName_Index}    ${ColumnName_Index}
+
+Generate Deal Name and Alias with 5 Numeric Test Data
+    [Documentation]    This keyword generates deal name and alias.
+    ...    @author:    mcastro    27NOV2020    - Initial Create
+    [Arguments]   ${Deal_NamePrefix}    ${Deal_AliasPrefix}
+    ${Deal_Name}    Auto Generate Only 5 Numeric Test Data    ${Deal_NamePrefix}
+    log    Deal Name: ${Deal_Name}
+    ${Deal_Alias}    Auto Generate Only 5 Numeric Test Data    ${Deal_AliasPrefix}
+    log    Deal Alias: ${Deal_Alias}
+    [Return]    ${Deal_Name}    ${Deal_Alias}
+
+Generate Facility Name with 5 Numeric Test Data
+    [Documentation]    This keyword generates facility name with 5 numeric text.
+    ...    @author: mcastro    02DEC2020    - Initial Create
+    [Arguments]   ${Facility_NamePrefix}
+    
+    ${Facility_Name}    Auto Generate Only 5 Numeric Test Data     ${Facility_NamePrefix}
+    [Return]    ${Facility_Name}
+    
+Check if File Exist
+    [Documentation]    This keyword is used to check if the file exists in the specified path with multiple retries.
+    ...    @author: clanding    27NOV2020    - initial Create
+    [Arguments]    ${sPath}    ${sFile_Name}    ${sFile_Type}=xlsx    ${iRange}=300
+    
+    :FOR    ${Index}    IN RANGE    ${iRange}
+    \    ${IsFileExist}    Run Keyword And Return Status    OperatingSystem.File Should Exist    ${sPath}\\${sFile_Name}.${sFile_Type}
+    \    Exit For Loop If    ${IsFileExist}==${True}
+    Run Keyword If    ${IsFileExist}==${True}    Log    '${sPath}\\${sFile_Name}.${sFile_Type}' is found.
+    ...    ELSE    Run Keyword And Continue on Failure    Fail    '${sFile_Name}' is not found at '${sPath}'.
+
+Generate Deal Name and Alias with Numeric Test Data
+    [Documentation]    This keyword generates deal name and alias by appending numeric characters.
+    ...    Add additional condition if  there is a need for another specific number of numeric characters.
+    ...    @author:    dahijara    03DEC2020    - Initial Create
+    [Arguments]   ${sDeal_NamePrefix}    ${sDeal_AliasPrefix}    ${sNumofSuffix}
+    ${Deal_Name}    Run Keyword If    '${sNumofSuffix}'=='4'    Auto Generate Only 4 Numeric Test Data    ${sDeal_NamePrefix}
+    ...    ELSE IF    '${sNumofSuffix}'=='5'    Auto Generate Only 5 Numeric Test Data    ${sDeal_NamePrefix}
+    Log    Deal Name: ${Deal_Name}
+
+    ${Deal_Alias}    Run Keyword If    '${sNumofSuffix}'=='4'    Auto Generate Only 4 Numeric Test Data    ${sDeal_AliasPrefix}
+    ...    ELSE IF    '${sNumofSuffix}'=='5'    Auto Generate Only 5 Numeric Test Data    ${sDeal_AliasPrefix}
+    Log    Deal Alias: ${Deal_Alias}
+    [Return]    ${Deal_Name}    ${Deal_Alias}
+

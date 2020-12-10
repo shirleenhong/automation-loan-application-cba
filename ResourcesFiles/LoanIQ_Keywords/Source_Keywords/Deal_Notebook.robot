@@ -56,7 +56,8 @@ Create New Deal
     ...    @update: bernchua    21AUG2019    Added Take Screnshot keyword
     ...    @update: amansuet    02APR2020    Updated to align with automation standards and added keyword pre and post processing
     ...    @update: ehugo    28MAY2020    - added keyword pre-processing for non-unique arguments
-    [Arguments]    ${sDeal_Name}    ${sDeal_Alias}    ${sDeal_Currency}    ${sDeal_Department}    ${sDeal_SalesGroup}
+    ...    @update: mcastro    26NOV2020     - Added conditon for Deal not requiring Sales Group
+    [Arguments]    ${sDeal_Name}    ${sDeal_Alias}    ${sDeal_Currency}    ${sDeal_Department}    ${sDeal_SalesGroup}=None
 
     ### Keyword Pre-processing ###
     ${Deal_Name}    Acquire Argument Value    ${sDeal_Name}    ${ARG_TYPE_UNIQUE_NAME_VALUE}
@@ -75,11 +76,11 @@ Create New Deal
     Mx LoanIQ select combo box value    ${LIQ_DealSelect_Currenrcy_SelectBox}    ${Deal_Currency}
     Mx LoanIQ select combo box value    ${LIQ_DealSelect_Department_SelectBox}    ${Deal_Department}
     Run Keyword And Continue On Failure    Validate Input on Create New Deal    ${Deal_Name}    ${Deal_Department}    ${Deal_Currency}   ${Deal_Alias} 
-    mx LoanIQ click    ${LIQ_DealSelect_SalesGroups_Button}
-    Mx LoanIQ Select String    ${LIQ_SalesGroup_Available_JavaTree}    ${Deal_SalesGroup}
-    mx LoanIQ click    ${LIQ_SalesGroup_OK_Button}
-    Run Keyword And Continue On Failure    Mx LoanIQ Select String    ${LIQ_DealSelect_SalesGroups_JavaTree}    ${Deal_SalesGroup}
-    Run Keyword And Continue On Failure    Mx LoanIQ Select String   ${LIQ_DealSelect_SalesGroups_JavaTree}    Yes
+    Run Keyword If    '${Deal_SalesGroup}'!='None'    Run Keywords    mx LoanIQ click    ${LIQ_DealSelect_SalesGroups_Button}
+    ...    AND    Mx LoanIQ Select String    ${LIQ_SalesGroup_Available_JavaTree}    ${Deal_SalesGroup}
+    ...    AND    Mx LoanIQ click    ${LIQ_SalesGroup_OK_Button}
+    ...    AND    Run Keyword And Continue On Failure    Mx LoanIQ Select String    ${LIQ_DealSelect_SalesGroups_JavaTree}    ${Deal_SalesGroup}
+    ...    AND    Run Keyword And Continue On Failure    Mx LoanIQ Select String   ${LIQ_DealSelect_SalesGroups_JavaTree}    Yes
     ${Status}    Run Keyword And Return Status    Mx LoanIQ Verify Runtime Property    ${LIQ_DealSelect_DropInFolder_Checkbox}    value%1
     Run Keyword If    ${Status}==False    Mx LoanIQ Set    ${LIQ_DealSelect_DropInFolder_Checkbox}    ON                
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/Deal_Select
@@ -215,12 +216,14 @@ Select Deal Borrower Remmitance Instruction
     ...    @author: fmamaril
     ...    @update: amansuet    02APR2020    Updated to align with automation standards and added keyword pre-processing
     ...    @update: ehugo    28MAY2020    - added keyword pre-processing for other arguments; added screenshot
-    [Arguments]    ${sDeal_Borrower}    ${sDeal_Name}    ${sBorrower_Location}
+    ...    @update: mcastro    27NOV2020    - Added argument for ${Borrower_Depositor_Indicator} to handle required unchecked Depositor Indicator
+    [Arguments]    ${sDeal_Borrower}    ${sDeal_Name}    ${sBorrower_Location}    ${sBorrower_Depositor_Indicator}=None
     
     ### GetRuntime Keyword Pre-processing ###
     ${Deal_Borrower}    Acquire Argument Value    ${sDeal_Borrower}
     ${Deal_Name}    Acquire Argument Value    ${sDeal_Name}
     ${Borrower_Location}    Acquire Argument Value    ${sBorrower_Location}
+    ${Borrower_Depositor_Indicator}    Acquire Argument Value    ${sBorrower_Depositor_Indicator}
 
     ### Keyword Process ###
     mx LoanIQ click    ${LIQ_DealBorrower_PreferredRemittanceInstructions_Button}
@@ -233,8 +236,8 @@ Select Deal Borrower Remmitance Instruction
     mx LoanIQ click    ${LIQ_PreferredRemittanceInstructions_Ok_Button}
     mx LoanIQ click    ${LIQ_ServicingGroupDetails_Ok_Button}
     Run Keyword And Continue On Failure    Mx LoanIQ Verify Object Exist    ${LIQ_DealBorrower_Window}    VerificationData="Yes"
-    Mx LoanIQ Set    ${LIQ_DealBorrower_DepositorIndicator_Checkbox}    ON
-    Run Keyword And Continue On Failure    Validate if Element is Checked    ${LIQ_DealBorrower_DepositorIndicator_Checkbox}    Deal Borrower Indicator
+    Run Keyword If    '${Borrower_Depositor_Indicator}'=='None'    Run Keywords    Mx LoanIQ Set    ${LIQ_DealBorrower_DepositorIndicator_Checkbox}    ON
+    ...    AND    Run Keyword And Continue On Failure    Validate if Element is Checked    ${LIQ_DealBorrower_DepositorIndicator_Checkbox}    Deal Borrower Indicator
     Run Keyword And Continue On Failure    Validate if Element is Checked    ${LIQ_DealBorrower_BorrowerIndicator_Checkbox}    Deal Borrower Indicator
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/DealNotebook_BorrowerRemittanceInstruction
     mx LoanIQ click    ${LIQ_DealBorrower_Ok_Button}
@@ -620,11 +623,14 @@ Add Pricing Option
     ...    Changed verify text in java tree on line 540 to mx loaniq select string.
     ...    Added an optional argument to handle pricing options that does not tick on Bill Borrower checkbox.
     ...    @update: ehugo    28MAY2020    - added keyword Pre-processing; added screenshot
-    [Arguments]    ${sPricingRule_Option}    ${sInitialFractionRate_Round}    ${sRoundingDecimal_Round}    ${sNonBusinessDayRule}    ${iPricingOption_BillNoOfDays}    ${sMatrixChangeAppMethod}    ${sRateChangeAppMethod}    ${PricingOption_InitialFractionRate}=None
-    ...    ${PricingOption_RoundingDecimalPrecision}=None    ${PricingOption_RoundingApplicationMethod}=None    ${PricingOption_PercentOfRateFormulaUsage}=None    ${PricingOption_RepricingNonBusinessDayRule}=None    ${PricingOption_FeeOnLenderShareFunding}=None
-    ...    ${PricingOption_InterestDueUponPrincipalPayment}=None    ${PricingOption_InterestDueUponRepricing}=None    ${PricingOption_ReferenceBanksApply}=None    ${PricingOption_IntentNoticeDaysInAdvance}=None    ${PricingOption_IntentNoticeTime}=None
-    ...    ${PricingOption_12HrPeriodOption}=None    ${PricingOption_MaximumDrawdownAmount}=None    ${PricingOption_MinimumDrawdownAmount}=None    ${PricingOption_MinimumPaymentAmount}=None    ${PricingOption_MinimumAmountMultiples}=None    ${PricingOption_CCY}=None
-    ...    ${PricingOption_BillBorrower}=Y
+    ...    @update: dahijara    03DEC2020    - added two optional arguments ${PricingOption_RateSettingTime}=None    ${PricingOption_RateSettingPeriodOption}=None
+    ...                                      - added optional steps to handle Rate setting time and Rate setting period population.
+    ...                                      - rename arguments by appending arg type. added pre-processing for all arguments.
+    [Arguments]    ${sPricingRule_Option}    ${sInitialFractionRate_Round}    ${sRoundingDecimal_Round}    ${sNonBusinessDayRule}    ${iPricingOption_BillNoOfDays}    ${sMatrixChangeAppMethod}    ${sRateChangeAppMethod}    ${sPricingOption_InitialFractionRate}=None
+    ...    ${sPricingOption_RoundingDecimalPrecision}=None    ${sPricingOption_RoundingApplicationMethod}=None    ${sPricingOption_PercentOfRateFormulaUsage}=None    ${sPricingOption_RepricingNonBusinessDayRule}=None    ${sPricingOption_FeeOnLenderShareFunding}=None
+    ...    ${sPricingOption_InterestDueUponPrincipalPayment}=None    ${sPricingOption_InterestDueUponRepricing}=None    ${sPricingOption_ReferenceBanksApply}=None    ${sPricingOption_IntentNoticeDaysInAdvance}=None    ${sPricingOption_IntentNoticeTime}=None
+    ...    ${sPricingOption_12HrPeriodOption}=None    ${sPricingOption_MaximumDrawdownAmount}=None    ${sPricingOption_MinimumDrawdownAmount}=None    ${sPricingOption_MinimumPaymentAmount}=None    ${sPricingOption_MinimumAmountMultiples}=None    ${sPricingOption_CCY}=None
+    ...    ${sPricingOption_BillBorrower}=Y    ${sPricingOption_RateSettingTime}=None    ${sPricingOption_RateSettingPeriodOption}=None
 
     ### GetRuntime Keyword Pre-processing ###
     ${PricingRule_Option}    Acquire Argument Value    ${sPricingRule_Option}
@@ -634,6 +640,26 @@ Add Pricing Option
     ${PricingOption_BillNoOfDays}    Acquire Argument Value    ${iPricingOption_BillNoOfDays}
     ${MatrixChangeAppMethod}    Acquire Argument Value    ${sMatrixChangeAppMethod}
     ${RateChangeAppMethod}    Acquire Argument Value    ${sRateChangeAppMethod}
+    ${PricingOption_InitialFractionRate}    Acquire Argument Value    ${sPricingOption_InitialFractionRate}
+    ${PricingOption_RoundingDecimalPrecision}    Acquire Argument Value    ${sPricingOption_RoundingDecimalPrecision}
+    ${PricingOption_RoundingApplicationMethod}    Acquire Argument Value    ${sPricingOption_RoundingApplicationMethod}
+    ${PricingOption_PercentOfRateFormulaUsage}    Acquire Argument Value    ${sPricingOption_PercentOfRateFormulaUsage}
+    ${PricingOption_RepricingNonBusinessDayRule}    Acquire Argument Value    ${sPricingOption_RepricingNonBusinessDayRule}
+    ${PricingOption_FeeOnLenderShareFunding}    Acquire Argument Value    ${sPricingOption_FeeOnLenderShareFunding}
+    ${PricingOption_InterestDueUponPrincipalPayment}    Acquire Argument Value    ${sPricingOption_InterestDueUponPrincipalPayment}
+    ${PricingOption_InterestDueUponRepricing}    Acquire Argument Value    ${sPricingOption_InterestDueUponRepricing}
+    ${PricingOption_ReferenceBanksApply}    Acquire Argument Value    ${sPricingOption_ReferenceBanksApply}
+    ${PricingOption_IntentNoticeDaysInAdvance}    Acquire Argument Value    ${sPricingOption_IntentNoticeDaysInAdvance}
+    ${PricingOption_IntentNoticeTime}    Acquire Argument Value    ${sPricingOption_IntentNoticeTime}
+    ${PricingOption_12HrPeriodOption}    Acquire Argument Value    ${sPricingOption_12HrPeriodOption}
+    ${PricingOption_MaximumDrawdownAmount}    Acquire Argument Value    ${sPricingOption_MaximumDrawdownAmount}
+    ${PricingOption_MinimumDrawdownAmount}    Acquire Argument Value    ${sPricingOption_MinimumDrawdownAmount}
+    ${PricingOption_MinimumPaymentAmount}    Acquire Argument Value    ${sPricingOption_MinimumPaymentAmount}
+    ${PricingOption_MinimumAmountMultiples}    Acquire Argument Value    ${sPricingOption_MinimumAmountMultiples}
+    ${PricingOption_CCY}    Acquire Argument Value    ${sPricingOption_CCY}
+    ${PricingOption_BillBorrower}    Acquire Argument Value    ${sPricingOption_BillBorrower}
+    ${PricingOption_RateSettingTime}    Acquire Argument Value    ${sPricingOption_RateSettingTime}
+    ${PricingOption_RateSettingPeriodOption}    Acquire Argument Value    ${sPricingOption_RateSettingPeriodOption}
 
     Mx LoanIQ Select Window Tab    ${LIQ_DealNotebook_Tab}    Pricing Rules
     mx LoanIQ click    ${LIQ_PricingRules_AddOption_Button}
@@ -666,6 +692,9 @@ Add Pricing Option
     Run Keyword If    '${PricingOption_MinimumDrawdownAmount}' != 'None'    mx LoanIQ enter    ${LIQ_InterestPricingOption_MinimumDrawdownAmount_Textfield}    ${PricingOption_MinimumDrawdownAmount}
     Run Keyword If    '${PricingOption_MinimumPaymentAmount}' != 'None'    mx LoanIQ enter    ${LIQ_InterestPricingOption_MinimumPaymentAmount_Textfield}    ${PricingOption_MinimumPaymentAmount}    
     Run Keyword If    '${PricingOption_MinimumAmountMultiples}' != 'None'    mx LoanIQ enter    ${LIQ_InterestPricingOption_MinimumAmountMultiples_Textfield}    ${PricingOption_MinimumAmountMultiples}
+    Run Keyword If    '${PricingOption_RateSettingTime}' != 'None'    mx LoanIQ enter    ${LIQ_InterestPricingOption_RateSettingTimeInAdvance_Textfield}    ${PricingOption_RateSettingTime}
+    Run Keyword If    '${PricingOption_RateSettingPeriodOption}' != 'None'    mx LoanIQ enter    JavaWindow("title:=Interest Pricing Option.*").JavaRadioButton("labeled_containers_path:=.*Rate Setting.*","attached text:=${PricingOption_RateSettingPeriodOption}")    ON
+
     mx LoanIQ click    ${LIQ_InterestPricingOption_Ok_Button}
     Run Keyword And Continue On Failure    Mx LoanIQ Select String   ${LIQ_PricingRules_AllowedPricingOption_JavaTree}    ${PricingRule_Option}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/DealNotebook_PricingRulesTab_PricingOption
@@ -795,6 +824,7 @@ Close the Deal
     mx LoanIQ enter    ${LIQ_DealNotebook_CloseDate}    ${CloseDate}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/DealNotebook_Workflow
     mx LoanIQ click    ${LIQ_CloseDeal_OKButton}
+    mx LoanIQ click element if present    ${LIQ_Warning_OK_Button}
     Verify If Warning Is Displayed
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/DealNotebook_Workflow
     
@@ -805,6 +835,7 @@ Verify Status on Circle and Facility and Deal
     ...    Added a for loop and array to handle multiple facility validation.
     ...    @update: amansuet    24APR2020    - updated keyword name for New Framework , added keyword pre-processing and replaced ${FacilityName} to ${Facility_Name}
     ...    @update: clanding    17JUL2020    - refactor arguments and updated condition in validating if Deal is closed
+    ...    @update: clanding    26NOV2020    - added mx LoanIQ click element if present    ${LIQ_Alerts_OK_Button}
     [Tags]    Validation
     [Arguments]    ${sFundReceiverDetailCustomer}    ${sFacility_Name}
 
@@ -830,6 +861,7 @@ Verify Status on Circle and Facility and Deal
     \    Mx LoanIQ Select Or DoubleClick In Javatree    ${LIQ_FacilityNavigator_Tree }    ${Facility_Name}%d
     \    Run Keyword And Continue On Failure    Mx LoanIQ Verify Object Exist    JavaWindow("title:=Facility - .*In Closed Deal.*")    VerificationData="Yes"
     \    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/Facility_Window
+    \    mx LoanIQ click element if present    ${LIQ_Alerts_OK_Button}
     \    Mx LoanIQ Close    ${LIQ_FacilityNotebook_Window} 
     Mx LoanIQ Close    ${LIQ_FacilityNavigator_Window}
     Run Keyword And Continue On Failure    Mx LoanIQ Verify Object Exist    JavaWindow("title:=Deal Notebook - Closed Deal.*")    VerificationData="Yes"
@@ -2916,4 +2948,181 @@ Get Financial Ratio Type Effective Date and Return
     
     Save Values of Runtime Execution on Excel File    ${sRuntime_Variable_EffectiveDate}    ${EffectiveDate}
     [Return]    ${EffectiveDate} 
+
+Enter Agreement Date
+    [Documentation]    This keyword populates the Agreement Date
+    ...    @author:    mcastro    27NOV2020    - Initial Create
+    [Arguments]    ${sDeal_AgreementDate}
+
+    ### Keyword Pre-processing ###
+    ${Deal_AgreementDate}    Acquire Argument Value    ${sDeal_AgreementDate}
+
+    Mx LoanIQ Select Window Tab    ${LIQ_DealNotebook_Tab}    ${SUMMARY_TAB}
+    Mx LoanIQ enter    ${LIQ_DealSummaryAgreementDate_Textfield}    ${Deal_AgreementDate}  
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/DealNotebook_AgreementDate
+
+Add Alerts in Deal Notebook
+    [Documentation]    This keyword is used to add Alerts details in Deal Notebook.
+    ...    @author: clanding    24NOV2020    - initial create
+    [Arguments]    ${sShortDescription}    ${sDetail}
     
+    ### Keyword Pre-processing ###
+    ${ShortDescription}    Acquire Argument Value    ${sShortDescription}
+    ${Detail}    Acquire Argument Value    ${sDetail}
+
+    mx LoanIQ activate window    ${LIQ_DealNotebook_Window}
+    Select Menu Item    ${LIQ_DealNotebook_Window}    Options    Alerts
+    ${IsExist}    Run Keyword And Return Status    Mx LoanIQ Verify Object Exist    ${LIQ_Question_Yes_Button}
+    Run Keyword If    ${IsExist}==${True}    mx LoanIQ click    ${LIQ_Question_Yes_Button}
+    ...    ELSE    Run Keywords    mx LoanIQ activate window    ${LIQ_DealNotebook_AlertManagementScreen_Window}
+    ...    AND    mx LoanIQ click    ${LIQ_DealNotebook_AlertManagementScreen_Create_Button}
+    
+    mx LoanIQ activate window    ${LIQ_DealNotebook_AlertManagementScreen_AlertEditor_Window}
+    mx LoanIQ enter    ${LIQ_DealNotebook_AlertManagementScreen_AlertEditor_ShortDescription_Textbox}    ${ShortDescription}
+    
+    ${Current_Local_Date}    Get Current Date    result_format=%d-%b-%Y %H:%M:%S
+    mx LoanIQ enter    ${LIQ_DealNotebook_AlertManagementScreen_AlertEditor_Details_Textbox}    ${Detail}${SPACE}${Current_Local_Date}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/AlertEditor_Window
+    mx LoanIQ click    ${LIQ_DealNotebook_AlertManagementScreen_AlertEditor_OK_Button}
+    mx LoanIQ activate window    ${LIQ_DealNotebook_AlertManagementScreen_Window}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/AlertManagementScreen_Window
+
+    mx LoanIQ close window    ${LIQ_DealNotebook_AlertManagementScreen_Window}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/CloseAlertManagementScreen_Window
+    [Return]    ${Detail}${SPACE}${Current_Local_Date}    ${Current_Local_Date}
+
+Add Details in Comments Tab in Deal Notebook
+    [Documentation]    This keyword is used to add details in the Comments tab of a Deal.
+    ...    @author: clanding    25NOV2020    - initial create
+    [Arguments]    ${sSubject}    ${sComment}
+    
+    ### Keyword Pre-processing ###
+    ${Subject}    Acquire Argument Value    ${sSubject}
+    ${Comment}    Acquire Argument Value    ${sComment}
+
+    ### Input Comment ###
+    mx LoanIQ activate window    ${LIQ_DealNotebook_Window}
+    mx LoanIQ click element if present    ${LIQ_InquiryMode_Button}
+    Mx LoanIQ Select Window Tab     ${LIQ_DealNotebook_Tab}    Comments
+    mx LoanIQ click    ${LIQ_DealNotebook_CommentsTab_Add_Button}
+    mx LoanIQ activate window    ${LIQ_DealNotebook_CommentEdit_Window}
+    mx LoanIQ enter    ${LIQ_DealNotebook_CommentEdit_Subject_Textbox}    ${Subject}
+    ${Current_Local_Date}    Get Current Date    result_format=%d-%b-%Y %H:%M:%S
+    mx LoanIQ enter    ${LIQ_DealNotebook_CommentEdit_Comment_Textbox}    ${Comment}${SPACE}${Current_Local_Date}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/CommentsEdit_Window
+    mx LoanIQ click    ${LIQ_DealNotebook_CommentEdit_OK_Button}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/CommentsEdit_Window
+    
+    ### Validate Comment if added ###
+    mx LoanIQ activate window    ${LIQ_DealNotebook_Window}
+    ${IsSelected}    Run Keyword And Return Status    Mx LoanIQ Select String    ${LIQ_DealNotebook_CommentsTab_JavaTree}    ${Subject}
+    Run Keyword If    ${IsSelected}==${True}    Log    ${Subject} is successfully added in the Comments tab.
+    ...    ELSE     Run Keyword And Continue On Failure    FAIL    ${Subject} is NOT successfully added in the Comments tab.
+
+    ### Get Author and Date ###
+    ${Comment_Author}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_DealNotebook_CommentsTab_JavaTree}    ${Subject}%Author%Comment_Author
+    ${Comment_Date}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_DealNotebook_CommentsTab_JavaTree}    ${Subject}%Date%Comment_Date
+    
+    [Return]    ${Comment_Author}    ${Comment_Date}    ${Comment}${SPACE}${Current_Local_Date}    ${Current_Local_Date}
+    
+Update Alerts in Deal Notebook
+    [Documentation]    This keyword is used to update Alerts details in Deal Notebook.
+    ...    @author: clanding    03DEC2020    - initial create
+    [Arguments]    ${sNew_ShortDescription}
+    
+    ### Keyword Pre-processing ###
+    ${New_ShortDescription}    Acquire Argument Value    ${sNew_ShortDescription}
+
+    mx LoanIQ activate window    ${LIQ_DealNotebook_Window}
+    Select Menu Item    ${LIQ_DealNotebook_Window}    Options    Alerts   
+    mx LoanIQ activate window    ${LIQ_DealNotebook_AlertManagementScreen_AlertEditor_Window}
+    mx LoanIQ click    ${LIQ_DealNotebook_AlertManagementScreen_Modify_Button}
+
+    ${Current_Local_Date}    Get Current Date    result_format=%d-%b-%Y %H:%M:%S
+    mx LoanIQ enter    ${LIQ_DealNotebook_AlertManagementScreen_AlertEditor_ShortDescription_Textbox}    ${New_ShortDescription}
+    mx LoanIQ enter    ${LIQ_DealNotebook_AlertManagementScreen_AlertEditor_Details_Textbox}    ${New_ShortDescription}${SPACE}${Current_Local_Date}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/AlertEditor_Window
+    mx LoanIQ click    ${LIQ_DealNotebook_AlertManagementScreen_AlertEditor_OK_Button}
+    mx LoanIQ activate window    ${LIQ_DealNotebook_AlertManagementScreen_Window}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/AlertManagementScreen_Window
+
+    mx LoanIQ close window    ${LIQ_DealNotebook_AlertManagementScreen_Window}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/CloseAlertManagementScreen_Window
+    [Return]    ${New_ShortDescription}${SPACE}${Current_Local_Date}    ${Current_Local_Date}
+
+Update Details in Comments Tab in Deal Notebook
+    [Documentation]    This keyword is used to update details in the Comments tab of a Deal.
+    ...    @author: clanding    03DEC2020    - initial create
+    [Arguments]    ${sCurrent_Subject}    ${sNew_Subject}
+
+    ### Keyword Pre-processing ###
+    ${Current_Subject}    Acquire Argument Value    ${sCurrent_Subject}
+    ${New_Subject}    Acquire Argument Value    ${sNew_Subject}
+
+    mx LoanIQ activate window    ${LIQ_DealNotebook_Window}
+    mx LoanIQ click element if present    ${LIQ_InquiryMode_Button}
+
+    ### Search existing Comment ###
+    ### Tabs with highlight does not return any text and method is not working ###
+    Log To Console    Manually click Comments tab.
+    Pause Execution    Click Comments tab then click OK.
+    # Mx LoanIQ Select Window Tab     ${LIQ_DealNotebook_Tab}    Comments    ### Raised TACOE-1193/GDE-9343 for the issue
+    mx LoanIQ activate window    ${LIQ_DealNotebook_Window}
+    ${IsSelected}    Run Keyword And Return Status    Mx LoanIQ Select String    ${LIQ_DealNotebook_CommentsTab_JavaTree}    ${Current_Subject}
+    Run Keyword If    ${IsSelected}==${True}    Log    ${Current_Subject} is existing in the Comments tab.
+    ...    ELSE    FAIL    ${Current_Subject} is NOT existing in the Comments tab.
+
+    ### Update Comment ###
+    Mx LoanIQ Select Or DoubleClick In Javatree    ${LIQ_DealNotebook_CommentsTab_JavaTree}    ${Current_Subject}%d
+    mx LoanIQ activate window    ${LIQ_DealNotebook_CommentEdit_Window}
+
+    ${Current_Local_Date}    Get Current Date    result_format=%d-%b-%Y %H:%M:%S
+    mx LoanIQ enter    ${LIQ_DealNotebook_CommentEdit_Subject_Textbox}    ${New_Subject}
+    mx LoanIQ enter    ${LIQ_DealNotebook_CommentEdit_Comment_Textbox}    ${New_Subject}${SPACE}${Current_Local_Date}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/CommentsEdit_Window
+    mx LoanIQ click    ${LIQ_DealNotebook_CommentEdit_OK_Button}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/CommentsEdit_Window
+    
+    ### Validate Comment if updated ###
+    mx LoanIQ activate window    ${LIQ_DealNotebook_Window}
+    ${IsSelected}    Run Keyword And Return Status    Mx LoanIQ Select String    ${LIQ_DealNotebook_CommentsTab_JavaTree}    ${New_Subject}
+    Run Keyword If    ${IsSelected}==${True}    Log    ${New_Subject} is successfully updated in the Comments tab.
+    ...    ELSE     Run Keyword And Continue On Failure    FAIL    ${New_Subject} is NOT successfully updated in the Comments tab.
+    
+    [Return]    ${New_Subject}${SPACE}${Current_Local_Date}    ${Current_Local_Date}
+
+Delete Details in Comments Tab in Deal Notebook
+    [Documentation]    This keyword is used to delete details in the Comments tab of a Deal.
+    ...    @author: clanding    04DEC2020    - initial create
+    [Arguments]    ${sSubject}
+
+    ### Keyword Pre-processing ###
+    ${Subject}    Acquire Argument Value    ${sSubject}
+
+    mx LoanIQ activate window    ${LIQ_DealNotebook_Window}
+    mx LoanIQ click element if present    ${LIQ_InquiryMode_Button}
+
+    ### Search existing Comment ###
+    ### Tabs with highlight does not return any text and method is not working ###
+    Log To Console    Manually click Comments tab.
+    Pause Execution    Click Comments tab then click OK.
+    # Mx LoanIQ Select Window Tab     ${LIQ_DealNotebook_Tab}    Comments    ### Raised TACOE-1193/GDE-9343 for the issue
+    mx LoanIQ activate window    ${LIQ_DealNotebook_Window}
+    ${IsSelected}    Run Keyword And Return Status    Mx LoanIQ Select String    ${LIQ_DealNotebook_CommentsTab_JavaTree}    ${Subject}
+    Run Keyword If    ${IsSelected}==${True}    Log    ${Subject} is existing in the Comments tab.
+    ...    ELSE    FAIL    ${Subject} is NOT existing in the Comments tab.
+
+    ### Delete Comment ###
+    Mx LoanIQ Select Or DoubleClick In Javatree    ${LIQ_DealNotebook_CommentsTab_JavaTree}    ${Subject}%d
+    mx LoanIQ activate window    ${LIQ_DealNotebook_CommentEdit_Window}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/CommentsEdit_Window
+    mx LoanIQ click    ${LIQ_DealNotebook_CommentEdit_Delete_Button}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/CommentsEdit_Window
+    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/CommentsEdit_Window
+    
+    ### Validate Comment if deleted ###
+    mx LoanIQ activate window    ${LIQ_DealNotebook_Window}
+    ${IsSelected}    Run Keyword And Return Status    Mx LoanIQ Select String    ${LIQ_DealNotebook_CommentsTab_JavaTree}    ${Subject}
+    Run Keyword If    ${IsSelected}==${False}    Log    ${Subject} is successfully deleted in the Comments tab.
+    ...    ELSE     Run Keyword And Continue On Failure    FAIL    ${Subject} is NOT successfully deleted in the Comments tab.
