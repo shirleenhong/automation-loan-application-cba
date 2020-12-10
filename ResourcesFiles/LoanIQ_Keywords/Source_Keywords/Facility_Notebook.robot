@@ -3911,6 +3911,7 @@ Add After Item to Existing Selection For Facility Pricing
     Mx LoanIQ Optional Select    ${LIQ_AddItem_List}    ${OngoingFee_AfterItem}
     Mx LoanIQ Optional Select    ${LIQ_AddItemType_List}    ${OngoingFee_AfterItem_Type}
     mx LoanIQ click    ${LIQ_AddItem_OK_Button}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/FacilityPricing_Window
 
 Add Facility Matrix to Ongoing Fee or Interest Pricing with Existing Matrix For Facility Pricing
     [Documentation]    Adds Ongoing Fee Matrix on the Facility Notebook's Ongoing Fee Pricing window.
@@ -3938,6 +3939,7 @@ Add Item to Ongoing Fee or Interest Pricing For Facility Pricing
     Mx LoanIQ Optional Select    ${LIQ_AddItem_List}    ${OngoingFee_AfterItem}
     Mx LoanIQ Optional Select    ${LIQ_AddItemType_List}    ${OngoingFee_AfterItem_Type}
     mx LoanIQ click    ${LIQ_AddItem_OK_Button}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/FacilityPricing_OngoingFeeInterest_Window
 
 Navigate to Facitily Interest Pricing Window
     [Documentation]    This keyword adds interest pricing on facility.
@@ -3945,6 +3947,8 @@ Navigate to Facitily Interest Pricing Window
 
     mx LoanIQ activate window     ${LIQ_FacilityNotebook_Window}
     Mx LoanIQ Select Window Tab     ${LIQ_FacilityNotebook_Tab}    ${PRICING_TAB}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/FacilityPricing_Tab
     mx LoanIQ click    ${LIQ_FacilityPricing_ModifyInterestPricing_Button}
     mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}    
     mx LoanIQ activate window     ${LIQ_Facility_InterestPricing_Window}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/FacilityPricing_Window
