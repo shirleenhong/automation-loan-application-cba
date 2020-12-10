@@ -35,7 +35,7 @@ LIQ_GL_Entries_JavaTree = 'JavaWindow("title:=GL Entries For.*").JavaTree("attac
 LIQ_GL_Entries_Exit_Button = 'JavaWindow("title:=GL Entries For.*").JavaButton("attached text:=Exit.*")'
 LIQ_GL_Entries_Refresh_Button = 'JavaWindow("title:=GL Entries For.*").JavaButton("attached text:=Refresh.*")'
 
-#Loan Repricing Cashflow Locators
+### Loan Repricing Cashflow Locators ###
 LIQ_LoanRepricing_Cashflow_Window = 'JavaWindow("title:=Cashflows For Loan Repricing.*","displayed:=1")'
 LIQ_LoanRepricing_Cashflow_HostBankShare_Value = 'JavaWindow("title:=Cashflows For Loan Repricing.*","displayed:=1").JavaStaticText("index:=25")'
 LIQ_LoanRepricing_Cashflows_List  = 'JavaWindow("title:=Cashflows For Loan Repricing.*","displayed:=1").JavaTree("attached text:=Drill down to view/change details")'
