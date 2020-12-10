@@ -42,7 +42,7 @@ Create Deal Borrower in Quick Party Onboarding for ATM BILAT
     Run Keyword If    '${SSO_ENABLED}'=='NO'    Logout User on Party
     Close Browser
     
-    ## SUPERVISOR ###
+    ### SUPERVISOR ###
     ${Task_ID_From_Supervisor}    Approve Party via Supervisor Account    ${Party_ID}    &{ExcelPath}[UserZone]    &{ExcelPath}[UserBranch]
     
     ### INPUTTER ###
@@ -56,39 +56,39 @@ Search Customer and Complete Borrower Profile Creation with Default Values for A
     ...    @author: nbautista    09DEC2020
     [Arguments]    ${ExcelPath}
 	
-	###Login to LoanIQ
+	### Login to LoanIQ ###
     Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
     Navigate to Customer Notebook via Customer ID    &{ExcelPath}[Party_ID]
     Switch Customer Notebook to Update Mode
 
-    ###Adding Customer Notice Type Method
+    ### Adding Customer Notice Type Method ###
     Select Customer Notice Type Method    &{ExcelPath}[CustomerNotice_TypeMethod]
     
-    ###Adding Expense Code Details 
+    ### Adding Expense Code Details ###
     Add Expense Code Details under General tab    &{ExcelPath}[Expense_Code]
     
-    ###Adding Department Code Details
+    ### Adding Department Code Details ###
     Add Department Code Details under General tab    &{ExcelPath}[Deparment_Code]
 
-    ##Navigating to Profile Tab 
+    ### Navigating to Profile Tab ###
     Navigate to "Profiles" tab and Validate 'Add Profile' Button
 
-    ###Adding Profile          
+    ### Adding Profile ###
     Add Profile under Profiles Tab    &{ExcelPath}[Profile_Type]
           
-    ###Adding Borrower Profile Details
+    ### Adding Borrower Profile Details ###
     Add Borrower Profile Details under Profiles Tab    &{ExcelPath}[Profile_Type]
     
-    ##Validating Buttons 
+    ### Validating Buttons ###
     Validate Only 'Add Profile', 'Add Location' and 'Delete' Buttons are Enabled in Profile Tab
     
-    ###Adding Location          
+    ### Adding Location ###
     Add Location under Profiles Tab    &{ExcelPath}[Customer_Location]  
     
-    ###Adding Borrowwer/Location Details
+    ### Adding Borrowwer/Location Details ###
     Add Borrowwer/Location Details under Profiles Tab   &{ExcelPath}[Profile_Type]    &{ExcelPath}[Customer_Location]    
     
-    ###Validating Buttons if Enabled 
+    ### Validating Buttons if Enabled ###
     Validate If All Buttons are Enabled
   
     Add Contact under Profiles Tab    &{ExcelPath}[Customer_Location]    &{ExcelPath}[LIQCustomer_ShortName]    &{ExcelPath}[Contact_FirstName]    &{ExcelPath}[Contact_LastName]    
@@ -97,7 +97,7 @@ Search Customer and Complete Borrower Profile Creation with Default Values for A
     ...    &{ExcelPath}[ProductSBLC_Checkbox]    &{ExcelPath}[ProductLoan_Checkbox]    &{ExcelPath}[BalanceType_Principal_Checkbox]
     ...    &{ExcelPath}[BalanceType_Interest_Checkbox]    &{ExcelPath}[BalanceType_Fees_Checkbox]    &{ExcelPath}[Address_Code]    
        
-    ##Completing Location              
+    ### Completing Location ###
     Complete Location under Profile Tab    &{ExcelPath}[Profile_Type]    &{ExcelPath}[Customer_Location]
     
     ### Adding Remittance Instructions ###
