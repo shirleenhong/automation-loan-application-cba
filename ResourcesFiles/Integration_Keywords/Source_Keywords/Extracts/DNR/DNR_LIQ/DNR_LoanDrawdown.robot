@@ -1,5 +1,3 @@
-DNR_LoanDrawdown.robot
-
 *** Settings ***
 Resource    ../../../../../../Configurations/Integration_Import_File.robot
 
