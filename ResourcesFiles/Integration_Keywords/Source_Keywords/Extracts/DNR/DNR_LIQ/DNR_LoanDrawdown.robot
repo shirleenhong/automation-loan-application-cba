@@ -487,15 +487,25 @@ Create Loan Drawdown TERM and SBLC for Syndicated Deal With Backdated Effective 
     ###Login to Original User###
     Logout from Loan IQ
     Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
+    
+    ###Get Loan IQ System Date and Writing of Deal and Facility Name###
+    ${LoanProcessingDate}	Get System Date
+    Write Data To Excel	   SC2_LoanDrawdown    Loan_ProcessingDate    ${rowid}    ${LoanProcessingDate}   ${DNR_DATASET}
+
+    ${Deal_Name}    Read Data From Excel    SC2_DealSetup    Deal_Name    1    ${DNR_DATASET}
+    Write Data To Excel	   SC2_LoanDrawdown    Deal_Name    ${rowid}    ${Deal_Name}   ${DNR_DATASET}
+
+    ${Facility_Name}    Read Data From Excel    SC2_FacilitySetup    Facility_Name    1    ${DNR_DATASET}
+    Write Data To Excel	   SC2_LoanDrawdown    Facility_Name    ${rowid}    ${Facility_Name}   ${DNR_DATASET}
 
     ###Deal Notebook###
     ${LoanEffectiveDate}    Get Back Dated Current Date    &{ExcelPath}[NumberOfDays_ToBackdate]
-    Search for Deal    &{ExcelPath}[Deal_Name]
+    Search for Deal    ${Deal_Name}
     
     ###Creation of Initial Loan Drawdown in Loan NoteBook###
     Write Data To Excel    SC2_LoanDrawdown    Loan_EffectiveDate    ${rowid}    ${LoanEffectiveDate}    ${DNR_DATASET}
     Navigate to Outstanding Select Window from Deal
-    ${Alias}    Create Loan Outstanding    &{ExcelPath}[Outstanding_Type]    &{ExcelPath}[Facility_Name]    &{ExcelPath}[Borrower_ShortName]    &{ExcelPath}[Loan_PricingOption]    &{ExcelPath}[Loan_Currency]  
+    ${Alias}    Create Loan Outstanding    &{ExcelPath}[Outstanding_Type]    ${Facility_Name}    &{ExcelPath}[Borrower_ShortName]    &{ExcelPath}[Loan_PricingOption]    &{ExcelPath}[Loan_Currency]  
     
     ###Write Data to Other TestCases###
     Write Data To Excel    SC2_LoanDrawdown    Loan_Alias    ${rowid}    ${Alias}    ${DNR_DATASET}
