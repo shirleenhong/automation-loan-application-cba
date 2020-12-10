@@ -746,6 +746,7 @@ Navigate Notebook Workflow
     ...    @update: dahijara    19NOV2020    Added click element if present to handle RPA scenario for Loan repricing release
     ...    @update: dahijara    20NOV2020    Replaced Mx Click    ${LIQ_Cashflows_MarkSelectedItemForRelease_Button} to Mx LoanIQ select    ${LIQ_Cashflow_Options_MarkAllRelease}
     ...                                      Inserted Release Cashflow condition under Run Keyword If statement.
+    ...    @update: mcastro     07DEC2020    Added condition for Rate Setting transaction to click No on Warning pop-up
     [Arguments]    ${sNotebook_Locator}    ${sNotebookTab_Locator}    ${sNotebookWorkflow_Locator}    ${sTransaction}    
 
     ###Pre-processing Keyword##
@@ -759,7 +760,8 @@ Navigate Notebook Workflow
     Mx LoanIQ Select Window Tab    ${NotebookTab_Locator}    ${WORKFLOW_TAB}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/NotebookWorkflow
     Mx LoanIQ Select Or DoubleClick In Javatree    ${NotebookWorkflow_Locator}    ${Transaction}%d
-    Validate if Question or Warning Message is Displayed
+    Run Keyword If    '${Transaction}'=='Rate Setting'    mx LoanIQ click element if present    ${LIQ_Question_No_Button}
+    ...    ELSE    Validate if Question or Warning Message is Displayed
     mx LoanIQ click element if present    ${LIQ_Question_Yes_Button}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/NotebookWorkflow
     Run Keyword If    '${Transaction}'=='Release'    Run Keywords
@@ -2774,3 +2776,4 @@ Generate Deal Name and Alias with Numeric Test Data
     Log    Deal Alias: ${Deal_Alias}
     [Return]    ${Deal_Name}    ${Deal_Alias}
 
+    
