@@ -1745,3 +1745,73 @@ Update Adjusted Due Date on Commitment Fee
     Save Values of Runtime Execution on Excel File    ${sRunTimeVar_New_AdjustedDueDate}    ${New_AdjustedDueDate}
 
     [Return]    ${New_AdjustedDueDate}    
+
+Update Ongoing Fee General Information
+    [Documentation]    This keyword updates the general tab values for an ongoing fee notebook/
+    ...    @author: dahijara    04DEC2020    - Initial Create
+    [Arguments]    ${sFee_EffectiveDate}    ${sFee_ActualDate}    ${sFee_AdjustedDueDate}    ${sFee_Accrue}    ${sFee_AccrualEndDate}
+
+    ### Keyword Pre-processing ###
+    ${Fee_EffectiveDate}    Acquire Argument Value    ${sFee_EffectiveDate}
+    ${Fee_ActualDate}    Acquire Argument Value    ${sFee_ActualDate}
+    ${Fee_AdjustedDueDate}    Acquire Argument Value    ${sFee_AdjustedDueDate}
+    ${Fee_Accrue}    Acquire Argument Value    ${sFee_Accrue}
+    ${Fee_AccrualEndDate}    Acquire Argument Value    ${sFee_AccrualEndDate}
+
+    mx LoanIQ activate window    ${LIQ_OngoingFee_Window}
+    Mx LoanIQ Select Window Tab    ${LIQ_OngoingFee_Tab}    ${GENERAL_TAB}
+    Run Keyword And Continue On Failure    Mx LoanIQ click element if present    ${LIQ_OngoingFee_InquiryMode_Button}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/OngoingFeeNotebook_General
+    Mx LoanIQ Enter    ${LIQ_OngoingFee_EffectiveDate_Field}    ${Fee_EffectiveDate}
+    Mx LoanIQ Enter    ${LIQ_OngoingFee_FloatRateStartDate_Field}    ${Fee_EffectiveDate}
+    Mx LoanIQ Enter    ${LIQ_OngoingFee_ActualDueDate_Field}    ${Fee_ActualDate}
+    Mx LoanIQ Enter    ${LIQ_OngoingFee_AdjustedDueDate}    ${Fee_AdjustedDueDate}
+    Mx LoanIQ select combo box value    ${LIQ_OngoingFee_Accrue_Dropdown}    ${Fee_Accrue}
+    Mx LoanIQ Enter    ${LIQ_OngoingFee_AccrualEndDate_Field}    ${Fee_AccrualEndDate}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/OngoingFeeNotebook_General
+
+Update Fee Paid By and Servicing Group for Ongoing Fee
+    [Documentation]    This keyword updates the fee paid by and servicing groups for an ongoing fee notebook.
+    ...    @author: dahijara    04DEC2020    - Initial Create
+    [Arguments]    ${sBorrower_ShortName}    ${sBorrower_Location}    ${sBorrower_SGName}    ${sBorrower_SG_GroupMembers}    ${sBorrower_SG_Method}
+
+    ### Keyword Pre-processing ###
+    ${Borrower_ShortName}    Acquire Argument Value    ${sBorrower_ShortName}
+    ${Borrower_Location}    Acquire Argument Value    ${sBorrower_Location}
+    ${Borrower_SGName}    Acquire Argument Value    ${sBorrower_SGName}
+    ${Borrower_SG_GroupMembers}    Acquire Argument Value    ${sBorrower_SG_GroupMembers}
+    ${Borrower_SG_Method}    Acquire Argument Value    ${sBorrower_SG_Method}
+
+    ### Customer Select ###
+    Mx LoanIQ Click    ${LIQ_OngoingFee_FeePaidBy_Button}
+    Mx LoanIQ Activate    ${LIQ_CustomerSelect_Window}
+    Mx LoanIQ Enter    ${LIQ_CustomerSelect_Search_Inputfield}     ${Borrower_ShortName}
+    Take Screenshot    ${Screenshot_Path}/Screenshots/LoanIQ/OngoingFee_CustomerSelectWindow
+    Mx LoanIQ Click    ${LIQ_CustomerSelect_OK_Button}
+
+    ### Locations ###
+    Mx LoanIQ Activate    ${LIQ_Locations_Window}
+    Mx LoanIQ Select String    ${LIQ_Locations_JavaTree}    ${Borrower_Location}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/OngoingFee_Locations
+    Mx LoanIQ Click    ${LIQ_Locations_OK_Button}
+
+    ### Servicing Group ###
+    Run Keyword And Continue On Failure    Mx LoanIQ Verify Object Exist    ${LIQ_ServicingGroup_Window}    VerificationData="Yes"
+    Mx LoanIQ activate window    ${LIQ_ServicingGroup_Window}
+    Mx LoanIQ Select String    ${LIQ_ServicingGroups_JavaTree}   ${Borrower_SGName}
+    Mx LoanIQ Select String    ${LIQ_ServicingGroups_GroupMembers_JavaTree}   ${Borrower_SG_GroupMembers}
+    Mx LoanIQ Select String    ${LIQ_ServicingGroups_RemittanceInctructions_JavaTree}   ${Borrower_SG_Method}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/OngoingFee_ServicingGroupsFor
+    Mx LoanIQ click    ${LIQ_ServicingGroup_OK_Button}
+    Mx LoanIQ activate window    ${LIQ_OngoingFee_Window}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/OngoingFeeNotebook_General
+
+Save and Close Ongoing Fee Window
+    [Documentation]    This keyword saves and closes an ongoing fee notebook.
+    ...    @author: dahijara    04DEC2020    - Initial Create
+
+    Mx LoanIQ activate window    ${LIQ_OngoingFee_Window}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/OngoingFeeNotebook_General
+    Mx LoanIQ select    ${LIQ_OngoingFee_Save_Menu}
+    Mx LoanIQ click element if present    ${LIQ_Warning_OK_Button}
+    Mx LoanIQ select    ${LIQ_OngoingFee_Exit_Menu}

@@ -125,7 +125,7 @@ Unrestrict Deal
     ${Status}    Run Keyword And Return Status    Mx LoanIQ Verify Object Exist    ${LIQ_DealNotebook_Restrict_Label}    VerificationData="Yes"
     Run Keyword And Continue On Failure    Should Not Be True   ${Status}==True
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/DealWindow_Summary
-    
+
 Add Deal Borrower
     [Documentation]    It adds the borrower name in a deal
     ...    @author: fmamaril
@@ -589,6 +589,49 @@ Add Financial Ratio
     Run Keyword And Continue On Failure    Mx LoanIQ Select String   ${LIQ_FinantialRatio_JavaTree}    ${RatioType}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/DealWindow_RatiosConditions
 
+Add Outside Conditions
+    [Documentation]    This keyword adds a outside condition in Ratios/Conds
+    ...    @author: kmagday    08DEC2020    initial create
+    [Arguments]    ${sIndex}    ${sOutsideCondition}    ${sStartDate}    ${sTrue}=OFF    
+
+    ### Keyword Pre-processing ###
+    ${Index}    Acquire Argument Value  ${sIndex}
+    ${OutsideCondition}    Acquire Argument Value    ${sOutsideCondition}
+    ${True}    Acquire Argument Value    ${sTrue}
+    ${startDate}    Acquire Argument Value    ${sStartDate}
+
+    Mx LoanIQ Select Window Tab    ${LIQ_DealNotebook_Tab}    ${RATIOS_CONDS_TAB}
+
+    ### Populating textfield ###
+    ${LIQ_OutsideConditions_TextField}    Replace Variables    ${LIQ_OutsideConditions_TextField}
+    mx LoanIQ enter    ${LIQ_OutsideConditions_TextField}    ${sOutsideCondition}
+
+    ### Populating the true or false radio button ###
+    Run Keyword If    '${Index}'=='1' and '${True}'=='ON'    mx LoanIQ click    ${LIQ_OutsideConditions_First_TrueRadioButton}    
+    ...    ELSE    mx LoanIQ click    ${LIQ_OutsideConditions_First_FalseRadioButton}
+    Run Keyword If    '${Index}'=='2' and '${True}'=='ON'    mx LoanIQ click    ${LIQ_OutsideConditions_Second_TrueRadioButton}    
+    ...    ELSE    mx LoanIQ click    ${LIQ_OutsideConditions_Second_FalseRadioButton}
+    Run Keyword If    '${Index}'=='3' and '${True}'=='ON'    mx LoanIQ click    ${LIQ_OutsideConditions_Third_TrueRadioButton}    
+    ...    ELSE    mx LoanIQ click    ${LIQ_OutsideConditions_Third_FalseRadioButton}
+
+
+    mx LoanIQ click    ${LIQ_OutsideConditions_History_Button}
+    mx LoanIQ click element if present   ${LIQ_Warning_Yes_Button}
+
+    ${dropdownVal}    Set Variable If    '${Index}'=='1'    Outside Condition 1
+    ...    '${Index}'=='2'    Outside Condition 2
+    ...    '${Index}'=='3'    Outside Condition 3
+
+    Mx LoanIQ select combo box value    ${LIQ_OutsideConditions_SelectConditionDropdown}    ${dropdownVal}
+    mx LoanIQ click    ${LIQ_OutsideConditions_Insert_Button}
+
+    mx LoanIQ enter    ${LIQ_Edit_OutsideConditions_StartDate}    ${startDate}
+    mx LoanIQ click    ${LIQ_Edit_OutsideConditions_OK_Button}
+
+    mx LoanIQ click element if present    ${LIQ_Edit_OutsideConditions_Question_Yes_Button}
+    mx LoanIQ click    ${LIQ_OutsideConditions_OK_Button}
+
+
 Modify Upfront Fees
     [Documentation]    This keyword adds a financial ratio in a deal.
     ...    @author: fmamaril
@@ -824,6 +867,7 @@ Close the Deal
     mx LoanIQ enter    ${LIQ_DealNotebook_CloseDate}    ${CloseDate}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/DealNotebook_Workflow
     mx LoanIQ click    ${LIQ_CloseDeal_OKButton}
+    mx LoanIQ click element if present    ${LIQ_Warning_OK_Button}
     Verify If Warning Is Displayed
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/DealNotebook_Workflow
     
@@ -3065,10 +3109,10 @@ Update Details in Comments Tab in Deal Notebook
     ### Tabs with highlight does not return any text and method is not working ###
     Log To Console    Manually click Comments tab.
     Pause Execution    Click Comments tab then click OK.
-    # Mx LoanIQ Select Window Tab     ${LIQ_DealNotebook_Tab}    Comments    ### Raised TACOE-1193 for the issue
+    # Mx LoanIQ Select Window Tab     ${LIQ_DealNotebook_Tab}    Comments    ### Raised TACOE-1193/GDE-9343 for the issue
     mx LoanIQ activate window    ${LIQ_DealNotebook_Window}
     ${IsSelected}    Run Keyword And Return Status    Mx LoanIQ Select String    ${LIQ_DealNotebook_CommentsTab_JavaTree}    ${Current_Subject}
-    Run Keyword If    ${IsSelected}==${True}    Log    ${Current_Subject} is successfully added in the Comments tab.
+    Run Keyword If    ${IsSelected}==${True}    Log    ${Current_Subject} is existing in the Comments tab.
     ...    ELSE    FAIL    ${Current_Subject} is NOT existing in the Comments tab.
 
     ### Update Comment ###
@@ -3082,10 +3126,52 @@ Update Details in Comments Tab in Deal Notebook
     mx LoanIQ click    ${LIQ_DealNotebook_CommentEdit_OK_Button}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/CommentsEdit_Window
     
-    ### Validate Comment if added ###
+    ### Validate Comment if updated ###
     mx LoanIQ activate window    ${LIQ_DealNotebook_Window}
     ${IsSelected}    Run Keyword And Return Status    Mx LoanIQ Select String    ${LIQ_DealNotebook_CommentsTab_JavaTree}    ${New_Subject}
-    Run Keyword If    ${IsSelected}==${True}    Log    ${New_Subject} is successfully added in the Comments tab.
-    ...    ELSE     Run Keyword And Continue On Failure    FAIL    ${New_Subject} is NOT successfully added in the Comments tab.
+    Run Keyword If    ${IsSelected}==${True}    Log    ${New_Subject} is successfully updated in the Comments tab.
+    ...    ELSE     Run Keyword And Continue On Failure    FAIL    ${New_Subject} is NOT successfully updated in the Comments tab.
     
     [Return]    ${New_Subject}${SPACE}${Current_Local_Date}    ${Current_Local_Date}
+
+Delete Details in Comments Tab in Deal Notebook
+    [Documentation]    This keyword is used to delete details in the Comments tab of a Deal.
+    ...    @author: clanding    04DEC2020    - initial create
+    [Arguments]    ${sSubject}
+
+    ### Keyword Pre-processing ###
+    ${Subject}    Acquire Argument Value    ${sSubject}
+
+    mx LoanIQ activate window    ${LIQ_DealNotebook_Window}
+    mx LoanIQ click element if present    ${LIQ_InquiryMode_Button}
+
+    ### Search existing Comment ###
+    ### Tabs with highlight does not return any text and method is not working ###
+    Log To Console    Manually click Comments tab.
+    Pause Execution    Click Comments tab then click OK.
+    # Mx LoanIQ Select Window Tab     ${LIQ_DealNotebook_Tab}    Comments    ### Raised TACOE-1193/GDE-9343 for the issue
+    mx LoanIQ activate window    ${LIQ_DealNotebook_Window}
+    ${IsSelected}    Run Keyword And Return Status    Mx LoanIQ Select String    ${LIQ_DealNotebook_CommentsTab_JavaTree}    ${Subject}
+    Run Keyword If    ${IsSelected}==${True}    Log    ${Subject} is existing in the Comments tab.
+    ...    ELSE    FAIL    ${Subject} is NOT existing in the Comments tab.
+
+    ### Delete Comment ###
+    Mx LoanIQ Select Or DoubleClick In Javatree    ${LIQ_DealNotebook_CommentsTab_JavaTree}    ${Subject}%d
+    mx LoanIQ activate window    ${LIQ_DealNotebook_CommentEdit_Window}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/CommentsEdit_Window
+    mx LoanIQ click    ${LIQ_DealNotebook_CommentEdit_Delete_Button}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/CommentsEdit_Window
+    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/CommentsEdit_Window
+    
+    ### Validate Comment if deleted ###
+    mx LoanIQ activate window    ${LIQ_DealNotebook_Window}
+    ${IsSelected}    Run Keyword And Return Status    Mx LoanIQ Select String    ${LIQ_DealNotebook_CommentsTab_JavaTree}    ${Subject}
+    Run Keyword If    ${IsSelected}==${False}    Log    ${Subject} is successfully deleted in the Comments tab.
+    ...    ELSE     Run Keyword And Continue On Failure    FAIL    ${Subject} is NOT successfully deleted in the Comments tab.
+
+Click OK Button To Close Borrowers Notebook
+    [Documentation]    Clicking Ok button to close/save deal borrowers notebook
+    ...    @author: kmagday    09DEC2020    - initial create
+
+    mx LoanIQ click    ${LIQ_DealBorrower_Ok_Button}

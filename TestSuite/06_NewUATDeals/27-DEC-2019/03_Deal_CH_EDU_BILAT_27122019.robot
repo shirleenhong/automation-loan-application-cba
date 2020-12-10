@@ -15,3 +15,9 @@ Establish Deal with LVR Effective 30/6/2019
 
 Establish Capitalisation Facility
     Mx Execute Template With Multiple Data    Create Capitalisation Facility for CH EDU Bilateral Deal    ${ExcelPath}    ${rowid}    CRED02_FacilitySetup_A
+
+Establish Commitment Fee
+    Mx Execute Template With Multiple Data    Setup Commitment Fee for CH EDU Bilateral Deal    ${ExcelPath}    ${rowid}    CRED08_OngoingFeeSetup_A
+
+Establish Cash Advance Facility
+    Mx Execute Template With Multiple Data    Create Cash Advance Facility for CH EDU Bilateral Deal    ${ExcelPath}    ${rowid}    CRED02_FacilitySetup_B

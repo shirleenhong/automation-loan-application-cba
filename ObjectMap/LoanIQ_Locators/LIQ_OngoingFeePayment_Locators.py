@@ -15,3 +15,20 @@ LIQ_OngoingFee_CurrentRate_Field = 'JavaWindow("title:=.*Fee /.*").JavaEdit("att
 LIQ_OngoingFee_RateBasis_Text = 'JavaWindow("title:=.*Fee /.*").JavaStaticText("attached text:=Actual/.*")'
 LIQ_OngoingFee_BalanceAmount_Field = 'JavaWindow("title:=.*Fee /.*").JavaEdit("attached text:=Balance Amount:")'
 LIQ_OngoingFee_General_OptionsPayment_Menu = 'JavaWindow("title:=.*Fee /.*","displayed:=1").JavaMenu("label:=Options").JavaMenu("label:=Payment")'
+
+### Ongoing Fee Notebook - General Tab ###
+LIQ_OngoingFee_InquiryMode_Button = 'JavaWindow("title:=.*Fee /.*","displayed:=1").JavaButton("attached text:=Notebook in Inquiry Mode.*")'
+LIQ_OngoingFee_Window = 'JavaWindow("title:=.*Fee /.*","displayed:=1")'
+LIQ_OngoingFee_Tab = 'JavaWindow("title:=.*Fee /.*","displayed:=1").JavaTab("tagname:=TabFolder")' 
+LIQ_OngoingFee_EffectiveDate_Field = 'JavaWindow("title:=.*Fee /.*","displayed:=1").JavaEdit("attached text:=Effective Date:.*")'
+LIQ_OngoingFee_FloatRateStartDate_Field = 'JavaWindow("title:=.*Fee /.*","displayed:=1").JavaEdit("attached text:=Float Rate Start Date:.*")'
+LIQ_OngoingFee_ActualDueDate_Field = 'JavaWindow("title:=.*Fee /.*","displayed:=1").JavaEdit("attached text:=Actual Due Date:.*")'
+LIQ_OngoingFee_AdjustedDueDate = 'JavaWindow("title:=.*Fee /.*","displayed:=1").JavaEdit("attached text:=Adjusted Due Date:.*")'
+LIQ_OngoingFee_Accrue_Dropdown = 'JavaWindow("title:=.*Fee /.*","displayed:=1").JavaList("attached text:=Accrue.*")'
+LIQ_OngoingFee_AccrualEndDate_Field = 'JavaWindow("title:=.*Fee /.*","displayed:=1").JavaEdit("attached text:=Accrual End Date:.*")'
+LIQ_OngoingFee_FeePaidBy_Button = 'JavaWindow("title:=.*Fee /.*","displayed:=1").JavaButton("attached text:=Fee Paid By:.*")'
+LIQ_OngoingFee_ServicingGroup_Button = 'JavaWindow("title:=.*Fee /.*","displayed:=1").JavaButton("attached text:=Servicing Group.*")'
+
+### Ongoing Fee Menu ###
+LIQ_OngoingFee_Save_Menu = 'JavaWindow("title:=.*Fee /.*","displayed:=1").JavaMenu("label:=File").JavaMenu("label:=Save")'
+LIQ_OngoingFee_Exit_Menu = 'JavaWindow("title:=.*Fee /.*","displayed:=1").JavaMenu("label:=File").JavaMenu("label:=Exit")'

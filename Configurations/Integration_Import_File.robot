@@ -508,6 +508,7 @@ Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/Extr
 ### Integration Resource Files - DNR - Source Keywords ###
 Resource    ../ResourcesFiles/Integration_Keywords/Source_Keywords/Extracts/DNR/DNR_Extract/DNR_ExtractValidation_Keywords.robot
 Resource    ../ResourcesFiles/Integration_Keywords/Source_Keywords/Extracts/DNR/DNR_Extract/DNR_Generic_Keywords.robot
+Resource    ../ResourcesFiles/Integration_Keywords/Source_Keywords/Extracts/DNR/DNR_LIQ/DNR_Customer.robot
 Resource    ../ResourcesFiles/Integration_Keywords/Source_Keywords/Extracts/DNR/DNR_LIQ/DNR_DealSetup.robot
 Resource    ../ResourcesFiles/Integration_Keywords/Source_Keywords/Extracts/DNR/DNR_LIQ/DNR_FacilityFeeSetup.robot
 Resource    ../ResourcesFiles/Integration_Keywords/Source_Keywords/Extracts/DNR/DNR_LIQ/DNR_FacilitySetup.robot
@@ -515,6 +516,9 @@ Resource    ../ResourcesFiles/Integration_Keywords/Source_Keywords/Extracts/DNR/
 Resource    ../ResourcesFiles/Integration_Keywords/Source_Keywords/Extracts/DNR/DNR_LIQ/DNR_LoanDrawdown.robot
 Resource    ../ResourcesFiles/Integration_Keywords/Source_Keywords/Extracts/DNR/DNR_LIQ/DNR_Payments.robot
 Resource    ../ResourcesFiles/Integration_Keywords/Source_Keywords/Extracts/DNR/DNR_LIQ/DNR_PrimaryAllocation.robot
+Resource    ../ResourcesFiles/Integration_Keywords/Source_Keywords/Extracts/DNR/DNR_LIQ/DNR_AdminFeeSetup.robot
+Resource    ../ResourcesFiles/Integration_Keywords/Source_Keywords/Extracts/DNR/DNR_LIQ/DNR_LoanDrawdown.robot
+Resource    ../ResourcesFiles/Integration_Keywords/Source_Keywords/Extracts/DNR/DNR_LIQ/DNR_LoanSplit.robot
 
 ### Integration Resource Files - DNR - Business Process Keywords ###
 Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/Extracts/DNR_LIQ/DNR_Cognos.robot
