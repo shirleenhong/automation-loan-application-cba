@@ -4,10 +4,11 @@ Resource    ../../../../Configurations/Party_Import_File.robot
 
 *** Keywords ***
 
-Load Base Rate for UAT Deal 27DEC2019
+Load Base Rate for UAT Deal
     [Documentation]    Used to send a valid Golden Source file to SFTP site. Then validate if GS file is processed and moved to Archive folder.
     ...    Then validate in LoanIQ if Base Rate Code is updated correctly.
     ...    @author: dahijara    26NOV2020    - initial create
+    ...    @update: mcastro     10DEC2020    - Updated keyword name from Load Base Rate for UAT Deal 27DEC2019 to Load Base Rate for UAT Deal
     [Arguments]    ${ExcelPath}
     
     Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
