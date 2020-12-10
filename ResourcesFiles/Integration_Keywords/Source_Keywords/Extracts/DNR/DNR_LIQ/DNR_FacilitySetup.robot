@@ -52,19 +52,19 @@ Create Facility for DNR
     Write Data To Excel    SC1_FacilitySetup    Facility_MaturityDate    ${rowid}    ${Facility_MaturityDate}    ${DNR_DATASET}
     Write Data To Excel    SC1_FacilitySetup    Facility_ExpiryDate    ${rowid}    ${Facility_ExpiryDate}    ${DNR_DATASET}
 
-    ${row_previous}    Run Keyword If    '${rowid}'=='1'    Set Variable    ${rowid}
+    ${row_previous}    Run Keyword If    '${rowid}'=='1' or '${rowid}'=='4'    Set Variable    ${rowid}
     ...    ELSE    Evaluate    ${rowid}-1
     ${row_previous}    Convert To String    ${row_previous}
     ${Facility_Name_Primary}    Read Data From Excel    SC1_PrimaryAllocation    Facility_Name    ${row_previous}    ${DNR_DATASET}
-    ${Facility_Name_Primary}    Run Keyword If    '${rowid}'=='1'    Set Variable    ${Facility_Name}
+    ${Facility_Name_Primary}    Run Keyword If    '${rowid}'=='1' or '${rowid}'=='4'    Set Variable    ${Facility_Name}
     ...    ELSE    Set Variable    ${Facility_Name_Primary}|${Facility_Name}
     Write Data To Excel    SC1_PrimaryAllocation    Facility_Name    Expanded_Scenario1_ActiveFac1_Repayment    ${Facility_Name_Primary}    ${DNR_DATASET}
 
-    ${row_previous}    Run Keyword If    '${rowid}'=='1'    Set Variable    ${rowid}
+    ${row_previous}    Run Keyword If    '${rowid}'=='1' or '${rowid}'=='4'    Set Variable    ${rowid}
     ...    ELSE    Evaluate    ${rowid}-1
     ${row_previous}    Convert To String    ${row_previous}
     ${Facility_ExpiryDate_Primary}    Read Data From Excel    SC1_PrimaryAllocation    Primary_PortfolioExpiryDate    ${row_previous}    ${DNR_DATASET}
-    ${Facility_ExpiryDate_Primary}    Run Keyword If    '${rowid}'=='1'    Set Variable    ${Facility_ExpiryDate}
+    ${Facility_ExpiryDate_Primary}    Run Keyword If    '${rowid}'=='1' or '${rowid}'=='4'    Set Variable    ${Facility_ExpiryDate}
     ...    ELSE    Set Variable    ${Facility_ExpiryDate_Primary}|${Facility_ExpiryDate}
     Write Data To Excel    SC1_PrimaryAllocation    Primary_PortfolioExpiryDate    Expanded_Scenario1_ActiveFac1_Repayment    ${Facility_ExpiryDate_Primary}    ${DNR_DATASET}
     
