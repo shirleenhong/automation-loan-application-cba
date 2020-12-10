@@ -2,7 +2,7 @@
 Resource    ../../../../../Configurations/Integration_Import_File.robot
 
 *** Keywords ***
-Validate Cash Out Report For Payment Non Agency is Generated for All Transactions In Approval Status
+Validate Cash Out Report for Payment Non Agency is Generated for All Transactions in Approval Status
     [Documentation]    This keyword is used to validate that the Cash Out Report is generated for all transactions in Approval status.
     ...    @author: fluberio    10DEC2020    - initial create
     [Arguments]    ${ExcelPath}
