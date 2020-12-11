@@ -4037,3 +4037,57 @@ Select Text In Ongoing Fee Pricing List
     ${Text}    Acquire Argument Value    ${sText}
 
     Mx LoanIQ Select Or DoubleClick In Javatree   ${LIQ_FacilityPricing_OngoingFeeInterest_Tree}    ${Text}%s
+Add After Item to Existing Selection For Facility Pricing
+    [Documentation]    Adds an After Item to an Existing Selection For Facility Pricing Notebook.
+    ...    @author: dahijara    09DEC2020    - Initial create
+    [Arguments]    ${sOngoingFee_AfterItem}    ${sOngoingFee_AfterItem_Type}
+
+    ### Keyword Pre-processing ###
+    ${OngoingFee_AfterItem}    Acquire Argument Value    ${sOngoingFee_AfterItem}
+    ${OngoingFee_AfterItem_Type}    Acquire Argument Value    ${sOngoingFee_AfterItem_Type}
+
+    mx LoanIQ click    ${LIQ_FacilityPricing_OngoingFeeInterest_After_Button}
+    Mx LoanIQ Optional Select    ${LIQ_AddItem_List}    ${OngoingFee_AfterItem}
+    Mx LoanIQ Optional Select    ${LIQ_AddItemType_List}    ${OngoingFee_AfterItem_Type}
+    mx LoanIQ click    ${LIQ_AddItem_OK_Button}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/FacilityPricing_Window
+
+Add Facility Matrix to Ongoing Fee or Interest Pricing with Existing Matrix For Facility Pricing
+    [Documentation]    Adds Ongoing Fee Matrix on the Facility Notebook's Ongoing Fee Pricing window.
+    ...    @author: dahijara    09DEC2020    - Initial Create
+    [Arguments]    ${sOngoingFee_MatrixType}    ${sOngoingFee_Item}    ${sOngoingFee_Item_Type}
+
+    ### Keyword Pre-processing ###
+    ${OngoingFee_MatrixType}    Acquire Argument Value    ${sOngoingFee_MatrixType}
+    ${OngoingFee_Item}    Acquire Argument Value    ${sOngoingFee_Item}
+    ${OngoingFee_Item_Type}    Acquire Argument Value    ${sOngoingFee_Item_Type}
+
+    Mx LoanIQ Select Or DoubleClick In Javatree    ${LIQ_FacilityPricing_OngoingFeeInterest_Tree}    ${sOngoingFee_MatrixType}%s
+    Add Item to Ongoing Fee or Interest Pricing For Facility Pricing    ${OngoingFee_Item}    ${OngoingFee_Item_Type}
+
+Add Item to Ongoing Fee or Interest Pricing For Facility Pricing
+    [Documentation]    Adds an Item to an Existing Selection For Facility Pricing Notebook.
+    ...    @author: dahijara    09DEC2020    - Initial create
+    [Arguments]    ${sOngoingFee_AfterItem}    ${sOngoingFee_AfterItem_Type}
+
+    ### Keyword Pre-processing ###
+    ${OngoingFee_AfterItem}    Acquire Argument Value    ${sOngoingFee_AfterItem}
+    ${OngoingFee_AfterItem_Type}    Acquire Argument Value    ${sOngoingFee_AfterItem_Type}
+
+    mx LoanIQ click    ${LIQ_FacilityPricing_OngoingFeeInterest_Add_Button}
+    Mx LoanIQ Optional Select    ${LIQ_AddItem_List}    ${OngoingFee_AfterItem}
+    Mx LoanIQ Optional Select    ${LIQ_AddItemType_List}    ${OngoingFee_AfterItem_Type}
+    mx LoanIQ click    ${LIQ_AddItem_OK_Button}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/FacilityPricing_OngoingFeeInterest_Window
+
+Navigate to Facitily Interest Pricing Window
+    [Documentation]    This keyword adds interest pricing on facility.
+    ...    @author: dahijara    09DEC2020    - Initial create
+
+    mx LoanIQ activate window     ${LIQ_FacilityNotebook_Window}
+    Mx LoanIQ Select Window Tab     ${LIQ_FacilityNotebook_Tab}    ${PRICING_TAB}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/FacilityPricing_Tab
+    mx LoanIQ click    ${LIQ_FacilityPricing_ModifyInterestPricing_Button}
+    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}    
+    mx LoanIQ activate window     ${LIQ_Facility_InterestPricing_Window}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/FacilityPricing_Window
