@@ -264,10 +264,12 @@ Set Filter Using Payment Date and Download Report
     UnSelect Frame
     Capture Page Screenshot    ${screenshot_path}/Screenshots/DNR/Download-{index}.png
 
-Validate Facility Performance Report File with Active Status
+Validate Facility Performance Report File
     [Documentation]    This keyword is used to validate facility name row values in the facility performance report file with active status.
     ...    Columns to Validate: Facility Name, FCN, Total Utilization Amount, Facility Status
     ...    @author: ccarriedo    07DEC2020    - initial create
+    ...    @update: clanding    11DEC2020    - updated keyword name from 'Validate Facility Performance Report File with Active Status' to 'Validate Facility Performance Report File'
+    ...    @update: clanding    11DEC2020    - added conversion of decimal place of both expected and actual amount to 2
     [Arguments]    ${sLIQPerformance_Report}    ${sSheet_Name}    ${sFacility_Name}    ${sColumns_To_Validate}    ${sDelimiter}    
     ...    ${Column_Headers_RowID}    ${sFacility_Status}    ${sFacility_Outstandings}    ${sFacility_FCN}
 
@@ -292,7 +294,9 @@ Validate Facility Performance Report File with Active Status
     ### Validate Facility Outstandings using the Dictionary key Total Utilization Amount ###
     ${Report_File_Facility_Outstandings}    Get From Dictionary    ${Expected_Row_Values_Dictionary}    Total Utilization Amount        
     Log    Report File Facility Outstandings: '${Report_File_Facility_Outstandings}'
-    Compare Two Strings    ${sFacility_Outstandings}    ${Report_File_Facility_Outstandings}
+    ${Report_File_Facility_Outstandings}   Return Given Number with Specific Decimal Places without Rounding    ${Report_File_Facility_Outstandings}    2
+    ${Facility_Outstandings}   Return Given Number with Specific Decimal Places without Rounding    ${sFacility_Outstandings}    2
+    Compare Two Strings    ${Facility_Outstandings}    ${Report_File_Facility_Outstandings}
 
 Create Facility Name Row Values Dictionary
     [Documentation]    This keyword is used to validate facility name row values in the facility performance report file.
@@ -320,6 +324,7 @@ Create Facility Name Row Values Dictionary
 Get Facility Name Row Values
     [Documentation]    This keyword is used to validate Facility Name, FCN,  Total Utilization Amount and Facility Status Values in the facility performance report file.
     ...    @author: ccarriedo    07DEC2020    - initial create
+    ...    @update: clanding    11DEC2020    - added getting of row value from coordinates value
     [Arguments]    ${sLIQPerformance_Report}    ${sSheet_Name}    ${sFacility_Name}    ${sColumns_To_Validate}    ${Column_Headers_RowID}
 
     ${Report_Column_Header_Index}    Get Specific Column Header Index in the Report File    ${sSheet_Name}    ${sColumns_To_Validate}    ${Column_Headers_RowID}        
@@ -329,15 +334,19 @@ Get Facility Name Row Values
     
     ### Convert the list to string and substring to determine the facility name row ###
     ${Report_Sheet_Values_List_String}    Convert To String    ${Report_Sheet_Values_List}
+    Log    ${Report_Sheet_Values_List_String}
     ${Facility_Name_Left}    Fetch From Left    ${Report_Sheet_Values_List_String}    ${sFacility_Name}
     ${Facility_Name_Left_Count}    Get Length    ${Facility_Name_Left}
-    ${Facility_Name_Left_Start}    Evaluate    ${Facility_Name_Left_Count}-30
+    ${Facility_Name_Left_Start}    Evaluate    ${Facility_Name_Left_Count}-10
     ${Facility_Name_Left_Substring}    Get Substring    ${Facility_Name_Left}    ${Facility_Name_Left_Start}
     ${Split_String}    Split String    ${Facility_Name_Left_Substring}    ,
-    ${String_Right}    Get From List    ${Split_String}    1
-    ${String_Right_Count}    Get Length    ${String_Right}
-    ${String_Right_End}    Evaluate    ${String_Right_Count}-1
-    ${Facility_Name_Row_String}    Get Substring    ${String_Right}    4    ${String_Right_End}
+    ${String_Right}    Get From List    ${Split_String}    0
+    ${String_Right}    Remove String    ${String_Right}    '
+    # ${String_Right_Count}    Get Length    ${String_Right}
+    # ${String_Right_End}    Evaluate    ${String_Right_Count}-1
+    # ${Facility_Name_Row_String}    Get Substring    ${String_Right}    4    ${String_Right_End}
+    ${Facility_Name_Row_String}    Get Row Value from Coordinates    ${String_Right}
+    ${Facility_Name_Row_String}    Evaluate    ${Facility_Name_Row_String}-1
 
     ### Get all row values ###
     ${Expected_Row_Values_List}    CustomExcelLibrary.Get Row Values    ${sSheet_Name}    ${Facility_Name_Row_String}    ${True}
