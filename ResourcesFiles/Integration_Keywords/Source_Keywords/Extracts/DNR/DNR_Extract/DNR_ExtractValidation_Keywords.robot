@@ -342,9 +342,6 @@ Get Facility Name Row Values
     ${Split_String}    Split String    ${Facility_Name_Left_Substring}    ,
     ${String_Right}    Get From List    ${Split_String}    0
     ${String_Right}    Remove String    ${String_Right}    '
-    # ${String_Right_Count}    Get Length    ${String_Right}
-    # ${String_Right_End}    Evaluate    ${String_Right_Count}-1
-    # ${Facility_Name_Row_String}    Get Substring    ${String_Right}    4    ${String_Right_End}
     ${Facility_Name_Row_String}    Get Row Value from Coordinates    ${String_Right}
     ${Facility_Name_Row_String}    Evaluate    ${Facility_Name_Row_String}-1
 
@@ -374,3 +371,4 @@ Get Facility Name Row Values
     ${Report_File_Row_Values}    Get From Dictionary    ${Get_From_List_Dictionary}    ${Expected_Value_Key}
     
     [Return]    ${Report_File_Row_Values}
+
