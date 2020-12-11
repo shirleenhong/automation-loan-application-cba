@@ -40,3 +40,17 @@ Create Initial Loan Drawdown for Active Facility Expanded Scenario 1 - Payment N
     Mx Execute Template With Specific Test Case Name    Generate DNR Report for Payment    ${DNR_DATASET}    Test_Case    ${TestCase_Name}    DNR
     Mx Execute Template With Specific Test Case Name    Write Details for Payment Non Agency Reports    ${DNR_DATASET}    Test_Case    ${TestCase_Name}    DNR
 
+    Set Global Variable    ${rowid}    4
+    Set Global Variable    ${TestCase_Name}    Expanded_Scenario1_Payment_NonAgency
+    Mx Execute Template With Multiple Data    Release Revolver Facility Drawdown for Bilateral Deal    ${DNR_DATASET}    ${rowid}    SC1_LoanDrawdown
+
+    ### Generate Payment Non Agenecy Cash Out Report Released Status ###
+    Set Global Variable    ${rowid}    4
+    Set Global Variable    ${TestCase_Name}    PAYNA_003
+    Mx Execute Template With Specific Test Case Name    Write Filter Details for Payment Non Agency Reports in DNR Data Set    ${DNR_DATASET}    Test_Case    ${TestCase_Name}    DNR
+    Mx Execute Template With Multiple Data    Write Cashflow ID for Payment Non Agency Report    ${DNR_DATASET}    ${rowid}    SC1_LoanDrawdown
+    Mx Execute Template With Specific Test Case Name    Generate DNR Report for Payment    ${DNR_DATASET}    Test_Case    ${TestCase_Name}    DNR
+    Mx Execute Template With Specific Test Case Name    Write Details for Payment Non Agency Reports    ${DNR_DATASET}    Test_Case    ${TestCase_Name}    DNR
+    
+    Log To Console    Run 1 Day EOD for Facility 2 to expire
+    Pause Execution
