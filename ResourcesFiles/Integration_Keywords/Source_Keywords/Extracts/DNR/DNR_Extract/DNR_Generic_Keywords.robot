@@ -104,6 +104,62 @@ Validate Multiple Value if Existing in Excel Sheet
     :FOR    ${Expected_Value}    IN    @{Expected_ValueList}
     \    ${Sheet_ColumnValue}    Validate Value if Existing in Excel Sheet    ${sExcelFile}    ${sSheetName}    ${Expected_Value}
 
+Validate List Value if Existing in Excel Sheet Column
+    [Documentation]    This keyword is used validate aList Value is existing in the sSheetColumn from sExcelFile.
+    ...    NOTE: sExcelFile=includes file path and extension.
+    ...    @author: kaustero    07DEC2020    - initial create
+    [Arguments]    ${sExcelFile}    ${sSheetName}    ${sColumnName}    ${aList}
+    
+    Open Excel    ${sExcelFile}
+    ${ColumnData}    Read Data From All Column Rows    ${sSheetName}    ${sColumnName}
+    Log    ${ColumnData}
+    Close Current Excel Document
+
+    ${ColumnData_String}    Convert To String    ${ColumnData}
+    Log    ${ColumnData_String}
+
+    ${List_Count}    Get Length    ${aList}
+    :FOR    ${Index}    IN RANGE    0    ${List_Count}
+    \    ${IsContain}    Run Keyword and Return Status    Should Contain    ${ColumnData_String}    @{aList}[${Index}]
+    \    Run Keyword If    ${IsContain}==${True}    Log    Expected: @{aList}[${Index}] is present in sheet ${ColumnData_String}.
+         ...    ELSE    Run Keyword And Continue On Failure    FAIL    Expected: @{aList}[${Index}] is NOT present in sheet ${ColumnData_String}.  
+
+Validate Text Value if Existing in Excel Sheet Column
+    [Documentation]    This keyword is used validate sTextValue is existing in the sSheetColumn from sExcelFile.
+    ...    NOTE: sExcelFile=includes file path and extension.
+    ...    @author: clanding    08DEC2020    - initial create
+    [Arguments]    ${sExcelFile}    ${sSheetName}    ${sColumnName}    ${sTextValue}    ${iColumnIndex}=1
+    
+    Open Excel    ${sExcelFile}
+    ${ColumnData}    Read Data From All Column Rows    ${sSheetName}    ${sColumnName}    ${iColumnIndex}
+    Log    ${ColumnData}
+    Close Current Excel Document
+
+    ${ColumnData_String}    Convert To String    ${ColumnData}
+    Log    ${ColumnData_String}
+
+    ${IsContain}    Run Keyword and Return Status    Should Contain    ${ColumnData_String}    ${sTextValue}
+    Run Keyword If    ${IsContain}==${True}    Log    Expected: '${sTextValue}' is present in column '${sColumnName}' with values '${ColumnData}'
+    ...    ELSE    Run Keyword And Continue On Failure    FAIL    Expected: '${sTextValue}' is NOT present in column '${sColumnName}' with values '${ColumnData}'
+
+Validate Text Value if Not Existing in Excel Sheet Column
+    [Documentation]    This keyword is used validate sTextValue is not existing in the sSheetColumn from sExcelFile.
+    ...    NOTE: sExcelFile=includes file path and extension.
+    ...    @author: clanding    08DEC2020    - initial create
+    [Arguments]    ${sExcelFile}    ${sSheetName}    ${sColumnName}    ${sTextValue}    ${iColumnIndex}=1
+    
+    Open Excel    ${sExcelFile}
+    ${ColumnData}    Read Data From All Column Rows    ${sSheetName}    ${sColumnName}    ${iColumnIndex}
+    Log    ${ColumnData}
+    Close Current Excel Document
+
+    ${ColumnData_String}    Convert To String    ${ColumnData}
+    Log    ${ColumnData_String}
+
+    ${IsContain}    Run Keyword and Return Status    Should Contain    ${ColumnData_String}    ${sTextValue}
+    Run Keyword If    ${IsContain}==${False}    Log    Expected: '${sTextValue}' is not present in column '${sColumnName}' with values '${ColumnData}'
+    ...    ELSE    Run Keyword And Continue On Failure    FAIL    Expected: '${sTextValue}' is present in column '${sColumnName}' with values '${ColumnData}'
+
 Get Total Row Count of Excel Sheet
     [Documentation]    This Keyword is used to get the row count of the specific sheet in the Excel
     ...    @author: fluberio    19NOV2020    - initial create
@@ -181,6 +237,7 @@ Create Dictionary Using Report File and Validate Values if Existing
 Get Specific Detail in Given Date
     [Documentation]    This Keyword is used to get the specific detail in date having format of %d-%b-%Y
     ...    @author: fluberio    04DEC2020    - initial create
+    ...    @update: clanding    09DEC2020    - added removing of 0 on the left of day
     [Arguments]    ${sDate}    ${sFormat}    ${sDelimiter}
 
     ### note that sDate mus be in %d-%b-%Y ###
@@ -190,6 +247,8 @@ Get Specific Detail in Given Date
     ...    ELSE IF    '${sFormat}'=='M'    Set Variable    @{Date_DetailList}[1]
     ...    ELSE IF    '${sFormat}'=='Y'    Set Variable    @{Date_DetailList}[2]    
  
+    ${Date_Specific Detail}    Strip String    ${Date_Specific Detail}    mode=left    characters=0
+
     [Return]    ${Date_Specific Detail}
 
 Get Date Value from Date Added or Amended Column
@@ -219,3 +278,61 @@ Setup Year for From and To Filter
     Press Keys    ${slocator}    ${sText}
     Press Keys    ${slocator}    RETURN
     Wait Until Browser Ready State
+
+Verify List Values if Correct
+    [Documentation]    This keyword is used to verify if all list values are correct compared to sExpectedValue
+    ...    @author: clanding    07DEC2020    - initial create
+    [Arguments]    ${aList}    ${sExpectedValue}
+
+    ${List_Count}    Get Length    ${aList}
+    :FOR    ${Index}    IN RANGE    0    ${List_Count}
+    \    Compare Two Strings    ${sExpectedValue}    @{aList}[${Index}]   
+
+Get Specific Column Header Index in the Report File
+    [Documentation]    This keyword is used to get the header index of a specific column in the report file.
+    ...    @author: ccarriedo    07DEC2020    - initial create
+    [Arguments]    ${sSheet_Name}    ${sColumns_To_Validate}    ${Column_Headers_RowID}
+    
+    ### Get column headers ###
+    ${Report_Column_Headers_List}    CustomExcelLibrary.Get Row Values    ${sSheet_Name}    ${Column_Headers_RowID}	### The report file does not start at row 1 so the column headers are at row 5 ###
+    ### Get the total number of columns ###
+    ${Report_Column_Headers_Count}    Get Length    ${Report_Column_Headers_List}
+    ### Search the index of the required column and exit once done ###
+    :FOR    ${Index}    IN RANGE    ${Report_Column_Headers_Count}
+    \    ${Report_Column_Header}    Get From List    ${Report_Column_Headers_List}    ${Index}
+    \    ${Status_Report_Column_Header}    Run Keyword and Return Status    Should Contain    ${Report_Column_Header}    ${sColumns_To_Validate}
+    \    Run keyword if    '${Status_Report_Column_Header}' == '${True}'    Set Global Variable    ${Report_Column_Header_Index}    ${Index}
+    \    Exit For Loop If    '${Status_Report_Column_Header}' == '${True}'
+    Log    Report Column Header Index of '${Report_Column_Header}': '${Report_Column_Header_Index}'
+    
+    [Return]    ${Report_Column_Header_Index}
+
+Verify List Values Displays Numbers in N Decimal Places
+    [Documentation]    This keyword is used to verify if all list values displays numbers in ${iDecimalPlaces} Decimal Places.
+    ...    @author: kaustero    08DEC2020    - initial create
+    ...    @update: clanding    09DEC2020    - added handling of .00 and .60 decimal places
+    [Arguments]    ${aList}    ${iDecimalPlaces}=2
+
+    ${List_Count}    Get Length    ${aList}
+    :FOR    ${Index}    IN RANGE    0    ${List_Count}
+    \    ${Value}    Convert To String    @{aList}[${Index}]
+    \
+    \    ### Check if value contains a decimal point ###
+    \    ${IsContain}    Run Keyword and Return Status    Should Contain    ${Value}   .
+    \    Run Keyword If    ${IsContain}==${False}    Run Keyword And Continue On Failure    FAIL    Expected: ${Value} does not contain a decimal number.
+         ...    ELSE    Log    Expected: ${Value} contains a decimal number.
+    \  
+    \    ### Skip current iteration if value does not contain a decimal point ###
+    \    Continue For Loop If    ${IsContain}==${False}
+    \
+    \    ${Container_List}    Split String    ${Value}    .
+    \    ${WholeNum_Value}    Set Variable    @{Container_List}[0]
+    \    ${Decimal_Value}    Set Variable    @{Container_List}[1]
+    \    ${DecimalPlaces}    Run Keyword If    '${Decimal_Value}'=='0'    Set Variable    1
+         ...    ELSE IF    ${Decimal_Value}>1 and ${Decimal_Value}<10    Set Variable    1
+         ...    ELSE    Set Variable    ${iDecimalPlaces}
+    \    ${Count}    Get Length    ${Decimal_Value}
+    \    ${IsEqual}    Run Keyword And Return Status    Should Be Equal As Integers    ${Count}    ${DecimalPlaces}
+    \    Run Keyword If    ${IsEqual}==${True}    Log    Expected: ${Value} contains ${DecimalPlaces} decimal places.
+         ...    ELSE    Run Keyword And Continue On Failure    FAIL    Expected: ${Value} contains ${Count} decimal places instead of ${DecimalPlaces}.
+    

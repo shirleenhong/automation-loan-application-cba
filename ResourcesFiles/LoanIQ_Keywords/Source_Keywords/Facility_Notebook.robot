@@ -3195,13 +3195,14 @@ Rename Facility
 Validate Facility Status
     [Documentation]    This keyword is used to validate Facility status is Active or Expired.
     ...    @author: amansuet    28OCT2019    - Initial Create
+    ...    @update: clanding    09DEC2020    - added Run Keyword And Continue On Failure on Fail
     [Arguments]    ${sFacilityName}    ${sFacilityStatus}
     
     mx LoanIQ activate    ${LIQ_FacilityNavigator_Window}
     Take Screenshot    Facility_Status_FacilityNavigator
     ${status}    Run Keyword And Return Status    Mx LoanIQ Select String    ${LIQ_FacilityNavigator_Tree}    ${sFacilityName}\t${sFacilityStatus}
     Run Keyword If    '${status}'=='${True}'    Log    Facility Status of '${sFacilityName}' is '${sFacilityStatus}'.
-    ...    ELSE IF    '${status}'=='${False}'    Fail    Facility Status of '${sFacilityName}' is NOT '${sFacilityStatus}'.
+    ...    ELSE IF    '${status}'=='${False}'    Run Keyword And Continue On Failure    Fail    Facility Status of '${sFacilityName}' is NOT '${sFacilityStatus}'.
 
 Get Facility Type
     [Documentation]    Gets the Facility Type on Facility Notebook Summary Tab.
@@ -3897,6 +3898,57 @@ Add Alerts in Facility Notebook
     mx LoanIQ close window    ${LIQ_FacilityNotebook_AlertManagementScreen_Window}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/CloseAlertManagementScreen_Window
     [Return]    ${Detail}${SPACE}${Current_Local_Date}    ${Current_Local_Date}
+
+New Facility Select for Pending Status
+    [Documentation]    This keyword creates a new facility.
+    ...    @author: clanding    09DEC2020    - initial create
+    [Arguments]    ${sDeal_Name}    ${sFacility_Name}    ${sFacility_Type}    ${sFacility_Currency}
+
+    ### GetRuntime Keyword Pre-processing ###
+    ${Deal_Name}    Acquire Argument Value    ${sDeal_Name}
+    ${Facility_Type}    Acquire Argument Value    ${sFacility_Type}
+    ${Facility_Currency}    Acquire Argument Value    ${sFacility_Currency}
+    
+    ### Keyword Pre-processing ###
+    ${Facility_Name}    Acquire Argument Value    ${sFacility_Name}    ${ARG_TYPE_UNIQUE_NAME_VALUE}
+
+    mx LoanIQ activate window     ${LIQ_DealNotebook_Window}
+    mx LoanIQ click element if present    ${LIQ_InquiryMode_Button}    
+    mx LoanIQ select   ${LIQ_DealNotebook_Options_Facilities}
+    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}      
+    mx LoanIQ click    ${LIQ_FacilityNavigator_Add_Button}
+    Validation on Facility Add
+    mx LoanIQ enter    ${LIQ_FacilitySelect_New_RadioButton}    ON
+    mx LoanIQ enter    ${LIQ_FacilitySelect_DealName_Textfield}    ${Deal_Name}
+    mx LoanIQ enter    ${LIQ_FacilitySelect_FacilityName_Text}    ${Facility_Name}
+    mx LoanIQ click    ${LIQ_FacilitySelect_FacilityType_Button}
+    mx LoanIQ enter    ${LIQ_FacilityTypeSelect_SearchByDescription_Textfield}    ${Facility_Type}
+    mx LoanIQ click    ${LIQ_FacilityTypeSelect_OK_Button}    
+    Mx LoanIQ select combo box value    ${LIQ_FacilitySelect_Currency_List}    ${Facility_Currency}
+    mx LoanIQ click    ${LIQ_FacilitySelect_OK_Button} 
+    :FOR    ${i}    IN RANGE    2
+    \    Sleep    10
+    \    ${LIQ_FacilityNoebook_WindowExist}    Run Keyword And Return Status    Mx LoanIQ Verify Object Exist    ${LIQ_FacilityNotebook_Window}        VerificationData="Yes"
+    \    Exit For Loop If    ${LIQ_FacilityNoebook_WindowExist}==True    
+    mx LoanIQ activate window     ${LIQ_FacilityNotebook_Window}
+    Run Keyword And Continue On Failure    Verify If Text Value Exist as Static Text on Page    Facility -    ${Facility_Type}
+    Run Keyword And Continue On Failure    Verify If Text Value Exist as Static Text on Page    Facility -    ${Facility_Type}  
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/Facility_Window
+
+Get Outstandings Amount from Facility Notebook
+    [Documentation]    This keyword returns the Facility Host Bank Share Gross Amounts Outstandings Amount.
+    ...    @author: ccarriedo    09DEC2020    Initial Create
+
+    mx LoanIQ activate window    ${LIQ_FacilityNotebook_Window}
+    Mx LoanIQ Select Window Tab    ${LIQ_FacilityNotebook_Tab}    Summary
+    ${Facility_Outstandings}    Mx LoanIQ Get Data    ${LIQ_FacilitySummary_HostBank_Outstandings}    value%Amount
+    ${Facility_Outstandings_Amount}    Remove Comma and Convert to Number    ${Facility_Outstandings} 
+    Log    The Facility ost Bank Share Gross Amounts Outstandings Amount is ${Facility_Outstandings_Amount} 
+    Screenshot.Set Screenshot Directory    ${Screenshot_Path}
+    Set Test Variable    ${SCREENSHOT_FILENAME}    Outstandings Amount
+    Take Screenshot    ${SCREENSHOT_FILENAME}
+    
+    [Return]    ${Facility_Outstandings_Amount}
 
 Add After Item to Existing Selection For Facility Pricing
     [Documentation]    Adds an After Item to an Existing Selection For Facility Pricing Notebook.
