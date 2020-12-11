@@ -114,15 +114,22 @@ Get Active Facility Details for Active Outstanding and Write in DNR Dataset
 Get Expired Facility Details for Active Outstanding and Write in DNR Dataset
     [Documentation]    This keyword is used to get details for each report and write in dataset.
     ...    @author: clanding    25NOV2020    - initial create
+    ...    @update: clanding    11DEC2020    - added validation of status and getting amount
     [Arguments]    ${ExcelPath}
 
     Navigate to Facility Notebook    &{ExcelPath}[Deal_Name]    &{ExcelPath}[Facility_Name]
     ${FacilityControlNumber}    Get Facility Control Number
+    
+    ${Facility_Status}    Read Data From Excel    FACPF    Facility_Status    ${rowid}    ${DNR_DATASET}
+	Validate Facility Status    &{ExcelPath}[Facility_Name]    ${Facility_Status}
+    
+    ${Facility_Outstandings_Amount}    Get Outstandings Amount from Facility Notebook  
 
     ### Writing for Facility Performance Report ###
     Write Data To Excel    FACPF    Facility_Name    FACPF_004    &{ExcelPath}[Facility_Name]    ${DNR_DATASET}    bTestCaseColumn=True
     Write Data To Excel    FACPF    Facility_FCN    FACPF_004    ${FacilityControlNumber}    ${DNR_DATASET}    bTestCaseColumn=True
     Write Data To Excel    FACPF    Deal_Name    FACPF_004    &{ExcelPath}[Deal_Name]    ${DNR_DATASET}    bTestCaseColumn=True
+    Write Data To Excel    FACPF    Facility_Outstandings    FACPF_004    ${Facility_Outstandings_Amount}    ${DNR_DATASET}    bTestCaseColumn=True
 
     Close All Windows on LIQ
 
