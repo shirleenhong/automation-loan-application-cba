@@ -3978,7 +3978,7 @@ Add Ongoing Fee - Matrix - Outside Condition
 Add Ongoing Fee - Matrix - Outside Condition - Insert After
     [Documentation]    This keyword adds ongoing fee - after on facility.
     ...    @author: kmagday    10DEC2020    -    initial create
-    [Arguments]    ${FacilityItemAfter}    ${FacilityItem}    ${OutsideCondition_RadioButton}=OFF  
+    [Arguments]    ${sFacilityItemAfter}    ${sFacilityItem}    ${sOutsideCondition_RadioButton}=OFF  
 
     ### Keyword Pre-processing ###
     ${FacilityItemAfter}    Acquire Argument Value    ${sFacilityItemAfter}
@@ -4037,7 +4037,7 @@ Select Text In Ongoing Fee Pricing List
     ${Text}    Acquire Argument Value    ${sText}
 
     Mx LoanIQ Select Or DoubleClick In Javatree   ${LIQ_FacilityPricing_OngoingFeeInterest_Tree}    ${Text}%s
-    
+
 Add After Item to Existing Selection For Facility Pricing
     [Documentation]    Adds an After Item to an Existing Selection For Facility Pricing Notebook.
     ...    @author: dahijara    09DEC2020    - Initial create
