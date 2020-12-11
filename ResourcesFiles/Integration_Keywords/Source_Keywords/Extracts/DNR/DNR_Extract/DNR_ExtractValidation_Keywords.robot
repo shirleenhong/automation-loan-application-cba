@@ -263,3 +263,112 @@ Set Filter Using Payment Date and Download Report
         
     UnSelect Frame
     Capture Page Screenshot    ${screenshot_path}/Screenshots/DNR/Download-{index}.png
+
+Validate Facility Performance Report File
+    [Documentation]    This keyword is used to validate facility name row values in the facility performance report file with active status.
+    ...    Columns to Validate: Facility Name, FCN, Total Utilization Amount, Facility Status
+    ...    @author: ccarriedo    07DEC2020    - initial create
+    ...    @update: clanding    11DEC2020    - updated keyword name from 'Validate Facility Performance Report File with Active Status' to 'Validate Facility Performance Report File'
+    ...    @update: clanding    11DEC2020    - added conversion of decimal place of both expected and actual amount to 2
+    [Arguments]    ${sLIQPerformance_Report}    ${sSheet_Name}    ${sFacility_Name}    ${sColumns_To_Validate}    ${sDelimiter}    
+    ...    ${Column_Headers_RowID}    ${sFacility_Status}    ${sFacility_Outstandings}    ${sFacility_FCN}
+
+    ### Open report excel file ###
+    CustomExcelLibrary.Open Excel    ${sLIQPerformance_Report}
+    
+    ### Create and store facility name row values in a dictionary ###
+    ${Expected_Row_Values_Dictionary}    Create Facility Name Row Values Dictionary    ${sLIQPerformance_Report}    ${sSheet_Name}    ${sFacility_Name}    ${sColumns_To_Validate}    
+    ...    ${sDelimiter}    ${Column_Headers_RowID}    ${sFacility_Outstandings}    ${sFacility_FCN}
+
+    ### Validate Facility FCN using the Dictionary key FCN ###
+    ${Report_File_Facility_FCN}    Get From Dictionary    ${Expected_Row_Values_Dictionary}    FCN
+    Log    Report File Facility FCN: '${Report_File_Facility_FCN}'            
+    Compare Two Strings    ${sFacility_FCN}    ${Report_File_Facility_FCN}
+    
+    ### Validate Facility Status using the Dictionary key Facility Status ###
+    ${Report_File_Facility_Status}    Get From Dictionary    ${Expected_Row_Values_Dictionary}    Facility Status
+    Log    Report File Facility Status: '${Report_File_Facility_Status}'
+    ${sFacility_Status_Uppercase}    Convert To Uppercase    ${sFacility_Status}         
+    Compare Two Strings    ${sFacility_Status_Uppercase}    ${Report_File_Facility_Status}
+    
+    ### Validate Facility Outstandings using the Dictionary key Total Utilization Amount ###
+    ${Report_File_Facility_Outstandings}    Get From Dictionary    ${Expected_Row_Values_Dictionary}    Total Utilization Amount        
+    Log    Report File Facility Outstandings: '${Report_File_Facility_Outstandings}'
+    ${Report_File_Facility_Outstandings}   Return Given Number with Specific Decimal Places without Rounding    ${Report_File_Facility_Outstandings}    2
+    ${Facility_Outstandings}   Return Given Number with Specific Decimal Places without Rounding    ${sFacility_Outstandings}    2
+    Compare Two Strings    ${Facility_Outstandings}    ${Report_File_Facility_Outstandings}
+
+Create Facility Name Row Values Dictionary
+    [Documentation]    This keyword is used to validate facility name row values in the facility performance report file.
+    ...    @author: ccarriedo    07DEC2020    - initial create
+    [Arguments]    ${sLIQPerformance_Report}    ${sSheet_Name}    ${sFacility_Name}    ${sColumns_To_Validate}    ${sDelimiter}    ${Column_Headers_RowID}    
+    ...    ${sFacility_Outstandings}    ${sFacility_FCN}
+
+    ### Get the columns to validate from dataset and split delimeter to string ###
+    ${Column_Headers_List}    Split String    ${sColumns_To_Validate}    ${sDelimiter}
+    ${Column_Headers_List_Count}    Get Length    ${Column_Headers_List}
+    
+    ### Create dictionary for the container of the fetched row values to be validated ###
+    ${Report_File_Row_Values_Dictionary}    Create Dictionary
+    
+    ### This is to fetch all the values of the row and store it in list and dictionary which will be used for validating the excel values using the dictionary key-value pairs and to LIQ values ###
+    :FOR    ${Index}    IN RANGE    ${Column_Headers_List_Count}
+    \    ${Column_Headers_Value}    Get From List    ${Column_Headers_List}    ${Index}
+    \    ${Report_File_Row_Values}    Get Facility Name Row Values    ${sLIQPerformance_Report}    ${sSheet_Name}    ${sFacility_Name}    ${Column_Headers_Value}    ${Column_Headers_RowID}
+    \    Log    The value of '${Column_Headers_Value}': '${Report_File_Row_Values}'
+    \    Set To Dictionary    ${Report_File_Row_Values_Dictionary}    ${Column_Headers_Value}=${Report_File_Row_Values}
+    Log    ${Report_File_Row_Values_Dictionary}
+    
+    [Return]    ${Report_File_Row_Values_Dictionary}
+
+Get Facility Name Row Values
+    [Documentation]    This keyword is used to validate Facility Name, FCN,  Total Utilization Amount and Facility Status Values in the facility performance report file.
+    ...    @author: ccarriedo    07DEC2020    - initial create
+    ...    @update: clanding    11DEC2020    - added getting of row value from coordinates value
+    [Arguments]    ${sLIQPerformance_Report}    ${sSheet_Name}    ${sFacility_Name}    ${sColumns_To_Validate}    ${Column_Headers_RowID}
+
+    ${Report_Column_Header_Index}    Get Specific Column Header Index in the Report File    ${sSheet_Name}    ${sColumns_To_Validate}    ${Column_Headers_RowID}        
+    
+    ### Get all report sheet values ###
+    ${Report_Sheet_Values_List}    CustomExcelLibrary.Get Sheet Values    ${sSheet_Name}
+    
+    ### Convert the list to string and substring to determine the facility name row ###
+    ${Report_Sheet_Values_List_String}    Convert To String    ${Report_Sheet_Values_List}
+    Log    ${Report_Sheet_Values_List_String}
+    ${Facility_Name_Left}    Fetch From Left    ${Report_Sheet_Values_List_String}    ${sFacility_Name}
+    ${Facility_Name_Left_Count}    Get Length    ${Facility_Name_Left}
+    ${Facility_Name_Left_Start}    Evaluate    ${Facility_Name_Left_Count}-10
+    ${Facility_Name_Left_Substring}    Get Substring    ${Facility_Name_Left}    ${Facility_Name_Left_Start}
+    ${Split_String}    Split String    ${Facility_Name_Left_Substring}    ,
+    ${String_Right}    Get From List    ${Split_String}    0
+    ${String_Right}    Remove String    ${String_Right}    '
+    ${Facility_Name_Row_String}    Get Row Value from Coordinates    ${String_Right}
+    ${Facility_Name_Row_String}    Evaluate    ${Facility_Name_Row_String}-1
+
+    ### Get all row values ###
+    ${Expected_Row_Values_List}    CustomExcelLibrary.Get Row Values    ${sSheet_Name}    ${Facility_Name_Row_String}    ${True}
+    Log    ${Expected_Row_Values_List}
+    
+    ### Get value using the column index ###
+    ${Expected_Row_Values}    Get From List    ${Expected_Row_Values_List}    ${Report_Column_Header_Index}
+    Log    ${Expected_Row_Values}
+    
+    ### Convert the value to string and split using the delimiter , ###
+    ${Expected_Row_Values_String}    Convert To String    ${Expected_Row_Values}
+    ${Expected_Value_Split}    Split String    ${Expected_Row_Values_String}	,
+    
+    ### Get the left value from the split string to determine the cell coordinate ###
+    ${Expected_Value_String_Left}    Get From List    ${Expected_Value_Split}    0
+    ${Expected_Value_String_Left_Count}    Get Length    ${Expected_Value_String_Left}
+    ${Expected_Value_String_Left_End}    Evaluate    ${Expected_Value_String_Left_Count}-1
+    ${Expected_Value_Key}    Get Substring    ${Expected_Value_String_Left}    2    ${Expected_Value_String_Left_End}
+    
+    ### Convert the row list to dictionary ###
+    ${Get_From_List_Dictionary}    Convert To Dictionary    ${Expected_Row_Values_List}
+    Log    ${Get_From_List_Dictionary}
+    
+    ### Get the value using the cell coordinate as the key to validate in Loan IQ Facility Outstandings value ###
+    ${Report_File_Row_Values}    Get From Dictionary    ${Get_From_List_Dictionary}    ${Expected_Value_Key}
+    
+    [Return]    ${Report_File_Row_Values}
+

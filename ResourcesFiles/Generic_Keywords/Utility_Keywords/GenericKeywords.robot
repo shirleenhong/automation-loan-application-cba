@@ -746,6 +746,7 @@ Navigate Notebook Workflow
     ...    @update: dahijara    19NOV2020    Added click element if present to handle RPA scenario for Loan repricing release
     ...    @update: dahijara    20NOV2020    Replaced Mx Click    ${LIQ_Cashflows_MarkSelectedItemForRelease_Button} to Mx LoanIQ select    ${LIQ_Cashflow_Options_MarkAllRelease}
     ...                                      Inserted Release Cashflow condition under Run Keyword If statement.
+    ...    @update: mcastro     07DEC2020    Added condition for Rate Setting transaction to click No on Warning pop-up
     [Arguments]    ${sNotebook_Locator}    ${sNotebookTab_Locator}    ${sNotebookWorkflow_Locator}    ${sTransaction}    
 
     ###Pre-processing Keyword##
@@ -759,7 +760,8 @@ Navigate Notebook Workflow
     Mx LoanIQ Select Window Tab    ${NotebookTab_Locator}    ${WORKFLOW_TAB}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/NotebookWorkflow
     Mx LoanIQ Select Or DoubleClick In Javatree    ${NotebookWorkflow_Locator}    ${Transaction}%d
-    Validate if Question or Warning Message is Displayed
+    Run Keyword If    '${Transaction}'=='Rate Setting'    mx LoanIQ click element if present    ${LIQ_Question_No_Button}
+    ...    ELSE    Validate if Question or Warning Message is Displayed
     mx LoanIQ click element if present    ${LIQ_Question_Yes_Button}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/NotebookWorkflow
     Run Keyword If    '${Transaction}'=='Release'    Run Keywords
@@ -2688,12 +2690,15 @@ Get the Row Id for Given Pricing Option
 Return Given Number with Specific Decimal Places without Rounding
     [Documentation]    This keyword return the given number with the given number of Decimal Places without roundinf off the number
     ...    @author: fluberio    12MAY2020    - initial create
+    ...    @update: clanding    11DEC2020    - added handling when sNumberToBeConverted does not have any decimal
     [Arguments]     ${sNumberToBeConverted}    ${sNumberOfDecimalPlaces}
     ${sContainer}    Convert To String    ${sNumberToBeConverted}
     ${sContainer}    Remove String    ${sContainer}    ,
     ${Container_List}    Split String    ${sContainer}    .
     ${sWholeNum_Value}    Set Variable    @{Container_List}[0]
-    ${sDecimal_Value}    Set Variable    @{Container_List}[1]
+    ${With_Decimal}    Run Keyword And Return Status    Set Variable    @{Container_List}[1]
+    ${sDecimal_Value}    Run Keyword If    ${With_Decimal}==${True}    Set Variable    @{Container_List}[1]
+    ...    ELSE    Set Variable    0
     
     ${sDecimal_Value}    Get Substring    ${sDecimal_Value}    0    ${sNumberOfDecimalPlaces}
     ${result}    Evaluate    ${sWholeNum_Value}.${sDecimal_Value}
@@ -2773,4 +2778,36 @@ Generate Deal Name and Alias with Numeric Test Data
     ...    ELSE IF    '${sNumofSuffix}'=='5'    Auto Generate Only 5 Numeric Test Data    ${sDeal_AliasPrefix}
     Log    Deal Alias: ${Deal_Alias}
     [Return]    ${Deal_Name}    ${Deal_Alias}
+
+Get Correct Dataset From Dataset List
+    [Documentation]    This keyword gets the correct dataset file for new UAT deals
+    ...    @author:    nbautist    09DEC2020    - Initial Create
+    [Arguments]    ${lValues}
+    
+    Set Global Variable    ${ExcelPath}    ${dataset_path}&{lValues}[Path]&{lValues}[Filename]
+
+Remove Comma Separators in Numbers
+    [Documentation]    This keyword is used to remove , in the number. 
+    ...    @author: clanding    10DEC2020    - initial create
+    [Arguments]    ${sNumber}    ${bInclude_Decimal}=${True}    ${sRunTimeVar_Result}=None
+
+    ### Keyword Pre-processing ###
+    ${Number}    Acquire Argument Value    ${sNumber}
+
+    ${String}    Convert To String    ${Number}
+    ${Number}    Remove String    ${String}    ,
+
+    ${Container_List}    Split String    ${Number}    .
+    ${WholeNum_Value}    Set Variable    @{Container_List}[0]
+    ${Decimal_Value}    Set Variable    @{Container_List}[1]
+    
+    ${Include_Decimal}    Run Keyword If    '${Decimal_Value}'=='00'    Set Variable    ${False}
+    ...    ELSE    Set Variable    ${bInclude_Decimal}
+
+    ${Number}    Run Keyword If    ${Include_Decimal}==${True}    Set Variable    ${WholeNum_Value}.${Decimal_Value}
+    ...    ELSE    Set Variable    ${WholeNum_Value}
+
+    ### Keyword Post-processing ###
+    Save Values of Runtime Execution on Excel File    ${sRunTimeVar_Result}    ${Number}
+    [Return]    ${Number}
 

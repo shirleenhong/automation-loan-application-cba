@@ -22,6 +22,7 @@ Facility 1 Setup for Expanded Scenario 1
     Set Global Variable    ${rowid}    1
     Mx Execute Template With Multiple Data    Create Facility for DNR    ${DNR_DATASET}    ${rowid}    SC1_FacilitySetup
     Mx Execute Template With Multiple Data    Ongoing Fee Setup for DNR     ${DNR_DATASET}    ${rowid}    SC1_OngoingFeeSetup
+    Set Global Variable    ${TestCase_Name}    FACPF_004
     Mx Execute Template With Multiple Data    Get Active Facility Details for Active Outstanding and Write in DNR Dataset    ${DNR_DATASET}    ${rowid}    SC1_FacilitySetup
     
     Set Global Variable    ${TestCase_Name}    Expanded_Scenario1_ActiveFac1_Repayment
@@ -91,6 +92,11 @@ Create Initial Loan Drawdown for Active Facility Expanded Scenario 1
     Set Global Variable    ${TestCase_Name}    LQDTY_002
     Mx Execute Template With Specific Test Case Name    Generate DNR Report for Liquidity    ${DNR_DATASET}    Test_Case    ${TestCase_Name}    DNR
     Mx Execute Template With Specific Test Case Name    Write Details for Liquidity Report    ${DNR_DATASET}    Test_Case    ${TestCase_Name}    DNR
+
+    ### Generate Loans & Accruals Report with Active Facility and Outstanding ###
+    Set Global Variable    ${TestCase_Name}    LOACC_008
+    Mx Execute Template With Specific Test Case Name    Generate DNR Report for Loans and Accruals    ${DNR_DATASET}    Test_Case    ${TestCase_Name}    DNR
+    Mx Execute Template With Specific Test Case Name    Write Details for Loans and Accruals Report    ${DNR_DATASET}    Test_Case    ${TestCase_Name}    DNR
 
     Set Global Variable    ${rowid}    1
     Set Global Variable    ${TestCase_Name}    Expanded_Scenario1_ActiveFac1_Repayment
