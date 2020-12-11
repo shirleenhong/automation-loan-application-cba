@@ -14,7 +14,7 @@ Initiate Line Fee Payment - AHBDE_002
     Mx Execute Template With Multiple Data    Update Line Fee Cycle for DNR    ${DNR_DATASET}    ${rowid}    SC2_PaymentFees
     Mx Execute Template With Multiple Data    Pay Line Fee Amount - Syndicated for DNR    ${DNR_DATASET}    ${rowid}    SC2_PaymentFees
 
-Write Filter Details for Agency Host Bank Cashout Report in DNR Data Set
+Write Filter Details for Agency Host Bank DE Report in DNR Data Set
     [Documentation]   This DNR test case is used to get the value of the processing date and to generate the Agency Host Bank DE Report
     ...    @author: songchan    10DEC2020    - initial create
     

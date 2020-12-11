@@ -2,29 +2,6 @@
 Resource    ../../../../../../Configurations/Integration_Import_File.robot
 
 *** Keywords ***
-Setup Fees for Term Facility for DNR
-    [Documentation]    Sets up the Ongoing Fees and Interests in a Term Facility.
-    ...    @author: songchan    - initial create
-    [Arguments]    ${ExcelPath}
-    Navigate to Modify Ongoing Fee Window
-    Validate Facility Pricing Window    &{ExcelPath}[Facility_Name]    Ongoing Fee
-    
-    Add Facility Ongoing Fees    &{ExcelPath}[OngoingFee_Category1]    &{ExcelPath}[OngoingFee_Type1]    &{ExcelPath}[OngoingFee_RateBasis1]
-    ...    &{ExcelPath}[OngoingFee_AfterItem]    &{ExcelPath}[OngoingFee_AfterItemType]
-    ...    &{ExcelPath}[FormulaCategory_Type1]    &{ExcelPath}[OngoingFee_SpreadType1]    &{ExcelPath}[OngoingFee_SpreadAmt1]
-    Validate Ongoing Fee or Interest
-    
-    ##Interest Pricing###
-    Validate Facility Pricing Window    &{ExcelPath}[Facility_Name]    Interest
-    Add Facility Interest    &{ExcelPath}[Interest_AddItem]    &{ExcelPath}[Interest_OptionName1]    &{ExcelPath}[Interest_RateBasis]
-    ...    &{ExcelPath}[Interest_SpreadType1]    &{ExcelPath}[Interest_SpreadValue1]    &{ExcelPath}[Interest_BaseRateCode1]
-    Validate Ongoing Fee or Interest
-    mx LoanIQ click element if present    ${LIQ_FacilityPricing_OngoingFeeInterest_OK_Button}
-    Validate Facility Pricing Rule Items    &{ExcelPath}[Facility_PricingRuleOption1]
-    
-    ###Facility Validation and close###
-    Validate Facility
-    mx LoanIQ close window    ${LIQ_FacilityNavigator_Window}
 
 Update Line Fee Cycle for DNR
     [Documentation]    This keyword will update the existing commitment fee cycle in the created deal
@@ -83,7 +60,7 @@ Pay Line Fee Amount - Syndicated for DNR
     ##Cycles for Commitment Fee###
     Select Cycle Due Line Fee Payment 
     
-    # ##Ongoing Fee Payment Notebook - General Tab###
+    ###Ongoing Fee Payment Notebook - General Tab###
     Enter Effective Date for Ongoing Fee Payment    ${SysDate}    ${ProjectedCycleDue}
     
     ###Ongoing Fee Payment Notebook - Workflow Tab###  
@@ -101,12 +78,12 @@ Pay Line Fee Amount - Syndicated for DNR
     ${Lend2TranAmount}    Get Transaction Amount in Cashflow    &{ExcelPath}[Lender2_ShortName]
     Send Ongoing Fee Payment to Approval
     
-    #Loan IQ Desktop###
+    ###Loan IQ Desktop###
     Close All Windows on LIQ
     Logout from Loan IQ
     Login to Loan IQ    ${SUPERVISOR_USERNAME}    ${SUPERVISOR_PASSWORD}
 
-    #Work In Process Window###
+    ###Work In Process Window###
     Select Item in Work in Process    Payments    Awaiting Approval    Ongoing Fee Payment     &{ExcelPath}[Facility_Name]
 
     
@@ -126,7 +103,7 @@ Pay Line Fee Amount - Syndicated for DNR
     Close All Windows on LIQ
     Open Existing Deal    &{ExcelPath}[Deal_Name]
     
-    ##Deal Notebook - Summary Tab### 
+    ###Deal Notebook - Summary Tab### 
     Open Ongoing Fee from Deal Notebook    &{ExcelPath}[Facility_Name]    &{ExcelPath}[Fee_Type1]
 
     ###Commitment Fee Notebook - Acrual Tab###
