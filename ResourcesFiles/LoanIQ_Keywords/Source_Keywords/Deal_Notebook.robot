@@ -125,7 +125,7 @@ Unrestrict Deal
     ${Status}    Run Keyword And Return Status    Mx LoanIQ Verify Object Exist    ${LIQ_DealNotebook_Restrict_Label}    VerificationData="Yes"
     Run Keyword And Continue On Failure    Should Not Be True   ${Status}==True
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/DealWindow_Summary
-    
+
 Add Deal Borrower
     [Documentation]    It adds the borrower name in a deal
     ...    @author: fmamaril
@@ -588,6 +588,49 @@ Add Financial Ratio
     mx LoanIQ click    ${LIQ_FinantialRatio_Ok_Button}
     Run Keyword And Continue On Failure    Mx LoanIQ Select String   ${LIQ_FinantialRatio_JavaTree}    ${RatioType}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/DealWindow_RatiosConditions
+
+Add Outside Conditions
+    [Documentation]    This keyword adds a outside condition in Ratios/Conds
+    ...    @author: kmagday    08DEC2020    initial create
+    [Arguments]    ${sIndex}    ${sOutsideCondition}    ${sStartDate}    ${sTrue}=OFF    
+
+    ### Keyword Pre-processing ###
+    ${Index}    Acquire Argument Value  ${sIndex}
+    ${OutsideCondition}    Acquire Argument Value    ${sOutsideCondition}
+    ${True}    Acquire Argument Value    ${sTrue}
+    ${startDate}    Acquire Argument Value    ${sStartDate}
+
+    Mx LoanIQ Select Window Tab    ${LIQ_DealNotebook_Tab}    ${RATIOS_CONDS_TAB}
+
+    ### Populating textfield ###
+    ${LIQ_OutsideConditions_TextField}    Replace Variables    ${LIQ_OutsideConditions_TextField}
+    mx LoanIQ enter    ${LIQ_OutsideConditions_TextField}    ${sOutsideCondition}
+
+    ### Populating the true or false radio button ###
+    Run Keyword If    '${Index}'=='1' and '${True}'=='ON'    mx LoanIQ click    ${LIQ_OutsideConditions_First_TrueRadioButton}    
+    ...    ELSE    mx LoanIQ click    ${LIQ_OutsideConditions_First_FalseRadioButton}
+    Run Keyword If    '${Index}'=='2' and '${True}'=='ON'    mx LoanIQ click    ${LIQ_OutsideConditions_Second_TrueRadioButton}    
+    ...    ELSE    mx LoanIQ click    ${LIQ_OutsideConditions_Second_FalseRadioButton}
+    Run Keyword If    '${Index}'=='3' and '${True}'=='ON'    mx LoanIQ click    ${LIQ_OutsideConditions_Third_TrueRadioButton}    
+    ...    ELSE    mx LoanIQ click    ${LIQ_OutsideConditions_Third_FalseRadioButton}
+
+
+    mx LoanIQ click    ${LIQ_OutsideConditions_History_Button}
+    mx LoanIQ click element if present   ${LIQ_Warning_Yes_Button}
+
+    ${dropdownVal}    Set Variable If    '${Index}'=='1'    Outside Condition 1
+    ...    '${Index}'=='2'    Outside Condition 2
+    ...    '${Index}'=='3'    Outside Condition 3
+
+    Mx LoanIQ select combo box value    ${LIQ_OutsideConditions_SelectConditionDropdown}    ${dropdownVal}
+    mx LoanIQ click    ${LIQ_OutsideConditions_Insert_Button}
+
+    mx LoanIQ enter    ${LIQ_Edit_OutsideConditions_StartDate}    ${startDate}
+    mx LoanIQ click    ${LIQ_Edit_OutsideConditions_OK_Button}
+
+    mx LoanIQ click element if present    ${LIQ_Edit_OutsideConditions_Question_Yes_Button}
+    mx LoanIQ click    ${LIQ_OutsideConditions_OK_Button}
+
 
 Modify Upfront Fees
     [Documentation]    This keyword adds a financial ratio in a deal.
@@ -2845,6 +2888,7 @@ Update Branch and Processing Area
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/ChangeBranchProcArea_Window
     mx LoanIQ click    ${LIQ_ChangeBranchProcArea_OK_Button}
     mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
+    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
 
 Validate and Update Branch and Processing Area in MIS Codes Tab
     [Documentation]    This keyword validates and update Branch and Processing Area in MIS Codes tab if Branch and Processing Area does not match.
@@ -3126,3 +3170,9 @@ Delete Details in Comments Tab in Deal Notebook
     ${IsSelected}    Run Keyword And Return Status    Mx LoanIQ Select String    ${LIQ_DealNotebook_CommentsTab_JavaTree}    ${Subject}
     Run Keyword If    ${IsSelected}==${False}    Log    ${Subject} is successfully deleted in the Comments tab.
     ...    ELSE     Run Keyword And Continue On Failure    FAIL    ${Subject} is NOT successfully deleted in the Comments tab.
+
+Click OK Button To Close Borrowers Notebook
+    [Documentation]    Clicking Ok button to close/save deal borrowers notebook
+    ...    @author: kmagday    09DEC2020    - initial create
+
+    mx LoanIQ click    ${LIQ_DealBorrower_Ok_Button}
