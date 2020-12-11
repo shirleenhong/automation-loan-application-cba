@@ -746,6 +746,7 @@ Navigate Notebook Workflow
     ...    @update: dahijara    19NOV2020    Added click element if present to handle RPA scenario for Loan repricing release
     ...    @update: dahijara    20NOV2020    Replaced Mx Click    ${LIQ_Cashflows_MarkSelectedItemForRelease_Button} to Mx LoanIQ select    ${LIQ_Cashflow_Options_MarkAllRelease}
     ...                                      Inserted Release Cashflow condition under Run Keyword If statement.
+    ...    @update: mcastro     07DEC2020    Added condition for Rate Setting transaction to click No on Warning pop-up
     [Arguments]    ${sNotebook_Locator}    ${sNotebookTab_Locator}    ${sNotebookWorkflow_Locator}    ${sTransaction}    
 
     ###Pre-processing Keyword##
@@ -759,7 +760,8 @@ Navigate Notebook Workflow
     Mx LoanIQ Select Window Tab    ${NotebookTab_Locator}    ${WORKFLOW_TAB}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/NotebookWorkflow
     Mx LoanIQ Select Or DoubleClick In Javatree    ${NotebookWorkflow_Locator}    ${Transaction}%d
-    Validate if Question or Warning Message is Displayed
+    Run Keyword If    '${Transaction}'=='Rate Setting'    mx LoanIQ click element if present    ${LIQ_Question_No_Button}
+    ...    ELSE    Validate if Question or Warning Message is Displayed
     mx LoanIQ click element if present    ${LIQ_Question_Yes_Button}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/NotebookWorkflow
     Run Keyword If    '${Transaction}'=='Release'    Run Keywords
@@ -1813,9 +1815,13 @@ Write Data To Cell
 Get Index of a Column Header Value
     [Documentation]    This keyword is used to get the index of a column header value at the Excel Sheet.
     ...    @author: hstone    19FEB2020    Initial Create
-    [Arguments]    ${sSheetName}    ${sColumnName}    ${bTestCaseColumn}=False
+    ...    @update: clanding    08DEC2020    Added optional argument for column index: ${iColumnIndex}
+    [Arguments]    ${sSheetName}    ${sColumnName}    ${bTestCaseColumn}=False    ${iColumnIndex}=1
 
-    ${DataColumn_List}    Read Excel Row    1    sheet_name=${sSheetName}
+    ${ColumnIndex}    Run Keyword If    '${iColumnIndex}'=='1'    Set Variable    1
+    ...     ELSE    Set Variable    ${iColumnIndex}
+
+    ${DataColumn_List}    Read Excel Row    ${ColumnIndex}    sheet_name=${sSheetName}
     Log    Data Set Sheet Name: '${sSheetName}'
     Log    Data Set Sheet Column Names: '${DataColumn_List}'
 
@@ -1932,9 +1938,10 @@ Read Data From Excel
 Read Data From All Column Rows
     [Documentation]    This keyword will be used for reading data from all rows of a specified column.
     ...    @author: hstone    16MAR2020    Initial Create
-    [Arguments]    ${sSheetName}    ${sColumnName}
+    ...    @update: clanding    08DEC2020    Added optional argument for column index: ${iColumnIndex}
+    [Arguments]    ${sSheetName}    ${sColumnName}     ${iColumnIndex}=1
 
-    ${ColumnHeader_Index}    Get Index of a Column Header Value    ${sSheetName}    ${sColumnName}
+    ${ColumnHeader_Index}    Get Index of a Column Header Value    ${sSheetName}    ${sColumnName}    iColumnIndex=${iColumnIndex}
     ${Column_Data}    Read Excel Column    ${ColumnHeader_Index}    0    ${sSheetName}
     Remove Values From List    ${Column_Data}    ${sColumnName}
 
@@ -2769,3 +2776,9 @@ Generate Deal Name and Alias with Numeric Test Data
     Log    Deal Alias: ${Deal_Alias}
     [Return]    ${Deal_Name}    ${Deal_Alias}
 
+Get Correct Dataset From Dataset List
+    [Documentation]    This keyword gets the correct dataset file for new UAT deals
+    ...    @author:    nbautist    09DEC2020    - Initial Create
+    [Arguments]    ${lValues}
+    
+    Set Global Variable    ${ExcelPath}    ${dataset_path}&{lValues}[Path]&{lValues}[Filename]

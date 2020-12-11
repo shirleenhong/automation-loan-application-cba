@@ -49,4 +49,4 @@ Setup Deal for LBT BILAT Deal
     Add Fee Pricing Rules    &{ExcelPath}[PricingRule_Fee]    &{ExcelPath}[PricingRule_MatrixChangeAppMthd]    &{ExcelPath}[PricingRule_NonBussDayRule]
     
     ### Ratios/Conds Tab ###
-    Add Outside Conditions in Deal Notebook    &{ExcelPath}[OutsideCondition1]    &{ExcelPath}[History_StartDate]
+    Add Outside Conditions    &{ExcelPath}[Ratios_And_Cons_Index]    &{ExcelPath}[Ratios_And_Cons_Description]    &{ExcelPath}[Ratios_And_Cons_StartDate]    &{ExcelPath}[Ratios_And_Cons_RadioButton]

@@ -4,6 +4,7 @@ ExcelPath_API_temp = 'C:\\Git_Evergreen\\fms_cba\\DataSet\\Integration_DataSet\\
 ExcelPath = "C:\\Git_Evergreen\\fms_cba\DataSet\\LoanIQ_DataSet\\EVG_PTYLIQ04_BaselineNonAgentSyndication.xlsx"
 dataset_path = "C:\\Git_Evergreen\\fms_cba"
 CBAUAT_ExcelPath = "C:\\Git_Evergreen\\fms_cba\\DataSet\\NewUATDeals_DataSet\\Deal_CH_EDU_BILAT.xlsx"
+NEW_UAT_DEALS_ExcelPath = "C:\\Git_Evergreen\\fms_cba\\DataSet\\NewUATDeals_DataSet\\New_UAT_Deals_Dataset_Masterlist.xlsx"
 TL_DATASET = "C:\\Git_Evergreen\\fms_cba\\DataSet\\Integration_DataSet\\TL\\TL_Data_Set_AU.xlsx"
 SAPWUL_DATASET = "C:\\Git_evergreen\\evergreen_projects\\CBA_Evergreen\\DataSet\\Downstream_DataSet\\SAPWUL\\SAPWUL_Data_Set.xlsx"
 ComSeeDataSet = "C:\\Git_Evergreen\\fms_cba\DataSet\\Integration_DataSet\\CommSee\\COMMSEE_Data_Set.xlsx"
@@ -45,11 +46,11 @@ MDM_FFC_Password = 'admin'
 ### TL Credentials ###
 TL_USERNAME = "CGLINP00"
 TL_PASSWORD = "password"
-INPUTTER_USERNAME = "CGLINP00"
+INPUTTER_USERNAME = "SHINPAU0"
 INPUTTER_PASSWORD = "password"
-SUPERVISOR_USERNAME = "CGLSUP01"
+SUPERVISOR_USERNAME = "SHSUPAU0"
 SUPERVISOR_PASSWORD = "password"
-MANAGER_USERNAME = "CGLMGR01"
+MANAGER_USERNAME = "SHMANAU0"
 MANAGER_PASSWORD = "password"
 
 SSO_USERLINK = "mancsleverg0028"
@@ -299,17 +300,25 @@ IDC_DOCUMENT_DOWNLOAD_PATH = 'C:\\Git_Evergreen\\evergreen_projects\\CBA_Evergre
 COGNOS_SERVER = 'mancsweverg0006'
 COGNOS_PORT = '9305'
 COGNOS_URL = '/bi/?perspective=home'
-COGNOS_USERNAME = "CGLINP01"
+COGNOS_USERNAME = "SHINPAU0"
 COGNOS_PASSWORD = "Finastra2020"
 COGNOS_NAMESPACE = 'FinastraRoot'
 CBA_ALERTS_REPORTFILE = "Alerts_Report_V1.3.4"
 CBA_COMMENTS_REPORTFILE = "Comments_Report_V1.3.4"
-CBA_CALENDAR_REPORTFILE = "Calendar Report_v1.0"
-CBA_LIQUIDITY_REPORTFILE= "CBA Liquidity Report"
+CBA_CALENDAR_REPORTFILE = "Calendar Report v1.0"
+CBA_LIQUIDITY_REPORTFILE= "Liquidity Report_SYD_10AM_V1.3.4"
 CBA_CASHOUT_REPORTFILE = "Agency Host Bank Cash Out Report"
 CBA_DE_REPORTFILE= "Agency Host Bank DE Extract"
 CBA_LIQPERFORMANCE_REPORTFILE = "LIQFacilityPerformance_V1.3.4"
 CBA_LOANSACCRUALS_REPORTFILE = "LoansAndAccrualsReport_V1.3.4"
+CBA_PAYMENT_AHBCO_REPORTFILE = "Agency Host Bank Cash Out Report"
+CBA_PAYMENT_AHBDE_REPORTFILE = "Agency Host Bank DE Extract"
+CBA_PAYMENT_CIR_REPORTFILE = "Cash In Report_V1.2"
+CBA_PAYMENT_CORAS_REPORTFILE = "Cash Out Report Approved Status_V1.2"
+CBA_PAYMENT_CORRS_REPORTFILE = "Cash Out Report Released Status_V1.2"
+CBA_PAYMENT_DE_REPORTFILE = "DE Extract_V1.2"
+
+
 
 import os
 project_path = os.path.dirname(os.path.realpath(__file__)).replace("MDM_ConfigFile","")

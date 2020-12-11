@@ -125,7 +125,7 @@ Unrestrict Deal
     ${Status}    Run Keyword And Return Status    Mx LoanIQ Verify Object Exist    ${LIQ_DealNotebook_Restrict_Label}    VerificationData="Yes"
     Run Keyword And Continue On Failure    Should Not Be True   ${Status}==True
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/DealWindow_Summary
-    
+
 Add Deal Borrower
     [Documentation]    It adds the borrower name in a deal
     ...    @author: fmamaril
@@ -588,6 +588,57 @@ Add Financial Ratio
     mx LoanIQ click    ${LIQ_FinantialRatio_Ok_Button}
     Run Keyword And Continue On Failure    Mx LoanIQ Select String   ${LIQ_FinantialRatio_JavaTree}    ${RatioType}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/DealWindow_RatiosConditions
+
+Add Outside Conditions
+    [Documentation]    This keyword adds a outside condition in Ratios/Conds
+    ...    @author: kmagday    08DEC2020    - initial create
+    ...    @update: javinzon    11DEC2020    - added Take Screenshot keywords and validation if Outside condition is set
+    ...                                        with True value
+    [Arguments]    ${sIndex}    ${sOutsideCondition}    ${sStartDate}    ${sTrue}=OFF    
+
+    ### Keyword Pre-processing ###
+    ${Index}    Acquire Argument Value  ${sIndex}
+    ${OutsideCondition}    Acquire Argument Value    ${sOutsideCondition}
+    ${True}    Acquire Argument Value    ${sTrue}
+    ${startDate}    Acquire Argument Value    ${sStartDate}
+
+    Mx LoanIQ Select Window Tab    ${LIQ_DealNotebook_Tab}    ${RATIOS_CONDS_TAB}
+
+    ### Populating textfield ###
+    ${LIQ_OutsideConditions_TextField}    Replace Variables    ${LIQ_OutsideConditions_TextField}
+    mx LoanIQ enter    ${LIQ_OutsideConditions_TextField}    ${sOutsideCondition}
+
+    ### Populating the true or false radio button ###
+    Run Keyword If    '${Index}'=='1' and '${True}'=='ON'    mx LoanIQ click    ${LIQ_OutsideConditions_First_TrueRadioButton}    
+    ...    ELSE    mx LoanIQ click    ${LIQ_OutsideConditions_First_FalseRadioButton}
+    Run Keyword If    '${Index}'=='2' and '${True}'=='ON'    mx LoanIQ click    ${LIQ_OutsideConditions_Second_TrueRadioButton}    
+    ...    ELSE    mx LoanIQ click    ${LIQ_OutsideConditions_Second_FalseRadioButton}
+    Run Keyword If    '${Index}'=='3' and '${True}'=='ON'    mx LoanIQ click    ${LIQ_OutsideConditions_Third_TrueRadioButton}    
+    ...    ELSE    mx LoanIQ click    ${LIQ_OutsideConditions_Third_FalseRadioButton}
+
+    mx LoanIQ click    ${LIQ_OutsideConditions_History_Button}
+    mx LoanIQ click element if present   ${LIQ_Warning_Yes_Button}
+
+    ${dropdownVal}    Set Variable If    '${Index}'=='1'    Outside Condition 1
+    ...    '${Index}'=='2'    Outside Condition 2
+    ...    '${Index}'=='3'    Outside Condition 3
+
+    Mx LoanIQ select combo box value    ${LIQ_OutsideConditions_SelectConditionDropdown}    ${dropdownVal}
+    mx LoanIQ click    ${LIQ_OutsideConditions_Insert_Button}
+
+    mx LoanIQ enter    ${LIQ_Edit_OutsideConditions_StartDate}    ${startDate}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/DealWindow_OutsideConditions_HistoryUpdate
+    mx LoanIQ click    ${LIQ_Edit_OutsideConditions_OK_Button}
+
+    mx LoanIQ click element if present    ${LIQ_Edit_OutsideConditions_Question_Yes_Button}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/DealWindow_OutsideConditions_HistoryUpdated
+    mx LoanIQ click    ${LIQ_OutsideConditions_OK_Button}
+    
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/DealWindow_OutsideConditions
+    ${isPresent}    Run Keyword And Return Status    Validate if Element is Checked    ${LIQ_OutsideConditions_First_TrueRadioButton}    True    
+    Run Keyword If    ${isPresent}==True    Run Keywords    Log    History Start Date is successfully updated.
+    ...    AND    Mx LoanIQ Close Window    ${LIQ_DealNotebook_Window}
+    ...    ELSE    Run Keyword And Continue On Failure    FAIL    History Start Date is NOT successfully updated.
 
 Modify Upfront Fees
     [Documentation]    This keyword adds a financial ratio in a deal.
@@ -2847,6 +2898,7 @@ Update Branch and Processing Area
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/ChangeBranchProcArea_Window
     mx LoanIQ click    ${LIQ_ChangeBranchProcArea_OK_Button}
     mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
+    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
 
 Validate and Update Branch and Processing Area in MIS Codes Tab
     [Documentation]    This keyword validates and update Branch and Processing Area in MIS Codes tab if Branch and Processing Area does not match.
@@ -3128,34 +3180,10 @@ Delete Details in Comments Tab in Deal Notebook
     ${IsSelected}    Run Keyword And Return Status    Mx LoanIQ Select String    ${LIQ_DealNotebook_CommentsTab_JavaTree}    ${Subject}
     Run Keyword If    ${IsSelected}==${False}    Log    ${Subject} is successfully deleted in the Comments tab.
     ...    ELSE     Run Keyword And Continue On Failure    FAIL    ${Subject} is NOT successfully deleted in the Comments tab.
-    
-Add Outside Conditions in Deal Notebook
-    [Documentation]    This keyword is used to add outside condition in Ratios/Conds tab of a Deal.
-    ...    @author: javinzon    09DEC2020    - initial create
-    [Arguments]    ${sOutsideCondition1}    ${sHistory_StartDate}
 
-    ### Keyword Pre-processing ###
-    ${OutsideCondition1}    Acquire Argument Value    ${sOutsideCondition1}
-    ${History_StartDate}    Acquire Argument Value    ${sHistory_StartDate}
+Click OK Button To Close Borrowers Notebook
+    [Documentation]    Clicking Ok button to close/save deal borrowers notebook
+    ...    @author: kmagday    09DEC2020    - initial create
 
-    mx LoanIQ activate window    ${LIQ_DealNotebook_Window}    
-    Mx LoanIQ Select Window Tab    ${LIQ_DealNotebook_Tab}    ${RATIOS_CONDS}
-    mx LoanIQ enter    ${LIQ_OutsideConditions_OutsideCondition1_Textfield}    ${OutsideCondition1}
-    
-    mx LoanIQ click    ${LIQ_OutsideConditions_History_Button}
-    mx LoanIQ click element if present   ${LIQ_Warning_Yes_Button}
-    mx LoanIQ click    ${LIQ_OutsideConditions_History_Insert_Button}
-    Mx LoanIQ Enter    ${LIQ_OutsideConditions_History_Insert_True_RadioButton}    ON
-    mx LoanIQ enter    ${LIQ_OutsideConditions_History_Insert_StartDate_Textfield}    ${History_StartDate}
-    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/DealWindow_OutsideConditions_HistoryUpdate
-    mx LoanIQ click    ${LIQ_OutsideConditions_History_Insert_OK_Button}
-    mx LoanIQ click    ${LIQ_Question_Yes_Button}
-    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/DealWindow_OutsideConditions_HistoryUpdated
-    mx LoanIQ click    ${LIQ_OutsideConditions_History_OK_Button}
-    mx LoanIQ click element if present   ${LIQ_Warning_Yes_Button}
+    mx LoanIQ click    ${LIQ_DealBorrower_Ok_Button}
 
-    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/DealWindow_OutsideConditions
-    ${isPresent}    Run Keyword And Return Status    Validate if Element is Checked    ${LIQ_OutsideConditions_OutsideCondition1_True_RadioButton}    True    
-    Run Keyword If    ${isPresent}==True    Run Keywords    Log    History Start Date is successfully updated.
-    ...    AND    Mx LoanIQ Close Window    ${LIQ_DealNotebook_Window}
-    ...    ELSE    Run Keyword And Continue On Failure    FAIL    History Start Date is NOT successfully updated.

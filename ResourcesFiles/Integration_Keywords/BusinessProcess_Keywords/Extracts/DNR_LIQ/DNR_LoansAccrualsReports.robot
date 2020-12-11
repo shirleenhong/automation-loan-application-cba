@@ -37,3 +37,43 @@ Validate Data Type Column if Correct from Loans and Accruals Report
 
     ${Actual_DataType_Outstanding}    Read Data From Excel    Outstandings    Data Type    1    &{ExcelPath}[Report_Path]&{ExcelPath}[Report_File_Name]    readAllData=Y
     Verify List Values if Correct    ${Actual_DataType_Outstanding}    Outstanding
+
+Validate Currency Column if Correct from Loans and Accruals Report
+    [Documentation]    This keyword is used to validate if Currency values are correct for Facility and Outstanding sheet.
+    ...    @author: kaustero    07DEC2020    - initial create
+    [Arguments]    ${ExcelPath}
+
+    ${Actual_FacilityCurrency}    Read Data From Excel    Facilities    Facility Currency    1    &{ExcelPath}[Report_Path]&{ExcelPath}[Report_File_Name]    readAllData=Y
+    Validate List Value if Existing in Excel Sheet Column    ${Currency_Codes}    Currency_Codes    Currency_Code    ${Actual_FacilityCurrency}
+
+    ${Actual_OutstandingCurrency}    Read Data From Excel    Outstandings    Outstanding Currency    1    &{ExcelPath}[Report_Path]&{ExcelPath}[Report_File_Name]    readAllData=Y
+    Validate List Value if Existing in Excel Sheet Column    ${Currency_Codes}    Currency_Codes    Currency_Code    ${Actual_OutstandingCurrency}
+
+Validate Pending Facility is Existing in Loans and Accruals Report
+    [Documentation]    This keyword is used to validate pending facility is existing in Loans and Accruals Report.
+    ...    @author: clanding    09DEC2020    - initial create
+    [Arguments]    ${ExcelPath}
+    
+    Validate Text Value if Existing in Excel Sheet Column    &{ExcelPath}[Report_Path]&{ExcelPath}[Report_File_Name]    &{ExcelPath}[Sheet_Name]    &{ExcelPath}[Columns_To_Validate]    &{ExcelPath}[FCN]${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}
+    
+Validate Facility is Not Existing in Facilities Sheet and Existing in Oustandings Sheet in Loans and Accruals Report
+    [Documentation]    This keyword is used to validate active facility with active outstanding is not existing in Facilities but existing in Outstandings in Loans and Accruals Report.
+    ...    @author: clanding    09DEC2020    - initial create
+    [Arguments]    ${ExcelPath}
+    
+    Validate Text Value if Not Existing in Excel Sheet Column    &{ExcelPath}[Report_Path]&{ExcelPath}[Report_File_Name]    Facilities    &{ExcelPath}[Columns_To_Validate]    &{ExcelPath}[FCN]${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}
+    Validate Text Value if Existing in Excel Sheet Column    &{ExcelPath}[Report_Path]&{ExcelPath}[Report_File_Name]    Outstandings    &{ExcelPath}[Columns_To_Validate]    &{ExcelPath}[FCN]${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}
+
+Validate Amount Columns Displays Numbers in 2 Decimal Places from Loans and Accruals Report
+    [Documentation]    This keyword is used to validate if the Amount Columns in Facility and Outstanding sheet display number in 2 Decimal Places.
+    ...    @author: kaustero    08DEC2020    - initial create
+    [Arguments]    ${ExcelPath}
+
+    ${Actual_FacilityLenderCommitment}    Read Data From Excel    Facilities    Lender Commitment    1    &{ExcelPath}[Report_Path]&{ExcelPath}[Report_File_Name]    readAllData=Y
+    Verify List Values Displays Numbers in N Decimal Places    ${Actual_FacilityLenderCommitment}
+
+    ${Actual_OutstandingLenderCommitment}    Read Data From Excel    Outstandings    Lender Commitment    1    &{ExcelPath}[Report_Path]&{ExcelPath}[Report_File_Name]    readAllData=Y
+    Verify List Values Displays Numbers in N Decimal Places    ${Actual_OutstandingLenderCommitment}
+
+    ${Actual_OutstandingAmount}    Read Data From Excel    Outstandings    Outstanding Amount    1    &{ExcelPath}[Report_Path]&{ExcelPath}[Report_File_Name]    readAllData=Y
+    Verify List Values Displays Numbers in N Decimal Places    ${Actual_OutstandingAmount}

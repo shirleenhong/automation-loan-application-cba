@@ -662,6 +662,19 @@ Get Pricing Option Description from Table Maintenance
     Log    Pricing Option description is ${PricingOptionDesc}    
     mx LoanIQ click    ${LIQ_PricingOption_Exit_Button}
     [Return]    ${PricingOptionDesc}
+
+Get Business Transaction Code from Table Maintenance
+    [Documentation]    This keyword returns the expense code description from Table Maintenance.
+    ...    @author: makcamps    10DEC2020    Initial Create    
+    [Arguments]    ${sDescription}
+    mx LoanIQ click    ${LIQ_TableMaintenance_Button}    
+    Search in Table Maintenance    Business Transaction
+    mx LoanIQ activate window    ${LIQ_BusinessTransaction_Window}
+    Mx LoanIQ Set    ${LIQ_BusinessTransaction_ShowAll_Button}    ON  
+    ${BusinessTransactionCode}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_BusinessTransaction_JavaTree}    ${sDescription}%Code%BusinessTransactionCode   
+    Log    Bussiness Transaction code is ${BusinessTransactionCode}    
+    mx LoanIQ click    ${LIQ_BusinessTransaction_Exit_Button}
+    [Return]    ${BusinessTransactionCode}
        
 Validate the Processing Area Code in LIQ
     [Documentation]    This keyword is used to verify the available Processing Area Codes from CSV to LIQ Screen.
