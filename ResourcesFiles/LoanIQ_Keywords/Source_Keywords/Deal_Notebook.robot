@@ -3126,3 +3126,32 @@ Delete Details in Comments Tab in Deal Notebook
     ${IsSelected}    Run Keyword And Return Status    Mx LoanIQ Select String    ${LIQ_DealNotebook_CommentsTab_JavaTree}    ${Subject}
     Run Keyword If    ${IsSelected}==${False}    Log    ${Subject} is successfully deleted in the Comments tab.
     ...    ELSE     Run Keyword And Continue On Failure    FAIL    ${Subject} is NOT successfully deleted in the Comments tab.
+
+Navigate to Deal Pricing Rules Tab
+    [Documentation]    This keyword navigates to deal Pricing Rules tab.
+    ...    @author: dahijara    11DEC2020    Initial create
+
+    Mx LoanIQ activate    ${LIQ_DealNotebook_Window}    
+    Run Keyword And Continue On Failure    Mx LoanIQ click element if present    ${LIQ_InquiryMode_Button}
+	Mx LoanIQ Select Window Tab    ${LIQ_DealNotebook_Tab}    ${PRICING_RULES_TAB}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/DealNotebook_PricingRulesTab
+
+Update Deal Pricing Rules
+    [Documentation]    This keyword updates fields in deal Pricing Option.
+    ...    Note: currently, keyword only updates Matrix Change Application Method field. Add Optional fields as necessary.
+    ...    @author: dahijara    11DEC2020    Initial create
+    [Arguments]    ${sPricingOption}    ${sMatrixChangeAppMethod}
+
+    ### Keyword Pre-processing ###
+    ${PricingOption}    Acquire Argument Value    ${sPricingOption}
+    ${MatrixChangeAppMethod}    Acquire Argument Value    ${sMatrixChangeAppMethod}
+
+	Mx LoanIQ Select Window Tab    ${LIQ_DealNotebook_Tab}    ${PRICING_RULES_TAB}
+    Mx LoanIQ Select Or DoubleClick In Javatree    ${LIQ_PricingRules_AllowedPricingOption_JavaTree}    ${PricingOption}%d
+    Mx LoanIQ activate window    ${LIQ_InterestPricingOption_Window}
+
+    Mx LoanIQ Select Combo Box Value    ${LIQ_InterestPricingOption_MatrixChangeAppMthd_Combobox}    ${MatrixChangeAppMethod}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/DealNotebook_PricingOption_InterestPricingOption
+    mx LoanIQ click    ${LIQ_InterestPricingOption_Ok_Button}
+    Run Keyword And Continue On Failure    Mx LoanIQ Select String   ${LIQ_PricingRules_AllowedPricingOption_JavaTree}    ${PricingOption}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/DealNotebook_PricingRulesTab_PricingOption

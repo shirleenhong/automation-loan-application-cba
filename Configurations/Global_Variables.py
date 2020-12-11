@@ -250,6 +250,7 @@ RATES_TAB = "Rates"
 FACILITIES_TAB = "Facilities"
 CONTACTS_TAB = "Contacts"
 CURRENCY_TAB = "Currency"
+AMTS_DATES_TAB = 'Amts/Dates'
 
 ### Payment Type ###
 FEE_PAYMENT_FROM_BORROWER_TYPE = "Fee Payment From Borrower"

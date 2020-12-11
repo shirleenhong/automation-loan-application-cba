@@ -287,9 +287,10 @@ LIQ_PricingRules_AddFee_Button = 'JavaWindow("title:=Deal Notebook.*").JavaButto
 LIQ_PricingRules_AllowedPricingOption_JavaTree = 'JavaWindow("title:=Deal Notebook -.*").JavaTree("tagname:=Drill down to update","labeled_containers_path:=.*Allowed Pricing Options.*")'    
     
 ###Deal Notebook - Pricing Options Window###
-LIQ_InterestPricingOption_Window = 'JavaWindow("title:=Interest Pricing Option.*")'
+LIQ_InterestPricingOption_Window = 'JavaWindow("title:=.*Interest Pricing Option.*")'
 LIQ_InterestPricingOption_Dropdown = 'JavaWindow("title:=Interest Pricing Option.*").JavaList("attached text:=Round:.*","index:=0")'    
 LIQ_InterestPricingOption_Ok_Button = 'JavaWindow("title:=Interest Pricing Option.*").JavaButton("attached text:=OK")'
+LIQ_InterestPricingOption_Cancel_Button = 'JavaWindow("title:=.*Interest Pricing Option.*").JavaButton("attached text:=Cancel")'
 LIQ_InterestPricingOption_InitialFractionRate_List = 'JavaWindow("title:=Interest Pricing Option.*").JavaList("x:=270","y:=59")'  
 LIQ_InterestPricingOption_InitialFractionRate_Round = 'JavaWindow("title:=Interest Pricing Option.*").JavaList("x:=396","y:=59")'
 LIQ_InterestPricingOption_RoundingDecimalPrecision_List = 'JavaWindow("title:=Interest Pricing Option.*").JavaList("x:=270","y:=88")'    
