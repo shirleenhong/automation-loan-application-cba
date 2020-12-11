@@ -3972,7 +3972,7 @@ Verify Facility Pricing Option Details
 
     ${isMatched}    Run Keyword And Return Status    Should Be Equal    ${UI_MatrixChangeAppMethod}    ${MatrixChangeAppMethod}
     Run Keyword If    ${isMatched}==${TRUE}    Log    Matrix Change Application Method is correct. Value: ${UI_MatrixChangeAppMethod}
-    ...    ELSE    Fail    Matrix Change Application Method is NOT correct. Value: ${UI_MatrixChangeAppMethod}
+    ...    ELSE    Run Keyword And Continue On Failure    Fail    Matrix Change Application Method is NOT correct. Value: ${UI_MatrixChangeAppMethod}
 
     Mx LoanIQ click    ${LIQ_InterestPricingOption_Cancel_Button}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/DealNotebook_PricingRulesTab_PricingOption

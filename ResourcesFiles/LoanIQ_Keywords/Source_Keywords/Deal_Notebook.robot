@@ -3153,5 +3153,9 @@ Update Deal Pricing Rules
     Mx LoanIQ Select Combo Box Value    ${LIQ_InterestPricingOption_MatrixChangeAppMthd_Combobox}    ${MatrixChangeAppMethod}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/DealNotebook_PricingOption_InterestPricingOption
     mx LoanIQ click    ${LIQ_InterestPricingOption_Ok_Button}
-    Run Keyword And Continue On Failure    Mx LoanIQ Select String   ${LIQ_PricingRules_AllowedPricingOption_JavaTree}    ${PricingOption}
+
+    ${IsSelected}    Run Keyword And Return Status    Mx LoanIQ Select String    ${LIQ_PricingRules_AllowedPricingOption_JavaTree}    ${PricingOption}
+    Run Keyword If    ${IsSelected}==${True}    Log    ${PricingOption} is successfully selected in the Pricing Option Table.
+    ...    ELSE     Run Keyword And Continue On Failure    FAIL    ${PricingOption} is NOT successfully selected in the Pricing Option Table.
+
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/DealNotebook_PricingRulesTab_PricingOption
