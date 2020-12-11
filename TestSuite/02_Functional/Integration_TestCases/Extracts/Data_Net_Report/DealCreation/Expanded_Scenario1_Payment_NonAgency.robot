@@ -52,5 +52,13 @@ Create Initial Loan Drawdown for Active Facility Expanded Scenario 1 - Payment N
     Mx Execute Template With Specific Test Case Name    Generate DNR Report for Payment    ${DNR_DATASET}    Test_Case    ${TestCase_Name}    DNR
     Mx Execute Template With Specific Test Case Name    Write Details for Payment Non Agency Reports    ${DNR_DATASET}    Test_Case    ${TestCase_Name}    DNR
     
-    Log To Console    Run 1 Day EOD for Facility 2 to expire
+    Log To Console    Run 30 Days EOD for Loan Repricing to expire
     Pause Execution
+
+Create Comprehensive Repricing for Bilateral Deal for Expanded Scenario 1 Loan Repricing
+    [Documentation]   This DNR test case is used to create comprehensive loan repricing for Bilateral Deals
+    ...    Prerequisite: Create Initial Loan Drawdown for Bilateral Deal for Expanded Scenario 1 - Payment Non Agency and 1 month EOD
+    [Tags]    05 Create Initial Loan Drawdown for Bilateral Deal for Expanded Scenario 1 - Payment Non Agency
+    Set Global Variable    ${rowid}    4
+    Mx Execute Template With Multiple Data    Create Comprehensive Repricing for Non Agency Bilateral Deal for DNR    ${DNR_DATASET}   ${rowid}    SC1_ComprehensiveRepricing
+    #Mx Execute Template With Multiple Data    Write Cashflow ID for Agency DE Report    ${DNR_DATASET}    ${rowid}    SC1_ComprehensiveRepricing
