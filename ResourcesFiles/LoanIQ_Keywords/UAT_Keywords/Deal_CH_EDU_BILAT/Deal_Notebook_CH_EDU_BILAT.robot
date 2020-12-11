@@ -8,9 +8,10 @@ ${SCENARIO}
 Setup Deal for CH EDU BILAT Deal
     [Documentation]    This keyword is for setting up Deal for CH EDU Bilateral Deal
     ...    @author:    dahijara    01DEC2020    - Initial create 
+    ...    @update:    dahijara    09DEC2020    - Adjusted suffix number for generating Deal Name from 5 to 4
     [Arguments]    ${ExcelPath}
     
-    ${Deal_Name}    ${Deal_Alias}    Generate Deal Name and Alias with Numeric Test Data    &{ExcelPath}[Deal_NamePrefix]    &{ExcelPath}[Deal_AliasPrefix]    5
+    ${Deal_Name}    ${Deal_Alias}    Generate Deal Name and Alias with Numeric Test Data    &{ExcelPath}[Deal_NamePrefix]    &{ExcelPath}[Deal_AliasPrefix]    4
 
     ${Borrower_ShortName}    Read Data From Excel    PTY001_QuickPartyOnboarding    LIQCustomer_ShortName    &{ExcelPath}[rowid]  
     ${Borrower_Location}    Read Data From Excel    PTY001_QuickPartyOnboarding    Customer_Location    &{ExcelPath}[rowid] 
