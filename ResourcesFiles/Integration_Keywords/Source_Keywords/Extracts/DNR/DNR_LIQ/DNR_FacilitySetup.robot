@@ -120,7 +120,7 @@ Get Expired Facility Details for Active Outstanding and Write in DNR Dataset
     Navigate to Facility Notebook    &{ExcelPath}[Deal_Name]    &{ExcelPath}[Facility_Name]
     ${FacilityControlNumber}    Get Facility Control Number
     
-    ${Facility_Status}    Read Data From Excel    FACPF    Facility_Status    ${rowid}    ${DNR_DATASET}
+    ${Facility_Status}    Read Data From Excel    FACPF    Facility_Status    ${TestCase_Name}    ${DNR_DATASET}    bTestCaseColumn=True    sTestCaseColReference=TestCase_Name
 	Validate Facility Status    &{ExcelPath}[Facility_Name]    ${Facility_Status}
     
     ${Facility_Outstandings_Amount}    Get Outstandings Amount from Facility Notebook  
