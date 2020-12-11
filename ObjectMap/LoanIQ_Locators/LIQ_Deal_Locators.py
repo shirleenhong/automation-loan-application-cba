@@ -318,6 +318,7 @@ LIQ_InterestPricingOption_MinimumDrawdownAmount_Textfield = 'JavaWindow("title:=
 LIQ_InterestPricingOption_MinimumPaymentAmount_Textfield = 'JavaWindow("title:=Interest Pricing Option.*").JavaEdit("index:=2")'
 LIQ_InterestPricingOption_MinimumAmountMultiples_Textfield = 'JavaWindow("title:=Interest Pricing Option.*").JavaEdit("index:=3")'
 LIQ_InterestPricingOption_MinimumLenderShareMultiples_Textfield = 'JavaWindow("title:=Interest Pricing Option.*").JavaEdit("index:=4")'
+LIQ_InterestPricingOption_RateSettingDaysInAdvance_Textfield = 'JavaWindow("title:=Interest Pricing Option.*","displayed:=1").JavaEdit("labeled_containers_path:=Group:Rate Setting;", "attached text:=Days in Advance:")'
 LIQ_InterestPricingOption_RateSettingTimeInAdvance_Textfield = 'JavaWindow("title:=Interest Pricing Option.*").JavaEdit("labeled_containers_path:=.*Rate Setting.*","attached text:=Time.*")'
 
 ### Interest Pricing Option - Frequency Selection List Window ###
@@ -355,7 +356,6 @@ LIQ_Edit_OutsideConditions_StartDate = 'JavaWindow("label:=.*Outside Condition")
 LIQ_Edit_OutsideConditions_OK_Button = 'JavaWindow("label:=.*Outside Condition").JavaButton("attached text:=OK")'
 LIQ_Edit_OutsideConditions_Question_Window = 'JavaWindow("text:=Question")'
 LIQ_Edit_OutsideConditions_Question_Yes_Button = 'JavaWindow("title:=Question","displayed:=1").JavaButton("label:=Yes")'
-
 
 ###Deal Notebook - Fees Tab###    
     
