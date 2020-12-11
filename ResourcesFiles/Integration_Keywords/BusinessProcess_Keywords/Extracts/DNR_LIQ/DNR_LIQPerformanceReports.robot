@@ -34,9 +34,10 @@ Validate Facility Performance Report File with Pending Status
     
     Validate Facility Name Value if Existing    ${LIQPerformance_Report}    ${Sheet_Name}    ${Facility_Name}
     
-Validate Facility Performance Report File
+Validate Facility Performance Report File for Active Facility
     [Documentation]    This keyword is used to validate facility performance report files.
     ...    @author: ccarriedo    07DEC2020    - initial create
+    ...    @update: clanding    11DEC2020    - updated keyword name from 'Validate Facility Performance Report File' to 'Validate Facility Performance Report File for Active Facility'
     [Arguments]    ${ExcelPath}
 
     ${Deal_Name}    Set Variable    &{ExcelPath}[Deal_Name]
@@ -49,5 +50,23 @@ Validate Facility Performance Report File
     ${Facility_Status}    Set Variable    &{ExcelPath}[Facility_Status]        
     ${Facility_FCN}    Set Variable    &{ExcelPath}[Facility_FCN]
     
-    Validate Facility Performance Report File with Active Status    &{ExcelPath}[Report_Path]&{ExcelPath}[Report_File_Name]    ${Sheet_Name}    ${Facility_Name}    ${Columns_To_Validate}    
+    Validate Facility Performance Report File    &{ExcelPath}[Report_Path]&{ExcelPath}[Report_File_Name]    ${Sheet_Name}    ${Facility_Name}    ${Columns_To_Validate}    
+    ...    ${Delimiter}    ${Column_Headers_RowID}    ${Facility_Status}    ${Facility_Outstandings}    ${Facility_FCN}
+
+Validate Facility Performance Report File for Expired Facility
+    [Documentation]    This keyword is used to validate facility performance report files for Expired Facility status.
+    ...    @author: clanding    11DEC2020    - initial create
+    [Arguments]    ${ExcelPath}
+
+    ${Deal_Name}    Set Variable    &{ExcelPath}[Deal_Name]
+    ${Sheet_Name}    Set Variable    &{ExcelPath}[Sheet_Name]
+    ${Facility_Name}    Set Variable    &{ExcelPath}[Facility_Name]
+    ${Columns_To_Validate}    Set Variable    &{ExcelPath}[Columns_To_Validate]
+    ${Delimiter}    Set Variable    &{ExcelPath}[Delimiter]
+    ${Column_Headers_RowID}    Set Variable    &{ExcelPath}[Column_Headers_RowID]    ### The report file does not start at row 1 ###
+    ${Facility_Outstandings}    Set Variable    &{ExcelPath}[Facility_Outstandings]
+    ${Facility_Status}    Set Variable    &{ExcelPath}[Facility_Status]        
+    ${Facility_FCN}    Set Variable    &{ExcelPath}[Facility_FCN]
+    
+    Validate Facility Performance Report File    &{ExcelPath}[Report_Path]&{ExcelPath}[Report_File_Name]    ${Sheet_Name}    ${Facility_Name}    ${Columns_To_Validate}    
     ...    ${Delimiter}    ${Column_Headers_RowID}    ${Facility_Status}    ${Facility_Outstandings}    ${Facility_FCN}

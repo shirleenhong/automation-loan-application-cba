@@ -2690,12 +2690,15 @@ Get the Row Id for Given Pricing Option
 Return Given Number with Specific Decimal Places without Rounding
     [Documentation]    This keyword return the given number with the given number of Decimal Places without roundinf off the number
     ...    @author: fluberio    12MAY2020    - initial create
+    ...    @update: clanding    11DEC2020    - added handling when sNumberToBeConverted does not have any decimal
     [Arguments]     ${sNumberToBeConverted}    ${sNumberOfDecimalPlaces}
     ${sContainer}    Convert To String    ${sNumberToBeConverted}
     ${sContainer}    Remove String    ${sContainer}    ,
     ${Container_List}    Split String    ${sContainer}    .
     ${sWholeNum_Value}    Set Variable    @{Container_List}[0]
-    ${sDecimal_Value}    Set Variable    @{Container_List}[1]
+    ${With_Decimal}    Run Keyword And Return Status    Set Variable    @{Container_List}[1]
+    ${sDecimal_Value}    Run Keyword If    ${With_Decimal}==${True}    Set Variable    @{Container_List}[1]
+    ...    ELSE    Set Variable    0
     
     ${sDecimal_Value}    Get Substring    ${sDecimal_Value}    0    ${sNumberOfDecimalPlaces}
     ${result}    Evaluate    ${sWholeNum_Value}.${sDecimal_Value}
@@ -2776,6 +2779,13 @@ Generate Deal Name and Alias with Numeric Test Data
     Log    Deal Alias: ${Deal_Alias}
     [Return]    ${Deal_Name}    ${Deal_Alias}
 
+Get Correct Dataset From Dataset List
+    [Documentation]    This keyword gets the correct dataset file for new UAT deals
+    ...    @author:    nbautist    09DEC2020    - Initial Create
+    [Arguments]    ${lValues}
+    
+    Set Global Variable    ${ExcelPath}    ${dataset_path}&{lValues}[Path]&{lValues}[Filename]
+
 Remove Comma Separators in Numbers
     [Documentation]    This keyword is used to remove , in the number. 
     ...    @author: clanding    10DEC2020    - initial create
@@ -2800,3 +2810,4 @@ Remove Comma Separators in Numbers
     ### Keyword Post-processing ###
     Save Values of Runtime Execution on Excel File    ${sRunTimeVar_Result}    ${Number}
     [Return]    ${Number}
+

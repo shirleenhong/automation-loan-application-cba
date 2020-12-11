@@ -55,6 +55,7 @@ LIQ_InitialDrawdown_Calendar_Billing_CheckBox = 'JavaWindow("title:=Holiday Cale
 LIQ_InitialDrawdown_Calendar_HolidayCalendar_OkButton = 'JavaWindow("title:=Holiday Calendar.*").JavaButton("attached text:=OK.*")'
 LIQ_InitialDrawdown_Calendar_JavaTree = 'JavaWindow("title:=.*Initial Drawdown.*").JavaTree("attached text:=Drill down for details.*")'
 LIQ_InitialDrawdown_Calendar_DeleteButton = 'JavaWindow("title:=.*Initial Drawdown.*").JavaButton("attached text:=Delete.*")'
+LIQ_InitialDrawdown_Comment_AddButton = 'JavaWindow("title:=.*Initial Drawdown.*").JavaButton("attached text:=Add.*")'
 
 ##Rates Tab##
 LIQ_InitialDrawdown_BaseRate_Button = 'JavaWindow("title:=.*Initial Drawdown.*").JavaButton("attached text:=Base Rate:")'

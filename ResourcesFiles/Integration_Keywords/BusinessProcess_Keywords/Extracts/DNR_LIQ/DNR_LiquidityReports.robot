@@ -54,8 +54,16 @@ Validate if Loan is Existing in Liquidity Report
     ...    @author: clanding    08DEC2020    - initial create
     [Arguments]    ${ExcelPath}
 
+    ### Get Deal Values ###
     ${Loan_RequestedAmount_WithComma}    Read Data From Excel    SC1_LoanDrawdown    Loan_RequestedAmount    Expanded_Scenario1_ActiveFac1_Repayment    ${DNR_DATASET}    bTestCaseColumn=True    sTestCaseColReference=Test_Case
     ${Loan_RequestedAmount}    Remove Comma Separators in Numbers    ${Loan_RequestedAmount_WithComma}
     
-    Validate Text Value if Existing in Excel Sheet Column    &{ExcelPath}[Report_Path]&{ExcelPath}[Report_File_Name]    &{ExcelPath}[Sheet_Name]    Transaction Id    &{ExcelPath}[Transaction_ID]    2
-    Validate Text Value if Existing in Excel Sheet Column    &{ExcelPath}[Report_Path]&{ExcelPath}[Report_File_Name]    &{ExcelPath}[Sheet_Name]    Net Cashflow    -${Loan_RequestedAmount}    2
+    ### Get Report Values ###
+    ${Net_Cashflow}    Read Data From Excel    &{ExcelPath}[Sheet_Name]    Net Cashflow    &{ExcelPath}[Transaction_ID]    &{ExcelPath}[Report_Path]&{ExcelPath}[Report_File_Name]    bTestCaseColumn=True    sTestCaseColReference=Transaction Id    iHeaderIndex=2
+    ${Transaction_Status}    Read Data From Excel    &{ExcelPath}[Sheet_Name]    Transaction Status    &{ExcelPath}[Transaction_ID]    &{ExcelPath}[Report_Path]&{ExcelPath}[Report_File_Name]    bTestCaseColumn=True    sTestCaseColReference=Transaction Id    iHeaderIndex=2
+
+    Compare Two Strings    &{ExcelPath}[Transaction_Status]    ${Transaction_Status}
+
+    ${Net_Cashflow}   Return Given Number with Specific Decimal Places without Rounding    ${Net_Cashflow}    2
+    ${Loan_RequestedAmount}   Return Given Number with Specific Decimal Places without Rounding    ${Loan_RequestedAmount}    2
+    Compare Two Strings    -${Loan_RequestedAmount}    ${Net_Cashflow}

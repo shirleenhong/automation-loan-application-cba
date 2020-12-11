@@ -22,6 +22,7 @@ Facility 1 Setup for Expanded Scenario 1
     Set Global Variable    ${rowid}    1
     Mx Execute Template With Multiple Data    Create Facility for DNR    ${DNR_DATASET}    ${rowid}    SC1_FacilitySetup
     Mx Execute Template With Multiple Data    Ongoing Fee Setup for DNR     ${DNR_DATASET}    ${rowid}    SC1_OngoingFeeSetup
+    Set Global Variable    ${TestCase_Name}    FACPF_004
     Mx Execute Template With Multiple Data    Get Active Facility Details for Active Outstanding and Write in DNR Dataset    ${DNR_DATASET}    ${rowid}    SC1_FacilitySetup
     
     Set Global Variable    ${TestCase_Name}    Expanded_Scenario1_ActiveFac1_Repayment
