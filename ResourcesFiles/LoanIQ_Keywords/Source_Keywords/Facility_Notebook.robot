@@ -4037,6 +4037,7 @@ Select Text In Ongoing Fee Pricing List
     ${Text}    Acquire Argument Value    ${sText}
 
     Mx LoanIQ Select Or DoubleClick In Javatree   ${LIQ_FacilityPricing_OngoingFeeInterest_Tree}    ${Text}%s
+    
 Add After Item to Existing Selection For Facility Pricing
     [Documentation]    Adds an After Item to an Existing Selection For Facility Pricing Notebook.
     ...    @author: dahijara    09DEC2020    - Initial create
