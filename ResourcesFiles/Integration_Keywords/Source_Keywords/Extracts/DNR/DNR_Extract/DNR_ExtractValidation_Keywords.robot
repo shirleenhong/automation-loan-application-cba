@@ -43,7 +43,7 @@ Run As Report Type
     ${DNR_TeamContent_CBAReports_ReportType_RadioButton_Locator}    Replace Variables    ${DNR_TeamContent_CBAReports_ReportType_RadioButton_Locator}
     Wait Until Keyword Succeeds    50x    5s    Wait Until Element Is Visible    ${DNR_TeamContent_CBAReports_ReportType_RadioButton_Locator}
     Click Element    ${DNR_TeamContent_CBAReports_ReportType_RadioButton_Locator}
-    
+
     ### Click Run Button ###
     Click Element    ${DNR_TeamContent_CBAReports_Run_Button_Locator}
     Wait Until Browser Ready State
