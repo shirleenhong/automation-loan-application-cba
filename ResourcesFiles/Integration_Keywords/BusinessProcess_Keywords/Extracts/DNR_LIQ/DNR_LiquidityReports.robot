@@ -41,6 +41,19 @@ Get RID from Loan for Liquidity Report
     Logout from Loan IQ
 
     Write Data To Excel    LQDTY    Transaction_ID    ${TestCase_Name}    ${Loan_RID}    ${DNR_DATASET}    bTestCaseColumn=True
+    
+Get RID from Loan Principal Payment for Liquidity Report
+    [Documentation]    This keyword is used to get RID from loan principal payment for Liquidity Report.
+    ...    @author: makcamps    11DEC2020    - initial create
+    [Arguments]    ${ExcelPath}
+
+    Logout from Loan IQ
+    Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
+    Navigate to an Existing Loan    &{ExcelPath}[Deal_Name]    &{ExcelPath}[Facility_Name]    &{ExcelPath}[Loan_Alias]
+    ${Loan_RID}    Get Cashflow Details from Released Loan Principal Payment    &{ExcelPath}[Borrower1_ShortName]
+    Logout from Loan IQ
+
+    Write Data To Excel    LQDTY    Transaction_ID    &{ExcelPath}[TestCase_Name]    ${Loan_RID}    ${DNR_DATASET}    bTestCaseColumn=True
 
 Validate if RID is Not Existing in Liquidity Report
     [Documentation]    This keyword is used verify if RID is not existing in the report.
@@ -48,3 +61,24 @@ Validate if RID is Not Existing in Liquidity Report
     [Arguments]    ${ExcelPath}
 
     Validate Text Value if Not Existing in Excel Sheet Column    &{ExcelPath}[Report_Path]&{ExcelPath}[Report_File_Name]    &{ExcelPath}[Sheet_Name]    &{ExcelPath}[Columns_To_Validate]    &{ExcelPath}[Transaction_ID]    2
+    
+Validate Principal Payment is Existing in Liquidity Report
+    [Documentation]    This keyword is used to validate Ongoing Fee Payment transactions are not existing in the liquidity report.
+    ...    @author: makcamps    11DEC2020    - initial create
+    [Arguments]    ${ExcelPath}
+    
+    ### Get Expected Details ###
+    ${TransactionID}    Read Data From Excel    LQDTY    Transaction_ID    ${TestCase_Name}    ${DNR_DATASET}    N    True    Test_Case
+    ${Column_Row_Index}    Read Data From Excel    LQDTY    Column_Row_Index    ${TestCase_Name}    ${DNR_DATASET}    N    True    Test_Case
+    ${Net_Cashflow}    Read Data From Excel    SC1_UnscheduledPayments    PrincipalPayment_RequestedAmount    ${TestCase_Name}    ${DNR_DATASET}    N    True    TestCase_Name
+    ${Transaction_Desc}    Read Data From Excel    SC1_UnscheduledPayments    Transaction_Description    ${TestCase_Name}    ${DNR_DATASET}    N    True    TestCase_Name
+    ${Transaction_Stat}    Read Data From Excel    SC1_UnscheduledPayments    Transaction_Status    ${TestCase_Name}    ${DNR_DATASET}    N    True    TestCase_Name
+   
+    ### Get Actual Details in the Report
+    ${Net_Cashflow_Extract}    Read Data From Excel    Details    Net Cashflow    ${TransactionID}    &{ExcelPath}[Report_Path]&{ExcelPath}[Report_File_Name]    N    True    Transaction Id    ${Column_Row_Index}
+    ${Transaction_Desc_Extract}    Read Data From Excel    Details    Transaction Description    ${TransactionID}    &{ExcelPath}[Report_Path]&{ExcelPath}[Report_File_Name]    N    True    Transaction Id    ${Column_Row_Index}
+    ${Transaction_Stat_Extract}    Read Data From Excel    Details    Transaction Status    ${TransactionID}    &{ExcelPath}[Report_Path]&{ExcelPath}[Report_File_Name]    N    True    Transaction Id    ${Column_Row_Index}
+    
+    Compare Two Strings    ${Net_Cashflow}    ${Net_Cashflow_Extract}
+    Compare Two Strings    ${Transaction_Desc}    ${Transaction_Desc_Extract}
+    Compare Two Strings    ${Transaction_Stat}    ${Transaction_Stat_Extract}
