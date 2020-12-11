@@ -18,7 +18,7 @@ Expanded Scenario2 Loan Split
     Mx Execute Template With Multiple Data    Setup Fees for Term Facility    ${DNR_DATASET}    ${rowid}    SC2_OngoingFeeSetup
     Mx Execute Template With Multiple Data    Setup Primaries for Syndicated Deal for DNR    ${DNR_DATASET}    ${rowid}    SC2_PrimaryAllocation
     Mx Execute Template With Multiple Data    Syndicated Deal Approval and Close    ${DNR_DATASET}    ${rowid}    SC2_PrimaryAllocation
-    Mx Execute Template With Multiple Data    Create Revolver Facility Drawdown for DNR    ${DNR_DATASET}    ${rowid}    SC2_LoanDrawdown
+    Mx Execute Template With Multiple Data    Create Revolver Facility Drawdown for DNR Syndicated Deal    ${DNR_DATASET}    ${rowid}    SC2_LoanDrawdown
     Log to Console    Pause Execution - Run Monthly EOD
     Pause Execution
     Mx Execute Template With Multiple Data    Create Loan Split For DNR    ${DNR_DATASET}    ${rowid}    SC2_LoanSplit
