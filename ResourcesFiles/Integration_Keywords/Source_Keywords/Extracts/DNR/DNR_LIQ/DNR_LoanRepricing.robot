@@ -112,7 +112,7 @@ Create Comprehensive Repricing for Non Agency Bilateral Deal for DNR
 
     ###Deal Notebook###
     ${Borrower_ShortName}    Read Data From Excel    SC1_DealSetup    Borrower1_ShortName    &{ExcelPath}[rowid]    ${DNR_DATASET}
-    ${BaseRatePercentage}    Get Base Rate from Funding Rate Details    &{ExcelPath}[FundingRate_Alias]    &{ExcelPath}[Repricing_Frequency]    &{ExcelPath}[Currency1]
+    ${BaseRatePercentage}    Get Base Rate from Funding Rate Details    &{ExcelPath}[FundingRate_Alias]    &{ExcelPath}[Repricing_Frequency]    &{ExcelPath}[Loan_Currency]
     ${ExchangeRate}    Get Currency Exchange Rate from Treasury Navigation    ${AUD_TO_USD}        
 	${baseRateCode}    Read Data From Excel    SC1_ComprehensiveRepricing    Pricing_Option    &{ExcelPath}[rowid]    ${DNR_DATASET}  
     Search for Deal    &{ExcelPath}[Deal_Name]
@@ -135,16 +135,19 @@ Create Comprehensive Repricing for Non Agency Bilateral Deal for DNR
     ###Add Interest Payment###
     Setup Repricing    &{ExcelPath}[Repricing_Add_Option_Setup_2]    ${BaseRatePercentage}    ${baseRateCode}    &{ExcelPath}[LoanAmount_2]    &{ExcelPath}[Repricing_Frequency]    ${Y}    ${ADD_LOAN_REPRICING}
 
-    
     ###Create Cashflow###
     Navigate to Loan Repricing Workflow and Proceed With Transaction    Create Cashflows
 
     ###Verify Remittance Instructions###
     Verify if Method has Remittance Instruction    &{ExcelPath}[Borrower_ShortName]    &{ExcelPath}[Remittance_Description]    &{ExcelPath}[Remittance_Instruction]
-    Set All Items to Do It
     
     ${HostBankShare}    Get Host Bank Cash in Cashflow    &{ExcelPath}[Loan_Currency]
     ${BorrowerTranAmount}    Get Transaction Amount in Cashflow    ${Borrower_ShortName}
+    
+    ${Interest_Amount}    Subtract 2 Numbers    ${BorrowerTranAmount}    ${HostBankShare}
+    Verify if Method has Remittance Instruction    &{ExcelPath}[Borrower_ShortName]    &{ExcelPath}[Remittance_Description]    &{ExcelPath}[Remittance_Instruction]
+    ...    sTransactionAmount=${Interest_Amount}
+    Set All Items to Do It
 
     ###GL Entries###
     Navigate to GL Entries from Loan Rerpricing Notebook
