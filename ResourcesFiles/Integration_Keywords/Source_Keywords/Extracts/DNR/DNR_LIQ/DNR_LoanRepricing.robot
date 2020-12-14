@@ -110,7 +110,7 @@ Create Comprehensive Repricing for Non Agency Bilateral Deal for DNR
     Logout from Loan IQ
     Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
 
-    ###Deal Notebook###
+    # ###Deal Notebook###
     ${Borrower_ShortName}    Read Data From Excel    SC1_DealSetup    Borrower1_ShortName    &{ExcelPath}[rowid]    ${DNR_DATASET}
     ${BaseRatePercentage}    Get Base Rate from Funding Rate Details    &{ExcelPath}[FundingRate_Alias]    &{ExcelPath}[Repricing_Frequency]    &{ExcelPath}[Loan_Currency]
     ${ExchangeRate}    Get Currency Exchange Rate from Treasury Navigation    ${AUD_TO_USD}        
@@ -139,14 +139,14 @@ Create Comprehensive Repricing for Non Agency Bilateral Deal for DNR
     Navigate to Loan Repricing Workflow and Proceed With Transaction    Create Cashflows
 
     ###Verify Remittance Instructions###
-    Verify if Method has Remittance Instruction    &{ExcelPath}[Borrower_ShortName]    &{ExcelPath}[Remittance_Description]    &{ExcelPath}[Remittance_Instruction]
+    Verify if Method has Remittance Instruction    &{ExcelPath}[Borrower1_ShortName]    &{ExcelPath}[Remittance_Description]    &{ExcelPath}[Remittance_Instruction]
     
     ${HostBankShare}    Get Host Bank Cash in Cashflow    &{ExcelPath}[Loan_Currency]
     ${BorrowerTranAmount}    Get Transaction Amount in Cashflow    ${Borrower_ShortName}
     
     ${Interest_Amount}    Subtract 2 Numbers    ${BorrowerTranAmount}    ${HostBankShare}
-    Verify if Method has Remittance Instruction    &{ExcelPath}[Borrower_ShortName]    &{ExcelPath}[Remittance_Description]    &{ExcelPath}[Remittance_Instruction]
-    ...    sTransactionAmount=${Interest_Amount}
+    Verify if Method has Remittance Instruction    &{ExcelPath}[Borrower1_ShortName]    &{ExcelPath}[Remittance_Description]    &{ExcelPath}[Remittance_Instruction]
+    ...    sTransactionAmount=${Interest_Amount}    sCurrency=&{ExcelPath}[Loan_Currency]
     Set All Items to Do It
 
     ###GL Entries###
@@ -178,8 +178,9 @@ Create Comprehensive Repricing for Non Agency Bilateral Deal for DNR
     ###Get System Date and Write to Excel###
     ${RepricedLoan_Date}    Get System Date
     Write Data To Excel    SC1_ComprehensiveRepricing    Transaction_Date    ${rowid}    ${RepricedLoan_Date}    ${DNR_DATASET}
-    Write Data To Excel    SC1_ComprehensiveRepricing    Cashflow_Amount    &{ExcelPath}[rowid]    ${BorrowerTranAmount}    ${DNR_DATASET}
-    Write Data To Excel    SC1_ComprehensiveRepricing    Transaction_Status    &{ExcelPath}[rowid]    ${RELEASE_STATUS}    ${DNR_DATASET}
+    Write Data To Excel    SC1_ComprehensiveRepricing    Cashflow_Amount_Principal    &{ExcelPath}[rowid]    ${BorrowerTranAmount}    ${DNR_DATASET}
+    Write Data To Excel    SC1_ComprehensiveRepricing    Cashflow_Amount_Interest    &{ExcelPath}[rowid]    ${Interest_Amount}    ${DNR_DATASET}
+    Write Data To Excel    SC1_ComprehensiveRepricing    Transaction_Status    &{ExcelPath}[rowid]    ${RELEASED_STATUS}    ${DNR_DATASET}
     
     ###LIQ Window###
     Close All Windows on LIQ
