@@ -9,7 +9,7 @@ LOACC_003
     ...    NOTE: Loans and Accruals Report should be available already in the report path.
     ...    @author: ccarriedo    14DEC2020    - initial create
 
-    # Set Global Variable    ${rowid}    1
+    Set Global Variable    ${rowid}    1
     Set Global Variable    ${TestCase_Name_Facilities}    LOACC_003_Facilities
     Mx Execute Template With Specific Test Case Name    Generate DNR Report for Loans and Accruals    ${DNR_DATASET}    Test_Case    ${TestCase_Name_Facilities}    DNR
     Mx Execute Template With Specific Test Case Name    Write Details for Loans and Accruals Report    ${DNR_DATASET}    Test_Case    ${TestCase_Name_Facilities}    DNR
