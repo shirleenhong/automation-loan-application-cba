@@ -230,6 +230,7 @@ Validate Details on Acrual Tab - Commitment Fee
     ...    @author: fmamaril
     ...    update: mgaling    22Aug2019    Added Take Screenshot keyword
     ...    @update: ehugo    05JUN2020    - added keyword pre-processing; updated screenshot location
+    ...    @update: mcastro    11DEC2020    - Added Run Keyword And Continue On Failure on validation 
     [Arguments]    ${sComputed_ProjectedCycleDue}    ${sCycleNumber}     
 
     ### GetRuntime Keyword Pre-processing ###
@@ -239,10 +240,10 @@ Validate Details on Acrual Tab - Commitment Fee
     mx LoanIQ activate window    ${LIQ_Fee_Window}
     Mx LoanIQ Select Window Tab    ${LIQ_CommitmentFee_Tab}    Accrual
     ${CycleDue}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_CommitmentFee_Acrual_JavaTree}    ${CycleNumber}%Cycle Due%CycleDue    
-    Should Be Equal As Strings    0.00    ${CycleDue}
+    Run Keyword And Continue On Failure    Should Be Equal As Strings    0.00    ${CycleDue}
     ${PaidToDate}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_CommitmentFee_Acrual_JavaTree}    ${CycleNumber}%Paid to date%PaidToDate
     ${PaidToDate}    Remove Comma, Negative Character and Convert to Number    ${PaidToDate}    
-    Should Be Equal As Strings    ${PaidToDate}    ${Computed_ProjectedCycleDue}  
+    Run Keyword And Continue On Failure    Should Be Equal As Strings    ${PaidToDate}    ${Computed_ProjectedCycleDue}  
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/FeeWindow_AccrualTab_CommitmentFeeAccruals 
     
 Validate Details of Ongoing Fee on Accruals Tab
@@ -1815,3 +1816,12 @@ Save and Close Ongoing Fee Window
     Mx LoanIQ select    ${LIQ_OngoingFee_Save_Menu}
     Mx LoanIQ click element if present    ${LIQ_Warning_OK_Button}
     Mx LoanIQ select    ${LIQ_OngoingFee_Exit_Menu}
+
+Release Ongoing Fee
+    [Documentation]    This keyword will handle the releasing of ongoing Fe
+    ...   @author: dahijara    10DEC2020    Initial Commit
+    
+    mx LoanIQ activate window    ${LIQ_OngoingFee_Window}
+    Run Keyword And Continue On Failure    Mx LoanIQ click element if present    ${LIQ_OngoingFee_InquiryMode_Button}
+    Navigate Notebook Workflow    ${LIQ_OngoingFee_Window}    ${LIQ_OngoingFee_Tab}    ${LIQ_OngoingFee_Workflow_JavaTree}    Release
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/OngoingFee_Notebook     

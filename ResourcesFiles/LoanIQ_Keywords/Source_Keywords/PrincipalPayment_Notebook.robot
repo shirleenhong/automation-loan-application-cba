@@ -948,3 +948,47 @@ Close Selected Windows for Payment Release
     ...                @author: fmamaril    14OCT2019    Initial create
     mx LoanIQ close window    ${LIQ_RepaymentSchedule_Window}
     mx LoanIQ close window    ${LIQ_Loan_Window}
+
+Get Cashflow Details from Released Loan Principal Payment
+    [Documentation]    This keyword is used to get the cashflow ID and write the value in the dataset
+    ...    @author: makcamps    11DEC2020    - initial create
+    [Arguments]    ${sBorrower_ShortName}
+    
+    ${Borrower_Shortname}    Acquire Argument Value    ${sBorrower_ShortName}
+
+    Mx LoanIQ Select Window Tab    ${LIQ_Loan_Tab}    Events
+    Mx LoanIQ Select Or DoubleClick In Javatree    ${LIQ_Loan_Events_List}    Principal Prepayment Applied%d
+    
+    ###Open Cashflow Details From Released Initial Loan Drawdown###
+    Open Cashflows Window from Notebook Menu    ${LIQ_PrincipalPayment_Window}    ${LIQ_PrincipalPayment_OptionsCashflow}
+    mx LoanIQ activate window    ${LIQ_Cashflows_Window}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/PrincipalPayment_CashflowWindow
+    Mx LoanIQ Select Or DoubleClick In Javatree    ${LIQ_Cashflows_Tree}    ${Borrower_Shortname}%d
+    mx LoanIQ activate window    ${LIQ_Cashflows_DetailsForCashflow_Window}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/CashflowDetails
+    mx LoanIQ send keys    {F8}
+    
+    ###Get the Actual Cashflow ID and Return to Loan###
+    mx LoanIQ activate window    ${LIQ_UpdateInformation_Window}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/Cashflow_UpdateDetails
+    mx LoanIQ click    ${LIQ_Cashflows_UpdateInformation_CopyRID_Button}
+    mx LoanIQ click    ${LIQ_UpdateInformation_Exit_Button}
+    mx LoanIQ click    ${LIQ_Payment_Cashflows_DetailsforCashflow_Exit_Button}
+    mx LoanIQ close window    ${LIQ_Cashflows_Window}
+    mx LoanIQ close window    ${LIQ_PrincipalPayment_Window}
+    mx LoanIQ activate window    ${LIQ_Loan_Window}
+       
+    ###Set The Cashflow ID in Variable and Write To Report Validation Sheet###
+    ### Tabs with highlight does not return any text and method is not working ###
+    ${IsClicked}    Run Keyword And Return Status    Mx LoanIQ Select Window Tab    ${LIQ_Loan_Tab}    Comments
+    Run Keyword If    ${IsClicked}==${False}    Pause Execution    Manually click Comments tab then click OK.     ### Raised TACOE-1193/GDE-9343 for the issue
+    mx LoanIQ click    ${LIQ_LoanNotebook_CommentsTab_Add_Button}
+    mx LoanIQ enter    ${LIQ_CommentsEdit_Comment_Textfield}    /
+    mx LoanIQ send keys    ^{V}
+    ${CashflowID}    Mx LoanIQ Get Data    ${LIQ_CommentsEdit_Comment_Textfield}    value%rid
+    mx LoanIQ close window    ${LIQ_CommentsEdit_Window}    
+    ${CashflowID}    Remove String    ${CashflowID}    /
+    ${CashflowID}    Strip String    ${CashflowID}    mode=both
+    Log To Console    ${CashflowID}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/Cashflow_ID
+    [Return]    ${CashflowID}

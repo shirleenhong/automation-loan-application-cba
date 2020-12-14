@@ -43,4 +43,4 @@ Setup Fees for Term Facility for DNR
     
     ###Facility Validation and close###
     Validate Facility
-    mx LoanIQ close window    ${LIQ_FacilityNavigator_Window}
+    Close Facility Notebook and Navigator Windows

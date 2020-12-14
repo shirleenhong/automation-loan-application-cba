@@ -77,6 +77,7 @@ Send a Drawdown Intent Notice via Notice Application
 Send a Drawdown Intent Notice via Notice Application without FFC Validation
     [Documentation]    This keyword is use to successfully sent out a Drawdown Intent Notice via Notice Application without validation in FFC - API_COR_TC03
     ...    @author: mcastro    09DEC2020    - Initial Create
+    ...    @update: mcastro    14DEC2020    - update encoding and decoding bytes to high level keyword
     [Arguments]    ${APIDataSet}
     
     Get Notice Details via Loan Notebook in LIQ    ${rowid}    &{APIDataSet}[Facility_Name]    &{APIDataSet}[Deal_Name]    &{APIDataSet}[Loan_Alias]
@@ -108,9 +109,7 @@ Send a Drawdown Intent Notice via Notice Application without FFC Validation
     ${CorrelationID}    Read Data From Excel for API_Data    Correspondence    Correlation_ID    ${rowid}
     
     ### Send Call Back thru Postman ###
-    ${CorrelationIdByte}    Encode String To Bytes    ${CorrelationID}     UTF-8
-    ${MessageIdEncode}    B 32 Encode    ${CorrelationIdByte}
-    ${MessageIdDecode}    Decode Bytes To String    ${MessageIdEncode}    UTF-8
+    ${MessageIdDecode}    Encode and Decode Bytes to String    ${CorrelationID}
 
     Update Key Values of input JSON file for Correspondence API    ${MessageIdDecode}    &{APIDataSet}[CallBack_Status]    &{APIDataSet}[errorMessage]    
     ...    &{APIDataSet}[InputFilePath]&{APIDataSet}[InputJson].json

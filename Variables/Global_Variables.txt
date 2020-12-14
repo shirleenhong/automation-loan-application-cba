@@ -384,6 +384,9 @@ ${LOANIQ_USERSTATUS_INACTIVE}    INACTIVE
 ${LOANIQ_USERSTATUS_ACTIVE}    ACTIVE
 ${LOANIQ_USERSTATUS_BOTH_ACTIVE_INACTIVE}    BOTH
 
+### Loan IQ - Deal Notebook Tabs ###
+${RATIOS_CONDS}    Ratios/Conds
+
 ### Table Maintenance ###
 ${AUTOMATED_TRANSACTIONS}    Automated Transactions
 
