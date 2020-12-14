@@ -93,10 +93,17 @@ Pay Commitment Fee Amount for DNR
 
 Unscheduled Principal Payment - No Schedule for DNR
     [Documentation]    This keyword will pay Principal without Schedule
-    ...    @clanding: clanding    01DEC2020    - initial create
+    ...    @author: clanding    01DEC2020    - initial create
+    ...    @update: makcamps    11DEC2020    - added re-login to refresh system date
     [Arguments]    ${ExcelPath}
+    
+    ### LIQ Desktop ###
+    Logout from Loan IQ
+    Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
+    
     ###Loan IQ Desktop###
-    ${SystemDate}    Get System Date     
+    ${SystemDate}    Get System Date
+    Write Data To Excel    SC1_UnscheduledPayments    PrincipalPayment_EffectiveDate    ${rowid}    ${SystemDate}    ${DNR_DATASET}  
     Navigate to Oustanding Facility Window    &{ExcelPath}[Deal_Name]    &{ExcelPath}[Facility_Name]
     ${OutstandingBeforePayment}    ${AvailToDrawBeforePayment}    ${CurrentCmtBeforePayment}    Get Current Commitment, Outstanding and Available to Draw on Facility Before Payment    &{ExcelPath}[Borrower1_ShortName]          
     Search Loan    &{ExcelPath}[Type]    &{ExcelPath}[Search_By]    &{ExcelPath}[Facility_Name]

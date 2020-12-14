@@ -96,3 +96,21 @@ Setup Line Fee in Arrears for CH EDU Bilateral Deal
     Save and Close Ongoing Fee Window
 
     Close All Windows on LIQ
+
+Release Ongoing Fee for CH EDU Bilateral Deal
+    [Documentation]    This keyword will release the existing ongoing fee in the created deal
+    ...    @author: dahijara    10DEC2020    - Initial Create
+    [Arguments]    ${ExcelPath}
+    
+    ${Deal_Name}    Read Data From Excel    CRED01_DealSetup    Deal_Name    &{ExcelPath}[rowid]
+    ${Facility_Name}    Run Keyword If    '&{ExcelPath}[OngoingFee_Type]'== 'Commitment Fee'    Read Data From Excel    CRED02_FacilitySetup_A    Facility_Name    &{ExcelPath}[rowid]
+    ...    ELSE IF    '&{ExcelPath}[OngoingFee_Type]'== 'Line Fee'    Read Data From Excel    CRED02_FacilitySetup_B    Facility_Name    &{ExcelPath}[rowid]
+
+    Navigate to Facility Notebook    ${Deal_Name}    ${Facility_Name}
+    Navigate to Commitment Fee Notebook    &{ExcelPath}[OngoingFee_Type]
+
+    ### Ongoing Fee Notebook ###
+    Release Ongoing Fee
+
+    Save Facility Notebook Transaction
+    Close All Windows on LIQ

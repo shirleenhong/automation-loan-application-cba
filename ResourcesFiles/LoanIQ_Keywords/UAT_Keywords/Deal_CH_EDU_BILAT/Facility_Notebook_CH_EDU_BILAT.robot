@@ -74,3 +74,36 @@ Create Cash Advance Facility for CH EDU Bilateral Deal
     Add Borrower    &{ExcelPath}[Facility_Currency]    ${Facility_BorrowerSGName}    &{ExcelPath}[Facility_BorrowerPercent]    ${Facility_Borrower}
     ...    &{ExcelPath}[Facility_GlobalLimit]    &{ExcelPath}[Facility_BorrowerMaturity]    &{ExcelPath}[Facility_EffectiveDate]
 
+Setup Primary for CH EDU Bilateral Deal
+    [Documentation]    This keyword will Setup primary for CH EDU Bilateral Deal
+    ...    @author: dahijara    10DEC2020    - Initial Create
+    [Arguments]    ${ExcelPath}
+    
+    ${Deal_Name}    Read Data From Excel    CRED01_DealSetup    Deal_Name    &{ExcelPath}[rowid]
+    ${Primary_Lender}    Read Data From Excel    CRED01_DealSetup    Deal_AdminAgent    &{ExcelPath}[rowid]
+    ${Primary_LenderLoc}    Read Data From Excel    CRED01_DealSetup    AdminAgent_Location    &{ExcelPath}[rowid]
+    ${FacilityName_1}    Read Data From Excel    CRED02_FacilitySetup_A    Facility_Name    &{ExcelPath}[rowid]
+    ${PortfolioAllocation_1}    Read Data From Excel    CRED02_FacilitySetup_A    Facility_ProposedCmtAmt    &{ExcelPath}[rowid]
+    ${FacilityName_2}    Read Data From Excel    CRED02_FacilitySetup_B    Facility_Name    &{ExcelPath}[rowid]
+    ${PortfolioAllocation_2}    Read Data From Excel    CRED02_FacilitySetup_B    Facility_ProposedCmtAmt    &{ExcelPath}[rowid]
+
+    Open Existing Deal    ${Deal_Name}
+    Add Lender and Location    ${Deal_Name}    ${Primary_Lender}    ${Primary_LenderLoc}    &{ExcelPath}[Primary_RiskBook]    &{ExcelPath}[Primaries_TransactionType]
+    Set Sell Amount and Percent of Deal    &{ExcelPath}[Primary_PctOfDeal]
+    Add Pro Rate    &{ExcelPath}[Primary_BuySellPrice]
+    Verify Buy/Sell Price in Circle Notebook
+    Populate Amts or Dates Tab for Orig Primary    &{ExcelPath}[Primary_ExpectedCloseDate]
+    Add Contact in Primary    &{ExcelPath}[Primary_Contact]
+    Select Servicing Group on Primaries    None    &{ExcelPath}[Primary_SGAlias]
+
+    Circling for Primary Workflow    &{ExcelPath}[Primary_CircledDate]
+    Complete Portfolio Allocations Workflow    &{ExcelPath}[Primary_Portfolio]|&{ExcelPath}[Primary_Portfolio]    &{ExcelPath}[Primary_PortfolioBranch]    ${PortfolioAllocation_1}|${PortfolioAllocation_2}    None|None    ${FacilityName_1}|${FacilityName_2}    &{ExcelPath}[Primary_ExpenseCode]
+    Navigate to Orig Primaries Workflow and Proceed With Transaction    ${SEND_TO_SETTLEMENT_APPROVAL_WORKFLOW}
+    Close All Windows on LIQ
+
+    ### Approval using a different user ###
+    Logout from Loan IQ
+    Login to Loan IQ    ${SUPERVISOR_USERNAME}    ${SUPERVISOR_PASSWORD}
+    Select Actions    ${WORK_IN_PROCESS_ACTIONS}
+    Circle Notebook Settlement Approval    ${Deal_Name}    ${HOST_BANK}
+    Close All Windows on LIQ

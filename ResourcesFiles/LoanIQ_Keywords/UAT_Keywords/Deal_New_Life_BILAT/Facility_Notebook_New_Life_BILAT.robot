@@ -67,7 +67,7 @@ Setup Primary for New Life BILAT
     Add Lender and Location    &{ExcelPath}[Deal_Name]    &{ExcelPath}[Primary_Lender]    &{ExcelPath}[Primary_LenderLoc1]    &{ExcelPath}[Primary_RiskBook]    &{ExcelPath}[Primaries_TransactionType]
     Set Sell Amount and Percent of Deal    &{ExcelPath}[Primary_PctOfDeal]
     Add Pro Rate    &{ExcelPath}[Primary_BuySellPrice]
-    Populate Amts/Dates Tab in Orig Primary Window    &{ExcelPath}[Orig_Primary_ExpectedCloseDate]    
+    Populate Amts or Dates Tab for Orig Primary    &{ExcelPath}[Orig_Primary_ExpectedCloseDate]    
     Verify Buy/Sell Price in Circle Notebook
     Add Contact in Primary    &{ExcelPath}[Primary_Contact]
     Select Servicing Group on Primaries    None    &{ExcelPath}[Primary_SGAlias]

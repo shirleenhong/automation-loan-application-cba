@@ -336,3 +336,40 @@ Verify List Values Displays Numbers in N Decimal Places
     \    Run Keyword If    ${IsEqual}==${True}    Log    Expected: ${Value} contains ${DecimalPlaces} decimal places.
          ...    ELSE    Run Keyword And Continue On Failure    FAIL    Expected: ${Value} contains ${Count} decimal places instead of ${DecimalPlaces}.
     
+Get Row Value from Coordinates
+    [Documentation]    This keyword is used to get row value from given coordinates.
+    ...    E.g. AA1234 - Get 1234 row value
+    ...    @author: clanding    11DEC2020    - initial create
+    [Arguments]    ${sCoordinates}
+
+    ${Coordinates_List}    Convert To List    ${sCoordinates}
+    ${Coordinate_Count}    Get Length    ${sCoordinates}
+    :FOR    ${Index}    IN RANGE    ${Coordinate_Count}
+    \    ${IsNumber}    Run Keyword And Return Status    Convert To Number    @{Coordinates_List}[${Index}]
+    \    Exit For Loop If    ${IsNumber}==${True}
+
+    ${Row}    Get Substring    ${sCoordinates}    ${Index}
+    [Return]    ${Row}
+
+Verify Value Displays Numbers in N Decimal Places
+    [Documentation]    This keyword is used to verify if value displays numbers in ${iDecimalPlaces} Decimal Places.
+    ...    @author: clanding    11DEC2020    - initial create
+    [Arguments]    ${sValue}    ${iDecimalPlaces}=2
+
+    ${Value}    Convert To String    ${sValue}
+    
+    ### Check if value contains a decimal point ###
+    ${IsContain}    Run Keyword and Return Status    Should Contain    ${Value}   .
+    Run Keyword If    ${IsContain}==${False}    Run Keyword And Continue On Failure    FAIL    Expected: ${Value} does not contain a decimal number.
+    ...    ELSE    Log    Expected: ${Value} contains a decimal number.
+
+    ${Container_List}    Split String    ${Value}    .
+    ${WholeNum_Value}    Set Variable    @{Container_List}[0]
+    ${Decimal_Value}    Set Variable    @{Container_List}[1]
+    ${DecimalPlaces}    Run Keyword If    '${Decimal_Value}'=='0'    Set Variable    1
+    ...    ELSE IF    ${Decimal_Value}>1 and ${Decimal_Value}<10    Set Variable    1
+    ...    ELSE    Set Variable    ${iDecimalPlaces}
+    ${Count}    Get Length    ${Decimal_Value}
+    ${IsEqual}    Run Keyword And Return Status    Should Be Equal As Integers    ${Count}    ${DecimalPlaces}
+    Run Keyword If    ${IsEqual}==${True}    Log    Expected: ${Value} contains ${DecimalPlaces} decimal places.
+    ...    ELSE    Run Keyword And Continue On Failure    FAIL    Expected: ${Value} contains ${Count} decimal places instead of ${DecimalPlaces}.

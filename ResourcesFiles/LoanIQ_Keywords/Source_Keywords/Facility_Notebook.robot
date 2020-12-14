@@ -4092,3 +4092,27 @@ Navigate to Facitily Interest Pricing Window
     mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}    
     mx LoanIQ activate window     ${LIQ_Facility_InterestPricing_Window}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/FacilityPricing_Window
+
+Verify Facility Pricing Option Details
+    [Documentation]    This keyword verifies fields in facility Pricing Option.
+    ...    Note: currently, keyword only verifies Matrix Change Application Method field. Add Optional fields as necessary.
+    ...    @author: dahijara    11DEC2020    Initial create
+    [Arguments]    ${sPricingOption}    ${sMatrixChangeAppMethod}
+
+    ### Keyword Pre-processing ###
+    ${PricingOption}    Acquire Argument Value    ${sPricingOption}
+    ${MatrixChangeAppMethod}    Acquire Argument Value    ${sMatrixChangeAppMethod}
+
+	Mx LoanIQ Select Window Tab    ${LIQ_FacilityNotebook_Tab}    ${PRICING_RULES_TAB}
+    Mx LoanIQ Select Or DoubleClick In Javatree    ${LIQ_FacilityPricing_AllowedPricingOption_JavaTree}    ${PricingOption}%d
+    Mx LoanIQ activate window    ${LIQ_InterestPricingOption_Window}
+
+    ${UI_MatrixChangeAppMethod}    Mx LoanIQ Get Data    ${LIQ_FacilityPricing_PricingOption_MatrixChangeAppMthd_Combobox}    text
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/DealNotebook_PricingOption_InterestPricingOption
+
+    ${isMatched}    Run Keyword And Return Status    Should Be Equal    ${UI_MatrixChangeAppMethod}    ${MatrixChangeAppMethod}
+    Run Keyword If    ${isMatched}==${TRUE}    Log    Matrix Change Application Method is correct. Value: ${UI_MatrixChangeAppMethod}
+    ...    ELSE    Run Keyword And Continue On Failure    Fail    Matrix Change Application Method is NOT correct. Value: ${UI_MatrixChangeAppMethod}
+
+    Mx LoanIQ click    ${LIQ_InterestPricingOption_Cancel_Button}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/DealNotebook_PricingRulesTab_PricingOption

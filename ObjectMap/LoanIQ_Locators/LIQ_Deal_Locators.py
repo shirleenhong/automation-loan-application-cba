@@ -287,9 +287,10 @@ LIQ_PricingRules_AddFee_Button = 'JavaWindow("title:=Deal Notebook.*").JavaButto
 LIQ_PricingRules_AllowedPricingOption_JavaTree = 'JavaWindow("title:=Deal Notebook -.*").JavaTree("tagname:=Drill down to update","labeled_containers_path:=.*Allowed Pricing Options.*")'    
     
 ###Deal Notebook - Pricing Options Window###
-LIQ_InterestPricingOption_Window = 'JavaWindow("title:=Interest Pricing Option.*")'
+LIQ_InterestPricingOption_Window = 'JavaWindow("title:=.*Interest Pricing Option.*")'
 LIQ_InterestPricingOption_Dropdown = 'JavaWindow("title:=Interest Pricing Option.*").JavaList("attached text:=Round:.*","index:=0")'    
 LIQ_InterestPricingOption_Ok_Button = 'JavaWindow("title:=Interest Pricing Option.*").JavaButton("attached text:=OK")'
+LIQ_InterestPricingOption_Cancel_Button = 'JavaWindow("title:=.*Interest Pricing Option.*").JavaButton("attached text:=Cancel")'
 LIQ_InterestPricingOption_InitialFractionRate_List = 'JavaWindow("title:=Interest Pricing Option.*").JavaList("x:=270","y:=59")'  
 LIQ_InterestPricingOption_InitialFractionRate_Round = 'JavaWindow("title:=Interest Pricing Option.*").JavaList("x:=396","y:=59")'
 LIQ_InterestPricingOption_RoundingDecimalPrecision_List = 'JavaWindow("title:=Interest Pricing Option.*").JavaList("x:=270","y:=88")'    
@@ -318,6 +319,7 @@ LIQ_InterestPricingOption_MinimumDrawdownAmount_Textfield = 'JavaWindow("title:=
 LIQ_InterestPricingOption_MinimumPaymentAmount_Textfield = 'JavaWindow("title:=Interest Pricing Option.*").JavaEdit("index:=2")'
 LIQ_InterestPricingOption_MinimumAmountMultiples_Textfield = 'JavaWindow("title:=Interest Pricing Option.*").JavaEdit("index:=3")'
 LIQ_InterestPricingOption_MinimumLenderShareMultiples_Textfield = 'JavaWindow("title:=Interest Pricing Option.*").JavaEdit("index:=4")'
+LIQ_InterestPricingOption_RateSettingDaysInAdvance_Textfield = 'JavaWindow("title:=Interest Pricing Option.*","displayed:=1").JavaEdit("labeled_containers_path:=Group:Rate Setting;", "attached text:=Days in Advance:")'
 LIQ_InterestPricingOption_RateSettingTimeInAdvance_Textfield = 'JavaWindow("title:=Interest Pricing Option.*").JavaEdit("labeled_containers_path:=.*Rate Setting.*","attached text:=Time.*")'
 
 ### Interest Pricing Option - Frequency Selection List Window ###
@@ -357,7 +359,6 @@ LIQ_Edit_OutsideConditions_StartDate = 'JavaWindow("label:=.*Outside Condition")
 LIQ_Edit_OutsideConditions_OK_Button = 'JavaWindow("label:=.*Outside Condition").JavaButton("attached text:=OK")'
 LIQ_Edit_OutsideConditions_Question_Window = 'JavaWindow("text:=Question")'
 LIQ_Edit_OutsideConditions_Question_Yes_Button = 'JavaWindow("title:=Question","displayed:=1").JavaButton("label:=Yes")'
-
 
 ###Deal Notebook - Fees Tab###    
     
