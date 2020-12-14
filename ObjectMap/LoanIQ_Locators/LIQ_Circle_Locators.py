@@ -75,6 +75,7 @@ LIQ_PortfolioAllocation_PortfolioExpense_JavaTree = 'JavaWindow("text:=Portfolio
 ### Circle Notebook - Amts/Dates Tab ###
 LIQ_Circle_Amounts_CurrentAmount = 'JavaWindow("title:=.*Orig Primary.*").JavaEdit("attached text:=Current:", "labeled_containers_path:=Tab:Amts/Dates;Group:Amounts;")'
 LIQ_Circle_Amounts_Net_RadioButton = 'JavaWindow("title:=.*Orig Primary.*").JavaRadioButton("attached text:=Net")'
+LIQ_Circle_ExpectedClose_Textfield = 'JavaWindow("title:=.*Orig Primary.*").JavaEdit("index:=1")'
 
 ### Change Lender/Location ###
 LIQ_Circle_ChangeLenderLocation_Window = 'JavaWindow("title:=.*Change Lender/Location*")'

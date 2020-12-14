@@ -45,7 +45,7 @@ Create Facility for New Life BILAT
    
 Setup Facility Ongoing Fee for New Life BILAT
     [Documentation]    This high-level keyword sets up Ongoing Fee from the Deal Notebook
-    ...    @author: kmagday    12DE2020    - Initial Create
+    ...    @author: kmagday    12DEC2020    - Initial Create
     [Arguments]    ${ExcelPath}
     
     ### Ongoing Fee ###
@@ -58,4 +58,59 @@ Setup Facility Ongoing Fee for New Life BILAT
     Validate Ongoing Fee or Interest
     Modify Interest Pricing - Insert Add    &{ExcelPath}[Interest_AddItem]    &{ExcelPath}[Interest_OptionName]    &{ExcelPath}[Interest_RateBasis]    &{ExcelPath}[Interest_SpreadAmt]    &{ExcelPath}[Interest_BaseRateCode]
 
+Setup Primary for New Life BILAT
+    [Documentation]    This keyword will Setup primary for New Life BILAT deal
+    ...    @author: kmagday    12DEC2020    - Initial Create
+    [Arguments]    ${ExcelPath}
     
+    Open Existing Deal    &{ExcelPath}[Deal_Name]
+    Add Lender and Location    &{ExcelPath}[Deal_Name]    &{ExcelPath}[Primary_Lender]    &{ExcelPath}[Primary_LenderLoc1]    &{ExcelPath}[Primary_RiskBook]    &{ExcelPath}[Primaries_TransactionType]
+    Set Sell Amount and Percent of Deal    &{ExcelPath}[Primary_PctOfDeal]
+    Add Pro Rate    &{ExcelPath}[Primary_BuySellPrice]
+    Populate Amts/Dates Tab in Orig Primary Window    &{ExcelPath}[Orig_Primary_ExpectedCloseDate]    
+    Verify Buy/Sell Price in Circle Notebook
+    Add Contact in Primary    &{ExcelPath}[Primary_Contact]
+    Select Servicing Group on Primaries    None    &{ExcelPath}[Primary_SGAlias]
+    ${SellAmount}    Get Circle Notebook Sell Amount  
+    Mx LoanIQ close window    ${LIQ_OrigPrimaries_Window}
+    
+    ### Circle Notebook Complete Portfolio Allocation, Circling, and Sending to Settlement Approval ###
+    Circle Notebook Workflow Navigation    &{ExcelPath}[Primary_Lender]    &{ExcelPath}[Primary_CircledDate]    &{ExcelPath}[Lender_Hostbank]    &{ExcelPath}[Primary_Portfolio]
+    ...    &{ExcelPath}[Primary_PortfolioBranch]    ${SellAmount}    &{ExcelPath}[Primary_ExpiryDate]    &{ExcelPath}[Primary_RiskBook]
+
+    Close All Windows on LIQ
+
+Approve and Close Deal for New Life Bilat
+    [Documentation]    This keyword approves and closes the created Deal
+    ...    @author: kmagday    12DEC2020    - Initial Create
+    [Arguments]    ${ExcelPath}
+    
+    Logout from Loan IQ
+    Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
+    
+    ### Deal Notebook ###
+    Search Existing Deal    &{ExcelPath}[Deal_Name]
+    Navigate to Deal Notebook Workflow and Proceed With Transaction    ${SEND_TO_APPROVAL_STATUS}
+    Logout from Loan IQ
+    Login to Loan IQ    ${SUPERVISOR_USERNAME}    ${SUPERVISOR_PASSWORD}
+    Open Existing Deal    &{ExcelPath}[Deal_Name]
+    Approve the Deal    &{ExcelPath}[ApproveDate]
+    Close the Deal    &{ExcelPath}[CloseDate]
+    
+    Close All Windows on LIQ
+    Logout from Loan IQ
+    Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
+
+Release Commitment Fee For New Life BILAT
+    [Documentation]    This keyword will release the existing commitment fee in the created deal
+    ...    @author: kmagday    12DEC2020    - Initial Create
+    [Arguments]    ${ExcelPath}
+    
+    Navigate to Facility Notebook  &{ExcelPath}[Deal_Name]    &{ExcelPath}[Facility_Name]
+    Navigate to Commitment Fee Notebook    &{ExcelPath}[OngoingFee_Type]
+
+    ### Commitment Fee Notebook ###
+    Release Commitment Fee
+
+    Save Facility Notebook Transaction
+    Close All Windows on LIQ
