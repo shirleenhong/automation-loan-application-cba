@@ -108,9 +108,7 @@ Send a SENT Callback for Payment Notice without FFC Validation
     ${CorrelationID}    Read Data From Excel for API_Data    Correspondence    Correlation_ID    ${rowid}
     
     ### Send Call Back thru Postman ###
-    ${CorrelationIdByte}    Encode String To Bytes    ${CorrelationID}     UTF-8
-    ${MessageIdEncode}    B 32 Encode    ${CorrelationIdByte}
-    ${MessageIdDecode}    Decode Bytes To String    ${MessageIdEncode}    UTF-8
+    ${MessageIdDecode}    Encode and Decode Bytes to String    ${CorrelationID}
     Update Key Values of input JSON file for Correspondence API    ${MessageIdDecode}    &{APIDataSet}[CallBack_Status]    &{APIDataSet}[errorMessage]    
     ...    &{APIDataSet}[InputFilePath]&{APIDataSet}[InputJson].json
      

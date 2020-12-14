@@ -7,6 +7,7 @@ Create Initial Loan Drawdown for PIM Future BILAT
     [Documentation]    This high-level keyword is used to setup the outstanding for PIM Future BILAT facility
     ...    @author: mcastro    04DEC2020    - Initial Create
     ...    @update: mcastro    11DEC2020    - Added writing of Loan_Alias to Correspondence
+    ...    @update: mcastro    14DEC2020    - Update closing of notice window to a new keyword
     [Arguments]    ${ExcelPath}
 
     Logout from Loan IQ
@@ -44,7 +45,7 @@ Create Initial Loan Drawdown for PIM Future BILAT
     Select Item in Work in Process    ${OUTSTANDINGS_TRANSACTION}    ${GENERATE_INTENT_NOTICES}    ${LOAN_INITIAL_DRAWDOWN_TYPE}     ${Loan_Alias}
     Navigate Notebook Workflow    ${LIQ_InitialDrawdown_Window}    ${LIQ_InitialDrawdown_Tab}    ${LIQ_InitialDrawdown_WorkflowAction}    ${GENERATE_INTENT_NOTICES} 
     Generate Intent Notices    &{ExcelPath}[Borrower_Name]
-    Mx LoanIQ Close Window    ${LIQ_NoticeGroup_Window}
+    Close Notice Group Window
 
     ### Rate Setting ###
     Navigate to Loan Drawdown Workflow and Proceed With Transaction    ${RATE_SETTING_TRANSACTION}

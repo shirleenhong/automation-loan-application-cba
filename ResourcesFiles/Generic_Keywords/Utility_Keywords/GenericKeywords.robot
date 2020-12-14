@@ -2776,4 +2776,8 @@ Generate Deal Name and Alias with Numeric Test Data
     Log    Deal Alias: ${Deal_Alias}
     [Return]    ${Deal_Name}    ${Deal_Alias}
 
-    
+Close Notice Group Window
+    [Documentation] This keyword closes the notice group window
+    ...    @author: mcastro    14DEC2020    - Initial Create
+
+    Mx LoanIQ Close Window    ${LIQ_NoticeGroup_Window}
