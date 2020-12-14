@@ -591,7 +591,9 @@ Add Financial Ratio
 
 Add Outside Conditions
     [Documentation]    This keyword adds a outside condition in Ratios/Conds
-    ...    @author: kmagday    08DEC2020    initial create
+    ...    @author: kmagday    08DEC2020    - initial create
+    ...    @update: javinzon    11DEC2020    - added Take Screenshot keywords and validation if Outside condition is set
+    ...                                        with True value
     [Arguments]    ${sIndex}    ${sOutsideCondition}    ${sStartDate}    ${sTrue}=OFF    
 
     ### Keyword Pre-processing ###
@@ -614,7 +616,6 @@ Add Outside Conditions
     Run Keyword If    '${Index}'=='3' and '${True}'=='ON'    mx LoanIQ click    ${LIQ_OutsideConditions_Third_TrueRadioButton}    
     ...    ELSE    mx LoanIQ click    ${LIQ_OutsideConditions_Third_FalseRadioButton}
 
-
     mx LoanIQ click    ${LIQ_OutsideConditions_History_Button}
     mx LoanIQ click element if present   ${LIQ_Warning_Yes_Button}
 
@@ -626,11 +627,18 @@ Add Outside Conditions
     mx LoanIQ click    ${LIQ_OutsideConditions_Insert_Button}
 
     mx LoanIQ enter    ${LIQ_Edit_OutsideConditions_StartDate}    ${startDate}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/DealWindow_OutsideConditions_HistoryUpdate
     mx LoanIQ click    ${LIQ_Edit_OutsideConditions_OK_Button}
 
     mx LoanIQ click element if present    ${LIQ_Edit_OutsideConditions_Question_Yes_Button}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/DealWindow_OutsideConditions_HistoryUpdated
     mx LoanIQ click    ${LIQ_OutsideConditions_OK_Button}
-
+    
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/DealWindow_OutsideConditions
+    ${isPresent}    Run Keyword And Return Status    Validate if Element is Checked    ${LIQ_OutsideConditions_First_TrueRadioButton}    True    
+    Run Keyword If    ${isPresent}==True    Run Keywords    Log    History Start Date is successfully updated.
+    ...    AND    Mx LoanIQ Close Window    ${LIQ_DealNotebook_Window}
+    ...    ELSE    Run Keyword And Continue On Failure    FAIL    History Start Date is NOT successfully updated.
 
 Modify Upfront Fees
     [Documentation]    This keyword adds a financial ratio in a deal.
@@ -665,10 +673,11 @@ Add Pricing Option
     ...    @update: rtarayao
     ...    Changed verify text in java tree on line 540 to mx loaniq select string.
     ...    Added an optional argument to handle pricing options that does not tick on Bill Borrower checkbox.
-    ...    @update: ehugo    28MAY2020    - added keyword Pre-processing; added screenshot
+    ...    @update: ehugo       28MAY2020    - added keyword Pre-processing; added screenshot
     ...    @update: dahijara    03DEC2020    - added two optional arguments ${PricingOption_RateSettingTime}=None    ${PricingOption_RateSettingPeriodOption}=None
     ...                                      - added optional steps to handle Rate setting time and Rate setting period population.
     ...                                      - rename arguments by appending arg type. added pre-processing for all arguments.
+    ...	   @update: javinzon	09DEC2020	 - added takescreenshot for Interest pricing option details window
     [Arguments]    ${sPricingRule_Option}    ${sInitialFractionRate_Round}    ${sRoundingDecimal_Round}    ${sNonBusinessDayRule}    ${iPricingOption_BillNoOfDays}    ${sMatrixChangeAppMethod}    ${sRateChangeAppMethod}    ${sPricingOption_InitialFractionRate}=None
     ...    ${sPricingOption_RoundingDecimalPrecision}=None    ${sPricingOption_RoundingApplicationMethod}=None    ${sPricingOption_PercentOfRateFormulaUsage}=None    ${sPricingOption_RepricingNonBusinessDayRule}=None    ${sPricingOption_FeeOnLenderShareFunding}=None
     ...    ${sPricingOption_InterestDueUponPrincipalPayment}=None    ${sPricingOption_InterestDueUponRepricing}=None    ${sPricingOption_ReferenceBanksApply}=None    ${sPricingOption_IntentNoticeDaysInAdvance}=None    ${sPricingOption_IntentNoticeTime}=None
@@ -703,7 +712,7 @@ Add Pricing Option
     ${PricingOption_BillBorrower}    Acquire Argument Value    ${sPricingOption_BillBorrower}
     ${PricingOption_RateSettingTime}    Acquire Argument Value    ${sPricingOption_RateSettingTime}
     ${PricingOption_RateSettingPeriodOption}    Acquire Argument Value    ${sPricingOption_RateSettingPeriodOption}
-
+   
     Mx LoanIQ Select Window Tab    ${LIQ_DealNotebook_Tab}    Pricing Rules
     mx LoanIQ click    ${LIQ_PricingRules_AddOption_Button}
     mx LoanIQ activate window    ${LIQ_InterestPricingOption_Window}
@@ -737,8 +746,9 @@ Add Pricing Option
     Run Keyword If    '${PricingOption_MinimumAmountMultiples}' != 'None'    mx LoanIQ enter    ${LIQ_InterestPricingOption_MinimumAmountMultiples_Textfield}    ${PricingOption_MinimumAmountMultiples}
     Run Keyword If    '${PricingOption_RateSettingTime}' != 'None'    mx LoanIQ enter    ${LIQ_InterestPricingOption_RateSettingTimeInAdvance_Textfield}    ${PricingOption_RateSettingTime}
     Run Keyword If    '${PricingOption_RateSettingPeriodOption}' != 'None'    mx LoanIQ enter    JavaWindow("title:=Interest Pricing Option.*").JavaRadioButton("labeled_containers_path:=.*Rate Setting.*","attached text:=${PricingOption_RateSettingPeriodOption}")    ON
-
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/DealNotebook_PricingRulesTab_PricingOptionDetails
     mx LoanIQ click    ${LIQ_InterestPricingOption_Ok_Button}
+    
     Run Keyword And Continue On Failure    Mx LoanIQ Select String   ${LIQ_PricingRules_AllowedPricingOption_JavaTree}    ${PricingRule_Option}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/DealNotebook_PricingRulesTab_PricingOption
 
@@ -2888,6 +2898,7 @@ Update Branch and Processing Area
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/ChangeBranchProcArea_Window
     mx LoanIQ click    ${LIQ_ChangeBranchProcArea_OK_Button}
     mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
+    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
 
 Validate and Update Branch and Processing Area in MIS Codes Tab
     [Documentation]    This keyword validates and update Branch and Processing Area in MIS Codes tab if Branch and Processing Area does not match.
@@ -3175,3 +3186,36 @@ Click OK Button To Close Borrowers Notebook
     ...    @author: kmagday    09DEC2020    - initial create
 
     mx LoanIQ click    ${LIQ_DealBorrower_Ok_Button}
+
+Navigate to Deal Pricing Rules Tab
+    [Documentation]    This keyword navigates to deal Pricing Rules tab.
+    ...    @author: dahijara    11DEC2020    Initial create
+
+    Mx LoanIQ activate    ${LIQ_DealNotebook_Window}    
+    Run Keyword And Continue On Failure    Mx LoanIQ click element if present    ${LIQ_InquiryMode_Button}
+	Mx LoanIQ Select Window Tab    ${LIQ_DealNotebook_Tab}    ${PRICING_RULES_TAB}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/DealNotebook_PricingRulesTab
+
+Update Deal Pricing Rules
+    [Documentation]    This keyword updates fields in deal Pricing Option.
+    ...    Note: currently, keyword only updates Matrix Change Application Method field. Add Optional fields as necessary.
+    ...    @author: dahijara    11DEC2020    Initial create
+    [Arguments]    ${sPricingOption}    ${sMatrixChangeAppMethod}
+
+    ### Keyword Pre-processing ###
+    ${PricingOption}    Acquire Argument Value    ${sPricingOption}
+    ${MatrixChangeAppMethod}    Acquire Argument Value    ${sMatrixChangeAppMethod}
+
+	Mx LoanIQ Select Window Tab    ${LIQ_DealNotebook_Tab}    ${PRICING_RULES_TAB}
+    Mx LoanIQ Select Or DoubleClick In Javatree    ${LIQ_PricingRules_AllowedPricingOption_JavaTree}    ${PricingOption}%d
+    Mx LoanIQ activate window    ${LIQ_InterestPricingOption_Window}
+
+    Mx LoanIQ Select Combo Box Value    ${LIQ_InterestPricingOption_MatrixChangeAppMthd_Combobox}    ${MatrixChangeAppMethod}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/DealNotebook_PricingOption_InterestPricingOption
+    mx LoanIQ click    ${LIQ_InterestPricingOption_Ok_Button}
+
+    ${IsSelected}    Run Keyword And Return Status    Mx LoanIQ Select String    ${LIQ_PricingRules_AllowedPricingOption_JavaTree}    ${PricingOption}
+    Run Keyword If    ${IsSelected}==${True}    Log    ${PricingOption} is successfully selected in the Pricing Option Table.
+    ...    ELSE     Run Keyword And Continue On Failure    FAIL    ${PricingOption} is NOT successfully selected in the Pricing Option Table.
+
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/DealNotebook_PricingRulesTab_PricingOption

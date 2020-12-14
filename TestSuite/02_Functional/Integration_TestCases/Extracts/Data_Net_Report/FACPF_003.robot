@@ -8,4 +8,4 @@ FACPF_003
     ...    @author: ccarriedo    09DEC2020    - initial create
     
     Set Global Variable    ${TestCase_Name}    FACPF_003
-    Mx Execute Template With Specific Test Case Name    Validate Facility Performance Report File     ${DNR_DATASET}    Test_Case    ${TestCase_Name}    FACPF
+    Mx Execute Template With Specific Test Case Name    Validate Facility Performance Report File for Active Facility     ${DNR_DATASET}    Test_Case    ${TestCase_Name}    FACPF

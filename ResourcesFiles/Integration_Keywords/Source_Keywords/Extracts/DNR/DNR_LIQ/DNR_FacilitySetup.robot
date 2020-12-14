@@ -52,19 +52,19 @@ Create Facility for DNR
     Write Data To Excel    SC1_FacilitySetup    Facility_MaturityDate    ${rowid}    ${Facility_MaturityDate}    ${DNR_DATASET}
     Write Data To Excel    SC1_FacilitySetup    Facility_ExpiryDate    ${rowid}    ${Facility_ExpiryDate}    ${DNR_DATASET}
 
-    ${row_previous}    Run Keyword If    '${rowid}'=='1'    Set Variable    ${rowid}
+    ${row_previous}    Run Keyword If    '${rowid}'=='1' or '${rowid}'=='4'    Set Variable    ${rowid}
     ...    ELSE    Evaluate    ${rowid}-1
     ${row_previous}    Convert To String    ${row_previous}
     ${Facility_Name_Primary}    Read Data From Excel    SC1_PrimaryAllocation    Facility_Name    ${row_previous}    ${DNR_DATASET}
-    ${Facility_Name_Primary}    Run Keyword If    '${rowid}'=='1'    Set Variable    ${Facility_Name}
+    ${Facility_Name_Primary}    Run Keyword If    '${rowid}'=='1' or '${rowid}'=='4'    Set Variable    ${Facility_Name}
     ...    ELSE    Set Variable    ${Facility_Name_Primary}|${Facility_Name}
     Write Data To Excel    SC1_PrimaryAllocation    Facility_Name    Expanded_Scenario1_ActiveFac1_Repayment    ${Facility_Name_Primary}    ${DNR_DATASET}
 
-    ${row_previous}    Run Keyword If    '${rowid}'=='1'    Set Variable    ${rowid}
+    ${row_previous}    Run Keyword If    '${rowid}'=='1' or '${rowid}'=='4'    Set Variable    ${rowid}
     ...    ELSE    Evaluate    ${rowid}-1
     ${row_previous}    Convert To String    ${row_previous}
     ${Facility_ExpiryDate_Primary}    Read Data From Excel    SC1_PrimaryAllocation    Primary_PortfolioExpiryDate    ${row_previous}    ${DNR_DATASET}
-    ${Facility_ExpiryDate_Primary}    Run Keyword If    '${rowid}'=='1'    Set Variable    ${Facility_ExpiryDate}
+    ${Facility_ExpiryDate_Primary}    Run Keyword If    '${rowid}'=='1' or '${rowid}'=='4'    Set Variable    ${Facility_ExpiryDate}
     ...    ELSE    Set Variable    ${Facility_ExpiryDate_Primary}|${Facility_ExpiryDate}
     Write Data To Excel    SC1_PrimaryAllocation    Primary_PortfolioExpiryDate    Expanded_Scenario1_ActiveFac1_Repayment    ${Facility_ExpiryDate_Primary}    ${DNR_DATASET}
     
@@ -114,21 +114,29 @@ Get Active Facility Details for Active Outstanding and Write in DNR Dataset
 Get Expired Facility Details for Active Outstanding and Write in DNR Dataset
     [Documentation]    This keyword is used to get details for each report and write in dataset.
     ...    @author: clanding    25NOV2020    - initial create
+    ...    @update: clanding    11DEC2020    - added validation of status and getting amount
     [Arguments]    ${ExcelPath}
 
     Navigate to Facility Notebook    &{ExcelPath}[Deal_Name]    &{ExcelPath}[Facility_Name]
     ${FacilityControlNumber}    Get Facility Control Number
+    
+    ${Facility_Status}    Read Data From Excel    FACPF    Facility_Status    ${TestCase_Name}    ${DNR_DATASET}    bTestCaseColumn=True    sTestCaseColReference=TestCase_Name
+	Validate Facility Status    &{ExcelPath}[Facility_Name]    ${Facility_Status}
+    
+    ${Facility_Outstandings_Amount}    Get Outstandings Amount from Facility Notebook  
 
     ### Writing for Facility Performance Report ###
     Write Data To Excel    FACPF    Facility_Name    FACPF_004    &{ExcelPath}[Facility_Name]    ${DNR_DATASET}    bTestCaseColumn=True
     Write Data To Excel    FACPF    Facility_FCN    FACPF_004    ${FacilityControlNumber}    ${DNR_DATASET}    bTestCaseColumn=True
     Write Data To Excel    FACPF    Deal_Name    FACPF_004    &{ExcelPath}[Deal_Name]    ${DNR_DATASET}    bTestCaseColumn=True
+    Write Data To Excel    FACPF    Facility_Outstandings    FACPF_004    ${Facility_Outstandings_Amount}    ${DNR_DATASET}    bTestCaseColumn=True
 
     Close All Windows on LIQ
 
 Setup Term Facility for Syndicated Deal for DNR
     [Documentation]    This keyword is used to create a Term Facility for DNR.
     ...    @author: shirhong    04DEC2020    - initial create
+    ...    @author: makcamps    10DEC2020    - updated sheet name for repricing
     [Arguments]    ${ExcelPath}
     
     ###Data Generation###
@@ -140,7 +148,7 @@ Setup Term Facility for Syndicated Deal for DNR
     Write Data To Excel    SC2_PrimaryAllocation    Facility_Name    ${rowid}    ${Facility_Name}    ${DNR_DATASET}    
     Write Data To Excel    SC2_LoanDrawdown    Facility_Name    ${rowid}    ${Facility_Name}    ${DNR_DATASET}
     Write Data To Excel    SC2_LoanDrawdownNonAgent    Facility_Name    ${rowid}    ${Facility_Name}    ${DNR_DATASET}  
-    Write Data To Excel    SC2_LoanRepricing    Facility_Name    ${rowid}    ${Facility_Name}    ${DNR_DATASET}
+    Write Data To Excel    SC2_ComprehensiveRepricing    Facility_Name    ${rowid}    ${Facility_Name}    ${DNR_DATASET}
     Write Data To Excel    SC2_FacilityShareAdjustment    Facility_Name    ${rowid}    ${Facility_Name}    ${DNR_DATASET}
     Write Data To Excel    SC2_CycleShareAdjustment    Facility_Name    ${rowid}    ${Facility_Name}    ${DNR_DATASET}
     Write Data To Excel    SC2_PaymentFees    Facility_Name    ${rowid}    ${Facility_Name}    ${DNR_DATASET}

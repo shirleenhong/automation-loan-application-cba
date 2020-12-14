@@ -63,3 +63,17 @@ Validate Facility is Not Existing in Facilities Sheet and Existing in Oustanding
     
     Validate Text Value if Not Existing in Excel Sheet Column    &{ExcelPath}[Report_Path]&{ExcelPath}[Report_File_Name]    Facilities    &{ExcelPath}[Columns_To_Validate]    &{ExcelPath}[FCN]${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}
     Validate Text Value if Existing in Excel Sheet Column    &{ExcelPath}[Report_Path]&{ExcelPath}[Report_File_Name]    Outstandings    &{ExcelPath}[Columns_To_Validate]    &{ExcelPath}[FCN]${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}
+
+Validate Amount Columns Displays Numbers in 2 Decimal Places from Loans and Accruals Report
+    [Documentation]    This keyword is used to validate if the Amount Columns in Facility and Outstanding sheet display number in 2 Decimal Places.
+    ...    @author: kaustero    08DEC2020    - initial create
+    [Arguments]    ${ExcelPath}
+
+    ${Actual_FacilityLenderCommitment}    Read Data From Excel    Facilities    Lender Commitment    1    &{ExcelPath}[Report_Path]&{ExcelPath}[Report_File_Name]    readAllData=Y
+    Verify List Values Displays Numbers in N Decimal Places    ${Actual_FacilityLenderCommitment}
+
+    ${Actual_OutstandingLenderCommitment}    Read Data From Excel    Outstandings    Lender Commitment    1    &{ExcelPath}[Report_Path]&{ExcelPath}[Report_File_Name]    readAllData=Y
+    Verify List Values Displays Numbers in N Decimal Places    ${Actual_OutstandingLenderCommitment}
+
+    ${Actual_OutstandingAmount}    Read Data From Excel    Outstandings    Outstanding Amount    1    &{ExcelPath}[Report_Path]&{ExcelPath}[Report_File_Name]    readAllData=Y
+    Verify List Values Displays Numbers in N Decimal Places    ${Actual_OutstandingAmount}

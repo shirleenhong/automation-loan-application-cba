@@ -6,6 +6,7 @@ LIQ_PrincipalPayment_QueriesGLEntries   = 'JavaWindow("title:=.* Principal Payme
 LIQ_PrincipalPayment_OptionsViewUpdateLenderShares = 'JavaWindow("title:=.* Principal Payment .*","displayed:=1").JavaMenu("label:=Options").JavaMenu("label:=View/Update Lender Shares")'
 LIQ_PrincipalPayment_OptionsFacilityNotebook = 'JavaWindow("title:=.* Principal Payment .*","displayed:=1").JavaMenu("label:=Options").JavaMenu("label:=Facility Notebook")'
 LIQ_PrincipalPayment_OptionsLoanNotebook = 'JavaWindow("title:=.* Principal Payment .*","displayed:=1").JavaMenu("label:=Options").JavaMenu("label:=Loan Notebook")'
+LIQ_PrincipalPayment_OptionsCashflow = 'JavaWindow("title:=.* Principal Payment .*","displayed:=1").JavaMenu("label:=Options").JavaMenu("label:=Cashflow")'
 LIQ_PrincipalPayment_WorkflowTree = 'JavaWindow("title:=.* Principal Payment .*","displayed:=1").JavaTree("attached text:=Drill down to perform Workflow item")'
 
 ###Principal Payment Notebook - General Tab###

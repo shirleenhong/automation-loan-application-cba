@@ -1,6 +1,9 @@
 *** Settings ***
 Resource    ../../../../../Configurations/LoanIQ_Import_File.robot
 
+*** Variables ***
+${row_id}    5
+
 *** Test Cases ***
 AHBDE_001
     [Documentation]    This test case is used to validate Agency DE Extract tab in the DE report if the following fields are available:

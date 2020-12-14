@@ -1816,3 +1816,12 @@ Save and Close Ongoing Fee Window
     Mx LoanIQ select    ${LIQ_OngoingFee_Save_Menu}
     Mx LoanIQ click element if present    ${LIQ_Warning_OK_Button}
     Mx LoanIQ select    ${LIQ_OngoingFee_Exit_Menu}
+
+Release Ongoing Fee
+    [Documentation]    This keyword will handle the releasing of ongoing Fe
+    ...   @author: dahijara    10DEC2020    Initial Commit
+    
+    mx LoanIQ activate window    ${LIQ_OngoingFee_Window}
+    Run Keyword And Continue On Failure    Mx LoanIQ click element if present    ${LIQ_OngoingFee_InquiryMode_Button}
+    Navigate Notebook Workflow    ${LIQ_OngoingFee_Window}    ${LIQ_OngoingFee_Tab}    ${LIQ_OngoingFee_Workflow_JavaTree}    Release
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/OngoingFee_Notebook     

@@ -58,7 +58,7 @@ Collect Commitment Fee Payment For PIM Future BILAT
     Select Item in Work in Process    ${PAYMENTS_TRANSACTION}    ${GENERATE_INTENT_NOTICES}    ${ONGOING_FEE_PAYMENT_TRANSACTION}     &{ExcelPath}[Facility_Name]
     Navigate Notebook Workflow    ${LIQ_OngoingFeePayment_Window}    ${LIQ_OngoingFeePayment_Tab}    ${LIQ_OngoingFeePayment_WorkflowItems}    ${GENERATE_INTENT_NOTICES} 
     Generate Intent Notices    &{ExcelPath}[Borrower_ShortName]
-    Close Notice Group Window
+    Close Generate Notice Window
     Navigate Notebook Workflow    ${LIQ_OngoingFeePayment_Window}    ${LIQ_OngoingFeePayment_Tab}    ${LIQ_OngoingFeePayment_WorkflowItems}    ${RELEASE_STATUS}
     
     ### Validation Of Payment Amount and Release Status ###

@@ -157,6 +157,8 @@ LIQ_FacilityPricing_OngoingFeeRate = 'JavaWindow("title:=Facility - .*").JavaTre
 LIQ_FacilityPricing_Pricing_Tab = 'JavaWindow("title:=Facility - .*").JavaTab("tagname:=TabFolder", "value:=Pricing")'
 LIQ_FacilityPricing_ModifyInterestPricing_Button = 'JavaWindow("title:=Facility -.*").JavaButton("attached text:=Modify Interest Pricing.*")'
 LIQ_FacilityPricing_InterestPricingZoom_Button = 'JavaWindow("title:=Facility -.*").JavaButton("attached text:=Interest Pricing Zoom")'
+LIQ_FacilityPricing_AllowedPricingOption_JavaTree = 'JavaWindow("title:=Facility -.*").JavaTree("tagname:=Drill down to update","labeled_containers_path:=.*Allowed Pricing Options.*")'
+LIQ_FacilityPricing_PricingOption_MatrixChangeAppMthd_Combobox = 'JavaWindow("title:=.*Interest Pricing Option.*").JavaList("index:=7")'
 
 ##Interest Pricing - Financial Ratio Window###
 LIQ_FacilityPricing_InterestPricing_FinancialRatio_Window= 'JavaWindow("title:=Financial Ratio")'
@@ -223,6 +225,7 @@ LIQ_Facility_InterestPricing_FormulaCategory_OK_Button = 'JavaWindow("title:=For
 LIQ_Facility_InterestPricing_FormulaCategory_Cancel_Button = 'JavaWindow("title:=Formula Category").JavaButton("attached text:=Cancel")'     
 LIQ_Facility_InterestPricing_FormulaCategory_JavaTree = 'JavaWindow("title:=Formula Category").JavaTree("tagname:=Search:")'    
 LIQ_Facility_InterestPricing_RateFormulaUsage_List = 'JavaWindow("title:=Formula Category").JavaList("attached text:=Percent of Rate Formula Usage")'  
+LIQ_Facility_InterestPricing_FormulaCategoryFormulaText_TextField = 'JavaWindow("title:=Formula Category").JavaEdit("labeled_containers_path:=.*Formula Text.*")'
 LIQ_Facility_InterestPricing_AllInRateCapHistory_Button = 'JavaWindow("title:=.*Interest Pricing.*").JavaButton("attached text:=All-In Rate Cap History.*")'
 LIQ_Facility_InterestPricing_AllInRateFloorHistory_Button = 'JavaWindow("title:=.*Interest Pricing.*").JavaButton("attached text:=All-In Rate Floor History")'
 LIQ_Facility_InterestPricing_AllInRateCapHistory_Window = 'JavaWindow("title:=.*All-In Rate Cap  History")'

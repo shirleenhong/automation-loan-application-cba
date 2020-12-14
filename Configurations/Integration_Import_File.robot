@@ -517,8 +517,10 @@ Resource    ../ResourcesFiles/Integration_Keywords/Source_Keywords/Extracts/DNR/
 Resource    ../ResourcesFiles/Integration_Keywords/Source_Keywords/Extracts/DNR/DNR_LIQ/DNR_Payments.robot
 Resource    ../ResourcesFiles/Integration_Keywords/Source_Keywords/Extracts/DNR/DNR_LIQ/DNR_PrimaryAllocation.robot
 Resource    ../ResourcesFiles/Integration_Keywords/Source_Keywords/Extracts/DNR/DNR_LIQ/DNR_AdminFeeSetup.robot
+Resource    ../ResourcesFiles/Integration_Keywords/Source_Keywords/Extracts/DNR/DNR_LIQ/DNR_OngoingFeeSetup.robot
 Resource    ../ResourcesFiles/Integration_Keywords/Source_Keywords/Extracts/DNR/DNR_LIQ/DNR_LoanDrawdown.robot
 Resource    ../ResourcesFiles/Integration_Keywords/Source_Keywords/Extracts/DNR/DNR_LIQ/DNR_LoanSplit.robot
+Resource    ../ResourcesFiles/Integration_Keywords/Source_Keywords/Extracts/DNR/DNR_LIQ/DNR_LoanRepricing.robot
 
 ### Integration Resource Files - DNR - Business Process Keywords ###
 Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/Extracts/DNR_LIQ/DNR_Cognos.robot
@@ -530,3 +532,4 @@ Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/Extr
 Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/Extracts/DNR_LIQ/DNR_AgencyHostBankDEReports.robot
 Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/Extracts/DNR_LIQ/DNR_LIQPerformanceReports.robot
 Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/Extracts/DNR_LIQ/DNR_LoansAccrualsReports.robot
+Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/Extracts/DNR_LIQ/DNR_PaymentNonAgencyReports.robot
