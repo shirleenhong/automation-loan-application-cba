@@ -7,7 +7,7 @@ ${rowid}    1
 *** Keywords ***
 Create Facility for New Life BILAT
     [Documentation]    This keyword is used to create a Facility for PIM Future Bilateral deal
-    ...    @author: kmagday    10DEC2020    - Initial Create
+    ...    @author: kmagday    10DEC2020    Initial Create
     [Arguments]    ${ExcelPath}
     
     ${Facility_NamePrefix}    Read Data From Excel    CRED02_FacilitySetup    Facility_NamePrefix    ${rowid}
@@ -45,22 +45,22 @@ Create Facility for New Life BILAT
    
 Setup Facility Ongoing Fee for New Life BILAT
     [Documentation]    This high-level keyword sets up Ongoing Fee from the Deal Notebook
-    ...    @author: kmagday    12DEC2020    - Initial Create
+    ...    @author: kmagday    12DEC2020    Initial Create
     [Arguments]    ${ExcelPath}
     
     ### Ongoing Fee ###
     Modify Ongoing Fee Pricing - Insert Add    &{ExcelPath}[OngoingFee_Category]    &{ExcelPath}[OngoingFee_Type]    &{ExcelPath}[OngoingFee_RateBasis]
-    Add Ongoing Fee - Matrix - Outside Condition   &{ExcelPath}[OngoingFee_AfterItem]    &{ExcelPath}[OngoingFee_AfterItemType]    &{ExcelPath}[OutsideCondition_RadioButton]
-    Add Ongoing Fee Pricing - Insert After - Outside Condition   &{ExcelPath}[OngoingFee_AfterItem1]    &{ExcelPath}[Facility_PercentWhole1]    &{ExcelPath}[OngoingFee_Category]    &{ExcelPath}[Facility_Percent1] 
-    Select Text In Ongoing Fee Pricing List     If( &{ExcelPath}[OngoingFee_Type1]1 )
-    Add Ongoing Fee - Matrix - Outside Condition - Insert After  &{ExcelPath}[OngoingFee_AfterItem]    &{ExcelPath}[OngoingFee_AfterItemType]
-    Add Ongoing Fee Pricing - Insert After - Outside Condition   &{ExcelPath}[OngoingFee_AfterItem1]    &{ExcelPath}[Facility_PercentWhole2]    &{ExcelPath}[OngoingFee_Category]    &{ExcelPath}[Facility_Percent2] 
+    Add Ongoing Fee using Matrix and Outside Condition   &{ExcelPath}[OngoingFee_AfterItem]    &{ExcelPath}[OngoingFee_AfterItemType]    &{ExcelPath}[OutsideCondition_RadioButton]
+    Insert After Ongoing Fee Pricing using Outside Condition   &{ExcelPath}[OngoingFee_AfterItem1]    &{ExcelPath}[Facility_PercentWhole1]    &{ExcelPath}[OngoingFee_Category]    &{ExcelPath}[Facility_Percent1] 
+    Select Text in Ongoing Fee Pricing List     If( &{ExcelPath}[OngoingFee_Type1]1 )
+    Insert After Ongoing Fee using Matrix and Outside Condition   &{ExcelPath}[OngoingFee_AfterItem]    &{ExcelPath}[OngoingFee_AfterItemType]
+    Insert After Ongoing Fee Pricing using Outside Condition   &{ExcelPath}[OngoingFee_AfterItem1]    &{ExcelPath}[Facility_PercentWhole2]    &{ExcelPath}[OngoingFee_Category]    &{ExcelPath}[Facility_Percent2] 
     Validate Ongoing Fee or Interest
     Modify Interest Pricing - Insert Add    &{ExcelPath}[Interest_AddItem]    &{ExcelPath}[Interest_OptionName]    &{ExcelPath}[Interest_RateBasis]    &{ExcelPath}[Interest_SpreadAmt]    &{ExcelPath}[Interest_BaseRateCode]
 
 Setup Primary for New Life BILAT
     [Documentation]    This keyword will Setup primary for New Life BILAT deal
-    ...    @author: kmagday    12DEC2020    - Initial Create
+    ...    @author: kmagday    12DEC2020    Initial Create
     [Arguments]    ${ExcelPath}
     
     Open Existing Deal    &{ExcelPath}[Deal_Name]
@@ -70,7 +70,7 @@ Setup Primary for New Life BILAT
     Populate Amts or Dates Tab for Orig Primary    &{ExcelPath}[Orig_Primary_ExpectedCloseDate]    
     Verify Buy/Sell Price in Circle Notebook
     Add Contact in Primary    &{ExcelPath}[Primary_Contact]
-    Select Servicing Group on Primaries    None    &{ExcelPath}[Primary_SGAlias]
+    Select Servicing Group on Primaries    &{ExcelPath}[Primary_ServicingGroupMember]    &{ExcelPath}[Primary_SGAlias]
     ${SellAmount}    Get Circle Notebook Sell Amount  
     Mx LoanIQ close window    ${LIQ_OrigPrimaries_Window}
     
@@ -82,7 +82,7 @@ Setup Primary for New Life BILAT
 
 Approve and Close Deal for New Life Bilat
     [Documentation]    This keyword approves and closes the created Deal
-    ...    @author: kmagday    12DEC2020    - Initial Create
+    ...    @author: kmagday    12DEC2020     Initial Create
     [Arguments]    ${ExcelPath}
     
     Logout from Loan IQ
@@ -103,7 +103,7 @@ Approve and Close Deal for New Life Bilat
 
 Release Commitment Fee For New Life BILAT
     [Documentation]    This keyword will release the existing commitment fee in the created deal
-    ...    @author: kmagday    12DEC2020    - Initial Create
+    ...    @author: kmagday    12DEC2020    Initial Create
     [Arguments]    ${ExcelPath}
     
     Navigate to Facility Notebook  &{ExcelPath}[Deal_Name]    &{ExcelPath}[Facility_Name]

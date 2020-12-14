@@ -7,8 +7,8 @@ ${rowid}    1
 *** Keywords ***
 Setup Deal for New Life BILAT
     [Documentation]    This keyword is for setting up Deal for New Life Bilateral Deal
-    ...    @author:    kmagday    07DEC2020    - Initial create 
-    ...    @update:    kmagday    10DEC2020    - added writing of deal alias to CRED01_DealSetup sheet
+    ...    @author:    kmagday    07DEC2020    Initial create 
+    ...    @update:    kmagday    10DEC2020    added writing of deal alias to CRED01_DealSetup sheet
     [Arguments]    ${ExcelPath}
     
     ${Deal_Name}    ${Deal_Alias}    Generate Deal Name and Alias with 5 Numeric Test Data    &{ExcelPath}[Deal_NamePrefix]    &{ExcelPath}[Deal_AliasPrefix]

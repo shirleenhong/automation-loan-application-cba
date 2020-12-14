@@ -3950,7 +3950,7 @@ Get Outstandings Amount from Facility Notebook
     
     [Return]    ${Facility_Outstandings_Amount}
 
-Add Ongoing Fee - Matrix - Outside Condition
+Add Ongoing Fee using Matrix and Outside Condition
     [Documentation]    This keyword adds ongoing fee
     ...    @author: kmagday    10DEC2020    -    initial create
     [Arguments]    ${sFacilityItemAfter}    ${sFacilityItem}    ${sOutsideCondition_RadioButton}=OFF  
@@ -3971,11 +3971,12 @@ Add Ongoing Fee - Matrix - Outside Condition
     Run Keyword If    '${OutsideCondition_RadioButton}'=='ON'    mx LoanIQ click    ${LIQ_OutsideConditions_Matrix_RadioButton_True}
     ...    ELSE    mx LoanIQ click    ${LIQ_OutsideConditions_Matrix_RadioButton_False}
 
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/FacilityWindow_Pricing
     mx LoanIQ click    ${LIQ_Edit_OutsideConditions_OK_Button}
 
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/FacilityWindow_Pricing
 
-Add Ongoing Fee - Matrix - Outside Condition - Insert After
+Insert After Ongoing Fee using Matrix and Outside Condition 
     [Documentation]    This keyword adds ongoing fee - after on facility.
     ...    @author: kmagday    10DEC2020    -    initial create
     [Arguments]    ${sFacilityItemAfter}    ${sFacilityItem}    ${sOutsideCondition_RadioButton}=OFF  
@@ -4001,16 +4002,16 @@ Add Ongoing Fee - Matrix - Outside Condition - Insert After
 
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/FacilityWindow_Pricing
 
-Add Ongoing Fee Pricing - Insert After - Outside Condition
+Insert After Ongoing Fee Pricing using Outside Condition
     [Documentation]    This keyword adds ongoing fee - after on facility.
     ...    @author: kmagday    10DEC2020    -    initial create
-    [Arguments]    ${sFacilityItemAfter}    ${sFacility_PercentWhole}    ${sFacilityItem}    ${sFacility_Percent}  
+    [Arguments]    ${sFacilityItemAfter}    ${iFacility_PercentWhole}    ${sFacilityItem}    ${iFacility_Percent}  
 
     ### Keyword Pre-processing ###
     ${FacilityItemAfter}    Acquire Argument Value    ${sFacilityItemAfter}
-    ${Facility_PercentWhole}    Acquire Argument Value    ${sFacility_PercentWhole}
+    ${Facility_PercentWhole}    Acquire Argument Value    ${iFacility_PercentWhole}
     ${FacilityItem}    Acquire Argument Value    ${sFacilityItem}
-    ${Facility_Percent}    Acquire Argument Value    ${sFacility_Percent}
+    ${Facility_Percent}    Acquire Argument Value    ${iFacility_Percent}
 
     mx LoanIQ click    ${LIQ_FacilityPricing_OngoingFees_After_Button}
     Mx LoanIQ Select Combo Box Value    ${LIQ_Facility_InterestPricing_AddItem_List}    ${FacilityItemAfter}
@@ -4028,7 +4029,7 @@ Add Ongoing Fee Pricing - Insert After - Outside Condition
     Run Keyword And Continue On Failure    Mx LoanIQ Verify Object Exist    JavaWindow("title:=.*Ongoing Fee Pricing.*").JavaTree("developer name:=.*${Facility_PercentWhole}.*")    VerificationData="Yes"
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/FacilityWindow_Pricing
 
-Select Text In Ongoing Fee Pricing List 
+Select Text in Ongoing Fee Pricing List 
     [Documentation]    This keyword selects/clicks a value from the ongoing pricing list java tree
     ...    @author: kmagday    10DEC2020    -    initial create
     [Arguments]    ${sText}
