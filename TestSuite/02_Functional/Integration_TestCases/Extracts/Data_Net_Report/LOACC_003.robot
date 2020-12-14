@@ -4,10 +4,10 @@ Resource    ../../../../../Configurations/Integration_Import_File.robot
 *** Test Cases ***
 LOACC_003
     [Documentation]    This test case is used to verify following date fields in the report.
-    ...    Fields to Validate in Facilities and Outstandings sheets: Business Date, Effective date of the Facility, Facility Maturity Date, Outstanding Start Date, 
+    ...    Fields to Validate in Facilities and Outstandings sheets: Business Date, Facility Start Date, Facility Maturity Date, Outstanding Start, 
     ...    Repricing Date, Outstanding Cycle Start Date, Outstanding Cycle End Date, Outstanding Cycle Due Date
     ...    NOTE: Loans and Accruals Report should be available already in the report path.
-    ...    @author: ccarriedo    23NOV2020    - initial create
+    ...    @author: ccarriedo    14DEC2020    - initial create
 
     Set Global Variable    ${TestCase_Name_Facilities}    LOACC_003_Facilities
     Set Global Variable    ${TestCase_Name_Outstandings}    LOACC_003_Outstandings

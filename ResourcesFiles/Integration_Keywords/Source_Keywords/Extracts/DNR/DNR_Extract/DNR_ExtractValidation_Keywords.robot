@@ -372,3 +372,38 @@ Get Facility Name Row Values
     
     [Return]    ${Report_File_Row_Values}
 
+Validate Date Fields from Loans and Accruals Report
+    [Documentation]    This keyword is used to validate the following date fields.
+    ...    @author: ccarriedo    14DEC2020    - initial create
+    [Arguments]    ${ExcelPath}
+    
+    ${Sheet_Name}    Set Variable    &{ExcelPath}[Sheet_Name]
+    ${Column_Headers}    Set Variable    &{ExcelPath}[Columns_To_Validate]
+    ${Delimiter}    Set Variable    &{ExcelPath}[Delimiter]
+ 
+    ### Get Report Column Headers To Validate Total Count ###
+    ${Column_Headers_List}    Split String    ${Column_Headers}    ${Delimiter}
+    ${Column_Headers_List_Count}    Get Length    ${Column_Headers_List}
+    
+    :FOR    ${Index}    IN RANGE    ${Column_Headers_List_Count}
+    \    ${Column_Header}    Get From List    ${Column_Headers_List}    ${Index}
+    \    ${Actual_Dates}    Get Date Fields and Convert For Validation    ${Sheet_Name}    ${Column_Header}    &{ExcelPath}[Report_Path]&{ExcelPath}[Report_File_Name]
+
+Get Date Fields and Convert For Validation
+    [Documentation]    This keyword is used to fetch the date values and convert to dd-mmm-yyyy format for validation.
+    ...    @author: ccarriedo    14DEC2020    - initial create
+    [Arguments]    ${sSheet_Name}    ${sColumn_Header}    ${sLOACC_Report}
+    
+    ${Dates_List}    Create List
+    ${Column_Dates_List}    Read Data From Excel    ${sSheet_Name}    ${sColumn_Header}    1    ${sLOACC_Report}    readAllData=Y
+    ${Column_Dates_List_Count}    Get Length    ${Column_Dates_List}
+
+    :FOR    ${Index}    IN RANGE    ${Column_Dates_List_Count}
+    \    ${Column_Date}    Get From List    ${Column_Dates_List}    ${Index}
+    \    ### Skip current iteration if ${Column_Date} value is blank or None ###
+    \    Continue For Loop If    '${Column_Date}'=='None'
+    \    ${Converted_Dates}    Convert Date    ${Column_Date}    result_format=%d-%b-%Y
+    \    Append To List    ${Dates_List}    ${Converted_Dates}
+
+    [Return]    ${Dates_List}
+ 
