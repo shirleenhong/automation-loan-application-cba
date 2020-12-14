@@ -373,3 +373,19 @@ Verify Value Displays Numbers in N Decimal Places
     ${IsEqual}    Run Keyword And Return Status    Should Be Equal As Integers    ${Count}    ${DecimalPlaces}
     Run Keyword If    ${IsEqual}==${True}    Log    Expected: ${Value} contains ${DecimalPlaces} decimal places.
     ...    ELSE    Run Keyword And Continue On Failure    FAIL    Expected: ${Value} contains ${Count} decimal places instead of ${DecimalPlaces}.
+ 
+Validate Given List is in Date Format
+    [Documentation]    This keyword is used to validate the list if each values are in the correct date format.
+    ...    @author: ccarriedo    14DEC2020    - initial create
+    [Arguments]    ${aColumn_Dates_List}
+    
+    ${Column_Dates_List_Count}    Get Length    ${aColumn_Dates_List}
+
+    :FOR    ${Index}    IN RANGE    ${Column_Dates_List_Count}
+    \    ${Column_Date}    Get From List    ${aColumn_Dates_List}    ${Index}
+    \    ### Skip current iteration if ${Column_Date} value is blank or None ###
+    \    Continue For Loop If    '${Column_Date}'=='None'
+    \    ${Converted_Dates}    Run Keyword and Return Status    Convert Date    ${Column_Date}    result_format=%d-%b-%Y
+    \    Run Keyword If    ${Converted_Dates}==${True}    Log	'${Column_Date}' is converting in date format.
+         ...    ELSE    Run Keyword And Continue On Failure    FAIL    '${Column_Date}' is NOT converting in date format.    
+      
