@@ -3192,3 +3192,19 @@ Send Participation for Approval
     Take Screenshot    ${Screenshot_Path}/Screenshots/LoanIQ/ParticipationSendToApproval
     Validate if Question or Warning Message is Displayed
     Take Screenshot    ${Screenshot_Path}/Screenshots/LoanIQ/ParticipationApproval   
+
+Populate Amts or Dates Tab for Orig Primary
+    [Documentation]    This keyword is for populating the fields under Circle Notebook - Amts/Dates Tab.
+    ...    @author: dahijara    10AUG2020    - initial create
+    [Arguments]    ${sExpectedCloseDate}   
+    
+    ### GetRuntime Keyword Pre-processing ###
+    ${ExpectedCloseDate}    Acquire Argument Value    ${sExpectedCloseDate}
+    
+    Mx LoanIQ Select Window Tab    ${LIQ_OrigPrimaries_Tab}    ${AMTS_DATES_TAB}
+    
+    ### Input data in Dates Section ###    
+    mx LoanIQ enter    ${LIQ_Circle_AmtsDates_ExpectedCloseDate}    ${ExpectedCloseDate}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/OrigPrimary
+    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}    
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/OrigPrimary

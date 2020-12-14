@@ -24,3 +24,12 @@ Establish Cash Advance Facility
 
 Establish Line Fee in Arrears
     Mx Execute Template With Multiple Data    Setup Line Fee in Arrears for CH EDU Bilateral Deal    ${ExcelPath}    ${rowid}    CRED08_OngoingFeeSetup_B
+
+Setup Primaries and Close Deal
+    Mx Execute Template With Multiple Data    Setup Primary for CH EDU Bilateral Deal    ${ExcelPath}    ${rowid}    SYND02_PrimaryAllocation
+    Mx Execute Template With Multiple Data    Approve and Close CH EDU Bilateral Deal    ${ExcelPath}    ${rowid}    SYND02_PrimaryAllocation
+    Mx Execute Template With Multiple Data    Release Ongoing Fee for CH EDU Bilateral Deal    ${ExcelPath}    ${rowid}    CRED08_OngoingFeeSetup_A
+    Mx Execute Template With Multiple Data    Release Ongoing Fee for CH EDU Bilateral Deal    ${ExcelPath}    ${rowid}    CRED08_OngoingFeeSetup_B
+
+After Deal Close, Modify the Interest Matrix Application Method to Next Pepricing Date
+    Mx Execute Template With Multiple Data    Update Pricing Rules via Deal Notebook for CH EDU Bilateral Deal    ${ExcelPath}    ${rowid}    CRED01_DealPricingSetup
