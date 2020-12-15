@@ -5,7 +5,7 @@ Resource    ../../../../../Configurations/Integration_Import_File.robot
  
 AHBCO_002
     [Documentation]    This test case is for Scenario 1- Verify that all the cashflows on the Cash Out Report are the ones with Unreleased or Released Status
-    ...    NOTE: Agency Host Bank Cashout Report should be available already in the report path.
+    ...    NOTE: Agency Host Bank Cashout Report should be available already in the report path. Execute this testcase after running AHBCO_003 or AHBCO_004.
     ...    @author: shirhong    19NOV2020    - Initial create
     
     Set Global Variable    ${TestCase_Name}    AHBCO_002

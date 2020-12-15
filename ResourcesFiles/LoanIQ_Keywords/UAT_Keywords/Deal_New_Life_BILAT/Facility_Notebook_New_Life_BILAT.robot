@@ -101,9 +101,23 @@ Approve and Close Deal for New Life Bilat
     Logout from Loan IQ
     Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
 
-Release Commitment Fee For New Life BILAT
-    [Documentation]    This keyword will release the existing commitment fee in the created deal
-    ...    @author: kmagday    12DEC2020    Initial Create
+Update Commitment Fee for New Life BILAT
+    [Documentation]    This keyword will update the existing commitment fee in the created deal
+    ...    @author: kmagday    15DEC2020    Initial Create
+    [Arguments]    ${ExcelPath}
+    
+    Navigate to Facility Notebook  &{ExcelPath}[Deal_Name]    &{ExcelPath}[Facility_Name]
+    Navigate to Commitment Fee Notebook    &{ExcelPath}[OngoingFee_Type]
+
+    ### Commitment Fee Notebook - General Tab ###  
+    Update Commitment Fee    &{ExcelPath}[Commitment_EffectiveDate]    &{ExcelPath}[Commitment_ActualDate]    &{ExcelPath}[Commitment_AdjustedDueDate]    &{ExcelPath}[Commitment_Accrue]    &{ExcelPath}[Commitment_AccrualEndDate] 
+
+    Save Facility Notebook Transaction
+    Close All Windows on LIQ
+
+Release Commitment Fee for New Life Bilat
+    [Documentation]    This keyword will update the existing commitment fee in the created deal
+    ...    @author: kmagday    15DEC2020    Initial Create
     [Arguments]    ${ExcelPath}
     
     Navigate to Facility Notebook  &{ExcelPath}[Deal_Name]    &{ExcelPath}[Facility_Name]
@@ -111,6 +125,8 @@ Release Commitment Fee For New Life BILAT
 
     ### Commitment Fee Notebook ###
     Release Commitment Fee
-
+    
     Save Facility Notebook Transaction
     Close All Windows on LIQ
+
+    
