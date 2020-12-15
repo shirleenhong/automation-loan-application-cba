@@ -49,6 +49,7 @@ Validate Cash Out Report for Payment Non Agency is Generated for All Transaction
 Write Details for Payment Non Agency Reports
     [Documentation]    This keyword is used to write needed details in Payment Non Agency sheet.
     ...    @author: fluberio    10DEC2020    - initial create
+    ...    @update: fluberio    14DEC2020    - Added new Writing
     [Arguments]    ${ExcelPath}
 
     Delete File If Exist    &{ExcelPath}[Report_Path]&{ExcelPath}[File_Name]${CBA_PAYMENT_REPORTFILE}.xlsx
@@ -56,19 +57,21 @@ Write Details for Payment Non Agency Reports
     Write Data To Excel    DNR    Report_File_Name    ${TestCase_Name}    &{ExcelPath}[File_Name]${CBA_PAYMENT_REPORTFILE}.xlsx    ${DNR_DATASET}    bTestCaseColumn=True
     Write Data To Excel    PAYNA    Report_File_Name    ${TestCase_Name}    &{ExcelPath}[File_Name]${CBA_PAYMENT_REPORTFILE}.xlsx    ${DNR_DATASET}    bTestCaseColumn=True
     
-    ${Cashflow_Amount}    Read Data From Excel    SC1_LoanDrawdown    Cashflow_Amount    ${rowid}    ${DNR_DATASET}
-    ${Transaction_Status}    Read Data From Excel    SC1_LoanDrawdown    Transaction_Status    ${rowid}    ${DNR_DATASET}
-    ${ProcessingAreaCode}    Read Data From Excel    SC1_LoanDrawdown    Processing_Area_Code    ${rowid}    ${DNR_DATASET}
-    ${Cashflow_Id}    Read Data From Excel    SC1_LoanDrawdown    Cashflow_ID    ${rowid}    ${DNR_DATASET}
-    ${ProcessingDate}    Read Data From Excel    SC1_LoanDrawdown    Transaction_Date    ${rowid}    ${DNR_DATASET}
-    ${Deal_TrackingNumber}    Read Data From Excel    SC1_LoanDrawdown    Deal_TrackingNumber    ${rowid}    ${DNR_DATASET}
+    ${Cashflow_Amount}    Read Data From Excel    &{ExcelPath}[LIQ_Sheet_Name]    Cashflow_Amount    ${rowid}    ${DNR_DATASET}
+    ${Transaction_Status}    Read Data From Excel    &{ExcelPath}[LIQ_Sheet_Name]    Transaction_Status    ${rowid}    ${DNR_DATASET}
+    ${ProcessingAreaCode}    Read Data From Excel    &{ExcelPath}[LIQ_Sheet_Name]    Processing_Area_Code    ${rowid}    ${DNR_DATASET}
+    ${Cashflow_Id}    Read Data From Excel    &{ExcelPath}[LIQ_Sheet_Name]    Cashflow_ID    ${rowid}    ${DNR_DATASET}
+    ${ProcessingDate}    Read Data From Excel    &{ExcelPath}[LIQ_Sheet_Name]    Transaction_Date    ${rowid}    ${DNR_DATASET}
+    ${Cashflow_Amount_Principal}    Read Data From Excel    &{ExcelPath}[LIQ_Sheet_Name]    Cashflow_Amount_Principal    ${rowid}    ${DNR_DATASET}
+    ${Cashflow_Amount_Interest}    Read Data From Excel    &{ExcelPath}[LIQ_Sheet_Name]    Cashflow_Amount_Interest    ${rowid}    ${DNR_DATASET}
     
     Write Data To Excel    PAYNA    Transaction_Date    ${TestCase_Name}    ${ProcessingDate}    ${DNR_DATASET}    bTestCaseColumn=True
-    Write Data To Excel    PAYNA    Deal_TrackingNumber    ${TestCase_Name}    ${Deal_TrackingNumber}    ${DNR_DATASET}    bTestCaseColumn=True
     Write Data To Excel    PAYNA    Cashflow_Amount    ${TestCase_Name}    ${Cashflow_Amount}    ${DNR_DATASET}    bTestCaseColumn=True
     Write Data To Excel    PAYNA    Transaction_Status    ${TestCase_Name}    ${Transaction_Status}    ${DNR_DATASET}    bTestCaseColumn=True
     Write Data To Excel    PAYNA    Processing_Area_Code    ${TestCase_Name}    ${ProcessingAreaCode}    ${DNR_DATASET}    bTestCaseColumn=True
     Write Data To Excel    PAYNA    Cashflow_ID    ${TestCase_Name}    ${Cashflow_Id}    ${DNR_DATASET}    bTestCaseColumn=True
+    Write Data To Excel    PAYNA    Cashflow_Amount_Principal    ${TestCase_Name}    ${Cashflow_Amount_Principal}    ${DNR_DATASET}    bTestCaseColumn=True
+    Write Data To Excel    PAYNA    Cashflow_Amount_Interest    ${TestCase_Name}    ${Cashflow_Amount_Interest}    ${DNR_DATASET}    bTestCaseColumn=True
          
 Write Filter Details for Payment Non Agency Reports in DNR Data Set
     [Documentation]    This keyword is used to write needed filter details for Payment Non Agency Report sheet in DNR Date Set.
@@ -83,7 +86,7 @@ Write Filter Details for Payment Non Agency Reports in DNR Data Set
     Write Data To Excel    DNR    From_Month    ${TestCase_Name}    ${From_Month}    ${DNR_DATASET}    bTestCaseColumn=True
     Write Data To Excel    DNR    From_Year    ${TestCase_Name}    ${From_Year}    ${DNR_DATASET}    bTestCaseColumn=True
     
-Write Cashflow ID for Payment Non Agency Report
+Write Cashflow ID of Initial Loan Drawdown for Payment Non Agency Report
     [Documentation]    This will serve as a High Level keyword for reopening of the loans's cashflow
     ...    and getting the cashflow ID to be written in the AHBDE Report Validation sheet.
     ...    @author: fluberio    11DEC2020    - initial create
@@ -99,4 +102,62 @@ Write Cashflow ID for Payment Non Agency Report
     ###Write Cashflow ID for Report Validation Sheet###
     Write Data To Excel    SC1_LoanDrawdown    Cashflow_ID    ${rowid}    ${CashflowID}    ${DNR_DATASET}
     
+    
     Close All Windows on LIQ
+    
+Write Cashflow ID of Loan Repricing for Payment Non Agency Report
+    [Documentation]    This will serve as a High Level keyword for reopening of the loans's cashflow
+    ...    and getting the cashflow ID to be written in the AHBDE Report Validation sheet.
+    ...    @author: fluberio    14DEC2020    - initial create
+    [Arguments]    ${ExcelPath}
+    ###Login to Inputter and Open the Loan After Released###
+    Logout from Loan IQ
+    Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
+    
+    Search for Deal    &{ExcelPath}[Deal_Name]
+    Search for Existing Outstanding    &{ExcelPath}[OutstandingSelect_Type]    &{ExcelPath}[Facility_Name]
+    Select Specific Outsanding After Loan Repricing    &{ExcelPath}[New_Loan_Alias]
+    
+    ${CashflowID}   Get Cashflow Details from Released Loan Repricing    &{ExcelPath}[Borrower1_ShortName]
+     
+    ###Write Cashflow ID for Report Validation Sheet###
+    Write Data To Excel    SC1_ComprehensiveRepricing    Cashflow_ID    ${rowid}    ${CashflowID}    ${DNR_DATASET}
+    
+    Close All Windows on LIQ
+    
+Validate Cash In Report for Payment Non Agency is Generated for All Payments Coming in for CBA
+    [Documentation]    This keyword is used to validate that the Cash In Report is generated for all payments coming in for CBA.
+    ...    @author: fluberio    10DEC2020    - initial create
+    [Arguments]    ${ExcelPath}
+    
+    ### Get Actual Details in the Report For Interest DDA Transaction ###
+    ${Cashflow_Amount_Interest}    Read Data From Excel    Page1    Cashflow Amount    &{ExcelPath}[DDA_Transaction_Interest]${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}    &{ExcelPath}[Report_Path]&{ExcelPath}[Report_File_Name]    bTestCaseColumn=True    sTestCaseColReference=DDA Transaction Description
+    ${Transaction_Status_Interest}    Read Data From Excel    Page1    Cashflow Status    &{ExcelPath}[DDA_Transaction_Interest]${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}    &{ExcelPath}[Report_Path]&{ExcelPath}[Report_File_Name]    bTestCaseColumn=True    sTestCaseColReference=DDA Transaction Description
+    ${ProcessingAreaCode_Interest}    Read Data From Excel    Page1    Processing Area Code    &{ExcelPath}[DDA_Transaction_Interest]${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}    &{ExcelPath}[Report_Path]&{ExcelPath}[Report_File_Name]    bTestCaseColumn=True    sTestCaseColReference=DDA Transaction Description
+    ${ProcessingDate_Interest}    Read Data From Excel    Page1    Processing Date    &{ExcelPath}[DDA_Transaction_Interest]${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}    &{ExcelPath}[Report_Path]&{ExcelPath}[Report_File_Name]    bTestCaseColumn=True    sTestCaseColReference=DDA Transaction Description
+    ${Cashflow_Direction_Interest}    Read Data From Excel    Page1    Cashflow Direction${SPACE}    &{ExcelPath}[DDA_Transaction_Interest]${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}    &{ExcelPath}[Report_Path]&{ExcelPath}[Report_File_Name]    bTestCaseColumn=True    sTestCaseColReference=DDA Transaction Description
+    
+    Compare Two Numbers    &{ExcelPath}[Cashflow_Amount_Interest]    ${Cashflow_Amount_Interest}
+    Compare Two Strings    &{ExcelPath}[Transaction_Status]    ${Transaction_Status_Interest.strip()}
+    Compare Two Strings    &{ExcelPath}[Processing_Area_Code]    ${ProcessingAreaCode_Interest.strip()}
+    Compare Two Strings    &{ExcelPath}[Cashflow_Direction]    ${Cashflow_Direction_Interest.strip()}
+    
+    ${Report_Date_Value}    Get Date Value from Date Added or Amended Column    ${ProcessingDate_Interest}    %d-%b-%Y
+    ${Dataset_Date_Value}    Get Date Value from Date Added or Amended Column    &{ExcelPath}[Transaction_Date]
+    Compare Two Strings    ${Dataset_Date_Value}    ${Report_Date_Value.strip()}
+    
+    ### Get Actual Details in the Report For Principal DDA Transaction ###
+    ${Cashflow_Amount_Principal}    Read Data From Excel    Page1    Cashflow Amount    &{ExcelPath}[DDA_Transaction_Principal]${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}    &{ExcelPath}[Report_Path]&{ExcelPath}[Report_File_Name]    bTestCaseColumn=True    sTestCaseColReference=DDA Transaction Description
+    ${Transaction_Status_Principal}    Read Data From Excel    Page1    Cashflow Status    &{ExcelPath}[DDA_Transaction_Principal]${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}    &{ExcelPath}[Report_Path]&{ExcelPath}[Report_File_Name]    bTestCaseColumn=True    sTestCaseColReference=DDA Transaction Description
+    ${ProcessingAreaCode_Principal}    Read Data From Excel    Page1    Processing Area Code    &{ExcelPath}[DDA_Transaction_Principal]${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}    &{ExcelPath}[Report_Path]&{ExcelPath}[Report_File_Name]    bTestCaseColumn=True    sTestCaseColReference=DDA Transaction Description
+    ${ProcessingDate_Principal}    Read Data From Excel    Page1    Processing Date    &{ExcelPath}[DDA_Transaction_Principal]${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}    &{ExcelPath}[Report_Path]&{ExcelPath}[Report_File_Name]    bTestCaseColumn=True    sTestCaseColReference=DDA Transaction Description
+    ${Cashflow_Direction_Principal}    Read Data From Excel    Page1    Cashflow Direction${SPACE}    &{ExcelPath}[DDA_Transaction_Principal]${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}    &{ExcelPath}[Report_Path]&{ExcelPath}[Report_File_Name]    bTestCaseColumn=True    sTestCaseColReference=DDA Transaction Description
+    
+    Compare Two Numbers    &{ExcelPath}[Cashflow_Amount_Principal]    ${Cashflow_Amount_Principal}
+    Compare Two Strings    &{ExcelPath}[Transaction_Status]    ${Transaction_Status_Principal.strip()}
+    Compare Two Strings    &{ExcelPath}[Processing_Area_Code]    ${ProcessingAreaCode_Principal.strip()}
+    Compare Two Strings    &{ExcelPath}[Cashflow_Direction]    ${Cashflow_Direction_Principal.strip()}
+    
+    ${Report_Date_Value}    Get Date Value from Date Added or Amended Column    ${ProcessingDate_Principal}    %d-%b-%Y
+    ${Dataset_Date_Value}    Get Date Value from Date Added or Amended Column    &{ExcelPath}[Transaction_Date]
+    Compare Two Strings    ${Dataset_Date_Value}    ${Report_Date_Value.strip()}
