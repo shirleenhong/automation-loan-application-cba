@@ -692,7 +692,7 @@ Create Line Fee Payment Reversal After Fee Payment is Released
     mx LoanIQ click    ${LIQ_ReversePayment_UpdateMode_Button}   
     
     ${Question_Displayed}    Run Keyword And Return Status    Mx LoanIQ Verify Object Exist    ${LIQ_Question_OK_Button}    VerificationData="Yes"
-    Run Keyword If    ${Question_Displayed}==True    mx LoanIQ click element if present    ${LIQ_Question_OK_Button}
+    Run Keyword If    ${Question_Displayed}==${True}    mx LoanIQ click element if present    ${LIQ_Question_OK_Button}
     
     ###Verify that the Reversal comment is saved###
     Run Keyword And Continue On Failure    Mx LoanIQ Verify Object Exist    JavaWindow("title:=Line Fee Reverse Fee.*").JavaEdit("value:=.*${Reversal_Comment}")    VerificationData="Yes"
