@@ -3,7 +3,7 @@ Resource    ../../../Configurations/Party_Import_File.robot
 
 
 *** Test Cases ***
-PTY_001_EU
+PTY_001
     [Documentation]    This test case is used to create customer details through the Quick Party Onboarding module of the Fusion Party Application, 
     ...    Accepts the newly created customer and validates the successfully created customer in the LoanIQ Application
     ...    @author:javinzon    15SEP2020    -initial create
