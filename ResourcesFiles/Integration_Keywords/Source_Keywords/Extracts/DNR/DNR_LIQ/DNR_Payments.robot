@@ -176,14 +176,14 @@ Create Cycle Share Adjustment for Fee Accrual- Payment Reversal for DNR
     Navigate to Commitment Fee Notebook    &{ExcelPath}[OngoingFee_Type]
     
     ###Create interest Payment Reversal in full###
-    ${CycleDue_Expected}    ${Paidtodate_Expected}    Retrieve Intial Amounts in Line Fee Accrual Tab and Evaluate Expected Values for Reversal Post Validation    &{ExcelPath}[CycleNo]    &{ExcelPath}[Amount]  
+    ${CycleDue_Expected}    ${Paidtodate_Expected}    Retrieve Initial Amounts in Line Fee Accrual Tab and Evaluate Expected Values for Reversal Post Validation    &{ExcelPath}[CycleNo]    &{ExcelPath}[Amount]  
   
-    ${DebitAmt_Customer}    ${CreditAmt_Customer}    ${DebitAmt_Host}    ${CreditAmt_Host}    ${TotalDebitAmt}    ${TotalCreditAmt}    Retrieve Initial Data From GL Entries After Payment for Line Fee    &{ExcelPath}[Customer_Name]    &{ExcelPath}[Host_ShortName]    &{ExcelPath}[FeePayment_Date] 
+    ${DebitAmt_Customer}    ${CreditAmt_Customer}    ${DebitAmt_Host}    ${CreditAmt_Host}    ${TotalDebitAmt}    ${TotalCreditAmt}    Retrieve Initial Data from GL Entries After Payment for Line Fee    &{ExcelPath}[Customer_Name]    &{ExcelPath}[Host_ShortName]    &{ExcelPath}[FeePayment_Date] 
     ...    &{ExcelPath}[FeePayment_Time]    &{ExcelPath}[FeePayment_User]    &{ExcelPath}[EffectiveDate_FeePayment]    &{ExcelPath}[FeePayment_Comment]    
 
-    Create Line Fee Payment Reversal After Fee Payment Is Released    &{ExcelPath}[Reversal_Comment]    &{ExcelPath}[EffectiveDate_FeePayment]    &{ExcelPath}[EffectiveDate_Label]    &{ExcelPath}[Window_name]    &{ExcelPath}[Amount]
+    Create Line Fee Payment Reversal After Fee Payment is Released    &{ExcelPath}[Reversal_Comment]    &{ExcelPath}[EffectiveDate_FeePayment]    &{ExcelPath}[EffectiveDate_Label]    &{ExcelPath}[Window_name]    &{ExcelPath}[Amount]
 
-    ## Create Cashflows for Paperclip ###
+    ### Create Cashflows for Paperclip ###
     Navigate to Reverse Fee Workflow and Proceed With Transaction    Create Cashflow
     Verify if Method has Remittance Instruction    &{ExcelPath}[Customer_Name]    &{ExcelPath}[Borrower1_RemittanceDescription]    &{ExcelPath}[Borrower1_RemittanceInstruction]    
     Verify if Status is set to Do It    &{ExcelPath}[Customer_Name]  

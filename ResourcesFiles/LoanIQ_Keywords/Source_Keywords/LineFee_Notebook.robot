@@ -583,7 +583,7 @@ Close Fee Payment Notice Window
     ...    @author: dahijara    15OCT2020    - Initial create
     mx LoanIQ click    ${LIQ_FeePayment_Notice_Exit_Button}
     
-Retrieve Intial Amounts in Line Fee Accrual Tab and Evaluate Expected Values for Reversal Post Validation
+Retrieve Initial Amounts in Line Fee Accrual Tab and Evaluate Expected Values for Reversal Post Validation
     [Documentation]    This keyword is used retrieve Paid to date and Cycle Due values on the accrual tab before processing Payment Reversal. Expected amount are also computed.
     ...    @author: shirhong    14DEC2020    - initial create
     [Arguments]    ${sCycleNo}    ${sReversalAmount}    ${sRunVar_CycleDue_Expected}=None    ${sRunVar_Paidtodate_Expected}=None
@@ -614,7 +614,7 @@ Retrieve Intial Amounts in Line Fee Accrual Tab and Evaluate Expected Values for
     Save Values of Runtime Execution on Excel File    ${sRunVar_Paidtodate_Expected}    ${Paidtodate_Expected}
     [RETURN]    ${CycleDue_Expected}    ${Paidtodate_Expected}    
     
-Retrieve Initial Data From GL Entries After Payment for Line Fee
+Retrieve Initial Data from GL Entries After Payment for Line Fee
     [Documentation]    This keyword is used retrieve GL Entries detailsof the Line Fee Payment Released.
     ...    @author: shirhong    14DEC2020    - initial create
     [Arguments]    ${sCustomer_Name}    ${sHost_ShortName}    ${sFeePayment_Date}    ${sFeePayment_Time}    ${sFeePayment_User}    ${sEffectiveDate_FeePayment}    ${sFeePayment_Comment}
@@ -665,9 +665,9 @@ Retrieve Initial Data From GL Entries After Payment for Line Fee
     Save Values of Runtime Execution on Excel File    ${sRunVar_TotalDebitAmt}    ${TotalDebitAmt}
     Save Values of Runtime Execution on Excel File    ${sRunVar_TotalCreditAmt}    ${TotalCreditAmt}
 
-    [RETURN]    ${DebitAmt_Customer}    ${CreditAmt_Customer}    ${DebitAmt_Host}    ${CreditAmt_Host}    ${TotalDebitAmt}    ${TotalCreditAmt}
+    [Return]    ${DebitAmt_Customer}    ${CreditAmt_Customer}    ${DebitAmt_Host}    ${CreditAmt_Host}    ${TotalDebitAmt}    ${TotalCreditAmt}
     
-Create Line Fee Payment Reversal After Fee Payment Is Released
+Create Line Fee Payment Reversal After Fee Payment is Released
     [Documentation]    This keyword initiates payment reversal after Line Fee Payment is released.
     ...    @author: shirhong    14DEC2020    - initial create
     [Arguments]    ${sReversal_Comment}    ${sSystemDate}    ${sEffectiveDate_Label}    ${sWindow}    ${sFeePaymentAmount}
@@ -697,7 +697,7 @@ Create Line Fee Payment Reversal After Fee Payment Is Released
     ###Verify that the Reversal comment is saved###
     Run Keyword And Continue On Failure    Mx LoanIQ Verify Object Exist    JavaWindow("title:=Line Fee Reverse Fee.*").JavaEdit("value:=.*${Reversal_Comment}")    VerificationData="Yes"
     ${Comment_Status}    Run Keyword And Return Status    Mx LoanIQ Verify Object Exist    JavaWindow("title:=Line Fee Reverse Fee.*").JavaEdit("value:=.*${Reversal_Comment}")    VerificationData="Yes"
-    Run Keyword If    ${Comment_Status}==True    Log    Reason for Payment Reversal is applied.
+    Run Keyword If    ${Comment_Status}==${True}    Log    Reason for Payment Reversal is applied.
     ...    ELSE    Log    Reason for Payment Reversal - Comment is not applied.    level=WARN  
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/ReversePayment  
     
