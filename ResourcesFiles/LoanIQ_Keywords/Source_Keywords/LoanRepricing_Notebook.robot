@@ -27,6 +27,8 @@ Search for Existing Outstanding
     ...    ELSE    Log    No existing loans for the selected Facility
     Log    Search for Existing Outstanding keyword is complete
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/Facility_ExistingLoan
+    mx LoanIQ click element if present    ${LIQ_Alerts_OK_Button}
+    mx LoanIQ activate window    ${LIQ_ExistingLoans_Window}
                 
 Select Loan to Reprice
     [Documentation]    This is a low-level keyword that will be used to select a specific loan in Existing Loans For Facility window

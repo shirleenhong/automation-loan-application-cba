@@ -116,13 +116,7 @@ Write Cashflow ID of Loan Repricing for Payment Non Agency Report
     
     Search for Deal    &{ExcelPath}[Deal_Name]
     Search for Existing Outstanding    &{ExcelPath}[OutstandingSelect_Type]    &{ExcelPath}[Facility_Name]
-    mx LoanIQ click element if present    ${LIQ_Alerts_OK_Button}
-    mx LoanIQ activate window    ${LIQ_ExistingLoans_Window} 
-    
-    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/OutstandingSelect_ExistingLoans
-    Mx LoanIQ Select Or Doubleclick In Tree By Text    ${LIQ_ExistingLoans_JavaTree}    &{ExcelPath}[New_Loan_Alias]%d
-    mx LoanIQ click element if present    ${LIQ_Alerts_OK_Button}
-    mx LoanIQ click element if present    ${LIQ_Loan_InquiryMode_Button}
+    Select Specific Outsanding After Loan Repricing    &{ExcelPath}[New_Loan_Alias]
     
     ${CashflowID}   Get Cashflow Details from Released Loan Repricing    &{ExcelPath}[Borrower1_ShortName]
      
@@ -143,9 +137,7 @@ Validate Cash In Report for Payment Non Agency is Generated for All Payments Com
     ${ProcessingDate_Interest}    Read Data From Excel    Page1    Processing Date    &{ExcelPath}[DDA_Transaction_Interest]${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}    &{ExcelPath}[Report_Path]&{ExcelPath}[Report_File_Name]    bTestCaseColumn=True    sTestCaseColReference=DDA Transaction Description
     ${Cashflow_Direction_Interest}    Read Data From Excel    Page1    Cashflow Direction${SPACE}    &{ExcelPath}[DDA_Transaction_Interest]${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}    &{ExcelPath}[Report_Path]&{ExcelPath}[Report_File_Name]    bTestCaseColumn=True    sTestCaseColReference=DDA Transaction Description
     
-    ${Cashflow_Amount}    Convert to Number    &{ExcelPath}[Cashflow_Amount_Interest]
-    ${Cashflow_Amount_Interest}    Convert to Number    ${Cashflow_Amount_Interest}
-    Compare Two Strings    ${Cashflow_Amount}    ${Cashflow_Amount_Interest}
+    Compare Two Numbers    &{ExcelPath}[Cashflow_Amount_Interest]    ${Cashflow_Amount_Interest}
     Compare Two Strings    &{ExcelPath}[Transaction_Status]    ${Transaction_Status_Interest.strip()}
     Compare Two Strings    &{ExcelPath}[Processing_Area_Code]    ${ProcessingAreaCode_Interest.strip()}
     Compare Two Strings    &{ExcelPath}[Cashflow_Direction]    ${Cashflow_Direction_Interest.strip()}
@@ -161,9 +153,7 @@ Validate Cash In Report for Payment Non Agency is Generated for All Payments Com
     ${ProcessingDate_Principal}    Read Data From Excel    Page1    Processing Date    &{ExcelPath}[DDA_Transaction_Principal]${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}    &{ExcelPath}[Report_Path]&{ExcelPath}[Report_File_Name]    bTestCaseColumn=True    sTestCaseColReference=DDA Transaction Description
     ${Cashflow_Direction_Principal}    Read Data From Excel    Page1    Cashflow Direction${SPACE}    &{ExcelPath}[DDA_Transaction_Principal]${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}    &{ExcelPath}[Report_Path]&{ExcelPath}[Report_File_Name]    bTestCaseColumn=True    sTestCaseColReference=DDA Transaction Description
     
-    ${Cashflow_Amount}    Convert to Number    &{ExcelPath}[Cashflow_Amount_Principal]
-    ${Cashflow_Amount_Principal}    Convert to Number    ${Cashflow_Amount_Principal}
-    Compare Two Strings    ${Cashflow_Amount}    ${Cashflow_Amount_Principal}
+    Compare Two Numbers    &{ExcelPath}[Cashflow_Amount_Principal]    ${Cashflow_Amount_Principal}
     Compare Two Strings    &{ExcelPath}[Transaction_Status]    ${Transaction_Status_Principal.strip()}
     Compare Two Strings    &{ExcelPath}[Processing_Area_Code]    ${ProcessingAreaCode_Principal.strip()}
     Compare Two Strings    &{ExcelPath}[Cashflow_Direction]    ${Cashflow_Direction_Principal.strip()}

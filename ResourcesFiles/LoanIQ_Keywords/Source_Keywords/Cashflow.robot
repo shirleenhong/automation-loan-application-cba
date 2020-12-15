@@ -594,3 +594,12 @@ Set All Items to Do It
     Select Menu Item    ${LIQ_Cashflows_Window}    Options    Set All To 'Do It'
     Mx LoanIQ click    ${LIQ_Cashflows_OK_Button}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/CashflowVerification
+    
+Select Specific Outsanding After Loan Repricing
+    [Documentation]    This keyword select a specific Outstanding after loan repricing
+    ...    @author: fluberio    15DEC2020    initial create
+    [Arguments]    ${sLoan_Alias}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/OutstandingSelect_ExistingLoans
+    Mx LoanIQ Select Or Doubleclick In Tree By Text    ${LIQ_ExistingLoans_JavaTree}    ${sLoan_Alias}%d
+    mx LoanIQ click element if present    ${LIQ_Alerts_OK_Button}
+    mx LoanIQ click element if present    ${LIQ_Loan_InquiryMode_Button}
