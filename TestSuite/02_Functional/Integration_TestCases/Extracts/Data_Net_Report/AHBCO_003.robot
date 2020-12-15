@@ -28,6 +28,6 @@ Report Validation for AHBCO_003
     
     Set Global Variable    ${TestCase_Name}    AHBCO_003
     
-    Mx Execute Template With Specific Test Case Name    Validation of Report and Dataset Value for Agency Host Bank Cash Out for Processing Date    ${DNR_DATASET}    Test_Case    ${TestCase_Name}    AHBCO
-    Mx Execute Template With Specific Test Case Name    Validation of Report and Dataset Value for Agency Host Bank Cash Out for Effective Date    ${DNR_DATASET}    Test_Case    ${TestCase_Name}    AHBCO
+    Mx Execute Template With Specific Test Case Name    Validation of Report and Dataset Value for Agency Host Bank Cash Out for Loan Processing Date    ${DNR_DATASET}    Test_Case    ${TestCase_Name}    AHBCO
+    Mx Execute Template With Specific Test Case Name    Validation of Report and Dataset Value for Agency Host Bank Cash Out for Loan Effective Date    ${DNR_DATASET}    Test_Case    ${TestCase_Name}    AHBCO
     

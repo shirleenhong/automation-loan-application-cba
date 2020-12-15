@@ -403,7 +403,6 @@ Create Loan Drawdown TERM and SBLC for Syndicated Deal for DNR
     
     ###Write Data to Other TestCases###
     Write Data To Excel    SC2_LoanDrawdown    Loan_Alias    ${rowid}    ${Alias}    ${DNR_DATASET}
-    Write Data To Excel    SC2_PaymentFees    Loan_Alias    ${rowid}    ${Alias}    ${DNR_DATASET}
     ${Alias}    Read Data From Excel    SC2_LoanDrawdown    Loan_Alias    ${rowid}    ${DNR_DATASET}
     Input General Loan Drawdown Details with Accrual End Date    &{ExcelPath}[Loan_RequestedAmount]    &{ExcelPath}[Loan_MaturityDate]   &{ExcelPath}[Loan_RepricingFrequency]    ${LoanEffectiveDate}    None    None    None    None    &{ExcelPath}[Loan_Accrue]
     Input Loan Drawdown Rates for Term Drawdown    &{ExcelPath}[Borrower_BaseRate]
@@ -509,7 +508,6 @@ Create Loan Drawdown TERM and SBLC for Syndicated Deal With Backdated Effective 
     
     ###Write Data to Other TestCases###
     Write Data To Excel    SC2_LoanDrawdown    Loan_Alias    ${rowid}    ${Alias}    ${DNR_DATASET}
-    Write Data To Excel    SC2_PaymentFees    Loan_Alias    ${rowid}    ${Alias}    ${DNR_DATASET}
     ${Alias}    Read Data From Excel    SC2_LoanDrawdown    Loan_Alias    ${rowid}    ${DNR_DATASET}
     Input General Loan Drawdown Details with Accrual End Date    &{ExcelPath}[Loan_RequestedAmount]    &{ExcelPath}[Loan_MaturityDate]   &{ExcelPath}[Loan_RepricingFrequency]    ${LoanEffectiveDate}    None    None    None    None    &{ExcelPath}[Loan_Accrue]
     Input Loan Drawdown Rates for Term Drawdown    &{ExcelPath}[Borrower_BaseRate]

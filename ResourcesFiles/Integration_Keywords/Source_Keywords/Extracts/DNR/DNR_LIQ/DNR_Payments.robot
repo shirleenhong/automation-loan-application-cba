@@ -158,3 +158,54 @@ Unscheduled Principal Payment - No Schedule for DNR
     Close All Windows on LIQ
     Logout from Loan IQ
     Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
+    
+
+Create Cycle Share Adjustment for Fee Accrual- Payment Reversal for DNR
+    [Documentation]    This keyword is for creating and validating a successful Reversal for Fee Payments in FULL.
+    ...    @author: shirhong    14DEC2020    - initial create
+    [Arguments]    ${ExcelPath}  
+    
+    ###Write Effective Date Details to Cycle Share Adjustment Sheet####
+    ${Payment_EffectiveDate}    Read Data From Excel    SC2_PaymentFees    FeePayment_EffectiveDate    &{ExcelPath}[rowid]    ${DNR_DATASET}
+    Write Data To Excel	   SC2_CycleShareAdjustment    Payment_EffectiveDate    ${rowid}    ${Payment_EffectiveDate}   ${DNR_DATASET}
+    
+    ###Navigate to the applicable Deal/Facility/Outstanding and open Payment Notebook###
+    ${SystemDate}    Get System Date
+    Write Data To Excel	   SC2_CycleShareAdjustment    Payment_ProcessingDate    ${rowid}    ${SystemDate}   ${DNR_DATASET}
+    Launch Existing Facility    &{ExcelPath}[Deal_Name]    &{ExcelPath}[Facility_Name]
+    Navigate to Commitment Fee Notebook    &{ExcelPath}[OngoingFee_Type]
+    
+    ###Create interest Payment Reversal in full###
+    ${CycleDue_Expected}    ${Paidtodate_Expected}    Retrieve Intial Amounts in Line Fee Accrual Tab and Evaluate Expected Values for Reversal Post Validation    &{ExcelPath}[CycleNo]    &{ExcelPath}[Amount]  
+  
+    ${DebitAmt_Customer}    ${CreditAmt_Customer}    ${DebitAmt_Host}    ${CreditAmt_Host}    ${TotalDebitAmt}    ${TotalCreditAmt}    Retrieve Initial Data From GL Entries After Payment for Line Fee    &{ExcelPath}[Customer_Name]    &{ExcelPath}[Host_ShortName]    &{ExcelPath}[FeePayment_Date] 
+    ...    &{ExcelPath}[FeePayment_Time]    &{ExcelPath}[FeePayment_User]    &{ExcelPath}[EffectiveDate_FeePayment]    &{ExcelPath}[FeePayment_Comment]    
+
+    Create Line Fee Payment Reversal After Fee Payment Is Released    &{ExcelPath}[Reversal_Comment]    &{ExcelPath}[EffectiveDate_FeePayment]    &{ExcelPath}[EffectiveDate_Label]    &{ExcelPath}[Window_name]    &{ExcelPath}[Amount]
+
+    ## Create Cashflows for Paperclip ###
+    Navigate to Reverse Fee Workflow and Proceed With Transaction    Create Cashflow
+    Verify if Method has Remittance Instruction    &{ExcelPath}[Customer_Name]    &{ExcelPath}[Borrower1_RemittanceDescription]    &{ExcelPath}[Borrower1_RemittanceInstruction]    
+    Verify if Status is set to Do It    &{ExcelPath}[Customer_Name]  
+    Create Cashflow     &{ExcelPath}[Customer_Name]    release
+    
+    ###Send Created Cashflow/Payment Reversal for Approval###
+    Navigate to Reverse Fee Workflow and Proceed With Transaction    Send to Approval
+    Logout from Loan IQ
+    
+    ###Accrual Share Adjustment Notebook - Workflow Items (APPROVER)###
+    Login to Loan IQ    ${MANAGER_USERNAME}    ${MANAGER_PASSWORD}
+    ### Approve Paperclip Transaction
+    Select Item in Work in Process    Payments    Awaiting Approval    Reverse Fee Payment     &{ExcelPath}[Deal_Name]
+    Navigate to Reverse Fee Workflow and Proceed With Transaction    Approval
+    Logout from Loan IQ
+    
+    ###Accrual Share Adjustment Notebook - Workflow Items (APPROVER2)###
+    Login to Loan IQ    ${SUPERVISOR_USERNAME}    ${SUPERVISOR_PASSWORD}
+    Select Item in Work in Process    Payments    Awaiting Release    Reverse Fee Payment     &{ExcelPath}[Deal_Name]
+    Navigate to Reverse Fee Workflow and Proceed With Transaction    Release
+    Close All Windows on LIQ  
+    
+
+
+    
