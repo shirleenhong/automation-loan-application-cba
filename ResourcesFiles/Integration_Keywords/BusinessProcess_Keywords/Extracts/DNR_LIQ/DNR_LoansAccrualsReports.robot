@@ -77,3 +77,10 @@ Validate Amount Columns Displays Numbers in 2 Decimal Places from Loans and Accr
 
     ${Actual_OutstandingAmount}    Read Data From Excel    Outstandings    Outstanding Amount    1    &{ExcelPath}[Report_Path]&{ExcelPath}[Report_File_Name]    readAllData=Y
     Verify List Values Displays Numbers in N Decimal Places    ${Actual_OutstandingAmount}
+    
+Validate Date Fields from Loans and Accruals Report
+    [Documentation]    This keyword is used to validate the date fields from Loans and Accruals report file.
+    ...    @author: ccarriedo    14DEC2020    - initial create
+    [Arguments]    ${ExcelPath}
+    
+    Get Date Fields and Convert for Validation    &{ExcelPath}[Report_Path]&{ExcelPath}[Report_File_Name]    &{ExcelPath}[Sheet_Name]    &{ExcelPath}[Columns_To_Validate]    &{ExcelPath}[Delimiter]            

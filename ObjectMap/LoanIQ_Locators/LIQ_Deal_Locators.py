@@ -353,6 +353,8 @@ LIQ_OutsideConditions_History_Button = 'JavaWindow("title:=Deal Notebook -.*").J
 LIQ_OutsideConditions_Insert_Button = 'JavaWindow("label:=.*Outside Conditions History").JavaButton("attached text:=Insert")'
 LIQ_OutsideConditions_OK_Button = 'JavaWindow("label:=.*Outside Conditions History").JavaButton("label:=OK")'
 LIQ_OutsideConditions_SelectConditionDropdown = 'JavaWindow("label:=.*Outside Conditions History").JavaList("attached text:=Select Condition")'
+LIQ_OutsideConditions_Matrix_RadioButton_True = 'JavaWindow("title:=Outside Condition").JavaRadioButton("index:=0")'
+LIQ_OutsideConditions_Matrix_RadioButton_False = 'JavaWindow("title:=Outside Condition").JavaRadioButton("index:=1")'
 LIQ_Edit_OutsideConditions_StartDate = 'JavaWindow("label:=.*Outside Condition").JavaEdit("index:=0")'
 LIQ_Edit_OutsideConditions_OK_Button = 'JavaWindow("label:=.*Outside Condition").JavaButton("attached text:=OK")'
 LIQ_Edit_OutsideConditions_Question_Window = 'JavaWindow("text:=Question")'
