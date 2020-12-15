@@ -372,3 +372,16 @@ Get Facility Name Row Values
     
     [Return]    ${Report_File_Row_Values}
 
+Get Date Fields and Convert for Validation
+    [Documentation]    This keyword is used to get the date values for each columns and use it for validation of date format.
+    ...    @author: ccarriedo    14DEC2020    - initial create
+    [Arguments]    ${sReport_Path_File}    ${sSheet_Name}    ${sColumn_Headers}    ${sDelimiter}        
+    
+    ### Get Report Column Headers To Validate Total Count ###
+    ${Column_Headers_List}    Split String    ${sColumn_Headers}    ${sDelimiter}
+    ${Column_Headers_List_Count}    Get Length    ${Column_Headers_List}
+    
+    :FOR    ${Index}    IN RANGE    ${Column_Headers_List_Count}
+    \    ${Column_Header}    Get From List    ${Column_Headers_List}    ${Index}
+    \    ${Column_Dates_List}    Read Data From Excel    ${sSheet_Name}    ${Column_Header}    1    ${sReport_Path_File}    readAllData=Y
+    \    Validate Given List is in Date Format    ${Column_Dates_List}    

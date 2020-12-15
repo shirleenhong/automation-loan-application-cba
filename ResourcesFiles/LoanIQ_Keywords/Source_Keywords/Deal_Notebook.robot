@@ -3183,7 +3183,7 @@ Delete Details in Comments Tab in Deal Notebook
 
 Click OK Button To Close Borrowers Notebook
     [Documentation]    Clicking Ok button to close/save deal borrowers notebook
-    ...    @author: kmagday    09DEC2020    - initial create
+    ...    @author: kmagday    09DEC2020    initial create
 
     mx LoanIQ click    ${LIQ_DealBorrower_Ok_Button}
 

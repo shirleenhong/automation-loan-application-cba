@@ -140,7 +140,7 @@ Admin Fee Payment for DNR
     
     ###Initiate the Admin Fee Payment by entering the required fields###
     ${AdminFeePayment_EffectiveDate}    Get System Date
-    Write Data To Excel    SC2_AdminFeePayment    AdminFeePayment_EffectiveDate    ${rowid}    ${AdminFeePayment_EffectiveDate}    sFilePath=${DNR_DATASET}
+    Write Data To Excel    SC2_AdminFeePayment    FeePayment_EffectiveDate    ${rowid}    ${AdminFeePayment_EffectiveDate}    ${DNR_DATASET}
     Create Admin Fee Payment    &{ExcelPath}[Deal_Name]    ${AdminFeePayment_EffectiveDate}    &{ExcelPath}[AdminFeePayment_Comment]
     
     ### Create cashflows and verifying the remittance details
