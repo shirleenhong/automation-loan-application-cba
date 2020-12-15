@@ -6,6 +6,7 @@ Resource    ../../../../../../Configurations/Integration_Import_File.robot
 Create Facility for DNR
     [Documentation]    This keyword is used to create a Facility.
     ...    @author: clanding     24NOV2020    - initial create
+    ...    @update: fluberio    15DEC2020    - added SC1_ComprehensiveRepricing Writting in Excel
     [Arguments]    ${ExcelPath}
     
     Open Existing Deal    &{ExcelPath}[Deal_Name]
@@ -18,6 +19,7 @@ Create Facility for DNR
     Write Data To Excel    SC1_PaymentFees    Facility_Name    ${rowid}    ${Facility_Name}    ${DNR_DATASET}    ${DNR_DATASET}
     Write Data To Excel    SC1_UnscheduledPayments    Facility_Name    ${rowid}    ${Facility_Name}    ${DNR_DATASET}    ${DNR_DATASET}
     Write Data To Excel    SC1_UnscheduledPayments    Facility_Name    3    ${Facility_Name}    ${DNR_DATASET}    ${DNR_DATASET}
+    Write Data To Excel    SC1_ComprehensiveRepricing    Facility_Name    ${rowid}    ${Facility_Name}    ${DNR_DATASET}    ${DNR_DATASET}
 
     ###New Facility Screen###
     ${Facility_ProposedCmtAmt}    New Facility Select    &{ExcelPath}[Deal_Name]    ${FacilityName}    &{ExcelPath}[Facility_Type]    &{ExcelPath}[Facility_ProposedCmtAmt]    &{ExcelPath}[Facility_Currency]    

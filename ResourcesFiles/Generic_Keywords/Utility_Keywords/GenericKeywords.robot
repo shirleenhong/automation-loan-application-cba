@@ -2786,6 +2786,18 @@ Get Correct Dataset From Dataset List
     
     Set Global Variable    ${ExcelPath}    ${dataset_path}&{lValues}[Path]&{lValues}[Filename]
 
+Subtract 2 Numbers
+    [Documentation]    This keyword is used to get the difference of iNumber2 from iNumber1.
+    ...    @author: clanding    14DEC2020    - initial create
+    [Arguments]    ${iNumber1}    ${iNumber2}    ${iDecimal_Place}=2    
+
+    ${Number1}    Remove Comma and Convert to Number    ${iNumber1}
+    ${Number2}    Remove Comma and Convert to Number    ${iNumber2}
+
+    ${DifferenceAmount}    Evaluate    "%.${iDecimal_Place}f" % (${Number2}-${Number1})    
+    
+    [Return]    ${DifferenceAmount}
+
 Remove Comma Separators in Numbers
     [Documentation]    This keyword is used to remove , in the number. 
     ...    @author: clanding    10DEC2020    - initial create
@@ -2816,4 +2828,3 @@ Close Generate Notice Window
     ...    @author: mcastro    14DEC2020    - Initial Create
 
     Mx LoanIQ Close Window    ${LIQ_NoticeGroup_Window}
-
