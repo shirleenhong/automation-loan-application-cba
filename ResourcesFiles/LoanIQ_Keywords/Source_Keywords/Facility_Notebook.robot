@@ -3952,7 +3952,7 @@ Get Outstandings Amount from Facility Notebook
 
 Add Ongoing Fee using Matrix and Outside Condition
     [Documentation]    This keyword adds ongoing fee
-    ...    @author: kmagday    10DEC2020    -    initial create
+    ...    @author: kmagday    10DEC2020    - initial create
     [Arguments]    ${sFacilityItemAfter}    ${sFacilityItem}    ${sOutsideCondition_RadioButton}=OFF  
 
     ### Keyword Pre-processing ###
@@ -3978,7 +3978,7 @@ Add Ongoing Fee using Matrix and Outside Condition
 
 Insert After Ongoing Fee using Matrix and Outside Condition 
     [Documentation]    This keyword adds ongoing fee - after on facility.
-    ...    @author: kmagday    10DEC2020    -    initial create
+    ...    @author: kmagday    10DEC2020    - initial create
     [Arguments]    ${sFacilityItemAfter}    ${sFacilityItem}    ${sOutsideCondition_RadioButton}=OFF  
 
     ### Keyword Pre-processing ###
@@ -4004,7 +4004,7 @@ Insert After Ongoing Fee using Matrix and Outside Condition
 
 Insert After Ongoing Fee Pricing using Outside Condition
     [Documentation]    This keyword adds ongoing fee - after on facility.
-    ...    @author: kmagday    10DEC2020    -    initial create
+    ...    @author: kmagday    10DEC2020    - initial create
     [Arguments]    ${sFacilityItemAfter}    ${iFacility_PercentWhole}    ${sFacilityItem}    ${iFacility_Percent}  
 
     ### Keyword Pre-processing ###
@@ -4031,7 +4031,7 @@ Insert After Ongoing Fee Pricing using Outside Condition
 
 Select Text in Ongoing Fee Pricing List 
     [Documentation]    This keyword selects/clicks a value from the ongoing pricing list java tree
-    ...    @author: kmagday    10DEC2020    -    initial create
+    ...    @author: kmagday    10DEC2020    - initial create
     [Arguments]    ${sText}
 
     ### Keyword Pre-processing ###
