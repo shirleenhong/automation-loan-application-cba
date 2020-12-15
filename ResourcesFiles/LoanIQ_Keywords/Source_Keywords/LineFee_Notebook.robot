@@ -582,3 +582,172 @@ Close Fee Payment Notice Window
     [Documentation]    This keyword closes Fee Payment Notice Window. 
     ...    @author: dahijara    15OCT2020    - Initial create
     mx LoanIQ click    ${LIQ_FeePayment_Notice_Exit_Button}
+    
+Retrieve Initial Amounts in Line Fee Accrual Tab and Evaluate Expected Values for Reversal Post Validation
+    [Documentation]    This keyword is used retrieve Paid to date and Cycle Due values on the accrual tab before processing Payment Reversal. Expected amount are also computed.
+    ...    @author: shirhong    14DEC2020    - initial create
+    [Arguments]    ${sCycleNo}    ${sReversalAmount}    ${sRunVar_CycleDue_Expected}=None    ${sRunVar_Paidtodate_Expected}=None
+
+    ### GetRuntime Keyword Pre-processing ###
+    ${CycleNo}    Acquire Argument Value    ${sCycleNo}
+    ${ReversalAmount}    Acquire Argument Value    ${sReversalAmount}
+
+    mx LoanIQ activate window    ${LIQ_Fee_Window}
+    Mx LoanIQ Select Window Tab    ${LIQ_Fee_Tab}    Accrual
+
+    ###Retrieve Cycle Due before Payment Reversal###
+    ${CycleDue_beforeReversal}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_FeeNotebook_Accrual_JavaTree}    ${CycleNo}%Cycle Due%value              
+    ${CycleDue_beforeReversal}    Remove comma and convert to number    ${CycleDue_beforeReversal}
+    
+    ###Retrieve Paid to date before Payment Reversal###
+    ${Paidtodate_beforeReversal}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_FeeNotebook_Accrual_JavaTree}    ${CycleNo}%Paid to date%value
+    ${Paidtodate_beforeReversal}    Remove comma and convert to number    ${Paidtodate_beforeReversal}
+    
+    ###Evaluate Values for Post Validation###
+    ${ReversalAmount}    Remove comma and convert to number    ${ReversalAmount}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/CommitmentFee_Accrual
+    ${CycleDue_Expected}    Evaluate    ${CycleDue_beforeReversal}+${ReversalAmount}
+    ${Paidtodate_Expected}    Evaluate    ${Paidtodate_beforeReversal}-${ReversalAmount}
+	
+    ### ConstRuntime Keyword Post-processing ###
+    Save Values of Runtime Execution on Excel File    ${sRunVar_CycleDue_Expected}    ${CycleDue_Expected}
+    Save Values of Runtime Execution on Excel File    ${sRunVar_Paidtodate_Expected}    ${Paidtodate_Expected}
+    [RETURN]    ${CycleDue_Expected}    ${Paidtodate_Expected}    
+    
+Retrieve Initial Data from GL Entries After Payment for Line Fee
+    [Documentation]    This keyword is used retrieve GL Entries detailsof the Line Fee Payment Released.
+    ...    @author: shirhong    14DEC2020    - initial create
+    [Arguments]    ${sCustomer_Name}    ${sHost_ShortName}    ${sFeePayment_Date}    ${sFeePayment_Time}    ${sFeePayment_User}    ${sEffectiveDate_FeePayment}    ${sFeePayment_Comment}
+    ...    ${sRunVar_DebitAmt_Customer}=None    ${sRunVar_CreditAmt_Customer}=None    ${sRunVar_DebitAmt_Host}=None    ${sRunVar_CreditAmt_Host}=None    ${sRunVar_TotalDebitAmt}=None    ${sRunVar_TotalCreditAmt}=None
+    ### GetRuntime Keyword Pre-processing ###
+    ${Customer_Name}    Acquire Argument Value    ${sCustomer_Name}
+    ${Host_ShortName}    Acquire Argument Value    ${sHost_ShortName}
+    ${FeePayment_Date}    Acquire Argument Value    ${sFeePayment_Date}
+    ${FeePayment_Time}    Acquire Argument Value    ${sFeePayment_Time}
+    ${FeePayment_User}    Acquire Argument Value    ${sFeePayment_User}
+    ${EffectiveDate_FeePayment}    Acquire Argument Value    ${sEffectiveDate_FeePayment}
+    ${FeePayment_Comment}    Acquire Argument Value    ${sFeePayment_Comment}
+
+    ###Navigate to Fee Payment released###
+    mx LoanIQ activate window    ${LIQ_Fee_Window}
+    Mx LoanIQ Select Window Tab    ${LIQ_Fee_Tab}    Events
+    Mx LoanIQ Select String    ${LIQ_Fee_Events_Javatree}   Fee Payment Released
+    Mx LoanIQ DoubleClick   ${LIQ_Fee_Events_Javatree}    Fee Payment Released
+    
+    ###Open GL Entries Window###
+    mx LoanIQ select    ${LIQ_Fee_Queries_GLEntries}    
+    mx LoanIQ activate window    ${LIQ_OngoingFeePayment_GLEntries_Window}
+    mx LoanIQ maximize    ${LIQ_OngoingFeePayment_GLEntries_Window}    
+    
+    ###Retrieve Data for Debit and Credit Amounts for post validation use###
+    ${Branch}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_GL_Entries_JavaTree}    ${Customer_Name}%Branch%Branch
+    
+    ${DebitAmt_Customer}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_GL_Entries_JavaTree}    ${Customer_Name}%Debit Amt%DebitAmt
+    ${CreditAmt_Customer}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_GL_Entries_JavaTree}    ${Customer_Name}%Credit Amt%CreditAmt
+
+    ${DebitAmt_Host}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_GL_Entries_JavaTree}    ${Host_ShortName}%Debit Amt%DebitAmt
+    ${CreditAmt_Host}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_GL_Entries_JavaTree}    ${Host_ShortName}%Credit Amt%CreditAmt
+    
+    ${Branch}    Set Variable    ${Branch.strip()}    
+    ${TotalAmount}    Catenate     ${space}Total For:    ${Branch}
+            
+    ${TotalDebitAmt}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_GL_Entries_JavaTree}    ${TotalAmount}%Debit Amt%TotalDebitAmt
+    ${TotalCreditAmt}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_GL_Entries_JavaTree}   ${TotalAmount}%Credit Amt%TotalCreditAmt                              
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/GL_Entries
+    ###Exit GL Entries###
+    mx LoanIQ click    ${LIQ_OngoingFeePayment_GLEntries_Exit_Button}
+	
+    ### ConstRuntime Keyword Post-processing ###
+    Save Values of Runtime Execution on Excel File    ${sRunVar_DebitAmt_Customer}    ${DebitAmt_Customer}
+    Save Values of Runtime Execution on Excel File    ${sRunVar_CreditAmt_Customer}    ${CreditAmt_Customer}
+    Save Values of Runtime Execution on Excel File    ${sRunVar_DebitAmt_Host}    ${DebitAmt_Host}
+    Save Values of Runtime Execution on Excel File    ${sRunVar_CreditAmt_Host}    ${CreditAmt_Host}
+    Save Values of Runtime Execution on Excel File    ${sRunVar_TotalDebitAmt}    ${TotalDebitAmt}
+    Save Values of Runtime Execution on Excel File    ${sRunVar_TotalCreditAmt}    ${TotalCreditAmt}
+
+    [Return]    ${DebitAmt_Customer}    ${CreditAmt_Customer}    ${DebitAmt_Host}    ${CreditAmt_Host}    ${TotalDebitAmt}    ${TotalCreditAmt}
+    
+Create Line Fee Payment Reversal After Fee Payment is Released
+    [Documentation]    This keyword initiates payment reversal after Line Fee Payment is released.
+    ...    @author: shirhong    14DEC2020    - initial create
+    [Arguments]    ${sReversal_Comment}    ${sSystemDate}    ${sEffectiveDate_Label}    ${sWindow}    ${sFeePaymentAmount}
+    ### GetRuntime Keyword Pre-processing ###
+    ${Reversal_Comment}    Acquire Argument Value    ${sReversal_Comment}
+    ${SystemDate}    Acquire Argument Value    ${sSystemDate}
+    ${EffectiveDate_Label}    Acquire Argument Value    ${sEffectiveDate_Label}
+    ${Window}    Acquire Argument Value    ${sWindow}
+    ${FeePaymentAmount}    Acquire Argument Value    ${sFeePaymentAmount}
+
+    mx LoanIQ activate window    ${LIQ_OngoingFeePaymentNotebook_Window}  
+    mx LoanIQ select    ${LIQ_Fee_ReversePayment}
+    Verify If Warning Is Displayed
+    mx LoanIQ activate window    ${LIQ_ReverseFee_Window}
+    
+    ###Verify Window Status after Reverse Payment creation is initiated- now Pending###
+    Validate Window Title Status    ${Window}    Pending
+    
+    ###Supply Reversal comment stating that Interest is waived###
+    mx LoanIQ enter    ${LIQ_ReversePayment_Comment_Textfield}    ${Reversal_Comment}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/ReversePayment
+    mx LoanIQ click    ${LIQ_ReversePayment_UpdateMode_Button}   
+    
+    ${Question_Displayed}    Run Keyword And Return Status    Mx LoanIQ Verify Object Exist    ${LIQ_Question_OK_Button}    VerificationData="Yes"
+    Run Keyword If    ${Question_Displayed}==${True}    mx LoanIQ click element if present    ${LIQ_Question_OK_Button}
+    
+    ###Verify that the Reversal comment is saved###
+    Run Keyword And Continue On Failure    Mx LoanIQ Verify Object Exist    JavaWindow("title:=Line Fee Reverse Fee.*").JavaEdit("value:=.*${Reversal_Comment}")    VerificationData="Yes"
+    ${Comment_Status}    Run Keyword And Return Status    Mx LoanIQ Verify Object Exist    JavaWindow("title:=Line Fee Reverse Fee.*").JavaEdit("value:=.*${Reversal_Comment}")    VerificationData="Yes"
+    Run Keyword If    ${Comment_Status}==${True}    Log    Reason for Payment Reversal is applied.
+    ...    ELSE    Log    Reason for Payment Reversal - Comment is not applied.    level=WARN  
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/ReversePayment  
+    
+Get Cashflow Details from Released Cycle Share Adjustment - Payment Reversal
+    [Documentation]    This keyword is used to get the cashflow ID and write the value in the dataset
+    ...    @author: shirhong    14DEC2020    - initial create
+    [Arguments]    ${sBorrower_ShortName}   ${sDeal_Name}
+    
+    ${Borrower_Shortname}    Acquire Argument Value    ${sBorrower_ShortName}
+    ${Deal_Name}    Acquire Argument Value    ${sDeal_Name}
+
+    ###Navigate to Fee Payment released###
+    mx LoanIQ activate window    ${LIQ_Fee_Window}
+    Mx LoanIQ Select Window Tab    ${LIQ_Fee_Tab}    Events
+    Mx LoanIQ Select String    ${LIQ_Fee_Events_Javatree}   Reverse Payment Released
+    Mx LoanIQ DoubleClick   ${LIQ_Fee_Events_Javatree}    Reverse Payment Released
+    
+    ###Open Cashflow Details From Released Initial Loan Drawdown###
+    Open Cashflows Window from Notebook Menu    ${LIQ_ReverseFee_Window}    ${LIQ_ReverseFee_Options_Cashflow}
+    mx LoanIQ activate window    ${LIQ_Cashflows_Window}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/InitialLoanDrawdown_CashflowWindow
+    Mx LoanIQ Select Or DoubleClick In Javatree    ${LIQ_Cashflows_Tree}    ${Borrower_Shortname}%d
+    mx LoanIQ activate window    ${LIQ_Cashflows_DetailsForCashflow_Window}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/CashflowDetails
+    mx LoanIQ send keys    {F8}
+    
+    ###Get the Actual Cashflow ID and Open the Deal###
+    mx LoanIQ activate window    ${LIQ_UpdateInformation_Window}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/Cashflow_UpdateDetails
+    mx LoanIQ click    ${LIQ_Cashflows_UpdateInformation_CopyRID_Button}
+    mx LoanIQ click    ${LIQ_UpdateInformation_Exit_Button}
+    mx LoanIQ click    ${LIQ_Payment_Cashflows_DetailsforCashflow_Exit_Button}
+    mx LoanIQ close window    ${LIQ_Cashflows_Window}
+    
+    Close All Windows on LIQ
+    Open Existing Deal    ${Deal_Name}
+    mx LoanIQ activate window    ${LIQ_DealNotebook_Window}
+       
+    ###Set The Cashflow ID in Variable and Write To Report Validation Sheet###
+    ### Tabs with highlight does not return any text and method is not working ###
+    ${IsClicked}    Run Keyword And Return Status    Mx LoanIQ Select Window Tab    ${LIQ_DealNotebook_Tab}    Comments
+    Run Keyword If    ${IsClicked}==${False}    Pause Execution    Manually click Comments tab then click OK.     ### Raised TACOE-1193/GDE-9343 for the issue
+    mx LoanIQ click    ${LIQ_DealNotebook_CommentsTab_Add_Button}
+    mx LoanIQ enter    ${LIQ_DealNotebook_CommentEdit_Comment_Textbox}    /
+    mx LoanIQ send keys    ^{V}
+    ${CashflowID}    Mx LoanIQ Get Data    ${LIQ_DealNotebook_CommentEdit_Comment_Textbox}    value%rid
+    mx LoanIQ close window    ${LIQ_DealNotebook_CommentEdit_Window}    
+    ${CashflowID}    Remove String    ${CashflowID}    /
+    ${CashflowID}    Strip String    ${CashflowID}    mode=both
+    Log To Console    ${CashflowID}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/Cashflow_ID
+    [Return]    ${CashflowID}
+
