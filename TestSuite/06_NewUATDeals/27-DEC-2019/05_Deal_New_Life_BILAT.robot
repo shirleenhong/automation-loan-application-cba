@@ -17,5 +17,7 @@ Establish Facility - CRED01
     Mx Execute Template With Multiple Data    Create Facility for New Life BILAT    ${CBAUAT_ExcelPath}     ${rowid}    CRED02_FacilitySetup
 	Mx Execute Template With Multiple Data    Setup Facility Ongoing Fee for New Life BILAT    ${CBAUAT_ExcelPath}    ${rowid}    CRED08_OngoingFeeSetup
 	Mx Execute Template With Multiple Data    Setup Primary for New Life BILAT    ${CBAUAT_ExcelPath}    ${rowid}    SYND02_PrimaryAllocation
+    Mx Execute Template With Multiple Data    Update Commitment Fee for New Life BILAT    ${ExcelPath}    ${rowid}    SERV29_CommitmentFeePayment
     Mx Execute Template With Multiple Data    Approve and Close Deal for New Life Bilat    ${CBAUAT_ExcelPath}    ${rowid}    SYND02_PrimaryAllocation
-   
+    Mx Execute Template With Multiple Data    Release Commitment Fee for New Life Bilat    ${ExcelPath}    ${rowid}    SERV29_CommitmentFeePayment
+    
