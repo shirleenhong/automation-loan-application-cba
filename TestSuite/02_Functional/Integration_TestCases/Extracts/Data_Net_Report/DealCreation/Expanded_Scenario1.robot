@@ -154,7 +154,4 @@ Unscheduled Principal Payment for Active Facility Expanded Scenario 1
     Set Global Variable    ${rowid}    3
     Set Global Variable    ${TestCase_Name}    Expanded_Scenario1_ActiveFac1_NoRepayment
     Mx Execute Template With Multiple Data    Unscheduled Principal Payment - No Schedule for DNR    ${DNR_DATASET}    ${rowid}    SC1_UnscheduledPayments
-
-    Set Global Variable    ${TestCase_Name}    LQDTY_005
-    Mx Execute Template With Specific Test Case Name    Generate DNR Report for Liquidity    ${DNR_DATASET}    Test_Case    ${TestCase_Name}    DNR
-    Mx Execute Template With Specific Test Case Name    Write Details for Liquidity Report    ${DNR_DATASET}    Test_Case    ${TestCase_Name}    DNR
+    Mx Execute Template With Multiple Data    Get RID from Loan Principal Payment for Liquidity Report    ${DNR_DATASET}    ${rowid}    SC1_UnscheduledPayments

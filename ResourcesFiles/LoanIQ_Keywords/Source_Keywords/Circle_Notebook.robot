@@ -3192,7 +3192,7 @@ Send Participation for Approval
     Take Screenshot    ${Screenshot_Path}/Screenshots/LoanIQ/ParticipationSendToApproval
     Validate if Question or Warning Message is Displayed
     Take Screenshot    ${Screenshot_Path}/Screenshots/LoanIQ/ParticipationApproval   
-
+    
 Populate Amts or Dates Tab for Orig Primary
     [Documentation]    This keyword is for populating the fields under Circle Notebook - Amts/Dates Tab.
     ...    @author: dahijara    10AUG2020    - initial create

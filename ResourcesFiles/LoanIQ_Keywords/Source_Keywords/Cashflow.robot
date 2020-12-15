@@ -310,6 +310,7 @@ Validate if Debit and Credit Amt is equal to Transaction Amount
     ...    @update: rtarayao    10OCT2019    added keyword for warning message
     ...    @update: hstone      27APR2020    - Added Keyword Pre-processing: Acquire Argument Value
     ...    @update: ehugo    01JUN2020    - added screenshot
+    ...    @update: mcastro    11DEC2020    - Updated Log level error to lowercase
     [Arguments]    ${sUICreditAmt}    ${sUIDebitAmt}    ${sTotalAmount}
     
     ### Keyword Pre-processing ###
@@ -321,11 +322,11 @@ Validate if Debit and Credit Amt is equal to Transaction Amount
     
     ${status}    Run Keyword And Return Status    Should Be Equal    ${iUICreditAmt}    ${iTotalAmount}  
     Run Keyword If    '${status}'=='True'    Log    Passed: Credit Amount is equal to Total Amount
-    ...    ELSE    Log    Failed: UI Value and Computed Value is not the same    LEVEL=ERROR
+    ...    ELSE    Log    Failed: UI Value and Computed Value is not the same    level=ERROR
     
     ${status}    Run Keyword And Return Status    Should Be Equal    ${iUIDebitAmt}    ${iTotalAmount}  
     Run Keyword If    '${status}'=='True'    Log    Passed: Debit Amount is equal to Total Amount
-    ...    ELSE    Log    Failed: UI Value and Computed Value is not the same    LEVEL=ERROR    
+    ...    ELSE    Log    Failed: UI Value and Computed Value is not the same    level=ERROR    
 
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/GLEntriesWindow_Verification
 

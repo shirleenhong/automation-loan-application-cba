@@ -75,6 +75,7 @@ Send Notice via Notice Application
 Send Notice via Notice Application without FFC Validation
     [Documentation]    This keyword is use to successfully sent out a NOTICE via Notice Application without FFC Validation - API_COR_TC01
     ...    @author: mcastro    09DEC2020    - Initial Create
+    ...    @update: mcastro    14DEC2020    - update encoding and decoding bytes to high level keyword
     [Arguments]    ${APIDictionary}
     
     ### Get Notice Details in LIQ ###
@@ -102,9 +103,8 @@ Send Notice via Notice Application without FFC Validation
     Write Data To Excel    Correspondence    Correlation_ID    ${rowid}    ${CorrelationID}    bTestCaseColumn=True
     
     ### Send Call Back thru Postman ###
-    ${CorrelationIdByte}    Encode String To Bytes    ${CorrelationID}     UTF-8
-    ${MessageIdEncode}    B 32 Encode    ${CorrelationIdByte}
-    ${MessageIdDecode}    Decode Bytes To String    ${MessageIdEncode}    UTF-8
+    ${MessageIdDecode}    Encode and Decode Bytes to String    ${CorrelationID}
+    
     Update Key Values of input JSON file for Correspondence API    ${MessageIdDecode}    &{APIDictionary}[CallBack_Status]    &{APIDictionary}[errorMessage]    
     ...    &{APIDictionary}[InputFilePath]&{APIDictionary}[InputJson].json
     Correspondence POST API    &{APIDictionary}[InputFilePath]    &{APIDictionary}[InputJson]    &{APIDictionary}[OutputFilePath]    &{APIDictionary}[OutputAPIResponse]    &{APIDictionary}[OutputAPIResponse]    
