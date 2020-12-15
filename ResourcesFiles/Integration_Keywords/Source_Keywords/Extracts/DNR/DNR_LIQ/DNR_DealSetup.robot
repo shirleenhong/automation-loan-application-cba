@@ -272,7 +272,7 @@ Setup Deal Administrative Fees for DNR
     ###Deal Notebook###
     ${AdminFee_EffectiveDate}    Get System Date
     Write Data To Excel    SC2_AdminFee    AdminFee_EffectiveDate    ${rowid}    ${AdminFee_EffectiveDate}    ${DNR_DATASET}
-    Write Data To Excel    SC2_AdminFeePayment    AdminFeePayment_EffectiveDate    ${rowid}    ${AdminFee_EffectiveDate}    ${DNR_DATASET}    
+    Write Data To Excel    SC2_AdminFeePayment    FeePayment_EffectiveDate    ${rowid}    ${AdminFee_EffectiveDate}    ${DNR_DATASET}    
 
     Search Existing Deal    &{ExcelPath}[Deal_Name]
     Add Admin Fee in Deal Notebook    &{ExcelPath}[AdminFee_IncomeMethod]
