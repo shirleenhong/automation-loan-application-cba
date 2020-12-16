@@ -595,3 +595,21 @@ Set All Items to Do It
     Select Menu Item    ${LIQ_Cashflows_Window}    Options    Set All To 'Do It'
     Mx LoanIQ click    ${LIQ_Cashflows_OK_Button}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/CashflowVerification
+
+Set All Items to None
+    [Documentation]    This keyword will set all cashflow items to None
+    ...    @author: dahijara    14DEC2020    - Initial create
+    Mx LoanIQ Activate    ${LIQ_Cashflows_Window}
+    Select Menu Item    ${LIQ_Cashflows_Window}    Options    Set All to None
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/CashflowWindow
+    Mx LoanIQ click    ${LIQ_Cashflows_OK_Button}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/CashflowWindow
+
+Set All Items to SPAP
+    [Documentation]    This keyword will set all cashflow items to SPAP
+    ...    @author: dahijara    16DEC2020    - Initial create
+    Mx LoanIQ Activate    ${LIQ_Cashflows_Window}
+    Select Menu Item    ${LIQ_Cashflows_Window}    Options    Send All To SPAP
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/CashflowWindow
+    Mx LoanIQ click    ${LIQ_Cashflows_OK_Button}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/CashflowWindow

@@ -316,3 +316,121 @@ Select Notice Group
 
     [Return]    ${Notice_Customer_LegalName}    ${Contact}    ${Status}    ${Orig_UserID}    ${Orig_NoticeMethod}
         
+Add Group Comment for Notices
+    [Documentation]    This keyword add group comment for Notice window.
+    ...    @author: dahijara    15DEC2020    - Initial create
+    [Arguments]    ${sSubject}    ${sComment}
+
+    ### Keyword Pre-processing ###
+    ${Subject}    Acquire Argument Value    ${sSubject}
+    ${Comment}    Acquire Argument Value    ${sComment}
+
+    Mx LoanIQ Activate    ${LIQ_Notice_Notice_Window}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/NoticeWindow
+    Mx LoanIQ Click    ${LIQ_Notice_GroupComment_Button}
+    Mx LoanIQ Click Element if Present    ${LIQ_Warning_Yes_Button}
+
+    Mx LoanIQ Activate    ${LIQ_Notice_CommentEdit_Window}
+    Mx LoanIQ Enter    ${LIQ_Notice_CommentEdit_Subject_Textbox}    ${Subject}
+    Mx LoanIQ Enter    ${LIQ_Notice_CommentEdit_Comment_Textbox}    ${Comment}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/NoticeGroupComment
+    Mx LoanIQ Click    ${LIQ_Notice_CommentEdit_OK_Button}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/NoticeWindow
+
+Exit Notice Window
+    [Documentation]    This keyword closes the notice window
+    ...    @author: dahijara    15DEC2020    - Initial Create
+
+    Take Screenshot    ${screenshot_path}/Screenshots/Integration/Notice
+    Mx LoanIQ Close Window    ${LIQ_Notice_Notice_Window}
+
+Get the Notice Details in LIQ via Deal Notebook
+    [Documentation]    This Keyword gets the necessary data for Notice Validation.
+    ...    @author: dahijara     15DEC2020    - initial create
+    [Arguments]    ${sRowid}    ${sSubAddDays}    ${sDealName}    ${sNoticeType}    ${sZeroTempPath}
+
+    ### Keyword Pre-processing ###
+    ${rowid}    Acquire Argument Value    ${sRowid}
+    ${SubAddDays}    Acquire Argument Value    ${sSubAddDays}
+    ${DealName}    Acquire Argument Value    ${sDealName}
+    ${NoticeType}    Acquire Argument Value    ${sNoticeType}
+    ${ZeroTempPath}    Acquire Argument Value    ${sZeroTempPath}
+    
+    ###Get System Date###
+    ${SystemDate}    Get Current Date of Local Machine    %d-%b-%Y
+    ${SystemDate}    Convert Date    ${SystemDate}     date_format=%d-%b-%Y
+    ${FromDate}    Subtract Time From Date    ${SystemDate}    ${sSubAddDays}days
+    ${ThruDate}    Add Time To Date    ${SystemDate}    ${sSubAddDays}days
+    Write Data To Excel    Correspondence    From_Date    ${rowid}    ${FromDate}
+    Write Data To Excel   Correspondence    Thru_Date    ${rowid}    ${ThruDate}
+    
+    Search Existing Deal    ${DealName}
+    Get Notice ID via Deal Notebook    ${FromDate}    ${ThruDate}    ${sNoticeType}
+
+Get Notice ID via Deal Notebook 
+    [Documentation]    This keyword gets the Notice ID by navigating into Notices Window thru Deal Notebook.
+    ...    @author: dahijara    15DEC2020    - Initial create
+    [Arguments]    ${sFrom_Date}    ${sThru_Date}    ${sNotice_Type}         
+    ### Keyword Pre-processing ###
+    ${From_Date}    Acquire Argument Value    ${sFrom_Date}
+    ${Thru_Date}    Acquire Argument Value    ${sThru_Date}
+    ${Notice_Type}    Acquire Argument Value    ${sNotice_Type}
+
+    mx LoanIQ activate window    ${LIQ_DealNotebook_Window}
+    mx LoanIQ select    ${LIQ_DealNotebook_Queries_Notices}
+    mx LoanIQ activate window    ${LIQ_NoticeSelectMessage_Window}
+    mx LoanIQ enter    ${LIQ_NoticeSelectMessage_FromDate_Field}    ${From_Date} 
+    mx LoanIQ enter    ${LIQ_NoticeSelectMessage_ThruDate_Field}    ${Thru_Date}        
+    mx LoanIQ click    ${LIQ_NoticeSelectMessage_OK_Button} 
+    
+    ${Search_Threshold}    Set Variable    10
+    ${Search_Threshold}    Convert To Integer    ${Search_Threshold} 
+    
+    :FOR    ${Current_Row}    IN RANGE    1    ${Search_Threshold}
+    \    ${Notice_Customer_LegalName}    ${Contact}    ${Status}    ${Orig_UserID}    ${Orig_NoticeMethod}    Select Notice Group    ${Notice_Type}    ${Current_Row}
+    \    Take Screenshot    ${screenshot_path}/Screenshots/Integration/Correspondence_Notice_NoticeGroup
+    \
+    \    Run Keyword If    '${Orig_NoticeMethod}' == '${Email_Notice_Method}' and '${Status}' == '${Initial_Notice_Status}'    Exit For Loop
+         ...    ELSE IF    '${Orig_NoticeMethod}' == '${CBA_Email_Notice_Method}' and '${Status}' == '${Initial_Notice_Status}'    Exit For Loop
+         ...    ELSE IF    '${Current_Row}' == '${Search_Threshold}' and '${Status}' != '${Initial_Notice_Status}'    Fail
+    \    
+    \    mx LoanIQ close window    ${LIQ_NoticeGroup_Window}    
+    
+    Mx LoanIQ Select String    ${LIQ_NoticeGroup_Items_JavaTree}    ${Notice_Customer_LegalName}\t${Contact}\t${Status}\t${Orig_UserID}\t${Orig_NoticeMethod}
+    mx LoanIQ click    ${LIQ_NoticeGroup_EditHighlightNotices}
+    mx LoanIQ activate window    ${LIQ_Notice_Window}
+    ${Notice_ID}    Mx LoanIQ Get Data    ${LIQ_Notice_NoticeID_Field}    value%ID
+    
+    Write Data To Excel    Correspondence    Notice_Identifier    ${rowid}     ${Notice_ID}    ${ExcelPath}    bTestCaseColumn=True    sColumnReference=rowid
+    Write Data To Excel    Correspondence    Notice_Customer_LegalName    ${rowid}     ${Notice_Customer_LegalName}    ${ExcelPath}    bTestCaseColumn=True    sColumnReference=rowid
+    Write Data To Excel    Correspondence    Contact    ${rowid}     ${Contact}    ${ExcelPath}    bTestCaseColumn=True    sColumnReference=rowid
+    Take Screenshot    ${screenshot_path}/Screenshots/Integration/Correspondence_Notice_NoticeGroup
+    Close All Windows on LIQ
+
+Select Notices Recepients
+    [Documentation]    This keyword selects the recepient of the generated notices.
+    ...    Values for sBorrowerDepesitor, sGuarrantors & sExporterSponsors should be Y or N
+    ...    @author: dahijara    16DEC2020
+    [Arguments]    ${sBorrowerDepesitor}=Y    ${sGuarrantors}=N    ${sExporterSponsors}=N
+    
+    ### Keyword Pre-processing ###
+    ${BorrowerDepesitor}    Acquire Argument Value    ${sBorrowerDepesitor}
+    ${Guarrantors}    Acquire Argument Value    ${sGuarrantors}
+    ${ExporterSponsors}    Acquire Argument Value    ${sExporterSponsors}
+
+    mx LoanIQ activate    ${LIQ_Notices_Window}
+
+    Run Keyword If    '${sBorrowerDepesitor}'=='Y'    Mx LoanIQ Set    ${LIQ_Notices_Borrower_Checkbox}    ON
+    ...    ELSE    Mx LoanIQ Set    ${LIQ_Notices_Borrower_Checkbox}    OFF
+
+    Run Keyword If    '${sGuarrantors}'=='Y'    Mx LoanIQ Set    ${LIQ_Notices_Guarantors_Checkbox}    ON
+    ...    ELSE    Mx LoanIQ Set    ${LIQ_Notices_Guarantors_Checkbox}    OFF
+
+    Run Keyword If    '${sExporterSponsors}'=='Y'    Mx LoanIQ Set    ${LIQ_Notices_Exporters_Checkbox}    ON
+    ...    ELSE    Mx LoanIQ Set    ${LIQ_Notices_Exporters_Checkbox}    OFF
+    Take Screenshot    ${screenshot_path}/Screenshots/Integration/Notice
+    mx LoanIQ click    ${LIQ_Notices_OK_Button}
+    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
+    mx LoanIQ activate    ${LIQ_NoticeGroup_Window}    
+    Take Screenshot    ${screenshot_path}/Screenshots/Integration/Notice
+

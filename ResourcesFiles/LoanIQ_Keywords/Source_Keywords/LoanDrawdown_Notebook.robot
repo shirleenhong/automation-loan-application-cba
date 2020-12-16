@@ -3983,3 +3983,130 @@ Get Cashflow Details Before Sending to Approval in Initial Loan Drawdown
     Log To Console    ${CashflowID}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/Cashflow_ID
     [Return]    ${CashflowID}
+
+Validate Loan Drawdown Amounts for CH EDU Bilateral Deal
+    [Documentation]    This keyword validates the loan drawdown amounts for CH EDU Bilateral Deal.
+    ...    @author: dahijara    16DEC2020    - Initial create
+    [Arguments]    ${sOrig_LoanGlobalOriginal}    ${sOrig_LoanGlobalCurrent}    ${sOrig_LoanHostBankGross}    ${sOrig_LoanHostBankNet}
+
+    ### GetRuntime Keyword Pre-processing ###
+    ${Orig_LoanGlobalOriginal}    Acquire Argument Value    ${sOrig_LoanGlobalOriginal}
+    ${Orig_LoanGlobalCurrent}    Acquire Argument Value    ${sOrig_LoanGlobalCurrent}
+    ${Orig_LoanHostBankGross}    Acquire Argument Value    ${sOrig_LoanHostBankGross}
+    ${Orig_LoanHostBankNet}    Acquire Argument Value    ${sOrig_LoanHostBankNet}
+	
+    mx LoanIQ activate window    ${LIQ_Loan_Window}
+    mx LoanIQ click element if present    ${LIQ_Loan_UpdateMode_Button}      
+    Mx LoanIQ Select Window Tab    ${LIQ_Loan_Tab}    General    
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LoanWindow
+
+    ### Global Original Amount ###
+    ${New_LoanGlobalOriginal}    Mx LoanIQ Get Data    ${LIQ_Loan_GlobalOriginal_Amount}    value%Amount
+    ${Status}    Run Keyword And Return Status    Should Be Equal    ${New_LoanGlobalOriginal}    ${Orig_LoanGlobalOriginal}
+    Run Keyword If    ${Status}==True    Log    Loan Global Original Amount is correct.
+    ...    ELSE    Run Keyword And Continue On Failure    Fail    Loan Global Original Amount is incorrect. Expected: ${Orig_LoanGlobalOriginal} - Actual: ${New_LoanGlobalOriginal}
+
+    ### Global Current Amount ###
+    ${New_LoanGlobalCurrent}    Mx LoanIQ Get Data    ${LIQ_Loan_GlobalCurrent_Amount}    value%Amount
+    ${Status}    Run Keyword And Return Status    Should Be Equal    ${New_LoanGlobalCurrent}    ${Orig_LoanGlobalCurrent}
+    Run Keyword If    ${Status}==True    Log    Loan Global Current Amount is correct.
+    ...    ELSE    Run Keyword And Continue On Failure    Fail    Loan Global Current Amount is incorrect. Expected: ${Orig_LoanGlobalCurrent} - Actual: ${New_LoanGlobalCurrent}
+    
+    ### Host Bank Gross Amount ###
+    ${New_LoanHostBankGross}    Mx LoanIQ Get Data    ${LIQ_Loan_HostBankGross_Amount}    value%Amount
+    ${Status}    Run Keyword And Return Status    Should Be Equal    ${New_LoanHostBankGross}    ${Orig_LoanHostBankGross}
+    Run Keyword If    ${Status}==True    Log    Loan Host Bank Gross Amount is correct.
+    ...    ELSE    Run Keyword And Continue On Failure    Fail    Expected Loan Host Bank Gross Amount is incorrect. Expected: ${Orig_LoanHostBankGross} - Actual: ${New_LoanHostBankGross}
+    
+    ### Host Bank Net Amount ###
+    ${New_LoanHostBankNet}    Mx LoanIQ Get Data    ${LIQ_Loan_HostBankNet_Amount}    value%Amount
+    ${Status}    Run Keyword And Return Status    Should Be Equal    ${New_LoanHostBankNet}    ${Orig_LoanHostBankNet}          
+    Run Keyword If    ${Status}==True    Log    Loan Host Bank Net Amount is correct.
+    ...    ELSE    Run Keyword And Continue On Failure    Fail    Loan Host Bank Net Amount is incorrect. Expected: ${Orig_LoanHostBankNet} - Actual: ${New_LoanHostBankNet}
+
+Validate Loan Drawdown Rates for CH EDU Bilateral Deal
+    [Documentation]    This keyword validates the loan drawdown rates for CH EDU Bilateral Deal.
+    ...    @author: dahijara    16DEC2020    - Initial create
+    [Arguments]    ${sLoan_BaseRate}    ${sLoan_Spread}    ${sLoan_AllInRate}
+
+    ### GetRuntime Keyword Pre-processing ###
+    ${Loan_BaseRate}    Acquire Argument Value    ${sLoan_BaseRate}
+    ${Loan_Spread}    Acquire Argument Value    ${sLoan_Spread}
+    ${Loan_AllInRate}    Acquire Argument Value    ${sLoan_AllInRate}
+	
+    mx LoanIQ activate window    ${LIQ_Loan_Window}
+    mx LoanIQ click element if present    ${LIQ_Loan_UpdateMode_Button}
+    Mx LoanIQ Select Window Tab    ${LIQ_Loan_Tab}    Rates
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LoanWindow
+
+    ### Base Rate ###
+    ${UI_LoanCurrentBaseRate}    Mx LoanIQ Get Data    ${LIQ_Loan_CurrentBaseRate}    value%data
+    ${Status}    Run Keyword And Return Status    Should Be Equal    ${UI_LoanCurrentBaseRate}    ${Loan_BaseRate}
+    Run Keyword If    ${Status}==True    Log    Loan Base Rate is correct.
+    ...    ELSE    Run Keyword And Continue On Failure    Fail    Loan Base Rate is incorrect. Expected: ${Loan_BaseRate} - Actual: ${UI_LoanCurrentBaseRate}
+
+    ### Spread ###
+    ${UI_LoanCurrentSpread}    Mx LoanIQ Get Data    ${LIQ_Loan_Spread}    value%data
+    ${Status}    Run Keyword And Return Status    Should Be Equal    ${UI_LoanCurrentSpread}    ${Loan_Spread}
+    Run Keyword If    ${Status}==True    Log    Loan Spread is correct.
+    ...    ELSE    Run Keyword And Continue On Failure    Fail    Loan Spread is incorrect. Expected: ${Loan_Spread} - Actual: ${UI_LoanCurrentSpread}
+
+    ### All In Rate ###
+    ${UI_LoanAllInRate}    Mx LoanIQ Get Data    ${LIQ_Loan_AllInRate}    value%data
+    ${Status}    Run Keyword And Return Status    Should Be Equal    ${UI_LoanAllInRate}    ${Loan_AllInRate}
+    Run Keyword If    ${Status}==True    Log    Loan All-In-Rate is correct.
+    ...    ELSE    Run Keyword And Continue On Failure    Fail    Loan All-In-Rate is incorrect. Expected: ${Loan_AllInRate} - Actual: ${UI_LoanAllInRate}
+
+Validate Loan Drawdown General Details for CH EDU Bilateral Deal
+    [Documentation]    This keyword validates the loan drawdown general details for CH EDU Bilateral Deal.
+    ...    @author: dahijara    16DEC2020    - Initial create
+    [Arguments]    ${sLoan_PricingOption}    ${sLoan_EffectiveDate}    ${sLoan_RepricingFrequency}    ${sLoan_RepricingDate}    ${sLoan_PaymentMode}    ${sLoan_IntCycleFrequency}
+
+    ### GetRuntime Keyword Pre-processing ###
+    ${Loan_PricingOption}    Acquire Argument Value    ${sLoan_PricingOption}
+    ${Loan_EffectiveDate}    Acquire Argument Value    ${sLoan_EffectiveDate}
+    ${Loan_RepricingFrequency}    Acquire Argument Value    ${sLoan_RepricingFrequency}
+    ${Loan_RepricingDate}    Acquire Argument Value    ${sLoan_RepricingDate}
+    ${Loan_PaymentMode}    Acquire Argument Value    ${sLoan_PaymentMode}
+    ${Loan_IntCycleFrequency}    Acquire Argument Value    ${sLoan_IntCycleFrequency}
+	
+    mx LoanIQ activate window    ${LIQ_Loan_Window}
+    mx LoanIQ click element if present    ${LIQ_Loan_UpdateMode_Button}      
+    Mx LoanIQ Select Window Tab    ${LIQ_Loan_Tab}    General    
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LoanWindow
+
+    ### Pricing Option ###
+    ${UI_PricingOption}    Mx LoanIQ Get Data    ${LIQ_Loan_PricingOption_Label}    text%data
+    ${Status}    Run Keyword And Return Status    Should Contain    ${Loan_PricingOption}    ${UI_PricingOption}
+    Run Keyword If    ${Status}==True    Log    Loan Pricing Option is correct.
+    ...    ELSE    Run Keyword And Continue On Failure    Fail    Loan Pricing Option is incorrect. Expected: ${Loan_PricingOption} - Actual: ${UI_PricingOption}
+
+    ### Effective Date ###
+    ${UI_EffectiveDate}    Mx LoanIQ Get Data    ${LIQ_Loan_EffectiveDate_Label}    text%data
+    ${Status}    Run Keyword And Return Status    Should Be Equal    ${UI_EffectiveDate}    ${Loan_EffectiveDate}
+    Run Keyword If    ${Status}==True    Log    Loan Effective Date is correct.
+    ...    ELSE    Run Keyword And Continue On Failure    Fail    Loan Effective Date is incorrect. Expected: ${Loan_EffectiveDate} - Actual: ${UI_EffectiveDate}
+
+    ### Repricing Frequency ###
+    ${UI_RepricingFrequency}    Mx LoanIQ Get Data    ${LIQ_Loan_RepricingFrequency_List}    value%data
+    ${Status}    Run Keyword And Return Status    Should Be Equal    ${UI_RepricingFrequency}    ${Loan_RepricingFrequency}
+    Run Keyword If    ${Status}==True    Log    Loan Repricing Frequency is correct.
+    ...    ELSE    Run Keyword And Continue On Failure    Fail    Loan Repricing Frequency is incorrect. Expected: ${Loan_RepricingFrequency} - Actual: ${UI_RepricingFrequency}
+
+    ### Repricing Date ###
+    ${UI_RepricingDate}    Mx LoanIQ Get Data    ${LIQ_Loan_RepricingDate_Label}    text%data
+    ${Status}    Run Keyword And Return Status    Should Be Equal    ${UI_RepricingDate}    ${Loan_RepricingDate}
+    Run Keyword If    ${Status}==True    Log    Loan Repricing Date is correct.
+    ...    ELSE    Run Keyword And Continue On Failure    Fail    Loan Repricing Date is incorrect. Expected: ${Loan_RepricingDate} - Actual: ${UI_RepricingDate}
+
+    ### Payment Mode ###
+    ${UI_PaymentMode}    Mx LoanIQ Get Data    ${LIQ_Loan_PaymentMode_List}    value%data
+    ${Status}    Run Keyword And Return Status    Should Be Equal    ${UI_PaymentMode}    ${Loan_PaymentMode}
+    Run Keyword If    ${Status}==True    Log    Loan Payment Mode is correct.
+    ...    ELSE    Run Keyword And Continue On Failure    Fail    Loan Payment Mode is incorrect. Expected: ${Loan_PaymentMode} - Actual: ${UI_PaymentMode}
+
+    ### Int Cycle Frequency ###
+    ${UI_IntCycleFrequency}    Mx LoanIQ Get Data    ${LIQ_Loan_IntCycleFreq_Dropdownlist}    value%data
+    ${Status}    Run Keyword And Return Status    Should Be Equal    ${UI_IntCycleFrequency}    ${Loan_IntCycleFrequency}
+    Run Keyword If    ${Status}==True    Log    Loan Int Cycle Frequency is correct.
+    ...    ELSE    Run Keyword And Continue On Failure    Fail    Loan Int Cycle Frequency is incorrect. Expected: ${Loan_IntCycleFrequency} - Actual: ${UI_IntCycleFrequency}

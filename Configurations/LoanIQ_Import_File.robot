@@ -446,6 +446,9 @@ Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/Deal_CH_EDU_BILAT/Dea
 Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/Deal_CH_EDU_BILAT/Deal_Notebook_CH_EDU_BILAT.robot
 Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/Deal_CH_EDU_BILAT/Facility_Notebook_CH_EDU_BILAT.robot
 Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/Deal_CH_EDU_BILAT/OngoingFee_Notebook_CH_EDU_BILAT.robot
+Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/Deal_CH_EDU_BILAT/UprontFee_Notebook_CH_EDU_BILAT.robot
+Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/Deal_CH_EDU_BILAT/Notices_CH_EDU_BILAT.robot
+Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/Deal_CH_EDU_BILAT/Outstandings_CH_EDU_BILAT.robot
 
 ### Deal LBT BILAT ###
 Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/Deal_LBT_BILAT/Deal_Borrower_LBT_BILAT.robot
