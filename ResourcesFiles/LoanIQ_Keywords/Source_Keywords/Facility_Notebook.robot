@@ -229,9 +229,9 @@ Modify Ongoing Fee Pricing - Insert After
     ...    @update: clanding    30JUL2020    - replaced sleep keywords
     [Arguments]    ${FacilityItemAfter}    ${Facility_PercentWhole}    ${FacilityItem}    ${Facility_Percent}  
     mx LoanIQ click    ${LIQ_FacilityPricing_OngoingFees_After_Button}
-    Run Keyword And Continue On Failure    Mx LoanIQ Select Combo Box Value    ${LIQ_Facility_InterestPricing_AddItem_List}    Copy Interest Pricing Matrix
-    Run Keyword And Continue On Failure    Mx LoanIQ Select Combo Box Value    ${LIQ_Facility_InterestPricing_AddItem_List}    FormulaCategory
-    Run Keyword And Continue On Failure    Mx LoanIQ Select Combo Box Value    ${LIQ_Facility_InterestPricing_AddItem_List}    Matrix
+    Mx LoanIQ Select Combo Box Value    ${LIQ_Facility_InterestPricing_AddItem_List}    Copy Interest Pricing Matrix
+    Mx LoanIQ Select Combo Box Value    ${LIQ_Facility_InterestPricing_AddItem_List}    FormulaCategory
+    Mx LoanIQ Select Combo Box Value    ${LIQ_Facility_InterestPricing_AddItem_List}    Matrix
     Mx LoanIQ Select Combo Box Value    ${LIQ_Facility_InterestPricing_AddItem_List}    ${FacilityItemAfter}
     Run Keyword And Continue On Failure    Mx LoanIQ Verify Object Exist    ${LIQ_FacilityPricing_OngoingFees_AddItem_OK_Button}    VerificationData="Yes"
     Run Keyword And Continue On Failure    Mx LoanIQ Verify Object Exist    ${LIQ_FacilityPricing_OngoingFees_AddItem_Cancel_Button}       VerificationData="Yes"
@@ -2564,10 +2564,19 @@ Set Facility Utilized Percentage Matrix
     [Documentation]    Sets the details in the Facility Utilized Percentage Matrix under Facility Notebook's Pricing tab - Modify Interest Pricing.
     ...    FormulaCategoryType = The Formula Category that the Fee will be using. Either "Flat Amount" or "Formula".
     ...    Amount = The actual amount of the Fee.
-    ...    SpreadType = The spread type used if Formula Category "Formula" is used. Either "Basis Points" or "Percent".
-    ...    
+    ...    SpreadType = The spread type used if Formula Category "Formula" is used. Either "Basis Points" or "Percent".   
     ...    @author: javinzon    11DEC2020    - Initial create
-    [Arguments]    ${CommitmentPctType}    ${BalanceType}    ${GreaterThan}    ${LessThan}    ${MnemonicStatus}    ${MinimumValue}    ${MaximumValue}=Maximum
+    [Arguments]    ${sCommitmentPctType}    ${sBalanceType}    ${sGreaterThan}    ${sLessThan}    ${sMnemonicStatus}    ${sMinimumValue}    ${sMaximumValue}=Maximum
+    
+    ### Keyword Pre-processing ###
+    ${CommitmentPctType}    Acquire Argument Value    ${sCommitmentPctType}
+    ${BalanceType}    Acquire Argument Value    ${sBalanceType}
+    ${GreaterThan}    Acquire Argument Value    ${sGreaterThan}
+    ${LessThan}    Acquire Argument Value    ${sLessThan}
+    ${MnemonicStatus}    Acquire Argument Value    ${sMnemonicStatus}
+    ${MinimumValue}    Acquire Argument Value    ${sMinimumValue}
+    ${MaximumValue}    Acquire Argument Value    ${sMaximumValue}
+
     Mx LoanIQ Select Combo Box Value    ${LIQ_PercentageCommitmentMatrix_Type_ComboBox}    ${CommitmentPctType}   
     Run Keyword If    '${BalanceType}'=='Deal'    Mx LoanIQ Set    ${LIQ_PercentageCommitmentMatrix_DealBalance_RadioButton}    ON
     Run Keyword If    '${BalanceType}'=='Facility'    Mx LoanIQ Set    ${LIQ_PercentageCommitmentMatrix_FacilityBalance_RadioButton}    ON
@@ -2578,7 +2587,7 @@ Set Facility Utilized Percentage Matrix
     ...    Mx LoanIQ Set    ${LIQ_PercentageCommitmentMatrix_Mnemonic_Checkbox}    ON
     ...    AND    Mx LoanIQ Verify Runtime Property    ${LIQ_PercentageCommitmentMatrix_LessThanOrEqual_RadioButton}    enabled%1
     ...    AND    Mx LoanIQ Verify Runtime Property    ${LIQ_PercentageCommitmentMatrix_Mnemonic_JavaList}    value%Maximum
-    Run Keyword If    '${MnemonicStatus}'=='OFF'    Set Commitment Fee Percentage Maximum    ${LessThan}    ${MaximumValue}
+    Run Keyword If    '${sMnemonicStatus}'=='OFF'    Set Commitment Fee Percentage Maximum    ${LessThan}    ${MaximumValue}
     mx LoanIQ click    ${LIQ_PercentageCommitmentMatrix_OK_Button}
     
     ${status}    Run Keyword And Return Status    Mx LoanIQ Verify Object Exist    JavaWindow("title:=Facility.*Pricing").JavaTree("developer name:=.*${CommitmentPctType}.*${MinimumValue}.*${MaximumValue}.*")        VerificationData="Yes"        VerificationData="Yes"

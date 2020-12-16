@@ -27,7 +27,7 @@ Setup Commitment Fee for LBT Bilateral Deal
     Set Formula Category For Fees    &{ExcelPath}[OngoingFee_FormulaCategoryType]    &{ExcelPath}[Facility_Percent2]    &{ExcelPath}[OngoingFee_SpreadType]
     Validate Ongoing Fee or Interest
 
-    ## Modify Interest Pricing ###
+    ### Modify Interest Pricing ###
     Navigate to Facitily Interest Pricing Window
     Add Item to Ongoing Fee or Interest Pricing For Facility Pricing    &{ExcelPath}[Interest_Item1]    &{ExcelPath}[Interest_ItemType1]
     Set Facility Utilized Percentage Matrix    &{ExcelPath}[Commitment_PctType]    &{ExcelPath}[Commitment_BalanceType]    &{ExcelPath}[Commitment_GreaterThan1]    &{ExcelPath}[Commitment_LessThan]
@@ -57,7 +57,7 @@ Setup Commitment Fee for LBT Bilateral Deal
     ### Ongoing Fee - Update Details ###
     Navigate to Existing Ongoing Fee Notebook    &{ExcelPath}[OngoingFee_Type]
 
-    Update Ongoing Fee General Information    &{ExcelPath}[OngoingFee_EffectiveDate]    &{ExcelPath}[OngoingFee_ActualDate]    &{ExcelPath}[OngoingFee_AdjustedDueDate]    &{ExcelPath}[OngoingFee_Accrue]    &{ExcelPath}[OngoingFee_AccrualEndDate]
+    Update Ongoing Fee General Information    &{ExcelPath}[OngoingFee_EffectiveDate]    &{ExcelPath}[OngoingFee_ActualDate]    &{ExcelPath}[OngoingFee_AdjustedDueDate]    &{ExcelPath}[OngoingFee_Accrue]    &{ExcelPath}[OngoingFee_AccrualEndDate]    &{ExcelPath}[Cycle_Frequency]
 
     Update Fee Paid By and Servicing Group for Ongoing Fee    ${Borrower_ShortName}    ${Borrower_Location}    ${Borrower_SGName}    ${Borrower_SG_GroupMembers}    ${Borrower_SG_Method}
 
@@ -86,5 +86,19 @@ Setup Primary for LBT Bilateral Deal
     Circle Notebook Workflow Navigation    &{ExcelPath}[Primary_Lender]    &{ExcelPath}[Primary_CircledDate]    &{ExcelPath}[Lender_Hostbank]    &{ExcelPath}[Primary_Portfolio]
     ...    &{ExcelPath}[Primary_PortfolioBranch]    ${SellAmount}    None    &{ExcelPath}[Primary_RiskBook]
     
+    Close All Windows on LIQ
+
+Release Commitment Fee for LBT Bilateral Deal
+    [Documentation]    This keyword will release the existing commitment fee in the created deal
+    ...    @author: javinzon    16DEC2020    - Initial create
+    [Arguments]    ${ExcelPath}
+    
+    Navigate to Facility Notebook  &{ExcelPath}[Deal_Name]    &{ExcelPath}[Facility_Name]
+    Navigate to Commitment Fee Notebook    &{ExcelPath}[OngoingFee_Type]
+
+    ### Commitment Fee Notebook ###
+    Release Commitment Fee
+
+    Save Facility Notebook Transaction
     Close All Windows on LIQ
 

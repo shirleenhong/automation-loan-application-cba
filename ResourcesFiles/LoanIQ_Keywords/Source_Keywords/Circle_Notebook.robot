@@ -3215,8 +3215,8 @@ Populate Amts or Dates Tab in Pending Orig Primary
     
     Run Keyword And Continue On Failure    Should Be Equal As Numbers    ${Displayed_CurrentAmount}    ${Expected_CurrentAmount}     
     ${result}    Run Keyword And Return Status    Run Keyword And Continue On Failure    Should Be Equal As Numbers    ${Displayed_CurrentAmount}    ${Expected_CurrentAmount}
-    Run Keyword If   '${result}'=='True'    Log    Displayed 'Sell Amount' in the Facilities tab matches the displayed 'Current Amount' in the Amts/Dates tab
-    ...     ELSE    Log    Displayed 'Sell Amount' in the Facilities tab does not matched the displayed 'Current Amount' in the Amts/Dates tab
+    Run Keyword If   ${result}==True    Log    Displayed 'Sell Amount' in the Facilities tab matches the displayed 'Current Amount' in the Amts/Dates tab
+    ...     ELSE    Run Keyword And Continue On Failure    Fail    Displayed 'Sell Amount' in the Facilities tab does not matched the displayed 'Current Amount' in the Amts/Dates tab
     
     ### Input data in Dates Section ###    
     mx LoanIQ enter    ${LIQ_OrigPrimaries_AmtsDates_ExpectedClose_TextField}    ${ExpectedCloseDate}
