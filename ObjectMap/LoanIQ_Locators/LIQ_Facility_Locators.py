@@ -338,7 +338,11 @@ LIQ_FacilityPricing_OngoingFeeInterest_OK_Button = 'JavaWindow("title:=Facility.
 LIQ_FacilityPricing_OngoingFeeInterest_Add_Button = 'JavaWindow("title:=Facility.*Pricing").JavaButton("label:=Add")'    
 LIQ_FacilityPricing_OngoingFeeInterest_After_Button = 'JavaWindow("title:=.*Pricing").JavaButton("label:=After")'  
 LIQ_FacilityPricing_OngoingFeeInterest_Validate_Button = 'JavaWindow("title:=Facility.*Pricing").JavaButton("label:=Validate")'    
-    
+LIQ_FacilityPricing_OngoingFeeInterest_OutsideCondition_Type_Dropdown = 'JavaWindow("title:=Outside Condition").JavaList("attached text:=Type:")'
+LIQ_FacilityPricing_OngoingFeeInterest_OutsideCondition_True_RadioButton = 'JavaWindow("title:=Outside Condition").JavaRadioButton("attached text:=True")'
+LIQ_FacilityPricing_OngoingFeeInterest_OutsideCondition_False_RadioButton = 'JavaWindow("title:=Outside Condition").JavaRadioButton("attached text:=False")'
+LIQ_FacilityPricing_OngoingFeeInterest_OutsideCondition_OK_Button = 'JavaWindow("title:=Outside Condition").JavaButton("attached text:=OK")'
+
 LIQ_FacilityPricing_Interest_OptionCondition_Window = 'JavaWindow("title:=Option Condition")'    
 LIQ_FacilityPricing_Interest_OptionCondition_OptionName_Combobox = 'JavaWindow("title:=Option Condition").JavaList("attached text:=Option Name:")'    
 LIQ_FacilityPricing_Interest_OptionCondition_RateBasis_Combobox = 'JavaWindow("title:=Option Condition").JavaList("attached text:=Rate Basis:")'    
