@@ -604,3 +604,21 @@ Select Specific Outsanding After Loan Repricing
     Mx LoanIQ Select Or Doubleclick In Tree By Text    ${LIQ_ExistingLoans_JavaTree}    ${sLoan_Alias}%d
     mx LoanIQ click element if present    ${LIQ_Alerts_OK_Button}
     mx LoanIQ click element if present    ${LIQ_Loan_InquiryMode_Button}
+
+Set All Items to None
+    [Documentation]    This keyword will set all cashflow items to None
+    ...    @author: dahijara    14DEC2020    - Initial create
+    Mx LoanIQ Activate    ${LIQ_Cashflows_Window}
+    Select Menu Item    ${LIQ_Cashflows_Window}    Options    Set All to None
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/CashflowWindow
+    Mx LoanIQ click    ${LIQ_Cashflows_OK_Button}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/CashflowWindow
+
+Set All Items to SPAP
+    [Documentation]    This keyword will set all cashflow items to SPAP
+    ...    @author: dahijara    16DEC2020    - Initial create
+    Mx LoanIQ Activate    ${LIQ_Cashflows_Window}
+    Select Menu Item    ${LIQ_Cashflows_Window}    Options    Send All To SPAP
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/CashflowWindow
+    Mx LoanIQ click    ${LIQ_Cashflows_OK_Button}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/CashflowWindow

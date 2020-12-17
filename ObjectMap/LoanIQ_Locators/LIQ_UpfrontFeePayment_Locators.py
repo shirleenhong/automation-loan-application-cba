@@ -6,7 +6,7 @@ LIQ_UpfrontFeePayment_Tab= 'JavaWindow("label:=.*Upfront Fee Payment from Borrow
 ###Upfront Fee Payment Notebook- General Tab###
 LIQ_UpfrontFeeAmount_Field= 'JavaWindow("label:=.*Upfront Fee Payment from Borrower / Agent / Third Party -.*","displayed:=1").JavaEdit("attached text:=Amount:")'
 LIQ_FeeDetail_Button= 'JavaWindow("label:=.*Upfront Fee Payment from Borrower / Agent / Third Party -.*","displayed:=1").JavaButton("attached text:=Fee Detail")'
-LIQ_UpfrontFee_Comment_Field= 'JavaWindow("label:=.*Upfront Fee Payment from Borrower / Agent / Third Party -.*").JavaEdit("labeled_containers_path:=Tab:General;Group:Comment;","index:=1")'
+LIQ_UpfrontFee_Comment_Field= 'JavaWindow("label:=.*Upfront Fee Payment from Borrower / Agent / Third Party -.*","displayed:=1").JavaEdit("labeled_containers_path:=Tab:General;Group:Comment;","index:=1")'
 LIQ_UpfrontFee_EffectiveDate_Field= 'JavaWindow("label:=.*Upfront Fee Payment from Borrower / Agent / Third Party -.*","displayed:=1").JavaEdit("attached text:=Effective Date:")'
 
 ###Fee Details Window###
@@ -21,7 +21,7 @@ LIQ_FeeDetail_Selected_FeeType= 'JavaWindow("title:=Fee Details","displayed:=1")
 LIQ_FeeDetail_FeeType_OK_Button= 'JavaWindow("title:=Fee Detail","displayed:=1").JavaButton("attached text:=OK")'
 
 ###Upfront Fee Payment Notebook- Workflow Tab###
-LIQ_UpfrontFeePayment_WorkflowItems= 'JavaWindow("label:=Upfront Fee Payment from Borrower / Agent / Third Party -.*").JavaTree("attached text:=Workflow Items")'
+LIQ_UpfrontFeePayment_WorkflowItems= 'JavaWindow("label:=Upfront Fee Payment from Borrower / Agent / Third Party -.*","displayed:=1").JavaTree("attached text:=Workflow Items")'
 LIQ_UpfrontFeePayment_Cashflows_Notebook= 'JavaWindow("title:=Cashflows For Upfront Fee Payment from Borrower / Agent / Third Party")'
 LIQ_UpfrontFeePayment_Cashflows_JavaTree= 'JavaWindow("title:=Cashflows For Upfront Fee Payment from Borrower / Agent / Third Party").JavaTree("attached text:=Drill down to view/change details")'
 LIQ_UpfrontFeePayment_Cashflow_RemittanceDesc_None_StaticText = 'JavaWindow("title:=Cashflows For Upfront Fee Payment from Borrower / Agent / Third Party").JavaStaticText("attached text:=None")'
