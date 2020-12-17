@@ -37,6 +37,8 @@ LIQ_Loan_Options_LoanChangeTransaction_Menu = 'JavaWindow("title:=.*Loan.*Active
 LIQ_Loan_Queries_FeeActivityLIst_Menu = 'JavaWindow("title:=.*Loan.*Active").JavaMenu("label:=Queries").JavaMenu("label:=Fee Activity List")'
 LIQ_Loan_CyclesforLoan_ProRateType_RadioButton = 'JavaWindow("title:=Cycles for Loan.*").JavaRadioButton("attached text:=${Pro_Rate}")'
 LIQ_Loan_ChoosePayment_Cancel_Button = 'JavaWindow("title:=Choose a Payment").JavaButton("attached text:=Cancel")'
+LIQ_Loan_Options_Reprice_Menu = 'JavaWindow("title:=.*Loan.*Active").JavaMenu("label:=Options").JavaMenu("label:=Reprice .*")'
+LIQ_Loan_Options_CapitalizeInterest = 'JavaWindow("title:=.*Loan.*Active","displayed:=1").JavaMenu("label:=Options").JavaMenu("label:=Capitalize Interest.*")'
 
 ###Repricing Loan Notebook - General Tab###
 LIQ_Repricing_Loan_RiskType_Text = 'JavaWindow("title:=.*Loan.*Active").JavaStaticText("labeled_containers_path:=Tab:General;", "Index:=2")'

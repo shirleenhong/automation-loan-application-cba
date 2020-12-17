@@ -910,15 +910,19 @@ Generate Intent Notices
     [Documentation]    This keyword navigates the transaction workflow and generates intent notices.
     ...    @author: bernchua
     ...    <update> @ghabal - commented section that handles 'Edit Highlighted Notices Button' since what is being displayed now is 'View Highlighted Notices Button' 
+    ...    @update: mcastro    17DEC2020    - Added Take screenshots
     [Arguments]    ${Customer_Name}
     mx LoanIQ activate    ${LIQ_Notices_Window}    
     mx LoanIQ click    ${LIQ_Notices_OK_Button}
     mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
-    mx LoanIQ activate    ${LIQ_NoticeGroup_Window}    
+    mx LoanIQ activate    ${LIQ_NoticeGroup_Window}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/IntentNoticeWindow    
     ${Notice_Contact}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_NoticeGroup_Tree}    ${Customer_Name}%Contact%contact    
     ${Notice_Method}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_NoticeGroup_Tree}    ${Customer_Name}%Notice Method%method
     mx LoanIQ select    ${LIQ_NoticeGroup_File_Preview}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/IntentNoticeWindow
     ${Error_Displayed}    Run Keyword And Return Status    mx LoanIQ click element if present    ${LIQ_Error_OK_Button}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/IntentNoticeWindow
   
     # Run Keyword If    ${Error_Displayed}==True    Run Keywords
     # ...    mx LoanIQ click    ${LIQ_NoticeGroup_EditHighlightedNotices_Button}
@@ -2812,7 +2816,7 @@ Remove Comma Separators in Numbers
     [Return]    ${Number}
 
 Close Generate Notice Window
-    [Documentation] This keyword closes the notice group window
+    [Documentation]    This keyword closes the notice group window
     ...    @author: mcastro    14DEC2020    - Initial Create
 
     Mx LoanIQ Close Window    ${LIQ_NoticeGroup_Window}

@@ -1630,12 +1630,15 @@ Navigate to Loan Repricing Workflow and Proceed With Transaction
     [Documentation]    This keyword navigates to the Loan Drawdown Workflow using the desired Transaction
     ...  @author: hstone    26MAY2020    Initial create
     ...    @update: amansuet    15JUN2020    - updated take screenshot
+    ...    @update: mcastro     15DEC2020    - Added clicking of Yes on confirmation window when present
     [Arguments]    ${sTransaction}
 
     ### Keyword Pre-processing ###
     ${Transaction}    Acquire Argument Value    ${sTransaction}
 
     Navigate Notebook Workflow    ${LIQ_LoanRepricingForDeal_Window}    ${LIQ_LoanRepricingForDeal_Workflow_Tab}    ${LIQ_LoanRepricingForDeal_Workflow_JavaTree}    ${Transaction}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LoanRepricingWindow_WorkflowTab
+    Mx LoanIQ click element if present    ${LIQ_LoanRepricing_ConfirmationWindow_Yes_Button}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LoanRepricingWindow_WorkflowTab
 
 Add Rollover Conversion to New
@@ -1821,4 +1824,73 @@ Get Cashflow Details from Released Loan Repricing
     Log To Console    ${CashflowID}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/Cashflow_ID
     [Return]    ${CashflowID}
-        
+
+Navigate to Create Repricing Window
+    [Documentation]    This keyword is used navigate to create repricing window from loan notebook
+    ...    @author: mcastro    15DEC2020    - initial create
+    
+    Mx LoanIQ activate window    ${LIQ_Loan_Window}
+    Mx LoanIQ Select    ${LIQ_Loan_Options_Reprice_Menu}
+
+Validate Release of Loan Repricing
+    [Documentation]    This keyword validates the release of Loan Repricing on Events.
+    ...    @author: mcastro    15DEC2020    - Initial Create
+    [Arguments]    ${sEvent_Name}
+    
+    ### Pre-processing Keyword ##
+    ${Event_Name}    Acquire Argument Value    ${sEvent_Name}
+
+    Mx LoanIQ activate window    ${LIQ_LoanRepricingForDeal_Window}
+    Mx LoanIQ Select Window Tab    ${LIQ_LoanRepricingForDeal_Tab}    ${EVENTS_TAB}
+    ${Event_Selected}    Run Keyword And Return Status    Mx LoanIQ Select String    ${LIQ_LoanRepricingForDeal_Events_JavaTree}    ${Event_Name}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LoanRepricingWindow_EventsTab
+    Run Keyword and Continue on Failure    Run Keyword If    ${Event_Selected}==${True}    Log    ${Event_Name} is shown in the Events list of the Loan repricing notebook.
+    ...    ELSE    Fail    Loan Repricing is not Released.
+
+Validate Loan Amount was Updated after Repricing
+    [Documentation]    This keyword validates the expected Loan amount on Loan Notebook after Repricing.
+    ...    @author: mcastro    15DEC2020    - Initial Create
+    [Arguments]    ${sNew_LoanAmount}
+    
+    ### Pre-processing Keyword ##
+    ${New_LoanAmount}    Acquire Argument Value    ${sNew_LoanAmount}
+
+    Mx LoanIQ activate window    ${LIQ_Loan_Window}
+
+    ${New_LoanAmount}    Remove Comma and Convert to Number    ${New_LoanAmount}    
+    
+    ${ExistingOriginal}    Mx LoanIQ Get Data    ${LIQ_Loan_GlobalOriginal_Field}    ExistingOriginal
+    ${ExistingOriginal}    Remove Comma and Convert to Number    ${ExistingOriginal}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LoanWindow_GeneralTab
+    ${Status}    Run keyword and Return Status    Should Be Equal    ${New_LoanAmount}    ${ExistingOriginal}
+    Run Keyword and Continue on Failure    Run Keyword If    ${Status}==${True}    Log    Global original amount is the expected Loan amount after repricing
+    ...    ELSE    Fail    Current amount is incorrect. Expected amount is ${New_LoanAmount}
+
+    ${ExistingCurrent}    Mx LoanIQ Get Data    ${LIQ_Loan_GlobalCurrent_Field}    ExistingCurrent
+    ${ExistingCurrent}    Remove Comma and Convert to Number    ${ExistingCurrent}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LoanWindow_GeneralTab
+    ${Status}    Run keyword and Return Status    Should Be Equal    ${New_LoanAmount}    ${ExistingCurrent}
+    Run Keyword and Continue on Failure    Run Keyword If    ${Status}==${True}    Log    Current amount is the expected Loan amount after repricing
+    ...    ELSE    Fail    Current amount is incorrect. Expected amount is ${New_LoanAmount}
+
+    ${ExistingGross}    Mx LoanIQ Get Data    ${LIQ_Loan_HostBankGross_Field}    ExistingGross
+    ${ExistingGross}    Remove Comma and Convert to Number    ${ExistingGross}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LoanWindow_GeneralTab
+    ${Status}    Run keyword and Return Status    Should Be Equal    ${New_LoanAmount}    ${ExistingGross}
+    Run Keyword and Continue on Failure    Run Keyword If    ${Status}==${True}    Log    Current Hostbank Gross is the expected Loan amount after repricing
+    ...    ELSE    Fail    Current amount is incorrect. Expected amount is ${New_LoanAmount}
+
+    ${ExistingNet}    Mx LoanIQ Get Data    ${LIQ_Loan_HostBankNet_Field}    ExistingNet
+    ${ExistingNet}    Remove Comma and Convert to Number    ${ExistingNet}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LoanWindow_GeneralTab
+    ${Status}    Run keyword and Return Status    Should Be Equal    ${New_LoanAmount}    ${ExistingNet}
+    Run Keyword and Continue on Failure    Run Keyword If    ${Status}==${True}    Log    Current Hostbank Net is the expected Loan amount after repricing
+    ...    ELSE    Fail    Current amount is incorrect. Expected amount is ${New_LoanAmount}
+
+Navigate to Choose a Payment Window
+    [Documentation]    This keyword is used navigate to choose a payment window from loan notebook
+    ...    @author: mcastro    15DEC2020    - initial create
+    
+    Mx LoanIQ activate window    ${LIQ_Loan_Window}
+    Mx LoanIQ Select    ${LIQ_Loan_Options_Payment}
+    

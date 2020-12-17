@@ -595,3 +595,15 @@ Set All Items to Do It
     Select Menu Item    ${LIQ_Cashflows_Window}    Options    Set All To 'Do It'
     Mx LoanIQ click    ${LIQ_Cashflows_OK_Button}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/CashflowVerification
+
+Validate Cashflow Error is Displayed
+    [Documentation]    This keyword is used to validate that Cashflow pop-up error is displayed
+    ...    @author: mcastro    15DEC2020    - Initial Create
+    
+    Run Keyword and Continue on Failure   Mx LoanIQ Verify Object Exist    ${LIQ_Error_Window}
+    ${Status}    Run Keyword and Return Status   Mx LoanIQ Verify Object Exist    ${LIQ_Error_Window}
+    Run Keyword If    ${Status}==${True}    Log    Cashflow error is displayed
+    ...    ELSE    Log    Cashflow error is not displayed    level=ERROR 
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/Cashflow
+    Mx LoanIQ click element if present    ${LIQ_Error_OK_Button}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/Cashflow

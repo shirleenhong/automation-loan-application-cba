@@ -98,3 +98,44 @@ Validate Capitalize Interest Details
     mx LoanIQ click element if present    ${LIQ_Warning_OK_Button}
     mx LoanIQ select    ${LIQ_InitialDrawdown_FileMenu_Exit}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LoanInterest_Capitalization_Validate
+
+Enter Capitalize Interest Percent of Payment
+    [Documentation]    This keyword is used to enter Capitalize Interest percent of payment only.
+    ...    @author: mcastro    15DEC2020    - Initial create
+    [Arguments]    ${sPercentofPayment}
+    
+    ### Pre-processing Keyword ###
+    ${PercentofPayment}    Acquire Argument Value    ${sPercentofPayment}
+
+    mx LoanIQ activate window    ${LIQ_InitialDrawdown_Window}
+    mx LoanIQ click element if present    ${LIQ_Loan_InquiryMode_Button}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LoanInterest_Capitalization_details
+    mx LoanIQ select    ${LIQ_InitialDrawdown_Options_CapitalizeInterest} 
+    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button} 
+    Mx LoanIQ Set    ${LIQ_InterestCapitalization_ActiveInterestCapitalization_Checkbox}    ON    
+    mx LoanIQ enter    ${LIQ_InterestCapitalization_PercentofPayment_InputField}    ${PercentofPayment}    
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LoanInterest_Capitalization_details
+    Mx LoanIQ click    ${LIQ_InterestCapitalization_OKButton} 
+
+Navigate to Capitalize Interest Payment from Loan Notebook
+    [Documentation]    This keyword is used to open loan capitalization window from Loan notebook
+    ...    @author: mcastro    16DEC2020    - Initial create
+
+    Mx LoanIQ activate window    ${LIQ_Loan_Window}
+    Mx LoanIQ click element if present    ${LIQ_Loan_InquiryMode_Button}
+    Mx LoanIQ select    ${LIQ_Loan_Options_CapitalizeInterest}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LoanInterest_Capitalization_details 
+    Mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button} 
+
+Set Activate Interest Capitalization
+     [Documentation]    This keyword is used to set activate Interest capitalization checkbox
+    ...    @author: mcastro    16DEC2020    - Initial create
+    [Arguments]    ${sInterestCapitalization_Status}
+    
+    ### Pre-processing Keyword ###
+    ${InterestCapitalization_Status}    Acquire Argument Value    ${sInterestCapitalization_Status}
+
+    Mx LoanIQ Set    ${LIQ_InterestCapitalization_ActiveInterestCapitalization_Checkbox}    ${InterestCapitalization_Status}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LoanInterest_Capitalization_details
+    Mx LoanIQ click    ${LIQ_InterestCapitalization_OKButton}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LoanInterest_Capitalization_details
