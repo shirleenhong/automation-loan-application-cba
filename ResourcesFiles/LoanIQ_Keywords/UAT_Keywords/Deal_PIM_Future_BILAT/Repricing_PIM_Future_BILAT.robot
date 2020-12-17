@@ -62,7 +62,7 @@ Create Comprehensive Repricing for PIM Future BILAT
 
     ### Rate Setting ###
     Navigate to Loan Repricing Workflow and Proceed With Transaction    ${RATE_SETTING_TRANSACTION}
-    Set Base Rate Details    None    &{ExcelPath}[AcceptRate_FromPricing]
+    Set Base Rate Details    &{ExcelPath}[Base_Rate]    &{ExcelPath}[AcceptRate_FromPricing]
     Send to Rate Approval
 
     ### Rate Approval ###

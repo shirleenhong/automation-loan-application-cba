@@ -611,16 +611,15 @@ Select Existing loan for Facility
 Select Cycles Item
     [Documentation]    This keyword will select an item in the 'Cycles for Loan' window and select a specific 'Prorate With' option.
     ...    @author: mcastro    16DEC2020    - Initial Create
-    [Arguments]    ${sProrate_With}    ${sCycle_No}
+    [Arguments]    ${sProrate_With}    ${iCycle_No}
 
     ### Pre-processing Keyword ###
     ${Prorate_With}    Acquire Argument Value    ${sProrate_With}
-    ${Cycle_No}    Acquire Argument Value    ${sCycle_No}
+    ${Cycle_No}    Acquire Argument Value    ${iCycle_No}
 
     Mx LoanIQ activate window    ${LIQ_Loan_CyclesforLoan_Window}
     Mx LoanIQ Set    JavaWindow("title:=Cycles for Loan.*").JavaRadioButton("label:=${Prorate_With}")    ON
     Run Keyword If    '${Prorate_With}'=='Projected Due'    Set Test Variable    ${ProrateWith}    Projected Cycle Due
-    ${Cycle_Amount}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_Loan_CyclesforLoan_List}    ${Cycle_No}%${sProrate_With}%amount
     Mx LoanIQ Select String    ${LIQ_Loan_CyclesforLoan_List}    ${Cycle_No}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/CyclesForLoan
 
@@ -639,8 +638,8 @@ Validate Payment Amount and Interest Due on Cycles for Loan
     ${ForPaymentAmount}    Remove Comma and Convert to Number    ${ForPaymentAmount}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/CyclesForLoan
     ${Status}    Run keyword and Return Status    Should Be Equal    ${Payment_Amount}    ${ForPaymentAmount}
-    Run Keyword and Continue on Failure    Run Keyword If    ${Status}==${True}    Log    for Payment Amount is correct
-    ...    ELSE    Fail    for Payment Amount is incorrect. Expected amount is ${Payment_Amount}
+    Run Keyword If    ${Status}==${True}    Log    for Payment Amount is correct
+    ...    ELSE    Run Keyword and Continue on Failure    Fail    for Payment Amount is incorrect. Expected amount is ${Payment_Amount}
 
     ### Validate Interest Due ###
     ${Interest_Due}    Remove Comma and Convert to Number    ${Interest_Due}
@@ -648,8 +647,8 @@ Validate Payment Amount and Interest Due on Cycles for Loan
     ${currentInterestDue}    Remove Comma and Convert to Number    ${currentInterestDue}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/CyclesForLoan
     ${Status}    Run keyword and Return Status    Should Be Equal    ${Interest_Due}    ${currentInterestDue}
-    Run Keyword and Continue on Failure    Run Keyword If    ${Status}==${True}    Log    Interest Due is correct
-    ...    ELSE    Fail    Interest due is incorrect. Expected amount is ${Interest_Due}
+    Run Keyword If    ${Status}==${True}    Log    Interest Due is correct
+    ...    ELSE    Run Keyword and Continue on Failure    Fail    Interest due is incorrect. Expected amount is ${Interest_Due}
 
 Close Cycles for Loan Window
     [Documentation]    This keyword will select an item in the 'Cycles for Loan' window and select a specific 'Prorate With' option.

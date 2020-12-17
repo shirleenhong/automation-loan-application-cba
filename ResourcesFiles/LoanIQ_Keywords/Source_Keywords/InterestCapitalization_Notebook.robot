@@ -109,12 +109,12 @@ Enter Capitalize Interest Percent of Payment
 
     mx LoanIQ activate window    ${LIQ_InitialDrawdown_Window}
     mx LoanIQ click element if present    ${LIQ_Loan_InquiryMode_Button}
-    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LoanInterest_Capitalization_details
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LoanInterest_Capitalization_Details
     mx LoanIQ select    ${LIQ_InitialDrawdown_Options_CapitalizeInterest} 
     mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button} 
     Mx LoanIQ Set    ${LIQ_InterestCapitalization_ActiveInterestCapitalization_Checkbox}    ON    
     mx LoanIQ enter    ${LIQ_InterestCapitalization_PercentofPayment_InputField}    ${PercentofPayment}    
-    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LoanInterest_Capitalization_details
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LoanInterest_Capitalization_Details
     Mx LoanIQ click    ${LIQ_InterestCapitalization_OKButton} 
 
 Navigate to Capitalize Interest Payment from Loan Notebook
@@ -124,7 +124,7 @@ Navigate to Capitalize Interest Payment from Loan Notebook
     Mx LoanIQ activate window    ${LIQ_Loan_Window}
     Mx LoanIQ click element if present    ${LIQ_Loan_InquiryMode_Button}
     Mx LoanIQ select    ${LIQ_Loan_Options_CapitalizeInterest}
-    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LoanInterest_Capitalization_details 
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LoanInterest_Capitalization_Details 
     Mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button} 
 
 Set Activate Interest Capitalization
@@ -136,6 +136,6 @@ Set Activate Interest Capitalization
     ${InterestCapitalization_Status}    Acquire Argument Value    ${sInterestCapitalization_Status}
 
     Mx LoanIQ Set    ${LIQ_InterestCapitalization_ActiveInterestCapitalization_Checkbox}    ${InterestCapitalization_Status}
-    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LoanInterest_Capitalization_details
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LoanInterest_Capitalization_Details
     Mx LoanIQ click    ${LIQ_InterestCapitalization_OKButton}
-    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LoanInterest_Capitalization_details
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LoanInterest_Capitalization_Details

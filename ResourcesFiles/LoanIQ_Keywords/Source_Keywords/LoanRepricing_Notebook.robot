@@ -1831,6 +1831,8 @@ Navigate to Create Repricing Window
     
     Mx LoanIQ activate window    ${LIQ_Loan_Window}
     Mx LoanIQ Select    ${LIQ_Loan_Options_Reprice_Menu}
+    Mx LoanIQ activate Window    ${LIQ_CreateRepricing_Window}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/CreateRepricingWindow
 
 Validate Release of Loan Repricing
     [Documentation]    This keyword validates the release of Loan Repricing on Events.
@@ -1844,8 +1846,8 @@ Validate Release of Loan Repricing
     Mx LoanIQ Select Window Tab    ${LIQ_LoanRepricingForDeal_Tab}    ${EVENTS_TAB}
     ${Event_Selected}    Run Keyword And Return Status    Mx LoanIQ Select String    ${LIQ_LoanRepricingForDeal_Events_JavaTree}    ${Event_Name}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LoanRepricingWindow_EventsTab
-    Run Keyword and Continue on Failure    Run Keyword If    ${Event_Selected}==${True}    Log    ${Event_Name} is shown in the Events list of the Loan repricing notebook.
-    ...    ELSE    Fail    Loan Repricing is not Released.
+    Run Keyword If    ${Event_Selected}==${True}    Log    ${Event_Name} is shown in the Events list of the Loan repricing notebook.
+    ...    ELSE    Run Keyword and Continue on Failure    Fail    Loan Repricing is not Released.
 
 Validate Loan Amount was Updated after Repricing
     [Documentation]    This keyword validates the expected Loan amount on Loan Notebook after Repricing.
@@ -1863,29 +1865,29 @@ Validate Loan Amount was Updated after Repricing
     ${ExistingOriginal}    Remove Comma and Convert to Number    ${ExistingOriginal}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LoanWindow_GeneralTab
     ${Status}    Run keyword and Return Status    Should Be Equal    ${New_LoanAmount}    ${ExistingOriginal}
-    Run Keyword and Continue on Failure    Run Keyword If    ${Status}==${True}    Log    Global original amount is the expected Loan amount after repricing
-    ...    ELSE    Fail    Current amount is incorrect. Expected amount is ${New_LoanAmount}
+    Run Keyword If    ${Status}==${True}    Log    Global original amount is the expected Loan amount after repricing
+    ...    ELSE    Run Keyword and Continue on Failure    Fail    Current amount is incorrect. Expected amount is ${New_LoanAmount}
 
     ${ExistingCurrent}    Mx LoanIQ Get Data    ${LIQ_Loan_GlobalCurrent_Field}    ExistingCurrent
     ${ExistingCurrent}    Remove Comma and Convert to Number    ${ExistingCurrent}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LoanWindow_GeneralTab
     ${Status}    Run keyword and Return Status    Should Be Equal    ${New_LoanAmount}    ${ExistingCurrent}
-    Run Keyword and Continue on Failure    Run Keyword If    ${Status}==${True}    Log    Current amount is the expected Loan amount after repricing
-    ...    ELSE    Fail    Current amount is incorrect. Expected amount is ${New_LoanAmount}
+    Run Keyword If    ${Status}==${True}    Log    Current amount is the expected Loan amount after repricing
+    ...    ELSE    Run Keyword and Continue on Failure    Fail    Current amount is incorrect. Expected amount is ${New_LoanAmount}
 
     ${ExistingGross}    Mx LoanIQ Get Data    ${LIQ_Loan_HostBankGross_Field}    ExistingGross
     ${ExistingGross}    Remove Comma and Convert to Number    ${ExistingGross}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LoanWindow_GeneralTab
     ${Status}    Run keyword and Return Status    Should Be Equal    ${New_LoanAmount}    ${ExistingGross}
-    Run Keyword and Continue on Failure    Run Keyword If    ${Status}==${True}    Log    Current Hostbank Gross is the expected Loan amount after repricing
-    ...    ELSE    Fail    Current amount is incorrect. Expected amount is ${New_LoanAmount}
+    Run Keyword If    ${Status}==${True}    Log    Current Hostbank Gross is the expected Loan amount after repricing
+    ...    ELSE    Run Keyword and Continue on Failure    Fail    Current amount is incorrect. Expected amount is ${New_LoanAmount}
 
     ${ExistingNet}    Mx LoanIQ Get Data    ${LIQ_Loan_HostBankNet_Field}    ExistingNet
     ${ExistingNet}    Remove Comma and Convert to Number    ${ExistingNet}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LoanWindow_GeneralTab
     ${Status}    Run keyword and Return Status    Should Be Equal    ${New_LoanAmount}    ${ExistingNet}
-    Run Keyword and Continue on Failure    Run Keyword If    ${Status}==${True}    Log    Current Hostbank Net is the expected Loan amount after repricing
-    ...    ELSE    Fail    Current amount is incorrect. Expected amount is ${New_LoanAmount}
+    Run Keyword If    ${Status}==${True}    Log    Current Hostbank Net is the expected Loan amount after repricing
+    ...    ELSE    Run Keyword and Continue on Failure    Fail    Current amount is incorrect. Expected amount is ${New_LoanAmount}
 
 Navigate to Choose a Payment Window
     [Documentation]    This keyword is used navigate to choose a payment window from loan notebook
@@ -1893,4 +1895,6 @@ Navigate to Choose a Payment Window
     
     Mx LoanIQ activate window    ${LIQ_Loan_Window}
     Mx LoanIQ Select    ${LIQ_Loan_Options_Payment}
+    Mx LoanIQ activate window    ${LIQ_ChoosePayment_Window}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/ChoosePaymentWindow
     
