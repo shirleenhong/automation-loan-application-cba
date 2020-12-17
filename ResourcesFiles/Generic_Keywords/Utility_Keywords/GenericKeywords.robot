@@ -842,6 +842,7 @@ Convert Number With Comma Separators
     ...    @update: hstone      29APR2020    - Added Keyword Pre-processing: Acquire Argument Value
     ...                                      - Added Optional Arguments: ${sRunTimeVar_Result}
     ...                                      - Added Keyword Post-processing: Save Runtime Value
+    ...    @update: javinzon    16DEC2020    - Added Keywords to handle ${Number} with lengths 10,11 and 12
     [Arguments]    ${sNumber}    ${sRunTimeVar_Result}=None
 
     ### Keyword Pre-processing ###
@@ -855,9 +856,11 @@ Convert Number With Comma Separators
     ${Number}    Set Variable    ${Number}
     ${6digits}    Run keyword if    ${iLength} == 4 or ${iLength} == 5 or ${iLength} == 6     Get Number 6 Digits    ${Number}
     ${9digits}    Run keyword if    ${iLength} == 7 or ${iLength} == 8 or ${iLength} == 9     Get Number 9 Digits    ${Number}
+    ${12digits}    Run keyword if    ${iLength} == 10 or ${iLength} == 11 or ${iLength} == 12     Get Number 12 Digits    ${Number}
     Run keyword if    ${iLength} == 1 or ${iLength} == 2 or ${iLength} == 3     Set Global Variable    ${Number}    ${Number}
     Run keyword if    ${iLength} == 4 or ${iLength} == 5 or ${iLength} == 6     Set Global Variable    ${Number}    ${6digits}
     Run keyword if    ${iLength} == 7 or ${iLength} == 8 or ${iLength} == 9     Set Global Variable    ${Number}    ${9digits}
+    Run keyword if    ${iLength} == 10 or ${iLength} == 11 or ${iLength} == 12     Set Global Variable    ${Number}    ${12digits}
     Log    ${Number}.${sDecimal}
     ${sDecimalLength}    Get Length    ${sDecimal}
     ${sDecimal1}    Run keyword if    ${sDecimalLength}==1    Set Variable    ${sDecimal}0
