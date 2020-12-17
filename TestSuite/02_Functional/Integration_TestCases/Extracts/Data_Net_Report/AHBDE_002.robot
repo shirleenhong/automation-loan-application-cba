@@ -23,8 +23,7 @@ Write Filter Details for Agency Host Bank DE Report in DNR Data Set
     Mx Execute Template With Specific Test Case Name    Generate DNR Report for Payment    ${DNR_DATASET}    Test_Case    ${TestCase_Name}    DNR
     
 Report Validation for AHBDE_002
-    [Documentation]    This test case is for Scenario 1- Verify that Report is displaying a freshly done Drawdown Cashflow on the report when Processing Date & Effective dates are same
-    ...    NOTE: Agency Host Bank Cashout Report should be available already in the report path.
+    [Documentation]    This test case is for Scenario 2 - Verify details after Line Fee Payment 
     ...    @author: songchan    10DEC2020    - Initial create
     
     Set Global Variable    ${TestCase_Name}    AHBDE_002
