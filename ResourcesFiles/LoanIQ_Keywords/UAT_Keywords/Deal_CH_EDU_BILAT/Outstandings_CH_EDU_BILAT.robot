@@ -22,7 +22,7 @@ Create Loan Drawdown for CH EDU Bilateral Deal - Outstanding Y
     Write Data To Excel    SERV01_LoanDrawdown    Loan_Alias    &{ExcelPath}[rowid]    ${Loan_Alias}
 
     Input General Loan Drawdown Details    &{ExcelPath}[Loan_RequestedAmount]    &{ExcelPath}[Loan_EffectiveDate]    &{ExcelPath}[Loan_MaturityDate]    &{ExcelPath}[Loan_RepricingFrequency]    
-    ...    None    &{ExcelPath}[Loan_Accrue]    &{ExcelPath}[Loan_RepricingDate]
+    ...    &{ExcelPath}[Loan_IntCycleFrequency]    &{ExcelPath}[Loan_Accrue]    &{ExcelPath}[Loan_RepricingDate]
 
     ### Cashflow Notebook - Create Cashflows ###
     Navigate to Loan Drawdown Workflow and Proceed With Transaction    ${CREATE_CASHFLOWS_TYPE}
@@ -48,7 +48,7 @@ Create Loan Drawdown for CH EDU Bilateral Deal - Outstanding Y
 
     ### Rate Setting ###
     Navigate to Loan Drawdown Workflow and Proceed With Transaction        ${RATE_SETTING_TRANSACTION}
-    Set Base Rate Details    None    &{ExcelPath}[AcceptRate_FromPricing]
+    Set Base Rate Details    &{ExcelPath}[BorrowerBaseRate]    &{ExcelPath}[AcceptRate_FromPricing]
 
     ### Send to Rate Approval ###
     Navigate to Loan Drawdown Workflow and Proceed With Transaction        ${SEND_TO_RATE_APPROVAL_STATUS}
@@ -76,5 +76,5 @@ Create Loan Drawdown for CH EDU Bilateral Deal - Outstanding Y
     Navigate to Outstanding Select Window from Deal
     Navigate to Existing Loan    &{ExcelPath}[Outstanding_Type]    ${FacilityName}    ${Loan_Alias}
     Validate Loan Drawdown Amounts for CH EDU Bilateral Deal    &{ExcelPath}[Expctd_LoanGlobalOriginal]    &{ExcelPath}[Expctd_LoanGlobalCurrent]    &{ExcelPath}[Expctd_LoanHostBankGross]    &{ExcelPath}[Expctd_LoanHostBankNet]
-    Validate Loan Drawdown General Details for CH EDU Bilateral Deal    &{ExcelPath}[Pricing_Option]    &{ExcelPath}[Loan_EffectiveDate]    &{ExcelPath}[Loan_RepricingFrequency]    &{ExcelPath}[Loan_RepricingDate]    &{ExcelPath}[Loan_PaymentMode]    &{ExcelPath}[Loan_IntCycleFrequency]
+    Validate Loan Drawdown General Details for CH EDU Bilateral Deal    &{ExcelPath}[Pricing_Option]    &{ExcelPath}[Loan_EffectiveDate]    &{ExcelPath}[Loan_RepricingFrequency]    &{ExcelPath}[Loan_RepricingDate]    &{ExcelPath}[Loan_PaymentMode]    &{ExcelPath}[Expctd_Loan_IntCycleFrequency]
     Validate Loan Drawdown Rates for CH EDU Bilateral Deal    &{ExcelPath}[Expctd_LoanCurrentBaseRate]    &{ExcelPath}[Expctd_LoanSpread]    &{ExcelPath}[Expctd_LoanAllInRate]

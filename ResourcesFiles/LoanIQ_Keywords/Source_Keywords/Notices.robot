@@ -344,33 +344,30 @@ Exit Notice Window
     Take Screenshot    ${screenshot_path}/Screenshots/Integration/Notice
     Mx LoanIQ Close Window    ${LIQ_Notice_Notice_Window}
 
-Get the Notice Details in LIQ via Deal Notebook
-    [Documentation]    This Keyword gets the necessary data for Notice Validation.
+Generate From and Thru Dates for Notices
+    [Documentation]    This Keyword generate From and Thru dates for filtering Notices.
     ...    @author: dahijara     15DEC2020    - initial create
-    [Arguments]    ${sRowid}    ${sSubAddDays}    ${sDealName}    ${sNoticeType}    ${sZeroTempPath}
+    [Arguments]    ${sSubAddDays}    ${sRunVal_FromDate}=None    ${sRunVal_ThruDate}=None
 
     ### Keyword Pre-processing ###
-    ${rowid}    Acquire Argument Value    ${sRowid}
     ${SubAddDays}    Acquire Argument Value    ${sSubAddDays}
-    ${DealName}    Acquire Argument Value    ${sDealName}
-    ${NoticeType}    Acquire Argument Value    ${sNoticeType}
-    ${ZeroTempPath}    Acquire Argument Value    ${sZeroTempPath}
     
     ###Get System Date###
     ${SystemDate}    Get Current Date of Local Machine    %d-%b-%Y
     ${SystemDate}    Convert Date    ${SystemDate}     date_format=%d-%b-%Y
     ${FromDate}    Subtract Time From Date    ${SystemDate}    ${sSubAddDays}days
     ${ThruDate}    Add Time To Date    ${SystemDate}    ${sSubAddDays}days
-    Write Data To Excel    Correspondence    From_Date    ${rowid}    ${FromDate}
-    Write Data To Excel   Correspondence    Thru_Date    ${rowid}    ${ThruDate}
-    
-    Search Existing Deal    ${DealName}
-    Get Notice ID via Deal Notebook    ${FromDate}    ${ThruDate}    ${sNoticeType}
+
+    ### Keyword Post-processing ###
+    Save Values of Runtime Execution on Excel File    ${sRunVal_FromDate}    ${FromDate}
+    Save Values of Runtime Execution on Excel File    ${sRunVal_ThruDate}    ${ThruDate}
+
+    [Return]    ${FromDate}    ${ThruDate}
 
 Get Notice ID via Deal Notebook 
     [Documentation]    This keyword gets the Notice ID by navigating into Notices Window thru Deal Notebook.
     ...    @author: dahijara    15DEC2020    - Initial create
-    [Arguments]    ${sFrom_Date}    ${sThru_Date}    ${sNotice_Type}         
+    [Arguments]    ${sFrom_Date}    ${sThru_Date}    ${sNotice_Type}    ${sRunVal_Notice_ID}=None    ${sRunVal_Notice_Customer_LegalName}=None    ${sRunVal_Contact}=None
     ### Keyword Pre-processing ###
     ${From_Date}    Acquire Argument Value    ${sFrom_Date}
     ${Thru_Date}    Acquire Argument Value    ${sThru_Date}
@@ -401,11 +398,15 @@ Get Notice ID via Deal Notebook
     mx LoanIQ activate window    ${LIQ_Notice_Window}
     ${Notice_ID}    Mx LoanIQ Get Data    ${LIQ_Notice_NoticeID_Field}    value%ID
     
-    Write Data To Excel    Correspondence    Notice_Identifier    ${rowid}     ${Notice_ID}    ${ExcelPath}    bTestCaseColumn=True    sColumnReference=rowid
-    Write Data To Excel    Correspondence    Notice_Customer_LegalName    ${rowid}     ${Notice_Customer_LegalName}    ${ExcelPath}    bTestCaseColumn=True    sColumnReference=rowid
-    Write Data To Excel    Correspondence    Contact    ${rowid}     ${Contact}    ${ExcelPath}    bTestCaseColumn=True    sColumnReference=rowid
     Take Screenshot    ${screenshot_path}/Screenshots/Integration/Correspondence_Notice_NoticeGroup
     Close All Windows on LIQ
+
+    ### Keyword Post-processing ###
+    Save Values of Runtime Execution on Excel File    ${sRunVal_Notice_ID}    ${Notice_ID}
+    Save Values of Runtime Execution on Excel File    ${sRunVal_Notice_Customer_LegalName}    ${Notice_Customer_LegalName}
+    Save Values of Runtime Execution on Excel File    ${sRunVal_Contact}    ${Contact}
+
+    [Return]    ${Notice_ID}    ${Notice_Customer_LegalName}    ${Contact}
 
 Select Notices Recepients
     [Documentation]    This keyword selects the recepient of the generated notices.
@@ -420,13 +421,13 @@ Select Notices Recepients
 
     mx LoanIQ activate    ${LIQ_Notices_Window}
 
-    Run Keyword If    '${sBorrowerDepesitor}'=='Y'    Mx LoanIQ Set    ${LIQ_Notices_Borrower_Checkbox}    ON
+    Run Keyword If    '${BorrowerDepesitor}'=='Y'    Mx LoanIQ Set    ${LIQ_Notices_Borrower_Checkbox}    ON
     ...    ELSE    Mx LoanIQ Set    ${LIQ_Notices_Borrower_Checkbox}    OFF
 
-    Run Keyword If    '${sGuarrantors}'=='Y'    Mx LoanIQ Set    ${LIQ_Notices_Guarantors_Checkbox}    ON
+    Run Keyword If    '${Guarrantors}'=='Y'    Mx LoanIQ Set    ${LIQ_Notices_Guarantors_Checkbox}    ON
     ...    ELSE    Mx LoanIQ Set    ${LIQ_Notices_Guarantors_Checkbox}    OFF
 
-    Run Keyword If    '${sExporterSponsors}'=='Y'    Mx LoanIQ Set    ${LIQ_Notices_Exporters_Checkbox}    ON
+    Run Keyword If    '${ExporterSponsors}'=='Y'    Mx LoanIQ Set    ${LIQ_Notices_Exporters_Checkbox}    ON
     ...    ELSE    Mx LoanIQ Set    ${LIQ_Notices_Exporters_Checkbox}    OFF
     Take Screenshot    ${screenshot_path}/Screenshots/Integration/Notice
     mx LoanIQ click    ${LIQ_Notices_OK_Button}

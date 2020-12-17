@@ -11,13 +11,16 @@ Send Upfront Fee Intent Notice for CH EDU Bilateral Deal
     ${Deal_Name}    Read Data From Excel    CRED01_DealSetup    Deal_Name    &{ExcelPath}[rowid]
 
     Get Notice Details for Fee Payment Notice Upfront Fee LIQ    ${rowid}    ${Deal_Name}
-    Get the Notice Details in LIQ via Deal Notebook    ${rowid}    &{ExcelPath}[SubAdd_Days]    ${Deal_Name}    &{ExcelPath}[Notice_Type]    &{ExcelPath}[Zero_TempPath]0.xls
-    
-    ${FromDate}    Read Data From Excel    Correspondence    From_Date    ${rowid}
-    ${ThruDate}    Read Data From Excel    Correspondence    Thru_Date    ${rowid}
-    
-    ${NoticeIdentifier}    Read Data From Excel    Correspondence    Notice_Identifier    ${rowid}
-    ${NoticeCustomerLegalName}    Read Data From Excel    Correspondence    Notice_Customer_LegalName    ${rowid}
+    ${FromDate}    ${ThruDate}    Generate From and Thru Dates for Notices    &{ExcelPath}[SubAdd_Days]
+
+    Write Data To Excel    Correspondence    From_Date    ${rowid}    ${FromDate}
+    Write Data To Excel   Correspondence    Thru_Date    ${rowid}    ${ThruDate}
+
+    Search Existing Deal    ${Deal_Name}
+    ${NoticeIdentifier}    ${NoticeCustomerLegalName}    ${Contact}    Get Notice ID via Deal Notebook    ${FromDate}    ${ThruDate}    &{ExcelPath}[Notice_Type]
+    Write Data To Excel    Correspondence    Notice_Identifier    ${rowid}     ${NoticeIdentifier}    ${ExcelPath}    bTestCaseColumn=True    sColumnReference=rowid
+    Write Data To Excel    Correspondence    Notice_Customer_LegalName    ${rowid}     ${NoticeCustomerLegalName}    ${ExcelPath}    bTestCaseColumn=True    sColumnReference=rowid
+    Write Data To Excel    Correspondence    Contact    ${rowid}     ${Contact}    ${ExcelPath}    bTestCaseColumn=True    sColumnReference=rowid
     
     ### Validate and Send Notice ###
     Send Notice via WIP in LIQ    ${NoticeIdentifier}    ${NoticeCustomerLegalName}    &{ExcelPath}[Notice_Method]    Awaiting release        
