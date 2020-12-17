@@ -20,4 +20,8 @@ Establish Facility - CRED01
     Mx Execute Template With Multiple Data    Update Commitment Fee for New Life BILAT    ${ExcelPath}    ${rowid}    SERV29_CommitmentFeePayment
     Mx Execute Template With Multiple Data    Approve and Close Deal for New Life Bilat    ${CBAUAT_ExcelPath}    ${rowid}    SYND02_PrimaryAllocation
     Mx Execute Template With Multiple Data    Release Commitment Fee for New Life Bilat    ${ExcelPath}    ${rowid}    SERV29_CommitmentFeePayment
+
+Create Initial Loan Drawdown - SERV01
+    Mx Execute Template With Multiple Data    Create Initial Loan Drawdown for New Life BILAT    ${ExcelPath}    ${rowid}    SERV01_LoanDrawdown
+
     

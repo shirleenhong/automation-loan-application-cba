@@ -2824,7 +2824,8 @@ Remove Comma Separators in Numbers
     [Return]    ${Number}
 
 Close Generate Notice Window
-    [Documentation] This keyword closes the notice group window
+    [Documentation]    This keyword closes the notice group window
     ...    @author: mcastro    14DEC2020    - Initial Create
+    ...    @update: kmagday    16Dec2020    - Added space in documentation to fix the error.
 
     Mx LoanIQ Close Window    ${LIQ_NoticeGroup_Window}
