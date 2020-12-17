@@ -1670,10 +1670,11 @@ Open Excel
 Get Row Count
     [Documentation]    This keyword is used to to handle old way of getting row count from an excel file.
     ...    UTF upgrade from 3.2 to 3.9.1.
-    ...    @author: dahijara    29OCT2019    - intial create    
+    ...    @author: dahijara    29OCT2019    - intial create
+    ...    update: songchan    17DEC2020    - added value for max_num to correct the passing of arguments for sheetname    
     [Arguments]    ${sSheetName}
     
-    ${aColumn}    Read Excel Column    1    0    ${sSheetName}
+    ${aColumn}    Read Excel Column    1    0    0    ${sSheetName}
     ${iRowCount}    Get Length    ${aColumn}
     [Return]    ${iRowCount}
 
@@ -1681,9 +1682,10 @@ Get Column Count
     [Documentation]    This keyword is used to to handle old way of getting column count from an excel file.
     ...    UTF upgrade from 3.2 to 3.9.1.
     ...    @author: dahijara    29OCT2019    - intial create    
+    ...    update: songchan    17DEC2020    - added value for max_num to correct the passing of arguments for sheetname
     [Arguments]    ${sSheetName}
     
-    ${aRowValues}    Read Excel Row    1    0    ${sSheetName}
+    ${aRowValues}    Read Excel Row    1    0    0    ${sSheetName}
     ${iColCount}    Get Length    ${aRowValues}
     Log    ${iColCount}
     [Return]    ${iColCount}    
@@ -1691,7 +1693,7 @@ Get Column Count
 Get Row Values
     [Documentation]    This keyword is used to to handle old way of getting row values from an excel file.
     ...    UTF upgrade from 3.2 to 3.9.1.
-    ...    @author: dahijara    29OCT2019    - intial create    
+    ...    @author: dahijara    29OCT2019    - intial create         
     [Arguments]    ${sSheetName}    ${iRowIndex}
     
     ${aRowValues}    Read Excel Row    ${iRowIndex}    0    ${sSheetName}
