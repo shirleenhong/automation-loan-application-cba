@@ -9,6 +9,8 @@ Setup Deal for PIM Future BILAT
     ...    @update: mcastro    09DEC2020    - Added writing of Borrower_Shortname and Deal_Name on SERV01_LoanDrawdown and Correspondence
     ...    @update: mcastro    10DEC2020    - Added writing of Borrower_Shortname on SERV29_CommitmentFeePayment
     ...    @update: mcastro    11DEC2020    - Added writing of Borrower_Shortname and Deal_Name on Correspondence for row 3
+    ...    @update: mcastro    14DEC2020    - Added checking of sole lender
+    ...    @update: mcastro    15DEC2020    - Added writing of Borrower_Shortname and Deal_Name on Correspondence for row 4 and 5
     [Arguments]    ${ExcelPath}
     
     ${Deal_Name}    ${Deal_Alias}    Generate Deal Name and Alias with 5 Numeric Test Data    &{ExcelPath}[Deal_NamePrefix]    &{ExcelPath}[Deal_AliasPrefix]
@@ -28,9 +30,15 @@ Setup Deal for PIM Future BILAT
     Write Data To Excel    Correspondence    Notice_Customer_LegalName    ${rowid}    ${Borrower_ShortName}
     Write Data To Excel    Correspondence    Notice_Customer_LegalName    2    ${Borrower_ShortName}
     Write Data To Excel    Correspondence    Notice_Customer_LegalName    3    ${Borrower_ShortName}
+    Write Data To Excel    Correspondence    Notice_Customer_LegalName    4    ${Borrower_ShortName}
+    Write Data To Excel    Correspondence    Notice_Customer_LegalName    5    ${Borrower_ShortName}
     Write Data To Excel    Correspondence    Deal_Name    ${rowid}    ${Deal_Name}
     Write Data To Excel    Correspondence    Deal_Name    2    ${Deal_Name}
     Write Data To Excel    Correspondence    Deal_Name    3    ${Deal_Name}
+    Write Data To Excel    Correspondence    Deal_Name    4   ${Deal_Name}
+    Write Data To Excel    Correspondence    Deal_Name    5    ${Deal_Name}
+    Write Data To Excel    SERV08_ComprehensiveRepricing    Deal_Name    ${rowid}    ${Deal_Name}
+    Write Data To Excel    SERV08_ComprehensiveRepricing    Borrower_Name    ${rowid}    ${Borrower_ShortName}
     
     Create New Deal    ${Deal_Name}    ${Deal_Alias}    &{ExcelPath}[Deal_Currency]    &{ExcelPath}[Deal_Department]
 
@@ -39,6 +47,7 @@ Setup Deal for PIM Future BILAT
     Select Deal Borrower Location and Servicing Group    &{ExcelPath}[Borrower_Location]    &{ExcelPath}[Borrower_SGAlias]    &{ExcelPath}[Borrower_SG_GroupMembers]    &{ExcelPath}[Borrower_PreferredRIMthd]    &{ExcelPath}[Borrower_ShortName]    &{ExcelPath}[Borrower_SG_Name]
     Select Deal Borrower Remmitance Instruction    &{ExcelPath}[Borrower_ShortName]    ${Deal_Name}    &{ExcelPath}[Borrower_Location]    &{ExcelPath}[Borrower_Depositor_Indicator]   
     Select Deal Classification    &{ExcelPath}[Deal_ClassificationCode]    &{ExcelPath}[Deal_ClassificationDesc]
+    Set Deal as Sole Lender
     Select Admin Agent    &{ExcelPath}[Deal_AdminAgent]    &{ExcelPath}[AdminAgent_Location]
     Select Servicing group and Remittance Instrucion for Admin Agent    &{ExcelPath}[AdminAgent_SGAlias]    &{ExcelPath}[AdminAgent_RIMethod]    &{ExcelPath}[AdminAgent_SGName]
     Enter Agreement Date    &{ExcelPath}[Deal_AgreementDate]

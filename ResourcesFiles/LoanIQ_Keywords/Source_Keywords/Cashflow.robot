@@ -595,6 +595,18 @@ Set All Items to Do It
     Select Menu Item    ${LIQ_Cashflows_Window}    Options    Set All To 'Do It'
     Mx LoanIQ click    ${LIQ_Cashflows_OK_Button}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/CashflowVerification
+
+Validate Cashflow Error is Displayed
+    [Documentation]    This keyword is used to validate that Cashflow pop-up error is displayed
+    ...    @author: mcastro    15DEC2020    - Initial Create
+    
+    Run Keyword and Continue on Failure   Mx LoanIQ Verify Object Exist    ${LIQ_Error_Window}
+    ${Status}    Run Keyword and Return Status   Mx LoanIQ Verify Object Exist    ${LIQ_Error_Window}
+    Run Keyword If    ${Status}==${True}    Log    Cashflow error is displayed
+    ...    ELSE    Log    Cashflow error is not displayed    level=ERROR 
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/Cashflow
+    Mx LoanIQ click element if present    ${LIQ_Error_OK_Button}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/Cashflow
     
 Select Specific Outsanding After Loan Repricing
     [Documentation]    This keyword select a specific Outstanding after loan repricing
@@ -604,3 +616,21 @@ Select Specific Outsanding After Loan Repricing
     Mx LoanIQ Select Or Doubleclick In Tree By Text    ${LIQ_ExistingLoans_JavaTree}    ${sLoan_Alias}%d
     mx LoanIQ click element if present    ${LIQ_Alerts_OK_Button}
     mx LoanIQ click element if present    ${LIQ_Loan_InquiryMode_Button}
+
+Set All Items to None
+    [Documentation]    This keyword will set all cashflow items to None
+    ...    @author: dahijara    14DEC2020    - Initial create
+    Mx LoanIQ Activate    ${LIQ_Cashflows_Window}
+    Select Menu Item    ${LIQ_Cashflows_Window}    Options    Set All to None
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/CashflowWindow
+    Mx LoanIQ click    ${LIQ_Cashflows_OK_Button}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/CashflowWindow
+
+Set All Items to SPAP
+    [Documentation]    This keyword will set all cashflow items to SPAP
+    ...    @author: dahijara    16DEC2020    - Initial create
+    Mx LoanIQ Activate    ${LIQ_Cashflows_Window}
+    Select Menu Item    ${LIQ_Cashflows_Window}    Options    Send All To SPAP
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/CashflowWindow
+    Mx LoanIQ click    ${LIQ_Cashflows_OK_Button}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/CashflowWindow

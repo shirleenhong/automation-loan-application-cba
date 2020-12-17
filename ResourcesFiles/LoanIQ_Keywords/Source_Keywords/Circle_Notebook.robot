@@ -3192,6 +3192,37 @@ Send Participation for Approval
     Take Screenshot    ${Screenshot_Path}/Screenshots/LoanIQ/ParticipationSendToApproval
     Validate if Question or Warning Message is Displayed
     Take Screenshot    ${Screenshot_Path}/Screenshots/LoanIQ/ParticipationApproval   
+
+Populate Amts or Dates Tab in Pending Orig Primary 
+    [Documentation]    This keyword is for populating the fields under Pending Orig Primary - Amts/Dates Tab.
+    ...    @author: javinzon    14DEC2020    - Initial create
+    [Arguments]    ${sExpected_CurrentAmount}    ${sExpectedCloseDate}   
+    
+    ### GetRuntime Keyword Pre-processing ###
+    ${ExpectedCloseDate}    Acquire Argument Value    ${sExpectedCloseDate}
+    ${Expected_CurrentAmount}    Acquire Argument Value    ${sExpected_CurrentAmount}
+    
+    Mx LoanIQ Select Window Tab    ${LIQ_OrigPrimaries_Tab}    Amts/Dates
+    
+    ### Validate Current Amount ###
+    ${Displayed_CurrentAmount}    Mx LoanIQ Get Data    ${LIQ_OrigPrimaries_AmtsDates_Current_TextField}    currentamount
+    ${Displayed_CurrentAmount}    Remove String     ${Displayed_CurrentAmount}    ,      
+    ${Displayed_CurrentAmount}    Convert To Number    ${Displayed_CurrentAmount}
+    Log     ${Displayed_CurrentAmount}
+
+    ${Expected_CurrentAmount}    Remove String    ${Expected_CurrentAmount}    ,
+    ${Expected_CurrentAmount}    Convert To Number    ${Expected_CurrentAmount}
+    
+    Run Keyword And Continue On Failure    Should Be Equal As Numbers    ${Displayed_CurrentAmount}    ${Expected_CurrentAmount}     
+    ${result}    Run Keyword And Return Status    Run Keyword And Continue On Failure    Should Be Equal As Numbers    ${Displayed_CurrentAmount}    ${Expected_CurrentAmount}
+    Run Keyword If   ${result}==${True}    Log    Displayed 'Sell Amount' in the Facilities tab matches the displayed 'Current Amount' in the Amts/Dates tab
+    ...     ELSE    Run Keyword And Continue On Failure    Fail    Displayed 'Sell Amount' in the Facilities tab does not matched the displayed 'Current Amount' in the Amts/Dates tab
+    
+    ### Input data in Dates Section ###    
+    mx LoanIQ enter    ${LIQ_OrigPrimaries_AmtsDates_ExpectedClose_TextField}    ${ExpectedCloseDate}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/AmtsAndDates
+    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}    
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/PendingOrigPrimary
     
 Populate Amts or Dates Tab for Orig Primary
     [Documentation]    This keyword is for populating the fields under Circle Notebook - Amts/Dates Tab.

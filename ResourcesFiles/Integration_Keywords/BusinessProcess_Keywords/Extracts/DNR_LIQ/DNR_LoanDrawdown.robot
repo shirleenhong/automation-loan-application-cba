@@ -1,5 +1,5 @@
 *** Settings ***
-Resource    ../../../../../../Configurations/Integration_Import_File.robot
+Resource    ../../../../../Configurations/Integration_Import_File.robot
 
 *** Keywords ***
 Create Revolver Facility Drawdown for DNR Syndicated Deal

@@ -8,6 +8,7 @@ Create Initial Loan Drawdown for PIM Future BILAT
     ...    @author: mcastro    04DEC2020    - Initial Create
     ...    @update: mcastro    11DEC2020    - Added writing of Loan_Alias to Correspondence
     ...    @update: mcastro    14DEC2020    - Update closing of notice window to a new keyword
+    ...    @update: mcastro    16DEC2020    - Added writing of Loan_Alias to SERV08_ComprehensiveRepricing
     [Arguments]    ${ExcelPath}
 
     Logout from Loan IQ
@@ -21,6 +22,7 @@ Create Initial Loan Drawdown for PIM Future BILAT
     Write Data To Excel    Correspondence    Loan_Alias    ${rowid}    ${Loan_Alias}
     Write Data To Excel    Correspondence    Loan_Alias    2    ${Loan_Alias}
     Write Data To Excel    Correspondence    Loan_Alias    3    ${Loan_Alias}
+    Write Data To Excel    SERV08_ComprehensiveRepricing    Loan_Alias    ${rowid}    ${Loan_Alias}
 
     Input General Loan Drawdown Details    &{ExcelPath}[Loan_RequestedAmount]    &{ExcelPath}[Loan_EffectiveDate]    &{ExcelPath}[Loan_MaturityDate]    &{ExcelPath}[Loan_RepricingFrequency]    
     ...    None    &{ExcelPath}[Loan_Accrue]    &{ExcelPath}[Loan_RepricingDate]
@@ -72,4 +74,3 @@ Create Initial Loan Drawdown for PIM Future BILAT
     Close All Windows on LIQ
     Logout from Loan IQ
     Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
-

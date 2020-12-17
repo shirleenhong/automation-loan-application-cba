@@ -7,6 +7,7 @@ Setup Deal for CH EDU BILAT Deal
     [Documentation]    This keyword is for setting up Deal for CH EDU Bilateral Deal
     ...    @author:    dahijara    01DEC2020    - Initial create 
     ...    @update:    dahijara    09DEC2020    - Adjusted suffix number for generating Deal Name from 5 to 4
+    ...    @update:    dahijara    14DEC2020    - Added step to select sole lender checkbox
     [Arguments]    ${ExcelPath}
     
     ${Deal_Name}    ${Deal_Alias}    Generate Deal Name and Alias with Numeric Test Data    &{ExcelPath}[Deal_NamePrefix]    &{ExcelPath}[Deal_AliasPrefix]    4
@@ -33,6 +34,9 @@ Setup Deal for CH EDU BILAT Deal
     Select Servicing group and Remittance Instrucion for Admin Agent    &{ExcelPath}[AdminAgent_SGAlias]    &{ExcelPath}[AdminAgent_RIMethod]    &{ExcelPath}[AdminAgent_SGName]
     Enter Agreement Date    &{ExcelPath}[Deal_AgreementDate]
     Unrestrict Deal
+
+    ### Check Sole Lender checkbox ###
+    Set Deal as Sole Lender
 
     ### Personnel Tab ###
     Enter Department on Personel Tab    &{ExcelPath}[Deal_DepartmentCode]    &{ExcelPath}[Deal_Department]
