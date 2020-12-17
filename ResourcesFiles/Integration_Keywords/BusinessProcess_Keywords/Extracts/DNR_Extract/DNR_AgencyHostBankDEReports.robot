@@ -57,7 +57,7 @@ Validate that the Agency Host Bank DE Report Net Amount is Correct
     Compare Two Strings    ${HostBank_Share}    ${HostBank_Share_Amount}
     Compare Two Strings    &{ExcelPath}[Cashflow_Direction]    ${Cashflow_Direction.strip()}
     Compare Two Strings    ${Customer_Name}    ${Customer_Name_Report.strip()}
-    
+        
 Validate that the Agency Host Bank DE Report DDA Transaction Desc is Correct 
     [Documentation]    This keyword is used to verify DDA Transaction Description is correct when completing a loan drawdown rollover with comprehensive repricing
     ...    @author: makcamps    09DEC2020    - initial create
@@ -100,3 +100,72 @@ Write Cashflow ID for Agency DE Report
     Write Data To Excel    AHBDE    Cashflow_ID    ${rowid}    ${CashflowID}    ${DNR_DATASET}
     
     Close All Windows on LIQ
+    
+Validation of Report and Dataset Value for Agency Host Bank DE
+    [Documentation]    This keyword is used for reading the downloaded Agency Host Bank DE Report 
+    ...    and validating the value Processing_Date from the dataset. AHBDE
+    ...    @author: songchan    - Initial Create
+    [Arguments]    ${ExcelPath}
+        
+    Log    ${ExcelPath}
+    
+    ### Get Expected Details
+    ${HostBank_Share}    Read Data From Excel    SC2_PaymentFees    Host_BankShare    ${rowid}    ${DNR_DATASET}
+    ${Customer_Name}    Read Data From Excel    SC2_PaymentFees    Borrower_ShortName    ${rowid}    ${DNR_DATASET}
+    ${DDA_Transaction_Description}    Read Data From Excel    SC2_PaymentFees    WIP_OutstandingType    ${rowid}    ${DNR_DATASET}
+    
+    ### Get Actual Details in the Report
+    ${Actual_HostBankShare}    Read Data From Excel    Agency_DE Extract    Host Bank Share Amount    &{ExcelPath}[DDA_Transaction_Description]${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}    &{ExcelPath}[Report_Path]${CBA_DE_REPORTFILE}.xlsx    bTestCaseColumn=True    sTestCaseColReference=DDA Transaction Description    iHeaderIndex=2
+    ${Actual_CustomerName}    Read Data From Excel    Agency_DE Extract    Customer Short Name    &{ExcelPath}[DDA_Transaction_Description]${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}    &{ExcelPath}[Report_Path]${CBA_DE_REPORTFILE}.xlsx    bTestCaseColumn=True    sTestCaseColReference=DDA Transaction Description    iHeaderIndex=2
+    ${Actual_DDA_Transaction_Description}    Read Data From Excel    Agency_DE Extract    DDA Transaction Description    &{ExcelPath}[DDA_Transaction_Description]${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}    &{ExcelPath}[Report_Path]${CBA_DE_REPORTFILE}.xlsx    bTestCaseColumn=True    sTestCaseColReference=DDA Transaction Description    iHeaderIndex=2  
+    ${Actual_Transaction_Code}    Read Data From Excel    Agency_DE Extract    Transaction Code    &{ExcelPath}[DDA_Transaction_Description]${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}   &{ExcelPath}[Report_Path]${CBA_DE_REPORTFILE}.xlsx    bTestCaseColumn=True    sTestCaseColReference=DDA Transaction Description    iHeaderIndex=2
+   
+    ### Validation of Expected and Actual
+    Compare Two Strings    ${HostBank_Share}    ${Actual_HostBankShare}
+    Compare Two Strings    ${Customer_Name}    ${Actual_CustomerName}
+    Compare Two Strings    ${DDA_Transaction_Description}    ${Actual_DDA_Transaction_Description}
+    Compare Two Strings    ${ExcelPath}[Transaction_Code]    ${Actual_Transaction_Code}
+
+Write Filter Details for Agency Host Bank DE Report in DNR Data Set
+    [Documentation]    This keyword is used to write needed filter details for Agency Host Bank DE Report sheet in DNR Date Set.
+    ...    @author: songchan    10DEC2020    - initial create
+    [Arguments]    ${ExcelPath}
+
+    ${ProcessingDate}    Read Data From Excel    &{ExcelPath}[LIQ_Sheet_Name]    FeePayment_EffectiveDate    ${rowid}    ${DNR_DATASET}
+
+    ${From_Date}    Get Specific Detail in Given Date    ${ProcessingDate}    D    -
+    ${From_Month}    Get Specific Detail in Given Date    ${ProcessingDate}    M    -
+    ${From_Year}    Get Specific Detail in Given Date    ${ProcessingDate}    Y    -    
+    Write Data To Excel    DNR    From_Date    ${TestCase_Name}    ${From_Date}    ${DNR_DATASET}    bTestCaseColumn=True
+    Write Data To Excel    DNR    From_Month    ${TestCase_Name}    ${From_Month}    ${DNR_DATASET}    bTestCaseColumn=True
+    Write Data To Excel    DNR    From_Year    ${TestCase_Name}    ${From_Year}    ${DNR_DATASET}    bTestCaseColumn=True
+    
+Validation of Report and Dataset Value for Agency Host Bank DE - AHBDE_004
+    [Documentation]    This keyword is used for reading the downloaded AHBDE Report
+    ...    and validating the value from the dataset.
+    ...    @author: songchan    14DEC2020    - initial create
+    [Arguments]    ${ExcelPath}
+    
+    ### Get Expected Details
+    ${HostBank_Share}    Read Data From Excel    SC2_PaymentFees    Host_BankShare    ${rowid}    ${DNR_DATASET}
+    ${Customer_Name}    Read Data From Excel    SC2_AdminFeePayment    Borrower_ShortName    ${rowid}    ${DNR_DATASET}
+    ${DDA_Transaction_Description}    Read Data From Excel    SC2_AdminFeePayment    AdminFeePayment_Comment    ${rowid}    ${DNR_DATASET}
+    ${Effective_Date}    Read Data From Excel    SC2_AdminFeePayment    FeePayment_EffectiveDate    ${rowid}    ${DNR_DATASET}
+    
+    ### Get Actual Details in the Report
+    ${Actual_HostBankShare}    Read Data From Excel    Agency_DE Extract    Host Bank Share Amount    &{ExcelPath}[DDA_Transaction_Description]${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}    &{ExcelPath}[Report_Path]${CBA_DE_REPORTFILE}.xlsx    bTestCaseColumn=True    sTestCaseColReference=DDA Transaction Description    iHeaderIndex=2
+    ${Actual_CustomerName}    Read Data From Excel    Agency_DE Extract    Customer Short Name    &{ExcelPath}[DDA_Transaction_Description]${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}    &{ExcelPath}[Report_Path]${CBA_DE_REPORTFILE}.xlsx    bTestCaseColumn=True    sTestCaseColReference=DDA Transaction Description    iHeaderIndex=2
+    ${Actual_DDA_Transaction_Description}    Read Data From Excel    Agency_DE Extract    DDA Transaction Description    &{ExcelPath}[DDA_Transaction_Description]${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}    &{ExcelPath}[Report_Path]${CBA_DE_REPORTFILE}.xlsx    bTestCaseColumn=True    sTestCaseColReference=DDA Transaction Description    iHeaderIndex=2  
+    ${Actual_Cashflow_Currency}    Read Data From Excel    Agency_DE Extract    Cashflow Currency    &{ExcelPath}[DDA_Transaction_Description]${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}   &{ExcelPath}[Report_Path]${CBA_DE_REPORTFILE}.xlsx    bTestCaseColumn=True    sTestCaseColReference=DDA Transaction Description    iHeaderIndex=2
+    ${Actual_Cashflow_Direction}    Read Data From Excel    Agency_DE Extract    Cashflow Direction    &{ExcelPath}[DDA_Transaction_Description]${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}   &{ExcelPath}[Report_Path]${CBA_DE_REPORTFILE}.xlsx    bTestCaseColumn=True    sTestCaseColReference=DDA Transaction Description    iHeaderIndex=2
+    ${Actual_Processing_Date}    Read Data From Excel    Agency_DE Extract    Processing Date    &{ExcelPath}[DDA_Transaction_Description]${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}   &{ExcelPath}[Report_Path]${CBA_DE_REPORTFILE}.xlsx    bTestCaseColumn=True    sTestCaseColReference=DDA Transaction Description    iHeaderIndex=2
+    ${Actual_Effective_Date}    Read Data From Excel    Agency_DE Extract    Effective Date    &{ExcelPath}[DDA_Transaction_Description]${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}${SPACE}   &{ExcelPath}[Report_Path]${CBA_DE_REPORTFILE}.xlsx    bTestCaseColumn=True    sTestCaseColReference=DDA Transaction Description    iHeaderIndex=2
+    
+    ### Validation of Expected and Actual
+    Compare Two Strings    ${Customer_Name}    ${Actual_CustomerName}
+    Compare Two Strings    ${HostBank_Share}    ${Actual_HostBankShare}
+    Compare Two Strings    ${ExcelPath}[Cashflow_Currency]    ${Actual_Cashflow_Currency}
+    Compare Two Strings    ${ExcelPath}[Cashflow_Direction]    ${Actual_Cashflow_Direction}
+    Compare Two Strings    ${ExcelPath}[Processing_Date]    ${Actual_Processing_Date}
+    Compare Two Strings    ${Effective_Date}    ${Actual_Effective_Date}
+    Compare Two Strings    ${DDA_Transaction_Description}    ${Actual_DDA_Transaction_Description}

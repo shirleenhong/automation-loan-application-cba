@@ -1,5 +1,5 @@
 *** Settings ***
-Resource    ../../../../../../Configurations/Integration_Import_File.robot
+Resource    ../../../../../Configurations/Integration_Import_File.robot
 
 *** Keywords ***
 
@@ -11,6 +11,7 @@ Setup Syndicated Deal for DNR
     ...    @update: makcamps    10DEC2020    - updated sheet name for repricing and loandrawdownnonagent
     [Arguments]    ${ExcelPath}
 
+    Log    ${rowid}
     ###Data Generation###
     ${Deal_Name}    Auto Generate Name Test Data    &{ExcelPath}[Deal_NamePrefix]
     ${Deal_Alias}    Auto Generate Name Test Data    &{ExcelPath}[Deal_AliasPrefix]  
@@ -100,14 +101,17 @@ Setup Syndicated Deal for DNR
     Write Data To Excel    SC2_AdminFee    AdminFee_ActualDueDate    ${rowid}    ${AdminFee_DueDate}    ${DNR_DATASET} 
     Write Data To Excel    SC2_FacilitySetup    Facility_AgreementDate    ${rowid}    ${Date}    ${DNR_DATASET} 
     Write Data To Excel    SC2_FacilitySetup    Facility_EffectiveDate    ${rowid}    ${Date}    ${DNR_DATASET}
+    Write Data To Excel    SC2_AdminFeePayment    AdminFee_DueDate    &{ExcelPath}[rowid]    ${AdminFee_DueDate}    ${DNR_DATASET}
     ${ScheduledActivityFilter_FromDate}    Subtract Days to Date    ${Date}    30
     ${ScheduledActivityFilter_ThruDate}    Add Days to Date    ${Date}    30
     Write Data To Excel     SC2_AdminFeePayment    ScheduledActivityFilter_FromDate     &{ExcelPath}[rowid]    ${ScheduledActivityFilter_FromDate}    ${DNR_DATASET}
     Write Data To Excel     SC2_AdminFeePayment    ScheduledActivityFilter_ThruDate    &{ExcelPath}[rowid]    ${ScheduledActivityFilter_FromDate}    ${DNR_DATASET}
+   
 
 Setup a Bilateral Deal for DNR
     [Documentation]    Create a Bilateral Deal with no Origination System
     ...    @author: clanding     24NOV2020    - initial create
+    ...    @update: fluberio    15DEC2020    - added SC1_ComprehensiveRepricing Writting in Excel
     [Arguments]    ${ExcelPath}
 
     ###Set Dates for transactions###
@@ -141,6 +145,7 @@ Setup a Bilateral Deal for DNR
     Write Data To Excel    SC1_PaymentFees    ScheduledActivity_DealName    ${rowid}    ${Deal_Name}    ${DNR_DATASET}
     Write Data To Excel    SC1_UnscheduledPayments    Deal_Name    ${rowid}    ${Deal_Name}    ${DNR_DATASET}
     Write Data To Excel    SC1_UnscheduledPayments    Deal_Name    3    ${Deal_Name}    ${DNR_DATASET}
+    Write Data To Excel    SC1_ComprehensiveRepricing    Deal_Name    ${rowid}    ${Deal_Name}    ${DNR_DATASET}
     
     ###For Scenario 1 Deal Setup###
     Write Data To Excel    SC1_FacilitySetup    Facility_Currency1    ${rowid}    ${ExcelPath}[Deal_Currency]    ${DNR_DATASET}
@@ -267,7 +272,8 @@ Setup Deal Administrative Fees for DNR
     ###Deal Notebook###
     ${AdminFee_EffectiveDate}    Get System Date
     Write Data To Excel    SC2_AdminFee    AdminFee_EffectiveDate    ${rowid}    ${AdminFee_EffectiveDate}    ${DNR_DATASET}
-    
+    Write Data To Excel    SC2_AdminFeePayment    FeePayment_EffectiveDate    ${rowid}    ${AdminFee_EffectiveDate}    ${DNR_DATASET}    
+
     Search Existing Deal    &{ExcelPath}[Deal_Name]
     Add Admin Fee in Deal Notebook    &{ExcelPath}[AdminFee_IncomeMethod]
     Set General Tab Details in Admin Fee Notebook    &{ExcelPath}[AdminFee_FlatAmount]    ${AdminFee_EffectiveDate}    &{ExcelPath}[AdminFee_PeriodFrequency]

@@ -56,3 +56,12 @@ LIQ_NoticeGroup_EditHighlightNotices = 'JavaWindow("title:=.* Notice Group creat
 ###Notice Groups For Window###
 LIQ_NoticeGroupsFor_Window = 'JavaWindow("title:=Notice Groups for.*","displayed:=1")'
 LIQ_NoticeGroupsFor_Items = 'JavaWindow("title:=Notice Groups for.*").JavaTree("attached text:=Drill down to process a group")'
+
+### Generic Notice Locators ###
+LIQ_Notice_Notice_Window = 'JavaWindow("title:=.*Notice.*","displayed:=1")'
+LIQ_Notice_Ok_Button = 'JavaWindow("title:=.*Notice.*","displayed:=1").JavaButton("attached text:=OK")'
+LIQ_Notice_GroupComment_Button = 'JavaWindow("title:=.*Notice.*","displayed:=1").JavaButton("attached text:=Group comment.*")'
+LIQ_Notice_CommentEdit_Window = 'JavaWindow("title:=Comment Edit","displayed:=1")'
+LIQ_Notice_CommentEdit_Subject_Textbox = 'JavaWindow("title:=Comment Edit","displayed:=1").JavaEdit("attached text:=Subject.*")'
+LIQ_Notice_CommentEdit_Comment_Textbox = 'JavaWindow("title:=Comment Edit","displayed:=1").JavaEdit("attached text:=Comment.*")'
+LIQ_Notice_CommentEdit_OK_Button = 'JavaWindow("title:=Comment Edit","displayed:=1").JavaButton("attached text:=OK")'

@@ -1,11 +1,12 @@
 *** Settings ***
-Resource    ../../../../../../Configurations/Integration_Import_File.robot
+Resource    ../../../../../Configurations/Integration_Import_File.robot
 
 *** Keywords ***
 
 Create Facility for DNR
     [Documentation]    This keyword is used to create a Facility.
     ...    @author: clanding     24NOV2020    - initial create
+    ...    @update: fluberio    15DEC2020    - added SC1_ComprehensiveRepricing Writting in Excel
     [Arguments]    ${ExcelPath}
     
     Open Existing Deal    &{ExcelPath}[Deal_Name]
@@ -18,6 +19,7 @@ Create Facility for DNR
     Write Data To Excel    SC1_PaymentFees    Facility_Name    ${rowid}    ${Facility_Name}    ${DNR_DATASET}    ${DNR_DATASET}
     Write Data To Excel    SC1_UnscheduledPayments    Facility_Name    ${rowid}    ${Facility_Name}    ${DNR_DATASET}    ${DNR_DATASET}
     Write Data To Excel    SC1_UnscheduledPayments    Facility_Name    3    ${Facility_Name}    ${DNR_DATASET}    ${DNR_DATASET}
+    Write Data To Excel    SC1_ComprehensiveRepricing    Facility_Name    ${rowid}    ${Facility_Name}    ${DNR_DATASET}    ${DNR_DATASET}
 
     ###New Facility Screen###
     ${Facility_ProposedCmtAmt}    New Facility Select    &{ExcelPath}[Deal_Name]    ${FacilityName}    &{ExcelPath}[Facility_Type]    &{ExcelPath}[Facility_ProposedCmtAmt]    &{ExcelPath}[Facility_Currency]    
@@ -114,15 +116,22 @@ Get Active Facility Details for Active Outstanding and Write in DNR Dataset
 Get Expired Facility Details for Active Outstanding and Write in DNR Dataset
     [Documentation]    This keyword is used to get details for each report and write in dataset.
     ...    @author: clanding    25NOV2020    - initial create
+    ...    @update: clanding    11DEC2020    - added validation of status and getting amount
     [Arguments]    ${ExcelPath}
 
     Navigate to Facility Notebook    &{ExcelPath}[Deal_Name]    &{ExcelPath}[Facility_Name]
     ${FacilityControlNumber}    Get Facility Control Number
+    
+    ${Facility_Status}    Read Data From Excel    FACPF    Facility_Status    ${TestCase_Name}    ${DNR_DATASET}    bTestCaseColumn=True    sTestCaseColReference=TestCase_Name
+	Validate Facility Status    &{ExcelPath}[Facility_Name]    ${Facility_Status}
+    
+    ${Facility_Outstandings_Amount}    Get Outstandings Amount from Facility Notebook  
 
     ### Writing for Facility Performance Report ###
     Write Data To Excel    FACPF    Facility_Name    FACPF_004    &{ExcelPath}[Facility_Name]    ${DNR_DATASET}    bTestCaseColumn=True
     Write Data To Excel    FACPF    Facility_FCN    FACPF_004    ${FacilityControlNumber}    ${DNR_DATASET}    bTestCaseColumn=True
     Write Data To Excel    FACPF    Deal_Name    FACPF_004    &{ExcelPath}[Deal_Name]    ${DNR_DATASET}    bTestCaseColumn=True
+    Write Data To Excel    FACPF    Facility_Outstandings    FACPF_004    ${Facility_Outstandings_Amount}    ${DNR_DATASET}    bTestCaseColumn=True
 
     Close All Windows on LIQ
 

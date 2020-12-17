@@ -58,3 +58,17 @@ Create Session Correspondence
 
     ${Resp}    Create Session    ${APISESSION}    ${API_CORRES_HOST}
     Log    ${Resp}
+
+Encode and Decode Bytes to String
+    [Documentation]    This keyword is used to encode string to bytes then decode Bytes to string
+    ...    @author: mcastro    14DEC2020    - Initial Create
+    [Arguments]   ${sCorrelationID}
+
+    ### Keyword Pre-processing ###
+    ${CorrelationID}    Acquire Argument Value    ${sCorrelationID}
+
+    ${CorrelationIdByte}    Encode String To Bytes    ${CorrelationID}     UTF-8
+    ${MessageIdEncode}    B 32 Encode    ${CorrelationIdByte}
+    ${MessageIdDecode}    Decode Bytes To String    ${MessageIdEncode}    UTF-8
+
+    [Return]    ${MessageIdDecode}

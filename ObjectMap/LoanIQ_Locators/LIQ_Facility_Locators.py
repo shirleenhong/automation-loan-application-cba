@@ -157,6 +157,8 @@ LIQ_FacilityPricing_OngoingFeeRate = 'JavaWindow("title:=Facility - .*").JavaTre
 LIQ_FacilityPricing_Pricing_Tab = 'JavaWindow("title:=Facility - .*").JavaTab("tagname:=TabFolder", "value:=Pricing")'
 LIQ_FacilityPricing_ModifyInterestPricing_Button = 'JavaWindow("title:=Facility -.*").JavaButton("attached text:=Modify Interest Pricing.*")'
 LIQ_FacilityPricing_InterestPricingZoom_Button = 'JavaWindow("title:=Facility -.*").JavaButton("attached text:=Interest Pricing Zoom")'
+LIQ_FacilityPricing_AllowedPricingOption_JavaTree = 'JavaWindow("title:=Facility -.*").JavaTree("tagname:=Drill down to update","labeled_containers_path:=.*Allowed Pricing Options.*")'
+LIQ_FacilityPricing_PricingOption_MatrixChangeAppMthd_Combobox = 'JavaWindow("title:=.*Interest Pricing Option.*").JavaList("index:=7")'
 
 ##Interest Pricing - Financial Ratio Window###
 LIQ_FacilityPricing_InterestPricing_FinancialRatio_Window= 'JavaWindow("title:=Financial Ratio")'

@@ -310,6 +310,7 @@ Validate if Debit and Credit Amt is equal to Transaction Amount
     ...    @update: rtarayao    10OCT2019    added keyword for warning message
     ...    @update: hstone      27APR2020    - Added Keyword Pre-processing: Acquire Argument Value
     ...    @update: ehugo    01JUN2020    - added screenshot
+    ...    @update: mcastro    11DEC2020    - Updated Log level error to lowercase
     [Arguments]    ${sUICreditAmt}    ${sUIDebitAmt}    ${sTotalAmount}
     
     ### Keyword Pre-processing ###
@@ -321,11 +322,11 @@ Validate if Debit and Credit Amt is equal to Transaction Amount
     
     ${status}    Run Keyword And Return Status    Should Be Equal    ${iUICreditAmt}    ${iTotalAmount}  
     Run Keyword If    '${status}'=='True'    Log    Passed: Credit Amount is equal to Total Amount
-    ...    ELSE    Log    Failed: UI Value and Computed Value is not the same    LEVEL=ERROR
+    ...    ELSE    Log    Failed: UI Value and Computed Value is not the same    level=ERROR
     
     ${status}    Run Keyword And Return Status    Should Be Equal    ${iUIDebitAmt}    ${iTotalAmount}  
     Run Keyword If    '${status}'=='True'    Log    Passed: Debit Amount is equal to Total Amount
-    ...    ELSE    Log    Failed: UI Value and Computed Value is not the same    LEVEL=ERROR    
+    ...    ELSE    Log    Failed: UI Value and Computed Value is not the same    level=ERROR    
 
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/GLEntriesWindow_Verification
 
@@ -594,3 +595,30 @@ Set All Items to Do It
     Select Menu Item    ${LIQ_Cashflows_Window}    Options    Set All To 'Do It'
     Mx LoanIQ click    ${LIQ_Cashflows_OK_Button}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/CashflowVerification
+    
+Select Specific Outsanding After Loan Repricing
+    [Documentation]    This keyword select a specific Outstanding after loan repricing
+    ...    @author: fluberio    15DEC2020    initial create
+    [Arguments]    ${sLoan_Alias}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/OutstandingSelect_ExistingLoans
+    Mx LoanIQ Select Or Doubleclick In Tree By Text    ${LIQ_ExistingLoans_JavaTree}    ${sLoan_Alias}%d
+    mx LoanIQ click element if present    ${LIQ_Alerts_OK_Button}
+    mx LoanIQ click element if present    ${LIQ_Loan_InquiryMode_Button}
+
+Set All Items to None
+    [Documentation]    This keyword will set all cashflow items to None
+    ...    @author: dahijara    14DEC2020    - Initial create
+    Mx LoanIQ Activate    ${LIQ_Cashflows_Window}
+    Select Menu Item    ${LIQ_Cashflows_Window}    Options    Set All to None
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/CashflowWindow
+    Mx LoanIQ click    ${LIQ_Cashflows_OK_Button}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/CashflowWindow
+
+Set All Items to SPAP
+    [Documentation]    This keyword will set all cashflow items to SPAP
+    ...    @author: dahijara    16DEC2020    - Initial create
+    Mx LoanIQ Activate    ${LIQ_Cashflows_Window}
+    Select Menu Item    ${LIQ_Cashflows_Window}    Options    Send All To SPAP
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/CashflowWindow
+    Mx LoanIQ click    ${LIQ_Cashflows_OK_Button}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/CashflowWindow

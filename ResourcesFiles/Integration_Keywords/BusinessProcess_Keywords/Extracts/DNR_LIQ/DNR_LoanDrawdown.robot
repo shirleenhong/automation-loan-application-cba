@@ -1,5 +1,5 @@
 *** Settings ***
-Resource    ../../../../../../Configurations/Integration_Import_File.robot
+Resource    ../../../../../Configurations/Integration_Import_File.robot
 
 *** Keywords ***
 Create Revolver Facility Drawdown for DNR Syndicated Deal
@@ -403,7 +403,6 @@ Create Loan Drawdown TERM and SBLC for Syndicated Deal for DNR
     
     ###Write Data to Other TestCases###
     Write Data To Excel    SC2_LoanDrawdown    Loan_Alias    ${rowid}    ${Alias}    ${DNR_DATASET}
-    Write Data To Excel    SC2_PaymentFees    Loan_Alias    ${rowid}    ${Alias}    ${DNR_DATASET}
     ${Alias}    Read Data From Excel    SC2_LoanDrawdown    Loan_Alias    ${rowid}    ${DNR_DATASET}
     Input General Loan Drawdown Details with Accrual End Date    &{ExcelPath}[Loan_RequestedAmount]    &{ExcelPath}[Loan_MaturityDate]   &{ExcelPath}[Loan_RepricingFrequency]    ${LoanEffectiveDate}    None    None    None    None    &{ExcelPath}[Loan_Accrue]
     Input Loan Drawdown Rates for Term Drawdown    &{ExcelPath}[Borrower_BaseRate]
@@ -509,7 +508,6 @@ Create Loan Drawdown TERM and SBLC for Syndicated Deal With Backdated Effective 
     
     ###Write Data to Other TestCases###
     Write Data To Excel    SC2_LoanDrawdown    Loan_Alias    ${rowid}    ${Alias}    ${DNR_DATASET}
-    Write Data To Excel    SC2_PaymentFees    Loan_Alias    ${rowid}    ${Alias}    ${DNR_DATASET}
     ${Alias}    Read Data From Excel    SC2_LoanDrawdown    Loan_Alias    ${rowid}    ${DNR_DATASET}
     Input General Loan Drawdown Details with Accrual End Date    &{ExcelPath}[Loan_RequestedAmount]    &{ExcelPath}[Loan_MaturityDate]   &{ExcelPath}[Loan_RepricingFrequency]    ${LoanEffectiveDate}    None    None    None    None    &{ExcelPath}[Loan_Accrue]
     Input Loan Drawdown Rates for Term Drawdown    &{ExcelPath}[Borrower_BaseRate]
@@ -617,7 +615,7 @@ Create Revolver Facility Drawdown for DNR Bilateral Deal until Awaiting Send to 
     Navigate to Outstanding Select Window
     ${Loan_Alias}    New Outstanding Select    &{ExcelPath}[Deal_Name]    &{ExcelPath}[Facility_Name]    ${Borrower_ShortName}    &{ExcelPath}[Outstanding_Type]    &{ExcelPath}[Loan_PricingOption]    &{ExcelPath}[Loan_Currency]
     Write Data To Excel    SC1_LoanDrawdown    Loan_Alias    &{ExcelPath}[rowid]    ${Loan_Alias}    ${DNR_DATASET}
-    #Write Data To Excel    SC1_LoanSplit    Loan_Alias    &{ExcelPath}[rowid]    ${Loan_Alias}    ${DNR_DATASET}
+    Write Data To Excel    SC1_ComprehensiveRepricing    Loan_Alias    &{ExcelPath}[rowid]    ${Loan_Alias}    ${DNR_DATASET}
     
     Enter Initial Loan Drawdown General Details    &{ExcelPath}[Loan_RequestedAmount]    ${Current_Date}    ${EMPTY}    &{ExcelPath}[Loan_Accrue]    &{ExcelPath}[Loan_Currency]    &{ExcelPath}[Loan_RepricingFrequency]
     
@@ -718,3 +716,38 @@ Create Initial Loan Drawdown for Agency Syndication for DNR
     Close All Windows on LIQ
     Logout from Loan IQ
     Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
+
+Release Revolver Facility Drawdown for Bilateral Deal
+    [Documentation]    This keyword is used to release Revolver Facility Drawdown for bilateral deal.
+    ...    @author: fluberio    11DEC2020    - initial create
+    [Arguments]    ${ExcelPath}   
+    
+    ${Current_Date}    Get System Date
+    ${Loan_Alias}    Read Data From Excel    SC1_LoanDrawdown    Loan_Alias    ${rowid}    ${DNR_DATASET}
+    Navigate Transaction in WIP    ${OUTSTANDINGS_TRANSACTION}    ${SEND_TO_RATE_APPROVAL_STATUS}    ${LOAN_INITIAL_DRAWDOWN_TYPE}    ${Loan_Alias}    ### commented out in IEE testing
+    
+    Navigate to Loan Drawdown Workflow and Proceed With Transaction    ${SEND_TO_RATE_APPROVAL_STATUS}
+    Validate Window Title Status    ${INITIAL_DRAWDOWN_TITLE}    ${AWAITING_RATE_APPROVAL_STATUS}
+    Logout from Loan IQ
+    Login to Loan IQ    ${MANAGER_USERNAME}    ${MANAGER_PASSWORD}
+    Navigate Transaction in WIP    ${OUTSTANDINGS_TRANSACTION}    ${AWAITING_RATE_APPROVAL_STATUS}    ${LOAN_INITIAL_DRAWDOWN_TYPE}    ${Loan_Alias}
+    Navigate to Loan Drawdown Workflow and Proceed With Transaction    ${RATE_APPROVAL_TRANSACTION}
+    Validate Window Title Status    ${INITIAL_DRAWDOWN_TITLE}    ${AWAITING_RELEASE_STATUS}
+       
+    ### Release Cashflows ###
+    Release Cashflow Based on Remittance Instruction    &{ExcelPath}[Remittance_Instruction]    &{ExcelPath}[Borrower1_ShortName]
+    
+    ### Release ###
+    Close All Windows on LIQ
+    Navigate Transaction in WIP    ${OUTSTANDINGS_TRANSACTION}    ${AWAITING_RELEASE_STATUS}    ${LOAN_INITIAL_DRAWDOWN_TYPE}    ${Loan_Alias}
+    Sleep    5s
+    Navigate to Loan Drawdown Workflow and Proceed With Transaction    ${RELEASE_STATUS}
+    Validate Window Title Status    ${INITIAL_DRAWDOWN_TITLE}    ${RELEASED_STATUS}
+    
+    ### Close all windows and go back to original user ###
+    Close All Windows on LIQ
+    Logout from Loan IQ
+    Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
+    
+    Write Data To Excel    SC1_LoanDrawdown    Transaction_Date    &{ExcelPath}[rowid]    ${Current_Date}    ${DNR_DATASET}
+    Write Data To Excel    SC1_LoanDrawdown    Transaction_Status    &{ExcelPath}[rowid]    ${RELEASED_STATUS}    ${DNR_DATASET}

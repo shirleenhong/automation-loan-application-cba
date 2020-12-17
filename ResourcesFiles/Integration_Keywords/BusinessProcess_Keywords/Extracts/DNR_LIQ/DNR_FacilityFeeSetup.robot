@@ -1,5 +1,5 @@
 *** Settings ***
-Resource    ../../../../../../Configurations/Integration_Import_File.robot
+Resource    ../../../../../Configurations/Integration_Import_File.robot
 
 *** Keywords ***
 
@@ -43,4 +43,4 @@ Setup Fees for Term Facility for DNR
     
     ###Facility Validation and close###
     Validate Facility
-    mx LoanIQ close window    ${LIQ_FacilityNavigator_Window}
+    Close Facility Notebook and Navigator Windows

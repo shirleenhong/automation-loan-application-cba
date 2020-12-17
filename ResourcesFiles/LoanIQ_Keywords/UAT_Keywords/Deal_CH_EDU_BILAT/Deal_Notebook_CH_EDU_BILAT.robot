@@ -1,14 +1,13 @@
 *** Settings ***
 Resource    ../../../../Configurations/LoanIQ_Import_File.robot
 
-*** Variables ***
-${SCENARIO}
 
 *** Keywords ***
 Setup Deal for CH EDU BILAT Deal
     [Documentation]    This keyword is for setting up Deal for CH EDU Bilateral Deal
     ...    @author:    dahijara    01DEC2020    - Initial create 
     ...    @update:    dahijara    09DEC2020    - Adjusted suffix number for generating Deal Name from 5 to 4
+    ...    @update:    dahijara    14DEC2020    - Added step to select sole lender checkbox
     [Arguments]    ${ExcelPath}
     
     ${Deal_Name}    ${Deal_Alias}    Generate Deal Name and Alias with Numeric Test Data    &{ExcelPath}[Deal_NamePrefix]    &{ExcelPath}[Deal_AliasPrefix]    4
@@ -36,6 +35,9 @@ Setup Deal for CH EDU BILAT Deal
     Enter Agreement Date    &{ExcelPath}[Deal_AgreementDate]
     Unrestrict Deal
 
+    ### Check Sole Lender checkbox ###
+    Set Deal as Sole Lender
+
     ### Personnel Tab ###
     Enter Department on Personel Tab    &{ExcelPath}[Deal_DepartmentCode]    &{ExcelPath}[Deal_Department]
     Enter Expense Code    &{ExcelPath}[Deal_ExpenseCode]
@@ -55,3 +57,54 @@ Setup Deal for CH EDU BILAT Deal
 
     ### Ratios/Conds Tab ###
     Add Financial Ratio    &{ExcelPath}[RatioType]    &{ExcelPath}[FinancialRatio]    &{ExcelPath}[FinancialRatio_StartDate]
+
+Approve and Close CH EDU Bilateral Deal
+    [Documentation]    This keyword approves and closes the created Deal
+    ...    @author: dahijara    10DEC2020    - Initial Create
+    [Arguments]    ${ExcelPath}
+    
+    ${Deal_Name}    Read Data From Excel    CRED01_DealSetup    Deal_Name    &{ExcelPath}[rowid]
+    ${ApproveandCloseDate}    Read Data From Excel    SYND02_PrimaryAllocation    Primary_ExpectedCloseDate    &{ExcelPath}[rowid]
+
+    Logout from Loan IQ
+    Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
+    
+    ### Deal Notebook ###
+    Search Existing Deal    ${Deal_Name}
+    Navigate to Deal Notebook Workflow and Proceed With Transaction    ${SEND_TO_APPROVAL_STATUS}
+    Logout from Loan IQ
+    Login to Loan IQ    ${SUPERVISOR_USERNAME}    ${SUPERVISOR_PASSWORD}
+    Open Existing Deal    ${Deal_Name}
+    Approve the Deal    ${ApproveandCloseDate}
+    Close the Deal    ${ApproveandCloseDate}
+    
+    Close All Windows on LIQ
+    Logout from Loan IQ
+    Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
+
+Update Pricing Rules via Deal Notebook for CH EDU Bilateral Deal
+    [Documentation]    The keyword will Update Pricing Rules for CH EDU Bilateral Deal.
+    ...    @author: dahijara    11DEC2020    - Initial create
+    [Arguments]    ${ExcelPath}
+
+    ${Deal_Name}    Read Data From Excel    CRED01_DealSetup    Deal_Name    &{ExcelPath}[rowid]
+    ${FacilityName_1}    Read Data From Excel    CRED02_FacilitySetup_A    Facility_Name    &{ExcelPath}[rowid]
+    ${FacilityName_2}    Read Data From Excel    CRED02_FacilitySetup_B    Facility_Name    &{ExcelPath}[rowid]
+
+    ### Open Deal Notebook If Not present ###
+    Open Deal Notebook If Not Present    ${Deal_Name}
+    Navigate to Deal Pricing Rules Tab
+    Update Deal Pricing Rules    &{ExcelPath}[InterestPricingOption]    &{ExcelPath}[Pricing_MatrixChangeAppMethod]
+
+    ### Validate Facility 1 ###
+    Navigate to Facility Notebook from Deal Notebook    ${FacilityName_1}
+    Verify Pricing Rules    &{ExcelPath}[InterestPricingOption]
+    Verify Facility Pricing Option Details    &{ExcelPath}[InterestPricingOption]    &{ExcelPath}[Pricing_MatrixChangeAppMethod]
+    Close All Windows on LIQ
+    
+    ### Validate Facility 2 ###
+    Open Deal Notebook If Not Present    ${Deal_Name}
+    Navigate to Facility Notebook from Deal Notebook    ${FacilityName_2}
+    Verify Pricing Rules    &{ExcelPath}[InterestPricingOption]
+    Verify Facility Pricing Option Details    &{ExcelPath}[InterestPricingOption]    &{ExcelPath}[Pricing_MatrixChangeAppMethod]
+    Close All Windows on LIQ
