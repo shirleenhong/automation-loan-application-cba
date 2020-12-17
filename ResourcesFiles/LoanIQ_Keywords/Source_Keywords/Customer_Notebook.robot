@@ -141,6 +141,32 @@ Validate 'Active Customer' Window
     Run Keyword If   '${result}'=='True'    Log    "Active Customer -- ${LIQCustomer_ShortName}" window has been displayed.
     ...     ELSE    Log    "Active Customer -- ${LIQCustomer_ShortName}" window has been displayed.        
     Take Screenshot    ${Screenshot_Path}/Screenshots/LoanIQ/ActiveCustomerWindow_GeneralTab
+    
+Validate Corporate Tab Values
+    [Documentation]    This keyword validates the Corporate Tab values if correct
+    ...    @author: makcamps    - initial create
+    [Arguments]    ${sLIQCustomer_ShortName}    ${sLIQCustomer_LegalName}    ${sLIQCustomer_ID}    ${sCountry}
+
+    ### Keyword Pre-processing ###
+    ${LIQCustomer_ShortName}    Acquire Argument Value    ${sLIQCustomer_ShortName}
+    ${LIQCustomer_LegalName}    Acquire Argument Value    ${sLIQCustomer_LegalName}
+    ${LIQCustomer_ID}    Acquire Argument Value    ${sLIQCustomer_ID}
+    ${Expected_Country}    Acquire Argument Value    ${sCountry}
+
+    Mx LoanIQ Select Window Tab    ${LIQ_Active_Customer_Notebook_TabSelection}    Corporate
+    
+    Run Keyword And Continue On Failure    Validate Loan IQ Details    ${LIQCustomer_ShortName}    ${LIQ_Active_Customer_Notebook_CorpTab_ImmediateParentField}
+    Run Keyword And Continue On Failure    Validate Loan IQ Details    ${sLIQCustomer_ID}    ${LIQ_Active_Customer_Notebook_CorpTab_ImmediateParentCustIdValue}
+    Run Keyword And Continue On Failure    Validate Loan IQ Details    ${LIQCustomer_ShortName}    ${LIQ_Active_Customer_Notebook_CorpTab_UltimateParentField}
+    Run Keyword And Continue On Failure    Validate Loan IQ Details    ${sLIQCustomer_ID}    ${LIQ_Active_Customer_Notebook_CorpTab_UltimateParentCustIdValue}
+    Run Keyword And Continue On Failure    Validate Loan IQ Details    ${LIQCustomer_ShortName}    ${LIQ_Active_Customer_Notebook_CorpTab_TradingParentField}
+    Run Keyword And Continue On Failure    Validate Loan IQ Details    ${sLIQCustomer_ID}    ${LIQ_Active_Customer_Notebook_CorpTab_TradingParentCustIdValue}
+    
+    ${Actual_Country}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_Active_Customer_Notebook_CorpTab_CountryJavaTree}    ${LIQCustomer_LegalName}%Country%Country
+
+    Run Keyword And Continue On Failure    Should Be Equal   ${Actual_Country}    ${Expected_Country}
+
+    Take Screenshot    ${Screenshot_Path}/Screenshots/LoanIQ/ActiveCustomerWindow_CorporateTab
 
 Read Excel Data and Validate Customer ID, Short Name and Legal Name fields
     [Documentation]    This keyword validates the Customer ID, Short Name and Legal Name fields against from excel data 
