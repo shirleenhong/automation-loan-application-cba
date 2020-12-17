@@ -84,7 +84,7 @@ Setup Primary for LBT Bilateral Deal
     
     ### Circle Notebook Complete Portfolio Allocation, Circling, and Sending to Settlement Approval ###
     Circle Notebook Workflow Navigation    &{ExcelPath}[Primary_Lender]    &{ExcelPath}[Primary_CircledDate]    &{ExcelPath}[Lender_Hostbank]    &{ExcelPath}[Primary_Portfolio]
-    ...    &{ExcelPath}[Primary_PortfolioBranch]    ${SellAmount}    None    &{ExcelPath}[Primary_RiskBook]
+    ...    &{ExcelPath}[Primary_PortfolioBranch]    ${SellAmount}    &{ExcelPath}[Primary_PortfolioExpDate]    &{ExcelPath}[Primary_RiskBook]
     
     Close All Windows on LIQ
 

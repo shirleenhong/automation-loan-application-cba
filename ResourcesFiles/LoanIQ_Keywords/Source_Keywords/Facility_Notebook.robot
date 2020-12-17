@@ -2587,7 +2587,7 @@ Set Facility Utilized Percentage Matrix
     ...    Mx LoanIQ Set    ${LIQ_PercentageCommitmentMatrix_Mnemonic_Checkbox}    ON
     ...    AND    Mx LoanIQ Verify Runtime Property    ${LIQ_PercentageCommitmentMatrix_LessThanOrEqual_RadioButton}    enabled%1
     ...    AND    Mx LoanIQ Verify Runtime Property    ${LIQ_PercentageCommitmentMatrix_Mnemonic_JavaList}    value%Maximum
-    Run Keyword If    '${sMnemonicStatus}'=='OFF'    Set Commitment Fee Percentage Maximum    ${LessThan}    ${MaximumValue}
+    Run Keyword If    '${MnemonicStatus}'=='OFF'    Set Commitment Fee Percentage Maximum    ${LessThan}    ${MaximumValue}
     mx LoanIQ click    ${LIQ_PercentageCommitmentMatrix_OK_Button}
     
     ${status}    Run Keyword And Return Status    Mx LoanIQ Verify Object Exist    JavaWindow("title:=Facility.*Pricing").JavaTree("developer name:=.*${CommitmentPctType}.*${MinimumValue}.*${MaximumValue}.*")        VerificationData="Yes"        VerificationData="Yes"
