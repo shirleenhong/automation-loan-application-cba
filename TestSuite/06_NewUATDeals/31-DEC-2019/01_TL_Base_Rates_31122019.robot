@@ -1,7 +1,8 @@
 *** Settings ***
 Resource    ../../../Configurations/LoanIQ_Import_File.robot
 *** Variables ***
-${rowid}    8
+${rowid}    10
+
 
 *** Test Cases ***
 Load Base Rate
