@@ -1669,7 +1669,7 @@ Get Row Count
     ...    @author: dahijara    29OCT2019    - intial create    
     [Arguments]    ${sSheetName}
     
-    ${aColumn}    Read Excel Column    1    0    ${sSheetName}
+    ${aColumn}    Read Excel Column    1    0    0    ${sSheetName}
     ${iRowCount}    Get Length    ${aColumn}
     [Return]    ${iRowCount}
 
@@ -1679,7 +1679,7 @@ Get Column Count
     ...    @author: dahijara    29OCT2019    - intial create    
     [Arguments]    ${sSheetName}
     
-    ${aRowValues}    Read Excel Row    1    0    ${sSheetName}
+    ${aRowValues}    Read Excel Row    1    0    0    ${sSheetName}
     ${iColCount}    Get Length    ${aRowValues}
     Log    ${iColCount}
     [Return]    ${iColCount}    
