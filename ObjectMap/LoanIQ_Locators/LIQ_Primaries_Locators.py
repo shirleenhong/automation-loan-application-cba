@@ -44,6 +44,10 @@ LIQ_OrigPrimariesy_Facilities_JavaTree = 'JavaWindow("title:=.*Orig Primary.*").
 LIQ_ProRate_BuySellPrice_Textfield = 'JavaWindow("title:=Pro-Rate Transaction Amount.*").JavaEdit("attached text:=Buy/Sell Price:")'
 LIQ_ProRate_BuySellPrice_Ok_Button = 'JavaWindow("title:=Pro-Rate Transaction Amount.*").JavaButton("label:=OK")'
 
+###Pending Orig Primaries - Amts/Dates###
+LIQ_OrigPrimaries_AmtsDates_ExpectedClose_TextField = 'JavaWindow("title:=.*Orig Primary.*").JavaEdit("attached text:=Expected Close:")'
+LIQ_OrigPrimaries_AmtsDates_Current_TextField = 'JavaWindow("title:=.*Orig Primary.*").JavaEdit("attached text:=Current:")'
+
 ###Pending Orig Primaries - Comment Edit###
 LIQ_PricingComment_CommentEdit_Window = 'JavaWindow("title:=Comment Edit.*")'
 LIQ_PricingComment_CommentEdit_Comment_Textfield = 'JavaWindow("title:=Comment Edit.*").JavaEdit("attached text:=Comment:")'
