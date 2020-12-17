@@ -1750,7 +1750,8 @@ Update Adjusted Due Date on Commitment Fee
 Update Ongoing Fee General Information
     [Documentation]    This keyword updates the general tab values for an ongoing fee notebook/
     ...    @author: dahijara    04DEC2020    - Initial Create
-    [Arguments]    ${sFee_EffectiveDate}    ${sFee_ActualDate}    ${sFee_AdjustedDueDate}    ${sFee_Accrue}    ${sFee_AccrualEndDate}
+    ...    @update: javinzon    16DEC2020    - Added optional argument for Cycle Frequency field
+    [Arguments]    ${sFee_EffectiveDate}    ${sFee_ActualDate}    ${sFee_AdjustedDueDate}    ${sFee_Accrue}    ${sFee_AccrualEndDate}    ${sCycle_Frequency}=None
 
     ### Keyword Pre-processing ###
     ${Fee_EffectiveDate}    Acquire Argument Value    ${sFee_EffectiveDate}
@@ -1758,6 +1759,7 @@ Update Ongoing Fee General Information
     ${Fee_AdjustedDueDate}    Acquire Argument Value    ${sFee_AdjustedDueDate}
     ${Fee_Accrue}    Acquire Argument Value    ${sFee_Accrue}
     ${Fee_AccrualEndDate}    Acquire Argument Value    ${sFee_AccrualEndDate}
+    ${Cycle_Frequency}    Acquire Argument Value    ${sCycle_Frequency}
 
     mx LoanIQ activate window    ${LIQ_OngoingFee_Window}
     Mx LoanIQ Select Window Tab    ${LIQ_OngoingFee_Tab}    ${GENERAL_TAB}
@@ -1769,6 +1771,8 @@ Update Ongoing Fee General Information
     Mx LoanIQ Enter    ${LIQ_OngoingFee_AdjustedDueDate}    ${Fee_AdjustedDueDate}
     Mx LoanIQ select combo box value    ${LIQ_OngoingFee_Accrue_Dropdown}    ${Fee_Accrue}
     Mx LoanIQ Enter    ${LIQ_OngoingFee_AccrualEndDate_Field}    ${Fee_AccrualEndDate}
+    Run Keyword If    '${Cycle_Frequency}'!='None'    mx LoanIQ Select Combo Box Value    ${LIQ_OngoingFee_CycleFrequency_Field}    ${Cycle_Frequency}
+    ...    ELSE    Log    Specific Cycle Frequency is not required for the transaction
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/OngoingFeeNotebook_General
 
 Update Fee Paid By and Servicing Group for Ongoing Fee

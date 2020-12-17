@@ -145,6 +145,7 @@ Search for Deal
     ...    @update: hstone     20JUL2020    - Removed sleep
     ...                                     - Fixed documentation
     ...                                     - Removed extra spaces
+    ...    @update: clanding    13DEC2020    - added mx LoanIQ click element if present    ${LIQ_Alerts_OK_Button}
     [Arguments]    ${sDeal_Name}
 
     ###Pre-processing keyword####
@@ -155,6 +156,7 @@ Search for Deal
     Verify Window    ${LIQ_DealSelect_Window}
     mx LoanIQ enter    ${LIQ_DealSelect_Search_TextField}     ${Deal_Name}
     mx LoanIQ click    ${LIQ_DealSelect_Ok_Button}
+    mx LoanIQ click element if present    ${LIQ_Alerts_OK_Button}
     Log    Deal is successfully opened
 
 Create New Outstanding Select

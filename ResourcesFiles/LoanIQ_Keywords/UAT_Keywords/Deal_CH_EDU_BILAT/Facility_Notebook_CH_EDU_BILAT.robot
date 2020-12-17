@@ -77,6 +77,7 @@ Create Cash Advance Facility for CH EDU Bilateral Deal
 Setup Primary for CH EDU Bilateral Deal
     [Documentation]    This keyword will Setup primary for CH EDU Bilateral Deal
     ...    @author: dahijara    10DEC2020    - Initial Create
+    ...    @update: dahijara    14DEC2020    - Removed steps for Sending and Approving Settlement approval
     [Arguments]    ${ExcelPath}
     
     ${Deal_Name}    Read Data From Excel    CRED01_DealSetup    Deal_Name    &{ExcelPath}[rowid]
@@ -98,12 +99,5 @@ Setup Primary for CH EDU Bilateral Deal
 
     Circling for Primary Workflow    &{ExcelPath}[Primary_CircledDate]
     Complete Portfolio Allocations Workflow    &{ExcelPath}[Primary_Portfolio]|&{ExcelPath}[Primary_Portfolio]    &{ExcelPath}[Primary_PortfolioBranch]    ${PortfolioAllocation_1}|${PortfolioAllocation_2}    None|None    ${FacilityName_1}|${FacilityName_2}    &{ExcelPath}[Primary_ExpenseCode]
-    Navigate to Orig Primaries Workflow and Proceed With Transaction    ${SEND_TO_SETTLEMENT_APPROVAL_WORKFLOW}
     Close All Windows on LIQ
 
-    ### Approval using a different user ###
-    Logout from Loan IQ
-    Login to Loan IQ    ${SUPERVISOR_USERNAME}    ${SUPERVISOR_PASSWORD}
-    Select Actions    ${WORK_IN_PROCESS_ACTIONS}
-    Circle Notebook Settlement Approval    ${Deal_Name}    ${HOST_BANK}
-    Close All Windows on LIQ

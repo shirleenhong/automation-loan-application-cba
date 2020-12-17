@@ -188,7 +188,7 @@ LIQ_Payment_Queries_GLEntries_Menu = 'JavaWindow("title:=.* Payment.*").JavaMenu
 # 
 ##Payment Reversal##
  
-LIQ_ReversePayment_WorkflowItems_Tree = 'JavaWindow("title:=Commitment Fee Reverse Fee.*").JavaTree("attached text:=.*Workflow .*")'
+LIQ_ReversePayment_WorkflowItems_Tree = 'JavaWindow("title:=.* Fee Reverse Fee.*").JavaTree("attached text:=.*Workflow .*")'
  
 ###Create Split Cashflow###
 LIQ_Cashflow_Options_SplitCashflows = 'JavaWindow("title:=Cashflows .*").JavaMenu("label:=Options").JavaMenu("label:=Split Cashflows")'

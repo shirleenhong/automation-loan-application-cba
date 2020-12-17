@@ -1,5 +1,5 @@
 *** Settings ***
-Resource    ../../../../../../Configurations/Integration_Import_File.robot
+Resource    ../../../../../Configurations/Integration_Import_File.robot
 
 *** Keywords ***
 
@@ -111,6 +111,7 @@ Setup Syndicated Deal for DNR
 Setup a Bilateral Deal for DNR
     [Documentation]    Create a Bilateral Deal with no Origination System
     ...    @author: clanding     24NOV2020    - initial create
+    ...    @update: fluberio    15DEC2020    - added SC1_ComprehensiveRepricing Writting in Excel
     [Arguments]    ${ExcelPath}
 
     ###Set Dates for transactions###
@@ -144,6 +145,7 @@ Setup a Bilateral Deal for DNR
     Write Data To Excel    SC1_PaymentFees    ScheduledActivity_DealName    ${rowid}    ${Deal_Name}    ${DNR_DATASET}
     Write Data To Excel    SC1_UnscheduledPayments    Deal_Name    ${rowid}    ${Deal_Name}    ${DNR_DATASET}
     Write Data To Excel    SC1_UnscheduledPayments    Deal_Name    3    ${Deal_Name}    ${DNR_DATASET}
+    Write Data To Excel    SC1_ComprehensiveRepricing    Deal_Name    ${rowid}    ${Deal_Name}    ${DNR_DATASET}
     
     ###For Scenario 1 Deal Setup###
     Write Data To Excel    SC1_FacilitySetup    Facility_Currency1    ${rowid}    ${ExcelPath}[Deal_Currency]    ${DNR_DATASET}
@@ -270,7 +272,7 @@ Setup Deal Administrative Fees for DNR
     ###Deal Notebook###
     ${AdminFee_EffectiveDate}    Get System Date
     Write Data To Excel    SC2_AdminFee    AdminFee_EffectiveDate    ${rowid}    ${AdminFee_EffectiveDate}    ${DNR_DATASET}
-    Write Data To Excel    SC2_AdminFeePayment    AdminFeePayment_EffectiveDate    ${rowid}    ${AdminFee_EffectiveDate}    ${DNR_DATASET}    
+    Write Data To Excel    SC2_AdminFeePayment    FeePayment_EffectiveDate    ${rowid}    ${AdminFee_EffectiveDate}    ${DNR_DATASET}    
 
     Search Existing Deal    &{ExcelPath}[Deal_Name]
     Add Admin Fee in Deal Notebook    &{ExcelPath}[AdminFee_IncomeMethod]

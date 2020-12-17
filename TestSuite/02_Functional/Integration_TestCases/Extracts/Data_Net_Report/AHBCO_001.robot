@@ -5,7 +5,7 @@ Resource    ../../../../../Configurations/Integration_Import_File.robot
 
 AHBCO_001
     [Documentation]    This test case is for Scenario 1- Verify that Cashflow Amount Field will be replaced by Host Bank Share Amount in the Report
-    ...    NOTE: Agency Host Bank Cashout Report should be available already in the report path.
+    ...    NOTE: Agency Host Bank Cashout Report should be available already in the report path. Execute this testcase after running AHBCO_003 or AHBCO_004.
     ...    @author: shirhong    17NOV2020    - Initial create
     
     Set Global Variable    ${TestCase_Name}    AHBCO_001
