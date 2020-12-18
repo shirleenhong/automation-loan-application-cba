@@ -1128,9 +1128,9 @@ Add Deal Pricing Options
     ...    @update: makcamps    18DEC2020    - added bill borrower condition: if provided is off, don't check checkbox
     ...    									 - added interest due on principal payment condition: if provided is on, check checkbox
     [Arguments]    ${sPricingOption}    ${sInitialFraction_Round}    ${sRoundingDecimal_Round}    ${sNonBusinessDayRule}
-    ...    ${sBillingNumberOfDays}    ${sMatrixChangeAppMethod}    ${sRateChangeAppMethod}    ${sBillBorrower}=ON    ${sInterestDueUponPrincipalPayment}=OFF
-    ...    ${sPercentOfRateFormulaUsage}=${EMPTY}    ${sPricingOption_CCY}=${EMPTY}    ${sRepricing_NonBusinessDayRule}=${EMPTY}
-    ...    ${sIntentNotice_DaysInAdvance}=${EMPTY}    ${sIntentNotice_Time}=${EMPTY}    ${sIntentNotice_AMPM}=${EMPTY}
+    ...    ${sBillingNumberOfDays}    ${sMatrixChangeAppMethod}    ${sRateChangeAppMethod}    ${sPercentOfRateFormulaUsage}=${EMPTY}    ${sPricingOption_CCY}=${EMPTY}
+    ...    ${sRepricing_NonBusinessDayRule}=${EMPTY}    ${sIntentNotice_DaysInAdvance}=${EMPTY}    ${sIntentNotice_Time}=${EMPTY}    ${sIntentNotice_AMPM}=${EMPTY}
+    ...    ${sBillBorrower}=ON    ${sInterestDueUponPrincipalPayment}=OFF
 
     ### GetRuntime Keyword Pre-processing ###
     ${PricingOption}    Acquire Argument Value    ${sPricingOption}
@@ -1140,14 +1140,14 @@ Add Deal Pricing Options
     ${BillingNumberOfDays}    Acquire Argument Value    ${sBillingNumberOfDays}
     ${MatrixChangeAppMethod}    Acquire Argument Value    ${sMatrixChangeAppMethod}
     ${RateChangeAppMethod}    Acquire Argument Value    ${sRateChangeAppMethod}
-    ${BillBorrower}    Acquire Argument Value    ${sBillBorrower}
-    ${InterestDueUponPrincipalPayment}    Acquire Argument Value    ${sInterestDueUponPrincipalPayment}
     ${PercentOfRateFormulaUsage}    Acquire Argument Value    ${sPercentOfRateFormulaUsage}
     ${PricingOption_CCY}    Acquire Argument Value    ${sPricingOption_CCY}
     ${Repricing_NonBusinessDayRule}    Acquire Argument Value    ${sRepricing_NonBusinessDayRule}
     ${IntentNotice_DaysInAdvance}    Acquire Argument Value    ${sIntentNotice_DaysInAdvance}
     ${IntentNotice_Time}    Acquire Argument Value    ${sIntentNotice_Time}
     ${IntentNotice_AMPM}    Acquire Argument Value    ${sIntentNotice_AMPM}
+    ${BillBorrower}    Acquire Argument Value    ${sBillBorrower}
+    ${InterestDueUponPrincipalPayment}    Acquire Argument Value    ${sInterestDueUponPrincipalPayment}
 
     Mx LoanIQ Select Window Tab    ${LIQ_DealNotebook_Tab}    Pricing Rules
     mx LoanIQ click    ${LIQ_PricingRules_AddOption_Button}

@@ -33,9 +33,6 @@ Setup Syndicated Deal for LLA Syndicated
     Select Deal Borrower Location and Servicing Group    ${Borrower_Location}    ${Borrower_SGAlias}    ${Borrower_SG_GroupMembers}    ${Borrower_PreferredRIMthd}    ${Borrower_ShortName}    ${Borrower_SG_Name}
     Select Deal Borrower Remmitance Instruction    ${Borrower_ShortName}    ${Deal_Name}    ${Borrower_Location}    ${Borrower_Depositor_Indicator}
     
-    # ${Borrower_Name}    Get Borrower Name From Deal Notebook
-    # ${Customer_LegalName}    Get Customer Legal Name From Customer Notebook Via Deal Notebook
-    
     Select Deal Classification    &{ExcelPath}[Deal_ClassificationCode]    &{ExcelPath}[Deal_ClassificationDesc]
     
     ###Deal Admin Agent Setup###
@@ -53,7 +50,7 @@ Setup Syndicated Deal for LLA Syndicated
     ###Pricing Rules Tab - Pricing Options###
     Add Deal Pricing Options    &{ExcelPath}[Deal_PricingOption]    &{ExcelPath}[InitialFractionRate_Round]    &{ExcelPath}[RoundingDecimal_Round]    
     ...    &{ExcelPath}[NonBusinessDayRule]    &{ExcelPath}[PricingOption_BillNoOfDays]    &{ExcelPath}[PricingOption_MatrixChangeAppMthd]
-    ...    &{ExcelPath}[PricingOption_RateChangeAppMthd]    &{ExcelPath}[Bill_Borrower]    ON
+    ...    &{ExcelPath}[PricingOption_RateChangeAppMthd]    sBillBorrower=OFF    sInterestDueUponPrincipalPayment=ON
     
     ###Pricing Rules###
     Add Fee Pricing Rules    &{ExcelPath}[PricingRule_Fee1]    &{ExcelPath}[PricingRule_MatrixChangeAppMthd1]    &{ExcelPath}[PricingRule_NonBussDayRule1]
