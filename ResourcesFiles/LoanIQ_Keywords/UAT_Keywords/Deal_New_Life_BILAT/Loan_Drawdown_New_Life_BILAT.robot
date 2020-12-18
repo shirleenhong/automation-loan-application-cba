@@ -47,7 +47,7 @@ Create Initial Loan Drawdown for New Life BILAT
 
     ### Rate Setting ###
     Navigate to Loan Drawdown Workflow and Proceed With Transaction    ${RATE_SETTING_TRANSACTION}
-    Set Base Rate Details    None    &{ExcelPath}[AcceptRate_FromPricing]
+    Set Base Rate Details    &{ExcelPath}[Loan_BorrowerBaseRate]    &{ExcelPath}[AcceptRate_FromPricing]
     Send Initial Drawdown to Rate Approval
      
     ### Rate Approval ###
