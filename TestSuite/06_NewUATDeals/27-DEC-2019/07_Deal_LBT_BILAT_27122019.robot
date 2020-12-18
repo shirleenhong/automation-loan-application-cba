@@ -25,5 +25,7 @@ Establish Commitment Fee for LBT Bilateral Deal
     Mx Execute Template With Multiple Data    Release Commitment Fee for LBT Bilateral Deal    ${ExcelPath}    ${rowid}    CRED08_OngoingFeeSetup
     
 Create Loan Drawdown for LBT Bilateral Deal 
-    Mx Execute Template With Multiple Data    Create Loan Drawdown for LBT Bilateral Deal - Outstanding Z    ${ExcelPath}    ${rowid}    SERV01_LoanDrawdown
+    Mx Execute Template With Multiple Data    Create Loan Drawdown for LBT Bilateral Deal    ${ExcelPath}    ${rowid}    SERV01_LoanDrawdown
+    Set Test Variable    ${rowid}    2
+    Mx Execute Template With Multiple Data    Create Loan Drawdown for LBT Bilateral Deal    ${ExcelPath}    ${rowid}    SERV01_LoanDrawdown
     

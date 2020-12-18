@@ -2,23 +2,21 @@
 Resource    ../../../../Configurations/LoanIQ_Import_File.robot
 
 *** Keywords ***
-Create Loan Drawdown for LBT Bilateral Deal - Outstanding Z
+Create Loan Drawdown for LBT Bilateral Deal
     [Documentation]    This high-level keyword is used to setup the outstanding for LBT Bilateral facility
     ...    @author: javinzon    16DEC2020    - Initial create
+    ...    @update: javinzon    18DEC2020    - Renamed keyword from 'Create Loan Drawdown for LBT Bilateral Deal - Outstanding Z'
+    ...                                        to 'Create Loan Drawdown for LBT Bilateral Deal', Removed keywords Read Data from Excel
     [Arguments]    ${ExcelPath}
-
-    ${Deal_Name}    Read Data From Excel    CRED01_DealSetup    Deal_Name    &{ExcelPath}[rowid]
-    ${FacilityName}    Read Data From Excel    CRED01_FacilitySetup    Facility_Name    &{ExcelPath}[rowid]
-    ${Borrower_Name}    Read Data From Excel    PTY001_QuickPartyOnboarding    LIQCustomer_ShortName    &{ExcelPath}[rowid]
     
     Logout from Loan IQ
     Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
 
-    Open Existing Deal    ${Deal_Name}
+    Open Existing Deal    &{ExcelPath}[Deal_Name]
     
     ### Create Drawdown ###
     Navigate to Outstanding Select Window from Deal
-    ${Loan_Alias}    New Outstanding Select    ${Deal_Name}    ${Facility_Name}    ${Borrower_Name}    &{ExcelPath}[Outstanding_Type]    &{ExcelPath}[Pricing_Option]    &{ExcelPath}[Outstanding_Currency]
+    ${Loan_Alias}    New Outstanding Select    &{ExcelPath}[Deal_Name]    &{ExcelPath}[Facility_Name]    &{ExcelPath}[Borrower_Name]    &{ExcelPath}[Outstanding_Type]    &{ExcelPath}[Pricing_Option]    &{ExcelPath}[Outstanding_Currency]
     Write Data To Excel    SERV01_LoanDrawdown    Loan_Alias    ${rowid}    ${Loan_Alias}
    
     Input General Loan Drawdown Details with Accrual End Date    &{ExcelPath}[Loan_RequestedAmount]    &{ExcelPath}[Loan_MaturityDate]    &{ExcelPath}[Loan_RepricingFrequency]    &{ExcelPath}[Loan_EffectiveDate]            
@@ -26,8 +24,8 @@ Create Loan Drawdown for LBT Bilateral Deal - Outstanding Z
 
     ### Cashflow Notebook - Create Cashflows ###
     Navigate to Drawdown Cashflow Window
-    Verify if Method has Remittance Instruction    ${Borrower_Name}    &{ExcelPath}[Remittance_Description]    &{ExcelPath}[Remittance_Instruction]
-    Verify if Status is set to Do It    ${Borrower_Name}
+    Verify if Method has Remittance Instruction    &{ExcelPath}[Borrower_Name]    &{ExcelPath}[Remittance_Description]    &{ExcelPath}[Remittance_Instruction]
+    Verify if Status is set to Do It    &{ExcelPath}[Borrower_Name]
     Navigate to GL Entries
     Close GL Entries and Cashflow Window
 
@@ -43,7 +41,7 @@ Create Loan Drawdown for LBT Bilateral Deal - Outstanding Z
     Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
     Select Item in Work in Process    ${OUTSTANDINGS_TRANSACTION}    ${GENERATE_INTENT_NOTICES}    ${LOAN_INITIAL_DRAWDOWN_TYPE}     ${Loan_Alias}
     Navigate Notebook Workflow    ${LIQ_InitialDrawdown_Window}    ${LIQ_InitialDrawdown_Tab}    ${LIQ_InitialDrawdown_WorkflowAction}    ${GENERATE_INTENT_NOTICES} 
-    Generate Intent Notices    ${Borrower_Name}
+    Generate Intent Notices    &{ExcelPath}[Borrower_Name]
     Mx LoanIQ Close Window    ${LIQ_NoticeGroup_Window}
 
     ### Rate Setting ###
@@ -61,7 +59,7 @@ Create Loan Drawdown for LBT Bilateral Deal - Outstanding Z
     Logout from Loan IQ
     Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
     Select Item in Work in Process    ${OUTSTANDINGS_TRANSACTION}    ${AWAITING_GENERATE_RATE_SETTING_NOTICES_STATUS}    ${LOAN_INITIAL_DRAWDOWN_TYPE}     ${Loan_Alias}
-    Generate Rate Setting Notices for Drawdown    ${Borrower_Name}    &{ExcelPath}[RateSetting_NoticeStatus]
+    Generate Rate Setting Notices for Drawdown    &{ExcelPath}[Borrower_Name]    &{ExcelPath}[RateSetting_NoticeStatus]
 
     Navigate to Loan Drawdown Workflow and Proceed With Transaction    ${RELEASE_STATUS}
 
@@ -72,11 +70,10 @@ Create Loan Drawdown for LBT Bilateral Deal - Outstanding Z
     Logout from Loan IQ
     Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
      
-    Open Existing Deal    ${Deal_Name}
+    Open Existing Deal    &{ExcelPath}[Deal_Name]
     Navigate to Outstanding Select Window from Deal
-    Navigate to Existing Loan    &{ExcelPath}[Outstanding_Type]    ${FacilityName}    ${Loan_Alias}
+    Navigate to Existing Loan    &{ExcelPath}[Outstanding_Type]    &{ExcelPath}[Facility_Name]    ${Loan_Alias}
     Validate Loan Drawdown Amounts in General Tab    &{ExcelPath}[Expctd_LoanGlobalOriginal]    &{ExcelPath}[Expctd_LoanGlobalCurrent]    &{ExcelPath}[Expctd_LoanHostBankGross]    &{ExcelPath}[Expctd_LoanHostBankNet]
     Validate Loan Drawdown General Details in General Tab    &{ExcelPath}[Pricing_Option]    &{ExcelPath}[Loan_EffectiveDate]    &{ExcelPath}[Loan_RepricingFrequency]    &{ExcelPath}[Loan_RepricingDate]    &{ExcelPath}[Payment_Mode]    &{ExcelPath}[Expctd_Loan_IntCycleFrequency]
     Validate Loan Drawdown Rates in Rates Tab    &{ExcelPath}[Expctd_LoanCurrentBaseRate]    &{ExcelPath}[Expctd_LoanSpread]    &{ExcelPath}[Expctd_LoanAllInRate]
-
 
