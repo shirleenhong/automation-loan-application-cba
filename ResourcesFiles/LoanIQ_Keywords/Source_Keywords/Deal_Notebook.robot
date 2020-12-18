@@ -1123,12 +1123,14 @@ Validate Deal Holiday Calendar Items
 
 Add Deal Pricing Options
     [Documentation]    This keyword adds Pricing Options in the Deal Notebook.
-    ...                @author: bernchua
-    ...    @update: ehugo    29JUN2020    - added keyword pre-processing; added screenshot
+    ...    @author: bernchua
+    ...    @update: ehugo       29JUN2020    - added keyword pre-processing; added screenshot
+    ...    @update: makcamps    18DEC2020    - added bill borrower condition: if provided is off, don't check checkbox
+    ...    									 - added interest due on principal payment condition: if provided is on, check checkbox
     [Arguments]    ${sPricingOption}    ${sInitialFraction_Round}    ${sRoundingDecimal_Round}    ${sNonBusinessDayRule}
-    ...    ${sBillingNumberOfDays}    ${sMatrixChangeAppMethod}    ${sRateChangeAppMethod}    ${sPercentOfRateFormulaUsage}=${EMPTY}
-    ...    ${sPricingOption_CCY}=${EMPTY}    ${sRepricing_NonBusinessDayRule}=${EMPTY}
-    ...    ${sIntentNotice_DaysInAdvance}=${EMPTY}    ${sIntentNotice_Time}=${EMPTY}    ${sIntentNotice_AMPM}=${EMPTY}
+    ...    ${sBillingNumberOfDays}    ${sMatrixChangeAppMethod}    ${sRateChangeAppMethod}    ${sPercentOfRateFormulaUsage}=${EMPTY}    ${sPricingOption_CCY}=${EMPTY}
+    ...    ${sRepricing_NonBusinessDayRule}=${EMPTY}    ${sIntentNotice_DaysInAdvance}=${EMPTY}    ${sIntentNotice_Time}=${EMPTY}    ${sIntentNotice_AMPM}=${EMPTY}
+    ...    ${sBillBorrower}=ON    ${sInterestDueUponPrincipalPayment}=OFF
 
     ### GetRuntime Keyword Pre-processing ###
     ${PricingOption}    Acquire Argument Value    ${sPricingOption}
@@ -1144,6 +1146,8 @@ Add Deal Pricing Options
     ${IntentNotice_DaysInAdvance}    Acquire Argument Value    ${sIntentNotice_DaysInAdvance}
     ${IntentNotice_Time}    Acquire Argument Value    ${sIntentNotice_Time}
     ${IntentNotice_AMPM}    Acquire Argument Value    ${sIntentNotice_AMPM}
+    ${BillBorrower}    Acquire Argument Value    ${sBillBorrower}
+    ${InterestDueUponPrincipalPayment}    Acquire Argument Value    ${sInterestDueUponPrincipalPayment}
 
     Mx LoanIQ Select Window Tab    ${LIQ_DealNotebook_Tab}    Pricing Rules
     mx LoanIQ click    ${LIQ_PricingRules_AddOption_Button}
@@ -1153,12 +1157,12 @@ Add Deal Pricing Options
     Run Keyword If    '${PercentOfRateFormulaUsage}'!='${EMPTY}'    Mx LoanIQ Select Combo Box Value    ${LIQ_InterestPricingOption_PercentOfRateFormulaUsage_List}    ${PercentOfRateFormulaUsage}
     Mx LoanIQ Select Combo Box Value    ${LIQ_InterestPricingOption_NonBusinessDayRule_Dropdown}    ${NonBusinessDayRule}
     mx LoanIQ enter    ${LIQ_InterestPricingOption_BillingNumberDays_Field}    ${BillingNumberOfDays}
-    Mx LoanIQ Set    ${LIQ_InterestPricingOption_BillBorrower_Checkbox}    ON
+    Run Keyword If    '${BillBorrower}'=='ON'    Mx LoanIQ Set    ${LIQ_InterestPricingOption_BillBorrower_Checkbox}    ON
     Mx LoanIQ Select Combo Box Value    ${LIQ_InterestPricingOption_MatrixChangeAppMthd_Combobox}    ${MatrixChangeAppMethod}    
     Mx LoanIQ Select Combo Box Value    ${LIQ_InterestPricingOption_RateChangeAppMthd_Combobox}    ${RateChangeAppMethod}
     ${InterestDue_CheckboxVisible}    Run Keyword And Return Status    Mx LoanIQ Verify Object Exist    ${LIQ_InterestPricingOption_InterestDueUponRepricing_Checkbox}    VerificationData="Yes"
     Run Keyword If    ${InterestDue_CheckboxVisible}==True    Mx LoanIQ Set    ${LIQ_InterestPricingOption_InterestDueUponRepricing_Checkbox}    ON
-    Run Keyword If    '${PricingOption}'=='Fixed Rate Option'    Mx LoanIQ Set    ${LIQ_InterestPricingOption_InterestDueUponPrincipalPayment_Checkbox}    ON
+    Run Keyword If    '${PricingOption}'=='Fixed Rate Option' or '${InterestDueUponPrincipalPayment}'=='ON'    Mx LoanIQ Set    ${LIQ_InterestPricingOption_InterestDueUponPrincipalPayment_Checkbox}    ON
     Run Keyword If    '${IntentNotice_DaysInAdvance}'!='${EMPTY}'    Run Keywords
     ...    mx LoanIQ enter    ${LIQ_InterestPricingOption_IntentNoticeDaysInAdvance_Textfield}    ${IntentNotice_DaysInAdvance}
     ...    AND    mx LoanIQ enter    ${LIQ_InterestPricingOption_IntentNoticeTimeInAdvance_Textfield}    ${IntentNotice_Time}
