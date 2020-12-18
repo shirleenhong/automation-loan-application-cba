@@ -5,6 +5,7 @@ Resource    ../../../../Configurations/LoanIQ_Import_File.robot
 Setup Commitment Fee for LBT Bilateral Deal
     [Documentation]    This keyword is used to set up Commitment Fee for LBT Bilateral Deal.
     ...    @author: javinzon    10DEC2020    - Initial create
+    ...    @update: javinzon    17DEC2020    - Added keyword 'Set Facility Pricing Penalty Spread'
     [Arguments]    ${ExcelPath}
     
     ${Borrower_ShortName}    Read Data From Excel    PTY001_QuickPartyOnboarding    LIQCustomer_ShortName    &{ExcelPath}[rowid]
@@ -14,6 +15,8 @@ Setup Commitment Fee for LBT Bilateral Deal
     ${Borrower_SG_Method}    Read Data From Excel    PTY001_QuickPartyOnboarding    Borrower_PreferredRIMthd    &{ExcelPath}[rowid]
 
     ### Facility Notebook - Pricing Tab ###
+    Set Facility Pricing Penalty Spread    &{ExcelPath}[Penalty_Spread]    &{ExcelPath}[Penalty_Status]
+    
     ### Modify Ongoing Fees ###
     Modify Ongoing Fee Pricing - Insert Add    &{ExcelPath}[OngoingFee_Category]    &{ExcelPath}[OngoingFee_Type]    &{ExcelPath}[OngoingFee_RateBasis]
     Add After Item to Facility Ongoing Fee    &{ExcelPath}[OngoingFee_Category]    &{ExcelPath}[OngoingFee_AfterItem1]    &{ExcelPath}[OngoingFee_AfterItemType1]
