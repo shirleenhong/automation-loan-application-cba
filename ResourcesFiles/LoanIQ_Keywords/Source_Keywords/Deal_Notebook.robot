@@ -1126,8 +1126,9 @@ Add Deal Pricing Options
     ...    @author: bernchua
     ...    @update: ehugo       29JUN2020    - added keyword pre-processing; added screenshot
     ...    @update: makcamps    18DEC2020    - added bill borrower condition: if provided is off, don't check checkbox
+    ...    									 - added interest due on principal payment condition: if provided is on, check checkbox
     [Arguments]    ${sPricingOption}    ${sInitialFraction_Round}    ${sRoundingDecimal_Round}    ${sNonBusinessDayRule}
-    ...    ${sBillingNumberOfDays}    ${sMatrixChangeAppMethod}    ${sRateChangeAppMethod}    ${sBillBorrower}=ON
+    ...    ${sBillingNumberOfDays}    ${sMatrixChangeAppMethod}    ${sRateChangeAppMethod}    ${sBillBorrower}=ON    ${sInterestDueUponPrincipalPayment}=OFF
     ...    ${sPercentOfRateFormulaUsage}=${EMPTY}    ${sPricingOption_CCY}=${EMPTY}    ${sRepricing_NonBusinessDayRule}=${EMPTY}
     ...    ${sIntentNotice_DaysInAdvance}=${EMPTY}    ${sIntentNotice_Time}=${EMPTY}    ${sIntentNotice_AMPM}=${EMPTY}
 
@@ -1140,6 +1141,7 @@ Add Deal Pricing Options
     ${MatrixChangeAppMethod}    Acquire Argument Value    ${sMatrixChangeAppMethod}
     ${RateChangeAppMethod}    Acquire Argument Value    ${sRateChangeAppMethod}
     ${BillBorrower}    Acquire Argument Value    ${sBillBorrower}
+    ${InterestDueUponPrincipalPayment}    Acquire Argument Value    ${sInterestDueUponPrincipalPayment}
     ${PercentOfRateFormulaUsage}    Acquire Argument Value    ${sPercentOfRateFormulaUsage}
     ${PricingOption_CCY}    Acquire Argument Value    ${sPricingOption_CCY}
     ${Repricing_NonBusinessDayRule}    Acquire Argument Value    ${sRepricing_NonBusinessDayRule}
@@ -1160,8 +1162,7 @@ Add Deal Pricing Options
     Mx LoanIQ Select Combo Box Value    ${LIQ_InterestPricingOption_RateChangeAppMthd_Combobox}    ${RateChangeAppMethod}
     ${InterestDue_CheckboxVisible}    Run Keyword And Return Status    Mx LoanIQ Verify Object Exist    ${LIQ_InterestPricingOption_InterestDueUponRepricing_Checkbox}    VerificationData="Yes"
     Run Keyword If    ${InterestDue_CheckboxVisible}==True    Mx LoanIQ Set    ${LIQ_InterestPricingOption_InterestDueUponRepricing_Checkbox}    ON
-    Run Keyword If    '${PricingOption}'=='Fixed Rate Option'    Mx LoanIQ Set    ${LIQ_InterestPricingOption_InterestDueUponPrincipalPayment_Checkbox}    ON
-    ...    ELSE    Mx LoanIQ Set    ${LIQ_InterestPricingOption_InterestDueUponPrincipalPayment_Checkbox}    OFF
+    Run Keyword If    '${PricingOption}'=='Fixed Rate Option' or '${InterestDueUponPrincipalPayment}'=='ON'    Mx LoanIQ Set    ${LIQ_InterestPricingOption_InterestDueUponPrincipalPayment_Checkbox}    ON
     Run Keyword If    '${IntentNotice_DaysInAdvance}'!='${EMPTY}'    Run Keywords
     ...    mx LoanIQ enter    ${LIQ_InterestPricingOption_IntentNoticeDaysInAdvance_Textfield}    ${IntentNotice_DaysInAdvance}
     ...    AND    mx LoanIQ enter    ${LIQ_InterestPricingOption_IntentNoticeTimeInAdvance_Textfield}    ${IntentNotice_Time}

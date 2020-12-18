@@ -50,11 +50,10 @@ Setup Syndicated Deal for LLA Syndicated
     ###Calendars Tab###
     Set Deal Calendar    &{ExcelPath}[HolidayCalendar]
     
-    ###Pricing Rules Tab###
-    ###Pricing Options###
+    ###Pricing Rules Tab - Pricing Options###
     Add Deal Pricing Options    &{ExcelPath}[Deal_PricingOption]    &{ExcelPath}[InitialFractionRate_Round]    &{ExcelPath}[RoundingDecimal_Round]    
     ...    &{ExcelPath}[NonBusinessDayRule]    &{ExcelPath}[PricingOption_BillNoOfDays]    &{ExcelPath}[PricingOption_MatrixChangeAppMthd]
-    ...    &{ExcelPath}[PricingOption_RateChangeAppMthd]    &{ExcelPath}[Bill_Borrower]
+    ...    &{ExcelPath}[PricingOption_RateChangeAppMthd]    &{ExcelPath}[Bill_Borrower]    ON
     
     ###Pricing Rules###
     Add Fee Pricing Rules    &{ExcelPath}[PricingRule_Fee1]    &{ExcelPath}[PricingRule_MatrixChangeAppMthd1]    &{ExcelPath}[PricingRule_NonBussDayRule1]
