@@ -913,15 +913,19 @@ Generate Intent Notices
     [Documentation]    This keyword navigates the transaction workflow and generates intent notices.
     ...    @author: bernchua
     ...    <update> @ghabal - commented section that handles 'Edit Highlighted Notices Button' since what is being displayed now is 'View Highlighted Notices Button' 
+    ...    @update: mcastro    17DEC2020    - Added Take screenshots
     [Arguments]    ${Customer_Name}
     mx LoanIQ activate    ${LIQ_Notices_Window}    
     mx LoanIQ click    ${LIQ_Notices_OK_Button}
     mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
-    mx LoanIQ activate    ${LIQ_NoticeGroup_Window}    
+    mx LoanIQ activate    ${LIQ_NoticeGroup_Window}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/IntentNoticeWindow    
     ${Notice_Contact}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_NoticeGroup_Tree}    ${Customer_Name}%Contact%contact    
     ${Notice_Method}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_NoticeGroup_Tree}    ${Customer_Name}%Notice Method%method
     mx LoanIQ select    ${LIQ_NoticeGroup_File_Preview}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/IntentNoticeWindow
     ${Error_Displayed}    Run Keyword And Return Status    mx LoanIQ click element if present    ${LIQ_Error_OK_Button}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/IntentNoticeWindow
   
     # Run Keyword If    ${Error_Displayed}==True    Run Keywords
     # ...    mx LoanIQ click    ${LIQ_NoticeGroup_EditHighlightedNotices_Button}
@@ -1666,10 +1670,11 @@ Open Excel
 Get Row Count
     [Documentation]    This keyword is used to to handle old way of getting row count from an excel file.
     ...    UTF upgrade from 3.2 to 3.9.1.
-    ...    @author: dahijara    29OCT2019    - intial create    
+    ...    @author: dahijara    29OCT2019    - intial create
+    ...    update: songchan    17DEC2020    - added value for max_num to correct the passing of arguments for sheetname    
     [Arguments]    ${sSheetName}
     
-    ${aColumn}    Read Excel Column    1    0    ${sSheetName}
+    ${aColumn}    Read Excel Column    1    0    0    ${sSheetName}
     ${iRowCount}    Get Length    ${aColumn}
     [Return]    ${iRowCount}
 
@@ -1677,9 +1682,10 @@ Get Column Count
     [Documentation]    This keyword is used to to handle old way of getting column count from an excel file.
     ...    UTF upgrade from 3.2 to 3.9.1.
     ...    @author: dahijara    29OCT2019    - intial create    
+    ...    update: songchan    17DEC2020    - added value for max_num to correct the passing of arguments for sheetname
     [Arguments]    ${sSheetName}
     
-    ${aRowValues}    Read Excel Row    1    0    ${sSheetName}
+    ${aRowValues}    Read Excel Row    1    0    0    ${sSheetName}
     ${iColCount}    Get Length    ${aRowValues}
     Log    ${iColCount}
     [Return]    ${iColCount}    
@@ -1687,7 +1693,7 @@ Get Column Count
 Get Row Values
     [Documentation]    This keyword is used to to handle old way of getting row values from an excel file.
     ...    UTF upgrade from 3.2 to 3.9.1.
-    ...    @author: dahijara    29OCT2019    - intial create    
+    ...    @author: dahijara    29OCT2019    - intial create         
     [Arguments]    ${sSheetName}    ${iRowIndex}
     
     ${aRowValues}    Read Excel Row    ${iRowIndex}    0    ${sSheetName}

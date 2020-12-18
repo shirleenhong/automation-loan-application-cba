@@ -141,6 +141,32 @@ Validate 'Active Customer' Window
     Run Keyword If   '${result}'=='True'    Log    "Active Customer -- ${LIQCustomer_ShortName}" window has been displayed.
     ...     ELSE    Log    "Active Customer -- ${LIQCustomer_ShortName}" window has been displayed.        
     Take Screenshot    ${Screenshot_Path}/Screenshots/LoanIQ/ActiveCustomerWindow_GeneralTab
+    
+Validate Corporate Tab Values
+    [Documentation]    This keyword validates the Corporate Tab values if correct
+    ...    @author: makcamps    17DEC2020    - initial create
+    [Arguments]    ${sLIQCustomer_ShortName}    ${sLIQCustomer_LegalName}    ${sLIQCustomer_ID}    ${sCountry}
+
+    ### Keyword Pre-processing ###
+    ${LIQCustomer_ShortName}    Acquire Argument Value    ${sLIQCustomer_ShortName}
+    ${LIQCustomer_LegalName}    Acquire Argument Value    ${sLIQCustomer_LegalName}
+    ${LIQCustomer_ID}    Acquire Argument Value    ${sLIQCustomer_ID}
+    ${Expected_Country}    Acquire Argument Value    ${sCountry}
+
+    Mx LoanIQ Select Window Tab    ${LIQ_Active_Customer_Notebook_TabSelection}    Corporate
+    
+    Run Keyword And Continue On Failure    Validate Loan IQ Details    ${LIQCustomer_ShortName}    ${LIQ_Active_Customer_Notebook_CorpTab_ImmediateParentField}
+    Run Keyword And Continue On Failure    Validate Loan IQ Details    ${sLIQCustomer_ID}    ${LIQ_Active_Customer_Notebook_CorpTab_ImmediateParentCustIdValue}
+    Run Keyword And Continue On Failure    Validate Loan IQ Details    ${LIQCustomer_ShortName}    ${LIQ_Active_Customer_Notebook_CorpTab_UltimateParentField}
+    Run Keyword And Continue On Failure    Validate Loan IQ Details    ${sLIQCustomer_ID}    ${LIQ_Active_Customer_Notebook_CorpTab_UltimateParentCustIdValue}
+    Run Keyword And Continue On Failure    Validate Loan IQ Details    ${LIQCustomer_ShortName}    ${LIQ_Active_Customer_Notebook_CorpTab_TradingParentField}
+    Run Keyword And Continue On Failure    Validate Loan IQ Details    ${sLIQCustomer_ID}    ${LIQ_Active_Customer_Notebook_CorpTab_TradingParentCustIdValue}
+    
+    ${Actual_Country}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_Active_Customer_Notebook_CorpTab_CountryJavaTree}    ${LIQCustomer_LegalName}%Country%Country
+
+    Run Keyword And Continue On Failure    Should Be Equal   ${Actual_Country}    ${Expected_Country}
+
+    Take Screenshot    ${Screenshot_Path}/Screenshots/LoanIQ/ActiveCustomerWindow_CorporateTab
 
 Read Excel Data and Validate Customer ID, Short Name and Legal Name fields
     [Documentation]    This keyword validates the Customer ID, Short Name and Legal Name fields against from excel data 
@@ -850,6 +876,7 @@ Add DDA Remittance Instruction
     ...    @author: ghabal
     ...    @update: amansuet    23APR2020    added keyword pre and post processing
     ...    @update: amansuet    19MAY2020    - added acquire argument and take screenshot keywords and remove unused keyword
+    ...    @update: makcamps    17DEC2020    - added clicking of Remittance Instruction Button if Remittance Instruction Window is not yet displayed
     [Arguments]    ${sCustomer_Location}    ${sRemittanceInstruction_DDAMethod}    ${sRemittanceInstruction_DDADescriptionAUD}    ${sRemittanceInstruction_DDAAccountName}    ${sRemittanceInstruction_DDAAccountNumber}    ${sRemittanceInstruction_DDACurrencyAUD}    
     ...    ${bRI_ProductLoan_Checkbox}    ${bRI_ProductSBLC_Checkbox}    ${bRI_FromCust_Checkbox}    ${bRI_ToCust_Checkbox}    ${bRI_BalanceType_Principal_Checkbox}    ${bRI_BalanceType_Interest_Checkbox}    ${bRI_BalanceType_Fees_Checkbox}    ${bRI_AutoDoIt_Checkbox}
     
@@ -869,6 +896,8 @@ Add DDA Remittance Instruction
     ${RI_BalanceType_Fees_Checkbox}    Acquire Argument Value    ${bRI_BalanceType_Fees_Checkbox}
     ${RI_AutoDoIt_Checkbox}    Acquire Argument Value    ${bRI_AutoDoIt_Checkbox}
     
+    ${IsDisplayed}    Run Keyword And Return Status    Mx LoanIQ Verify Object Exist    ${RemittanceList_Window_AddButton}    VerificationData="Yes"
+    Run Keyword If    ${IsDisplayed}!=${True}    mx LoanIQ click    ${RemittanceInstructions_Button}
     Mx LoanIQ Click    ${RemittanceList_Window_AddButton}
     Mx LoanIQ Activate    ${RemittanceList_Window_AddRemittanceInstruction_Window}
     Validate Window Title    Add Remittance Instruction

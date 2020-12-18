@@ -258,11 +258,15 @@ Send Paperclip Payment for Approval
 Approve Paperclip 
     [Documentation]    This keyword will navigate from General tab to Workflow and Approve
     ...    @author: ritragel
+    ...    @update: mcastro    16DEC2020    - Added additional Validation for Question or warning if present, added Take screenshot
     mx LoanIQ activate window    ${LIQ_PendingPaperClip_Window}
     Mx LoanIQ Select Window Tab    ${LIQ_PaperClip_Tabs}    Workflow
     Mx LoanIQ DoubleClick    ${LIQ_PaperClip_Workflow_Tab}    Approval
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/ApprovedPaperClip
     mx LoanIQ click element if present    ${LIQ_Question_Yes_Button}
     mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
+    Validate if Question or Warning Message is Displayed
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/ApprovedPaperClip
     
 Release Cashflows for Paperclip
     [Documentation]    This keyword will release cashflow for Paperclip
@@ -307,11 +311,16 @@ Verify if Status is set to Release it - Paperclip
 Release Paperclip Transaction
     [Documentation]    This keyword will navigate from General tab to Workflow and Rekease the Paperclip Transaction
     ...    @author: ritragel
+    ...    @update: mcastro    16DEC2020    - Added additional validation of question or warning if displayed, added Take screenshot
+
     mx LoanIQ activate window    ${LIQ_PendingPaperClip_Window}
     Mx LoanIQ Select Window Tab    ${LIQ_PaperClip_Tabs}    Workflow
     Mx LoanIQ DoubleClick    ${LIQ_PaperClip_Workflow_Tab}    Release
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/ReleasePaperClip
     mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
-    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}      
+    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}  
+    Validate if Question or Warning Message is Displayed
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/ReleasePaperClip    
 
 Generate Intent Notices for Paper Clip
     [Documentation]    This keyword is used to Generate Intent Notice for Paper Clip
@@ -598,3 +607,81 @@ Select Existing loan for Facility
     [Arguments]    ${Loan_Alias}
     mx LoanIQ activate    ${LIQ_ExistingOutstandings_Window}
     Mx LoanIQ Select Or DoubleClick In Javatree    ${LIQ_ExistingOutstandings_Table}    ${Loan_Alias}%d    
+
+Select Cycles Item
+    [Documentation]    This keyword will select an item in the 'Cycles for Loan' window and select a specific 'Prorate With' option.
+    ...    @author: mcastro    16DEC2020    - Initial Create
+    [Arguments]    ${sProrate_With}    ${iCycle_No}
+
+    ### Pre-processing Keyword ###
+    ${Prorate_With}    Acquire Argument Value    ${sProrate_With}
+    ${Cycle_No}    Acquire Argument Value    ${iCycle_No}
+
+    Mx LoanIQ activate window    ${LIQ_Loan_CyclesforLoan_Window}
+    Mx LoanIQ Set    JavaWindow("title:=Cycles for Loan.*").JavaRadioButton("label:=${Prorate_With}")    ON
+    Run Keyword If    '${Prorate_With}'=='Projected Due'    Set Test Variable    ${ProrateWith}    Projected Cycle Due
+    Mx LoanIQ Select String    ${LIQ_Loan_CyclesforLoan_List}    ${Cycle_No}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/CyclesForLoan
+
+Validate Payment Amount and Interest Due on Cycles for Loan
+    [Documentation]    This keyword will validate the payment amount and interest due on cycles for loan window.
+    ...    @author: mcastro    16DEC2020    - Initial Create
+    [Arguments]    ${sPayment_Amount}    ${sInterest_Due}
+
+    ### Pre-processing Keyword ###
+    ${Payment_Amount}    Acquire Argument Value    ${sPayment_Amount}
+    ${Interest_Due}    Acquire Argument Value    ${sInterest_Due}
+
+    ### Validate Payment Amount ###
+    ${Payment_Amount}    Remove Comma and Convert to Number    ${Payment_Amount}
+    ${ForPaymentAmount}    Mx LoanIQ Get Data    ${LIQ_CyclesForLoan_forPaymentAmount_Text}    ForPaymentAmount 
+    ${ForPaymentAmount}    Remove Comma and Convert to Number    ${ForPaymentAmount}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/CyclesForLoan
+    ${Status}    Run keyword and Return Status    Should Be Equal    ${Payment_Amount}    ${ForPaymentAmount}
+    Run Keyword If    ${Status}==${True}    Log    for Payment Amount is correct
+    ...    ELSE    Run Keyword and Continue on Failure    Fail    for Payment Amount is incorrect. Expected amount is ${Payment_Amount}
+
+    ### Validate Interest Due ###
+    ${Interest_Due}    Remove Comma and Convert to Number    ${Interest_Due}
+    ${currentInterestDue}    Mx LoanIQ Get Data    ${LIQ_CyclesForLoan_Interest_Text}    currentInterestDue
+    ${currentInterestDue}    Remove Comma and Convert to Number    ${currentInterestDue}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/CyclesForLoan
+    ${Status}    Run keyword and Return Status    Should Be Equal    ${Interest_Due}    ${currentInterestDue}
+    Run Keyword If    ${Status}==${True}    Log    Interest Due is correct
+    ...    ELSE    Run Keyword and Continue on Failure    Fail    Interest due is incorrect. Expected amount is ${Interest_Due}
+
+Close Cycles for Loan Window
+    [Documentation]    This keyword will select an item in the 'Cycles for Loan' window and select a specific 'Prorate With' option.
+    ...    @author: mcastro    16DEC2020    - Initial Create
+
+    Mx LoanIQ activate window    ${LIQ_Loan_CyclesforLoan_Window}
+    Mx LoanIQ click    ${LIQ_Loan_CyclesforLoan_OK_Button}
+    Mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/CyclesForLoan
+
+Navigate to Split Cashflows from Paper Clip
+    [Documentation]    This keyword will go to split cashflow window from Paper clip notebook.
+    ...    @author: mcastro    16DEC2020    - Initial Create
+
+    Navigate Notebook Workflow    ${LIQ_PendingPaperClip_Window}    ${LIQ_PaperClip_Tabs}    ${LIQ_PaperClip_Workflow_Tab}    ${CREATE_CASHFLOW_TYPE}
+    Mx LoanIQ activate window    ${LIQ_Cashflows_Window}
+    Mx LoanIQ select    ${LIQ_Cashflow_Options_SplitCashflows}
+    Mx LoanIQ activate window    ${LIQ_SplitCashflows_Window}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/SplitCashflow
+
+Populate Split Cashflow Split Interest Amount
+    [Documentation]    This keyword will populate split interest amount on split cashflow window.
+    ...    @author: mcastro    16DEC2020    - Initial Create
+    [Arguments]    ${sSplit_Interest}
+   
+    ### Pre-processing Keyword ###
+    ${Split_Interest}    Acquire Argument Value    ${sSplit_Interest}
+
+    Mx LoanIQ activate window    ${LIQ_SplitCashflows_Window}
+    Mx LoanIQ click    ${LIQ_SplitCashflows_Add_Button}
+    mx LoanIQ enter    ${LIQ_SplitCashflowsDetail_SplitInterest_Field}    ${Split_Interest}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/SplitCashflowDetail
+    mx LoanIQ click    ${LIQ_SplitCashflowsDetail_OK_Button}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/SplitCashflow
+    mx LoanIQ click    ${LIQ_SplitCashflows_Exit_Button}
+    mx LoanIQ activate window    ${LIQ_Cashflows_Window}
