@@ -6,6 +6,7 @@ Resource    ../../../../Configurations/LoanIQ_Import_File.robot
 Create Loan Drawdown for CH EDU Bilateral Deal - Outstanding Y
     [Documentation]    This high-level keyword is used to setup the loan drawdown for CH EDU Bilateral Deal
     ...    @author: dahijara    15DEC2020    - Initial Create
+    ...    @update: javinzon    18DEC2020    - updated keyword names for validation of loan drawdown's Amount, General details and Rates
     [Arguments]    ${ExcelPath}
 
     ${Deal_Name}    Read Data From Excel    CRED01_DealSetup    Deal_Name    &{ExcelPath}[rowid]
@@ -75,6 +76,6 @@ Create Loan Drawdown for CH EDU Bilateral Deal - Outstanding Y
     Open Existing Deal    ${Deal_Name}
     Navigate to Outstanding Select Window from Deal
     Navigate to Existing Loan    &{ExcelPath}[Outstanding_Type]    ${FacilityName}    ${Loan_Alias}
-    Validate Loan Drawdown Amounts for CH EDU Bilateral Deal    &{ExcelPath}[Expctd_LoanGlobalOriginal]    &{ExcelPath}[Expctd_LoanGlobalCurrent]    &{ExcelPath}[Expctd_LoanHostBankGross]    &{ExcelPath}[Expctd_LoanHostBankNet]
-    Validate Loan Drawdown General Details for CH EDU Bilateral Deal    &{ExcelPath}[Pricing_Option]    &{ExcelPath}[Loan_EffectiveDate]    &{ExcelPath}[Loan_RepricingFrequency]    &{ExcelPath}[Loan_RepricingDate]    &{ExcelPath}[Loan_PaymentMode]    &{ExcelPath}[Expctd_Loan_IntCycleFrequency]
-    Validate Loan Drawdown Rates for CH EDU Bilateral Deal    &{ExcelPath}[Expctd_LoanCurrentBaseRate]    &{ExcelPath}[Expctd_LoanSpread]    &{ExcelPath}[Expctd_LoanAllInRate]
+    Validate Loan Drawdown Amounts in General Tab    &{ExcelPath}[Expctd_LoanGlobalOriginal]    &{ExcelPath}[Expctd_LoanGlobalCurrent]    &{ExcelPath}[Expctd_LoanHostBankGross]    &{ExcelPath}[Expctd_LoanHostBankNet]
+    Validate Loan Drawdown General Details in General Tab    &{ExcelPath}[Pricing_Option]    &{ExcelPath}[Loan_EffectiveDate]    &{ExcelPath}[Loan_RepricingFrequency]    &{ExcelPath}[Loan_RepricingDate]    &{ExcelPath}[Loan_PaymentMode]    &{ExcelPath}[Expctd_Loan_IntCycleFrequency]
+    Validate Loan Drawdown Rates in Rates Tab    &{ExcelPath}[Expctd_LoanCurrentBaseRate]    &{ExcelPath}[Expctd_LoanSpread]    &{ExcelPath}[Expctd_LoanAllInRate]
