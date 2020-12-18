@@ -57,13 +57,3 @@ Setup Syndicated Deal for LLA Syndicated
     ...    OFF    &{ExcelPath}[PricingRule_BillNoOfDays1]
     
     Save Changes on Deal Notebook 
-    
-    ###Get necessary data from created Deal to be used in succeeding transactions###
-    ${Date}    Get Data From LoanIQ    ${LIQ_DealNotebook_Window}    ${LIQ_DealNotebook_Tab}    Summary    ${LIQ_DealSummaryAgreementDate_Textfield}
-    ${AdminFee_DueDate}    Add Days to Date    ${Date}    30
-    Log    ${Date} is the date.
-    Log    ${AdminFee_DueDate} is the due date.
-    ${ScheduledActivityFilter_FromDate}    Subtract Days to Date    ${Date}    30
-    ${ScheduledActivityFilter_ThruDate}    Add Days to Date    ${Date}    30
-    Log    ${ScheduledActivityFilter_FromDate} is from date.
-    Log    ${ScheduledActivityFilter_ThruDate} is through date.
