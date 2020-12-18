@@ -80,6 +80,7 @@ Update GLOffset Details
     ...    @author: dahijara 26OCT2020
     ...    @update: dahijara    29OCT2020    - Added handling for warning messages when saving data.
     ...    @update: mcastro     20NOV2020    - Update keyword used for selecting dealname in FHAD window
+    ...    @update: dahijara    18DEC2020    - Update keyword for selection from 'Mx LoanIQ Select Or Doubleclick In Tree By Text' to 'Mx LoanIQ Select String'    
     [Arguments]    ${sGL_ShortName}    ${sGL_Offset_Type}    ${sAwaitingDispose}
     
     ###Pre-processing Keyword###
@@ -96,7 +97,7 @@ Update GLOffset Details
     Mx LoanIQ Select Combo Box Value    ${LIQ_DebitGLOffsetDetails_GLShortName}    ${GL_ShortName}
     Mx LoanIQ Click    ${LIQ_DebitGLOffsetDetails_WIPButton}
     Mx LoanIQ Activate Window    ${LIQ_FeesHeldAwaitingDispose_Window}
-    Mx LoanIQ Select Or Doubleclick In Tree By Text    ${LIQ_FeesHeldAwaitingDispose_List}    ${AwaitingDispose}%s
+    Mx LoanIQ Select String    ${LIQ_FeesHeldAwaitingDispose_List}    ${AwaitingDispose}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/OffsetDetails
     Mx LoanIQ Click    ${LIQ_FeesHeldAwaitingDispose_Use_Button}
     mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
@@ -118,3 +119,60 @@ Navigate to Portfolio Settled Discount Change Workflow and Proceed With Transact
 
     Navigate Notebook Workflow    ${LIQ_PortfolioSettledDiscountChange_Window}    ${LIQ_PortfolioSettledDiscountChange_Tab}    ${LIQ_PortfolioSettledDiscountChange_WorkflowItems}    ${Transaction}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LoanDradown_Workflow
+
+Select Portfolio for Portfolio Settled Discount Change
+    [Documentation]    This keyword is used to select the Portfolio position for Settled discount change
+    ...    @author: dahijara   18DEC2020    - Initial create
+    [Arguments]    ${sPortfolio_Name}
+    
+    ### Pre-processing keyword ###
+    ${Portfolio_Name}    Acquire Argument Value    ${sPortfolio_Name}
+       
+    Mx LoanIQ Activate Window    ${LIQ_PortfolioSettledDiscountChange_Window}
+    Mx LoanIQ Click    ${LIQ_PortfolioSettledDiscountChange_Portfolio_Button}
+    Mx LoanIQ Click Element If Present    ${LIQ_Question_Yes_Button}
+    Mx LoanIQ Select String    ${LIQ_SelectPortfolio_JavaTree}    ${Portfolio_Name}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/SelectPortfolio
+    Mx LoanIQ Click    ${LIQ_SelectPortfolio_OK_Button}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/SelectPortfolio
+
+Navigate to Porfolio Allocation from Portfolio Position Notebook
+    [Documentation]    This keyword is used to double click on the Portfolio position to navigate to Portfolio allocation
+    ...    @author: dahijara    18DEC2020    - Initial create
+    [Arguments]    ${sPortfolio_Name}    ${sFacilityName_Name}
+    
+    ###Pre-processing keyword###
+    ${Portfolio_Name}    Acquire Argument Value    ${sPortfolio_Name}
+    ${FacilityName_Name}    Acquire Argument Value    ${sFacilityName_Name}
+       
+    Mx LoanIQ Activate Window    ${LIQ_Portfolio_Positions_Window}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/PortfolioPosition
+    Mx LoanIQ Click    ${LIQ_Portfolio_Positions_CollapseAll_Button}
+    Mx LoanIQ DoubleClick    ${LIQ_Portfolio_Positions_JavaTree}    ${Portfolio_Name}
+    Mx LoanIQ Select Or Doubleclick In Tree By Text    ${LIQ_Portfolio_Positions_JavaTree}    ${sFacilityName_Name}%d
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/PortfolioPosition
+
+Validate Trade and Settled Discount Amount
+    [Documentation]    This keyword is used to validate Trade and Settled Discount amounts in Portfolio allocation
+    ...    @author: dahijara    18DEC2020    - Initial create
+    [Arguments]    ${sExpectedTradeDiscount}    ${sExpectedSettledDiscount}
+
+    ### Pre-processing keyword ###
+    ${ExpectedTradeDiscount}    Acquire Argument Value    ${sExpectedTradeDiscount}
+    ${ExpectedSettledDiscount}    Acquire Argument Value    ${sExpectedSettledDiscount}
+
+    Mx LoanIQ Activate Window    ${LIQ_Cirlce_PortfolioAllocation_Window}
+
+    ### Trade Discount ###
+    ${UI_TradeDiscount}    Mx LoanIQ Get Data    ${LIQ_PortfolioAllocation_TradeDiscount_Textfield}    text%Amount
+    ${Status}    Run Keyword And Return Status    Should Be Equal    ${UI_TradeDiscount}    ${ExpectedTradeDiscount}
+    Run Keyword If    ${Status}==${True}    Log    Trade Discount Amount is correct.
+    ...    ELSE    Run Keyword And Continue On Failure    Fail    Trade Discount Amount is incorrect. Expected: ${ExpectedTradeDiscount} - Actual: ${UI_TradeDiscount}
+
+    ### Settled Discount ###
+    ${UI_SettledDiscount}    Mx LoanIQ Get Data    ${LIQ_PortfolioAllocation_SettledDiscount_Textfield}    text%Amount
+    ${Status}    Run Keyword And Return Status    Should Be Equal    ${UI_SettledDiscount}    ${ExpectedSettledDiscount}
+    Run Keyword If    ${Status}==${True}    Log    Settled Discount Amount is correct.
+    ...    ELSE    Run Keyword And Continue On Failure    Fail    Settled Discount Amount is incorrect. Expected: ${ExpectedSettledDiscount} - Actual: ${UI_SettledDiscount}
+
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/PortfolioAllocation

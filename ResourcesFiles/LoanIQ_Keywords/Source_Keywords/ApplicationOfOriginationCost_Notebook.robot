@@ -163,3 +163,29 @@ Verification of Released Upfront Fee Payment Status
     Run Keyword And Continue On Failure    Mx LoanIQ Verify Text In Javatree    ${LIQ_Events_Javatree}    Upfront Fee Payment from Borrower/Agent Released%yes 
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/UpfrontFeePaymentStatus       
     Select Menu Item    ${LIQ_DealNotebook_Window}    File    Exit   
+
+Adjust Lender Shares from Facility Notebook
+    [Documentation]    This keyword is used to adjust Lender Shares from facility notebook
+    ...    @author:dahijara    18DEC2020
+    [Arguments]    ${sAdjustmentSelection}
+    
+    ### Pre-processing Keyword ###
+    ${AdjustmentSelection}    Acquire Argument Value    ${sAdjustmentSelection}
+    Mx LoanIQ Activate Window    ${LIQ_FacilityNotebook_Window}    
+    Select Menu Item    ${LIQ_FacilityNotebook_Window}    Options    Adjust Lender Shares...
+    Mx LoanIQ Activate Window    ${LIQ_Make_Selections_Window}
+    
+    Run Keyword If    '${AdjustmentSelection}'=='Portfolio Settled Discount Change'    Mx LoanIQ Set    ${LIQ_Make_Selections_SettledDiscountChage_RadioButton}    ON
+    ...    ELSE IF    '${AdjustmentSelection}'=='Portfolio Trade Date Discount Change'    Mx LoanIQ Set    ${LIQ_Make_Selections_TradeDateDiscountChange_RadioButton}    ON
+    ...    ELSE IF    '${AdjustmentSelection}'=='Portfolio Assignable Change'    Mx LoanIQ Set    ${LIQ_Make_Selections_AssignableChange_RadioButton}    ON
+
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/AdjustLenderShares_MakeSelection
+    Mx LoanIQ Click    ${LIQ_Make_Selections_OK_Button}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/AdjustLenderShares_MakeSelection
+
+Navigate to Portfolio Positions from Facility Notebook
+    [Documentation]    This keyword is used to navigate to Portfolio Positions from Facility Notebook
+    ...    @author: dahijara    18DEC2020
+    Mx LoanIQ Activate Window    ${LIQ_FacilityNotebook_Window}    
+    Select Menu Item    ${LIQ_FacilityNotebook_Window}    Options    Portfolio Positions...   
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/PortfolioPositions
