@@ -40,3 +40,7 @@ Charge Upfront Fee and Capitialise (Drawdown Back Date to 17/12/2019)
     Mx Execute Template With Multiple Data    Charge Upfront Fee for CH EDU Bilateral Deal    ${ExcelPath}    ${rowid}    CRED07_UpfrontFee_Payment
     Mx Execute Template With Multiple Data    Send Upfront Fee Intent Notice for CH EDU Bilateral Deal    ${ExcelPath}    ${rowid}    Correspondence
     Mx Execute Template With Multiple Data    Create Loan Drawdown for CH EDU Bilateral Deal - Outstanding Y    ${ExcelPath}    ${rowid}    SERV01_LoanDrawdown
+
+Generate and Send Upfront Fee Payment Notice/Add comment About Upfront Fee Capitalisation
+    Mx Execute Template With Multiple Data    Complete Upfront Fee Cashflow for CH EDU Bilateral Deal    ${ExcelPath}    ${rowid}    CRED07_UpfrontFee_Payment
+    Mx Execute Template With Multiple Data    Complete Portfolio Settled Discount for CH EDU Bilateral Deal    ${ExcelPath}    ${rowid}    TRPO12_PortfolioSettledDisc

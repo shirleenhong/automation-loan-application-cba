@@ -52,3 +52,34 @@ Charge Upfront Fee for CH EDU Bilateral Deal
     Close All Windows on LIQ
     Logout from Loan IQ
     Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
+
+Complete Upfront Fee Cashflow for CH EDU Bilateral Deal
+    [Documentation]    IThis keyword navigates to released Upfront Fee payment and then complete its cashflow.
+    ...    @author: dahijara    17DEC2020    - Initial create
+    [Arguments]    ${ExcelPath}
+
+    ### Read Excel Data ###
+    ${Deal_Name}    Read Data From Excel    CRED01_DealSetup    Deal_Name    &{ExcelPath}[rowid]
+    ${Borrower_Name}    Read Data From Excel    PTY001_QuickPartyOnboarding    LIQCustomer_ShortName    &{ExcelPath}[rowid]
+    ${Expense_Code}    Read Data From Excel    CRED01_DealSetup    Deal_ExpenseCode    &{ExcelPath}[rowid]
+
+    ### Close all windows and Login as original user ###
+    Close All Windows on LIQ
+    Logout from Loan IQ
+    Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
+    
+    ### Open Upfront Fee Payment Window ###
+    Search Existing Deal    ${Deal_Name}
+    Navigate to Released Upfront Fee Payment
+
+    ### Complete Cashflow ###
+    Navigate to Upfront Fee Payment Workflow and Proceed With Transaction    ${COMPLETE_CASHFLOWS_WORKFLOW}
+    Verify Customer Status in Cashflow Window    ${Borrower_Name}    &{ExcelPath}[CashFlow_BeforeStatus]
+    Verify Customer Method in Cashflow Window    ${Borrower_Name}    &{ExcelPath}[CashFlow_BeforeMethod]
+
+    Match and Verify WIP Items    ${Borrower_Name}    &{ExcelPath}[GLShortName]    &{ExcelPath}[UpfrontFee_EffectiveDate]    &{ExcelPath}[UpfrontFee_Amount]    ${Expense_Code}
+    Verify Customer Status in Cashflow Window    ${Borrower_Name}    &{ExcelPath}[CashFlow_AfterStatus]
+    Verify Customer Method in Cashflow Window    ${Borrower_Name}    &{ExcelPath}[CashFlow_AfterMethod]
+    Click OK In Cashflows
+    Verify if Work Item List is Empty for Upfront Fee Payment
+    Close All Windows on LIQ
