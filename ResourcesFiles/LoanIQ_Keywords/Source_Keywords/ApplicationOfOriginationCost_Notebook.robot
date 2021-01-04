@@ -166,7 +166,7 @@ Verification of Released Upfront Fee Payment Status
 
 Adjust Lender Shares from Facility Notebook
     [Documentation]    This keyword is used to adjust Lender Shares from facility notebook
-    ...    @author:dahijara    18DEC2020
+    ...    @author:dahijara    18DEC2020    - Initial create
     [Arguments]    ${sAdjustmentSelection}
     
     ### Pre-processing Keyword ###
@@ -185,7 +185,7 @@ Adjust Lender Shares from Facility Notebook
 
 Navigate to Portfolio Positions from Facility Notebook
     [Documentation]    This keyword is used to navigate to Portfolio Positions from Facility Notebook
-    ...    @author: dahijara    18DEC2020
+    ...    @author: dahijara    18DEC2020    - Initial create
     Mx LoanIQ Activate Window    ${LIQ_FacilityNotebook_Window}    
     Select Menu Item    ${LIQ_FacilityNotebook_Window}    Options    Portfolio Positions...   
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/PortfolioPositions
