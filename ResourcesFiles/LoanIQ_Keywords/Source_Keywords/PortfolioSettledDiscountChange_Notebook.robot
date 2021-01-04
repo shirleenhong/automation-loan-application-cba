@@ -149,7 +149,7 @@ Navigate to Porfolio Allocation from Portfolio Position Notebook
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/PortfolioPosition
     Mx LoanIQ Click    ${LIQ_Portfolio_Positions_CollapseAll_Button}
     Mx LoanIQ DoubleClick    ${LIQ_Portfolio_Positions_JavaTree}    ${Portfolio_Name}
-    Mx LoanIQ Select Or Doubleclick In Tree By Text    ${LIQ_Portfolio_Positions_JavaTree}    ${sFacilityName_Name}%d
+    Mx LoanIQ Select Or Doubleclick In Tree By Text    ${LIQ_Portfolio_Positions_JavaTree}    ${FacilityName_Name}%d
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/PortfolioPosition
 
 Validate Trade and Settled Discount Amount
