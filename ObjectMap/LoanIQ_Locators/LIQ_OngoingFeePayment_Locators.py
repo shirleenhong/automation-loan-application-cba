@@ -28,6 +28,7 @@ LIQ_OngoingFee_Accrue_Dropdown = 'JavaWindow("title:=.*Fee /.*","displayed:=1").
 LIQ_OngoingFee_AccrualEndDate_Field = 'JavaWindow("title:=.*Fee /.*","displayed:=1").JavaEdit("attached text:=Accrual End Date:.*")'
 LIQ_OngoingFee_FeePaidBy_Button = 'JavaWindow("title:=.*Fee /.*","displayed:=1").JavaButton("attached text:=Fee Paid By:.*")'
 LIQ_OngoingFee_ServicingGroup_Button = 'JavaWindow("title:=.*Fee /.*","displayed:=1").JavaButton("attached text:=Servicing Group.*")'
+LIQ_OngoingFee_CycleFrequency_Field = 'JavaWindow("title:=.*Fee /.*","displayed:=1").JavaList("attached text:=Cycle Frequency:.*")'
 LIQ_OngoingFee_Workflow_JavaTree = 'JavaWindow("title:=.*Fee /.*","displayed:=1").JavaTree("tagname:=Drill down to perform.*","index:=0")'
 
 ### Ongoing Fee Menu ###

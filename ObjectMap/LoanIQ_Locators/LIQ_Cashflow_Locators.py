@@ -206,6 +206,7 @@ LIQ_SplitCashflowsDetail_RemittanceInstruction_Button = 'JavaWindow("title:=Spli
 LIQ_SplitCashflowsDetail_SplitPrincipal_Field = 'JavaWindow("title:=Split Cashflow Detail").JavaEdit("attached text:=Split Principal:")'
 LIQ_SplitCashflowsDetail_TransactionAmount_Static = 'JavaWindow("title:=Split Cashflow Detail").JavaStaticText("labeled_containers_path:=.*Amount Available To Split.*","index:=1")'
 LIQ_SplitCashflowsDetail_OK_Button = 'JavaWindow("title:=Split Cashflow Detail").JavaButton("attached text:=OK")'
+LIQ_SplitCashflowsDetail_SplitInterest_Field = 'JavaWindow("title:=Split Cashflow Detail").JavaEdit("attached text:=Split Interest:")'
 
 ###Select Remittance Instruction###
 LIQ_SelectRemittanceInstruction_Window = 'JavaWindow("title:=Select a Remittance Instruction")'

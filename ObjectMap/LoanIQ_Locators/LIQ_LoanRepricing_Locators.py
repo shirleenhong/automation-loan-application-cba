@@ -18,7 +18,7 @@ LIQ_LoanRepricingForDeal_OK_Button = 'JavaWindow("title:=Loan Repricing for Deal
 
 ### Confirmation Window
 
-LIQ_LoanRepricing_ConfirmationWindow_Yes_Button = 'JavaWindow("title:=Question").JavaButton("attached text:=Yes")'
+LIQ_LoanRepricing_ConfirmationWindow_Yes_Button = 'JavaWindow("title:=Loan Repricing For Deal.*").JavaWindow("title:=Confirmation").JavaButton("label:=Yes")'
 LIQ_LoanRepricing_Confirmation_Window = 'JavaWindow("title:=Question")'
 
 ### Repricing Detail Add Options
@@ -79,6 +79,8 @@ LIQ_CyclesForLoan_ProjectedDue_RadioButton = 'JavaWindow("title:=Cycles for Loan
 LIQ_CyclesForLoan_LenderSharesPrepayCycle_RadioButton = 'JavaWindow("title:=Cycles for Loan.*").JavaRadioButton("attached text:=Lender Shares \(Prepay Cycle\)")'
 LIQ_CyclesForLoan_CycleDue_RadioButton = 'JavaWindow("title:=Cycles for Loan.*").JavaRadioButton("attached text:=Cycle Due")'
 LIQ_CyclesForLoan_Ok_Button = 'JavaWindow("title:=Cycles for Loan.*").JavaButton("attached text:=OK")'
+LIQ_CyclesForLoan_forPaymentAmount_Text = 'JavaWindow("title:=Cycles for Loan.*").JavaEdit("attached text:=for Payment Amount:")'
+LIQ_CyclesForLoan_Interest_Text = 'JavaWindow("title:=Cycles for Loan.*").JavaEdit("attached text:=Interest Due:")'
 
 ###Interest Payment Notebook###
 LIQ_InterestPayment_FileExit_Menu = 'JavaWindow("title:=.* Interest Payment.*").JavaMenu("label:=File").JavaMenu("label:=Exit")'

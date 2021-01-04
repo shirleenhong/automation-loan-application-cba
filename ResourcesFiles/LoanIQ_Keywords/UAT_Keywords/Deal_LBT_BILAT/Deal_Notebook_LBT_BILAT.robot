@@ -5,6 +5,9 @@ Resource    ../../../../Configurations/LoanIQ_Import_File.robot
 Setup Deal for LBT BILAT Deal
     [Documentation]    This keyword is for setting up Deal for LBT Bilateral Deal with outside condition
     ...    @author: javinzon    09DEC2020    - Initial create 
+    ...    @update: javinzon    14DEC2020    - Added Write Data to Excel for Deal_Name of SYND02_PrimaryAllocation and 
+    ...										   CRED08_OngoingFeeSetup, Added Set Deal as Sole Lender keyword
+    ...    @update: javinzon    18DEC2020    - Added keywords Write Data to Excel for Deal_Name of SERV01_LoanDrawdown
     [Arguments]    ${ExcelPath}
  
     ${Deal_Name}    ${Deal_Alias}    Generate Deal Name and Alias with Numeric Test Data    &{ExcelPath}[Deal_NamePrefix]    &{ExcelPath}[Deal_AliasPrefix]    5
@@ -19,7 +22,12 @@ Setup Deal for LBT BILAT Deal
 
     Write Data To Excel    CRED01_DealSetup    Deal_Name    &{ExcelPath}[rowid]    ${Deal_Name}
     Write Data To Excel    CRED01_DealSetup    Deal_Alias    &{ExcelPath}[rowid]    ${Deal_Alias}
-
+    Write Data To Excel    SYND02_PrimaryAllocation    Deal_Name    &{ExcelPath}[rowid]    ${Deal_Name}
+    Write Data To Excel    CRED08_OngoingFeeSetup    Deal_Name    &{ExcelPath}[rowid]    ${Deal_Name}
+    Write Data To Excel    SERV01_LoanDrawdown    Deal_Name    &{ExcelPath}[rowid]    ${Deal_Name}
+    Write Data To Excel    SERV01_LoanDrawdown    Deal_Name    2    ${Deal_Name}
+    Write Data To Excel    SERV01_LoanDrawdown    Deal_Name    3    ${Deal_Name}
+    
     Create New Deal    ${Deal_Name}    ${Deal_Alias}    &{ExcelPath}[Deal_Currency]    &{ExcelPath}[Deal_Department]
 
     ### Summary Tab ###   
@@ -27,6 +35,7 @@ Setup Deal for LBT BILAT Deal
     Select Deal Borrower Location and Servicing Group    ${Borrower_Location}    ${Borrower_SGAlias}    ${Borrower_SG_GroupMembers}    ${Borrower_PreferredRIMthd}    ${Borrower_ShortName}    ${Borrower_SG_Name}
     Select Deal Borrower Remmitance Instruction    ${Borrower_ShortName}    ${Deal_Name}    ${Borrower_Location}    ${Borrower_Depositor_Indicator}
     Select Deal Classification    &{ExcelPath}[Deal_ClassificationCode]    &{ExcelPath}[Deal_ClassificationDesc]
+    Set Deal as Sole Lender
     Select Admin Agent    &{ExcelPath}[Deal_AdminAgent]    &{ExcelPath}[AdminAgent_Location]
     Select Servicing group and Remittance Instrucion for Admin Agent    &{ExcelPath}[AdminAgent_SGAlias]    &{ExcelPath}[AdminAgent_RIMethod]    &{ExcelPath}[AdminAgent_SGName]
     Enter Agreement Date    &{ExcelPath}[Deal_AgreementDate]

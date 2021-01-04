@@ -3984,9 +3984,11 @@ Get Cashflow Details Before Sending to Approval in Initial Loan Drawdown
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/Cashflow_ID
     [Return]    ${CashflowID}
 
-Validate Loan Drawdown Amounts for CH EDU Bilateral Deal
-    [Documentation]    This keyword validates the loan drawdown amounts for CH EDU Bilateral Deal.
+Validate Loan Drawdown Amounts in General Tab
+    [Documentation]    This keyword validates the loan drawdown amounts in General Tab.
     ...    @author: dahijara    16DEC2020    - Initial create
+    ...    @update: javinzon    18DEC2020    - Updated keyword name from 'Validate Loan Drawdown Amounts for CH EDU Bilateral Deal' 
+    ...                                        to 'Validate Loan Drawdown Amounts in General Tab', updated documentation
     [Arguments]    ${sOrig_LoanGlobalOriginal}    ${sOrig_LoanGlobalCurrent}    ${sOrig_LoanHostBankGross}    ${sOrig_LoanHostBankNet}
 
     ### GetRuntime Keyword Pre-processing ###
@@ -4024,10 +4026,12 @@ Validate Loan Drawdown Amounts for CH EDU Bilateral Deal
     Run Keyword If    ${Status}==${True}    Log    Loan Host Bank Net Amount is correct.
     ...    ELSE    Run Keyword And Continue On Failure    Fail    Loan Host Bank Net Amount is incorrect. Expected: ${Orig_LoanHostBankNet} - Actual: ${New_LoanHostBankNet}
 
-Validate Loan Drawdown Rates for CH EDU Bilateral Deal
-    [Documentation]    This keyword validates the loan drawdown rates for CH EDU Bilateral Deal.
+Validate Loan Drawdown Rates in Rates Tab
+    [Documentation]    This keyword validates the loan drawdown rates in Rates Tab.
     ...    @author: dahijara    16DEC2020    - Initial create
-    [Arguments]    ${sLoan_BaseRate}    ${sLoan_Spread}    ${sLoan_AllInRate}
+    ...    @update: javinzon    18DEC2020    - Updated keyword name from 'Validate Loan Drawdown Rates for CH EDU Bilateral Deal' to
+    ...                                        'Validate Loan Drawdown Rates in Rates Tab', updated documentation
+    [Arguments]    ${sLoan_BaseRate}    ${sLoan_Spread}    ${sLoan_AllInRate}    
 
     ### GetRuntime Keyword Pre-processing ###
     ${Loan_BaseRate}    Acquire Argument Value    ${sLoan_BaseRate}
@@ -4056,10 +4060,12 @@ Validate Loan Drawdown Rates for CH EDU Bilateral Deal
     ${Status}    Run Keyword And Return Status    Should Be Equal    ${UI_LoanAllInRate}    ${Loan_AllInRate}
     Run Keyword If    ${Status}==${True}    Log    Loan All-In-Rate is correct.
     ...    ELSE    Run Keyword And Continue On Failure    Fail    Loan All-In-Rate is incorrect. Expected: ${Loan_AllInRate} - Actual: ${UI_LoanAllInRate}
-
-Validate Loan Drawdown General Details for CH EDU Bilateral Deal
-    [Documentation]    This keyword validates the loan drawdown general details for CH EDU Bilateral Deal.
+    
+Validate Loan Drawdown General Details in General Tab
+    [Documentation]    This keyword validates the loan drawdown general details in General Tab.
     ...    @author: dahijara    16DEC2020    - Initial create
+    ...    @update: javinzon    18DEC2020    - Updated keyword name from 'Validate Loan Drawdown General Details for CH EDU Bilateral Deal' to
+    ...                                        'Validate Loan Drawdown General Details for CH EDU Bilateral Deal' and documentation
     [Arguments]    ${sLoan_PricingOption}    ${sLoan_EffectiveDate}    ${sLoan_RepricingFrequency}    ${sLoan_RepricingDate}    ${sLoan_PaymentMode}    ${sLoan_IntCycleFrequency}
 
     ### GetRuntime Keyword Pre-processing ###

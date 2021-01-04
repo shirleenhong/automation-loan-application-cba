@@ -842,6 +842,7 @@ Convert Number With Comma Separators
     ...    @update: hstone      29APR2020    - Added Keyword Pre-processing: Acquire Argument Value
     ...                                      - Added Optional Arguments: ${sRunTimeVar_Result}
     ...                                      - Added Keyword Post-processing: Save Runtime Value
+    ...    @update: javinzon    16DEC2020    - Added Keywords to handle ${Number} with lengths 10,11 and 12
     [Arguments]    ${sNumber}    ${sRunTimeVar_Result}=None
 
     ### Keyword Pre-processing ###
@@ -855,9 +856,11 @@ Convert Number With Comma Separators
     ${Number}    Set Variable    ${Number}
     ${6digits}    Run keyword if    ${iLength} == 4 or ${iLength} == 5 or ${iLength} == 6     Get Number 6 Digits    ${Number}
     ${9digits}    Run keyword if    ${iLength} == 7 or ${iLength} == 8 or ${iLength} == 9     Get Number 9 Digits    ${Number}
+    ${12digits}    Run keyword if    ${iLength} == 10 or ${iLength} == 11 or ${iLength} == 12     Get Number 12 Digits    ${Number}
     Run keyword if    ${iLength} == 1 or ${iLength} == 2 or ${iLength} == 3     Set Global Variable    ${Number}    ${Number}
     Run keyword if    ${iLength} == 4 or ${iLength} == 5 or ${iLength} == 6     Set Global Variable    ${Number}    ${6digits}
     Run keyword if    ${iLength} == 7 or ${iLength} == 8 or ${iLength} == 9     Set Global Variable    ${Number}    ${9digits}
+    Run keyword if    ${iLength} == 10 or ${iLength} == 11 or ${iLength} == 12     Set Global Variable    ${Number}    ${12digits}
     Log    ${Number}.${sDecimal}
     ${sDecimalLength}    Get Length    ${sDecimal}
     ${sDecimal1}    Run keyword if    ${sDecimalLength}==1    Set Variable    ${sDecimal}0
@@ -910,15 +913,19 @@ Generate Intent Notices
     [Documentation]    This keyword navigates the transaction workflow and generates intent notices.
     ...    @author: bernchua
     ...    <update> @ghabal - commented section that handles 'Edit Highlighted Notices Button' since what is being displayed now is 'View Highlighted Notices Button' 
+    ...    @update: mcastro    17DEC2020    - Added Take screenshots
     [Arguments]    ${Customer_Name}
     mx LoanIQ activate    ${LIQ_Notices_Window}    
     mx LoanIQ click    ${LIQ_Notices_OK_Button}
     mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
-    mx LoanIQ activate    ${LIQ_NoticeGroup_Window}    
+    mx LoanIQ activate    ${LIQ_NoticeGroup_Window}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/IntentNoticeWindow    
     ${Notice_Contact}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_NoticeGroup_Tree}    ${Customer_Name}%Contact%contact    
     ${Notice_Method}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_NoticeGroup_Tree}    ${Customer_Name}%Notice Method%method
     mx LoanIQ select    ${LIQ_NoticeGroup_File_Preview}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/IntentNoticeWindow
     ${Error_Displayed}    Run Keyword And Return Status    mx LoanIQ click element if present    ${LIQ_Error_OK_Button}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/IntentNoticeWindow
   
     # Run Keyword If    ${Error_Displayed}==True    Run Keywords
     # ...    mx LoanIQ click    ${LIQ_NoticeGroup_EditHighlightedNotices_Button}
@@ -1663,10 +1670,11 @@ Open Excel
 Get Row Count
     [Documentation]    This keyword is used to to handle old way of getting row count from an excel file.
     ...    UTF upgrade from 3.2 to 3.9.1.
-    ...    @author: dahijara    29OCT2019    - intial create    
+    ...    @author: dahijara    29OCT2019    - intial create
+    ...    update: songchan    17DEC2020    - added value for max_num to correct the passing of arguments for sheetname    
     [Arguments]    ${sSheetName}
     
-    ${aColumn}    Read Excel Column    1    0    ${sSheetName}
+    ${aColumn}    Read Excel Column    1    0    0    ${sSheetName}
     ${iRowCount}    Get Length    ${aColumn}
     [Return]    ${iRowCount}
 
@@ -1674,9 +1682,10 @@ Get Column Count
     [Documentation]    This keyword is used to to handle old way of getting column count from an excel file.
     ...    UTF upgrade from 3.2 to 3.9.1.
     ...    @author: dahijara    29OCT2019    - intial create    
+    ...    update: songchan    17DEC2020    - added value for max_num to correct the passing of arguments for sheetname
     [Arguments]    ${sSheetName}
     
-    ${aRowValues}    Read Excel Row    1    0    ${sSheetName}
+    ${aRowValues}    Read Excel Row    1    0    0    ${sSheetName}
     ${iColCount}    Get Length    ${aRowValues}
     Log    ${iColCount}
     [Return]    ${iColCount}    
@@ -1684,7 +1693,7 @@ Get Column Count
 Get Row Values
     [Documentation]    This keyword is used to to handle old way of getting row values from an excel file.
     ...    UTF upgrade from 3.2 to 3.9.1.
-    ...    @author: dahijara    29OCT2019    - intial create    
+    ...    @author: dahijara    29OCT2019    - intial create         
     [Arguments]    ${sSheetName}    ${iRowIndex}
     
     ${aRowValues}    Read Excel Row    ${iRowIndex}    0    ${sSheetName}
@@ -2826,5 +2835,6 @@ Remove Comma Separators in Numbers
 Close Generate Notice Window
     [Documentation]    This keyword closes the notice group window
     ...    @author: mcastro    14DEC2020    - Initial Create
+    ...    @update: kmagday    16Dec2020    - Added space in documentation to fix the error.
 
     Mx LoanIQ Close Window    ${LIQ_NoticeGroup_Window}

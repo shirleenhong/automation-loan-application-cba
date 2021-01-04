@@ -8,6 +8,7 @@ Create Facility for PIM Future BILAT
     ...    @author: mcastro    02DEC2020    - Initial Create
     ...    @update: mcastro    09DEC2020    - Added writing of Facility_name to Correspondence
     ...    @update: mcastro    11DEC2020    - Added writing of Facility_name to Correspondence row 3
+    ...    @update: mcastro    15DEC2020    - Added writing of Facility_name to Correspondence row 4 and 5
     [Arguments]    ${ExcelPath}
     
     ${Facility_NamePrefix}    Read Data From Excel    CRED02_FacilitySetup    Facility_NamePrefix    ${rowid}
@@ -20,7 +21,10 @@ Create Facility for PIM Future BILAT
     Write Data To Excel    SYND02_PrimaryAllocation    Facility_Name    ${rowid}    ${Facility_Name} 
     Write Data To Excel    Correspondence    Facility_Name    ${rowid}    ${Facility_Name}
     Write Data To Excel    Correspondence    Facility_Name    2    ${Facility_Name}
-    Write Data To Excel    Correspondence    Facility_Name    3    ${Facility_Name}    
+    Write Data To Excel    Correspondence    Facility_Name    3    ${Facility_Name}
+    Write Data To Excel    Correspondence    Facility_Name    4    ${Facility_Name}
+    Write Data To Excel    Correspondence    Facility_Name    5    ${Facility_Name}   
+    Write Data To Excel    SERV08_ComprehensiveRepricing    Facility_Name    ${rowid}    ${Facility_Name}
          
     ###New Facility Screen###
     ${Facility_ProposedCmtAmt}    New Facility Select    &{ExcelPath}[Deal_Name]    ${FacilityName}    &{ExcelPath}[Facility_Type]    &{ExcelPath}[Facility_ProposedCmtAmt]    &{ExcelPath}[Facility_Currency]
@@ -88,6 +92,7 @@ Update Commitment for PIM Future BILAT
 Setup Primary for PIM Future BILAT
     [Documentation]    This keyword will Setup primary for PIM Future BILAT deal
     ...    @author: mcastro    03DEC2020    - Initial Create
+    ...    @update: mcastro    14DEC2020    - Update workflow process, approval not needed for the deal
     [Arguments]    ${ExcelPath}
     
     Open Existing Deal    &{ExcelPath}[Deal_Name]
@@ -98,19 +103,12 @@ Setup Primary for PIM Future BILAT
     Add Contact in Primary    &{ExcelPath}[Primary_Contact]
     Select Servicing Group on Primaries    None    &{ExcelPath}[Primary_SGAlias]
     ${SellAmount}    Get Circle Notebook Sell Amount   
-    Mx LoanIQ close window    ${LIQ_OrigPrimaries_Window}
     
-    ### Circle Notebook Complete Portfolio Allocation, Circling, and Sending to Settlement Approval ###
-    Circle Notebook Workflow Navigation    &{ExcelPath}[Primary_Lender]    &{ExcelPath}[Primary_CircledDate]    &{ExcelPath}[Lender_Hostbank]    &{ExcelPath}[Primary_Portfolio]
-    ...    &{ExcelPath}[Primary_PortfolioBranch]    ${SellAmount}    &{ExcelPath}[Primary_ExpiryDate]    &{ExcelPath}[Primary_RiskBook]
+    ### Circle Notebook Complete Portfolio Allocation and Circling ###
 
-    Close All Windows on LIQ
+    Complete Portfolio Allocations Workflow    &{ExcelPath}[Primary_Portfolio]    &{ExcelPath}[Primary_PortfolioBranch]    ${SellAmount}    &{ExcelPath}[Primary_ExpiryDate]    None    &{ExcelPath}[Primary_RiskBook]
+    Circling for Primary Workflow    &{ExcelPath}[Primary_CircledDate]
 
-    ### Approval using a different user ###
-    Logout from Loan IQ
-    Login to Loan IQ    ${SUPERVISOR_USERNAME}    ${SUPERVISOR_PASSWORD}
-    Select Actions    ${WORK_IN_PROCESS_ACTIONS}
-    Circle Notebook Settlement Approval    &{ExcelPath}[Deal_Name]    ${HOST_BANK}
     Close All Windows on LIQ
 
 Approve and Close Deal

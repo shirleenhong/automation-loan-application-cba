@@ -2560,6 +2560,41 @@ Set Commitment Fee Percentage Matrix
     Run Keyword If    ${status}==True    Log    ${CommitmentPctType} with minimum value ${MinimumValue} and maximum value ${MaximumValue} has been successfully added.
     ...    ELSE    Fail    Commitment Fee Percentage Matrix has not been added.
 
+Set Facility Utilized Percentage Matrix
+    [Documentation]    Sets the details in the Facility Utilized Percentage Matrix under Facility Notebook's Pricing tab - Modify Interest Pricing.
+    ...    FormulaCategoryType = The Formula Category that the Fee will be using. Either "Flat Amount" or "Formula".
+    ...    Amount = The actual amount of the Fee.
+    ...    SpreadType = The spread type used if Formula Category "Formula" is used. Either "Basis Points" or "Percent".   
+    ...    @author: javinzon    11DEC2020    - Initial create
+    [Arguments]    ${sCommitmentPctType}    ${sBalanceType}    ${sGreaterThan}    ${sLessThan}    ${sMnemonicStatus}    ${sMinimumValue}    ${sMaximumValue}=Maximum
+    
+    ### Keyword Pre-processing ###
+    ${CommitmentPctType}    Acquire Argument Value    ${sCommitmentPctType}
+    ${BalanceType}    Acquire Argument Value    ${sBalanceType}
+    ${GreaterThan}    Acquire Argument Value    ${sGreaterThan}
+    ${LessThan}    Acquire Argument Value    ${sLessThan}
+    ${MnemonicStatus}    Acquire Argument Value    ${sMnemonicStatus}
+    ${MinimumValue}    Acquire Argument Value    ${sMinimumValue}
+    ${MaximumValue}    Acquire Argument Value    ${sMaximumValue}
+
+    Mx LoanIQ Select Combo Box Value    ${LIQ_PercentageCommitmentMatrix_Type_ComboBox}    ${CommitmentPctType}   
+    Run Keyword If    '${BalanceType}'=='Deal'    Mx LoanIQ Set    ${LIQ_PercentageCommitmentMatrix_DealBalance_RadioButton}    ON
+    Run Keyword If    '${BalanceType}'=='Facility'    Mx LoanIQ Set    ${LIQ_PercentageCommitmentMatrix_FacilityBalance_RadioButton}    ON
+    Run Keyword If    '${GreaterThan}'=='>='    Mx LoanIQ Set    ${LIQ_PercentageCommitmentMatrix_GreaterThanOrEqual_RadioButton}    ON
+    ...    ELSE IF    '${GreaterThan}'=='>'    Mx LoanIQ Set    ${LIQ_PercentageCommitmentMatrix_GreaterThan_RadioButton}    ON    
+    mx LoanIQ enter    ${LIQ_PercentageCommitmentMatrix_MinimumValue_Field}    ${MinimumValue}
+    Run Keyword If    '${MnemonicStatus}'=='ON'    Run Keywords
+    ...    Mx LoanIQ Set    ${LIQ_PercentageCommitmentMatrix_Mnemonic_Checkbox}    ON
+    ...    AND    Mx LoanIQ Verify Runtime Property    ${LIQ_PercentageCommitmentMatrix_LessThanOrEqual_RadioButton}    enabled%1
+    ...    AND    Mx LoanIQ Verify Runtime Property    ${LIQ_PercentageCommitmentMatrix_Mnemonic_JavaList}    value%Maximum
+    Run Keyword If    '${MnemonicStatus}'=='OFF'    Set Commitment Fee Percentage Maximum    ${LessThan}    ${MaximumValue}
+    mx LoanIQ click    ${LIQ_PercentageCommitmentMatrix_OK_Button}
+    
+    ${status}    Run Keyword And Return Status    Mx LoanIQ Verify Object Exist    JavaWindow("title:=Facility.*Pricing").JavaTree("developer name:=.*${CommitmentPctType}.*${MinimumValue}.*${MaximumValue}.*")        VerificationData="Yes"        VerificationData="Yes"
+    ...    VerificationData="Yes"
+    Run Keyword If    ${status}==True    Log    ${CommitmentPctType} with minimum value ${MinimumValue} and maximum value ${MaximumValue} has been successfully added.
+    ...    ELSE    Fail    Facility Utilized Percentage Matrix has not been added.
+
 Set Commitment Fee Percentage Maximum
     [Documentation]    This keyword sets the Maximum value if Mnemonix checkbox is unticked.
     ...    @author: rtarayao
@@ -4094,6 +4129,20 @@ Navigate to Facitily Interest Pricing Window
     mx LoanIQ activate window     ${LIQ_Facility_InterestPricing_Window}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/FacilityPricing_Window
 
+Set Outside Condition to Facility Ongoing Fee
+    [Documentation]    This keyword is used to set an Outside condition for Commitment Fee
+    ...    @author: javinzon    11DEC2020    - Initial create
+    [Arguments]    ${sOutsideCondition_Type}    ${sOutsideCondition_RadioButton}=OFF
+    
+    ### Keyword Pre-processing ###
+    ${OutsideCondition_Type}    Acquire Argument Value    ${sOutsideCondition_Type}
+    ${OutsideCondition_RadioButton}    Acquire Argument Value    ${sOutsideCondition_RadioButton}
+    
+    mx LoanIQ select    ${LIQ_FacilityPricing_OngoingFeeInterest_OutsideCondition_Type_Dropdown}    ${OutsideCondition_Type}
+    Run Keyword If    '${OutsideCondition_RadioButton}'=='ON'    mx LoanIQ click    ${LIQ_FacilityPricing_OngoingFeeInterest_OutsideCondition_True_RadioButton}
+    ...    ELSE    mxLoanIQ click    ${LIQ_FacilityPricing_OngoingFeeInterest_OutsideCondition_False_RadioButton}
+    mx LoanIQ click    ${LIQ_FacilityPricing_OngoingFeeInterest_OutsideCondition_OK_Button}
+
 Verify Facility Pricing Option Details
     [Documentation]    This keyword verifies fields in facility Pricing Option.
     ...    Note: currently, keyword only verifies Matrix Change Application Method field. Add Optional fields as necessary.
@@ -4117,3 +4166,4 @@ Verify Facility Pricing Option Details
 
     Mx LoanIQ click    ${LIQ_InterestPricingOption_Cancel_Button}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/DealNotebook_PricingRulesTab_PricingOption
+
