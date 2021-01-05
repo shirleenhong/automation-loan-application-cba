@@ -3227,7 +3227,6 @@ Update Deal Pricing Rules
 Add False Outside Conditions Deal Change
     [Documentation]    This keyword adds a false outside condition in Conditions Tab
     ...    @author: kmagday    04JAN2021    - initial create
-
     [Arguments]    ${sStartDate}  
 
     ### Keyword Pre-processing ###
@@ -3255,5 +3254,6 @@ Add False Outside Conditions Deal Change
     mx LoanIQ click element if present    ${LIQ_Edit_OutsideConditions_Question_Yes_Button}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/DealWindow_OutsideConditions_HistoryUpdated
     mx LoanIQ click    ${LIQ_OutsideConditions_OK_Button}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/DealWindow_OutsideConditions_HistoryUpdated
     
     

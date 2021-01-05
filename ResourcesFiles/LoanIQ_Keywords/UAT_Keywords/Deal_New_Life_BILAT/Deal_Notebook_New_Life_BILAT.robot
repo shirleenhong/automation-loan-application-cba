@@ -69,7 +69,7 @@ Setup Deal for New Life BILAT
 
 Add False Outside Condition Deal Change
     [Documentation]    This keyword is for setting up false condition
-    ...    @author:    kmagday    04JAN2021    Initial create 
+    ...    @author: kmagday    04JAN2021    Initial create 
     [Arguments]    ${ExcelPath}
     
     ### Open the existing deal ###
