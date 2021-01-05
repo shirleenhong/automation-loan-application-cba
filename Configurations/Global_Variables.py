@@ -381,6 +381,3 @@ EXCEL_REPORTTYPE = 'Excel'
 DOWNLOAD_PATH = ''
 DNR_RELEASED_STATUS = 'RELSD'
 DNR_ONGOINGFEEPAYMENT_TRANSACTION = 'Ongoing Fee Payment'
-
-### Java Window ###
-JAVAWINDOW_WITH_RELEASE_IN_TITLE = 'JavaWindow("title:= Released.*")'

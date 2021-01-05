@@ -32,7 +32,7 @@ Release Deal Change Transaction
     Validate Question Message Box
     Mx LoanIQ click element if present    ${LIQ_Question_Yes_Button}
     Mx LoanIQ click element if present    ${LIQ_Question_Yes_Button}
-    Mx LoanIQ close window    ${JAVAWINDOW_WITH_RELEASE_IN_TITLE}
+    Mx LoanIQ close window    ${LIQ_DealChange_JavaWindow}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/DealChangeTransaction_Workflow
 
 Send Approval Deal Change Transaction
