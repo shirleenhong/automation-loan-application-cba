@@ -3,6 +3,7 @@ LIQ_Cashflows_Window = 'JavaWindow("title:=Cashflows For.*","displayed:=1")'
 LIQ_Cashflows_Tree = 'JavaWindow("title:=Cashflows For.*","displayed:=1").JavaTree("attached text:=Drill down to view/change details")'
 LIQ_Cashflows_SetSelectedItemTo_Button = 'JavaWindow("title:=Cashflows For.*","displayed:=1").JavaButton("label:=Set Selected Item To.*")'
 LIQ_Cashflows_OK_Button = 'JavaWindow("title:=Cashflows For.*","displayed:=1").JavaButton("label:=OK")'
+LIQ_Cashflows_MatchWIPItems_Button = 'JavaWindow("title:=Cashflows For.*","displayed:=1").JavaButton("label:=Match WIP Items")'
 LIQ_Cashflows_Queries_GLEntries = 'JavaWindow("title:=Cashflows For.*","displayed:=1").JavaMenu("label:=Queries").JavaMenu("label:=GL Entries")'
 LIQ_Cashflows_Options_SendAllToSPAP = 'JavaWindow("title:=Cashflows For.*","displayed:=1").JavaMenu("label:=Options").JavaMenu("label:=Send All To SPAP")'
 LIQ_Cashflows_Options_SetAllToDoIt = 'JavaWindow("title:=Cashflows For.*","displayed:=1").JavaMenu("label:=Options").JavaMenu("label:=Set All To .*Do It.*")'
@@ -241,3 +242,11 @@ LIQ_Cashflows_HostBankCashNet_Amount = 'JavaWindow("title:=Cashflows .*").JavaSt
 # ###Cashflows Reversal Fee###
 # LIQ_ReversePayment_Cashflows_MarkSelectedItemForRelease_Button = 'JavaWindow("title:=Cashflows .* Fee Reverse.*").JavaButton("attached text:=Mark Selected Item For Release")'
 # LIQ_ReversePayment_Cashflows_OK_Button = 'JavaWindow("title:=Cashflows .* Fee Reverse.*").JavaButton("attached text:=OK")'
+
+### List of Public WIP Items Window ###
+LIQ_Cashflow_ListOfPublicWIPItems_Window = 'JavaWindow("title:=Cashflows .*").JavaWindow("title:=List of public WIP Items","displayed:=1")'
+LIQ_Cashflow_ListOfPublicWIPItems_JavaTree = 'JavaWindow("title:=Cashflows .*").JavaWindow("title:=List of public WIP Items","displayed:=1").JavaTree("index:=0")'
+LIQ_ListOfPublicWIPItems_Match_Button = 'JavaWindow("title:=Cashflows .*").JavaWindow("title:=List of public WIP Items","displayed:=1").JavaButton("attached text:=Match.*")'
+LIQ_ListOfPublicWIPItems_Exit_Button = 'JavaWindow("title:=Cashflows .*").JavaWindow("title:=List of public WIP Items","displayed:=1").JavaButton("attached text:=Exit")'
+LIQ_CashItemMatchingEditor_Window = 'JavaWindow("title:=Cash Item Matching Editor","displayed:=1")'
+LIQ_CashItemMatchingEditor_OK_Button = 'JavaWindow("title:=Cash Item Matching Editor","displayed:=1").JavaButton("attached text:=OK")'
