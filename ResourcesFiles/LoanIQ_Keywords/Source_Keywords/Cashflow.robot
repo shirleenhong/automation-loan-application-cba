@@ -634,3 +634,70 @@ Set All Items to SPAP
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/CashflowWindow
     Mx LoanIQ click    ${LIQ_Cashflows_OK_Button}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/CashflowWindow
+
+Verify Customer Status in Cashflow Window
+    [Documentation]    This keyword is used to validate the Cashflow status.
+    ...    @author: dahijara    17DEC2020    - Initial create
+    [Arguments]    ${sCustomerShortName}    ${sCashflowStatus}
+
+    ### Keyword Pre-processing ###   
+    ${CustomerShortName}    Acquire Argument Value    ${sCustomerShortName}
+    ${CashflowStatus}    Acquire Argument Value    ${sCashflowStatus}
+
+    Mx LoanIQ Activate    ${LIQ_Cashflows_Window}
+    ${UI_CashflowStatus}    Mx LoanIQ Store TableCell To Clipboard   ${LIQ_Cashflows_Tree}    ${CustomerShortName}%Status%Value_Variable
+
+    ${Status}    Run Keyword And Return Status    Should Be Equal    ${UI_CashflowStatus}    ${CashflowStatus}
+    Run Keyword If    ${Status}==${True}    Log    Cashflow status for ${CustomerShortName} is correct.
+    ...    ELSE    Run Keyword And Continue On Failure    Fail    Cashflow status for ${CustomerShortName} is incorrect. Expected: ${CashflowStatus} - Actual: ${UI_CashflowStatus}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/CashflowNotebook
+
+Verify Customer Method in Cashflow Window
+    [Documentation]    This keyword is used to validate the Cashflow method.
+    ...    @author: dahijara    17DEC2020    - Initial create
+    [Arguments]    ${sCustomerShortName}    ${sCashflowMethod}
+
+    ### Keyword Pre-processing ###   
+    ${CustomerShortName}    Acquire Argument Value    ${sCustomerShortName}
+    ${CashflowMethod}    Acquire Argument Value    ${sCashflowMethod}
+
+    Mx LoanIQ Activate    ${LIQ_Cashflows_Window}
+    ${UI_CashflowMethod}    Mx LoanIQ Store TableCell To Clipboard   ${LIQ_Cashflows_Tree}    ${CustomerShortName}%Method%Value_Variable
+
+    ${Status}    Run Keyword And Return Status    Should Be Equal    ${UI_CashflowMethod}    ${CashflowMethod}
+    Run Keyword If    ${Status}==${True}    Log    Cashflow method for ${CustomerShortName} is correct.
+    ...    ELSE    Run Keyword And Continue On Failure    Fail    Cashflow method for ${CustomerShortName} is incorrect. Expected: ${CashflowMethod} - Actual: ${UI_CashflowMethod}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/CashflowNotebook
+
+Match and Verify WIP Items
+    [Documentation]    This keyword is used to Navigate to list of WIP Items to mach and verify selected WIP Item in the Cashflow.
+    ...    @author: dahijara    17DEC2020    - Initial create
+    [Arguments]    ${sCustomerShortName}    ${sGLShortName}    ${sEffectiveDate}    ${sCurrentBalance}    ${sExpenseCode}
+
+    ### Keyword Pre-processing ###   
+    ${CustomerShortName}    Acquire Argument Value    ${sCustomerShortName}
+    ${GLShortName}    Acquire Argument Value    ${sGLShortName}
+    ${EffectiveDate}    Acquire Argument Value    ${sEffectiveDate}
+    ${CurrentBalance}    Acquire Argument Value    ${sCurrentBalance}
+    ${ExpenseCode}    Acquire Argument Value    ${sExpenseCode}
+
+    Mx LoanIQ Activate    ${LIQ_Cashflows_Window}
+    Mx LoanIQ Select Or DoubleClick In Javatree    ${LIQ_Cashflows_Tree}    ${CustomerShortName}%s
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/Cashflow_Window
+    Mx LoanIQ Click    ${LIQ_Cashflows_MatchWIPItems_Button}
+    Mx LoanIQ Activate    ${LIQ_Cashflow_ListOfPublicWIPItems_Window}
+    
+    ### List of Public WIP Items ###
+    Mx LoanIQ Select String    ${LIQ_Cashflow_ListOfPublicWIPItems_JavaTree}    ${GLShortName}\t${EffectiveDate}\t${CurrentBalance}\t${ExpenseCode}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/Cashflow_ListOfPublicWIPItems
+    Mx LoanIQ Click    ${LIQ_ListOfPublicWIPItems_Match_Button}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/Cashflow_ListOfPublicWIPItems
+
+    ### Cash Item Matching Editor ###
+    Mx LoanIQ Activate    ${LIQ_CashItemMatchingEditor_Window}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/Cashflow_CashItemMatchingEditor
+    Mx LoanIQ Click    ${LIQ_CashItemMatchingEditor_OK_Button}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/Cashflow_ListOfPublicWIPItems
+
+    Mx LoanIQ Click    ${LIQ_ListOfPublicWIPItems_Exit_Button}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/Cashflow_Window

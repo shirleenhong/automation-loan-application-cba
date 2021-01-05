@@ -3223,3 +3223,37 @@ Update Deal Pricing Rules
     ...    ELSE     Run Keyword And Continue On Failure    FAIL    ${PricingOption} is NOT successfully selected in the Pricing Option Table.
 
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/DealNotebook_PricingRulesTab_PricingOption
+
+Add False Outside Conditions Deal Change
+    [Documentation]    This keyword adds a false outside condition in Conditions Tab
+    ...    @author: kmagday    04JAN2021    - initial create
+    [Arguments]    ${sStartDate}  
+
+    ### Keyword Pre-processing ###
+    ${startDate}    Acquire Argument Value    ${sStartDate}
+
+    ### Go to Option->Deal Change Transaction ###
+    Mx LoanIQ select    ${LIQ_DealNotebook_Options_DealChangeTransactions}
+    Mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
+
+    ### click Conditions Tab ###
+    Mx LoanIQ Select Window Tab    ${LIQ_DealChangeTransaction_Tab}    Conditions
+
+    ### click history button and Insert button ###
+    mx LoanIQ click    ${LIQ_DealChangeTransaction_Conditions_OutsideConditions_History_Button}
+    mx LoanIQ click    ${LIQ_OutsideConditions_Insert_Button}
+
+    ### click false radio button
+    mx LoanIQ click    ${LIQ_Edit_OutsideConditions_False_RadioButton}
+
+    ### type the new date take screenshot and click ok button ###
+    mx LoanIQ enter    ${LIQ_Edit_OutsideConditions_StartDate}    ${startDate}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/DealWindow_OutsideConditions_HistoryUpdate
+    mx LoanIQ click    ${LIQ_Edit_OutsideConditions_OK_Button}
+
+    mx LoanIQ click element if present    ${LIQ_Edit_OutsideConditions_Question_Yes_Button}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/DealWindow_OutsideConditions_HistoryUpdated
+    mx LoanIQ click    ${LIQ_OutsideConditions_OK_Button}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/DealWindow_OutsideConditions_HistoryUpdated
+    
+    
