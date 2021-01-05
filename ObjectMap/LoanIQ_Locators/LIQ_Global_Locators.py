@@ -173,3 +173,7 @@ LIQ_SelectByRID_OK_Button = 'JavaWindow("title:=Select by RID").JavaButton("atta
 
 ### Alerts ###
 LIQ_Alerts_OK_Button = 'JavaWindow("text:=Alerts").JavaButton("attached text:=OK")'
+
+### Deal Change Java Window ###
+LIQ_DealChange_JavaWindow = 'JavaWindow("title:= Released.*")'
+
