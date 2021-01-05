@@ -3372,19 +3372,23 @@ Set Base Rate Details
     ...                @update: hstone      05SEP2019    Added Question Window Confirmation
     ...                @update: hstone      18JUN2020    Added Keyword Pre-processing
     ...                @update: mcastro     03SEP2020    Updated screenshot path
-    [Arguments]    ${sBorrowerBaseRate}    ${sAcceptRateFromPricing}=N
+    ...                @update: dahijara    04JAN2021    Added optional argument for Accept Rate from Interpolation
+    ...                @update: dahijara    04JAN2021    Added condition for clicking Accept Rate from Interpolation
+    [Arguments]    ${sBorrowerBaseRate}    ${sAcceptRateFromPricing}=N    ${sAcceptRateFromInterpolation}=N
 
     ### Keyword Pre-processing ###
     ${BorrowerBaseRate}    Acquire Argument Value    ${sBorrowerBaseRate}
     ${AcceptRateFromPricing}    Acquire Argument Value    ${sAcceptRateFromPricing}
+    ${AcceptRateFromInterpolation}    Acquire Argument Value    ${sAcceptRateFromInterpolation}
 
     ${STATUS}    Run Keyword And Return Status    Mx LoanIQ Verify Object Exist    ${LIQ_SetBaseRate_Window}    VerificationData="Yes"
     Run Keyword If    ${STATUS}==False    Run Keywords
     ...    mx LoanIQ click    ${LIQ_InitialDrawdown_BaseRate_Button}
     ...    AND    Verify If Warning Is Displayed
     mx LoanIQ click element if present    ${LIQ_Question_Yes_Button}
-    Run Keyword If    '${AcceptRateFromPricing}'=='N'    mx LoanIQ enter    ${LIQ_InitialDrawdown_BorrowerBaseRate_Field}    ${BorrowerBaseRate}
-    ...    ELSE IF    '${AcceptRateFromPricing}'=='Y'    mx LoanIQ click    ${LIQ_InitialDrawdown_AcceptBaseRate}
+    Run Keyword If    '${AcceptRateFromPricing}'=='N' and '${AcceptRateFromInterpolation}'=='N'    mx LoanIQ enter    ${LIQ_InitialDrawdown_BorrowerBaseRate_Field}    ${BorrowerBaseRate}
+    ...    ELSE IF    '${AcceptRateFromPricing}'=='Y' and '${AcceptRateFromInterpolation}'=='N'    mx LoanIQ click    ${LIQ_InitialDrawdown_AcceptBaseRate}
+    ...    ELSE IF    '${AcceptRateFromPricing}'=='N' and '${AcceptRateFromInterpolation}'=='Y'    mx LoanIQ click    ${LIQ_InitialDrawdown_AcceptRateFromInterpolation}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/BaseRate-Window
     mx LoanIQ click    ${LIQ_InitialDrawdown_SetBaseRate_OK_Button}
     Verify If Warning Is Displayed
