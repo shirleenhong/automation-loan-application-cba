@@ -72,11 +72,10 @@ Setup Primary for New Life BILAT
     Add Contact in Primary    &{ExcelPath}[Primary_Contact]
     Select Servicing Group on Primaries    &{ExcelPath}[Primary_ServicingGroupMember]    &{ExcelPath}[Primary_SGAlias]
     ${SellAmount}    Get Circle Notebook Sell Amount  
-    Mx LoanIQ close window    ${LIQ_OrigPrimaries_Window}
     
-    ### Circle Notebook Complete Portfolio Allocation, Circling, and Sending to Settlement Approval ###
-    Circle Notebook Workflow Navigation    &{ExcelPath}[Primary_Lender]    &{ExcelPath}[Primary_CircledDate]    &{ExcelPath}[Lender_Hostbank]    &{ExcelPath}[Primary_Portfolio]
-    ...    &{ExcelPath}[Primary_PortfolioBranch]    ${SellAmount}    &{ExcelPath}[Primary_ExpiryDate]    &{ExcelPath}[Primary_RiskBook]
+    ### Circle Notebook Complete Portfolio Allocation, Circling ###
+    Complete Portfolio Allocations Workflow    &{ExcelPath}[Primary_Portfolio]    &{ExcelPath}[Primary_PortfolioBranch]    ${SellAmount}    &{ExcelPath}[Primary_ExpiryDate]    &{ExcelPath}[Primary_FacilityName]    &{ExcelPath}[Primary_RiskBook]
+    Circling for Primary Workflow    &{ExcelPath}[Primary_CircledDate]
 
     Close All Windows on LIQ
 

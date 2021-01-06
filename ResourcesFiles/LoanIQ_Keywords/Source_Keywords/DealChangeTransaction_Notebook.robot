@@ -21,13 +21,18 @@ Release Deal Change Transaction
     [Documentation]    This keyword will release the deal change transaction
     ...    @author: mnanquilada
     ...    @update: fmamaril    22MAY2020    - Add Screenshot path
+    ...    @update: kmagday    04JAN2020     - Close Deal Notebook before releasing(can't release if deal notebook is open)
+
+    ${dealNotebookIsOpen}    Run Keyword And Return Status    Mx LoanIQ Verify Object Exist    ${LIQ_DealNotebook_Window}
+    Run Keyword If    ${dealNotebookIsOpen}==${True}    Mx LoanIQ close window    ${LIQ_DealNotebook_Window}
+ 
     Mx LoanIQ select    ${LIQ_DealChangeTransaction_Status_Release}
     Mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
     Mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
     Validate Question Message Box
     Mx LoanIQ click element if present    ${LIQ_Question_Yes_Button}
     Mx LoanIQ click element if present    ${LIQ_Question_Yes_Button}
-    Mx LoanIQ close window    JavaWindow("title:= Released.*")
+    Mx LoanIQ close window    ${LIQ_DealChange_JavaWindow}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/DealChangeTransaction_Workflow
 
 Send Approval Deal Change Transaction
@@ -148,7 +153,26 @@ Modify Deal Expense Code and Processing Area
     [Return]    ${ExpenseDescription}    ${ProcessingAreaDescription} 
 
 
+Validate added outside condition on the deal
+    [Documentation]    This keyword will validates if the false outside condition is added via deal change.
+    ...    @author: kmagday    04JAN2021    - Initial create
+    [Arguments]    ${sStartDate}  
+
+    ### Keyword Pre-processing ###
+    ${startDate}    Acquire Argument Value    ${sStartDate}
     
+    Mx LoanIQ Select Window Tab    ${LIQ_DealNotebook_Tab}    Ratios/Conds
+    mx LoanIQ click    ${LIQ_OutsideConditions_History_Button}
+
+    Mx LoanIQ Click Javatree Cell    ${LIQ_OutsideConditions_JavaTree}    ${startDate}%s
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/DealChangeTransaction
+    mx LoanIQ click    ${LIQ_OutsideConditions_Cancel_Button}
+
+    Mx LoanIQ Select Window Tab    ${LIQ_DealNotebook_Tab}    Events    
+    Mx LoanIQ Select String    ${LIQ_Events_Javatree}    Deal Change Transaction Released            
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/DealChangeTransaction
+
+    Close All Windows on LIQ
              
                   
     

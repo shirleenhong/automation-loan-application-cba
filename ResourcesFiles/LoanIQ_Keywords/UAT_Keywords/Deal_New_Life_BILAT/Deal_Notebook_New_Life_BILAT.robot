@@ -60,10 +60,61 @@ Setup Deal for New Life BILAT
     Add Pricing Option    &{ExcelPath}[Deal_PricingOption]    &{ExcelPath}[InitialFractionRate_Round]    &{ExcelPath}[RoundingDecimal_Round]    &{ExcelPath}[NonBusinessDayRule]    &{ExcelPath}[PricingOption_BillNoOfDays]    
     ...    &{ExcelPath}[PricingOption_MatrixChangeAppMthd]    &{ExcelPath}[PricingOption_RateChangeAppMthd]    &{ExcelPath}[PricingOption_InitialFractionRate]    &{ExcelPath}[PricingOption_RoundingDecimalPrecision]    &{ExcelPath}[PricingOption_RoundingApplicationMethod]      
     ...    &{ExcelPath}[PricingOption_PercentOfRateFormulaUsage]    &{ExcelPath}[PricingOption_RepricingNonBusinessDayRule]    &{ExcelPath}[PricingOption_FeeOnLenderShareFunding]    &{ExcelPath}[PricingOption_InterestDueUponPrincipalPayment]    &{ExcelPath}[PricingOption_InterestDueUponRepricing]
-    ...    &{ExcelPath}[PricingOption_ReferenceBanksApply]    &{ExcelPath}[PricingOption_IntentNoticeDaysInAdvance]    &{DxcelPath}[PricingOption_IntentNoticeTime]    sPricingOption_MinimumDrawdownAmount=&{ExcelPath}[MinimumDrawdownAmount]   sPricingOption_BillBorrower=&{ExcelPath}[PricingOption_BillBorrower]     
+    ...    &{ExcelPath}[PricingOption_ReferenceBanksApply]    &{ExcelPath}[PricingOption_IntentNoticeDaysInAdvance]    &{ExcelPath}[PricingOption_IntentNoticeTime]    sPricingOption_MinimumDrawdownAmount=&{ExcelPath}[MinimumDrawdownAmount]   sPricingOption_BillBorrower=&{ExcelPath}[PricingOption_BillBorrower]     
 
     Add Fee Pricing Rules    &{ExcelPath}[PricingRule_Fee]    &{ExcelPath}[PricingRule_MatrixChangeAppMthd]    &{ExcelPath}[PricingRule_NonBussDayRule]
 
     ### Ratios/Conds Tab ###
     Add Outside Conditions    &{ExcelPath}[Ratios_And_Cons_Index]    &{ExcelPath}[Ratios_And_Cons_Description]    &{ExcelPath}[Ratios_And_Cons_StartDate]    &{ExcelPath}[Ratios_And_Cons_RadioButton]
 
+Add False Outside Condition Deal Change
+    [Documentation]    This keyword is for setting up false condition
+    ...    @author: kmagday    04JAN2021    Initial create 
+    [Arguments]    ${ExcelPath}
+    
+    ### Open the existing deal ###
+    Open Existing Deal    &{ExcelPath}[Deal_Name]
+
+    ### Going to Option->Deal Change Transaction and adding false outside condition to previous one ###
+    Add False Outside Conditions Deal Change   &{ExcelPath}[Ratios_And_Cons_StartDate1]
+
+    ###Deal Change Transaction - Workflow Tab###
+    ${Current_Date}    Get System Date
+    Send Approval Deal Change Transaction    ${Current_Date}
+
+    ###Loan IQ Desktop###  
+    Logout from Loan IQ
+    Login to Loan IQ    ${MANAGER_USERNAME}    ${MANAGER_PASSWORD}
+    Open Existing Deal    &{ExcelPath}[Deal_Name]
+     
+    ###Deal Notebook - General Tab###               
+    Validate Status of Deal and Navigate to Deal Change Transaction
+    
+    ###Deal Change Transaction - Workflow Tab###  
+    Approve Deal Change Transaction
+    
+    Logout from Loan IQ
+    Login to Loan IQ    ${SUPERVISOR_USERNAME}    ${SUPERVISOR_PASSWORD}    
+    Open Existing Deal    &{ExcelPath}[Deal_Name]
+    
+    ###Deal Notebook - General Tab###          
+    Validate Status of Deal and Navigate to Deal Change Transaction
+    Release Deal Change Transaction
+
+    ###Refresh All Code Tables###
+    Refresh Tables in LIQ
+    
+    ###Deal Notebook - Conds###  
+    Open Existing Deal    &{ExcelPath}[Deal_Name]
+    Validate added outside condition on the deal    &{ExcelPath}[Ratios_And_Cons_StartDate1]
+    
+    ### Go back to original user.###
+    Logout from Loan IQ
+    Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
+
+    
+
+
+
+   
+    
