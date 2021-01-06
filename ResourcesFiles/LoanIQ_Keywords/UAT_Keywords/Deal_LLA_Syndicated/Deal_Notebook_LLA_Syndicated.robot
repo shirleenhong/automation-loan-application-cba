@@ -21,6 +21,10 @@ Setup Syndicated Deal for LLA Syndicated
 
     Write Data To Excel    CRED01_DealSetup    Deal_Name    &{ExcelPath}[rowid]    ${Deal_Name}
     Write Data To Excel    CRED01_DealSetup    Deal_Alias    &{ExcelPath}[rowid]    ${Deal_Alias}
+    Write Data To Excel    CRED02_FacilitySetup    Deal_Name    &{ExcelPath}[rowid]    ${Deal_Name}
+    Write Data To Excel    CRED02_FacilitySetup    Borrower_ShortName    &{ExcelPath}[rowid]    ${Borrower_ShortName}
+    Write Data To Excel    CRED02_FacilitySetup    Facility_Borrower    &{ExcelPath}[rowid]    ${Borrower_ShortName}
+    Write Data To Excel    CRED02_FacilitySetup    Facility_BorrowerSGName    &{ExcelPath}[rowid]    ${Borrower_SG_Name}
     
     ###Deal Select Window###
     Create New Deal    ${Deal_Name}    ${Deal_Alias}    &{ExcelPath}[Deal_Currency]    &{ExcelPath}[Deal_Department]

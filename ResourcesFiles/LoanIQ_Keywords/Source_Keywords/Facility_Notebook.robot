@@ -229,9 +229,9 @@ Modify Ongoing Fee Pricing - Insert After
     ...    @update: clanding    30JUL2020    - replaced sleep keywords
     [Arguments]    ${FacilityItemAfter}    ${Facility_PercentWhole}    ${FacilityItem}    ${Facility_Percent}  
     mx LoanIQ click    ${LIQ_FacilityPricing_OngoingFees_After_Button}
-    Mx LoanIQ Select Combo Box Value    ${LIQ_Facility_InterestPricing_AddItem_List}    Copy Interest Pricing Matrix
-    Mx LoanIQ Select Combo Box Value    ${LIQ_Facility_InterestPricing_AddItem_List}    FormulaCategory
-    Mx LoanIQ Select Combo Box Value    ${LIQ_Facility_InterestPricing_AddItem_List}    Matrix
+    Run Keyword And Continue On Failure    Mx LoanIQ Select Combo Box Value    ${LIQ_Facility_InterestPricing_AddItem_List}    Copy Interest Pricing Matrix
+    Run Keyword And Continue On Failure    Mx LoanIQ Select Combo Box Value    ${LIQ_Facility_InterestPricing_AddItem_List}    FormulaCategory
+    Run Keyword And Continue On Failure    Mx LoanIQ Select Combo Box Value    ${LIQ_Facility_InterestPricing_AddItem_List}    Matrix
     Mx LoanIQ Select Combo Box Value    ${LIQ_Facility_InterestPricing_AddItem_List}    ${FacilityItemAfter}
     Run Keyword And Continue On Failure    Mx LoanIQ Verify Object Exist    ${LIQ_FacilityPricing_OngoingFees_AddItem_OK_Button}    VerificationData="Yes"
     Run Keyword And Continue On Failure    Mx LoanIQ Verify Object Exist    ${LIQ_FacilityPricing_OngoingFees_AddItem_Cancel_Button}       VerificationData="Yes"
