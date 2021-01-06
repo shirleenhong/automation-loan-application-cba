@@ -701,3 +701,12 @@ Match and Verify WIP Items
 
     Mx LoanIQ Click    ${LIQ_ListOfPublicWIPItems_Exit_Button}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/Cashflow_Window
+
+Set All Items to Undo It
+    [Documentation]    This keyword will set all cashflow items to 'Undo It'
+    ...    @author: dahijara    04JAN2021    - Initial create
+    Mx LoanIQ Activate    ${LIQ_Cashflows_Window}
+    Select Menu Item    ${LIQ_Cashflows_Window}    Options    Set All To 'Undo It'
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/CashflowWindow
+    Mx LoanIQ click    ${LIQ_Cashflows_OK_Button}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/CashflowWindow
