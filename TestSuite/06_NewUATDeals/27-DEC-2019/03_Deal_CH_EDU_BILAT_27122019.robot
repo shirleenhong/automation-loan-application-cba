@@ -48,3 +48,7 @@ Generate and Send Upfront Fee Payment Notice/Add comment About Upfront Fee Capit
 Create Drawdown and Back Date to 4/12/2019
     Set Test Variable    ${rowid}    3
     Mx Execute Template With Multiple Data    Create Loan Drawdown for CH EDU Bilateral Deal - Outstanding A    ${ExcelPath}    ${rowid}    SERV01_LoanDrawdown
+
+Create Drawdown and Back Date to 18/12/2019
+    Set Test Variable    ${rowid}    4
+    Mx Execute Template With Multiple Data    Create Loan Drawdown for CH EDU Bilateral Deal - Outstanding B    ${ExcelPath}    ${rowid}    SERV01_LoanDrawdown
