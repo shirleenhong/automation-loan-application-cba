@@ -25,9 +25,6 @@ Collect Commitment Fee Payment For New Life BILAT
     ${ProjectedCycleDue}    Compute Commitment Fee Amount Per Cycle    ${BalanceAmount}    ${RateBasis}    &{ExcelPath}[Cycle_Number]    &{ExcelPath}[Commitment_AdjustedDueDate]    None    None    &{ExcelPath}[Commitment_Accrue]    
     Write Data To Excel    SERV29_CommitmentFeePayment    Computed_CycleDue    ${rowid}    ${ProjectedCycleDue}
 
-    # ### Acrual Tab ###
-    # Validate Details of Ongoing Fee on Accruals Tab    ${ProjectedCycleDue}    &{ExcelPath}[Cycle_Number]
-    
     ### Ongoing Fee Payment ###
     Select Cycle Fee Payment 
     Enter Effective Date for Ongoing Fee-Cycle Due Payment    &{ExcelPath}[Commitment_AdjustedDueDate]
@@ -46,7 +43,7 @@ Collect Commitment Fee Payment For New Life BILAT
     Select Item in Work in Process    ${PAYMENTS_TRANSACTION}    ${AWAITING_APPROVAL_STATUS}    ${ONGOING_FEE_PAYMENT_TRANSACTION}     &{ExcelPath}[Facility_Name]
     Navigate Notebook Workflow    ${LIQ_OngoingFeePayment_Window}    ${LIQ_OngoingFeePayment_Tab}    ${LIQ_OngoingFeePayment_WorkflowItems}    ${APPROVAL_STATUS}
     
-    # ### Generate Intent Notice and Release ###
+    ### Generate Intent Notice and Release ###
     Logout from Loan IQ
     Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
     Select Item in Work in Process    ${PAYMENTS_TRANSACTION}    ${GENERATE_INTENT_NOTICES}    ${ONGOING_FEE_PAYMENT_TRANSACTION}     &{ExcelPath}[Facility_Name]
