@@ -6,6 +6,7 @@ Setup Syndicated Deal for LLA Syndicated
     [Documentation]    This keyword is used to create a Syndicated Deal.
     ...    Primarily entering data in multiple tabs of the Deal Notebook and adding Pricing Options.
     ...    @author: makcamps    18DEC2020    - initial create
+    ...    @update: makcamps    07JAN2021    - added write methods for new sheets created
     [Arguments]    ${ExcelPath}
 
     ###Data Generation###
