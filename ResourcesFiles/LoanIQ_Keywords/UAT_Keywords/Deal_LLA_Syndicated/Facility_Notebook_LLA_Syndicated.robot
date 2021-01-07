@@ -82,12 +82,13 @@ Setup Pricing for LLA Syndicated Deal
     ...    &{ExcelPath}[MaxType4]    &{ExcelPath}[MinValue2]    &{ExcelPath}[MaxValue2]
     Modify Ongoing Fee Pricing - Insert Matrix of External Rating    &{ExcelPath}[Condition3]    &{ExcelPath}[ExternalRatingType1]    &{ExcelPath}[MinType5]
     ...    &{ExcelPath}[MaxType3]    &{ExcelPath}[MinValue2]    &{ExcelPath}[MaxValue2]
-    Modify Ongoing Fee Pricing - Insert After Matrix of External Rating    &{ExcelPath}[FacilityItemAfter]    &{ExcelPath}[Facility_Percent3]
+    Modify Ongoing Fee Pricing - Insert After Matrix of External Rating    &{ExcelPath}[FacilityItemAfter]    &{ExcelPath}[Facility_Percent3]    
     Confirm Facility Ongoing Fee Pricing Options Settings
-    Run Keyword And Continue On Failure    Mx LoanIQ Verify Object Exist    JavaWindow("title:=Facility -.*").JavaTree("developer name:=.*&{ExcelPath}[Facility_PercentWhole1].*")    VerificationData="Yes"
-    Run Keyword And Continue On Failure    Mx LoanIQ Verify Object Exist    JavaWindow("title:=Facility -.*").JavaTree("developer name:=.*&{ExcelPath}[Facility_PercentWhole2].*")    VerificationData="Yes"
-    Run Keyword And Continue On Failure    Mx LoanIQ Verify Object Exist    JavaWindow("title:=Facility -.*").JavaTree("developer name:=.*&{ExcelPath}[Facility_PercentWhole3].*")    VerificationData="Yes"
-    Run Keyword And Continue On Failure    Mx LoanIQ Verify Object Exist    JavaWindow("title:=Facility -.*").JavaTree("developer name:=.*&{ExcelPath}[FacilityItem].*")    VerificationData="Yes"
+    
+    Verify If Text Value Exist as Static Text on Page    Facility -    &{ExcelPath}[Facility_PercentWhole1]
+    Verify If Text Value Exist as Static Text on Page    Facility -    &{ExcelPath}[Facility_PercentWhole2]
+    Verify If Text Value Exist as Static Text on Page    Facility -    &{ExcelPath}[Facility_PercentWhole3]
+    Verify If Text Value Exist as Static Text on Page    Facility -    &{ExcelPath}[FacilityItem]
     
     ### Modify Interest Pricing ###
     Navigate to Facility Notebook - Modify Interest Pricing
@@ -124,7 +125,8 @@ Setup Pricing for LLA Syndicated Deal
     Modify Interest Pricing - Insert Matrix of External Rating    &{ExcelPath}[Condition3]    &{ExcelPath}[ExternalRatingType1]    &{ExcelPath}[MinType5]
     ...    &{ExcelPath}[MaxType3]    &{ExcelPath}[MinValue2]    &{ExcelPath}[MaxValue2]    
     Modify Interest Pricing - Insert After Matrix of External Rating    &{ExcelPath}[InterestPricingItem]    &{ExcelPath}[OptionName]    &{ExcelPath}[Interest_RateBasis]
-    ...    &{ExcelPath}[FormulaText]    &{ExcelPath}[Spread3]
+    ...    &{ExcelPath}[FormulaText]    &{ExcelPath}[Spread3]    
     Confirm Facility Interest Pricing Options Settings
-    Run Keyword And Continue On Failure    Mx LoanIQ Verify Object Exist    JavaWindow("title:=Facility -.*").JavaTree("developer name:=.*&{ExcelPath}[Code].*")     VerificationData="Yes"
+    
+    Verify If Text Value Exist as Static Text on Page    Facility -    &{ExcelPath}[Code]
     
