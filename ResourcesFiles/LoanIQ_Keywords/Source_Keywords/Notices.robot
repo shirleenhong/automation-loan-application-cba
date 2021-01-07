@@ -484,9 +484,8 @@ Validate Notice Status for Event Fee Payment Notice
     ###Notice Group Window Validation###
     Mx LoanIQ activate window    ${LIQ_NoticeGroup_Window}
     Mx LoanIQ click    ${LIQ_EventFeePaymentGroup_UnmarkAll_Button}
-    Sleep    10s    
+    Mx LoanIQ activate window    ${LIQ_NoticeGroup_Window}  
     mx LoanIQ click    ${LIQ_EventFeePaymentGroup_Refresh_Button}
-    Sleep    10s  
     mx LoanIQ activate window    ${LIQ_NoticeGroup_Window}  
     Log    ${Notice_Customer_LegalName}
     Log    ${Contact}

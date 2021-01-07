@@ -23,7 +23,7 @@ Break Cost for Early Prepayment for PIM Future BILAT
     Search for Existing Outstanding    ${OutstandingSelect_Type}    ${Facility_Name}
     Open Existing Loan    ${Loan_Alias}
 
-    ## Breakfunding Notebook ###
+    ### Breakfunding Notebook ###
     Navigate to Breakfunding Window from Loan Notebook
     Generate Lender Shares for Bilateral Deal    &{ExcelPath}[Legal_Entity]    &{ExcelPath}[Legal_Entity_Amount]
     Add Portfolio and Expense Code    &{ExcelPath}[Legal_Entity]    &{ExcelPath}[Legal_Entity_Amount]    &{ExcelPath}[Expense_Code]

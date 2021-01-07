@@ -107,6 +107,7 @@ Generate Lender Shares for Bilateral Deal
     [Documentation]    This keyword is use to generate lender shares in breakfunding
     ...    @author: ritragel
     ...    @update: mcastro    17DEC2020    - Added take screenshot
+    ...    @update: mcastro    07JAN2021    - Updated Mx Native Type to Mx Press Combination
     [Arguments]     ${Legal_Entity}    ${Legal_Entity_Amount}
     mx LoanIQ activate window    ${LIQ_Breakfunding_Window}
     Mx LoanIQ Select Window Tab    ${LIQ_Breakfunding_Workflow_Tab}    Workflow 
@@ -119,7 +120,7 @@ Generate Lender Shares for Bilateral Deal
     mx LoanIQ activate window    ${LIQ_SharesForBreakCostFee_Window}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/BreakCostFeeWindow
     Mx LoanIQ Select String    ${LIQ_SharesForBreakCostFee_PrimaryAssignee_List}    ${Legal_Entity}
-    Mx Native Type    {ENTER}
+    Mx Press Combination    Key.ENTER
     mx LoanIQ activate window    ${LIQ_ServicingGroupShare_Window}
     mx LoanIQ enter    ${LIQ_ServicingGroupShare_Amount_Textfield}    ${Legal_Entity_Amount}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/ServicingGroupShareWindow
@@ -132,6 +133,7 @@ Add Portfolio and Expense Code
     ...    @update: ritragel    9SEP11    Passing expense code instead of rowid
     ...    @update: sahalder    08JUL2020    Added keyword pre-processing steps
     ...    @update: mcastro    17DEC2020    Fixed incorrect variable name for ExpenseCode
+    ...    @update: mcastro    07JAN2021    - Updated Mx Native Type to Mx Press Combination
     [Arguments]    ${sLegal_Entity}    ${sLegal_Entity_Amount}    ${sExpenseCode}
     
     ### GetRuntime Keyword Pre-processing ###
@@ -141,7 +143,7 @@ Add Portfolio and Expense Code
 
     mx LoanIQ activate window    ${LIQ_SharesForBreakCostFee_Window}
     Mx LoanIQ Select String    ${LIQ_SharesForBreakCostFee_LegalEntity_List}    ${Legal_Entity}
-    Mx Native Type    {ENTER}
+    Mx Press Combination    Key.ENTER
     mx LoanIQ activate window    ${LIQ_HostBankShares_Window}
     Run Keyword And Continue On Failure    Mx LoanIQ Verify Object Exist    ${LIQ_HostBankShares_Window}              VerificationData="Yes"
     mx LoanIQ click    ${LIQ_HostBankShares_AddPortfolioExpenseCode_Button}
