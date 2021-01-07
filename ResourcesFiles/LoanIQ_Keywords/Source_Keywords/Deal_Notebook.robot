@@ -1123,12 +1123,14 @@ Validate Deal Holiday Calendar Items
 
 Add Deal Pricing Options
     [Documentation]    This keyword adds Pricing Options in the Deal Notebook.
-    ...                @author: bernchua
-    ...    @update: ehugo    29JUN2020    - added keyword pre-processing; added screenshot
+    ...    @author: bernchua
+    ...    @update: ehugo       29JUN2020    - added keyword pre-processing; added screenshot
+    ...    @update: makcamps    18DEC2020    - added bill borrower condition: if provided is off, don't check checkbox
+    ...    									 - added interest due on principal payment condition: if provided is on, check checkbox
     [Arguments]    ${sPricingOption}    ${sInitialFraction_Round}    ${sRoundingDecimal_Round}    ${sNonBusinessDayRule}
-    ...    ${sBillingNumberOfDays}    ${sMatrixChangeAppMethod}    ${sRateChangeAppMethod}    ${sPercentOfRateFormulaUsage}=${EMPTY}
-    ...    ${sPricingOption_CCY}=${EMPTY}    ${sRepricing_NonBusinessDayRule}=${EMPTY}
-    ...    ${sIntentNotice_DaysInAdvance}=${EMPTY}    ${sIntentNotice_Time}=${EMPTY}    ${sIntentNotice_AMPM}=${EMPTY}
+    ...    ${sBillingNumberOfDays}    ${sMatrixChangeAppMethod}    ${sRateChangeAppMethod}    ${sPercentOfRateFormulaUsage}=${EMPTY}    ${sPricingOption_CCY}=${EMPTY}
+    ...    ${sRepricing_NonBusinessDayRule}=${EMPTY}    ${sIntentNotice_DaysInAdvance}=${EMPTY}    ${sIntentNotice_Time}=${EMPTY}    ${sIntentNotice_AMPM}=${EMPTY}
+    ...    ${sBillBorrower}=ON    ${sInterestDueUponPrincipalPayment}=OFF
 
     ### GetRuntime Keyword Pre-processing ###
     ${PricingOption}    Acquire Argument Value    ${sPricingOption}
@@ -1144,6 +1146,8 @@ Add Deal Pricing Options
     ${IntentNotice_DaysInAdvance}    Acquire Argument Value    ${sIntentNotice_DaysInAdvance}
     ${IntentNotice_Time}    Acquire Argument Value    ${sIntentNotice_Time}
     ${IntentNotice_AMPM}    Acquire Argument Value    ${sIntentNotice_AMPM}
+    ${BillBorrower}    Acquire Argument Value    ${sBillBorrower}
+    ${InterestDueUponPrincipalPayment}    Acquire Argument Value    ${sInterestDueUponPrincipalPayment}
 
     Mx LoanIQ Select Window Tab    ${LIQ_DealNotebook_Tab}    Pricing Rules
     mx LoanIQ click    ${LIQ_PricingRules_AddOption_Button}
@@ -1153,12 +1157,12 @@ Add Deal Pricing Options
     Run Keyword If    '${PercentOfRateFormulaUsage}'!='${EMPTY}'    Mx LoanIQ Select Combo Box Value    ${LIQ_InterestPricingOption_PercentOfRateFormulaUsage_List}    ${PercentOfRateFormulaUsage}
     Mx LoanIQ Select Combo Box Value    ${LIQ_InterestPricingOption_NonBusinessDayRule_Dropdown}    ${NonBusinessDayRule}
     mx LoanIQ enter    ${LIQ_InterestPricingOption_BillingNumberDays_Field}    ${BillingNumberOfDays}
-    Mx LoanIQ Set    ${LIQ_InterestPricingOption_BillBorrower_Checkbox}    ON
+    Run Keyword If    '${BillBorrower}'=='ON'    Mx LoanIQ Set    ${LIQ_InterestPricingOption_BillBorrower_Checkbox}    ON
     Mx LoanIQ Select Combo Box Value    ${LIQ_InterestPricingOption_MatrixChangeAppMthd_Combobox}    ${MatrixChangeAppMethod}    
     Mx LoanIQ Select Combo Box Value    ${LIQ_InterestPricingOption_RateChangeAppMthd_Combobox}    ${RateChangeAppMethod}
     ${InterestDue_CheckboxVisible}    Run Keyword And Return Status    Mx LoanIQ Verify Object Exist    ${LIQ_InterestPricingOption_InterestDueUponRepricing_Checkbox}    VerificationData="Yes"
     Run Keyword If    ${InterestDue_CheckboxVisible}==True    Mx LoanIQ Set    ${LIQ_InterestPricingOption_InterestDueUponRepricing_Checkbox}    ON
-    Run Keyword If    '${PricingOption}'=='Fixed Rate Option'    Mx LoanIQ Set    ${LIQ_InterestPricingOption_InterestDueUponPrincipalPayment_Checkbox}    ON
+    Run Keyword If    '${PricingOption}'=='Fixed Rate Option' or '${InterestDueUponPrincipalPayment}'=='ON'    Mx LoanIQ Set    ${LIQ_InterestPricingOption_InterestDueUponPrincipalPayment_Checkbox}    ON
     Run Keyword If    '${IntentNotice_DaysInAdvance}'!='${EMPTY}'    Run Keywords
     ...    mx LoanIQ enter    ${LIQ_InterestPricingOption_IntentNoticeDaysInAdvance_Textfield}    ${IntentNotice_DaysInAdvance}
     ...    AND    mx LoanIQ enter    ${LIQ_InterestPricingOption_IntentNoticeTimeInAdvance_Textfield}    ${IntentNotice_Time}
@@ -3219,3 +3223,37 @@ Update Deal Pricing Rules
     ...    ELSE     Run Keyword And Continue On Failure    FAIL    ${PricingOption} is NOT successfully selected in the Pricing Option Table.
 
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/DealNotebook_PricingRulesTab_PricingOption
+
+Add False Outside Conditions Deal Change
+    [Documentation]    This keyword adds a false outside condition in Conditions Tab
+    ...    @author: kmagday    04JAN2021    - initial create
+    [Arguments]    ${sStartDate}  
+
+    ### Keyword Pre-processing ###
+    ${startDate}    Acquire Argument Value    ${sStartDate}
+
+    ### Go to Option->Deal Change Transaction ###
+    Mx LoanIQ select    ${LIQ_DealNotebook_Options_DealChangeTransactions}
+    Mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
+
+    ### click Conditions Tab ###
+    Mx LoanIQ Select Window Tab    ${LIQ_DealChangeTransaction_Tab}    Conditions
+
+    ### click history button and Insert button ###
+    mx LoanIQ click    ${LIQ_DealChangeTransaction_Conditions_OutsideConditions_History_Button}
+    mx LoanIQ click    ${LIQ_OutsideConditions_Insert_Button}
+
+    ### click false radio button
+    mx LoanIQ click    ${LIQ_Edit_OutsideConditions_False_RadioButton}
+
+    ### type the new date take screenshot and click ok button ###
+    mx LoanIQ enter    ${LIQ_Edit_OutsideConditions_StartDate}    ${startDate}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/DealWindow_OutsideConditions_HistoryUpdate
+    mx LoanIQ click    ${LIQ_Edit_OutsideConditions_OK_Button}
+
+    mx LoanIQ click element if present    ${LIQ_Edit_OutsideConditions_Question_Yes_Button}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/DealWindow_OutsideConditions_HistoryUpdated
+    mx LoanIQ click    ${LIQ_OutsideConditions_OK_Button}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/DealWindow_OutsideConditions_HistoryUpdated
+    
+    

@@ -126,6 +126,20 @@ Update Enterprise Party Details And Return Values
     
     [Return]    ${New_Enterprise_Name}    ${Short_Name}
     
+Update Short Name and Enterprise Name And Return Values
+    [Documentation]    This keyword is used to update enterprise name and short name, generate and update Enterprise Name in Excel File
+    ...    @author: makcamps    17DEC2020    - intial create 
+    [Arguments]        ${sEnterprise_Prefix}    ${sShort_Name_Prefix}    ${sParty_ID}
+    
+    Wait Until Browser Ready State
+    ${New_Enterprise_Name}    Set Variable    ${sEnterprise_Prefix} ${sParty_ID}
+    Mx Input Text    ${Party_QuickEnterpriseParty_PartyName_TextBox}    ${New_Enterprise_Name}
+    ${Short_Name}    Get Short Name Value and Return    ${sShort_Name_Prefix}    ${sParty_ID}
+    Mx Input Text    ${Party_QuickEnterpriseParty_ShortName_TextBox}    ${Short_Name}
+    Capture Page Screenshot    ${screenshot_path}/Screenshots/Party/Update_EnterprisePartyDetailsPage--{index}.png
+    
+    [Return]    ${New_Enterprise_Name}    ${Short_Name}
+    
 Update Enterprise Party Address Details
     [Documentation]    This keyword is used to update Party address details
     ...    @author: javinzon    22SEP2020    - initial create
@@ -171,6 +185,21 @@ Update Enterprise Business Activity Details
     Capture Page Screenshot    ${screenshot_path}/Screenshots/Party/Update_EnterprisePartyDetailsPage--{index}.png
     Mx Click Element    ${Party_QuickEnterpriseParty_AddressDetails_Next_Button}
     
+Update Enterprise Business Activity Field
+    [Documentation]    This keyword is used to update industry sector and business activity field only
+    ...    @author: makcamps    17DEC2020    - initial create
+    [Arguments]    ${sIndustry_Sector}    ${sBusiness_Activity}    ${sExpected_Error_Message}=None
+    
+    Wait Until Page Contains Element    ${Party_MaintainPartyDetails_EnterpriseParty_BusinessActivity_Checkbox}
+    Wait Until Loading Page Is Not Visible    ${PARTY_TIMEOUT}
+    Wait Until Page Contains    Create Enterprise Business Activity 
+    Double Click Element    ${Party_TableRadioButton_RadioButton}
+    Mx Input Text    ${Party_QuickEnterpriseParty_EnterpriseBusinessActivity_IndustrySector_Dropdown}    ${sIndustry_Sector}
+    Mx Input Text    ${Party_QuickEnterpriseParty_EnterpriseBusinessActivity_BusinessActivity_Dropdown}    ${sBusiness_Activity}
+    Mx Click Element    ${Party_Dialog_SaveRow_Button}
+    Capture Page Screenshot    ${screenshot_path}/Screenshots/Party/Update_EnterprisePartyDetailsPage--{index}.png
+    Mx Click Element    ${Party_QuickEnterpriseParty_AddressDetails_Next_Button}
+    
 Update Goods and Service Tax Details
     [Documentation]    This keyword is used to update GST Number in Goods and Service Tax Dialog
     ...    @author: javinzon    22SEP2020    - initial create
@@ -202,6 +231,25 @@ Update Party Details in Enterprise Party Page
     
     ${New_Enterprise_Name}    ${Short_Name}    Update Enterprise Party Details And Return Values   ${sLocality}    ${sParty_Sub_Type}    ${sParty_Category}    ${sEnterprise_Prefix}    ${sRegistered_Number}    ${sShort_Name_Prefix}
     ...    ${sCountry_of_Tax_Domicile}   ${sCountry_of_Registration} 
+    Mx Scroll Element Into View    ${Party_Footer_Next_Button}
+    Wait Until Page Contains Element    ${Party_Footer_Next_Button}    60s
+    Double Click Element    ${Party_Footer_Next_Button}
+    Wait Until Page Contains Element    ${Party_QuickEnterpriseParty_ApprovalRequired_Dialog}    60s 
+    Capture Page Screenshot    ${screenshot_path}/Screenshots/Party/PartyApprovalDialog-{index}.png
+    Mx Click Element    ${Party_QuickEnterpriseParty_AskForApproval_Button}
+
+    Wait Until Page Contains Element    ${Party_RaisedMessage_Notification}
+    
+    [Return]    ${New_Enterprise_Name}    ${Short_Name}
+    
+Update Business Activity, Short Name and Enterprise Name in Enterprise Party Page
+    [Documentation]    This keyword is used to update Business Activity fields, Short Name and Enterprise Name in Enterprise Party Page
+    ...    @author: makcamps    17DEC2020    - initial create 
+    [Arguments]    ${sEnterprise_Prefix}    ${sShort_Name_Prefix}    ${sParty_ID}    ${sIndustry_Sector}    ${sBusiness_Activity}
+        
+    Update Enterprise Business Activity Field    ${sIndustry_Sector}    ${sBusiness_Activity}
+    
+    ${New_Enterprise_Name}    ${Short_Name}    Update Short Name and Enterprise Name And Return Values   ${sEnterprise_Prefix}    ${sShort_Name_Prefix}    ${sParty_ID}
     Mx Scroll Element Into View    ${Party_Footer_Next_Button}
     Wait Until Page Contains Element    ${Party_Footer_Next_Button}    60s
     Double Click Element    ${Party_Footer_Next_Button}
@@ -309,6 +357,42 @@ Accept Approved Updated Party
     Capture Page Screenshot    ${screenshot_path}/Screenshots/Party/PartyNotificationTypesPage-{index}.png
     Mx Click Element    ${Party_Next_Button}
     
+    Wait Until Browser Ready State
+    Wait Until Loading Page Is Not Visible    ${PARTY_TIMEOUT}
+    Validate Page Screen is Displayed    ${PARTY_APPROVALS_PAGETITLE}
+    
+    ${TaskId_ForPartyDetails}    Select Referral Using Reference ID    ${sTaskID_ForPartyDetails}    
+    ${IsPresent}    Run Keyword And Return Status    Wait Until Page Contains    ${PARTY_ENTERPRISEPARTYDETAILSCHANGE_DESCRIPTION}    5s
+    Run Keyword If    ${isPresent}==${True}    Run Keywords    Capture Page Screenshot    ${screenshot_path}/Screenshots/Party/PartyApprovalPage-{index}.png
+    ...    AND    Mx Click Element    ${Party_Footer_Next_Button} 
+    ...    ELSE    Run Keyword And Continue On Failure    Fail    Approved Referral must be for Enterprise Party Details Changed.
+    
+    Wait Until Browser Ready State
+    Wait Until Loading Page Is Not Visible    ${PARTY_TIMEOUT}
+    Validate Page Screen is Displayed    ${PARTY_AMENDSUCCESSFUL_PAGETITLE}
+    ${isSuccessful}    Run Keyword And Return Status    Wait Until Page Contains    ${PARTY_AMENDSUCCESSFUL_MESSAGE}    10s
+    Run Keyword If    ${isSuccessful}==${True}   Capture Page Screenshot    ${screenshot_path}/Screenshots/Party/PartyAmendment-{index}.png
+    ...    ELSE    Run Keyword And Continue On Failure    Fail    Amendment is unsuccessful.        
+    
+    Mx Click Element    ${Party_CloseTab_Button}
+    
+Accept Approved Updated Selected Details Party
+    [Documentation]    This keyword is used to Accept the Approved Updated party with Business Activity fields, Short Name and Enterprise Name updates
+    ...    @author: makcamps    17DEC2020    - initial create
+    [Arguments]    ${sTaskID_ForPartyDetails}    ${sUserZone}    ${sUserBranch}   
+    
+    Login User to Party    ${PARTY_USERNAME}    ${PARTY_PASSWORD}    ${USER_LINK}    ${USER_PORT}    ${PARTY_URL_SUFFIX}    ${PARTY_HTML_USER_CREDENTIALS}    ${SSO_ENABLED}    ${PARTY_URL}   
+    
+    Configure Zone and Branch    ${sUserZone}    ${sUserBranch}
+    
+    Mx Click Element    ${Party_HomePage_Notification_Icon}    
+    Wait Until Loading Page Is Not Visible    ${PARTY_TIMEOUT}
+    Validate Page Screen is Displayed    ${PARTY_NOTIFICATIONTYPES_PAGETITLE}
+    Mx Input Text    ${Party_NotificationTypes_TaskType_TextBox}    Approval
+    Mx Click Element    ${Party_ProcessNotification_NotificationTypes_Approval_RadioButton}
+    Capture Page Screenshot    ${screenshot_path}/Screenshots/Party/PartyNotificationTypesPage-{index}.png
+    Mx Click Element    ${Party_Next_Button}
+
     Wait Until Browser Ready State
     Wait Until Loading Page Is Not Visible    ${PARTY_TIMEOUT}
     Validate Page Screen is Displayed    ${PARTY_APPROVALS_PAGETITLE}

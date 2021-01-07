@@ -38,6 +38,15 @@ LIQ_ActiveCustomer_Window_Language = 'JavaWindow("title:=Active Customer.*").Jav
 LIQ_Active_Customer_Notebook_GeneralTab_CustomerID = 'JavaWindow("title:=Active Customer.*").JavaEdit("attached text:=Customer ID:")'
 LIQ_Active_Customer_Notebook_GeneralTab_ShortName = 'JavaWindow("title:=Active Customer.*").JaveEdit("title:=Short Name.*").JavaEdit("tagname:=ShortName.*")'
 
+###Active Customer Window_CorporateTab###
+LIQ_Active_Customer_Notebook_CorpTab_ImmediateParentField = 'JavaWindow("title:=Active Customer.*").JavaEdit("labeled_containers_path:=Tab:Corporate;Group:<empty>;", "index:=1")'
+LIQ_Active_Customer_Notebook_CorpTab_ImmediateParentCustIdValue = 'JavaWindow("title:=Active Customer.*").JavaStaticText("labeled_containers_path:=Tab:Corporate;Group:<empty>;", "index:=4")'
+LIQ_Active_Customer_Notebook_CorpTab_UltimateParentField = 'JavaWindow("title:=Active Customer.*").JavaEdit("labeled_containers_path:=Tab:Corporate;Group:<empty>;", "index:=0")'
+LIQ_Active_Customer_Notebook_CorpTab_UltimateParentCustIdValue = 'JavaWindow("title:=Active Customer.*").JavaStaticText("labeled_containers_path:=Tab:Corporate;Group:<empty>;", "index:=2")'
+LIQ_Active_Customer_Notebook_CorpTab_TradingParentField = 'JavaWindow("title:=Active Customer.*").JavaEdit("labeled_containers_path:=Tab:Corporate;Group:<empty>;", "index:=2")'
+LIQ_Active_Customer_Notebook_CorpTab_TradingParentCustIdValue = 'JavaWindow("title:=Active Customer.*").JavaStaticText("labeled_containers_path:=Tab:Corporate;Group:<empty>;", "index:=9")'
+LIQ_Active_Customer_Notebook_CorpTab_CountryJavaTree = 'JavaWindow("title:=Active Customer.*").JavaTree("labeled_containers_path:=Tab:Corporate;Group:Countries;")'
+
 ###Active Customer Window_TabSelection###
 LIQ_Active_Customer_Notebook_TabSelection = 'JavaWindow("title:=Active Customer -.*").JavaTab("tagname:=Language:")'
 

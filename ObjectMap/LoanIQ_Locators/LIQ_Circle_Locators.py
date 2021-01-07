@@ -98,3 +98,8 @@ LIQ_FeeDecisionFor_Window = 'JavaWindow("title:=Fee Decision for:.*")'
 LIQ_FeeDecisionFor_Distribute_RadioButton = 'JavaWindow("title:=Fee Decision for:.*").JavaRadioButton("label:=Distribute")'
 LIQ_FeeDecisionFor_Retain_Inputfield = 'JavaWindow("title:=Fee Decision for:.*").JavaEdit("x:=263","y:=154")'
 LIQ_FeeDecisionFor_OK_Button = 'JavaWindow("title:=Fee Decision for:.*").JavaButton("attached text:=OK")'
+
+### Portfolio Allocation ###
+LIQ_PortfolioAllocation_Window = 'JavaWindow("title:=Portfolio Allocations for.*","displayed:=1")'
+LIQ_PortfolioAllocation_TradeDiscount_Textfield = 'JavaWindow("title:=Portfolio Allocations for.*","displayed:=1").JavaEdit("attached text:=Discount.*")'
+LIQ_PortfolioAllocation_SettledDiscount_Textfield = 'JavaWindow("title:=Portfolio Allocations for.*","displayed:=1").JavaEdit("index:=6")'

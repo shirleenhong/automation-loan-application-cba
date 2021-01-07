@@ -272,6 +272,7 @@ COMPLETE_PORTFOLIO_ALLOCATIONS_WORKFLOW = "Complete Portfolio Allocations"
 FUNDING_MEMO_WORKFLOW = "Funding Memo"
 SEND_TO_SETTLEMENT_APPROVAL_WORKFLOW = "Send to Settlement Approval"
 CLOSE_WORKFLOW = "Close"
+COMPLETE_CASHFLOWS_WORKFLOW = "Complete Cashflows"
 
 ### Loan Acrrue ###
 TO_THE_ACTUAL_DUE_DATE = "to the actual due date"
@@ -380,5 +381,3 @@ EXCEL_REPORTTYPE = 'Excel'
 DOWNLOAD_PATH = ''
 DNR_RELEASED_STATUS = 'RELSD'
 DNR_ONGOINGFEEPAYMENT_TRANSACTION = 'Ongoing Fee Payment'
-
-

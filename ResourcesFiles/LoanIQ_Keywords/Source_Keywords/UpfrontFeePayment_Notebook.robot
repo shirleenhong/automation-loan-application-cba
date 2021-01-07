@@ -278,3 +278,19 @@ Compute Upfront Fee Amount Based On Percentage
     ${New_Upfrontfee_Amount}    Evaluate    ${Percent}*${Deal_Amount}
 
     [Return]    ${New_Upfrontfee_Amount} 
+
+Navigate to Released Upfront Fee Payment
+    [Documentation]    This keyword is used to navigate to the Released Upfront Fee Payment.
+    ...    @author: dahijara    17DEC2020    - Initial create
+    Mx LoanIQ activate window    ${LIQ_DealNotebook_Window}
+    Mx LoanIQ Select Window Tab    ${LIQ_DealNotebook_Tab}    Events
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/Deal_EventsTab
+    Mx LoanIQ Select Or Doubleclick In Tree By Text    ${LIQ_Events_Javatree}    Upfront Fee Payment from Borrower/Agent Released%d
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/UpfrontFeePaymentWindow
+
+Verify if Work Item List is Empty for Upfront Fee Payment
+    [Documentation]    This keyword validates the 'Work Item' list in Upfront Fee Payment workflow tab.
+    ...    @author: dahijara    18DEC2020    - Initial create
+    mx LoanIQ activate    ${LIQ_UpfrontFeePayment_Notebook}
+    Run Keyword And Continue On Failure    Mx LoanIQ Verify Object Exist    ${LIQ_UpfrontFeePaymentNotebook_WorkflowTab_NoItems}    VerificationData="Yes"
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/UpfrontFeePaymentWindow

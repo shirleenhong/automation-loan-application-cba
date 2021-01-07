@@ -3372,19 +3372,23 @@ Set Base Rate Details
     ...                @update: hstone      05SEP2019    Added Question Window Confirmation
     ...                @update: hstone      18JUN2020    Added Keyword Pre-processing
     ...                @update: mcastro     03SEP2020    Updated screenshot path
-    [Arguments]    ${sBorrowerBaseRate}    ${sAcceptRateFromPricing}=N
+    ...                @update: dahijara    04JAN2021    Added optional argument for Accept Rate from Interpolation
+    ...                @update: dahijara    04JAN2021    Added condition for clicking Accept Rate from Interpolation
+    [Arguments]    ${sBorrowerBaseRate}    ${sAcceptRateFromPricing}=N    ${sAcceptRateFromInterpolation}=N
 
     ### Keyword Pre-processing ###
     ${BorrowerBaseRate}    Acquire Argument Value    ${sBorrowerBaseRate}
     ${AcceptRateFromPricing}    Acquire Argument Value    ${sAcceptRateFromPricing}
+    ${AcceptRateFromInterpolation}    Acquire Argument Value    ${sAcceptRateFromInterpolation}
 
     ${STATUS}    Run Keyword And Return Status    Mx LoanIQ Verify Object Exist    ${LIQ_SetBaseRate_Window}    VerificationData="Yes"
     Run Keyword If    ${STATUS}==False    Run Keywords
     ...    mx LoanIQ click    ${LIQ_InitialDrawdown_BaseRate_Button}
     ...    AND    Verify If Warning Is Displayed
     mx LoanIQ click element if present    ${LIQ_Question_Yes_Button}
-    Run Keyword If    '${AcceptRateFromPricing}'=='N'    mx LoanIQ enter    ${LIQ_InitialDrawdown_BorrowerBaseRate_Field}    ${BorrowerBaseRate}
-    ...    ELSE IF    '${AcceptRateFromPricing}'=='Y'    mx LoanIQ click    ${LIQ_InitialDrawdown_AcceptBaseRate}
+    Run Keyword If    '${AcceptRateFromPricing}'=='N' and '${AcceptRateFromInterpolation}'=='N'    mx LoanIQ enter    ${LIQ_InitialDrawdown_BorrowerBaseRate_Field}    ${BorrowerBaseRate}
+    ...    ELSE IF    '${AcceptRateFromPricing}'=='Y' and '${AcceptRateFromInterpolation}'=='N'    mx LoanIQ click    ${LIQ_InitialDrawdown_AcceptBaseRate}
+    ...    ELSE IF    '${AcceptRateFromPricing}'=='N' and '${AcceptRateFromInterpolation}'=='Y'    mx LoanIQ click    ${LIQ_InitialDrawdown_AcceptRateFromInterpolation}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/BaseRate-Window
     mx LoanIQ click    ${LIQ_InitialDrawdown_SetBaseRate_OK_Button}
     Verify If Warning Is Displayed
@@ -3984,9 +3988,11 @@ Get Cashflow Details Before Sending to Approval in Initial Loan Drawdown
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/Cashflow_ID
     [Return]    ${CashflowID}
 
-Validate Loan Drawdown Amounts for CH EDU Bilateral Deal
-    [Documentation]    This keyword validates the loan drawdown amounts for CH EDU Bilateral Deal.
+Validate Loan Drawdown Amounts in General Tab
+    [Documentation]    This keyword validates the loan drawdown amounts in General Tab.
     ...    @author: dahijara    16DEC2020    - Initial create
+    ...    @update: javinzon    18DEC2020    - Updated keyword name from 'Validate Loan Drawdown Amounts for CH EDU Bilateral Deal' 
+    ...                                        to 'Validate Loan Drawdown Amounts in General Tab', updated documentation
     [Arguments]    ${sOrig_LoanGlobalOriginal}    ${sOrig_LoanGlobalCurrent}    ${sOrig_LoanHostBankGross}    ${sOrig_LoanHostBankNet}
 
     ### GetRuntime Keyword Pre-processing ###
@@ -4024,10 +4030,12 @@ Validate Loan Drawdown Amounts for CH EDU Bilateral Deal
     Run Keyword If    ${Status}==${True}    Log    Loan Host Bank Net Amount is correct.
     ...    ELSE    Run Keyword And Continue On Failure    Fail    Loan Host Bank Net Amount is incorrect. Expected: ${Orig_LoanHostBankNet} - Actual: ${New_LoanHostBankNet}
 
-Validate Loan Drawdown Rates for CH EDU Bilateral Deal
-    [Documentation]    This keyword validates the loan drawdown rates for CH EDU Bilateral Deal.
+Validate Loan Drawdown Rates in Rates Tab
+    [Documentation]    This keyword validates the loan drawdown rates in Rates Tab.
     ...    @author: dahijara    16DEC2020    - Initial create
-    [Arguments]    ${sLoan_BaseRate}    ${sLoan_Spread}    ${sLoan_AllInRate}
+    ...    @update: javinzon    18DEC2020    - Updated keyword name from 'Validate Loan Drawdown Rates for CH EDU Bilateral Deal' to
+    ...                                        'Validate Loan Drawdown Rates in Rates Tab', updated documentation
+    [Arguments]    ${sLoan_BaseRate}    ${sLoan_Spread}    ${sLoan_AllInRate}    
 
     ### GetRuntime Keyword Pre-processing ###
     ${Loan_BaseRate}    Acquire Argument Value    ${sLoan_BaseRate}
@@ -4056,10 +4064,12 @@ Validate Loan Drawdown Rates for CH EDU Bilateral Deal
     ${Status}    Run Keyword And Return Status    Should Be Equal    ${UI_LoanAllInRate}    ${Loan_AllInRate}
     Run Keyword If    ${Status}==${True}    Log    Loan All-In-Rate is correct.
     ...    ELSE    Run Keyword And Continue On Failure    Fail    Loan All-In-Rate is incorrect. Expected: ${Loan_AllInRate} - Actual: ${UI_LoanAllInRate}
-
-Validate Loan Drawdown General Details for CH EDU Bilateral Deal
-    [Documentation]    This keyword validates the loan drawdown general details for CH EDU Bilateral Deal.
+    
+Validate Loan Drawdown General Details in General Tab
+    [Documentation]    This keyword validates the loan drawdown general details in General Tab.
     ...    @author: dahijara    16DEC2020    - Initial create
+    ...    @update: javinzon    18DEC2020    - Updated keyword name from 'Validate Loan Drawdown General Details for CH EDU Bilateral Deal' to
+    ...                                        'Validate Loan Drawdown General Details for CH EDU Bilateral Deal' and documentation
     [Arguments]    ${sLoan_PricingOption}    ${sLoan_EffectiveDate}    ${sLoan_RepricingFrequency}    ${sLoan_RepricingDate}    ${sLoan_PaymentMode}    ${sLoan_IntCycleFrequency}
 
     ### GetRuntime Keyword Pre-processing ###

@@ -449,13 +449,19 @@ Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/Deal_CH_EDU_BILAT/Ong
 Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/Deal_CH_EDU_BILAT/UprontFee_Notebook_CH_EDU_BILAT.robot
 Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/Deal_CH_EDU_BILAT/Notices_CH_EDU_BILAT.robot
 Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/Deal_CH_EDU_BILAT/Outstandings_CH_EDU_BILAT.robot
+Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/Deal_CH_EDU_BILAT/Portfolio_Notebook_CH_EDU_BILAT.robot
 
 ### Deal LBT BILAT ###
 Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/Deal_LBT_BILAT/Deal_Borrower_LBT_BILAT.robot
 Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/Deal_LBT_BILAT/Deal_Notebook_LBT_BILAT.robot
 Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/Deal_LBT_BILAT/Facility_Notebook_LBT_BILAT.robot
 Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/Deal_LBT_BILAT/CommitmentFee_Notebook_LBT_BILAT.robot
+Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/Deal_LBT_BILAT/Outstandings_LBT_BILAT.robot
 
+### New UAT LLA Syndicated Deal ###
+Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/Deal_LLA_Syndicated/Deal_Borrower_LLA_Syndicated.robot
+Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/Deal_LLA_Syndicated/Deal_Notebook_LLA_Syndicated.robot
+Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/Deal_LLA_Syndicated/Facility_Notebook_LLA_Syndicated.robot
 
 ### NEW UAT Deal PIM Future BILAT ###
 Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/Deal_PIM_Future_BILAT/Deal_Borrower_PIM_Future_BILAT.robot
@@ -477,3 +483,4 @@ Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/UAT_TL_Keywords/TL_FX
 Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/Deal_New_Life_BILAT/Deal_Borrower_New_Life_BILAT.robot
 Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/Deal_New_Life_BILAT/Deal_Notebook_New_Life_BILAT.robot
 Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/Deal_New_Life_BILAT/Facility_Notebook_New_Life_BILAT.robot
+Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/Deal_New_Life_BILAT/Loan_Drawdown_New_Life_BILAT.robot

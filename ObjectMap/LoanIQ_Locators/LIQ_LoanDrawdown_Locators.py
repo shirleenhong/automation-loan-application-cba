@@ -67,6 +67,7 @@ LIQ_InitialDrawdown_Spread_Current = 'JavaWindow("title:=.*Initial Drawdown .*")
 LIQ_InitialDrawdown_AllInRate = 'JavaWindow("title:=.*Initial Drawdown .*").JavaEdit("attached text:=All-In Rate:")'
 LIQ_InitialDrawdown_AllInRateFromPricing_Text = 'JavaWindow("title:=.*Initial Drawdown.*").JavaObject("tagname:=Group", "text:=Interest Rates").JavaEdit("Index:=5")'
 LIQ_InitialDrawdown_AcceptBaseRate = 'JavaWindow("title:=Set Base Rate.*").JavaButton("attached text:=Accept Rate from Pricing.*")'
+LIQ_InitialDrawdown_AcceptRateFromInterpolation = 'JavaWindow("title:=Set Base Rate.*").JavaButton("attached text:=Accept Rate from Interpolation.*")'
 LIQ_InitialDrawdown_BaseRateFromPricing_Text = 'JavaWindow("title:=Set Base Rate.*").JavaEdit("attached text:=Base Rate from Pricing:")'
 LIQ_InitialDrawdown_BaseRate_Current_Text = 'JavaWindow("title:=.*Initial Drawdown.*").javaObject("tagname:=Group","text:=Interest Rates").JavaEdit("index:=7")'
 LIQ_InitialDrawdown_SpreadRate_Button = 'JavaWindow("title:=.*Initial Drawdown.*").JavaButton("attached text:=Spread:")'
