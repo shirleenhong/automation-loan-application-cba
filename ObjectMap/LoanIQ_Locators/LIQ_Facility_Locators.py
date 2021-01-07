@@ -151,8 +151,13 @@ LIQ_FacilityPricing_OngoingFees_After_Button = 'JavaWindow("title:=Facility:.*")
 LIQ_FacilityPricing_OngoingFees_After_AddItemList = 'JavaWindow("title:=Add Item").JavaList("tagname:=List","index:=0")'
 LIQ_FacilityPricing_OngoingFees_After_AddItemType= 'JavaWindow("title:=Add Item").JavaList("attached text:=Type:")'    
 LIQ_FacilityPricing_OngoingFees_After_AddItemList_OK_Button = 'JavaWindow("title:=Add Item").JavaButton("label:=OK")'
+LIQ_FacilityPricing_OngoingFees_And_Button = 'JavaWindow("title:=Facility:.*").JavaButton("label:=AND")'    
+LIQ_FacilityPricing_OngoingFees_Or_Button = 'JavaWindow("title:=Facility:.*").JavaButton("label:=OR")'
+LIQ_FacilityPricing_OngoingFees_Replicate_Button = 'JavaWindow("title:=Facility:.*").JavaButton("label:=Replicate")'    
+LIQ_FacilityPricing_OngoingFees_Validate_Button = 'JavaWindow("title:=Facility:.*").JavaButton("label:=Validate")'    
+LIQ_FacilityPricing_OngoingFees_Window = 'JavaWindow("title:=.*Ongoing Fee Pricing")'  
 LIQ_Facility_InterestPricing_AddItemType_List= 'JavaWindow("title:=Add Item").JavaList("attached text:=Type:")'    
-LIQ_FacilityPricing_Interest_Tree = 'JavaWindow("title:=Facility -.*").JavaTre("labeled_containers_path:=Tab:Pricing;","index:=1")'
+LIQ_FacilityPricing_Interest_Tree = 'JavaWindow("title:=Facility -.*").JavaTree("labeled_containers_path:=Tab:Pricing;","index:=1")'
 LIQ_FacilityPricing_OngoingFeeRate = 'JavaWindow("title:=Facility - .*").JavaTree("labeled_containers_path:=Tab:Pricing;","index:=0")'
 LIQ_FacilityPricing_Pricing_Tab = 'JavaWindow("title:=Facility - .*").JavaTab("tagname:=TabFolder", "value:=Pricing")'
 LIQ_FacilityPricing_ModifyInterestPricing_Button = 'JavaWindow("title:=Facility -.*").JavaButton("attached text:=Modify Interest Pricing.*")'
@@ -170,8 +175,7 @@ LIQ_FinancialRatio_MaximumValue_Field= 'JavaWindow("title:=Financial Ratio").Jav
 LIQ_FinancialRatio_OK_Button= 'JavaWindow("title:=Financial Ratio").JavaButton("attached text:=OK")'
 LIQ_FinancialRatio_Mnemonic_CheckBox= 'JavaWindow("title:=Financial Ratio").JavaCheckBox("attached text:=Mnemonic")'
 LIQ_FinancialRatio_Mnemonic_List= 'JavaWindow("title:=Financial Ratio").JavaList("x:=495","y:=117")'
-    
-    
+
 ###Facility Notebook - Fee Selection###    
 LIQ_Facility_Pricing_FeeSelection_Window = 'JavaWindow("title:=Fee Selection")'
 LIQ_FacilityPricing_OngoingFees_FreeSelection_OK_Button = 'JavaWindow("title:=Fee Selection").JavaButton("label:=OK")'    
@@ -197,6 +201,8 @@ LIQ_Facility_InterestPricing_Table = 'JavaWindow("title:=.*Interest Pricing").Ja
 LIQ_Facility_InterestPricing_OK_Button = 'JavaWindow("title:=.*Interest Pricing.*").JavaButton("attached text:=OK")'
 LIQ_Facility_InterestPricing_Add_Button = 'JavaWindow("title:=.*Interest Pricing.*").JavaButton("label:=Add")'
 LIQ_Facility_InterestPricing_After_Button = 'JavaWindow("title:=.*Interest Pricing.*").JavaButton("label:=After")'
+LIQ_Facility_InterestPricing_And_Button = 'JavaWindow("title:=.*Interest Pricing.*").JavaButton("label:=AND")'
+LIQ_Facility_InterestPricing_Or_Button = 'JavaWindow("title:=.*Interest Pricing.*").JavaButton("label:=OR")'
 LIQ_Facility_InterestPricing_Validate_Button = 'JavaWindow("title:=.*Interest Pricing.*").JavaButton("label:=Validate")'
 LIQ_Facility_InterestPricing_AddItem_List = 'JavaWindow("title:=Add Item").JavaList("tagname:=List","index:=0")'  
 LIQ_Facility_InterestPricing_Type_List = 'JavaWindow("title:=Add Item").JavaList("attached text:=Type:")'  
@@ -216,6 +222,7 @@ LIQ_Facility_InterestPricing_ExternalRating_MinRating_List = 'JavaWindow("title:
 LIQ_Facility_InterestPricing_ExternalRating_MaxRating_List = 'JavaWindow("title:=External Rating").JavaList("tagname:=Combo","index:=1")'
 LIQ_Facility_InterestPricing_ExternalRating_Customer_List = 'JavaWindow("title:=External Rating").JavaList("attached text:=Customer")'
 LIQ_Facility_InterestPricing_ExternalRating_OK_Button = 'JavaWindow("title:=External Rating").JavaButton("attached text:=OK")'
+LIQ_Facility_InterestPricing_ExternalRating_Cancel_Button = 'JavaWindow("title:=External Rating").JavaButton("attached text:=Cancel")'
 LIQ_Facility_InterestPricingZoom_Window = 'JavaWindow("title:=Interest Pricing.*")'  
 LIQ_Facility_InterestPricingZoom_Table = 'JavaWindow("title:=Interest Pricing.*").JavaTree("tagname:=Tree")'
 LIQ_FormulaCategory_Window = 'JavaWindow("title:=Formula Category")'    
@@ -553,7 +560,6 @@ LIQ_FacilityMISCodes_MISCode_List = 'JavaWindow("title:=Facility MIS Code Detail
 LIQ_FacilityMISCodes_Value_Field = 'JavaWindow("text:=Facility MIS Code Details").JavaEdit("attached text:=Value:")'
 LIQ_FacilityMISCodes_OK_Button = 'JavaWindow("text:=Facility MIS Code Details").JavaButton("attached text:=OK")'
 LIQ_FacilityMISCodes_Cancel_Button = 'JavaWindow("text:=Facility MIS Code Details").JavaButton("attached text:=Cancel")'
-
 
 ### Facility Notebook - Codes Tab ###
 LIQ_Facility_Codes_FundingDesk_Text = 'JavaWindow("title:=Facility -.*").JavaStaticText("labeled_containers_path:=Tab:Codes;Group: General Information ;", "Index:=12")'
