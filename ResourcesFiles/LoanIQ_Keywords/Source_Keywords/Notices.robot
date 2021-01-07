@@ -435,3 +435,66 @@ Select Notices Recepients
     mx LoanIQ activate    ${LIQ_NoticeGroup_Window}    
     Take Screenshot    ${screenshot_path}/Screenshots/Integration/Notice
 
+Validate and Send Event Fee Payment Notice
+    [Documentation]    This keyword is used for sending the event fee payment notice.
+    ...    @author: mcastro    06JAN2021    - Initial Create
+    [Arguments]    ${sNotice_Customer_LegalName}    ${sNotice_Identifier}  
+
+    ### Keyword Pre-processing ###
+    ${Notice_Customer_LegalName}    Acquire Argument Value    ${sNotice_Customer_LegalName}
+    ${Notice_Identifier}    Acquire Argument Value    ${sNotice_Identifier}
+
+    Mx LoanIQ activate window    ${LIQ_EventFeePaymentGroup_Window}
+     
+    Validate Loan IQ Details    ${Notice_Customer_LegalName}    ${LIQ_EventFeePaymentGroup_Customer_Field} 
+    Validate Loan IQ Details    ${Notice_Identifier}    ${LIQ_EventFeePaymentGroup_NoticeID_Field}
+    Mx LoanIQ Verify Runtime Property    ${LIQ_EventFeePaymentGroup_StaticText}    attached text%Awaiting release       
+    Take Screenshot    ${screenshot_path}/Screenshots/Integration/Correspondence_Notice_AwaitingRelease
+    
+    Mx LoanIQ select    ${LIQ_EventFeePaymentGroup_OptionsSend_Menu}
+    Mx LoanIQ Verify Runtime Property    ${LIQ_EventFeePaymentGroup_StaticText}    attached text%Queued
+    
+    Take Screenshot    ${screenshot_path}/Screenshots/Integration/Correspondence_Notice_Queued
+    
+    Close All Windows on LIQ
+
+Validate Notice Status for Event Fee Payment Notice
+    [Documentation]    This Keyword validates the status of Event Fee payment in Notice Window and Notice Group after POST API transaction.
+    ...    @author: mcastro    07JAN2021    - Initial Create
+    [Arguments]    ${sNotice_Identifier}    ${sNotice_Status}     ${sNotice_Customer_LegalName}    ${sContact}    ${sNoticeGroup_UserID}    ${sNotice_Method}                
+    
+    ### Keyword Pre-processing ###
+    ${Notice_Identifier}    Acquire Argument Value    ${sNotice_Identifier}
+    ${Notice_Status}    Acquire Argument Value    ${sNotice_Status}
+    ${Notice_Customer_LegalName}    Acquire Argument Value    ${sNotice_Customer_LegalName}
+    ${Contact}    Acquire Argument Value    ${sContact}
+    ${NoticeGroup_UserID}    Acquire Argument Value    ${sNoticeGroup_UserID}
+    ${Notice_Method}    Acquire Argument Value    ${sNotice_Method}
+
+    ### Notice Window Validation ###
+    Mx LoanIQ activate window    ${LIQ_EventFeePaymentGroup_Window}
+    Validate Loan IQ Details    ${Notice_Identifier}    ${LIQ_EventFeePaymentGroup_NoticeID_Field}
+    Run Keyword And Continue On Failure    Mx LoanIQ Verify Runtime Property    ${LIQ_EventFeePaymentGroup_StaticText}    attached text%${Notice_Status}
+    Log    ${Notice_Status}    
+    
+    ### Notice Listing Window ###
+    Mx LoanIQ activate window    ${LIQ_NoticeListing_Window}   
+    Mx LoanIQ click    ${LIQ_NoticeListing_NoticeGroup_Button}
+    
+    ###Notice Group Window Validation###
+    Mx LoanIQ activate window    ${LIQ_NoticeGroup_Window}
+    Mx LoanIQ click    ${LIQ_EventFeePaymentGroup_UnmarkAll_Button}
+    Sleep    10s    
+    mx LoanIQ click    ${LIQ_EventFeePaymentGroup_Refresh_Button}
+    Sleep    10s  
+    mx LoanIQ activate window    ${LIQ_NoticeGroup_Window}  
+    Log    ${Notice_Customer_LegalName}
+    Log    ${Contact}
+    Log    ${Notice_Status}
+    Log    ${NoticeGroup_UserID}
+    Log    ${Notice_Method}
+    Run Keyword And Continue On Failure    Mx LoanIQ Select String    ${LIQ_EventFeePayment_Items_JavaTree}    ${Notice_Customer_LegalName}\t${Contact}\t${Notice_Status}\t${NoticeGroup_UserID}\t${Notice_Method}
+    
+    Take Screenshot    ${screenshot_path}/Screenshots/Integration/Correspondence_Notice_PostStatus
+    
+    Close All Windows on LIQ     

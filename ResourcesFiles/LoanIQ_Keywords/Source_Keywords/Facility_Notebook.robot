@@ -2616,12 +2616,15 @@ Navigate to Facility Notebook - Modify Interest Pricing
 
 Save Facility Notebook Transaction
     [Documentation]    This keyword saves the current Facility Notebook transaction	
-    ...                @author: bernchua	
-    ...                @update: hstone     05JUN2020      - Added Warning OK Button Click
+    ...    @author: bernchua	
+    ...    @update: hstone     05JUN2020      - Added Warning OK Button Click
+    ...    @update: mcastro    05JAN2021    - Added additional clicking of warning or question button
+    
     mx LoanIQ activate    ${LIQ_FacilityNotebook_Window}    
     mx LoanIQ select    ${LIQ_FacilityNotebook_File_Save}
     mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
     mx LoanIQ click element if present    ${LIQ_Warning_OK_Button}
+    Validate if Question or Warning Message is Displayed
 
 Add Borrower Sublimits Limits
     [Documentation]    This keyword adds Sublimit to the Borrower.
