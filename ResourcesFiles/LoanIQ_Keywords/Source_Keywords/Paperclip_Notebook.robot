@@ -312,14 +312,18 @@ Release Paperclip Transaction
     [Documentation]    This keyword will navigate from General tab to Workflow and Rekease the Paperclip Transaction
     ...    @author: ritragel
     ...    @update: mcastro    16DEC2020    - Added additional validation of question or warning if displayed, added Take screenshot
+    ...    @update: mcastro    17DEC2020    - Added additional Closing of Cashflow window if present
 
-    mx LoanIQ activate window    ${LIQ_PendingPaperClip_Window}
+    Mx LoanIQ activate window    ${LIQ_PendingPaperClip_Window}
     Mx LoanIQ Select Window Tab    ${LIQ_PaperClip_Tabs}    Workflow
     Mx LoanIQ DoubleClick    ${LIQ_PaperClip_Workflow_Tab}    Release
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/ReleasePaperClip
     mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
     mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}  
     Validate if Question or Warning Message is Displayed
+    Repeat Keyword    3 times    Mx LoanIQ click element if present    ${LIQ_BreakFunding_Yes_Button}
+    Mx LoanIQ click element if present    ${LIQ_Information_OK_Button}
+    Mx LoanIQ click element if present    ${LIQ_Cashflows_OK_Button}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/ReleasePaperClip    
 
 Generate Intent Notices for Paper Clip
@@ -672,6 +676,7 @@ Navigate to Split Cashflows from Paper Clip
 Populate Split Cashflow Split Interest Amount
     [Documentation]    This keyword will populate split interest amount on split cashflow window.
     ...    @author: mcastro    16DEC2020    - Initial Create
+    ...    @update: mcastro    06JAN2021    - Added activate split cashflow detail window
     [Arguments]    ${sSplit_Interest}
    
     ### Pre-processing Keyword ###
@@ -679,6 +684,7 @@ Populate Split Cashflow Split Interest Amount
 
     Mx LoanIQ activate window    ${LIQ_SplitCashflows_Window}
     Mx LoanIQ click    ${LIQ_SplitCashflows_Add_Button}
+    Mx LoanIQ activate window    ${LIQ_SplitCashflowsDetail_Window}
     mx LoanIQ enter    ${LIQ_SplitCashflowsDetail_SplitInterest_Field}    ${Split_Interest}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/SplitCashflowDetail
     mx LoanIQ click    ${LIQ_SplitCashflowsDetail_OK_Button}
