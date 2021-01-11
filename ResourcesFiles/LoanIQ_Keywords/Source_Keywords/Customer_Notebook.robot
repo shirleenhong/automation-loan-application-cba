@@ -2738,7 +2738,7 @@ Add Remittance Instruction with Swift Role
     Mx LoanIQ Click    ${RemittanceList_Window_AddRemittanceInstruction_OkButton} 
     Adding Remittance Instructions Details and Swift Role    ${RemittanceInstruction_Method}    ${RemittanceInstruction_Description}   ${RemittanceInstruction_Currency}    ${RemittanceInstruction_DirectionSelected}    ${IMT_MessageCode}    ${BOC_Level}
     ...    ${RI_FromCust_Checkbox}    ${RI_ToCust_Checkbox}    ${RI_AutoDoIt_Checkbox}    ${RI_SendersCorrespondent_Checkbox}    ${Swift_Role}    ${SwiftID}    ${Details_Of_Charges}
-    Take Screenshot    ${Screenshot_Path}/Screenshots/LoanIQ/RTGSRemittanceInstructionsDetailWindow
+    Take Screenshot    ${Screenshot_Path}/Screenshots/LoanIQ/RemittanceInstructionsDetailWindow
     Send Remittance Instruction to Approval
     Mx LoanIQ Select    ${LIQ_RemittanceInstruction_Notebook_FileMenu_ExitMenu}  
     Read Excel Data and Validate Remittance Instructions Data Added in the Remittance List Window     ${RemittanceInstruction_Description}    ${Customer_Location}
