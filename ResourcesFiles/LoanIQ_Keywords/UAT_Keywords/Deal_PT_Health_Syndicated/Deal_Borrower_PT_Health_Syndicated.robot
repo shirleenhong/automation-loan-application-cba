@@ -50,9 +50,13 @@ Create Deal Borrower Initial Details in Quick Party Onboarding for PT Health Syn
 
     Pause Execution
     
+    Validate Party Details in Loan IQ    ${Party_ID}    ${Short_Name}    ${Enterprise_Name}    &{ExcelPath}[GST_Number]    &{ExcelPath}[Party_Sub_Type]    &{ExcelPath}[Business_Activity]    &{ExcelPath}[Business_Country]
+    ...    &{ExcelPath}[Address_Type]    &{ExcelPath}[Address_Line_1]    &{ExcelPath}[Address_Line_2]    &{ExcelPath}[Address_Line_3]    &{ExcelPath}[Address_Line_4]    
+    ...    &{ExcelPath}[Town_City]    &{ExcelPath}[Country_of_Registration]    &{ExcelPath}[Country_of_Tax_Domicile]    &{ExcelPath}[State_Province]    &{ExcelPath}[Post_Code]    ${Entity_Name}
+    
 Search Customer and Complete Borrower Profile Creation with Default Values for PT Health Syndicated Deal
     [Documentation]    This keyword searches a customer and complete its Borrower Profile creation with default values
-    ...    @author: songchan    05JAN2021
+    ...    @author: songchan    05JAN2021    - initial create
     [Arguments]    ${ExcelPath}
 	
 	###Login to LoanIQ
@@ -71,7 +75,7 @@ Search Customer and Complete Borrower Profile Creation with Default Values for P
     ###SIC Tab - Validate Sic Code and Desc
     Navigate to "SIC" tab and Validate Primary SIC Code    &{ExcelPath}[SICCode]    ${ENTITY} / &{ExcelPath}[Business_Activity]
 
-    ##Profile Tab - Adding Profile, Borrower Profile, Location, Contact, and Remittance Instruction
+    ###Profile Tab - Adding Profile, Borrower Profile, Location, Contact, and Remittance Instruction
     Navigate to "Profiles" tab and Validate 'Add Profile' Button
     Add Profile under Profiles Tab    &{ExcelPath}[Profile_Type]
     Add Borrower Profile Details under Profiles Tab    &{ExcelPath}[Profile_Type]
