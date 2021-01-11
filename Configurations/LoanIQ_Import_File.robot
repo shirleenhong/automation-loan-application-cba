@@ -444,12 +444,13 @@ Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/CBA_UAT05_DealTemplat
 ### Deal CH EDU BILAT ###
 Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/Deal_CH_EDU_BILAT/Deal_Borrower_CH_EDU_BILAT.robot
 Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/Deal_CH_EDU_BILAT/Deal_Notebook_CH_EDU_BILAT.robot
+Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/Deal_CH_EDU_BILAT/DealChangeTransaction_CH_EDU_BILAT.robot
 Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/Deal_CH_EDU_BILAT/Facility_Notebook_CH_EDU_BILAT.robot
-Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/Deal_CH_EDU_BILAT/OngoingFee_Notebook_CH_EDU_BILAT.robot
-Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/Deal_CH_EDU_BILAT/UprontFee_Notebook_CH_EDU_BILAT.robot
 Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/Deal_CH_EDU_BILAT/Notices_CH_EDU_BILAT.robot
+Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/Deal_CH_EDU_BILAT/OngoingFee_Notebook_CH_EDU_BILAT.robot
 Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/Deal_CH_EDU_BILAT/Outstandings_CH_EDU_BILAT.robot
 Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/Deal_CH_EDU_BILAT/Portfolio_Notebook_CH_EDU_BILAT.robot
+Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/Deal_CH_EDU_BILAT/UprontFee_Notebook_CH_EDU_BILAT.robot
 
 ### Deal LBT BILAT ###
 Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/Deal_LBT_BILAT/Deal_Borrower_LBT_BILAT.robot
@@ -484,3 +485,5 @@ Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/Deal_New_Life_BILAT/D
 Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/Deal_New_Life_BILAT/Deal_Notebook_New_Life_BILAT.robot
 Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/Deal_New_Life_BILAT/Facility_Notebook_New_Life_BILAT.robot
 Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/Deal_New_Life_BILAT/Loan_Drawdown_New_Life_BILAT.robot
+Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/Deal_New_Life_BILAT/OngoingFee_New_Life_BILAT.robot
+
