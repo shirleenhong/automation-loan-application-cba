@@ -3079,13 +3079,13 @@ Validate Drawdown Rate Change Event
 Validate Initial Drawdown Events Tab
     [Documentation]    This keyword validates the Initial Drawdown Notebook's Event Tab
     ...    @author: bernchua
-    ...    @update: mcastro    08JAN2021    - Added Take Screenshot
+    ...    @update: mcastro    11JAN2021    - Added Take Screenshot, Added 'Run Keyword And Continue On Failure'
     [Arguments]    ${Event_Name}
     mx LoanIQ activate    ${LIQ_InitialDrawdown_Window}
     Mx LoanIQ Select Window Tab    ${LIQ_InitialDrawdown_Tab}    Events
     ${Event_Selected}    Run Keyword And Return Status    Mx LoanIQ Select String    ${LIQ_DrawdownEvents_List}    ${Event_Name}
     Run Keyword If    ${Event_Selected}==True    Log    ${Event_Name} is shown in the Events list of the Drawdown notebook.
-    ...    ELSE    Fail    Event not verified.
+    ...    ELSE    Run Keyword And Continue On Failure    Fail    Event not verified.
 
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LoanEvents
 

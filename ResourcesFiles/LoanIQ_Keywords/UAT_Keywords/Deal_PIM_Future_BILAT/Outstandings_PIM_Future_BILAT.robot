@@ -8,7 +8,8 @@ Create Initial Loan Drawdown for PIM Future BILAT
     ...    @author: mcastro    04DEC2020    - Initial Create
     ...    @update: mcastro    11DEC2020    - Added writing of Loan_Alias to Correspondence
     ...    @update: mcastro    14DEC2020    - Update closing of notice window to a new keyword
-    ...    @update: mcastro    16DEC2020    - Added writing of Loan_Alias to SERV08_ComprehensiveRepricing, updated Set Base Rate Details argument variable
+    ...    @update: mcastro    16DEC2020    - Added writing of Loan_Alias to SERV08_ComprehensiveRepricing, 
+    ...    @update: mcastro    11JAN2021    - Updated Set Base Rate Details and Input General Loan Drawdown Details argument variable
     [Arguments]    ${ExcelPath}
 
     Logout from Loan IQ
@@ -26,7 +27,7 @@ Create Initial Loan Drawdown for PIM Future BILAT
     Write Data To Excel    SERV08_ComprehensiveRepricing    Loan_Alias    ${rowid}    ${Loan_Alias}
 
     Input General Loan Drawdown Details    &{ExcelPath}[Loan_RequestedAmount]    &{ExcelPath}[Loan_EffectiveDate]    &{ExcelPath}[Loan_MaturityDate]    &{ExcelPath}[Loan_RepricingFrequency]    
-    ...    None    &{ExcelPath}[Loan_Accrue]    &{ExcelPath}[Loan_RepricingDate]
+    ...    &{ExcelPath}[Loan_IntCycleFrequency]    &{ExcelPath}[Loan_Accrue]    &{ExcelPath}[Loan_RepricingDate]
 
     ### Cashflow Notebook - Create Cashflows ###
     Navigate to Drawdown Cashflow Window
@@ -85,7 +86,7 @@ Create Initial Loan Drawdown for PIM Future BILAT
 
 Create New Loan Drawdown for PIM Future BILAT
     [Documentation]    This high-level keyword is used to setup a 2nd outstanding for PIM Future BILAT facility
-    ...    @author: mcastro    07JAN2021
+    ...    @author: mcastro    07JAN2021    - Initial Create
     [Arguments]    ${ExcelPath}
 
     Logout from Loan IQ
@@ -102,7 +103,7 @@ Create New Loan Drawdown for PIM Future BILAT
 
     ### General Tab ###
     Input General Loan Drawdown Details    &{ExcelPath}[Loan_RequestedAmount]    &{ExcelPath}[Loan_EffectiveDate]    &{ExcelPath}[Loan_MaturityDate]    &{ExcelPath}[Loan_RepricingFrequency]    
-    ...    None    &{ExcelPath}[Loan_Accrue]    &{ExcelPath}[Loan_RepricingDate]
+    ...    &{ExcelPath}[Loan_IntCycleFrequency]    &{ExcelPath}[Loan_Accrue]    &{ExcelPath}[Loan_RepricingDate]
 
     ### Cashflow Notebook - Create Cashflows ###
     Navigate to Drawdown Cashflow Window
