@@ -99,13 +99,10 @@ Search Customer and Complete Borrower Profile Creation with Default Values for P
     ##Completing Location              
     Complete Location under Profile Tab    &{ExcelPath}[Profile_Type]    &{ExcelPath}[Customer_Location]
     
-    ###Adding Remittance Instructions
-    mx LoanIQ click    ${RemittanceInstructions_Button} 
-    
     Add DDA Remittance Instruction    &{ExcelPath}[Customer_Location]    &{ExcelPath}[RI_DDAMethod]    &{ExcelPath}[RI_DDADescription]    &{ExcelPath}[RI_DDAAccountName]    &{ExcelPath}[RI_DDAAccountNumber]    &{ExcelPath}[RI_DDACurrency]    &{ExcelPath}[RI_ProductLoan_Checkbox]    &{ExcelPath}[RI_ProductSBLC_Checkbox]    &{ExcelPath}[RI_FromCust_Checkbox]    &{ExcelPath}[RI_ToCust_Checkbox]    &{ExcelPath}[RI_BalanceType_Principal_Checkbox]    
     ...    &{ExcelPath}[RI_BalanceType_Interest_Checkbox]    &{ExcelPath}[RI_BalanceType_Fees_Checkbox]    &{ExcelPath}[RI_AutoDoIt_Checkbox]
     
-    Add RTGS Remittance Instruction with Swift Role    &{ExcelPath}[Customer_Location]    &{ExcelPath}[RI_RTGSMethod]    &{ExcelPath}[RI_RTGSDescription]    &{ExcelPath}[RI_DDACurrency]
+    Add Remittance Instruction with Swift Role    &{ExcelPath}[Customer_Location]    &{ExcelPath}[RI_RTGSMethod]    &{ExcelPath}[RI_RTGSDescription]    &{ExcelPath}[RI_DDACurrency]
     ...    &{ExcelPath}[RemittanceInstruction_DirectionSelected]    &{ExcelPath}[IMT_MessageCode]    &{ExcelPath}[BOC_Level]    
     ...    &{ExcelPath}[RI_FromCust_RTGSCheckbox]    &{ExcelPath}[RI_ToCust_RTGSCheckbox]    &{ExcelPath}[RI_AutoDoIt_Checkbox]    &{ExcelPath}[RI_SendersCorrespondent_Checkbox]
     ...    &{ExcelPath}[Swift_Role]    &{ExcelPath}[SwiftID]    &{ExcelPath}[Details_Of_Charges]
