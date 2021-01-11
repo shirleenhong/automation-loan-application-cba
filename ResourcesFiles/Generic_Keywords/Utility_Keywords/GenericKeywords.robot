@@ -1672,9 +1672,10 @@ Get Row Count
     ...    UTF upgrade from 3.2 to 3.9.1.
     ...    @author: dahijara    29OCT2019    - intial create
     ...    update: songchan    17DEC2020    - added value for max_num to correct the passing of arguments for sheetname    
+    ...    update: dahijara    08JAN2021    - reverting updates last 17DEC2020. 
     [Arguments]    ${sSheetName}
     
-    ${aColumn}    Read Excel Column    1    0    0    ${sSheetName}
+    ${aColumn}    Read Excel Column    1    0    ${sSheetName}
     ${iRowCount}    Get Length    ${aColumn}
     [Return]    ${iRowCount}
 
@@ -1683,9 +1684,10 @@ Get Column Count
     ...    UTF upgrade from 3.2 to 3.9.1.
     ...    @author: dahijara    29OCT2019    - intial create    
     ...    update: songchan    17DEC2020    - added value for max_num to correct the passing of arguments for sheetname
+    ...    update: dahijara    08JAN2021    - reverting updates last 17DEC2020. 
     [Arguments]    ${sSheetName}
     
-    ${aRowValues}    Read Excel Row    1    0    0    ${sSheetName}
+    ${aRowValues}    Read Excel Row    1    0    ${sSheetName}
     ${iColCount}    Get Length    ${aRowValues}
     Log    ${iColCount}
     [Return]    ${iColCount}    

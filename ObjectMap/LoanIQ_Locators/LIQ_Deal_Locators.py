@@ -672,6 +672,7 @@ LIQ_DealChangeTransaction_ProcessingArea_JavaTree = 'JavaWindow("title:=Processi
 LIQ_DealChangeTransaction_ProcessingArea_Search_TextField = 'JavaWindow("title:=Processing Area.*").JavaEdit("tagname:=Text")'  
 LIQ_DealChangeTransaction_ProcessingArea_OK_Button = 'JavaWindow("title:=Processing Area.*").JavaButton("attached text:=OK")' 
 LIQ_DealChangeTransaction_Workflow_Tab = 'JavaWindow("title:=.* Deal Change Transaction.*").JavaTab("tagname:=TabFolder")'
+LIQ_DealChangeTransaction_FinancialRatio_History_Button = 'JavaWindow("title:=.* Deal Change Transaction.*").JavaButton("attached text:=History","labeled_containers_path:=Tab:Ratios;Group:Financial Ratios.*")'
 
 ###Deal Change Transaction - Financial Ratio Window###
 LIQ_DealChangeTransaction_FinancialRatio_Window = 'JavaWindow("title:=Select Financial Ratio")'
@@ -683,6 +684,11 @@ LIQ_DealChangeTransaction_FinantialRatio_Date_Field = 'JavaWindow("title:=Financ
 LIQ_DealChangeTransaction_FinancialRatio_Ok_Button = 'JavaWindow("title:=Financial Ratio.*").JavaButton("attached text:=OK")'
 LIQ_DealChangeTransaction_FinancialRatioAdd_Window = 'JavaWindow("title:=Financial Ratio Add")'
 LIQ_DealChangeTransaction_FinancialRatioUpdate_Window = 'JavaWindow("title:=Financial Ratio Update")'
+LIQ_DealChangeTransaction_FinantialRatio_StartDate_Field = 'JavaWindow("title:=Financial Ratio.*").JavaEdit("tagname:=Leverage Ratio (LR)","index:=1")'
+LIQ_DealChangeTransaction_FinancialRatioHistory_Window = 'JavaWindow("title:=.*Deal Change Transaction Financial Ratio History")'
+LIQ_DealChangeTransaction_FinancialRatioHistory_JavaTree = 'JavaWindow("title:=.*Deal Change Transaction Financial Ratio History").JavaTree("attached text:=Drill down to update")'
+LIQ_DealChangeTransaction_FinancialRatioHistory_Insert_Button = 'JavaWindow("title:=.*Deal Change Transaction Financial Ratio History").JavaButton("attached text:=Insert")'
+LIQ_DealChangeTransaction_FinancialRatioHistory_OK_Button = 'JavaWindow("title:=.*Deal Change Transaction Financial Ratio History").JavaButton("attached text:=OK")'
 
 ###Deal Change Transaction - Conditions Tab ###
 LIQ_DealChangeTransaction_Conditions_PrevOutsideConditions_History_Button = 'JavaWindow("title:=Awaiting Send To Approval.*").JavaTab("value:=Conditions").JavaButton("index:=0")'

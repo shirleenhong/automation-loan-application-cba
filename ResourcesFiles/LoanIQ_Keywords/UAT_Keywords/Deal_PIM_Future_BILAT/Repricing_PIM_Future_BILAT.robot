@@ -5,7 +5,8 @@ Resource    ../../../../Configurations/LoanIQ_Import_File.robot
 *** Keywords ***
 Create Comprehensive Repricing for PIM Future BILAT
     [Documentation]    This is a high-level keyword to Create Comprehensive Repricing for PIM Future BILAT
-    ...    @author: mcastro    14DEC2020    - Initial Create    
+    ...    @author: mcastro    14DEC2020    - Initial Create 
+    ...    @update: mcatro    05JAN2021    - Added writing of New loan alias to Correspondence   
     [Arguments]    ${ExcelPath}
 
     ${Rollover_Amount}    Read Data From Excel    SERV01_LoanDrawdown    Loan_RequestedAmount    ${rowid}
@@ -36,6 +37,9 @@ Create Comprehensive Repricing for PIM Future BILAT
     Write Data To Excel    SERV08_ComprehensiveRepricing    NewLoan_Alias    ${rowid}    ${NewLoan_Alias}
     Write Data To Excel    Correspondence    Loan_Alias    4    ${NewLoan_Alias}
     Write Data To Excel    Correspondence    Loan_Alias    5    ${NewLoan_Alias}
+    Write Data To Excel    Correspondence    Loan_Alias    6    ${NewLoan_Alias}
+    Write Data To Excel    Correspondence    Loan_Alias    7    ${NewLoan_Alias}
+    Write Data To Excel    SERV40_BreakFunding    Loan_Alias    ${rowid}    ${NewLoan_Alias}
 
     ### Adding of Interest Payment ###
     Add Interest Payment for Loan Repricing

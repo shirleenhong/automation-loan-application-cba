@@ -12,3 +12,7 @@ Create Quick Party Onboarding for LLA Syndicated Deal - PTY001
     
 Create Syndicated Deal for LLA Syndicated Deal - CRED01
     Mx Execute Template With Multiple Data    Setup Syndicated Deal for LLA Syndicated    ${ExcelPath}    ${rowid}    CRED01_DealSetup
+
+Establish Facility for LLA Syndicated Deal - CRED02
+    Mx Execute Template With Multiple Data    Create Revolver Facility for LLA Syndicated Deal    ${ExcelPath}    ${rowid}    CRED02_FacilitySetup
+    Mx Execute Template With Multiple Data    Setup Pricing for LLA Syndicated Deal    ${ExcelPath}    ${rowid}    CRED08_OngoingFeeSetup

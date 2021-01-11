@@ -38,17 +38,24 @@ Navigate Breakfunding Fee Notebook
 Request Lender Fees
     [Documentation]    This keyword is use to request lender fees in breakfunding
     ...    @author: jcdelacruz
+    ...    @update: mcastro    17DEC2020    - Added Take screenshot
     mx LoanIQ activate window    ${LIQ_Breakfunding_Window}
     Mx LoanIQ Select Window Tab    ${LIQ_Breakfunding_Workflow_Tab}    Workflow
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/BreakfundingWorkflowTab
     ${InquiryButtonStatus}    Run Keyword And Return Status    Mx LoanIQ Verify Object Exist    ${LIQ_Breakfunding_InquiryMode_Button}    VerificationData="Yes"
     Run Keyword If    ${InquiryButtonStatus}==True    mx LoanIQ click    ${LIQ_Breakfunding_InquiryMode_Button}
     Mx LoanIQ Select Or DoubleClick In Javatree    ${LIQ_Breakfunding_WorkflowItems_List}    Request Lender Fees%d
-    mx LoanIQ click element if present    ${LIQ_Question_Yes_Button}    
+    mx LoanIQ click element if present    ${LIQ_Question_Yes_Button}
+    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/BreakfundingWorkflowTab    
     mx LoanIQ activate window    ${LIQ_Notices_Window}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/BreakfundingWorkflowTab
     Run Keyword And Continue On Failure    Validate if Element is Checked    ${LIQ_Notices_Lenders_Checkbox}    Lenders
     mx LoanIQ click    ${LIQ_Notices_Ok_Button}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/BreakfundingWorkflowTab
     mx LoanIQ click element if present    ${LIQ_Information_OK_Button}
     mx LoanIQ activate window    ${LIQ_BreakfundingEventFeePayment_Window}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/BreakfundingWindow
     # Mx Click    ${LIQ_BreakfundingEventFeePayment_MarkAll_Button}
     # Mx Click    ${LIQ_BreakfundingEventFeePayment_Send_Button}
     # Mx Click Element If Present    ${LIQ_Information_OK_Button}
@@ -99,25 +106,34 @@ Generate Lender Shares
 Generate Lender Shares for Bilateral Deal
     [Documentation]    This keyword is use to generate lender shares in breakfunding
     ...    @author: ritragel
+    ...    @update: mcastro    17DEC2020    - Added take screenshot
+    ...    @update: mcastro    07JAN2021    - Updated Mx Native Type to Mx Press Combination
     [Arguments]     ${Legal_Entity}    ${Legal_Entity_Amount}
     mx LoanIQ activate window    ${LIQ_Breakfunding_Window}
     Mx LoanIQ Select Window Tab    ${LIQ_Breakfunding_Workflow_Tab}    Workflow 
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/BreakfundingWindow_WorkflowTab
     ${InquiryButtonStatus}    Run Keyword And Return Status    Mx LoanIQ Verify Object Exist    ${LIQ_Breakfunding_InquiryMode_Button}    VerificationData="Yes"
     Run Keyword If    ${InquiryButtonStatus}==True    mx LoanIQ click    ${LIQ_Breakfunding_InquiryMode_Button}
     Mx LoanIQ Select Or DoubleClick In Javatree    ${LIQ_Breakfunding_WorkflowItems_List}    Generate Lender Shares%d
-    
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/BreakfundingWindow_WorkflowTab
+
     mx LoanIQ activate window    ${LIQ_SharesForBreakCostFee_Window}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/BreakCostFeeWindow
     Mx LoanIQ Select String    ${LIQ_SharesForBreakCostFee_PrimaryAssignee_List}    ${Legal_Entity}
-    Mx Native Type    {ENTER}
+    Mx Press Combination    Key.ENTER
     mx LoanIQ activate window    ${LIQ_ServicingGroupShare_Window}
     mx LoanIQ enter    ${LIQ_ServicingGroupShare_Amount_Textfield}    ${Legal_Entity_Amount}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/ServicingGroupShareWindow
     mx LoanIQ click    ${LIQ_ServicingGroupShare_Ok_Button}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/BreakCostFeeWindow
     
 Add Portfolio and Expense Code
     [Documentation]    This keyword is use to add portfolio and expense code to the legal entity from lender window
     ...    @author: jcdelacruz
     ...    @update: ritragel    9SEP11    Passing expense code instead of rowid
     ...    @update: sahalder    08JUL2020    Added keyword pre-processing steps
+    ...    @update: mcastro    17DEC2020    Fixed incorrect variable name for ExpenseCode
+    ...    @update: mcastro    07JAN2021    - Updated Mx Native Type to Mx Press Combination
     [Arguments]    ${sLegal_Entity}    ${sLegal_Entity_Amount}    ${sExpenseCode}
     
     ### GetRuntime Keyword Pre-processing ###
@@ -127,13 +143,13 @@ Add Portfolio and Expense Code
 
     mx LoanIQ activate window    ${LIQ_SharesForBreakCostFee_Window}
     Mx LoanIQ Select String    ${LIQ_SharesForBreakCostFee_LegalEntity_List}    ${Legal_Entity}
-    Mx Native Type    {ENTER}
+    Mx Press Combination    Key.ENTER
     mx LoanIQ activate window    ${LIQ_HostBankShares_Window}
     Run Keyword And Continue On Failure    Mx LoanIQ Verify Object Exist    ${LIQ_HostBankShares_Window}              VerificationData="Yes"
     mx LoanIQ click    ${LIQ_HostBankShares_AddPortfolioExpenseCode_Button}
     mx LoanIQ activate window    ${LIQ_HostBankShares_PortfolioSelection_Window}
     Run Keyword And Continue On Failure    Mx LoanIQ Verify Object Exist    ${LIQ_HostBankShares_PortfolioSelection_Window}    VerificationData="Yes"
-    Mx LoanIQ Select String    ${LIQ_HostBankShares_PortfolioSelection_List}    ${Expense_Code}
+    Mx LoanIQ Select String    ${LIQ_HostBankShares_PortfolioSelection_List}    ${ExpenseCode}
     mx LoanIQ click    ${LIQ_HostBankShares_PortfolioSelection_Ok_Button}
     mx LoanIQ activate window    ${LIQ_PortfolioShareEdit_Window}
     mx LoanIQ enter    ${LIQ_PortfolioShareEdit_ActualAmount_Field}    ${Legal_Entity_Amount}
@@ -419,8 +435,25 @@ Get Debit Amount
 Select Breakfunding Reason
     [Documentation]    This keyword is used to select breakfunding reason when releasing payment
     ...    @author: ritragel    09SEP2019
+    ...    @update: mcastro    17DEC2020    - Updated screenshot path, added pre-processing keyword
     [Arguments]    ${sReason}
-    mx LoanIQ activate window    ${LIQ_UnscheduledPrincipalPayment_Breakfunding_Window}    
-    Mx LoanIQ Select Combo Box Value    ${LIQ_UnscheduledPrincipalPayment_Breakfunding_ComboBox}     ${sReason}
-    Take Screenshot    Breakfunding_
-    mx LoanIQ click    ${LIQ_UnscheduledPrincipalPayment_Breakfunding_OK_Button}
+
+    ### Pre-processing Keyword ###
+    ${Reason}    Acquire Argument Value    ${sReason}
+
+    Mx LoanIQ activate window    ${LIQ_UnscheduledPrincipalPayment_Breakfunding_Window}    
+    Mx LoanIQ Select Combo Box Value    ${LIQ_UnscheduledPrincipalPayment_Breakfunding_ComboBox}     ${Reason}
+    Take Screenshot    ${Screenshot_Path}/Screenshots/LoanIQ/BreakfundingReason
+    Mx LoanIQ click    ${LIQ_UnscheduledPrincipalPayment_Breakfunding_OK_Button}
+
+Navigate to Breakfunding Window from Loan Notebook
+    [Documentation]    This keyword is used to Navigate to breakfunding window from Loan Notebook
+    ...    @author: mcastro    17DEC2020    - Initial Create
+
+    Mx LoanIQ Select Window Tab    ${LIQ_LoanNotebook_BbsyBidLoan_Tab}    Pending
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/BreakfundingPendingTab
+    Run Keyword And Continue On Failure    Mx LoanIQ Verify Text In Javatree    ${LIQ_LoanNotebook_PendingItems_List}    Break Cost Fee%yes
+    Mx LoanIQ Select String    ${LIQ_LoanNotebook_PendingItems_List}    Break Cost Fee        
+    Mx Press Combination    Key.ENTER
+    Mx LoanIQ activate    ${LIQ_Breakfunding_Pending_Window}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/BreakfundingPendingTab   
