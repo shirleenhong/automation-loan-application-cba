@@ -18,7 +18,8 @@ Create Initial Loan Drawdown for PIM Future BILAT
     
     Navigate to Outstanding Select Window from Deal
     ${Loan_Alias}    New Outstanding Select    &{ExcelPath}[Deal_Name]    &{ExcelPath}[Facility_Name]    &{ExcelPath}[Borrower_Name]    &{ExcelPath}[Outstanding_Type]    &{ExcelPath}[Pricing_Option]    &{ExcelPath}[Outstanding_Currency]
-        Write Data To Excel    SERV01_LoanDrawdown    Loan_Alias    ${rowid}    ${Loan_Alias}
+    
+    Write Data To Excel    SERV01_LoanDrawdown    Loan_Alias    ${rowid}    ${Loan_Alias}
     Write Data To Excel    Correspondence    Loan_Alias    ${rowid}    ${Loan_Alias}
     Write Data To Excel    Correspondence    Loan_Alias    2    ${Loan_Alias}
     Write Data To Excel    Correspondence    Loan_Alias    3    ${Loan_Alias}
