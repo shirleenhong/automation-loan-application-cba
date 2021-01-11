@@ -2709,7 +2709,7 @@ Update Alerts in Active Customer
     [Return]    ${New_ShortDescription}${SPACE}${Current_Local_Date}    ${Current_Local_Date}    ${Current_Local_Date_WithoutTime}
     
 Add Remittance Instruction with Swift Role
-    [Documentation]    This keyword adds RTGS Remittance Instruction with Swift Role to the Details of a Contact of a Customer
+    [Documentation]    This keyword adds Remittance Instruction with Swift Role to the Details of a Contact of a Customer
     ...    @author: shirhong    07JAN2021    - initial create
     [Arguments]    ${sCustomer_Location}    ${sRemittanceInstruction_Method}    ${sRemittanceInstruction_Description}    ${sRemittanceInstruction_Currency}    ${sRemittanceInstruction_DirectionSelected}    ${sIMT_MessageCode}    ${sBOC_Level}
     ...    ${bRI_FromCust_Checkbox}    ${bRI_ToCust_Checkbox}    ${bRI_AutoDoIt_Checkbox}    ${bRI_SendersCorrespondent_Checkbox}    ${sSwift_Role}    ${sSwiftID}    ${sDetails_Of_Charges}
@@ -2747,7 +2747,7 @@ Add Remittance Instruction with Swift Role
     Save Values of Runtime Execution on Excel File    ${sRemittanceInstruction_Description}    ${RemittanceInstruction_Description}	
 	
 Adding RTGS Remittance Instructions Details and Swift Role
-    [Documentation]    This keyword adds details of Simplified RTGS-AUD Remittance Instruction, Swift Role, and Details of Charges to the Details of a Customer
+    [Documentation]    This keyword adds details of Simplified Remittance Instruction, Swift Role, and Details of Charges to the Details of a Customer
     ...    @author: shirhong    07JAN2021    - initial create
     [Arguments]    ${sRemittanceInstruction_Method}    ${sRemittanceInstruction_Description}   ${sRemittanceInstruction_Currency}    ${sRemittanceInstruction_DirectionSelected}    ${sIMT_MessageCode}    ${sBOC_Level}
     ...    ${sRI_FromCust_Checkbox}    ${sRI_ToCust_Checkbox}    ${sRI_AutoDoIt_Checkbox}    ${sRI_SendersCorrespondent_Checkbox}    ${sSwift_Role}    ${sSwiftID}    ${sDetails_Of_Charges}
