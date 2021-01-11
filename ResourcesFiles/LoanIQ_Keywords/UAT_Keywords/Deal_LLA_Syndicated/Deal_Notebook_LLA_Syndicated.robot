@@ -7,6 +7,7 @@ Setup Syndicated Deal for LLA Syndicated
     ...    Primarily entering data in multiple tabs of the Deal Notebook and adding Pricing Options.
     ...    @author: makcamps    18DEC2020    - initial create
     ...    @update: makcamps    07JAN2021    - added write methods for new sheets created
+    ...    @update: makcamps    11JAN2021    - added write methods for new sheets created
     [Arguments]    ${ExcelPath}
 
     ###Data Generation###
@@ -76,10 +77,9 @@ Setup Primaries for LLA Syndicated Deal
     Verify Buy/Sell Price in Circle Notebook 
     Populate Amts or Dates Tab in Pending Orig Primary    ${SellAmount1}    &{ExcelPath}[Expected_CloseDate]
     Add Contact in Primary    &{ExcelPath}[Primary_Contact1]
-    Select Servicing Group on Primaries    None    &{ExcelPath}[AdminAgent_SGAlias]
-    # Write Data To Excel    CRED01_DealSetup    Primary_PortfolioAllocation1    &{ExcelPath}[rowid]    ${SellAmount1}    bTestCaseColumn=True    sColumnReference=rowid
-    mx LoanIQ close window    ${LIQ_OrigPrimaries_Window}
-   
+    Select Servicing Group on Primaries    &{ExcelPath}[ServicingGroupMember]    &{ExcelPath}[AdminAgent_SGAlias1]
+    Close Orig Primaries Window
+    
     ###Secondary Lender - Non Host Bank###
     Add Non-Host Bank Lenders for a Syndicated Deal    &{ExcelPath}[Deal_Name]    &{ExcelPath}[Primary_Lender2]    &{ExcelPath}[Primary_LenderLoc2]    &{ExcelPath}[Primary_TransactionType]
     ${SellAmount2}    Set Sell Amount and Percent of Deal    &{ExcelPath}[Primary_PctOfDeal2]
@@ -87,24 +87,23 @@ Setup Primaries for LLA Syndicated Deal
     Verify Buy/Sell Price in Circle Notebook 
     Populate Amts or Dates Tab in Pending Orig Primary    ${SellAmount2}    &{ExcelPath}[Expected_CloseDate]
     Add Contact in Primary    &{ExcelPath}[Primary_Contact2]
-    Select Servicing Group on Primaries    None    &{ExcelPath}[AdminAgent_SGAlias_Secondary]
-    # Write Data To Excel    CRED01_DealSetup    Primary_PortfolioAllocation2    &{ExcelPath}[rowid]    ${SellAmount2}    bTestCaseColumn=True    sColumnReference=rowid
-    mx LoanIQ close window    ${LIQ_OrigPrimaries_Window}
+    Select Servicing Group on Primaries    &{ExcelPath}[ServicingGroupMember]    &{ExcelPath}[AdminAgent_SGAlias2]
+    Close Orig Primaries Window
     
-    ##Circle Notebook Complete Portfolio Allocation, Circling, and Sending to Settlement Approval###
+    ###Circle Notebook Complete Portfolio Allocation, Circling, and Sending to Settlement Approval###
      ${HostBank_ShareAmount}    Circle Notebook Workflow Navigation for LLA Syndicated Deal    &{ExcelPath}[Primary_Lender1]    &{ExcelPath}[Primary_CircledDate]
-    ...    Yes    &{ExcelPath}[Primary_Portfolio]    &{ExcelPath}[Primary_PortfolioBranch]    &{ExcelPath}[Primary_PortfolioAllocation]
+    ...    &{ExcelPath}[IsLenderAHostBank]    &{ExcelPath}[Primary_Portfolio]    &{ExcelPath}[Primary_PortfolioBranch]    &{ExcelPath}[Primary_PortfolioAllocation]
     ...    &{ExcelPath}[Primary_PortfolioExpiryDate]    &{ExcelPath}[Deal_ExpenseCode]
     ${Lender_ShareAmount1}    Circle Notebook Workflow Navigation for LLA Syndicated Deal    &{ExcelPath}[Primary_Lender2]    &{ExcelPath}[Primary_CircledDate]
     
-    ##Approval using a different user###
+    ###Approval using a different user###
     Logout from Loan IQ
     Login to Loan IQ    ${SUPERVISOR_USERNAME}    ${SUPERVISOR_PASSWORD}
     Select Actions    [Actions];Work In Process
-    Circle Notebook Settlement Approval    &{ExcelPath}[Primary_Lender1]    Host Bank
+    Circle Notebook Settlement Approval    &{ExcelPath}[Primary_Lender1]    &{ExcelPath}[LenderType1]
     Close All Windows on LIQ
     Select Actions    [Actions];Work In Process
-    Circle Notebook Settlement Approval    &{ExcelPath}[Primary_Lender2]    Non-Host Bank
+    Circle Notebook Settlement Approval    &{ExcelPath}[Primary_Lender2]    &{ExcelPath}[LenderType2]
     
 LLA Syndicated Deal Approval and Close
     [Documentation]    This keywords Approves and Closes the created LLA Syndicated Deal.

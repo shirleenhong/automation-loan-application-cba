@@ -199,11 +199,11 @@ Verify If Text Value Exist as Static Text on Page
 Verify If Text Value Exist as Java Tree on Page
     [Documentation]    This keyword verifies if java tree object exist in page
     ...    @author: makcamps    11JAN2021    - initial create
-    [Arguments]    ${WindowName}    ${Text to Validate}
-    Run Keyword And Continue On Failure    Mx LoanIQ Verify Object Exist    JavaWindow("title:=.*${WindowName}.*","displayed:=1").JavaTree("developer name:=.*${Text to Validate}.*")    VerificationData="Yes"
-    ${result}    Run Keyword And Return Status    Mx LoanIQ Verify Object Exist    JavaWindow("title:=.*${WindowName}.*","displayed:=1").JavaTree("developer name:=.*${Text to Validate}.*")    VerificationData="Yes"    Processtimeout=5
-    Run Keyword If   '${result}'=='True'    Log    "${Text to Validate}" is displayed on ${WindowName} window.
-    ...     ELSE    Log    "${Text to Validate}" is not displayed on ${WindowName} window.
+    [Arguments]    ${sWindowName}    ${sTextToValidate}
+    Run Keyword And Continue On Failure    Mx LoanIQ Verify Object Exist    JavaWindow("title:=.*${sWindowName}.*","displayed:=1").JavaTree("developer name:=.*${sTextToValidate}.*")    VerificationData="Yes"
+    ${result}    Run Keyword And Return Status    Mx LoanIQ Verify Object Exist    JavaWindow("title:=.*${sWindowName}.*","displayed:=1").JavaTree("developer name:=.*${sTextToValidate}.*")    VerificationData="Yes"    Processtimeout=5
+    Run Keyword If   '${result}'=='True'    Log    "${sTextToValidate}" is displayed on ${sWindowName} window.
+    ...     ELSE    Run Keyword And Continue On Failure    Fail    "${sTextToValidate}" is not displayed on ${sWindowName} window.
  
 Verify If Text Value Exist in Textfield on Page
     [Documentation]    This keyword verifies if static object exist in page
