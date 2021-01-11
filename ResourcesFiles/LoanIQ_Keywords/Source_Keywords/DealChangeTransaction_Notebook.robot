@@ -174,7 +174,106 @@ Validate added outside condition on the deal
 
     Close All Windows on LIQ
              
-                  
-    
-            
-        
+Navigate to Deal Ratios/Conds Tab
+    [Documentation]    This keyword Navigates to Deal Rations/Conds Tab.
+    ...    @author: dahijara    07JAN2021    - Initial create
+
+    Mx LoanIQ activate window    ${LIQ_DealNotebook_Window}
+    Mx LoanIQ click element if present    ${LIQ_DealNotebook_InquiryMode_Button}
+    Mx LoanIQ Select Window Tab    ${LIQ_DealNotebook_Tab}    Ratios/Conds
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/Deal_Ratios_Conds
+
+Get Existing Deal Ratio
+    [Documentation]    This keyword is used to get existing deal leverage ratio 
+    ...    @author: dahijara    07JAN2021    - Initial create
+    [Arguments]    ${sRatioType}    ${sRunVar_Ratio}=None
+
+    ### Keyword Pre-processing ###
+    ${RatioType}    Acquire Argument Value    ${sRatioType}
+
+    ${RatioValue}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_FinantialRatio_JavaTree}    ${RatioType}%Ratio%value
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/Deal_Ratios_Conds
+    Save Values of Runtime Execution on Excel File    ${sRunVar_Ratio}    ${RatioValue}
+
+    [Return]    ${RatioValue}
+
+Navigate to Deal Change Transaction
+    [Documentation]    This keyword will navigate to deal change transaction window.
+    ...    @author: dahijara    07JAN2021    - Initial create
+
+    Mx LoanIQ activate window    ${LIQ_DealNotebook_Window}
+    Mx LoanIQ click element if present    ${LIQ_DealNotebook_InquiryMode_Button}
+    Mx LoanIQ select    ${LIQ_DealNotebook_Options_DealChangeTransactions}
+    Mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/DealChangeTransaction_Window
+
+Insert Financial Ratio via Deal Change Transaction
+    [Documentation]    This keyword will inster a financial ratio in Deal Change Transaction
+    ...    @author: dahijara    07JAN2021    - Initial create
+    [Arguments]    ${sFinancialRatio}    ${sFinancial_Ratio_Type}    ${sFinancial_Ratio_StartDate}
+
+    ### Keyword Pre-processing ###
+    ${FinancialRatio}    Acquire Argument Value    ${sFinancialRatio}
+    ${Financial_Ratio_Type}    Acquire Argument Value    ${sFinancial_Ratio_Type}
+    ${Financial_Ratio_StartDate}    Acquire Argument Value    ${sFinancial_Ratio_StartDate}
+
+    Mx LoanIQ Select Window Tab    ${LIQ_DealChangeTransaction_Tab}    Ratios
+    Mx LoanIQ Select String    ${LIQ_DealChangeTransaction_FinancialRatio_JavaTree}    ${Financial_Ratio_Type}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/DealChangeTransaction_FinancialRatio
+    Mx LoanIQ Click    ${LIQ_DealChangeTransaction_FinancialRatio_History_Button}
+    mx LoanIQ activate    ${LIQ_DealChangeTransaction_FinancialRatioHistory_Window}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/DealChangeTransaction_FinancialRatio
+    Mx LoanIQ Click    ${LIQ_DealChangeTransaction_FinancialRatioHistory_Insert_Button}
+    Mx LoanIQ activate window    ${LIQ_DealChangeTransaction_FinancialRatioUpdate_Window}
+    Mx LoanIQ enter    ${LIQ_DealChangeTransaction_FinantialRatio_Field}    ${FinancialRatio}
+    Mx LoanIQ enter    ${LIQ_DealChangeTransaction_FinantialRatio_StartDate_Field}    ${Financial_Ratio_StartDate}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/DealChangeTransaction_FinancialRatio
+    Mx LoanIQ click    ${LIQ_DealChangeTransaction_FinancialRatio_Ok_Button}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/DealChangeTransaction_FinancialRatio
+    Mx LoanIQ click element if present    ${LIQ_Question_Yes_Button}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/DealChangeTransaction_FinancialRatio
+    Mx LoanIQ click    ${LIQ_DealChangeTransaction_FinancialRatioHistory_OK_Button}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/DealChangeTransaction_FinancialRatio
+
+Navigate to Deal Change Transaction Workflow and Proceed With Transaction
+    [Documentation]    This keyword navigates to the Loan Drawdown Workflow using the desired Transaction
+    ...    @author: dahijara    07JAN2021    - Initial create
+    [Arguments]    ${sTransaction}
+
+    ### Keyword Pre-processing ###
+    ${Transaction}    Acquire Argument Value    ${sTransaction}
+
+    Navigate Notebook Workflow    ${LIQ_DealChangeTransaction_Window}    ${LIQ_DealChangeTransaction_Workflow_Tab}    ${LIQ_DealChangeTransaction_WorkFlow_JavaTree}    ${Transaction}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/DealChangeTransaction_Workflow
+
+Validate Deal Events Tab
+    [Documentation]    This keyword validates the Deal Notebook's Event Tab
+    ...    @author: dahijara    07JAN2021    - Initial create
+    [Arguments]    ${sEvent_Name}
+
+    ### Keyword Pre-processing ###
+    ${Event_Name}    Acquire Argument Value    ${sEvent_Name}
+
+    mx LoanIQ activate    ${LIQ_DealNotebook_Window}
+    Mx LoanIQ Select Window Tab    ${LIQ_DealNotebook_Tab}    Events
+    ${Event_Selected}    Run Keyword And Return Status    Mx LoanIQ Select String    ${LIQ_Events_Javatree}    ${Event_Name}
+    Run Keyword If    ${Event_Selected}==${True}    Log    ${Event_Name} is shown in the Events list of the Deal notebook.
+    ...    ELSE    Run Keyword And Continue On Failure    Fail    Event not verified.
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/Deal_Events
+
+Validate Updated Financial Ratio
+    [Documentation]    This keyword is used to validate old and new deal leverage ratio 
+    ...    @author: dahijara    07JAN2021    - Initial create
+    [Arguments]    ${sRatioType}    ${sNewRatio}
+
+    ### Keyword Pre-processing ###
+    ${RatioType}    Acquire Argument Value    ${sRatioType}
+    ${NewRatio}    Acquire Argument Value    ${sNewRatio}
+
+    ${UI_NewRatioValue}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_FinantialRatio_JavaTree}    ${RatioType}%Ratio%value
+
+    ${Stat}    Run Keyword and Return Status    Should Be Equal    ${UI_NewRatioValue}    ${NewRatio}
+    Run Keyword If    ${Stat}==${True}    Log    Financial Ratio is successfuly Updated
+    ...    ELSE    Run Keyword And Continue On Failure    Fail    Financial Ratio is NOT Updated
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/Deal_Ratios_Conds
+
