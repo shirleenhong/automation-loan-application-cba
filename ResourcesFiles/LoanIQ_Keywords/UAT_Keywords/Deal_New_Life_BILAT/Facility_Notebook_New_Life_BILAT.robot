@@ -18,10 +18,7 @@ Create Facility for New Life BILAT
     Write Data To Excel    CRED08_OngoingFeeSetup    Facility_Name    ${rowid}    ${Facility_Name}
     Write Data To Excel    SERV01_LoanDrawdown    Facility_Name    ${rowid}    ${Facility_Name} 
     Write Data To Excel    SYND02_PrimaryAllocation    Facility_Name    ${rowid}    ${Facility_Name}
-    :FOR    ${index}    IN RANGE    1    8
-    \    ${counter}    Convert To String    ${index}
-    \    Write Data To Excel    SERV29_CommitmentFeePayment    Facility_Name    ${counter}    ${Facility_Name} 
-       
+    Write Data To Excel    SERV29_CommitmentFeePayment    Facility_Name    ${counter}    ${Facility_Name}    multipleValue=Y  
 
     ###Open Deal Notebook If Not present###
     Open Deal Notebook If Not Present    &{ExcelPath}[Deal_Name]
