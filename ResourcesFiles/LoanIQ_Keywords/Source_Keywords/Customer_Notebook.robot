@@ -2736,17 +2736,14 @@ Add Remittance Instruction with Swift Role
     Mx LoanIQ Activate    ${RemittanceList_Window_AddRemittanceInstruction_Window}
     Validate Window Title    Add Remittance Instruction
     Mx LoanIQ Click    ${RemittanceList_Window_AddRemittanceInstruction_OkButton} 
-    Adding RTGS Remittance Instructions Details and Swift Role    ${RemittanceInstruction_Method}    ${RemittanceInstruction_Description}   ${RemittanceInstruction_Currency}    ${RemittanceInstruction_DirectionSelected}    ${IMT_MessageCode}    ${BOC_Level}
+    Adding Remittance Instructions Details and Swift Role    ${RemittanceInstruction_Method}    ${RemittanceInstruction_Description}   ${RemittanceInstruction_Currency}    ${RemittanceInstruction_DirectionSelected}    ${IMT_MessageCode}    ${BOC_Level}
     ...    ${RI_FromCust_Checkbox}    ${RI_ToCust_Checkbox}    ${RI_AutoDoIt_Checkbox}    ${RI_SendersCorrespondent_Checkbox}    ${Swift_Role}    ${SwiftID}    ${Details_Of_Charges}
     Take Screenshot    ${Screenshot_Path}/Screenshots/LoanIQ/RTGSRemittanceInstructionsDetailWindow
     Send Remittance Instruction to Approval
     Mx LoanIQ Select    ${LIQ_RemittanceInstruction_Notebook_FileMenu_ExitMenu}  
     Read Excel Data and Validate Remittance Instructions Data Added in the Remittance List Window     ${RemittanceInstruction_Description}    ${Customer_Location}
 
-    ### Keyword Post-processing ###
-    Save Values of Runtime Execution on Excel File    ${sRemittanceInstruction_Description}    ${RemittanceInstruction_Description}	
-	
-Adding RTGS Remittance Instructions Details and Swift Role
+Adding Remittance Instructions Details and Swift Role
     [Documentation]    This keyword adds details of Simplified Remittance Instruction, Swift Role, and Details of Charges to the Details of a Customer
     ...    @author: shirhong    07JAN2021    - initial create
     [Arguments]    ${sRemittanceInstruction_Method}    ${sRemittanceInstruction_Description}   ${sRemittanceInstruction_Currency}    ${sRemittanceInstruction_DirectionSelected}    ${sIMT_MessageCode}    ${sBOC_Level}
@@ -2770,27 +2767,28 @@ Adding RTGS Remittance Instructions Details and Swift Role
     Mx LoanIQ Activate   ${RemittanceList_Window_RemittanceInstructionsDetail_Window}
     Mx LoanIQ Select Window Tab    ${RemittanceList_Window_RemittanceInstructionsDetail__Notebook_TabSelection}    General
 
-    Run Keyword If    '${RemittanceInstruction_Method}' == '${RemittanceInstruction_Method}'    Mx LoanIQ Select Combo Box Value    ${RemittanceList_Window_RemittanceInstructionsDetail_MethodType}    ${RemittanceInstruction_Method}
-    Run Keyword If    '${RemittanceInstruction_Description}' != 'None'    Mx LoanIQ Enter    ${RemittanceList_Window_RemittanceInstructionsDetail_Description}    ${RemittanceInstruction_Description}
-    Run Keyword If    '${RemittanceInstruction_Currency}' != 'None'    Mx LoanIQ Select Combo Box Value    ${RemittanceList_Window_RemittanceInstructionsDetail_Currency}    ${RemittanceInstruction_Currency}
-    Run Keyword If    '${RI_FromCust_Checkbox}' != 'OFF'    Mx LoanIQ Check Or Uncheck    ${RemittanceList_Window_RemittanceInstructionsDetail_Direction_FromCust_Checkbox}    ON
-    Run Keyword If    '${RI_ToCust_Checkbox}' != 'ON'    Mx LoanIQ Check Or Uncheck    ${RemittanceList_Window_RemittanceInstructionsDetail_Direction_ToCust_Checkbox}    OFF
-    Run Keyword If    '${RI_AutoDoIt_Checkbox}' != 'OFF'    Mx LoanIQ Check Or Uncheck    ${RemittanceList_Window_RemittanceInstructionsDetail_AutoDoIt_Checkbox}    ON
-    Take Screenshot    ${Screenshot_Path}/Screenshots/LoanIQ/RTGSRemittanceInstructionsIMTDetailWindowAdd
+    Run Keyword If    '${RemittanceInstruction_Method}' != ''    Mx LoanIQ Select Combo Box Value    ${RemittanceList_Window_RemittanceInstructionsDetail_MethodType}    ${RemittanceInstruction_Method}
+    Run Keyword If    '${RemittanceInstruction_Description}' != ''    Mx LoanIQ Enter    ${RemittanceList_Window_RemittanceInstructionsDetail_Description}    ${RemittanceInstruction_Description}
+    Run Keyword If    '${RemittanceInstruction_Currency}' != ''    Mx LoanIQ Select Combo Box Value    ${RemittanceList_Window_RemittanceInstructionsDetail_Currency}    ${RemittanceInstruction_Currency}
+    Run Keyword If    '${RI_FromCust_Checkbox}' = 'ON'    Mx LoanIQ Check Or Uncheck    ${RemittanceList_Window_RemittanceInstructionsDetail_Direction_FromCust_Checkbox}    ON
+    Run Keyword If    '${RI_ToCust_Checkbox}' = 'OFF'    Mx LoanIQ Check Or Uncheck    ${RemittanceList_Window_RemittanceInstructionsDetail_Direction_ToCust_Checkbox}    OFF
+    Run Keyword If    '${RI_AutoDoIt_Checkbox}' = 'ON'    Mx LoanIQ Check Or Uncheck    ${RemittanceList_Window_RemittanceInstructionsDetail_AutoDoIt_Checkbox}    ON
+    Take Screenshot    ${Screenshot_Path}/Screenshots/LoanIQ/RemittanceInstructionsIMTDetailWindowAdd
     Mx LoanIQ Click    ${RemittanceList_Window_RemittanceInstructionsDetail_AddButton}
     Mx LoanIQ Click    ${LIQ_Warning_Yes_Button}
-    Take Screenshot    ${Screenshot_Path}/Screenshots/LoanIQ/RTGSRemittanceInstructionsIMTDetailWindow
-    Run Keyword If    '${IMT_MessageCode}' != 'None'    Mx LoanIQ Enter   ${RemittanceList_Window_RemittanceInstructionsDetail_SelectMessageType_SearchField}    ${IMT_MessageCode}
+    Take Screenshot    ${Screenshot_Path}/Screenshots/LoanIQ/RemittanceInstructionsIMTDetailWindow
+    Run Keyword If    '${IMT_MessageCode}' != ''    Mx LoanIQ Enter   ${RemittanceList_Window_RemittanceInstructionsDetail_SelectMessageType_SearchField}    ${IMT_MessageCode}
     Mx LoanIQ Click    ${RemittanceList_Window_RemittanceInstructionsDetail_SelectMessageType_OKButton}
-    Take Screenshot    ${Screenshot_Path}/Screenshots/LoanIQ/RTGSRemittanceInstructionsIMTDetailWindowMessageType
-    Run Keyword If    '${RI_SendersCorrespondent_Checkbox}' != 'OFF'    Mx LoanIQ Check Or Uncheck    ${RemittanceList_Window_RemittanceInstructionsDetail_IMT_SendersCorrespondent_Checkbox}    ON
-    Run Keyword If    '${BOC_Level}' == != 'None'    Mx LoanIQ Select Combo Box Value    ${RemittanceList_Window_RemittanceInstructionsDetail_IMT_BankOperationCode}    ${BOC_Level}    
+    Take Screenshot    ${Screenshot_Path}/Screenshots/LoanIQ/RemittanceInstructionsIMTDetailWindowMessageType
+    Run Keyword If    '${RI_SendersCorrespondent_Checkbox}' = 'ON'    Mx LoanIQ Check Or Uncheck    ${RemittanceList_Window_RemittanceInstructionsDetail_IMT_SendersCorrespondent_Checkbox}    ON
+    Run Keyword If    '${BOC_Level}' != ''    Mx LoanIQ Select Combo Box Value    ${RemittanceList_Window_RemittanceInstructionsDetail_IMT_BankOperationCode}    ${BOC_Level}    
     
     Add Swift Role in IMT message    ${RI_SendersCorrespondent_Checkbox}    ${Swift_Role}    ${SwiftID}    
-    Run Keyword If    '${Details_Of_Charges}'!='None'    Mx LoanIQ Select Combo Box Value    ${RemittanceList_Window_RemittanceInstructionsDetail_IMT_DetailsofCharges}    ${Details_Of_Charges}
+    Run Keyword If    '${Details_Of_Charges}'!= ''    Mx LoanIQ Select Combo Box Value    ${RemittanceList_Window_RemittanceInstructionsDetail_IMT_DetailsofCharges}    ${Details_Of_Charges}
     
-    Take Screenshot    ${Screenshot_Path}/Screenshots/LoanIQ/RTGSRemittanceInstructionsIMTDetailWindowDOC
+    Take Screenshot    ${Screenshot_Path}/Screenshots/LoanIQ/RemittanceInstructionsIMTDetailWindowDOC
     Mx LoanIQ Click    ${RemittanceList_Window_RemittanceInstructionsDetail_IMT_OKButton}
     Mx LoanIQ Select    ${LIQ_RemittanceInstruction_Notebook_FileMenu_SaveMenu}
     Mx LoanIQ Click    ${LIQ_Warning_OK_Button}
-    Take Screenshot    ${Screenshot_Path}/Screenshots/LoanIQ/RTGSRemittanceInstructionsIMTDetailWindowSaved
+    Take Screenshot    ${Screenshot_Path}/Screenshots/LoanIQ/RemittanceInstructionsIMTDetailWindowSaved
+    
