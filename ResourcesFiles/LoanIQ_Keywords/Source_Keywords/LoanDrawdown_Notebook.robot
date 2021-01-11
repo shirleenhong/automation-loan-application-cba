@@ -3078,13 +3078,16 @@ Validate Drawdown Rate Change Event
 
 Validate Initial Drawdown Events Tab
     [Documentation]    This keyword validates the Initial Drawdown Notebook's Event Tab
-    ...                @author: bernchua
+    ...    @author: bernchua
+    ...    @update: mcastro    11JAN2021    - Added Take Screenshot, Added 'Run Keyword And Continue On Failure'
     [Arguments]    ${Event_Name}
     mx LoanIQ activate    ${LIQ_InitialDrawdown_Window}
     Mx LoanIQ Select Window Tab    ${LIQ_InitialDrawdown_Tab}    Events
     ${Event_Selected}    Run Keyword And Return Status    Mx LoanIQ Select String    ${LIQ_DrawdownEvents_List}    ${Event_Name}
     Run Keyword If    ${Event_Selected}==True    Log    ${Event_Name} is shown in the Events list of the Drawdown notebook.
-    ...    ELSE    Fail    Event not verified.
+    ...    ELSE    Run Keyword And Continue On Failure    Fail    Event not verified.
+
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LoanEvents
 
 Compute Transaction Amount
     [Documentation]    This keyword computes for the Lender's Tran Amount based from the Drawdown amount and Lender share percent, to be used in validating the amounts shown in the Cashflows
@@ -3372,19 +3375,23 @@ Set Base Rate Details
     ...                @update: hstone      05SEP2019    Added Question Window Confirmation
     ...                @update: hstone      18JUN2020    Added Keyword Pre-processing
     ...                @update: mcastro     03SEP2020    Updated screenshot path
-    [Arguments]    ${sBorrowerBaseRate}    ${sAcceptRateFromPricing}=N
+    ...                @update: dahijara    04JAN2021    Added optional argument for Accept Rate from Interpolation
+    ...                @update: dahijara    04JAN2021    Added condition for clicking Accept Rate from Interpolation
+    [Arguments]    ${sBorrowerBaseRate}    ${sAcceptRateFromPricing}=N    ${sAcceptRateFromInterpolation}=N
 
     ### Keyword Pre-processing ###
     ${BorrowerBaseRate}    Acquire Argument Value    ${sBorrowerBaseRate}
     ${AcceptRateFromPricing}    Acquire Argument Value    ${sAcceptRateFromPricing}
+    ${AcceptRateFromInterpolation}    Acquire Argument Value    ${sAcceptRateFromInterpolation}
 
     ${STATUS}    Run Keyword And Return Status    Mx LoanIQ Verify Object Exist    ${LIQ_SetBaseRate_Window}    VerificationData="Yes"
     Run Keyword If    ${STATUS}==False    Run Keywords
     ...    mx LoanIQ click    ${LIQ_InitialDrawdown_BaseRate_Button}
     ...    AND    Verify If Warning Is Displayed
     mx LoanIQ click element if present    ${LIQ_Question_Yes_Button}
-    Run Keyword If    '${AcceptRateFromPricing}'=='N'    mx LoanIQ enter    ${LIQ_InitialDrawdown_BorrowerBaseRate_Field}    ${BorrowerBaseRate}
-    ...    ELSE IF    '${AcceptRateFromPricing}'=='Y'    mx LoanIQ click    ${LIQ_InitialDrawdown_AcceptBaseRate}
+    Run Keyword If    '${AcceptRateFromPricing}'=='N' and '${AcceptRateFromInterpolation}'=='N'    mx LoanIQ enter    ${LIQ_InitialDrawdown_BorrowerBaseRate_Field}    ${BorrowerBaseRate}
+    ...    ELSE IF    '${AcceptRateFromPricing}'=='Y' and '${AcceptRateFromInterpolation}'=='N'    mx LoanIQ click    ${LIQ_InitialDrawdown_AcceptBaseRate}
+    ...    ELSE IF    '${AcceptRateFromPricing}'=='N' and '${AcceptRateFromInterpolation}'=='Y'    mx LoanIQ click    ${LIQ_InitialDrawdown_AcceptRateFromInterpolation}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/BaseRate-Window
     mx LoanIQ click    ${LIQ_InitialDrawdown_SetBaseRate_OK_Button}
     Verify If Warning Is Displayed
@@ -4031,6 +4038,7 @@ Validate Loan Drawdown Rates in Rates Tab
     ...    @author: dahijara    16DEC2020    - Initial create
     ...    @update: javinzon    18DEC2020    - Updated keyword name from 'Validate Loan Drawdown Rates for CH EDU Bilateral Deal' to
     ...                                        'Validate Loan Drawdown Rates in Rates Tab', updated documentation
+    ...    @update: mcastro    08JAN2021    - Added another Take Screenshot to capture the tab after loading
     [Arguments]    ${sLoan_BaseRate}    ${sLoan_Spread}    ${sLoan_AllInRate}    
 
     ### GetRuntime Keyword Pre-processing ###
@@ -4060,6 +4068,8 @@ Validate Loan Drawdown Rates in Rates Tab
     ${Status}    Run Keyword And Return Status    Should Be Equal    ${UI_LoanAllInRate}    ${Loan_AllInRate}
     Run Keyword If    ${Status}==${True}    Log    Loan All-In-Rate is correct.
     ...    ELSE    Run Keyword And Continue On Failure    Fail    Loan All-In-Rate is incorrect. Expected: ${Loan_AllInRate} - Actual: ${UI_LoanAllInRate}
+
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LoanWindow
     
 Validate Loan Drawdown General Details in General Tab
     [Documentation]    This keyword validates the loan drawdown general details in General Tab.

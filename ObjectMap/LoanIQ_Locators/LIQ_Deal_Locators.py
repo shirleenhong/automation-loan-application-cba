@@ -341,7 +341,7 @@ LIQ_FinantialRatio_Field = 'JavaWindow("title:=Financial Ratio Add").JavaEdit("a
 LIQ_FinantialRatio_Date = 'JavaWindow("title:=Financial Ratio Add").JavaEdit("tagname:=Text","index:=1")'    
 LIQ_FinantialRatio_Ok_Button = 'JavaWindow("title:=Financial Ratio Add").JavaButton("attached text:=OK")'    
 LIQ_FinantialRatio_JavaTree = 'JavaWindow("title:=Deal Notebook -.*").JavaTab("text:=Ratios/Conds").JavaTree("tagname:=Drill down to update")'  
-
+LIQ_OutsideConditions_JavaTree = 'JavaWindow("label:=.*Outside Conditions.*").JavaTree("tagname:=Select Condition")'
 LIQ_OutsideConditions_TextField = 'JavaWindow("title:=Deal Notebook -.*").JavaTab("text:=Ratios/Conds").JavaEdit("attached_text:=${Index}:")'
 LIQ_OutsideConditions_First_TrueRadioButton = 'JavaWindow("title:=Deal Notebook -.*").JavaTab("text:=Ratios/Conds").JavaRadioButton("index:=0")'
 LIQ_OutsideConditions_First_FalseRadioButton = 'JavaWindow("title:=Deal Notebook -.*").JavaTab("text:=Ratios/Conds").JavaRadioButton("index:=1")'
@@ -352,6 +352,7 @@ LIQ_OutsideConditions_Third_FalseRadioButton = 'JavaWindow("title:=Deal Notebook
 LIQ_OutsideConditions_History_Button = 'JavaWindow("title:=Deal Notebook -.*").JavaTab("text:=Ratios/Conds").JavaButton("label:=History", "index:=1")'
 LIQ_OutsideConditions_Insert_Button = 'JavaWindow("label:=.*Outside Conditions History").JavaButton("attached text:=Insert")'
 LIQ_OutsideConditions_OK_Button = 'JavaWindow("label:=.*Outside Conditions History").JavaButton("label:=OK")'
+LIQ_OutsideConditions_Cancel_Button = 'JavaWindow("label:=.*Outside Conditions History").JavaButton("label:=Cancel")'
 LIQ_OutsideConditions_SelectConditionDropdown = 'JavaWindow("label:=.*Outside Conditions History").JavaList("attached text:=Select Condition")'
 LIQ_OutsideConditions_Matrix_RadioButton_True = 'JavaWindow("title:=Outside Condition").JavaRadioButton("index:=0")'
 LIQ_OutsideConditions_Matrix_RadioButton_False = 'JavaWindow("title:=Outside Condition").JavaRadioButton("index:=1")'
@@ -359,6 +360,10 @@ LIQ_Edit_OutsideConditions_StartDate = 'JavaWindow("label:=.*Outside Condition")
 LIQ_Edit_OutsideConditions_OK_Button = 'JavaWindow("label:=.*Outside Condition").JavaButton("attached text:=OK")'
 LIQ_Edit_OutsideConditions_Question_Window = 'JavaWindow("text:=Question")'
 LIQ_Edit_OutsideConditions_Question_Yes_Button = 'JavaWindow("title:=Question","displayed:=1").JavaButton("label:=Yes")'
+LIQ_Edit_OutsideConditions_True_RadioButton = 'JavaWindow("label:=.*Outside Condition").JavaRadioButton("index:=0")'
+LIQ_Edit_OutsideConditions_False_RadioButton = 'JavaWindow("label:=.*Outside Condition").JavaRadioButton("index:=1")'
+
+
 
 ###Deal Notebook - Fees Tab###    
     
@@ -667,6 +672,7 @@ LIQ_DealChangeTransaction_ProcessingArea_JavaTree = 'JavaWindow("title:=Processi
 LIQ_DealChangeTransaction_ProcessingArea_Search_TextField = 'JavaWindow("title:=Processing Area.*").JavaEdit("tagname:=Text")'  
 LIQ_DealChangeTransaction_ProcessingArea_OK_Button = 'JavaWindow("title:=Processing Area.*").JavaButton("attached text:=OK")' 
 LIQ_DealChangeTransaction_Workflow_Tab = 'JavaWindow("title:=.* Deal Change Transaction.*").JavaTab("tagname:=TabFolder")'
+LIQ_DealChangeTransaction_FinancialRatio_History_Button = 'JavaWindow("title:=.* Deal Change Transaction.*").JavaButton("attached text:=History","labeled_containers_path:=Tab:Ratios;Group:Financial Ratios.*")'
 
 ###Deal Change Transaction - Financial Ratio Window###
 LIQ_DealChangeTransaction_FinancialRatio_Window = 'JavaWindow("title:=Select Financial Ratio")'
@@ -678,6 +684,15 @@ LIQ_DealChangeTransaction_FinantialRatio_Date_Field = 'JavaWindow("title:=Financ
 LIQ_DealChangeTransaction_FinancialRatio_Ok_Button = 'JavaWindow("title:=Financial Ratio.*").JavaButton("attached text:=OK")'
 LIQ_DealChangeTransaction_FinancialRatioAdd_Window = 'JavaWindow("title:=Financial Ratio Add")'
 LIQ_DealChangeTransaction_FinancialRatioUpdate_Window = 'JavaWindow("title:=Financial Ratio Update")'
+LIQ_DealChangeTransaction_FinantialRatio_StartDate_Field = 'JavaWindow("title:=Financial Ratio.*").JavaEdit("tagname:=Leverage Ratio (LR)","index:=1")'
+LIQ_DealChangeTransaction_FinancialRatioHistory_Window = 'JavaWindow("title:=.*Deal Change Transaction Financial Ratio History")'
+LIQ_DealChangeTransaction_FinancialRatioHistory_JavaTree = 'JavaWindow("title:=.*Deal Change Transaction Financial Ratio History").JavaTree("attached text:=Drill down to update")'
+LIQ_DealChangeTransaction_FinancialRatioHistory_Insert_Button = 'JavaWindow("title:=.*Deal Change Transaction Financial Ratio History").JavaButton("attached text:=Insert")'
+LIQ_DealChangeTransaction_FinancialRatioHistory_OK_Button = 'JavaWindow("title:=.*Deal Change Transaction Financial Ratio History").JavaButton("attached text:=OK")'
+
+###Deal Change Transaction - Conditions Tab ###
+LIQ_DealChangeTransaction_Conditions_PrevOutsideConditions_History_Button = 'JavaWindow("title:=Awaiting Send To Approval.*").JavaTab("value:=Conditions").JavaButton("index:=0")'
+LIQ_DealChangeTransaction_Conditions_OutsideConditions_History_Button = 'JavaWindow("title:=Awaiting Send To Approval.*").JavaTab("value:=Conditions").JavaButton("index:=1")'
 
 ###Closed Deal###
 LIQ_ClosedDeal__CurrentCommitment_Field = 'JavaWindow("title:=Facility.*Closed Deal.*").JavaEdit("attached text:=Current Cmt:")'

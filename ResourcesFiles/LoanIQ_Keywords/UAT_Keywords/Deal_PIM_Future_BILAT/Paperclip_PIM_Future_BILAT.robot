@@ -5,13 +5,14 @@ Resource    ../../../../Configurations/LoanIQ_Import_File.robot
 *** Keywords ***
 Collect Early Prepayment via Paper Clip For PIM Future BILAT
     [Documentation]    This is a high-level keyword to collect early prepayment via paperclip
-    ...    @author: mcastro    16DEC2020    - Initial Create    
+    ...    @author: mcastro    16DEC2020    - Initial Create
+    ...    @update: mcastro    05JAN2021    - Updated with correct column name, added selecting of breakfunding reason  
     [Arguments]    ${ExcelPath}
 
     ### Read data from Loan Drawdown and Comprehensive repricing sheets ###
     ${Deal_Name}    Read Data From Excel    SERV01_LoanDrawdown    Deal_Name    ${rowid}
     ${Facility_Name}    Read Data From Excel    SERV01_LoanDrawdown    Facility_Name    ${rowid}
-    ${OutstandingSelect_Type}    Read Data From Excel    SERV01_LoanDrawdown    OutstandingSelect_Type    ${rowid}
+    ${OutstandingSelect_Type}    Read Data From Excel    SERV01_LoanDrawdown    Outstanding_Type    ${rowid}
     ${Borrower_Name}    Read Data From Excel    SERV01_LoanDrawdown    Borrower_Name    ${rowid}
     ${NewLoan_Alias}    Read Data From Excel    SERV08_ComprehensiveRepricing    NewLoan_Alias    ${rowid}
 
@@ -23,7 +24,7 @@ Collect Early Prepayment via Paper Clip For PIM Future BILAT
     Search for Existing Outstanding    ${OutstandingSelect_Type}    ${Facility_Name}
     Open Existing Loan    ${NewLoan_Alias}
 
-    ## Loan Capitalization Editor ###
+    ### Loan Capitalization Editor ###
     Navigate to Capitalize Interest Payment from Loan Notebook
     Set Activate Interest Capitalization    &{ExcelPath}[InterestCapitalization_Status]
     
@@ -68,3 +69,8 @@ Collect Early Prepayment via Paper Clip For PIM Future BILAT
     Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
     Select Item in Work in Process    ${PAYMENTS_TRANSACTION}    ${AWAITING_RELEASE_STATUS}    ${PAPER_CLIP}    ${Deal_Name}
     Release Paperclip Transaction
+
+    ### Breakfunding Window ###
+    Select Breakfunding Reason    &{ExcelPath}[Breakfunding_Reason] 
+
+    Close All Windows on LIQ

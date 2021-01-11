@@ -8,6 +8,7 @@ ${rowid}    1
 Create Facility for New Life BILAT
     [Documentation]    This keyword is used to create a Facility for PIM Future Bilateral deal
     ...    @author: kmagday    10DEC2020    Initial Create
+    ...    @update: kmagday    09JAN2021    Update writing of Facility_Name to SERV29_CommitmentFeePayment from row 1 to 7
     [Arguments]    ${ExcelPath}
     
     ${Facility_NamePrefix}    Read Data From Excel    CRED02_FacilitySetup    Facility_NamePrefix    ${rowid}
@@ -16,8 +17,8 @@ Create Facility for New Life BILAT
     Write Data To Excel    CRED02_FacilitySetup    Facility_Name    ${rowid}    ${Facility_Name}
     Write Data To Excel    CRED08_OngoingFeeSetup    Facility_Name    ${rowid}    ${Facility_Name}
     Write Data To Excel    SERV01_LoanDrawdown    Facility_Name    ${rowid}    ${Facility_Name} 
-    Write Data To Excel    SERV29_CommitmentFeePayment    Facility_Name    ${rowid}    ${Facility_Name}
-    Write Data To Excel    SYND02_PrimaryAllocation    Facility_Name    ${rowid}    ${Facility_Name}    
+    Write Data To Excel    SYND02_PrimaryAllocation    Facility_Name    ${rowid}    ${Facility_Name}
+    Write Data To Excel    SERV29_CommitmentFeePayment    Facility_Name    ${counter}    ${Facility_Name}    multipleValue=Y  
 
     ###Open Deal Notebook If Not present###
     Open Deal Notebook If Not Present    &{ExcelPath}[Deal_Name]
@@ -72,11 +73,10 @@ Setup Primary for New Life BILAT
     Add Contact in Primary    &{ExcelPath}[Primary_Contact]
     Select Servicing Group on Primaries    &{ExcelPath}[Primary_ServicingGroupMember]    &{ExcelPath}[Primary_SGAlias]
     ${SellAmount}    Get Circle Notebook Sell Amount  
-    Mx LoanIQ close window    ${LIQ_OrigPrimaries_Window}
     
-    ### Circle Notebook Complete Portfolio Allocation, Circling, and Sending to Settlement Approval ###
-    Circle Notebook Workflow Navigation    &{ExcelPath}[Primary_Lender]    &{ExcelPath}[Primary_CircledDate]    &{ExcelPath}[Lender_Hostbank]    &{ExcelPath}[Primary_Portfolio]
-    ...    &{ExcelPath}[Primary_PortfolioBranch]    ${SellAmount}    &{ExcelPath}[Primary_ExpiryDate]    &{ExcelPath}[Primary_RiskBook]
+    ### Circle Notebook Complete Portfolio Allocation, Circling ###
+    Complete Portfolio Allocations Workflow    &{ExcelPath}[Primary_Portfolio]    &{ExcelPath}[Primary_PortfolioBranch]    ${SellAmount}    &{ExcelPath}[Primary_ExpiryDate]    &{ExcelPath}[Primary_FacilityName]    &{ExcelPath}[Primary_RiskBook]
+    Circling for Primary Workflow    &{ExcelPath}[Primary_CircledDate]
 
     Close All Windows on LIQ
 
