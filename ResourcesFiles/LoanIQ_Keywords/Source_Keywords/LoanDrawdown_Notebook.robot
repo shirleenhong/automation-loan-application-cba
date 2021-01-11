@@ -3078,13 +3078,16 @@ Validate Drawdown Rate Change Event
 
 Validate Initial Drawdown Events Tab
     [Documentation]    This keyword validates the Initial Drawdown Notebook's Event Tab
-    ...                @author: bernchua
+    ...    @author: bernchua
+    ...    @update: mcastro    08JAN2021    - Added Take Screenshot
     [Arguments]    ${Event_Name}
     mx LoanIQ activate    ${LIQ_InitialDrawdown_Window}
     Mx LoanIQ Select Window Tab    ${LIQ_InitialDrawdown_Tab}    Events
     ${Event_Selected}    Run Keyword And Return Status    Mx LoanIQ Select String    ${LIQ_DrawdownEvents_List}    ${Event_Name}
     Run Keyword If    ${Event_Selected}==True    Log    ${Event_Name} is shown in the Events list of the Drawdown notebook.
     ...    ELSE    Fail    Event not verified.
+
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LoanEvents
 
 Compute Transaction Amount
     [Documentation]    This keyword computes for the Lender's Tran Amount based from the Drawdown amount and Lender share percent, to be used in validating the amounts shown in the Cashflows
@@ -4035,6 +4038,7 @@ Validate Loan Drawdown Rates in Rates Tab
     ...    @author: dahijara    16DEC2020    - Initial create
     ...    @update: javinzon    18DEC2020    - Updated keyword name from 'Validate Loan Drawdown Rates for CH EDU Bilateral Deal' to
     ...                                        'Validate Loan Drawdown Rates in Rates Tab', updated documentation
+    ...    @update: mcastro    08JAN2021    - Added another Take Screenshot to capture the tab after loading
     [Arguments]    ${sLoan_BaseRate}    ${sLoan_Spread}    ${sLoan_AllInRate}    
 
     ### GetRuntime Keyword Pre-processing ###
@@ -4064,6 +4068,8 @@ Validate Loan Drawdown Rates in Rates Tab
     ${Status}    Run Keyword And Return Status    Should Be Equal    ${UI_LoanAllInRate}    ${Loan_AllInRate}
     Run Keyword If    ${Status}==${True}    Log    Loan All-In-Rate is correct.
     ...    ELSE    Run Keyword And Continue On Failure    Fail    Loan All-In-Rate is incorrect. Expected: ${Loan_AllInRate} - Actual: ${UI_LoanAllInRate}
+
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LoanWindow
     
 Validate Loan Drawdown General Details in General Tab
     [Documentation]    This keyword validates the loan drawdown general details in General Tab.
