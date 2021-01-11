@@ -12,6 +12,7 @@ Setup Deal for PIM Future BILAT
     ...    @update: mcastro    14DEC2020    - Added checking of sole lender
     ...    @update: mcastro    15DEC2020    - Added writing of Borrower_Shortname and Deal_Name on Correspondence for row 4 and 5
     ...    @update: mcastro    06JAN2021    - Added writing of Borrower_Shortname and Deal_Name on Correspondence for row 6 and 7
+    ...    @update: mcastro    08JAN2021    - Added writing of Borrower_Shortname and Deal_Name on SERV01_LoanDrawdown for 2nd Loan
     [Arguments]    ${ExcelPath}
     
     ${Deal_Name}    ${Deal_Alias}    Generate Deal Name and Alias with 5 Numeric Test Data    &{ExcelPath}[Deal_NamePrefix]    &{ExcelPath}[Deal_AliasPrefix]
@@ -28,6 +29,8 @@ Setup Deal for PIM Future BILAT
     Write Data To Excel    SYND02_PrimaryAllocation    Deal_Name    ${rowid}    ${Deal_Name}
     Write Data To Excel    SERV01_LoanDrawdown    Deal_Name    ${rowid}    ${Deal_Name}
     Write Data To Excel    SERV01_LoanDrawdown    Borrower_Name    ${rowid}    ${Borrower_ShortName}
+    Write Data To Excel    SERV01_LoanDrawdown    Deal_Name    2    ${Deal_Name}
+    Write Data To Excel    SERV01_LoanDrawdown    Borrower_Name    2    ${Borrower_ShortName}
     Write Data To Excel    Correspondence    Notice_Customer_LegalName    ${rowid}    ${Borrower_ShortName}
     Write Data To Excel    Correspondence    Notice_Customer_LegalName    2    ${Borrower_ShortName}
     Write Data To Excel    Correspondence    Notice_Customer_LegalName    3    ${Borrower_ShortName}
