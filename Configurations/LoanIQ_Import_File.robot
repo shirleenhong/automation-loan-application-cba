@@ -485,3 +485,4 @@ Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/Deal_New_Life_BILAT/L
 
 ### New PT Health UAT Deal ###
 Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/Deal_PT_Health_Syndicated/Deal_Notebook_PT_Health_Syndicated.robot
+Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/Deal_PT_Health_Syndicated/Deal_Borrower_PT_Health_Syndicated.robot
