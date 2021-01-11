@@ -48,6 +48,7 @@ Create Facility for PIM Future BILAT
 Setup Facility Ongoing Fee for PIM Future BILAT
     [Documentation]    This high-level keyword sets up Ongoing Fee from the Deal Notebook
     ...    @author: mcastro    02DEC2020    - Initial Create
+    ...    @update: mcastro    17DEC2020    - Added setting of facility Pricing Penalty Spread
     [Arguments]    ${ExcelPath}
 
     Navigate to Modify Ongoing Fee Window
@@ -71,6 +72,9 @@ Setup Facility Ongoing Fee for PIM Future BILAT
 
     ### Interest Pricing ###
     Modify Interest Pricing - Insert Add    &{ExcelPath}[Interest_AddItem]    &{ExcelPath}[Interest_OptionName]    &{ExcelPath}[Interest_RateBasis]    &{ExcelPath}[Interest_SpreadAmt]    &{ExcelPath}[Interest_BaseRateCode]
+
+    ### Penalty Spread ###
+    Set Facility Pricing Penalty Spread    &{ExcelPath}[Penalty_Spread]    &{ExcelPath}[Penalty_Status]
 
     Validate Facility
     Mx LoanIQ close window    ${LIQ_FacilityNavigator_Window}
