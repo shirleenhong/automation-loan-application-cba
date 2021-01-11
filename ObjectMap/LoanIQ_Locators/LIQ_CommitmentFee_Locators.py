@@ -21,12 +21,12 @@ LIQ_CommitmentFee_Cycles_CycleDue_RadioButton = 'JavaWindow("title:=Cycles for.*
 
 ###Commitment Fee - Ongoing Fee Payment - General###  
 LIQ_OngoingFeePayment_Window = 'JavaWindow("title:=.*Fee.*Ongoing Fee Payment.*","displayed:=1")'
-LIQ_OngoingFeePayment_RequestedAmount_Textfield = 'JavaWindow("title:=.* Payment .*").JavaEdit("labeled_containers_path:=Tab:General;Group: Amounts ;", "index:=0")'
-LIQ_OngoingFeePayment_EffectiveDate_Field = 'JavaWindow("title:=.*Fee.*Ongoing Fee Payment.*").JavaEdit("attached text:=Effective Date:.*")'
-LIQ_OngoingFeePayment_EffectiveDate_DateField = 'JavaWindow("title:=.* Payment .*").JavaEdit("attached text:=Effective Date:.*")'
-LIQ_OngoingFeePayment_EffectiveDate_DateField = 'JavaWindow("title:=.* Payment .*").JavaEdit("attached text:=Effective Date:.*")'
-LIQ_OngoingFeePayment_UpdateMode_Button = 'JavaWindow("title:=.* Payment .*").JavaButton("attached text:=Notebook in Update Mode - F7")'
-LIQ_OngoingFeePayment_InquiryMode_Button = 'JavaWindow("title:=.* Payment .*").JavaButton("attached text:=Notebook in Inquiry Mode - F7")'
+LIQ_OngoingFeePayment_RequestedAmount_Textfield = 'JavaWindow("title:=.* Payment .*","displayed:=1").JavaEdit("labeled_containers_path:=Tab:General;Group: Amounts ;", "index:=0")'
+LIQ_OngoingFeePayment_EffectiveDate_Field = 'JavaWindow("title:=.*Fee.*Ongoing Fee Payment.*","displayed:=1").JavaEdit("attached text:=Effective Date:.*")'
+LIQ_OngoingFeePayment_EffectiveDate_DateField = 'JavaWindow("title:=.* Payment .*","displayed:=1").JavaEdit("attached text:=Effective Date:.*")'
+LIQ_OngoingFeePayment_EffectiveDate_DateField = 'JavaWindow("title:=.* Payment .*","displayed:=1").JavaEdit("attached text:=Effective Date:.*")'
+LIQ_OngoingFeePayment_UpdateMode_Button = 'JavaWindow("title:=.* Payment .*","displayed:=1").JavaButton("attached text:=Notebook in Update Mode - F7")'
+LIQ_OngoingFeePayment_InquiryMode_Button = 'JavaWindow("title:=.* Payment .*","displayed:=1").JavaButton("attached text:=Notebook in Inquiry Mode - F7")'
 LIQ_OngoingFeePayment_ViewUpdateLenderShares_Menu = 'JavaWindow("title:=.* Payment .*").JavaMenu("label:=Options").JavaMenu("label:=View/Update Lender Shares")'
 LIQ_OngoingFeePayment_AwaitingReleaseWindow = 'JavaWindow("title:=.*Ongoing Fee Payment.*.*Awaiting Release.*","displayed:=1")'
 
