@@ -487,3 +487,7 @@ Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/Deal_New_Life_BILAT/F
 Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/Deal_New_Life_BILAT/Loan_Drawdown_New_Life_BILAT.robot
 Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/Deal_New_Life_BILAT/OngoingFee_New_Life_BILAT.robot
 
+### NEW UAT Deal PDS SYND ###
+Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/Deal_PDS_SYND/Deal_Borrower_PDS_SYND.robot
+
+
