@@ -977,6 +977,31 @@ Circle Notebook Workflow Navigation
     Save Values of Runtime Execution on Excel File    ${sRuntime_Variable}    ${ShareAmount}
     [Return]    ${ShareAmount}
     
+Circle Notebook Workflow Navigation for LLA Syndicated Deal
+    [Documentation]    This navigates the Workflow tab of the Lender's Circle Notebook, to Complete Portfolio Allocations, Circling and Send to Settlement Approval.
+    ...    This is initiated in the "Primaries List" window for selecting a Lender.
+    ...    This keyword returns the "Sell Amount" of the Lender to be used in later transactions.
+    ...    
+    ...    | Arguments |
+    ...    'IsLenderAHostBank' = Accepts 'Yes' for conditional statement. If Yes, this keyword will execute "Complete Portfolio Allocations Worflow" keyword,
+    ...                          and will require the Arguments needed for the said keyword.
+    ...    
+    ...    @author: makcamps    11JAN2021    - initial create
+    [Arguments]    ${Lender_Name}    ${CircledDate}    ${IsLenderAHostBank}=null    ${Primary_Portfolio}=null    ${Primary_PortfolioBranch}=null
+    ...    ${Primary_PortfolioAllocation}=null    ${Primary_PortfolioExpDate}=null    ${ExpenseCode}=null    ${sRuntime_Variable}=None
+    
+    mx LoanIQ activate    ${LIQ_PrimariesList_Window}
+    Mx LoanIQ Select Or DoubleClick In Javatree    ${LIQ_PrimariesList_JavaTree}    ${Lender_Name}%d
+    Validate Circle Notebook Lender Name and Sell Amount    ${Lender_Name}
+    ${ShareAmount}    Mx LoanIQ Get Data    ${LIQ_OrigPrimaries_SellAmount_Textfield}    value%amount
+    Circling for Primary Workflow    ${CircledDate}
+    Run Keyword If    '${IsLenderAHostBank}'=='Yes'
+    ...    Complete Portfolio Allocations Workflow    ${Primary_Portfolio}    ${Primary_PortfolioBranch}    ${Primary_PortfolioAllocation}    ${Primary_PortfolioExpDate}    None    ${ExpenseCode}
+    Navigate Notebook Workflow    ${LIQ_OrigPrimaries_Window}    ${LIQ_OrigPrimaries_Tab}    ${LIQ_PrimaryCircle_Workflow_JavaTree}    Send to Settlement Approval
+    Validate Window Title Status    Orig Primary    Awaiting Settlement Approval
+    Save Values of Runtime Execution on Excel File    ${sRuntime_Variable}    ${ShareAmount}
+    [Return]    ${ShareAmount}
+    
 Circle Notebook Settlement Approval
     [Documentation]    This keyword Navigates the WIP for Circles transaction for Settlement Approval.
     ...    @author: bernchua
