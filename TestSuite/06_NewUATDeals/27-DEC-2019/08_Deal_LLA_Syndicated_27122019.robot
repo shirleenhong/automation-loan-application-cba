@@ -20,3 +20,4 @@ Establish Facility for LLA Syndicated Deal - CRED02
 Establish Primaries for LLA Syndicated Deal - SYND02
     Mx Execute Template With Multiple Data    Setup Primaries for LLA Syndicated Deal    ${ExcelPath}    ${rowid}    SYND02_PrimaryAllocation
     Mx Execute Template With Multiple Data    LLA Syndicated Deal Approval and Close    ${ExcelPath}    ${rowid}    SYND02_PrimaryAllocation
+    Mx Execute Template With Multiple Data    Release Ongoing Fee for LLA Syndicated Deal    ${ExcelPath}    ${rowid}    CRED08_OngoingFeeSetup
