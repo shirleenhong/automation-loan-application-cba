@@ -701,7 +701,7 @@ Navigate to Paper Clip Complete Cashflow Window
 
     ${Status}    Run Keyword And Return Status    Mx LoanIQ Verify Text In Javatree    ${LIQ_PaperClip_WorkflowItems}    ${COMPLETE_CASHFLOWS_WORKFLOW}%yes 
     Run Keyword If    ${Status}==${True}    Log    Complete Cashflow is displayed.
-    ... ELSE    Run Keyword And Continue On Failure    Fail    Complete Cashflow is not displayed.
+    ...    ELSE    Run Keyword And Continue On Failure    Fail    Complete Cashflow is not displayed.
 
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/CompleteCashflow
     Mx LoanIQ DoubleClick    ${LIQ_PaperClip_WorkflowItems}    ${COMPLETE_CASHFLOWS_WORKFLOW}
@@ -718,6 +718,6 @@ Verify if Cashflow is Completed for Paper Clip Payment
     Mx LoanIQ activate    ${LIQ_PaperClip_Window}
     ${Status}    Run Keyword And Return Status   Mx LoanIQ Verify Text In Javatree    ${LIQ_PaperClip_WorkflowItems}    ${COMPLETE_CASHFLOWS_WORKFLOW}%no
     Run Keyword If    ${Status}==${True}    Log    Complete Cashflow is no longer displayed.
-    ... ELSE    Run Keyword And Continue On Failure    Fail    Complete Cashflow is still displayed.
+    ...    ELSE    Run Keyword And Continue On Failure    Fail    Complete Cashflow is still displayed.
     
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/PaperClipPaymentWorkflowTab        
