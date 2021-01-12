@@ -691,3 +691,26 @@ Populate Split Cashflow Split Interest Amount
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/SplitCashflow
     mx LoanIQ click    ${LIQ_SplitCashflows_Exit_Button}
     mx LoanIQ activate window    ${LIQ_Cashflows_Window}
+
+Navigate to Paper Clip Complete Cashflow Window
+    [Documentation]    This keyword is used to navigate to the Paper Clip Complete Workflow Transaction window.
+    ...    @author: mcastro    11JAN2021    - Initial Create
+    
+    Mx LoanIQ activate    ${LIQ_PaperClip_Window}
+    Mx LoanIQ Select Window Tab    ${LIQ_PaperClip_Tabs}    ${WORKFLOW_TAB}
+    Mx LoanIQ Verify Text In Javatree    ${LIQ_PaperClip_WorkflowItems}    ${COMPLETE_CASHFLOWS_WORKFLOW}%yes 
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/CompleteCashflow
+    Mx LoanIQ DoubleClick    ${LIQ_PaperClip_WorkflowItems}    ${COMPLETE_CASHFLOWS_WORKFLOW}
+    Mx LoanIQ click element if present    ${LIQ_Question_Yes_Button}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/CompleteCashflow
+    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
+    Mx LoanIQ activate window    ${LIQ_Cashflows_Window}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/CompleteCashflow
+
+Verify if Cashflow is Completed for Paper Clip Payment
+    [Documentation]    This keyword validates that Complete Cashflow is not in the list of Paper clip Payment workflow tab.
+    ...    @author: mcastro    11JAN2021    - Initial create
+
+    Mx LoanIQ activate    ${LIQ_PaperClip_Window}
+    Run Keyword And Continue On Failure    Mx LoanIQ Verify Text In Javatree    ${LIQ_PaperClip_WorkflowItems}    ${COMPLETE_CASHFLOWS_WORKFLOW}%no
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/PaperClipPaymentWorkflowTab        

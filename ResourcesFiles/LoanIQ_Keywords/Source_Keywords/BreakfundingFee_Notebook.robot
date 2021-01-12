@@ -354,8 +354,9 @@ Open Breakfunding Fee Notebook via WIP - Awaiting Release
     
 Release Breakfunding
     [Documentation]    This keyword approves the Breakfunding.
-    ...     @author: jcdelacruz
-    ...     @update: sahalder    10JUL2020    Added steps for taking screenshots   
+    ...    @author: jcdelacruz
+    ...    @update: sahalder    10JUL2020    Added steps for taking screenshots  
+    ...    @update: mcastro    11JAN2021    - Added additional Closing of Cashflow window if present 
     Mx LoanIQ Select Window Tab    ${LIQ_Breakfunding_AwaitingRelease_Tab}    Workflow
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/BreakfundingFee_Release
     Mx LoanIQ Verify Text In Javatree    ${LIQ_Breakfunding_WorkflowItems_AwaitingRelease_List}    Release%yes 
@@ -368,6 +369,7 @@ Release Breakfunding
     \    Run Keyword And Ignore Error    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
     \    Run Keyword And Ignore Error    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}  
     Run Keyword And Continue On Failure    Mx LoanIQ Verify Object Exist    ${LIQ_Breakfunding_Released_Window}    VerificationData="Yes"
+    Mx LoanIQ click element if present    ${LIQ_Cashflows_OK_Button}
     mx LoanIQ select    ${LIQ_Breakfunding_FileExit_Menu}    
    
 Get Expense Code from Deal
@@ -457,3 +459,26 @@ Navigate to Breakfunding Window from Loan Notebook
     Mx Press Combination    Key.ENTER
     Mx LoanIQ activate    ${LIQ_Breakfunding_Pending_Window}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/BreakfundingPendingTab   
+
+Navigate to Breakfunding Complete Cashflow Window
+    [Documentation]    This keyword is used to navigate to Breakfunding Complete Workflow Transaction window.
+    ...    @author: mcastro    11JAN2021    - Initial Create
+    
+    Mx LoanIQ activate    ${LIQ_Breakfunding_Window}
+    Mx LoanIQ Select Window Tab    ${LIQ_Breakfunding_Workflow_Tab}    ${WORKFLOW_TAB}
+    Mx LoanIQ Verify Text In Javatree    ${LIQ_Breakfunding_WorkflowItems_List}    ${COMPLETE_CASHFLOWS_WORKFLOW}%yes 
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/CompleteCashflow
+    Mx LoanIQ DoubleClick    ${LIQ_Breakfunding_WorkflowItems_List}    ${COMPLETE_CASHFLOWS_WORKFLOW}
+    Mx LoanIQ click element if present    ${LIQ_Question_Yes_Button}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/CompleteCashflow
+    Mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
+    Mx LoanIQ activate window    ${LIQ_Cashflows_Window}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/CompleteCashflow
+
+Verify if Cashflow is Completed for Breakfunding
+    [Documentation]    This keyword validates that Complete Cashflow is not in the list of Break Cost Fee workflow tab.
+    ...    @author: mcastro    11JAN2021    - Initial create
+
+    Mx LoanIQ activate    ${LIQ_Breakfunding_Window}
+    Run Keyword And Continue On Failure    Mx LoanIQ Verify Text In Javatree    ${LIQ_Breakfunding_WorkflowItems_List}    ${COMPLETE_CASHFLOWS_WORKFLOW}%no
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/BreakfundingWorkflowTab 
