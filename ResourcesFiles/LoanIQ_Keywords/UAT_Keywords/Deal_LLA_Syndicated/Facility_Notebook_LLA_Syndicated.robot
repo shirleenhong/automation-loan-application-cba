@@ -10,6 +10,7 @@ Create Revolver Facility for LLA Syndicated Deal
     ###Test Data Generation and Writings###
 	${FacilityName}    Generate Facility Name with 5 Numeric Test Data    &{ExcelPath}[Facility_NamePrefix]
 	Write Data To Excel    CRED02_FacilitySetup    Facility_Name    ${rowid}    ${FacilityName}
+	Write Data To Excel    SYND02_PrimaryAllocation    Facility_Name    ${rowid}    ${FacilityName}
 	Set To Dictionary    ${ExcelPath}    Facility_Name=${FacilityName}
 	
 	###Add Revolver Facility###
@@ -85,10 +86,10 @@ Setup Pricing for LLA Syndicated Deal
     Modify Ongoing Fee Pricing - Insert After Matrix of External Rating    &{ExcelPath}[FacilityItemAfter]    &{ExcelPath}[Facility_Percent3]    
     Confirm Facility Ongoing Fee Pricing Options Settings
     
-    Verify If Text Value Exist as Static Text on Page    Facility -    &{ExcelPath}[Facility_PercentWhole1]
-    Verify If Text Value Exist as Static Text on Page    Facility -    &{ExcelPath}[Facility_PercentWhole2]
-    Verify If Text Value Exist as Static Text on Page    Facility -    &{ExcelPath}[Facility_PercentWhole3]
-    Verify If Text Value Exist as Static Text on Page    Facility -    &{ExcelPath}[FacilityItem]
+    Verify If Text Value Exist as Java Tree on Page    Facility -    &{ExcelPath}[Facility_PercentWhole1]
+    Verify If Text Value Exist as Java Tree on Page    Facility -    &{ExcelPath}[Facility_PercentWhole2]
+    Verify If Text Value Exist as Java Tree on Page    Facility -    &{ExcelPath}[Facility_PercentWhole3]
+    Verify If Text Value Exist as Java Tree on Page    Facility -    &{ExcelPath}[FacilityItem]
     
     ### Modify Interest Pricing ###
     Navigate to Facility Notebook - Modify Interest Pricing
@@ -128,5 +129,5 @@ Setup Pricing for LLA Syndicated Deal
     ...    &{ExcelPath}[FormulaText]    &{ExcelPath}[Spread3]    
     Confirm Facility Interest Pricing Options Settings
     
-    Verify If Text Value Exist as Static Text on Page    Facility -    &{ExcelPath}[Code]
+    Verify If Text Value Exist as Java Tree on Page    Facility -    &{ExcelPath}[Code]
     
