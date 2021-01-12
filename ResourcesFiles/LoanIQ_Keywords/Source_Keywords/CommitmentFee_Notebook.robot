@@ -1689,7 +1689,8 @@ Run Online Acrual to Usage Fee
 Update Commitment Fee
     [Documentation]    This keyword updates the values on the commitment fee notebook
     ...    @author: mcastro    03DEC2020    - Initial Create
-    [Arguments]    ${sFeePayment_EffectiveDate}    ${sFeePayment_ActualDate}    ${sFeePayment_AdjustedDueDate}    ${sAccrue}    ${sFeePayment_AccrualEndDate}    
+    ...    @update: kmagday    12/JAN2020   - added selecting cycle frequency
+    [Arguments]    ${sFeePayment_EffectiveDate}    ${sFeePayment_ActualDate}    ${sFeePayment_AdjustedDueDate}    ${sAccrue}    ${sFeePayment_AccrualEndDate}    ${sCycle_Frequency}=None   
 
     ### Keyword Pre-processing ###
     ${FeePayment_EffectiveDate}    Acquire Argument Value    ${sFeePayment_EffectiveDate}
@@ -1697,6 +1698,7 @@ Update Commitment Fee
     ${FeePayment_AdjustedDueDate}    Acquire Argument Value    ${sFeePayment_AdjustedDueDate}
     ${Accrue}    Acquire Argument Value    ${sAccrue}
     ${FeePayment_AccrualEndDate}    Acquire Argument Value    ${sFeePayment_AccrualEndDate}
+    ${Cycle_Frequency}    Acquire Argument Value    ${sCycle_Frequency}
 
     mx LoanIQ activate window    ${LIQ_CommitmentFee_Window}
     Mx LoanIQ Select Window Tab    ${LIQ_CommitmentFee_Tab}    ${GENERAL_TAB}
@@ -1704,6 +1706,7 @@ Update Commitment Fee
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/CommitmentFeeNotebook_General
     Mx LoanIQ Enter    ${LIQ_CommitmentFee_EffectiveDate_Field}    ${FeePayment_EffectiveDate}
     Mx LoanIQ Enter    ${LIQ_CommitmentFee_FloatRateStartDate_Field}    ${FeePayment_EffectiveDate}
+    Run Keyword If    '${Cycle_Frequency}'!='None'    mx LoanIQ Select Combo Box Value    ${LIQ_CommitmentFee_Cycle_Frequency_Dropdown}    ${Cycle_Frequency}
     Mx LoanIQ Enter    ${LIQ_CommitmentFee_ActualDueDate_Field}    ${FeePayment_ActualDate}
     Mx LoanIQ Enter    ${LIQ_CommitmentFee_AdjustedDueDate}    ${FeePayment_AdjustedDueDate}
     Mx LoanIQ select combo box value    ${LIQ_CommitmentFee_Accrue_Dropdown}    ${Accrue}

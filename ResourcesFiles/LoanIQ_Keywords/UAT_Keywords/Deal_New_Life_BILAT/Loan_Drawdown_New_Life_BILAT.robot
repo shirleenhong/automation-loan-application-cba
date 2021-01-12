@@ -19,6 +19,7 @@ Create Initial Loan Drawdown for New Life BILAT
     Write Data To Excel    Correspondence    Loan_Alias    ${rowid}    ${Loan_Alias}
     Write Data To Excel    Correspondence    Loan_Alias    2    ${Loan_Alias}
     Write Data To Excel    Correspondence    Loan_Alias    3    ${Loan_Alias}
+    Write Data To Excel    SERV08_ComprehensiveRepricing    Loan_Alias    ${rowid}    ${Loan_Alias}
 
     Input General Loan Drawdown Details    &{ExcelPath}[Loan_RequestedAmount]    &{ExcelPath}[Loan_EffectiveDate]    &{ExcelPath}[Loan_MaturityDate]    &{ExcelPath}[Loan_RepricingFrequency]    
     ...    &{ExcelPath}[Loan_IntCycleFrequency]    &{ExcelPath}[Loan_Accrue]    &{ExcelPath}[Loan_RepricingDate]
