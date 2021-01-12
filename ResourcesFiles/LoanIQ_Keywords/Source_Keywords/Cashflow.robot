@@ -686,7 +686,7 @@ Match and Verify WIP Items
 
     Mx LoanIQ Activate    ${LIQ_Cashflows_Window}
     Mx LoanIQ Select Or DoubleClick In Javatree    ${LIQ_Cashflows_Tree}    ${CustomerShortName}%s
-    Run Keyword If    "${Payment_Type}"=="Paper Clip Payment"    Mx Press Combination    Key.DOWN
+    Run Keyword If    '${Payment_Type}'=='Paper Clip Payment'    Mx Press Combination    Key.DOWN
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/Cashflow_Window
     Mx LoanIQ Click    ${LIQ_Cashflows_MatchWIPItems_Button}
     Mx LoanIQ Activate    ${LIQ_Cashflow_ListOfPublicWIPItems_Window}

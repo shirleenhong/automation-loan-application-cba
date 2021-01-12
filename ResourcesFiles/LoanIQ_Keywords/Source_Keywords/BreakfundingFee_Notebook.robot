@@ -466,7 +466,11 @@ Navigate to Breakfunding Complete Cashflow Window
     
     Mx LoanIQ activate    ${LIQ_Breakfunding_Window}
     Mx LoanIQ Select Window Tab    ${LIQ_Breakfunding_Workflow_Tab}    ${WORKFLOW_TAB}
-    Mx LoanIQ Verify Text In Javatree    ${LIQ_Breakfunding_WorkflowItems_List}    ${COMPLETE_CASHFLOWS_WORKFLOW}%yes 
+
+    ${Status}    Run Keyword And Return Status    Mx LoanIQ Verify Text In Javatree    ${LIQ_Breakfunding_WorkflowItems_List}    ${COMPLETE_CASHFLOWS_WORKFLOW}%yes
+    Run Keyword If    ${Status}==${True}    Log    Complete Cashflow is displayed.
+    ... ELSE    Run Keyword And Continue On Failure    Fail    Complete Cashflow is not displayed.
+    
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/CompleteCashflow
     Mx LoanIQ DoubleClick    ${LIQ_Breakfunding_WorkflowItems_List}    ${COMPLETE_CASHFLOWS_WORKFLOW}
     Mx LoanIQ click element if present    ${LIQ_Question_Yes_Button}
@@ -480,5 +484,8 @@ Verify if Cashflow is Completed for Breakfunding
     ...    @author: mcastro    11JAN2021    - Initial create
 
     Mx LoanIQ activate    ${LIQ_Breakfunding_Window}
-    Run Keyword And Continue On Failure    Mx LoanIQ Verify Text In Javatree    ${LIQ_Breakfunding_WorkflowItems_List}    ${COMPLETE_CASHFLOWS_WORKFLOW}%no
+    ${Status}    Run Keyword And Return Status    Mx LoanIQ Verify Text In Javatree    ${LIQ_Breakfunding_WorkflowItems_List}    ${COMPLETE_CASHFLOWS_WORKFLOW}%no
+    Run Keyword If    ${Status}==${True}    Log    Complete Cashflow is no longer displayed.
+    ... ELSE    Run Keyword And Continue On Failure    Fail    Complete Cashflow is still displayed.
+    
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/BreakfundingWorkflowTab 
