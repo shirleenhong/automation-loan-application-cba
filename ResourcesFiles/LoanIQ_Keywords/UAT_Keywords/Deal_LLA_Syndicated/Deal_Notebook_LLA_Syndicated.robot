@@ -7,6 +7,7 @@ Setup Syndicated Deal for LLA Syndicated
     ...    Primarily entering data in multiple tabs of the Deal Notebook and adding Pricing Options.
     ...    @author: makcamps    18DEC2020    - initial create
     ...    @update: makcamps    07JAN2021    - added write methods for new sheets created
+    ...    @update: makcamps    11JAN2021    - added write methods for new sheets created
     [Arguments]    ${ExcelPath}
 
     ###Data Generation###
@@ -26,6 +27,7 @@ Setup Syndicated Deal for LLA Syndicated
     Write Data To Excel    CRED02_FacilitySetup    Borrower_ShortName    &{ExcelPath}[rowid]    ${Borrower_ShortName}
     Write Data To Excel    CRED02_FacilitySetup    Facility_Borrower    &{ExcelPath}[rowid]    ${Borrower_ShortName}
     Write Data To Excel    CRED02_FacilitySetup    Facility_BorrowerSGName    &{ExcelPath}[rowid]    ${Borrower_SG_Name}
+    Write Data To Excel    SYND02_PrimaryAllocation    Deal_Name    &{ExcelPath}[rowid]    ${Deal_Name}
     
     ###Deal Select Window###
     Create New Deal    ${Deal_Name}    ${Deal_Alias}    &{ExcelPath}[Deal_Currency]    &{ExcelPath}[Deal_Department]
@@ -61,4 +63,75 @@ Setup Syndicated Deal for LLA Syndicated
     Add Fee Pricing Rules    &{ExcelPath}[PricingRule_Fee1]    &{ExcelPath}[PricingRule_MatrixChangeAppMthd1]    &{ExcelPath}[PricingRule_NonBussDayRule1]
     ...    OFF    &{ExcelPath}[PricingRule_BillNoOfDays1]
     
-    Save Changes on Deal Notebook 
+    Save Changes on Deal Notebook
+    
+Setup Primaries for LLA Syndicated Deal
+    [Documentation]    This keyword adds Lenders in a LLA Syndicated Deal. Specifically, 1 Host Bank and 1 Non-Host Banks.
+    ...    @author: makcamps    07JAN2021    - initial create
+    [Arguments]    ${ExcelPath}
+    
+    ###Primary Lender - Host Bank###
+    Add Lender and Location    &{ExcelPath}[Deal_Name]    &{ExcelPath}[Primary_Lender1]    &{ExcelPath}[Primary_LenderLoc1]    &{ExcelPath}[Primary_RiskBook]    &{ExcelPath}[Primary_TransactionType]
+    ${SellAmount1}    Set Sell Amount and Percent of Deal    &{ExcelPath}[Primary_PctOfDeal1]
+    Add Pro Rate    &{ExcelPath}[Primary_BuySellPrice]
+    Verify Buy/Sell Price in Circle Notebook 
+    Populate Amts or Dates Tab in Pending Orig Primary    ${SellAmount1}    &{ExcelPath}[Expected_CloseDate]
+    Add Contact in Primary    &{ExcelPath}[Primary_Contact1]
+    Select Servicing Group on Primaries    &{ExcelPath}[ServicingGroupMember]    &{ExcelPath}[AdminAgent_SGAlias1]
+    Close Orig Primaries Window
+    
+    ###Secondary Lender - Non Host Bank###
+    Add Non-Host Bank Lenders for a Syndicated Deal    &{ExcelPath}[Deal_Name]    &{ExcelPath}[Primary_Lender2]    &{ExcelPath}[Primary_LenderLoc2]    &{ExcelPath}[Primary_TransactionType]
+    ${SellAmount2}    Set Sell Amount and Percent of Deal    &{ExcelPath}[Primary_PctOfDeal2]
+    Add Pro Rate    &{ExcelPath}[Primary_BuySellPrice]
+    Verify Buy/Sell Price in Circle Notebook 
+    Populate Amts or Dates Tab in Pending Orig Primary    ${SellAmount2}    &{ExcelPath}[Expected_CloseDate]
+    Add Contact in Primary    &{ExcelPath}[Primary_Contact2]
+    Select Servicing Group on Primaries    &{ExcelPath}[ServicingGroupMember]    &{ExcelPath}[AdminAgent_SGAlias2]
+    Close Orig Primaries Window
+    
+    ###Circle Notebook Complete Portfolio Allocation, Circling, and Sending to Settlement Approval###
+     ${HostBank_ShareAmount}    Circle Notebook Workflow Navigation for LLA Syndicated Deal    &{ExcelPath}[Primary_Lender1]    &{ExcelPath}[Primary_CircledDate]
+    ...    &{ExcelPath}[IsLenderAHostBank]    &{ExcelPath}[Primary_Portfolio]    &{ExcelPath}[Primary_PortfolioBranch]    &{ExcelPath}[Primary_PortfolioAllocation]
+    ...    &{ExcelPath}[Primary_PortfolioExpiryDate]    &{ExcelPath}[Deal_ExpenseCode]
+    ${Lender_ShareAmount1}    Circle Notebook Workflow Navigation for LLA Syndicated Deal    &{ExcelPath}[Primary_Lender2]    &{ExcelPath}[Primary_CircledDate]
+    
+    ###Approval using a different user###
+    Logout from Loan IQ
+    Login to Loan IQ    ${SUPERVISOR_USERNAME}    ${SUPERVISOR_PASSWORD}
+    Select Actions    [Actions];Work In Process
+    Circle Notebook Settlement Approval    &{ExcelPath}[Primary_Lender1]    &{ExcelPath}[LenderType1]
+    Close All Windows on LIQ
+    Select Actions    [Actions];Work In Process
+    Circle Notebook Settlement Approval    &{ExcelPath}[Primary_Lender2]    &{ExcelPath}[LenderType2]
+    
+LLA Syndicated Deal Approval and Close
+    [Documentation]    This keywords Approves and Closes the created LLA Syndicated Deal.
+    ...    @author: makcamps    07JAN2021    - initial create
+    [Arguments]    ${ExcelPath}
+    
+    ###Close all windows and Login as original user###
+    Close All Windows on LIQ
+    Logout from Loan IQ
+    Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
+    
+    ###Deal Notebook###
+    Search Existing Deal    &{ExcelPath}[Deal_Name]
+    Navigate Notebook Workflow    ${LIQ_DealNotebook_Window}    ${LIQ_DealNotebook_Tab}    ${LIQ_DealNotebook_Workflow_JavaTree}    ${SEND_TO_APPROVAL_STATUS}
+    Logout from Loan IQ
+    Login to Loan IQ    ${SUPERVISOR_USERNAME}    ${SUPERVISOR_PASSWORD}
+    Open Existing Deal    &{ExcelPath}[Deal_Name]
+    Approve the Deal    &{ExcelPath}[ApproveDate]
+    Close the Deal    &{ExcelPath}[CloseDate]
+
+    ###Validate Deal, Facility and Circle Notebooks status after Deal Close.
+    Verify Circle Notebook Status After Deal Close    &{ExcelPath}[Primary_Lender1]
+    Verify Facility Status After Deal Close    &{ExcelPath}[Facility_Name]
+    Verify Deal Status After Deal Close
+    Validate Deal Closing Cmt With Facility Total Global Current Cmt
+    ${Deal_ClosingCmt}    Get Deal Closing Cmt
+    
+    Close All Windows on LIQ
+    Logout from Loan IQ
+    Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
+   
