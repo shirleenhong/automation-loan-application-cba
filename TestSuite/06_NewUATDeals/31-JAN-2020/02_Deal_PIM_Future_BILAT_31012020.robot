@@ -28,3 +28,7 @@ Create New Loan $323.82 - SERV01
     Mx Execute Template With Multiple Data    Send a Drawdown Intent Notice via Notice Application without FFC Validation    ${ExcelPath}    ${rowid}    Correspondence
     Set Test Variable    ${rowid}    9
     Mx Execute Template With Multiple Data    Send Notice via Notice Application without FFC Validation        ${ExcelPath}    ${rowid}    Correspondence   
+
+Collect Interest for Prepaid Portion for Loan 1
+    [Tags]  04 Collect Interest for Loan 1
+    Mx Execute Template With Multiple Data    Collect Interest for Prepaid Portion    ${ExcelPath}    ${rowid}    SERV23_LoanPaperClip  

@@ -672,7 +672,9 @@ Verify Customer Method in Cashflow Window
 Match and Verify WIP Items
     [Documentation]    This keyword is used to Navigate to list of WIP Items to mach and verify selected WIP Item in the Cashflow.
     ...    @author: dahijara    17DEC2020    - Initial create
-    [Arguments]    ${sCustomerShortName}    ${sGLShortName}    ${sEffectiveDate}    ${sCurrentBalance}    ${sExpenseCode}
+    ...    @update: mcastro    11JAN2021    - Added additional argument ${sPayment_Type}=None
+    ...                                     - Added step required for paper clip payment complete cashflow transactions
+    [Arguments]    ${sCustomerShortName}    ${sGLShortName}    ${sEffectiveDate}    ${sCurrentBalance}    ${sExpenseCode}    ${sPayment_Type}=None
 
     ### Keyword Pre-processing ###   
     ${CustomerShortName}    Acquire Argument Value    ${sCustomerShortName}
@@ -680,9 +682,11 @@ Match and Verify WIP Items
     ${EffectiveDate}    Acquire Argument Value    ${sEffectiveDate}
     ${CurrentBalance}    Acquire Argument Value    ${sCurrentBalance}
     ${ExpenseCode}    Acquire Argument Value    ${sExpenseCode}
+    ${Payment_Type}    Acquire Argument Value    ${sPayment_Type}
 
     Mx LoanIQ Activate    ${LIQ_Cashflows_Window}
     Mx LoanIQ Select Or DoubleClick In Javatree    ${LIQ_Cashflows_Tree}    ${CustomerShortName}%s
+    Run Keyword If    '${Payment_Type}'=='Paper Clip Payment'    Mx Press Combination    Key.DOWN
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/Cashflow_Window
     Mx LoanIQ Click    ${LIQ_Cashflows_MatchWIPItems_Button}
     Mx LoanIQ Activate    ${LIQ_Cashflow_ListOfPublicWIPItems_Window}
