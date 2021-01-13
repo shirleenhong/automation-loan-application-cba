@@ -7,6 +7,7 @@ Create Loan Drawdown for CH EDU Bilateral Deal - Outstanding Y
     [Documentation]    This high-level keyword is used to setup the loan drawdown for CH EDU Bilateral Deal
     ...    @author: dahijara    15DEC2020    - Initial Create
     ...    @update: javinzon    18DEC2020    - updated keyword names for validation of loan drawdown's Amount, General details and Rates
+    ...    @update: dahijara    13JAN2020    - Updated keyword name from 'Select Notices Recepients' to 'Select Notices Recipients'
     [Arguments]    ${ExcelPath}
 
     ${Deal_Name}    Read Data From Excel    CRED01_DealSetup    Deal_Name    &{ExcelPath}[rowid]
@@ -43,7 +44,7 @@ Create Loan Drawdown for CH EDU Bilateral Deal - Outstanding Y
     Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
     Navigate Transaction in WIP    ${OUTSTANDINGS_TRANSACTION}    ${GENERATE_INTENT_NOTICES}    ${LOAN_INITIAL_DRAWDOWN_TYPE}    ${Loan_Alias}
     Navigate to Loan Drawdown Workflow and Proceed With Transaction        ${GENERATE_INTENT_NOTICES}
-    Select Notices Recepients
+    Select Notices Recipients
     Add Group Comment for Notices    &{Excelpath}[Notice_Subject]    &{Excelpath}[Notice_Comment]
     Exit Notice Window
 
@@ -65,7 +66,7 @@ Create Loan Drawdown for CH EDU Bilateral Deal - Outstanding Y
     Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
     Navigate Transaction in WIP    ${OUTSTANDINGS_TRANSACTION}    ${AWAITING_GENERATE_RATE_SETTING_NOTICES_STATUS}    ${LOAN_INITIAL_DRAWDOWN_TYPE}    ${Loan_Alias}
     Navigate to Loan Drawdown Workflow and Proceed With Transaction        ${GENERATE_RATE_SETTING_NOTICES_TRANSACTION}
-    Select Notices Recepients
+    Select Notices Recipients
     Exit Notice Window
 
     ### Release ###
@@ -84,6 +85,7 @@ Create Loan Drawdown for CH EDU Bilateral Deal - Outstanding Y
 Create Loan Drawdown for CH EDU Bilateral Deal - Outstanding A
     [Documentation]    This high-level keyword is used to setup the loan drawdown for CH EDU Bilateral Deal
     ...    @author: dahijara    05JAN2021    - Initial Create
+    ...    @update: dahijara    13JAN2020    - Updated keyword name from 'Select Notices Recepients' to 'Select Notices Recipients'
     [Arguments]    ${ExcelPath}
 
     ${Deal_Name}    Read Data From Excel    CRED01_DealSetup    Deal_Name    1
@@ -120,7 +122,7 @@ Create Loan Drawdown for CH EDU Bilateral Deal - Outstanding A
     Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
     Navigate Transaction in WIP    ${OUTSTANDINGS_TRANSACTION}    ${GENERATE_INTENT_NOTICES}    ${LOAN_INITIAL_DRAWDOWN_TYPE}    ${Loan_Alias}
     Navigate to Loan Drawdown Workflow and Proceed With Transaction        ${GENERATE_INTENT_NOTICES}
-    Select Notices Recepients
+    Select Notices Recipients
     Exit Notice Window
 
     ### Rate Setting ###
@@ -141,7 +143,7 @@ Create Loan Drawdown for CH EDU Bilateral Deal - Outstanding A
     Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
     Navigate Transaction in WIP    ${OUTSTANDINGS_TRANSACTION}    ${AWAITING_GENERATE_RATE_SETTING_NOTICES_STATUS}    ${LOAN_INITIAL_DRAWDOWN_TYPE}    ${Loan_Alias}
     Navigate to Loan Drawdown Workflow and Proceed With Transaction        ${GENERATE_RATE_SETTING_NOTICES_TRANSACTION}
-    Select Notices Recepients
+    Select Notices Recipients
     Exit Notice Window
 
     ### Release ###
@@ -160,6 +162,7 @@ Create Loan Drawdown for CH EDU Bilateral Deal - Outstanding B
     [Documentation]    This high-level keyword is used to setup the loan drawdown for CH EDU Bilateral Deal
     ...    Outsanding B - Drawdown 3 and back date to 18/12/2019
     ...    @author: dahijara    06JAN2021    - Initial Create
+    ...    @update: dahijara    13JAN2020    - Updated keyword name from 'Select Notices Recepients' to 'Select Notices Recipients'
     [Arguments]    ${ExcelPath}
 
     ${Deal_Name}    Read Data From Excel    CRED01_DealSetup    Deal_Name    1
@@ -196,7 +199,7 @@ Create Loan Drawdown for CH EDU Bilateral Deal - Outstanding B
     Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
     Navigate Transaction in WIP    ${OUTSTANDINGS_TRANSACTION}    ${GENERATE_INTENT_NOTICES}    ${LOAN_INITIAL_DRAWDOWN_TYPE}    ${Loan_Alias}
     Navigate to Loan Drawdown Workflow and Proceed With Transaction        ${GENERATE_INTENT_NOTICES}
-    Select Notices Recepients
+    Select Notices Recipients
     Exit Notice Window
 
     ### Rate Setting ###
@@ -217,7 +220,7 @@ Create Loan Drawdown for CH EDU Bilateral Deal - Outstanding B
     Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
     Navigate Transaction in WIP    ${OUTSTANDINGS_TRANSACTION}    ${AWAITING_GENERATE_RATE_SETTING_NOTICES_STATUS}    ${LOAN_INITIAL_DRAWDOWN_TYPE}    ${Loan_Alias}
     Navigate to Loan Drawdown Workflow and Proceed With Transaction        ${GENERATE_RATE_SETTING_NOTICES_TRANSACTION}
-    Select Notices Recepients
+    Select Notices Recipients
     Exit Notice Window
 
     ### Release ###
