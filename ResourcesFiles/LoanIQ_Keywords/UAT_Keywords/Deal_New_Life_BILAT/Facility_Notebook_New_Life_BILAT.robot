@@ -9,6 +9,7 @@ Create Facility for New Life BILAT
     [Documentation]    This keyword is used to create a Facility for PIM Future Bilateral deal
     ...    @author: kmagday    10DEC2020    Initial Create
     ...    @update: kmagday    09JAN2021    Update writing of Facility_Name to SERV29_CommitmentFeePayment from row 1 to 7
+    ...    @update: kmagday    11JAN2021    Added writing of Deal_Name, Borrower_ShortName to SERV08_ComprehensiveRepricing sheet
     [Arguments]    ${ExcelPath}
     
     ${Facility_NamePrefix}    Read Data From Excel    CRED02_FacilitySetup    Facility_NamePrefix    ${rowid}
@@ -18,7 +19,8 @@ Create Facility for New Life BILAT
     Write Data To Excel    CRED08_OngoingFeeSetup    Facility_Name    ${rowid}    ${Facility_Name}
     Write Data To Excel    SERV01_LoanDrawdown    Facility_Name    ${rowid}    ${Facility_Name} 
     Write Data To Excel    SYND02_PrimaryAllocation    Facility_Name    ${rowid}    ${Facility_Name}
-    Write Data To Excel    SERV29_CommitmentFeePayment    Facility_Name    ${counter}    ${Facility_Name}    multipleValue=Y  
+    Write Data To Excel    SERV29_CommitmentFeePayment    Facility_Name    ${counter}    ${Facility_Name}    multipleValue=Y 
+    Write Data To Excel    SERV08_ComprehensiveRepricing    Facility_Name    ${rowid}    ${Facility_Name} 
 
     ###Open Deal Notebook If Not present###
     Open Deal Notebook If Not Present    &{ExcelPath}[Deal_Name]
@@ -110,8 +112,8 @@ Update Commitment Fee for New Life BILAT
     Navigate to Commitment Fee Notebook    &{ExcelPath}[OngoingFee_Type]
 
     ### Commitment Fee Notebook - General Tab ###  
-    Update Commitment Fee    &{ExcelPath}[Commitment_EffectiveDate]    &{ExcelPath}[Commitment_ActualDate]    &{ExcelPath}[Commitment_AdjustedDueDate]    &{ExcelPath}[Commitment_Accrue]    &{ExcelPath}[Commitment_AccrualEndDate] 
-
+    Update Commitment Fee    &{ExcelPath}[Commitment_EffectiveDate]    &{ExcelPath}[Commitment_ActualDate]    &{ExcelPath}[Commitment_AdjustedDueDate]    &{ExcelPath}[Commitment_Accrue]    &{ExcelPath}[Commitment_AccrualEndDate]    ${ExcelPath}[Commitment_CycleFrequency] 
+    
     Save Facility Notebook Transaction
     Close All Windows on LIQ
 

@@ -3256,4 +3256,8 @@ Add False Outside Conditions Deal Change
     mx LoanIQ click    ${LIQ_OutsideConditions_OK_Button}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/DealWindow_OutsideConditions_HistoryUpdated
     
-    
+Close Deal Notebook Window
+    [Documentation]    This keywrd is used to close deal notebook window
+    ...    @author: ccarriedo    13JAN2021    - Initial create
+
+    Mx LoanIQ Close Window    ${LIQ_DealBorrower_Window}
