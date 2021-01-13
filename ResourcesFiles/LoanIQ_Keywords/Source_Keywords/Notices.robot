@@ -408,10 +408,11 @@ Get Notice ID via Deal Notebook
 
     [Return]    ${Notice_ID}    ${Notice_Customer_LegalName}    ${Contact}
 
-Select Notices Recepients
+Select Notices Recipients
     [Documentation]    This keyword selects the recepient of the generated notices.
     ...    Values for sBorrowerDepesitor, sGuarrantors & sExporterSponsors should be Y or N
     ...    @author: dahijara    16DEC2020
+    ...    @update: dahijara    13JAN2020    - Updated keyword name from 'Select Notices Recepients' to 'Select Notices Recipients'
     [Arguments]    ${sBorrowerDepesitor}=Y    ${sGuarrantors}=N    ${sExporterSponsors}=N
     
     ### Keyword Pre-processing ###

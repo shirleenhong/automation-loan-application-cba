@@ -118,6 +118,7 @@ Release Ongoing Fee for CH EDU Bilateral Deal
 Pay Line Fee for CH EDU Bilateral Deal
     [Documentation]    This keyword is used for line fee payment for CH EDU Bilateral Deal
     ...    @author: dahijara    11JAN2021    - Initial Create
+    ...    @update: dahijara    13JAN2020    - Updated keyword name from 'Select Notices Recepients' to 'Select Notices Recipients'
     [Arguments]    ${ExcelPath} 
 
     ${Deal_Name}    Read Data From Excel    CRED01_DealSetup    Deal_Name    1
@@ -141,7 +142,7 @@ Pay Line Fee for CH EDU Bilateral Deal
 
     ### Generate Intent Notice ###
     Navigate to Payment Workflow and Proceed With Transaction        ${GENERATE_INTENT_NOTICES}
-    Select Notices Recepients
+    Select Notices Recipients
     Exit Notice Window
 
     ### Sending Payment For Approval ###
