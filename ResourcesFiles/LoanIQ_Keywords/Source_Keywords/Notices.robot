@@ -284,11 +284,12 @@ Select Notice Group
     ...    @update: jdelacru    09JAN2020    - removed excelpath as part of keyword MXLoanIQGetData
     ...    @update: jloretiz    15JUL2019    - added screenshots, updated the Active Window keyword and updated screenshot location
     ...                                      - change the logic to fix the error on Mx LoanIQ Get Data To Excel
+    ...    @update: mcastro    08JAN2021    - Updated 'Mx LoanIQ Select Or DoubleClick In Javatree' to 'Mx LoanIQ Select Or Doubleclick In Tree By Text' to handle notices that contains the same text
     [Arguments]    ${Notice_Type}    ${Current_Row}
 
     Mx LoanIQ Activate Window    ${LIQ_NoticeGroupsFor_Window}
     Mx LoanIQ Select String    ${LIQ_NoticeGroupsFor_Items}    ${Notice_Type}   
-    Mx LoanIQ Select Or DoubleClick In Javatree    ${LIQ_NoticeGroupsFor_Items}    ${Notice_Type}%s
+    Mx LoanIQ Select Or Doubleclick In Tree By Text    ${LIQ_NoticeGroupsFor_Items}    ${Notice_Type}%s
     
     Log    CurrentRow: ${Current_Row}
     :FOR    ${i}    IN RANGE    0    ${Current_Row}

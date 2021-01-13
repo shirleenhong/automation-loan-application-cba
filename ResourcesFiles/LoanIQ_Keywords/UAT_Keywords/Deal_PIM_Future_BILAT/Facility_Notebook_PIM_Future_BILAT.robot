@@ -9,6 +9,7 @@ Create Facility for PIM Future BILAT
     ...    @update: mcastro    09DEC2020    - Added writing of Facility_name to Correspondence
     ...    @update: mcastro    11DEC2020    - Added writing of Facility_name to Correspondence row 3
     ...    @update: mcastro    15DEC2020    - Added writing of Facility_name to Correspondence row 4 and 5
+    ...    @update: mcastro    08Jan2021    - Added writing of Facility_name to SERV01_LoanDrawdown for the 2nd loan
     [Arguments]    ${ExcelPath}
     
     ${Facility_NamePrefix}    Read Data From Excel    CRED02_FacilitySetup    Facility_NamePrefix    ${rowid}
@@ -16,7 +17,8 @@ Create Facility for PIM Future BILAT
     Write Data To Excel    CRED01_DealSetup    Facility_Name    ${rowid}    ${Facility_Name}
     Write Data To Excel    CRED02_FacilitySetup    Facility_Name    ${rowid}    ${Facility_Name}
     Write Data To Excel    CRED08_OngoingFeeSetup    Facility_Name    ${rowid}    ${Facility_Name}
-    Write Data To Excel    SERV01_LoanDrawdown    Facility_Name    ${rowid}    ${Facility_Name} 
+    Write Data To Excel    SERV01_LoanDrawdown    Facility_Name    ${rowid}    ${Facility_Name}
+    Write Data To Excel    SERV01_LoanDrawdown    Facility_Name    2    ${Facility_Name}
     Write Data To Excel    SERV29_CommitmentFeePayment    Facility_Name    ${rowid}    ${Facility_Name}
     Write Data To Excel    SYND02_PrimaryAllocation    Facility_Name    ${rowid}    ${Facility_Name} 
     Write Data To Excel    Correspondence    Facility_Name    ${rowid}    ${Facility_Name}

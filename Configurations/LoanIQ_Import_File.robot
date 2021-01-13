@@ -463,6 +463,7 @@ Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/Deal_LBT_BILAT/Outsta
 Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/Deal_LLA_Syndicated/Deal_Borrower_LLA_Syndicated.robot
 Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/Deal_LLA_Syndicated/Deal_Notebook_LLA_Syndicated.robot
 Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/Deal_LLA_Syndicated/Facility_Notebook_LLA_Syndicated.robot
+Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/Deal_LLA_Syndicated/OngoingFee_Notebook_LLA_Syndicated.robot
 
 ### NEW UAT Deal PIM Future BILAT ###
 Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/Deal_PIM_Future_BILAT/Deal_Borrower_PIM_Future_BILAT.robot
@@ -487,3 +488,9 @@ Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/Deal_New_Life_BILAT/F
 Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/Deal_New_Life_BILAT/Loan_Drawdown_New_Life_BILAT.robot
 Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/Deal_New_Life_BILAT/OngoingFee_New_Life_BILAT.robot
 
+### NEW UAT Deal PDS SYND ###
+Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/Deal_PDS_SYND/Deal_Borrower_PDS_SYND.robot
+
+### New PT Health UAT Deal ###
+Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/Deal_PT_Health_Syndicated/Deal_Notebook_PT_Health_Syndicated.robot
+Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/Deal_PT_Health_Syndicated/Deal_Borrower_PT_Health_Syndicated.robot
