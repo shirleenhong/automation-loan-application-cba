@@ -167,7 +167,7 @@ Close Active Tab
     
     Mx Click Element    ${Party_CloseTab_Button}
 
-Get Short Name Value and Return Without Space
+Get Short Name Value and Return without Space
     [Documentation]    This keyword is used to get shortname value using party id and short name prefix without space.
     ...    @author: ccarriedo    13JAN2021
     [Arguments]    ${sShort_Name_Prefix}    ${sParty_ID}
