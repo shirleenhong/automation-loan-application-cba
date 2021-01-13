@@ -16,3 +16,8 @@ Create Syndicated Deal for LLA Syndicated Deal - CRED01
 Establish Facility for LLA Syndicated Deal - CRED02
     Mx Execute Template With Multiple Data    Create Revolver Facility for LLA Syndicated Deal    ${ExcelPath}    ${rowid}    CRED02_FacilitySetup
     Mx Execute Template With Multiple Data    Setup Pricing for LLA Syndicated Deal    ${ExcelPath}    ${rowid}    CRED08_OngoingFeeSetup
+    
+Establish Primaries for LLA Syndicated Deal - SYND02
+    Mx Execute Template With Multiple Data    Setup Primaries for LLA Syndicated Deal    ${ExcelPath}    ${rowid}    SYND02_PrimaryAllocation
+    Mx Execute Template With Multiple Data    LLA Syndicated Deal Approval and Close    ${ExcelPath}    ${rowid}    SYND02_PrimaryAllocation
+    Mx Execute Template With Multiple Data    Release Ongoing Fee for LLA Syndicated Deal    ${ExcelPath}    ${rowid}    CRED08_OngoingFeeSetup

@@ -194,7 +194,21 @@ Verify If Text Value Exist as Static Text on Page
     Run Keyword And Continue On Failure    Mx LoanIQ Verify Object Exist    JavaWindow("title:=.*${WindowName}.*","displayed:=1").JavaStaticText("attached text:=.*${Text to Validate}.*")    VerificationData="Yes"
     ${result}    Run Keyword And Return Status    Mx LoanIQ Verify Object Exist    JavaWindow("title:=.*${WindowName}.*","displayed:=1").JavaStaticText("attached text:=.*${Text to Validate}.*")    VerificationData="Yes"    Processtimeout=5
     Run Keyword If   '${result}'=='True'    Log    "${Text to Validate}" is displayed on ${WindowName} window.
-    ...     ELSE    Log    "${Text to Validate}" is not displayed on ${WindowName} window. 
+    ...     ELSE    Log    "${Text to Validate}" is not displayed on ${WindowName} window.
+
+Verify If Text Value Exist as Java Tree on Page
+    [Documentation]    This keyword verifies if java tree object exist in page
+    ...    @author: makcamps    11JAN2021    - initial create
+    [Arguments]    ${sWindowName}    ${sTextToValidate}
+
+    ### Keyword Pre-processing ###
+    ${WindowName}    Acquire Argument Value    ${sWindowName}
+    ${TextToValidate}    Acquire Argument Value    ${sTextToValidate}
+
+    Run Keyword And Continue On Failure    Mx LoanIQ Verify Object Exist    JavaWindow("title:=.*${WindowName}.*","displayed:=1").JavaTree("developer name:=.*${TextToValidate}.*")    VerificationData="Yes"
+    ${result}    Run Keyword And Return Status    Mx LoanIQ Verify Object Exist    JavaWindow("title:=.*${WindowName}.*","displayed:=1").JavaTree("developer name:=.*${TextToValidate}.*")    VerificationData="Yes"    Processtimeout=5
+    Run Keyword If   '${result}'=='True'    Log    "${TextToValidate}" is displayed on ${WindowName} window.
+    ...     ELSE    Run Keyword And Continue On Failure    Fail    "${TextToValidate}" is not displayed on ${WindowName} window.
  
 Verify If Text Value Exist in Textfield on Page
     [Documentation]    This keyword verifies if static object exist in page
@@ -713,8 +727,6 @@ Write Data to Excel Using Row Index
     Close Current Excel Document
     # ${lib}    Get Library Instance    ExcelLibrary
     # Call Method    ${lib.wb}    release_resources
-
-
 
 Verify If Work In Process Window is Not Existing And Navigate
     [Documentation]    This keyword is use to verify if the work in process window is not existing and search 
@@ -1672,9 +1684,10 @@ Get Row Count
     ...    UTF upgrade from 3.2 to 3.9.1.
     ...    @author: dahijara    29OCT2019    - intial create
     ...    update: songchan    17DEC2020    - added value for max_num to correct the passing of arguments for sheetname    
+    ...    update: dahijara    08JAN2021    - reverting updates last 17DEC2020. 
     [Arguments]    ${sSheetName}
     
-    ${aColumn}    Read Excel Column    1    0    0    ${sSheetName}
+    ${aColumn}    Read Excel Column    1    0    ${sSheetName}
     ${iRowCount}    Get Length    ${aColumn}
     [Return]    ${iRowCount}
 
@@ -1683,9 +1696,10 @@ Get Column Count
     ...    UTF upgrade from 3.2 to 3.9.1.
     ...    @author: dahijara    29OCT2019    - intial create    
     ...    update: songchan    17DEC2020    - added value for max_num to correct the passing of arguments for sheetname
+    ...    update: dahijara    08JAN2021    - reverting updates last 17DEC2020. 
     [Arguments]    ${sSheetName}
     
-    ${aRowValues}    Read Excel Row    1    0    0    ${sSheetName}
+    ${aRowValues}    Read Excel Row    1    0    ${sSheetName}
     ${iColCount}    Get Length    ${aRowValues}
     Log    ${iColCount}
     [Return]    ${iColCount}    

@@ -425,6 +425,13 @@ Select Servicing Group on Primaries
     mx LoanIQ click    ${LIQ_ServicingGroupSelection_Exit_Button}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/PrimariesWindow
 
+Close Orig Primaries Window
+    [Documentation]    This keyword closes Orig Primaries window.
+    ...    @author: makcamps	11JAN2021	- initial create
+
+    mx LoanIQ close window    ${LIQ_OrigPrimaries_Window}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/FacilityNavigatorWindow
+
 Open Primary Servicing Groups
     [Documentation]    This keyword opens the Servicing Groups from the Circle Notebook.
     ...    @author: bernchua
@@ -975,6 +982,42 @@ Circle Notebook Workflow Navigation
     Navigate Notebook Workflow    ${LIQ_OrigPrimaries_Window}    ${LIQ_OrigPrimaries_Tab}    ${LIQ_PrimaryCircle_Workflow_JavaTree}    Send to Settlement Approval
     Validate Window Title Status    Orig Primary    Awaiting Settlement Approval
     Save Values of Runtime Execution on Excel File    ${sRuntime_Variable}    ${ShareAmount}
+    [Return]    ${ShareAmount}
+    
+Circle Notebook Workflow Navigation for LLA Syndicated Deal
+    [Documentation]    This navigates the Workflow tab of the Lender's Circle Notebook, to Complete Portfolio Allocations, Circling and Send to Settlement Approval.
+    ...    This is initiated in the "Primaries List" window for selecting a Lender.
+    ...    This keyword returns the "Sell Amount" of the Lender to be used in later transactions.
+    ...    
+    ...    | Arguments |
+    ...    'IsLenderAHostBank' = Accepts 'Yes' for conditional statement. If Yes, this keyword will execute "Complete Portfolio Allocations Worflow" keyword,
+    ...                          and will require the Arguments needed for the said keyword.
+    ...    
+    ...    @author: makcamps    11JAN2021    - initial create
+    [Arguments]    ${sLender_Name}    ${sCircledDate}    ${sIsLenderAHostBank}=null    ${sPrimary_Portfolio}=null    ${sPrimary_PortfolioBranch}=null
+    ...    ${sPrimary_PortfolioAllocation}=null    ${sPrimary_PortfolioExpDate}=null    ${sExpenseCode}=null    ${sRuntime_Variable}=None
+    
+    ### GetRuntime Keyword Pre-processing ###
+    ${Lender_Name}    Acquire Argument Value    ${sLender_Name}
+    ${CircledDate}    Acquire Argument Value    ${sCircledDate}
+    ${IsLenderAHostBank}    Acquire Argument Value    ${sIsLenderAHostBank}
+    ${Primary_Portfolio}    Acquire Argument Value    ${sPrimary_Portfolio}
+    ${Primary_PortfolioBranch}    Acquire Argument Value    ${sPrimary_PortfolioBranch}
+    ${Primary_PortfolioAllocation}    Acquire Argument Value    ${sPrimary_PortfolioAllocation}
+    ${Primary_PortfolioExpDate}    Acquire Argument Value    ${sPrimary_PortfolioExpDate}
+    ${ExpenseCode}    Acquire Argument Value    ${sExpenseCode}
+    ${Runtime_Variable}    Acquire Argument Value    ${sRuntime_Variable}
+
+    mx LoanIQ activate    ${LIQ_PrimariesList_Window}
+    Mx LoanIQ Select Or DoubleClick In Javatree    ${LIQ_PrimariesList_JavaTree}    ${Lender_Name}%d
+    Validate Circle Notebook Lender Name and Sell Amount    ${Lender_Name}
+    ${ShareAmount}    Mx LoanIQ Get Data    ${LIQ_OrigPrimaries_SellAmount_Textfield}    value%amount
+    Circling for Primary Workflow    ${CircledDate}
+    Run Keyword If    '${IsLenderAHostBank}'=='Yes'
+    ...    Complete Portfolio Allocations Workflow    ${Primary_Portfolio}    ${Primary_PortfolioBranch}    ${Primary_PortfolioAllocation}    ${Primary_PortfolioExpDate}    None    ${ExpenseCode}
+    Navigate Notebook Workflow    ${LIQ_OrigPrimaries_Window}    ${LIQ_OrigPrimaries_Tab}    ${LIQ_PrimaryCircle_Workflow_JavaTree}    Send to Settlement Approval
+    Validate Window Title Status    Orig Primary    Awaiting Settlement Approval
+    Save Values of Runtime Execution on Excel File    ${Runtime_Variable}    ${ShareAmount}
     [Return]    ${ShareAmount}
     
 Circle Notebook Settlement Approval

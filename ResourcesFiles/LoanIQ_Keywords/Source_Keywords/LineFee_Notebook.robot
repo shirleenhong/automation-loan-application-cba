@@ -751,3 +751,114 @@ Get Cashflow Details from Released Cycle Share Adjustment - Payment Reversal
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/Cashflow_ID
     [Return]    ${CashflowID}
 
+Initiate Payment for Line Fee
+    [Documentation]    This keyword selects a cycle fee payment for projected Due amount and validate cycle due amount.
+    ...    @author: dahijara    11JAN2021    Initial Create 
+    [Arguments]    ${sCycle_Number}    ${sExpectedCycleDueAmt}    ${sEffectiveDate}
+
+    ### GetRuntime Keyword Pre-processing ###
+    ${Cycle_Number}    Acquire Argument Value    ${sCycle_Number}
+    ${ExpectedCycleDueAmt}    Acquire Argument Value    ${sExpectedCycleDueAmt}
+    ${EffectiveDate}    Acquire Argument Value    ${sEffectiveDate}
+
+    mx LoanIQ activate window    ${LIQ_LineFee_Window}    
+    mx LoanIQ select    ${LIQ_LineFee_General_OptionsPayment_Menu}
+    mx LoanIQ enter    ${LIQ_ChoosePayment_Fee_RadioButton}    ON
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LineFeePayment
+    mx LoanIQ click    ${LIQ_ChoosePayment_OK_Button}
+
+    mx LoanIQ enter    ${LIQ_CommitmentFee_Cycles_ProjectedDue_RadioButton}    ON   
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LineFeePayment
+    mx LoanIQ click    ${LIQ_CommitmentFee_Cycles_OK_Button} 
+
+    mx LoanIQ activate window    ${LIQ_Payment_Window}
+    mx LoanIQ click element if present    ${LIQ_LineFee_InquiryMode_Button} 
+    mx LoanIQ enter    ${LIQ_OngoingFeePayment_EffectiveDate_DateField}    ${EffectiveDate}
+    ${UI_CycleAmount}    Mx LoanIQ Get Data    ${LIQ_OngoingFeePayment_RequestedAmount_Textfield}    text%CycleAmount
+    ${Status}    Run Keyword And Return Status    Should Be Equal    ${ExpectedCycleDueAmt}    ${UI_CycleAmount}
+    Run Keyword If    ${Status}==${True}    Log    Default Requested amount is correct.
+    ...    ELSE    Run Keyword And Continue On Failure    Fail    Default Requested amount is NOT correct. Expected: ${ExpectedCycleDueAmt} - Actual: ${UI_CycleAmount}
+    mx LoanIQ enter    ${LIQ_OngoingFeePayment_RequestedAmount_Textfield}    ${UI_CycleAmount}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LineFeePayment
+
+Verify Details in Accrual Tab for Line Fee
+    [Documentation]    This keyword is used for navigating and verifies details in Accrual Tab.
+    ...    @author: dahijara    11JAN2021    - initial create
+    [Arguments]    ${sCycleNo}    ${sStartDate}    ${sEndDate}    ${sDueDate}    ${sCycleDue}    ${sProjectedCycleDue}
+
+    ### GetRuntime Keyword Pre-processing ###
+    ${CycleNo}    Acquire Argument Value    ${sCycleNo}
+    ${StartDate}    Acquire Argument Value    ${sStartDate}
+    ${EndDate}    Acquire Argument Value    ${sEndDate}
+    ${DueDate}    Acquire Argument Value    ${sDueDate}
+    ${CycleDue}    Acquire Argument Value    ${sCycleDue}
+    ${ProjectedCycleDue}    Acquire Argument Value    ${sProjectedCycleDue}
+
+    
+    Mx LoanIQ Select Window Tab    ${LIQ_LineFee_Tab}    Accrual
+    Run Keyword And Continue On Failure    Mx LoanIQ Verify Object Exist    ${LIQ_LineFee_Accrual_Cycles_JavaTree}            VerificationData="Yes"
+    
+    ${UI_StartDate}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_LineFee_Accrual_Cycles_JavaTree}    ${CycleNo}%Start Date%value    
+    ${UI_EndDate}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_LineFee_Accrual_Cycles_JavaTree}    ${CycleNo}%End Date%value
+    ${UI_DueDate}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_LineFee_Accrual_Cycles_JavaTree}    ${CycleNo}%Due Date%value
+    ${UI_CycleDue}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_LineFee_Accrual_Cycles_JavaTree}    ${CycleNo}%Cycle Due%value
+    ${UI_ProjectedCycleDue}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_LineFee_Accrual_Cycles_JavaTree}    ${CycleNo}%Projected EOC due%value
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LineFee_AccrualTab
+	
+    ### Start Date ###
+    ${Status}    Run Keyword And Return Status    Should Be Equal    ${StartDate}    ${UI_StartDate}
+    Run Keyword If    ${Status}==${True}    Log    Cycle Start Date is correct.
+    ...    ELSE    Run Keyword And Continue On Failure    Fail    Cycle Start Date is NOT correct. Expected: ${StartDate} - Actual: ${UI_StartDate}
+
+    ### End Date ###
+    ${Status}    Run Keyword And Return Status    Should Be Equal    ${EndDate}    ${UI_EndDate}
+    Run Keyword If    ${Status}==${True}    Log    Cycle End Date is correct.
+    ...    ELSE    Run Keyword And Continue On Failure    Fail    Cycle End Date is NOT correct. Expected: ${EndDate} - Actual: ${UI_EndDate}
+
+    ### Due Date ###
+    ${Status}    Run Keyword And Return Status    Should Be Equal    ${DueDate}    ${UI_DueDate}
+    Run Keyword If    ${Status}==${True}    Log    Cycle Due Date is correct.
+    ...    ELSE    Run Keyword And Continue On Failure    Fail    Cycle Due Date is NOT correct. Expected: ${DueDate} - Actual: ${UI_DueDate}
+
+    ### Cycle Due ###
+    ${Status}    Run Keyword And Return Status    Should Be Equal    ${CycleDue}    ${UI_CycleDue}
+    Run Keyword If    ${Status}==${True}    Log    Cycle Due is correct.
+    ...    ELSE    Run Keyword And Continue On Failure    Fail    Cycle Due is NOT correct. Expected: ${CycleDue} - Actual: ${UI_CycleDue}
+
+    ### Projected Cycle Due ###
+    ${Status}    Run Keyword And Return Status    Should Be Equal    ${ProjectedCycleDue}    ${UI_ProjectedCycleDue}
+    Run Keyword If    ${Status}==${True}    Log    Projected Cycle Due is correct.
+    ...    ELSE    Run Keyword And Continue On Failure    Fail    Projected Cycle Due is NOT correct. Expected: ${ProjectedCycleDue} - Actual: ${UI_ProjectedCycleDue}
+
+Validate Payment Release of Ongoing Line Fee
+    [Documentation]    This keyword validates the payment release of Ongoing Fee on Events tab.
+    ...    @author: dahijara    11JAN2021    - initial create
+
+    mx LoanIQ activate window    ${LIQ_LineFee_Window}
+    Mx LoanIQ Select Window Tab    ${LIQ_LineFee_Tab}    Events
+    Mx LoanIQ Select String    ${LIQ_LineFee_Events_Javatree}   Fee Payment Released
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LineFeeWindow_EventsTab_OngoingFeePayment
+
+Validate After Payment Details on Acrual Tab - Line Fee
+    [Documentation]    This keyword validates the after payment details on Acrual Tab for Line Fee.
+    ...    @author: dahijara    11JAN2021    - initial create
+    [Arguments]    ${sExpected_PaymentAmt}    ${sCycleNumber}     
+
+    ### GetRuntime Keyword Pre-processing ###
+    ${Expected_PaymentAmt}    Acquire Argument Value    ${sExpected_PaymentAmt}
+    ${CycleNumber}    Acquire Argument Value    ${sCycleNumber}
+
+    mx LoanIQ activate window    ${LIQ_LineFeeReleasedNotebook_Window}
+    Mx LoanIQ Select Window Tab    ${LIQ_LineFee_Tab}    Accrual
+    ${CycleDue}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_LineFee_Accrual_Cycles_JavaTree}    ${CycleNumber}%Cycle Due%CycleDue    
+    ${Status}    Run Keyword And Return Status    Should Be Equal    0.00    ${CycleDue}
+    Run Keyword If    ${Status}==${True}    Log    Cycle Due is correct.
+    ...    ELSE    Run Keyword And Continue On Failure    Fail    Cycle Due is NOT correct. Expected: 0.00 - Actual: ${CycleDue}
+
+    ${PaidToDate}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_LineFee_Accrual_Cycles_JavaTree}    ${CycleNumber}%Paid to date%PaidToDate
+    ${Status}    Run Keyword And Return Status    Should Be Equal    ${PaidToDate}    ${Expected_PaymentAmt}
+    Run Keyword If    ${Status}==${True}    Log    Paid To Date Amount is correct.
+    ...    ELSE    Run Keyword And Continue On Failure    Fail    Paid To Date Amount is NOT correct. Expected: ${Expected_PaymentAmt} - Actual: ${PaidToDate}
+
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/FeeWindow_AccrualTab_LineFeeAccruals
+

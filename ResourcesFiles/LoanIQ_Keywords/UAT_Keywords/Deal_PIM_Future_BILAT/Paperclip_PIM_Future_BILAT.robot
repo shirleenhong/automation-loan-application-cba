@@ -74,3 +74,49 @@ Collect Early Prepayment via Paper Clip For PIM Future BILAT
     Select Breakfunding Reason    &{ExcelPath}[Breakfunding_Reason] 
 
     Close All Windows on LIQ
+
+Collect Interest for Prepaid Portion
+    [Documentation]    This is a high-level keyword to collect Interest for prepaid portion from paperclip and breakfunding notebooks
+    ...    @author: mcastro    11JAN2021    - Initial Create
+    [Arguments]    ${ExcelPath}
+
+    ### Read data from other sheets ###
+    ${Deal_Name}    Read Data From Excel    SERV01_LoanDrawdown    Deal_Name    ${rowid}
+    ${WIP_Amount}    Read Data From Excel    SERV01_LoanDrawdown    Loan_RequestedAmount    2
+    ${Expense_Code}    Read Data From Excel    CRED01_DealSetup    Deal_ExpenseCode    ${rowid}
+    ${Borrower_Name}    Read Data From Excel    SERV01_LoanDrawdown    Borrower_Name    ${rowid}
+    ${Legal_Entity_Amount}    Read Data From Excel    SERV40_BreakFunding    Legal_Entity_Amount    ${rowid}
+    ${Facility_Name}    Read Data From Excel    SERV01_LoanDrawdown    Facility_Name    ${rowid}
+    ${OutstandingSelect_Type}    Read Data From Excel    SERV01_LoanDrawdown    Outstanding_Type    ${rowid}
+    ${NewLoan_Alias}    Read Data From Excel    SERV08_ComprehensiveRepricing    NewLoan_Alias    ${rowid}
+    
+    Logout from Loan IQ
+    Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
+
+    ### Complete Cashflow in Paper Clip Payment ###
+    Select Item in Work in Process    ${PAYMENTS_TRANSACTION}    ${AWAITING_COMPLETE_CASHFLOW_TRANSACTION}    ${PAPER_CLIP}    ${Deal_Name}
+    Navigate to Paper Clip Complete Cashflow Window
+    Match and Verify WIP Items    ${Borrower_Name}    &{ExcelPath}[GLShortName]    &{ExcelPath}[Effective_Date]    ${WIP_Amount}    ${Expense_Code}    &{ExcelPath}[Payment_Type]
+	Verify Customer Status in Cashflow Window    ${Borrower_Name}    &{ExcelPath}[CashFlow_AfterStatus]
+    Click OK In Cashflows
+    Verify if Cashflow is Completed for Paper Clip Payment
+    Close All Windows on LIQ
+
+    ### Complete Cashflow in Breakfunding ###
+    Select Item in Work in Process    ${PAYMENTS_TRANSACTION}    ${AWAITING_COMPLETE_CASHFLOW_TRANSACTION}    ${BREAK_COST_FEE}    ${Deal_Name}
+    Navigate to Breakfunding Complete Cashflow Window
+    Match and Verify WIP Items    ${Borrower_Name}    &{ExcelPath}[GLShortName]    &{ExcelPath}[Effective_Date]    ${Legal_Entity_Amount}    ${Expense_Code}
+    Verify Customer Status in Cashflow Window    ${Borrower_Name}    &{ExcelPath}[CashFlow_AfterStatus]
+    Click OK In Cashflows
+    Verify if Cashflow is Completed for Breakfunding
+    Close All Windows on LIQ
+
+    ### Open Loan Notebook ###
+    Search for Deal    ${Deal_Name}
+    Search for Existing Outstanding    ${OutstandingSelect_Type}    ${Facility_Name}
+    Open Existing Loan    ${NewLoan_Alias}
+
+    ### Loan Capitalization Editor ###
+    Navigate to Capitalize Interest Payment from Loan Notebook
+    Set Activate Interest Capitalization    &{ExcelPath}[InterestCapitalization_Status2]
+    Close All Windows on LIQ
