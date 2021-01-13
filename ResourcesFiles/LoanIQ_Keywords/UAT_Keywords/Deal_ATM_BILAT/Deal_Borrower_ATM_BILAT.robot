@@ -20,7 +20,7 @@ Create Deal Borrower in Quick Party Onboarding for ATM BILAT
     
     Validate Pre-Existence Check Page Values and Field State    &{ExcelPath}[Locality]    ${Entity}    ${Assigned_Branch}    &{ExcelPath}[Party_Type]    &{ExcelPath}[Party_Sub_Type]    &{ExcelPath}[Party_Category]
     ${Enterprise_Name}    ${Party_ID}    Populate Pre-Existence Check    &{ExcelPath}[Enterprise_Prefix]
-    ${Short_Name}    Catenate    SEPARATOR=    &{ExcelPath}[Short_Name_Prefix]    ${Party_ID}
+    ${Short_Name}    Get Short Name Value and Return Without Space    &{ExcelPath}[Short_Name_Prefix]    ${Party_ID}
 
     Populate Quick Enterprise Party    ${Party_ID}    &{ExcelPath}[Country_of_Tax_Domicile]    &{ExcelPath}[Country_of_Registration]
     ...    &{ExcelPath}[Address_Type]    &{ExcelPath}[Country_Region]    &{ExcelPath}[Post_Code]    &{ExcelPath}[Document_Collection_Status]
@@ -184,7 +184,7 @@ Setup Deal for ATM BILAT
     Add Deal Borrower    ${Borrower_ShortName2}
     
     ### Close Deal Borrower window ###
-    mx LoanIQ click    ${LIQ_DealBorrower_Ok_Button}
+    Close Deal Notebook Window
     
     Select Deal Classification    &{ExcelPath}[Deal_ClassificationCode]    &{ExcelPath}[Deal_ClassificationDesc]
     Select Admin Agent    &{ExcelPath}[Deal_AdminAgent]    &{ExcelPath}[AdminAgent_Location]
