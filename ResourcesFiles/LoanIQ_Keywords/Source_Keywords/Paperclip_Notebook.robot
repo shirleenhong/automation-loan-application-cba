@@ -697,22 +697,28 @@ Populate Split Cashflow Split Interest Amount
 Validate Interest and Pricipal Amount for Pending Paperclip Payment
     [Documentation]    This keyword validates the Interest and Principal amount of a Pending Paper Clip Payment. 
     ...    @author: javinzon    12JAN2021    - Initial Create
-    [Arguments]    ${Expected_InterestAmount}    ${TransactionType2}    ${Interest_OptionType}      ${Loan_RequestedAmount}    ${Loan_Transaction_Type}    ${Principal_OptionType}
+    [Arguments]    ${sExpected_InterestAmount}    ${sInterest_OptionType}    ${sLoan_RequestedAmount}    ${sPrincipal_OptionType}
+    
+    ### Pre-processing Keyword ###
+    ${Expected_InterestAmount}    Acquire Argument Value    ${sExpected_InterestAmount}
+    ${Interest_OptionType}    Acquire Argument Value    ${sInterest_OptionType}
+    ${Loan_RequestedAmount}    Acquire Argument Value    ${sLoan_RequestedAmount}
+    ${Principal_OptionType}    Acquire Argument Value    ${sPrincipal_OptionType}
     
     mx LoanIQ activate window    ${LIQ_PaperClip_Window}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/PendingPaperClip_Amounts
     ${UIInterestAmount}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_PaperClip_Transactions_JavaTree}   ${Interest_OptionType}%Amount%value         
-    ${UIInterestAmount}    Remove String    ${UIInterestAmount}    ,    .
-    ${Expected_InterestAmount}    Remove String    ${Expected_InterestAmount}    ,    .
+    ${Num_UIInterestAmount}    Remove String    ${UIInterestAmount}    ,    .
+    ${Num_Expected_InterestAmount}    Remove String    ${Expected_InterestAmount}    ,    .
         
-    ${status}    Run Keyword And Return Status    Should Be Equal As Numbers    ${Expected_InterestAmount}    ${UIInterestAmount}
-    Run Keyword If    ${status}==True    Log    Interest Amount computed is correct.
-    ...    ELSE    Run Keyword And Continue On Failure    Fail    Expected Interest Amount is '${Expected_InterestAmount}'.
+    ${status}    Run Keyword And Return Status    Should Be Equal As Numbers    ${Num_Expected_InterestAmount}    ${Num_UIInterestAmount}
+    Run Keyword If    ${status}==${True}    Log    Interest Amount computed is correct.
+    ...    ELSE    Run Keyword And Continue On Failure    Fail    Value is Incorrect! Expected Interest Amount: '${Expected_InterestAmount}' | Actual Interest Amount: '${UIInterestAmount}'.
     
     ${UIPrincipalAmount}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_PaperClip_Transactions_JavaTree}   ${Principal_OptionType}%Amount%value         
-    ${UIPrincipalAmount}    Remove String    ${UIPrincipalAmount}    ,    .
-    ${Loan_RequestedAmount}    Remove String    ${Loan_RequestedAmount}    ,    .
+    ${Num_UIPrincipalAmount}    Remove String    ${UIPrincipalAmount}    ,    .
+    ${Num_Loan_RequestedAmount}    Remove String    ${Loan_RequestedAmount}    ,    .
         
-    ${status}    Run Keyword And Return Status    Should Be Equal As Numbers    ${Loan_RequestedAmount}    ${UIPrincipalAmount}
-    Run Keyword If    ${status}==True    Log    Interest Amount computed is correct.
-    ...    ELSE    Run Keyword And Continue On Failure    Fail    Expected Principal Amount is '${Loan_RequestedAmount}'.
+    ${status}    Run Keyword And Return Status    Should Be Equal As Numbers    ${Num_Loan_RequestedAmount}    ${Num_UIPrincipalAmount}
+    Run Keyword If    ${status}==${True}    Log    Interest Amount computed is correct.
+    ...    ELSE    Run Keyword And Continue On Failure    Fail    Value is Incorrect! Expected Principal Amount: '${Loan_RequestedAmount}' | Actual Principal Amount: '${UIPrincipalAmount}'.

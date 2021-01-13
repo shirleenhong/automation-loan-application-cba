@@ -36,8 +36,7 @@ Collect Full Prepayment via Paper Clip for LBT Bilateral Deal - Outstanding Z
     Select Cycles Item     &{ExcelPath}[Cycles_ForLoan]    &{ExcelPath}[Loan_CycleNumber]
     Close Cycles for Loan Window
     Verify Added Paperclip Payments    &{ExcelPath}[Pricing_Option]${SPACE}(${Loan_Alias})Principal|&{ExcelPath}[Pricing_Option]${SPACE}(${Loan_Alias})Interest
-    Validate Interest and Pricipal Amount for Pending Paper Clip Payment        &{ExcelPath}[Loan_InterestAmount]    &{ExcelPath}[Loan_Transaction_Type2]    &{ExcelPath}[Interest_OptionType]
-    ...    &{ExcelPath}[Loan_RequestedAmount]    &{ExcelPath}[Loan_Transaction_Type]    &{ExcelPath}[Principal_OptionType] 
+    Validate Interest and Pricipal Amount for Pending Paper Clip Payment    &{ExcelPath}[Loan_InterestAmount]    &{ExcelPath}[Interest_OptionType]    &{ExcelPath}[Loan_RequestedAmount]    &{ExcelPath}[Principal_OptionType] 
     
     ### Create Cashflows ###
     Navigate to Create Cashflow for Paperclip
