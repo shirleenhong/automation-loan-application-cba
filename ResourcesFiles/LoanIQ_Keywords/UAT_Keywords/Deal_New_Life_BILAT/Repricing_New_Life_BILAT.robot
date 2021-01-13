@@ -5,7 +5,7 @@ Resource    ../../../../Configurations/LoanIQ_Import_File.robot
 *** Keywords ***
 Create Comprehensive Repricing for New Life BILAT
     [Documentation]    This is a high-level keyword to Create Comprehensive Repricing for New Life BILAT
-    ...    @author: mcastro    11JAN2021    - Initial Create 
+    ...    @author: kmagday    11JAN2021    - Initial Create 
     [Arguments]    ${ExcelPath}
 
     ${Rollover_Amount}    Read Data From Excel    SERV01_LoanDrawdown    Loan_RequestedAmount    ${rowid}

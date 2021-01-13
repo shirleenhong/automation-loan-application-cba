@@ -6,6 +6,7 @@ Resource    ../../../../Configurations/LoanIQ_Import_File.robot
 Create Initial Loan Drawdown for New Life BILAT
     [Documentation]    This high-level keyword is used to setup the outstanding for New Life BILAT facility
     ...    @author: kmagday    15DEC2020    - Initial Create
+    ...    @update: kmagday    12JAN2021    - added writing of Loan_Alias in SERV08_ComprehensiveRepricing sheet
     [Arguments]    ${ExcelPath}
 
     Logout from Loan IQ

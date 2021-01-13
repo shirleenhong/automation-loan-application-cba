@@ -1706,7 +1706,7 @@ Update Commitment Fee
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/CommitmentFeeNotebook_General
     Mx LoanIQ Enter    ${LIQ_CommitmentFee_EffectiveDate_Field}    ${FeePayment_EffectiveDate}
     Mx LoanIQ Enter    ${LIQ_CommitmentFee_FloatRateStartDate_Field}    ${FeePayment_EffectiveDate}
-    Run Keyword If    '${Cycle_Frequency}'!='None'    mx LoanIQ Select Combo Box Value    ${LIQ_CommitmentFee_Cycle_Frequency_Dropdown}    ${Cycle_Frequency}
+    Run Keyword If    '${Cycle_Frequency}'!='None' or  '${Cycle_Frequency}'!=''    mx LoanIQ Select Combo Box Value    ${LIQ_CommitmentFee_Cycle_Frequency_Dropdown}    ${Cycle_Frequency}
     Mx LoanIQ Enter    ${LIQ_CommitmentFee_ActualDueDate_Field}    ${FeePayment_ActualDate}
     Mx LoanIQ Enter    ${LIQ_CommitmentFee_AdjustedDueDate}    ${FeePayment_AdjustedDueDate}
     Mx LoanIQ select combo box value    ${LIQ_CommitmentFee_Accrue_Dropdown}    ${Accrue}

@@ -9,7 +9,7 @@ Create Facility for New Life BILAT
     [Documentation]    This keyword is used to create a Facility for PIM Future Bilateral deal
     ...    @author: kmagday    10DEC2020    Initial Create
     ...    @update: kmagday    09JAN2021    Update writing of Facility_Name to SERV29_CommitmentFeePayment from row 1 to 7
-    ...    @update:    kmagday    11JAN2021    Added writing of Deal_Name, Borrower_ShortName to SERV08_ComprehensiveRepricing sheet
+    ...    @update: kmagday    11JAN2021    Added writing of Deal_Name, Borrower_ShortName to SERV08_ComprehensiveRepricing sheet
     [Arguments]    ${ExcelPath}
     
     ${Facility_NamePrefix}    Read Data From Excel    CRED02_FacilitySetup    Facility_NamePrefix    ${rowid}
