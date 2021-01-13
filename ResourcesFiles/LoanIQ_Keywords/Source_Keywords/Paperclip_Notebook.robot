@@ -82,8 +82,10 @@ Verify Added Paperclip Payments
 Navigate to Create Cashflow for Paperclip
     [Documentation]    This keyword will navigate from General tab to Workflow and Create Cashflows
     ...    @author: ritragel
+    ...    @update: javinzon    12JAN2021    - Added Take Screenshot Keyword
     mx LoanIQ activate window    ${LIQ_PendingPaperClip_Window}
     Mx LoanIQ Select Window Tab    ${LIQ_PaperClip_Tabs}    Workflow
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/PendingPaperClip_CreateCashflows
     Mx LoanIQ DoubleClick    ${LIQ_PaperClip_Workflow_Tab}    Create Cashflows
 
 Add Remittance Instuctions for Customer
@@ -691,3 +693,26 @@ Populate Split Cashflow Split Interest Amount
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/SplitCashflow
     mx LoanIQ click    ${LIQ_SplitCashflows_Exit_Button}
     mx LoanIQ activate window    ${LIQ_Cashflows_Window}
+    
+Validate Interest and Pricipal Amount for Pending Paperclip Payment
+    [Documentation]    This keyword validates the Interest and Principal amount of a Pending Paper Clip Payment. 
+    ...    @author: javinzon    12JAN2021    - Initial Create
+    [Arguments]    ${Expected_InterestAmount}    ${TransactionType2}    ${Interest_OptionType}      ${Loan_RequestedAmount}    ${Loan_Transaction_Type}    ${Principal_OptionType}
+    
+    mx LoanIQ activate window    ${LIQ_PaperClip_Window}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/PendingPaperClip_Amounts
+    ${UIInterestAmount}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_PaperClip_Transactions_JavaTree}   ${Interest_OptionType}%Amount%value         
+    ${UIInterestAmount}    Remove String    ${UIInterestAmount}    ,    .
+    ${Expected_InterestAmount}    Remove String    ${Expected_InterestAmount}    ,    .
+        
+    ${status}    Run Keyword And Return Status    Should Be Equal As Numbers    ${Expected_InterestAmount}    ${UIInterestAmount}
+    Run Keyword If    ${status}==True    Log    Interest Amount computed is correct.
+    ...    ELSE    Run Keyword And Continue On Failure    Fail    Expected Interest Amount is '${Expected_InterestAmount}'.
+    
+    ${UIPrincipalAmount}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_PaperClip_Transactions_JavaTree}   ${Principal_OptionType}%Amount%value         
+    ${UIPrincipalAmount}    Remove String    ${UIPrincipalAmount}    ,    .
+    ${Loan_RequestedAmount}    Remove String    ${Loan_RequestedAmount}    ,    .
+        
+    ${status}    Run Keyword And Return Status    Should Be Equal As Numbers    ${Loan_RequestedAmount}    ${UIPrincipalAmount}
+    Run Keyword If    ${status}==True    Log    Interest Amount computed is correct.
+    ...    ELSE    Run Keyword And Continue On Failure    Fail    Expected Principal Amount is '${Loan_RequestedAmount}'.
