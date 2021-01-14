@@ -630,6 +630,7 @@ Select Cycles Item
 Validate Payment Amount and Interest Due on Cycles for Loan
     [Documentation]    This keyword will validate the payment amount and interest due on cycles for loan window.
     ...    @author: mcastro    16DEC2020    - Initial Create
+    ...    @update: mcastro    14JAN2021    - Updated log message
     [Arguments]    ${sPayment_Amount}    ${sInterest_Due}
 
     ### Pre-processing Keyword ###
@@ -643,7 +644,7 @@ Validate Payment Amount and Interest Due on Cycles for Loan
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/CyclesForLoan
     ${Status}    Run keyword and Return Status    Should Be Equal    ${Payment_Amount}    ${ForPaymentAmount}
     Run Keyword If    ${Status}==${True}    Log    for Payment Amount is correct
-    ...    ELSE    Run Keyword and Continue on Failure    Fail    for Payment Amount is incorrect. Expected amount is ${Payment_Amount}
+    ...    ELSE    Run Keyword and Continue on Failure    Fail    Payment Amount is incorrect. Expected amount is ${Payment_Amount}
 
     ### Validate Interest Due ###
     ${Interest_Due}    Remove Comma and Convert to Number    ${Interest_Due}
@@ -721,3 +722,14 @@ Verify if Cashflow is Completed for Paper Clip Payment
     ...    ELSE    Run Keyword And Continue On Failure    Fail    Complete Cashflow is still displayed.
     
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/PaperClipPaymentWorkflowTab        
+
+Validate Release of Paper Clip Payment
+    [Documentation]    This keyword validates the Released status of payment via Paper Clip
+    ...    @author: mcastro    13JAN2021    - Initial Create
+    
+    Mx LoanIQ activate window    ${LIQ_PaperClip_Window}
+    Mx LoanIQ Select Window Tab    ${LIQ_PaperClip_Tabs}    ${EVENTS_TAB}
+    ${Event_Selected}    Run Keyword And Return Status    Mx LoanIQ Select String    ${LIQ_PaperClip_Events_JavaTree}    ${RELEASED_STATUS}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/PaperClip_EventsTab
+    Run Keyword If    ${Event_Selected}==${True}    Log    ${RELEASED_STATUS} is shown in the Events list of the Paper Clip notebook.
+    ...    ELSE    Run Keyword and Continue on Failure    Fail    Paper clip payment is not Released.
