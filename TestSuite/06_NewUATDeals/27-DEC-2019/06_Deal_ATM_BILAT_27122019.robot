@@ -11,3 +11,10 @@ Get Dataset for ATM BILAT
 Establish Party and Enrich Customers Data
     Mx Execute Template With Multiple Data    Create Deal Borrower in Quick Party Onboarding for ATM BILAT    ${ExcelPath}    ${rowid}    PTY001_QuickPartyOnboarding
     Mx Execute Template With Multiple Data    Search Customer and Complete Borrower Profile Creation with Default Values for ATM Bilateral Deal    ${ExcelPath}    ${rowid}    PTY001_QuickPartyOnboarding
+    
+    Set Test Variable    ${rowid}    2
+    Mx Execute Template With Multiple Data    Create Deal Borrower in Quick Party Onboarding for ATM BILAT    ${ExcelPath}    ${rowid}    PTY001_QuickPartyOnboarding
+    Mx Execute Template With Multiple Data    Search Customer and Complete Borrower Profile Creation with Default Values for ATM Bilateral Deal    ${ExcelPath}    ${rowid}    PTY001_QuickPartyOnboarding
+        
+Establish Deal for ATM BILAT
+    Mx Execute Template With Multiple Data    Setup Deal for ATM BILAT    ${ExcelPath}    ${rowid}    CRED01_DealSetup

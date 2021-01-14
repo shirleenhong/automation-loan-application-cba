@@ -6,6 +6,7 @@ LIQ_PendingPaperClip_Add_Button = 'JavaWindow("title:=.*Paper Clip for.*").JavaO
 LIQ_PaperClip_Tabs = 'JavaWindow("title:=.*Paper Clip for.*").JavaTab("tagname:=TabFolder")'
 LIQ_PaperClip_Workflow_Tab = 'JavaWindow("title:=.*Paper Clip for.*").JavaTree("attached text:=Drill down to perform.*")'
 LIQ_PaperClip_Transactions_JavaTree = 'JavaWindow("title:=.*Paper Clip for.*").JavaObject("tagname:=Group","text:=Transactions:").JavaTree("attached text:=Drill down to.*")'
+LIQ_PaperClip_Events_JavaTree = 'JavaWindow("title:=.*Paper Clip for.*").JavaTree("labeled_containers_path:=Tab:Events;")'
 
 LIQ_FeesAndOutstandings_Window = 'JavaWindow("title:=Fees and Outstandings")'
 LIQ_FeesAndOutstandings_ExpandAll_Button = 'JavaWindow("title:=Fees and Outstandings").JavaButton("attached text:=Expand All")'
@@ -45,7 +46,7 @@ LIQ_Paperclip_Options_Cashflow_Menu = 'JavaWindow("title:=.*Paper Clip for.*").J
 LIQ_PaperClip_AwaitingApproval_Status_Window = 'JavaWindow("title:=Awaiting Approval Paper Clip.*")'
 LIQ_FeesAndOutstandings_Interest_RadioButton = 'JavaWindow("title:=Fees and Outstandings").JavaObject("tagname:=Group","text:=Add Transaction Type").JavaRadioButton("attached text:=Interest")'
 LIQ_FeesAndOutstandings_Principal_RadioButton = 'JavaWindow("title:=Fees and Outstandings").JavaObject("tagname:=Group","text:=Add Transaction Type").JavaRadioButton("attached text:=Principal")'
-LIQ_FeesAndOutstandings_EnterAmount_Textbox = 'JavaWindow("title:=Fees and Outstandings").JavaEdit("attached text:=Enter Amount:")'
+LIQ_FeesAndOutstandings_EnterAmount_Textbox = 'JavaWindow("title:=Fees and Outstandings","displayed:=1").JavaEdit("attached text:=Enter Amount:")'
 
 ###Event Fee Window###
 LIQ_Fee_ServiceFee_Window = 'JavaWindow("title:=.* Service Fee.*")'
