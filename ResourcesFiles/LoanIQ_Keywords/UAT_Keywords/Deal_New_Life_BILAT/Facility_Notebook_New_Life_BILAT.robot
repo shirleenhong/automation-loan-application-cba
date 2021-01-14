@@ -10,6 +10,7 @@ Create Facility for New Life BILAT
     ...    @author: kmagday    10DEC2020    Initial Create
     ...    @update: kmagday    09JAN2021    Update writing of Facility_Name to SERV29_CommitmentFeePayment from row 1 to 7
     ...    @update: kmagday    11JAN2021    Added writing of Deal_Name, Borrower_ShortName to SERV08_ComprehensiveRepricing sheet
+    ...    @update: kmagday    13JAN2021    Added multipleValue=Y to writing of Facility_Name in SERV01_LoanDrawdown
     [Arguments]    ${ExcelPath}
     
     ${Facility_NamePrefix}    Read Data From Excel    CRED02_FacilitySetup    Facility_NamePrefix    ${rowid}
@@ -17,10 +18,10 @@ Create Facility for New Life BILAT
     Write Data To Excel    CRED01_DealSetup    Facility_Name    ${rowid}    ${Facility_Name}
     Write Data To Excel    CRED02_FacilitySetup    Facility_Name    ${rowid}    ${Facility_Name}
     Write Data To Excel    CRED08_OngoingFeeSetup    Facility_Name    ${rowid}    ${Facility_Name}
-    Write Data To Excel    SERV01_LoanDrawdown    Facility_Name    ${rowid}    ${Facility_Name} 
+    Write Data To Excel    SERV01_LoanDrawdown    Facility_Name    ${rowid}    ${Facility_Name}    multipleValue=Y
     Write Data To Excel    SYND02_PrimaryAllocation    Facility_Name    ${rowid}    ${Facility_Name}
-    Write Data To Excel    SERV29_CommitmentFeePayment    Facility_Name    ${counter}    ${Facility_Name}    multipleValue=Y 
-    Write Data To Excel    SERV08_ComprehensiveRepricing    Facility_Name    ${rowid}    ${Facility_Name} 
+    Write Data To Excel    SERV29_CommitmentFeePayment    Facility_Name    ${rowid}    ${Facility_Name}    multipleValue=Y 
+    Write Data To Excel    SERV08_ComprehensiveRepricing    Facility_Name    ${rowid}    ${Facility_Name}    multipleValue=Y
 
     ###Open Deal Notebook If Not present###
     Open Deal Notebook If Not Present    &{ExcelPath}[Deal_Name]
