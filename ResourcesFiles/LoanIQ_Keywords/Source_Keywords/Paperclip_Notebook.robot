@@ -82,8 +82,10 @@ Verify Added Paperclip Payments
 Navigate to Create Cashflow for Paperclip
     [Documentation]    This keyword will navigate from General tab to Workflow and Create Cashflows
     ...    @author: ritragel
+    ...    @update: javinzon    12JAN2021    - Added Take Screenshot Keyword
     mx LoanIQ activate window    ${LIQ_PendingPaperClip_Window}
     Mx LoanIQ Select Window Tab    ${LIQ_PaperClip_Tabs}    Workflow
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/PendingPaperClip_CreateCashflows
     Mx LoanIQ DoubleClick    ${LIQ_PaperClip_Workflow_Tab}    Create Cashflows
 
 Add Remittance Instuctions for Customer
@@ -630,6 +632,7 @@ Select Cycles Item
 Validate Payment Amount and Interest Due on Cycles for Loan
     [Documentation]    This keyword will validate the payment amount and interest due on cycles for loan window.
     ...    @author: mcastro    16DEC2020    - Initial Create
+    ...    @update: mcastro    14JAN2021    - Updated log message
     [Arguments]    ${sPayment_Amount}    ${sInterest_Due}
 
     ### Pre-processing Keyword ###
@@ -643,7 +646,7 @@ Validate Payment Amount and Interest Due on Cycles for Loan
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/CyclesForLoan
     ${Status}    Run keyword and Return Status    Should Be Equal    ${Payment_Amount}    ${ForPaymentAmount}
     Run Keyword If    ${Status}==${True}    Log    for Payment Amount is correct
-    ...    ELSE    Run Keyword and Continue on Failure    Fail    for Payment Amount is incorrect. Expected amount is ${Payment_Amount}
+    ...    ELSE    Run Keyword and Continue on Failure    Fail    Payment Amount is incorrect. Expected amount is ${Payment_Amount}
 
     ### Validate Interest Due ###
     ${Interest_Due}    Remove Comma and Convert to Number    ${Interest_Due}
@@ -721,3 +724,43 @@ Verify if Cashflow is Completed for Paper Clip Payment
     ...    ELSE    Run Keyword And Continue On Failure    Fail    Complete Cashflow is still displayed.
     
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/PaperClipPaymentWorkflowTab        
+
+Validate Interest and Pricipal Amount for Pending Paperclip Payment
+    [Documentation]    This keyword validates the Interest and Principal amount of a Pending Paper Clip Payment. 
+    ...    @author: javinzon    12JAN2021    - Initial Create
+    [Arguments]    ${sExpected_InterestAmount}    ${sInterest_OptionType}    ${sLoan_RequestedAmount}    ${sPrincipal_OptionType}
+    
+    ### Pre-processing Keyword ###
+    ${Expected_InterestAmount}    Acquire Argument Value    ${sExpected_InterestAmount}
+    ${Interest_OptionType}    Acquire Argument Value    ${sInterest_OptionType}
+    ${Loan_RequestedAmount}    Acquire Argument Value    ${sLoan_RequestedAmount}
+    ${Principal_OptionType}    Acquire Argument Value    ${sPrincipal_OptionType}
+    
+    mx LoanIQ activate window    ${LIQ_PaperClip_Window}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/PendingPaperClip_Amounts
+    ${UIInterestAmount}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_PaperClip_Transactions_JavaTree}   ${Interest_OptionType}%Amount%value         
+    ${Num_UIInterestAmount}    Remove String    ${UIInterestAmount}    ,    .
+    ${Num_Expected_InterestAmount}    Remove String    ${Expected_InterestAmount}    ,    .
+        
+    ${status}    Run Keyword And Return Status    Should Be Equal As Numbers    ${Num_Expected_InterestAmount}    ${Num_UIInterestAmount}
+    Run Keyword If    ${status}==${True}    Log    Interest Amount computed is correct.
+    ...    ELSE    Run Keyword And Continue On Failure    Fail    Value is Incorrect! Expected Interest Amount: '${Expected_InterestAmount}' | Actual Interest Amount: '${UIInterestAmount}'.
+    
+    ${UIPrincipalAmount}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_PaperClip_Transactions_JavaTree}   ${Principal_OptionType}%Amount%value         
+    ${Num_UIPrincipalAmount}    Remove String    ${UIPrincipalAmount}    ,    .
+    ${Num_Loan_RequestedAmount}    Remove String    ${Loan_RequestedAmount}    ,    .
+        
+    ${status}    Run Keyword And Return Status    Should Be Equal As Numbers    ${Num_Loan_RequestedAmount}    ${Num_UIPrincipalAmount}
+    Run Keyword If    ${status}==${True}    Log    Interest Amount computed is correct.
+    ...    ELSE    Run Keyword And Continue On Failure    Fail    Value is Incorrect! Expected Principal Amount: '${Loan_RequestedAmount}' | Actual Principal Amount: '${UIPrincipalAmount}'.
+
+Validate Release of Paper Clip Payment
+    [Documentation]    This keyword validates the Released status of payment via Paper Clip
+    ...    @author: mcastro    13JAN2021    - Initial Create
+    
+    Mx LoanIQ activate window    ${LIQ_PaperClip_Window}
+    Mx LoanIQ Select Window Tab    ${LIQ_PaperClip_Tabs}    ${EVENTS_TAB}
+    ${Event_Selected}    Run Keyword And Return Status    Mx LoanIQ Select String    ${LIQ_PaperClip_Events_JavaTree}    ${RELEASED_STATUS}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/PaperClip_EventsTab
+    Run Keyword If    ${Event_Selected}==${True}    Log    ${RELEASED_STATUS} is shown in the Events list of the Paper Clip notebook.
+    ...    ELSE    Run Keyword and Continue on Failure    Fail    Paper clip payment is not Released.
