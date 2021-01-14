@@ -12,6 +12,7 @@ Setup Deal for New Life BILAT
     ...    @update:    kmagday    15DEC2020    Added writing of Deal_Name and Borrower_ShortName in SERV01_LoanDrawdown sheet
     ...    @update:    kmagday    06JAN2021    Added writing of Borrower_Name in Serv29_CommitmentFeePayment
     ...    @update:    kmagday    09JAN2021    Update writing of Deal_Name,Borrower_ShortName to SERV29_CommitmentFeePayment from row 1 to 7
+    ...    @update:    kmagday    11JAN2021    Added writing of Deal_Name, Borrower_ShortName to SERV08_ComprehensiveRepricing sheet
     [Arguments]    ${ExcelPath}
     
     ${Deal_Name}    ${Deal_Alias}    Generate Deal Name and Alias with 5 Numeric Test Data    &{ExcelPath}[Deal_NamePrefix]    &{ExcelPath}[Deal_AliasPrefix]
@@ -28,6 +29,8 @@ Setup Deal for New Life BILAT
     Write Data To Excel    SYND02_PrimaryAllocation    Deal_Name    ${rowid}    ${Deal_Name}
     Write Data To Excel    SERV29_CommitmentFeePayment    Deal_Name    ${counter}    ${Deal_Name}    multipleValue=Y
     Write Data To Excel    SERV29_CommitmentFeePayment    Borrower_ShortName    ${counter}    ${Borrower_ShortName}    multipleValue=Y
+    Write Data To Excel    SERV08_ComprehensiveRepricing    Deal_Name    ${rowid}    ${Deal_Name}
+    Write Data To Excel    SERV08_ComprehensiveRepricing    Borrower_Name    ${rowid}    ${Borrower_ShortName}
 
     Create New Deal    ${Deal_Name}    ${Deal_Alias}    &{ExcelPath}[Deal_Currency]    &{ExcelPath}[Deal_Department]    ${ExcelPath}[Deal_SalesGroup]
 

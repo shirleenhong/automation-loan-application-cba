@@ -8,6 +8,8 @@ Setup Deal for LBT BILAT Deal
     ...    @update: javinzon    14DEC2020    - Added Write Data to Excel for Deal_Name of SYND02_PrimaryAllocation and 
     ...										   CRED08_OngoingFeeSetup, Added Set Deal as Sole Lender keyword
     ...    @update: javinzon    18DEC2020    - Added keywords Write Data to Excel for Deal_Name of SERV01_LoanDrawdown
+    ...    @update: javinzon    13JAN2021    - Added keywords Write Data to Excel for Deal_Name of Correspondence and LegalName
+    ...                                        of Correspondence
     [Arguments]    ${ExcelPath}
  
     ${Deal_Name}    ${Deal_Alias}    Generate Deal Name and Alias with Numeric Test Data    &{ExcelPath}[Deal_NamePrefix]    &{ExcelPath}[Deal_AliasPrefix]    5
@@ -27,7 +29,9 @@ Setup Deal for LBT BILAT Deal
     Write Data To Excel    SERV01_LoanDrawdown    Deal_Name    &{ExcelPath}[rowid]    ${Deal_Name}
     Write Data To Excel    SERV01_LoanDrawdown    Deal_Name    2    ${Deal_Name}
     Write Data To Excel    SERV01_LoanDrawdown    Deal_Name    3    ${Deal_Name}
-    
+    Write Data To Excel    Correspondence    Deal_Name    &{ExcelPath}[rowid]    ${Deal_Name}
+    Write Data To Excel    Correspondence    Notice_Customer_LegalName    &{ExcelPath}[rowid]    ${Borrower_ShortName}  
+
     Create New Deal    ${Deal_Name}    ${Deal_Alias}    &{ExcelPath}[Deal_Currency]    &{ExcelPath}[Deal_Department]
 
     ### Summary Tab ###   

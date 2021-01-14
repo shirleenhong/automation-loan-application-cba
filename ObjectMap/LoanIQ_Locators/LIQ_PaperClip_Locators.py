@@ -45,7 +45,7 @@ LIQ_Paperclip_Options_Cashflow_Menu = 'JavaWindow("title:=.*Paper Clip for.*").J
 LIQ_PaperClip_AwaitingApproval_Status_Window = 'JavaWindow("title:=Awaiting Approval Paper Clip.*")'
 LIQ_FeesAndOutstandings_Interest_RadioButton = 'JavaWindow("title:=Fees and Outstandings").JavaObject("tagname:=Group","text:=Add Transaction Type").JavaRadioButton("attached text:=Interest")'
 LIQ_FeesAndOutstandings_Principal_RadioButton = 'JavaWindow("title:=Fees and Outstandings").JavaObject("tagname:=Group","text:=Add Transaction Type").JavaRadioButton("attached text:=Principal")'
-LIQ_FeesAndOutstandings_EnterAmount_Textbox = 'JavaWindow("title:=Fees and Outstandings").JavaEdit("attached text:=Enter Amount:")'
+LIQ_FeesAndOutstandings_EnterAmount_Textbox = 'JavaWindow("title:=Fees and Outstandings","displayed:=1").JavaEdit("attached text:=Enter Amount:")'
 
 ###Event Fee Window###
 LIQ_Fee_ServiceFee_Window = 'JavaWindow("title:=.* Service Fee.*")'
