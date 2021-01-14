@@ -465,6 +465,7 @@ Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/Deal_LBT_BILAT/Notice
 Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/Deal_LLA_Syndicated/Deal_Borrower_LLA_Syndicated.robot
 Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/Deal_LLA_Syndicated/Deal_Notebook_LLA_Syndicated.robot
 Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/Deal_LLA_Syndicated/Facility_Notebook_LLA_Syndicated.robot
+Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/Deal_LLA_Syndicated/OngoingFee_Notebook_LLA_Syndicated.robot
 
 ### NEW UAT Deal PIM Future BILAT ###
 Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/Deal_PIM_Future_BILAT/Deal_Borrower_PIM_Future_BILAT.robot
@@ -478,6 +479,7 @@ Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/Deal_PIM_Future_BILAT
 
 ### NEW UAT Deal ATM BILAT ###
 Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/Deal_ATM_BILAT/Deal_Borrower_ATM_BILAT.robot
+Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/Deal_ATM_BILAT/Deal_Notebook_ATM_BILAT.robot
 
 ### NEW UAT Deal TL ###
 Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/UAT_TL_Keywords/TL_FX_Rates.robot
@@ -488,8 +490,11 @@ Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/Deal_New_Life_BILAT/D
 Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/Deal_New_Life_BILAT/Facility_Notebook_New_Life_BILAT.robot
 Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/Deal_New_Life_BILAT/Loan_Drawdown_New_Life_BILAT.robot
 Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/Deal_New_Life_BILAT/OngoingFee_New_Life_BILAT.robot
+Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/Deal_New_Life_BILAT/Repricing_New_Life_BILAT.robot
 
 ### NEW UAT Deal PDS SYND ###
 Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/Deal_PDS_SYND/Deal_Borrower_PDS_SYND.robot
 
-
+### New PT Health UAT Deal ###
+Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/Deal_PT_Health_Syndicated/Deal_Notebook_PT_Health_Syndicated.robot
+Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/Deal_PT_Health_Syndicated/Deal_Borrower_PT_Health_Syndicated.robot

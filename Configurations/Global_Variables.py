@@ -228,6 +228,8 @@ RATE_SETTING_TRANSACTION = "Rate Setting"
 AWAITING_SEND_TO_SETTLEMENT_APPROVAL_TRANSACTION = "Awaiting Send to Settlement Approval"
 AWAITING_CLOSE_TRANSACTION= "Awaiting Close"
 FEE_PAYMENT_RELEASED_STATUS = "Fee Payment Released"
+AWAITING_COMPLETE_CASHFLOW_TRANSACTION = "Awaiting Complete Cashflows"
+BREAK_COST_FEE = "Break Cost Fee"
 
 ### Bank Role ###
 REFERENCE_BANK_ROLE = "Reference Bank"
