@@ -5,6 +5,7 @@ Resource    ../../../../Configurations/LoanIQ_Import_File.robot
 Setup Syndicated Deal for PT Health Syndicated
     [Documentation]    This keyword is used to create a Syndicated Deal for PT Health
     ...    @author: songchan    04JAN2021    - initial create
+    ...    @update: songchan    14JAN2021    - Change keyword for pricing option and added holiday calendar
     [Arguments]    ${ExcelPath}
     
     ###Data Generation###
