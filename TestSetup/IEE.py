@@ -1,10 +1,10 @@
 ### Dataset Locations ###
-APIDataSet = "C:\\Git_Evergreen\\fms_cba\DataSet\\NewUATDeals_DataSet\\Deal_LLA_Syndicated.xlsx"
+APIDataSet = "C:\\Git_Evergreen\\fms_cba\\DataSet\\Integration_DataSet\\API\\API_Data_Set.xlsx"
 ExcelPath_API_temp = 'C:\\Git_Evergreen\\fms_cba\\DataSet\\Integration_DataSet\\API\\temp.xlsx'
-ExcelPath = "C:\\Git_Evergreen\\fms_cba\DataSet\\NewUATDeals_DataSet\\Deal_LLA_Syndicated.xlsx"
+ExcelPath = "C:\\Git_Evergreen\\fms_cba\DataSet\\LoanIQ_DataSet\\EVG_PTYLIQ04_BaselineNonAgentSyndication.xlsx"
 dataset_path = "C:\\Git_Evergreen\\fms_cba"
 CBAUAT_ExcelPath = "C:\\Git_Evergreen\\fms_cba\\DataSet\\NewUATDeals_DataSet\\Deal_CH_EDU_BILAT.xlsx"
-NEW_UAT_DEALS_ExcelPath = "C:\\Git_Evergreen\\fms_cba\DataSet\\NewUATDeals_DataSet\\Deal_LBT_BILAT.xlsx"
+NEW_UAT_DEALS_ExcelPath = "C:\\Git_Evergreen\\fms_cba\\DataSet\\NewUATDeals_DataSet\\New_UAT_Deals_Dataset_Masterlist.xlsx"
 TL_DATASET = "C:\\Git_Evergreen\\fms_cba\\DataSet\\Integration_DataSet\\TL\\TL_Data_Set_AU.xlsx"
 SAPWUL_DATASET = "C:\\Git_evergreen\\evergreen_projects\\CBA_Evergreen\\DataSet\\Downstream_DataSet\\SAPWUL\\SAPWUL_Data_Set.xlsx"
 ComSeeDataSet = "C:\\Git_Evergreen\\fms_cba\DataSet\\Integration_DataSet\\CommSee\\COMMSEE_Data_Set.xlsx"
@@ -46,12 +46,12 @@ MDM_FFC_Password = 'admin'
 ### TL Credentials ###
 TL_USERNAME = "CGLINP00"
 TL_PASSWORD = "password"
-INPUTTER_USERNAME = "MAKAUI03"
-INPUTTER_PASSWORD = "ARFEL_20"
-SUPERVISOR_USERNAME = "MAKAUS03"
-SUPERVISOR_PASSWORD = "ARFEL_20"
-MANAGER_USERNAME = "MAKAUM03"
-MANAGER_PASSWORD = "ARFEL_20"
+INPUTTER_USERNAME = "SKOINP00"
+INPUTTER_PASSWORD = "password"
+SUPERVISOR_USERNAME = "SKOSUP00"
+SUPERVISOR_PASSWORD = "password"
+MANAGER_USERNAME = "SKOMGR00"
+MANAGER_PASSWORD = "password"
 
 SSO_USERLINK = "mancsleverg0028"
 SSO_PORT = "8080"
@@ -73,8 +73,8 @@ PARTY_SERVER = 'mancsleverg0031:7080'
 PARTY_URL = 'mancsleverg0031:7080/uxp/rt/html/login.html'
 
 ###Party Credential###
-PARTY_USERNAME = 'brad'
-PARTY_PASSWORD = 'brad'
+PARTY_USERNAME = 'amipac'
+PARTY_PASSWORD = 'password'
 
 ###Transformation Layer###
 TL_SERVICE_HOST = "mancsleverg0007"

@@ -1,12 +1,12 @@
 dataset_path = "C:\\Git_Evergreen\\fms_cba"
-ExcelPath = "C:\\Git_Evergreen\\fms_cba\\DataSet\\LoanIQ_DataSet\\EU_Entity\\EVG_PTYLIQ01_EU_BaselineBilateralCustomer.xlsx"
+ExcelPath = "C:\\Git_Evergreen\\fms_cba\\DataSet\\LoanIQ_DataSet\\EU_Entity\\EVG_PTYLIQ04_EU_BaselineNonAgentSyndication.xlsx"
 CBAUAT_ExcelPath = "C:\\Git_Evergreen\\evergreen_projects\\CBA_Evergreen\\DataSet\\CBA_UAT_DataSet\\EVG_CBAUAT01.xls"
 APIDataSet = "C:\\Git_Evergreen\\fms_cba\\DataSet\\Integration_DataSet\\API\\API_Data_Set.xlsx"
 APIDataSet_EU = "C:\\Git_Evergreen\\fms_cba\\DataSet\\Integration_DataSet\\API\\API_Data_Set.xlsx"
 Countries_Codes = "C:\\Git_Evergreen\\evergreen_projects\\CBA_Evergreen\\DataSet\\API_DataSet\\Countries_Codes.xlsx"
 TL_DATASET = "C:\\Git_Evergreen\\fms_cba\\DataSet\\Integration_DataSet\\TL\\TL_Data_Set_EU.xlsx"
 SAPWUL_DATASET = "C:\\Git_evergreen\\evergreen_projects\\CBA_Evergreen\\DataSet\\Downstream_DataSet\\SAPWUL\\SAPWUL_Data_Set.xlsx"
-ComSeeDataSet = 'C:\\Git_Evergreen\\fms_cba\DataSet\\Integration_DataSet\\CommSee\\COMMSEE_Data_Set_EU.xlsx'
+ComSeeDataSet = 'C:\\Git_Evergreen\\evergreen_projects\\CBA_Evergreen\\DataSet\\Downstream_DataSet\\ComSee\\COMSEE_Data_Set.xls'
 GLExcelPath = 'C:\\Git_Evergreen\\fms_cba\\DataSet\\Integration_DataSet\Extracts\\GL\\EVG_GL_TestData_EU.xlsx'
 PTY_DATASET = "C:\\Git_Evergreen\\fms_cba\\DataSet\\Party_DataSet\\PTY_DataSet_EU.xlsx"
 INDUSTRYSECTOR_LIST = "C:\\Git_Evergreen\\fms_cba\\DataSet\\Party_DataSet\\Industry_Sector\\Industry_Sector_Values.txt"
@@ -33,12 +33,12 @@ MDM_User_API = "/corporate/v1/users"
 
 TL_USERNAME = "CESSINP1"
 TL_PASSWORD = "password"
-INPUTTER_USERNAME = "ARFELI01"
-INPUTTER_PASSWORD = "ARFEL_20"
-SUPERVISOR_USERNAME = "ARFELS01"
-SUPERVISOR_PASSWORD = "ARFEL_20"
-MANAGER_USERNAME = "ARFELM01"
-MANAGER_PASSWORD = "ARFEL_20"
+INPUTTER_USERNAME = "FJUSRAM"
+INPUTTER_PASSWORD = "password"
+SUPERVISOR_USERNAME = "FJSUPAM"
+SUPERVISOR_PASSWORD = "password"
+MANAGER_USERNAME = "FJMGRAM"
+MANAGER_PASSWORD = "password"
 
 SSO_USERLINK = "mancsleverg0028"
 SSO_PORT = "7080"
