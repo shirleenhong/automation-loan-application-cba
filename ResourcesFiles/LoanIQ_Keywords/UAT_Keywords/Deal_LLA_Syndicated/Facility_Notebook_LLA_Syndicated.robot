@@ -22,12 +22,12 @@ Create Revolver Facility for LLA Syndicated Deal
     ###Facility Notebook - Date Settings##
     ${SystemDate}    Get System Date
     ${Facility_ExpiryDate}    Add Days to Date    ${SystemDate}    &{ExcelPath}[Add_To_Facility_ExpiryDate]
-    ${Facility_MaturityDate}    Add Days to Date    ${SystemDate}    &{ExcelPath}[Add_To_Facility_MaturityDate]  
-    Set Facility Dates    ${SystemDate}    ${SystemDate}    ${Facility_ExpiryDate}    ${Facility_MaturityDate} 
+    ${Facility_MaturityDate}    Add Days to Date    ${SystemDate}    &{ExcelPath}[Add_To_Facility_MaturityDate]
+    ${Primary_PortfolioExpiryDate}    Add Days to Date    ${SystemDate}    1
 	Write Data To Excel    CRED02_FacilitySetup    Facility_ExpiryDate    ${rowid}    ${Facility_ExpiryDate}
 	Write Data To Excel    CRED02_FacilitySetup    Facility_MaturityDate    ${rowid}    ${Facility_MaturityDate}
-    Write Data To Excel    CRED02_FacilitySetup    Facility_AgreementDate    ${rowid}    ${SystemDate}  
-    Write Data To Excel    CRED02_FacilitySetup    Facility_EffectiveDate    ${rowid}    ${SystemDate}     
+	Write Data To Excel    SYND02_PrimaryAllocation    Primary_PortfolioExpiryDate    ${rowid}    ${Primary_PortfolioExpiryDate}
+    Set Facility Dates    &{ExcelPath}[Facility_AgreementDate]    &{ExcelPath}[Facility_EffectiveDate]    ${Facility_ExpiryDate}    ${Facility_MaturityDate}    
     
     ###Facility Notebook - Types/Purpose###
     Set Facility Risk Type    &{ExcelPath}[Facility_RiskType]
@@ -38,7 +38,7 @@ Create Revolver Facility for LLA Syndicated Deal
     Add Facility Currency    &{ExcelPath}[Facility_Currency]
     
     ###Facility Notebook - Sublimit/Cust###
-    Add Borrower    &{ExcelPath}[Facility_Currency]    &{ExcelPath}[Facility_BorrowerSGName]    &{ExcelPath}[Facility_BorrowerPercent]    &{ExcelPath}[Borrower_ShortName]    &{ExcelPath}[Facility_GlobalLimit]    &{ExcelPath}[Facility_BorrowerMaturity]    ${SystemDate} 
+    Add Borrower    &{ExcelPath}[Facility_Currency]    &{ExcelPath}[Facility_BorrowerSGName]    &{ExcelPath}[Facility_BorrowerPercent]    &{ExcelPath}[Borrower_ShortName]    &{ExcelPath}[Facility_GlobalLimit]    &{ExcelPath}[Facility_BorrowerMaturity]    &{ExcelPath}[Facility_EffectiveDate]
     
     ###Facility Notebook - Summary###
     Validate Multi CCY Facility
