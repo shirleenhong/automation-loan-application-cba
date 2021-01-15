@@ -6,6 +6,7 @@ Resource    ../../../../Configurations/LoanIQ_Import_File.robot
 Create Comprehensive Repricing for New Life BILAT
     [Documentation]    This is a high-level keyword to Create Comprehensive Repricing for New Life BILAT
     ...    @author: kmagday    11JAN2021    - Initial Create 
+    ...    @update: kmagday    13JAN2021    - added writing of NewLoan_ALias in SERV08_ComprehensiveRepricing sheet
     [Arguments]    ${ExcelPath}
 
     ${Rollover_Amount}    Read Data From Excel    SERV01_LoanDrawdown    Loan_RequestedAmount    ${rowid}
@@ -29,6 +30,8 @@ Create Comprehensive Repricing for New Life BILAT
     ${Effective_Date}    ${NewLoan_Alias}    Set RolloverConversion Notebook General Details    ${Rollover_Amount}    &{ExcelPath}[Repricing_Frequency]
     Save Notebook Transaction    ${LIQ_RolloverConversion_Window}    ${LIQ_RolloverConversion_Save_Menu}
     Close RolloverConversion Notebook
+
+    Write Data To Excel    SERV08_ComprehensiveRepricing    NewLoan_Alias    ${rowid}    ${NewLoan_Alias}
 
     ### Repricing Notebook - Add > Add > Interest Payment ###  
     Add Interest Payment for Loan Repricing
