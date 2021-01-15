@@ -1,5 +1,6 @@
 *** Settings ***
 Resource    ../../../Configurations/LoanIQ_Import_File.robot
+
 *** Variables ***
 ${rowid}    12
 
