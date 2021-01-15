@@ -38,17 +38,18 @@ Setup Deal for PDS SYND Deal
     
     ### Calendars Tab ###
     Delete Existing Holiday on Calendar Table
-    Add Holiday on Calendar    &{ExcelPath}[HolidayCalendar]
+    Add Holiday on Calendar    &{ExcelPath}[HolidayCalendar_1]|&{ExcelPath}[HolidayCalendar_2]|&{ExcelPath}[HolidayCalendar_3]|&{ExcelPath}[HolidayCalendar_4]|&{ExcelPath}[HolidayCalendar_5]
     
     ### Pricing Rules Tab ###
-    Add Pricing Option    &{ExcelPath}[Deal_PricingOption]    &{ExcelPath}[InitialFractionRate_Round]    &{ExcelPath}[RoundingDecimal_Round]    &{ExcelPath}[NonBusinessDayRule]    &{ExcelPath}[PricingOption_BillNoOfDays]    
-    ...    &{ExcelPath}[PricingOption_MatrixChangeAppMthd]    &{ExcelPath}[PricingOption_RateChangeAppMthd]    None    None    None      
-    ...    None    None    None    &{ExcelPath}[PricingOption_InterestDueUponPrincipalPayment]    &{ExcelPath}[PricingOption_InterestDueUponRepricing]
-    ...    None    &{ExcelPath}[PricingOption_IntentNoticeDaysInAdvance]    &{ExcelPath}[PricingOption_IntentNoticeTime]    &{ExcelPath}[PricingOption_12HrPeriodOption]    None    None    &{ExcelPath}[PricingOption_MinimumPaymentAmount]
-    ...    None    None    None    &{ExcelPath}[PricingOption_RateSettingTime]    &{ExcelPath}[PricingOption_RateSettingPeriodOption]
-    
+    Add Pricing Option    &{ExcelPath}[Deal_PricingOption]    &{ExcelPath}[InitialFractionRate_Round]    &{ExcelPath}[RoundingDecimal_Round]    &{ExcelPath}[NonBusinessDayRule]    &{ExcelPath}[PricingOption_BillNoOfDays]
+    ...    &{ExcelPath}[PricingOption_MatrixChangeAppMthd]    &{ExcelPath}[PricingOption_RateChangeAppMthd]    &{ExcelPath}[PricingOption_InitialFractionRate]    &{ExcelPath}[PricingOption_RoundingDecimalPrecision]    &{ExcelPath}[PricingOption_RoundingApplicationMethod]
+    ...    &{ExcelPath}[PricingOption_PercentOfRateFormulaUsage]    &{ExcelPath}[PricingOption_RepricingNonBusinessDayRule]    &{ExcelPath}[PricingOption_FeeOnLenderShareFunding]    &{ExcelPath}[PricingOption_InterestDueUponPrincipalPayment]
+    ...    &{ExcelPath}[PricingOption_InterestDueUponRepricing]    &{ExcelPath}[PricingOption_ReferenceBanksApply]    &{ExcelPath}[PricingOption_IntentNoticeDaysInAdvance]    &{ExcelPath}[PricingOption_IntentNoticeTime]    &{ExcelPath}[PricingOption_12HrPeriodOption]
+    ...    &{ExcelPath}[PricingOption_MaximumDrawdownAmount]    &{ExcelPath}[PricingOption_MinimumDrawdownAmount]    &{ExcelPath}[PricingOption_MinimumPaymentAmount]    &{ExcelPath}[PricingOption_MinimumAmountMultiples]
+    ...    &{ExcelPath}[PricingOption_CCY]    &{ExcelPath}[PricingOption_BillBorrower]    &{ExcelPath}[PricingOption_RateSettingTime]    &{ExcelPath}[PricingOption_RateSettingPeriodOption]
+
     Add Fee Pricing Rules    &{ExcelPath}[PricingRule_Fee]    &{ExcelPath}[PricingRule_MatrixChangeAppMthd]    &{ExcelPath}[PricingRule_NonBussDayRule]
-    ...    None    &{ExcelPath}[PricingRule_BillNoOfDays]
+    ...    &{ExcelPath}[PricingRule_BillBorrowerStatus]    &{ExcelPath}[PricingRule_BillNoOfDays]
     
     Save Changes on Deal Notebook
     
