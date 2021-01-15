@@ -114,3 +114,61 @@ Release Ongoing Fee for CH EDU Bilateral Deal
 
     Save Facility Notebook Transaction
     Close All Windows on LIQ
+
+Pay Line Fee for CH EDU Bilateral Deal
+    [Documentation]    This keyword is used for line fee payment for CH EDU Bilateral Deal
+    ...    @author: dahijara    11JAN2021    - Initial Create
+    ...    @update: dahijara    13JAN2020    - Updated keyword name from 'Select Notices Recepients' to 'Select Notices Recipients'
+    [Arguments]    ${ExcelPath} 
+
+    ${Deal_Name}    Read Data From Excel    CRED01_DealSetup    Deal_Name    1
+    ${FacilityName}    Read Data From Excel    CRED02_FacilitySetup_B    Facility_Name    1
+
+    ### LIQ Window ###
+    Logout from Loan IQ
+    Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
+
+    ### Ongoing Fee Payment ###
+    Navigate to Facility Notebook    ${Deal_Name}    ${FacilityName}
+    Navigate to Existing Ongoing Fee Notebook    &{ExcelPath}[Fee_Type]
+    Verify Details in Accrual Tab for Line Fee    &{ExcelPath}[Cycle_Number]    &{ExcelPath}[Cycle_StartDate]    &{ExcelPath}[Cycle_EndDate]
+    ...    &{ExcelPath}[Cycle_DueDate]    &{ExcelPath}[Expected_CycleDueAmt]    &{ExcelPath}[ProjectedCycleDue]
+
+    Initiate Payment for Line Fee    &{ExcelPath}[Cycle_Number]    &{ExcelPath}[Expected_CycleDueAmt]    &{ExcelPath}[Effective_Date]
+    
+    ### Create Cashflows ###
+    Navigate to Payment Workflow and Proceed With Transaction    ${CREATE_CASHFLOWS_TYPE}
+    Set All Items to Do It
+
+    ### Generate Intent Notice ###
+    Navigate to Payment Workflow and Proceed With Transaction        ${GENERATE_INTENT_NOTICES}
+    Select Notices Recipients
+    Exit Notice Window
+
+    ### Sending Payment For Approval ###
+    Navigate to Payment Workflow and Proceed With Transaction    ${SEND_TO_APPROVAL_STATUS}
+    Close All Windows on LIQ
+
+    ###Loan IQ Desktop###
+    Logout from Loan IQ
+    Login to Loan IQ    ${SUPERVISOR_USERNAME}    ${SUPERVISOR_PASSWORD}
+    
+    ### Payment Approval ####
+    Navigate Transaction in WIP     ${PAYMENTS_TRANSACTION}    ${AWAITING_APPROVAL_STATUS}    ${ONGOING_FEE_PAYMENT_TRANSACTION}    ${FacilityName}
+    Navigate to Payment Workflow and Proceed With Transaction    ${APPROVAL_STATUS}
+    Close All Windows on LIQ
+    
+    ###Loan IQ Desktop###
+    Logout from Loan IQ
+    Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
+
+    ### Release Payment ###
+    Navigate Transaction in WIP     ${PAYMENTS_TRANSACTION}    ${AWAITING_RELEASE_STATUS}    ${ONGOING_FEE_PAYMENT_TRANSACTION}    ${FacilityName}
+    Navigate to Payment Workflow and Proceed With Transaction    ${RELEASE_STATUS}
+    Close All Windows on LIQ
+   
+    ### Validation ###
+    Navigate to Facility Notebook    ${Deal_Name}    ${FacilityName}
+    Navigate to Existing Ongoing Fee Notebook    &{ExcelPath}[Fee_Type]
+    Validate Payment Release of Ongoing Line Fee
+    Validate After Payment Details on Acrual Tab - Line Fee    &{ExcelPath}[Expected_CycleDueAmt]    &{ExcelPath}[Cycle_Number]

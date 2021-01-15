@@ -5,6 +5,7 @@ Resource    ../../../../Configurations/LoanIQ_Import_File.robot
 Create Deal Borrower in Quick Party Onboarding for ATM BILAT
     [Documentation]    This keyword creates a Deal Borrower in Quick Party Onboarding.
     ...    @author:    nbautist    07DEC2020    - Initial Create
+    ...    @author:    ccarriedo    12JAN2021    - Removed keyword Get Short Name Value and Return and replaced with simple Catenate as the required shortname should not have space
     [Arguments]    ${ExcelPath}
     ### INPUTTER ###
     Login User to Party    ${PARTY_USERNAME}    ${PARTY_PASSWORD}    ${USER_LINK}    ${USER_PORT}    ${PARTY_URL_SUFFIX}    ${PARTY_HTML_USER_CREDENTIALS}    ${SSO_ENABLED}    ${PARTY_URL} 
@@ -19,7 +20,7 @@ Create Deal Borrower in Quick Party Onboarding for ATM BILAT
     
     Validate Pre-Existence Check Page Values and Field State    &{ExcelPath}[Locality]    ${Entity}    ${Assigned_Branch}    &{ExcelPath}[Party_Type]    &{ExcelPath}[Party_Sub_Type]    &{ExcelPath}[Party_Category]
     ${Enterprise_Name}    ${Party_ID}    Populate Pre-Existence Check    &{ExcelPath}[Enterprise_Prefix]
-    ${Short_Name}    Get Short Name Value and Return    &{ExcelPath}[Short_Name_Prefix]    ${Party_ID}
+    ${Short_Name}    Get Short Name Value and Return without Space    &{ExcelPath}[Short_Name_Prefix]    ${Party_ID}
 
     Populate Quick Enterprise Party    ${Party_ID}    &{ExcelPath}[Country_of_Tax_Domicile]    &{ExcelPath}[Country_of_Registration]
     ...    &{ExcelPath}[Address_Type]    &{ExcelPath}[Country_Region]    &{ExcelPath}[Post_Code]    &{ExcelPath}[Document_Collection_Status]
@@ -54,6 +55,7 @@ Create Deal Borrower in Quick Party Onboarding for ATM BILAT
 Search Customer and Complete Borrower Profile Creation with Default Values for ATM Bilateral Deal
     [Documentation]    This keyword searches a customer and complete its Borrower Profile creation with default values
     ...    @author: nbautista    09DEC2020
+    ...    @author: ccarriedo    12JAN2021    - Added Update Borrower Servicing Group Alias keyword to populate Borrower_SGAlias column
     [Arguments]    ${ExcelPath}
 	
 	### Login to LoanIQ ###
@@ -112,7 +114,7 @@ Search Customer and Complete Borrower Profile Creation with Default Values for A
     Add Remittance Instruction to Servicing Group    &{ExcelPath}[RI_DDADescription]     
      
     Close Servicing Group Remittance Instructions Selection List Window    &{ExcelPath}[LIQCustomer_ShortName]    
-             
+    Update Borrower Servicing Group Alias    &{ExcelPath}[Borrower_SGAlias]         
     ### Logout and Relogin in Supervisor Level ###
     Close All Windows on LIQ
     Logout from Loan IQ
