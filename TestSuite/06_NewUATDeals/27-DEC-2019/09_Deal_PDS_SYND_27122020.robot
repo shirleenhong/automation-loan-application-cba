@@ -11,3 +11,6 @@ Get Dataset for PDS Syndicate Deal
 Create Quick Party Onboarding for PDS Syndicate Deal - PTY001 
     Mx Execute Template With Multiple Data    Create Deal Borrower Initial Details in Quick Party Onboarding for PDS Syndicate Deal    ${ExcelPath}    ${rowid}    PTY001_QuickPartyOnboarding
     Mx Execute Template With Multiple Data    Search Customer and Complete Borrower Profile Creation with Default Values for PDS Syndicate Deal    ${ExcelPath}    ${rowid}    PTY001_QuickPartyOnboarding
+
+Create Syndicated Deal for PDS Syndicated Deal - CRED01
+    Mx Execute Template With Multiple Data    Setup Deal for PDS SYND Deal    ${ExcelPath}    ${rowid}    CRED01_DealSetup
