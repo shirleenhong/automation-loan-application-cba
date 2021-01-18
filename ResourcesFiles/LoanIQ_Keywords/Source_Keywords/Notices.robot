@@ -504,4 +504,4 @@ Validate Notice Status for Event Fee Payment Notice
     
     Take Screenshot    ${screenshot_path}/Screenshots/Integration/Correspondence_Notice_PostStatus
     
-    Close All Windows on LIQ     
+    Close All Windows on LIQ   

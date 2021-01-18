@@ -628,3 +628,16 @@ Validate Fees of Breakfunding on General Tab
     ...    ELSE    Run Keyword And Continue On Failure    Fail    Total Host Bank Fees is incorrect. Expected: ${Expected_Fees} - Actual: ${HostBankFees_Amount}
 
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/Breakfunding_GeneralTab
+
+Navigate to Breakfunding Window from Inactive Loan Notebook
+    [Documentation]    This keyword is used to Navigate to breakfunding window from an Inactive Loan Notebook
+    ...    @author: javinzon    14JAN2021    - Initial create
+
+    Mx LoanIQ Select Window Tab    ${LIQ_InactiveLoan_Tab}    Pending
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/BreakfundingPendingTab
+    ${Status}    Run Keyword And Return Status    Mx LoanIQ Verify Text In Javatree    ${LIQ_InactiveLoanNotebook_PendingItems_List}    Break Cost Fee%yes
+    Run Keyword If    ${Status}==${True}    Run Keywords    Mx LoanIQ Select String    ${LIQ_InactiveLoanNotebook_PendingItems_List}    Break Cost Fee 
+    ...    AND    Mx Press Combination    Key.ENTER
+    ...    AND    Mx LoanIQ activate    ${LIQ_Breakfunding_Pending_Window}
+    ...    AND    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/BreakfundingPendingTab 
+    ...    ELSE    Run Keyword And Continue On Failure    Fail    Break Cost Fee transaction is not existing in this deal

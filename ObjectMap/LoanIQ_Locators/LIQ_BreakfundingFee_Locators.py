@@ -4,6 +4,7 @@ LIQ_LoanNotebook_BbsyBidLoan_Tab = 'JavaWindow("title:=.* Loan.*.*Active.*").Jav
 
 ###Loan Notebook - BBSY - Bid Loan###
 LIQ_LoanNotebook_PendingItems_List = 'JavaWindow("title:=.* Loan.*.*Active.*").JavaTree("attached text:=Pending Transactions")'
+LIQ_InactiveLoanNotebook_PendingItems_List = 'JavaWindow("title:=.* Loan.*.*Inactive.*").JavaTree("attached text:=Pending Transactions")'
 
 ###Breakfunding Fee Notebook###
 LIQ_Breakfunding_Window = 'JavaWindow("title:=Break Cost Fee.*")'

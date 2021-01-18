@@ -11,3 +11,8 @@ Get Dataset for LBT BILAT
 Full Preprayment for LBT Bilateral Deal
     Mx Execute Template With Multiple Data    Collect Full Prepayment via Paper Clip for LBT Bilateral Deal - Outstanding Z    ${ExcelPath}    ${rowid}    SERV23_LoanPaperClip  
     Mx Execute Template With Multiple Data    Send Paperclip Intent Notice for LBT Bilateral Deal    ${ExcelPath}    ${rowid}    Correspondence
+    
+Charge $800 Breakcost for Full Prepayment for LBT Bilateral Deal
+    Mx Execute Template With Multiple Data    Break Cost for Full Prepayment for LBT Bilateral Deal - Outstanding Z    ${ExcelPath}    ${rowid}     SERV40_BreakFunding
+    Set Test Variable    ${rowid}    2
+    Mx Execute Template With Multiple Data    Send Event Fee Payment Notice without FFC Validation    ${ExcelPath}    ${rowid}    Correspondence
