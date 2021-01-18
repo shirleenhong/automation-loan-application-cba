@@ -19,6 +19,7 @@ LIQ_Breakfunding_AwaitingRelease_Tab= 'JavaWindow("title:=Break Cost Fee / Await
 LIQ_Breakfunding_Released_Window = 'JavaWindow("title:=Break Cost Fee / Released.*","displayed:=1")'
 LIQ_Breakfunding_FileSave_Menu = 'JavaWindow("title:=Break Cost Fee / Released.*","displayed:=1").JavaMenu("label:=File").JavaMenu("label:=Save")'
 LIQ_Breakfunding_FileExit_Menu = 'JavaWindow("title:=Break Cost Fee / Released.*","displayed:=1").JavaMenu("label:=File").JavaMenu("label:=Exit")'
+LIQ_Breakfunding_Events_JavaTree = 'JavaWindow("title:=Break Cost Fee .*").JavaTree("labeled_containers_path:=Tab:Events;")'
 
 LIQ_Breakfunding_Deal_Label = 'JavaWindow("title:=Break Cost Fee / Pending.*").JavaStaticText("x:=166","y:=19")'
 LIQ_Breakfunding_Facility_Label = 'JavaWindow("title:=Break Cost Fee / Pending.*").JavaStaticText("x:=167","y:=56")'
@@ -26,6 +27,10 @@ LIQ_Breakfunding_Borrower_Label = 'JavaWindow("title:=Break Cost Fee / Pending.*
 LIQ_Breakfunding_LoanAlias_Label = 'JavaWindow("title:=Break Cost Fee / Pending.*").JavaStaticText("x:=509","y:=58")'
 LIQ_Breakfunding_PricingOption_Label = 'JavaWindow("title:=Break Cost Fee / Pending.*").JavaStaticText("x:=528","y:=89")'
 LIQ_Breakfunding_Currency_Label = 'JavaWindow("title:=Break Cost Fee / Pending.*").JavaStaticText("x:=477","y:=122")'
+
+###Breakfunding General tab###
+LIQ_Breakfunding_HostBankFees_Text = 'JavaWindow("title:=Break Cost Fee .*").JavaEdit("attached text:=Total Host Bank Fees:")'
+LIQ_Breakfunding_BorrowerFees_Text = 'JavaWindow("title:=Break Cost Fee .*").JavaEdit("attached text:=Total Borrower Fees:")'
 
 ###Breakfunding Fee - Workflow Tab###
 LIQ_Breakfunding_WorkflowItems_List = 'JavaWindow("title:=Break Cost Fee.*").JavaTree("attached text:=Drill down to perform Workflow item")'
@@ -83,17 +88,18 @@ LIQ_Breakfunding_Queries_GLEntries_Cashflow = 'JavaWindow("title:=Cashflows For 
 LIQ_Breakfunding_Cashflow_HostBankCash_JavaEdit = 'JavaWindow("title:=Cashflows .* Break Cost Fee.*").JavaStaticText("to_class:=JavaStaticText","index:=28")'
 
 ###Event Fee Payment Group Window###
-LIQ_EventFeePaymentGroup_Window = 'JavaWindow("title:=Event Fee Payment Group.*")'
-LIQ_EventFeePaymentGroup_MarkAll_Button = 'JavaWindow("title:=Event Fee Payment Group.*").JavaButton("attached text:=Mark all")'
-LIQ_EventFeePaymentGroup_Send_Button = 'JavaWindow("title:=Event Fee Payment Group.*").JavaButton("attached text:=Send")'
-LIQ_EventFeePaymentGroup_Exit_Button = 'JavaWindow("title:=Event Fee Payment Group.*").JavaButton("attached text:=Exit")'
+LIQ_EventFeePaymentGroup_Window = 'JavaWindow("title:=Event Fee Payment Group.*","displayed:=1")'
+LIQ_EventFeePaymentGroup_MarkAll_Button = 'JavaWindow("title:=Event Fee Payment Group.*","displayed:=1").JavaButton("attached text:=Mark all")'
+LIQ_EventFeePaymentGroup_Send_Button = 'JavaWindow("title:=Event Fee Payment Group.*","displayed:=1").JavaButton("attached text:=Send")'
+LIQ_EventFeePaymentGroup_Exit_Button = 'JavaWindow("title:=Event Fee Payment Group.*","displayed:=1").JavaButton("attached text:=Exit")'
 LIQ_EventFeePaymentGroup_OptionsSend_Menu = 'JavaWindow("title:=Event Fee Payment .*","displayed:=1").JavaMenu("label:=Options").JavaMenu("label:=Send")'
-LIQ_EventFeePaymentGroup_NoticeID_Field = 'JavaWindow("title:=Event Fee Payment .*","displayed:=1").JavaEdit("attached text:=Notice ID:")'
-LIQ_EventFeePaymentGroup_Customer_Field = 'JavaWindow("title:=Event Fee Payment .*","displayed:=1").JavaEdit("tagname:=Text","index:=2")'
-LIQ_EventFeePaymentGroup_StaticText = 'JavaWindow("title:=Event Fee Payment .*","displayed:=1").JavaStaticText("labeled_containers_path:=Group:Status;","index:=7")'
+LIQ_EventFeePaymentGroup_NoticeID_Field = 'JavaWindow("title:=Event Fee Payment created by.*","displayed:=1").JavaEdit("attached text:=Notice ID:")'
+LIQ_EventFeePaymentGroup_Customer_Field = 'JavaWindow("title:=Event Fee Payment created by.*","displayed:=1").JavaEdit("tagname:=Text","index:=2")'
+LIQ_EventFeePaymentGroup_StaticText = 'JavaWindow("title:=Event Fee Payment created by.*","displayed:=1").JavaStaticText("labeled_containers_path:=Group:Status;","index:=7")'
 LIQ_EventFeePaymentGroup_Refresh_Button = 'JavaWindow("title:=Event Fee Payment Group.*","displayed:=1").JavaButton("attached text:=Refresh")'
 LIQ_EventFeePaymentGroup_UnmarkAll_Button = 'JavaWindow("title:=Event Fee Payment Group.*","displayed:=1").JavaButton("attached text:=Unmark all")'
 LIQ_EventFeePayment_Items_JavaTree = 'JavaWindow("title:=Event Fee Payment Group.*","displayed:=1").JavaTree("attached text:=Drill down to mark notices")'
+LIQ_EventFeePaymentGroup_GroupComment_Button = 'JavaWindow("title:=Event Fee Payment .*","displayed:=1").JavaButton("attached text:=Group comment.*")'
 
 ### GL Entries ###
 LIQ_GL_Entries_Window = 'JavaWindow("title:=GL Entries For.*")'
