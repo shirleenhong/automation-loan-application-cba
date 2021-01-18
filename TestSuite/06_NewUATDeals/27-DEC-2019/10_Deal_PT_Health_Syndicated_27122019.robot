@@ -11,3 +11,6 @@ Get Dataset for PT Health Syndicated Deal
 Create Quick Party Onboarding for PT Health Syndicated Deal - PTY001
     Mx Execute Template With Multiple Data    Create Deal Borrower Initial Details in Quick Party Onboarding for PT Health Syndicated Deal    ${ExcelPath}    ${rowid}    PTY001_QuickPartyOnboarding
     Mx Execute Template With Multiple Data    Search Customer and Complete Borrower Profile Creation with Default Values for PT Health Syndicated Deal    ${ExcelPath}    ${rowid}    PTY001_QuickPartyOnboarding
+    
+Create Syndicated Deal for PT Health Syndicated Deal - CRED01
+    Mx Execute Template With Multiple Data    Setup Syndicated Deal for PT Health Syndicated    ${ExcelPath}    ${rowid}    CRED01_DealSetup

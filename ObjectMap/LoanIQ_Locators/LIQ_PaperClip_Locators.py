@@ -6,6 +6,7 @@ LIQ_PendingPaperClip_Add_Button = 'JavaWindow("title:=.*Paper Clip for.*").JavaO
 LIQ_PaperClip_Tabs = 'JavaWindow("title:=.*Paper Clip for.*").JavaTab("tagname:=TabFolder")'
 LIQ_PaperClip_Workflow_Tab = 'JavaWindow("title:=.*Paper Clip for.*").JavaTree("attached text:=Drill down to perform.*")'
 LIQ_PaperClip_Transactions_JavaTree = 'JavaWindow("title:=.*Paper Clip for.*").JavaObject("tagname:=Group","text:=Transactions:").JavaTree("attached text:=Drill down to.*")'
+LIQ_PaperClip_Events_JavaTree = 'JavaWindow("title:=.*Paper Clip for.*").JavaTree("labeled_containers_path:=Tab:Events;")'
 
 LIQ_FeesAndOutstandings_Window = 'JavaWindow("title:=Fees and Outstandings")'
 LIQ_FeesAndOutstandings_ExpandAll_Button = 'JavaWindow("title:=Fees and Outstandings").JavaButton("attached text:=Expand All")'

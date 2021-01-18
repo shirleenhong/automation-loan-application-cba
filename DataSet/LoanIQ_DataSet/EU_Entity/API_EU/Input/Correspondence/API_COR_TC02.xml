@@ -1,44 +1,49 @@
 <liqInfo>
-    {"event_schema_id":"2148","event":{"header":{"correlationId":"LIQ-QJEJ33BA-QJEJ338J-2","processPath":{"array":[{"source":"FINASTRA_CCB","timestamp":"2020-11-03T18:37:41.645+08:00"}]}},"sourceSystem":{"string":"FINASTRA_CCB"},"ttl":{"au.com.cba.avro.customermanagement.noticesnotify.ttl":{"ttlDuration":"300","ttlSourceTime":"2020-11-03T18:37:41.645+08:00"}},"cifIds":{"array":[{"string":"9"}]},"documentInfo":{"documentPackage":{"businessChannel":"LOANIQ","name":null,"version":null,"templateId":null,"fileType":null,"content":"
+    {"event_schema_id":"2148","event":{"header":{"correlationId":"LIQ-9HEMMY3A-9HEMMY1R-2","processPath":{"array":[{"source":"FINASTRA_CCB","timestamp":"2021-01-13T15:39:03.769+08:00"}]}},"sourceSystem":{"string":"FINASTRA_CCB"},"ttl":{"au.com.cba.avro.customermanagement.noticesnotify.ttl":{"ttlDuration":"300","ttlSourceTime":"2021-01-13T15:39:03.765+08:00"}},"cifIds":{"array":[{"string":"1710818"}]},"documentInfo":{"documentPackage":{"businessChannel":"LOANIQ","name":null,"version":null,"templateId":null,"fileType":null,"content":"
     <FinastraApplication>
         <StandardNotice>
-            <ProcessingArea>EUOPS</ProcessingArea>
+            <ProcessingArea>AUSNA</ProcessingArea>
             <Address>
-                <line>Date: 03-Nov-2020</line>
-                <line>TO  : LENDLEG0414</line>
-                <line>ATTN: Lending NHB</line>
-                <line>Re  : Establishment/Extension Fee for CBANLD_03112020160326YZJ</line>
+                <line>Date: 13-Jan-2021</line>
+                <line>TO  : CH EDU Limited 1710818</line>
+                <line>ATTN: Linda Chu</line>
+                <line>Re  : CH EDU BILAT DEAL AUD 158.2M 17DEC191610 REV_CASH_ADVANCE_FAC_38121</line>
             </Address>
             <BodyContent>
                 <section>
                     <line>                                *** FEE INVOICE ***</line>
                     <line/>
-                    <line>Description: Establishment/Extension Fee </line>
+                    <line>Description: Line Fee                   </line>
                     <line/>
                     <line>In accordance with the facility agreement, we advise the following.</line>
                     <line/>
-                    <line>Effective 03-Nov-2020, Establishment/Extension Fee totalling EUR 5,000.00 are due.</line>
+                    <line>Effective 02-Jan-2020, the following Line Fee totalling AUD 204,668.49 for CH EDU Limited 1710818 becomes due.</line>
                 </section>
                 <section>
-                    <line>Fee                                Amount                Total</line>
-                    <line>____________________ ____________________ ____________________</line>
+                    <line>Calculated as follows:</line>
                     <line/>
-                    <line>Establishment/Extens             5,000.00             5,000.00</line>
-                    <line>ion Fee                                                       </line>
-                    <line>____________________ ____________________ ____________________</line>
+                    <line>Rate Basis:  Actual/365</line>
                     <line/>
-                    <line>TOTAL:                           5,000.00             5,000.00</line>
+                    <line>Start       End         Days CCY Amount         All        Amount    </line>
+                    <line>                                                In Rate              </line>
+                    <line>___________ ___________ ____ ___ ______________ __________ __________</line>
+                    <line/>
+                    <line>01-Oct-2019 31-Dec-2019 92   AUD 112,000,000.00 0.725000%  204,668.49</line>
                 </section>
                 <section>
-                    <line>Please remit EUR 5,000.00 into our nominated account below for value on the effective date.</line>
+                    <line>We will debit your nominated account for an amount of AUD 204,668.49 on the effective date.</line>
                 </section>
                 <section>
-                    <line>For: LENDLEG0414</line>
-                    <line>Correspondent Bank: BANK OF NEW YORK MELLON SA/NV, AMSTERDAM BRANCH (Swift ID: BNYMNL22XXX) </line>
-                    <line>Account Name: CBA Amsterdam</line>
+                    <line>For: CH EDU Limited 1710818</line>
+                    <line/>
+                    <line>Account Number:   </line>
+                    <line>4444 55555</line>
+                    <line>Account Name:  </line>
+                    <line>CH EDU Limited</line>
+                    <line>Routing Number:</line>
                 </section>
                 <section>
-                    <line>Reference: EUOPS1000733</line>
+                    <line>Reference: AUSNA1001789</line>
                 </section>
                 <section>
                     <line/>
@@ -46,6 +51,6 @@
             </BodyContent>
         </StandardNotice>
     </FinastraApplication>
-    "},"documentStorage":{"status":null,"fileName":null,"inputSource":null,"inputSourceDetail":null,"scanDate":null,"departmentId":{"string":"BG_COL"},"retrievalId":null,"documentumType":null,"applicationNumber":null,"purgeDate":null,"boxLocation":null,"recordManager":null,"description":null,"processes":{"array":[{"string":"QJEJ338J"}]},"services":{"array":[{"string":"1000733"}]},"accountNumbers":{"array":[{"source":{"string":"LOANIQ"},"productCode":{"string":"DEA"},"number":{"string":"1000733"}}]},"processFlags":{"array":[{"name":null,"value":null}]}}},"emailSecureMessageDetails":{"subject":"1000733 CBANLD_03112020160326YZJ","senderEmail":"NON-AGENCY@CBA.AU.COM","toRecipientEmail":"lending@cba.com.au","ccRecipientEmail":{"string":"JOHN.DOE_1@CBA.AU.COM"},"mimeType":null,"messageID":"LIQ-QJEJ33BA-QJEJ338J-2","body":null,"attachment":null,"inBandAttachment":null,"deliveredToEmail":null,"undeliveredToEmail":null,"systemCode":null,"systemName":null,"identifier":{"string":"EUOPS"},"digitalSignature":null}}}
+    "},"documentStorage":{"status":null,"fileName":null,"inputSource":null,"inputSourceDetail":null,"scanDate":null,"departmentId":{"string":"TM_COL"},"retrievalId":null,"documentumType":null,"applicationNumber":null,"purgeDate":null,"boxLocation":null,"recordManager":null,"description":null,"processes":{"array":[{"string":"9HEMMY1R"}]},"services":{"array":[{"string":"1001789"}]},"accountNumbers":{"array":[{"source":{"string":"LOANIQ"},"productCode":{"string":"FAC"},"number":{"string":"3001429"}}]},"processFlags":{"array":[{"name":null,"value":null}]}}},"emailSecureMessageDetails":{"subject":"1001789 CH EDU BILAT DEAL AUD 158.2M 17DEC191610","senderEmail":"NON-AGENCY@CBA.AU.COM","toRecipientEmail":"IwantToTest@nowhere.com.test","ccRecipientEmail":{"string":"JOHN.DOE_1@CBA.AU.COM"},"mimeType":null,"messageID":"LIQ-9HEMMY3A-9HEMMY1R-2","body":null,"attachment":null,"inBandAttachment":null,"deliveredToEmail":null,"undeliveredToEmail":null,"systemCode":null,"systemName":null,"identifier":{"string":"AUSNA"},"digitalSignature":null}}}
 
 </liqInfo>
