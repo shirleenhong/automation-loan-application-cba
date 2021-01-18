@@ -489,3 +489,15 @@ Verify if Cashflow is Completed for Breakfunding
     ...    ELSE    Run Keyword And Continue On Failure    Fail    Complete Cashflow is still displayed.
     
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/BreakfundingWorkflowTab 
+
+Navigate to Breakfunding Window from Inactive Loan Notebook
+    [Documentation]    This keyword is used to Navigate to breakfunding window from an Inactive Loan Notebook
+    ...    @author: javinzon    14JAN2021    - Initial create
+
+    Mx LoanIQ Select Window Tab    ${LIQ_InactiveLoan_Tab}    Pending
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/BreakfundingPendingTab
+    Run Keyword And Continue On Failure    Mx LoanIQ Verify Text In Javatree    ${LIQ_InactiveLoanNotebook_PendingItems_List}    Break Cost Fee%yes
+    Mx LoanIQ Select String    ${LIQ_InactiveLoanNotebook_PendingItems_List}    Break Cost Fee        
+    Mx Press Combination    Key.ENTER
+    Mx LoanIQ activate    ${LIQ_Breakfunding_Pending_Window}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/BreakfundingPendingTab   

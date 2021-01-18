@@ -128,26 +128,31 @@ Send Notice via Notice Application without FFC Validation
 Send Event Fee Payment Notice without FFC Validation
     [Documentation]    This keyword is use to successfully sent out a Event Fee payment NOTICE via Notice Application without FFC Validation - API_COR_TC01
     ...    @author: mcastro    06JAN2021    - Initial Create
-    [Arguments]    ${APIDictionary}
+    [Arguments]    ${ExcelPath}
     
-    ### Get Notice Details in LIQ ###
-    Get Notice Details via Loan Notebook in LIQ    ${rowid}    &{APIDictionary}[Facility_Name]    &{APIDictionary}[Deal_Name]    &{APIDictionary}[Loan_Alias]
+    ${Deal_Name}    Read Data From Excel    CRED01_DealSetup    Deal_Name    1
+    Search Existing Deal    ${DealName}
 
-    ### Read Data from Dataset ###
-    ${FromDate}    Read Data From Excel    Correspondence    From_Date    ${rowid}
-    ${ThruDate}    Read Data From Excel    Correspondence    Thru_Date    ${rowid}
-    ${NoticeIdentifier}    Read Data From Excel    Correspondence    Notice_Identifier    ${rowid}
-    ${NoticeCustomerLegalName}    Read Data From Excel    Correspondence    Notice_Customer_LegalName    ${rowid}
+    ${FromDate}    ${ThruDate}    Generate From and Thru Dates for Notices    &{ExcelPath}[SubAdd_Days]
+
+    Write Data To Excel    Correspondence    From_Date    ${rowid}    ${FromDate}
+    Write Data To Excel   Correspondence    Thru_Date    ${rowid}    ${ThruDate}
+
+    ### Get Notice Details in LIQ ###
+    ${NoticeIdentifier}    ${NoticeCustomerLegalName}    ${Contact}    Get Notice ID via Deal Notebook    ${FromDate}    ${ThruDate}    &{ExcelPath}[Notice_Type]
+    Write Data To Excel    Correspondence    Notice_Identifier    ${rowid}     ${NoticeIdentifier}    
+    Write Data To Excel    Correspondence    Notice_Customer_LegalName    ${rowid}     ${NoticeCustomerLegalName}    
+    Write Data To Excel    Correspondence    Contact    ${rowid}     ${Contact}    
 
     ### Send Notices via LIQ ###
     Navigate to Notice Select Window
-    Search Existing Notice    &{APIDictionary}[Search_By]    ${NoticeIdentifier}    ${FromDate}    ${ThruDate}  
+    Search Existing Notice    &{ExcelPath}[Search_By]    ${NoticeIdentifier}    ${FromDate}    ${ThruDate}  
     Validate and Send Event Fee Payment Notice    ${NoticeCustomerLegalName}    ${NoticeIdentifier}
 
     ### Validate Notices in LIQ ###
-    ${StartEndDate}    ${CorrelationID}    Validate Notice in Business Event Output Window in LIQ    ${rowid}    &{APIDictionary}[Customer_IdentifiedBy]    ${NoticeCustomerLegalName}    ${NoticeIdentifier}
-    ...    ${dataset_path}&{APIDictionary}[InputFilePath]&{APIDictionary}[XML_File].xml
-    ...    ${dataset_path}&{APIDictionary}[InputFilePath]&{APIDictionary}[Temp_File].json    &{APIDictionary}[Field_Name]
+    ${StartEndDate}    ${CorrelationID}    Validate Notice in Business Event Output Window in LIQ    ${rowid}    &{ExcelPath}[Customer_IdentifiedBy]    ${NoticeCustomerLegalName}    ${NoticeIdentifier}
+    ...    ${dataset_path}&{ExcelPath}[InputFilePath]&{ExcelPath}[XML_File].xml
+    ...    ${dataset_path}&{ExcelPath}[InputFilePath]&{ExcelPath}[Temp_File].json    &{ExcelPath}[Field_Name]
 
     ### Write Data from Dataset ###
     Write Data To Excel    Correspondence    BEO_StartDate    ${rowid}    ${StartEndDate}    bTestCaseColumn=True
@@ -157,21 +162,12 @@ Send Event Fee Payment Notice without FFC Validation
     ### Send Call Back thru Postman ###
     ${MessageIdDecode}    Encode and Decode Bytes to String    ${CorrelationID}
 
-    Update Key Values of input JSON file for Correspondence API    ${MessageIdDecode}    &{APIDictionary}[CallBack_Status]    &{APIDictionary}[errorMessage]    
-    ...    &{APIDictionary}[InputFilePath]&{APIDictionary}[InputJson].json
-    Correspondence POST API    &{APIDictionary}[InputFilePath]    &{APIDictionary}[InputJson]    &{APIDictionary}[OutputFilePath]    &{APIDictionary}[OutputAPIResponse]    &{APIDictionary}[OutputAPIResponse]    
+    Update Key Values of input JSON file for Correspondence API    ${MessageIdDecode}    &{ExcelPath}[CallBack_Status]    &{ExcelPath}[errorMessage]    
+    ...    &{ExcelPath}[InputFilePath]&{ExcelPath}[InputJson].json
+    Correspondence POST API    &{ExcelPath}[InputFilePath]    &{ExcelPath}[InputJson]    &{ExcelPath}[OutputFilePath]    &{ExcelPath}[OutputAPIResponse]    &{ExcelPath}[OutputAPIResponse]    
     ...    ${RESPONSECODE_200}
-           
-    ### Notice Window Validation ### 
-    ${Contact}    Read Data From Excel    Correspondence    Contact    ${rowid}   ${APIDataSet}
-    ${Loan_EffectiveDate}    Read Data From Excel    Correspondence    Loan_EffectiveDate    ${rowid}   ${APIDataSet}
-    ${Loan_MaturityDate}    Read Data From Excel    Correspondence    Loan_MaturityDate    ${rowid}   ${APIDataSet}
-    ${Loan_BaseRate}    Read Data From Excel    Correspondence    Loan_BaseRate    ${rowid}   ${APIDataSet}
-    ${Loan_Spread}    Read Data From Excel    Correspondence    Loan_Spread    ${rowid}   ${APIDataSet}
-    ${Notice_AllInRate}    Read Data From Excel    Correspondence    Notice_AllInRate    ${rowid}   ${APIDataSet}
-    ${Notice_Amount}    Read Data From Excel    Correspondence    Notice_Amount    ${rowid}   ${APIDataSet}
 
     Refresh Tables in LIQ
     Navigate to Notice Select Window
-    Search Existing Notice    $&{APIDictionary}[Search_By]    ${NoticeIdentifier}    ${FromDate}    ${ThruDate}
-    Validate Notice Status for Event Fee Payment Notice    ${NoticeIdentifier}    &{APIDictionary}[Notice_Status]     ${NoticeCustomerLegalName}    ${Contact}    &{APIDictionary}[NoticeGroup_UserID]    &{APIDictionary}[Notice_Method]
+    Search Existing Notice    $&{ExcelPath}[Search_By]    ${NoticeIdentifier}    ${FromDate}    ${ThruDate}
+    Validate Notice Status for Event Fee Payment Notice    ${NoticeIdentifier}    &{ExcelPath}[Notice_Status]     ${NoticeCustomerLegalName}    ${Contact}    &{ExcelPath}[NoticeGroup_UserID]    &{ExcelPath}[Notice_Method]
