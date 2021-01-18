@@ -496,8 +496,13 @@ Navigate to Breakfunding Window from Inactive Loan Notebook
 
     Mx LoanIQ Select Window Tab    ${LIQ_InactiveLoan_Tab}    Pending
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/BreakfundingPendingTab
-    Run Keyword And Continue On Failure    Mx LoanIQ Verify Text In Javatree    ${LIQ_InactiveLoanNotebook_PendingItems_List}    Break Cost Fee%yes
-    Mx LoanIQ Select String    ${LIQ_InactiveLoanNotebook_PendingItems_List}    Break Cost Fee        
-    Mx Press Combination    Key.ENTER
-    Mx LoanIQ activate    ${LIQ_Breakfunding_Pending_Window}
-    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/BreakfundingPendingTab   
+    ${Status}    Mx LoanIQ Verify Text In Javatree    ${LIQ_InactiveLoanNotebook_PendingItems_List}    Break Cost Fee%yes
+    Run Keyword If    ${Status}==${True}    Run Keywords    Mx LoanIQ Select String    ${LIQ_InactiveLoanNotebook_PendingItems_List}    Break Cost Fee 
+    ...    AND    Mx Press Combination    Key.ENTER
+    ...    AND    Mx LoanIQ activate    ${LIQ_Breakfunding_Pending_Window}
+    ...    AND    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/BreakfundingPendingTab 
+    ...    ELSE    Run Keyword And Continue On Failure    Fail    Break Cost Fee transaction is not existing in this deal
+           
+    
+    
+      
