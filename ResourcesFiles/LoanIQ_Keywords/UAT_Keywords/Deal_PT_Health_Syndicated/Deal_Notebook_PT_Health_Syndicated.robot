@@ -5,6 +5,7 @@ Resource    ../../../../Configurations/LoanIQ_Import_File.robot
 Setup Syndicated Deal for PT Health Syndicated
     [Documentation]    This keyword is used to create a Syndicated Deal for PT Health
     ...    @author: songchan    04JAN2021    - initial create
+    ...    @update: songchan    14JAN2021    - Change keyword for pricing option and added holiday calendar
     [Arguments]    ${ExcelPath}
     
     ###Data Generation###
@@ -45,11 +46,16 @@ Setup Syndicated Deal for PT Health Syndicated
     
     ###Calendars Tab###
     Set Deal Calendar    &{ExcelPath}[HolidayCalendar]
+    Set Deal Calendar    &{ExcelPath}[HolidayCalendar2]
+    Set Deal Calendar    &{ExcelPath}[HolidayCalendar3]
     
     ###Pricing Rules Tab - Pricing Options###
-    Add Deal Pricing Options    &{ExcelPath}[Deal_PricingOption]    &{ExcelPath}[InitialFractionRate_Round]    &{ExcelPath}[RoundingDecimal_Round]    
+    Add Pricing Option    &{ExcelPath}[Deal_PricingOption]    &{ExcelPath}[InitialFractionRate_Round]    &{ExcelPath}[RoundingDecimal_Round]    
     ...    &{ExcelPath}[NonBusinessDayRule]    &{ExcelPath}[PricingOption_BillNoOfDays]    &{ExcelPath}[PricingOption_MatrixChangeAppMthd]
-    ...    &{ExcelPath}[PricingOption_RateChangeAppMthd]    sBillBorrower=OFF    sInterestDueUponPrincipalPayment=ON
+    ...    &{ExcelPath}[PricingOption_RateChangeAppMthd]    sPricingOption_RoundingDecimalPrecision=&{ExcelPath}[RoundingDecimal_Precision]
+    ...    sPricingOption_IntentNoticeDaysInAdvance=&{ExcelPath}[PricingOption_IntentNoticeDay]   sPricingOption_IntentNoticeTime=&{ExcelPath}[PricingOption_IntentNoticeTime]
+    ...    sPricingOption_MinimumPaymentAmount=&{ExcelPath}[Minimum_Payment_Amount]    sPricingOption_InterestDueUponPrincipalPayment=&{ExcelPath}[PricingOption_InterestDueUponPrincipalPayment]
+    ...    sPricingOption_InterestDueUponRepricing=&{ExcelPath}[PricingOption_InterestDueUponRepricing]    sPricingOption_BillBorrower=&{ExcelPath}[PricingOption_BillBorrower]
     
     ###Pricing Rules###
     Add Fee Pricing Rules    &{ExcelPath}[PricingRule_Fee1]    &{ExcelPath}[PricingRule_MatrixChangeAppMthd1]    &{ExcelPath}[PricingRule_NonBussDayRule1]
