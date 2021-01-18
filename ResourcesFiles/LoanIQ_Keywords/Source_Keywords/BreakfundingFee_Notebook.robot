@@ -530,8 +530,15 @@ Generate and Add Intent Notice Comment on Breakfunding
     Mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/GenerateIntentNotice
     mx LoanIQ activate window    ${LIQ_Notices_Window}
-    Run Keyword And Continue On Failure    Validate if Element is Checked    ${LIQ_Notices_Lenders_Checkbox}    Lenders
-    Run Keyword And Continue On Failure    Validate if Element is Checked    ${LIQ_Notices_BorrowerDepositor_Checkbox}    Borrower / Depositor
+
+    ${Status}    Run Keyword And Return Status    Validate if Element is Checked    ${LIQ_Notices_Lenders_Checkbox}    Lenders
+    Run Keyword If    ${Status}==${True}    Log    Lenders checkbox is checked.
+    ...    ELSE    Run Keyword And Continue On Failure    Fail    Lenders checkbox is unchecked.
+
+    ${Status}    Run Keyword And Return Status    Validate if Element is Checked    ${LIQ_Notices_BorrowerDepositor_Checkbox}    Borrower / Depositor
+    Run Keyword If    ${Status}==${True}    Log    Borrower / Depositor checkbox is checked.
+    ...    ELSE    Run Keyword And Continue On Failure    Fail    Borrower / Depositor checkbox is unchecked.
+
     mx LoanIQ click    ${LIQ_Notices_Ok_Button}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/NoticeWindow
     mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}

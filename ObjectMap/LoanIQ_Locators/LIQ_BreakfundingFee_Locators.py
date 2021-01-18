@@ -19,7 +19,7 @@ LIQ_Breakfunding_AwaitingRelease_Tab= 'JavaWindow("title:=Break Cost Fee / Await
 LIQ_Breakfunding_Released_Window = 'JavaWindow("title:=Break Cost Fee / Released.*","displayed:=1")'
 LIQ_Breakfunding_FileSave_Menu = 'JavaWindow("title:=Break Cost Fee / Released.*","displayed:=1").JavaMenu("label:=File").JavaMenu("label:=Save")'
 LIQ_Breakfunding_FileExit_Menu = 'JavaWindow("title:=Break Cost Fee / Released.*","displayed:=1").JavaMenu("label:=File").JavaMenu("label:=Exit")'
-LIQ_Breakfunding_Events_JavaTree = 'JavaWindow("title:=Break Cost Fee .*").JavaTree("labeled_containers_path:=Tab:Events;")'
+LIQ_Breakfunding_Events_JavaTree = 'JavaWindow("title:=Break Cost Fee .*").JavaTree("attached text:=Select event to view details")'
 
 LIQ_Breakfunding_Deal_Label = 'JavaWindow("title:=Break Cost Fee / Pending.*").JavaStaticText("x:=166","y:=19")'
 LIQ_Breakfunding_Facility_Label = 'JavaWindow("title:=Break Cost Fee / Pending.*").JavaStaticText("x:=167","y:=56")'
