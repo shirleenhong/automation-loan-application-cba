@@ -368,6 +368,7 @@ Generate From and Thru Dates for Notices
 Get Notice ID via Deal Notebook 
     [Documentation]    This keyword gets the Notice ID by navigating into Notices Window thru Deal Notebook.
     ...    @author: dahijara    15DEC2020    - Initial create
+    ...    @update: mcastro    15JAN2021   - Added condition to handle Event Fee Payment Notice Window
     [Arguments]    ${sFrom_Date}    ${sThru_Date}    ${sNotice_Type}    ${sRunVal_Notice_ID}=None    ${sRunVal_Notice_Customer_LegalName}=None    ${sRunVal_Contact}=None
     ### Keyword Pre-processing ###
     ${From_Date}    Acquire Argument Value    ${sFrom_Date}
@@ -394,10 +395,15 @@ Get Notice ID via Deal Notebook
     \    
     \    mx LoanIQ close window    ${LIQ_NoticeGroup_Window}    
     
+    ${Window_title}    Mx LoanIQ Get Data    ${LIQ_NoticeGroup_Window}    label%temp
+
     Mx LoanIQ Select String    ${LIQ_NoticeGroup_Items_JavaTree}    ${Notice_Customer_LegalName}\t${Contact}\t${Status}\t${Orig_UserID}\t${Orig_NoticeMethod}
     mx LoanIQ click    ${LIQ_NoticeGroup_EditHighlightNotices}
     mx LoanIQ activate window    ${LIQ_Notice_Window}
-    ${Notice_ID}    Mx LoanIQ Get Data    ${LIQ_Notice_NoticeID_Field}    value%ID
+
+    ${Status}    Run Keyword and Return Status   Should Contain    ${Window_title}    Event Fee Payment
+    ${Notice_ID}    Run Keyword If    ${Status}==${True}    Mx LoanIQ Get Data    ${LIQ_EventFeePaymentGroup_NoticeID_Field}    value%ID
+    ...    ELSE    Mx LoanIQ Get Data    ${LIQ_Notice_NoticeID_Field}    value%ID
     
     Take Screenshot    ${screenshot_path}/Screenshots/Integration/Correspondence_Notice_NoticeGroup
     Close All Windows on LIQ

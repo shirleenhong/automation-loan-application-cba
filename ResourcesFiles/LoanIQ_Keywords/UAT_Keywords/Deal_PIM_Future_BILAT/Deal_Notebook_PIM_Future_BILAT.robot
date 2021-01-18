@@ -13,6 +13,8 @@ Setup Deal for PIM Future BILAT
     ...    @update: mcastro    15DEC2020    - Added writing of Borrower_Shortname and Deal_Name on Correspondence for row 4 and 5
     ...    @update: mcastro    06JAN2021    - Added writing of Borrower_Shortname and Deal_Name on Correspondence for row 6 and 7
     ...    @update: mcastro    08JAN2021    - Added writing of Borrower_Shortname and Deal_Name on SERV01_LoanDrawdown for 2nd Loan
+    ...    @udpate: mcastro    15JAN2021    - Replace writing of Borrower_Shortname and Deal_Name to use multipleValue=Y value
+    ...                                     - Removed writing of Borrower_Shortname on Correspondence as this is already done by Notice test case
     [Arguments]    ${ExcelPath}
     
     ${Deal_Name}    ${Deal_Alias}    Generate Deal Name and Alias with 5 Numeric Test Data    &{ExcelPath}[Deal_NamePrefix]    &{ExcelPath}[Deal_AliasPrefix]
@@ -27,24 +29,9 @@ Setup Deal for PIM Future BILAT
     Write Data To Excel    SERV29_CommitmentFeePayment    Deal_Name    ${rowid}    ${Deal_Name}
     Write Data To Excel    SERV29_CommitmentFeePayment    Borrower_ShortName    ${rowid}    ${Borrower_ShortName}
     Write Data To Excel    SYND02_PrimaryAllocation    Deal_Name    ${rowid}    ${Deal_Name}
-    Write Data To Excel    SERV01_LoanDrawdown    Deal_Name    ${rowid}    ${Deal_Name}
-    Write Data To Excel    SERV01_LoanDrawdown    Borrower_Name    ${rowid}    ${Borrower_ShortName}
-    Write Data To Excel    SERV01_LoanDrawdown    Deal_Name    2    ${Deal_Name}
-    Write Data To Excel    SERV01_LoanDrawdown    Borrower_Name    2    ${Borrower_ShortName}
-    Write Data To Excel    Correspondence    Notice_Customer_LegalName    ${rowid}    ${Borrower_ShortName}
-    Write Data To Excel    Correspondence    Notice_Customer_LegalName    2    ${Borrower_ShortName}
-    Write Data To Excel    Correspondence    Notice_Customer_LegalName    3    ${Borrower_ShortName}
-    Write Data To Excel    Correspondence    Notice_Customer_LegalName    4    ${Borrower_ShortName}
-    Write Data To Excel    Correspondence    Notice_Customer_LegalName    5    ${Borrower_ShortName}
-    Write Data To Excel    Correspondence    Notice_Customer_LegalName    6    ${Borrower_ShortName}
-    Write Data To Excel    Correspondence    Notice_Customer_LegalName    7    ${Borrower_ShortName}
-    Write Data To Excel    Correspondence    Deal_Name    ${rowid}    ${Deal_Name}
-    Write Data To Excel    Correspondence    Deal_Name    2    ${Deal_Name}
-    Write Data To Excel    Correspondence    Deal_Name    3    ${Deal_Name}
-    Write Data To Excel    Correspondence    Deal_Name    4   ${Deal_Name}
-    Write Data To Excel    Correspondence    Deal_Name    5    ${Deal_Name}
-    Write Data To Excel    Correspondence    Deal_Name    6    ${Deal_Name}
-    Write Data To Excel    Correspondence    Deal_Name    7    ${Deal_Name}
+    Write Data To Excel    SERV01_LoanDrawdown    Deal_Name    ${rowid}    ${Deal_Name}    multipleValue=Y
+    Write Data To Excel    SERV01_LoanDrawdown    Borrower_Name    ${rowid}    ${Borrower_ShortName}    multipleValue=Y
+    Write Data To Excel    Correspondence    Deal_Name    ${rowid}    ${Deal_Name}    multipleValue=Y
     Write Data To Excel    SERV08_ComprehensiveRepricing    Deal_Name    ${rowid}    ${Deal_Name}
     Write Data To Excel    SERV08_ComprehensiveRepricing    Borrower_Name    ${rowid}    ${Borrower_ShortName}
     
