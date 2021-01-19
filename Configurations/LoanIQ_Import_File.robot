@@ -199,6 +199,7 @@ Resource    ../ResourcesFiles/LoanIQ_Keywords/BusinessProcess_Keywords/Miscellan
 Resource    ../ResourcesFiles/LoanIQ_Keywords/BusinessProcess_Keywords/Notices/Notice_UpfrontFeePayment.robot
 Resource    ../ResourcesFiles/LoanIQ_Keywords/BusinessProcess_Keywords/Notices/Notice_InterestPayment.robot
 Resource    ../ResourcesFiles/LoanIQ_Keywords/BusinessProcess_Keywords/Notices/Notice_PrincipalPayment.robot
+Resource    ../ResourcesFiles/LoanIQ_Keywords/BusinessProcess_Keywords/Notices/Notice_LineFeePayment.robot
 Resource    ../ResourcesFiles/LoanIQ_Keywords/BusinessProcess_Keywords/Payments/SERV18_ScheduledPrincipalPayment.robot
 Resource    ../ResourcesFiles/LoanIQ_Keywords/BusinessProcess_Keywords/Payments/SERV19_UnscheduledPrincipalPaymentNoSchedule.robot
 Resource    ../ResourcesFiles/LoanIQ_Keywords/BusinessProcess_Keywords/Payments/SERV20_UnschedulePrincipalPayment.robot
@@ -460,6 +461,7 @@ Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/Deal_LBT_BILAT/Commit
 Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/Deal_LBT_BILAT/Outstandings_LBT_BILAT.robot
 Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/Deal_LBT_BILAT/Paperclip_LBT_BILAT.robot
 Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/Deal_LBT_BILAT/Notices_LBT_BILAT.robot
+Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/Deal_LBT_BILAT/Breakfunding_LBT_BILAT.robot
 
 ### New UAT LLA Syndicated Deal ###
 Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/Deal_LLA_Syndicated/Deal_Borrower_LLA_Syndicated.robot

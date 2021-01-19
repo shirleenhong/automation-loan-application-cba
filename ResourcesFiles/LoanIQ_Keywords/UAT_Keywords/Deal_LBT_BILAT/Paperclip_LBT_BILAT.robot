@@ -5,7 +5,8 @@ Resource    ../../../../Configurations/LoanIQ_Import_File.robot
 Collect Full Prepayment via Paper Clip for LBT Bilateral Deal - Outstanding Z
     [Documentation]    This is a high-level keyword to collect full prepayment via paperclip and Generate 
     ...    Intent Notice for LBT Bilateral Deal - Outstanding Z
-    ...    @author: javinzon    08JAN2020    - Initial Create    
+    ...    @author: javinzon    08JAN2021    - Initial Create    
+    ...    @update: javinzon    14JAN2021    - Added keyword Write Data to Excel for Loan_Alias of Correspondence
     [Arguments]    ${ExcelPath}
 
     ${Deal_Name}    Read Data From Excel    SERV01_LoanDrawdown    Deal_Name    ${rowid}
@@ -14,6 +15,9 @@ Collect Full Prepayment via Paper Clip for LBT Bilateral Deal - Outstanding Z
     ${Borrower_Name}    Read Data From Excel    SERV01_LoanDrawdown    Borrower_Name    ${rowid}
     ${Loan_Alias}    Read Data From Excel    SERV01_LoanDrawdown    Loan_Alias    ${rowid}
 
+    ### Write data to Correspondence sheet ###
+    Write Data To Excel    Correspondence    Loan_Alias    ${rowid}    ${Loan_Alias}
+    
     Logout from Loan IQ
     Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
     

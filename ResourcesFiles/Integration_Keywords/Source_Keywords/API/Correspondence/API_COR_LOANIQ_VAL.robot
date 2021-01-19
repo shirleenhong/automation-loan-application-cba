@@ -20,7 +20,23 @@ Get the Notice Details in LIQ
     
     Search Existing Deal    ${sDealName}
     Get Notice ID thru Deal Notebook    ${FromDate}    ${ThruDate}    ${sNoticeType}
-
+    
+Get the Notice Details of Specific Contact in LIQ
+    [Documentation]    This Keyword gets the necessary data for Notice Validation.
+    ...    @author: makcamps    15JAN2021    - initial create
+    [Arguments]    ${rowid}    ${sSubAddDays}    ${sDealName}    ${sNoticeType}    ${sZeroTempPath}    ${Contact}
+    
+    ###Get System Date###
+    ${SystemDate}    Get System Date
+    ${SystemDate}    Convert Date    ${SystemDate}     date_format=%d-%b-%Y
+    ${FromDate}    Subtract Time From Date    ${SystemDate}    ${sSubAddDays}days
+    ${ThruDate}    Add Time To Date    ${SystemDate}    ${sSubAddDays}days
+    Write Data To Excel for API_Data    Correspondence    From_Date    ${rowid}    ${FromDate}
+    Write Data To Excel for API_Data   Correspondence    Thru_Date    ${rowid}    ${ThruDate}
+    
+    Search Existing Deal    ${sDealName}
+    Get Notice ID thru Deal Notebook of specific Contact    ${FromDate}    ${ThruDate}    ${sNoticeType}    ${Contact}
+    
 Get Notice Details for Fee Payment Notice Line Fee in LIQ
     [Documentation]    Get Notice Details (All In Rate, Balance, Amount and Rate Basis) for Fee Payment Notice - Line Fee in LIQ
     ...    @author: ehugo    08162019
@@ -375,6 +391,7 @@ Validate the Notice Window in LIQ
     ...    @update: ehugo       13SEP2019    - added argument - Repricing Date
     ...    @update: fluberio    26OCT2020    - added argument for Upfront Fee From Borrower/Agent/Third Party Intent Notice
     ...    @update: makcamps    05NOV2020    - added argument for Interest Payment Notice
+    ...    @update: makcamps    15JAN2021    - added argument for Line Fee in Advance Payment Notice
     [Arguments]    ${sSearch_By}    ${sNotice_Identifier}    ${sFrom_Date}    ${sThru_Date}    ${sNotice_Status}    ${sNotice_Customer_LegalName}    
     ...    ${sContact}    ${sNoticeGroup_UserID}    ${sNotice_Method}
     ...    ${sNotice_Type}    ${sPath_XMLFile}    ${sDeal_Name}    ${sXML_NoticeType}    ${sLoan_PricingOption}    
@@ -399,6 +416,8 @@ Validate the Notice Window in LIQ
     ...    ${sDeal_Name}    ${sXML_NoticeType}    ${sEffectiveDate}    ${sUpfrontFee_Amount}    ${sFee_Type}    ${sCurrency}    ${sAccount_Name}
     ...    ELSE IF    '${sNotice_Type}' == 'Interest Payment Notice'    Run Keyword    Validate Interest Payment Notice Details    ${sPath_XMLFile}    ${sFee_Type}    ${iNotice_AllInRate}    ${sEffectiveDate}
     ...    ${sNotice_Customer_LegalName}    ${sCurrency}    ${sNotice_Amount}
+    ...    ELSE IF    '${sNotice_Type}' == 'Line Fee in Advance Payment Notice'    Run Keyword    Validate Line Fee in Advance Notice Details    ${sPath_XMLFile}    ${sNotice_Customer_LegalName}    ${sContact}    
+    ...    ${sDeal_Name}    ${sXML_NoticeType}    ${sOngoingFee_Type}    ${iNotice_AllInRate}    ${sNotice_Amount}    ${sRate_Basis}
 
 Validate the Paperclip Notice Window in LIQ
     [Documentation]    This keyword validates the fields, status and Data in Paperclip Notice Window.
@@ -962,3 +981,51 @@ Validate Interest Payment Notice Details
     ${Status}    Run Keyword And Return Status    Should Contain    ${XMLFile}    ${sNotice_Amount}
     Run Keyword If    ${Status}==${True}    Log    ${sNotice_Amount} is present
     ...    ELSE    Run Keyword And Continue On Failure    FAIL    ${sNotice_Amount} is not present 
+    
+Validate Line Fee in Advance Notice Details
+    [Documentation]    This keyword validates the Notice details in XML.
+    ...    @author: makcamps    15JAN2021    - initial create
+    [Arguments]    ${sPath_XMLFile}    ${sNotice_Customer_LegalName}    ${sContact}    ${sDeal_Name}    ${sXML_NoticeType}    ${sOngoingFee_Type}    ${sNotice_AllInRate}    ${sNotice_Amount}    ${sRate_Basis}
+                 
+    
+    ${XMLFile}    OperatingSystem.Get File    ${sPath_XMLFile} 
+    
+    ###Customer Legal Name Validation###
+    ${Status}    Run Keyword And Return Status    Should Contain    ${XMLFile}    ${sNotice_Customer_LegalName}
+    Run Keyword If    ${Status}==True    Log    ${sNotice_Customer_LegalName} is present
+    ...    ELSE    Run Keyword and Continue on Failure    Fail    ${sNotice_Customer_LegalName} is not present
+    
+    ###Contact Validation###
+    ${Status}    Run Keyword And Return Status    Should Contain    ${XMLFile}    ${sContact}
+    Run Keyword If    ${Status}==True    Log    ${sContact} is present
+    ...    ELSE    Run Keyword and Continue on Failure    Fail    ${sContact} is not present
+    
+    ###Deal Validation###
+    ${Status}    Run Keyword And Return Status    Should Contain    ${XMLFile}    ${sDeal_Name}
+    Run Keyword If    ${Status}==True    Log    ${sDeal_Name} is present
+    ...    ELSE    Run Keyword and Continue on Failure    Fail    ${sDeal_Name} is not present
+    
+    ###Notice Type Validation###
+    ${Status}    Run Keyword And Return Status    Should Contain    ${XMLFile}    ${sXML_NoticeType}
+    Run Keyword If    ${Status}==True    Log    ${sXML_NoticeType} is present
+    ...    ELSE    Run Keyword and Continue on Failure    Fail    ${sXML_NoticeType} is not present
+    
+    ###Fee Type Validation###
+    ${Status}    Run Keyword And Return Status    Should Contain    ${XMLFile}    ${sOngoingFee_Type}
+    Run Keyword If    ${Status}==True    Log    ${sOngoingFee_Type} is present
+    ...    ELSE    Run Keyword and Continue on Failure    Fail    ${sOngoingFee_Type} is not present 
+    
+    ###All In Rate Validation###
+    ${Status}    Run Keyword And Return Status    Should Contain    ${XMLFile}    ${sNotice_AllInRate}
+    Run Keyword If    ${Status}==True    Log    ${sNotice_AllInRate} is present
+    ...    ELSE    Run Keyword and Continue on Failure    Fail    ${sNotice_AllInRate} is not present 
+    
+    ###Amount Validation###
+    ${Status}    Run Keyword And Return Status    Should Contain    ${XMLFile}    ${sNotice_Amount}
+    Run Keyword If    ${Status}==True    Log    ${sNotice_Amount} is present
+    ...    ELSE    Run Keyword and Continue on Failure    Fail    ${sNotice_Amount} is not present 
+    
+    ###Rate Basis Validation###
+    ${Status}    Run Keyword And Return Status    Should Contain    ${XMLFile}    ${sRate_Basis}
+    Run Keyword If    ${Status}==True    Log    ${sRate_Basis} is present
+    ...    ELSE    Run Keyword and Continue on Failure    Fail    ${sRate_Basis} is not present 
