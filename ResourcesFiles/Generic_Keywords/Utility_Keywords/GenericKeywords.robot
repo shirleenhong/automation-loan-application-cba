@@ -2852,3 +2852,15 @@ Close Generate Notice Window
     ...    @update: kmagday    16Dec2020    - Added space in documentation to fix the error.
 
     Mx LoanIQ Close Window    ${LIQ_NoticeGroup_Window}
+
+Split String And Return As A List
+    [Documentation]    This keyword accepts a string and delimeter and returns an Array
+    ...    @author: kmagday    19JAN2021    - Initial create
+    [Arguments]    ${sData}    ${sDelimiter}
+
+    ###Pre-processing Keyword##
+    ${Data}    Acquire Argument Value    ${sData}
+    ${Delimeter}    Acquire Argument Value    ${sDelimiter}
+
+    @{SplittedString}    Split String    ${Data}    ${Delimeter}
+    [Return]    @{SplittedString}

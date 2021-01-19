@@ -98,13 +98,12 @@ Loan Combine and Rollover
     Search for Existing Outstanding    &{ExcelPath}[OutstandingSelect_Type]    &{ExcelPath}[Facility_Name]
    
     ### get the loans from the excel sheet and split it ###
-    ${loans}    Set Variable    &{ExcelPath}[CombineExistingLoans]
-    ${loanArray}    Split String    ${loans}    ,
+    @{ExistingLoans}    Split String And Return As A List   &{ExcelPath}[CombineExistingLoans]    &{ExcelPath}[Delimiter]    
 
     ### open existing loan then navigate to repricing and select the 2 loans ###
-    Select Loan to Reprice    @{loanArray}[0]
+    Select Loan to Reprice   @{ExistingLoans}[0]
     Select Repricing Type    &{ExcelPath}[Repricing_Type]
-    Select Multiple Loan to Merge    @{loanArray}[0]    @{loanArray}[1]
+    Select Multiple Loan to Merge    @{ExistingLoans}[0]    @{ExistingLoans}[1]
 
     
     ### Repricing Notebook - Add > Rolllover/Conversion to New ###  
@@ -117,9 +116,9 @@ Loan Combine and Rollover
     Write Data To Excel    SERV08_ComprehensiveRepricing    NewLoan_Alias    ${rowid}    ${NewLoan_Alias}
 
     ### Repricing Notebook - Add > Add > Interest Payment ###  
-    Select Loan to Process    @{loanArray}[1]
+    Select Loan to Process    @{ExistingLoans}[1]
     Add Interest Payment for Loan Repricing   
-    Select Loan to Process    @{loanArray}[0]
+    Select Loan to Process    @{ExistingLoans}[0]
     Add Interest Payment for Loan Repricing
 
     ### Loan Repricing Workflow Tab  - Send to approval ###
@@ -163,7 +162,7 @@ Loan Combine and Rollover
     Navigate to Loan Repricing Workflow and Proceed With Transaction    ${RELEASE_STATUS}
 
     ### Pause execution because of breakfunding part do it manually(steps not included in screenshot)###
-    Pause Execution
+    # Pause Execution
 
     ### Loan Notebook ###
     Validate Release of Loan Repricing    ${RELEASED_STATUS}
