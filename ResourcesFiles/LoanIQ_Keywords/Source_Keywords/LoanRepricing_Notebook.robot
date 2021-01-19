@@ -9,15 +9,19 @@ Search for Existing Outstanding
     ...    @update: hstone    26MAY2020     - Added Keyword Pre-processing
     ...                                     - Removed Sleep, replaced with 'Wait Until Keyword Succeeds'
     ...    @update: clanding    13AUG2020    - Updated hard coded values to global variables; added path to screenshot
-    [Arguments]    ${sOutstandingSelect_Type}    ${sFacility_Name}
+    ...    @update: javinzon    18JAN2021    - Added optional arguments and additional conditions
+    [Arguments]    ${sOutstandingSelect_Type}    ${sFacility_Name}    ${sInactive}=None
 
     ### Keyword Pre-processing ###
     ${OutstandingSelect_Type}    Acquire Argument Value    ${sOutstandingSelect_Type}
     ${Facility_Name}    Acquire Argument Value    ${sFacility_Name}
+    ${Inactive}    Acquire Argument Value    ${sInactive}
 
     mx LoanIQ select    ${LIQ_OutstandingSelect_Submenu}
     mx LoanIQ activate window    ${LIQ_OutstandingSelect_Window}
     Wait Until Keyword Succeeds    ${retry}    ${retry_interval}    mx LoanIQ enter    ${LIQ_OutstandingSelect_Existing_RadioButton}    ${ON} 
+    Run Keyword If    '${Inactive}'!='None'    Mx LoanIQ Set    ${LIQ_OutstandingSelect_Inactive_Checkbox}    ON
+    ...    ELSE    Log    Outstanding is not Inactive.
     mx LoanIQ select    ${LIQ_OutstandingSelect_Type_Dropdown}    ${OutstandingSelect_Type}    
     mx LoanIQ select    ${LIQ_OutstandingSelect_Facility_Dropdown}    ${Facility_Name}
     mx LoanIQ click    ${LIQ_OutstandingSelect_Search_Button}      

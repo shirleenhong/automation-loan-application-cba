@@ -145,6 +145,7 @@ Search Customer and Complete Borrower Profile Creation with Default Values for L
 Update Party Details in Maintain Party Details Module for LLA Syndicated Deal
     [Documentation]    This keyword is used to update Party/Customer via Maintain Party Details Module and validate in Loan IQ.
     ...    @author: makcamps    17DEC2020    - initial create
+    ...    @update: makcamps    15JAN2021    - added validating of SIC code if updated, and Run Keyword And Continue On Failure for writing 
     [Arguments]    ${ExcelPath}
     
     ### INPUTTER ###
@@ -184,7 +185,7 @@ Update Party Details in Maintain Party Details Module for LLA Syndicated Deal
     ...    &{ExcelPath}[Address_Type]    &{ExcelPath}[Address_Line_1]    &{ExcelPath}[Address_Line_2]    &{ExcelPath}[Address_Line_3]    &{ExcelPath}[Address_Line_4]    
     ...    &{ExcelPath}[Town_City]    &{ExcelPath}[Country_of_Registration]    &{ExcelPath}[Country_of_Tax_Domicile]    &{ExcelPath}[State_Province]    &{ExcelPath}[Post_Code]    ${Entity_Name}
 
-    ###SIC Tab - Validate Sic Code and Desc
+    ###SIC Tab - Validate Sic Code and Desc###
     Close All Windows on LIQ
     Logout from Loan IQ
     Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}

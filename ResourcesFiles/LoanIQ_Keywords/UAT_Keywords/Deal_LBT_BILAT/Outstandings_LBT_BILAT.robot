@@ -7,7 +7,8 @@ Create Loan Drawdown for LBT Bilateral Deal
     ...    @author: javinzon    16DEC2020    - Initial create
     ...    @update: javinzon    18DEC2020    - Renamed keyword from 'Create Loan Drawdown for LBT Bilateral Deal - Outstanding Z'
     ...                                        to 'Create Loan Drawdown for LBT Bilateral Deal', Removed keywords Read Data from Excel
-    ...    @update: javinzon    13JAN2021    - Added keyword Write Data to Excel for Facility_Name of Correspondence
+    ...    @update: javinzon    13JAN2021    - Added keyword Write Data to Excel for Loan_Alias of Correspondence
+    ...    @update: javinzon    14JAN2021    - Removed keywords Write Data To Excel
     [Arguments]    ${ExcelPath}
     
     Logout from Loan IQ
@@ -19,7 +20,6 @@ Create Loan Drawdown for LBT Bilateral Deal
     Navigate to Outstanding Select Window from Deal
     ${Loan_Alias}    New Outstanding Select    &{ExcelPath}[Deal_Name]    &{ExcelPath}[Facility_Name]    &{ExcelPath}[Borrower_Name]    &{ExcelPath}[Outstanding_Type]    &{ExcelPath}[Pricing_Option]    &{ExcelPath}[Outstanding_Currency]
     Write Data To Excel    SERV01_LoanDrawdown    Loan_Alias    ${rowid}    ${Loan_Alias}
-    Write Data To Excel    Correspondence    Loan_Alias    ${rowid}    ${Loan_Alias}
    
     Input General Loan Drawdown Details with Accrual End Date    &{ExcelPath}[Loan_RequestedAmount]    &{ExcelPath}[Loan_MaturityDate]    &{ExcelPath}[Loan_RepricingFrequency]    &{ExcelPath}[Loan_EffectiveDate]            
     ...    &{ExcelPath}[Loan_RepricingDate]    &{ExcelPath}[Loan_RiskType]    &{ExcelPath}[Loan_FiskandLoanRiskType]    &{ExcelPath}[Payment_Mode]    &{ExcelPath}[Loan_Accrue]    &{ExcelPath}[Loan_AccrualEndDate]        

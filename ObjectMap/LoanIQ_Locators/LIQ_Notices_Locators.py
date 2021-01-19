@@ -47,17 +47,17 @@ LIQ_Notice_LastSentBy_JavaStaticText = 'JavaWindow("title:=.* Notice created by 
 LIQ_WorkInProgress_NoticeTransactionStatus_List = 'JavaWindow("title:=Transactions In Process.*").JavaTree("labeled_containers_path:=Group:Details;Tab:Notices;")'
 
 ###Notice Group Window###
-LIQ_NoticeGroup_Window = 'JavaWindow("title:=.* Notice Group created by .*","displayed:=1")'
-LIQ_NoticeGroup_Items_JavaTree = 'JavaWindow("title:=.* Notice Group created by .*","displayed:=1").JavaTree("attached text:=Drill down to mark notices")'
+LIQ_NoticeGroup_Window = 'JavaWindow("title:=.* Group created by .*","displayed:=1")'
+LIQ_NoticeGroup_Items_JavaTree = 'JavaWindow("title:=.* Group created by .*","displayed:=1").JavaTree("attached text:=Drill down to mark notices")'
 LIQ_NoticeGroup_Refresh_Button = 'JavaWindow("title:=.* Notice Group created by .*","displayed:=1").JavaButton("attached text:=Refresh")'
 LIQ_NoticeGroup_Unmarkall_Button = 'JavaWindow("title:=.* Notice Group created by .*","displayed:=1").JavaButton("attached text:=Unmark all")'
 LIQ_NoticeGroup_Markall_Button = 'JavaWindow("title:=.* Notice Group created by .*","displayed:=1").JavaButton("attached text:=Mark all")'
 LIQ_NoticeGroup_Send_Button = 'JavaWindow("title:=.* Notice Group created by .*","displayed:=1").JavaButton("attached text:=Send")'
-LIQ_NoticeGroup_EditHighlightNotices = 'JavaWindow("title:=.* Notice Group created by .*","displayed:=1").JavaButton("attached text:=Edit Highlighted Notices")'
+LIQ_NoticeGroup_EditHighlightNotices = 'JavaWindow("title:=.* Group created by .*","displayed:=1").JavaButton("attached text:=Edit Highlighted Notices")'
 
 ###Notice Groups For Window###
-LIQ_NoticeGroupsFor_Window = 'JavaWindow("title:=Notice Groups for.*","displayed:=1")'
-LIQ_NoticeGroupsFor_Items = 'JavaWindow("title:=Notice Groups for.*").JavaTree("attached text:=Drill down to process a group")'
+LIQ_NoticeGroupsFor_Window = 'JavaWindow("title:=.* Groups for.*","displayed:=1")'
+LIQ_NoticeGroupsFor_Items = 'JavaWindow("title:=.* Groups for.*").JavaTree("attached text:=Drill down to process a group")'
 
 ### Generic Notice Locators ###
 LIQ_Notice_Notice_Window = 'JavaWindow("title:=.*Notice.*","displayed:=1")'

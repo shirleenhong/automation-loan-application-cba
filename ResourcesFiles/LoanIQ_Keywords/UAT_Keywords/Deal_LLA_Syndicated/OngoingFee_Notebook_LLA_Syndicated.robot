@@ -9,6 +9,9 @@ ${SCENARIO}
 Update Ongoing Fee for LLA Syndicated Deal
     [Documentation]    This keyword will release the existing ongoing fee in the created deal
     ...    @author: makcamps    12JAN2021    - Initial Create
+    ...    @update: makcamps    15JAN2021    - updated data used to get from data set
+    ...                                      - removed releasing of fee as it is expected to be automatically released after close
+    ...                                      - added updating of line fee details
     [Arguments]    ${ExcelPath}
 
     Navigate to Facility Notebook    &{ExcelPath}[Deal_Name]    &{ExcelPath}[Facility_Name]

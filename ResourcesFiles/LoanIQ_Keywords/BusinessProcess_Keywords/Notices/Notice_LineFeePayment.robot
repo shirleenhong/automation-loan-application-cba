@@ -12,7 +12,7 @@ Send Notice for Line Fee
     
     Get Rate Basis via Facility Notebook in LIQ    ${rowid}    &{ExcelPath}[Facility_Name]    &{ExcelPath}[Deal_Name]    &{ExcelPath}[OngoingFee_Type]
     
-    Get the Notice Details of specific Contact in LIQ    ${rowid}    &{ExcelPath}[SubAdd_Days]    &{ExcelPath}[Deal_Name]    &{ExcelPath}[Fee_Type]    &{ExcelPath}[Zero_TempPath]0.xls    &{ExcelPath}[Contact]
+    Get the Notice Details of Specific Contact in LIQ    ${rowid}    &{ExcelPath}[SubAdd_Days]    &{ExcelPath}[Deal_Name]    &{ExcelPath}[Fee_Type]    &{ExcelPath}[Zero_TempPath]0.xls    &{ExcelPath}[Contact]
     
     ${FromDate}    Read Data From Excel for API_Data    Correspondence    From_Date    ${rowid}
     ${ThruDate}    Read Data From Excel for API_Data    Correspondence    Thru_Date    ${rowid}

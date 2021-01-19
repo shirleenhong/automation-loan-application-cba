@@ -280,7 +280,13 @@ Get Notice ID thru Deal Notebook
 Get Notice ID thru Deal Notebook of specific Contact
     [Documentation]    This keyword gets the Notice ID by navigating into Notices Window thru Deal Notebook.
     ...    @author: makcamps    15JAN2021    - initial create 
-    [Arguments]    ${From_Date}    ${Thru_Date}    ${Notice_Type}    ${Contact}
+    [Arguments]    ${sFrom_Date}    ${sThru_Date}    ${sNotice_Type}    ${sContact}
+    
+    ### Keyword Pre-processing###
+    ${From_Date}    Acquire Argument Value    ${sFrom_Date}
+    ${Thru_Date}    Acquire Argument Value    ${sThru_Date}
+    ${Notice_Type}    Acquire Argument Value    ${sNotice_Type}
+    ${Contact}    Acquire Argument Value    ${sContact}
     
     mx LoanIQ activate window    ${LIQ_DealNotebook_Window}
     mx LoanIQ select    ${LIQ_DealNotebook_Queries_Notices}
@@ -322,7 +328,7 @@ Select Notice Group
     ...                                      - change the logic to fix the error on Mx LoanIQ Get Data To Excel
     ...    @update: mcastro    08JAN2021    - Updated 'Mx LoanIQ Select Or DoubleClick In Javatree' to 'Mx LoanIQ Select Or Doubleclick In Tree By Text' to handle notices that contains the same text
     [Arguments]    ${Notice_Type}    ${Current_Row}
-
+    
     Mx LoanIQ Activate Window    ${LIQ_NoticeGroupsFor_Window}
     Mx LoanIQ Select String    ${LIQ_NoticeGroupsFor_Items}    ${Notice_Type}   
     Mx LoanIQ Select Or Doubleclick In Tree By Text    ${LIQ_NoticeGroupsFor_Items}    ${Notice_Type}%s
@@ -356,7 +362,12 @@ Select Notice Group
 Select Notice Group with Contact as Ref
     [Documentation]    This keyword selects a notice group in the Notice Group window
     ...    @author: makcamps    15JAN2021    - initial create
-    [Arguments]    ${Notice_Type}    ${Current_Row}    ${ContactName}
+    [Arguments]    ${sNotice_Type}    ${sCurrent_Row}    ${sContactName}
+
+    ### Keyword Pre-processing###
+    ${Notice_Type}    Acquire Argument Value    ${sNotice_Type}
+    ${Current_Row}    Acquire Argument Value    ${sCurrent_Row}
+    ${ContactName}    Acquire Argument Value    ${sContactName}
 
     Mx LoanIQ Activate Window    ${LIQ_NoticeGroupsFor_Window}
     Mx LoanIQ Select String    ${LIQ_NoticeGroupsFor_Items}    ${Notice_Type}   
@@ -438,6 +449,7 @@ Generate From and Thru Dates for Notices
 Get Notice ID via Deal Notebook 
     [Documentation]    This keyword gets the Notice ID by navigating into Notices Window thru Deal Notebook.
     ...    @author: dahijara    15DEC2020    - Initial create
+    ...    @update: mcastro    15JAN2021   - Added condition to handle Event Fee Payment Notice Window
     [Arguments]    ${sFrom_Date}    ${sThru_Date}    ${sNotice_Type}    ${sRunVal_Notice_ID}=None    ${sRunVal_Notice_Customer_LegalName}=None    ${sRunVal_Contact}=None
     ### Keyword Pre-processing ###
     ${From_Date}    Acquire Argument Value    ${sFrom_Date}
@@ -464,10 +476,15 @@ Get Notice ID via Deal Notebook
     \    
     \    mx LoanIQ close window    ${LIQ_NoticeGroup_Window}    
     
+    ${Window_title}    Mx LoanIQ Get Data    ${LIQ_NoticeGroup_Window}    label%temp
+
     Mx LoanIQ Select String    ${LIQ_NoticeGroup_Items_JavaTree}    ${Notice_Customer_LegalName}\t${Contact}\t${Status}\t${Orig_UserID}\t${Orig_NoticeMethod}
     mx LoanIQ click    ${LIQ_NoticeGroup_EditHighlightNotices}
     mx LoanIQ activate window    ${LIQ_Notice_Window}
-    ${Notice_ID}    Mx LoanIQ Get Data    ${LIQ_Notice_NoticeID_Field}    value%ID
+
+    ${Status}    Run Keyword and Return Status   Should Contain    ${Window_title}    Event Fee Payment
+    ${Notice_ID}    Run Keyword If    ${Status}==${True}    Mx LoanIQ Get Data    ${LIQ_EventFeePaymentGroup_NoticeID_Field}    value%ID
+    ...    ELSE    Mx LoanIQ Get Data    ${LIQ_Notice_NoticeID_Field}    value%ID
     
     Take Screenshot    ${screenshot_path}/Screenshots/Integration/Correspondence_Notice_NoticeGroup
     Close All Windows on LIQ
@@ -568,4 +585,4 @@ Validate Notice Status for Event Fee Payment Notice
     
     Take Screenshot    ${screenshot_path}/Screenshots/Integration/Correspondence_Notice_PostStatus
     
-    Close All Windows on LIQ 
+    Close All Windows on LIQ   

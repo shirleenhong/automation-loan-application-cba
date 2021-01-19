@@ -11,3 +11,9 @@ Get Dataset for LBT BILAT
 Early Prepayment $157,000
     [Tags]  01 Paper Clip Payment
     Mx Execute Template With Multiple Data    Collect Prepayment for PIM Future BILAT    ${ExcelPath}    ${rowid}    SERV23_LoanPaperClip
+
+Breakcost for Prepayment $157,000
+    [Tags]  02 Breakfunding
+    Mx Execute Template With Multiple Data    Break Cost for Early Prepayment for PIM Future BILAT    ${ExcelPath}    ${rowid}    SERV40_BreakFunding
+    Set Test Variable    ${rowid}    10
+    Mx Execute Template With Multiple Data    Send Event Fee Payment Notice without FFC Validation    ${ExcelPath}    ${rowid}    Correspondence

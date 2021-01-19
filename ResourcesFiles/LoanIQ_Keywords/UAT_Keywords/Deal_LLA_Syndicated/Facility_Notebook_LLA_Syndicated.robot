@@ -5,6 +5,7 @@ Resource    ../../../../Configurations/LoanIQ_Import_File.robot
 Create Revolver Facility for LLA Syndicated Deal
     [Documentation]    This high-level keyword is used to create an initial set up of Revolver Facility for LLA Syndicated Deal
     ...    @author: makcamps    04JAN2021    - Initial Create
+    ...    @update: makcamps    15JAN2021    - updated data used for dates to follow dates from screenshots provided
     [Arguments]    ${ExcelPath}
     
     ###Test Data Generation and Writings###
