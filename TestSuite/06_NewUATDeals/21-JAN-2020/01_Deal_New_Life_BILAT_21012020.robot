@@ -1,7 +1,6 @@
 *** Settings ***
 Resource    ../../../Configurations/LoanIQ_Import_File.robot
 
-
 *** Variables ***
 ${rowid}    1
 
@@ -14,6 +13,7 @@ Amend Commitment Fee
     Set Test Variable    ${rowid}    3
     Mx Execute Template With Multiple Data    Update Commitment Fee for New Life BILAT    ${ExcelPath}    ${rowid}    SERV29_CommitmentFeePayment
 
-Comprehensive Repricing - SERV08
+Comprehensive Repricing - $191,569,254.72
     Set Test Variable    ${rowid}    1
     Mx Execute Template With Multiple Data    Create Comprehensive Repricing for New Life BILAT    ${ExcelPath}    ${rowid}    SERV08_ComprehensiveRepricing
+
