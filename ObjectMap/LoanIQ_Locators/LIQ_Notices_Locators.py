@@ -51,6 +51,8 @@ LIQ_NoticeGroup_Window = 'JavaWindow("title:=.* Group created by .*","displayed:
 LIQ_NoticeGroup_Items_JavaTree = 'JavaWindow("title:=.* Group created by .*","displayed:=1").JavaTree("attached text:=Drill down to mark notices")'
 LIQ_NoticeGroup_Refresh_Button = 'JavaWindow("title:=.* Notice Group created by .*","displayed:=1").JavaButton("attached text:=Refresh")'
 LIQ_NoticeGroup_Unmarkall_Button = 'JavaWindow("title:=.* Notice Group created by .*","displayed:=1").JavaButton("attached text:=Unmark all")'
+LIQ_NoticeGroup_Markall_Button = 'JavaWindow("title:=.* Notice Group created by .*","displayed:=1").JavaButton("attached text:=Mark all")'
+LIQ_NoticeGroup_Send_Button = 'JavaWindow("title:=.* Notice Group created by .*","displayed:=1").JavaButton("attached text:=Send")'
 LIQ_NoticeGroup_EditHighlightNotices = 'JavaWindow("title:=.* Group created by .*","displayed:=1").JavaButton("attached text:=Edit Highlighted Notices")'
 
 ###Notice Groups For Window###
