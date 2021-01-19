@@ -177,7 +177,7 @@ Release Ongoing Fee Payment
     Run Keyword And Continue On Failure    mx LoanIQ click element if present    ${LIQ_InquiryMode_Button}
     Mx LoanIQ Select Or DoubleClick In Javatree    ${LIQ_OngoingFeePaymentNotebook_Workflow_JavaTree}    Release%d
     Validate if Question or Warning Message is Displayed
-    Mx Click Element If Present    LIQ_Warning_OK_Button 
+    Mx Click Element If Present    ${LIQ_Warning_OK_Button} 
 
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/OngoingFeePaymentWindow_WorkflowTab_Release
 
