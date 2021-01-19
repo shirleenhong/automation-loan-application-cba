@@ -2853,7 +2853,7 @@ Close Generate Notice Window
 
     Mx LoanIQ Close Window    ${LIQ_NoticeGroup_Window}
 
-Split String And Return As A List
+Split String and Return as a List
     [Documentation]    This keyword accepts a string and delimeter and returns an Array
     ...    @author: kmagday    19JAN2021    - Initial create
     [Arguments]    ${sData}    ${sDelimiter}

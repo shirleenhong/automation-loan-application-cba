@@ -98,7 +98,7 @@ Loan Combine and Rollover
     Search for Existing Outstanding    &{ExcelPath}[OutstandingSelect_Type]    &{ExcelPath}[Facility_Name]
    
     ### get the loans from the excel sheet and split it ###
-    @{ExistingLoans}    Split String And Return As A List   &{ExcelPath}[CombineExistingLoans]    &{ExcelPath}[Delimiter]    
+    ${ExistingLoans}    Split String and Return as a List   &{ExcelPath}[CombineExistingLoans]    &{ExcelPath}[Delimiter]    
 
     ### open existing loan then navigate to repricing and select the 2 loans ###
     Select Loan to Reprice   @{ExistingLoans}[0]
