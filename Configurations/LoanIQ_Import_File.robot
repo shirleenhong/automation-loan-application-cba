@@ -383,7 +383,7 @@ Resource    ../ResourcesFiles/LoanIQ_Keywords/Source_Keywords/UsageFee_Notebook.
 Resource    ../ResourcesFiles/LoanIQ_Keywords/Source_Keywords/UserAdministration_Notebook.robot
 Resource    ../ResourcesFiles/LoanIQ_Keywords/Source_Keywords/UserAdministrationProfile_Notebook.robot
 Resource    ../ResourcesFiles/LoanIQ_Keywords/Source_Keywords/UpfrontFeeDistribution_Notebook.robot
-
+Resource    ../ResourcesFiles/LoanIQ_Keywords/Source_Keywords/LoanIncrease_Notebook.robot
 
 ### CBA UAT Keywords ###
 Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/UAT_TL_Keywords/UAT_TL_BASE.robot
