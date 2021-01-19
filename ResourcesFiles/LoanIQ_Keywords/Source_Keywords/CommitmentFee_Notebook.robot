@@ -168,7 +168,8 @@ Release Ongoing Fee Payment
     [Documentation]    This keyword releases the Ongoing Fee Payment from LIQ.
     ...    @author: fmamaril
     ...    @update: bernchua    25JUN2019    Used generic keyword for clicking warning/question messages
-    ...    @update: ehugo    05JUN2020    - added screenshot
+    ...    @update: ehugo       05JUN2020    - added screenshot
+    ...    @update: makcamps    15JAN2021    - added clicking of warning message if present
 
     mx LoanIQ activate window    ${LIQ_OngoingFeePayment_Window}
     Mx LoanIQ Select Window Tab    ${LIQ_OngoingFeePayment_Tab}    Workflow
@@ -176,6 +177,7 @@ Release Ongoing Fee Payment
     Run Keyword And Continue On Failure    mx LoanIQ click element if present    ${LIQ_InquiryMode_Button}
     Mx LoanIQ Select Or DoubleClick In Javatree    ${LIQ_OngoingFeePaymentNotebook_Workflow_JavaTree}    Release%d
     Validate if Question or Warning Message is Displayed
+    Mx Click Element If Present    ${LIQ_Warning_OK_Button} 
 
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/OngoingFeePaymentWindow_WorkflowTab_Release
 
@@ -531,6 +533,7 @@ Verify Status and Notice Method in Notices
     
 Edit Highlighted Notice
     [Documentation]    This keyword updates the hihglighted notice for all ongoing fee payments
+    ...    @author: fmamaril
     [Arguments]    ${Contact_Email}   
     mx LoanIQ click    ${LIQ_IntentNotice_EditHighlightedNotice_Button}
     Mx LoanIQ Verify Object Exist    ${LIQ_IntentNotice_Edit_Window}      VerificationData="Yes"
@@ -1832,4 +1835,4 @@ Release Ongoing Fee
     mx LoanIQ activate window    ${LIQ_OngoingFee_Window}
     Run Keyword And Continue On Failure    Mx LoanIQ click element if present    ${LIQ_OngoingFee_InquiryMode_Button}
     Navigate Notebook Workflow    ${LIQ_OngoingFee_Window}    ${LIQ_OngoingFee_Tab}    ${LIQ_OngoingFee_Workflow_JavaTree}    Release
-    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/OngoingFee_Notebook     
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/OngoingFee_Notebook
