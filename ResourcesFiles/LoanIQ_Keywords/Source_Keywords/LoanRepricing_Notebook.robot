@@ -1907,7 +1907,7 @@ Navigate to Choose a Payment Window
 Validate Rollover/Conversion General tab
     [Documentation]    This keyword is used to verify values on the Rollover/Conversion window General Tab information
     ...    @author: dahijara    18JAN2021    - Initial Create
-    [Arguments]    ${sRepricingFrequency_Expected}    ${sLoanMerge_Amount}    ${sRisk_Type}
+    [Arguments]    ${sRepricingFrequency_Expected}    ${sLoanMerge_Amount}    ${sRisk_Type}    ${sRunVar_LoanMergeAlias}=None
     
     ### GetRuntime Keyword Pre-processing ###
     ${RepricingFrequency_Expected}    Acquire Argument Value    ${sRepricingFrequency_Expected}
@@ -1917,19 +1917,19 @@ Validate Rollover/Conversion General tab
     mx LoanIQ activate window    ${LIQ_Rollover_Window}
     
     ${RiskType_Status}    Run Keyword And Return Status    Mx LoanIQ Verify Object Exist    ${LIQ_AwaitingSendToApprovalRollover_LoanRiskType}            VerificationData="Yes"
-    Run Keyword If    ${RiskType_Status}==False    Run Keywords
+    Run Keyword If    ${RiskType_Status}==${False}    Run Keywords
     ...    mx LoanIQ click    ${LIQ_AwaitingSendToApprovalRollover_RiskType_Button}
     ...    AND    Mx LoanIQ Select Or DoubleClick In Javatree    ${LIQ_PendingRollover_RiskType_Tree}    ${Risk_Type}%d
     ...    ELSE    Log    Correct Risk Type is set!
        
-    ${RequestedAmount}    Mx LoanIQ Get Data    ${LIQ_AwaitingSendToApprovalRollover_RequestedAmount_Textfield}    RequestedAmount        
+    ${RequestedAmount}    Mx LoanIQ Get Data    ${LIQ_AwaitingSendToApprovalRollover_RequestedAmount_Textfield}    text%RequestedAmount        
     ${RequestedAmt_Status}    Run Keyword And Return Status    Should Be Equal As Strings    ${RequestedAmount}    ${LoanMerge_Amount}
-    Run Keyword If    ${RequestedAmt_Status}==False    mx LoanIQ enter    ${LIQ_AwaitingSendToApprovalRollover_RequestedAmount_Textfield}    ${LoanMerge_Amount}     
+    Run Keyword If    ${RequestedAmt_Status}==${False}    mx LoanIQ enter    ${LIQ_AwaitingSendToApprovalRollover_RequestedAmount_Textfield}    ${LoanMerge_Amount}     
     ...    ELSE    Log    Correct Requested Amount!
     
-    ${RepricingFrequency}    Mx LoanIQ Get Data    ${LIQ_AwaitingSendToApprovalRollover_RepricingFreq_DropdownList}    RepricingFrequency
+    ${RepricingFrequency}    Mx LoanIQ Get Data    ${LIQ_AwaitingSendToApprovalRollover_RepricingFreq_DropdownList}    value%RepricingFrequency
     ${RepricingFrequency_status}    Run Keyword And Return Status    Should Be Equal    ${RepricingFrequency}    ${RepricingFrequency_Expected}
-    Run Keyword If    ${RepricingFrequency_status}==False    Run Keywords
+    Run Keyword If    ${RepricingFrequency_status}==${False}    Run Keywords
     ...    mx LoanIQ select list    ${LIQ_AwaitingSendToApprovalRollover_RepricingFreq_DropdownList}    ${RepricingFrequency_Expected}           
     ...    AND    mx LoanIQ click element if present    ${LIQ_Error_OK_Button}
     ...    ELSE    Log    Correct Repricing Frequency!
@@ -1939,6 +1939,9 @@ Validate Rollover/Conversion General tab
     mx LoanIQ select    ${LIQ_RolloverConversion_FileExit_Menu}
     mx LoanIQ click    ${LIQ_Exiting_SaveExit_Button}
     
+    ### Keyword Post-processing ###
+    Save Values of Runtime Execution on Excel File    ${sRunVar_LoanMergeAlias}    ${LoanMergeAlias}
+
     [Return]    ${LoanMergeAlias}
 
 
@@ -1999,7 +2002,7 @@ Validate New Outstanding Amount for Loan Repricing
     ${UI_NewAmount}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_LoanRepricing_Outstanding_List}    ${Description}%Amount%amounts
     ${isMatched}    Run Keyword And Return Status    Should Be Equal    ${NewOutstanding_Amount}    ${UI_NewAmount}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LoanRepricing_Outstanding
-    Run Keyword If    ${isMatched}==True    Log    Amount for ${Description} successfully validated.
+    Run Keyword If    ${isMatched}==${True}    Log    Amount for ${Description} successfully validated.
     ...    ELSE    Run Keyword and Continue on Failure    Fail    Amount for ${Description} is incorrect.
 
 Validate Event Status in Loan Events Tab
@@ -2013,7 +2016,7 @@ Validate Event Status in Loan Events Tab
     mx LoanIQ activate window    ${LIQ_Loan_Window}
     Mx LoanIQ Select Window Tab    ${LIQ_Loan_Tab}    Events
     ${Event_Selected}    Run Keyword And Return Status    Mx LoanIQ Select String    ${LIQ_Loan_Events_List}    ${Event_Name}
-    Run Keyword If    ${Event_Selected}==True    Log    ${Event_Name} is shown in the Events list of the Loan notebook.
+    Run Keyword If    ${Event_Selected}==${True}    Log    ${Event_Name} is shown in the Events list of the Loan notebook.
     ...    ELSE    Run Keyword And Continue On Failure    Fail    Event not verified.
 
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LoanEvents
