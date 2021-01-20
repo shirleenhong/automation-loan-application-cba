@@ -199,6 +199,7 @@ Resource    ../ResourcesFiles/LoanIQ_Keywords/BusinessProcess_Keywords/Miscellan
 Resource    ../ResourcesFiles/LoanIQ_Keywords/BusinessProcess_Keywords/Notices/Notice_UpfrontFeePayment.robot
 Resource    ../ResourcesFiles/LoanIQ_Keywords/BusinessProcess_Keywords/Notices/Notice_InterestPayment.robot
 Resource    ../ResourcesFiles/LoanIQ_Keywords/BusinessProcess_Keywords/Notices/Notice_PrincipalPayment.robot
+Resource    ../ResourcesFiles/LoanIQ_Keywords/BusinessProcess_Keywords/Notices/Notice_LineFeePayment.robot
 Resource    ../ResourcesFiles/LoanIQ_Keywords/BusinessProcess_Keywords/Payments/SERV18_ScheduledPrincipalPayment.robot
 Resource    ../ResourcesFiles/LoanIQ_Keywords/BusinessProcess_Keywords/Payments/SERV19_UnscheduledPrincipalPaymentNoSchedule.robot
 Resource    ../ResourcesFiles/LoanIQ_Keywords/BusinessProcess_Keywords/Payments/SERV20_UnschedulePrincipalPayment.robot
@@ -383,7 +384,7 @@ Resource    ../ResourcesFiles/LoanIQ_Keywords/Source_Keywords/UsageFee_Notebook.
 Resource    ../ResourcesFiles/LoanIQ_Keywords/Source_Keywords/UserAdministration_Notebook.robot
 Resource    ../ResourcesFiles/LoanIQ_Keywords/Source_Keywords/UserAdministrationProfile_Notebook.robot
 Resource    ../ResourcesFiles/LoanIQ_Keywords/Source_Keywords/UpfrontFeeDistribution_Notebook.robot
-
+Resource    ../ResourcesFiles/LoanIQ_Keywords/Source_Keywords/LoanIncrease_Notebook.robot
 
 ### CBA UAT Keywords ###
 Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/UAT_TL_Keywords/UAT_TL_BASE.robot

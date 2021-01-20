@@ -7,6 +7,7 @@ Create Initial Loan Drawdown for New Life BILAT
     [Documentation]    This high-level keyword is used to setup the outstanding for New Life BILAT facility
     ...    @author: kmagday    15DEC2020    - Initial Create
     ...    @update: kmagday    12JAN2021    - added writing of Loan_Alias in SERV08_ComprehensiveRepricing sheet
+    ...    @update: kmagday    19JAN2021    - remove writing of Loan_Alias in SERV08_ComprehensiveRepricing sheet
     [Arguments]    ${ExcelPath}
 
     Logout from Loan IQ
@@ -20,7 +21,6 @@ Create Initial Loan Drawdown for New Life BILAT
     Write Data To Excel    Correspondence    Loan_Alias    ${rowid}    ${Loan_Alias}
     Write Data To Excel    Correspondence    Loan_Alias    2    ${Loan_Alias}
     Write Data To Excel    Correspondence    Loan_Alias    3    ${Loan_Alias}
-    Write Data To Excel    SERV08_ComprehensiveRepricing    Loan_Alias    ${rowid}    ${Loan_Alias}
 
     Input General Loan Drawdown Details    &{ExcelPath}[Loan_RequestedAmount]    &{ExcelPath}[Loan_EffectiveDate]    &{ExcelPath}[Loan_MaturityDate]    &{ExcelPath}[Loan_RepricingFrequency]    
     ...    &{ExcelPath}[Loan_IntCycleFrequency]    &{ExcelPath}[Loan_Accrue]    &{ExcelPath}[Loan_RepricingDate]
