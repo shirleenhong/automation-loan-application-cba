@@ -4326,3 +4326,32 @@ Verify Facility Pricing Option Details
     Mx LoanIQ click    ${LIQ_InterestPricingOption_Cancel_Button}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/DealNotebook_PricingRulesTab_PricingOption
 
+Setup Interest Pricing for ATM Bilateral Deal
+    [Documentation]    This high-level keyword sets up Interest Pricing for ATM Bilateral Deal.
+    ...    @author: ccarriedo    20JAN2021    - Initial create
+    [Arguments]    ${ExcelPath}
+
+    mx LoanIQ activate window     ${LIQ_FacilityNotebook_Window}
+    Mx LoanIQ Select Window Tab     ${LIQ_FacilityNotebook_Tab}    Pricing     
+    mx LoanIQ click    ${LIQ_FacilityPricing_ModifyInterestPricing_Button}
+    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}    
+    mx LoanIQ activate window     ${LIQ_Facility_InterestPricing_Window}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/Facility_InterestPricing_Window
+    ${Result}    Run Keyword And Return Status    Mx LoanIQ Verify Object Exist    ${LIQ_Facility_InterestPricing_Window}    VerificationData="Yes"
+    Run Keyword If   ${Result} == ${True}    Log    Facility Interest Pricing Window is displayed.
+    ...     ELSE    Log    Facility Interest Pricing Window is not displayed.
+    mx LoanIQ click    ${LIQ_Facility_InterestPricing_Add_Button}
+    ${status}    Run Keyword And Return Status    Mx LoanIQ Verify Object Exist    ${LIQ_Facility_InterestPricing_AddItem_List}      VerificationData="Yes"
+    Run Keyword If    ${status} == ${True}    Mx LoanIQ Select Combo Box Value    ${LIQ_Facility_InterestPricing_AddItem_List}    &{ExcelPath}[Interest_AddItem]
+    Run Keyword If    ${status} == ${True}    mx LoanIQ click    ${LIQ_Facility_InterestPricing_AddItem_OK_Button}
+    Mx LoanIQ Select Combo Box Value    ${LIQ_OptionCondition_OptionName_List}    &{ExcelPath}[Interest_OptionName]
+    Mx LoanIQ Select Combo Box Value    ${LIQ_OptionCondition_RateBasis_List}    &{ExcelPath}[Interest_RateBasis]
+    mx LoanIQ click    ${LIQ_Facility_InterestPricing_OptionCondition_OK_Button}
+    mx LoanIQ enter    ${LIQ_Facility_InterestPricing_FormulaCategory_Percent_Radiobutton}    ON
+    mx LoanIQ enter    ${LIQ_Facility_InterestPricing_FormulaCategory_Percent_Textfield}    &{ExcelPath}[Interest_SpreadAmt]
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/Facility_InterestPricing_FormulaCategory_Percent_Textfield 
+    mx LoanIQ click    ${LIQ_Facility_InterestPricing_FormulaCategory_OK_Button}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/Facility_Pricing_Window
+    
+    ###Validate Interest Pricing###
+    Validate and Confirm Interest Pricing

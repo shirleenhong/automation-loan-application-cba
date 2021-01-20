@@ -45,35 +45,33 @@ Create Facility for ATM BILAT
     Add Borrower    &{ExcelPath}[Facility_Currency]    &{ExcelPath}[Facility_BorrowerSGName]    &{ExcelPath}[Facility_BorrowerPercent]    &{ExcelPath}[Facility_Borrower1]
     ...    &{ExcelPath}[Facility_GlobalLimit]    &{ExcelPath}[Facility_BorrowerMaturity]    &{ExcelPath}[Facility_EffectiveDate]
 
-Setup Interest Pricing for ATM Bilateral Deal
-    [Documentation]    This high-level keyword sets up Interest Pricing for ATM Bilateral Deal.
-    ...    @author: ccarriedo    20JAN2021    - Initial create
+Set Multiple Amortization Schedule for Facility
+    [Documentation]    This high-level keyword sets up Amortization Schedule for Facility.
+    ...    @author: ccarriedo    19JAN2021    - Initial create
     [Arguments]    ${ExcelPath}
     
-    ### GetRuntime Keyword Pre-processing ###
-    ${InterestPricingItem}    Acquire Argument Value    &{ExcelPath}[Interest_AddItem]
-    ${OptionName}    Acquire Argument Value    &{ExcelPath}[Interest_OptionName]
-    ${RateBasisInterestPricing}    Acquire Argument Value    &{ExcelPath}[Interest_RateBasis]
-    ${Spread}    Acquire Argument Value    &{ExcelPath}[Interest_SpreadAmt]
-    ${InterestPricingCode}    Acquire Argument Value    &{ExcelPath}[Interest_BaseRateCode]
-
-    mx LoanIQ activate window     ${LIQ_FacilityNotebook_Window}
-    Mx LoanIQ Select Window Tab     ${LIQ_FacilityNotebook_Tab}    Pricing     
-    mx LoanIQ click    ${LIQ_FacilityPricing_ModifyInterestPricing_Button}
-    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}    
-    mx LoanIQ activate window     ${LIQ_Facility_InterestPricing_Window}
-    Run Keyword And Continue On Failure    Mx LoanIQ Verify Object Exist    ${LIQ_Facility_InterestPricing_Window}        VerificationData="Yes"
-    mx LoanIQ click    ${LIQ_Facility_InterestPricing_Add_Button}
-    ${status}    Run Keyword And Return Status    Mx LoanIQ Verify Object Exist    ${LIQ_Facility_InterestPricing_AddItem_List}      VerificationData="Yes"
-    Run Keyword If    '${status}' == 'True'    Mx LoanIQ Select Combo Box Value    ${LIQ_Facility_InterestPricing_AddItem_List}    ${InterestPricingItem}
-    Run Keyword If    '${status}' == 'True'    mx LoanIQ click    ${LIQ_Facility_InterestPricing_AddItem_OK_Button}
-    Mx LoanIQ Select Combo Box Value    ${LIQ_OptionCondition_OptionName_List}    ${OptionName}
-    Mx LoanIQ Select Combo Box Value    ${LIQ_OptionCondition_RateBasis_List}    ${RateBasisInterestPricing}
-    mx LoanIQ click    ${LIQ_Facility_InterestPricing_OptionCondition_OK_Button}
-    mx LoanIQ enter    ${LIQ_Facility_InterestPricing_FormulaCategory_Percent_Radiobutton}    ON
-    mx LoanIQ enter    ${LIQ_Facility_InterestPricing_FormulaCategory_Percent_Textfield}    ${Spread} 
-    # Run Keyword If    '${PercentOfRateFormulaUsage}' != 'None'    Mx LoanIQ Select Combo Box Value    ${LIQ_FormulaCategory_PercentOfRateFormulaUsage_List}    ${PercentOfRateFormulaUsage}
-    mx LoanIQ click    ${LIQ_Facility_InterestPricing_FormulaCategory_OK_Button}
+    ${Facility1_LimitChangeDecreaseAmount_List}    Split String    &{ExcelPath}[Facility1_LimitChangeDecreaseAmount]    &{ExcelPath}[Delimiter]
+    ${Facility1_LimitChangeDecreaseAmount_Count}    Get Length    ${Facility1_LimitChangeDecreaseAmount_List}
     
-    ###Validate Interest Pricing###
-    Validate and Confirm Interest Pricing
+    ${Facility1_LimitChangeDecreaseAmtSched_List}    Split String    &{ExcelPath}[Facility1_LimitChangeDecreaseAmtSched]    &{ExcelPath}[Delimiter]
+    ${Facility1_LimitChangeDecreaseAmtSched_Count}    Get Length    ${Facility1_LimitChangeDecreaseAmtSched_List}
+    
+    ### Set amortization schedule ammounts ###
+    Navigate to Amortization Schedule for Facility
+    
+    mx LoanIQ activate window    ${LIQ_FacilityIncreaseDecreaseSchedule_AmortizationSchedule_Window}
+    mx LoanIQ select    ${LIQ_FacilityIncreaseDecreaseSchedule_AmortizationSchedule_AmortizationScheduleStatus_Dropdown}    &{ExcelPath}[Facility_AmortizationScheduleStatus]
+    
+    Delete Current Amortization Schedule for Facility
+    
+    :FOR    ${INDEX}    IN RANGE    ${Facility1_LimitChangeDecreaseAmount_Count}
+    \    ${LimitChangeDecreaseAmount}    Get From List    ${Facility1_LimitChangeDecreaseAmount_List}    ${INDEX}
+    \    ${LimitChangeDecreaseAmtSched}    Get From List    ${Facility1_LimitChangeDecreaseAmtSched_List}    ${INDEX}
+    \    Add Amortization Schedule for Facility    Decrease    ${LimitChangeDecreaseAmount}    ${LimitChangeDecreaseAmtSched}     
+    \    Sleep    10s
+    # \    mx LoanIQ activate window    ${LIQ_FacilityIncreaseDecreaseSchedule_AmortizationSchedule_Window}   
+
+    Save Amortization Schedule for Facility
+        
+    ###Facility Validation and close###
+    Validate Facility
