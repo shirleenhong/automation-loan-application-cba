@@ -500,6 +500,7 @@ LIQ_FacilityIncreaseDecreaseSchedule_AmortizationSchedule_Window = 'JavaWindow("
 LIQ_FacilityIncreaseDecreaseSchedule_AmortizationSchedule_Reschedule_Button = 'JavaWindow("title:=Amortization Schedule.*").JavaButton("attached text:=Reschedule")'
 LIQ_FacilityIncreaseDecreaseSchedule_AmortizationSchedule_JavaTree = 'JavaWindow("title:=Amortization Schedule.*").JavaObject("text:=Current Schedule").JavaTree("tagname:=item\(s\) selected\.")'
 LIQ_FacilityIncreaseDecreaseSchedule_AmortizationSchedule_Add_Button = 'JavaWindow("title:=Amortization Schedule.*").JavaObject("text:=Current Schedule").JavaButton("attached text:=Add")'
+LIQ_FacilityIncreaseDecreaseSchedule_AmortizationSchedule_Delete_Button = 'JavaWindow("title:=Amortization Schedule.*").JavaObject("text:=Current Schedule").JavaButton("attached text:=Delete")'
 LIQ_FacilityIncreaseDecreaseSchedule_AmortizationSchedule_EqualizeAmounts_Button = 'JavaWindow("title:=Amortization Schedule.*").JavaObject("text:=Current Schedule").JavaButton("attached text:=Equalize Amounts")'
 LIQ_FacilityIncreaseDecreaseSchedule_AmortizationSchedule_Save_Button = 'JavaWindow("title:=Amortization Schedule.*").JavaButton("attached text:=Save")'
 LIQ_FacilityIncreaseDecreaseSchedule_AmortizationSchedule_Exit_Button = 'JavaWindow("title:=Amortization Schedule.*").JavaButton("attached text:=Exit")'

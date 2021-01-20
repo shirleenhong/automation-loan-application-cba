@@ -180,3 +180,86 @@ Validation on Commitment Decrease Schedule
         
     Should Be Equal    ${UnscheduledCommitmentType}    ${Type}
     Should Be Equal    ${Decrease_Amount}    ${ScheduleItem_Amount}                   
+    
+Navigate to Amortization Schedule for Facility
+    [Documentation]    This keyword is used to navigate Amortization Schedule for Facility.
+    ...    @author: ccarriedo    19JAN2021    - Initial create
+
+    Mx LoanIQ Activate    ${LIQ_FacilityNotebook_Window}
+    Select Menu Item    ${LIQ_FacilityNotebook_Window}    Options    Increase/Decrease Schedule...
+    Mx LoanIQ Click Element If Present    ${LIQ_Warning_Yes_Button}
+    Mx LoanIQ Click Element If Present    ${LIQ_Warning_Yes_Button}
+    
+Set Multiple Amortization Schedule for Facility
+    [Documentation]    This high-level keyword sets up Amortization Schedule for Facility.
+    ...    @author: ccarriedo    19JAN2021    - Initial create
+    [Arguments]    ${ExcelPath}
+    
+    ${sDelimiter}    Acquire Argument Value    &{ExcelPath}[Delimiter]
+    ${sFacility1_LimitChangeDecreaseAmount}    Acquire Argument Value    &{ExcelPath}[Facility1_LimitChangeDecreaseAmount]
+    ${sFacility1_LimitChangeDecreaseAmtSched}    Acquire Argument Value    &{ExcelPath}[Facility1_LimitChangeDecreaseAmtSched]
+    ${sFacility_AmortizationScheduleStatus}    Acquire Argument Value    &{ExcelPath}[Facility_AmortizationScheduleStatus]
+    
+    ${Facility1_LimitChangeDecreaseAmount_List}    Split String    ${sFacility1_LimitChangeDecreaseAmount}    ${sDelimiter}
+    ${Facility1_LimitChangeDecreaseAmount_Count}    Get Length    ${Facility1_LimitChangeDecreaseAmount_List}
+    
+    ${Facility1_LimitChangeDecreaseAmtSched_List}    Split String    ${sFacility1_LimitChangeDecreaseAmtSched}    ${sDelimiter}
+    ${Facility1_LimitChangeDecreaseAmtSched_Count}    Get Length    ${Facility1_LimitChangeDecreaseAmtSched_List}
+    
+    ### Set amortization schedule ammounts ###
+    Navigate to Amortization Schedule for Facility
+    
+    mx LoanIQ activate window    ${LIQ_FacilityIncreaseDecreaseSchedule_AmortizationSchedule_Window}
+    mx LoanIQ select    ${LIQ_FacilityIncreaseDecreaseSchedule_AmortizationSchedule_AmortizationScheduleStatus_Dropdown}    ${sFacility_AmortizationScheduleStatus}
+    
+    # Modify Current Amortization Schedule for Facility    Decrease    &{ExcelPath}[Facility1_LimitChangeDecreaseAmount1]    &{ExcelPath}[Facility1_LimitChangeDecreaseAmtSched1]     
+    Delete Current Amortization Schedule for Facility
+    
+    :FOR    ${INDEX}    IN RANGE    ${Facility1_LimitChangeDecreaseAmount_Count}
+    \    ${LimitChangeDecreaseAmount}    Get From List    ${Facility1_LimitChangeDecreaseAmount_List}    ${INDEX}
+    \    ${LimitChangeDecreaseAmtSched}    Get From List    ${Facility1_LimitChangeDecreaseAmtSched_List}    ${INDEX}
+    \    Add Amortization Schedule for Facility    Decrease    ${LimitChangeDecreaseAmount}    ${LimitChangeDecreaseAmtSched}     
+    \    Sleep    10s   
+
+    Save Amortization Schedule for Facility  
+        
+    ###Facility Validation and close###
+    Validate Facility
+ 
+Delete Current Amortization Schedule for Facility
+    [Documentation]    This keyword is used to delete the current amortization schedule
+    ...    @author: ccarriedo    19JAN2021    - Initial create
+    
+    mx LoanIQ activate window    ${LIQ_FacilityIncreaseDecreaseSchedule_AmortizationSchedule_Window}
+    Mx LoanIQ Select String    ${LIQ_FacilityChangeTransaction_AmortizationSchedule_List}    Scheduled        
+    mx LoanIQ click    ${LIQ_FacilityIncreaseDecreaseSchedule_AmortizationSchedule_Delete_Button}
+    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button} 
+
+Add Amortization Schedule for Facility
+    [Documentation]    This keyword is used to modify the current amortization schedule
+    ...    @author: ccarriedo    19JAN2021    - Initial create
+    [Arguments]    ${sChangeType}    ${sAmount}    ${sDate}=None
+    
+    ${Change_Type}    Convert To Uppercase    ${sChangeType}
+    mx LoanIQ activate window    ${LIQ_FacilityIncreaseDecreaseSchedule_AmortizationSchedule_Window}
+    mx LoanIQ click    ${LIQ_FacilityIncreaseDecreaseSchedule_AmortizationSchedule_Add_Button}   
+    mx LoanIQ click element if present    ${LIQ_Question_Yes_Button}
+    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}    
+    Run Keyword If    '${Change_Type}'=='DECREASE'    mx LoanIQ enter    ${LIQ_FacilityChangeTransaction_AddScheduleItem_Decrease_RadioButton}    ON 
+    ...    ELSE    mx LoanIQ enter    ${LIQ_FacilityChangeTransaction_AddScheduleItem_Increase_RadioButton}    ON
+    mx LoanIQ enter    ${LIQ_FacilityChangeTransaction_AddScheduleItem_AmountField}    ${sAmount}   
+    Run Keyword If    '${sDate}'!='None'    mx LoanIQ enter    ${LIQ_FacilityChangeTransaction_AddScheduleItem_ScheduleDateField}    ${sDate}                    
+    mx LoanIQ click    ${LIQ_FacilityChangeTransaction_AddScheduleItem_OKButton}
+
+Save Amortization Schedule for Facility
+    [Documentation]    This keyword is used to save amortization schedule settings.
+    ...    @author: ccarriedo    19JAN2021    - Initial create
+    ...       
+    mx LoanIQ activate window    ${LIQ_FacilityIncreaseDecreaseSchedule_AmortizationSchedule_Window}
+    mx LoanIQ click    ${LIQ_FacilityIncreaseDecreaseSchedule_AmortizationSchedule_Save_Button}
+    mx LoanIQ click element if present    ${LIQ_Information_OK_Button}
+    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
+    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
+    mx LoanIQ click    ${LIQ_FacilityIncreaseDecreaseSchedule_AmortizationSchedule_Exit_Button}      
+    mx LoanIQ activate window    ${LIQ_FacilityChangeTransaction_Window}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/Cashflow_FacilityChangeTransaction_ModifyScheduleItem   
