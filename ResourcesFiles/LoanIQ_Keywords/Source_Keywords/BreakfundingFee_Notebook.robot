@@ -134,6 +134,7 @@ Add Portfolio and Expense Code
     ...    @update: sahalder    08JUL2020    Added keyword pre-processing steps
     ...    @update: mcastro    17DEC2020    Fixed incorrect variable name for ExpenseCode
     ...    @update: mcastro    07JAN2021    - Updated Mx Native Type to Mx Press Combination
+    ...    @update: mcastro    15JAN2021    - Added taking of screenshots
     [Arguments]    ${sLegal_Entity}    ${sLegal_Entity_Amount}    ${sExpenseCode}
     
     ### GetRuntime Keyword Pre-processing ###
@@ -148,13 +149,18 @@ Add Portfolio and Expense Code
     Run Keyword And Continue On Failure    Mx LoanIQ Verify Object Exist    ${LIQ_HostBankShares_Window}              VerificationData="Yes"
     mx LoanIQ click    ${LIQ_HostBankShares_AddPortfolioExpenseCode_Button}
     mx LoanIQ activate window    ${LIQ_HostBankShares_PortfolioSelection_Window}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/BreakCostFee_PortfolioSelection
     Run Keyword And Continue On Failure    Mx LoanIQ Verify Object Exist    ${LIQ_HostBankShares_PortfolioSelection_Window}    VerificationData="Yes"
     Mx LoanIQ Select String    ${LIQ_HostBankShares_PortfolioSelection_List}    ${ExpenseCode}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/BreakCostFee_PortfolioSelection
     mx LoanIQ click    ${LIQ_HostBankShares_PortfolioSelection_Ok_Button}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/BreakCostFee_PortfolioShareEdit
     mx LoanIQ activate window    ${LIQ_PortfolioShareEdit_Window}
     mx LoanIQ enter    ${LIQ_PortfolioShareEdit_ActualAmount_Field}    ${Legal_Entity_Amount}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/BreakCostFee_PortfolioShareEdit
     mx LoanIQ click    ${LIQ_PortfolioShareEdit_Ok_Button}
     mx LoanIQ activate window    ${LIQ_HostBankShares_Window}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/BreakCostFee_PortfolioShare
     # Run Keyword And Continue On Failure    Mx LoanIQ Verify Text In Javatree    ${LIQ_HostBankShares_BranchPortfolioExpenseCode_List}    .*${Expense_Code}.*%yes
     # Run Keyword And Continue On Failure    Mx LoanIQ Verify Text In Javatree    ${LIQ_HostBankShares_BranchPortfolioExpenseCode_List}    .*${Lender1_Amount}.*%yes
     mx LoanIQ click    ${LIQ_HostBankShares_Ok_Button}
@@ -217,22 +223,29 @@ Add Remittance Instructions - Breakfunding
 Generate Intent Notices - Break Funding
     [Documentation]    This keyword is use to generate intent notice for breakfunding
     ...    @author: jcdelacruz
+    ...    @update: mcastro    14JAN2021    - Updated 'Generate Intent Notice' and 'Workflow' to global variable, Added logging of passed/failed validation
+    ...                                     - Removed comment steps; Added Taking of screenshots
+
     mx LoanIQ click element if present    ${LIQ_BreakFundingCashflow_Ok_Button}
     mx LoanIQ activate window    ${LIQ_Breakfunding_AwaitingSend_Window}    
-    Mx LoanIQ Select Window Tab    ${LIQ_Breakfunding_AwaitingSend_Tab}    Workflow
-    Run Keyword And Continue On Failure    Mx LoanIQ Verify Text In Javatree    ${LIQ_Breakfunding_WorkflowItems_AwaitingSend_List}    Generate Intent Notices%yes
-    Mx LoanIQ DoubleClick    ${LIQ_Breakfunding_WorkflowItems_AwaitingSend_List}    Generate Intent Notices
+    Mx LoanIQ Select Window Tab    ${LIQ_Breakfunding_AwaitingSend_Tab}    ${WORKFLOW_TAB}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/GenerateIntentNotice
+
+    ${Status}    Run Keyword And Return Status    Mx LoanIQ Verify Text In Javatree    ${LIQ_Breakfunding_WorkflowItems_AwaitingSend_List}    ${GENERATE_INTENT_NOTICES}%yes
+    Run Keyword If    ${Status}==${True}    Log    ${GENERATE_INTENT_NOTICES} is displayed.
+    ...    ELSE    Run Keyword And Continue On Failure    Fail    ${GENERATE_INTENT_NOTICES} is not displayed.
+
+    Mx LoanIQ DoubleClick    ${LIQ_Breakfunding_WorkflowItems_AwaitingSend_List}    ${GENERATE_INTENT_NOTICES}
     mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/GenerateIntentNotice
     mx LoanIQ activate window    ${LIQ_Notices_Window}
     Run Keyword And Continue On Failure    Validate if Element is Checked    ${LIQ_Notices_Lenders_Checkbox}    Lenders
     Run Keyword And Continue On Failure    Validate if Element is Checked    ${LIQ_Notices_BorrowerDepositor_Checkbox}    Borrower / Depositor
     mx LoanIQ click    ${LIQ_Notices_Ok_Button}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/GenerateIntentNotice
     mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
     mx LoanIQ activate window    ${LIQ_EventFeePaymentGroup_Window}
-    # Mx Click    ${LIQ_EventFeePaymentGroup_MarkAll_Button}
-    # Mx Click    ${LIQ_EventFeePaymentGroup_Send_Button}
-    # Mx Click Element If Present    ${LIQ_Information_OK_Button}
-    # Mx Click Element If Present    ${LIQ_Information_OK_Button}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/GenerateIntentNotice
     mx LoanIQ click    ${LIQ_EventFeePaymentGroup_Exit_Button}
 
 Send Breakfunding to Approval
@@ -451,11 +464,16 @@ Select Breakfunding Reason
 Navigate to Breakfunding Window from Loan Notebook
     [Documentation]    This keyword is used to Navigate to breakfunding window from Loan Notebook
     ...    @author: mcastro    17DEC2020    - Initial Create
-
-    Mx LoanIQ Select Window Tab    ${LIQ_LoanNotebook_BbsyBidLoan_Tab}    Pending
+    ...    @update: mcastro    14JAN2021    - Updated with global variable, added logging of passed/failed validation
+    
+    Mx LoanIQ Select Window Tab    ${LIQ_LoanNotebook_BbsyBidLoan_Tab}    ${PENDING_STATUS}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/BreakfundingPendingTab
-    Run Keyword And Continue On Failure    Mx LoanIQ Verify Text In Javatree    ${LIQ_LoanNotebook_PendingItems_List}    Break Cost Fee%yes
-    Mx LoanIQ Select String    ${LIQ_LoanNotebook_PendingItems_List}    Break Cost Fee        
+
+    ${Status}    Run Keyword And Return Status    Mx LoanIQ Verify Text In Javatree    ${LIQ_LoanNotebook_PendingItems_List}    ${BREAK_COST_FEE}%yes
+    Run Keyword If    ${Status}==${True}    Log    ${BREAK_COST_FEE} is displayed.
+    ...    ELSE    Run Keyword And Continue On Failure    Fail    ${BREAK_COST_FEE} is not displayed.
+
+    Mx LoanIQ Select String    ${LIQ_LoanNotebook_PendingItems_List}    ${BREAK_COST_FEE}        
     Mx Press Combination    Key.ENTER
     Mx LoanIQ activate    ${LIQ_Breakfunding_Pending_Window}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/BreakfundingPendingTab   
@@ -489,3 +507,137 @@ Verify if Cashflow is Completed for Breakfunding
     ...    ELSE    Run Keyword And Continue On Failure    Fail    Complete Cashflow is still displayed.
     
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/BreakfundingWorkflowTab 
+
+Generate and Add Intent Notice Comment on Breakfunding
+    [Documentation]    This keyword is used to generate intent notice with adding of comments on breakfunding
+    ...    @author: mcastro    14JAN2021    - Initial Create
+    [Arguments]    ${sSubject}    ${sComment}
+
+    ### Keyword Pre-processing ###
+    ${Subject}    Acquire Argument Value    ${sSubject}
+    ${Comment}    Acquire Argument Value    ${sComment}
+
+    Mx LoanIQ click element if present    ${LIQ_BreakFundingCashflow_Ok_Button}
+    Mx LoanIQ activate window    ${LIQ_Breakfunding_AwaitingSend_Window}    
+    Mx LoanIQ Select Window Tab    ${LIQ_Breakfunding_AwaitingSend_Tab}    ${WORKFLOW_TAB}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/GenerateIntentNotice
+
+    ${Status}    Run Keyword And Return Status    Mx LoanIQ Verify Text In Javatree    ${LIQ_Breakfunding_WorkflowItems_AwaitingSend_List}    ${GENERATE_INTENT_NOTICES}%yes
+    Run Keyword If    ${Status}==${True}    Log    ${GENERATE_INTENT_NOTICES} is displayed.
+    ...    ELSE    Run Keyword And Continue On Failure    Fail    ${GENERATE_INTENT_NOTICES} is not displayed.
+
+    Mx LoanIQ DoubleClick    ${LIQ_Breakfunding_WorkflowItems_AwaitingSend_List}    ${GENERATE_INTENT_NOTICES}
+    Mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/GenerateIntentNotice
+    mx LoanIQ activate window    ${LIQ_Notices_Window}
+
+    ${Status}    Run Keyword And Return Status    Validate if Element is Checked    ${LIQ_Notices_Lenders_Checkbox}    Lenders
+    Run Keyword If    ${Status}==${True}    Log    Lenders checkbox is checked.
+    ...    ELSE    Run Keyword And Continue On Failure    Fail    Lenders checkbox is unchecked.
+
+    ${Status}    Run Keyword And Return Status    Validate if Element is Checked    ${LIQ_Notices_BorrowerDepositor_Checkbox}    Borrower / Depositor
+    Run Keyword If    ${Status}==${True}    Log    Borrower / Depositor checkbox is checked.
+    ...    ELSE    Run Keyword And Continue On Failure    Fail    Borrower / Depositor checkbox is unchecked.
+
+    mx LoanIQ click    ${LIQ_Notices_Ok_Button}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/NoticeWindow
+    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
+
+    Mx LoanIQ activate window    ${LIQ_EventFeePaymentGroup_Window}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/NoticeWindow
+
+    Add Notice Group Comment on Breakfunding    ${Subject}    ${Comment}
+    
+    Mx LoanIQ click    ${LIQ_EventFeePaymentGroup_Exit_Button}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/GenerateIntentNotice
+    
+Add Notice Group Comment on Breakfunding
+    [Documentation]    This keyword is used to add notice group comment on breakfunding
+    ...    @author: mcastro    14JAN2021    - Initial Create
+    [Arguments]    ${sSubject}    ${sComment}
+
+    ### Keyword Pre-processing ###
+    ${Subject}    Acquire Argument Value    ${sSubject}
+    ${Comment}    Acquire Argument Value    ${sComment}
+
+    Mx LoanIQ Click    ${LIQ_EventFeePaymentGroup_GroupComment_Button}
+    Mx LoanIQ Click Element if Present    ${LIQ_Warning_Yes_Button}
+ 
+    Mx LoanIQ activate window    ${LIQ_Notice_CommentEdit_Window}
+    Mx LoanIQ Enter    ${LIQ_Notice_CommentEdit_Subject_Textbox}    ${Subject}
+    Mx LoanIQ Enter    ${LIQ_Notice_CommentEdit_Comment_Textbox}    ${Comment}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/NoticeGroupComment
+    Mx LoanIQ Click    ${LIQ_Notice_CommentEdit_OK_Button}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/GenerateIntentNotice
+
+Navigate to Breakfunding Window
+    [Documentation]    This keyword is used to navigate to Breakfunding Window from Loan Events tab
+    ...    @author: mcastro    15JAN2021    - Initial Create
+    [Arguments]    ${sDeal_Name}    ${sOutstandingSelect_Type}    ${sFacility_Name}    ${sLoan_Alias}   ${sEvents}
+
+    ### Keyword Pre-processing ###
+    ${Deal_Name}    Acquire Argument Value    ${sDeal_Name}
+    ${OutstandingSelect_Type}    Acquire Argument Value    ${sOutstandingSelect_Type}
+    ${Facility_Name}    Acquire Argument Value    ${sFacility_Name}
+    ${Loan_Alias}    Acquire Argument Value    ${sLoan_Alias}
+    ${Events}    Acquire Argument Value    ${sEvents}
+
+    Search for Deal    ${Deal_Name}
+    Search for Existing Outstanding    ${OutstandingSelect_Type}    ${Facility_Name}
+    Open Existing Loan    ${Loan_Alias}
+
+    Mx LoanIQ activate    ${LIQ_LoanNotebook_BbsyBidLoan_Window}
+    Mx LoanIQ Select Window Tab    ${LIQ_LoanNotebook_BbsyBidLoan_Tab}    ${EVENTS_TAB}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/Loan_EventsTab
+    Mx LoanIQ Select Or DoubleClick In Javatree    ${LIQ_Loan_Events_List}    ${Events}%d  
+    Mx LoanIQ activate window    ${LIQ_Breakfunding_Window}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/BreakfundingWindow
+
+Validate Release of Breakfunding
+    [Documentation]    This keyword validates the Released status of breakfunding
+    ...    @author: mcastro    15JAN2021    - Initial Create
+    
+    Mx LoanIQ activate window    ${LIQ_Breakfunding_Window}
+    Mx LoanIQ Select Window Tab    ${LIQ_Breakfunding_Workflow_Tab}    ${EVENTS_TAB}
+    ${Event_Selected}    Run Keyword And Return Status    Mx LoanIQ Select String    ${LIQ_Breakfunding_Events_JavaTree}    ${RELEASED_STATUS}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/Breakfunding_EventsTab
+    Run Keyword If    ${Event_Selected}==${True}    Log    ${RELEASED_STATUS} is shown in the Events list of the Breakfunding notebook.
+    ...    ELSE    Run Keyword and Continue on Failure    Fail    Breakfunding payment is not Released.
+
+Validate Fees of Breakfunding on General Tab
+    [Documentation]    This keyword is used to validate amounts on breakfunding general tab
+    ...    @author: mcastro    15JAN2021    - Initial Create
+    [Arguments]    ${sExpected_Fees}
+
+    ### Keyword Pre-processing ###
+    ${Expected_Fees}    Acquire Argument Value    ${sExpected_Fees}
+
+    Mx LoanIQ activate window    ${LIQ_Breakfunding_Window}
+    Mx LoanIQ Select Window Tab    ${LIQ_Breakfunding_Workflow_Tab}    ${GENERAL_TAB}
+
+    ### Host Bank Fees Amount ###
+    ${HostBankFees_Amount}    Mx LoanIQ Get Data    ${LIQ_Breakfunding_HostBankFees_Text}    value%Amount
+    ${Status}    Run Keyword And Return Status    Should Be Equal    ${HostBankFees_Amount}    ${Expected_Fees}
+    Run Keyword If    ${Status}==${True}    Log    Total Host Bank Fees is correct.
+    ...    ELSE    Run Keyword And Continue On Failure    Fail    Total Host Bank Fees is incorrect. Expected: ${Expected_Fees} - Actual: ${HostBankFees_Amount}
+
+    ### Total Borrower Fees Amount ###
+    ${HostBankFees_Amount}    Mx LoanIQ Get Data    ${LIQ_Breakfunding_HostBankFees_Text}    value%Amount
+    ${Status}    Run Keyword And Return Status    Should Be Equal    ${HostBankFees_Amount}    ${Expected_Fees}
+    Run Keyword If    ${Status}==${True}    Log    Total Host Bank Fees is correct.
+    ...    ELSE    Run Keyword And Continue On Failure    Fail    Total Host Bank Fees is incorrect. Expected: ${Expected_Fees} - Actual: ${HostBankFees_Amount}
+
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/Breakfunding_GeneralTab
+
+Navigate to Breakfunding Window from Inactive Loan Notebook
+    [Documentation]    This keyword is used to Navigate to breakfunding window from an Inactive Loan Notebook
+    ...    @author: javinzon    14JAN2021    - Initial create
+
+    Mx LoanIQ Select Window Tab    ${LIQ_InactiveLoan_Tab}    Pending
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/BreakfundingPendingTab
+    ${Status}    Run Keyword And Return Status    Mx LoanIQ Verify Text In Javatree    ${LIQ_InactiveLoanNotebook_PendingItems_List}    Break Cost Fee%yes
+    Run Keyword If    ${Status}==${True}    Run Keywords    Mx LoanIQ Select String    ${LIQ_InactiveLoanNotebook_PendingItems_List}    Break Cost Fee 
+    ...    AND    Mx Press Combination    Key.ENTER
+    ...    AND    Mx LoanIQ activate    ${LIQ_Breakfunding_Pending_Window}
+    ...    AND    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/BreakfundingPendingTab 
+    ...    ELSE    Run Keyword And Continue On Failure    Fail    Break Cost Fee transaction is not existing in this deal

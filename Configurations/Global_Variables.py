@@ -230,6 +230,9 @@ AWAITING_CLOSE_TRANSACTION= "Awaiting Close"
 FEE_PAYMENT_RELEASED_STATUS = "Fee Payment Released"
 AWAITING_COMPLETE_CASHFLOW_TRANSACTION = "Awaiting Complete Cashflows"
 BREAK_COST_FEE = "Break Cost Fee"
+PENDING_STATUS = "Pending"
+LOAN_INCREASE = "Loan Increase"
+AWAITING_GENERATE_INTENT_NOTICES_STATUS = "Awaiting Generate Intent Notices"
 
 ### Bank Role ###
 REFERENCE_BANK_ROLE = "Reference Bank"
