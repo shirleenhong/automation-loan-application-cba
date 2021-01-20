@@ -15,10 +15,10 @@ Navigate to Loan Increase from Loan Notebook
 Input General Loan Increase Details
     [Documentation]    This keyword is used to input details on Loan Increase General tab
     ...    @author: mcastro    19JAN2021    - Initial create
-    [Arguments]    ${iRequested_Amt}    ${sEffective_Date}    ${sReason}=None
+    [Arguments]    ${sRequested_Amt}    ${sEffective_Date}    ${sReason}=None
     
     ### Keyword Pre-processing ###
-    ${Requested_Amt}    Acquire Argument Value    ${iRequested_Amt}
+    ${Requested_Amt}    Acquire Argument Value    ${sRequested_Amt}
     ${Effective_Date}    Acquire Argument Value    ${sEffective_Date}
     ${Reason}    Acquire Argument Value    ${sReason}
 
@@ -76,12 +76,12 @@ Validate Release of Loan Increase
 Validate Loan Increase Details in General Tab
     [Documentation]    This keyword validates the amounts of Loan Increase in general tab
     ...    @author: mcastro    19JAN2021    - Initial Create
-    [Arguments]    ${iExpected_Outstanding}    ${iExpected_RequestedAmt}    ${iExpectedActual_Amt}
+    [Arguments]    ${sExpected_Outstanding}    ${sExpected_RequestedAmt}    ${sExpectedActual_Amt}
 
     ### Keyword Pre-processing ###
-    ${Expected_Outstanding}    Acquire Argument Value    ${iExpected_Outstanding}
-    ${Expected_RequestedAmt}    Acquire Argument Value    ${iExpected_RequestedAmt}
-    ${ExpectedActual_Amt}    Acquire Argument Value    ${iExpectedActual_Amt}
+    ${Expected_Outstanding}    Acquire Argument Value    ${sExpected_Outstanding}
+    ${Expected_RequestedAmt}    Acquire Argument Value    ${sExpected_RequestedAmt}
+    ${ExpectedActual_Amt}    Acquire Argument Value    ${sExpectedActual_Amt}
     
     Mx LoanIQ activate window    ${LIQ_Increase_Window}
     Mx LoanIQ Select Window Tab    ${LIQ_Increase_Window_Tab}    ${GENERAL_TAB}

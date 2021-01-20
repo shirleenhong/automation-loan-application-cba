@@ -110,7 +110,7 @@ Collect Interest for Prepaid Portion after Increase
 
     ### Validation of Loan Increase ###
     Validate Release of Loan Increase
-    Validate Loan Increase Details in General Tab    &{ExcelPath}[Expected_Outstanding]     &{ExcelPath}[Legal_Entity_Amount]    &{ExcelPath}[Legal_Entity_Amount]
+    Validate Loan Increase Details in General Tab    &{ExcelPath}[Expected_Outstanding]     &{ExcelPath}[Legal_Entity_Amount]    &{ExcelPath}[Increase_Actual_Amount]
     Close All Windows on LIQ
 
     ### Complete Cashflow from Breakfunding Notebook ###
