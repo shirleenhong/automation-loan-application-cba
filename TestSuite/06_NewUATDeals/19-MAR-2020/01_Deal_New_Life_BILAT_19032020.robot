@@ -16,3 +16,6 @@ Collect Commitment Fee - $54,003.89
     Set Test Variable    ${rowid}    6
     Mx Execute Template With Multiple Data    Collect Commitment Fee Payment For New Life BILAT    ${ExcelPath}    ${rowid}    SERV29_CommitmentFeePayment
 
+Amend Commitment Fee
+    Set Test Variable    ${rowid}    7
+    Mx Execute Template With Multiple Data    Update Commitment Fee for New Life BILAT    ${ExcelPath}    ${rowid}    SERV29_CommitmentFeePayment
