@@ -8,6 +8,7 @@ Setup Syndicated Deal for LLA Syndicated
     ...    @author: makcamps    18DEC2020    - initial create
     ...    @update: makcamps    07JAN2021    - added write methods for new sheets created
     ...    @update: makcamps    11JAN2021    - added write methods for new sheets created
+    ...    @update: makcamps    20JAN2021    - added write methods for notice
     [Arguments]    ${ExcelPath}
 
     ###Data Generation###
@@ -19,7 +20,8 @@ Setup Syndicated Deal for LLA Syndicated
     ${Borrower_SG_GroupMembers}    Read Data From Excel    PTY001_QuickPartyOnboarding    Borrower_SG_GroupMembers    &{ExcelPath}[rowid] 
     ${Borrower_PreferredRIMthd}    Read Data From Excel    PTY001_QuickPartyOnboarding    Borrower_PreferredRIMthd    &{ExcelPath}[rowid] 
     ${Borrower_SG_Name}    Read Data From Excel    PTY001_QuickPartyOnboarding    Borrower_SG_Name    &{ExcelPath}[rowid] 
-    ${Borrower_Depositor_Indicator}    Read Data From Excel    PTY001_QuickPartyOnboarding    Borrower_Depositor_Indicator    &{ExcelPath}[rowid] 
+    ${Borrower_Depositor_Indicator}    Read Data From Excel    PTY001_QuickPartyOnboarding    Borrower_Depositor_Indicator    &{ExcelPath}[rowid]  
+    ${Lender_ShortName}    Read Data From Excel    CRED08_OngoingFeeSetup    Lender_ShortName    &{ExcelPath}[rowid] 
 
     Write Data To Excel    CRED01_DealSetup    Deal_Name    &{ExcelPath}[rowid]    ${Deal_Name}
     Write Data To Excel    CRED01_DealSetup    Deal_Alias    &{ExcelPath}[rowid]    ${Deal_Alias}
@@ -27,7 +29,12 @@ Setup Syndicated Deal for LLA Syndicated
     Write Data To Excel    CRED02_FacilitySetup    Borrower_ShortName    &{ExcelPath}[rowid]    ${Borrower_ShortName}
     Write Data To Excel    CRED02_FacilitySetup    Facility_Borrower    &{ExcelPath}[rowid]    ${Borrower_ShortName}
     Write Data To Excel    CRED02_FacilitySetup    Facility_BorrowerSGName    &{ExcelPath}[rowid]    ${Borrower_SG_Name}
+    Write Data To Excel    CRED08_OngoingFeeSetup    Deal_Name    &{ExcelPath}[rowid]    ${Deal_Name}
+    Write Data To Excel    CRED08_OngoingFeeSetup    Borrower_ShortName    &{ExcelPath}[rowid]    ${Borrower_ShortName}
     Write Data To Excel    SYND02_PrimaryAllocation    Deal_Name    &{ExcelPath}[rowid]    ${Deal_Name}
+    Write Data To Excel    Correspondence    Deal_Name    ${rowid}    ${Deal_Name}    multipleValue=Y    bTestCaseColumn=True    sColumnReference=rowid
+    Write Data To Excel    Correspondence    Notice_Customer_LegalName    1    ${Lender_ShortName}    bTestCaseColumn=True    sColumnReference=rowid
+    Write Data To Excel    Correspondence    Notice_Customer_LegalName    2    ${Borrower_ShortName}    bTestCaseColumn=True    sColumnReference=rowid
     
     ###Deal Select Window###
     Create New Deal    ${Deal_Name}    ${Deal_Alias}    &{ExcelPath}[Deal_Currency]    &{ExcelPath}[Deal_Department]
@@ -108,6 +115,7 @@ Setup Primaries for LLA Syndicated Deal
 LLA Syndicated Deal Approval and Close
     [Documentation]    This keywords Approves and Closes the created LLA Syndicated Deal.
     ...    @author: makcamps    07JAN2021    - initial create
+    ...    @update: makcamps    20JAN2021    - added update of line fee details
     [Arguments]    ${ExcelPath}
     
     ###Close all windows and Login as original user###
@@ -130,6 +138,13 @@ LLA Syndicated Deal Approval and Close
     Verify Deal Status After Deal Close
     Validate Deal Closing Cmt With Facility Total Global Current Cmt
     ${Deal_ClosingCmt}    Get Deal Closing Cmt
+    
+    ###Line Fee Notebook###
+    ${OngoingFee_Type}    Read Data From Excel    CRED08_OngoingFeeSetup    OngoingFee_Type    &{ExcelPath}[rowid]  
+    Navigate to Facility Notebook    &{ExcelPath}[Deal_Name]    &{ExcelPath}[Facility_Name]
+    Navigate to Commitment Fee Notebook    ${OngoingFee_Type}
+    Release Line Fee
+    Save Notebook Transaction    ${LIQ_FacilityNavigator_Window}    ${LIQ_FacilityNotebook_File_Save}
     
     Close All Windows on LIQ
     Logout from Loan IQ
