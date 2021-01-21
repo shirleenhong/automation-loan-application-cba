@@ -6,12 +6,16 @@ Create Revolver Facility for LLA Syndicated Deal
     [Documentation]    This high-level keyword is used to create an initial set up of Revolver Facility for LLA Syndicated Deal
     ...    @author: makcamps    04JAN2021    - Initial Create
     ...    @update: makcamps    15JAN2021    - updated data used for dates to follow dates from screenshots provided
+    ...    @update: makcamps    20JAN2021    - added write method for notice
     [Arguments]    ${ExcelPath}
     
     ###Test Data Generation and Writings###
 	${FacilityName}    Generate Facility Name with 5 Numeric Test Data    &{ExcelPath}[Facility_NamePrefix]
 	Write Data To Excel    CRED02_FacilitySetup    Facility_Name    ${rowid}    ${FacilityName}
 	Write Data To Excel    SYND02_PrimaryAllocation    Facility_Name    ${rowid}    ${FacilityName}
+    Write Data To Excel    CRED08_OngoingFeeSetup    Facility_Name    ${rowid}    ${FacilityName}
+    Write Data To Excel    Correspondence    Facility_Name    1    ${Facility_Name}    bTestCaseColumn=True    sColumnReference=rowid
+    Write Data To Excel    Correspondence    Facility_Name    2    ${Facility_Name}    bTestCaseColumn=True    sColumnReference=rowid
 	Set To Dictionary    ${ExcelPath}    Facility_Name=${FacilityName}
 	
 	###Add Revolver Facility###
@@ -131,4 +135,3 @@ Setup Pricing for LLA Syndicated Deal
     Confirm Facility Interest Pricing Options Settings
     
     Verify If Text Value Exist as Java Tree on Page    Facility -    &{ExcelPath}[Code]
-    
