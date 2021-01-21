@@ -49,28 +49,15 @@ Set Multiple Amortization Schedule for Facility
     [Documentation]    This high-level keyword sets up Amortization Schedule for Facility.
     ...    @author: ccarriedo    19JAN2021    - Initial create
     [Arguments]    ${ExcelPath}
-    
-    ${Facility1_LimitChangeDecreaseAmount_List}    Split String    &{ExcelPath}[Facility1_LimitChangeDecreaseAmount]    &{ExcelPath}[Delimiter]
-    ${Facility1_LimitChangeDecreaseAmount_Count}    Get Length    ${Facility1_LimitChangeDecreaseAmount_List}
-    
-    ${Facility1_LimitChangeDecreaseAmtSched_List}    Split String    &{ExcelPath}[Facility1_LimitChangeDecreaseAmtSched]    &{ExcelPath}[Delimiter]
-    ${Facility1_LimitChangeDecreaseAmtSched_Count}    Get Length    ${Facility1_LimitChangeDecreaseAmtSched_List}
+
+    ${Facility_LimitChangeDecreaseAmount_List}    ${Facility_LimitChangeDecreaseAmount_Count}    Split String with Delimiter and Get Length of the List    &{ExcelPath}[Facility1_LimitChangeDecreaseAmount]    &{ExcelPath}[Delimiter]        
+    ${Facility_LimitChangeDecreaseAmtSched_List}    ${Facility_LimitChangeDecreaseAmtSched_Count}    Split String with Delimiter and Get Length of the List    &{ExcelPath}[Facility1_LimitChangeDecreaseAmtSched]    &{ExcelPath}[Delimiter]
     
     ### Set amortization schedule ammounts ###
     Navigate to Amortization Schedule for Facility
-    
-    mx LoanIQ activate window    ${LIQ_FacilityIncreaseDecreaseSchedule_AmortizationSchedule_Window}
-    mx LoanIQ select    ${LIQ_FacilityIncreaseDecreaseSchedule_AmortizationSchedule_AmortizationScheduleStatus_Dropdown}    &{ExcelPath}[Facility_AmortizationScheduleStatus]
-    
+    Select Amortization Schedule Status for Facility    &{ExcelPath}[Facility_AmortizationScheduleStatus]
     Delete Current Amortization Schedule for Facility
-    
-    :FOR    ${INDEX}    IN RANGE    ${Facility1_LimitChangeDecreaseAmount_Count}
-    \    ${LimitChangeDecreaseAmount}    Get From List    ${Facility1_LimitChangeDecreaseAmount_List}    ${INDEX}
-    \    ${LimitChangeDecreaseAmtSched}    Get From List    ${Facility1_LimitChangeDecreaseAmtSched_List}    ${INDEX}
-    \    Add Amortization Schedule for Facility    Decrease    ${LimitChangeDecreaseAmount}    ${LimitChangeDecreaseAmtSched}     
-    \    Sleep    10s
-    # \    mx LoanIQ activate window    ${LIQ_FacilityIncreaseDecreaseSchedule_AmortizationSchedule_Window}   
-
+    Add Multiple Amortization Schedule for Facility    ${Facility_LimitChangeDecreaseAmount_Count}    ${Facility_LimitChangeDecreaseAmount_List}    ${Facility_LimitChangeDecreaseAmtSched_List}
     Save Amortization Schedule for Facility
         
     ###Facility Validation and close###

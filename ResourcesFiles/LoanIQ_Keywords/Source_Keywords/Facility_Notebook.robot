@@ -4355,3 +4355,43 @@ Setup Interest Pricing for ATM Bilateral Deal
     
     ###Validate Interest Pricing###
     Validate and Confirm Interest Pricing
+
+Split String with Delimiter and Get Length of the List
+    [Documentation]    This keyword accepts a string and delimeter and returns an Array List
+    ...    @author: ccarriedo    21JAN2021    - Initial create
+    [Arguments]    ${sSplit_String}    ${sDelimiter}
+    
+    ### Keyword Pre-processing ###
+    ${Split_String}    Acquire Argument Value    ${sSplit_String}
+    ${Delimiter}    Acquire Argument Value    ${sDelimiter}
+    
+    ${String_List}    Split String    ${Split_String}    ${Delimiter}
+    ${List_Count}    Get Length    ${String_List}
+    
+    [Return]    ${String_List}    ${List_Count}
+
+Select Amortization Schedule Status for Facility
+    [Documentation]    This keyword is used to navigate to increase decrease amortization schedule for facility
+    ...    @author: ccarriedo    21JAN2021    - Initial create
+    [Arguments]    ${sAmortizationScheduleStatus}
+    
+    ### Keyword Pre-processing ###
+    ${AmortizationScheduleStatus}    Acquire Argument Value    ${sAmortizationScheduleStatus}
+
+    mx LoanIQ activate window    ${LIQ_FacilityIncreaseDecreaseSchedule_AmortizationSchedule_Window}
+    mx LoanIQ select    ${LIQ_FacilityIncreaseDecreaseSchedule_AmortizationSchedule_AmortizationScheduleStatus_Dropdown}    ${AmortizationScheduleStatus}
+    
+Add Multiple Amortization Schedule for Facility
+    [Documentation]    This keyword is used to add multiple amortization schedule for facility
+    ...    @author: ccarriedo    21JAN2021    - Initial create
+    [Arguments]    ${iFacility_LimitChangeDecreaseAmount_Count}    ${aFacility_LimitChangeDecreaseAmount_List}    ${aFacility_LimitChangeDecreaseAmtSched_List}
+    
+    ### Keyword Pre-processing ###
+    ${Facility_LimitChangeDecreaseAmount_Count}    Acquire Argument Value    ${iFacility_LimitChangeDecreaseAmount_Count}
+    ${Facility_LimitChangeDecreaseAmount_List}    Acquire Argument Value    ${aFacility_LimitChangeDecreaseAmount_List}
+        
+    :FOR    ${INDEX}    IN RANGE    ${Facility_LimitChangeDecreaseAmount_Count}
+    \    ${LimitChangeDecreaseAmount}    Get From List    ${aFacility_LimitChangeDecreaseAmount_List}    ${INDEX}
+    \    ${LimitChangeDecreaseAmtSched}    Get From List    ${Facility_LimitChangeDecreaseAmount_List}    ${INDEX}
+    \    Add Amortization Schedule for Facility    Decrease    ${LimitChangeDecreaseAmount}    ${LimitChangeDecreaseAmtSched}     
+    \    Sleep    10s
