@@ -4329,7 +4329,13 @@ Verify Facility Pricing Option Details
 Setup Interest Pricing for ATM Bilateral Deal
     [Documentation]    This high-level keyword sets up Interest Pricing for ATM Bilateral Deal.
     ...    @author: ccarriedo    20JAN2021    - Initial create
-    [Arguments]    ${ExcelPath}
+    [Arguments]    ${sInterest_AddItem}    ${sInterest_OptionName}    ${sInterest_RateBasis}    ${iInterest_SpreadAmt}
+
+    ### Keyword Pre-processing ###
+    ${Interest_AddItem}    Acquire Argument Value    ${sInterest_AddItem}
+    ${Interest_OptionName}    Acquire Argument Value    ${sInterest_OptionName}
+    ${Interest_RateBasis}    Acquire Argument Value    ${sInterest_RateBasis}
+    ${Interest_SpreadAmt}    Acquire Argument Value    ${iInterest_SpreadAmt}
 
     mx LoanIQ activate window     ${LIQ_FacilityNotebook_Window}
     Mx LoanIQ Select Window Tab     ${LIQ_FacilityNotebook_Tab}    Pricing     
@@ -4342,13 +4348,13 @@ Setup Interest Pricing for ATM Bilateral Deal
     ...     ELSE    Log    Facility Interest Pricing Window is not displayed.
     mx LoanIQ click    ${LIQ_Facility_InterestPricing_Add_Button}
     ${status}    Run Keyword And Return Status    Mx LoanIQ Verify Object Exist    ${LIQ_Facility_InterestPricing_AddItem_List}      VerificationData="Yes"
-    Run Keyword If    ${status} == ${True}    Mx LoanIQ Select Combo Box Value    ${LIQ_Facility_InterestPricing_AddItem_List}    &{ExcelPath}[Interest_AddItem]
+    Run Keyword If    ${status} == ${True}    Mx LoanIQ Select Combo Box Value    ${LIQ_Facility_InterestPricing_AddItem_List}    ${Interest_AddItem}
     Run Keyword If    ${status} == ${True}    mx LoanIQ click    ${LIQ_Facility_InterestPricing_AddItem_OK_Button}
-    Mx LoanIQ Select Combo Box Value    ${LIQ_OptionCondition_OptionName_List}    &{ExcelPath}[Interest_OptionName]
-    Mx LoanIQ Select Combo Box Value    ${LIQ_OptionCondition_RateBasis_List}    &{ExcelPath}[Interest_RateBasis]
+    Mx LoanIQ Select Combo Box Value    ${LIQ_OptionCondition_OptionName_List}    ${Interest_OptionName}
+    Mx LoanIQ Select Combo Box Value    ${LIQ_OptionCondition_RateBasis_List}    ${Interest_RateBasis}
     mx LoanIQ click    ${LIQ_Facility_InterestPricing_OptionCondition_OK_Button}
     mx LoanIQ enter    ${LIQ_Facility_InterestPricing_FormulaCategory_Percent_Radiobutton}    ON
-    mx LoanIQ enter    ${LIQ_Facility_InterestPricing_FormulaCategory_Percent_Textfield}    &{ExcelPath}[Interest_SpreadAmt]
+    mx LoanIQ enter    ${LIQ_Facility_InterestPricing_FormulaCategory_Percent_Textfield}    ${Interest_SpreadAmt}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/Facility_InterestPricing_FormulaCategory_Percent_Textfield 
     mx LoanIQ click    ${LIQ_Facility_InterestPricing_FormulaCategory_OK_Button}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/Facility_Pricing_Window
@@ -4387,11 +4393,12 @@ Add Multiple Amortization Schedule for Facility
     [Arguments]    ${iFacility_LimitChangeDecreaseAmount_Count}    ${aFacility_LimitChangeDecreaseAmount_List}    ${aFacility_LimitChangeDecreaseAmtSched_List}
     
     ### Keyword Pre-processing ###
-    ${Facility_LimitChangeDecreaseAmount_Count}    Acquire Argument Value    ${iFacility_LimitChangeDecreaseAmount_Count}
+    ${Facility_LimitChangeDecreaseAmtSched_List}    Acquire Argument Value    ${aFacility_LimitChangeDecreaseAmtSched_List}
     ${Facility_LimitChangeDecreaseAmount_List}    Acquire Argument Value    ${aFacility_LimitChangeDecreaseAmount_List}
+    ${Facility_LimitChangeDecreaseAmount_Count}    Acquire Argument Value    ${iFacility_LimitChangeDecreaseAmount_Count}
         
     :FOR    ${INDEX}    IN RANGE    ${Facility_LimitChangeDecreaseAmount_Count}
-    \    ${LimitChangeDecreaseAmount}    Get From List    ${aFacility_LimitChangeDecreaseAmount_List}    ${INDEX}
-    \    ${LimitChangeDecreaseAmtSched}    Get From List    ${Facility_LimitChangeDecreaseAmount_List}    ${INDEX}
+    \    ${LimitChangeDecreaseAmount}    Get From List    ${Facility_LimitChangeDecreaseAmount_List}    ${INDEX}
+    \    ${LimitChangeDecreaseAmtSched}    Get From List    ${Facility_LimitChangeDecreaseAmtSched_List}    ${INDEX}
     \    Add Amortization Schedule for Facility    Decrease    ${LimitChangeDecreaseAmount}    ${LimitChangeDecreaseAmtSched}     
     \    Sleep    10s

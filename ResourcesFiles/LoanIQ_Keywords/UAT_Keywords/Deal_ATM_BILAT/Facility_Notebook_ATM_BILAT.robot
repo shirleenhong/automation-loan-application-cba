@@ -45,6 +45,8 @@ Create Facility for ATM BILAT
     Add Borrower    &{ExcelPath}[Facility_Currency]    &{ExcelPath}[Facility_BorrowerSGName]    &{ExcelPath}[Facility_BorrowerPercent]    &{ExcelPath}[Facility_Borrower1]
     ...    &{ExcelPath}[Facility_GlobalLimit]    &{ExcelPath}[Facility_BorrowerMaturity]    &{ExcelPath}[Facility_EffectiveDate]
 
+    Setup Interest Pricing for ATM Bilateral Deal    &{ExcelPath}[Interest_AddItem]    &{ExcelPath}[Interest_OptionName]    &{ExcelPath}[Interest_RateBasis]    &{ExcelPath}[Interest_SpreadAmt]
+
 Set Multiple Amortization Schedule for Facility
     [Documentation]    This high-level keyword sets up Amortization Schedule for Facility.
     ...    @author: ccarriedo    19JAN2021    - Initial create
