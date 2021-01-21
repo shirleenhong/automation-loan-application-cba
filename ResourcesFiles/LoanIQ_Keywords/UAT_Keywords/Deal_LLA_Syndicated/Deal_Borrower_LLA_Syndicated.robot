@@ -58,6 +58,7 @@ Create Deal Borrower Initial Details in Quick Party Onboarding for LLA Syndicate
 Search Customer and Complete Borrower Profile Creation with Default Values for LLA Syndicated Deal
     [Documentation]    This keyword searches a customer and complete its Borrower Profile creation with default values
     ...    @author: makcamps    17DEC2020
+    ...    @update: makcamps	20JAN2021	- fixed sequence for updating contact alias
     [Arguments]    ${ExcelPath}
 	
 	###Login to LoanIQ
@@ -103,9 +104,9 @@ Search Customer and Complete Borrower Profile Creation with Default Values for L
     ...    &{ExcelPath}[RI_BalanceType_Fees_Checkbox]    &{ExcelPath}[RI_AutoDoIt_Checkbox]
     Activate and Close Remittance List Window
     Add Servicing Groups Details    &{ExcelPath}[LIQCustomer_ShortName]    &{ExcelPath}[Group_Contact]    &{ExcelPath}[Contact_LastName]    
-    Run Keyword If    '&{ExcelPath}[Borrower_SGAlias]'!='None'    Update Borrower Servicing Group Alias    &{ExcelPath}[Borrower_SGAlias]
     Add Remittance Instruction to Servicing Group    &{ExcelPath}[RI_DDADescription]     
     Close Servicing Group Remittance Instructions Selection List Window    &{ExcelPath}[LIQCustomer_ShortName]    
+    Run Keyword If    '&{ExcelPath}[Borrower_SGAlias]'!='None'    Update Borrower Servicing Group Alias    &{ExcelPath}[Borrower_SGAlias]
              
     ###Logout and Relogin in Supervisor Level
     Close All Windows on LIQ
@@ -146,6 +147,7 @@ Update Party Details in Maintain Party Details Module for LLA Syndicated Deal
     [Documentation]    This keyword is used to update Party/Customer via Maintain Party Details Module and validate in Loan IQ.
     ...    @author: makcamps    17DEC2020    - initial create
     ...    @update: makcamps    15JAN2021    - added validating of SIC code if updated, and Run Keyword And Continue On Failure for writing 
+    ...    @update: makcamps    20JAN2021    - updated writing keywords and usage of data from data set 
     [Arguments]    ${ExcelPath}
     
     ### INPUTTER ###
@@ -157,9 +159,13 @@ Update Party Details in Maintain Party Details Module for LLA Syndicated Deal
 
     ${New_Enterprise_Name}    ${New_Short_Name}    Update Business Activity, Short Name and Enterprise Name in Enterprise Party Page    &{ExcelPath}[New_Enterprise_Prefix]
     ...    &{ExcelPath}[New_Short_Name_Prefix]    &{ExcelPath}[Party_ID]    &{ExcelPath}[New_Industry_Sector]    &{ExcelPath}[New_Business_Activity]
-    
-    Run Keyword And Continue On Failure    Write Data To Excel    PTY001_QuickPartyOnboarding    New_Enterprise_Name     ${TestCase_Name}    ${New_Enterprise_Name}
-    Run Keyword And Continue On Failure    Write Data To Excel    PTY001_QuickPartyOnboarding    New_Short_Name    ${TestCase_Name}    ${New_Short_Name}
+
+    Run Keyword And Continue On Failure    Write Data To Excel    PTY001_QuickPartyOnboarding    New_LIQBorrower_LegalName    ${rowid}    ${New_Enterprise_Name}
+    Run Keyword And Continue On Failure    Write Data To Excel    PTY001_QuickPartyOnboarding    New_LIQCustomer_ShortName    ${rowid}    ${New_Short_Name.upper()}
+    Run Keyword And Continue On Failure    Write Data To Excel    CRED02_FacilitySetup    Borrower_ShortName    ${rowid}    ${New_Short_Name.upper()}
+    Run Keyword And Continue On Failure    Write Data To Excel    CRED02_FacilitySetup    Facility_Borrower    ${rowid}    ${New_Short_Name.upper()}
+    Run Keyword And Continue On Failure    Write Data To Excel    CRED08_OngoingFeeSetup    Borrower_ShortName    ${rowid}    ${New_Short_Name.upper()}
+    Run Keyword And Continue On Failure    Write Data To Excel    Correspondence    Notice_Customer_LegalName    2    ${New_Short_Name.upper()}    bTestCaseColumn=True    sColumnReference=rowid
     Run Keyword If    '${SSO_ENABLED}'=='NO'    Logout User on Party
     ...    ELSE    Close Browser
     
@@ -167,21 +173,18 @@ Update Party Details in Maintain Party Details Module for LLA Syndicated Deal
     ${TaskID_ForPartyDetails}    Approve Party via Supervisor Account    &{ExcelPath}[Party_ID]    &{ExcelPath}[UserZone]    &{ExcelPath}[UserBranch]
     
     ### INPUTTER ###
-    Accept Approved Updated Selected Details Party    ${TaskID_ForPartyDetails}    &{ExcelPath}[UserZone]    &{ExcelPath}[UserBranch]  
-    
-    ${Enterprise_Name}    Run Keyword And Continue On Failure    Read Data From Excel    PTY001_QuickPartyOnboarding    New_Enterprise_Name    ${TestCase_Name}    sTestCaseColReference=Test_Case 
-    ${Short_Name}    Run Keyword And Continue On Failure    Read Data From Excel    PTY001_QuickPartyOnboarding    New_Short_Name    ${TestCase_Name}    sTestCaseColReference=Test_Case
+    Accept Approved Updated Selected Details Party    ${TaskID_ForPartyDetails}    &{ExcelPath}[UserZone]    &{ExcelPath}[UserBranch]
     
     Validate Enquire Enterprise Party After Amendment    &{ExcelPath}[Business_Country]    &{ExcelPath}[New_Industry_Sector]    &{ExcelPath}[New_Business_Activity]    &{ExcelPath}[Is_Main_Activity]    &{ExcelPath}[Is_Primary_Activity]    &{ExcelPath}[Locality]    
-    ...    &{ExcelPath}[Entity]    &{ExcelPath}[Assigned_Branch]    &{ExcelPath}[Party_Type]    &{ExcelPath}[Party_Sub_Type]    &{ExcelPath}[Party_Category]    &{ExcelPath}[Party_ID]    &{ExcelPath}[New_Enterprise_Name]    &{ExcelPath}[Registered_Number]   
-    ...    &{ExcelPath}[Country_of_Registration]    &{ExcelPath}[Country_of_Tax_Domicile]    &{ExcelPath}[New_Short_Name]    &{ExcelPath}[Address_Type]    &{ExcelPath}[Address_Line_1]    &{ExcelPath}[Address_Line_2]
+    ...    &{ExcelPath}[UserZone_Long]    &{ExcelPath}[Assigned_Branch]    &{ExcelPath}[Party_Type]    &{ExcelPath}[Party_Sub_Type]    &{ExcelPath}[Party_Category]    &{ExcelPath}[Party_ID]    ${New_Enterprise_Name}    &{ExcelPath}[Registered_Number]   
+    ...    &{ExcelPath}[Country_of_Registration]    &{ExcelPath}[Country_of_Tax_Domicile]    ${New_Short_Name}    &{ExcelPath}[Address_Type]    &{ExcelPath}[Address_Line_1]    &{ExcelPath}[Address_Line_2]
     ...    &{ExcelPath}[Address_Line_3]    &{ExcelPath}[Address_Line_4]    &{ExcelPath}[Town_City]    &{ExcelPath}[State_Province]    &{ExcelPath}[Post_Code]    &{ExcelPath}[Country_Region]    &{ExcelPath}[GST_Number]
     
     ${Entity_Name}    Get Substring    &{ExcelPath}[Entity]    0    2
     
     Pause Execution
 
-    Validate Party Details in Loan IQ    &{ExcelPath}[Party_ID]    &{ExcelPath}[New_Short_Name]    &{ExcelPath}[New_Enterprise_Name]    &{ExcelPath}[GST_Number]    &{ExcelPath}[Party_Sub_Type]    &{ExcelPath}[New_Business_Activity]    &{ExcelPath}[Business_Country]
+    Validate Party Details in Loan IQ    &{ExcelPath}[Party_ID]    ${New_Short_Name}    ${New_Enterprise_Name}    &{ExcelPath}[GST_Number]    &{ExcelPath}[Party_Sub_Type]    &{ExcelPath}[New_Business_Activity]    &{ExcelPath}[Business_Country]
     ...    &{ExcelPath}[Address_Type]    &{ExcelPath}[Address_Line_1]    &{ExcelPath}[Address_Line_2]    &{ExcelPath}[Address_Line_3]    &{ExcelPath}[Address_Line_4]    
     ...    &{ExcelPath}[Town_City]    &{ExcelPath}[Country_of_Registration]    &{ExcelPath}[Country_of_Tax_Domicile]    &{ExcelPath}[State_Province]    &{ExcelPath}[Post_Code]    ${Entity_Name}
 

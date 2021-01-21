@@ -10,3 +10,11 @@ Get Dataset for CH EDU Bilateral Deal
 
 Combine Outstanding A & B and Rollover
     Mx Execute Template With Multiple Data    Create Loan Merge for Outstanding A and B for CH EDU Bilateral Deal   ${ExcelPath}   ${rowid}    SERV11_LoanMerge
+
+Generate and Send Repricing Intent Notice - Combine Outstanding A & B and Rollover
+    Set Test Variable    ${rowid}    3
+    Mx Execute Template With Multiple Data    Send Repricing Intent Notice for CH EDU Bilateral Deal    ${ExcelPath}    ${rowid}    Correspondence
+
+Generate and Send Repricing Rate Setting Notice - Combine Outstanding A & B and Rollover
+    Set Test Variable    ${rowid}    4
+    Mx Execute Template With Multiple Data    Send Repricing Rate Setting Notice for CH EDU Bilateral Deal    ${ExcelPath}    ${rowid}    Correspondence
