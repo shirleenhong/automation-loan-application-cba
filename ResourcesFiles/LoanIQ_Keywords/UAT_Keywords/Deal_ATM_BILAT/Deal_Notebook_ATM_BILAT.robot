@@ -5,6 +5,7 @@ Resource    ../../../../Configurations/LoanIQ_Import_File.robot
 Setup Deal for ATM BILAT
     [Documentation]    This keyword is for setting up Deal for ATM Bilateral Deal
     ...    @author: ccarriedo    12JAN2021    - Initial Create
+    ...    @update: ccarriedo    20JAN2021    - Added writing of Deal_Name, Borrower_ShortName to CRED02_FacilitySetup sheet, deleted Global Variables
     [Arguments]    ${ExcelPath}
 	
 	### Login to LoanIQ ###
@@ -18,10 +19,15 @@ Setup Deal for ATM BILAT
     ${Borrower_SG_GroupMembers}    Read Data From Excel    PTY001_QuickPartyOnboarding    Borrower_SG_GroupMembers    &{ExcelPath}[rowid] 
     ${Borrower_PreferredRIMthd}    Read Data From Excel    PTY001_QuickPartyOnboarding    Borrower_PreferredRIMthd    &{ExcelPath}[rowid] 
     ${Borrower_SG_Name}    Read Data From Excel    PTY001_QuickPartyOnboarding    Borrower_SG_Name    &{ExcelPath}[rowid] 
-    ${Borrower_Depositor_Indicator}    Read Data From Excel    PTY001_QuickPartyOnboarding    Borrower_Depositor_Indicator    &{ExcelPath}[rowid] 
+    ${Borrower_Depositor_Indicator}    Read Data From Excel    PTY001_QuickPartyOnboarding    Borrower_Depositor_Indicator    &{ExcelPath}[rowid]
+    ${Party_ID1}    Read Data From Excel    PTY001_QuickPartyOnboarding    Party_ID    &{ExcelPath}[rowid]
 
     Write Data To Excel    CRED01_DealSetup    Deal_Name    &{ExcelPath}[rowid]    ${Deal_Name}
     Write Data To Excel    CRED01_DealSetup    Deal_Alias    &{ExcelPath}[rowid]    ${Deal_Alias}
+    Write Data To Excel    CRED01_DealSetup    Party_ID1    &{ExcelPath}[rowid]    ${Party_ID1}
+    Write Data To Excel    CRED02_FacilitySetup    Deal_Name    &{ExcelPath}[rowid]    ${Deal_Name}
+    Write Data To Excel    SERV15_SchComittmentDecrease    Deal_Name    &{ExcelPath}[rowid]    ${Deal_Name}
+
     Close All Windows on LIQ
     
     Create New Deal    ${Deal_Name}    ${Deal_Alias}    &{ExcelPath}[Deal_Currency]    &{ExcelPath}[Deal_Department]
@@ -33,7 +39,11 @@ Setup Deal for ATM BILAT
     
     ### Add another borrower ###
     ${Borrower_ShortName2}    Read Data From Excel    ORIG03_Customer    LIQCustomer_ShortName    2
+    ${Party_ID2}    Read Data From Excel    PTY001_QuickPartyOnboarding    Party_ID    2
+    Write Data To Excel    CRED02_FacilitySetup    Facility_Borrower1    &{ExcelPath}[rowid]    ${Borrower_ShortName2}
     Write Data To Excel    CRED01_DealSetup    Borrower_ShortName2    &{ExcelPath}[rowid]    ${Borrower_ShortName2}
+    Write Data To Excel    CRED02_FacilitySetup    Facility_Borrower2    &{ExcelPath}[rowid]    ${Borrower_ShortName}
+    Write Data To Excel    CRED01_DealSetup    Party_ID2    &{ExcelPath}[rowid]    ${Party_ID2}
     Add Deal Borrower    ${Borrower_ShortName2}
     
     ### Close Deal Borrower window ###
@@ -67,10 +77,6 @@ Setup Deal for ATM BILAT
 
     ### Save Changes ###    
     Save Changes on Deal Notebook
-    
-    ### Set variables for adding another borrower on next keyword ####
-    Set Global Variable    ${Deal_Name}
-    Set Global Variable    ${Deal_Alias}
     
     ### Logout and Relogin in Inputter Level ###
     Close All Windows on LIQ

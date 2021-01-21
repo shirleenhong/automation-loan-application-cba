@@ -276,7 +276,49 @@ Get Notice ID thru Deal Notebook
     ...    AND    Write Data To Excel    Correspondence    Contact    ${rowid}     ${Contact}    ${ExcelPath}    bTestCaseColumn=True    sColumnReference=rowid
     
     Close All Windows on LIQ
-
+  
+Get Notice ID thru Deal Notebook of specific Contact
+    [Documentation]    This keyword gets the Notice ID by navigating into Notices Window thru Deal Notebook.
+    ...    @author: makcamps    15JAN2021    - initial create 
+    [Arguments]    ${sFrom_Date}    ${sThru_Date}    ${sNotice_Type}    ${sContact}
+    
+    ### Keyword Pre-processing###
+    ${From_Date}    Acquire Argument Value    ${sFrom_Date}
+    ${Thru_Date}    Acquire Argument Value    ${sThru_Date}
+    ${Notice_Type}    Acquire Argument Value    ${sNotice_Type}
+    ${Contact}    Acquire Argument Value    ${sContact}
+    
+    mx LoanIQ activate window    ${LIQ_DealNotebook_Window}
+    mx LoanIQ select    ${LIQ_DealNotebook_Queries_Notices}
+    mx LoanIQ activate window    ${LIQ_NoticeSelectMessage_Window}
+    mx LoanIQ enter    ${LIQ_NoticeSelectMessage_FromDate_Field}    ${From_Date} 
+    mx LoanIQ enter    ${LIQ_NoticeSelectMessage_ThruDate_Field}    ${Thru_Date}        
+    mx LoanIQ click    ${LIQ_NoticeSelectMessage_OK_Button} 
+    
+    ${Search_Threshold}    Set Variable    10
+    ${Search_Threshold}    Convert To Integer    ${Search_Threshold} 
+    
+    :FOR    ${Current_Row}    IN RANGE    1    ${Search_Threshold}
+    \    ${Notice_Customer_LegalName}    ${Status}    ${Orig_UserID}    ${Orig_NoticeMethod}    Select Notice Group with Contact as Ref    ${Notice_Type}    ${Current_Row}    ${Contact}
+    \    Take Screenshot    ${screenshot_path}/Screenshots/Integration/Correspondence_Notice_NoticeGroup
+    \
+    \    Run Keyword If    '${Orig_NoticeMethod}' == '${Email_Notice_Method}' and '${Status}' == '${Initial_Notice_Status}'    Exit For Loop
+         ...    ELSE IF    '${Orig_NoticeMethod}' == '${CBA_Email_Notice_Method}' and '${Status}' == '${Initial_Notice_Status}'    Exit For Loop
+         ...    ELSE IF    '${Current_Row}' == '${Search_Threshold}' and '${Status}' != '${Initial_Notice_Status}'    Fail
+    \    
+    \    mx LoanIQ close window    ${LIQ_NoticeGroup_Window}    
+    
+    Mx LoanIQ Select String    ${LIQ_NoticeGroup_Items_JavaTree}    ${Notice_Customer_LegalName}\t${Contact}\t${Status}\t${Orig_UserID}\t${Orig_NoticeMethod}
+    mx LoanIQ click    ${LIQ_NoticeGroup_EditHighlightNotices}
+    mx LoanIQ activate window    ${LIQ_Notice_Window}
+    ${Notice_ID}    Mx LoanIQ Get Data    ${LIQ_Notice_NoticeID_Field}    value%ID
+    
+    Write Data To Excel    Correspondence    Notice_Identifier    ${rowid}     ${Notice_ID}    ${APIDataSet}    bTestCaseColumn=True    sColumnReference=rowid
+    Write Data To Excel    Correspondence    Notice_Customer_LegalName    ${rowid}     ${Notice_Customer_LegalName}    ${APIDataSet}    bTestCaseColumn=True    sColumnReference=rowid
+    Write Data To Excel    Correspondence    Contact    ${rowid}     ${Contact}    ${APIDataSet}    bTestCaseColumn=True    sColumnReference=rowid
+    
+    Close All Windows on LIQ
+  
 Select Notice Group
     [Documentation]    This keyword selects a notice group in the Notice Group window
     ...    @update: ehugo       15AUG2019    - initial create
@@ -286,7 +328,7 @@ Select Notice Group
     ...                                      - change the logic to fix the error on Mx LoanIQ Get Data To Excel
     ...    @update: mcastro    08JAN2021    - Updated 'Mx LoanIQ Select Or DoubleClick In Javatree' to 'Mx LoanIQ Select Or Doubleclick In Tree By Text' to handle notices that contains the same text
     [Arguments]    ${Notice_Type}    ${Current_Row}
-
+    
     Mx LoanIQ Activate Window    ${LIQ_NoticeGroupsFor_Window}
     Mx LoanIQ Select String    ${LIQ_NoticeGroupsFor_Items}    ${Notice_Type}   
     Mx LoanIQ Select Or Doubleclick In Tree By Text    ${LIQ_NoticeGroupsFor_Items}    ${Notice_Type}%s
@@ -316,7 +358,46 @@ Select Notice Group
     Take Screenshot    ${screenshot_path}/Screenshots/Integration/Select_Notice_Group
 
     [Return]    ${Notice_Customer_LegalName}    ${Contact}    ${Status}    ${Orig_UserID}    ${Orig_NoticeMethod}
-        
+
+Select Notice Group with Contact as Ref
+    [Documentation]    This keyword selects a notice group in the Notice Group window
+    ...    @author: makcamps    15JAN2021    - initial create
+    [Arguments]    ${sNotice_Type}    ${sCurrent_Row}    ${sContactName}
+
+    ### Keyword Pre-processing###
+    ${Notice_Type}    Acquire Argument Value    ${sNotice_Type}
+    ${Current_Row}    Acquire Argument Value    ${sCurrent_Row}
+    ${ContactName}    Acquire Argument Value    ${sContactName}
+
+    Mx LoanIQ Activate Window    ${LIQ_NoticeGroupsFor_Window}
+    Mx LoanIQ Select String    ${LIQ_NoticeGroupsFor_Items}    ${Notice_Type}   
+    Mx LoanIQ Select Or Doubleclick In Tree By Text    ${LIQ_NoticeGroupsFor_Items}    ${Notice_Type}%s
+    
+    Log    CurrentRow: ${Current_Row}
+    :FOR    ${i}    IN RANGE    0    ${Current_Row}
+    \    Mx Press Combination    Key.DOWN
+    Mx Press Combination    Key.ENTER
+    Mx LoanIQ Activate Window    ${LIQ_NoticeGroup_Window}
+    
+    ###Select item with Awaiting Release status and Email Notice Method###
+    ${Collection}    Mx LoanIQ Store Java Tree Items To Array    ${LIQ_NoticeGroup_Items_JavaTree}    Collection
+    ${Collection}    Split To Lines    ${Collection}
+    ${RowCount}    Get Length    ${Collection}
+
+	:FOR    ${Index}    IN RANGE    0    ${RowCount}
+	\    ${Notice_Customer_LegalName}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_NoticeGroup_Items_JavaTree}    ${ContactName}%Customer%Cust
+    \    ${Status}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_NoticeGroup_Items_JavaTree}    ${ContactName}%Status%Stat
+    \    ${Orig_UserID}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_NoticeGroup_Items_JavaTree}    ${ContactName}%User Id%Id
+    \    ${Orig_NoticeMethod}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_NoticeGroup_Items_JavaTree}    ${ContactName}%Notice Method%Notice
+    \
+    \    Run Keyword If    '${Orig_NoticeMethod}' == '${Email_Notice_Method}' and '${Status}' == '${Initial_Notice_Status}'    Exit For Loop
+         ...    ELSE IF    '${Orig_NoticeMethod}' == '${CBA_Email_Notice_Method}' and '${Status}' == '${Initial_Notice_Status}'    Exit For Loop
+         ...    ELSE IF    '${Index}' == '${RowCount-1}' and '${Status}' != '${Initial_Notice_Status}'    Exit For Loop      
+
+    Take Screenshot    ${screenshot_path}/Screenshots/Integration/Select_Notice_Group
+
+    [Return]    ${Notice_Customer_LegalName}    ${Status}    ${Orig_UserID}    ${Orig_NoticeMethod}
+
 Add Group Comment for Notices
     [Documentation]    This keyword add group comment for Notice window.
     ...    @author: dahijara    15DEC2020    - Initial create
@@ -368,6 +449,7 @@ Generate From and Thru Dates for Notices
 Get Notice ID via Deal Notebook 
     [Documentation]    This keyword gets the Notice ID by navigating into Notices Window thru Deal Notebook.
     ...    @author: dahijara    15DEC2020    - Initial create
+    ...    @update: mcastro    15JAN2021   - Added condition to handle Event Fee Payment Notice Window
     [Arguments]    ${sFrom_Date}    ${sThru_Date}    ${sNotice_Type}    ${sRunVal_Notice_ID}=None    ${sRunVal_Notice_Customer_LegalName}=None    ${sRunVal_Contact}=None
     ### Keyword Pre-processing ###
     ${From_Date}    Acquire Argument Value    ${sFrom_Date}
@@ -394,10 +476,15 @@ Get Notice ID via Deal Notebook
     \    
     \    mx LoanIQ close window    ${LIQ_NoticeGroup_Window}    
     
+    ${Window_title}    Mx LoanIQ Get Data    ${LIQ_NoticeGroup_Window}    label%temp
+
     Mx LoanIQ Select String    ${LIQ_NoticeGroup_Items_JavaTree}    ${Notice_Customer_LegalName}\t${Contact}\t${Status}\t${Orig_UserID}\t${Orig_NoticeMethod}
     mx LoanIQ click    ${LIQ_NoticeGroup_EditHighlightNotices}
     mx LoanIQ activate window    ${LIQ_Notice_Window}
-    ${Notice_ID}    Mx LoanIQ Get Data    ${LIQ_Notice_NoticeID_Field}    value%ID
+
+    ${Status}    Run Keyword and Return Status   Should Contain    ${Window_title}    Event Fee Payment
+    ${Notice_ID}    Run Keyword If    ${Status}==${True}    Mx LoanIQ Get Data    ${LIQ_EventFeePaymentGroup_NoticeID_Field}    value%ID
+    ...    ELSE    Mx LoanIQ Get Data    ${LIQ_Notice_NoticeID_Field}    value%ID
     
     Take Screenshot    ${screenshot_path}/Screenshots/Integration/Correspondence_Notice_NoticeGroup
     Close All Windows on LIQ
@@ -498,4 +585,4 @@ Validate Notice Status for Event Fee Payment Notice
     
     Take Screenshot    ${screenshot_path}/Screenshots/Integration/Correspondence_Notice_PostStatus
     
-    Close All Windows on LIQ     
+    Close All Windows on LIQ   

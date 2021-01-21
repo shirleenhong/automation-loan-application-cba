@@ -31,8 +31,9 @@ Validate Statuses Section
 
 Populate Filter Section
     [Documentation]    This keyword populate the fields under the Filter Section in Business Event Output Window.
-    ...    @author:mgaling
-    ...    @update:jaquitan 20Mar2019 updated arguments
+    ...    @author: mgaling		DDMMMYYY	- initial create
+    ...    @update: jaquitan	20Mar2019	- updated arguments
+    ...    @update: makcamps	16JAN2021	- added clicking of OK button of CustomerListByShortName
     [Arguments]    ${sBEO_StartDate}    ${sBEO_EndDate}    ${sCustomer_IdentifiedBy}    ${sNotice_Customer_LegalName}         
     
     mx LoanIQ activate window    ${LIQ_BusinessEventOutput_Window}
@@ -45,7 +46,8 @@ Populate Filter Section
     mx LoanIQ activate window    ${LIQ_CustomerSelect_Window}
     mx LoanIQ select list    ${LIQ_CustomerSelect_Search_Filter}    ${sCustomer_IdentifiedBy}
     mx LoanIQ enter    ${LIQ_CustomerSelect_Search_Inputfield}    ${sNotice_Customer_LegalName}       
-    mx LoanIQ click    ${LIQ_CustomerSelect_OK_Button}  
+    mx LoanIQ click    ${LIQ_CustomerSelect_OK_Button}
+    mx LoanIQ click element if present    ${LIQ_CustomerListByShortName_OK_Button}
 
 Validate Event Output Record
     [Documentation]    This keyword validates the Notice ID Status under Eevent Output Records Section.

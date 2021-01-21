@@ -172,6 +172,20 @@ Get Data in General Tab for Line Fee
     ${RateBasis}    Convert To Integer    ${RateBasis}
     
     [Return]    ${Rate}    ${BalanceAmount}    ${RateBasis}
+ 
+Get Notice Details in General Tab for Line Fee
+    [Documentation]    This keyword navigates to General Tab and gets data for notice details.
+    ...    @author: makcamps    15JAN2021    - Initial Create
+    
+    mx LoanIQ activate window    ${LIQ_LineFee_Window} 
+    Mx LoanIQ Select Window Tab    ${LIQ_LineFeeTag_Tab}    General
+        
+    ${RequestedAmount}    Mx LoanIQ Get Data    ${LIQ_OngoingFeePayment_Requested_Value}    value%test
+    ${FeeType}    Mx LoanIQ Get Data    ${LIQ_OngoingFeePayment_FeeType_Text}    value%test
+    ${Currency}    Mx LoanIQ Get Data    ${LIQ_OngoingFeePayment_Currency_Text}    value%test
+    ${EffectiveDate}    Mx LoanIQ Get Data    ${LIQ_OngoingFeePayment_EffectiveDate_Textfield}    value%test
+    
+    [Return]    ${RequestedAmount}    ${FeeType}    ${Currency}    ${EffectiveDate}
     
 Compute Line Fee Amount Per Cycle
     [Documentation]    This keyword is used in computing the first Projected Cycle Due of the Line Fee
@@ -302,27 +316,33 @@ Set Ongoing Fee Payment General Tab Details
      
 Enter Line Fee Details
     [Documentation]    This keyword will handle the dynamic updates in setting Line Fee dates
-    ...   @author: ritragel    06SEP2020
-    [Arguments]    ${sEffectiveDate}    ${sActual_DueDate}    ${sAdjusted_DueDate}    ${sCycle_Frequency}    ${sAccrue}
+    ...    @author: ritragel    06SEP2020
+    ...    @update: makcamps    14JAN2021    - added condition that if pay type is provided, update pay type
+    ...    @update: makcamps    20JAN2021    - updated sequence for updating line fee
+    [Arguments]    ${sEffectiveDate}    ${sActual_DueDate}    ${sAdjusted_DueDate}    ${sCycle_Frequency}    ${sAccrue}    ${sFloatRateDate}=None    ${sPayType}=None
     
     ### Keyword Pre-processing ###
     ${EffectiveDate}    Acquire Argument Value    ${sEffectiveDate}
     ${Actual_DueDate}    Acquire Argument Value    ${sActual_DueDate}
     ${Cycle_Frequency}    Acquire Argument Value    ${sCycle_Frequency}
     ${Adjusted_DueDate}    Acquire Argument Value    ${sAdjusted_DueDate}
+    ${FloatRateDate}    Acquire Argument Value    ${sFloatRateDate}
     ${Accrue}    Acquire Argument Value    ${sAccrue}
+    ${PayType}    Acquire Argument Value    ${sPayType}
 
     mx LoanIQ activate window    ${LIQ_LineFeeNotebook_Window}
-    mx LoanIQ click    ${LIQ_LineFee_InquiryMode_Button}
+    mx LoanIQ click    ${LIQ_LineFee_InquiryMode_Button}  
     mx LoanIQ enter    ${LIQ_LineFee_EffectiveDate_Field}    ${EffectiveDate} 
-    Mx Press Combination    Key.ENTER
-    Mx Click Element If Present    ${LIQ_Warning_OK_Button}    
-    mx LoanIQ enter    ${LIQ_LineFee_ActualDue_Date}    ${Actual_DueDate} 
-    Mx Click Element If Present    ${LIQ_Warning_OK_Button}   
+    Mx Press Combination    Key.ENTER 
+    Run Keyword If    '${PayType}'!='None'    mx LoanIQ enter    ${LIQ_LineFee_FloatRate_Date}    ${FloatRateDate}
+    Mx Click Element If Present    ${LIQ_Warning_OK_Button}
+    mx LoanIQ enter    ${LIQ_LineFee_ActualDue_Date}    ${Actual_DueDate}
+    Mx Click Element If Present    ${LIQ_Warning_OK_Button}
     mx LoanIQ enter    ${LIQ_LineFee_AdjustedDue_Date}    ${Adjusted_DueDate}  
-    Mx Click Element If Present    ${LIQ_Warning_OK_Button}   
+    Mx Click Element If Present    ${LIQ_Warning_OK_Button}
     mx LoanIQ Select Combo Box Value    ${LIQ_LineFee_Cycle}    ${Cycle_Frequency}
     mx LoanIQ Select Combo Box Value    ${LIQ_LineFee_Accrue_Dropdown}    ${Accrue}
+    Run Keyword If    '${PayType}'!='None'    mx LoanIQ Select Combo Box Value    ${LIQ_LineFee_PayType_Dropdown}    ${PayType}
     Select Menu Item    ${LIQ_LineFeeNotebook_Window}    File    Save
     mx LoanIQ click element if present    ${LIQ_Warning_OK_Button}
     Mx Click Element If Present    ${LIQ_Warning_Yes_Button}  
@@ -575,6 +595,33 @@ Initiate Line Fee Payment
     mx LoanIQ activate window    ${LIQ_Payment_Window}
     mx LoanIQ click element if present    ${LIQ_LineFee_InquiryMode_Button} 
     mx LoanIQ enter    ${LIQ_OngoingFeePayment_EffectiveDate_DateField}    ${SystemDate} 
+    mx LoanIQ enter    ${LIQ_OngoingFeePayment_RequestedAmount_Textfield}    ${CycleDueAmount}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LineFeePayment
+
+Initiate Line Fee Payment for LLA Syndicated Deal
+    [Documentation]    This keyword selects a cycle fee payment for projected Due amount.
+    ...    @author: makcamps    15JAN2021    - Initial Create 
+    [Arguments]    ${sCycle_Number}    ${sEffectiveDate}
+
+    ### GetRuntime Keyword Pre-processing ###
+    ${Cycle_Number}    Acquire Argument Value    ${sCycle_Number}
+    ${EffectiveDate}    Acquire Argument Value    ${sEffectiveDate}
+
+    mx LoanIQ activate window    ${LIQ_LineFee_Window}    
+    mx LoanIQ select    ${LIQ_LineFee_General_OptionsPayment_Menu}
+    mx LoanIQ enter    ${LIQ_ChoosePayment_Fee_RadioButton}    ON
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LineFeePayment
+    mx LoanIQ click    ${LIQ_ChoosePayment_OK_Button}
+
+    mx LoanIQ enter    ${LIQ_CommitmentFee_Cycles_ProjectedDue_RadioButton}    ON   
+
+    ${CycleDueAmount}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_CommitmentFee_Cyces_Javatree}    ${Cycle_Number}%Projected Cycle Due%value
+    ${CycleDueAmount}    Remove comma and convert to number - Cycle Due    ${CycleDueAmount}  
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LineFeePayment
+    mx LoanIQ click    ${LIQ_CommitmentFee_Cycles_OK_Button}
+    mx LoanIQ activate window    ${LIQ_Payment_Window}
+    mx LoanIQ click element if present    ${LIQ_LineFee_InquiryMode_Button} 
+    mx LoanIQ enter    ${LIQ_OngoingFeePayment_EffectiveDate_DateField}    ${EffectiveDate} 
     mx LoanIQ enter    ${LIQ_OngoingFeePayment_RequestedAmount_Textfield}    ${CycleDueAmount}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LineFeePayment
 
@@ -861,4 +908,3 @@ Validate After Payment Details on Acrual Tab - Line Fee
     ...    ELSE    Run Keyword And Continue On Failure    Fail    Paid To Date Amount is NOT correct. Expected: ${Expected_PaymentAmt} - Actual: ${PaidToDate}
 
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/FeeWindow_AccrualTab_LineFeeAccruals
-
