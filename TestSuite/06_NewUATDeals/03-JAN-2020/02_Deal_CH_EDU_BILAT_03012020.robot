@@ -14,3 +14,7 @@ Combine Outstanding A & B and Rollover
 Generate and Send Repricing Intent Notice - Combine Outstanding A & B and Rollover
     Set Test Variable    ${rowid}    3
     Mx Execute Template With Multiple Data    Send Repricing Intent Notice for CH EDU Bilateral Deal    ${ExcelPath}    ${rowid}    Correspondence
+
+Generate and Send Repricing Rate Setting Notice - Combine Outstanding A & B and Rollover
+    Set Test Variable    ${rowid}    4
+    Mx Execute Template With Multiple Data    Send Repricing Rate Setting Notice for CH EDU Bilateral Deal    ${ExcelPath}    ${rowid}    Correspondence
