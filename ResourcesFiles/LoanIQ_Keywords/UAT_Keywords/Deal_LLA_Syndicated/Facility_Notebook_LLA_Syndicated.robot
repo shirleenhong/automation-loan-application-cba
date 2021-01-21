@@ -14,7 +14,7 @@ Create Revolver Facility for LLA Syndicated Deal
 	Write Data To Excel    CRED02_FacilitySetup    Facility_Name    ${rowid}    ${FacilityName}
 	Write Data To Excel    SYND02_PrimaryAllocation    Facility_Name    ${rowid}    ${FacilityName}
     Write Data To Excel    CRED08_OngoingFeeSetup    Facility_Name    ${rowid}    ${FacilityName}
-    Write Data To Excel    Correspondence    Facility_Name    ${rowid}    ${Facility_Name}    ${ExcelPath}    Y    True    rowid
+    Write Data To Excel    Correspondence    Facility_Name    ${rowid}    ${FacilityName}    multipleValue=Y    bTestCaseColumn=True    sColumnReference=rowid
 	Set To Dictionary    ${ExcelPath}    Facility_Name=${FacilityName}
 	
 	###Add Revolver Facility###

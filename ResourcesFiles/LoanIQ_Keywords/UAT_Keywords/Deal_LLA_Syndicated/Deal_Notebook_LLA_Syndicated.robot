@@ -32,7 +32,7 @@ Setup Syndicated Deal for LLA Syndicated
     Write Data To Excel    CRED08_OngoingFeeSetup    Deal_Name    &{ExcelPath}[rowid]    ${Deal_Name}
     Write Data To Excel    CRED08_OngoingFeeSetup    Borrower_ShortName    &{ExcelPath}[rowid]    ${Borrower_ShortName}
     Write Data To Excel    SYND02_PrimaryAllocation    Deal_Name    &{ExcelPath}[rowid]    ${Deal_Name}
-    Write Data To Excel    Correspondence    Deal_Name    ${rowid}    ${Deal_Name}    ${ExcelPath}    N    True    rowid
+    Write Data To Excel    Correspondence    Deal_Name    ${rowid}    ${Deal_Name}    multipleValue=Y    bTestCaseColumn=True    sColumnReference=rowid
     Write Data To Excel    Correspondence    Notice_Customer_LegalName    1    ${Lender_ShortName}    bTestCaseColumn=True    sColumnReference=rowid
     Write Data To Excel    Correspondence    Notice_Customer_LegalName    2    ${Borrower_ShortName}    bTestCaseColumn=True    sColumnReference=rowid
     
