@@ -27,3 +27,6 @@ Establish and collect Line Fee for LLA Syndicated Deal
     Mx Execute Template With Multiple Data    Setup Line Fee in Arrears for LLA Syndicated Deal    ${ExcelPath}    ${rowid}    CRED08_OngoingFeeSetup
     Mx Execute Template With Multiple Data    Send Notice for Line Fee    ${ExcelPath}    1    Correspondence
     Mx Execute Template With Multiple Data    Send Notice for Line Fee    ${ExcelPath}    2    Correspondence
+
+Create Drawdown and Back Date to 16/12/2019
+    Mx Execute Template With Multiple Data    Create Loan Drawdown for LLA Syndicated Deal - Outstanding A    ${ExcelPath}    ${rowid}    SERV01_LoanDrawdown
