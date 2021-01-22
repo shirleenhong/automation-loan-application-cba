@@ -2052,7 +2052,7 @@ Validate the Total Amount of Existing Outstandings
     ${RequestedAmount_Expected}    Convert to String    ${RequestedAmount_Expected}
     ${TotalExistingOutstanding_Expected}    Convert Number With Comma Separators    ${RequestedAmount_Expected}
     
-    ${Status}    Run Keyword And Return Status    Should Be Equal    ${TotalExistingOutstanding}    ${TotalExistingOutstanding_Expected}
+    ${Status}    Run Keyword And Return Status    Compare Two Strings    ${TotalExistingOutstanding}    ${TotalExistingOutstanding_Expected}
     Run Keyword If    ${Status}==${True}    Log    Total Amount for Existing Outstandings is correct.
     ...    ELSE    Run Keyword And Continue On Failure    Fail    Total Amount for Existing Outstandings is incorrect. Expected amount:${TotalExistingOutstanding_Expected} | Actual amount:${TotalExistingOutstanding}
       
@@ -2061,7 +2061,7 @@ Validate the Total Amount of Existing Outstandings
 Get Repricing Date of Loans then Validate if Equal 
     [Documentation]    This keyword gets the Repricing Date of the selected Loan to be repriced.
     ...    @author: javinzon    21JAN2021    - Initial create
-    [Arguments]    ${sLoan1_Alias}    ${sLoan2_Alias}
+    [Arguments]    ${sLoan1_Alias}    ${sLoan2_Alias}   ${sRunVar_Loan2_Alias_RepricingDate}=None
     
     ### GetRuntime Keyword Pre-processing ###
 	${Loan1_Alias}    Acquire Argument Value    ${sLoan1_Alias}
@@ -2071,10 +2071,13 @@ Get Repricing Date of Loans then Validate if Equal
     ${Loan1_Alias_RepricingDate}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_ExistingLoansForFacility_JavaTree}    ${Loan1_Alias}%Repricing Date%RepricingDate  
     ${Loan2_Alias_RepricingDate}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_ExistingLoansForFacility_JavaTree}    ${Loan2_Alias}%Repricing Date%RepricingDate  
 
-    ${Status}    Run Keyword And Return Status    Should Be Equal    ${Loan1_Alias_RepricingDate}    ${Loan2_Alias_RepricingDate}
+    ${Status}    Run Keyword And Return Status    Compare Two Strings    ${Loan1_Alias_RepricingDate}    ${Loan2_Alias_RepricingDate}
     Run Keyword If    ${Status}==${True}    Log    Repricing dates of Loan Alias ${Loan1_Alias} and ${Loan2_Alias} are equal.
     ...    ELSE    Run Keyword And Continue On Failure    Fail  Repricing dates of Loan Alias ${Loan1_Alias} and ${Loan2_Alias} are not equal. Pelase check before merging. 
 
+    ### Keyword Post-processing ###
+    Save Values of Runtime Execution on Excel File    ${sRunVar_Loan2_Alias_RepricingDate}    ${Loan2_Alias_RepricingDate}
+    
     [Return]    ${Loan2_Alias_RepricingDate}
     
 Validate Fields in Loan Repricing General Tab
@@ -2116,6 +2119,7 @@ Add Auto Generate Interest Payment for Loan Repricing
     mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
     mx LoanIQ click element if present    ${LIQ_Information_OK_Button}
     mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/AutoGenerateInterestPayment
     Log    Auto Generate Interest Payment is added successfully  
 
 Validate General Tab of Pending Rollover/Conversion Notebook
@@ -2141,70 +2145,21 @@ Validate General Tab of Pending Rollover/Conversion Notebook
     Mx LoanIQ DoubleClick    ${LIQ_LoanRepricingForDeal_Workflow_JavaTree}    ${Alias_LoanMerge}
     Wait Until Keyword Succeeds    ${retry}    ${retry_interval}    mx LoanIQ activate window    ${LIQ_RolloverConversion_Window}
 
-    ### Effective Date ###
-    ${UI_EffectiveDate}    Mx LoanIQ Get Data    ${LIQ_RolloverConversion_EffectiveDate_Textfield}    text%data
-    ${Status}    Run Keyword And Return Status    Should Be Equal    ${UI_EffectiveDate}    ${Loan_EffectiveDate}
-    Run Keyword If    ${Status}==${True}    Log    Loan Effective Date is correct.
-    ...    ELSE    Run Keyword And Continue On Failure    Fail    Loan Effective Date is incorrect. Expected: ${Loan_EffectiveDate} - Actual: ${UI_EffectiveDate}
-
-    ### Maturity Date ###
-    ${UI_MaturityDate}    Mx LoanIQ Get Data    ${LIQ_RolloverConversion_MaturityDate_Textfield}    text%data
-    ${Status}    Run Keyword And Return Status    Should Be Equal    ${UI_MaturityDate}    ${Loan_MaturityDate}
-    Run Keyword If    ${Status}==${True}    Log    Loan Effective Date is correct.
-    ...    ELSE    Run Keyword And Continue On Failure    Fail    Loan Effective Date is incorrect. Expected: ${Loan_MaturityDate} - Actual: ${UI_MaturityDate}
-
-    ### Repricing Frequency ###
-    ${UI_RepricingFrequency}    Mx LoanIQ Get Data    ${LIQ_RolloverConversion_RepricingFrequency_List}    value%data
-    ${Status}    Run Keyword And Return Status    Should Be Equal    ${UI_RepricingFrequency}    ${Loan_RepricingFrequency}
-    Run Keyword If    ${Status}==${True}    Log    Loan Repricing Frequency is correct.
-    ...    ELSE    Run Keyword And Continue On Failure    Fail    Loan Repricing Frequency is incorrect. Expected: ${Loan_RepricingFrequency} - Actual: ${UI_RepricingFrequency}
-
-    ### Repricing Date ###
-    ${UI_RepricingDate}    Mx LoanIQ Get Data    ${LIQ_RolloverConversion_RepricingDate_Textfield}    text%data
-    ${Status}    Run Keyword And Return Status    Should Be Equal    ${UI_RepricingDate}    ${Loan_RepricingDate}
-    Run Keyword If    ${Status}==${True}    Log    Loan Repricing Date is correct.
-    ...    ELSE    Run Keyword And Continue On Failure    Fail    Loan Repricing Date is incorrect. Expected: ${Loan_RepricingDate} - Actual: ${UI_RepricingDate}
-
-    ### Payment Mode ###
-    ${UI_PaymentMode}    Mx LoanIQ Get Data    ${LIQ_RolloverConversion_PaymentMode_List}    value%data
-    ${Status}    Run Keyword And Return Status    Should Be Equal    ${UI_PaymentMode}    ${Loan_PaymentMode}
-    Run Keyword If    ${Status}==${True}    Log    Loan Payment Mode is correct.
-    ...    ELSE    Run Keyword And Continue On Failure    Fail    Loan Payment Mode is incorrect. Expected: ${Loan_PaymentMode} - Actual: ${UI_PaymentMode}
-
-    ### Int Cycle Frequency ###
-    ${UI_IntCycleFrequency}    Mx LoanIQ Get Data    ${LIQ_RolloverConversion_IntCycleFreq_Dropdown}    value%data
-    ${Status}    Run Keyword And Return Status    Should Be Equal    ${UI_IntCycleFrequency}    ${Loan_IntCycleFrequency}
-    Run Keyword If    ${Status}==${True}    Log    Loan Int Cycle Frequency is correct.
-    ...    ELSE    Run Keyword And Continue On Failure    Fail    Loan Int Cycle Frequency is incorrect. Expected: ${Loan_IntCycleFrequency} - Actual: ${UI_IntCycleFrequency}
-
-    ### Actual Due Date ###
-    ${UI_ActualDueDate}    Mx LoanIQ Get Data    ${LIQ_RolloverConversion_ActualDueDate_Textfield}    value%data
-    ${Status}    Run Keyword And Return Status    Should Be Equal    ${UI_ActualDueDate}    ${Loan_ActualDueDate}
-    Run Keyword If    ${Status}==${True}    Log    Loan Int Cycle Frequency is correct.
-    ...    ELSE    Run Keyword And Continue On Failure    Fail    Loan Int Cycle Frequency is incorrect. Expected: ${Loan_ActualDueDate} - Actual: ${UI_ActualDueDate}
-
-    ### Adjusted Due Date ###
-    ${UI_AdjustedDueDate}    Mx LoanIQ Get Data    ${LIQ_RolloverConversion_AdjustedDueDate_Textfield}    value%data
-    ${Status}    Run Keyword And Return Status    Should Be Equal    ${UI_AdjustedDueDate}    ${Loan_AdjustedDueDate}
-    Run Keyword If    ${Status}==${True}    Log    Loan Int Cycle Frequency is correct.
-    ...    ELSE    Run Keyword And Continue On Failure    Fail    Loan Int Cycle Frequency is incorrect. Expected: ${Loan_AdjustedDueDate} - Actual: ${UI_AdjustedDueDate}
-
-    ### Accrue ###
-    ${UI_Accrue}    Mx LoanIQ Get Data    ${LIQ_RolloverConversion_Accrue_List}    value%data
-    ${Status}    Run Keyword And Return Status    Should Be Equal    ${UI_Accrue}    ${Loan_Accrue}
-    Run Keyword If    ${Status}==${True}    Log    Loan Int Cycle Frequency is correct.
-    ...    ELSE    Run Keyword And Continue On Failure    Fail    Loan Int Cycle Frequency is incorrect. Expected: ${Loan_Accrue} - Actual: ${UI_Accrue}
-
-    ### Accrual End Date ###
-    ${UI_AccrualEndDate}    Mx LoanIQ Get Data    ${LIQ_RolloverConversion_AccrualEndDate_Textfield}    value%data
-    ${Status}    Run Keyword And Return Status    Should Be Equal    ${UI_AccrualEndDate}    ${Loan_AccrualEndDate}
-    Run Keyword If    ${Status}==${True}    Log    Loan Int Cycle Frequency is correct.
-    ...    ELSE    Run Keyword And Continue On Failure    Fail    Loan Int Cycle Frequency is incorrect. Expected: ${Loan_AccrualEndDate} - Actual: ${UI_AccrualEndDate}
+    Validate Loan IQ Details    ${Loan_EffectiveDate}    ${LIQ_RolloverConversion_EffectiveDate_Textfield}
+    Validate Loan IQ Details    ${Loan_MaturityDate}    ${LIQ_RolloverConversion_MaturityDate_Textfield}
+    Validate Loan IQ Details    ${Loan_RepricingFrequency}    ${LIQ_RolloverConversion_RepricingFrequency_List}
+    Validate Loan IQ Details    ${Loan_RepricingDate}    ${LIQ_RolloverConversion_RepricingDate_Textfield}
+    Validate Loan IQ Details    ${Loan_PaymentMode}    ${LIQ_RolloverConversion_PaymentMode_List}
+    Validate Loan IQ Details    ${Loan_IntCycleFrequency}    ${LIQ_RolloverConversion_IntCycleFreq_Dropdown}
+    Validate Loan IQ Details    ${Loan_ActualDueDate}    ${LIQ_RolloverConversion_ActualDueDate_Textfield}
+    Validate Loan IQ Details    ${Loan_AdjustedDueDate}    ${LIQ_RolloverConversion_AdjustedDueDate_Textfield}
+    Validate Loan IQ Details    ${Loan_Accrue}    ${LIQ_RolloverConversion_Accrue_List}
+    Validate Loan IQ Details    ${Loan_AccrualEndDate}    ${LIQ_RolloverConversion_AccrualEndDate_Textfield}
 
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/RolloverGeneralTab
     mx LoanIQ select    ${LIQ_RolloverConversion_FileExit_Menu}
 
-Validate If Repricing Date and Effective Date in Loan Repricing are Equal
+Validate if Repricing Date and Effective Date in Loan Repricing are Equal
     [Documentation]    This keyword is used to validate If Repricing Date of Merged Loan and Effective Date in Loan Repricing are Equal
     ...    @author: javinzon     21JAN2021    - Initial create
     [Arguments]    ${sRepricingDate}    ${sExpectedDate}
@@ -2213,7 +2168,7 @@ Validate If Repricing Date and Effective Date in Loan Repricing are Equal
     ${RepricingDate}    Acquire Argument Value    ${sRepricingDate}
     ${ExpectedDate}    Acquire Argument Value    ${sExpectedDate}
     
-    ${Status}    Run Keyword And Return Status    Should Be Equal    ${RepricingDate}    ${EffectiveDate}
+    ${Status}    Run Keyword And Return Status    Compare Two Strings    ${RepricingDate}    ${ExpectedDate}
     Run Keyword If    ${Status}==${True}    Log    Repricing Date and Effective Date are equal.
     ...    ELSE    Run Keyword And Continue On Failure    Fail    Repricing Date and Effective Date are not equal. Expected Date for both is ${ExpectedDate}.
     

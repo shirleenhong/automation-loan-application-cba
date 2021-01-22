@@ -79,7 +79,7 @@ Create Loan Drawdown for LBT Bilateral Deal
     Validate Loan Drawdown General Details in General Tab    &{ExcelPath}[Pricing_Option]    &{ExcelPath}[Loan_EffectiveDate]    &{ExcelPath}[Loan_RepricingFrequency]    &{ExcelPath}[Loan_RepricingDate]    &{ExcelPath}[Payment_Mode]    &{ExcelPath}[Expctd_Loan_IntCycleFrequency]
     Validate Loan Drawdown Rates in Rates Tab    &{ExcelPath}[Expctd_LoanCurrentBaseRate]    &{ExcelPath}[Expctd_LoanSpread]    &{ExcelPath}[Expctd_LoanAllInRate]
 
-Combine Drawdown A and B and make Partial Repayment for LBT Bilateral Deal
+Combine Drawdown A and B and Make Partial Repayment for LBT Bilateral Deal
      [Documentation]    This is a high-level keyword to Combine drawdowns and pay for partial payment then Rollover
     ...    @author: javinzon    19JAN2021    - Initial Create 
     [Arguments]    ${ExcelPath}
@@ -105,16 +105,17 @@ Combine Drawdown A and B and make Partial Repayment for LBT Bilateral Deal
     Select Repricing Type    &{ExcelPath}[Repricing_Type]
     Select Multiple Loan to Merge    ${Loan_Alias_A}    ${Loan_Alias_B}
     
-    ### Added pause execution to change effective date to a valid date (step not included in screenshots) ###
-    # Pause Execution
+    ### Added pause execution to change effective date to a valid date since LIQ date is not correct during build of this keyword (step not included in screenshots) ###
+    Pause Execution
     
     ### Validate Total of Existing Outstandings ###
     ${TotalExistingOutstanding_Amount}    Validate the Total Amount of Existing Outstandings    &{ExcelPath}[Pricing_Option]    ${Loan_Alias_A}    ${Loan_Alias_B}      ${Loan_AliasA_Amount}    ${Loan_AliasB_Amount}
     Validate Fields in Loan Repricing General Tab    &{ExcelPath}[Effective_Date] 
-    Validate If Repricing Date and Effective Date in Loan Repricing are Equal    ${RepricingDate_LoansAB}    &{ExcelPath}[Effective_Date]
+    Validate if Repricing Date and Effective Date in Loan Repricing are Equal    ${RepricingDate_LoansAB}    &{ExcelPath}[Effective_Date]
    
     ### Add New Outstandings ###
     ${Alias_LoanMerge}    Add New Outstandings    &{ExcelPath}[Pricing_Option]    &{ExcelPath}[Base_Rate]    &{ExcelPath}[NewLoan_Amount]
+    ${Alias_LoanMerge}    Set Variable    60002489
     Validate General Tab of Pending Rollover/Conversion Notebook    ${Alias_LoanMerge}    &{ExcelPath}[Effective_Date]    &{ExcelPath}[Maturity_Date]    &{ExcelPath}[Repricing_Frequency]    &{ExcelPath}[Repricing_Date]
     ...    &{ExcelPath}[Payment_Mode]    &{ExcelPath}[Int_Cycle_Freq]    &{ExcelPath}[Actual_Due_Date]    &{ExcelPath}[Adjusted_Due_Date]    &{ExcelPath}[Accrue]    &{ExcelPath}[Accrual_End_Date]
     
