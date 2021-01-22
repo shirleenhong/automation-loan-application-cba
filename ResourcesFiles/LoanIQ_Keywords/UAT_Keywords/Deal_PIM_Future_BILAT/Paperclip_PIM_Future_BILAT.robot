@@ -8,6 +8,7 @@ Collect Early Prepayment via Paper Clip For PIM Future BILAT
     ...    @author: mcastro    16DEC2020    - Initial Create
     ...    @update: mcastro    05JAN2021    - Updated with correct column name, added selecting of breakfunding reason 
     ...    @update: mcastro    14JAN2021    - Added validation of Released status 
+    ...    @update: mcastro    21JAN2021    - Added additional validation of total prepayment amount
     [Arguments]    ${ExcelPath}
 
     ### Read data from Loan Drawdown and Comprehensive repricing sheets ###

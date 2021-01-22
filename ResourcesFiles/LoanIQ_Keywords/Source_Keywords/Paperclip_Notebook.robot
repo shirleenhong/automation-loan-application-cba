@@ -80,6 +80,7 @@ Verify Added Paperclip Payments
     \    Log   Transaction is present in the JavaTree  
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/PendingPaperClip_FeesAndOutstanding
     mx LoanIQ click    ${LIQ_FeesAndOutstandings_OK_Button}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/PendingPaperClip_FeesAndOutstanding
 
 Navigate to Create Cashflow for Paperclip
     [Documentation]    This keyword will navigate from General tab to Workflow and Create Cashflows
