@@ -4004,6 +4004,7 @@ Validate Loan Drawdown Amounts in General Tab
     ...    @author: dahijara    16DEC2020    - Initial create
     ...    @update: javinzon    18DEC2020    - Updated keyword name from 'Validate Loan Drawdown Amounts for CH EDU Bilateral Deal' 
     ...                                        to 'Validate Loan Drawdown Amounts in General Tab', updated documentation
+    ...    @update: javinzon    21JAN2021    - Added another Take Screenshot to capture the tab after loading
     [Arguments]    ${sOrig_LoanGlobalOriginal}    ${sOrig_LoanGlobalCurrent}    ${sOrig_LoanHostBankGross}    ${sOrig_LoanHostBankNet}
 
     ### GetRuntime Keyword Pre-processing ###
@@ -4040,7 +4041,8 @@ Validate Loan Drawdown Amounts in General Tab
     ${Status}    Run Keyword And Return Status    Should Be Equal    ${New_LoanHostBankNet}    ${Orig_LoanHostBankNet}          
     Run Keyword If    ${Status}==${True}    Log    Loan Host Bank Net Amount is correct.
     ...    ELSE    Run Keyword And Continue On Failure    Fail    Loan Host Bank Net Amount is incorrect. Expected: ${Orig_LoanHostBankNet} - Actual: ${New_LoanHostBankNet}
-
+    
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LoanWindow
 Validate Loan Drawdown Rates in Rates Tab
     [Documentation]    This keyword validates the loan drawdown rates in Rates Tab.
     ...    @author: dahijara    16DEC2020    - Initial create
