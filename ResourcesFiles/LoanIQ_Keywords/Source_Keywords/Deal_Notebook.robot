@@ -3259,5 +3259,6 @@ Add False Outside Conditions Deal Change
 Close Deal Notebook Window
     [Documentation]    This keywrd is used to close deal notebook window
     ...    @author: ccarriedo    13JAN2021    - Initial create
+    ...    @update: ccarriedo    20JAN2021    - Changed the locator
 
-    Mx LoanIQ Close Window    ${LIQ_DealBorrower_Window}
+    mx LoanIQ click    ${LIQ_DealBorrower_Ok_Button}

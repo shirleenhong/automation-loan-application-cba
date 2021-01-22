@@ -15,6 +15,7 @@ Setup Deal for PIM Future BILAT
     ...    @update: mcastro    08JAN2021    - Added writing of Borrower_Shortname and Deal_Name on SERV01_LoanDrawdown for 2nd Loan
     ...    @udpate: mcastro    15JAN2021    - Replace writing of Borrower_Shortname and Deal_Name to use multipleValue=Y value
     ...                                     - Removed writing of Borrower_Shortname on Correspondence as this is already done by Notice test case
+    ...    @update: mcastro    22JAN2021    - Removed None on 'Add Pricing Option'
     [Arguments]    ${ExcelPath}
     
     ${Deal_Name}    ${Deal_Alias}    Generate Deal Name and Alias with 5 Numeric Test Data    &{ExcelPath}[Deal_NamePrefix]    &{ExcelPath}[Deal_AliasPrefix]
@@ -59,8 +60,8 @@ Setup Deal for PIM Future BILAT
     ### Pricing Rules Tab ###
     Add Pricing Option    &{ExcelPath}[Deal_PricingOption]    &{ExcelPath}[InitialFractionRate_Round]    &{ExcelPath}[RoundingDecimal_Round]    &{ExcelPath}[NonBusinessDayRule]    &{ExcelPath}[PricingOption_BillNoOfDays]    
     ...    &{ExcelPath}[PricingOption_MatrixChangeAppMthd]    &{ExcelPath}[PricingOption_RateChangeAppMthd]    &{ExcelPath}[PricingOption_InitialFractionRate]    &{ExcelPath}[PricingOption_RoundingDecimalPrecision]    &{ExcelPath}[PricingOption_RoundingApplicationMethod]      
-    ...    &{ExcelPath}[PricingOption_PercentOfRateFormulaUsage]    &{ExcelPath}[PricingOption_RepricingNonBusinessDayRule]    None    &{ExcelPath}[PricingOption_InterestDueUponPrincipalPayment]    &{ExcelPath}[PricingOption_InterestDueUponRepricing]
-    ...    None    None    None    None    None    None    None    None    None    &{ExcelPath}[PricingOption_BillBorrower]     
+    ...    &{ExcelPath}[PricingOption_PercentOfRateFormulaUsage]    &{ExcelPath}[PricingOption_RepricingNonBusinessDayRule]    sPricingOption_InterestDueUponPrincipalPayment=&{ExcelPath}[PricingOption_InterestDueUponPrincipalPayment]    
+    ...    sPricingOption_InterestDueUponRepricing=&{ExcelPath}[PricingOption_InterestDueUponRepricing]    sPricingOption_BillBorrower=&{ExcelPath}[PricingOption_BillBorrower]        
 
     Add Fee Pricing Rules    &{ExcelPath}[PricingRule_Fee]    &{ExcelPath}[PricingRule_MatrixChangeAppMthd]    &{ExcelPath}[PricingRule_NonBussDayRule]
 

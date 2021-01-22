@@ -384,7 +384,7 @@ Resource    ../ResourcesFiles/LoanIQ_Keywords/Source_Keywords/UsageFee_Notebook.
 Resource    ../ResourcesFiles/LoanIQ_Keywords/Source_Keywords/UserAdministration_Notebook.robot
 Resource    ../ResourcesFiles/LoanIQ_Keywords/Source_Keywords/UserAdministrationProfile_Notebook.robot
 Resource    ../ResourcesFiles/LoanIQ_Keywords/Source_Keywords/UpfrontFeeDistribution_Notebook.robot
-
+Resource    ../ResourcesFiles/LoanIQ_Keywords/Source_Keywords/LoanIncrease_Notebook.robot
 
 ### CBA UAT Keywords ###
 Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/UAT_TL_Keywords/UAT_TL_BASE.robot
@@ -482,6 +482,7 @@ Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/Deal_PIM_Future_BILAT
 ### NEW UAT Deal ATM BILAT ###
 Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/Deal_ATM_BILAT/Deal_Borrower_ATM_BILAT.robot
 Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/Deal_ATM_BILAT/Deal_Notebook_ATM_BILAT.robot
+Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/Deal_ATM_BILAT/Facility_Notebook_ATM_BILAT.robot
 
 ### NEW UAT Deal TL ###
 Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/UAT_TL_Keywords/TL_FX_Rates.robot
@@ -497,6 +498,7 @@ Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/Deal_New_Life_BILAT/R
 ### NEW UAT Deal PDS SYND ###
 Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/Deal_PDS_SYND/Deal_Borrower_PDS_SYND.robot
 Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/Deal_PDS_SYND/Deal_Notebook_PDS_SYND.robot
+Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/Deal_PDS_SYND/Facility_Notebook_PDS_SYND.robot
 
 ### New PT Health UAT Deal ###
 Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/Deal_PT_Health_Syndicated/Deal_Notebook_PT_Health_Syndicated.robot

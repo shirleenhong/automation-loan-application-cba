@@ -2124,6 +2124,7 @@ Generate Rate Setting Notices for Drawdown
     ...    @update: dahijara    15JUN2020    - Added code to get only the last 11 digits for Customer Name
     ...                                      - Update the validation for Customer Name in UI
     ...    @update: makcamps    15OCT2020	 - added upper() method to borrower name because it is displayed as all caps
+    ...    @update: mcastro    20JAN2021    - Added taking of screenshots
     [Arguments]    ${sCustomer_Legal_Name}    ${NoticeStatus}
 
     ### GetRuntime Keyword Pre-processing ###
@@ -2134,16 +2135,21 @@ Generate Rate Setting Notices for Drawdown
     mx LoanIQ activate window    ${LIQ_InitialDrawdown_Window}
     Mx LoanIQ Select Window Tab    ${LIQ_InitialDrawdown_Tab}    Workflow   
     Mx LoanIQ DoubleClick    ${LIQ_InitialDrawdown_WorkflowAction}    Generate Rate Setting Notices 
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/InitialDrawdown_Workflow
     mx LoanIQ click element if present    ${LIQ_Question_Yes_Button} 
     mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}   
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/InitialDrawdown_Workflow
     mx LoanIQ activate window    ${LIQ_Notices_Window}   
-    mx LoanIQ click    ${LIQ_Notices_OK_Button}      
+    mx LoanIQ click    ${LIQ_Notices_OK_Button}  
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/InitialDrawdown_Workflow    
     mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
     mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
-    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}   
+    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button} 
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/InitialDrawdown_Workflow  
     mx LoanIQ activate window    ${LIQ_Rollover_Intent_Notice_Window} 
     Mx LoanIQ Select String    ${LIQ_Notice_Information_Table}    ${Customer_Legal_Name}
-    mx LoanIQ click    ${LIQ_Rollover_EditHighlightedNotice_Button}       
+    mx LoanIQ click    ${LIQ_Rollover_EditHighlightedNotice_Button}   
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/InitialDrawdown_Workflow    
     mx LoanIQ activate window    ${LIQ_Rollover_NoticeCreate_Window}
     ${Verified_Customer}    Mx LoanIQ Get Data    JavaWindow("title:=.*Notice created.*","displayed:=1").JavaEdit("text:=.*${Customer_Legal_Name.upper()}")    Verified_Customer    
     Should Contain    ${Verified_Customer}    ${Customer_Legal_Name.upper()}
@@ -2151,8 +2157,10 @@ Generate Rate Setting Notices for Drawdown
     ${Verified_Status}    Mx LoanIQ Get Data    JavaWindow("title:=.*Notice created.*","displayed:=1").JavaObject("tagname:=Group","text:=Status").JavaStaticText("text:=${NoticeStatus}")    Verified_Status    
     Should Be Equal As Strings    ${NoticeStatus}    ${Verified_Status}
     Log    ${Verified_Status} - Status is correct! 
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/InitialDrawdown_Workflow
     mx LoanIQ close window    ${LIQ_Rollover_NoticeCreate_Window}
     mx LoanIQ close window    ${LIQ_Rollover_Intent_Notice_Window} 
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/InitialDrawdown_Workflow
 
 Enter Loan Drawdown Details for AUD Libor Option
     [Documentation]    This keyword is used to enter Loan Drawdown Details for USD Libor Option

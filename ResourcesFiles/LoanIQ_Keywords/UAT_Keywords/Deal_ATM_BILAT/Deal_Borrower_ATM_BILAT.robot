@@ -55,7 +55,7 @@ Create Deal Borrower in Quick Party Onboarding for ATM BILAT
 Search Customer and Complete Borrower Profile Creation with Default Values for ATM Bilateral Deal
     [Documentation]    This keyword searches a customer and complete its Borrower Profile creation with default values
     ...    @author: nbautista    09DEC2020
-    ...    @author: ccarriedo    12JAN2021    - Added Update Borrower Servicing Group Alias keyword to populate Borrower_SGAlias column
+    ...    @update: ccarriedo    12JAN2021    - Added Update Borrower Servicing Group Alias keyword to populate Borrower_SGAlias column
     [Arguments]    ${ExcelPath}
 	
 	### Login to LoanIQ ###

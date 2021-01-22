@@ -27,6 +27,7 @@ Update Ongoing Fee for LLA Syndicated Deal
 Setup Line Fee in Arrears for LLA Syndicated Deal
     [Documentation]    This keyword will setup Line Fee for LLA Syndicated Deal.
     ...    @author: makcamps    14JAN2021    - Initial Create
+    ...    @update: makcamps    20JAN2021    - removed closing of all windows
     [Arguments]    ${ExcelPath}
     
     Search Existing Deal    &{ExcelPath}[Deal_Name]    
@@ -68,6 +69,3 @@ Setup Line Fee in Arrears for LLA Syndicated Deal
     
     ###Ongoing Fee Notebook###
     Release Ongoing Fee Payment
-       
-    ###Loan IQ Desktop###
-    Close All Windows on LIQ
