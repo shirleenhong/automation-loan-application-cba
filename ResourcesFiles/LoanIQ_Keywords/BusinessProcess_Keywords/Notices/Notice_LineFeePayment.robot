@@ -6,6 +6,7 @@ Resource     ../../../../Configurations/LoanIQ_Import_File.robot
 Send Notice for Line Fee
     [Documentation]    This keyword is use to successfully sent out a Fee Payment Notice via WIP - API_COR_TC02
     ...    @author: makcamps
+    ...    @update: makcamps    22JAN2021    - updated where to get data from, instead of from api get from excel path
     [Arguments]    ${ExcelPath}
     
     Get Notice Details for Fee Payment Notice Line Fee in LIQ    ${rowid}    &{ExcelPath}[Facility_Name]    &{ExcelPath}[Deal_Name]    &{ExcelPath}[OngoingFee_Type]
@@ -14,11 +15,11 @@ Send Notice for Line Fee
     
     Get the Notice Details of Specific Contact in LIQ    ${rowid}    &{ExcelPath}[SubAdd_Days]    &{ExcelPath}[Deal_Name]    &{ExcelPath}[Fee_Type]    &{ExcelPath}[Zero_TempPath]0.xls    &{ExcelPath}[Contact]
     
-    ${FromDate}    Read Data From Excel for API_Data    Correspondence    From_Date    ${rowid}
-    ${ThruDate}    Read Data From Excel for API_Data    Correspondence    Thru_Date    ${rowid}
+    ${FromDate}    Read Data From Excel    Correspondence    From_Date    ${rowid}
+    ${ThruDate}    Read Data From Excel    Correspondence    Thru_Date    ${rowid}
     
-    ${NoticeIdentifier}    Read Data From Excel for API_Data    Correspondence    Notice_Identifier    ${rowid}
-    ${NoticeCustomerLegalName}    Read Data From Excel for API_Data    Correspondence    Notice_Customer_LegalName    ${rowid}
+    ${NoticeIdentifier}    Read Data From Excel    Correspondence    Notice_Identifier    ${rowid}
+    ${NoticeCustomerLegalName}    Read Data From Excel    Correspondence    Notice_Customer_LegalName    ${rowid}
     
     ###Validate and Sent Notice###
     Send Notice via WIP in LIQ    ${NoticeIdentifier}    ${NoticeCustomerLegalName}    &{ExcelPath}[Notice_Method]    Awaiting release        
@@ -29,13 +30,13 @@ Send Notice for Line Fee
     ...    ${dataset_path}&{ExcelPath}[InputFilePath]&{ExcelPath}[XML_File].xml
     ...    ${dataset_path}&{ExcelPath}[InputFilePath]&{ExcelPath}[Temp_File].json    &{ExcelPath}[Field_Name]
            
-    Write Data To Excel for API_Data    Correspondence    BEO_StartDate    ${rowid}    ${CurrentDate}
-    Write Data To Excel for API_Data    Correspondence    BEO_EndDate    ${rowid}    ${CurrentDate}
-    Write Data To Excel for API_Data    Correspondence    Correlation_ID    ${rowid}    ${FieldValue}
+    Write Data To Excel    Correspondence    BEO_StartDate    ${rowid}    ${CurrentDate}    bTestCaseColumn=True    sColumnReference=rowid
+    Write Data To Excel    Correspondence    BEO_EndDate    ${rowid}    ${CurrentDate}    bTestCaseColumn=True    sColumnReference=rowid
+    Write Data To Excel    Correspondence    Correlation_ID    ${rowid}    ${FieldValue}    bTestCaseColumn=True    sColumnReference=rowid
     
-    ${BEOStartDate}    Read Data From Excel for API_Data    Correspondence    BEO_StartDate    ${rowid}
-    ${BEOEndDate}    Read Data From Excel for API_Data    Correspondence    BEO_EndDate    ${rowid}
-    ${CorrelationID}    Read Data From Excel for API_Data    Correspondence    Correlation_ID    ${rowid}
+    ${BEOStartDate}    Read Data From Excel    Correspondence    BEO_StartDate    ${rowid}
+    ${BEOEndDate}    Read Data From Excel    Correspondence    BEO_EndDate    ${rowid}
+    ${CorrelationID}    Read Data From Excel    Correspondence    Correlation_ID    ${rowid}
     
     ###Send Call Back thru Postman###
     ${CorrelationIdByte}    Encode String To Bytes    ${CorrelationID}     UTF-8
@@ -48,11 +49,11 @@ Send Notice for Line Fee
     ...    &{ExcelPath}[OutputAPIResponse]    &{ExcelPath}[ExpectedJson]    ${RESPONSECODE_200}
     
     ###Notice Window Validation### 
-    ${Contact}    Read Data From Excel for API_Data    Correspondence    Contact   ${rowid}
-    ${Notice_AllInRate}    Read Data From Excel for API_Data    Correspondence    Notice_AllInRate   ${rowid}
-    ${Notice_Amount}    Read Data From Excel for API_Data    Correspondence    Notice_Amount   ${rowid}
-    ${Balance_Amount}    Read Data From Excel for API_Data    Correspondence    Balance_Amount   ${rowid}
-    ${Rate_Basis}    Read Data From Excel for API_Data    Correspondence    Rate_Basis   ${rowid}
+    ${Contact}    Read Data From Excel    Correspondence    Contact   ${rowid}
+    ${Notice_AllInRate}    Read Data From Excel    Correspondence    Notice_AllInRate   ${rowid}
+    ${Notice_Amount}    Read Data From Excel    Correspondence    Notice_Amount   ${rowid}
+    ${Balance_Amount}    Read Data From Excel    Correspondence    Balance_Amount   ${rowid}
+    ${Rate_Basis}    Read Data From Excel    Correspondence    Rate_Basis   ${rowid}
     
     Validate the Notice Window in LIQ    &{ExcelPath}[Search_By]    ${NoticeIdentifier}    ${FromDate}    ${ThruDate}    &{ExcelPath}[Notice_Status]    ${NoticeCustomerLegalName}
     ...    ${Contact}    &{ExcelPath}[NoticeGroup_UserID]    &{ExcelPath}[Notice_Method]

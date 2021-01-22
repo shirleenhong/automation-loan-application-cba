@@ -24,15 +24,16 @@ Get the Notice Details in LIQ
 Get the Notice Details of Specific Contact in LIQ
     [Documentation]    This Keyword gets the necessary data for Notice Validation.
     ...    @author: makcamps    15JAN2021    - initial create
-    [Arguments]    ${rowid}    ${sSubAddDays}    ${sDealName}    ${sNoticeType}    ${sZeroTempPath}    ${Contact}
+    ...    @update: makcamps	22JAN2021    - removed rowid from arguments and added arguments for writing method
+    [Arguments]    ${sSubAddDays}    ${sDealName}    ${sNoticeType}    ${sZeroTempPath}    ${Contact}
     
     ###Get System Date###
     ${SystemDate}    Get System Date
     ${SystemDate}    Convert Date    ${SystemDate}     date_format=%d-%b-%Y
     ${FromDate}    Subtract Time From Date    ${SystemDate}    ${sSubAddDays}days
     ${ThruDate}    Add Time To Date    ${SystemDate}    ${sSubAddDays}days
-    Write Data To Excel for API_Data    Correspondence    From_Date    ${rowid}    ${FromDate}
-    Write Data To Excel for API_Data   Correspondence    Thru_Date    ${rowid}    ${ThruDate}
+    Write Data To Excel    Correspondence    From_Date    ${rowid}    ${FromDate}    bTestCaseColumn=True    sColumnReference=rowid
+    Write Data To Excel   Correspondence    Thru_Date    ${rowid}    ${ThruDate}    bTestCaseColumn=True    sColumnReference=rowid
     
     Search Existing Deal    ${sDealName}
     Get Notice ID thru Deal Notebook of specific Contact    ${FromDate}    ${ThruDate}    ${sNoticeType}    ${Contact}

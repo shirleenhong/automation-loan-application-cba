@@ -279,7 +279,8 @@ Get Notice ID thru Deal Notebook
   
 Get Notice ID thru Deal Notebook of specific Contact
     [Documentation]    This keyword gets the Notice ID by navigating into Notices Window thru Deal Notebook.
-    ...    @author: makcamps    15JAN2021    - initial create 
+    ...    @author: makcamps    15JAN2021    - initial create
+    ...    @update: makcamps    22JAN2021    - updated writing of data instead of in api, write in excel path
     [Arguments]    ${sFrom_Date}    ${sThru_Date}    ${sNotice_Type}    ${sContact}
     
     ### Keyword Pre-processing###
@@ -313,9 +314,9 @@ Get Notice ID thru Deal Notebook of specific Contact
     mx LoanIQ activate window    ${LIQ_Notice_Window}
     ${Notice_ID}    Mx LoanIQ Get Data    ${LIQ_Notice_NoticeID_Field}    value%ID
     
-    Write Data To Excel    Correspondence    Notice_Identifier    ${rowid}     ${Notice_ID}    ${APIDataSet}    bTestCaseColumn=True    sColumnReference=rowid
-    Write Data To Excel    Correspondence    Notice_Customer_LegalName    ${rowid}     ${Notice_Customer_LegalName}    ${APIDataSet}    bTestCaseColumn=True    sColumnReference=rowid
-    Write Data To Excel    Correspondence    Contact    ${rowid}     ${Contact}    ${APIDataSet}    bTestCaseColumn=True    sColumnReference=rowid
+    Write Data To Excel    Correspondence    Notice_Identifier    ${rowid}     ${Notice_ID}    bTestCaseColumn=True    sColumnReference=rowid
+    Write Data To Excel    Correspondence    Notice_Customer_LegalName    ${rowid}     ${Notice_Customer_LegalName}    bTestCaseColumn=True    sColumnReference=rowid
+    Write Data To Excel    Correspondence    Contact    ${rowid}     ${Contact}    bTestCaseColumn=True    sColumnReference=rowid
     
     Close All Windows on LIQ
   
