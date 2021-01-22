@@ -69,6 +69,7 @@ Verify New Transactions
 Verify Added Paperclip Payments
     [Documentation]    This keyword will verify the added transactions in Paperclip payment
     ...    @author: ritragel    09SEP2019
+    ...    @update: mcastro    21JAN2021    - Added taking of screenshot
     [Arguments]    ${sTransactions}
     mx LoanIQ activate window    ${LIQ_FeesAndOutstandings_Window}
     @{aTransactions}    Split String    ${sTransactions}    |
@@ -77,7 +78,9 @@ Verify Added Paperclip Payments
     \    Log    @{aTransactions}[${i}] 
     \    Run Keyword    Mx LoanIQ Select String    ${LIQ_FeesAndOutstandings_JavaTree}    @{aTransactions}[${i}]
     \    Log   Transaction is present in the JavaTree  
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/PendingPaperClip_FeesAndOutstanding
     mx LoanIQ click    ${LIQ_FeesAndOutstandings_OK_Button}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/PendingPaperClip_FeesAndOutstanding
 
 Navigate to Create Cashflow for Paperclip
     [Documentation]    This keyword will navigate from General tab to Workflow and Create Cashflows
@@ -764,3 +767,25 @@ Validate Release of Paper Clip Payment
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/PaperClip_EventsTab
     Run Keyword If    ${Event_Selected}==${True}    Log    ${RELEASED_STATUS} is shown in the Events list of the Paper Clip notebook.
     ...    ELSE    Run Keyword and Continue on Failure    Fail    Paper clip payment is not Released.
+
+Validate Total Amount of Prepayment on Paper Clip
+    [Documentation]    This keyword will validate the total prepayment amount on paper clip general tab
+    ...    @author: mcastro    21JAN2021    - Initial Create
+    [Arguments]    ${sTotal_Prepayment_Amount}
+
+    ### Pre-processing Keyword ###
+    ${Total_Prepayment_Amount}    Acquire Argument Value    ${sTotal_Prepayment_Amount}
+
+    Mx LoanIQ activate window    ${LIQ_PaperClip_Window}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/PendingPaperClip_GeneralTab
+
+    ### Validate Payment Amount ###
+    ${Total_Prepayment_Amount}    Remove Comma and Convert to Number    ${Total_Prepayment_Amount}
+    ${Actual_Amount}    Mx LoanIQ Get Data    ${LIQ_PaperClip_Amount}    Actual_Amount 
+    ${Actual_Amount}    Remove Comma and Convert to Number    ${Actual_Amount}
+    
+    ${Status}    Run keyword and Return Status    Should Be Equal    ${Total_Prepayment_Amount}    ${Actual_Amount}
+    Run Keyword If    ${Status}==${True}    Log    Total Prepayment amount is correct
+    ...    ELSE    Run Keyword and Continue on Failure    Fail    Total Prepayment amount is incorrect. Expected amount: ${Total_Prepayment_Amount} | Actual amount: ${Actual_Amount}
+
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/PendingPaperClip_GeneralTab
