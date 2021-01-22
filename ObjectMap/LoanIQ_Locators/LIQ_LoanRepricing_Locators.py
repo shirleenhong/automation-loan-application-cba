@@ -26,7 +26,7 @@ LIQ_RepricingDetail_Window = 'JavaWindow("title:=Repricing Detail.*")'
 LIQ_RepricingDetail_RolloverNew_RadioButton = 'JavaWindow("title:=Repricing Detail.*").JavaRadioButton("label:=Rollover/Conversion to New:")'
 LIQ_RepricingDetail_RolloverExisting_Dropdown = 'JavaWindow("title:=Repricing Detail.*").JavaList("index:=0")'
 LIQ_RepricingDetail_RolloverExisting_RadioButton = 'JavaWindow("title:=Repricing Detail.*").JavaRadioButton("label:=Rollover/Conversion to Existing:")'
-LIQ_RepricingDetail_Principal_RadioButton = 'JavaWindow("title:=Repricing Detail.*").JavaRadioButton("label:=Principal Payment")'
+LIQ_RepricingDetail_Principal_RadioButton = 'JavaWindow("title:=Repricing Detail.*","displayed:=1").JavaRadioButton("label:=Principal Payment")'
 LIQ_RepricingDetail_Interest_RadioButton = 'JavaWindow("title:=Repricing Detail.*").JavaRadioButton("label:=Interest Payment")'
 LIQ_RepricingDetail_AutoGenerateInvidualRepayment_RadioButton = 'JavaWindow("title:=Repricing Detail.*").JavaRadioButton("label:=Auto Generate Individual Repayment")'
 LIQ_RepricingDetail_AutoGenerateInterestPayment_RadioButton = 'JavaWindow("title:=Repricing Detail.*").JavaRadioButton("label:=Auto Generate Interest Payment.*")'
@@ -65,6 +65,8 @@ LIQ_LoanRepricing_Add_Button = 'JavaWindow("title:=Loan Repricing.*").JavaButton
 LIQ_LoanRepricing_AutoReduceFacility_Checkbox = 'JavaWindow("title:=Loan Repricing.*").JavaCheckBox("attached text:=Auto Reduce Facility")'
 LIQ_LoanRepricing_Outstanding_List = 'JavaWindow("title:=Loan Repricing.*").JavaTree("attached text:=Drill down to view/edit details")'
 LIQ_LoanRepricing_EffectiveDate_StaticText = 'JavaWindow("title:=Loan Repricing.*").JavaStaticText("index:=2")'
+LIQ_LoanRepricing_SettleLendersNet_Checkbox = 'JavaWindow("title:=Loan Repricing.*").JavaCheckBox("attached text:=Settle Lenders Net")'
+LIQ_LoanRepricing_SettleBorrowerNet_Checkbox = 'JavaWindow("title:=Loan Repricing.*").JavaCheckBox("attached text:=Settle Borrower\(s\) Net")'
 
 ###Repricing Detail Add Options###
 LIQ_RepricingDetailAddOptions_Window = 'JavaWindow("title:=Repricing Detail Add Options")'

@@ -8,12 +8,17 @@ LIQ_RolloverConversion_Save_Menu = 'JavaWindow("title:=.* Rollover/Conversion.*"
 LIQ_RolloverConversion_RequestedAmt_Textfield = 'JavaWindow("title:=.* Rollover/Conversion.*").JavaEdit("attached text:=Requested Amt:")'
 LIQ_RolloverConversion_ActualAmt_Textfield = 'JavaWindow("title:=.* Rollover/Conversion.*").JavaEdit("attached text:=Actual Amt:")'
 LIQ_RolloverConversion_EffectiveDate_Textfield = 'JavaWindow("title:=.* Rollover/Conversion.*").JavaEdit("attached text:=Effective Date:")'
+LIQ_RolloverConversion_MaturityDate_Textfield = 'JavaWindow("title:=.* Rollover/Conversion.*").JavaEdit("attached text:=Maturity Date:")'
+LIQ_RolloverConversion_RepricingDate_Textfield = 'JavaWindow("title:=.* Rollover/Conversion.*").JavaEdit("attached text:=Repricing Date:")'
+LIQ_RolloverConversion_PaymentMode_List = 'JavaWindow("title:=.*Rollover/Conversion.*").JavaList("attached text:=Payment Mode:")'
 LIQ_RolloverConversion_IntCycleFreq_Dropdown = 'JavaWindow("title:=.* Rollover/Conversion.*").JavaList("attached text:=Int. Cycle Freq:")'
+LIQ_RolloverConversion_ActualDueDate_Textfield = 'JavaWindow("title:=.* Rollover/Conversion.*").JavaEdit("attached text:=Actual Due Date:")'
+LIQ_RolloverConversion_AdjustedDueDate_Textfield = 'JavaWindow("title:=.* Rollover/Conversion.*").JavaEdit("attached text:=Adjusted Due Date:")'
 LIQ_RolloverConversion_Alias_Textfield = 'JavaWindow("title:=.* Rollover/Conversion.*").JavaStaticText("x:=110","y:=119")'
 LIQ_RolloverConversion_Options_RepaymentSchedule_Menu = 'JavaWindow("title:=.* Rollover/Conversion.*").JavaMenu("label:=Options").JavaMenu("label:=Repayment Schedule")'
 LIQ_RolloverConversion_Accrue_List = 'JavaWindow("title:=.* Rollover/Conversion.*").JavaList("attached text:=Accrue:")'
-LIQ_RolloverConversion_ActualDueDate_Text = 'JavaWindow("title:=.* Rollover/Conversion.*").JavaEdit("attached text:=Actual Due Date:")'
 LIQ_RolloverConversion_RepricingFrequency_List  = 'JavaWindow("title:=.*Rollover/Conversion.*").JavaList("attached text:=Repricing Frequency:")'
+LIQ_RolloverConversion_AccrualEndDate_Textfield = 'JavaWindow("title:=.* Rollover/Conversion.*").JavaEdit("attached text:=Accrual End Date:")'
 
 ###Conversion from - General Tab###
 LIQ_ConversionFrom_Window = 'JavaWindow("title:=.*Conversion from .*")'

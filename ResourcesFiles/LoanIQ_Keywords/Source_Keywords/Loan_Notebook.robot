@@ -949,3 +949,30 @@ Add Alerts in Loan Notebook
     mx LoanIQ close window    ${LIQ_LoanNotebook_AlertManagementScreen_Window}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/CloseAlertManagementScreen_Window
     [Return]    ${Detail}${SPACE}${Current_Local_Date}    ${Current_Local_Date}
+    
+Validate the Merged Loan in Existing Loans
+    [Documentation]    This keyword navigates the LIQ User to the Existing Loans List and Validate the Merged Loan.
+    ...    @author: javinzon	21JAN2021	- Initial create
+    [Arguments]    ${sOutstanding_Type}    ${sLoan_FacilityName}    ${sAlias_LoanMerge} 
+    
+    ### Keyword Pre-processing ###
+    ${Outstanding_Type}    Acquire Argument Value    ${sOutstanding_Type}
+    ${Loan_FacilityName}    Acquire Argument Value    ${sLoan_FacilityName}
+    ${Alias_LoanMerge}    Acquire Argument Value    ${sAlias_LoanMerge}
+    
+    Mx LoanIQ Activate Window    ${LIQ_OutstandingSelect_Window}
+    Mx LoanIQ Set    ${LIQ_OutstandingSelect_Existing_RadioButton}    ${ON}
+    Mx LoanIQ Select Combo Box Value    ${LIQ_OutstandingSelect_Type_Dropdown}    ${Outstanding_Type}
+    Mx LoanIQ Click    ${LIQ_OutstandingSelect_Search_Button}
+    Mx LoanIQ Activate Window    ${LIQ_ExistingOutstandings_Window}
+    Mx LoanIQ Maximize    ${LIQ_ExistingOutstandings_Window}   
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/MergedLoan
+   
+	${Status}   Run Keyword And Return Status     Mx LoanIQ Select Or DoubleClick In Javatree    ${LIQ_ExistingOutstandings_Table}    ${Alias_LoanMerge}%d    
+    Run Keyword If    ${Status}==${True}    Log    The merged loan ${Alias_LoanMerge} is existing.
+    ...    ELSE    Run Keyword And Continue On Failure    Fail    The merged loan ${Alias_LoanMerge} is missing.
+
+    Mx LoanIQ Close Window    ${LIQ_ExistingOutstandings_Window}
+    Mx LoanIQ Activate Window    ${LIQ_Loan_Window}
+    Take Screenshot    ${Screenshot_Path}/Screenshots/LoanIQ/LoanWindow
+	
