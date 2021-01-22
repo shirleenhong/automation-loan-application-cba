@@ -2030,8 +2030,8 @@ Validate Event Status in Loan Events Tab
 Validate the Total Amount of Existing Outstandings
     [Documentation]    This keyword validates the total amount of Existing Outstandings and return the value.
     ...    @author: javinzon    20JAN2021    - Initial create
-    [Arguments]    ${sPricing_Option}    ${sLoan1Alias}    ${sLoan2Alias}    ${sLoan1_Amount}    ${sLoan2_Amount}
-    
+    [Arguments]    ${sPricing_Option}    ${sLoan1Alias}    ${sLoan2Alias}    ${sLoan1_Amount}    ${sLoan2_Amount}    ${sRunVar_TotalExistingOutstanding_Expected}=None
+        
     ### GetRuntime Keyword Pre-processing ###
 	${Pricing_Option}    Acquire Argument Value    ${sPricing_Option}
 	${Loan1Alias}    Acquire Argument Value    ${sLoan1Alias}
@@ -2052,10 +2052,11 @@ Validate the Total Amount of Existing Outstandings
     ${RequestedAmount_Expected}    Convert to String    ${RequestedAmount_Expected}
     ${TotalExistingOutstanding_Expected}    Convert Number With Comma Separators    ${RequestedAmount_Expected}
     
-    ${Status}    Run Keyword And Return Status    Compare Two Strings    ${TotalExistingOutstanding}    ${TotalExistingOutstanding_Expected}
-    Run Keyword If    ${Status}==${True}    Log    Total Amount for Existing Outstandings is correct.
-    ...    ELSE    Run Keyword And Continue On Failure    Fail    Total Amount for Existing Outstandings is incorrect. Expected amount:${TotalExistingOutstanding_Expected} | Actual amount:${TotalExistingOutstanding}
-      
+    Compare Two Strings    ${TotalExistingOutstanding}    ${TotalExistingOutstanding_Expected}
+    
+    ### Keyword Post-processing ###
+    Save Values of Runtime Execution on Excel File    ${sRunVar_TotalExistingOutstanding_Expected}    ${TotalExistingOutstanding_Expected}
+    
     [Return]    ${TotalExistingOutstanding_Expected}
     
 Get Repricing Date of Loans then Validate if Equal 
@@ -2071,9 +2072,7 @@ Get Repricing Date of Loans then Validate if Equal
     ${Loan1_Alias_RepricingDate}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_ExistingLoansForFacility_JavaTree}    ${Loan1_Alias}%Repricing Date%RepricingDate  
     ${Loan2_Alias_RepricingDate}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_ExistingLoansForFacility_JavaTree}    ${Loan2_Alias}%Repricing Date%RepricingDate  
 
-    ${Status}    Run Keyword And Return Status    Compare Two Strings    ${Loan1_Alias_RepricingDate}    ${Loan2_Alias_RepricingDate}
-    Run Keyword If    ${Status}==${True}    Log    Repricing dates of Loan Alias ${Loan1_Alias} and ${Loan2_Alias} are equal.
-    ...    ELSE    Run Keyword And Continue On Failure    Fail  Repricing dates of Loan Alias ${Loan1_Alias} and ${Loan2_Alias} are not equal. Pelase check before merging. 
+    Compare Two Strings    ${Loan1_Alias_RepricingDate}    ${Loan2_Alias_RepricingDate} 
 
     ### Keyword Post-processing ###
     Save Values of Runtime Execution on Excel File    ${sRunVar_Loan2_Alias_RepricingDate}    ${Loan2_Alias_RepricingDate}
@@ -2168,11 +2167,8 @@ Validate if Repricing Date and Effective Date in Loan Repricing are Equal
     ${RepricingDate}    Acquire Argument Value    ${sRepricingDate}
     ${ExpectedDate}    Acquire Argument Value    ${sExpectedDate}
     
-    ${Status}    Run Keyword And Return Status    Compare Two Strings    ${RepricingDate}    ${ExpectedDate}
-    Run Keyword If    ${Status}==${True}    Log    Repricing Date and Effective Date are equal.
-    ...    ELSE    Run Keyword And Continue On Failure    Fail    Repricing Date and Effective Date are not equal. Expected Date for both is ${ExpectedDate}.
+    Compare Two Strings    ${RepricingDate}    ${ExpectedDate}
     
-
 
 
 

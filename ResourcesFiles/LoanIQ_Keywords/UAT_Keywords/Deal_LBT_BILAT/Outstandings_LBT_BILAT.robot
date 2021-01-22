@@ -106,7 +106,7 @@ Combine Drawdown A and B and Make Partial Repayment for LBT Bilateral Deal
     Select Multiple Loan to Merge    ${Loan_Alias_A}    ${Loan_Alias_B}
     
     ### Added pause execution to change effective date to a valid date since LIQ date is not correct during build of this keyword (step not included in screenshots) ###
-    Pause Execution
+    # Pause Execution
     
     ### Validate Total of Existing Outstandings ###
     ${TotalExistingOutstanding_Amount}    Validate the Total Amount of Existing Outstandings    &{ExcelPath}[Pricing_Option]    ${Loan_Alias_A}    ${Loan_Alias_B}      ${Loan_AliasA_Amount}    ${Loan_AliasB_Amount}
@@ -115,7 +115,6 @@ Combine Drawdown A and B and Make Partial Repayment for LBT Bilateral Deal
    
     ### Add New Outstandings ###
     ${Alias_LoanMerge}    Add New Outstandings    &{ExcelPath}[Pricing_Option]    &{ExcelPath}[Base_Rate]    &{ExcelPath}[NewLoan_Amount]
-    ${Alias_LoanMerge}    Set Variable    60002489
     Validate General Tab of Pending Rollover/Conversion Notebook    ${Alias_LoanMerge}    &{ExcelPath}[Effective_Date]    &{ExcelPath}[Maturity_Date]    &{ExcelPath}[Repricing_Frequency]    &{ExcelPath}[Repricing_Date]
     ...    &{ExcelPath}[Payment_Mode]    &{ExcelPath}[Int_Cycle_Freq]    &{ExcelPath}[Actual_Due_Date]    &{ExcelPath}[Adjusted_Due_Date]    &{ExcelPath}[Accrue]    &{ExcelPath}[Accrual_End_Date]
     
