@@ -889,16 +889,19 @@ Validate Payment Release of Ongoing Line Fee
 Validate After Payment Details on Acrual Tab - Line Fee
     [Documentation]    This keyword validates the after payment details on Acrual Tab for Line Fee.
     ...    @author: dahijara    11JAN2021    - initial create
-    [Arguments]    ${sExpected_PaymentAmt}    ${sCycleNumber}     
+    ...    @update: makcamps    22JAN2021    - added cycle due argument and condition
+    [Arguments]    ${sExpected_PaymentAmt}    ${sCycleNumber}    ${sExpected_CycleDue}=None
 
     ### GetRuntime Keyword Pre-processing ###
     ${Expected_PaymentAmt}    Acquire Argument Value    ${sExpected_PaymentAmt}
     ${CycleNumber}    Acquire Argument Value    ${sCycleNumber}
+    ${Expected_CycleDue}    Acquire Argument Value    ${sExpected_CycleDue}
 
     mx LoanIQ activate window    ${LIQ_LineFeeReleasedNotebook_Window}
     Mx LoanIQ Select Window Tab    ${LIQ_LineFee_Tab}    Accrual
     ${CycleDue}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_LineFee_Accrual_Cycles_JavaTree}    ${CycleNumber}%Cycle Due%CycleDue    
-    ${Status}    Run Keyword And Return Status    Should Be Equal    0.00    ${CycleDue}
+    ${Status}    Run Keyword If    '${CycleDue}'=='None'    Run Keyword And Return Status    Should Be Equal    0.00    ${CycleDue}
+    ...    ELSE    Run Keyword And Return Status    Should Be Equal    ${Expected_CycleDue}    ${CycleDue}
     Run Keyword If    ${Status}==${True}    Log    Cycle Due is correct.
     ...    ELSE    Run Keyword And Continue On Failure    Fail    Cycle Due is NOT correct. Expected: 0.00 - Actual: ${CycleDue}
 
