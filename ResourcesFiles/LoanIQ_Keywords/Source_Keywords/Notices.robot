@@ -277,10 +277,10 @@ Get Notice ID thru Deal Notebook
     
     Close All Windows on LIQ
   
-Get Notice ID thru Deal Notebook of specific Contact
+Get Notice ID thru Deal Notebook of Specific Contact
     [Documentation]    This keyword gets the Notice ID by navigating into Notices Window thru Deal Notebook.
     ...    @author: makcamps    15JAN2021    - initial create
-    ...    @update: makcamps    22JAN2021    - updated writing of data instead of in api, write in excel path
+    ...    @update: makcamps    22JAN2021    - removed writing of data, instead stored it to variable for return
     [Arguments]    ${sFrom_Date}    ${sThru_Date}    ${sNotice_Type}    ${sContact}
     
     ### Keyword Pre-processing###

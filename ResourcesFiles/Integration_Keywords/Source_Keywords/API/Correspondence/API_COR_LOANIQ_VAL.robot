@@ -36,7 +36,7 @@ Get the Notice Details of Specific Contact in LIQ
     Write Data To Excel   Correspondence    Thru_Date    ${rowid}    ${ThruDate}    bTestCaseColumn=True    sColumnReference=rowid
     
     Search Existing Deal    ${sDealName}
-    ${Notice_ID}    ${Notice_Customer_LegalName}    ${ContactName}    Get Notice ID thru Deal Notebook of specific Contact    ${FromDate}    ${ThruDate}    ${sNoticeType}    ${Contact}
+    ${Notice_ID}    ${Notice_Customer_LegalName}    ${ContactName}    Get Notice ID thru Deal Notebook of Specific Contact    ${FromDate}    ${ThruDate}    ${sNoticeType}    ${Contact}
     
     Write Data To Excel    Correspondence    Notice_Identifier    ${rowid}     ${Notice_ID}    bTestCaseColumn=True    sColumnReference=rowid
     Write Data To Excel    Correspondence    Notice_Customer_LegalName    ${rowid}     ${Notice_Customer_LegalName}    bTestCaseColumn=True    sColumnReference=rowid
