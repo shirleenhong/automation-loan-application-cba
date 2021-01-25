@@ -8,6 +8,7 @@ Collect Early Prepayment via Paper Clip For PIM Future BILAT
     ...    @author: mcastro    16DEC2020    - Initial Create
     ...    @update: mcastro    05JAN2021    - Updated with correct column name, added selecting of breakfunding reason 
     ...    @update: mcastro    14JAN2021    - Added validation of Released status 
+    ...    @update: mcastro    21JAN2021    - Added additional validation of total prepayment amount
     [Arguments]    ${ExcelPath}
 
     ### Read data from Loan Drawdown and Comprehensive repricing sheets ###
@@ -44,6 +45,7 @@ Collect Early Prepayment via Paper Clip For PIM Future BILAT
     Validate Payment Amount and Interest Due on Cycles for Loan    &{ExcelPath}[Loan_RequestedAmount]    &{ExcelPath}[Interest_Due]
     Close Cycles for Loan Window
     Verify Added Paperclip Payments    &{ExcelPath}[Pricing_Option]${SPACE}(${NewLoan_Alias})Principal|&{ExcelPath}[Pricing_Option]${SPACE}(${NewLoan_Alias})Interest
+    Validate Total Amount of Prepayment on Paper Clip    &{ExcelPath}[Total_Prepayment_Amount]
 
     ### Create and Split Cashflows ###
     Navigate to Split Cashflows from Paper Clip
@@ -128,6 +130,7 @@ Collect Interest for Prepaid Portion
 Collect Prepayment for PIM Future BILAT
     [Documentation]    This is a high-level keyword to collect prepayment via paperclip
     ...    @author: mcastro    13JAN2021    - Initial Create 
+    ...    @update: mcastro    21JAN2021    - Added additional validation of total prepayment amount
     [Arguments]    ${ExcelPath}
 
     ### Read data from Loan Drawdown and Comprehensive repricing sheets ###
@@ -160,6 +163,7 @@ Collect Prepayment for PIM Future BILAT
     Validate Payment Amount and Interest Due on Cycles for Loan    &{ExcelPath}[Loan_RequestedAmount]    &{ExcelPath}[Interest_Due]
     Close Cycles for Loan Window
     Verify Added Paperclip Payments    &{ExcelPath}[Pricing_Option]${SPACE}(${NewLoan_Alias})Principal|&{ExcelPath}[Pricing_Option]${SPACE}(${NewLoan_Alias})Interest
+    Validate Total Amount of Prepayment on Paper Clip    &{ExcelPath}[Total_Prepayment_Amount]
 
     ### Create and Split Cashflows ###
     Navigate Notebook Workflow    ${LIQ_PendingPaperClip_Window}    ${LIQ_PaperClip_Tabs}    ${LIQ_PaperClip_Workflow_Tab}    ${CREATE_CASHFLOW_TYPE}
