@@ -15,3 +15,7 @@ Loan Combine and Rollover for New Life BILAT - $207,169,254.72
 Collect Commitment Fee - $47,406.47
     Set Test Variable    ${rowid}    8
     Mx Execute Template With Multiple Data    Collect Commitment Fee Payment For New Life BILAT    ${ExcelPath}    ${rowid}    SERV29_CommitmentFeePayment
+
+Amend Commitment Fee
+    Set Test Variable    ${rowid}    9
+    Mx Execute Template With Multiple Data    Update Commitment Fee for New Life BILAT    ${ExcelPath}    ${rowid}    SERV29_CommitmentFeePayment
