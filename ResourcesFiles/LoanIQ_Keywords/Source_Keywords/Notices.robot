@@ -314,12 +314,63 @@ Get Notice ID thru Deal Notebook of specific Contact
     mx LoanIQ activate window    ${LIQ_Notice_Window}
     ${Notice_ID}    Mx LoanIQ Get Data    ${LIQ_Notice_NoticeID_Field}    value%ID
     
-    Write Data To Excel    Correspondence    Notice_Identifier    ${rowid}     ${Notice_ID}    bTestCaseColumn=True    sColumnReference=rowid
-    Write Data To Excel    Correspondence    Notice_Customer_LegalName    ${rowid}     ${Notice_Customer_LegalName}    bTestCaseColumn=True    sColumnReference=rowid
-    Write Data To Excel    Correspondence    Contact    ${rowid}     ${Contact}    bTestCaseColumn=True    sColumnReference=rowid
-    
     Close All Windows on LIQ
-  
+
+    [Return]    ${Notice_ID}    ${Notice_Customer_LegalName}    ${Contact}
+
+Get Notice Details via Loan Notebook
+    [Documentation]    Get Notice Details (Effective Date, Term Start and End Date, Fixed Rate Option, Margin, All-in Rate and Interest Due) via Loan Notebook in LIQ
+    ...    @author: makcamps   22JAN2021    - initial create
+    [Arguments]    ${sFacilityName}    ${sDealName}    ${sLoanAlias}    ${sCycleNumber}=1
+
+    ### Keyword Pre-processing ###
+    ${FacilityName}    Acquire Argument Value    ${sFacilityName}    
+    ${DealName}    Acquire Argument Value    ${sDealName}
+    ${LoanAlias}    Acquire Argument Value    ${sLoanAlias}
+    ${CycleNumber}    Acquire Argument Value    ${sCycleNumber}
+
+    ### Navigate to Existing Loans For Facility Window ###
+    Search for Deal    ${DealName}
+    Search for Existing Outstanding    Loan    ${FacilityName}
+    
+    ###Existing Loans For Facility Window###
+    mx LoanIQ activate window    ${LIQ_ExistingLoansForFacility_Window}
+    ${Effective_Date}    Mx LoanIQ Store TableCell To Clipboard   ${LIQ_ExistingLoansForFacility_Loan_List}    ${LoanAlias}%Effective Date%var
+    ${Effective_Date}    Convert Date    ${Effective_Date}    result_format=%d-%b-%Y    date_format=%d-%b-%Y
+    ${Repricing_Date}    Mx LoanIQ Store TableCell To Clipboard   ${LIQ_ExistingLoansForFacility_Loan_List}    ${LoanAlias}%Repricing Date%var
+    ${Repricing_Date}    Convert Date    ${Repricing_Date}    result_format=%d-%b-%Y    date_format=%d-%b-%Y
+    ${Maturity_Date}    Mx LoanIQ Store TableCell To Clipboard   ${LIQ_ExistingLoansForFacility_Loan_List}    ${LoanAlias}%Maturity Date%var
+    ${Maturity_Date}    Convert Date    ${Maturity_Date}    result_format=%d-%b-%Y    date_format=%d-%b-%Y
+    Take Screenshot    ${screenshot_path}/Screenshots/Integration/Correspondence_Loan_ExistingLoansForFacility
+    
+    ### Navigate to Loan Notebook ###
+    Open Existing Loan    ${LoanAlias}
+    
+    ###Loan Notebook - General Tab###
+    mx LoanIQ activate window    ${LIQ_Loan_Window}
+    ${Global_Original}    Mx LoanIQ Get Data    ${LIQ_Loan_GlobalOriginal_Field}    text%Global_Original
+    ${RateSetting_DueDate}    Mx LoanIQ Get Data    ${LIQ_Loan_GeneralTab_RateSettingDueDate_Textfield}    text%RateSetting_DueDate
+    Take Screenshot    ${screenshot_path}/Screenshots/Integration/Correspondence_Loan_GeneralTab
+    
+    ###Loan Notebook - Rates Tab###
+    Mx LoanIQ Select Window Tab    ${LIQ_Loan_Tab}    Rates
+    ${PenaltySpread_IsOff}    Run Keyword And Return Status    Mx LoanIQ Verify Object Exist    ${LIQ_Loan_RatesTab_PenaltySpread_Status_OFF}        VerificationData="Yes"
+    Run Keyword If     ${PenaltySpread_IsOff}==${False}    Fail   Penalty Spread Status is not set to OFF.
+    ...    ELSE    Log    Penalty Spread Status is set to OFF.
+    ${Base_Rate}    Mx LoanIQ Get Data    ${LIQ_Loan_RatesTab_BaseRate_Field}    text%Base_Rate
+    ${Spread}    Mx LoanIQ Get Data    ${LIQ_Loan_RatesTab_Spread_Field}    text%Spread
+    ${AllIn_Rate}    Mx LoanIQ Get Data    ${LIQ_Loan_AllInRate}    text%AllIn_Rate
+    Take Screenshot    ${screenshot_path}/Screenshots/Integration/Correspondence_Loan_RatesTab
+    
+    ###Loan Notebook - Accrual Tab###
+    Mx LoanIQ Select Window Tab    ${LIQ_Loan_Tab}    Accrual
+    ${Cycle_Due}    Mx LoanIQ Store TableCell To Clipboard   ${LIQ_Loan_AccrualTab_Cycles_Table}    ${CycleNumber}%Cycle Due%var    Processtimeout=180    
+    Take Screenshot    ${screenshot_path}/Screenshots/Integration/Correspondence_Loan_AccrualTab
+
+    Close All Windows on LIQ
+        
+    [Return]    ${Effective_Date}    ${Repricing_Date}    ${Maturity_Date}    ${Base_Rate}    ${Spread}    ${AllIn_Rate}    ${Cycle_Due}    ${Global_Original}    ${RateSetting_DueDate}
+
 Select Notice Group
     [Documentation]    This keyword selects a notice group in the Notice Group window
     ...    @update: ehugo       15AUG2019    - initial create

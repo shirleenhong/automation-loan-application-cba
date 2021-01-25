@@ -20,7 +20,7 @@ Get the Notice Details in LIQ
     
     Search Existing Deal    ${sDealName}
     Get Notice ID thru Deal Notebook    ${FromDate}    ${ThruDate}    ${sNoticeType}
-    
+
 Get the Notice Details of Specific Contact in LIQ
     [Documentation]    This Keyword gets the necessary data for Notice Validation.
     ...    @author: makcamps    15JAN2021    - initial create
@@ -36,7 +36,11 @@ Get the Notice Details of Specific Contact in LIQ
     Write Data To Excel   Correspondence    Thru_Date    ${rowid}    ${ThruDate}    bTestCaseColumn=True    sColumnReference=rowid
     
     Search Existing Deal    ${sDealName}
-    Get Notice ID thru Deal Notebook of specific Contact    ${FromDate}    ${ThruDate}    ${sNoticeType}    ${Contact}
+    ${Notice_ID}    ${Notice_Customer_LegalName}    ${ContactName}    Get Notice ID thru Deal Notebook of specific Contact    ${FromDate}    ${ThruDate}    ${sNoticeType}    ${Contact}
+    
+    Write Data To Excel    Correspondence    Notice_Identifier    ${rowid}     ${Notice_ID}    bTestCaseColumn=True    sColumnReference=rowid
+    Write Data To Excel    Correspondence    Notice_Customer_LegalName    ${rowid}     ${Notice_Customer_LegalName}    bTestCaseColumn=True    sColumnReference=rowid
+    Write Data To Excel    Correspondence    Contact    ${rowid}     ${ContactName}    bTestCaseColumn=True    sColumnReference=rowid
     
 Get Notice Details for Fee Payment Notice Line Fee in LIQ
     [Documentation]    Get Notice Details (All In Rate, Balance, Amount and Rate Basis) for Fee Payment Notice - Line Fee in LIQ
