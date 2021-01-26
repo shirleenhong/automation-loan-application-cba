@@ -4326,3 +4326,77 @@ Verify Facility Pricing Option Details
     Mx LoanIQ click    ${LIQ_InterestPricingOption_Cancel_Button}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/DealNotebook_PricingRulesTab_PricingOption
 
+Navigate to Increase Decrease Schedule from Facility Notebook Window
+    [Documentation]    This keyword will navigate to Increase/Decrease Schedule from Facility Notebook
+    ...    @author: shirhong    25JAN2021    Initial Create
+
+    mx LoanIQ activate window    ${LIQ_FacilityNotebook_Window}  
+    mx LoanIQ select    ${LIQ_FacilityNotebook_Options_IncreaseDecreaseSchedule}
+    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}    
+    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
+
+Add Amortization Schedule Frequency
+    [Documentation]    This keyword is used to add Amortization Schedule Frequency for Facility
+    ...    @author: shirhong    25JAN2021   Initial Create
+    [Arguments]    ${sScheduleItem_Frequency}
+
+    ###Pre-Processing Keyword###
+    ${ScheduleItem_Frequency}    Acquire Argument Value    ${sScheduleItem_Frequency}
+    
+    Mx LoanIQ Activate    ${LIQ_AmortizationScheduleforFacility_Window}
+    Mx LoanIQ Select Combo Box Value    ${LIQ_AmortizationScheduleforFacility_Frequency_List}    ${ScheduleItem_Frequency} 
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/AmortizationScheduleFrequency
+
+Save and Exit Amortization Schedule For Facility Window
+    [Documentation]    This keyword saves and closes the Amortization Schedule window
+    ...    @author: shirhong    25JAN2021    - Initial Create
+
+    Mx LoanIQ activate window    ${LIQ_AmortizationScheduleforFacility_Window}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/AmortizationSchedule
+    Mx LoanIQ Click    ${LIQ_AmortizationScheduleforFacility_Save_Button}
+    Mx LoanIQ Click Element If Present    ${LIQ_Warning_Yes_Button}
+    Mx LoanIQ Click Element If Present    ${LIQ_Warning_Yes_Button}
+
+    Mx LoanIQ Click    ${LIQ_AmortizationScheduleforFacility_Exit_Button}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/FacilityWindowAfterAmortizationSchedule
+
+Add Scheduled Amortization Item
+    [Documentation]    This keyword is used to add Scheduled Amortization Item
+    ...    @author: shirhong    25JAN2021   Initial Create
+    [Arguments]    ${sScheduleItem_Amount}    ${sScheduleItem_PercentofCurrent}    ${sSchedule}
+    
+    ###Pre-Processing Keyword###
+    ${ScheduleItem_Amount}    Acquire Argument Value    ${sScheduleItem_Amount}
+    ${ScheduleItem_PercentofCurrent}    Acquire Argument Value    ${sScheduleItem_PercentofCurrent}
+    ${Schedule}    Acquire Argument Value    ${sSchedule}
+
+    Mx LoanIQ Activate    ${LIQ_AmortizationScheduleforFacility_Window}
+    Mx LoanIQ Click    ${LIQ_AmortizationScheduleforFacility_Add_Button}   
+    Mx LoanIQ Activate Window    ${LIQ_ScheduleItem_Window}
+    Mx LoanIQ Enter    ${LIQ_ScheduleItem_Decrease_RadioButton}    ON
+    Mx LoanIQ Enter    ${LIQ_ScheduleItem_Amount}    ${ScheduleItem_Amount}   
+    Mx LoanIQ Enter    ${LIQ_ScheduleItem_Schedule}    ${Schedule}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/ScheduleItem
+    Mx LoanIQ Click    ${LIQ_ScheduleItem_Ok_Button}
+    Mx LoanIQ Click Element If Present    ${LIQ_ScheduleItem_Ok_Button}
+    Mx LoanIQ Click Element If Present    ${LIQ_Warning_Yes_Button}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/AmortizationScheduleWindow
+
+Modify Schedule Item for Amortization
+    [Documentation]    This keyword is used to Modify Schedule Item
+    ...    @author: shirhong    25JAN2021   Initial Create
+    [Arguments]    ${sModifyScheduleItem_Amount}    ${sModifyScheduleItem_PercentofCurrent}    ${sModifySchedule}
+    
+    ###Pre-Processing Keyword###
+    ${ModifyScheduleItem_Amount}    Acquire Argument Value    ${sModifyScheduleItem_Amount}
+    ${ModifyScheduleItem_PercentofCurrent}    Acquire Argument Value    ${sModifyScheduleItem_PercentofCurrent}
+    ${ModifySchedule}    Acquire Argument Value    ${sModifySchedule}
+       
+    Mx LoanIQ Activate Window    ${LIQ_ModifySchedule_Window}
+    Mx LoanIQ Enter    ${LIQ_ModifySchedule_Decrease_RadioButton}    ON
+    Mx LoanIQ Enter    ${LIQ_ModifySchedule_Amount}    ${ModifyScheduleItem_Amount}   
+    Mx LoanIQ Enter    ${LIQ_ModifySchedule_Date}    ${ModifySchedule}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/ModifyScheduleItem
+    Mx LoanIQ Click    ${LIQ_ModifySchedule_Ok_Button}
+    Mx LoanIQ Click Element If Present    ${LIQ_Warning_Yes_Button}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/ModifyAmortizationScheduleWindow

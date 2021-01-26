@@ -1758,6 +1758,7 @@ Update Ongoing Fee General Information
     [Documentation]    This keyword updates the general tab values for an ongoing fee notebook/
     ...    @author: dahijara    04DEC2020    - Initial Create
     ...    @update: javinzon    16DEC2020    - Added optional argument for Cycle Frequency field
+    ...    @update: shirhong    25JAN2021    - Added handling for error messages, rearrange steps for entering field to add the values correctly
     [Arguments]    ${sFee_EffectiveDate}    ${sFee_ActualDate}    ${sFee_AdjustedDueDate}    ${sFee_Accrue}    ${sFee_AccrualEndDate}    ${sCycle_Frequency}=None
 
     ### Keyword Pre-processing ###
@@ -1768,16 +1769,19 @@ Update Ongoing Fee General Information
     ${Fee_AccrualEndDate}    Acquire Argument Value    ${sFee_AccrualEndDate}
     ${Cycle_Frequency}    Acquire Argument Value    ${sCycle_Frequency}
 
-    mx LoanIQ activate window    ${LIQ_OngoingFee_Window}
+	mx LoanIQ activate window    ${LIQ_OngoingFee_Window}
     Mx LoanIQ Select Window Tab    ${LIQ_OngoingFee_Tab}    ${GENERAL_TAB}
     Run Keyword And Continue On Failure    Mx LoanIQ click element if present    ${LIQ_OngoingFee_InquiryMode_Button}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/OngoingFeeNotebook_General
     Mx LoanIQ Enter    ${LIQ_OngoingFee_EffectiveDate_Field}    ${Fee_EffectiveDate}
     Mx LoanIQ Enter    ${LIQ_OngoingFee_FloatRateStartDate_Field}    ${Fee_EffectiveDate}
-    Mx LoanIQ Enter    ${LIQ_OngoingFee_ActualDueDate_Field}    ${Fee_ActualDate}
-    Mx LoanIQ Enter    ${LIQ_OngoingFee_AdjustedDueDate}    ${Fee_AdjustedDueDate}
+    Mx LoanIQ click element if present    ${LIQ_Warning_OK_Button}
+    Mx LoanIQ Enter    ${LIQ_OngoingFee_ActualDueDate_Field}    ${Fee_ActualDate}    
     Mx LoanIQ select combo box value    ${LIQ_OngoingFee_Accrue_Dropdown}    ${Fee_Accrue}
+    Mx LoanIQ Enter    ${LIQ_OngoingFee_AdjustedDueDate}    ${Fee_AdjustedDueDate}    
+    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
     Mx LoanIQ Enter    ${LIQ_OngoingFee_AccrualEndDate_Field}    ${Fee_AccrualEndDate}
+    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
     Run Keyword If    '${Cycle_Frequency}'!='None'    mx LoanIQ Select Combo Box Value    ${LIQ_OngoingFee_CycleFrequency_Field}    ${Cycle_Frequency}
     ...    ELSE    Log    Specific Cycle Frequency is not required for the transaction
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/OngoingFeeNotebook_General
@@ -1821,10 +1825,12 @@ Update Fee Paid By and Servicing Group for Ongoing Fee
 Save and Close Ongoing Fee Window
     [Documentation]    This keyword saves and closes an ongoing fee notebook.
     ...    @author: dahijara    04DEC2020    - Initial Create
+    ...    @update: shirhong    25JAN2021    - Added handing of error messages
 
     Mx LoanIQ activate window    ${LIQ_OngoingFee_Window}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/OngoingFeeNotebook_General
     Mx LoanIQ select    ${LIQ_OngoingFee_Save_Menu}
+    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
     Mx LoanIQ click element if present    ${LIQ_Warning_OK_Button}
     Mx LoanIQ select    ${LIQ_OngoingFee_Exit_Menu}
 
