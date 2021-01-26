@@ -319,7 +319,7 @@ Enter Line Fee Details
     ...    @author: ritragel    06SEP2020
     ...    @update: makcamps    14JAN2021    - added condition that if pay type is provided, update pay type
     ...    @update: makcamps    20JAN2021    - updated sequence for updating line fee
-    ...    @update: songchan    25JAN2021    - updated sequence for changing Pay type
+    ...    @update: songchan    25JAN2021    - updated sequence for updating Pay type and Cycle Frequency
     [Arguments]    ${sEffectiveDate}    ${sActual_DueDate}    ${sAdjusted_DueDate}    ${sCycle_Frequency}    ${sAccrue}    ${sFloatRateDate}=None    ${sPayType}=None
     
     ### Keyword Pre-processing ###
@@ -338,11 +338,11 @@ Enter Line Fee Details
     Mx Press Combination    Key.ENTER 
     Run Keyword If    '${PayType}'!='None'    mx LoanIQ enter    ${LIQ_LineFee_FloatRate_Date}    ${FloatRateDate}
     Mx Click Element If Present    ${LIQ_Warning_OK_Button}
+    mx LoanIQ Select Combo Box Value    ${LIQ_LineFee_Cycle}    ${Cycle_Frequency}
     mx LoanIQ enter    ${LIQ_LineFee_ActualDue_Date}    ${Actual_DueDate}
     Mx Click Element If Present    ${LIQ_Warning_OK_Button}
     mx LoanIQ enter    ${LIQ_LineFee_AdjustedDue_Date}    ${Adjusted_DueDate}  
     Mx Click Element If Present    ${LIQ_Warning_OK_Button}
-    mx LoanIQ Select Combo Box Value    ${LIQ_LineFee_Cycle}    ${Cycle_Frequency}
     mx LoanIQ Select Combo Box Value    ${LIQ_LineFee_Accrue_Dropdown}    ${Accrue}
     Select Menu Item    ${LIQ_LineFeeNotebook_Window}    File    Save
     mx LoanIQ click element if present    ${LIQ_Warning_OK_Button}
