@@ -4146,7 +4146,7 @@ Set Spread Rate as Fixed in Rates Tab of Loan Drawdown
     ${SpreadIsFixed}    Acquire Argument Value    ${sSpreadIsFixed}
     
     Mx LoanIQ Select Window Tab    ${LIQ_InitialDrawdown_Tab}    ${RATES_TAB}
-    Run Keyword If    '${SpreadIsFixed}'!=='OFF'    Mx LoanIQ Set    ${LIQ_InitialDrawdown_SpreadIsFixed_Checkbox}    ON
+    Run Keyword If    '${SpreadIsFixed}'=='ON'    Mx LoanIQ Set    ${LIQ_InitialDrawdown_SpreadIsFixed_Checkbox}    ON
     ...    ELSE    Log    Fixed spread rate is not required for the Loan drawdown.
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/InitialDrawdown_SpreadIsFixed
     Select Menu Item    ${LIQ_InitialDrawdown_Window}    File    Save
