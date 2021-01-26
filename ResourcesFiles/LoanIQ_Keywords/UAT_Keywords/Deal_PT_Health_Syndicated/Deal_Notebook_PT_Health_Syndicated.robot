@@ -74,7 +74,7 @@ Setup Primaries for PT Health Syndicated Deal
     
     ###Primary Lender - Host Bank###
     Add Lender and Location    &{ExcelPath}[Deal_Name]    &{ExcelPath}[Primary_Lender1]    &{ExcelPath}[Primary_LenderLoc1]    &{ExcelPath}[Primary_RiskBook]    &{ExcelPath}[Primary_TransactionType]
-    ${SellAmount}    Set Sell Amount and Percent of Deal    &{ExcelPath}[Primary_PctOfDeal1]
+    ${SellAmount}    Set Sell Amount and Percent of Deal for PT Health    &{ExcelPath}[Primary_PctOfDeal1]    &{ExcelPath}[RunTimeVar_SellAmount]
     Add Pro Rate    &{ExcelPath}[Primary_BuySellPrice]
     Verify Buy/Sell Price in Circle Notebook 
     Populate Amts or Dates Tab in Pending Orig Primary    ${SellAmount}    &{ExcelPath}[Expected_CloseDate]
@@ -83,7 +83,7 @@ Setup Primaries for PT Health Syndicated Deal
     Close Orig Primaries Window
     
     ### Circle Notebook Complete Portfolio Allocation, Circling ###
-    ${HostBank_ShareAmount}    Circle Notebook Workflow Navigation for PT Health Syndicated Deal    &{ExcelPath}[Primary_Lender1]    &{ExcelPath}[Primary_CircledDate]
+    ${HostBank_ShareAmount}    Circle Notebook Workflow Navigation    &{ExcelPath}[Primary_Lender1]    &{ExcelPath}[Primary_CircledDate]
     ...    &{ExcelPath}[IsLenderAHostBank]    &{ExcelPath}[Primary_Portfolio]    &{ExcelPath}[Primary_PortfolioBranch]    &{ExcelPath}[Primary_PortfolioAllocation]
     ...    &{ExcelPath}[Primary_PortfolioExpiryDate]    &{ExcelPath}[Deal_ExpenseCode]
     
@@ -93,6 +93,43 @@ Setup Primaries for PT Health Syndicated Deal
     Select Actions    [Actions];Work In Process
     Circle Notebook Settlement Approval    &{ExcelPath}[Deal_Name]    &{ExcelPath}[LenderType1]
     Close All Windows on LIQ
+
+Set Sell Amount and Percent of Deal for PT Health
+    [Documentation]    This keyword adds a Percent of Deal and Sell Amount for PT Health
+    ...                @author: songchan    26JAN2021    - Initial Create
+    [Arguments]    ${sPercentOfDeal}    ${sRunTimeVar_SellAmount}=None
+
+    ### GetRuntime Keyword Pre-processing ###
+    ${PercentOfDeal}    Acquire Argument Value    ${sPercentOfDeal}
+
+    Log    percent of deal is ${PercentOfDeal}
+    Mx LoanIQ Select Window Tab    ${LIQ_OrigPrimaries_Tab}    Facilities
+    mx LoanIQ activate window    ${LIQ_OrigPrimaries_Window}    
+    mx LoanIQ enter    ${LIQ_OrigPrimaries_PctOfDeal_Textfield}    ${PercentOfDeal}
+    Mx Press Combination    Key.Tab   
+
+    ${CurrentDealAmount}    Mx LoanIQ Get Data    ${LIQ_OrigPrimaries_CurrentDealAmount_Textfield}    value%amount
+    ${CurrentDealAmount}    Remove String    ${CurrentDealAmount}    ,
+    ${CurrentDealAmount}    Convert To Number    ${CurrentDealAmount}
+    ${SellAmountUI}    Mx LoanIQ Get Data    ${LIQ_OrigPrimaries_SellAmount_Textfield}    value%amount
+
+    ${PercentOfDeal}    Evaluate    ${PercentOfDeal}/100
+    Log    percent of deal after evaluation ${PercentOfDeal}
+    
+    Log    percent of deal after conversion ${PercentOfDeal}
+    ${Sell_Amount}    Evaluate    ${CurrentDealAmount}*${PercentOfDeal}
+    ${Sell_Amount}    Convert To Number    ${Sell_Amount}    2
+    ${Sell_Amount}    Convert To String    ${Sell_Amount}
+    ${Sell_Amount}    Convert Number With Comma Separators    ${Sell_Amount}
+    Run Keyword If    '${SellAmountUI}'=='${Sell_Amount}'    Log    Sell Amount is verified.
+    ...    ELSE    Fail    Sell Amount not verified.
+
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/PrimariesWindow_SetSellAmountAndPercentOfDeal
+
+    ### Keyword Post-processing ###
+    Save Values of Runtime Execution on Excel File    ${sRunTimeVar_SellAmount}    ${Sell_Amount}
+
+    [Return]    ${Sell_Amount}
     
 PT Health Syndicated Deal Approval and Close
     [Documentation]    This keywords Approves and Closes the created PT Health Syndicated Deal.

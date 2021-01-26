@@ -8,7 +8,7 @@ Create Facility for PT Health
     [Arguments]    ${ExcelPath}
     
     ${Facility_NamePrefix}    Read Data From Excel    CRED02_FacilitySetup    Facility_NamePrefix    ${rowid}
-    ${Facility_Name}    Generate Facility Name with 5 Numeric Test Data    ${Facility_NamePrefix}
+    ${Facility_Name}    Generate Facility Name with 4 Numeric Test Data    ${Facility_NamePrefix}
     Write Data To Excel    CRED02_FacilitySetup    Facility_Name    ${rowid}    ${Facility_Name}
     Write Data To Excel    SYND02_PrimaryAllocation    Facility_Name    &{ExcelPath}[rowid]    ${Facility_Name}
     Write Data To Excel    SERV29_CommitmentFeePayment    Facility_Name    &{ExcelPath}[rowid]    ${Facility_Name}
@@ -66,7 +66,8 @@ Update Line Fee for PT Health Syndicated
     Navigate to Commitment Fee Notebook    &{ExcelPath}[OngoingFee_Type]
 
     ### Commitment Fee Notebook - General Tab ###  
-    Enter Line Fee Details    &{ExcelPath}[Commitment_EffectiveDate]    &{ExcelPath}[Commitment_ActualDate]    &{ExcelPath}[Commitment_AdjustedDueDate]    ${ExcelPath}[Commitment_CycleFrequency]    &{ExcelPath}[Commitment_Accrue]  
+    Enter Line Fee Details    &{ExcelPath}[Commitment_EffectiveDate]    &{ExcelPath}[Commitment_ActualDate]    &{ExcelPath}[Commitment_AdjustedDueDate]    ${ExcelPath}[Commitment_CycleFrequency]    &{ExcelPath}[Commitment_Accrue]
+    ...    &{ExcelPath}[FloatRateDate]    &{ExcelPath}[PayType]  
     
     Save Facility Notebook Transaction
     Close All Windows on LIQ
