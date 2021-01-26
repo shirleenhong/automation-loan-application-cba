@@ -64,6 +64,7 @@ LIQ_InitialDrawdown_BaseRate_Textfield = 'JavaWindow("label:=Set Base Rate").Jav
 LIQ_InitialDrawdown_SetBaseRate_OK_Button = 'JavaWindow("label:=Set Base Rate").JavaButton("attached text:=OK")'
 LIQ_InitialDrawdown_BorrowerBaseRate_Field = 'JavaWindow("title:=Set Base Rate.*").JavaEdit("index:=0")'
 LIQ_InitialDrawdown_Spread_Current = 'JavaWindow("title:=.*Initial Drawdown .*").JavaEdit("attached text:=Current")'
+LIQ_InitialDrawdown_SpreadIsFixed_Checkbox = 'JavaWindow("title:=.*Initial Drawdown .*").JavaCheckBox("attached text:=Spread is Fixed.*")'
 LIQ_InitialDrawdown_AllInRate = 'JavaWindow("title:=.*Initial Drawdown .*").JavaEdit("attached text:=All-In Rate:")'
 LIQ_InitialDrawdown_AllInRateFromPricing_Text = 'JavaWindow("title:=.*Initial Drawdown.*").JavaObject("tagname:=Group", "text:=Interest Rates").JavaEdit("Index:=5")'
 LIQ_InitialDrawdown_AcceptBaseRate = 'JavaWindow("title:=Set Base Rate.*").JavaButton("attached text:=Accept Rate from Pricing.*")'
