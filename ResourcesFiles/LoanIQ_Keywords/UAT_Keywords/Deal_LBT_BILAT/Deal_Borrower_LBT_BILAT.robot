@@ -7,7 +7,7 @@ Create Deal Borrower Initial Details in Quick Party Onboarding for LBT Bilateral
     [Documentation]    This keyword creates a Deal Borrower in Quick Party Onboarding for LBT Bilateral Deal.
     ...    @author: javinzon    08DEC2020    - initial create
     ...    @update: javinzon    18DEC2020    - Added keywords Write Data to Excel for Borrower_Name of SERV01_LoanDrawdown
-    ...    @update: javinzon    26JAN2021    - Added keywords Write Data to Excel for Borrower_Name of SERV01_LoanDrawdown rows 4-10
+    ...    @update: javinzon    26JAN2021    - Added argument 'multipleValue=Y' when writing BorrowerName in SERV01_LoanDrawdown
     [Arguments]    ${ExcelPath}
 
     ### INPUTTER ###
@@ -51,17 +51,8 @@ Create Deal Borrower Initial Details in Quick Party Onboarding for LBT Bilateral
     Write Data To Excel    PTY001_QuickPartyOnboarding    LIQBorrower_ID    ${rowid}    ${Party_ID}
     Write Data To Excel    PTY001_QuickPartyOnboarding    LIQCustomer_ShortName    ${rowid}    ${Short_Name.upper()}
     Write Data To Excel    PTY001_QuickPartyOnboarding    LIQBorrower_LegalName    ${rowid}    ${Enterprise_Name}
-    Write Data To Excel    SERV01_LoanDrawdown    Borrower_Name    ${rowid}    ${Short_Name.upper()}
-    Write Data To Excel    SERV01_LoanDrawdown    Borrower_Name    2    ${Short_Name.upper()}
-    Write Data To Excel    SERV01_LoanDrawdown    Borrower_Name    3    ${Short_Name.upper()}
-    Write Data To Excel    SERV01_LoanDrawdown    Borrower_Name    4    ${Short_Name.upper()}
-    Write Data To Excel    SERV01_LoanDrawdown    Borrower_Name    5    ${Short_Name.upper()}
-    Write Data To Excel    SERV01_LoanDrawdown    Borrower_Name    6    ${Short_Name.upper()}
-    Write Data To Excel    SERV01_LoanDrawdown    Borrower_Name    7    ${Short_Name.upper()}
-    Write Data To Excel    SERV01_LoanDrawdown    Borrower_Name    8    ${Short_Name.upper()}
-    Write Data To Excel    SERV01_LoanDrawdown    Borrower_Name    9    ${Short_Name.upper()}
-    Write Data To Excel    SERV01_LoanDrawdown    Borrower_Name    10    ${Short_Name.upper()}
-
+    Write Data To Excel    SERV01_LoanDrawdown    Borrower_Name    ${rowid}    ${Short_Name.upper()}    multipleValue=Y
+  
 Search Customer and Complete Borrower Profile Creation with Default Values for LBT Bilateral Deal
     [Documentation]    This keyword searches a customer and complete its Borrower Profile creation with default values
     ...    @author: javinzon    08DEC2020    - initial create

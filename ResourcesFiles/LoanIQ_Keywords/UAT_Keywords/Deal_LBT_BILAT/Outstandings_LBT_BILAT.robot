@@ -23,8 +23,7 @@ Create Loan Drawdown for LBT Bilateral Deal
    
     Input General Loan Drawdown Details with Accrual End Date    &{ExcelPath}[Loan_RequestedAmount]    &{ExcelPath}[Loan_MaturityDate]    &{ExcelPath}[Loan_RepricingFrequency]    &{ExcelPath}[Loan_EffectiveDate]            
     ...    &{ExcelPath}[Loan_RepricingDate]    &{ExcelPath}[Loan_RiskType]    &{ExcelPath}[Loan_FiskandLoanRiskType]    &{ExcelPath}[Payment_Mode]    &{ExcelPath}[Loan_Accrue]    &{ExcelPath}[Loan_AccrualEndDate]        
-    
-    Run Keyword If    '${rowid}'=='5'    Set Spread Rate as Fixed in Rates Tab of Loan Drawdown
+    Set Spread Rate as Fixed in Rates Tab of Loan Drawdown    &{ExcelPath}[Spread_Is_Fixed]
     
     ### Cashflow Notebook - Create Cashflows ###
     Navigate to Drawdown Cashflow Window

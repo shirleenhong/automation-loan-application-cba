@@ -10,7 +10,7 @@ Setup Deal for LBT BILAT Deal
     ...    @update: javinzon    18DEC2020    - Added keywords Write Data to Excel for Deal_Name of SERV01_LoanDrawdown
     ...    @update: javinzon    13JAN2021    - Added keywords Write Data to Excel for Deal_Name of Correspondence and LegalName
     ...                                        for 1st and 2nd row of Correspondence
-    ...    @update: javinzon    26JAN2021    - Added keywords Write Data to Excel for Deal_Name of SERV01_LoanDrawdown for rows 4-10
+    ...    @update: javinzon    26JAN2021    - Added argument 'multipleValue=Y' when writing DealName in SERV01_LoanDrawdown
     [Arguments]    ${ExcelPath}
  
     ${Deal_Name}    ${Deal_Alias}    Generate Deal Name and Alias with Numeric Test Data    &{ExcelPath}[Deal_NamePrefix]    &{ExcelPath}[Deal_AliasPrefix]    5
@@ -27,16 +27,7 @@ Setup Deal for LBT BILAT Deal
     Write Data To Excel    CRED01_DealSetup    Deal_Alias    &{ExcelPath}[rowid]    ${Deal_Alias}
     Write Data To Excel    SYND02_PrimaryAllocation    Deal_Name    &{ExcelPath}[rowid]    ${Deal_Name}
     Write Data To Excel    CRED08_OngoingFeeSetup    Deal_Name    &{ExcelPath}[rowid]    ${Deal_Name}
-    Write Data To Excel    SERV01_LoanDrawdown    Deal_Name    &{ExcelPath}[rowid]    ${Deal_Name}
-    Write Data To Excel    SERV01_LoanDrawdown    Deal_Name    2    ${Deal_Name}
-    Write Data To Excel    SERV01_LoanDrawdown    Deal_Name    3    ${Deal_Name}
-    Write Data To Excel    SERV01_LoanDrawdown    Deal_Name    4    ${Deal_Name}
-    Write Data To Excel    SERV01_LoanDrawdown    Deal_Name    5    ${Deal_Name}
-    Write Data To Excel    SERV01_LoanDrawdown    Deal_Name    6    ${Deal_Name}
-    Write Data To Excel    SERV01_LoanDrawdown    Deal_Name    7    ${Deal_Name}
-    Write Data To Excel    SERV01_LoanDrawdown    Deal_Name    8    ${Deal_Name}
-    Write Data To Excel    SERV01_LoanDrawdown    Deal_Name    9    ${Deal_Name}
-    Write Data To Excel    SERV01_LoanDrawdown    Deal_Name    10    ${Deal_Name}
+    Write Data To Excel    SERV01_LoanDrawdown    Deal_Name    &{ExcelPath}[rowid]    ${Deal_Name}    multipleValue=Y
     Write Data To Excel    Correspondence    Deal_Name    &{ExcelPath}[rowid]    ${Deal_Name}
     Write Data To Excel    Correspondence    Notice_Customer_LegalName    &{ExcelPath}[rowid]    ${Borrower_ShortName}
     Write Data To Excel    Correspondence    Deal_Name    2    ${Deal_Name}
