@@ -35,3 +35,7 @@ Create Drawdown and Back Date to 16/12/2019
     Mx Execute Template With Multiple Data    Send Intent Notice for Loan Drawdown    ${ExcelPath}    ${rowid}    Correspondence
     Set Test Variable    ${rowid}    4
     Mx Execute Template With Multiple Data    Send Intent Notice for Loan Drawdown    ${ExcelPath}    ${rowid}    Correspondence
+    Set Test Variable    ${rowid}    5
+    Mx Execute Template With Multiple Data    Send Rate Setting Notice for Loan Drawdown    ${ExcelPath}    ${rowid}    Correspondence
+    Set Test Variable    ${rowid}    6
+    Mx Execute Template With Multiple Data    Send Rate Setting Notice for Loan Drawdown    ${ExcelPath}    ${rowid}    Correspondence
