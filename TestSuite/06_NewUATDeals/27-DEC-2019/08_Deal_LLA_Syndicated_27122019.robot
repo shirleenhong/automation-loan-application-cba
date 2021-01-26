@@ -39,3 +39,7 @@ Create Drawdown and Back Date to 16/12/2019
     Mx Execute Template With Multiple Data    Send Rate Setting Notice for Loan Drawdown    ${ExcelPath}    ${rowid}    Correspondence
     Set Test Variable    ${rowid}    6
     Mx Execute Template With Multiple Data    Send Rate Setting Notice for Loan Drawdown    ${ExcelPath}    ${rowid}    Correspondence
+
+Create Drawdown and Back Date to 8/11/2019
+    Set Test Variable    ${rowid}    2
+    Mx Execute Template With Multiple Data    Create Loan Drawdown for LLA Syndicated Deal - Outstanding B    ${ExcelPath}    ${rowid}    SERV01_LoanDrawdown
