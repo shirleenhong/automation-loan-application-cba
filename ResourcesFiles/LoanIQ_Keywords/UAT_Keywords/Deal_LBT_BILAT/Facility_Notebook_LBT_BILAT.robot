@@ -8,6 +8,7 @@ Create Class A Note Facility for LBT Bilateral Deal
     ...    @update: javinzon    16DEC2020    - Added Write Data To Excel of Facility Name for CRED08_OngoingFeeSetup
     ...    @update: javinzon    18DEC2020    - Added keywords Write Data to Excel for Facility_Name of SERV01_LoanDrawdown
     ...    @update: javinzon    13JAN2021    - Added keyword Write Data to Excel for Facility_Name of Correspondence rows 1 and 2.
+    ...    @update: javinzon    18DEC2020    - Added keywords Write Data to Excel for Facility_Name of SERV01_LoanDrawdown rows 4-10
     [Arguments]    ${ExcelPath}
 
     ${Facility_Name}    Auto Generate Only 5 Numeric Test Data    &{ExcelPath}[Facility_NamePrefix]
@@ -16,6 +17,13 @@ Create Class A Note Facility for LBT Bilateral Deal
     Write Data To Excel    SERV01_LoanDrawdown    Facility_Name    ${rowid}    ${Facility_Name}    bTestCaseColumn=True    sColumnReference=rowid
     Write Data To Excel    SERV01_LoanDrawdown    Facility_Name    2    ${Facility_Name}    bTestCaseColumn=True    sColumnReference=rowid
     Write Data To Excel    SERV01_LoanDrawdown    Facility_Name    3    ${Facility_Name}    bTestCaseColumn=True    sColumnReference=rowid
+    Write Data To Excel    SERV01_LoanDrawdown    Facility_Name    4    ${Facility_Name}    bTestCaseColumn=True    sColumnReference=rowid
+    Write Data To Excel    SERV01_LoanDrawdown    Facility_Name    5    ${Facility_Name}    bTestCaseColumn=True    sColumnReference=rowid
+    Write Data To Excel    SERV01_LoanDrawdown    Facility_Name    6    ${Facility_Name}    bTestCaseColumn=True    sColumnReference=rowid
+    Write Data To Excel    SERV01_LoanDrawdown    Facility_Name    7    ${Facility_Name}    bTestCaseColumn=True    sColumnReference=rowid
+    Write Data To Excel    SERV01_LoanDrawdown    Facility_Name    8    ${Facility_Name}    bTestCaseColumn=True    sColumnReference=rowid
+    Write Data To Excel    SERV01_LoanDrawdown    Facility_Name    9    ${Facility_Name}    bTestCaseColumn=True    sColumnReference=rowid
+    Write Data To Excel    SERV01_LoanDrawdown    Facility_Name    10    ${Facility_Name}    bTestCaseColumn=True    sColumnReference=rowid
     Write Data To Excel    Correspondence    Facility_Name    ${rowid}    ${Facility_Name}    bTestCaseColumn=True    sColumnReference=rowid
     Write Data To Excel    Correspondence    Facility_Name    2    ${Facility_Name}    bTestCaseColumn=True    sColumnReference=rowid
    

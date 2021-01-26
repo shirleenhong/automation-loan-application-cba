@@ -7,6 +7,7 @@ Create Deal Borrower Initial Details in Quick Party Onboarding for LBT Bilateral
     [Documentation]    This keyword creates a Deal Borrower in Quick Party Onboarding for LBT Bilateral Deal.
     ...    @author: javinzon    08DEC2020    - initial create
     ...    @update: javinzon    18DEC2020    - Added keywords Write Data to Excel for Borrower_Name of SERV01_LoanDrawdown
+    ...    @update: javinzon    26JAN2021    - Added keywords Write Data to Excel for Borrower_Name of SERV01_LoanDrawdown rows 4-10
     [Arguments]    ${ExcelPath}
 
     ### INPUTTER ###
@@ -53,6 +54,13 @@ Create Deal Borrower Initial Details in Quick Party Onboarding for LBT Bilateral
     Write Data To Excel    SERV01_LoanDrawdown    Borrower_Name    ${rowid}    ${Short_Name.upper()}
     Write Data To Excel    SERV01_LoanDrawdown    Borrower_Name    2    ${Short_Name.upper()}
     Write Data To Excel    SERV01_LoanDrawdown    Borrower_Name    3    ${Short_Name.upper()}
+    Write Data To Excel    SERV01_LoanDrawdown    Borrower_Name    4    ${Short_Name.upper()}
+    Write Data To Excel    SERV01_LoanDrawdown    Borrower_Name    5    ${Short_Name.upper()}
+    Write Data To Excel    SERV01_LoanDrawdown    Borrower_Name    6    ${Short_Name.upper()}
+    Write Data To Excel    SERV01_LoanDrawdown    Borrower_Name    7    ${Short_Name.upper()}
+    Write Data To Excel    SERV01_LoanDrawdown    Borrower_Name    8    ${Short_Name.upper()}
+    Write Data To Excel    SERV01_LoanDrawdown    Borrower_Name    9    ${Short_Name.upper()}
+    Write Data To Excel    SERV01_LoanDrawdown    Borrower_Name    10    ${Short_Name.upper()}
 
 Search Customer and Complete Borrower Profile Creation with Default Values for LBT Bilateral Deal
     [Documentation]    This keyword searches a customer and complete its Borrower Profile creation with default values

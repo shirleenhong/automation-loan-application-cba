@@ -9,11 +9,11 @@ Create Loan Drawdown for LBT Bilateral Deal
     ...                                        to 'Create Loan Drawdown for LBT Bilateral Deal', Removed keywords Read Data from Excel
     ...    @update: javinzon    13JAN2021    - Added keyword Write Data to Excel for Loan_Alias of Correspondence
     ...    @update: javinzon    14JAN2021    - Removed keywords Write Data To Excel
+    ...    @update: javinzon    26JAN2021    - Added condition to Run 'Enter Initial Loan Drawdown Spread Rate' keyword if rowid is 5
     [Arguments]    ${ExcelPath}
     
     Logout from Loan IQ
     Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
-
     Open Existing Deal    &{ExcelPath}[Deal_Name]
     
     ### Create Drawdown ###
@@ -23,7 +23,9 @@ Create Loan Drawdown for LBT Bilateral Deal
    
     Input General Loan Drawdown Details with Accrual End Date    &{ExcelPath}[Loan_RequestedAmount]    &{ExcelPath}[Loan_MaturityDate]    &{ExcelPath}[Loan_RepricingFrequency]    &{ExcelPath}[Loan_EffectiveDate]            
     ...    &{ExcelPath}[Loan_RepricingDate]    &{ExcelPath}[Loan_RiskType]    &{ExcelPath}[Loan_FiskandLoanRiskType]    &{ExcelPath}[Payment_Mode]    &{ExcelPath}[Loan_Accrue]    &{ExcelPath}[Loan_AccrualEndDate]        
-
+    
+    Run Keyword If    '${rowid}'=='5'    Set Spread Rate as Fixed in Rates Tab of Loan Drawdown
+    
     ### Cashflow Notebook - Create Cashflows ###
     Navigate to Drawdown Cashflow Window
     Verify if Method has Remittance Instruction    &{ExcelPath}[Borrower_Name]    &{ExcelPath}[Remittance_Description]    &{ExcelPath}[Remittance_Instruction]
@@ -186,8 +188,3 @@ Combine Drawdown A and B and Make Partial Repayment for LBT Bilateral Deal
     Validate Loan Drawdown Rates in Rates Tab    &{ExcelPath}[Expctd_LoanCurrentBaseRate]    &{ExcelPath}[Expctd_LoanSpread]    &{ExcelPath}[Expctd_LoanAllInRate]
     Validate Event Status in Loan Events Tab    ${RELEASED_STATUS}
     Close All Windows on LIQ
-    
-    
-
-
-

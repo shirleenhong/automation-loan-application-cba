@@ -4136,3 +4136,14 @@ Validate Loan Drawdown General Details in General Tab
     ${Status}    Run Keyword And Return Status    Should Be Equal    ${UI_IntCycleFrequency}    ${Loan_IntCycleFrequency}
     Run Keyword If    ${Status}==${True}    Log    Loan Int Cycle Frequency is correct.
     ...    ELSE    Run Keyword And Continue On Failure    Fail    Loan Int Cycle Frequency is incorrect. Expected: ${Loan_IntCycleFrequency} - Actual: ${UI_IntCycleFrequency}
+    
+Set Spread Rate as Fixed in Rates Tab of Loan Drawdown
+    [Documentation]    This keyword sets the 'Spread is Fixed' checkbox to ON in Initial Drawdown - Rates Tab
+    ...    @author: javinzon    26JAN2021    - Initial create
+    
+    Mx LoanIQ Select Window Tab    ${LIQ_InitialDrawdown_Tab}    ${RATES_TAB}
+    Mx LoanIQ Set    ${LIQ_InitialDrawdown_SpreadIsFixed_Checkbox}    ON
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/InitialDrawdown_SpreadIsFixed
+    Select Menu Item    ${LIQ_InitialDrawdown_Window}    File    Save
+    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
+
