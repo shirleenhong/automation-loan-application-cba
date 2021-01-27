@@ -22,3 +22,4 @@ Establish Deal for ATM BILAT
 Establish Facility for ATM BILAT
     Mx Execute Template With Multiple Data    Create Facility for ATM BILAT    ${ExcelPath}     ${rowid}    CRED02_FacilitySetup
     Mx Execute Template With Multiple Data    Set Multiple Amortization Schedule for Facility    ${ExcelPath}     ${rowid}    SERV15_SchComittmentDecrease
+    Mx Execute Template With Multiple Data    Add Another Facility with Ongoing Fees for ATM BILAT    ${ExcelPath}     ${rowid}    CRED02_FacilitySetup
