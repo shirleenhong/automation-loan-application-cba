@@ -8,6 +8,7 @@ Create Comprehensive Repricing for PIM Future BILAT
     ...    @author: mcastro    14DEC2020    - Initial Create 
     ...    @update: mcastro    05JAN2021    - Added writing of New loan alias to Correspondence  
     ...    @update: mcastro    15JAN2021    - Removed writing on breakfunding sheet, added writing of loan_alias on correspondence
+    ...    @update: mcastro    22JAN2021    - Added writing of Loan_Alias to correspondence, updated variable from &{ExcelPath}[NewLoan_Alias] to ${NewLoan_Alias}
     [Arguments]    ${ExcelPath}
 
     ${Rollover_Amount}    Read Data From Excel    SERV01_LoanDrawdown    Loan_RequestedAmount    ${rowid}
@@ -41,6 +42,7 @@ Create Comprehensive Repricing for PIM Future BILAT
     Write Data To Excel    Correspondence    Loan_Alias    6    ${NewLoan_Alias}
     Write Data To Excel    Correspondence    Loan_Alias    7    ${NewLoan_Alias}
     Write Data To Excel    Correspondence    Loan_Alias    10    ${NewLoan_Alias}
+    Write Data To Excel    Correspondence    Loan_Alias    13    ${NewLoan_Alias}
 
     ### Adding of Interest Payment ###
     Add Interest Payment for Loan Repricing
@@ -92,7 +94,7 @@ Create Comprehensive Repricing for PIM Future BILAT
     ### Validate New Loan Amount ###
     Search for Deal    &{ExcelPath}[Deal_Name]
     Search for Existing Outstanding    &{ExcelPath}[OutstandingSelect_Type]    &{ExcelPath}[Facility_Name]
-    Open Existing Loan    &{ExcelPath}[NewLoan_Alias]
+    Open Existing Loan    ${NewLoan_Alias}
     Validate Loan Amount was Updated after Repricing    &{ExcelPath}[New_LoanAmount]
 
     Close All Windows on LIQ
