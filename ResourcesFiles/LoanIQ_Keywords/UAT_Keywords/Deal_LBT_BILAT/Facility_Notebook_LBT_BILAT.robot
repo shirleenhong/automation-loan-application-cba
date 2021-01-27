@@ -8,14 +8,13 @@ Create Class A Note Facility for LBT Bilateral Deal
     ...    @update: javinzon    16DEC2020    - Added Write Data To Excel of Facility Name for CRED08_OngoingFeeSetup
     ...    @update: javinzon    18DEC2020    - Added keywords Write Data to Excel for Facility_Name of SERV01_LoanDrawdown
     ...    @update: javinzon    13JAN2021    - Added keyword Write Data to Excel for Facility_Name of Correspondence rows 1 and 2.
+    ...    @update: javinzon    26JAN2021    - Added argument 'multipleValue=Y' when writing FacilityName in SERV01_LoanDrawdown
     [Arguments]    ${ExcelPath}
 
     ${Facility_Name}    Auto Generate Only 5 Numeric Test Data    &{ExcelPath}[Facility_NamePrefix]
     Write Data To Excel    CRED01_FacilitySetup    Facility_Name    ${rowid}    ${Facility_Name}    bTestCaseColumn=True    sColumnReference=rowid
     Write Data To Excel    CRED08_OngoingFeeSetup    Facility_Name    ${rowid}    ${Facility_Name}    bTestCaseColumn=True    sColumnReference=rowid
-    Write Data To Excel    SERV01_LoanDrawdown    Facility_Name    ${rowid}    ${Facility_Name}    bTestCaseColumn=True    sColumnReference=rowid
-    Write Data To Excel    SERV01_LoanDrawdown    Facility_Name    2    ${Facility_Name}    bTestCaseColumn=True    sColumnReference=rowid
-    Write Data To Excel    SERV01_LoanDrawdown    Facility_Name    3    ${Facility_Name}    bTestCaseColumn=True    sColumnReference=rowid
+    Write Data To Excel    SERV01_LoanDrawdown    Facility_Name    ${rowid}    ${Facility_Name}    multipleValue=Y    bTestCaseColumn=True    sColumnReference=rowid
     Write Data To Excel    Correspondence    Facility_Name    ${rowid}    ${Facility_Name}    bTestCaseColumn=True    sColumnReference=rowid
     Write Data To Excel    Correspondence    Facility_Name    2    ${Facility_Name}    bTestCaseColumn=True    sColumnReference=rowid
    

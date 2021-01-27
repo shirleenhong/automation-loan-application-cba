@@ -4,7 +4,7 @@ Resource    ../../../../Configurations/LoanIQ_Import_File.robot
 
 *** Keywords ***
 Create Facility for PDS Syndicate Deal
-    [Documentation]    This keyword creates Capitalization Facility for CH EDU Bilateral Deal
+    [Documentation]    This keyword creates Facility for PDS Syndicated Deal
     ...    @author: shirhong    18JAN2021    - Intial Create
     [Arguments]    ${ExcelPath}
 
@@ -29,8 +29,31 @@ Create Facility for PDS Syndicate Deal
     Add Loan Purpose Type    &{ExcelPath}[Facility_LoanPurposeType]
    
     ##Facility Notebook - Restrictions Tab###
-    Add Currency Limit    &{ExcelPath}[Facility_Currency]    &{ExcelPath}[Facility_GlobalLimit]   &{ExcelPath}[Facility_CustomerServicingGroup]    &{ExcelPath}[Facility_SGAlias]
+    Add Currency Limit    &{ExcelPath}[Facility_Currency]    &{ExcelPath}[Facility_GlobalLimit]    &{ExcelPath}[Facility_CustomerServicingGroup]    &{ExcelPath}[Facility_SGAlias]
 
     ###Facility Notebook - Sublimit/Cust Tab###
     Add Borrower    &{ExcelPath}[Facility_Currency]    ${Facility_BorrowerSGName}    &{ExcelPath}[Facility_BorrowerPercent]    ${Facility_Borrower}
     ...    &{ExcelPath}[Facility_GlobalLimit]    &{ExcelPath}[Facility_BorrowerMaturity]    &{ExcelPath}[Facility_EffectiveDate]
+
+Add Repayment Schedule for PDS Syndicate Deal - Facility A
+    [Documentation]    This keyword creates Repayment Schedule for Facility A
+    ...    @author: shirhong    25JAN2021    - Intial Create
+    [Arguments]    ${ExcelPath}
+
+    ### Add Amortization / Repayment Schedule ###
+    Navigate to Increase Decrease Schedule from Facility Notebook Window
+
+    Add Amortization Schedule Frequency    &{ExcelPath}[Amortization_Frequency]
+
+    Add Amortization Schedule Status    &{ExcelPath}[Amortization_Status]    &{ExcelPath}[Amortization_ScheduleType]
+
+    Modify Schedule Item    &{ExcelPath}[ModifyScheduleItem_Amount]    &{ExcelPath}[ModifyScheduleItem_PercentofCurrent]    &{ExcelPath}[ModifyScheduleItem_Date]
+
+    Add Scheduled Amortization Item    &{ExcelPath}[ScheduleItem_Amount1]    &{ExcelPath}[ScheduleItem_PercentofCurrent1]    &{ExcelPath}[ScheduleItem_Date1]
+    Add Scheduled Amortization Item    &{ExcelPath}[ScheduleItem_Amount2]    &{ExcelPath}[ScheduleItem_PercentofCurrent2]    &{ExcelPath}[ScheduleItem_Date2]
+    Add Scheduled Amortization Item    &{ExcelPath}[ScheduleItem_Amount3]    &{ExcelPath}[ScheduleItem_PercentofCurrent3]    &{ExcelPath}[ScheduleItem_Date3]
+    
+    Save and Exit Amortization Schedule for Facility Window
+
+    Close All Windows on LIQ
+    
