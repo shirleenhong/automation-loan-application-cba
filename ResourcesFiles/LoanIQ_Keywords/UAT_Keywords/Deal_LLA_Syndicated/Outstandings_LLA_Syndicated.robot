@@ -84,12 +84,12 @@ Create Loan Drawdown for LLA Syndicated Deal - Outstanding A
 
 Create Loan Drawdown for LLA Syndicated Deal - Outstanding B
     [Documentation]    This high-level keyword is used to setup the loan drawdown for LLA Syndicated Deal
-    ...    Outsanding B - Drawdown 3 and back date to 18/12/2019
-    ...    @author: makcamps    21JAN2021    - Initial Create
+    ...    Outsanding B - Drawdown and back date to 11/08/2019
+    ...    @author: makcamps    26JAN2021    - Initial Create
     [Arguments]    ${ExcelPath}
 
     ${Deal_Name}    Read Data From Excel    CRED01_DealSetup    Deal_Name    1
-    ${FacilityName}    Read Data From Excel    CRED02_FacilitySetup_B    Facility_Name    1
+    ${FacilityName}    Read Data From Excel    CRED02_FacilitySetup    Facility_Name    1
     ${Borrower_Name}    Read Data From Excel    PTY001_QuickPartyOnboarding    LIQCustomer_ShortName    1
 
     Logout from Loan IQ
@@ -99,13 +99,15 @@ Create Loan Drawdown for LLA Syndicated Deal - Outstanding B
     ### Create Drawdown ###
     Navigate to Outstanding Select Window from Deal
     ${Loan_Alias}    New Outstanding Select    ${Deal_Name}    ${FacilityName}    ${Borrower_Name}    &{ExcelPath}[Outstanding_Type]    &{ExcelPath}[Pricing_Option]    &{ExcelPath}[Outstanding_Currency]
-    Write Data To Excel    SERV01_LoanDrawdown    Loan_Alias    &{ExcelPath}[rowid]    ${Loan_Alias}
+    Write Data To Excel    SERV01_LoanDrawdown    Loan_Alias    ${rowid}    ${Loan_Alias}    bTestCaseColumn=True    sColumnReference=rowid
 
     Input General Loan Drawdown Details    &{ExcelPath}[Loan_RequestedAmount]    &{ExcelPath}[Loan_EffectiveDate]    &{ExcelPath}[Loan_MaturityDate]    &{ExcelPath}[Loan_RepricingFrequency]    
     ...    &{ExcelPath}[Loan_IntCycleFrequency]    &{ExcelPath}[Loan_Accrue]    &{ExcelPath}[Loan_RepricingDate]
 
     ### Cashflow Notebook - Create Cashflows ###
     Navigate to Loan Drawdown Workflow and Proceed With Transaction    ${CREATE_CASHFLOWS_TYPE}
+    Verify if Method has Remittance Instruction    &{ExcelPath}[Borrower_ShortName]    &{ExcelPath}[Borrower_RemittanceDesc]    &{ExcelPath}[Borrower_RemittanceInstruction]
+    Verify if Method has Remittance Instruction    &{ExcelPath}[Lender_ShortName]    &{ExcelPath}[Lender_RemittanceDesc]    &{ExcelPath}[Lender_RemittanceInstruction]
     Set All Items to Do It
 
     ### Send to Approval ###
