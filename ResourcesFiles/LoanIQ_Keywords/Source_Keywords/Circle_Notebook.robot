@@ -115,6 +115,43 @@ Set Sell Amount and Percent of Deal
 
     [Return]    ${Sell_Amount}
     
+Set Sell Amount using Percent of Deal 
+    [Documentation]    This keyword adds a Percent of Deal and Sell Amount that doesn't remove the comma for percentage
+    ...                @author: songchan    26JAN2021    - Initial Create
+    [Arguments]    ${sPercentOfDeal}    ${sRunTimeVar_SellAmount}=None
+
+    ### GetRuntime Keyword Pre-processing ###
+    ${PercentOfDeal}    Acquire Argument Value    ${sPercentOfDeal}
+
+    Log    percent of deal is ${PercentOfDeal}
+    Mx LoanIQ Select Window Tab    ${LIQ_OrigPrimaries_Tab}    Facilities
+    mx LoanIQ activate window    ${LIQ_OrigPrimaries_Window}    
+    mx LoanIQ enter    ${LIQ_OrigPrimaries_PctOfDeal_Textfield}    ${PercentOfDeal}
+    Mx Press Combination    Key.Tab   
+
+    ${CurrentDealAmount}    Mx LoanIQ Get Data    ${LIQ_OrigPrimaries_CurrentDealAmount_Textfield}    value%amount
+    ${CurrentDealAmount}    Remove String    ${CurrentDealAmount}    ,
+    ${CurrentDealAmount}    Convert To Number    ${CurrentDealAmount}
+    ${SellAmountUI}    Mx LoanIQ Get Data    ${LIQ_OrigPrimaries_SellAmount_Textfield}    value%amount
+
+    ${PercentOfDeal}    Evaluate    ${PercentOfDeal}/100
+    Log    percent of deal after evaluation ${PercentOfDeal}
+    
+    Log    percent of deal after conversion ${PercentOfDeal}
+    ${Sell_Amount}    Evaluate    ${CurrentDealAmount}*${PercentOfDeal}
+    ${Sell_Amount}    Convert To Number    ${Sell_Amount}    2
+    ${Sell_Amount}    Convert To String    ${Sell_Amount}
+    ${Sell_Amount}    Convert Number With Comma Separators    ${Sell_Amount}
+    Run Keyword If    '${SellAmountUI}'=='${Sell_Amount}'    Log    Sell Amount is verified.
+    ...    ELSE    Fail    Sell Amount not verified.
+
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/PrimariesWindow_SetSellAmountAndPercentOfDeal
+
+    ### Keyword Post-processing ###
+    Save Values of Runtime Execution on Excel File    ${sRunTimeVar_SellAmount}    ${Sell_Amount}
+
+    [Return]    ${Sell_Amount}
+
 Add Pro Rate
     [Documentation]    This keyword adds a Pro Rate.
     ...    @author: fmamaril
