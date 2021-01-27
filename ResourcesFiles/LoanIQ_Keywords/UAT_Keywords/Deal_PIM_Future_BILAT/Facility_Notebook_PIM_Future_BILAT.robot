@@ -81,13 +81,14 @@ Setup Facility Ongoing Fee for PIM Future BILAT
 Update Commitment for PIM Future BILAT
     [Documentation]    This keyword will update the existing commitment fee in the created deal
     ...    @author: mcastro    03DEC2020    - Initial Create
+    ...    @update: mcastro    21JAN2020    - Added variable Commitment_Cycle_Frequency
     [Arguments]    ${ExcelPath}
     
     Navigate to Facility Notebook  &{ExcelPath}[Deal_Name]    &{ExcelPath}[Facility_Name]
     Navigate to Commitment Fee Notebook    &{ExcelPath}[OngoingFee_Type] 
     
     ### Commitment Fee Notebook - General Tab ###  
-    Update Commitment Fee    &{ExcelPath}[Commitment_EffectiveDate]    &{ExcelPath}[Commitment_ActualDate]    &{ExcelPath}[Commitment_AdjustedDueDate]    &{ExcelPath}[Commitment_Accrue]    &{ExcelPath}[Commitment_AccrualEndDate] 
+    Update Commitment Fee    &{ExcelPath}[Commitment_EffectiveDate]    &{ExcelPath}[Commitment_ActualDate]    &{ExcelPath}[Commitment_AdjustedDueDate]    &{ExcelPath}[Commitment_Accrue]    &{ExcelPath}[Commitment_AccrualEndDate]    &{ExcelPath}[Commitment_Cycle_Frequency]
 
     Close All Windows on LIQ 
 
@@ -95,6 +96,7 @@ Setup Primary for PIM Future BILAT
     [Documentation]    This keyword will Setup primary for PIM Future BILAT deal
     ...    @author: mcastro    03DEC2020    - Initial Create
     ...    @update: mcastro    14DEC2020    - Update workflow process, approval not needed for the deal
+    ...    @update: mcastro    21JAN2021    - Update None to variables
     [Arguments]    ${ExcelPath}
     
     Open Existing Deal    &{ExcelPath}[Deal_Name]
@@ -103,12 +105,11 @@ Setup Primary for PIM Future BILAT
     Add Pro Rate    &{ExcelPath}[Primary_BuySellPrice]
     Verify Buy/Sell Price in Circle Notebook
     Add Contact in Primary    &{ExcelPath}[Primary_Contact]
-    Select Servicing Group on Primaries    None    &{ExcelPath}[Primary_SGAlias]
+    Select Servicing Group on Primaries    &{ExcelPath}[Primary_SG_Member]    &{ExcelPath}[Primary_SGAlias]
     ${SellAmount}    Get Circle Notebook Sell Amount   
     
     ### Circle Notebook Complete Portfolio Allocation and Circling ###
-
-    Complete Portfolio Allocations Workflow    &{ExcelPath}[Primary_Portfolio]    &{ExcelPath}[Primary_PortfolioBranch]    ${SellAmount}    &{ExcelPath}[Primary_ExpiryDate]    None    &{ExcelPath}[Primary_RiskBook]
+    Complete Portfolio Allocations Workflow    &{ExcelPath}[Primary_Portfolio]    &{ExcelPath}[Primary_PortfolioBranch]    ${SellAmount}    &{ExcelPath}[Primary_ExpiryDate]    &{ExcelPath}[Facility_Name]    &{ExcelPath}[Primary_RiskBook]
     Circling for Primary Workflow    &{ExcelPath}[Primary_CircledDate]
 
     Close All Windows on LIQ

@@ -2124,6 +2124,7 @@ Generate Rate Setting Notices for Drawdown
     ...    @update: dahijara    15JUN2020    - Added code to get only the last 11 digits for Customer Name
     ...                                      - Update the validation for Customer Name in UI
     ...    @update: makcamps    15OCT2020	 - added upper() method to borrower name because it is displayed as all caps
+    ...    @update: mcastro    20JAN2021    - Added taking of screenshots
     [Arguments]    ${sCustomer_Legal_Name}    ${NoticeStatus}
 
     ### GetRuntime Keyword Pre-processing ###
@@ -2134,16 +2135,21 @@ Generate Rate Setting Notices for Drawdown
     mx LoanIQ activate window    ${LIQ_InitialDrawdown_Window}
     Mx LoanIQ Select Window Tab    ${LIQ_InitialDrawdown_Tab}    Workflow   
     Mx LoanIQ DoubleClick    ${LIQ_InitialDrawdown_WorkflowAction}    Generate Rate Setting Notices 
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/InitialDrawdown_Workflow
     mx LoanIQ click element if present    ${LIQ_Question_Yes_Button} 
     mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}   
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/InitialDrawdown_Workflow
     mx LoanIQ activate window    ${LIQ_Notices_Window}   
-    mx LoanIQ click    ${LIQ_Notices_OK_Button}      
+    mx LoanIQ click    ${LIQ_Notices_OK_Button}  
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/InitialDrawdown_Workflow    
     mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
     mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
-    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}   
+    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button} 
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/InitialDrawdown_Workflow  
     mx LoanIQ activate window    ${LIQ_Rollover_Intent_Notice_Window} 
     Mx LoanIQ Select String    ${LIQ_Notice_Information_Table}    ${Customer_Legal_Name}
-    mx LoanIQ click    ${LIQ_Rollover_EditHighlightedNotice_Button}       
+    mx LoanIQ click    ${LIQ_Rollover_EditHighlightedNotice_Button}   
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/InitialDrawdown_Workflow    
     mx LoanIQ activate window    ${LIQ_Rollover_NoticeCreate_Window}
     ${Verified_Customer}    Mx LoanIQ Get Data    JavaWindow("title:=.*Notice created.*","displayed:=1").JavaEdit("text:=.*${Customer_Legal_Name.upper()}")    Verified_Customer    
     Should Contain    ${Verified_Customer}    ${Customer_Legal_Name.upper()}
@@ -2151,8 +2157,10 @@ Generate Rate Setting Notices for Drawdown
     ${Verified_Status}    Mx LoanIQ Get Data    JavaWindow("title:=.*Notice created.*","displayed:=1").JavaObject("tagname:=Group","text:=Status").JavaStaticText("text:=${NoticeStatus}")    Verified_Status    
     Should Be Equal As Strings    ${NoticeStatus}    ${Verified_Status}
     Log    ${Verified_Status} - Status is correct! 
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/InitialDrawdown_Workflow
     mx LoanIQ close window    ${LIQ_Rollover_NoticeCreate_Window}
     mx LoanIQ close window    ${LIQ_Rollover_Intent_Notice_Window} 
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/InitialDrawdown_Workflow
 
 Enter Loan Drawdown Details for AUD Libor Option
     [Documentation]    This keyword is used to enter Loan Drawdown Details for USD Libor Option
@@ -3996,6 +4004,7 @@ Validate Loan Drawdown Amounts in General Tab
     ...    @author: dahijara    16DEC2020    - Initial create
     ...    @update: javinzon    18DEC2020    - Updated keyword name from 'Validate Loan Drawdown Amounts for CH EDU Bilateral Deal' 
     ...                                        to 'Validate Loan Drawdown Amounts in General Tab', updated documentation
+    ...    @update: javinzon    21JAN2021    - Added another Take Screenshot to capture the tab after loading
     [Arguments]    ${sOrig_LoanGlobalOriginal}    ${sOrig_LoanGlobalCurrent}    ${sOrig_LoanHostBankGross}    ${sOrig_LoanHostBankNet}
 
     ### GetRuntime Keyword Pre-processing ###
@@ -4032,7 +4041,8 @@ Validate Loan Drawdown Amounts in General Tab
     ${Status}    Run Keyword And Return Status    Should Be Equal    ${New_LoanHostBankNet}    ${Orig_LoanHostBankNet}          
     Run Keyword If    ${Status}==${True}    Log    Loan Host Bank Net Amount is correct.
     ...    ELSE    Run Keyword And Continue On Failure    Fail    Loan Host Bank Net Amount is incorrect. Expected: ${Orig_LoanHostBankNet} - Actual: ${New_LoanHostBankNet}
-
+    
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LoanWindow
 Validate Loan Drawdown Rates in Rates Tab
     [Documentation]    This keyword validates the loan drawdown rates in Rates Tab.
     ...    @author: dahijara    16DEC2020    - Initial create
@@ -4126,3 +4136,19 @@ Validate Loan Drawdown General Details in General Tab
     ${Status}    Run Keyword And Return Status    Should Be Equal    ${UI_IntCycleFrequency}    ${Loan_IntCycleFrequency}
     Run Keyword If    ${Status}==${True}    Log    Loan Int Cycle Frequency is correct.
     ...    ELSE    Run Keyword And Continue On Failure    Fail    Loan Int Cycle Frequency is incorrect. Expected: ${Loan_IntCycleFrequency} - Actual: ${UI_IntCycleFrequency}
+    
+Set Spread Rate as Fixed in Rates Tab of Loan Drawdown
+    [Documentation]    This keyword sets the 'Spread is Fixed' checkbox to ON in Initial Drawdown - Rates Tab
+    ...    @author: javinzon    26JAN2021    - Initial create
+    [Arguments]    ${sSpreadIsFixed}=OFF
+    
+    ### GetRuntime Keyword Pre-processing ###
+    ${SpreadIsFixed}    Acquire Argument Value    ${sSpreadIsFixed}
+    
+    Mx LoanIQ Select Window Tab    ${LIQ_InitialDrawdown_Tab}    ${RATES_TAB}
+    Run Keyword If    '${SpreadIsFixed}'=='ON'    Mx LoanIQ Set    ${LIQ_InitialDrawdown_SpreadIsFixed_Checkbox}    ON
+    ...    ELSE    Log    Fixed spread rate is not required for the Loan drawdown.
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/InitialDrawdown_SpreadIsFixed
+    Select Menu Item    ${LIQ_InitialDrawdown_Window}    File    Save
+    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
+

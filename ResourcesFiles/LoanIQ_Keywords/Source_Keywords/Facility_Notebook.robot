@@ -4400,3 +4400,80 @@ Modify Schedule Item for Amortization
     Mx LoanIQ Click    ${LIQ_ModifySchedule_Ok_Button}
     Mx LoanIQ Click Element If Present    ${LIQ_Warning_Yes_Button}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/ModifyAmortizationScheduleWindow
+    
+Setup Interest Pricing for ATM Bilateral Deal
+    [Documentation]    This high-level keyword sets up Interest Pricing for ATM Bilateral Deal.
+    ...    @author: ccarriedo    20JAN2021    - Initial create
+    [Arguments]    ${sInterest_AddItem}    ${sInterest_OptionName}    ${sInterest_RateBasis}    ${iInterest_SpreadAmt}
+
+    ### Keyword Pre-processing ###
+    ${Interest_AddItem}    Acquire Argument Value    ${sInterest_AddItem}
+    ${Interest_OptionName}    Acquire Argument Value    ${sInterest_OptionName}
+    ${Interest_RateBasis}    Acquire Argument Value    ${sInterest_RateBasis}
+    ${Interest_SpreadAmt}    Acquire Argument Value    ${iInterest_SpreadAmt}
+
+    mx LoanIQ activate window     ${LIQ_FacilityNotebook_Window}
+    Mx LoanIQ Select Window Tab     ${LIQ_FacilityNotebook_Tab}    Pricing     
+    mx LoanIQ click    ${LIQ_FacilityPricing_ModifyInterestPricing_Button}
+    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}    
+    mx LoanIQ activate window     ${LIQ_Facility_InterestPricing_Window}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/Facility_InterestPricing_Window
+    ${Result}    Run Keyword And Return Status    Mx LoanIQ Verify Object Exist    ${LIQ_Facility_InterestPricing_Window}    VerificationData="Yes"
+    Run Keyword If   ${Result} == ${True}    Log    Facility Interest Pricing Window is displayed.
+    ...     ELSE    Log    Facility Interest Pricing Window is not displayed.
+    mx LoanIQ click    ${LIQ_Facility_InterestPricing_Add_Button}
+    ${status}    Run Keyword And Return Status    Mx LoanIQ Verify Object Exist    ${LIQ_Facility_InterestPricing_AddItem_List}      VerificationData="Yes"
+    Run Keyword If    ${status} == ${True}    Mx LoanIQ Select Combo Box Value    ${LIQ_Facility_InterestPricing_AddItem_List}    ${Interest_AddItem}
+    Run Keyword If    ${status} == ${True}    mx LoanIQ click    ${LIQ_Facility_InterestPricing_AddItem_OK_Button}
+    Mx LoanIQ Select Combo Box Value    ${LIQ_OptionCondition_OptionName_List}    ${Interest_OptionName}
+    Mx LoanIQ Select Combo Box Value    ${LIQ_OptionCondition_RateBasis_List}    ${Interest_RateBasis}
+    mx LoanIQ click    ${LIQ_Facility_InterestPricing_OptionCondition_OK_Button}
+    mx LoanIQ enter    ${LIQ_Facility_InterestPricing_FormulaCategory_Percent_Radiobutton}    ON
+    mx LoanIQ enter    ${LIQ_Facility_InterestPricing_FormulaCategory_Percent_Textfield}    ${Interest_SpreadAmt}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/Facility_InterestPricing_FormulaCategory_Percent_Textfield 
+    mx LoanIQ click    ${LIQ_Facility_InterestPricing_FormulaCategory_OK_Button}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/Facility_Pricing_Window
+    
+    ###Validate Interest Pricing###
+    Validate and Confirm Interest Pricing
+
+Split String with Delimiter and Get Length of the List
+    [Documentation]    This keyword accepts a string and delimeter and returns an Array List
+    ...    @author: ccarriedo    21JAN2021    - Initial create
+    [Arguments]    ${sSplit_String}    ${sDelimiter}
+    
+    ### Keyword Pre-processing ###
+    ${Split_String}    Acquire Argument Value    ${sSplit_String}
+    ${Delimiter}    Acquire Argument Value    ${sDelimiter}
+    
+    ${String_List}    Split String    ${Split_String}    ${Delimiter}
+    ${List_Count}    Get Length    ${String_List}
+    
+    [Return]    ${String_List}    ${List_Count}
+
+Select Amortization Schedule Status for Facility
+    [Documentation]    This keyword is used to navigate to increase decrease amortization schedule for facility
+    ...    @author: ccarriedo    21JAN2021    - Initial create
+    [Arguments]    ${sAmortizationScheduleStatus}
+    
+    ### Keyword Pre-processing ###
+    ${AmortizationScheduleStatus}    Acquire Argument Value    ${sAmortizationScheduleStatus}
+
+    mx LoanIQ activate window    ${LIQ_FacilityIncreaseDecreaseSchedule_AmortizationSchedule_Window}
+    mx LoanIQ select    ${LIQ_FacilityIncreaseDecreaseSchedule_AmortizationSchedule_AmortizationScheduleStatus_Dropdown}    ${AmortizationScheduleStatus}
+    
+Add Multiple Amortization Schedule for Facility
+    [Documentation]    This keyword is used to add multiple amortization schedule for facility
+    ...    @author: ccarriedo    21JAN2021    - Initial create
+    [Arguments]    ${iFacility_LimitChangeDecreaseAmount_Count}    ${aFacility_LimitChangeDecreaseAmount_List}    ${aFacility_LimitChangeDecreaseAmtSched_List}
+    
+    ### Keyword Pre-processing ###
+    ${Facility_LimitChangeDecreaseAmtSched_List}    Acquire Argument Value    ${aFacility_LimitChangeDecreaseAmtSched_List}
+    ${Facility_LimitChangeDecreaseAmount_List}    Acquire Argument Value    ${aFacility_LimitChangeDecreaseAmount_List}
+    ${Facility_LimitChangeDecreaseAmount_Count}    Acquire Argument Value    ${iFacility_LimitChangeDecreaseAmount_Count}
+        
+    :FOR    ${INDEX}    IN RANGE    ${Facility_LimitChangeDecreaseAmount_Count}
+    \    ${LimitChangeDecreaseAmount}    Get From List    ${Facility_LimitChangeDecreaseAmount_List}    ${INDEX}
+    \    ${LimitChangeDecreaseAmtSched}    Get From List    ${Facility_LimitChangeDecreaseAmtSched_List}    ${INDEX}
+    \    Add Amortization Schedule for Facility    Decrease    ${LimitChangeDecreaseAmount}    ${LimitChangeDecreaseAmtSched}     
+    \    Sleep    10s
