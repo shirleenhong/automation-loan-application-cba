@@ -43,3 +43,7 @@ Create Drawdown and Back Date to 16/12/2019
 Create Drawdown and Back Date to 8/11/2019
     Set Test Variable    ${rowid}    2
     Mx Execute Template With Multiple Data    Create Loan Drawdown for LLA Syndicated Deal - Outstanding B    ${ExcelPath}    ${rowid}    SERV01_LoanDrawdown
+
+Create Drawdown and Back Date to 6/12/2019
+    Set Test Variable    ${rowid}    3
+    Mx Execute Template With Multiple Data    Create Loan Drawdown for LLA Syndicated Deal - Outstanding C    ${ExcelPath}    ${rowid}    SERV01_LoanDrawdown
