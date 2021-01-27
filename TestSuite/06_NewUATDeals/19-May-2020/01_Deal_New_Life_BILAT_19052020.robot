@@ -12,3 +12,6 @@ Get Dataset for New Life BILAT
 Rollover and Principle Repayment for New Life BILAT - $2,860,426.18 
     Mx Execute Template With Multiple Data    Rollover and Principle Repayment    ${ExcelPath}    ${rowid}    SERV08_ComprehensiveRepricing
 
+Collect Commitment Fee - $44,823.17
+    Set Test Variable    ${rowid}    10
+    Mx Execute Template With Multiple Data    Collect Commitment Fee Payment For New Life BILAT    ${ExcelPath}    ${rowid}    SERV29_CommitmentFeePayment

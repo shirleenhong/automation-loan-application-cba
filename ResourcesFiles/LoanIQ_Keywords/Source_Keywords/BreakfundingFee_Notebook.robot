@@ -135,6 +135,7 @@ Add Portfolio and Expense Code
     ...    @update: mcastro    17DEC2020    Fixed incorrect variable name for ExpenseCode
     ...    @update: mcastro    07JAN2021    - Updated Mx Native Type to Mx Press Combination
     ...    @update: mcastro    15JAN2021    - Added taking of screenshots
+    ...    @update: mcastro    22JAN2021    - Added additional taking of screenshots
     [Arguments]    ${sLegal_Entity}    ${sLegal_Entity_Amount}    ${sExpenseCode}
     
     ### GetRuntime Keyword Pre-processing ###
@@ -144,9 +145,11 @@ Add Portfolio and Expense Code
 
     mx LoanIQ activate window    ${LIQ_SharesForBreakCostFee_Window}
     Mx LoanIQ Select String    ${LIQ_SharesForBreakCostFee_LegalEntity_List}    ${Legal_Entity}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/BreakCostFee_PortfolioSelection
     Mx Press Combination    Key.ENTER
     mx LoanIQ activate window    ${LIQ_HostBankShares_Window}
     Run Keyword And Continue On Failure    Mx LoanIQ Verify Object Exist    ${LIQ_HostBankShares_Window}              VerificationData="Yes"
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/BreakCostFee_PortfolioSelection
     mx LoanIQ click    ${LIQ_HostBankShares_AddPortfolioExpenseCode_Button}
     mx LoanIQ activate window    ${LIQ_HostBankShares_PortfolioSelection_Window}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/BreakCostFee_PortfolioSelection
