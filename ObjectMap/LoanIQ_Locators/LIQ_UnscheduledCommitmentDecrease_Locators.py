@@ -6,6 +6,10 @@ LIQ_AmortizationScheduleforFacility_Modify_Button = 'JavaWindow("title:=Amortiza
 LIQ_AmortizationScheduleforFacility_Schedule_List = 'JavaWindow("title:=Amortization Schedule For Facility -.*").JavaTree("labeled_containers_path:=Group:Current Schedule;","attached text:=item\(s\) selected\.")'
 LIQ_AmortizationScheduleforFacility_CreatePending_Button = 'JavaWindow("title:=Amortization Schedule For Facility -.*").JavaButton("attached text:=Create Pending")'
 LIQ_AmortizationScheduleforFacility_TranNB_Button = 'JavaWindow("title:=Amortization Schedule For Facility -.*").JavaButton("attached text:=Tran\. NB")'
+LIQ_AmortizationScheduleforFacility_Add_Button = 'JavaWindow("title:=Amortization Schedule For Facility -.*").JavaButton("attached text:=Add")'
+LIQ_AmortizationScheduleforFacility_Save_Button = 'JavaWindow("title:=Amortization Schedule For Facility -.*").JavaButton("attached text:=Save")'
+LIQ_AmortizationScheduleforFacility_Exit_Button = 'JavaWindow("title:=Amortization Schedule For Facility -.*").JavaButton("attached text:=Exit")'
+LIQ_AmortizationScheduleforFacility_Frequency_List = 'JavaWindow("title:=Amortization Schedule For Facility -.*").JavaList("attached text:=Frequency:")'
 
 ###Schedule Item Window###
 LIQ_ScheduleItem_Window = 'JavaWindow("title:=Add Schedule Item")'
@@ -18,6 +22,14 @@ LIQ_ScheduleItem_Ok_Button = 'JavaWindow("title:=Add Schedule Item").JavaButton(
 ###Modify Transaction###
 LIQ_ModifyTransaction_Window = 'JavaWindow("title:=Modify Transaction")'
 LIQ_ModifyTransaction_Ok_Button = 'JavaWindow("title:=Modify Transaction").JavaButton("attached text:=OK")'
+
+###Modify Schedule Item Window###
+LIQ_ModifySchedule_Window = 'JavaWindow("title:=Modify Schedule Item")'
+LIQ_ModifySchedule_Decrease_RadioButton = 'JavaWindow("title:=Modify Schedule Item").JavaRadioButton("attached text:=Decrease")'
+LIQ_ModifySchedule_Amount = 'JavaWindow("title:=Modify Schedule Item").JavaEdit("attached text:=Amount:")'
+LIQ_ModifySchedule_PercentofCurrent = 'JavaWindow("title:=Modify Schedule Item").JavaEdit("attached text:=Percent of Current Balance:")'
+LIQ_ModifySchedule_Date = 'JavaWindow("title:=Modify Schedule Item").JavaEdit("attached text:=Schedule Date:")'
+LIQ_ModifySchedule_Ok_Button = 'JavaWindow("title:=Modify Schedule Item").JavaButton("attached text:=OK")'
 
 ###Unscheduled Commitment Decrease###
 LIQ_UnscheduledCommitmentDecrease_Window = 'JavaWindow("title:=Unscheduled Commitment Decrease.*","displayed:=1")'
