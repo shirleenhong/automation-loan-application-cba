@@ -1,4 +1,6 @@
 "Date"	"Time"	"User"	"Effective Date"	"Comment"
+"27-Jan-2021"	"12:27"	"LOANIQ01"	"19-Feb-2020"	"Funding Rate changed to 0.85500% beginning 19-Feb-2020."
+"27-Jan-2021"	"12:09"	"LOANIQ01"	"19-Feb-2020"	"Funding Rate changed to 0.85510% beginning 19-Feb-2020."
 "25-Jan-2021"	"11:46"	"LOANIQ01"	"03-Feb-2020"	"Funding Rate changed to 0.84620% beginning 03-Feb-2020."
 "21-Jan-2021"	"17:21"	"LOANIQ01"	"15-Jan-2020"	"Funding Rate changed to 0.90150% beginning 15-Jan-2020."
 "21-Jan-2021"	"17:03"	"LOANIQ01"	"15-Jan-2020"	"Funding Rate changed to 0.90140% beginning 15-Jan-2020."
