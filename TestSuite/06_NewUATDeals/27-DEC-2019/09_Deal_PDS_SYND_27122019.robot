@@ -22,4 +22,4 @@ Establish Commitment Fee for Facility A - CRED08
     Mx Execute Template With Multiple Data    Setup Commitment Fee for PDS Syndicate Deal    ${ExcelPath}    ${rowid}    CRED08_OngoingFeeSetup_A
     
 Setup Repayment Schedule for Facility A
-    Mx Execute Template With Multiple Data    Add Repayment Schedule for PDS Syndicated Deal - Facility A    ${ExcelPath}    ${rowid}    CRED02_FacilitySetup_A
+    Mx Execute Template With Multiple Data    Add Repayment Schedule for PDS Syndicate Deal - Facility A    ${ExcelPath}    ${rowid}    CRED02_FacilitySetup_A

@@ -3,7 +3,7 @@ Resource    ../../../../Configurations/LoanIQ_Import_File.robot
 
 *** Keywords ***
 Setup Commitment Fee for PDS Syndicate Deal
-    [Documentation]    This high-level keyword sets up Commitment Fee for CH EDU Bilateral Deal.
+    [Documentation]    This high-level keyword sets up Commitment Fee for PDS Syndicate Deal.
     ...    @author:    shirhong    21JAN2021    - Initial create
     [Arguments]    ${ExcelPath}
 

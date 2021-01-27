@@ -35,7 +35,7 @@ Create Facility for PDS Syndicate Deal
     Add Borrower    &{ExcelPath}[Facility_Currency]    ${Facility_BorrowerSGName}    &{ExcelPath}[Facility_BorrowerPercent]    ${Facility_Borrower}
     ...    &{ExcelPath}[Facility_GlobalLimit]    &{ExcelPath}[Facility_BorrowerMaturity]    &{ExcelPath}[Facility_EffectiveDate]
 
-Add Repayment Schedule for PDS Syndicated Deal - Facility A
+Add Repayment Schedule for PDS Syndicate Deal - Facility A
     [Documentation]    This keyword creates Repayment Schedule for Facility A
     ...    @author: shirhong    25JAN2021    - Intial Create
     [Arguments]    ${ExcelPath}
@@ -53,7 +53,7 @@ Add Repayment Schedule for PDS Syndicated Deal - Facility A
     Add Scheduled Amortization Item    &{ExcelPath}[ScheduleItem_Amount2]    &{ExcelPath}[ScheduleItem_PercentofCurrent2]    &{ExcelPath}[ScheduleItem_Date2]
     Add Scheduled Amortization Item    &{ExcelPath}[ScheduleItem_Amount3]    &{ExcelPath}[ScheduleItem_PercentofCurrent3]    &{ExcelPath}[ScheduleItem_Date3]
     
-    Save and Exit Amortization Schedule For Facility Window
+    Save and Exit Amortization Schedule for Facility Window
 
     Close All Windows on LIQ
     

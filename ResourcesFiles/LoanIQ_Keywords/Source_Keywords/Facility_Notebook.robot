@@ -4347,7 +4347,7 @@ Add Amortization Schedule Frequency
     Mx LoanIQ Select Combo Box Value    ${LIQ_AmortizationScheduleforFacility_Frequency_List}    ${ScheduleItem_Frequency} 
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/AmortizationScheduleFrequency
 
-Save and Exit Amortization Schedule For Facility Window
+Save and Exit Amortization Schedule for Facility Window
     [Documentation]    This keyword saves and closes the Amortization Schedule window
     ...    @author: shirhong    25JAN2021    - Initial Create
 

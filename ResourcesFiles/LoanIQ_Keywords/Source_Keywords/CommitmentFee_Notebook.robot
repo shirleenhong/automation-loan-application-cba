@@ -1825,7 +1825,7 @@ Update Fee Paid By and Servicing Group for Ongoing Fee
 Save and Close Ongoing Fee Window
     [Documentation]    This keyword saves and closes an ongoing fee notebook.
     ...    @author: dahijara    04DEC2020    - Initial Create
-    ...    @update: shirhong    25JAN2021    - Added handing of error messages
+    ...    @update: shirhong    25JAN2021    - Added handling of error messages
 
     Mx LoanIQ activate window    ${LIQ_OngoingFee_Window}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/OngoingFeeNotebook_General
