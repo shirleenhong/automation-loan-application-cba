@@ -2778,6 +2778,14 @@ Generate Facility Name with 5 Numeric Test Data
     
     ${Facility_Name}    Auto Generate Only 5 Numeric Test Data     ${Facility_NamePrefix}
     [Return]    ${Facility_Name}
+
+Generate Facility Name with 4 Numeric Test Data
+    [Documentation]    This keyword generates facility name with 5 numeric text.
+    ...    @author: songhan    25JAN2021    - Initial Create
+    [Arguments]   ${Facility_NamePrefix}
+    
+    ${Facility_Name}    Auto Generate Only 4 Numeric Test Data     ${Facility_NamePrefix}
+    [Return]    ${Facility_Name}
     
 Check if File Exist
     [Documentation]    This keyword is used to check if the file exists in the specified path with multiple retries.

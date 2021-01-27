@@ -493,7 +493,7 @@ Create Loan Merge for Outstanding AB and C for CH EDU Bilateral Deal
     ...    @author: dahijara    26JAN2021    - Initial Create
     [Arguments]    ${ExcelPath}
     
-    ### Retrieve Base Rate Payload Values ###
+    ### Retrieve Data from Excel Data Sheet ###
     ${Deal_Name}    Read Data From Excel    CRED01_DealSetup    Deal_Name    1
     ${FacilityName}    Read Data From Excel    CRED02_FacilitySetup_B    Facility_Name    1
     ${Outstanding_AB_Alias}    Read Data From Excel    SERV11_LoanMerge    Alias_LoanMerge    1
