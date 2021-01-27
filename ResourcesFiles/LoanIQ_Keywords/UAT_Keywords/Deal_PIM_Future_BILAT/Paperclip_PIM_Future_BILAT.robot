@@ -9,6 +9,7 @@ Collect Early Prepayment via Paper Clip For PIM Future BILAT
     ...    @update: mcastro    05JAN2021    - Updated with correct column name, added selecting of breakfunding reason 
     ...    @update: mcastro    14JAN2021    - Added validation of Released status 
     ...    @update: mcastro    21JAN2021    - Added additional validation of total prepayment amount
+    ...    @update: mcastro    27JAN2021    - Added validation of Paper clip released status on Deal Notebook
     [Arguments]    ${ExcelPath}
 
     ### Read data from Loan Drawdown and Comprehensive repricing sheets ###
@@ -78,7 +79,10 @@ Collect Early Prepayment via Paper Clip For PIM Future BILAT
 
     ### Validate Release ###
     Validate Release of Paper Clip Payment
+    Close All Windows on LIQ
 
+    ### Validate Paper Clip Transaction on Deal Notebook ###
+    Validate Release of Paper Clip Payment from Deal Notebook    ${Deal_Name}
     Close All Windows on LIQ
 
 Collect Interest for Prepaid Portion
@@ -131,6 +135,7 @@ Collect Prepayment for PIM Future BILAT
     [Documentation]    This is a high-level keyword to collect prepayment via paperclip
     ...    @author: mcastro    13JAN2021    - Initial Create 
     ...    @update: mcastro    21JAN2021    - Added additional validation of total prepayment amount
+    ...    @update: mcastro    27JAN2021    - Added validation of Paper clip released status on Deal Notebook
     [Arguments]    ${ExcelPath}
 
     ### Read data from Loan Drawdown and Comprehensive repricing sheets ###
@@ -190,5 +195,8 @@ Collect Prepayment for PIM Future BILAT
 
     ### Validate Release ###
     Validate Release of Paper Clip Payment
+    Close All Windows on LIQ
 
+    ### Validate Paper Clip Transaction on Deal Notebook ###
+    Validate Release of Paper Clip Payment from Deal Notebook    ${Deal_Name}
     Close All Windows on LIQ
