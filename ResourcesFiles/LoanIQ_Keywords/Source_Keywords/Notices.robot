@@ -320,7 +320,8 @@ Get Notice ID thru Deal Notebook of Specific Contact
 
 Get Notice Details via Loan Notebook
     [Documentation]    Get Notice Details (Effective Date, Term Start and End Date, Fixed Rate Option, Margin, All-in Rate and Interest Due) via Loan Notebook in LIQ
-    ...    @author: makcamps   22JAN2021    - initial create
+    ...    @author: makcamps    22JAN2021    - initial create
+    ...    @update: makcamps    26JAN2021    - added get data and return value for pricing option
     [Arguments]    ${sFacilityName}    ${sDealName}    ${sLoanAlias}    ${sCycleNumber}=1
 
     ### Keyword Pre-processing ###
@@ -341,6 +342,7 @@ Get Notice Details via Loan Notebook
     ${Repricing_Date}    Convert Date    ${Repricing_Date}    result_format=%d-%b-%Y    date_format=%d-%b-%Y
     ${Maturity_Date}    Mx LoanIQ Store TableCell To Clipboard   ${LIQ_ExistingLoansForFacility_Loan_List}    ${LoanAlias}%Maturity Date%var
     ${Maturity_Date}    Convert Date    ${Maturity_Date}    result_format=%d-%b-%Y    date_format=%d-%b-%Y
+    ${Pricing_Option}    Mx LoanIQ Store TableCell To Clipboard   ${LIQ_ExistingLoansForFacility_Loan_List}    ${LoanAlias}%Pricing Option%var
     Take Screenshot    ${screenshot_path}/Screenshots/Integration/Correspondence_Loan_ExistingLoansForFacility
     
     ### Navigate to Loan Notebook ###
@@ -369,7 +371,8 @@ Get Notice Details via Loan Notebook
 
     Close All Windows on LIQ
         
-    [Return]    ${Effective_Date}    ${Repricing_Date}    ${Maturity_Date}    ${Base_Rate}    ${Spread}    ${AllIn_Rate}    ${Cycle_Due}    ${Global_Original}    ${RateSetting_DueDate}
+    [Return]    ${Effective_Date}    ${Repricing_Date}    ${Maturity_Date}    ${Base_Rate}    ${Spread}
+    ...    ${AllIn_Rate}    ${Cycle_Due}    ${Global_Original}    ${RateSetting_DueDate}    ${Pricing_Option}
 
 Select Notice Group
     [Documentation]    This keyword selects a notice group in the Notice Group window
