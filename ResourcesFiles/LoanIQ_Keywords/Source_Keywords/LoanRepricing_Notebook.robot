@@ -1646,14 +1646,13 @@ Navigate to Loan Repricing Workflow and Proceed With Transaction
     ...  @author: hstone    26MAY2020    Initial create
     ...    @update: amansuet    15JUN2020    - updated take screenshot
     ...    @update: mcastro     15DEC2020    - Added clicking of Yes on confirmation window when present
+    ...    @update: dahijara    26JAN2021    - Moved clicking of Yes on confirmation window when present inside 'Navigate Notebook Workflow'
     [Arguments]    ${sTransaction}
 
     ### Keyword Pre-processing ###
     ${Transaction}    Acquire Argument Value    ${sTransaction}
 
     Navigate Notebook Workflow    ${LIQ_LoanRepricingForDeal_Window}    ${LIQ_LoanRepricingForDeal_Workflow_Tab}    ${LIQ_LoanRepricingForDeal_Workflow_JavaTree}    ${Transaction}
-    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LoanRepricingWindow_WorkflowTab
-    Mx LoanIQ click element if present    ${LIQ_LoanRepricing_ConfirmationWindow_Yes_Button}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LoanRepricingWindow_WorkflowTab
 
 Add Rollover Conversion to New
@@ -2214,21 +2213,15 @@ Evaluate Three Loans then Validate the Total Amount of Existing Outstandings
 
 
 
-
-
+Update Rollover/Conversion Repricing Date
+    [Documentation]    This keyword is used to verify values on the Rollover/Conversion window General Tab information
+    ...    @author: dahijara    26JAN2021    - Initial Create
+    [Arguments]    ${sRepricingDate}
     
+    ### GetRuntime Keyword Pre-processing ###
+    ${RepricingDate}    Acquire Argument Value    ${sRepricingDate}
 
-    
-
-
-
-
-
-
-    
-
-
-	
-
-
-
+    mx LoanIQ activate window    ${LIQ_Rollover_Window}
+    Mx LoanIQ enter    ${LIQ_PendingRollover_RepricingDate}    ${RepricingDate}
+    Mx Press Combination    KEY.TAB
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LoanMerge_Rollover_GeneralTab

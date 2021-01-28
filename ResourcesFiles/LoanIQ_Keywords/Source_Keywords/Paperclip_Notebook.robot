@@ -789,3 +789,18 @@ Validate Total Amount of Prepayment on Paper Clip
     ...    ELSE    Run Keyword and Continue on Failure    Fail    Total Prepayment amount is incorrect. Expected amount: ${Total_Prepayment_Amount} | Actual amount: ${Actual_Amount}
 
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/PendingPaperClip_GeneralTab
+
+Validate Release of Paper Clip Payment from Deal Notebook
+    [Documentation]    This keyword validates the Released status Paper Clip transaction
+    ...    @author: mcastro    27JAN2021    - Initial Create
+    [Arguments]    ${sDeal_Name}
+
+    ### Pre-processing Keyword ###
+    ${Deal_Name}    Acquire Argument Value    ${sDeal_Name}
+    
+    Search for Deal    ${Deal_Name}
+    Mx LoanIQ Select Window Tab    ${LIQ_DealNotebook_Tab}    ${EVENTS_TAB}
+    ${Event_Selected}    Run Keyword And Return Status    Mx LoanIQ Select String    ${LIQ_Events_Javatree}    Paper Clip Transaction Released
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/DealNotebook_EventsTab
+    Run Keyword If    ${Event_Selected}==${True}    Log    'Paper Clip Transaction Released' is shown in the Events list of the Paper Clip notebook.
+    ...    ELSE    Run Keyword and Continue on Failure    Fail    Paper clip payment is not Released.
