@@ -7,6 +7,7 @@ Create Comprehensive Repricing for New Life BILAT
     [Documentation]    This is a high-level keyword to Create Comprehensive Repricing for New Life BILAT
     ...    @author: kmagday    11JAN2021    - Initial Create 
     ...    @update: kmagday    13JAN2021    - added writing of NewLoan_ALias in SERV08_ComprehensiveRepricing sheet
+    ...    @update: kmagday    27JAN2021    - added validation of new loan amount after repricing
     [Arguments]    ${ExcelPath}
 
     ${Rollover_Amount}    Read Data From Excel    SERV01_LoanDrawdown    Loan_RequestedAmount    ${rowid}
@@ -89,6 +90,7 @@ Create Comprehensive Repricing for New Life BILAT
 Loan Combine and Rollover
     [Documentation]    This is a high-level keyword to Create Comprehensive Repricing for New Life BILAT
     ...    @author: kmagday    18JAN2021    - Initial Create 
+    ...    @update: kmagday    27JAN2021    - added validation of new loan amount after repricing
     [Arguments]    ${ExcelPath}
 
     Logout from Loan IQ
@@ -178,6 +180,7 @@ Loan Combine and Rollover
 Rollover and Principle Repayment
     [Documentation]    This is a high-level keyword to Create Comprehensive Repricing for New Life BILAT
     ...    @author: kmagday    25JAN2021    - Initial Create 
+    ...    @update: kmagday    27JAN2021    - added validation of new loan amount after repricing
     [Arguments]    ${ExcelPath}
 
     Logout from Loan IQ
@@ -264,6 +267,7 @@ Rollover and Principle Repayment
 Rollover and Auto Generate Interest Payment
     [Documentation]    This is a high-level keyword to Create Comprehensive Repricing for New Life BILAT    
     ...    @author: kmagday    27JAN2021    - Initial Create 
+    ...    @update: kmagday    27JAN2021    - added validation of new loan amount after repricing
     [Arguments]    ${ExcelPath}
 
     Logout from Loan IQ
