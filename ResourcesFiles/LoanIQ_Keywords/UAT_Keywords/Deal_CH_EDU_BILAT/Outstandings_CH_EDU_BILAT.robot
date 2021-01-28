@@ -487,3 +487,107 @@ Create Loan Drawdown for CH EDU Bilateral Deal - Outstanding D
     Validate Loan Drawdown Amounts in General Tab    &{ExcelPath}[Expctd_LoanGlobalOriginal]    &{ExcelPath}[Expctd_LoanGlobalCurrent]    &{ExcelPath}[Expctd_LoanHostBankGross]    &{ExcelPath}[Expctd_LoanHostBankNet]
     Validate Loan Drawdown General Details in General Tab    &{ExcelPath}[Pricing_Option]    &{ExcelPath}[Loan_EffectiveDate]    &{ExcelPath}[Loan_RepricingFrequency]    &{ExcelPath}[Loan_RepricingDate]    &{ExcelPath}[Loan_PaymentMode]    &{ExcelPath}[Expctd_Loan_IntCycleFrequency]
     Validate Loan Drawdown Rates in Rates Tab    &{ExcelPath}[Expctd_LoanCurrentBaseRate]    &{ExcelPath}[Expctd_LoanSpread]    &{ExcelPath}[Expctd_LoanAllInRate]
+
+Create Loan Merge for Outstanding AB and C for CH EDU Bilateral Deal
+    [Documentation]    This is a high-level keyword to combine outstanding AB and C for CH EDU Bilateral Deal.
+    ...    @author: dahijara    26JAN2021    - Initial Create
+    [Arguments]    ${ExcelPath}
+    
+    ### Retrieve Data from Excel Data Sheet ###
+    ${Deal_Name}    Read Data From Excel    CRED01_DealSetup    Deal_Name    1
+    ${FacilityName}    Read Data From Excel    CRED02_FacilitySetup_B    Facility_Name    1
+    ${Outstanding_AB_Alias}    Read Data From Excel    SERV11_LoanMerge    Alias_LoanMerge    1
+    ${Outstanding_C_Alias}    Read Data From Excel    SERV01_LoanDrawdown    Loan_Alias    5
+    ${Outstanding_AB_LoanAmt}    Read Data From Excel    SERV11_LoanMerge    LoanMerge_Amount    1
+    ${Outstanding_C_LoanAmt}    Read Data From Excel    SERV01_LoanDrawdown    Loan_RequestedAmount    5
+    ${Borrower_Name}    Read Data From Excel    PTY001_QuickPartyOnboarding    LIQCustomer_ShortName    1
+    ${BaseRate_OptionName}    Read Data From Excel    CRED01_DealSetup    Deal_PricingOption    1
+    ${BaseRate_Frequency}    Read Data From Excel    SERV01_LoanDrawdown    Loan_RepricingFrequency    5
+
+    Logout from Loan IQ
+    Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
+
+    ### Search for Existing Deal and Facility ###
+    Launch Existing Facility    ${Deal_Name}    ${FacilityName}
+
+    ### Search for Existing Outstanding ###
+    Navigate to Existing Outstanding    &{ExcelPath}[OutstandingSelect_Type]    ${FacilityName}
+        
+    ### Select Two Loans to Merge ###
+    Select Loan to Reprice    ${Outstanding_AB_Alias}
+    Select Repricing Type    &{ExcelPath}[Repricing_Type]
+    Select Multiple Loan to Merge    ${Outstanding_C_Alias}    ${Outstanding_AB_Alias}
+    
+    Change Effective Date for Loan Repricing    &{ExcelPath}[Effective_Date]
+
+    ### Add Repricing Detail ###
+    ${Total_LoanMergeAmount}    Add Loan Repricing Option    &{ExcelPath}[Repricing_Add_Option]    ${BaseRate_OptionName}    ${FacilityName}    ${Borrower_Name}    ${Outstanding_AB_Alias}
+    ...    ${Outstanding_C_Alias}    ${Outstanding_AB_LoanAmt}    ${Outstanding_C_LoanAmt}    ${BaseRate_OptionName}
+    Update Rollover/Conversion Repricing Date    &{ExcelPath}[Repricing_Date]
+    ${Alias_LoanMerge}    Validate Rollover/Conversion General Tab    ${BaseRate_Frequency}    ${Total_LoanMergeAmount}    &{ExcelPath}[OutstandingSelect_Type]
+    
+    Write Data To Excel    SERV11_LoanMerge    LoanMerge_Amount    &{ExcelPath}[rowid]    ${Total_LoanMergeAmount}
+    Write Data To Excel    SERV11_LoanMerge    Alias_LoanMerge    &{ExcelPath}[rowid]    ${Alias_LoanMerge}
+    
+    Validate New Outstanding Amount for Loan Repricing    ${BaseRate_OptionName}    ${Alias_LoanMerge}    ${Total_LoanMergeAmount}
+    Validate and Add Interest Payment for Loan Repricing    ${Outstanding_C_Alias}    &{ExcelPath}[Outstanding_1_IntAmt]
+    Validate and Add Interest Payment for Loan Repricing    ${Outstanding_AB_Alias}    &{ExcelPath}[Outstanding_2_IntAmt]
+    
+    ### Create Cashflow ###
+    Navigate to Loan Repricing Workflow and Proceed With Transaction    ${CREATE_CASHFLOWS_TYPE}
+    Set All Items to Do It
+
+    ### Send to Approval ###
+    Navigate to Loan Repricing Workflow and Proceed With Transaction    ${SEND_TO_APPROVAL_STATUS}
+    Close All Windows on LIQ
+    
+    ### Approval ###
+    Logout from Loan IQ
+    Login to Loan IQ    ${SUPERVISOR_USERNAME}    ${SUPERVISOR_PASSWORD}
+    Navigate Transaction in WIP    ${OUTSTANDINGS_TRANSACTION}    ${AWAITING_APPROVAL_STATUS}    ${LOAN_REPRICING}    ${Deal_Name}
+    Navigate to Loan Repricing Workflow and Proceed With Transaction    ${APPROVAL_STATUS}
+
+    ### Generate Intent Notice ###
+    Logout from Loan IQ
+    Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
+    Navigate Transaction in WIP    ${OUTSTANDINGS_TRANSACTION}    ${AWAITING_GENERATE_INTENT_NOTICES_STATUS}    ${LOAN_REPRICING}    ${Deal_Name}
+    Navigate to Loan Repricing Workflow and Proceed With Transaction    ${GENERATE_INTENT_NOTICES}
+    Select Notices Recipients
+    Exit Notice Window
+
+    ### Rate Setting ###
+    Navigate to Loan Repricing Workflow and Proceed With Transaction    ${RATE_SETTING_TRANSACTION}
+    Set Base Rate Details    &{ExcelPath}[BorrowerBaseRate]    &{ExcelPath}[AcceptRate_FromPricing]
+
+    ### Send to Rate Approval ###
+    Navigate to Loan Repricing Workflow and Proceed With Transaction    ${SEND_TO_RATE_APPROVAL_STATUS}
+    
+    ### Rate Approval ###
+    Logout from Loan IQ
+    Login to Loan IQ    ${SUPERVISOR_USERNAME}    ${SUPERVISOR_PASSWORD}
+    Navigate Transaction in WIP    ${OUTSTANDINGS_TRANSACTION}    ${AWAITING_RATE_APPROVAL_STATUS}    ${LOAN_REPRICING}    ${Deal_Name}
+    Navigate to Loan Repricing Workflow and Proceed With Transaction    ${RATE_APPROVAL_STATUS}
+
+    ### Generate Rate Setting Notice ###
+    Logout from Loan IQ
+    Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
+    Navigate Transaction in WIP    ${OUTSTANDINGS_TRANSACTION}    ${AWAITING_GENERATE_RATE_SETTING_NOTICES_STATUS}    ${LOAN_REPRICING}    ${Deal_Name}
+    Navigate to Loan Repricing Workflow and Proceed With Transaction    ${GENERATE_RATE_SETTING_NOTICES_TRANSACTION}
+    Select Notices Recipients
+    Exit Notice Window
+
+    ### Release Loan Repricing ###
+    Navigate to Loan Repricing Workflow and Proceed With Transaction    ${RELEASE_STATUS}
+    Validate Window Title Status    ${LOAN_REPRICING}    ${RELEASED_STATUS}
+
+    ### Validation ###
+    Close All Windows on LIQ
+    Open Existing Deal    ${Deal_Name}
+    Navigate to Outstanding Select Window from Deal
+    Navigate to Existing Loan    &{ExcelPath}[Outstanding_Type]    ${FacilityName}    ${Alias_LoanMerge}
+    Validate Event Status in Loan Events Tab    ${RELEASED_STATUS}
+    Validate Loan Drawdown Amounts in General Tab    &{ExcelPath}[Expctd_LoanGlobalOriginal]    &{ExcelPath}[Expctd_LoanGlobalCurrent]    &{ExcelPath}[Expctd_LoanHostBankGross]    &{ExcelPath}[Expctd_LoanHostBankNet]
+    Validate Loan Drawdown General Details in General Tab    &{ExcelPath}[Pricing_Option]    &{ExcelPath}[Effective_Date]    &{ExcelPath}[Loan_RepricingFrequency]    &{ExcelPath}[Repricing_Date]    &{ExcelPath}[Loan_PaymentMode]    &{ExcelPath}[Expctd_Loan_IntCycleFrequency]
+    Validate Loan Drawdown Rates in Rates Tab    &{ExcelPath}[Expctd_LoanCurrentBaseRate]    &{ExcelPath}[Expctd_LoanSpread]    &{ExcelPath}[Expctd_LoanAllInRate]
+    Close All Windows on LIQ
+
