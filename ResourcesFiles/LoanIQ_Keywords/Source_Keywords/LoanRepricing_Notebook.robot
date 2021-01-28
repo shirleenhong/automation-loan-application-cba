@@ -2033,7 +2033,6 @@ Validate Event Status in Loan Events Tab
 Validate the Total Amount of Existing Outstandings
     [Documentation]    This keyword validates the total amount of Existing Outstandings and return the value.
     ...    @author: javinzon    20JAN2021    - Initial create
-    ...    @update: javinzon    28JAN2021    - Added optional arguments and conditions for the 3rd Alias
     [Arguments]    ${sPricing_Option}    ${sLoan1Alias}    ${sLoan2Alias}    ${sLoan1_Amount}    ${sLoan2_Amount}    ${sRunVar_TotalExistingOutstanding_Expected}=None
         
     ### GetRuntime Keyword Pre-processing ###
