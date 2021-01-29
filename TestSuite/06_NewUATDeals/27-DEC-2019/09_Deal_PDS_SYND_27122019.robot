@@ -16,10 +16,14 @@ Create Syndicated Deal for PDS Syndicated Deal - CRED01
     Mx Execute Template With Multiple Data    Setup Deal for PDS SYND Deal    ${ExcelPath}    ${rowid}    CRED01_DealSetup
 
 Establish Facility A - CRED02
-    Mx Execute Template With Multiple Data    Create Facility for PDS Syndicate Deal    ${ExcelPath}    ${rowid}    CRED02_FacilitySetup_A
+    Mx Execute Template With Multiple Data    Create Facility A for PDS Syndicate Deal    ${ExcelPath}    ${rowid}    CRED02_FacilitySetup_A
 
 Establish Commitment Fee for Facility A - CRED08
     Mx Execute Template With Multiple Data    Setup Commitment Fee for PDS Syndicate Deal    ${ExcelPath}    ${rowid}    CRED08_OngoingFeeSetup_A
     
 Setup Repayment Schedule for Facility A
     Mx Execute Template With Multiple Data    Add Repayment Schedule for PDS Syndicate Deal - Facility A    ${ExcelPath}    ${rowid}    CRED02_FacilitySetup_A
+
+Establish Facility B - CRED02
+    Mx Execute Template With Multiple Data    Create Facility B for PDS Syndicate Deal    ${ExcelPath}    ${rowid}    CRED02_FacilitySetup_B
+    Mx Execute Template With Multiple Data    Add Repayment Schedule for PDS Syndicate Deal - Facility B    ${ExcelPath}    ${rowid}    CRED02_FacilitySetup_B
