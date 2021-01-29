@@ -11,3 +11,7 @@ Get Dataset for New Life BILAT
 
 Rollover and Auto Generate Interest Payment - $204,308,828.54 
     Mx Execute Template With Multiple Data    Rollover and Auto Generate Interest Payment    ${ExcelPath}    ${rowid}    SERV08_ComprehensiveRepricing
+
+Collect Commitment Fee - $52,102.83
+    Set Test Variable    ${rowid}    12
+    Mx Execute Template With Multiple Data    Collect Commitment Fee Payment For New Life BILAT    ${ExcelPath}    ${rowid}    SERV29_CommitmentFeePayment
