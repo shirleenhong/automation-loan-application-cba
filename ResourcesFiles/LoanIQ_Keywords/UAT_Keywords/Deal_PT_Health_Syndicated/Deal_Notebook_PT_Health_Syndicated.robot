@@ -7,6 +7,7 @@ Setup Syndicated Deal for PT Health Syndicated
     ...    @author: songchan    04JAN2021    - initial create
     ...    @update: songchan    14JAN2021    - Change keyword for pricing option and added holiday calendar
     ...    @update: songchan    25JAN2021    - Added writing of deal name in other sheet for data set
+    ...    @update: songchan    29JAN2021    - Added writing of Deal and Borrower name for Loan drawdown
     [Arguments]    ${ExcelPath}
     
     ###Data Generation###

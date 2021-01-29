@@ -3,7 +3,7 @@ Resource    ../../../../Configurations/LoanIQ_Import_File.robot
 
 *** Keywords ***
 Create Initial Loan Drawdown for PT Health
-    [Documentation]    This high-level keyword is used to setup the outstanding for PIM Future BILAT facility
+    [Documentation]    This high-level keyword is used to setup the outstanding for PT Health Syndicated facility
     ...    @author: songchan    27JAN2021    - initial create
     [Arguments]    ${ExcelPath}
 

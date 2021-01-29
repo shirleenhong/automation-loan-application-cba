@@ -5,6 +5,7 @@ Resource    ../../../../Configurations/LoanIQ_Import_File.robot
 Create Facility for PT Health
     [Documentation]    This keyword is used to create facility for PT Health
     ...    @author: songchan    15JAN2021    - initial create
+    ...    @update: songchan    29JAN2021    - Add writing of Facility Name for Loan Drawdown to dataset
     [Arguments]    ${ExcelPath}
     
     ${Facility_NamePrefix}    Read Data From Excel    CRED02_FacilitySetup    Facility_NamePrefix    ${rowid}
