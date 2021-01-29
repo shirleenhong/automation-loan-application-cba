@@ -1917,7 +1917,6 @@ Navigate to Choose a Payment Window
 Validate Rollover/Conversion General tab
     [Documentation]    This keyword is used to verify values on the Rollover/Conversion window General Tab information
     ...    @author: dahijara    18JAN2021    - Initial Create
-    ...    @update: mcastro    29JAN2021    - Added logging of Fail when Requested amount in the UI does not match the expected amount
     [Arguments]    ${sRepricingFrequency_Expected}    ${sLoanMerge_Amount}    ${sRisk_Type}    ${sRunVar_LoanMergeAlias}=None
     
     ### GetRuntime Keyword Pre-processing ###
@@ -1932,12 +1931,10 @@ Validate Rollover/Conversion General tab
     ...    mx LoanIQ click    ${LIQ_AwaitingSendToApprovalRollover_RiskType_Button}
     ...    AND    Mx LoanIQ Select Or DoubleClick In Javatree    ${LIQ_PendingRollover_RiskType_Tree}    ${Risk_Type}%d
     ...    ELSE    Log    Correct Risk Type is set!
-
+    
     ${RequestedAmount}    Mx LoanIQ Get Data    ${LIQ_AwaitingSendToApprovalRollover_RequestedAmount_Textfield}    text%RequestedAmount        
     ${RequestedAmt_Status}    Run Keyword And Return Status    Should Be Equal As Strings    ${RequestedAmount}    ${LoanMerge_Amount}
-    Run Keyword If    ${RequestedAmt_Status}==${False}    Run Keywords    
-    ...    Mx LoanIQ enter    ${LIQ_AwaitingSendToApprovalRollover_RequestedAmount_Textfield}    ${LoanMerge_Amount}     
-    ...    AND    Run Keyword and Continue on Failure    Fail    Current Requested amount is incorrect.
+    Run Keyword If    ${RequestedAmt_Status}==${False}    mx LoanIQ enter    ${LIQ_AwaitingSendToApprovalRollover_RequestedAmount_Textfield}    ${LoanMerge_Amount}     
     ...    ELSE    Log    Correct Requested Amount!
     
     ${RepricingFrequency}    Mx LoanIQ Get Data    ${LIQ_AwaitingSendToApprovalRollover_RepricingFreq_DropdownList}    value%RepricingFrequency
