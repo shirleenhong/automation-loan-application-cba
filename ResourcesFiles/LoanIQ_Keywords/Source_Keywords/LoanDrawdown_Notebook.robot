@@ -98,6 +98,7 @@ Input General Loan Drawdown Details
     ...                                      Added Optional Argument: ${sRunTimeVar_AdjustedDueDate}
     ...                                      Added Keyword Post-processing
     ...    @update: clanding    10AUG2020    Replaced hard coded value to global variable
+    ...    @update: songchan    28JAN2021    Added Saving of Loan Drawdown after entering all the details
     [Arguments]    ${sLoan_RequestedAmount}    ${sLoan_EffectiveDate}    ${sLoan_MaturityDate}=None    ${sLoan_RepricingFrequency}=None    ${sLoan_IntCycleFrequency}=None    ${sLoan_Accrue}=None    ${sRepricing_Date}=None    ${sLoan_RiskType}=None
     ...        ${sRunTimeVar_AdjustedDueDate}=None
     
@@ -134,6 +135,12 @@ Input General Loan Drawdown Details
 
     ### Keyword Post-processing ###
     Save Values of Runtime Execution on Excel File    ${sRunTimeVar_AdjustedDueDate}    ${AdjustedDueDate}
+    
+    Select Menu Item    ${LIQ_InitialDrawdown_Window}    File    Save
+    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
+    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
+    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
+    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
 
     [Return]    ${AdjustedDueDate}
 

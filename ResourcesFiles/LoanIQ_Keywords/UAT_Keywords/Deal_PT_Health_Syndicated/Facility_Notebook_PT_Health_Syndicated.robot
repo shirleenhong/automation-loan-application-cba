@@ -12,6 +12,7 @@ Create Facility for PT Health
     Write Data To Excel    CRED02_FacilitySetup    Facility_Name    ${rowid}    ${Facility_Name}
     Write Data To Excel    SYND02_PrimaryAllocation    Facility_Name    &{ExcelPath}[rowid]    ${Facility_Name}
     Write Data To Excel    SERV29_CommitmentFeePayment    Facility_Name    &{ExcelPath}[rowid]    ${Facility_Name}
+    Write Data To Excel    SERV01_LoanDrawdown    Facility_Name    &{ExcelPath}[rowid]    ${Facility_Name}
 
     ###Open Deal Notebook If Not present###
     Open Deal Notebook If Not Present    &{ExcelPath}[Deal_Name]
