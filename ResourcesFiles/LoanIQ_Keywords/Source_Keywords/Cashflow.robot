@@ -599,6 +599,7 @@ Set All Items to Do It
 Validate Cashflow Error is Displayed
     [Documentation]    This keyword is used to validate that Cashflow pop-up error is displayed
     ...    @author: mcastro    15DEC2020    - Initial Create
+    ...    @update: mcastro    29JAN2021    - Add closing of Cashflow window when displayed
     
     Run Keyword and Continue on Failure   Mx LoanIQ Verify Object Exist    ${LIQ_Error_Window}
     ${Status}    Run Keyword and Return Status   Mx LoanIQ Verify Object Exist    ${LIQ_Error_Window}
@@ -606,6 +607,7 @@ Validate Cashflow Error is Displayed
     ...    ELSE    Log    Cashflow error is not displayed    level=ERROR 
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/Cashflow
     Mx LoanIQ click element if present    ${LIQ_Error_OK_Button}
+    Mx LoanIQ click element if present    ${LIQ_Cashflows_OK_Button} 
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/Cashflow
     
 Select Specific Outsanding After Loan Repricing
