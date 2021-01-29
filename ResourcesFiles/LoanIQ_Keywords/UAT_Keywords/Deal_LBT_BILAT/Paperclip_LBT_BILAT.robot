@@ -7,6 +7,7 @@ Collect Full Prepayment via Paper Clip for LBT Bilateral Deal - Outstanding Z
     ...    Intent Notice for LBT Bilateral Deal - Outstanding Z
     ...    @author: javinzon    08JAN2021    - Initial Create    
     ...    @update: javinzon    14JAN2021    - Added keyword Write Data to Excel for Loan_Alias of Correspondence
+    ...    @update: javinzon    29JAN2021    - Added validation of Released status on Paper clip and Deal Notebook
     [Arguments]    ${ExcelPath}
 
     ${Deal_Name}    Read Data From Excel    SERV01_LoanDrawdown    Deal_Name    ${rowid}
@@ -70,4 +71,10 @@ Collect Full Prepayment via Paper Clip for LBT Bilateral Deal - Outstanding Z
     ### Breakfunding Window ###
     Select Breakfunding Reason    &{ExcelPath}[Breakfunding_Reason] 
 
+    ### Validate Release ###
+    Validate Release of Paper Clip Payment
+    Close All Windows on LIQ
+
+    ### Validate Paper Clip Transaction on Deal Notebook ###
+    Validate Release of Paper Clip Payment from Deal Notebook    ${Deal_Name}
     Close All Windows on LIQ
