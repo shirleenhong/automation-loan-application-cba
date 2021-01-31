@@ -15,3 +15,7 @@ Rollover and Auto Generate Interest Payment - $204,308,828.54
 Collect Commitment Fee - $52,102.83
     Set Test Variable    ${rowid}    12
     Mx Execute Template With Multiple Data    Collect Commitment Fee Payment For New Life BILAT    ${ExcelPath}    ${rowid}    SERV29_CommitmentFeePayment
+
+Expire the fee by amending the expiry date to start date 14 May 20 (create negative cycle due)
+    Set Test Variable    ${rowid}    13
+    Mx Execute Template With Multiple Data    Change Commitment Fee to Expiry Date    ${ExcelPath}    ${rowid}    SERV29_CommitmentFeePayment
