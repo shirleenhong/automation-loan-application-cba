@@ -1,4 +1,5 @@
 ###Circle Notebook - Checkbox###
+LIQ_InterestCapitalization_Window = 'JavaWindow("title:=Loan Capitalization Editor.*","displayed:=1")'
 LIQ_InterestCapitalization_ActiveInterestCapitalization_Checkbox = 'JavaWindow("title:=Loan Capitalization Editor.*","displayed:=1").JavaCheckBox("attached text:=Activate Interest Capitalization")'
 LIQ_InterestCapitalization_AllowCapitalizationOverFacilityLimit_Checkbox = 'JavaWindow("title:=Loan Capitalization Editor.*","displayed:=1").JavaCheckBox("attached text:=Allow Capitalization Over Facility Limit")'
 LIQ_InterestCapitalization_CapitalizationFrequencyApplies_Checkbox = 'JavaWindow("title:=Loan Capitalization Editor.*","displayed:=1").JavaCheckBox("attached text:=Capitalization Frequency Applies")'

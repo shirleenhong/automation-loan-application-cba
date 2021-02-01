@@ -35,7 +35,6 @@ Create Initial Loan Drawdown for PT Health
     Select Item in Work in Process    ${OUTSTANDINGS_TRANSACTION}    ${AWAITING_APPROVAL_STATUS}    ${LOAN_INITIAL_DRAWDOWN_TYPE}     ${Loan_Alias}
     Navigate to Loan Drawdown Workflow and Proceed With Transaction    ${APPROVAL_STATUS}
 
-
     ### Rate Setting ###
     Logout from Loan IQ
     Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
