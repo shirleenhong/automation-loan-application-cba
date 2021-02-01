@@ -2246,6 +2246,48 @@ Validate External Risk Rating Table
     Run Keyword And Continue On Failure    Should Be Equal   ${Actual_Rating}    ${Expected_Rating}
     Run Keyword And Continue On Failure    Should Be Equal   ${Actual_StartDate}    ${Expected_StartDate}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/ActiveCustomer_Risk
+    
+Validate Change of External Rating Event
+    [Documentation]    This keyword validates change of external rating event is added in events tab.
+    ...    @author: makcamps    29JAN2021    - initial create
+
+    mx LoanIQ activate window    ${LIQ_ActiveCustomer_Window}
+    Mx LoanIQ Select Window Tab    ${LIQ_ActiveCustomer_Tab}    Events
+    Mx LoanIQ Select String    ${LIQ_Active_Customer_Notebook_Events_Javatree}   External Rating Changed
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/ActiveCustomerWindow_EventsTab_ExternalRating
+
+Update External Risk Rating Table
+    [Documentation]    This keyword updates external risk rating table at the customer notebook.
+    ...    @author: makcamps    28JAN2021    - initial create
+    [Arguments]    ${sRatingType}    ${sRatingTypeNoSign}    ${sRating}    ${sStartDate}
+
+    ### Keyword Pre-processing ###
+    ${RatingType}    Acquire Argument Value    ${sRatingType}
+    ${RatingTypeNoSign}    Acquire Argument Value    ${sRatingTypeNoSign}
+    ${Rating}    Acquire Argument Value    ${sRating}
+    ${StartDate}    Acquire Argument Value    ${sStartDate}
+
+    ### Active Customer Window ###
+    Mx LoanIQ Activate    ${LIQ_ActiveCustomer_Window}
+
+    ### Open External Risk Rating ###
+    Mx LoanIQ Select String    ${LIQ_Active_Customer_Notebook_RiskTab_ExternalRiskRating_JavaTree}    ${RatingType}
+    mx LoanIQ click    ${LIQ_Active_Customer_Notebook_RiskTab_History_Button}
+    
+    ### External Ratings History Window ###
+    mx LoanIQ Activate Window    ${LIQ_Active_Customer_Notebook_ExternalRiskHistory_Window}
+    mx LoanIQ click    ${LIQ_Active_Customer_Notebook_ExternalRiskHistoryWindow_Insert_Button}
+    
+    ### Update External Rating History ###
+    mx LoanIQ Activate Window    ${LIQ_Active_Customer_Notebook_UpdateExternalRatingHistory_Window}
+    Mx LoanIQ Select Combo Box Value    ${LIQ_Active_Customer_Notebook_UpdateExternalRatingHistoryWindow_Rating_Field}    ${Rating}
+    mx LoanIQ enter    JavaWindow("title:=Update External Rating History").JavaEdit("attached text:=${RatingTypeNoSign}")    ${StartDate}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/ActiveCustomer_UpdateExternalRatingHistory
+    mx LoanIQ click    ${LIQ_Active_Customer_Notebook_UpdateExternalRatingHistoryWindow_OK_Button}
+    mx LoanIQ click element if present    ${LIQ_Question_Yes_Button}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/ActiveCustomer_ExternalRiskHistory
+    mx LoanIQ click    ${LIQ_Active_Customer_Notebook_ExternalRiskHistoryWindow_OK_Button}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/ActiveCustomer_Risk
 
 Populate Details on Customer Remittance Instructions
     [Documentation]    This keyword populates the Customer Remittance Instruction Details

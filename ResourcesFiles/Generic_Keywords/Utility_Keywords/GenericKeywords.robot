@@ -22,6 +22,18 @@ Mx Double Click Element
     Set Focus to Element    ${locator}
     Wait Until Keyword Succeeds    ${retry}    ${retry_interval}    Double Click Element    ${locator}
     Wait Until Browser Ready State
+    
+Mx Press Keyboard
+    [Documentation]    This keyword is used to press key declared as much as declared.
+    ...    @author: makcamps    01FEB2021    - initial Create
+    [Arguments]    ${sRowCount}    ${sKey}
+
+    ### Keyword Pre-processing ###
+    ${RowCount}    Acquire Argument Value    ${sRowCount}
+    ${Key}    Acquire Argument Value    ${sKey}
+    
+    :FOR    ${INDEX}    IN RANGE    0    ${RowCount}
+    \    Mx Press Combination    Key.${Key}  
         
 Wait Until Browser Ready State
     Execute Javascript    return window.load

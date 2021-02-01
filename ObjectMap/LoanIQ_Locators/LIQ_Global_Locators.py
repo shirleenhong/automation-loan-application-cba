@@ -105,6 +105,7 @@ LIQ_UpdateInformation_Exit_Button = 'JavaWindow("title:=Update Information.*").J
 ###Please Confirm Window###
 LIQ_PleaseConfirm_Window = 'JavaWindow("title:=Please confirm","displayed:=1")'
 LIQ_PleaseConfirm_Yes_Button ='JavaWindow("title:=Please confirm","displayed:=1").JavaButton("label:=Yes")'
+LIQ_PleaseConfirm_No_Button ='JavaWindow("title:=Please confirm","displayed:=1").JavaButton("label:=No")'
 
 ### Confirmation ###
 LIQ_Confirmation_Window = 'JavaWindow("title:=Confirmation")'
