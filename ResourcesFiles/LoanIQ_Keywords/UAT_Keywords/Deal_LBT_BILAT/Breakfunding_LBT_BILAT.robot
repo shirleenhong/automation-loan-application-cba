@@ -6,6 +6,7 @@ Break Cost for Full Prepayment for LBT Bilateral Deal - Outstanding Z
     [Documentation]    This is a high-level keyword to charge break cost for full prepayment and Generate 
     ...    Intent Notice for LBT Bilateral Deal - Outstanding Z
     ...    @author: javinzon    14JAN2021    - Initial Create
+    ...    @update: javinzon    29JAN2021    - Added validation if Loan is Inactive
     [Arguments]    ${ExcelPath}
 
     ${Deal_Name}    Read Data From Excel    SERV01_LoanDrawdown    Deal_Name    ${rowid}
@@ -64,5 +65,6 @@ Break Cost for Full Prepayment for LBT Bilateral Deal - Outstanding Z
     Search for Existing Outstanding    ${OutstandingSelect_Type}    ${Facility_Name}    &{ExcelPath}[Inactive]
     Open Existing Loan    ${Loan_Alias}
     Validate Loan Drawdown Amounts in General Tab    &{ExcelPath}[Expctd_LoanGlobalOriginal]    &{ExcelPath}[Expctd_LoanGlobalCurrent]    &{ExcelPath}[Expctd_LoanHostBankGross]    &{ExcelPath}[Expctd_LoanHostBankNet]
+    Validate if Loan is Inactive
     Close All Windows on LIQ
     

@@ -4152,3 +4152,11 @@ Set Spread Rate as Fixed in Rates Tab of Loan Drawdown
     Select Menu Item    ${LIQ_InitialDrawdown_Window}    File    Save
     mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
 
+Validate if Loan is Inactive
+    [Documentation]    This keyword is used to validate that Loan is in Status: Inactive
+    ...    @author: javinzon    29JAN2021    - Initial create
+    
+    ${Status}    Run Keyword And Return Status    Mx LoanIQ Verify Object Exist    ${LIQ_InactiveLoan_Tab}    VerificationData="Yes"
+    Run Keyword If    ${Status}==${True}    Log    Loan is in Inactive Status
+    ...    ELSE    Run Keyword And COntinue On Failure    Fail    Loan is not in Inactive state. 
+
