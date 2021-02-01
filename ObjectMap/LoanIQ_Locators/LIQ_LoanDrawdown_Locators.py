@@ -163,6 +163,7 @@ LIQ_Loan_PricingOption_Label = 'JavaWindow("title:=.*Loan.*Active").JavaStaticTe
 LIQ_Loan_RepricingFrequency_List = 'JavaWindow("title:=.*Loan.*Active").JavaList("attached text:=Repricing Frequency:")'
 LIQ_Loan_PaymentMode_List = 'JavaWindow("title:=.*Loan.*Active").JavaList("attached text:=Payment Mode:")'
 LIQ_LoanInquire_Button = 'JavaWindow("title:=.*Loan.*Active").JavaButton("attached text:=Notebook in Inquiry Mode - F7.*")'
+LIQ_LoanInquiry_InitialDrawdown_Button = 'JavaWindow("title:=.*Initial Drawdown.*").JavaButton("attached text:=Notebook in Inquiry Mode - F7.*")'
 LIQ_Loan_GlobalOriginal_Amount = 'JavaWindow("title:=.*Loan.*Active").JavaEdit("attached text:=Global Original:")'
 LIQ_Loan_IntCycleFreq_Dropdownlist = 'JavaWindow("title:=.*Loan.*Active").JavaList("attached text:=Int. Cycle Freq:")'
 LIQ_Loan_AllInRate = 'JavaWindow("title:=.*Loan.*Active").JavaEdit("attached text:=All-In Rate:")'

@@ -760,6 +760,7 @@ Navigate Notebook Workflow
     ...                                      Inserted Release Cashflow condition under Run Keyword If statement.
     ...    @update: mcastro     07DEC2020    Added condition for Rate Setting transaction to click No on Warning pop-up
     ...    @update: dahijara    26JAN2021    Added clicking of Yes on confirmation window when present for Rate Setting
+    ...    @update: songchan    29JAN2021    Added Setting of Notebook to Update Mode
     [Arguments]    ${sNotebook_Locator}    ${sNotebookTab_Locator}    ${sNotebookWorkflow_Locator}    ${sTransaction}    
 
     ###Pre-processing Keyword##
@@ -770,6 +771,7 @@ Navigate Notebook Workflow
     ${Transaction}    Acquire Argument Value    ${sTransaction} 
 
     mx LoanIQ activate window    ${Notebook_Locator}
+    Set Notebook to Update Mode    ${Notebook_Locator}    ${LIQ_LoanInquiry_InitialDrawdown_Button}
     Mx LoanIQ Select Window Tab    ${NotebookTab_Locator}    ${WORKFLOW_TAB}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/NotebookWorkflow
     Mx LoanIQ Select Or DoubleClick In Javatree    ${NotebookWorkflow_Locator}    ${Transaction}%d
