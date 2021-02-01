@@ -88,7 +88,7 @@ Create Comprehensive Repricing for New Life BILAT
     Validate Loan Amount was Updated after Repricing    &{ExcelPath}[New_LoanAmount]
     
 Loan Combine and Rollover
-    [Documentation]    This is a high-level keyword to Create Comprehensive Repricing for New Life BILAT
+    [Documentation]    This is a high-level keyword to combine existing loans and create rollover for New Life BILAT
     ...    @author: kmagday    18JAN2021    - Initial Create 
     ...    @update: kmagday    27JAN2021    - added validation of new loan amount after repricing
     [Arguments]    ${ExcelPath}
@@ -178,7 +178,7 @@ Loan Combine and Rollover
     Validate Loan Amount was Updated after Repricing    &{ExcelPath}[New_LoanAmount]
     
 Rollover and Principle Repayment
-    [Documentation]    This is a high-level keyword to Create Comprehensive Repricing for New Life BILAT
+    [Documentation]    This is a high-level keyword to Create rollover and principal repayment for New Life BILAT
     ...    @author: kmagday    25JAN2021    - Initial Create 
     ...    @update: kmagday    27JAN2021    - added validation of new loan amount after repricing
     [Arguments]    ${ExcelPath}
@@ -265,7 +265,7 @@ Rollover and Principle Repayment
     Validate Loan Amount was Updated after Repricing    &{ExcelPath}[New_LoanAmount]
 
 Rollover and Auto Generate Interest Payment
-    [Documentation]    This is a high-level keyword to Create Comprehensive Repricing for New Life BILAT    
+    [Documentation]    This is a high-level keyword to Create Comprehensive Repricing and auto generate interest payment for New Life BILAT    
     ...    @author: kmagday    27JAN2021    - Initial Create 
     ...    @update: kmagday    27JAN2021    - added validation of new loan amount after repricing
     [Arguments]    ${ExcelPath}
