@@ -770,7 +770,7 @@ Navigate Notebook Workflow
     ${Transaction}    Acquire Argument Value    ${sTransaction} 
 
     mx LoanIQ activate window    ${Notebook_Locator}
-    Set Notebook to Update Mode    ${LIQ_Loan_Window}    ${LIQ_Loan_InquiryMode_Button}
+    Set Notebook to Update Mode    ${Notebook_Locator}    ${LIQ_LoanInquiry_InitialDrawdown_Button}
     Mx LoanIQ Select Window Tab    ${NotebookTab_Locator}    ${WORKFLOW_TAB}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/NotebookWorkflow
     Mx LoanIQ Select Or DoubleClick In Javatree    ${NotebookWorkflow_Locator}    ${Transaction}%d
