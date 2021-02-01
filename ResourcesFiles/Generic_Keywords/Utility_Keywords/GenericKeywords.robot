@@ -1462,6 +1462,7 @@ Select Menu Item
     mx LoanIQ click element if present    ${LIQ_Warning_OK_Button}   
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/NotebookMenu
     mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button} 
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/NotebookMenu
     Log    Submenu selected successfully
     
 Validate String Data In LIQ Object
