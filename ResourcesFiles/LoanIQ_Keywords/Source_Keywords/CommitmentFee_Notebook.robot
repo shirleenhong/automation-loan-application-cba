@@ -1874,5 +1874,5 @@ Perform Online Accrual in Commitment Fee Notebook
 
     Verify If Warning Is Displayed
     ${InfoMessage}    Run Keyword And Return Status    Mx LoanIQ Verify Object Exist    ${LIQ_Information_MessageBox}    VerificationData="Yes"
-    Run Keyword If    ${InfoMessage}==True    mx LoanIQ click    ${LIQ_Information_OK_Button} 
+    Run Keyword If    ${InfoMessage}==True    Mx LoanIQ click element if present    ${LIQ_Information_OK_Button} 
     Log    Loan - Perform Online Accrual is complete
