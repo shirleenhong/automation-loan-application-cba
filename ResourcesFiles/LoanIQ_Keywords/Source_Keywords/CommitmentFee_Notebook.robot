@@ -233,6 +233,8 @@ Validate Details on Acrual Tab - Commitment Fee
     ...    update: mgaling    22Aug2019    Added Take Screenshot keyword
     ...    @update: ehugo    05JUN2020    - added keyword pre-processing; updated screenshot location
     ...    @update: mcastro    11DEC2020    - Added Run Keyword And Continue On Failure on validation 
+    ...    @update: mcastro    01FEB2021    - Added Remove command and convert to number to ${Computed_ProjectedCycleDue}; Added Evaluate to handle decimal numbers with 0
+    ...                                     - Replaced Should Be Equal As Strings to Compare Two Strings
     [Arguments]    ${sComputed_ProjectedCycleDue}    ${sCycleNumber}     
 
     ### GetRuntime Keyword Pre-processing ###
@@ -242,10 +244,13 @@ Validate Details on Acrual Tab - Commitment Fee
     mx LoanIQ activate window    ${LIQ_Fee_Window}
     Mx LoanIQ Select Window Tab    ${LIQ_CommitmentFee_Tab}    Accrual
     ${CycleDue}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_CommitmentFee_Acrual_JavaTree}    ${CycleNumber}%Cycle Due%CycleDue    
-    Run Keyword And Continue On Failure    Should Be Equal As Strings    0.00    ${CycleDue}
+    Compare Two Strings    0.00    ${CycleDue}
+
+    ${Computed_ProjectedCycleDue}    Remove Comma and Convert to Number    ${Computed_ProjectedCycleDue}
     ${PaidToDate}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_CommitmentFee_Acrual_JavaTree}    ${CycleNumber}%Paid to date%PaidToDate
-    ${PaidToDate}    Remove Comma, Negative Character and Convert to Number    ${PaidToDate}    
-    Run Keyword And Continue On Failure    Should Be Equal As Strings    ${PaidToDate}    ${Computed_ProjectedCycleDue}  
+    ${PaidToDate}    Remove Comma, Negative Character and Convert to Number    ${PaidToDate}
+    ${PaidToDate}    Evaluate    "%.2f" % ${PaidToDate}     
+    Compare Two Strings    ${PaidToDate}    ${Computed_ProjectedCycleDue}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/FeeWindow_AccrualTab_CommitmentFeeAccruals 
     
 Validate Details of Ongoing Fee on Accruals Tab
@@ -1842,6 +1847,24 @@ Release Ongoing Fee
     Run Keyword And Continue On Failure    Mx LoanIQ click element if present    ${LIQ_OngoingFee_InquiryMode_Button}
     Navigate Notebook Workflow    ${LIQ_OngoingFee_Window}    ${LIQ_OngoingFee_Tab}    ${LIQ_OngoingFee_Workflow_JavaTree}    Release
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/OngoingFee_Notebook
+
+Validate Dues on Accrual Tab for Commitment Fee
+    [Documentation]    This keyword validates the details on Accrual Tab during payment.
+    ...    @author: mcastro    01FEB2021    - Initial create
+    [Arguments]    ${sProjected_CycleDue}    ${sCycleNumber}     
+
+    ### GetRuntime Keyword Pre-processing ###
+    ${Projected_CycleDue}    Acquire Argument Value    ${sProjected_CycleDue}
+    ${CycleNumber}    Acquire Argument Value    ${sCycleNumber}
+
+    mx LoanIQ activate window    ${LIQ_Fee_Window}
+    Mx LoanIQ Select Window Tab    ${LIQ_CommitmentFee_Tab}    Accrual
+    ${CycleDue}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_CommitmentFee_Acrual_JavaTree}    ${CycleNumber}%Cycle Due%CycleDue    
+    Compare Two Strings    ${Projected_CycleDue}    ${CycleDue}
+
+    ${PaidToDate}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_CommitmentFee_Acrual_JavaTree}    ${CycleNumber}%Paid to date%PaidToDate    
+    Compare Two Strings    0.00    ${PaidToDate}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/FeeWindow_AccrualTab_CommitmentFeeAccruals 
 
 Change Expiry Date
     [Documentation]    This keyword will change the expire date of ongoing fee
