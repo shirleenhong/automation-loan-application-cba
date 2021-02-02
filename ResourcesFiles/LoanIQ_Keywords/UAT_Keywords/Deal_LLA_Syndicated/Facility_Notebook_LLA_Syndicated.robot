@@ -199,23 +199,24 @@ Create PCT for Pricing Matrix
     Navigate to Pricing Change Transaction Menu
     
     ### Navigate to PCT Menu ###
-    Input Pricing Change Transaction General Information    &{ExcelPath}[Deal_Name]    &{ExcelPath}[Facility_Name]    &{ExcelPath}[PricingChange_TransactionNo]    &{ExcelPath}[PricingChange_EffectiveDate]    &{ExcelPath}[PricingChange_Desc]
+    Input Pricing Change Transaction General Information    &{ExcelPath}[Deal_Name]    &{ExcelPath}[Facility_Name]    &{ExcelPath}[PricingChange_TransactionNo]
+    ...    &{ExcelPath}[PricingChange_EffectiveDate]    &{ExcelPath}[PricingChange_Desc]
     
     ### Modify Ongoing Fee Pricing ###
     Navigate to Modify Ongoing Fees Window from PCT Notebook
     Modify Ongoing Fees from PCT Notebook    &{ExcelPath}[PricingChange_OngoingFeeStr]    &{ExcelPath}[CurrentGlobalRate1]    &{ExcelPath}[OngoingFeePercent1]    &{ExcelPath}[GlobalCurrentRate1]
     Modify Ongoing Fees from PCT Notebook    &{ExcelPath}[PricingChange_OngoingFeeStr]    &{ExcelPath}[CurrentGlobalRate2]    &{ExcelPath}[OngoingFeePercent2]    &{ExcelPath}[GlobalCurrentRate2]
     Modify Ongoing Fees from PCT Notebook    &{ExcelPath}[PricingChange_OngoingFeeStr]    &{ExcelPath}[CurrentGlobalRate3]    &{ExcelPath}[OngoingFeePercent3]    &{ExcelPath}[GlobalCurrentRate3]
-    Mx LoanIQ Click    ${LIQ_PricingChangeTransaction_OngoingFees_OK_Button}
+    Click OK Button in Ongoing Fees Window
     
     ### Modify Interest Pricing ###
     Navigate to PCT Existing Interest Pricing
-    Update Existing Interest Pricing via PCT    7    &{ExcelPath}[Interest_OptionName]    &{ExcelPath}[Computation]    &{ExcelPath}[PricingCode]
-    ...    &{ExcelPath}[PricingPercent]    &{ExcelPath}[Interest_CurrentSpread1]    &{ExcelPath}[Interest_NewSpread1]
-    Update Existing Interest Pricing via PCT    15    &{ExcelPath}[Interest_OptionName]    &{ExcelPath}[Computation]    &{ExcelPath}[PricingCode]
-    ...    &{ExcelPath}[PricingPercent]    &{ExcelPath}[Interest_CurrentSpread2]    &{ExcelPath}[Interest_NewSpread2]
-    Update Existing Interest Pricing via PCT    19    &{ExcelPath}[Interest_OptionName]    &{ExcelPath}[Computation]    &{ExcelPath}[PricingCode]
-    ...    &{ExcelPath}[PricingPercent]    &{ExcelPath}[Interest_CurrentSpread3]    &{ExcelPath}[Interest_NewSpread3]
+    ${RowCount1}    Get Interest Pricing Rowcount    &{ExcelPath}[Computation]    &{ExcelPath}[PricingCode]    &{ExcelPath}[PricingPercent]    &{ExcelPath}[PricingSign]    &{ExcelPath}[Interest_CurrentSpread1]
+    ${RowCount2}    Get Interest Pricing Rowcount    &{ExcelPath}[Computation]    &{ExcelPath}[PricingCode]    &{ExcelPath}[PricingPercent]    &{ExcelPath}[PricingSign]    &{ExcelPath}[Interest_CurrentSpread2]
+    ${RowCount3}    Get Interest Pricing Rowcount    &{ExcelPath}[Computation]    &{ExcelPath}[PricingCode]    &{ExcelPath}[PricingPercent]    &{ExcelPath}[PricingSign]    &{ExcelPath}[Interest_CurrentSpread3]
+    Update Existing Interest Pricing via PCT    ${RowCount1}    &{ExcelPath}[Interest_OptionName]    &{ExcelPath}[Interest_NewSpread1]
+    Update Existing Interest Pricing via PCT    ${RowCount2}    &{ExcelPath}[Interest_OptionName]    &{ExcelPath}[Interest_NewSpread2]
+    Update Existing Interest Pricing via PCT    ${RowCount3}    &{ExcelPath}[Interest_OptionName]    &{ExcelPath}[Interest_NewSpread3]
     Click OK Button in Interest Pricing Window
     
     ##Send to Approval##

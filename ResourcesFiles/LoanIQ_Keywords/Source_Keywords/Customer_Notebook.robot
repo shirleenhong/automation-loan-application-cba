@@ -2281,13 +2281,14 @@ Update External Risk Rating Table
     ### External Ratings History Window ###
     mx LoanIQ Activate Window    ${LIQ_Active_Customer_Notebook_ExternalRiskHistory_Window}
     mx LoanIQ click    ${LIQ_Active_Customer_Notebook_ExternalRiskHistoryWindow_Insert_Button}
+    Mx LoanIQ Select Combo Box Value    ${LIQ_Active_Customer_Notebook_UpdateExternalRatingHistoryWindow_Rating_Field}    ${Rating}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/ActiveCustomer_UpdateExternalRatingHistory_Window
     
     ### Update External Rating History ###
     mx LoanIQ Activate Window    ${LIQ_Active_Customer_Notebook_UpdateExternalRatingHistory_Window}
-    Mx LoanIQ Select Combo Box Value    ${LIQ_Active_Customer_Notebook_UpdateExternalRatingHistoryWindow_Rating_Field}    ${Rating}
-    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/ActiveCustomer_UpdateExternalRatingHistoryWindow
-    
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/ActiveCustomer_UpdateExternalRatingHistoryWindow    
+    ${RatingTypeNoSign}    Replace Variables    ${RatingTypeNoSign}
+    ${LIQ_Active_Customer_Notebook_UpdateExternalRatingHistoryWindow_RatingType_Field}    Replace Variables    ${LIQ_Active_Customer_Notebook_UpdateExternalRatingHistoryWindow_RatingType_Field}    
     mx LoanIQ enter    ${LIQ_Active_Customer_Notebook_UpdateExternalRatingHistoryWindow_RatingType_Field}    ${StartDate}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/ActiveCustomer_UpdateExternalRatingHistory
     mx LoanIQ click    ${LIQ_Active_Customer_Notebook_UpdateExternalRatingHistoryWindow_OK_Button}

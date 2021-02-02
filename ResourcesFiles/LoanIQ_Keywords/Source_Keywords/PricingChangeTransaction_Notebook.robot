@@ -489,6 +489,15 @@ Modify Ongoing Fees from PCT Notebook
     Run Keyword And Continue On Failure    Mx LoanIQ Verify Object Exist    ${LIQ_PricingChangeTransaction_OngoingFeePricingWindow_GlobalCurrentXRateValue_Item}    VerificationData="Yes"
     Take Screenshot    ${Screenshot_Path}/Screenshots/LoanIQ/OngoingFeePricingWindow
 
+Click OK Button in Ongoing Fees Window
+    [Documentation]    This keyword is used to click Ongoing Fees window
+    ...    @author: makcamps    02FEB2021    -initial create
+    
+    ### Interest Pricing Window ###
+    Mx LoanIQ Activate Window    ${LIQ_PricingChangeTransaction_OngoingFeePricing_Window}
+    Mx LoanIQ click    ${LIQ_PricingChangeTransaction_OngoingFees_OK_Button}
+    Take Screenshot    ${Screenshot_Path}/Screenshots/LoanIQ/ModifyOngoingFeeWindow
+
 Save Ongoing Fees in Pricing Change Transaction Window for Global Current
     [Documentation]    This keyword verifies the Ongoing Fees values in the Price Change Transaction notebook, and save the values in excel.
     ...    @author: makcamps    01FEB2021    - initial create
@@ -705,24 +714,43 @@ Navigate to PCT Existing Interest Pricing
     Mx LoanIQ Click Element If Present    ${LIQ_Information_OK_Button}
     Take Screenshot    ${Screenshot_Path}/Screenshots/LoanIQ/InterestPricingWindow
 
-Update Existing Interest Pricing via PCT
-    [Documentation]    This keyword adds interest pricing on facility.
-    ...    @author: makcamps    01FEB2021    - initial create
-    [Arguments]    ${sRowCount}    ${sOptionName}    ${sComputation}    ${sPricingCode}    ${sPricingPercent}    ${sCurrentSpread}    ${sSpread}    ${sPercentOfRateFormulaUsage}=None
-
+Get Interest Pricing Rowcount
+    [Documentation]    This keyword is used to get row count of formula in Interest Pricing window.
+    ...    @authos: makcamps    02FEB2021    - initial create
+    [Arguments]    ${sComputation}    ${sPricingCode}    ${sPricingPercent}    ${sPricingSign}    ${sCurrentSpread}
+    
     ### Keyword Pre-processing ###
-    ${RowCount}    Acquire Argument Value    ${sRowCount}
-    ${OptionName}    Acquire Argument Value    ${sOptionName}
     ${Computation}    Acquire Argument Value    ${sComputation}
     ${PricingCode}    Acquire Argument Value    ${sPricingCode}
     ${PricingPercent}    Acquire Argument Value    ${sPricingPercent}
+    ${PricingSign}    Acquire Argument Value    ${sPricingSign}
     ${CurrentSpread}    Acquire Argument Value    ${sCurrentSpread}
-    ${Spread}    Acquire Argument Value    ${sSpread}
-    ${PercentOfRateFormulaUsage}    Acquire Argument Value    ${sPercentOfRateFormulaUsage}    
+    
+    ${Tree}    Mx LoanIQ Get Data    ${LIQ_PricingChangeTransaction_InterestPricingWindow_Item_Javatree}    developer name%Tree
+    ${List}    Split String    ${Tree}    \{col1=\
+    Log    ${List}
+    ${Count}    Get Length    ${List}
+   
+    :FOR    ${i}    IN RANGE    0    ${Count}
+    \    ${Converted_List_To_String}    Convert To String    @{List}[${i}]
+    \    ${Contains_8}    Run Keyword And Return Status    Should Contain    ${Converted_List_To_String}    (${SPACE}${Computation}(${SPACE}${PricingCode}${SPACE},${SPACE}${PricingPercent}${SPACE}${SPACE})${SPACE}${SPACE}${PricingSign}${SPACE}Spread${SPACE}(${CurrentSpread})${SPACE})
+    \    Log    ${i}
+    \    Exit For Loop If    ${Contains_8}==${True}
+    Log    ${i}
+    ${row}    Evaluate    ${i}-1
+    
+    [Return]    ${row}
 
-    Mx LoanIQ Click    ${LIQ_PricingChangeTransaction_InterestPricing_JavaTree}
-    Mx Press Keyboard    ${RowCount}    DOWN
-    Mx Press Combination    Key.ENTER
+Update Existing Interest Pricing via PCT
+    [Documentation]    This keyword adds interest pricing on facility.
+    ...    @author: makcamps    01FEB2021    - initial create
+    [Arguments]    ${iRowCount}    ${sOptionName}    ${sSpread}    ${sPercentOfRateFormulaUsage}=None
+
+    ### Keyword Pre-processing ###
+    ${RowCount}    Acquire Argument Value    ${iRowCount}
+    ${OptionName}    Acquire Argument Value    ${sOptionName}
+    ${Spread}    Acquire Argument Value    ${sSpread}
+    ${PercentOfRateFormulaUsage}    Acquire Argument Value    ${sPercentOfRateFormulaUsage}
     
     Run Keyword And Continue On Failure    Mx LoanIQ Verify Object Exist    ${LIQ_PricingChangeTransaction_InterestPricing_Window}    VerificationData="Yes"
     Take Screenshot    ${Screenshot_Path}/Screenshots/LoanIQ/InterestPricingWindow
@@ -731,11 +759,13 @@ Update Existing Interest Pricing via PCT
     Mx LoanIQ Activate Window    ${LIQ_PricingChangeTransaction_InterestPricing_Window}
     ${OptionName}    Replace Variables    ${OptionName}
     ${LIQ_PricingChangeTransaction_InterestPricingWindow_InterestPricing_Item}    Replace Variables    ${LIQ_PricingChangeTransaction_InterestPricingWindow_InterestPricing_Item}
-    Run Keyword And Continue On Failure    Mx LoanIQ Verify Object Exist    ${LIQ_PricingChangeTransaction_InterestPricingWindow_InterestPricing_Item}    VerificationData="Yes"
+    Run Keyword And Continue On Failure    Mx LoanIQ Verify Object Exist    ${LIQ_PricingChangeTransaction_InterestPricingWindow_InterestPricing_Item}    VerificationData="Yes"    
+
+    Mx LoanIQ Click    ${LIQ_PricingChangeTransaction_InterestPricing_JavaTree}
+    Mx Press Keyboard    ${RowCount}    DOWN
+    Mx Press Combination    Key.ENTER
 
     ### Modify Interest Pricing ###
-    Mx LoanIQ DoubleClick    ${LIQ_PricingChangeTransaction_InterestPricingWindow_Item_Javatree}    (${SPACE}${Computation}(${SPACE}${PricingCode}${SPACE},${SPACE}${PricingPercent}${SPACE}${SPACE})${SPACE}${SPACE}+${SPACE}Spread${SPACE}(${CurrentSpread})${SPACE})${SPACE}X${SPACE}PCT${SPACE}(1)
-    
     Run Keyword And Continue On Failure    Mx LoanIQ Verify Object Exist    ${LIQ_FormulaCatergory_Window}    VerificationData="Yes"
     Mx LoanIQ Enter    ${LIQ_Facility_InterestPricing_FormulaCategory_Percent_Radiobutton}    ON
     Mx LoanIQ Enter    ${LIQ_Facility_InterestPricing_FormulaCategory_Percent_Textfield}    ${Spread}
