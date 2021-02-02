@@ -1865,3 +1865,36 @@ Validate Dues on Accrual Tab for Commitment Fee
     ${PaidToDate}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_CommitmentFee_Acrual_JavaTree}    ${CycleNumber}%Paid to date%PaidToDate    
     Compare Two Strings    0.00    ${PaidToDate}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/FeeWindow_AccrualTab_CommitmentFeeAccruals 
+
+Change Expiry Date
+    [Documentation]    This keyword will change the expire date of ongoing fee
+    ...   @author: kmagday    31JAN2021    Initial Commit
+    [Arguments]    ${sExpiryDate}
+
+    ### Keyword Pre-processing ###
+    ${ExpiryDate}    Acquire Argument Value    ${sExpiryDate}
+
+    mx LoanIQ activate window    ${LIQ_CommitmentFee_Window}
+    Mx LoanIQ Select Window Tab    ${LIQ_CommitmentFee_Tab}    ${GENERAL_TAB}
+    Run Keyword And Continue On Failure    Mx LoanIQ click element if present    ${LIQ_CommitmentFee_InquiryMode_Button}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/CommitmentFeeNotebook_General
+    MX LoanIQ Select    ${LIQ_CommitmentFee_ChangeExpiryDate_Menu}
+
+    Mx LoanIQ Enter    ${LIQ_FeeExpiryDate_Textfield}    ${ExpiryDate}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/CommitmentFeeNotebook_ChangeExpiryDate
+    Mx LoanIQ click    ${LIQ_FeeExpiryDate_Ok_Button}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/CommitmentFeeNotebook_ChangeExpiryDate
+
+Perform Online Accrual in Commitment Fee Notebook
+    [Documentation]    This keyword will perform online accrual 
+    ...   @author: kmagday    31JAN2021    Initial Commit
+
+    mx LoanIQ activate window    ${LIQ_CommitmentFee_Window}
+    Mx LoanIQ Select Window Tab    ${LIQ_CommitmentFee_Tab}    ${GENERAL_TAB}
+    Run Keyword And Continue On Failure    Mx LoanIQ click element if present    ${LIQ_CommitmentFee_InquiryMode_Button}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/CommitmentFeeNotebook_General
+    MX LoanIQ Select    ${LIQ_CommitmentFee_OnlineAcrual_Menu}
+
+    Verify If Warning Is Displayed
+    Mx LoanIQ click element if present    ${LIQ_Information_OK_Button}
+    Log    Loan - Perform Online Accrual is complete

@@ -7,6 +7,7 @@ Setup Syndicated Deal for PT Health Syndicated
     ...    @author: songchan    04JAN2021    - initial create
     ...    @update: songchan    14JAN2021    - Change keyword for pricing option and added holiday calendar
     ...    @update: songchan    25JAN2021    - Added writing of deal name in other sheet for data set
+    ...    @update: songchan    29JAN2021    - Added writing of Deal and Borrower name for Loan drawdown
     [Arguments]    ${ExcelPath}
     
     ###Data Generation###
@@ -25,6 +26,8 @@ Setup Syndicated Deal for PT Health Syndicated
     Write Data To Excel    CRED02_FacilitySetup    Deal_Name    &{ExcelPath}[rowid]    ${Deal_Name}
     Write Data To Excel    SYND02_PrimaryAllocation    Deal_Name    &{ExcelPath}[rowid]    ${Deal_Name}
     Write Data To Excel    SERV29_CommitmentFeePayment    Deal_Name    &{ExcelPath}[rowid]    ${Deal_Name}
+    Write Data To Excel    SERV01_LoanDrawdown    Deal_Name    &{ExcelPath}[rowid]    ${Deal_Name}
+    Write Data To Excel    SERV01_LoanDrawdown    Borrower_Name    ${rowid}    ${Borrower_ShortName}
     
     ###Deal Select Window###
     Create New Deal    ${Deal_Name}    ${Deal_Alias}    &{ExcelPath}[Deal_Currency]    &{ExcelPath}[Deal_Department]
