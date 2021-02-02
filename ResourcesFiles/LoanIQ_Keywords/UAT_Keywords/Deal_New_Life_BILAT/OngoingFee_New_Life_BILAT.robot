@@ -63,3 +63,23 @@ Collect Commitment Fee Payment For New Life BILAT
     Logout from Loan IQ
     Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
     
+Change Commitment Fee Expiry Date
+    [Documentation]    This keyword change the expiry date of the commitment fee.
+    ...    @author: kmagday    31Jan2021    - Intial Create
+    [Arguments]    ${ExcelPath}
+
+    ### Login to LIQ ###
+    Logout from Loan IQ
+    Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
+        
+    ### Launch Facility ###
+    Launch Existing Facility    &{ExcelPath}[Deal_Name]    &{ExcelPath}[Facility_Name]
+    Navigate to Existing Ongoing Fee Notebook    &{ExcelPath}[OngoingFee_Type]
+
+    ### Commitment Fee Notebook - General Tab ###  
+    Change Expiry Date    ${ExcelPath}[Commitment_ExpiryDate]
+
+    ### Perform Online Accrual ###
+    Perform Online Accrual in Commitment Fee Notebook
+
+ 

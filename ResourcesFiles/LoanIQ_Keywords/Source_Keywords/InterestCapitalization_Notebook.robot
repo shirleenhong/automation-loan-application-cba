@@ -128,14 +128,34 @@ Navigate to Capitalize Interest Payment from Loan Notebook
     Mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button} 
 
 Set Activate Interest Capitalization
-     [Documentation]    This keyword is used to set activate Interest capitalization checkbox
+    [Documentation]    This keyword is used to set Interest capitalization checkbox
     ...    @author: mcastro    16DEC2020    - Initial create
+    ...    @update: mcastro    28JAN2021    - Added activate interest capitalization window
     [Arguments]    ${sInterestCapitalization_Status}
     
     ### Pre-processing Keyword ###
     ${InterestCapitalization_Status}    Acquire Argument Value    ${sInterestCapitalization_Status}
 
+    Mx LoanIQ activate window    ${LIQ_InterestCapitalization_Window}
     Mx LoanIQ Set    ${LIQ_InterestCapitalization_ActiveInterestCapitalization_Checkbox}    ${InterestCapitalization_Status}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LoanInterest_Capitalization_Details
+    Mx LoanIQ click    ${LIQ_InterestCapitalization_OKButton}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LoanInterest_Capitalization_Details
+
+Set Activate Interest Capitalization and Select To Loan Value
+    [Documentation]    This keyword is used to set activate Interest capitalization checkbox and select value on To Loan droplist
+    ...    @author: mcastro    28JAN2021    - Initial create
+    [Arguments]    ${sInterestCapitalization_Status}    ${sPricing_Option}    ${sLoan_Alias}
+
+    ### Pre-processing Keyword ###
+    ${InterestCapitalization_Status}    Acquire Argument Value    ${sInterestCapitalization_Status}
+    ${Pricing_Option}    Acquire Argument Value    ${sPricing_Option}
+    ${Loan_Alias}    Acquire Argument Value    ${sLoan_Alias}
+
+    Mx LoanIQ activate window    ${LIQ_InterestCapitalization_Window}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LoanInterest_Capitalization_Details
+    Mx LoanIQ Set    ${LIQ_InterestCapitalization_ActiveInterestCapitalization_Checkbox}    ${InterestCapitalization_Status}
+    Mx LoanIQ Select Combo Box Value    ${LIQ_InterestCapitalization_ToLoan_DropdownList}    ${Pricing_Option} Loan (${Loan_Alias})
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LoanInterest_Capitalization_Details
     Mx LoanIQ click    ${LIQ_InterestCapitalization_OKButton}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LoanInterest_Capitalization_Details
