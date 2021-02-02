@@ -1456,10 +1456,15 @@ Update Line Fee Dates
 Select Menu Item
     [Documentation]    Standard keyword for Selecting a Menu and Submenu Item under any LoanIQ Notebook
     ...    @author: ritagel    26JUN2019    Creation
+    ...    @update: mcastro    01FEB2021    Added additional Clicking on warning yes button and taking of screenshots
     [Arguments]    ${eNotebookLocator}    ${sMenu}    ${sSubMenu}
     mx LoanIQ activate window    ${eNotebookLocator}
     mx LoanIQ select    ${eNotebookLocator}.JavaMenu("label:=${sMenu}").JavaMenu("label:=${sSubMenu}")
-    mx LoanIQ click element if present    ${LIQ_Warning_OK_Button}    
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/NotebookMenu
+    mx LoanIQ click element if present    ${LIQ_Warning_OK_Button}   
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/NotebookMenu
+    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button} 
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/NotebookMenu
     Log    Submenu selected successfully
     
 Validate String Data In LIQ Object
