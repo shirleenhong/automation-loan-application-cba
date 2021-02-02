@@ -113,7 +113,9 @@ Validate Customer ID if a Numeric value Upon Customer Search by Customer Short N
 Switch Customer Notebook to Update Mode
     [Documentation]    This keyword switches the current Customer Notebook to Update Mode
     ...    @author: ghabal
-
+    ...    @update: makcamps    02FEB2021    - added activate Active Customer window.
+    
+    Mx LoanIQ Activate    ${LIQ_ActiveCustomer_Window}
     Run Keyword And Continue On Failure    mx LoanIQ click element if present  ${LIQ_Active_Customer_Notebook_InquiryMode}
     ${result}    Run Keyword And Return Status    Run Keyword And Continue On Failure    mx LoanIQ click element if present  ${LIQ_Active_Customer_Notebook_InquiryMode}
     Run Keyword If   '${result}'=='True'    Log    "Customer Notebook" is changed to "Update mode". 
@@ -2266,10 +2268,12 @@ Update External Risk Rating Table
     ${RatingTypeNoSign}    Acquire Argument Value    ${sRatingTypeNoSign}
     ${Rating}    Acquire Argument Value    ${sRating}
     ${StartDate}    Acquire Argument Value    ${sStartDate}
-
+    
     ### Active Customer Window ###
     Mx LoanIQ Activate    ${LIQ_ActiveCustomer_Window}
-
+    Mx LoanIQ Select Window Tab    ${LIQ_Active_Customer_Notebook_TabSelection}    Risk
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/ActiveCustomer_RiskTab
+    
     ### Open External Risk Rating ###
     Mx LoanIQ Select String    ${LIQ_Active_Customer_Notebook_RiskTab_ExternalRiskRating_JavaTree}    ${RatingType}
     mx LoanIQ click    ${LIQ_Active_Customer_Notebook_RiskTab_History_Button}
@@ -2277,11 +2281,14 @@ Update External Risk Rating Table
     ### External Ratings History Window ###
     mx LoanIQ Activate Window    ${LIQ_Active_Customer_Notebook_ExternalRiskHistory_Window}
     mx LoanIQ click    ${LIQ_Active_Customer_Notebook_ExternalRiskHistoryWindow_Insert_Button}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/ActiveCustomer_UpdateExternalRatingHistory_Window
     
     ### Update External Rating History ###
     mx LoanIQ Activate Window    ${LIQ_Active_Customer_Notebook_UpdateExternalRatingHistory_Window}
     Mx LoanIQ Select Combo Box Value    ${LIQ_Active_Customer_Notebook_UpdateExternalRatingHistoryWindow_Rating_Field}    ${Rating}
-    mx LoanIQ enter    JavaWindow("title:=Update External Rating History").JavaEdit("attached text:=${RatingTypeNoSign}")    ${StartDate}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/ActiveCustomer_UpdateExternalRatingHistoryWindow
+    
+    mx LoanIQ enter    ${LIQ_Active_Customer_Notebook_UpdateExternalRatingHistoryWindow_RatingType_Field}    ${StartDate}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/ActiveCustomer_UpdateExternalRatingHistory
     mx LoanIQ click    ${LIQ_Active_Customer_Notebook_UpdateExternalRatingHistoryWindow_OK_Button}
     mx LoanIQ click element if present    ${LIQ_Question_Yes_Button}

@@ -7,6 +7,7 @@ Create Revolver Facility for LLA Syndicated Deal
     ...    @author: makcamps    04JAN2021    - Initial Create
     ...    @update: makcamps    15JAN2021    - updated data used for dates to follow dates from screenshots provided
     ...    @update: makcamps    20JAN2021    - added write method for notice
+    ...    @update: makcamps    02FEB2021    - fixed arguments for Add Arguments
     [Arguments]    ${ExcelPath}
     
     ###Test Data Generation and Writings###
@@ -147,7 +148,7 @@ Update Facility Expiry and Maturity Date Through FCT
     ### Navigate to Facility Change Transaction ###
     Add Facility Change Transaction
     Update Facility Details    Expiry Date    &{ExcelPath}[New_ExpiryDate]
-    # Update Facility Details    Maturity Date    &{ExcelPath}[New_MaturityDate]
+    Update Facility Details    Maturity Date    &{ExcelPath}[New_MaturityDate]
     Send to Approval Facility Change Transaction
     
     ### Approve Facility Change Transaction Notebook ###
@@ -179,9 +180,7 @@ Update Borrowers External Credit Rating History
     Navigate to Customer Notebook via Customer ID    ${Party_ID}
     
     ### Navigate to Facility Notebook ###
-    Mx LoanIQ Activate    ${LIQ_ActiveCustomer_Window}
     Switch Customer Notebook to Update Mode
-    Mx LoanIQ Select Window Tab    ${LIQ_Active_Customer_Notebook_TabSelection}    Risk
     Update External Risk Rating Table    &{ExcelPath}[ExternalRatingType2]    &{ExcelPath}[RatingType]    &{ExcelPath}[MinType4]    &{ExcelPath}[New_StartDate]
     
     ### Validate External Risk Rating Changes ###
@@ -203,30 +202,21 @@ Create PCT for Pricing Matrix
     Input Pricing Change Transaction General Information    &{ExcelPath}[Deal_Name]    &{ExcelPath}[Facility_Name]    &{ExcelPath}[PricingChange_TransactionNo]    &{ExcelPath}[PricingChange_EffectiveDate]    &{ExcelPath}[PricingChange_Desc]
     
     ### Modify Ongoing Fee Pricing ###
-    Navigate Existing Ongoing Fees
-    Modify Existing Ongoing Fees    &{ExcelPath}[PricingChange_OngoingFeeStr]    &{ExcelPath}[CurrentGlobalRate1]    &{ExcelPath}[OngoingFeePercent1]    &{ExcelPath}[GlobalCurrentRate1]
-    Modify Existing Ongoing Fees    &{ExcelPath}[PricingChange_OngoingFeeStr]    &{ExcelPath}[CurrentGlobalRate2]    &{ExcelPath}[OngoingFeePercent2]    &{ExcelPath}[GlobalCurrentRate2]
-    Modify Existing Ongoing Fees    &{ExcelPath}[PricingChange_OngoingFeeStr]    &{ExcelPath}[CurrentGlobalRate3]    &{ExcelPath}[OngoingFeePercent3]    &{ExcelPath}[GlobalCurrentRate3]
+    Navigate to Modify Ongoing Fees Window from PCT Notebook
+    Modify Ongoing Fees from PCT Notebook    &{ExcelPath}[PricingChange_OngoingFeeStr]    &{ExcelPath}[CurrentGlobalRate1]    &{ExcelPath}[OngoingFeePercent1]    &{ExcelPath}[GlobalCurrentRate1]
+    Modify Ongoing Fees from PCT Notebook    &{ExcelPath}[PricingChange_OngoingFeeStr]    &{ExcelPath}[CurrentGlobalRate2]    &{ExcelPath}[OngoingFeePercent2]    &{ExcelPath}[GlobalCurrentRate2]
+    Modify Ongoing Fees from PCT Notebook    &{ExcelPath}[PricingChange_OngoingFeeStr]    &{ExcelPath}[CurrentGlobalRate3]    &{ExcelPath}[OngoingFeePercent3]    &{ExcelPath}[GlobalCurrentRate3]
     Mx LoanIQ Click    ${LIQ_PricingChangeTransaction_OngoingFees_OK_Button}
     
     ### Modify Interest Pricing ###
     Navigate to PCT Existing Interest Pricing
-    Mx LoanIQ Click    ${LIQ_PricingChangeTransaction_InterestPricing_JavaTree}
-    Mx Press Keyboard    7    DOWN
-    Mx Press Keyboard    1    ENTER
-    Update Existing Interest Pricing via PCT    &{ExcelPath}[Interest_OptionName]    &{ExcelPath}[Computation]    &{ExcelPath}[PricingCode]
+    Update Existing Interest Pricing via PCT    7    &{ExcelPath}[Interest_OptionName]    &{ExcelPath}[Computation]    &{ExcelPath}[PricingCode]
     ...    &{ExcelPath}[PricingPercent]    &{ExcelPath}[Interest_CurrentSpread1]    &{ExcelPath}[Interest_NewSpread1]
-    Mx LoanIQ Click    ${LIQ_PricingChangeTransaction_InterestPricing_JavaTree}
-    Mx Press Keyboard    15    DOWN
-    Mx Press Keyboard    1    ENTER
-    Update Existing Interest Pricing via PCT    &{ExcelPath}[Interest_OptionName]    &{ExcelPath}[Computation]    &{ExcelPath}[PricingCode]
+    Update Existing Interest Pricing via PCT    15    &{ExcelPath}[Interest_OptionName]    &{ExcelPath}[Computation]    &{ExcelPath}[PricingCode]
     ...    &{ExcelPath}[PricingPercent]    &{ExcelPath}[Interest_CurrentSpread2]    &{ExcelPath}[Interest_NewSpread2]
-    Mx LoanIQ Click    ${LIQ_PricingChangeTransaction_InterestPricing_JavaTree}
-    Mx Press Keyboard    19    DOWN
-    Mx Press Keyboard    1    ENTER
-    Update Existing Interest Pricing via PCT    &{ExcelPath}[Interest_OptionName]    &{ExcelPath}[Computation]    &{ExcelPath}[PricingCode]
-    ...    &{ExcelPath}[PricingPercent]    &{ExcelPath}[Interest_CurrentSpread3]    &{ExcelPath}[Interest_NewSpread3]    
-    Mx LoanIQ click    ${LIQ_PricingChangeTransaction_InterestPricing_OK_Button}
+    Update Existing Interest Pricing via PCT    19    &{ExcelPath}[Interest_OptionName]    &{ExcelPath}[Computation]    &{ExcelPath}[PricingCode]
+    ...    &{ExcelPath}[PricingPercent]    &{ExcelPath}[Interest_CurrentSpread3]    &{ExcelPath}[Interest_NewSpread3]
+    Click OK Button in Interest Pricing Window
     
     ##Send to Approval##
     Select Pricing Change Transaction Send to Approval

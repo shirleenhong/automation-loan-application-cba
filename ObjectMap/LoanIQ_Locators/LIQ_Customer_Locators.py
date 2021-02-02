@@ -125,6 +125,7 @@ LIQ_Active_Customer_Notebook_ExternalRiskHistoryWindow_Insert_Button = 'JavaWind
 LIQ_Active_Customer_Notebook_ExternalRiskHistoryWindow_OK_Button = 'JavaWindow("title:=.*External Ratings History").JavaButton("attached text:=OK")'
 LIQ_Active_Customer_Notebook_UpdateExternalRatingHistory_Window = 'JavaWindow("title:=Update External Rating History")'
 LIQ_Active_Customer_Notebook_UpdateExternalRatingHistoryWindow_Rating_Field = 'JavaWindow("title:=Update External Rating History").JavaList("attached text:=Rating:.*")'
+LIQ_Active_Customer_Notebook_UpdateExternalRatingHistoryWindow_RatingType_Field = 'JavaWindow("title:=Update External Rating History").JavaEdit("attached text:=${RatingTypeNoSign}")'
 LIQ_Active_Customer_Notebook_UpdateExternalRatingHistoryWindow_OK_Button = 'JavaWindow("title:=Update External Rating History").JavaButton("attached text:=OK")'
 LIQ_Active_Customer_Notebook_UpdateExternalRatingHistoryWindow_Cancel_Button = 'JavaWindow("title:=Update External Rating History").JavaButton("attached text:=Cancel")'
 
