@@ -28,4 +28,4 @@ Create Initial Loan Drawdown - SERV01
     Mx Execute Template With Multiple Data    Create Initial Loan Drawdown for PT Health    ${ExcelPath}    ${rowid}    SERV01_LoanDrawdown
     
 Establish and Collection of Line Fee for PT Health Syndicated Deal
-    Mx Execute Template With Multiple Data    Pay Line Fee for PT Health Syndicated Deal - Period 1    ${ExcelPath}    ${rowid}    CRED08_OngoingFeeSetup
+    Mx Execute Template With Multiple Data    Pay Line Fee with Online Accrual for PT Health Syndicated Deal    ${ExcelPath}    ${rowid}    CRED08_OngoingFeeSetup
