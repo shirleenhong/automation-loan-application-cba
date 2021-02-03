@@ -3,7 +3,7 @@ Resource    ../../../../Configurations/LoanIQ_Import_File.robot
 
 
 *** Keywords ***
-Pay Line Fee for PT Health Syndicated Deal
+Pay Line Fee for PT Health Syndicated Deal - Period 1
     [Documentation]    This keyword will setup an online accrual and payment for Line Fee
     ...    @author: songchan    01FEB2021    - initial create
     [Arguments]    ${ExcelPath}
