@@ -82,4 +82,44 @@ Change Commitment Fee Expiry Date
     ### Perform Online Accrual ###
     Perform Online Accrual in Commitment Fee Notebook
 
- 
+Create Reversal Payment for New Life Bilat
+    [Documentation]    This keyword initiates payment reversal 
+    ...    @author: kmagday
+    [Arguments]    ${ExcelPath}
+
+    ### Login to LIQ ###
+    Logout from Loan IQ
+    Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
+        
+    ### Launch Facility ###
+    Launch Existing Facility    &{ExcelPath}[Deal_Name]    &{ExcelPath}[Facility_Name]
+    Navigate to Existing Ongoing Fee Notebook    &{ExcelPath}[OngoingFee_Type]
+
+    ### Create PAyment reversal ###
+    Perform Reverse Payment Under Events Tab in Commitment Fee Notebook    &{ExcelPath}[Event]    &{ExcelPath}[Reversal_Comment]    &{ExcelPath}[EffectiveDate_FeePayment]    &{ExcelPath}[EffectiveDate_Label]    &{ExcelPath}[Window_name]    &{ExcelPath}[Amount]
+
+    ### Create Cashflow ###
+    Navigate Notebook Workflow    ${LIQ_ReverseFee_Window}    ${LIQ_ReversePayment_Tab}    ${LIQ_ReversePayment_WorkflowItems_Tree}    ${CREATE_CASHFLOW_TYPE}
+    Verify if Method has Remittance Instruction    &{ExcelPath}[Borrower_ShortName]    &{ExcelPath}[Remittance_Description]    &{ExcelPath}[Remittance_Instruction]
+    Set the Status to Send all to SPAP
+    Verify if Status is set to Do It    &{ExcelPath}[Borrower_ShortName]  
+    Close GL Entries and Cashflow Window
+
+    ### Send to Approval and Approve ###
+    Navigate Notebook Workflow    ${LIQ_ReverseFee_Window}    ${LIQ_ReversePayment_Tab}    ${LIQ_ReversePayment_WorkflowItems_Tree}    ${SEND_TO_APPROVAL_STATUS}
+    Logout from Loan IQ
+    Login to Loan IQ    ${SUPERVISOR_USERNAME}    ${SUPERVISOR_PASSWORD}
+    Select Item in Work in Process    ${PAYMENTS_TRANSACTION}    ${AWAITING_APPROVAL_STATUS}    ${REVERSE_FEE_PAYMENT_TRANSACTION}     &{ExcelPath}[Facility_Name]
+    Navigate Notebook Workflow    ${LIQ_ReverseFee_Window}    ${LIQ_ReversePayment_Tab}    ${LIQ_ReversePayment_WorkflowItems_Tree}    ${APPROVAL_STATUS}
+    
+    ### Generate Intent Notice  ###
+    Logout from Loan IQ
+    Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
+    Select Item in Work in Process    ${PAYMENTS_TRANSACTION}    ${AWAITING_GENERATE_INTENT_NOTICES_STATUS}    ${REVERSE_FEE_PAYMENT_TRANSACTION}     &{ExcelPath}[Facility_Name]
+    Navigate Notebook Workflow    ${LIQ_ReverseFee_Window}    ${LIQ_ReversePayment_Tab}    ${LIQ_ReversePayment_WorkflowItems_Tree}    ${GENERATE_INTENT_NOTICES}
+    Generate Intent Notices    &{ExcelPath}[Borrower_ShortName]
+    Close Generate Notice Window
+    Navigate Notebook Workflow    ${LIQ_ReverseFee_Window}    ${LIQ_ReversePayment_Tab}    ${LIQ_ReversePayment_WorkflowItems_Tree}    ${RELEASE_STATUS}
+    
+    ### Validate if reverse fee is released ###
+    Validate release of Reverse Fee Payment

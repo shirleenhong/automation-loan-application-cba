@@ -147,3 +147,6 @@ LIQ_IntentNotice_Window = 'JavaWindow("title:=.* Notice Group.*")'
 ### Fee Expiry Date ###
 LIQ_FeeExpiryDate_Textfield = 'JavaWindow("title:=Fee Expiry Date").JavaEdit("attached text:=Expiry Date :")'
 LIQ_FeeExpiryDate_Ok_Button = 'JavaWindow("title:=Fee Expiry Date").JavaButton("attached text:=OK")'
+
+###Commitment Fee Reverse Fee- Events###   
+LIQ_ReverseFee_Events_Javatree = 'JavaWindow("title:=Commitment Fee Reverse Fee.*").JavaTree("tagname:=Select event to view details")'   

@@ -234,6 +234,8 @@ PENDING_STATUS = "Pending"
 LOAN_INCREASE = "Loan Increase"
 AWAITING_GENERATE_INTENT_NOTICES_STATUS = "Awaiting Generate Intent Notices"
 AWAITING_RATE_SETTING = "Awaiting Rate Setting"
+REVERSE_FEE_PAYMENT_TRANSACTION= "Reverse Fee Payment"
+
 
 ### Bank Role ###
 REFERENCE_BANK_ROLE = "Reference Bank"
