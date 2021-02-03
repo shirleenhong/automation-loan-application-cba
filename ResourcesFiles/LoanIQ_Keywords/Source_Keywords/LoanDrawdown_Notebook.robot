@@ -98,6 +98,7 @@ Input General Loan Drawdown Details
     ...                                      Added Optional Argument: ${sRunTimeVar_AdjustedDueDate}
     ...                                      Added Keyword Post-processing
     ...    @update: clanding    10AUG2020    Replaced hard coded value to global variable
+    ...    @update: songchan    28JAN2021    Added Saving of Loan Drawdown after entering all the details
     [Arguments]    ${sLoan_RequestedAmount}    ${sLoan_EffectiveDate}    ${sLoan_MaturityDate}=None    ${sLoan_RepricingFrequency}=None    ${sLoan_IntCycleFrequency}=None    ${sLoan_Accrue}=None    ${sRepricing_Date}=None    ${sLoan_RiskType}=None
     ...        ${sRunTimeVar_AdjustedDueDate}=None
     
@@ -134,6 +135,12 @@ Input General Loan Drawdown Details
 
     ### Keyword Post-processing ###
     Save Values of Runtime Execution on Excel File    ${sRunTimeVar_AdjustedDueDate}    ${AdjustedDueDate}
+    
+    Select Menu Item    ${LIQ_InitialDrawdown_Window}    File    Save
+    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
+    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
+    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
+    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
 
     [Return]    ${AdjustedDueDate}
 
@@ -4004,6 +4011,7 @@ Validate Loan Drawdown Amounts in General Tab
     ...    @author: dahijara    16DEC2020    - Initial create
     ...    @update: javinzon    18DEC2020    - Updated keyword name from 'Validate Loan Drawdown Amounts for CH EDU Bilateral Deal' 
     ...                                        to 'Validate Loan Drawdown Amounts in General Tab', updated documentation
+    ...    @update: javinzon    21JAN2021    - Added another Take Screenshot to capture the tab after loading
     [Arguments]    ${sOrig_LoanGlobalOriginal}    ${sOrig_LoanGlobalCurrent}    ${sOrig_LoanHostBankGross}    ${sOrig_LoanHostBankNet}
 
     ### GetRuntime Keyword Pre-processing ###
@@ -4040,7 +4048,8 @@ Validate Loan Drawdown Amounts in General Tab
     ${Status}    Run Keyword And Return Status    Should Be Equal    ${New_LoanHostBankNet}    ${Orig_LoanHostBankNet}          
     Run Keyword If    ${Status}==${True}    Log    Loan Host Bank Net Amount is correct.
     ...    ELSE    Run Keyword And Continue On Failure    Fail    Loan Host Bank Net Amount is incorrect. Expected: ${Orig_LoanHostBankNet} - Actual: ${New_LoanHostBankNet}
-
+    
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LoanWindow
 Validate Loan Drawdown Rates in Rates Tab
     [Documentation]    This keyword validates the loan drawdown rates in Rates Tab.
     ...    @author: dahijara    16DEC2020    - Initial create
@@ -4134,3 +4143,27 @@ Validate Loan Drawdown General Details in General Tab
     ${Status}    Run Keyword And Return Status    Should Be Equal    ${UI_IntCycleFrequency}    ${Loan_IntCycleFrequency}
     Run Keyword If    ${Status}==${True}    Log    Loan Int Cycle Frequency is correct.
     ...    ELSE    Run Keyword And Continue On Failure    Fail    Loan Int Cycle Frequency is incorrect. Expected: ${Loan_IntCycleFrequency} - Actual: ${UI_IntCycleFrequency}
+    
+Set Spread Rate as Fixed in Rates Tab of Loan Drawdown
+    [Documentation]    This keyword sets the 'Spread is Fixed' checkbox to ON in Initial Drawdown - Rates Tab
+    ...    @author: javinzon    26JAN2021    - Initial create
+    [Arguments]    ${sSpreadIsFixed}=OFF
+    
+    ### GetRuntime Keyword Pre-processing ###
+    ${SpreadIsFixed}    Acquire Argument Value    ${sSpreadIsFixed}
+    
+    Mx LoanIQ Select Window Tab    ${LIQ_InitialDrawdown_Tab}    ${RATES_TAB}
+    Run Keyword If    '${SpreadIsFixed}'=='ON'    Mx LoanIQ Set    ${LIQ_InitialDrawdown_SpreadIsFixed_Checkbox}    ON
+    ...    ELSE    Log    Fixed spread rate is not required for the Loan drawdown.
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/InitialDrawdown_SpreadIsFixed
+    Select Menu Item    ${LIQ_InitialDrawdown_Window}    File    Save
+    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
+
+Validate if Loan is Inactive
+    [Documentation]    This keyword is used to validate that Loan is in Status: Inactive
+    ...    @author: javinzon    29JAN2021    - Initial create
+    
+    ${Status}    Run Keyword And Return Status    Mx LoanIQ Verify Object Exist    ${LIQ_InactiveLoan_Tab}    VerificationData="Yes"
+    Run Keyword If    ${Status}==${True}    Log    Loan is in Inactive Status
+    ...    ELSE    Run Keyword And COntinue On Failure    Fail    Loan is not in Inactive state. 
+

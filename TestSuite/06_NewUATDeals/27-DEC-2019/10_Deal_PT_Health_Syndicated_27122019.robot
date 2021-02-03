@@ -14,3 +14,15 @@ Create Quick Party Onboarding for PT Health Syndicated Deal - PTY001
     
 Create Syndicated Deal for PT Health Syndicated Deal - CRED01
     Mx Execute Template With Multiple Data    Setup Syndicated Deal for PT Health Syndicated    ${ExcelPath}    ${rowid}    CRED01_DealSetup
+    
+Establish Facility for PT Health Syndicated Deal - CRED02
+    Mx Execute Template With Multiple Data    Create Facility for PT Health    ${ExcelPath}    ${rowid}    CRED02_FacilitySetup
+    Mx Execute Template With Multiple Data    Setup Pricing for PT Health Syndicated Deal    ${ExcelPath}    ${rowid}    CRED08_OngoingFeeSetup
+    Mx Execute Template With Multiple Data    Setup Primaries for PT Health Syndicated Deal    ${ExcelPath}    ${rowid}    SYND02_PrimaryAllocation
+    Mx Execute Template With Multiple Data    Update Line Fee for PT Health Syndicated    ${ExcelPath}    ${rowid}    SERV29_CommitmentFeePayment
+    Mx Execute Template With Multiple Data    Update Facility Fee Expiry Date for PT Health Syndicated    ${ExcelPath}    ${rowid}    SERV29_CommitmentFeePayment
+    Mx Execute Template With Multiple Data    PT Health Syndicated Deal Approval and Close    ${ExcelPath}    ${rowid}    SYND02_PrimaryAllocation
+    Mx Execute Template With Multiple Data    Release Line Fee for PT Health Syndicated    ${ExcelPath}    ${rowid}    SERV29_CommitmentFeePayment
+    
+Create Initial Loan Drawdown - SERV01
+    Mx Execute Template With Multiple Data    Create Initial Loan Drawdown for PT Health    ${ExcelPath}    ${rowid}    SERV01_LoanDrawdown

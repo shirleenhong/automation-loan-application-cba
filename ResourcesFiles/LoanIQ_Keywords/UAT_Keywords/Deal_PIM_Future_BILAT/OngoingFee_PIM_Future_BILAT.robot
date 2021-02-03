@@ -6,6 +6,9 @@ Resource    ../../../../Configurations/LoanIQ_Import_File.robot
 Collect Commitment Fee Payment For PIM Future BILAT
     [Documentation]    This keyword collects the commitment fee payment of the facility.
     ...    @author: mcastro    10DEC2020    - Intial Create
+    ...    @update: mcastro    01FEB2021    - Remove uncessary keywords for computation and removed writing on data set for computation
+    ...                                     - Added additional validation on Accrual Tab
+    ...    @update: mcastro    02FEB2021    - Updated variable name Commitment_AdjustedDueDate to Commitment_EffectiveDate
     [Arguments]    ${ExcelPath}
        
     ### Login to LIQ ###
@@ -16,20 +19,12 @@ Collect Commitment Fee Payment For PIM Future BILAT
     Launch Existing Facility    &{ExcelPath}[Deal_Name]    &{ExcelPath}[Facility_Name]
     Navigate to Existing Ongoing Fee Notebook    &{ExcelPath}[OngoingFee_Type]
 
-    ### Commitment Fee Notebook - General Tab ###  
-    ${Rate}    ${BalanceAmount}    ${RateBasis}    Get Data in General Tab
-    Write Data To Excel    SERV29_CommitmentFeePayment    Rate    ${rowid}    ${Rate}
-    Write Data To Excel    SERV29_CommitmentFeePayment    Balance_Amount    ${rowid}    ${BalanceAmount}
-    Write Data To Excel    SERV29_CommitmentFeePayment    Rate_Basis    ${rowid}    ${RateBasis}  
-
-    ${ProjectedCycleDue}    Compute Commitment Fee Amount Per Cycle    ${BalanceAmount}    ${RateBasis}    &{ExcelPath}[Cycle_Number]    &{ExcelPath}[Commitment_AdjustedDueDate]    None    None    &{ExcelPath}[Commitment_Accrue]    
-    Write Data To Excel    SERV29_CommitmentFeePayment    Computed_CycleDue    ${rowid}    ${ProjectedCycleDue}
-    
     ### Ongoing Fee Payment ###
+    Validate Dues on Accrual Tab for Commitment Fee    &{ExcelPath}[Projected_CycleDue]    &{ExcelPath}[Cycle_Number]    &{ExcelPath}[Projected_EOCAccrual]    &{ExcelPath}[Projected_EOCDue]
     Select Cycle Fee Payment 
-    Enter Effective Date for Ongoing Fee-Cycle Due Payment    &{ExcelPath}[Commitment_AdjustedDueDate]
+    Enter Effective Date for Ongoing Fee Payment    &{ExcelPath}[Commitment_EffectiveDate]    &{ExcelPath}[Projected_CycleDue]
     Select Menu Item    ${LIQ_OngoingFeePayment_Window}    File    Save
-
+    
     ### Create Cashflow ###
     Navigate Notebook Workflow    ${LIQ_OngoingFeePayment_Window}    ${LIQ_OngoingFeePayment_Tab}    ${LIQ_OngoingFeePayment_WorkflowItems}    ${CREATE_CASHFLOW_TYPE}
     Verify if Method has Remittance Instruction    &{ExcelPath}[Borrower_ShortName]    &{ExcelPath}[Remittance_Description]    &{ExcelPath}[Remittance_Instruction]
@@ -43,7 +38,7 @@ Collect Commitment Fee Payment For PIM Future BILAT
 
     ${UITotalCreditAmt}    Get GL Entries Amount    ${SPACE}Total For: CB001   ${CREDIT_AMT_LABEL}
     ${UITotalDebitAmt}    Get GL Entries Amount    ${SPACE}Total For: CB001    ${DEBIT_AMT_LABEL}
-    Validate if Debit and Credit Amt is equal to Transaction Amount    ${UITotalDebitAmt}    ${UITotalCreditAmt}    ${ProjectedCycleDue}
+    Validate if Debit and Credit Amt is equal to Transaction Amount    ${UITotalDebitAmt}    ${UITotalCreditAmt}    &{ExcelPath}[Projected_CycleDue]
         
     ### Send to Approval and Approve ###
     Navigate Notebook Workflow    ${LIQ_OngoingFeePayment_Window}    ${LIQ_OngoingFeePayment_Tab}    ${LIQ_OngoingFeePayment_WorkflowItems}    ${SEND_TO_APPROVAL_STATUS}
@@ -66,9 +61,7 @@ Collect Commitment Fee Payment For PIM Future BILAT
     Search Existing Deal    &{ExcelPath}[Deal_Name]
     Launch Existing Facility    &{ExcelPath}[Deal_Name]    &{ExcelPath}[Facility_Name]
     Navigate to Existing Ongoing Fee Notebook    &{ExcelPath}[OngoingFee_Type]
-    Validate Details on Acrual Tab - Commitment Fee    ${ProjectedCycleDue}    &{ExcelPath}[Cycle_Number]
+    Validate Details on Acrual Tab - Commitment Fee    &{ExcelPath}[Projected_CycleDue]    &{ExcelPath}[Cycle_Number]
     Validate release of Ongoing Fee Payment
-    Close All Windows on LIQ   
-    Logout from Loan IQ
-    Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
+    Close All Windows on LIQ 
     

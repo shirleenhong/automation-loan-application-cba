@@ -18,8 +18,8 @@ LIQ_CustomerListByCustomerID_OK_ButtonJavaWindow = 'JavaWindow("title:=Customer 
 ###Active Customer Window###
 LIQ_Active_Customer_Notebook_InquiryMode = 'JavaWindow("title:=Active Customer.*").JavaButton("text:=Notebook in Inquiry Mode - F7")'
 LIQ_ActiveCustomer_Window = 'JavaWindow("title:=Active Customer.*")'
+LIQ_ActiveCustomer_Tab = 'JavaWindow("title:=Active Customer.*").JavaTab("tagname:=TabFolder")'
 LIQ_ActiveCustomer_ShortName_Window = 'JavaWindow("title:=Active Customer.*","tagname:=Active Customer -- ${LIQCustomer_ShortName}")'
-
 LIQ_ActiveCustomer_Window_FileMenu_SaveMenu = 'JavaWindow("title:=Active Customer.*").JavaMenu("index:=0").JavaMenu("label:=Save")'
 
 ###Active Customer Window_GST ID##
@@ -111,12 +111,23 @@ LIQ_Active_Customer_Notebook_RiskTab_InternalRiskRating_OkButton = 'JavaWindow("
 
 ###Active Customer Window_RiskTab_ExternalRiskRating###
 LIQ_Active_Customer_Notebook_RiskTab_AddExternal_Button = 'JavaWindow("title:=Active Customer -.*").JavaButton("attached text:=Add External.*")'
+LIQ_Active_Customer_Notebook_RiskTab_History_Button = 'JavaWindow("title:=Active Customer -.*").JavaButton("labeled_containers_path:=.*External Risk Rating.*", "attached text:=History")'
 LIQ_Active_Customer_Notebook_RiskTab_ExternalRiskRating_JavaTree = 'JavaWindow("title:=Active Customer -.*").JavaTree("attached text:=Drill down to update","index:=0")'
 LIQ_Active_Customer_Notebook_RiskTab_ExternalRiskRating_Window = 'JavaWindow("title:=Add External Risk Rating.*")'
 LIQ_Active_Customer_Notebook_RiskTab_ExtenalRiskRating_RatingTypeField = 'JavaWindow("title:=Add External Risk Rating.*").JavaList("attached text:=Rating Type:")'
 LIQ_Active_Customer_Notebook_RiskTab_ExtenalRiskRating_RatingField = 'JavaWindow("title:=Add External Risk Rating.*").JavaList("attached text:=Rating:.*")'
 LIQ_Active_Customer_Notebook_RiskTab_ExtenalRiskRating_StartDateField = 'JavaWindow("title:=Add External Risk Rating.*").JavaEdit("tagname:=Text.*")'
 LIQ_Active_Customer_Notebook_RiskTab_ExtenalRiskRating_OKButton = 'JavaWindow("title:=Add External Risk Rating.*").JavaButton("attached text:=OK.*")'
+
+###Active Customer Window_RiskTab_ExternalRiskRatingWindow###
+LIQ_Active_Customer_Notebook_ExternalRiskHistory_Window = 'JavaWindow("title:=.*External Ratings History")'
+LIQ_Active_Customer_Notebook_ExternalRiskHistoryWindow_Insert_Button = 'JavaWindow("title:=.*External Ratings History").JavaButton("attached text:=Insert.*")'
+LIQ_Active_Customer_Notebook_ExternalRiskHistoryWindow_OK_Button = 'JavaWindow("title:=.*External Ratings History").JavaButton("attached text:=OK")'
+LIQ_Active_Customer_Notebook_UpdateExternalRatingHistory_Window = 'JavaWindow("title:=Update External Rating History")'
+LIQ_Active_Customer_Notebook_UpdateExternalRatingHistoryWindow_Rating_Field = 'JavaWindow("title:=Update External Rating History").JavaList("attached text:=Rating:.*")'
+LIQ_Active_Customer_Notebook_UpdateExternalRatingHistoryWindow_RatingType_Field = 'JavaWindow("title:=Update External Rating History").JavaEdit("attached text:=${RatingTypeNoSign}")'
+LIQ_Active_Customer_Notebook_UpdateExternalRatingHistoryWindow_OK_Button = 'JavaWindow("title:=Update External Rating History").JavaButton("attached text:=OK")'
+LIQ_Active_Customer_Notebook_UpdateExternalRatingHistoryWindow_Cancel_Button = 'JavaWindow("title:=Update External Rating History").JavaButton("attached text:=Cancel")'
 
 ###Active Customer Window_SIC Tab###
 LIQ_Active_Customer_Notebook_SICTab_PrimarySICButton = 'JavaWindow("title:=Active.*Customer.*").JavaButton("attached text:=Primary SIC.*")'
@@ -127,6 +138,9 @@ LIQ_Active_Customer_Notebook_SICTab_PrimarySICText = 'JavaWindow("title:=Active 
 LIQ_Active_Customer_Notebook_SICTab_SIC_TextField = 'JavaWindow("title:=Active.*Customer.*").JavaEdit("value:=${PartyUser_SICCode}")'
 LIQ_Active_Customer_Notebook_SICTab_PrimarySICCode = 'JavaWindow("title:=Active.*Customer.*").JavaEdit("value:=${Primary_SICCode}")'
 LIQ_Active_Customer_Notebook_SICTab_PrimarySICCodeDescription = 'JavaWindow("title:=Active.*Customer.*").JavaEdit("value:=${PrimarySICCode_Description}")'
+
+###Active Customer Window_Events Tab###
+LIQ_Active_Customer_Notebook_Events_Javatree = 'JavaWindow("title:=Active Customer.*").JavaTree("tagname:=Select event to view details")' 
 
 ###Active Customer Window_Profiles Tab###
 Please_Confirm_AddingProfile_Window_YesButton = 'JavaWindow("title:=Please confirm","displayed:=1").JavaButton("label:=Yes")'

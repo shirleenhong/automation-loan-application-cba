@@ -6,10 +6,11 @@ Resource    ../../../../Configurations/LoanIQ_Import_File.robot
 Update Leverage Ratio for CH EDu Bilateral Deal
     [Documentation]    This keyword is used to peform deal change transaction for updating deal leverage ration 
     ...    @author:    dahijara    07JAN2021    initial create
+    ...    @update:    dahijara    29JAN2021    Updated rovw value in getting deal name.
     [Arguments]    ${ExcelPath}
 
     ### Read Excel Data ###
-    ${Deal_Name}    Read Data From Excel    CRED01_DealSetup    Deal_Name    &{ExcelPath}[rowid]
+    ${Deal_Name}    Read Data From Excel    CRED01_DealSetup    Deal_Name    1
 
     ### LIQ Window ###
     Logout from Loan IQ

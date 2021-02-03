@@ -10,6 +10,8 @@ Break Cost for Early Prepayment for PIM Future BILAT
     ...                                     - Added handling when adding of notice group comment is required
     ...                                     - Updated argument variable for approving releasing of breakfunding to use Global Variable
     ...                                     - Added validation of Release Status and Fees
+    ...    @update: mcastro    22JAN2021    - Updated ${EMPTY} to None
+    ...    @update: mcastro    02FEB2021    - Removed comment for Break Cost validation since the change request for the label is confirmed
     [Arguments]    ${ExcelPath}
 
     ### Read data from Loan Drawdown and Comprehensive repricing sheets ###
@@ -41,7 +43,7 @@ Break Cost for Early Prepayment for PIM Future BILAT
     Set All Items to None
     
     ### Intent Notice ###
-    Run Keyword If    '${Notice_Comment}'=='${EMPTY}'    Generate Intent Notices - Break Funding
+    Run Keyword If    '${Notice_Comment}'=='None'   Generate Intent Notices - Break Funding
     ...    ELSE    Generate and Add Intent Notice Comment on Breakfunding    &{Excelpath}[Notice_Subject]    &{Excelpath}[Notice_Comment] 
 
     ### Send to approval ###

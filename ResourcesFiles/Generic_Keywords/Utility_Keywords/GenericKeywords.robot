@@ -22,6 +22,18 @@ Mx Double Click Element
     Set Focus to Element    ${locator}
     Wait Until Keyword Succeeds    ${retry}    ${retry_interval}    Double Click Element    ${locator}
     Wait Until Browser Ready State
+    
+Mx Press Keyboard
+    [Documentation]    This keyword is used to press key declared as much as declared.
+    ...    @author: makcamps    01FEB2021    - initial Create
+    [Arguments]    ${sRowCount}    ${sKey}
+
+    ### Keyword Pre-processing ###
+    ${RowCount}    Acquire Argument Value    ${sRowCount}
+    ${Key}    Acquire Argument Value    ${sKey}
+    
+    :FOR    ${INDEX}    IN RANGE    0    ${RowCount}
+    \    Mx Press Combination    Key.${Key}  
         
 Wait Until Browser Ready State
     Execute Javascript    return window.load
@@ -759,6 +771,8 @@ Navigate Notebook Workflow
     ...    @update: dahijara    20NOV2020    Replaced Mx Click    ${LIQ_Cashflows_MarkSelectedItemForRelease_Button} to Mx LoanIQ select    ${LIQ_Cashflow_Options_MarkAllRelease}
     ...                                      Inserted Release Cashflow condition under Run Keyword If statement.
     ...    @update: mcastro     07DEC2020    Added condition for Rate Setting transaction to click No on Warning pop-up
+    ...    @update: dahijara    26JAN2021    Added clicking of Yes on confirmation window when present for Rate Setting
+    ...    @update: songchan    29JAN2021    Added Setting of Notebook to Update Mode
     [Arguments]    ${sNotebook_Locator}    ${sNotebookTab_Locator}    ${sNotebookWorkflow_Locator}    ${sTransaction}    
 
     ###Pre-processing Keyword##
@@ -769,10 +783,12 @@ Navigate Notebook Workflow
     ${Transaction}    Acquire Argument Value    ${sTransaction} 
 
     mx LoanIQ activate window    ${Notebook_Locator}
+    Set Notebook to Update Mode    ${Notebook_Locator}    ${LIQ_LoanInquiry_InitialDrawdown_Button}
     Mx LoanIQ Select Window Tab    ${NotebookTab_Locator}    ${WORKFLOW_TAB}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/NotebookWorkflow
     Mx LoanIQ Select Or DoubleClick In Javatree    ${NotebookWorkflow_Locator}    ${Transaction}%d
-    Run Keyword If    '${Transaction}'=='Rate Setting'    mx LoanIQ click element if present    ${LIQ_Question_No_Button}
+    Run Keyword If    '${Transaction}'=='Rate Setting'    Run Keywords    Mx LoanIQ click element if present    ${LIQ_LoanRepricing_ConfirmationWindow_Yes_Button}
+    ...    AND    mx LoanIQ click element if present    ${LIQ_Question_No_Button}
     ...    ELSE    Validate if Question or Warning Message is Displayed
     mx LoanIQ click element if present    ${LIQ_Question_Yes_Button}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/NotebookWorkflow
@@ -1452,10 +1468,15 @@ Update Line Fee Dates
 Select Menu Item
     [Documentation]    Standard keyword for Selecting a Menu and Submenu Item under any LoanIQ Notebook
     ...    @author: ritagel    26JUN2019    Creation
+    ...    @update: mcastro    01FEB2021    Added additional Clicking on warning yes button and taking of screenshots
     [Arguments]    ${eNotebookLocator}    ${sMenu}    ${sSubMenu}
     mx LoanIQ activate window    ${eNotebookLocator}
     mx LoanIQ select    ${eNotebookLocator}.JavaMenu("label:=${sMenu}").JavaMenu("label:=${sSubMenu}")
-    mx LoanIQ click element if present    ${LIQ_Warning_OK_Button}    
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/NotebookMenu
+    mx LoanIQ click element if present    ${LIQ_Warning_OK_Button}   
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/NotebookMenu
+    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button} 
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/NotebookMenu
     Log    Submenu selected successfully
     
 Validate String Data In LIQ Object
@@ -2775,6 +2796,14 @@ Generate Facility Name with 5 Numeric Test Data
     [Arguments]   ${Facility_NamePrefix}
     
     ${Facility_Name}    Auto Generate Only 5 Numeric Test Data     ${Facility_NamePrefix}
+    [Return]    ${Facility_Name}
+
+Generate Facility Name with 4 Numeric Test Data
+    [Documentation]    This keyword generates facility name with 5 numeric text.
+    ...    @author: songhan    25JAN2021    - Initial Create
+    [Arguments]   ${Facility_NamePrefix}
+    
+    ${Facility_Name}    Auto Generate Only 4 Numeric Test Data     ${Facility_NamePrefix}
     [Return]    ${Facility_Name}
     
 Check if File Exist

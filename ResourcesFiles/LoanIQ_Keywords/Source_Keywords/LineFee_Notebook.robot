@@ -319,6 +319,7 @@ Enter Line Fee Details
     ...    @author: ritragel    06SEP2020
     ...    @update: makcamps    14JAN2021    - added condition that if pay type is provided, update pay type
     ...    @update: makcamps    20JAN2021    - updated sequence for updating line fee
+    ...    @update: songchan    25JAN2021    - updated sequence for updating Pay type and Cycle Frequency
     [Arguments]    ${sEffectiveDate}    ${sActual_DueDate}    ${sAdjusted_DueDate}    ${sCycle_Frequency}    ${sAccrue}    ${sFloatRateDate}=None    ${sPayType}=None
     
     ### Keyword Pre-processing ###
@@ -332,17 +333,17 @@ Enter Line Fee Details
 
     mx LoanIQ activate window    ${LIQ_LineFeeNotebook_Window}
     mx LoanIQ click    ${LIQ_LineFee_InquiryMode_Button}  
+    Run Keyword If    '${PayType}'!='None'    mx LoanIQ Select Combo Box Value    ${LIQ_LineFee_PayType_Dropdown}    ${PayType}
     mx LoanIQ enter    ${LIQ_LineFee_EffectiveDate_Field}    ${EffectiveDate} 
     Mx Press Combination    Key.ENTER 
     Run Keyword If    '${PayType}'!='None'    mx LoanIQ enter    ${LIQ_LineFee_FloatRate_Date}    ${FloatRateDate}
     Mx Click Element If Present    ${LIQ_Warning_OK_Button}
+    mx LoanIQ Select Combo Box Value    ${LIQ_LineFee_Cycle}    ${Cycle_Frequency}
     mx LoanIQ enter    ${LIQ_LineFee_ActualDue_Date}    ${Actual_DueDate}
     Mx Click Element If Present    ${LIQ_Warning_OK_Button}
     mx LoanIQ enter    ${LIQ_LineFee_AdjustedDue_Date}    ${Adjusted_DueDate}  
     Mx Click Element If Present    ${LIQ_Warning_OK_Button}
-    mx LoanIQ Select Combo Box Value    ${LIQ_LineFee_Cycle}    ${Cycle_Frequency}
     mx LoanIQ Select Combo Box Value    ${LIQ_LineFee_Accrue_Dropdown}    ${Accrue}
-    Run Keyword If    '${PayType}'!='None'    mx LoanIQ Select Combo Box Value    ${LIQ_LineFee_PayType_Dropdown}    ${PayType}
     Select Menu Item    ${LIQ_LineFeeNotebook_Window}    File    Save
     mx LoanIQ click element if present    ${LIQ_Warning_OK_Button}
     Mx Click Element If Present    ${LIQ_Warning_Yes_Button}  
@@ -889,19 +890,24 @@ Validate Payment Release of Ongoing Line Fee
 Validate After Payment Details on Acrual Tab - Line Fee
     [Documentation]    This keyword validates the after payment details on Acrual Tab for Line Fee.
     ...    @author: dahijara    11JAN2021    - initial create
-    [Arguments]    ${sExpected_PaymentAmt}    ${sCycleNumber}     
+    ...    @update: makcamps    22JAN2021    - added cycle due argument and condition
+    [Arguments]    ${sExpected_PaymentAmt}    ${sCycleNumber}    ${sExpected_CycleDue}=None
 
     ### GetRuntime Keyword Pre-processing ###
     ${Expected_PaymentAmt}    Acquire Argument Value    ${sExpected_PaymentAmt}
     ${CycleNumber}    Acquire Argument Value    ${sCycleNumber}
+    ${Expected_CycleDue}    Acquire Argument Value    ${sExpected_CycleDue}
 
     mx LoanIQ activate window    ${LIQ_LineFeeReleasedNotebook_Window}
     Mx LoanIQ Select Window Tab    ${LIQ_LineFee_Tab}    Accrual
+    
     ${CycleDue}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_LineFee_Accrual_Cycles_JavaTree}    ${CycleNumber}%Cycle Due%CycleDue    
-    ${Status}    Run Keyword And Return Status    Should Be Equal    0.00    ${CycleDue}
+    ${Status}    Run Keyword If    '${Expected_CycleDue}'=='None'    Run Keyword And Return Status    Should Be Equal    0.00    ${CycleDue}
+    ...    ELSE    Run Keyword And Return Status    Should Be Equal    ${Expected_CycleDue}    ${CycleDue}
+    ${Expected_CycleDue}    Run Keyword If    '${Expected_CycleDue}'=='None'    Set Variable    0.00
     Run Keyword If    ${Status}==${True}    Log    Cycle Due is correct.
-    ...    ELSE    Run Keyword And Continue On Failure    Fail    Cycle Due is NOT correct. Expected: 0.00 - Actual: ${CycleDue}
-
+    ...    ELSE    Run Keyword And Continue On Failure    Fail    Cycle Due is NOT correct. Expected: ${Expected_CycleDue} - Actual: ${CycleDue}
+    
     ${PaidToDate}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_LineFee_Accrual_Cycles_JavaTree}    ${CycleNumber}%Paid to date%PaidToDate
     ${Status}    Run Keyword And Return Status    Should Be Equal    ${PaidToDate}    ${Expected_PaymentAmt}
     Run Keyword If    ${Status}==${True}    Log    Paid To Date Amount is correct.

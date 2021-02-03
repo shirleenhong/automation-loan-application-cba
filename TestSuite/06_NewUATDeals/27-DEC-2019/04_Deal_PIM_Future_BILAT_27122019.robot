@@ -27,7 +27,7 @@ Establish Facility - CRED01
     Mx Execute Template With Multiple Data    Approve and Close Deal    ${ExcelPath}    ${rowid}    SYND02_PrimaryAllocation
     Mx Execute Template With Multiple Data    Release Commitment Fee For PIM Future BILAT    ${ExcelPath}    ${rowid}    SERV29_CommitmentFeePayment
 
-Create Initial Loan Drawdown - SERV01
+Create Initial Loan Drawdown $3,828,950.55 effective 30/09/2019
     [Tags]  03 Create Initial Loan Drawdown - SERV01
     Mx Execute Template With Multiple Data    Create Initial Loan Drawdown for PIM Future BILAT    ${ExcelPath}    ${rowid}    SERV01_LoanDrawdown
     Mx Execute Template With Multiple Data    Send a Drawdown Intent Notice via Notice Application without FFC Validation    ${ExcelPath}    ${rowid}    Correspondence

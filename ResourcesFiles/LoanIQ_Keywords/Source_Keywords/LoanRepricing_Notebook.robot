@@ -127,6 +127,8 @@ Add Principal Payment after New Outstanding Addition
     ...                                      - Added Optional Arguments: ${sRunTimeVar_ActualPrincipalPayment}
     ...                                      - Added Keyword Post-processing: Save Runtime Value
     ...                                      - Removed unnecessary spacing
+    ...    @update: javinzon    20JAN2021    - Added 'Run Keyword And Continue On Failure' in Principal Amount validation
+    ...                                      - Added Take Screenshot Keyword
     [Arguments]    ${sPricing_Option}    ${sNewRequestedAmt}    ${sRunTimeVar_ActualPrincipalPayment}=None
 
     ### Keyword Pre-processing ###
@@ -145,8 +147,8 @@ Add Principal Payment after New Outstanding Addition
     ${ExpectedPrincipalPayment}    Evaluate    ${TotalExistingOutstanding}-${iNewRequestedAmt}
     ${status}    Run Keyword And Return Status     Should Be Equal As Numbers    ${ExpectedPrincipalPayment}    ${iActualPrincipalPayment}
     Run Keyword If    '${status}'=='True'    Log    Passed: Principal Payment Amount Verified
-    ...    ELSE    Log    Failed: Principal Payment Amount displayed is  ${iActualPrincipalPayment} instead of ${ExpectedPrincipalPayment}
-
+    ...    ELSE    Run Keyword And Continue On Failure    Fail    Principal Payment Amount displayed is  ${iActualPrincipalPayment} instead of ${ExpectedPrincipalPayment}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/PrincipalAmount
     ### Keyword Post-processing ###
     Save Values of Runtime Execution on Excel File    ${sRunTimeVar_ActualPrincipalPayment}    ${ActualPrincipalPayment}
 
@@ -352,7 +354,8 @@ Add New Outstandings
     ...    @update: shirhong    01OCT2020    Added Repricing Date
     ...                                      - Added Warning Confirmation when saving Rollover Conversion
     ...                                      - Added Question Confirmation when clicking Base Rate button 
-    [Arguments]    ${sPricing_Option}    ${sBorrower_Base_Rate}    ${sNewRequestedAmt}=None    ${sRepricingFrequency}=None    ${sRunTimeVar_NewLoanAlias}=None    ${sRepricingDate}=None
+    ...    @update: javinzon    20JAN2021    - Updated ${sBorrower_Base_Rate} as optional and added conditions for base rate
+    [Arguments]    ${sPricing_Option}    ${sBorrower_Base_Rate}=None    ${sNewRequestedAmt}=None    ${sRepricingFrequency}=None    ${sRunTimeVar_NewLoanAlias}=None    ${sRepricingDate}=None
 
     ### Keyword Pre-processing ###
     ${Pricing_Option}    Acquire Argument Value    ${sPricing_Option}
@@ -380,17 +383,18 @@ Add New Outstandings
     Run Keyword If    '${RepricingDate}'!='None'    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
     mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
     mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
-    Mx LoanIQ Select Window Tab    ${LIQ_RolloverConversion_Tab}    Rates
-    mx LoanIQ click    ${LIQ_RolloverConversion_BaseRate_Button}
-    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
-    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
+    Run Keyword If    '${Borrower_Base_Rate}'!='None'    Run Keywords    Mx LoanIQ Select Window Tab    ${LIQ_RolloverConversion_Tab}    Rates
+    ...    AND    mx LoanIQ click    ${LIQ_RolloverConversion_BaseRate_Button}
+    ...    AND    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
+    ...    AND    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
     # Mx Click Element If Present    ${LIQ_RolloverConversion_BaseRate_Button}
     # Mx Click Element If Present    ${LIQ_Warning_Yes_Button}
     # Mx Click Element If Present    ${LIQ_Warning_Yes_Button}
     Run Keyword If    '${RepricingDate}'!='None'    mx LoanIQ click element if present    ${LIQ_Question_No_Button}  
-    mx LoanIQ enter    ${LIQ_SetBaseRate_BorrowerBaseRate_Textfield}    ${Borrower_Base_Rate}
-    Take Screenshot    ${Screenshot_path}/Screenshots/LoanIQ/ComprehensiveRepricing_PendingRolloverConversion_RatesTab 
-    mx LoanIQ click    ${LIQ_SetBaseRate_Ok_Button}
+    Run Keyword If    '${Borrower_Base_Rate}'!='None'    Run Keywords    mx LoanIQ enter    ${LIQ_SetBaseRate_BorrowerBaseRate_Textfield}    ${Borrower_Base_Rate}
+    ...    AND    Take Screenshot    ${Screenshot_path}/Screenshots/LoanIQ/ComprehensiveRepricing_PendingRolloverConversion_RatesTab 
+    ...    AND    mx LoanIQ click    ${LIQ_SetBaseRate_Ok_Button}
+    ...    ELSE    Log    Updating the base rate is not required.
     mx LoanIQ select    ${LIQ_RolloverConversion_FileExit_Menu}
 
     ### Keyword Post-processing ###
@@ -900,15 +904,18 @@ Validate Events Tab
 Select Multiple Loan to Merge
     [Documentation]    This keyword selects two term drawdowns to merge
     ...    @author: chanario
-    ...    @update: sahalder    09JUL2020    Added keyword pre-processing steps
-    [Arguments]    ${sLoan1_Alias}    ${sLoan2_Alias}
+    ...    @update: sahalder    09JUL2020    - Added keyword pre-processing steps
+    ...    @update: javinzon    27JAN2021    - Added optional argument for 3rd Loan
+    [Arguments]    ${sLoan1_Alias}    ${sLoan2_Alias}    ${sLoan3_Alias}=None
     
     ### GetRuntime Keyword Pre-processing ###
 	${Loan1_Alias}    Acquire Argument Value    ${sLoan1_Alias}
-	${Loan2_Alias}    Acquire Argument Value    ${sLoan2_Alias}    
+	${Loan2_Alias}    Acquire Argument Value    ${sLoan2_Alias} 
+	${Loan3_Alias}    Acquire Argument Value    ${sLoan3_Alias}    
 
     mx LoanIQ activate window    ${LIQ_LoanRepricingForDeal_Window}    
-    Mx LoanIQ Multiple Select In Java Tree    ${LIQ_LoanRepricingForDeal_JavaTree}    ${Loan2_Alias};${Loan1_Alias}    
+    Run Keyword If    '${Loan3_Alias}'!='None'    Mx LoanIQ Multiple Select In Java Tree    ${LIQ_LoanRepricingForDeal_JavaTree}    ${Loan2_Alias};${Loan1_Alias};${Loan3_Alias}
+    ...    ELSE    Mx LoanIQ Multiple Select In Java Tree    ${LIQ_LoanRepricingForDeal_JavaTree}    ${Loan2_Alias};${Loan1_Alias}    
     mx LoanIQ click    ${LIQ_LoanRepricingForDeal_OK_Button}
     mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}      
     mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
@@ -1387,6 +1394,8 @@ Validate Interest Payments Amount
     ...	   @update: hstone      28AUG2019    - Added take screenshot
     ...    @update: hstone      28MAY2020    - Added Keyword Pre-processing: Acquire Argument Value
     ...                                      - Removed unnecessary spacing
+    ...    @update: javinzon    21JAN2021    - Added keyword 'Run Keyword And Continue On Failure'
+    ...                                      - Updated Failed Log Message
     [Arguments]    ${sPricingOption}    ${sPrevLoanAlias}    ${sExpectedInterestAmt}
 
     ### Keyword Pre-processing ###
@@ -1402,8 +1411,8 @@ Validate Interest Payments Amount
     ${ActualInterestAmt}    Remove Comma and Convert to Number    ${ActualInterestAmt}
     ${iExpectedInterestAmt}    Remove Comma and Convert to Number    ${ExpectedInterestAmt}
     ${status}    Run Keyword And Return Status    Should Be Equal    ${iExpectedInterestAmt}    ${ActualInterestAmt}   
-    Run Keyword If    '${status}'=='True'    Log    Passed: Interest Payments Amount Verified
-    ...    ELSE    Log    Failed: Interest Payments Amount displayed is ${ActualInterestAmt} instead of ${iExpectedInterestAmt}
+    Run Keyword If    '${status}'=='True'    Log    Interest Payments Amount is correct.
+    ...    ELSE    Run Keyword And Continue On Failure    Fail    Interest Payments Amount is incorrect. Loan Alias (${PrevLoanAlias}) Expected amount: ${iExpectedInterestAmt} | Actual amount: ${ActualInterestAmt}
 
 Select Existing Outstandings for Loan Repricing
     [Documentation]    Low-level keyword used to select an Existing Outstanding in the Loan Repricing Notebook
@@ -1433,8 +1442,9 @@ Cick Add in Loan Repricing Notebook
     
 Set Repricing Detail Add Options
     [Documentation]    Low-level keyword used to set and validate details in the 'Repricing Detail Add Option' window.
-    ...                @author: bernchua    27AUG2019    Initial create
-    ...                @update: sahalder    25JUN2020    Added keyword Pre-Processing steps
+    ...    @author: bernchua    27AUG2019    Initial create
+    ...    @update: sahalder    25JUN2020    Added keyword Pre-Processing steps
+    ...    @update: mcastro    28JAN2021    Added additional clicking of Question and Warning Yes button if present 
     [Arguments]    ${sRepricing_AddOption}    ${sPricing_Option}    ${sFacility_Name}    ${sBorrower_Name}
     
     ### GetRuntime Keyword Pre-processing ###
@@ -1452,6 +1462,7 @@ Set Repricing Detail Add Options
     mx LoanIQ click    ${LIQ_RepricingDetail_OK_Button}
     mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
     mx LoanIQ click element if present    ${LIQ_Information_OK_Button}
+    Validate if Question or Warning Message is Displayed
 
 Select Repricing Detail Add Options - Principal Payment
     [Documentation]    Low-level keyword used to set Repricing Detail Add Options to Principal Payment
@@ -1637,14 +1648,13 @@ Navigate to Loan Repricing Workflow and Proceed With Transaction
     ...  @author: hstone    26MAY2020    Initial create
     ...    @update: amansuet    15JUN2020    - updated take screenshot
     ...    @update: mcastro     15DEC2020    - Added clicking of Yes on confirmation window when present
+    ...    @update: dahijara    26JAN2021    - Moved clicking of Yes on confirmation window when present inside 'Navigate Notebook Workflow'
     [Arguments]    ${sTransaction}
 
     ### Keyword Pre-processing ###
     ${Transaction}    Acquire Argument Value    ${sTransaction}
 
     Navigate Notebook Workflow    ${LIQ_LoanRepricingForDeal_Window}    ${LIQ_LoanRepricingForDeal_Workflow_Tab}    ${LIQ_LoanRepricingForDeal_Workflow_JavaTree}    ${Transaction}
-    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LoanRepricingWindow_WorkflowTab
-    Mx LoanIQ click element if present    ${LIQ_LoanRepricing_ConfirmationWindow_Yes_Button}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LoanRepricingWindow_WorkflowTab
 
 Add Rollover Conversion to New
@@ -1858,12 +1868,15 @@ Validate Release of Loan Repricing
 Validate Loan Amount was Updated after Repricing
     [Documentation]    This keyword validates the expected Loan amount on Loan Notebook after Repricing.
     ...    @author: mcastro    15DEC2020    - Initial Create
+    ...    @update: mcastro    29JAN2021    - Added step on clicking General tab on Loan Window
     [Arguments]    ${sNew_LoanAmount}
     
     ### Pre-processing Keyword ##
     ${New_LoanAmount}    Acquire Argument Value    ${sNew_LoanAmount}
 
     Mx LoanIQ activate window    ${LIQ_Loan_Window}
+    Mx LoanIQ Select Window Tab    ${LIQ_Loan_Tab}    General    
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LoanWindow
 
     ${New_LoanAmount}    Remove Comma and Convert to Number    ${New_LoanAmount}    
     
@@ -1921,7 +1934,7 @@ Validate Rollover/Conversion General tab
     ...    mx LoanIQ click    ${LIQ_AwaitingSendToApprovalRollover_RiskType_Button}
     ...    AND    Mx LoanIQ Select Or DoubleClick In Javatree    ${LIQ_PendingRollover_RiskType_Tree}    ${Risk_Type}%d
     ...    ELSE    Log    Correct Risk Type is set!
-       
+    
     ${RequestedAmount}    Mx LoanIQ Get Data    ${LIQ_AwaitingSendToApprovalRollover_RequestedAmount_Textfield}    text%RequestedAmount        
     ${RequestedAmt_Status}    Run Keyword And Return Status    Should Be Equal As Strings    ${RequestedAmount}    ${LoanMerge_Amount}
     Run Keyword If    ${RequestedAmt_Status}==${False}    mx LoanIQ enter    ${LIQ_AwaitingSendToApprovalRollover_RequestedAmount_Textfield}    ${LoanMerge_Amount}     
@@ -2021,3 +2034,250 @@ Validate Event Status in Loan Events Tab
 
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LoanEvents
 
+Validate the Total Amount of Existing Outstandings
+    [Documentation]    This keyword validates the total amount of Existing Outstandings and return the value.
+    ...    @author: javinzon    20JAN2021    - Initial create
+    [Arguments]    ${sPricing_Option}    ${sLoan1Alias}    ${sLoan2Alias}    ${sLoan1_Amount}    ${sLoan2_Amount}    ${sRunVar_TotalExistingOutstanding_Expected}=None
+        
+    ### GetRuntime Keyword Pre-processing ###
+	${Pricing_Option}    Acquire Argument Value    ${sPricing_Option}
+	${Loan1Alias}    Acquire Argument Value    ${sLoan1Alias}
+	${Loan2Alias}    Acquire Argument Value    ${sLoan2Alias}
+	${Loan1_Amount}    Acquire Argument Value    ${sLoan1_Amount}
+	${Loan2_Amount}    Acquire Argument Value    ${sLoan2_Amount}
+    
+
+    mx LoanIQ activate window    ${LIQ_LoanRepricingForDeal_Window}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/TotalExistingOutstandingAmount
+    ${TotalExistingOutstanding}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_LoanRepricingForDealAdd_JavaTree}    Total:%Amount%TotalExistingOutstanding     
+    ${Loan1_ExistingOutstanding}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_LoanRepricingForDealAdd_JavaTree}    ${Pricing_Option} (${Loan1Alias})%Amount%Loan1_ExistingOutstanding
+    ${Loan2_ExistingOutstanding}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_LoanRepricingForDealAdd_JavaTree}    ${Pricing_Option} (${Loan2Alias})%Amount%Loan2_ExistingOutstanding
+   
+    ${Loan1_Amount}    Remove comma and convert to number    ${Loan1_Amount}    
+    ${Loan2_Amount}    Remove comma and convert to number    ${Loan2_Amount}
+    
+    ${RequestedAmount_Expected}    Evaluate    ${Loan1_Amount}+${Loan2_Amount}
+    ${RequestedAmount_Expected}    Evaluate    "%.2f" % ${RequestedAmount_Expected}
+    ${RequestedAmount_Expected}    Convert to String    ${RequestedAmount_Expected}
+    ${TotalExistingOutstanding_Expected}    Convert Number With Comma Separators    ${RequestedAmount_Expected}
+    
+    Compare Two Strings    ${TotalExistingOutstanding}    ${TotalExistingOutstanding_Expected}
+    
+    ### Keyword Post-processing ###
+    Save Values of Runtime Execution on Excel File    ${sRunVar_TotalExistingOutstanding_Expected}    ${TotalExistingOutstanding_Expected}
+    
+    [Return]    ${TotalExistingOutstanding_Expected}
+    
+Get Repricing Date of Loans then Validate if Equal 
+    [Documentation]    This keyword gets the Repricing Date of the selected Loan to be repriced.
+    ...    @author: javinzon    21JAN2021    - Initial create
+    [Arguments]    ${sLoan1_Alias}    ${sLoan2_Alias}    ${sRunVar_Loan2_Alias_RepricingDate}=None
+    
+    ### GetRuntime Keyword Pre-processing ###
+	${Loan1_Alias}    Acquire Argument Value    ${sLoan1_Alias}
+	${Loan2_Alias}    Acquire Argument Value    ${sLoan2_Alias}    
+
+    mx LoanIQ activate window    ${LIQ_ExistingLoansForFacility_Window} 
+    ${Loan1_Alias_RepricingDate}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_ExistingLoansForFacility_JavaTree}    ${Loan1_Alias}%Repricing Date%RepricingDate  
+    ${Loan2_Alias_RepricingDate}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_ExistingLoansForFacility_JavaTree}    ${Loan2_Alias}%Repricing Date%RepricingDate  
+
+    Compare Two Strings    ${Loan1_Alias_RepricingDate}    ${Loan2_Alias_RepricingDate} 
+
+    ### Keyword Post-processing ###
+    Save Values of Runtime Execution on Excel File    ${sRunVar_Loan2_Alias_RepricingDate}    ${Loan2_Alias_RepricingDate}
+    
+    [Return]    ${Loan2_Alias_RepricingDate}
+    
+Validate Fields in Loan Repricing General Tab
+    [Documentation]    This keyword validates Settle Lenders Net, Settle Borrower(s) Net, Auto Reduce Facility, Effective Date, and Currency.
+    ...    @author: javinzon    21JAN2021    - Initial create
+    [Arguments]    ${sEffectiveDate}    ${sSettleLenderNet}=1    ${sSettleBorrowerNet}=0    ${sAutoReduceFacility}=0    
+    
+    ### GetRuntime Keyword Pre-processing ###
+    ${EffectiveDate}    Acquire Argument Value    ${sEffectiveDate}
+	${SettleLenderNet}    Acquire Argument Value    ${sSettleLenderNet}
+	${SettleBorrowerNet}    Acquire Argument Value    ${sSettleBorrowerNet}
+    ${AutoReduceFacility}    Acquire Argument Value    ${sAutoReduceFacility}
+    
+    ${UI_EffectiveDate}    Mx LoanIQ Get Data    ${LIQ_LoanRepricing_EffectiveDate_StaticText}    label%EffectiveDate
+    Run Keyword If    '${EffectiveDate}'=='${UI_EffectiveDate}'    Log    Effective date ${UI_EffectiveDate} is correct.
+    ...    ELSE    Run Keyword And Continue On Failure    Fail    Effective Date is incorrect. Expected date: ${EffectiveDate} | Actual date: ${UI_EffectiveDate}
+    
+    ${UI_SettleLendersNet}    Mx LoanIQ Get Data    ${LIQ_LoanRepricing_SettleLendersNet_Checkbox}    value%SettleLendersNet  
+    Run Keyword If    ${SettleLenderNet}==${UI_SettleLendersNet}    Log    Settle Lender Net is ticked.
+    ...    ELSE    Run Keyword And Continue On Failure    Fail    Settle Lender Net should be ticked.
+
+    ${UI_SettleBorrowerNet}    Mx LoanIQ Get Data    ${LIQ_LoanRepricing_SettleBorrowerNet_Checkbox}    value%SettleBorrowerNet
+    Run Keyword If    ${SettleBorrowerNet}==${UI_SettleBorrowerNet}    Log    Settle Borrower Net is unticked.
+    ...    ELSE    Run Keyword And Continue On Failure    Fail    Settle Borrower Net should be unticked.
+
+    ${UI_AutoReduceFacility}    Mx LoanIQ Get Data    ${LIQ_LoanRepricing_AutoReduceFacility_Checkbox}    value%AutoReduceFacility
+    Run Keyword If    ${AutoReduceFacility}==${UI_AutoReduceFacility}    Log    Auto Reduce facility is unticked.
+    ...    ELSE    Run Keyword And Continue On Failure    Fail    Settle Lender Net should be unticked.
+
+Add Auto Generate Interest Payment for Loan Repricing
+    [Documentation]    This keyword is used to Auto Generated Interest Payment for Loan Repricing
+    ...    @author: javinzon    21JAN2021    - Initial create
+    
+    mx LoanIQ click    ${LIQ_LoanRepricingForDeal_Add_Button}
+    Wait Until Keyword Succeeds    ${retry}    ${retry_interval}    mx LoanIQ activate window    ${LIQ_RepricingDetail_Window}
+    mx LoanIQ enter    ${LIQ_RepricingDetail_AutoGenerateInterestPayment_RadioButton}    ON
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/AutoGenerateInterestPayment
+    mx LoanIQ click    ${LIQ_RepricingDetail_OK_Button}
+    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
+    mx LoanIQ click element if present    ${LIQ_Information_OK_Button}
+    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/AutoGenerateInterestPayment
+    Log    Auto Generate Interest Payment is added successfully  
+
+Validate General Tab of Pending Rollover/Conversion Notebook
+    [Documentation]    This keyword is used to validate fields in General Tab of Pending Rollover/Conversion Notebook
+    ...    @author: javinzon     21JAN2021    - Initial create
+    [Arguments]    ${sAlias_LoanMerge}    ${sLoan_EffectiveDate}    ${sLoan_MaturityDate}    ${sLoan_RepricingFrequency}    ${sLoan_RepricingDate}    ${sLoan_PaymentMode}    
+    ...    ${sLoan_IntCycleFrequency}    ${sLoan_ActualDueDate}    ${sLoan_AdjustedDueDate}    ${sLoan_Accrue}    ${sLoan_AccrualEndDate}
+
+    ### GetRuntime Keyword Pre-processing ###
+    ${Alias_LoanMerge}    Acquire Argument Value    ${sAlias_LoanMerge}
+    ${Loan_EffectiveDate}    Acquire Argument Value    ${sLoan_EffectiveDate}
+    ${Loan_MaturityDate}    Acquire Argument Value    ${sLoan_MaturityDate}
+    ${Loan_RepricingFrequency}    Acquire Argument Value    ${sLoan_RepricingFrequency}
+    ${Loan_RepricingDate}    Acquire Argument Value    ${sLoan_RepricingDate}
+    ${Loan_PaymentMode}    Acquire Argument Value    ${sLoan_PaymentMode}
+    ${Loan_IntCycleFrequency}    Acquire Argument Value    ${sLoan_IntCycleFrequency}
+    ${Loan_ActualDueDate}    Acquire Argument Value    ${sLoan_ActualDueDate}
+    ${Loan_AdjustedDueDate}    Acquire Argument Value    ${sLoan_AdjustedDueDate}
+    ${Loan_Accrue}    Acquire Argument Value    ${sLoan_Accrue}
+    ${Loan_AccrualEndDate}    Acquire Argument Value    ${sLoan_AccrualEndDate}
+
+    mx LoanIQ activate Window   ${LIQ_LoanRepricingForDeal_Window}
+    Mx LoanIQ DoubleClick    ${LIQ_LoanRepricingForDeal_Workflow_JavaTree}    ${Alias_LoanMerge}
+    Wait Until Keyword Succeeds    ${retry}    ${retry_interval}    mx LoanIQ activate window    ${LIQ_RolloverConversion_Window}
+
+    Validate Loan IQ Details    ${Loan_EffectiveDate}    ${LIQ_RolloverConversion_EffectiveDate_Textfield}
+    Validate Loan IQ Details    ${Loan_MaturityDate}    ${LIQ_RolloverConversion_MaturityDate_Textfield}
+    Validate Loan IQ Details    ${Loan_RepricingFrequency}    ${LIQ_RolloverConversion_RepricingFrequency_List}
+    Validate Loan IQ Details    ${Loan_RepricingDate}    ${LIQ_RolloverConversion_RepricingDate_Textfield}
+    Validate Loan IQ Details    ${Loan_PaymentMode}    ${LIQ_RolloverConversion_PaymentMode_List}
+    Validate Loan IQ Details    ${Loan_IntCycleFrequency}    ${LIQ_RolloverConversion_IntCycleFreq_Dropdown}
+    Validate Loan IQ Details    ${Loan_ActualDueDate}    ${LIQ_RolloverConversion_ActualDueDate_Textfield}
+    Validate Loan IQ Details    ${Loan_AdjustedDueDate}    ${LIQ_RolloverConversion_AdjustedDueDate_Textfield}
+    Validate Loan IQ Details    ${Loan_Accrue}    ${LIQ_RolloverConversion_Accrue_List}
+    Validate Loan IQ Details    ${Loan_AccrualEndDate}    ${LIQ_RolloverConversion_AccrualEndDate_Textfield}
+
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/RolloverGeneralTab
+    mx LoanIQ select    ${LIQ_RolloverConversion_FileExit_Menu}
+
+Validate if Repricing Date and Effective Date in Loan Repricing are Equal
+    [Documentation]    This keyword is used to validate If Repricing Date of Merged Loan and Effective Date in Loan Repricing are Equal
+    ...    @author: javinzon     21JAN2021    - Initial create
+    [Arguments]    ${sRepricingDate}    ${sExpectedDate}
+
+    ### GetRuntime Keyword Pre-processing ###
+    ${RepricingDate}    Acquire Argument Value    ${sRepricingDate}
+    ${ExpectedDate}    Acquire Argument Value    ${sExpectedDate}
+    
+    Compare Two Strings    ${RepricingDate}    ${ExpectedDate}
+
+Evaluate Three Loans then Validate the Total Amount of Existing Outstandings 
+    [Documentation]    This keyword evaluates three loans, validates the total amount of Existing Outstandings and return the value.
+    ...    @author: javinzon    28JAN2021    - Initial create
+    [Arguments]    ${sPricing_Option}    ${sLoan1Alias}    ${sLoan2Alias}    ${sLoan3Alias}    ${sLoan1_Amount}    ${sLoan2_Amount}    ${sLoan3_Amount}    ${sRunVar_TotalExistingOutstanding_Expected}=None
+        
+    ### GetRuntime Keyword Pre-processing ###
+	${Pricing_Option}    Acquire Argument Value    ${sPricing_Option}
+	${Loan1Alias}    Acquire Argument Value    ${sLoan1Alias}
+	${Loan2Alias}    Acquire Argument Value    ${sLoan2Alias}
+    ${Loan3Alias}    Acquire Argument Value    ${sLoan3Alias}
+	${Loan1_Amount}    Acquire Argument Value    ${sLoan1_Amount}
+	${Loan2_Amount}    Acquire Argument Value    ${sLoan2_Amount}
+    ${Loan3_Amount}    Acquire Argument Value    ${sLoan3_Amount}
+
+    mx LoanIQ activate window    ${LIQ_LoanRepricingForDeal_Window}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/TotalExistingOutstandingAmount
+    ${TotalExistingOutstanding}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_LoanRepricingForDealAdd_JavaTree}    Total:%Amount%TotalExistingOutstanding     
+    ${Loan1_ExistingOutstanding}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_LoanRepricingForDealAdd_JavaTree}    ${Pricing_Option} (${Loan1Alias})%Amount%Loan1_ExistingOutstanding
+    ${Loan2_ExistingOutstanding}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_LoanRepricingForDealAdd_JavaTree}    ${Pricing_Option} (${Loan2Alias})%Amount%Loan2_ExistingOutstanding
+    ${Loan3_ExistingOutstanding}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_LoanRepricingForDealAdd_JavaTree}    ${Pricing_Option} (${Loan3Alias})%Amount%Loan3_ExistingOutstanding
+    
+    ${Loan1_Amount}    Remove comma and convert to number    ${Loan1_Amount}    
+    ${Loan2_Amount}    Remove comma and convert to number    ${Loan2_Amount}
+    ${Loan3_Amount}    Remove comma and convert to number    ${Loan3_Amount}
+
+    ${RequestedAmount_Expected}    Evaluate    ${Loan1_Amount}+${Loan2_Amount}+${Loan3_Amount}
+    ${RequestedAmount_Expected}    Evaluate    "%.2f" % ${RequestedAmount_Expected}
+    ${RequestedAmount_Expected}    Convert to String    ${RequestedAmount_Expected}
+    ${TotalExistingOutstanding_Expected}    Convert Number With Comma Separators    ${RequestedAmount_Expected}
+    
+    Compare Two Strings    ${TotalExistingOutstanding}    ${TotalExistingOutstanding_Expected}
+    
+    ### Keyword Post-processing ###
+    Save Values of Runtime Execution on Excel File    ${sRunVar_TotalExistingOutstanding_Expected}    ${TotalExistingOutstanding_Expected}
+    
+    [Return]    ${TotalExistingOutstanding_Expected}
+    
+
+
+
+Update Rollover/Conversion Repricing Date
+    [Documentation]    This keyword is used to verify values on the Rollover/Conversion window General Tab information
+    ...    @author: dahijara    26JAN2021    - Initial Create
+    [Arguments]    ${sRepricingDate}
+    
+    ### GetRuntime Keyword Pre-processing ###
+    ${RepricingDate}    Acquire Argument Value    ${sRepricingDate}
+
+    mx LoanIQ activate window    ${LIQ_Rollover_Window}
+    Mx LoanIQ enter    ${LIQ_PendingRollover_RepricingDate}    ${RepricingDate}
+    Mx Press Combination    KEY.TAB
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LoanMerge_Rollover_GeneralTab
+
+Select Loans to Merge
+    [Documentation]    This keyword selects multiple loans to merge on Existing Loans for Deal window.
+    ...    Note: ${sLoans_Alias} argument variables should be separated by |
+    ...    @author: mcastro    28JAN2021    - Initial Create
+    [Arguments]    ${sLoans_Alias}
+    
+    ### GetRuntime Keyword Pre-processing ###
+	${Loans_Alias}    Acquire Argument Value    ${sLoans_Alias}    
+
+    Mx LoanIQ activate window    ${LIQ_LoanRepricingForDeal_Window}    
+    ${Loans_Alias}    Replace String    ${Loans_Alias}    |    ;
+    Mx LoanIQ Multiple Select In Java Tree    ${LIQ_LoanRepricingForDeal_JavaTree}    ${Loans_Alias}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LoanMerge_MultipleLoans    
+    Mx LoanIQ click    ${LIQ_LoanRepricingForDeal_OK_Button}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LoanMerge_MultipleLoans
+    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}      
+    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LoanMerge_MultipleLoans
+
+Validate Loan Amounts of Existing Outstandings
+    [Documentation]    This keyword handles multiple loans and validates the loan amount of each loans and Total amount of all loans on Existing Outstandings.
+    ...    Note: Argument variables for ${sLoan_Aliases} and ${sLoan_Amounts} should be separated by |
+    ...    @author: mcastro    28JAN2021    - Initial create
+    [Arguments]    ${sPricing_Option}    ${sLoan_Aliases}    ${sLoan_Amounts}    ${sTotal_LoanAmount}
+        
+    ### GetRuntime Keyword Pre-processing ###
+	${Pricing_Option}    Acquire Argument Value    ${sPricing_Option}
+	${Loan_Aliases}    Acquire Argument Value    ${sLoan_Aliases}
+	${Loan_Amounts}    Acquire Argument Value    ${sLoan_Amounts}
+    ${Total_LoanAmount}    Acquire Argument Value    ${sTotal_LoanAmount}
+
+    ${Loan_Alias_List}    Split String    ${Loan_Aliases}    |
+    ${Expected_Loan_Amounts_List}    Split String    ${Loan_Amounts}    |
+
+    Mx LoanIQ activate window    ${LIQ_LoanRepricingForDeal_Window}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/TotalExistingOutstandingAmount
+    
+    @{Actual_Loan_Amount_List}    Create List
+    :FOR    ${Loan_Alias}    IN    @{Loan_Alias_List}      
+    \    ${Actual_Loan_Amount}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_LoanRepricingForDealAdd_JavaTree}    ${Pricing_Option} (${Loan_Alias})%Amount%Loan_ExistingOutstanding
+    \    Append to List    ${Actual_Loan_Amount_List}    ${Actual_Loan_Amount}
+    Log    ${Actual_Loan_Amount_List}
+
+    ${isMatched}    Run Keyword and Return Status    Lists Should Be Equal    ${Expected_Loan_Amounts_List}    ${Actual_Loan_Amount_List}
+    Run Keyword If    ${isMatched}==${True}    Log    Existing Loan contains correct Loan amounts.   
+    ...    ELSE    Run Keyword And Continue on Failure    Fail    Existing Loan contains incorrect loan amounts. Expected: ${Expected_Loan_Amounts_List} | Actual: ${Actual_Loan_Amount_List}
+    
+    ${Actual_TotalLoan_Amount}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_LoanRepricingForDealAdd_JavaTree}    Total:%Amount%Actual_TotalLoan_Amount
+    Compare Two Strings    ${Actual_TotalLoan_Amount}    ${Total_LoanAmount}    Total Loan Amounts
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/TotalExistingOutstandingAmount
