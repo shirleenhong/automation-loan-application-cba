@@ -183,12 +183,14 @@ Validate Facility Change Transaction
     ...    @author: jdelacruz  
     ...    @update: ritragel    20MAY2019    Updated as per our scripting standards
     ...    @update: amansuet    22JUN2020    - updated to align with automation standards, added take screenshot and added keyword pre-processing
-    [Arguments]    ${sMaturity_Date}    ${sDeal_Name}    ${sFacility_Name}
+    ...    @update: makcamps    28JAN2021    - added validation of expiry date if provided
+    [Arguments]    ${sMaturity_Date}    ${sDeal_Name}    ${sFacility_Name}    ${sExpiry_Date}=None
 
     ### Keyword Pre-processing ###
     ${Maturity_Date}    Acquire Argument Value    ${sMaturity_Date}
     ${Deal_Name}    Acquire Argument Value    ${sDeal_Name}
     ${Facility_Name}    Acquire Argument Value    ${sFacility_Name}
+    ${Expiry_Date}    Acquire Argument Value    ${sExpiry_Date}
 
     Select Actions    [Actions];Facility
     Mx LoanIQ Enter    ${LIQ_FacilitySelect_DealName_Textfield}    ${Deal_Name}
@@ -197,6 +199,7 @@ Validate Facility Change Transaction
     Mx LoanIQ Click    ${LIQ_FacilitySelect_OK_Button}
     Take Screenshot    ${Screenshot_Path}/Screenshots/LoanIQ/FacilityWindow_SummaryTab
     Validate Loan IQ Details    ${Maturity_Date}    ${LIQ_FacilitySummary_FinalMaturityDate_Datefield}
+    Run Keyword If    '${Expiry_Date}'!='None'    Validate Loan IQ Details    ${Expiry_Date}    ${LIQ_FacilitySummary_ExpiryDate_Datefield}
     Mx LoanIQ Select    ${LIQ_FacilityNotebook_File_Exit}
 
 Update Expiry Date in Facility Change Transaction

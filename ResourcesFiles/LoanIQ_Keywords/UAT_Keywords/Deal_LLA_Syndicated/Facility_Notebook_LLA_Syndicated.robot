@@ -7,6 +7,7 @@ Create Revolver Facility for LLA Syndicated Deal
     ...    @author: makcamps    04JAN2021    - Initial Create
     ...    @update: makcamps    15JAN2021    - updated data used for dates to follow dates from screenshots provided
     ...    @update: makcamps    20JAN2021    - added write method for notice
+    ...    @update: makcamps    02FEB2021    - fixed arguments for Add Arguments
     [Arguments]    ${ExcelPath}
     
     ###Test Data Generation and Writings###
@@ -42,7 +43,8 @@ Create Revolver Facility for LLA Syndicated Deal
     Add Facility Currency    &{ExcelPath}[Facility_Currency]
     
     ###Facility Notebook - Sublimit/Cust###
-    Add Borrower    &{ExcelPath}[Facility_Currency]    &{ExcelPath}[Facility_BorrowerSGName]    &{ExcelPath}[Facility_BorrowerPercent]    &{ExcelPath}[Borrower_ShortName]    &{ExcelPath}[Facility_GlobalLimit]    &{ExcelPath}[Facility_BorrowerMaturity]    &{ExcelPath}[Facility_EffectiveDate]
+    Add Borrower    &{ExcelPath}[Facility_Currency]    &{ExcelPath}[Facility_BorrowerSGName]    &{ExcelPath}[Facility_BorrowerPercent]
+    ...    &{ExcelPath}[Borrower_ShortName]    &{ExcelPath}[Facility_GlobalLimit]    &{ExcelPath}[Facility_BorrowerMaturity]    &{ExcelPath}[Facility_EffectiveDate]
     
     ###Facility Notebook - Summary###
     Validate Multi CCY Facility
@@ -134,3 +136,108 @@ Setup Pricing for LLA Syndicated Deal
     Confirm Facility Interest Pricing Options Settings
     
     Verify If Text Value Exist as Java Tree on Page    Facility -    &{ExcelPath}[Code]
+
+Update Facility Expiry and Maturity Date Through FCT
+    [Documentation]    This keyword is used to update Facility's Expiry and Maturity Date.
+    ...    @author: makcamps    28JAN2021    - Initial create
+    [Arguments]    ${ExcelPath}
+    
+    ### Navigate to Facility Notebook ###
+    Navigate to Facility Notebook    &{ExcelPath}[Deal_Name]    &{ExcelPath}[Facility_Name]
+    
+    ### Navigate to Facility Change Transaction ###
+    Add Facility Change Transaction
+    Update Facility Details    Expiry Date    &{ExcelPath}[New_ExpiryDate]
+    Update Facility Details    Maturity Date    &{ExcelPath}[New_MaturityDate]
+    Send to Approval Facility Change Transaction
+    
+    ### Approve Facility Change Transaction Notebook ###
+    Logout from Loan IQ
+    Login to Loan IQ    ${MANAGER_USERNAME}    ${MANAGER_PASSWORD}
+    Approve Facility Change Transaction    &{ExcelPath}[Deal_Name]
+    
+    ### Release Facility Change Transaction Notebook ###
+    Logout from Loan IQ
+    Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
+    Release Facility Change Transaction    &{ExcelPath}[Deal_Name]
+    
+    ### Validate Changes in Facility Notebook ###
+    Validate Facility Change Transaction    &{ExcelPath}[New_MaturityDate]    &{ExcelPath}[Deal_Name]    &{ExcelPath}[Facility_Name]    &{ExcelPath}[New_ExpiryDate]
+    Close All Windows on LIQ
+
+Update Borrowers External Credit Rating History
+    [Documentation]    This keyword is used to update Borrower's External Credit Rating History
+    ...    @author: makcamps    28JAN2021    - Initial create
+    [Arguments]    ${ExcelPath}
+
+    ${Party_ID}    Read Data From Excel    PTY001_QuickPartyOnboarding    Party_ID    ${rowid}
+    
+    ### Login Loan IQ ###
+    Logout from Loan IQ
+    Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
+    
+    ### Navigate to Customer ###
+    Navigate to Customer Notebook via Customer ID    ${Party_ID}
+    
+    ### Navigate to Facility Notebook ###
+    Switch Customer Notebook to Update Mode
+    Update External Risk Rating Table    &{ExcelPath}[ExternalRatingType2]    &{ExcelPath}[RatingType]    &{ExcelPath}[MinType4]    &{ExcelPath}[New_StartDate]
+    
+    ### Validate External Risk Rating Changes ###
+    Validate External Risk Rating Table    &{ExcelPath}[RatingType2]    &{ExcelPath}[MinType4]    &{ExcelPath}[New_StartDate]
+    Validate Change of External Rating Event
+    
+Create PCT for Pricing Matrix
+    [Documentation]    This keyword is used to update Borrower's External Credit Rating History
+    ...    @author: makcamps    28JAN2021    - Initial create
+    [Arguments]    ${ExcelPath}
+    
+    ### Navigate to Facility Notebook ###
+    Navigate to Facility Notebook    &{ExcelPath}[Deal_Name]    &{ExcelPath}[Facility_Name]
+    
+    ### Navigate to PCT Menu ###
+    Navigate to Pricing Change Transaction Menu
+    
+    ### Navigate to PCT Menu ###
+    Input Pricing Change Transaction General Information    &{ExcelPath}[Deal_Name]    &{ExcelPath}[Facility_Name]    &{ExcelPath}[PricingChange_TransactionNo]
+    ...    &{ExcelPath}[PricingChange_EffectiveDate]    &{ExcelPath}[PricingChange_Desc]
+    
+    ### Modify Ongoing Fee Pricing ###
+    Navigate to Modify Ongoing Fees Window from PCT Notebook
+    Modify Ongoing Fees from PCT Notebook    &{ExcelPath}[PricingChange_OngoingFeeStr]    &{ExcelPath}[CurrentGlobalRate1]    &{ExcelPath}[OngoingFeePercent1]    &{ExcelPath}[GlobalCurrentRate1]
+    Modify Ongoing Fees from PCT Notebook    &{ExcelPath}[PricingChange_OngoingFeeStr]    &{ExcelPath}[CurrentGlobalRate2]    &{ExcelPath}[OngoingFeePercent2]    &{ExcelPath}[GlobalCurrentRate2]
+    Modify Ongoing Fees from PCT Notebook    &{ExcelPath}[PricingChange_OngoingFeeStr]    &{ExcelPath}[CurrentGlobalRate3]    &{ExcelPath}[OngoingFeePercent3]    &{ExcelPath}[GlobalCurrentRate3]
+    Click OK Button in Ongoing Fees Window
+    
+    ### Modify Interest Pricing ###
+    Navigate to PCT Existing Interest Pricing
+    ${RowCount1}    Get Interest Pricing Rowcount    &{ExcelPath}[Computation]    &{ExcelPath}[PricingCode]    &{ExcelPath}[PricingPercent]    &{ExcelPath}[PricingSign]    &{ExcelPath}[Interest_CurrentSpread1]
+    ${RowCount2}    Get Interest Pricing Rowcount    &{ExcelPath}[Computation]    &{ExcelPath}[PricingCode]    &{ExcelPath}[PricingPercent]    &{ExcelPath}[PricingSign]    &{ExcelPath}[Interest_CurrentSpread2]
+    ${RowCount3}    Get Interest Pricing Rowcount    &{ExcelPath}[Computation]    &{ExcelPath}[PricingCode]    &{ExcelPath}[PricingPercent]    &{ExcelPath}[PricingSign]    &{ExcelPath}[Interest_CurrentSpread3]
+    Update Existing Interest Pricing via PCT    ${RowCount1}    &{ExcelPath}[Interest_OptionName]    &{ExcelPath}[Interest_NewSpread1]
+    Update Existing Interest Pricing via PCT    ${RowCount2}    &{ExcelPath}[Interest_OptionName]    &{ExcelPath}[Interest_NewSpread2]
+    Update Existing Interest Pricing via PCT    ${RowCount3}    &{ExcelPath}[Interest_OptionName]    &{ExcelPath}[Interest_NewSpread3]
+    Click OK Button in Interest Pricing Window
+    
+    ##Send to Approval##
+    Select Pricing Change Transaction Send to Approval
+    Logout from Loan IQ
+
+    ##Approver Supervisor##
+    Login to Loan IQ    ${MANAGER_USERNAME}    ${MANAGER_PASSWORD}
+    Navigate to Facility Notebook    &{ExcelPath}[Deal_Name]    &{ExcelPath}[Facility_Name]
+    Navigate to Pricing Change Transaction Menu
+    Approve Price Change Transaction
+    Logout from Loan IQ
+
+    ##Approver Manager##
+    Login to Loan IQ    ${SUPERVISOR_USERNAME}    ${SUPERVISOR_PASSWORD}
+    Select Item in Work in Process    Facilities    Awaiting Release    Pricing Change Transaction     &{ExcelPath}[Facility_Name]
+    Select Pricing Change Transaction Release
+    
+    ##Verify Events##
+    Select Events Tab then Verify the Events    &{ExcelPath}[Created_Event]    &{ExcelPath}[OngoingFeePricingChanged_Event]
+    Close the Pricing Change Transaction Window
+    Close All Windows on LIQ
+    Logout from Loan IQ
+    Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}

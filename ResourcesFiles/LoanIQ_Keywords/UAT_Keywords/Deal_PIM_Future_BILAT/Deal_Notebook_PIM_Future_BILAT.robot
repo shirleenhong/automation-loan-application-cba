@@ -16,6 +16,7 @@ Setup Deal for PIM Future BILAT
     ...    @udpate: mcastro    15JAN2021    - Replace writing of Borrower_Shortname and Deal_Name to use multipleValue=Y value
     ...                                     - Removed writing of Borrower_Shortname on Correspondence as this is already done by Notice test case
     ...    @update: mcastro    22JAN2021    - Removed None on 'Add Pricing Option'
+    ...    @update: mcastro    01FEB2021    - Replaced writing of Borrower_Shortname and Deal_Name to use multipleValue=Y value for SERV29_CommitmentFeePayment
     [Arguments]    ${ExcelPath}
     
     ${Deal_Name}    ${Deal_Alias}    Generate Deal Name and Alias with 5 Numeric Test Data    &{ExcelPath}[Deal_NamePrefix]    &{ExcelPath}[Deal_AliasPrefix]
@@ -27,8 +28,8 @@ Setup Deal for PIM Future BILAT
     Write Data To Excel    CRED01_DealSetup    Borrower_Location    ${rowid}    ${Borrower_Location}
     Write Data To Excel    CRED02_FacilitySetup    Deal_Name    ${rowid}    ${Deal_Name}
     Write Data To Excel    CRED02_FacilitySetup    Facility_Borrower    ${rowid}    ${Borrower_ShortName}
-    Write Data To Excel    SERV29_CommitmentFeePayment    Deal_Name    ${rowid}    ${Deal_Name}
-    Write Data To Excel    SERV29_CommitmentFeePayment    Borrower_ShortName    ${rowid}    ${Borrower_ShortName}
+    Write Data To Excel    SERV29_CommitmentFeePayment    Deal_Name    ${rowid}    ${Deal_Name}    multipleValue=Y
+    Write Data To Excel    SERV29_CommitmentFeePayment    Borrower_ShortName    ${rowid}    ${Borrower_ShortName}    multipleValue=Y
     Write Data To Excel    SYND02_PrimaryAllocation    Deal_Name    ${rowid}    ${Deal_Name}
     Write Data To Excel    SERV01_LoanDrawdown    Deal_Name    ${rowid}    ${Deal_Name}    multipleValue=Y
     Write Data To Excel    SERV01_LoanDrawdown    Borrower_Name    ${rowid}    ${Borrower_ShortName}    multipleValue=Y

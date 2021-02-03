@@ -22,6 +22,18 @@ Mx Double Click Element
     Set Focus to Element    ${locator}
     Wait Until Keyword Succeeds    ${retry}    ${retry_interval}    Double Click Element    ${locator}
     Wait Until Browser Ready State
+    
+Mx Press Keyboard
+    [Documentation]    This keyword is used to press key declared as much as declared.
+    ...    @author: makcamps    01FEB2021    - initial Create
+    [Arguments]    ${sRowCount}    ${sKey}
+
+    ### Keyword Pre-processing ###
+    ${RowCount}    Acquire Argument Value    ${sRowCount}
+    ${Key}    Acquire Argument Value    ${sKey}
+    
+    :FOR    ${INDEX}    IN RANGE    0    ${RowCount}
+    \    Mx Press Combination    Key.${Key}  
         
 Wait Until Browser Ready State
     Execute Javascript    return window.load
@@ -1456,10 +1468,15 @@ Update Line Fee Dates
 Select Menu Item
     [Documentation]    Standard keyword for Selecting a Menu and Submenu Item under any LoanIQ Notebook
     ...    @author: ritagel    26JUN2019    Creation
+    ...    @update: mcastro    01FEB2021    Added additional Clicking on warning yes button and taking of screenshots
     [Arguments]    ${eNotebookLocator}    ${sMenu}    ${sSubMenu}
     mx LoanIQ activate window    ${eNotebookLocator}
     mx LoanIQ select    ${eNotebookLocator}.JavaMenu("label:=${sMenu}").JavaMenu("label:=${sSubMenu}")
-    mx LoanIQ click element if present    ${LIQ_Warning_OK_Button}    
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/NotebookMenu
+    mx LoanIQ click element if present    ${LIQ_Warning_OK_Button}   
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/NotebookMenu
+    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button} 
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/NotebookMenu
     Log    Submenu selected successfully
     
 Validate String Data In LIQ Object
