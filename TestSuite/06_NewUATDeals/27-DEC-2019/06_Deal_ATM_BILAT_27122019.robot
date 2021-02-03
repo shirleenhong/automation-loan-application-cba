@@ -31,5 +31,3 @@ Setup Primaries and Close Deal
     Mx Execute Template With Multiple Data    Setup Primaries for ATM BILAT    ${ExcelPath}    ${rowid}    SYND02_PrimaryAllocation
     Mx Execute Template With Multiple Data    Approve and Close ATM BILAT    ${ExcelPath}    ${rowid}    SYND02_PrimaryAllocation
     Mx Execute Template With Multiple Data    Release Ongoing Fee for ATM BILAT    ${ExcelPath}    ${rowid}    CRED08_OngoingFeeSetup
-
-    

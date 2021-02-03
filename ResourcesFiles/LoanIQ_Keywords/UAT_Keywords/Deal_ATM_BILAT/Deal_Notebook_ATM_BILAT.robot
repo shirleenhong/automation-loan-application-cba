@@ -80,7 +80,7 @@ Setup Deal for ATM BILAT
     ### Save Changes ###    
     Save Changes on Deal Notebook
     
-    ### Logout and Relogin in Inputter Level ###
+    ### Logout ###
     Close All Windows on LIQ
     Logout from Loan IQ
 
