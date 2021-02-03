@@ -1851,11 +1851,14 @@ Release Ongoing Fee
 Validate Dues on Accrual Tab for Commitment Fee
     [Documentation]    This keyword validates the details on Accrual Tab during payment.
     ...    @author: mcastro    01FEB2021    - Initial create
-    [Arguments]    ${sProjected_CycleDue}    ${sCycleNumber}     
+    ...    @update: mcastro    02FEB2021    - Added validation for Projected EOC Accrual and Projected EOC Due
+    [Arguments]    ${sProjected_CycleDue}    ${sCycleNumber}    ${sProjected_EOCAccrual}    ${sProjected_EOCDue}     
 
     ### GetRuntime Keyword Pre-processing ###
     ${Projected_CycleDue}    Acquire Argument Value    ${sProjected_CycleDue}
     ${CycleNumber}    Acquire Argument Value    ${sCycleNumber}
+    ${Projected_EOCAccrual}    Acquire Argument Value    ${sProjected_EOCAccrual}
+    ${Projected_EOCDue}    Acquire Argument Value    ${sProjected_EOCDue}
 
     mx LoanIQ activate window    ${LIQ_Fee_Window}
     Mx LoanIQ Select Window Tab    ${LIQ_CommitmentFee_Tab}    Accrual
@@ -1863,8 +1866,14 @@ Validate Dues on Accrual Tab for Commitment Fee
     Compare Two Strings    ${Projected_CycleDue}    ${CycleDue}
 
     ${PaidToDate}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_CommitmentFee_Acrual_JavaTree}    ${CycleNumber}%Paid to date%PaidToDate    
-    Compare Two Strings    0.00    ${PaidToDate}
-    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/FeeWindow_AccrualTab_CommitmentFeeAccruals 
+    Compare Two Strings    0.00    ${PaidToDate} 
+    
+    ${EOCAccrual}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_CommitmentFee_Acrual_JavaTree}    ${CycleNumber}%Projected EOC accrual%EOCAccrual    
+    Compare Two Strings    ${Projected_EOCAccrual}    ${EOCAccrual}
+
+    ${EOCDue}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_CommitmentFee_Acrual_JavaTree}    ${CycleNumber}%Projected EOC due%EOCDue    
+    Compare Two Strings    ${Projected_EOCDue}    ${EOCDue}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/FeeWindow_AccrualTab_CommitmentFeeAccruals
 
 Change Expiry Date
     [Documentation]    This keyword will change the expire date of ongoing fee

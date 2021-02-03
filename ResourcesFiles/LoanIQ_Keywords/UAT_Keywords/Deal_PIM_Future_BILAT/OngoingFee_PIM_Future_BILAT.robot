@@ -8,6 +8,7 @@ Collect Commitment Fee Payment For PIM Future BILAT
     ...    @author: mcastro    10DEC2020    - Intial Create
     ...    @update: mcastro    01FEB2021    - Remove uncessary keywords for computation and removed writing on data set for computation
     ...                                     - Added additional validation on Accrual Tab
+    ...    @update: mcastro    02FEB2021    - Updated variable name Commitment_AdjustedDueDate to Commitment_EffectiveDate
     [Arguments]    ${ExcelPath}
        
     ### Login to LIQ ###
@@ -19,11 +20,11 @@ Collect Commitment Fee Payment For PIM Future BILAT
     Navigate to Existing Ongoing Fee Notebook    &{ExcelPath}[OngoingFee_Type]
 
     ### Ongoing Fee Payment ###
-    Validate Dues on Accrual Tab for Commitment Fee    &{ExcelPath}[Projected_CycleDue]    &{ExcelPath}[Cycle_Number]
+    Validate Dues on Accrual Tab for Commitment Fee    &{ExcelPath}[Projected_CycleDue]    &{ExcelPath}[Cycle_Number]    &{ExcelPath}[Projected_EOCAccrual]    &{ExcelPath}[Projected_EOCDue]
     Select Cycle Fee Payment 
-    Enter Effective Date for Ongoing Fee Payment    &{ExcelPath}[Commitment_AdjustedDueDate]    &{ExcelPath}[Projected_CycleDue]
+    Enter Effective Date for Ongoing Fee Payment    &{ExcelPath}[Commitment_EffectiveDate]    &{ExcelPath}[Projected_CycleDue]
     Select Menu Item    ${LIQ_OngoingFeePayment_Window}    File    Save
-
+    
     ### Create Cashflow ###
     Navigate Notebook Workflow    ${LIQ_OngoingFeePayment_Window}    ${LIQ_OngoingFeePayment_Tab}    ${LIQ_OngoingFeePayment_WorkflowItems}    ${CREATE_CASHFLOW_TYPE}
     Verify if Method has Remittance Instruction    &{ExcelPath}[Borrower_ShortName]    &{ExcelPath}[Remittance_Description]    &{ExcelPath}[Remittance_Instruction]
