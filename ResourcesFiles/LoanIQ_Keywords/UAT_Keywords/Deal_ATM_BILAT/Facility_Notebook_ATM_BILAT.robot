@@ -8,6 +8,7 @@ ${rowid}    1
 Create Facility for ATM BILAT
     [Documentation]    This keyword is used to create a Facility for ATM BILAT deal
     ...    @author: ccarriedo    20JAN2021    Initial Create
+    ...    @update: ccarriedo    02FEB2021    - Added writing to SYND02_PrimaryAllocation and CRED08_OngoingFeeSetup sheets. Removed unnecessary writing to SERV15_SchComittmentDecrease
     [Arguments]    ${ExcelPath}
     
     ### Login to LoanIQ ###
@@ -18,10 +19,12 @@ Create Facility for ATM BILAT
 	${Deal_Name}    Read Data From Excel    CRED01_DealSetup    Deal_Name    &{ExcelPath}[rowid]
     Write Data To Excel    CRED01_DealSetup    Facility_Name1    ${rowid}    ${Facility_Name1}
     Write Data To Excel    CRED08_OngoingFeeSetup    Facility_Name1    ${rowid}    ${Facility_Name1}
-    Write Data To Excel    SERV15_SchComittmentDecrease    Facility_Name1    ${rowid}    ${Facility_Name1}
+    Write Data To Excel    SYND02_PrimaryAllocation    Deal_Name    ${rowid}    ${Deal_Name}
+    Write Data To Excel    SYND02_PrimaryAllocation    Facility_Name1    ${rowid}    ${Facility_Name1}
     Write Data To Excel    CRED01_DealSetup    Facility_Name2    ${rowid}    ${Facility_Name2}
     Write Data To Excel    CRED08_OngoingFeeSetup    Facility_Name2    ${rowid}    ${Facility_Name2}
-    Write Data To Excel    SERV15_SchComittmentDecrease    Facility_Name2    ${rowid}    ${Facility_Name2}
+    Write Data To Excel    SYND02_PrimaryAllocation    Facility_Name2    ${rowid}    ${Facility_Name2}
+    Write Data To Excel    CRED08_OngoingFeeSetup    Deal_Name    ${rowid}    ${Deal_Name}
     
     ###Open Deal Notebook If Not present###
     Open Deal Notebook If Not Present    ${Deal_Name}
@@ -88,6 +91,8 @@ Add Another Facility with Ongoing Fees for ATM BILAT
     Modify Ongoing Fee Pricing - Insert Add    &{ExcelPath}[OngoingFee_Category]    &{ExcelPath}[OngoingFee_Type]    &{ExcelPath}[OngoingFee_RateBasis]    
     Modify Ongoing Fee Pricing - Insert After   &{ExcelPath}[OngoingFee_AfterItem]    &{ExcelPath}[Facility_PercentWhole]    &{ExcelPath}[OngoingFee_Category]    &{ExcelPath}[Facility_Percent] 
 
+    Close All Windows on LIQ
+    
 Set Multiple Amortization Schedule for Facility
     [Documentation]    This high-level keyword sets up Amortization Schedule for Facility.
     ...    @author: ccarriedo    19JAN2021    - Initial create
@@ -108,5 +113,37 @@ Set Multiple Amortization Schedule for Facility
     Validate Facility
     
     ### Logout and Relogin in Inputter Level ###
+    Close All Windows on LIQ
+    Logout from Loan IQ
+    
+Setup Primaries for ATM BILAT
+    [Documentation]    This keyword will Setup primaries for ATM Bilateral Deal
+    ...    @author: ccarriedo    02FEB2021    - Initial Create
+    [Arguments]    ${ExcelPath}
+    
+    ${Deal_Name}    Read Data From Excel    CRED01_DealSetup    Deal_Name    &{ExcelPath}[rowid]
+    ${Primary_Lender}    Read Data From Excel    CRED01_DealSetup    Deal_AdminAgent    &{ExcelPath}[rowid]
+    ${Primary_LenderLoc}    Read Data From Excel    CRED01_DealSetup    AdminAgent_Location    &{ExcelPath}[rowid]
+    ${FacilityName_1}    Read Data From Excel    CRED02_FacilitySetup    Facility_Name1    &{ExcelPath}[rowid]
+    ${PortfolioAllocation_2}    Read Data From Excel    CRED02_FacilitySetup    Facility_ProposedCmtAmt    &{ExcelPath}[rowid]
+    ${FacilityName_2}    Read Data From Excel    CRED02_FacilitySetup    Facility_Name2    &{ExcelPath}[rowid]
+    ${PortfolioAllocation_1}    Read Data From Excel    CRED02_FacilitySetup    Facility_ProposedCmtAmt2    &{ExcelPath}[rowid]
+
+    Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
+    
+    Open Existing Deal    ${Deal_Name}
+    
+    Add Lender and Location    ${Deal_Name}    ${Primary_Lender}    ${Primary_LenderLoc}    &{ExcelPath}[Primary_RiskBook]    &{ExcelPath}[Primaries_TransactionType]
+    Set Sell Amount and Percent of Deal    &{ExcelPath}[Primary_PctOfDeal]
+    Add Pro Rate    &{ExcelPath}[Primary_BuySellPrice]
+    Verify Buy/Sell Price in Circle Notebook
+    Populate Amts or Dates Tab for Orig Primary    &{ExcelPath}[Primary_ExpectedCloseDate]
+
+    Add Contact in Primary    &{ExcelPath}[Primary_Contact]
+    Select Servicing Group on Primaries    None    &{ExcelPath}[Primary_SGAlias]
+
+    Circling for Primary Workflow    &{ExcelPath}[Primary_CircledDate]
+    Complete Portfolio Allocations Workflow    &{ExcelPath}[Primary_Portfolio]|&{ExcelPath}[Primary_Portfolio]    &{ExcelPath}[Primary_PortfolioBranch]    ${PortfolioAllocation_1}|${PortfolioAllocation_2}    None|None    ${FacilityName_2}|${FacilityName_1}    &{ExcelPath}[Primary_ExpenseCode]
+    
     Close All Windows on LIQ
     Logout from Loan IQ
