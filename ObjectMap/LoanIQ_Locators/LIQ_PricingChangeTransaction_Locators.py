@@ -43,6 +43,9 @@ LIQ_PricingChangeTransaction_ModifyInterestPricing_Button = 'JavaWindow("title:=
 LIQ_PricingChangeTransaction_InterestPricing_Add_Button = 'JavaWindow("title:=.*Interest Pricing.*").JavaButton("label:=Add")'
 LIQ_PricingChangeTransaction_InterestPricing_StaticText = 'JavaWindow("title:=.*Pricing Change Transaction.*").JavaTree("attached text:=Split Tiered:")'
 LIQ_PricingChangeTransaction_InterestPricing_OK_Button = 'JavaWindow("title:=.*Interest Pricing.*").JavaButton("label:=OK")'
+LIQ_PricingChangeTransaction_InterestPricing_MatrixOnly_RadioButton = 'JavaWindow("title:=.*Interest Pricing.*").JavaRadioButton("label:=Matrix Only")'
+LIQ_PricingChangeTransaction_InterestPricing_OptionOnly_RadioButton = 'JavaWindow("title:=.*Interest Pricing.*").JavaRadioButton("label:=Options Only")'
+LIQ_PricingChangeTransaction_InterestPricing_JavaTree = 'JavaWindow("title:=.*Interest Pricing.*").JavaTree("displayed:=1")'
 LIQ_AddItem_OptionName_List = 'JavaWindow("title:=Add Item").JavaList("attached text:=Option Name:")'    
 LIQ_AddItem_RateBasis_List = 'JavaWindow("title:=Add Item").JavaList("attached text:=Rate Basis:")'   
 LIQ_AddItem_Cancel_Button =  'JavaWindow("title:=Add Item").JavaButton("attached text:=Cancel")' 
@@ -96,6 +99,7 @@ LIQ_PCTNotebookReleased_FileExit_Menu= 'JavaWindow("title:=Released Pricing Chan
 LIQ_PricingChangeTransaction_OngoingFeePricingWindow_Item_Javatree = 'JavaWindow("title:=.*Ongoing Fee Pricing").JavaTree("tagname:=Tree")'
 LIQ_PricingChangeTransaction_OngoingFeePricingWindow_FacilityOngoingFee_Item = 'JavaWindow("title:=.*Ongoing Fee Pricing").JavaTree("tagname:=Tree", "developer name:=.*${PricingChange_OngoingFeeStr}.*")'
 LIQ_PricingChangeTransaction_OngoingFeePricingWindow_UnutilizedXRateValue_Item = 'JavaWindow("title:=.*Ongoing Fee Pricing").JavaTree("tagname:=Tree", "developer name:=.*${UnutilizedRate}.*")'
+LIQ_PricingChangeTransaction_OngoingFeePricingWindow_GlobalCurrentXRateValue_Item = 'JavaWindow("title:=.*Ongoing Fee Pricing").JavaTree("tagname:=Tree", "developer name:=.*${GlobalRate}.*")'
 
 ###Pricing Change Transaction - Interest Pricing Window###
 LIQ_PricingChangeTransaction_InterestPricing_Window = 'JavaWindow("title:=.*Interest Pricing.*")'

@@ -23,3 +23,11 @@ Establish Facility for ATM BILAT
     Mx Execute Template With Multiple Data    Create Facility for ATM BILAT    ${ExcelPath}     ${rowid}    CRED02_FacilitySetup
     Mx Execute Template With Multiple Data    Set Multiple Amortization Schedule for Facility    ${ExcelPath}     ${rowid}    SERV15_SchComittmentDecrease
     Mx Execute Template With Multiple Data    Add Another Facility with Ongoing Fees for ATM BILAT    ${ExcelPath}     ${rowid}    CRED02_FacilitySetup
+
+Establish Line Fee in Advance for ATM BILAT 
+    Mx Execute Template With Multiple Data    Setup Line Fee in Advance for ATM BILAT    ${ExcelPath}    ${rowid}    CRED08_OngoingFeeSetup
+    
+Setup Primaries and Close Deal
+    Mx Execute Template With Multiple Data    Setup Primaries for ATM BILAT    ${ExcelPath}    ${rowid}    SYND02_PrimaryAllocation
+    Mx Execute Template With Multiple Data    Approve and Close ATM BILAT    ${ExcelPath}    ${rowid}    SYND02_PrimaryAllocation
+    Mx Execute Template With Multiple Data    Release Ongoing Fee for ATM BILAT    ${ExcelPath}    ${rowid}    CRED08_OngoingFeeSetup

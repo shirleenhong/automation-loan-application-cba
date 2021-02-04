@@ -11,3 +11,7 @@ Get Dataset for LBT BILAT
 Create Loan Drawdown for LBT Bilateral Deal 
     Set Test Variable    ${rowid}    7
     Mx Execute Template With Multiple Data    Create Loan Drawdown for LBT Bilateral Deal    ${ExcelPath}    ${rowid}    SERV01_LoanDrawdown   
+    
+Combine Drawdowns A+B&C&D&E, Partial repayment of $8.945M and rollover
+    Set Test Variable    ${rowid}    3
+    Mx Execute Template With Multiple Data    Combine Drawdown ABCDE and Make Partial Repayment for LBT Bilateral Deal    ${ExcelPath}    ${rowid}    SERV11_LoanMerge

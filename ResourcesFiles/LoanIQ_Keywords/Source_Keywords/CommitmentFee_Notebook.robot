@@ -233,6 +233,8 @@ Validate Details on Acrual Tab - Commitment Fee
     ...    update: mgaling    22Aug2019    Added Take Screenshot keyword
     ...    @update: ehugo    05JUN2020    - added keyword pre-processing; updated screenshot location
     ...    @update: mcastro    11DEC2020    - Added Run Keyword And Continue On Failure on validation 
+    ...    @update: mcastro    01FEB2021    - Added Remove command and convert to number to ${Computed_ProjectedCycleDue}; Added Evaluate to handle decimal numbers with 0
+    ...                                     - Replaced Should Be Equal As Strings to Compare Two Strings
     [Arguments]    ${sComputed_ProjectedCycleDue}    ${sCycleNumber}     
 
     ### GetRuntime Keyword Pre-processing ###
@@ -242,10 +244,13 @@ Validate Details on Acrual Tab - Commitment Fee
     mx LoanIQ activate window    ${LIQ_Fee_Window}
     Mx LoanIQ Select Window Tab    ${LIQ_CommitmentFee_Tab}    Accrual
     ${CycleDue}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_CommitmentFee_Acrual_JavaTree}    ${CycleNumber}%Cycle Due%CycleDue    
-    Run Keyword And Continue On Failure    Should Be Equal As Strings    0.00    ${CycleDue}
+    Compare Two Strings    0.00    ${CycleDue}
+
+    ${Computed_ProjectedCycleDue}    Remove Comma and Convert to Number    ${Computed_ProjectedCycleDue}
     ${PaidToDate}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_CommitmentFee_Acrual_JavaTree}    ${CycleNumber}%Paid to date%PaidToDate
-    ${PaidToDate}    Remove Comma, Negative Character and Convert to Number    ${PaidToDate}    
-    Run Keyword And Continue On Failure    Should Be Equal As Strings    ${PaidToDate}    ${Computed_ProjectedCycleDue}  
+    ${PaidToDate}    Remove Comma, Negative Character and Convert to Number    ${PaidToDate}
+    ${PaidToDate}    Evaluate    "%.2f" % ${PaidToDate}     
+    Compare Two Strings    ${PaidToDate}    ${Computed_ProjectedCycleDue}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/FeeWindow_AccrualTab_CommitmentFeeAccruals 
     
 Validate Details of Ongoing Fee on Accruals Tab
@@ -1843,6 +1848,33 @@ Release Ongoing Fee
     Navigate Notebook Workflow    ${LIQ_OngoingFee_Window}    ${LIQ_OngoingFee_Tab}    ${LIQ_OngoingFee_Workflow_JavaTree}    Release
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/OngoingFee_Notebook
 
+Validate Dues on Accrual Tab for Commitment Fee
+    [Documentation]    This keyword validates the details on Accrual Tab during payment.
+    ...    @author: mcastro    01FEB2021    - Initial create
+    ...    @update: mcastro    02FEB2021    - Added validation for Projected EOC Accrual and Projected EOC Due
+    [Arguments]    ${sProjected_CycleDue}    ${sCycleNumber}    ${sProjected_EOCAccrual}    ${sProjected_EOCDue}     
+
+    ### GetRuntime Keyword Pre-processing ###
+    ${Projected_CycleDue}    Acquire Argument Value    ${sProjected_CycleDue}
+    ${CycleNumber}    Acquire Argument Value    ${sCycleNumber}
+    ${Projected_EOCAccrual}    Acquire Argument Value    ${sProjected_EOCAccrual}
+    ${Projected_EOCDue}    Acquire Argument Value    ${sProjected_EOCDue}
+
+    mx LoanIQ activate window    ${LIQ_Fee_Window}
+    Mx LoanIQ Select Window Tab    ${LIQ_CommitmentFee_Tab}    Accrual
+    ${CycleDue}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_CommitmentFee_Acrual_JavaTree}    ${CycleNumber}%Cycle Due%CycleDue    
+    Compare Two Strings    ${Projected_CycleDue}    ${CycleDue}
+
+    ${PaidToDate}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_CommitmentFee_Acrual_JavaTree}    ${CycleNumber}%Paid to date%PaidToDate    
+    Compare Two Strings    0.00    ${PaidToDate} 
+    
+    ${EOCAccrual}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_CommitmentFee_Acrual_JavaTree}    ${CycleNumber}%Projected EOC accrual%EOCAccrual    
+    Compare Two Strings    ${Projected_EOCAccrual}    ${EOCAccrual}
+
+    ${EOCDue}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_CommitmentFee_Acrual_JavaTree}    ${CycleNumber}%Projected EOC due%EOCDue    
+    Compare Two Strings    ${Projected_EOCDue}    ${EOCDue}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/FeeWindow_AccrualTab_CommitmentFeeAccruals
+
 Change Expiry Date
     [Documentation]    This keyword will change the expire date of ongoing fee
     ...   @author: kmagday    31JAN2021    Initial Commit
@@ -1875,3 +1907,43 @@ Perform Online Accrual in Commitment Fee Notebook
     Verify If Warning Is Displayed
     Mx LoanIQ click element if present    ${LIQ_Information_OK_Button}
     Log    Loan - Perform Online Accrual is complete
+
+Select Pay In Advance/Arrears
+    [Documentation]    This keyword selects Pay In Advance or Pay In Arrears in Ongoing Line Fee.
+    ...    @author: ccarriedo    02FEB2021    - Initial Create
+    [Arguments]    ${sAccrualRule}
+
+    ### Keyword Pre-processing ###
+    ${AccrualRule}    Acquire Argument Value    ${sAccrualRule}
+    
+    Mx LoanIQ Select Combo Box Value    ${LIQ_OngoingFee_PayIn_Dropdown}    ${AccrualRule}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/Pay_In_Advance_Arrears
+    
+    Mx LoanIQ select    ${LIQ_OngoingFee_Save_Menu}
+    Mx LoanIQ click element if present    ${LIQ_Warning_OK_Button}
+    
+Navigate and Verify Line Fee Accrual Tab
+    [Documentation]    This keyword is used for navigating and verifies data in Line Fee Accrual Tab.
+    ...    @author: ccarriedo    02FEB2021    - Initial Create
+    [Arguments]    ${iCycleNo}    ${sRunVar_StartDate}=None    ${sRunVar_EndDate}=None    ${sRunVar_DueDate}=None
+    
+    ### Keyword Pre-processing ###
+    ${OngoingFee_CycleNo}    Acquire Argument Value    ${iCycleNo}
+    ${RunVar_StartDate}    Acquire Argument Value    ${sRunVar_StartDate}
+    ${RunVar_EndDate}    Acquire Argument Value    ${sRunVar_EndDate}
+    ${RunVar_DueDate}    Acquire Argument Value    ${sRunVar_DueDate}
+
+    Mx LoanIQ Select Window Tab    ${LIQ_LineFee_Tab}    Accrual
+    Run Keyword And Continue On Failure    Mx LoanIQ Verify Object Exist    ${LIQ_OngoingFee_Accrual_JavaTree}    VerificationData="Yes"
+    
+    ${OngoingFee_EffectiveDate}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_OngoingFee_Accrual_JavaTree}    ${OngoingFee_CycleNo}%Start Date%value    
+    ${OngoingFee_AccrualEndDate}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_OngoingFee_Accrual_JavaTree}    ${OngoingFee_CycleNo}%End Date%value
+    ${OngoingFee_DueDate}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_OngoingFee_Accrual_JavaTree}    ${OngoingFee_CycleNo}%Due Date%value
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/OngoingFee_AccrualTab
+	
+    ### ConstRuntime Keyword Post-processing ###
+    Save Values of Runtime Execution on Excel File    ${RunVar_StartDate}    ${OngoingFee_EffectiveDate}
+    Save Values of Runtime Execution on Excel File    ${RunVar_EndDate}    ${OngoingFee_AccrualEndDate}
+    Save Values of Runtime Execution on Excel File    ${RunVar_DueDate}    ${OngoingFee_DueDate}
+    
+    [Return]    ${OngoingFee_EffectiveDate}    ${OngoingFee_AccrualEndDate}    ${OngoingFee_DueDate}
