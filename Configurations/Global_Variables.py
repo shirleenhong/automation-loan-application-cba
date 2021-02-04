@@ -273,6 +273,7 @@ EVENTS_TAB = "Events"
 ### Window Title ###
 ADMIN_FEE_PAYMENT_TITLE = "Admin Fee Payment"
 INITIAL_DRAWDOWN_TITLE = "Initial Drawdown"
+FEE_REVERSE_FEE_WINDOW_TITLE = "Fee Reverse Fee"
 
 ### Workflow ###
 PAYMENT_WORKFLOW = "Payment"

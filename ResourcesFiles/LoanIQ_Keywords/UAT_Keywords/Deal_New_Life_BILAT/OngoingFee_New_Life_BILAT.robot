@@ -96,7 +96,7 @@ Create Reversal Payment for New Life Bilat
     Navigate to Existing Ongoing Fee Notebook    &{ExcelPath}[OngoingFee_Type]
 
     ### Create PAyment reversal ###
-    Perform Reverse Payment Under Events Tab in Commitment Fee Notebook    &{ExcelPath}[Event]    &{ExcelPath}[Reversal_Comment]    &{ExcelPath}[EffectiveDate_FeePayment]    &{ExcelPath}[EffectiveDate_Label]    &{ExcelPath}[Window_name]    &{ExcelPath}[Amount]
+    Perform Reverse Payment Under Events Tab in Commitment Fee Notebook    &{ExcelPath}[Event]    &{ExcelPath}[Reversal_Comment]    &{ExcelPath}[EffectiveDate_FeePayment]    &{ExcelPath}[Amount]
 
     ### Create Cashflow ###
     Navigate Notebook Workflow    ${LIQ_ReverseFee_Window}    ${LIQ_ReversePayment_Tab}    ${LIQ_ReversePayment_WorkflowItems_Tree}    ${CREATE_CASHFLOW_TYPE}
@@ -122,4 +122,4 @@ Create Reversal Payment for New Life Bilat
     Navigate Notebook Workflow    ${LIQ_ReverseFee_Window}    ${LIQ_ReversePayment_Tab}    ${LIQ_ReversePayment_WorkflowItems_Tree}    ${RELEASE_STATUS}
     
     ### Validate if reverse fee is released ###
-    Validate release of Reverse Fee Payment
+    Validate Release of Reverse Fee Payment
