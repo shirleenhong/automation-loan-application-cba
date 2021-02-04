@@ -8,6 +8,7 @@ Collect Commitment Fee Payment For PIM Future BILAT
     ...    @author: mcastro    10DEC2020    - Intial Create
     ...    @update: mcastro    01FEB2021    - Remove uncessary keywords for computation and removed writing on data set for computation
     ...                                     - Added additional validation on Accrual Tab
+    ...    @update: javinzon    03FEB2021   - Added argument 'Expected_PaidToDate' for keyword 'Validate Dues on Accrual Tab for Commitment Fee'
     [Arguments]    ${ExcelPath}
        
     ### Login to LIQ ###
@@ -19,7 +20,7 @@ Collect Commitment Fee Payment For PIM Future BILAT
     Navigate to Existing Ongoing Fee Notebook    &{ExcelPath}[OngoingFee_Type]
 
     ### Ongoing Fee Payment ###
-    Validate Dues on Accrual Tab for Commitment Fee    &{ExcelPath}[Projected_CycleDue]    &{ExcelPath}[Cycle_Number]
+    Validate Dues on Accrual Tab for Commitment Fee    &{ExcelPath}[Projected_CycleDue]    &{ExcelPath}[Cycle_Number]    &{ExcelPath}[Expected_PaidToDate]
     Select Cycle Fee Payment 
     Enter Effective Date for Ongoing Fee Payment    &{ExcelPath}[Commitment_AdjustedDueDate]    &{ExcelPath}[Projected_CycleDue]
     Select Menu Item    ${LIQ_OngoingFeePayment_Window}    File    Save

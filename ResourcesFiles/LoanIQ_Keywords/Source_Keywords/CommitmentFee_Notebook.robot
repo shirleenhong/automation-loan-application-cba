@@ -406,15 +406,18 @@ Validate GL Entries for Ongoing Fee Payment
 Validate release of Ongoing Fee Payment
     [Documentation]    This keyword validates the release of Ongoing Fee Payment on Events.
     ...    @author: fmamaril
-    ...    update: mgaling    22Aug2019 Added Take Screenshot keyword
+    ...    @update: mgaling    22Aug2019    - Added Take Screenshot keyword
     ...    @update: ehugo    05JUN2020    - updated screenshot location
+    ...    @update: javinzon    04FEB2021    - Added validation in Commitment Fee Events tab
 
     mx LoanIQ activate window    ${LIQ_CommitmentFee_Window}
     Mx LoanIQ Select Window Tab    ${LIQ_CommitmentFee_Tab}    Events
-    Mx LoanIQ Select String    ${LIQ_CommitmentFee_Events_Javatree}   Fee Payment Released
+    ${Status}    Run Keyword And Return Status    Mx LoanIQ Select String    ${LIQ_CommitmentFee_Events_Javatree}   Fee Payment Released
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/CommitmentFeeWindow_EventsTab_OngoingFeePayment
-    Mx LoanIQ Select Or DoubleClick In Javatree   ${LIQ_CommitmentFee_Events_Javatree}    Fee Payment Released%d
-    mx LoanIQ activate window    ${LIQ_OngoingFeePaymentNotebook_Window}
+    Run Keyword If    ${Status}==${True}    Run Keywords    Log    Fee Payment was released succesfully.
+    ...    AND    Mx LoanIQ Select Or DoubleClick In Javatree   ${LIQ_CommitmentFee_Events_Javatree}    Fee Payment Released%d
+    ...    AND    mx LoanIQ activate window    ${LIQ_OngoingFeePaymentNotebook_Window}
+    ...    ELSE    Run Keyword And Continue On Failure    Fail    Fee Payment is not successfully released.
     
 Navigate to Cashflow - Ongoing Fee
     [Documentation]    This keyword creates cashflow for the breakfunding
@@ -619,11 +622,21 @@ Navigate and Verify Accrual Tab
 Navigate and Verify Accrual Share Adjustment Notebook
     [Documentation]    This keyword is used for navigating Accrual Share Adjustment Notebook from Commitment Notebook.
     ...    @author:mgaling
-    [Arguments]    ${StartDate}    ${Deal_Name}    ${Facility_Name}    ${Deal_Borrower}    ${OngoingFee_Type}    ${CurrentCycleDue_Value}    ${ProjectedCycleDue_Value}           
-       
+    ...    @update: javinzon    02FEB2021    - Removed commented scripts, added keyword pre-processing, added datatype for arguments,
+    ...                                           added correct validation for Amounts Section
+    [Arguments]    ${sStartDate}    ${sDeal_Name}    ${sFacility_Name}    ${sDeal_Borrower}    ${sOngoingFee_Type}    ${sCurrentCycleDue_Value}    ${sProjectedCycleDue_Value}           
+    
+    ### GetRuntime Keyword Pre-processing ###
+    ${StartDate}    Acquire Argument Value    ${sStartDate}
+    ${Deal_Name}    Acquire Argument Value    ${sDeal_Name}
+    ${Facility_Name}    Acquire Argument Value    ${sFacility_Name}
+    ${Deal_Borrower}    Acquire Argument Value    ${sDeal_Borrower}
+    ${OngoingFee_Type}    Acquire Argument Value    ${sOngoingFee_Type}
+    ${CurrentCycleDue_Value}    Acquire Argument Value    ${sCurrentCycleDue_Value}
+    ${ProjectedCycleDue_Value}    Acquire Argument Value    ${sProjectedCycleDue_Value}
+
     Mx LoanIQ Select Window Tab    ${LIQ_CommitmentFee_Tab}    Accrual 
     Mx LoanIQ Select String    ${LIQ_CommitmentFeeNotebook_Accrual_JavaTree}    ${StartDate}  
-    # Mx Native Type    {DOWN 1}
     mx LoanIQ click    ${LIQ_CommitmentFeeNotebook_CycleShareAdjustment_Button}
     mx LoanIQ activate window    ${LIQ_AccrualSharesAdjustment_Window} 
     
@@ -632,14 +645,22 @@ Navigate and Verify Accrual Share Adjustment Notebook
     Run Keyword And Continue On Failure    Mx LoanIQ Verify Object Exist    JavaWindow("title:=Accrual Shares Adjustment -.*").JavaStaticText("attached text:=${Deal_Borrower}")        VerificationData="Yes"
     Run Keyword And Continue On Failure    Mx LoanIQ Verify Object Exist    JavaWindow("title:=Accrual Shares Adjustment -.*").JavaStaticText("attached text:=${OngoingFee_Type}")    VerificationData="Yes"
     
-    ###Amounts Section###
-    # Run Keyword And Continue On Failure    Mx LoanIQ Verify Object Exist    JavaWindow("title:=Accrual Shares Adjustment -.*").JavaEdit("x:=231","y:=51", "value:=${CurrentCycleDue_Value}")      VerificationData="Yes"
-    # Run Keyword And Continue On Failure    Mx LoanIQ Verify Object Exist    JavaWindow("title:=Accrual Shares Adjustment -.*").JavaEdit("x:=231","y:=84", "value:=${ProjectedCycleDue_Value}")    VerificationData="Yes"
+    ### Amounts Section ###
+    ${CurrentCycleDue_UI}    Mx LoanIQ Get Data    ${LIQ_AccrualSharesAdjustment_CurrentCycleDue_TextField}    value%test
+    ${Num_CurrentCycleDue_UI}    Remove String    ${CurrentCycleDue_UI}    ,    .    \
+    ${Num_CurrentCycleDue_Value}    Remove String    ${CurrentCycleDue_Value}    ,    .
+    Compare Two Strings    ${Num_CurrentCycleDue_UI}    ${Num_CurrentCycleDue_Value}
+
+    ${ProjectedCycleDue_UI}    Mx LoanIQ Get Data    ${LIQ_AccrualSharesAdjustment_ProjectedCycleDue_TextField}    value%test
+    ${Num_ProjectedCycleDue_UI}    Remove String    ${ProjectedCycleDue_UI}    ,    .    \
+    ${Num_ProjectedCycleDue_Value}    Remove String    ${ProjectedCycleDue_Value}    ,    .
+    Compare Two Strings    ${Num_ProjectedCycleDue_UI}    ${Num_ProjectedCycleDue_Value}
     
 Validate Manual Adjustment Value
     [Documentation]    This keyword is used for navigating back to Commitment Notebook to validate if the requested amount reflects in Manual Adjustment column.
     ...    @author:mgaling
     ...    @update: dahijara    15JUL2020    - Added pre processing and screenshot
+    ...    @update: javinzon    03FEB2021    - Replaced keyword 'Should Be Equal' with 'Compare Two Strings' for value validation
     [Arguments]    ${sCycleNo}    ${sRequested_Amount}    
     ### GetRuntime Keyword Pre-processing ###
     ${CycleNo}    Acquire Argument Value    ${sCycleNo}
@@ -648,13 +669,14 @@ Validate Manual Adjustment Value
     Mx LoanIQ Select Window Tab    ${LIQ_CommitmentFee_Tab}    Accrual
     ${ManualAdj_Value}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_CommitmentFeeNotebook_Accrual_JavaTree}    ${CycleNo}%Manual adjustmt%value    
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/CommitmentFee_Accrual
-    Should Be Equal    ${Requested_Amount}    ${ManualAdj_Value}
-    Log    ${Requested_Amount}=${ManualAdj_Value} 
- 
+    
+    Compare Two Strings    ${Requested_Amount}    ${ManualAdj_Value}
+   
 Validate Cycle Due New Value
     [Documentation]    This keyword is used for navigating back to Commitment Notebook to validate if the requested amount added in Cycle Due column.
     ...    @author:mgaling
     ...    @update: dahijara    15JUL2020    - Added pre processing and screenshot
+    ...    @update: javinzon    03FEB2021    - Replaced keyword 'Should Be Equal' with 'Compare Two Strings' for value validation
     [Arguments]    ${sCycleNo}    ${sCycleDue}    ${sRequested_Amount}     
     ### GetRuntime Keyword Pre-processing ###
     ${CycleNo}    Acquire Argument Value    ${sCycleNo}
@@ -677,13 +699,14 @@ Validate Cycle Due New Value
     ${Calculated_CycleDue}    Evaluate    ${CycleDue_OriginalValue}+${Requested_Amount}         
     ${Calculated_CycleDue}    Convert To Number    ${Calculated_CycleDue}    2
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/CommitmentFee_Accrual
-    Should Be Equal    ${Calculated_CycleDue}    ${CycleDue_NewValue}
-    Log    ${Calculated_CycleDue}=${CycleDue_NewValue}        
-     
+    
+    Compare Two Strings    ${Calculated_CycleDue}    ${CycleDue_NewValue}
+    
 Validate Projected EOC Due New Value
     [Documentation]    This keyword is used for navigating back to Commitment Notebook to validate if the requested amount added in Projected EOC due column.
     ...    @author:mgaling
     ...    @update: dahijara    15JUL2020    - Added pre processing and screenshot
+    ...    @update: javinzon    03FEB2021    - Replaced keyword 'Should Be Equal' with 'Compare Two Strings' for value validation
     [Arguments]    ${sCycleNo}    ${sProjectedCycleDue}    ${sRequested_Amount}     
     ### GetRuntime Keyword Pre-processing ###
     ${CycleNo}    Acquire Argument Value    ${sCycleNo}
@@ -706,9 +729,9 @@ Validate Projected EOC Due New Value
     ${Calculated_PEOCDue}    Evaluate    ${PEOCDue_OriginalValue}+${Requested_Amount}
     ${Calculated_PEOCDue}    Convert To Number    ${Calculated_PEOCDue}    2         
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/CommitmentFee_Accrual
-    Should Be Equal    ${Calculated_PEOCDue}    ${PEOCDue_NewValue}
-    Log    ${Calculated_PEOCDue}=${PEOCDue_NewValue}              
 
+    Compare Two Strings    ${Calculated_PEOCDue}    ${PEOCDue_NewValue}
+  
 Validate Manual Adjustment Total Value
     [Documentation]    This keyword is used for checking the Total Amount.
     ...    @author:mgaling
@@ -1851,11 +1874,13 @@ Release Ongoing Fee
 Validate Dues on Accrual Tab for Commitment Fee
     [Documentation]    This keyword validates the details on Accrual Tab during payment.
     ...    @author: mcastro    01FEB2021    - Initial create
-    [Arguments]    ${sProjected_CycleDue}    ${sCycleNumber}     
+    ...    @update: javinzon    03FEB2021    - Replaced 0.00 with ${Expected_PaidToDate}
+    [Arguments]    ${sProjected_CycleDue}    ${sCycleNumber}     ${sExpected_PaidToDate}
 
     ### GetRuntime Keyword Pre-processing ###
     ${Projected_CycleDue}    Acquire Argument Value    ${sProjected_CycleDue}
     ${CycleNumber}    Acquire Argument Value    ${sCycleNumber}
+    ${Expected_PaidToDate}    Acquire Argument Value    ${sExpected_PaidToDate}
 
     mx LoanIQ activate window    ${LIQ_Fee_Window}
     Mx LoanIQ Select Window Tab    ${LIQ_CommitmentFee_Tab}    Accrual
@@ -1863,7 +1888,7 @@ Validate Dues on Accrual Tab for Commitment Fee
     Compare Two Strings    ${Projected_CycleDue}    ${CycleDue}
 
     ${PaidToDate}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_CommitmentFee_Acrual_JavaTree}    ${CycleNumber}%Paid to date%PaidToDate    
-    Compare Two Strings    0.00    ${PaidToDate}
+    Compare Two Strings    ${Expected_PaidToDate}    ${PaidToDate}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/FeeWindow_AccrualTab_CommitmentFeeAccruals 
 
 Change Expiry Date
@@ -1898,3 +1923,73 @@ Perform Online Accrual in Commitment Fee Notebook
     Verify If Warning Is Displayed
     Mx LoanIQ click element if present    ${LIQ_Information_OK_Button}
     Log    Loan - Perform Online Accrual is complete
+    
+Get and Validate Dates in Accrual Tab
+    [Documentation]    This keyword is used to get and validate the Start and End Date of a Cycle in Accrual Tab.
+    ...    @author: javinzon    02FEB2021    - Initial create
+    [Arguments]    ${sCycleNo}    ${sStartDate}    ${sEndDate}
+    
+    ### Keyword Pre-processing ###
+    ${CycleNo}    Acquire Argument Value    ${sCycleNo}
+    ${StartDate}    Acquire Argument Value    ${sStartDate}
+    ${EndDate}    Acquire Argument Value    ${sEndDate}
+
+    Mx LoanIQ Select Window Tab    ${LIQ_CommitmentFee_Tab}    Accrual
+    Run Keyword And Continue On Failure    Mx LoanIQ Verify Object Exist    ${LIQ_CommitmentFeeNotebook_Accrual_JavaTree}            VerificationData="Yes"
+    
+    ${StartDate_UI}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_CommitmentFeeNotebook_Accrual_JavaTree}    ${CycleNo}%Start Date%value    
+    ${EndDate_UI}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_CommitmentFeeNotebook_Accrual_JavaTree}    ${CycleNo}%End Date%value
+    
+    Compare Two Strings    ${StartDate}    ${StartDate_UI}  
+    Compare Two Strings    ${EndDate}    ${EndDate_UI}  
+
+Validate Accrual Shares Adjustment Applied Event
+    [Documentation]    This keyword validates Accrual Shares Adjustment Applied Event on Events Tab.
+    ...    @author: javinzon    02FEB2021    - Initial create
+
+    mx LoanIQ activate window    ${LIQ_CommitmentFee_Window}
+    Mx LoanIQ Select Window Tab    ${LIQ_CommitmentFee_Tab}    ${EVENTS_TAB}
+    ${Status}    Run Keyword And Return Status    Mx LoanIQ Select String    ${LIQ_CommitmentFee_Events_Javatree}   ${ACCRUAL_SHARES_ADJUSTMENT_APPLIED}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/CommitmentFeeWindow_EventsTab
+    Run Keyword If    ${Status}==${True}    Log    ${ACCRUAL_SHARES_ADJUSTMENT_APPLIED} is shown in the Events list of Commitment Fee notebook.
+    ...    ELSE    Run Keyword and Continue on Failure    Fail    Accrual Shares Adjustment is not successfully applied.
+
+Initiate Commitment Fee Ongoing Fee Payment
+    [Documentation]    This keyword initiates Fee Payment, compare Cycle Due vs Requested Amount, 
+    ...    validates requested amount and enter effective date.
+    ...    @author: javinzon    03FEB2021    - Initial create   
+    [Arguments]    ${sExpectedCycleDueAmt}    ${sEffectiveDate}
+    
+    ### GetRuntime Keyword Pre-processing ###
+    ${ExpectedCycleDueAmt}    Acquire Argument Value    ${sExpectedCycleDueAmt}
+    ${EffectiveDate}    Acquire Argument Value    ${sEffectiveDate}
+    
+    mx LoanIQ activate window    ${LIQ_CommitmentFee_Window}
+    mx LoanIQ select    ${LIQ_CommitmentFee_Payment_Menu}
+    mx LoanIQ activate window    ${LIQ_ChoosePayment_Window}
+    Validate Choose Payment Modal Window - Commitment Fee
+    mx LoanIQ enter    ${LIQ_ChoosePayment_Fee_RadioButton}    ON
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/FeePayment
+    mx LoanIQ click    ${LIQ_ChoosePayment_OK_Button}
+    
+    mx LoanIQ enter    ${LIQ_CommitmentFee_Cycles_ProjectedDue_RadioButton}    ON
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/FeePayment   
+    mx LoanIQ click    ${LIQ_CommitmentFee_Cycles_OK_Button}
+    
+    mx LoanIQ activate window    ${LIQ_Payment_Window}
+    mx LoanIQ click element if present    ${LIQ_CommitmentFee_InquiryMode_Button} 
+    Validate Loan IQ Details    ${ExpectedCycleDueAmt}    ${LIQ_OngoingFeePayment_CurrentCycleDue_TextField}
+    Validate Loan IQ Details    ${ExpectedCycleDueAmt}    ${LIQ_OngoingFeePayment_ProjectedCycleDue_TextField}
+    Validate Loan IQ Details    ${ExpectedCycleDueAmt}    ${LIQ_OngoingFeePayment_RequestedAmount_Textfield}
+    mx LoanIQ enter    ${LIQ_OngoingFeePayment_EffectiveDate_DateField}    ${EffectiveDate} 
+    mx LoanIQ enter    ${LIQ_OngoingFeePayment_RequestedAmount_Textfield}    ${ExpectedCycleDueAmt}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/FeePayment
+    mx LoanIQ select    ${LIQ_OngoingFeePayment_File_Save_Dropdown}
+    
+Close Ongoing Fee Payment Notebook Window
+    [Documentation]    This keyword closes the window for Ongoing Fee Payment Notebook
+    ...    @author: javinzon    04FEB2021    - Initial create
+    
+    mx LoanIQ activate window    ${LIQ_OngoingFeePaymentNotebook_Window}
+    mx LoanIQ select    ${LIQ_OngoingFeePayment_File_Exit_Dropdown}
+    
