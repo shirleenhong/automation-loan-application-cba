@@ -355,6 +355,7 @@ Add New Outstandings
     ...                                      - Added Warning Confirmation when saving Rollover Conversion
     ...                                      - Added Question Confirmation when clicking Base Rate button 
     ...    @update: javinzon    20JAN2021    - Updated ${sBorrower_Base_Rate} as optional and added conditions for base rate
+    ...    @update: dahijara    04FEB2021    - Added clicking of Save button if present after clicking exit. Removed commented unnecessary codes.
     [Arguments]    ${sPricing_Option}    ${sBorrower_Base_Rate}=None    ${sNewRequestedAmt}=None    ${sRepricingFrequency}=None    ${sRunTimeVar_NewLoanAlias}=None    ${sRepricingDate}=None
 
     ### Keyword Pre-processing ###
@@ -387,19 +388,16 @@ Add New Outstandings
     ...    AND    mx LoanIQ click    ${LIQ_RolloverConversion_BaseRate_Button}
     ...    AND    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
     ...    AND    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
-    # Mx Click Element If Present    ${LIQ_RolloverConversion_BaseRate_Button}
-    # Mx Click Element If Present    ${LIQ_Warning_Yes_Button}
-    # Mx Click Element If Present    ${LIQ_Warning_Yes_Button}
     Run Keyword If    '${RepricingDate}'!='None'    mx LoanIQ click element if present    ${LIQ_Question_No_Button}  
     Run Keyword If    '${Borrower_Base_Rate}'!='None'    Run Keywords    mx LoanIQ enter    ${LIQ_SetBaseRate_BorrowerBaseRate_Textfield}    ${Borrower_Base_Rate}
     ...    AND    Take Screenshot    ${Screenshot_path}/Screenshots/LoanIQ/ComprehensiveRepricing_PendingRolloverConversion_RatesTab 
     ...    AND    mx LoanIQ click    ${LIQ_SetBaseRate_Ok_Button}
     ...    ELSE    Log    Updating the base rate is not required.
     mx LoanIQ select    ${LIQ_RolloverConversion_FileExit_Menu}
+    mx LoanIQ click element if present    ${LIQ_Exiting_SaveExit_Button}
 
     ### Keyword Post-processing ###
     Save Values of Runtime Execution on Excel File    ${sRunTimeVar_NewLoanAlias}    ${NewLoanAlias}
-
     [Return]    ${NewLoanAlias}
       
 Create Cashflow for Loan Repricing
