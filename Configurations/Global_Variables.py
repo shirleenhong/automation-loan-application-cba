@@ -235,6 +235,8 @@ PENDING_STATUS = "Pending"
 LOAN_INCREASE = "Loan Increase"
 AWAITING_GENERATE_INTENT_NOTICES_STATUS = "Awaiting Generate Intent Notices"
 AWAITING_RATE_SETTING = "Awaiting Rate Setting"
+REVERSE_FEE_PAYMENT_TRANSACTION= "Reverse Fee Payment"
+
 
 ### Bank Role ###
 REFERENCE_BANK_ROLE = "Reference Bank"
@@ -272,6 +274,7 @@ EVENTS_TAB = "Events"
 ### Window Title ###
 ADMIN_FEE_PAYMENT_TITLE = "Admin Fee Payment"
 INITIAL_DRAWDOWN_TITLE = "Initial Drawdown"
+FEE_REVERSE_FEE_WINDOW_TITLE = "Fee Reverse Fee"
 
 ### Workflow ###
 PAYMENT_WORKFLOW = "Payment"

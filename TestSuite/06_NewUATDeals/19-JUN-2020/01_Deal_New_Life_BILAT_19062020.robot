@@ -19,3 +19,7 @@ Collect Commitment Fee - $52,102.83
 Expire the fee by amending the expiry date to start date 14 May 20 (create negative cycle due)
     Set Test Variable    ${rowid}    13
     Mx Execute Template With Multiple Data    Change Commitment Fee Expiry Date    ${ExcelPath}    ${rowid}    SERV29_CommitmentFeePayment
+
+Reverse the payment and send to SPAP
+    Set Test Variable    ${rowid}    14
+    Mx Execute Template With Multiple Data    Create Reversal Payment for New Life Bilat    ${ExcelPath}    ${rowid}    SERV29_CommitmentFeePayment

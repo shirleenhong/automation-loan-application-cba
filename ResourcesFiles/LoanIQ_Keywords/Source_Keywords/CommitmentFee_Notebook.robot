@@ -1933,6 +1933,53 @@ Perform Online Accrual in Commitment Fee Notebook
     Mx LoanIQ click element if present    ${LIQ_Information_OK_Button}
     Log    Loan - Perform Online Accrual is complete
 
+Perform Reverse Payment Under Events Tab in Commitment Fee Notebook
+    [Documentation]    This keyword will create payment reversal under commitment fee notebook events tab
+    ...   @author: kmagday    3FEB2021    Initial Commit  
+    [Arguments]    ${sEvent}    ${sReversal_Comment}    ${sSystemDate}    ${sFeePaymentAmount}
+
+    ### Keyword Pre-processing ###
+    ${Event}    Acquire Argument Value    ${sEvent}
+    ${Reversal_Comment}    Acquire Argument Value    ${sReversal_Comment}
+    ${SystemDate}    Acquire Argument Value    ${sSystemDate}
+    ${FeePaymentAmount}    Acquire Argument Value    ${sFeePaymentAmount}
+
+    mx LoanIQ activate window    ${LIQ_CommitmentFee_Window}
+    Mx LoanIQ Select Window Tab    ${LIQ_CommitmentFee_Tab}    Events
+
+    Mx LoanIQ Select Or DoubleClick In Javatree   ${LIQ_CommitmentFee_Events_Javatree}    ${Event}%d
+
+    mx LoanIQ activate window    ${LIQ_OngoingFeePaymentNotebook_Window}  
+    mx LoanIQ select    ${LIQ_CommitmentFee_ReversePayment}
+    Verify If Warning Is Displayed
+    mx LoanIQ activate window    ${LIQ_ReverseFee_Window}
+    
+    ###Verify Window Status after Reverse Payment creation is initiated- now Pending###
+    Validate Window Title Status    ${FEE_REVERSE_FEE_WINDOW_TITLE}    ${PENDING_STATUS}
+    
+    ###Verify if effective date is matched with the Fee payment Effective Date and not editable###
+    Validate if Element is Not Editable    ${LIQ_ReversePayment_EffectiveDate}    Effective Date    
+    ${EffectiveDate_Reversal}    Mx LoanIQ Get Data    ${LIQ_ReversePayment_EffectiveDate}    value%test
+    Run Keyword And Continue On Failure    Should Be Equal    ${EffectiveDate_Reversal}    ${SystemDate}        
+    ${EffectiveDateReversal_status}    Run Keyword and Return Status    Run Keyword And Continue On Failure    Should Be Equal    ${EffectiveDate_Reversal}    ${SystemDate}    
+
+    Run Keyword If    ${EffectiveDateReversal_status}==${True}    Log    Effective Date of Fee Payment and Reversal matched.
+    ...    ELSE    Log    Discrepancy in Fee payment effective date and reversal payment date.    level=Error          
+            
+    mx LoanIQ enter    ${LIQ_ReversePayment_Comment_Textfield}    ${Reversal_Comment}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/ReversalPayment
+  
+Validate Release of Reverse Fee Payment
+    [Documentation]    This keyword validates the release of Reverse Fee Payment on Events.
+    ...    @author: kmagday
+
+    mx LoanIQ activate window    ${LIQ_ReverseFee_Window}
+    Mx LoanIQ Select Window Tab    ${LIQ_ReversePayment_Tab}    ${EVENTS_TAB}
+    Mx LoanIQ Select String    ${LIQ_ReverseFee_Events_Javatree}   ${RELEASED_STATUS}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/CommitmentFeeWindow_EventsTab_ReverseFee
+    Mx LoanIQ Select Or DoubleClick In Javatree   ${LIQ_ReverseFee_Events_Javatree}    ${RELEASED_STATUS}%d
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/CommitmentFeeWindow_EventsTab_ReverseFee
+    
 Get and Validate Dates in Accrual Tab
     [Documentation]    This keyword is used to get and validate the Start and End Date of a Cycle in Accrual Tab.
     ...    @author: javinzon    02FEB2021    - Initial create
