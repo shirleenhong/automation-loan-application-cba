@@ -12,8 +12,8 @@ LIQ_AccrualSharesAdjustment_File_Save = 'JavaWindow("title:=Accrual Shares Adjus
 LIQ_AccrualSharesAdjustment_WorkflowAction = 'JavaWindow("title:=Accrual Shares Adjustment -.*").JavaTree("attached text:=Drill down to perform Workflow item")'
 LIQ_AccrualSharesAdjustment_Window = 'JavaWindow("title:=Accrual Shares Adjustment -.*")'
 LIQ_AccrualSharesAdjustment_Options_ModifyRequestedAmount_Dropdown = 'JavaWindow("title:=Accrual Shares Adjustment -.*").JavaMenu("label:=Options").JavaMenu("label:=Modify Requested Amount")'
-LIQ_AccrualSharesAdjustment_CurrentCycleDue_TextField = 'JavaWindow("title:=Accrual Shares Adjustment -.*").JavaEdit("x:=231","y:=51")'
-LIQ_AccrualSharesAdjustment_ProjectedCycleDue_TextField = 'JavaWindow("title:=Accrual Shares Adjustment -.*").JavaEdit("x:=231","y:=84")'
+LIQ_AccrualSharesAdjustment_CurrentCycleDue_TextField = 'JavaWindow("title:=Accrual Shares Adjustment -.*").JavaEdit("labeled_containers_path:=Tab:General;Group: Amounts ;","index:=3")'
+LIQ_AccrualSharesAdjustment_ProjectedCycleDue_TextField = 'JavaWindow("title:=Accrual Shares Adjustment -.*").JavaEdit("labeled_containers_path:=Tab:General;Group: Amounts ;","index:=1")'
 
 LIQ_AccrualSharesAdjustment_SendToApprovalWarningMessage_StaticText = 'JavaWindow("title:=Warning.*","displayed:=1").JavaEdit("attached text:=WARNING", "height:=68")'
 
