@@ -5,7 +5,8 @@ Resource    ../../../../Configurations/LoanIQ_Import_File.robot
 Setup Deal for ATM BILAT
     [Documentation]    This keyword is for setting up Deal for ATM Bilateral Deal
     ...    @author: ccarriedo    12JAN2021    - Initial Create
-    ...    @update: ccarriedo    20JAN2021    - Added writing of Deal_Name, Borrower_ShortName to CRED02_FacilitySetup sheet, deleted Global Variables
+    ...    @update: ccarriedo    20JAN2021    - Added writing of Deal_Name to CRED02_FacilitySetup sheet, deleted Global Variables
+    ...    @update: ccarriedo    02FEB2021    - Added writing of Borrower_ShortName to CRED01_DealSetup sheet
     [Arguments]    ${ExcelPath}
 	
 	### Login to LoanIQ ###
@@ -25,6 +26,7 @@ Setup Deal for ATM BILAT
     Write Data To Excel    CRED01_DealSetup    Deal_Name    &{ExcelPath}[rowid]    ${Deal_Name}
     Write Data To Excel    CRED01_DealSetup    Deal_Alias    &{ExcelPath}[rowid]    ${Deal_Alias}
     Write Data To Excel    CRED01_DealSetup    Party_ID1    &{ExcelPath}[rowid]    ${Party_ID1}
+    Write Data To Excel    CRED01_DealSetup    Borrower_ShortName    &{ExcelPath}[rowid]    ${Borrower_ShortName}
     Write Data To Excel    CRED02_FacilitySetup    Deal_Name    &{ExcelPath}[rowid]    ${Deal_Name}
     Write Data To Excel    SERV15_SchComittmentDecrease    Deal_Name    &{ExcelPath}[rowid]    ${Deal_Name}
 
@@ -78,6 +80,28 @@ Setup Deal for ATM BILAT
     ### Save Changes ###    
     Save Changes on Deal Notebook
     
-    ### Logout and Relogin in Inputter Level ###
+    ### Logout ###
+    Close All Windows on LIQ
+    Logout from Loan IQ
+
+Approve and Close ATM BILAT
+    [Documentation]    This keyword approves and closes the created Deal
+    ...    @author: ccarriedo    02FEB2021    - Initial Create
+    [Arguments]    ${ExcelPath}
+    
+    ${Deal_Name}    Read Data From Excel    CRED01_DealSetup    Deal_Name    &{ExcelPath}[rowid]
+    ${ApproveandCloseDate}    Read Data From Excel    SYND02_PrimaryAllocation    Primary_ExpectedCloseDate    &{ExcelPath}[rowid]
+
+    Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
+    
+    ### Deal Notebook ###
+    Search Existing Deal    ${Deal_Name}
+    Navigate to Deal Notebook Workflow and Proceed With Transaction    ${SEND_TO_APPROVAL_STATUS}
+    Logout from Loan IQ
+    Login to Loan IQ    ${SUPERVISOR_USERNAME}    ${SUPERVISOR_PASSWORD}
+    Open Existing Deal    ${Deal_Name}
+    Approve the Deal    ${ApproveandCloseDate}
+    Close the Deal    ${ApproveandCloseDate}
+    
     Close All Windows on LIQ
     Logout from Loan IQ
