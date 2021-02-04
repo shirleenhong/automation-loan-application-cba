@@ -3,6 +3,7 @@ Resource    ../../../Configurations/LoanIQ_Import_File.robot
 
 *** Variables ***
 ${rowid}    1
+${rowid_2}    2    
 
 *** Test Cases ***
 Get Dataset for PT Health Syndicated Deal
@@ -29,3 +30,4 @@ Create Initial Loan Drawdown - SERV01
     
 Establish and Collection of Line Fee for PT Health Syndicated Deal
     Mx Execute Template With Multiple Data    Pay Line Fee with Online Accrual for PT Health Syndicated Deal    ${ExcelPath}    ${rowid}    CRED08_OngoingFeeSetup
+    Mx Execute Template With Multiple Data    Pay Line Fee without Online Accrual for PT Health Syndicated Deal    ${ExcelPath}    ${rowid_2}    CRED08_OngoingFeeSetup
