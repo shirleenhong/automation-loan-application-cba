@@ -917,13 +917,16 @@ Validate After Payment Details on Acrual Tab - Line Fee
 
 Validate Line Fee Events Tab
     [Documentation]    This keyword validates the Line Fee Events tab.
-    ...    @author: dahijara    11JAN2021    - initial create
-    [Arguments]    ${Event_Name}
+    ...    @author: ccarriedo    04Feb2021    - initial create
+    [Arguments]    ${sEvent_Name}
+    
+    ### GetRuntime Keyword Pre-processing ###
+    ${Event_Name}    Acquire Argument Value    ${sEvent_Name}
 
     Mx LoanIQ Select Window Tab    ${LIQ_LineFee_Tab}    Events
 
     ${Event_Selected}    Run Keyword And Return Status    Mx LoanIQ Select String    ${LIQ_LineFee_Events_Javatree}    ${Event_Name}
-    Run Keyword If    ${Event_Selected}==True    Log    ${Event_Name} is shown in the Events list of Line Fee Notebook.
-    ...    ELSE    Run Keyword And Continue On Failure    Fail    Event not verified.
+    Run Keyword If    ${Event_Selected}==${True}    Log    ${Event_Name} is shown in the Events list of Line Fee Notebook.
+    ...    ELSE    Run Keyword And Continue On Failure    Fail    ${Event_Name} is NOT shown in the Events list of Line Fee Notebook.
 
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LineFeeWindow_EventsTab_Released

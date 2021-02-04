@@ -1942,8 +1942,8 @@ Navigate and Verify Line Fee Accrual Tab
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/OngoingFee_AccrualTab
 	
     ### ConstRuntime Keyword Post-processing ###
-    Save Values of Runtime Execution on Excel File    ${sRunVar_StartDate}    ${OngoingFee_EffectiveDate}
-    Save Values of Runtime Execution on Excel File    ${sRunVar_EndDate}    ${OngoingFee_AccrualEndDate}
-    Save Values of Runtime Execution on Excel File    ${sRunVar_DueDate}    ${OngoingFee_DueDate}
+    Save Values of Runtime Execution on Excel File    ${RunVar_StartDate}    ${OngoingFee_EffectiveDate}
+    Save Values of Runtime Execution on Excel File    ${RunVar_EndDate}    ${OngoingFee_AccrualEndDate}
+    Save Values of Runtime Execution on Excel File    ${RunVar_DueDate}    ${OngoingFee_DueDate}
     
     [Return]    ${OngoingFee_EffectiveDate}    ${OngoingFee_AccrualEndDate}    ${OngoingFee_DueDate}
