@@ -1874,8 +1874,8 @@ Release Ongoing Fee
 Validate Dues on Accrual Tab for Commitment Fee
     [Documentation]    This keyword validates the details on Accrual Tab during payment.
     ...    @author: mcastro    01FEB2021    - Initial create
-    ...    @update: javinzon    03FEB2021    - Replaced 0.00 with ${Expected_PaidToDate}
-    [Arguments]    ${sProjected_CycleDue}    ${sCycleNumber}     ${sExpected_PaidToDate}
+    ...    @update: javinzon    03FEB2021    - Added ${sExpected_PaidToDate} as optional argument
+    [Arguments]    ${sProjected_CycleDue}    ${sCycleNumber}     ${sExpected_PaidToDate}=0.00
 
     ### GetRuntime Keyword Pre-processing ###
     ${Projected_CycleDue}    Acquire Argument Value    ${sProjected_CycleDue}
@@ -1927,10 +1927,10 @@ Perform Online Accrual in Commitment Fee Notebook
 Get and Validate Dates in Accrual Tab
     [Documentation]    This keyword is used to get and validate the Start and End Date of a Cycle in Accrual Tab.
     ...    @author: javinzon    02FEB2021    - Initial create
-    [Arguments]    ${sCycleNo}    ${sStartDate}    ${sEndDate}
+    [Arguments]    ${iCycleNo}    ${sStartDate}    ${sEndDate}
     
     ### Keyword Pre-processing ###
-    ${CycleNo}    Acquire Argument Value    ${sCycleNo}
+    ${CycleNo}    Acquire Argument Value    ${iCycleNo}
     ${StartDate}    Acquire Argument Value    ${sStartDate}
     ${EndDate}    Acquire Argument Value    ${sEndDate}
 
