@@ -140,10 +140,10 @@ Setup Primaries for ATM BILAT
     Populate Amts or Dates Tab for Orig Primary    &{ExcelPath}[Primary_ExpectedCloseDate]
 
     Add Contact in Primary    &{ExcelPath}[Primary_Contact]
-    Select Servicing Group on Primaries    None    &{ExcelPath}[Primary_SGAlias]
+    Select Servicing Group on Primaries    &{ExcelPath}[Primary_ServicingGroupMember]    &{ExcelPath}[Primary_SGAlias]
 
     Circling for Primary Workflow    &{ExcelPath}[Primary_CircledDate]
-    Complete Portfolio Allocations Workflow    &{ExcelPath}[Primary_Portfolio]|&{ExcelPath}[Primary_Portfolio]    &{ExcelPath}[Primary_PortfolioBranch]    ${PortfolioAllocation_1}|${PortfolioAllocation_2}    None|None    ${FacilityName_2}|${FacilityName_1}    &{ExcelPath}[Primary_ExpenseCode]
+    Complete Portfolio Allocations Workflow    &{ExcelPath}[Primary_Portfolio]|&{ExcelPath}[Primary_Portfolio]    &{ExcelPath}[Primary_PortfolioBranch]    ${PortfolioAllocation_1}|${PortfolioAllocation_2}    &{ExcelPath}[Primary_PercentOfDeal]|&{ExcelPath}[Primary_PercentOfDeal]    ${FacilityName_2}|${FacilityName_1}    &{ExcelPath}[Primary_ExpenseCode]
     
     Close All Windows on LIQ
     Logout from Loan IQ

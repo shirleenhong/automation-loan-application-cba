@@ -24,10 +24,7 @@ Setup Line Fee in Advance for ATM BILAT
     Update Ongoing Fee General Information    &{ExcelPath}[OngoingFee_EffectiveDate]    &{ExcelPath}[OngoingFee_ActualDate]    &{ExcelPath}[OngoingFee_AdjustedDueDate]    &{ExcelPath}[OngoingFee_Accrue]    &{ExcelPath}[OngoingFee_AccrualEndDate]
     Select Pay In Advance/Arrears    ${OngoingFee_AccrualRule}
     
-    Mx LoanIQ select    ${LIQ_OngoingFee_Save_Menu}
-    Mx LoanIQ click element if present    ${LIQ_Warning_OK_Button}
-    
-    Navigate and Verify Line Fee Accrual Tab    ${rowid}    &{ExcelPath}[OngoingFee_CycleNo]    &{ExcelPath}[OngoingFee_EffectiveDate]    &{ExcelPath}[OngoingFee_AccrualEndDate]    &{ExcelPath}[OngoingFee_DueDate]
+    ${OngoingFee_EffectiveDate}    ${OngoingFee_AccrualEndDate}    ${OngoingFee_DueDate}    Navigate and Verify Line Fee Accrual Tab    &{ExcelPath}[OngoingFee_CycleNo]    &{ExcelPath}[OngoingFee_EffectiveDate]    &{ExcelPath}[OngoingFee_AccrualEndDate]    &{ExcelPath}[OngoingFee_DueDate]
  
     Save and Close Ongoing Fee Window
     Close All Windows on LIQ
@@ -40,16 +37,19 @@ Release Ongoing Fee for ATM BILAT
     
     ${Deal_Name}    Read Data From Excel    CRED01_DealSetup    Deal_Name    &{ExcelPath}[rowid]
     ${Facility_Name}    Read Data From Excel    CRED02_FacilitySetup    Facility_Name2    &{ExcelPath}[rowid]
+    ${LineFee_Release_Status}    Read Data From Excel    CRED08_OngoingFeeSetup    LineFee_Release_Status    &{ExcelPath}[rowid]
 
     ### Login to LIQ ###
     Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
     
     Navigate to Facility Notebook    ${Deal_Name}    ${Facility_Name}
-    Navigate to Commitment Fee Notebook    &{ExcelPath}[OngoingFee_Type2]
+    Navigate to Commitment Fee Notebook    &{ExcelPath}[OngoingFee_Type1]
 
     ### Ongoing Fee Notebook ###
     Release Ongoing Fee
 
+    Validate Line Fee Events Tab    ${LineFee_Release_Status}
+    
     Save Facility Notebook Transaction
     Close All Windows on LIQ
     Logout from Loan IQ

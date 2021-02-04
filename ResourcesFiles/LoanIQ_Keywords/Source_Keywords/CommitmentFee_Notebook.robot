@@ -1917,15 +1917,21 @@ Select Pay In Advance/Arrears
     ${AccrualRule}    Acquire Argument Value    ${sAccrualRule}
     
     Mx LoanIQ Select Combo Box Value    ${LIQ_OngoingFee_PayIn_Dropdown}    ${AccrualRule}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/Pay_In_Advance_Arrears
+    
+    Mx LoanIQ select    ${LIQ_OngoingFee_Save_Menu}
+    Mx LoanIQ click element if present    ${LIQ_Warning_OK_Button}
     
 Navigate and Verify Line Fee Accrual Tab
     [Documentation]    This keyword is used for navigating and verifies data in Line Fee Accrual Tab.
     ...    @author: ccarriedo    02FEB2021    - Initial Create
-    [Arguments]    ${sRowid}    ${sCycleNo}    ${sRunVar_StartDate}=None    ${sRunVar_EndDate}=None    ${sRunVar_DueDate}=None
+    [Arguments]    ${iCycleNo}    ${sRunVar_StartDate}=None    ${sRunVar_EndDate}=None    ${sRunVar_DueDate}=None
     
     ### Keyword Pre-processing ###
-    ${rowid}    Acquire Argument Value    ${sRowid}
-    ${OngoingFee_CycleNo}    Acquire Argument Value    ${sCycleNo}
+    ${OngoingFee_CycleNo}    Acquire Argument Value    ${iCycleNo}
+    ${RunVar_StartDate}    Acquire Argument Value    ${sRunVar_StartDate}
+    ${RunVar_EndDate}    Acquire Argument Value    ${sRunVar_EndDate}
+    ${RunVar_DueDate}    Acquire Argument Value    ${sRunVar_DueDate}
 
     Mx LoanIQ Select Window Tab    ${LIQ_LineFee_Tab}    Accrual
     Run Keyword And Continue On Failure    Mx LoanIQ Verify Object Exist    ${LIQ_OngoingFee_Accrual_JavaTree}    VerificationData="Yes"
@@ -1939,3 +1945,5 @@ Navigate and Verify Line Fee Accrual Tab
     Save Values of Runtime Execution on Excel File    ${sRunVar_StartDate}    ${OngoingFee_EffectiveDate}
     Save Values of Runtime Execution on Excel File    ${sRunVar_EndDate}    ${OngoingFee_AccrualEndDate}
     Save Values of Runtime Execution on Excel File    ${sRunVar_DueDate}    ${OngoingFee_DueDate}
+    
+    [Return]    ${OngoingFee_EffectiveDate}    ${OngoingFee_AccrualEndDate}    ${OngoingFee_DueDate}
