@@ -41,6 +41,8 @@ Input Requested Amount, Effective Date, and Comment
     [Documentation]    This keyword is used to input the Requested Amount, Effective Date, and Comment within the Accrual Shares Adjustment Notebook. 
     ...    @author: rtarayao
     ...    @update: dahijara    15JUL2020    - added preprocessing and screenshot; added Tab after entering effective date.
+    ...    @update: javinzon    03FEB2021    - updated keyword from 'mx LoanIQ enter' to 'Enter Value on Text field' to accommodate when value in
+    ...                                        Requested Amount is negative value.
     [Arguments]    	${sPaidSoFar_Value}    ${sSBLC_EffectiveDate}    ${sAccrual_Comment}
     ### GetRuntime Keyword Pre-processing ###
     ${PaidSoFar_Value}    Acquire Argument Value    ${sPaidSoFar_Value}
@@ -48,7 +50,9 @@ Input Requested Amount, Effective Date, and Comment
     ${Accrual_Comment}    Acquire Argument Value    ${sAccrual_Comment}
 
     Mx LoanIQ Select Window Tab    ${LIQ_AccrualSharesAdjustment_Window_Tab}    General     
-    mx LoanIQ enter    ${LIQ_AccrualSharesAdjustment_RequestedAmount_Textfield}    ${PaidSoFar_Value}
+    mx LoanIQ activate window    ${LIQ_AccrualSharesAdjustment_Window}
+    ${PaidSoFar_Value}    Convert To String    ${PaidSoFar_Value}
+    Enter Value on Text field    ${LIQ_AccrualSharesAdjustment_RequestedAmount_Textfield}    ${PaidSoFar_Value}
     mx LoanIQ enter    ${LIQ_AccrualSharesAdjustment_EffectiveDate_Textfield}    ${SBLC_EffectiveDate}
     Mx Press Combination    KEY.TAB
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/AccrualSharesAdjustment
@@ -61,6 +65,8 @@ Save the Requested Amount, Effective Date, and Comment
     ...    @author: rtarayao
     ...    @update: dahijara    15JUL2020    - added preprocessing and screenshot; adjusted keywords indention
     ...    @update: makcamps    20NOV2020    - changed locators dependent on AU data
+    ...    @update: javinzon    03FEB2020    - updated keyword from 'Mx LoanIQ Verify Object Exist' to 'Mx LoanIQ Get Data', 
+    ...                                        added 'Compare Two Strings' to validate comment value from UI
     [Arguments]    ${sRequested_Amount}    ${sAccrual_EffectiveDate}    ${sAccrual_Comment}
     ### GetRuntime Keyword Pre-processing ###
     ${Requested_Amount}    Acquire Argument Value    ${sRequested_Amount}
@@ -71,7 +77,8 @@ Save the Requested Amount, Effective Date, and Comment
     mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
     Mx LoanIQ Verify Object Exist    JavaWindow("title:=Accrual Shares Adjustment -.*").JavaEdit("labeled_containers_path:=Tab:General;Group: Amounts ;","index:=0", "value:=${Requested_Amount}.*")    VerificationData="Yes"
     Mx LoanIQ Verify Object Exist    JavaWindow("title:=Accrual Shares Adjustment -.*").JavaEdit("attached text:=Effective Date:", "value:=${Accrual_EffectiveDate}")               VerificationData="Yes"
-    Mx LoanIQ Verify Object Exist    JavaWindow("title:=Accrual Shares Adjustment -.*").JavaEdit("attached text:=Comment:", "value:=${Accrual_Comment}")    VerificationData="Yes"
+    ${Accrual_Comment_UI}    Mx LoanIQ Get Data    ${LIQ_AccrualSharesAdjustment_Comment_Textfield}    value%comment
+    Compare Two Strings    ${Accrual_Comment}    ${Accrual_Comment_UI}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/AccrualSharesAdjustment
 
 Send Adjustment to Approval
@@ -311,3 +318,18 @@ Navigate Work in Process for Reversal Fee Payment Release Cashflows
     Mx Native Type    {ENTER}
     mx LoanIQ close window    ${LIQ_TransactionInProcess_Window}    
     mx LoanIQ activate window    ${LIQ_ReverseFee_Window}
+
+Modify Requested Amount for Accrual Shares Adjustment
+    [Documentation]    This keyword is used to update requested amount if Requested field is disabled for user edit.
+    ...    @author: javinzon    02FEB2021    - Initial Create
+    [Arguments]    ${sRequestedAmount}
+    
+    ### GetRuntime Keyword Pre-processing ###
+    ${RequestedAmount}    Acquire Argument Value    ${sRequestedAmount}
+    
+    mx LoanIQ select    ${LIQ_AccrualSharesAdjustment_Options_ModifyRequestedAmount_Dropdown}
+    Sleep    3s     
+    mx LoanIQ activate window    ${LIQ_WorkInProgress_Window} 
+    Mx LoanIQ Enter    ${LIQ_AccrualSharesAdjustment_UpdateRequestedAmount_RequestedAmount_TextField}    ${RequestedAmount} 
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/UpdateRequestedAmount
+    Mx LoanIQ click    ${LIQ_AccrualSharesAdjustment_UpdateRequestedAmount_OK_Button}
