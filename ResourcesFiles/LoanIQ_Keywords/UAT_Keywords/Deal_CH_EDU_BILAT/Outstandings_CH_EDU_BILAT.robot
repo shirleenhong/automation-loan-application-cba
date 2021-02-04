@@ -764,8 +764,8 @@ Create Loan Merge for Outstanding D, E and F for CH EDU Bilateral Deal
     ${BaseRate_OptionName}    Read Data From Excel    CRED01_DealSetup    Deal_PricingOption    1
     ${BaseRate_Frequency}    Read Data From Excel    SERV01_LoanDrawdown    Loan_RepricingFrequency    8
 
-    # Logout from Loan IQ
-    # Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
+    Logout from Loan IQ
+    Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
 
     ### Search for Existing Deal and Facility ###
     Launch Existing Facility    ${Deal_Name}    ${FacilityName}
