@@ -33,7 +33,12 @@ LIQ_OngoingFee_FeePaidBy_Button = 'JavaWindow("title:=.*Fee /.*","displayed:=1")
 LIQ_OngoingFee_ServicingGroup_Button = 'JavaWindow("title:=.*Fee /.*","displayed:=1").JavaButton("attached text:=Servicing Group.*")'
 LIQ_OngoingFee_CycleFrequency_Field = 'JavaWindow("title:=.*Fee /.*","displayed:=1").JavaList("attached text:=Cycle Frequency:.*")'
 LIQ_OngoingFee_Workflow_JavaTree = 'JavaWindow("title:=.*Fee /.*","displayed:=1").JavaTree("tagname:=Drill down to perform.*","index:=0")'
+LIQ_OngoingFee_PayIn_Dropdown = 'JavaWindow("title:=.*Fee /.*","displayed:=1").JavaList("attached text:=Actual/365.*")'
 
 ### Ongoing Fee Menu ###
 LIQ_OngoingFee_Save_Menu = 'JavaWindow("title:=.*Fee /.*","displayed:=1").JavaMenu("label:=File").JavaMenu("label:=Save")'
 LIQ_OngoingFee_Exit_Menu = 'JavaWindow("title:=.*Fee /.*","displayed:=1").JavaMenu("label:=File").JavaMenu("label:=Exit")'
+
+### Ongoing Fee Notebook - Accrual Tab ###
+LIQ_OngoingFee_LineFee_Tab = 'JavaWindow("title:=Line Fee Fee / Pending:.*").JavaTab("attached text:=Accrual")'
+LIQ_OngoingFee_Accrual_JavaTree = 'JavaWindow("title:=Line Fee Fee / Pending:.*").JavaTree("labeled_containers_path:=Tab:Accrual;","attached text:=Cycles:")'

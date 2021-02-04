@@ -1907,3 +1907,43 @@ Perform Online Accrual in Commitment Fee Notebook
     Verify If Warning Is Displayed
     Mx LoanIQ click element if present    ${LIQ_Information_OK_Button}
     Log    Loan - Perform Online Accrual is complete
+
+Select Pay In Advance/Arrears
+    [Documentation]    This keyword selects Pay In Advance or Pay In Arrears in Ongoing Line Fee.
+    ...    @author: ccarriedo    02FEB2021    - Initial Create
+    [Arguments]    ${sAccrualRule}
+
+    ### Keyword Pre-processing ###
+    ${AccrualRule}    Acquire Argument Value    ${sAccrualRule}
+    
+    Mx LoanIQ Select Combo Box Value    ${LIQ_OngoingFee_PayIn_Dropdown}    ${AccrualRule}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/Pay_In_Advance_Arrears
+    
+    Mx LoanIQ select    ${LIQ_OngoingFee_Save_Menu}
+    Mx LoanIQ click element if present    ${LIQ_Warning_OK_Button}
+    
+Navigate and Verify Line Fee Accrual Tab
+    [Documentation]    This keyword is used for navigating and verifies data in Line Fee Accrual Tab.
+    ...    @author: ccarriedo    02FEB2021    - Initial Create
+    [Arguments]    ${iCycleNo}    ${sRunVar_StartDate}=None    ${sRunVar_EndDate}=None    ${sRunVar_DueDate}=None
+    
+    ### Keyword Pre-processing ###
+    ${OngoingFee_CycleNo}    Acquire Argument Value    ${iCycleNo}
+    ${RunVar_StartDate}    Acquire Argument Value    ${sRunVar_StartDate}
+    ${RunVar_EndDate}    Acquire Argument Value    ${sRunVar_EndDate}
+    ${RunVar_DueDate}    Acquire Argument Value    ${sRunVar_DueDate}
+
+    Mx LoanIQ Select Window Tab    ${LIQ_LineFee_Tab}    Accrual
+    Run Keyword And Continue On Failure    Mx LoanIQ Verify Object Exist    ${LIQ_OngoingFee_Accrual_JavaTree}    VerificationData="Yes"
+    
+    ${OngoingFee_EffectiveDate}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_OngoingFee_Accrual_JavaTree}    ${OngoingFee_CycleNo}%Start Date%value    
+    ${OngoingFee_AccrualEndDate}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_OngoingFee_Accrual_JavaTree}    ${OngoingFee_CycleNo}%End Date%value
+    ${OngoingFee_DueDate}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_OngoingFee_Accrual_JavaTree}    ${OngoingFee_CycleNo}%Due Date%value
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/OngoingFee_AccrualTab
+	
+    ### ConstRuntime Keyword Post-processing ###
+    Save Values of Runtime Execution on Excel File    ${RunVar_StartDate}    ${OngoingFee_EffectiveDate}
+    Save Values of Runtime Execution on Excel File    ${RunVar_EndDate}    ${OngoingFee_AccrualEndDate}
+    Save Values of Runtime Execution on Excel File    ${RunVar_DueDate}    ${OngoingFee_DueDate}
+    
+    [Return]    ${OngoingFee_EffectiveDate}    ${OngoingFee_AccrualEndDate}    ${OngoingFee_DueDate}
