@@ -22,6 +22,18 @@ Mx Double Click Element
     Set Focus to Element    ${locator}
     Wait Until Keyword Succeeds    ${retry}    ${retry_interval}    Double Click Element    ${locator}
     Wait Until Browser Ready State
+    
+Mx Press Keyboard
+    [Documentation]    This keyword is used to press key declared as much as declared.
+    ...    @author: makcamps    01FEB2021    - initial Create
+    [Arguments]    ${sRowCount}    ${sKey}
+
+    ### Keyword Pre-processing ###
+    ${RowCount}    Acquire Argument Value    ${sRowCount}
+    ${Key}    Acquire Argument Value    ${sKey}
+    
+    :FOR    ${INDEX}    IN RANGE    0    ${RowCount}
+    \    Mx Press Combination    Key.${Key}  
         
 Wait Until Browser Ready State
     Execute Javascript    return window.load
@@ -761,6 +773,7 @@ Navigate Notebook Workflow
     ...    @update: mcastro     07DEC2020    Added condition for Rate Setting transaction to click No on Warning pop-up
     ...    @update: dahijara    26JAN2021    Added clicking of Yes on confirmation window when present for Rate Setting
     ...    @update: songchan    29JAN2021    Added Setting of Notebook to Update Mode
+    ...    @update: dahijara    02FEB2021    Removed Setting of Notebook to Update Mode and Handled update mode for Rate Setting. <change in code was coordinated with songchan>
     [Arguments]    ${sNotebook_Locator}    ${sNotebookTab_Locator}    ${sNotebookWorkflow_Locator}    ${sTransaction}    
 
     ###Pre-processing Keyword##
@@ -771,11 +784,12 @@ Navigate Notebook Workflow
     ${Transaction}    Acquire Argument Value    ${sTransaction} 
 
     mx LoanIQ activate window    ${Notebook_Locator}
-    Set Notebook to Update Mode    ${Notebook_Locator}    ${LIQ_LoanInquiry_InitialDrawdown_Button}
     Mx LoanIQ Select Window Tab    ${NotebookTab_Locator}    ${WORKFLOW_TAB}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/NotebookWorkflow
     Mx LoanIQ Select Or DoubleClick In Javatree    ${NotebookWorkflow_Locator}    ${Transaction}%d
-    Run Keyword If    '${Transaction}'=='Rate Setting'    Run Keywords    Mx LoanIQ click element if present    ${LIQ_LoanRepricing_ConfirmationWindow_Yes_Button}
+    Run Keyword If    '${Transaction}'=='Rate Setting'    Run Keywords    Validate if Question or Warning Message is Displayed
+    ...    AND    mx LoanIQ click element if present    ${LIQ_Question_Yes_Button}
+    ...    AND    Mx LoanIQ click element if present    ${LIQ_LoanRepricing_ConfirmationWindow_Yes_Button}
     ...    AND    mx LoanIQ click element if present    ${LIQ_Question_No_Button}
     ...    ELSE    Validate if Question or Warning Message is Displayed
     mx LoanIQ click element if present    ${LIQ_Question_Yes_Button}
