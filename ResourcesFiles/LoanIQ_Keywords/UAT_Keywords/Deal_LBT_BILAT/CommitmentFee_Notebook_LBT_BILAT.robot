@@ -105,3 +105,102 @@ Release Commitment Fee for LBT Bilateral Deal
     Save Facility Notebook Transaction
     Close All Windows on LIQ
 
+Complete Cycle Shares Adjustment for LBT Bilateral Deal
+    [Documentation]    This is a high-level keyword to complete cycle shares adjustment for LBT Bilateral Deal
+    ...    @author: javinzon    01FEB2021    - Initial Create 
+    [Arguments]    ${ExcelPath}
+
+	${Deal_Name}    Read Data From Excel    CRED01_DealSetup    Deal_Name    ${rowid}
+	${Facility_Name}    Read Data From Excel    CRED01_FacilitySetup    Facility_Name    ${rowid}
+    ${Borrower_Name}    Read Data From Excel    PTY001_QuickPartyOnboarding    LIQCustomer_ShortName    ${rowid}
+	
+	Logout from Loan IQ
+    Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
+    
+    ### Open Accrual in Commitment Fee Notebook ###
+    Launch Existing Facility    ${Deal_Name}    ${Facility_Name}
+    Navigate to Commitment Fee Notebook    &{ExcelPath}[OngoingFee_Type]
+    Get and Validate Dates in Accrual Tab    ${ExcelPath}[Cycle_No]    ${ExcelPath}[Start_Date]    ${ExcelPath}[End_Date]
+
+    ### Accrual Share Adjustment Notebook ###
+    Navigate and Verify Accrual Share Adjustment Notebook    ${ExcelPath}[Start_Date]    ${Deal_Name}    ${Facility_Name}    ${Borrower_Name}    &{ExcelPath}[OngoingFee_Type]    &{ExcelPath}[Current_Cycle_Due]
+    ...    &{ExcelPath}[Projected_Cycle_Due]    
+    Input Requested Amount, Effective Date, and Comment    &{ExcelPath}[Requested_Amount]    ${ExcelPath}[Effective_Date]     &{ExcelPath}[Accrual_Comment]
+    Save the Requested Amount, Effective Date, and Comment    &{ExcelPath}[Requested_Amount]    ${ExcelPath}[Effective_Date]     &{ExcelPath}[Accrual_Comment]
+ 
+    ### Send to Approval ###
+    Send Adjustment to Approval
+    Logout from Loan IQ
+    
+    ### Approval ###
+    Login to Loan IQ    ${SUPERVISOR_USERNAME}    ${SUPERVISOR_PASSWORD}
+    Select Item in Work in Process    &{ExcelPath}[WIPTransaction_Type]    ${AWAITING_APPROVAL_STATUS}    &{ExcelPath}[FacilitiesTransaction_Type]     ${Deal_Name}
+    Approve Fee Accrual Shares Adjustment
+    Logout from Loan IQ
+    
+    ### Release ###
+    Login to Loan IQ    ${MANAGER_USERNAME}    ${MANAGER_PASSWORD}
+    Select Item in Work in Process    &{ExcelPath}[WIPTransaction_Type]    ${AWAITING_RELEASE_STATUS}    &{ExcelPath}[FacilitiesTransaction_Type]     ${Deal_Name}
+    Release Fee Accrual Shares Adjustment
+    Close Accrual Shares Adjustment Window
+    Logout from Loan IQ
+    
+    ### Verify the Updates in Accrual Tab ###
+    Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
+    Launch Existing Facility    ${Deal_Name}    ${Facility_Name}
+    Navigate to Commitment Fee Notebook    &{ExcelPath}[OngoingFee_Type]
+    
+    Validate Manual Adjustment Value    &{ExcelPath}[Cycle_No]    &{ExcelPath}[Requested_Amount] 
+    Validate Cycle Due New Value    &{ExcelPath}[Cycle_No]    &{ExcelPath}[Current_Cycle_Due]     &{ExcelPath}[Requested_Amount]
+    Validate Projected EOC Due New Value    &{ExcelPath}[Cycle_No]    &{ExcelPath}[Projected_Cycle_Due]     &{ExcelPath}[Requested_Amount]        
+    Validate Accrual Shares Adjustment Applied Event
+    Close All Windows on LIQ 
+    
+Fee Payment for LBT Bilateral Deal
+    [Documentation]    This keyword is used to create Fee Payment for LBT Bilateral Deal
+    ...    @author: javinzon    03FEB2021    - Initial create
+    [Arguments]    ${ExcelPath}
+    
+    ${Deal_Name}    Read Data From Excel    CRED01_DealSetup    Deal_Name    ${rowid}
+	${Facility_Name}    Read Data From Excel    CRED01_FacilitySetup    Facility_Name    ${rowid}
+    ${Borrower_Name}    Read Data From Excel    PTY001_QuickPartyOnboarding    LIQCustomer_ShortName    ${rowid}
+    
+    Launch Existing Facility    ${Deal_Name}    ${Facility_Name}
+    Navigate to Commitment Fee Notebook    &{ExcelPath}[OngoingFee_Type]
+    
+    Initiate Commitment Fee Ongoing Fee Payment    &{ExcelPath}[ExpectedCycleDueAmt]    &{ExcelPath}[Effective_Date]
+    
+    ### Create Cashflows ###
+    Navigate to Payment Workflow and Proceed With Transaction    ${CREATE_CASHFLOWS_TYPE}
+    Set All Items to Do It
+
+    ### Generate Intent Notice ###
+    Navigate to Payment Workflow and Proceed With Transaction        ${GENERATE_INTENT_NOTICES}
+    Select Notices Recipients
+    Exit Notice Window
+
+    ### Sending Payment For Approval ###
+    Navigate to Payment Workflow and Proceed With Transaction    ${SEND_TO_APPROVAL_STATUS}
+    Close All Windows on LIQ
+    Logout from Loan IQ
+    
+    ### Payment Approval ####
+    Login to Loan IQ    ${SUPERVISOR_USERNAME}    ${SUPERVISOR_PASSWORD}
+    Navigate Transaction in WIP     ${PAYMENTS_TRANSACTION}    ${AWAITING_APPROVAL_STATUS}    ${ONGOING_FEE_PAYMENT_TRANSACTION}    ${FacilityName}
+    Navigate to Payment Workflow and Proceed With Transaction    ${APPROVAL_STATUS}
+    Close All Windows on LIQ
+    Logout from Loan IQ
+    
+    ### Release Payment ###
+    Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
+    Navigate Transaction in WIP     ${PAYMENTS_TRANSACTION}    ${AWAITING_RELEASE_STATUS}    ${ONGOING_FEE_PAYMENT_TRANSACTION}    ${FacilityName}
+    Navigate to Payment Workflow and Proceed With Transaction    ${RELEASE_STATUS}
+    Close All Windows on LIQ
+   
+    ### Validation ###
+    Navigate to Facility Notebook    ${Deal_Name}    ${Facility_Name}
+    Navigate to Commitment Fee Notebook    &{ExcelPath}[OngoingFee_Type]
+    Validate release of Ongoing Fee Payment
+    Close Ongoing Fee Payment Notebook Window
+    Validate Dues on Accrual Tab for Commitment Fee    &{ExcelPath}[AfterPayment_CycleDueAmt]    &{ExcelPath}[Cycle_No]    &{ExcelPath}[AfterPayment_PaidToDate]   
+    Close All Windows on LIQ
