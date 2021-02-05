@@ -10,3 +10,7 @@ Get Dataset for CH EDU Bilateral Deal
 
 Combine Outstanding D, E and F and Rollover
     Mx Execute Template With Multiple Data    Create Loan Merge for Outstanding D, E and F for CH EDU Bilateral Deal    ${ExcelPath}    ${rowid}    SERV11_LoanMerge
+
+Rollover Outstanding ABC
+    Set Test Variable    ${rowid}    4
+    Mx Execute Template With Multiple Data    Rollover Outstanding ABC for CH EDU Bilateral Deal    ${ExcelPath}    ${rowid}    SERV11_LoanMerge
