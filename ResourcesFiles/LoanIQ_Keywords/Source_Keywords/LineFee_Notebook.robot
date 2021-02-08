@@ -320,6 +320,7 @@ Enter Line Fee Details
     ...    @update: makcamps    14JAN2021    - added condition that if pay type is provided, update pay type
     ...    @update: makcamps    20JAN2021    - updated sequence for updating line fee
     ...    @update: songchan    25JAN2021    - updated sequence for updating Pay type and Cycle Frequency
+    ...    @update: makcamps    08FEB2021    - updated click inquiry button if present
     [Arguments]    ${sEffectiveDate}    ${sActual_DueDate}    ${sAdjusted_DueDate}    ${sCycle_Frequency}    ${sAccrue}    ${sFloatRateDate}=None    ${sPayType}=None
     
     ### Keyword Pre-processing ###
@@ -332,7 +333,7 @@ Enter Line Fee Details
     ${PayType}    Acquire Argument Value    ${sPayType}
 
     mx LoanIQ activate window    ${LIQ_LineFeeNotebook_Window}
-    mx LoanIQ click    ${LIQ_LineFee_InquiryMode_Button}  
+    Mx Click Element If Present    ${LIQ_LineFee_InquiryMode_Button}  
     Run Keyword If    '${PayType}'!='None'    mx LoanIQ Select Combo Box Value    ${LIQ_LineFee_PayType_Dropdown}    ${PayType}
     mx LoanIQ enter    ${LIQ_LineFee_EffectiveDate_Field}    ${EffectiveDate} 
     Mx Press Combination    Key.ENTER 

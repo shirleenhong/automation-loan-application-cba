@@ -1,13 +1,13 @@
 <liqInfo>
-    {"event_schema_id":"2148","event":{"header":{"correlationId":"LIQ-LIENXJKL-LCENXHRL-2","processPath":{"array":[{"source":"FINASTRA_CCB","timestamp":"2021-02-05T21:54:35.924+08:00"}]}},"sourceSystem":{"string":"FINASTRA_CCB"},"ttl":{"au.com.cba.avro.customermanagement.noticesnotify.ttl":{"ttlDuration":"300","ttlSourceTime":"2021-02-05T21:54:35.919+08:00"}},"cifIds":{"array":[{"string":"1711726"}]},"documentInfo":{"documentPackage":{"businessChannel":"LOANIQ","name":null,"version":null,"templateId":null,"fileType":null,"content":"
+    {"event_schema_id":"2148","event":{"header":{"correlationId":"LIQ-!*EO2SI7-A#EO2PVG-2","processPath":{"array":[{"source":"FINASTRA_CCB","timestamp":"2021-02-08T20:45:19.408+08:00"}]}},"sourceSystem":{"string":"FINASTRA_CCB"},"ttl":{"au.com.cba.avro.customermanagement.noticesnotify.ttl":{"ttlDuration":"300","ttlSourceTime":"2021-02-08T20:45:19.408+08:00"}},"cifIds":{"array":[{"string":"1711726"}]},"documentInfo":{"documentPackage":{"businessChannel":"LOANIQ","name":null,"version":null,"templateId":null,"fileType":null,"content":"
     <FinastraApplication>
         <StandardNotice>
             <ProcessingArea>AUSAG</ProcessingArea>
             <Address>
-                <line>Date: 05-Feb-2021</line>
+                <line>Date: 08-Feb-2021</line>
                 <line>TO  : LLA Pty Ltd 1711726</line>
                 <line>ATTN: George Lippman</line>
-                <line>Re  : LLA SYND DEAL AUD 500M 23NOV1832109 REVOLVING CASH ADV FAC40120</line>
+                <line>Re  : LLA SYND DEAL AUD 500M 23NOV1848142 REVOLVING CASH ADV FAC56105</line>
             </Address>
             <BodyContent>
                 <section>
@@ -43,7 +43,7 @@
                     <line>Routing Number:</line>
                 </section>
                 <section>
-                    <line>Reference: AUSAG1002406</line>
+                    <line>Reference: AUSAG1002414</line>
                 </section>
                 <section>
                     <line/>
@@ -51,6 +51,6 @@
             </BodyContent>
         </StandardNotice>
     </FinastraApplication>
-    "},"documentStorage":{"status":null,"fileName":null,"inputSource":null,"inputSourceDetail":null,"scanDate":null,"departmentId":{"string":"RE_RES"},"retrievalId":null,"documentumType":null,"applicationNumber":null,"purgeDate":null,"boxLocation":null,"recordManager":null,"description":null,"processes":{"array":[{"string":"LCENXHRL"}]},"services":{"array":[{"string":"1002406"}]},"accountNumbers":{"array":[{"source":{"string":"LOANIQ"},"productCode":{"string":"OST"},"number":{"string":"60002903"}}]},"processFlags":{"array":[{"name":null,"value":null}]}}},"emailSecureMessageDetails":{"subject":"1002406 LLA SYND DEAL AUD 500M 23NOV1832109","senderEmail":"AGENCY@CBA.AU.COM","toRecipientEmail":"phamv@cba.com.au","ccRecipientEmail":{"string":"JOHN.DOE@CBA.AU.COM"},"mimeType":null,"messageID":"LIQ-LIENXJKL-LCENXHRL-2","body":null,"attachment":null,"inBandAttachment":null,"deliveredToEmail":null,"undeliveredToEmail":null,"systemCode":null,"systemName":null,"identifier":{"string":"AUSAG"},"digitalSignature":null}}}
+    "},"documentStorage":{"status":null,"fileName":null,"inputSource":null,"inputSourceDetail":null,"scanDate":null,"departmentId":{"string":"RE_RES"},"retrievalId":null,"documentumType":null,"applicationNumber":null,"purgeDate":null,"boxLocation":null,"recordManager":null,"description":null,"processes":{"array":[{"string":"A#EO2PVG"}]},"services":{"array":[{"string":"1002414"}]},"accountNumbers":{"array":[{"source":{"string":"LOANIQ"},"productCode":{"string":"OST"},"number":{"string":"60002956"}}]},"processFlags":{"array":[{"name":null,"value":null}]}}},"emailSecureMessageDetails":{"subject":"1002414 LLA SYND DEAL AUD 500M 23NOV1848142","senderEmail":"AGENCY@CBA.AU.COM","toRecipientEmail":"phamv@cba.com.au","ccRecipientEmail":{"string":"JOHN.DOE@CBA.AU.COM"},"mimeType":null,"messageID":"LIQ-!*EO2SI7-A#EO2PVG-2","body":null,"attachment":null,"inBandAttachment":null,"deliveredToEmail":null,"undeliveredToEmail":null,"systemCode":null,"systemName":null,"identifier":{"string":"AUSAG"},"digitalSignature":null}}}
 
 </liqInfo>

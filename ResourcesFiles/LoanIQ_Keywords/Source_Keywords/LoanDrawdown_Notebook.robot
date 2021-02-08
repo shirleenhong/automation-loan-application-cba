@@ -3505,6 +3505,17 @@ Navigate to Loan Drawdown Workflow and Proceed With Transaction
     Navigate Notebook Workflow    ${LIQ_InitialDrawdown_Window}    ${LIQ_InitialDrawdown_Tab}    ${LIQ_InitialDrawdown_WorkflowAction}    ${Transaction}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LoanDradown_Workflow
 
+Navigate to Loan Drawdown Workflow and Proceed With Rate Setting
+    [Documentation]    This keyword navigates to the Loan Drawdown Workflow using the Rate Settings
+    ...  @author: makcamps    08FEB2021    Initial create
+    [Arguments]    ${sTransaction}
+
+    ### Keyword Pre-processing ###
+    ${Transaction}    Acquire Argument Value    ${sTransaction}
+
+    Navigate Workflow and Select Rate Setting Then No    ${LIQ_InitialDrawdown_Window}    ${LIQ_InitialDrawdown_Tab}    ${LIQ_InitialDrawdown_WorkflowAction}    ${Transaction}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LoanDradown_Workflow
+
 Navigate to Loan Pending Tab and Proceed with the Transaction
     [Documentation]    This keyword navigates to the Loan Drawdown Pending Tab and Proceeds with the transaction
     ...  @author: hstone    28AMAY2020    Initial create
