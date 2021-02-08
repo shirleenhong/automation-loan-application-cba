@@ -1,13 +1,13 @@
 <liqInfo>
-    {"event_schema_id":"2148","event":{"header":{"correlationId":"LIQ-OAEN5EHD-OAEN5EDF-8","processPath":{"array":[{"source":"FINASTRA_CCB","timestamp":"2021-01-25T15:13:36.761+08:00"}]}},"sourceSystem":{"string":"FINASTRA_CCB"},"ttl":{"au.com.cba.avro.customermanagement.noticesnotify.ttl":{"ttlDuration":"300","ttlSourceTime":"2021-01-25T15:13:36.761+08:00"}},"cifIds":{"array":[{"string":"10"}]},"documentInfo":{"documentPackage":{"businessChannel":"LOANIQ","name":null,"version":null,"templateId":null,"fileType":null,"content":"
+    {"event_schema_id":"2148","event":{"header":{"correlationId":"LIQ-5BENXFW7-5BENXFS8-2","processPath":{"array":[{"source":"FINASTRA_CCB","timestamp":"2021-02-05T19:56:10.995+08:00"}]}},"sourceSystem":{"string":"FINASTRA_CCB"},"ttl":{"au.com.cba.avro.customermanagement.noticesnotify.ttl":{"ttlDuration":"300","ttlSourceTime":"2021-02-05T19:56:10.995+08:00"}},"cifIds":{"array":[{"string":"1711726"}]},"documentInfo":{"documentPackage":{"businessChannel":"LOANIQ","name":null,"version":null,"templateId":null,"fileType":null,"content":"
     <FinastraApplication>
         <StandardNotice>
             <ProcessingArea>AUSAG</ProcessingArea>
             <Address>
-                <line>Date: 25-Jan-2021</line>
-                <line>TO  : LEND01292020</line>
-                <line>ATTN: KUYA KESO</line>
-                <line>Re  : LLA SYND DEAL AUD 500M 23NOV1858142 REVOLVING CASH ADV FAC05119</line>
+                <line>Date: 05-Feb-2021</line>
+                <line>TO  : LLA Pty Ltd 1711726</line>
+                <line>ATTN: George Lippman</line>
+                <line>Re  : LLA SYND DEAL AUD 500M 23NOV1832109 REVOLVING CASH ADV FAC40120</line>
             </Address>
             <BodyContent>
                 <section>
@@ -18,11 +18,8 @@
                     <line>In accordance with the facility agreement, we advise the following.</line>
                     <line/>
                     <line>Effective 27-Dec-2019, the following Line Fee totalling AUD 554,520.55 for LLA Pty Ltd 1711726 becomes due.</line>
-                    <line/>
-                    <line>Please see details below:</line>
                 </section>
                 <section>
-                    <line>Your share of the AUD 554,520.55 Line Fee  is: AUD 388,164.38.</line>
                     <line>Calculated as follows:</line>
                     <line/>
                     <line>Rate Basis:  Actual/365</line>
@@ -31,21 +28,22 @@
                     <line>                                                In Rate              </line>
                     <line>___________ ___________ ____ ___ ______________ __________ __________</line>
                     <line/>
-                    <line>01-Oct-2019 31-Dec-2019 92   AUD 350,000,000.00 0.440000%  388,164.38</line>
+                    <line>01-Oct-2019 31-Dec-2019 92   AUD 500,000,000.00 0.440000%  554,520.55</line>
                 </section>
                 <section>
-                    <line>We will credit your nominated account for an amount of AUD 388,164.38 on the effective date.</line>
-                    <line/>
-                    <line>For: LEND01292020</line>
+                    <line>We will debit your nominated account for an amount of AUD 554,520.55 on the effective date.</line>
+                </section>
+                <section>
+                    <line>For: LLA Pty Ltd 1711726</line>
                     <line/>
                     <line>Account Number:   </line>
-                    <line>1000188515</line>
+                    <line>122 33345</line>
                     <line>Account Name:  </line>
-                    <line>CBA Domestic Account</line>
+                    <line>LLA Pty Ltd</line>
                     <line>Routing Number:</line>
                 </section>
                 <section>
-                    <line>Reference: AUSAG1002242</line>
+                    <line>Reference: AUSAG1002406</line>
                 </section>
                 <section>
                     <line/>
@@ -53,6 +51,6 @@
             </BodyContent>
         </StandardNotice>
     </FinastraApplication>
-    "},"documentStorage":{"status":null,"fileName":null,"inputSource":null,"inputSourceDetail":null,"scanDate":null,"departmentId":{"string":"RE_RES"},"retrievalId":null,"documentumType":null,"applicationNumber":null,"purgeDate":null,"boxLocation":null,"recordManager":null,"description":null,"processes":{"array":[{"string":"OAEN5EDF"}]},"services":{"array":[{"string":"1002242"}]},"accountNumbers":{"array":[{"source":{"string":"LOANIQ"},"productCode":{"string":"FAC"},"number":{"string":"3001726"}}]},"processFlags":{"array":[{"name":null,"value":null}]}}},"emailSecureMessageDetails":{"subject":"1002242 LLA SYND DEAL AUD 500M 23NOV1858142","senderEmail":"AGENCY@CBA.AU.COM","toRecipientEmail":"kuyakeso@email.com","ccRecipientEmail":{"string":"JOHN.DOE@CBA.AU.COM"},"mimeType":null,"messageID":"LIQ-OAEN5EHD-OAEN5EDF-8","body":null,"attachment":null,"inBandAttachment":null,"deliveredToEmail":null,"undeliveredToEmail":null,"systemCode":null,"systemName":null,"identifier":{"string":"AUSAG"},"digitalSignature":null}}}
+    "},"documentStorage":{"status":null,"fileName":null,"inputSource":null,"inputSourceDetail":null,"scanDate":null,"departmentId":{"string":"RE_RES"},"retrievalId":null,"documentumType":null,"applicationNumber":null,"purgeDate":null,"boxLocation":null,"recordManager":null,"description":null,"processes":{"array":[{"string":"5BENXFS8"}]},"services":{"array":[{"string":"1002406"}]},"accountNumbers":{"array":[{"source":{"string":"LOANIQ"},"productCode":{"string":"FAC"},"number":{"string":"3001918"}}]},"processFlags":{"array":[{"name":null,"value":null}]}}},"emailSecureMessageDetails":{"subject":"1002406 LLA SYND DEAL AUD 500M 23NOV1832109","senderEmail":"AGENCY@CBA.AU.COM","toRecipientEmail":"phamv@cba.com.au","ccRecipientEmail":{"string":"JOHN.DOE@CBA.AU.COM"},"mimeType":null,"messageID":"LIQ-5BENXFW7-5BENXFS8-2","body":null,"attachment":null,"inBandAttachment":null,"deliveredToEmail":null,"undeliveredToEmail":null,"systemCode":null,"systemName":null,"identifier":{"string":"AUSAG"},"digitalSignature":null}}}
 
 </liqInfo>
