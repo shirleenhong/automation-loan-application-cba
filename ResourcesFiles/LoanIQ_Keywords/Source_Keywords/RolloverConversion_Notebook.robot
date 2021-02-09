@@ -30,9 +30,9 @@ Setup Repricing
 
     mx LoanIQ activate window    ${LIQ_LoanRepricingForDeal_Window}
 
-    Run keyword if    '${loanRepricing}' == 'Setup'    Run Keywords
+    Run Keyword If    '${loanRepricing}' == 'Setup'    Run Keywords
     ...    Mx LoanIQ Select Window Tab    ${LIQ_LoanRepricingForDeal_Workflow_Tab}    Workflow  
-    ...    AND    Run keyword if    '${loanRepricing}' == 'Setup'    Mx LoanIQ DoubleClick    ${LIQ_LoanRepricingForDeal_Workflow_JavaTree}    Setup  
+    ...    AND    Run Keyword If    '${loanRepricing}' == 'Setup'    Mx LoanIQ DoubleClick    ${LIQ_LoanRepricingForDeal_Workflow_JavaTree}    Setup  
     ...    ELSE IF    '${loanRepricing}' == 'Add'    mx LoanIQ click    ${LIQ_LoanRepricingForDeal_Add_Button}
 
     mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
@@ -58,11 +58,11 @@ Setup Repricing
     ...    AND    mx LoanIQ click    ${LIQ_PendingRollover_BaseRate_Button}
     ...    AND    Verify If Warning Is Displayed
     
-    Run keyword if    '${acceptRepricingFrequency}'=='Y' and '${RepricingType}'!='Auto Generate Interest Payment'    mx LoanIQ click    ${LIQ_InitialDrawdown_AcceptBaseRate}
+    Run Keyword If    '${acceptRepricingFrequency}'=='Y' and '${RepricingType}'!='Auto Generate Interest Payment'    mx LoanIQ click    ${LIQ_InitialDrawdown_AcceptBaseRate}
     ...    ELSE    Log    No changes in rates needed.
     Log    ${Base_Rate}        
     
-    ${UIBaseRate}    Run keyword if    '${acceptRepricingFrequency}'=='Y' and '${RepricingType}'!='Auto Generate Interest Payment'    Get and Validate Borrower Base Rate    ${Base_Rate}
+    ${UIBaseRate}    Run Keyword If    '${acceptRepricingFrequency}'=='Y' and '${RepricingType}'!='Auto Generate Interest Payment'    Get and Validate Borrower Base Rate    ${Base_Rate}
     ...    ELSE IF    '${acceptRepricingFrequency}'=='N'    Set Base Rate    ${Base_Rate}
     ...    ELSE    Log    No changes in rates needed.
 

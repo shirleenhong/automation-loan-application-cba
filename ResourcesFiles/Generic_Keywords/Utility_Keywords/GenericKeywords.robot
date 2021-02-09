@@ -804,13 +804,12 @@ Navigate Notebook Workflow
     ...    ELSE IF    '${Transaction}'=='Close'    mx LoanIQ click element if present    ${LIQ_Information_OK_Button}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/NotebookWorkflow
 
-Navigate Workflow and Select Rate Setting Then No
+Navigate to Workflow and Select Rate Setting to No
     [Documentation]    This keyword navigates the Workflow tab of a Notebook, and does a Rate Setting and click No for Question.
     ...    @author: makcamps    08FEB2021    - Initial Create
     [Arguments]    ${sNotebook_Locator}    ${sNotebookTab_Locator}    ${sNotebookWorkflow_Locator}    ${sTransaction}    
 
     ###Pre-processing Keyword##
-    
     ${Notebook_Locator}    Acquire Argument Value    ${sNotebook_Locator}
     ${NotebookTab_Locator}    Acquire Argument Value    ${sNotebookTab_Locator}
     ${NotebookWorkflow_Locator}    Acquire Argument Value    ${sNotebookWorkflow_Locator}
