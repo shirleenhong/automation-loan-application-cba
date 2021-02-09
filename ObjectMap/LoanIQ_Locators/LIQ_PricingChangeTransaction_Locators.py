@@ -100,11 +100,14 @@ LIQ_PricingChangeTransaction_OngoingFeePricingWindow_Item_Javatree = 'JavaWindow
 LIQ_PricingChangeTransaction_OngoingFeePricingWindow_FacilityOngoingFee_Item = 'JavaWindow("title:=.*Ongoing Fee Pricing").JavaTree("tagname:=Tree", "developer name:=.*${PricingChange_OngoingFeeStr}.*")'
 LIQ_PricingChangeTransaction_OngoingFeePricingWindow_UnutilizedXRateValue_Item = 'JavaWindow("title:=.*Ongoing Fee Pricing").JavaTree("tagname:=Tree", "developer name:=.*${UnutilizedRate}.*")'
 LIQ_PricingChangeTransaction_OngoingFeePricingWindow_GlobalCurrentXRateValue_Item = 'JavaWindow("title:=.*Ongoing Fee Pricing").JavaTree("tagname:=Tree", "developer name:=.*${GlobalRate}.*")'
+LIQ_PricingChangeTransaction_OngoingFeePricingWindow_FacilityItemValue_Item = 'JavaWindow("title:=.*Ongoing Fee Pricing.*").JavaTree("developer name:=.*${FacilityItem}.*")'
 LIQ_PricingChangeTransaction_OngoingFeePricingWindow_Add_Button= 'JavaWindow("title:= .* Ongoing Fee Pricing").JavaButton("attached text:=Add")'
 LIQ_PricingChangeTransaction_OngoingFeePricingWindow_After_Button= 'JavaWindow("title:= .* Ongoing Fee Pricing").JavaButton("attached text:=After")'
 LIQ_PricingChangeTransaction_OngoingFeePricingWindow_Validate_Button= 'JavaWindow("title:= .* Ongoing Fee Pricing").JavaButton("attached text:=Validate")'
 LIQ_PricingChangeTransaction_OngoingFeePricingWindow_OK_Button=  'JavaWindow("title:= .* Ongoing Fee Pricing").JavaButton("attached text:=OK")'
 LIQ_PricingChangeTransaction_OngoingFeePricingWindow_Clear_Button = 'JavaWindow("title:= .* Ongoing Fee Pricing").JavaButton("attached text:=Clear")'
+
+
 ###Pricing Change Transaction - Interest Pricing Window###
 LIQ_PricingChangeTransaction_InterestPricing_Window = 'JavaWindow("title:=.*Interest Pricing.*")'
 LIQ_PricingChangeTransaction_InterestPricingWindow_Item_Javatree = 'JavaWindow("title:=.*Interest Pricing.*").JavaTree("tagname:=Tree")'
