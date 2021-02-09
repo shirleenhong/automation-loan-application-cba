@@ -3507,7 +3507,8 @@ Navigate to Loan Drawdown Workflow and Proceed With Transaction
 
 Navigate to Loan Drawdown Workflow and Proceed with Rate Setting
     [Documentation]    This keyword navigates to the Loan Drawdown Workflow using the Rate Settings
-    ...  @author: makcamps    08FEB2021    Initial create
+    ...    @author: makcamps    08FEB2021    Initial create
+    ...    @update: mcastro    09FEB2021    - Added  ${sAcceptRate_FromInterpolation} argument; Updated keyword used from 'Navigate to Workflow and Select Rate Setting to No' to 'Navigate to Workflow and Select Rate Setting'
     [Arguments]    ${sTransaction}    ${sAcceptRate_FromInterpolation}=N
 
     ### Keyword Pre-processing ###

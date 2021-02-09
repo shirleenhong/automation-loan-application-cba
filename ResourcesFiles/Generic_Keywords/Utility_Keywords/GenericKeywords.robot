@@ -807,6 +807,8 @@ Navigate Notebook Workflow
 Navigate to Workflow and Select Rate Setting
     [Documentation]    This keyword navigates the Workflow tab of a Notebook, and does a Rate Setting and click No for Question.
     ...    @author: makcamps    08FEB2021    - Initial Create
+    ...    @update: mcastro    09FEB2021    - Added  ${sAcceptRate_FromInterpolation} argument; added condition to handle requirement for clicking Yes
+    ...                                     - Updated keyword name from 'Navigate to Workflow and Select Rate Setting to No' to 'Navigate to Workflow and Select Rate Setting'
     [Arguments]    ${sNotebook_Locator}    ${sNotebookTab_Locator}    ${sNotebookWorkflow_Locator}    ${sTransaction}    ${sAcceptRate_FromInterpolation}=N     
 
     ###Pre-processing Keyword##
