@@ -803,7 +803,28 @@ Navigate Notebook Workflow
     ...    AND     mx LoanIQ click element if present    ${LIQ_Question_Yes_Button}
     ...    ELSE IF    '${Transaction}'=='Close'    mx LoanIQ click element if present    ${LIQ_Information_OK_Button}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/NotebookWorkflow
-        
+
+Navigate to Workflow and Select Rate Setting to No
+    [Documentation]    This keyword navigates the Workflow tab of a Notebook, and does a Rate Setting and click No for Question.
+    ...    @author: makcamps    08FEB2021    - Initial Create
+    [Arguments]    ${sNotebook_Locator}    ${sNotebookTab_Locator}    ${sNotebookWorkflow_Locator}    ${sTransaction}    
+
+    ###Pre-processing Keyword##
+    ${Notebook_Locator}    Acquire Argument Value    ${sNotebook_Locator}
+    ${NotebookTab_Locator}    Acquire Argument Value    ${sNotebookTab_Locator}
+    ${NotebookWorkflow_Locator}    Acquire Argument Value    ${sNotebookWorkflow_Locator}
+    ${Transaction}    Acquire Argument Value    ${sTransaction} 
+
+    mx LoanIQ activate window    ${Notebook_Locator}
+    Mx LoanIQ Select Window Tab    ${NotebookTab_Locator}    ${WORKFLOW_TAB}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/NotebookWorkflow
+    Mx LoanIQ Select Or DoubleClick In Javatree    ${NotebookWorkflow_Locator}    ${Transaction}%d
+    mx LoanIQ click element if present    ${LIQ_Question_No_Button}
+    Mx LoanIQ click element if present    ${LIQ_LoanRepricing_ConfirmationWindow_Yes_Button}
+    mx LoanIQ click element if present    ${LIQ_Question_No_Button}
+    mx LoanIQ click element if present    ${LIQ_Question_Yes_Button}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/NotebookWorkflow
+    
 Validate if Question or Warning Message is Displayed
     [Documentation]    This keyword checks continously if a Question or Warning message is displayed, and clicks OK.
     ...    @author: bernchua

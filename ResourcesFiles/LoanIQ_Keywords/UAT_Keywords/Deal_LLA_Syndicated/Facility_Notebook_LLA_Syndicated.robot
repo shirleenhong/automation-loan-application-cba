@@ -8,6 +8,7 @@ Create Revolver Facility for LLA Syndicated Deal
     ...    @update: makcamps    15JAN2021    - updated data used for dates to follow dates from screenshots provided
     ...    @update: makcamps    20JAN2021    - added write method for notice
     ...    @update: makcamps    02FEB2021    - fixed arguments for Add Arguments
+    ...    @update: makcamps    08FEB2021    - added writing methods
     [Arguments]    ${ExcelPath}
     
     ###Test Data Generation and Writings###
@@ -15,6 +16,8 @@ Create Revolver Facility for LLA Syndicated Deal
 	Write Data To Excel    CRED02_FacilitySetup    Facility_Name    ${rowid}    ${FacilityName}
 	Write Data To Excel    SYND02_PrimaryAllocation    Facility_Name    ${rowid}    ${FacilityName}
     Write Data To Excel    CRED08_OngoingFeeSetup    Facility_Name    ${rowid}    ${FacilityName}
+    Write Data To Excel    AMCH06_PricingChangeTransaction    Facility_Name    ${rowid}    ${FacilityName}
+    Write Data To Excel    SERV08_ComprehensiveRepricing    Facility_Name    ${rowid}    ${FacilityName}
     Write Data To Excel    Correspondence    Facility_Name    ${rowid}    ${FacilityName}    multipleValue=Y    bTestCaseColumn=True    sColumnReference=rowid
 	Set To Dictionary    ${ExcelPath}    Facility_Name=${FacilityName}
 	
@@ -168,6 +171,7 @@ Update Facility Expiry and Maturity Date Through FCT
 Update Borrowers External Credit Rating History
     [Documentation]    This keyword is used to update Borrower's External Credit Rating History
     ...    @author: makcamps    28JAN2021    - Initial create
+    ...    @update: makcamps    08FEB2021    - updated argument for validation
     [Arguments]    ${ExcelPath}
 
     ${Party_ID}    Read Data From Excel    PTY001_QuickPartyOnboarding    Party_ID    ${rowid}
@@ -184,7 +188,7 @@ Update Borrowers External Credit Rating History
     Update External Risk Rating Table    &{ExcelPath}[ExternalRatingType2]    &{ExcelPath}[RatingType]    &{ExcelPath}[MinType4]    &{ExcelPath}[New_StartDate]
     
     ### Validate External Risk Rating Changes ###
-    Validate External Risk Rating Table    &{ExcelPath}[RatingType2]    &{ExcelPath}[MinType4]    &{ExcelPath}[New_StartDate]
+    Validate External Risk Rating Table    &{ExcelPath}[ExternalRatingType2]    &{ExcelPath}[MinType4]    &{ExcelPath}[New_StartDate]
     Validate Change of External Rating Event
     
 Create PCT for Pricing Matrix
