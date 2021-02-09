@@ -111,6 +111,7 @@ LIQ_CommitmentFee_CapitalizationEditor_OK_Button = 'JavaWindow("title:=Facility 
 LIQ_CommitmentFee_Currency_Text = 'JavaWindow("title:=Commitment Fee.*").JavaStaticText("Index:=17")'
 LIQ_CommitmentFee_ActualExpiryDate_Text = 'JavaWindow("title:=Commitment Fee.*").JavaStaticText("Index:=1")'
 LIQ_CommitmentFee_ChangeExpiryDate_Menu = 'JavaWindow("title:=Commitment Fee.*").JavaMenu("label:=Options").JavaMenu("label:=Change Expiry Date")'
+LIQ_CommitmentFee_PricingFormulaInEffect_TextField = 'JavaWindow("title:=Commitment Fee.*").JavaEdit("attached text:=Pricing Formula In Effect:")'
 
 ###Commitment Fee - Lender Shares###
 LIQ_CommitmentFee_LenderShares_Window = 'JavaWindow("title:=Shares for.*")'
