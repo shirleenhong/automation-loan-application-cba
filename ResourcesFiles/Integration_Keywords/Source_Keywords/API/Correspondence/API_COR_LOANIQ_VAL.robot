@@ -990,6 +990,7 @@ Validate Interest Payment Notice Details
 Validate Line Fee in Advance Notice Details
     [Documentation]    This keyword validates the Notice details in XML.
     ...    @author: makcamps    15JAN2021    - initial create
+    ...    @update: makcamps    08FEB2021    - removed all in rate in validation, not available in xml
     [Arguments]    ${sPath_XMLFile}    ${sNotice_Customer_LegalName}    ${sContact}    ${sDeal_Name}    ${sXML_NoticeType}    ${sOngoingFee_Type}    ${sNotice_AllInRate}    ${sNotice_Amount}    ${sRate_Basis}
                  
     
@@ -1018,12 +1019,7 @@ Validate Line Fee in Advance Notice Details
     ###Fee Type Validation###
     ${Status}    Run Keyword And Return Status    Should Contain    ${XMLFile}    ${sOngoingFee_Type}
     Run Keyword If    ${Status}==True    Log    ${sOngoingFee_Type} is present
-    ...    ELSE    Run Keyword and Continue on Failure    Fail    ${sOngoingFee_Type} is not present 
-    
-    ###All In Rate Validation###
-    ${Status}    Run Keyword And Return Status    Should Contain    ${XMLFile}    ${sNotice_AllInRate}
-    Run Keyword If    ${Status}==True    Log    ${sNotice_AllInRate} is present
-    ...    ELSE    Run Keyword and Continue on Failure    Fail    ${sNotice_AllInRate} is not present 
+    ...    ELSE    Run Keyword and Continue on Failure    Fail    ${sOngoingFee_Type} is not present
     
     ###Amount Validation###
     ${Status}    Run Keyword And Return Status    Should Contain    ${XMLFile}    ${sNotice_Amount}

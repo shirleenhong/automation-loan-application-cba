@@ -7,6 +7,7 @@ Send Notice for Line Fee
     [Documentation]    This keyword is use to successfully sent out a Fee Payment Notice via WIP - API_COR_TC02
     ...    @author: makcamps
     ...    @update: makcamps    22JAN2021    - updated where to get data from, instead of from api get from excel path
+    ...    @update: makcamps    08FEB2021    - updated arguments for validating event management queue
     [Arguments]    ${ExcelPath}
     
     Get Notice Details for Fee Payment Notice Line Fee in LIQ    ${rowid}    &{ExcelPath}[Facility_Name]    &{ExcelPath}[Deal_Name]    &{ExcelPath}[OngoingFee_Type]
@@ -26,8 +27,7 @@ Send Notice for Line Fee
     
     ###Validate Event Management Queue###
     ${CurrentDate}    ${FieldValue}    Validate Notice in Business Event Output Window in LIQ    ${rowid}    &{ExcelPath}[Customer_IdentifiedBy]    
-    ...    ${NoticeCustomerLegalName}    ${NoticeIdentifier}
-    ...    ${dataset_path}&{ExcelPath}[InputFilePath]&{ExcelPath}[XML_File].xml
+    ...    ${NoticeCustomerLegalName}    ${NoticeIdentifier}    ${dataset_path}&{ExcelPath}[InputFilePath]&{ExcelPath}[XML_File].xml
     ...    ${dataset_path}&{ExcelPath}[InputFilePath]&{ExcelPath}[Temp_File].json    &{ExcelPath}[Field_Name]
            
     Write Data To Excel    Correspondence    BEO_StartDate    ${rowid}    ${CurrentDate}    bTestCaseColumn=True    sColumnReference=rowid

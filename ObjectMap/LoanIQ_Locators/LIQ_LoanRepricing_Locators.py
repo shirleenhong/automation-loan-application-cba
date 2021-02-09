@@ -10,15 +10,16 @@ LIQ_CreateRepricing_ComprehensiveRepricing_RadioButton = 'JavaWindow("title:=Cre
 LIQ_CreateRepricing_Ok_Button = 'JavaWindow("title:=Create Repricing.*").JavaButton("label:=OK")'
 
 ### Loan Repricing for Deal Window
-LIQ_LoanRepricingForDeal_Window = 'JavaWindow("title:=Loan Repricing for Deal.*")'
+LIQ_LoanRepricingForDeal_Window = 'JavaWindow("title:=Loan Repricing For Deal.*")'
 LIQ_LoanRepricingForDeal_Tab = 'JavaWindow("title:=Loan Repricing For Deal:.*").JavaTab("tagname:=TabFolder")'
 LIQ_LoanRepricingForDeal_JavaTree = 'JavaWindow("title:=Loan Repricing for Deal.*").JavaTree("tagname:=Select one or more.*")'
 LIQ_LoanRepricingForDeal_WorkFlowAction = 'JavaWindow("title:=Loan Repricing For Deal:.*").JavaTree("tagname:=Drill down to perform Workflow item")'
-LIQ_LoanRepricingForDeal_OK_Button = 'JavaWindow("title:=Loan Repricing for Deal.*").JavaButton("label:=OK")'
+LIQ_LoanRepricingForDeal_OK_Button = 'JavaWindow("title:=Loan Repricing For Deal.*").JavaButton("label:=OK")'
+LIQ_LoanRepricingForDeal_Inquiry_Button = 'JavaWindow("title:=Loan Repricing For Deal.*").JavaButton("attached text:=Notebook in Inquiry Mode - F7.*")'
 
 ### Confirmation Window
-
 LIQ_LoanRepricing_ConfirmationWindow_Yes_Button = 'JavaWindow("title:=Loan Repricing For Deal.*").JavaWindow("title:=Confirmation").JavaButton("label:=Yes")'
+LIQ_LoanRepricing_ConfirmationWindow_No_Button = 'JavaWindow("title:=Loan Repricing For Deal.*").JavaWindow("title:=Confirmation").JavaButton("label:=No")'
 LIQ_LoanRepricing_Confirmation_Window = 'JavaWindow("title:=Question")'
 
 ### Repricing Detail Add Options
