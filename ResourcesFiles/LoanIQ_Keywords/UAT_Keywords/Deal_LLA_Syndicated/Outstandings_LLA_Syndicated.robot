@@ -56,7 +56,7 @@ Create Loan Drawdown for LLA Syndicated Deal - Outstanding A
     Exit Notice Window
 
     ### Rate Setting ###
-    Navigate to Loan Drawdown Workflow and Proceed With Rate Setting        ${RATE_SETTING_TRANSACTION}
+    Navigate to Loan Drawdown Workflow and Proceed with Rate Setting        ${RATE_SETTING_TRANSACTION}
     Set Base Rate Details    &{ExcelPath}[BorrowerBaseRate]    &{ExcelPath}[AcceptRate_FromPricing]
 
     ### Send to Rate Approval ###
@@ -138,7 +138,7 @@ Create Loan Drawdown for LLA Syndicated Deal - Outstanding B
     Exit Notice Window
 
     ### Rate Setting ###
-    Navigate to Loan Drawdown Workflow and Proceed With Rate Setting        ${RATE_SETTING_TRANSACTION}
+    Navigate to Loan Drawdown Workflow and Proceed with Rate Setting        ${RATE_SETTING_TRANSACTION}
     Set Base Rate Details    &{ExcelPath}[BorrowerBaseRate]    &{ExcelPath}[AcceptRate_FromPricing]
 
     ### Send to Rate Approval ###
@@ -336,7 +336,7 @@ Create Comprehensive Repricing for LLA Syndicated Deal
     Search for Deal    &{ExcelPath}[Deal_Name]
     Search for Existing Outstanding    &{ExcelPath}[OutstandingSelect_Type]    &{ExcelPath}[Facility_Name]
     Open Existing Loan    ${NewLoan_Alias}
-    Validate Global and Host Bank Amount was Updated After Repricing    &{ExcelPath}[New_LoanAmount]    &{ExcelPath}[New_HostBankAmount]
+    Validate Updated Global and Host Bank Amount after Repricing    &{ExcelPath}[New_LoanAmount]    &{ExcelPath}[New_HostBankAmount]
     Navigate to Initial Drawdown Notebook from Loan Notebook
     Validate Release of Loan Repricing    &{ExcelPath}[Event_Name]
 
