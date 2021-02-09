@@ -4167,3 +4167,21 @@ Validate if Loan is Inactive
     Run Keyword If    ${Status}==${True}    Log    Loan is in Inactive Status
     ...    ELSE    Run Keyword And COntinue On Failure    Fail    Loan is not in Inactive state. 
 
+Navigate to Rate Setting Transaction from Loan Drawdown Notebook
+    [Documentation]    This keyword is used to navigate to rate setting transaction and select Yes or No on Rate setting Interpolation pop-up
+    ...    @author: mcastro    05FEB2021    - Initial create
+    [Arguments]    ${sAcceptRate_FromInterpolation}=N    
+
+    ###Pre-processing Keyword##
+    ${AcceptRate_FromInterpolation}    Acquire Argument Value    ${sAcceptRate_FromInterpolation} 
+
+    Mx LoanIQ activate window    ${LIQ_InitialDrawdown_Window}
+    Mx LoanIQ Select Window Tab    ${LIQ_InitialDrawdown_Tab}    ${WORKFLOW_TAB}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/RateSetting
+    Mx LoanIQ Select Or DoubleClick In Javatree    ${LIQ_InitialDrawdown_WorkflowAction}    ${RATE_SETTING_TRANSACTION}%d
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/RateSetting
+    Mx LoanIQ click element if present    ${LIQ_LoanRepricing_ConfirmationWindow_Yes_Button}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/RateSetting
+    Run Keyword If    '${AcceptRate_FromInterpolation}'=='N'    Mx LoanIQ click element if present    ${LIQ_Question_No_Button}
+    ...    ELSE    Mx LoanIQ click element if present    ${LIQ_Question_Yes_Button}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/RateSetting
