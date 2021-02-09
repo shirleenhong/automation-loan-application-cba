@@ -804,25 +804,32 @@ Navigate Notebook Workflow
     ...    ELSE IF    '${Transaction}'=='Close'    mx LoanIQ click element if present    ${LIQ_Information_OK_Button}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/NotebookWorkflow
 
-Navigate to Workflow and Select Rate Setting to No
+Navigate to Workflow and Select Rate Setting
     [Documentation]    This keyword navigates the Workflow tab of a Notebook, and does a Rate Setting and click No for Question.
     ...    @author: makcamps    08FEB2021    - Initial Create
-    [Arguments]    ${sNotebook_Locator}    ${sNotebookTab_Locator}    ${sNotebookWorkflow_Locator}    ${sTransaction}    
+    ...    @update: mcastro    09FEB2021    - Added  ${sAcceptRate_FromInterpolation} argument; added condition to handle requirement for clicking Yes
+    ...                                     - Updated keyword name from 'Navigate to Workflow and Select Rate Setting to No' to 'Navigate to Workflow and Select Rate Setting'
+    [Arguments]    ${sNotebook_Locator}    ${sNotebookTab_Locator}    ${sNotebookWorkflow_Locator}    ${sTransaction}    ${sAcceptRate_FromInterpolation}=N     
 
     ###Pre-processing Keyword##
     ${Notebook_Locator}    Acquire Argument Value    ${sNotebook_Locator}
     ${NotebookTab_Locator}    Acquire Argument Value    ${sNotebookTab_Locator}
     ${NotebookWorkflow_Locator}    Acquire Argument Value    ${sNotebookWorkflow_Locator}
     ${Transaction}    Acquire Argument Value    ${sTransaction} 
+    ${AcceptRate_FromInterpolation}    Acquire Argument Value    ${sAcceptRate_FromInterpolation}
 
-    mx LoanIQ activate window    ${Notebook_Locator}
+    Mx LoanIQ activate window    ${Notebook_Locator}
     Mx LoanIQ Select Window Tab    ${NotebookTab_Locator}    ${WORKFLOW_TAB}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/NotebookWorkflow
     Mx LoanIQ Select Or DoubleClick In Javatree    ${NotebookWorkflow_Locator}    ${Transaction}%d
-    mx LoanIQ click element if present    ${LIQ_Question_No_Button}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/NotebookWorkflow
+    Run Keyword If    '${AcceptRate_FromInterpolation}'=='N'    Mx LoanIQ click element if present    ${LIQ_Question_No_Button}
+    ...    ELSE    Mx LoanIQ click element if present    ${LIQ_Question_Yes_Button}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/NotebookWorkflow
+    Mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
     Mx LoanIQ click element if present    ${LIQ_LoanRepricing_ConfirmationWindow_Yes_Button}
-    mx LoanIQ click element if present    ${LIQ_Question_No_Button}
-    mx LoanIQ click element if present    ${LIQ_Question_Yes_Button}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/NotebookWorkflow
+    Mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/NotebookWorkflow
     
 Validate if Question or Warning Message is Displayed
