@@ -53,3 +53,70 @@ Setup Deal for PDS SYND Deal
     
     Save Changes on Deal Notebook
     
+Setup Primaries for PDS Syndicate Deal
+    [Documentation]    This keyword will setup primaries for PDS Syndicate Deal
+    ...    @author:    shirhong    04FEB2021    - Initial Create
+    [Arguments]    ${ExcelPath}
+    
+    ${Deal_Name}    Read Data From Excel    CRED01_DealSetup    Deal_Name    &{ExcelPath}[rowid]
+    ${Primary_LenderLoc}    Read Data From Excel    CRED01_DealSetup    AdminAgent_Location    &{ExcelPath}[rowid]
+    ${FacilityName_1}    Read Data From Excel    CRED02_FacilitySetup_A    Facility_Name    &{ExcelPath}[rowid]
+    ${FacilityName_2}    Read Data From Excel    CRED02_FacilitySetup_B    Facility_Name    &{ExcelPath}[rowid]
+
+    Open Existing Deal    ${Deal_Name}
+    Add Lender and Location    ${Deal_Name}    &{ExcelPath}[Primary_Lender]    ${Primary_LenderLoc}    &{ExcelPath}[Primary_RiskBook]    &{ExcelPath}[Primaries_TransactionType]
+    Set Sell Amount using Percent of Deal    &{ExcelPath}[Primary_PctOfDeal]
+    Set Facility Sell Amounts in Primaries    ${FacilityName_1}    &{ExcelPath}[Sell_Amount1]    &{ExcelPath}[Primary_BuySellPrice]
+    Set Facility Sell Amounts in Primaries    ${FacilityName_2}    &{ExcelPath}[Sell_Amount2]    &{ExcelPath}[Primary_BuySellPrice]
+    
+    Add Contact in Primary    &{ExcelPath}[Primary_Contact]
+    Select Servicing Group on Primaries    &{ExcelPath}[Primary_SGMember]    &{ExcelPath}[Primary_SGAlias]
+
+    Circling for Primary Workflow    &{ExcelPath}[Primary_CircledDate]
+    Complete Portfolio Allocations Workflow    &{ExcelPath}[Primary_Portfolio]|&{ExcelPath}[Primary_Portfolio]    &{ExcelPath}[Primary_PortfolioBranch]    &{ExcelPath}[Sell_Amount1]|&{ExcelPath}[Sell_Amount2]    &{ExcelPath}[Primary_PortfolioExpiryDate]|&{ExcelPath}[Primary_PortfolioExpiryDate]    ${FacilityName_1}|${FacilityName_2}    &{ExcelPath}[Deal_ExpenseCode]    
+    Send to Settlement Approval
+
+    Close All Windows on LIQ
+
+    ###Approval as Supervisor###
+    Logout from Loan IQ
+    Login to Loan IQ    ${SUPERVISOR_USERNAME}    ${SUPERVISOR_PASSWORD}
+    Select Actions    [Actions];Work In Process
+    Circle Notebook Settlement Approval    ${Deal_Name}    &{ExcelPath}[LenderType1]
+    Close All Windows on LIQ
+    
+PDS Syndicated Deal Approval and Close
+    [Documentation]    This keywords Approves and Closes the created PDS Syndicated Deal.
+    ...    @author:    shirhong    08FEB2021    - initial create
+    [Arguments]    ${ExcelPath}
+    
+    ${Deal_Name}    Read Data From Excel    CRED01_DealSetup    Deal_Name    &{ExcelPath}[rowid]
+    ${ApproveandCloseDate}    Read Data From Excel    SYND02_PrimaryAllocation    Expected_CloseDate    &{ExcelPath}[rowid]
+    ${FacilityName_1}    Read Data From Excel    CRED02_FacilitySetup_A    Facility_Name    &{ExcelPath}[rowid]
+    ${FacilityName_2}    Read Data From Excel    CRED02_FacilitySetup_B    Facility_Name    &{ExcelPath}[rowid]
+
+    ###Logout from LIQ and Login as Inputter###
+    Close All Windows on LIQ
+    Logout from Loan IQ
+    Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
+          
+    ### Deal Notebook ###
+    Search Existing Deal    ${Deal_Name}
+    Navigate to Deal Notebook Workflow and Proceed With Transaction    ${SEND_TO_APPROVAL_STATUS}
+    Logout from Loan IQ
+    Login to Loan IQ    ${SUPERVISOR_USERNAME}    ${SUPERVISOR_PASSWORD}
+    Open Existing Deal    ${Deal_Name}
+    Approve the Deal    ${ApproveandCloseDate}
+    Close the Deal    ${ApproveandCloseDate}
+
+    ###Validate Deal, Facility and Circle Notebooks status after Deal Close.
+    Verify Circle Notebook Status After Deal Close    &{ExcelPath}[Primary_Lender]
+    Verify Facility Status After Deal Close    ${FacilityName_1}
+    Verify Facility Status After Deal Close    ${FacilityName_2}
+    Verify Deal Status After Deal Close
+    Validate Deal Closing Cmt With Facility Total Global Current Cmt
+        
+    Close All Windows on LIQ
+    Logout from Loan IQ
+    Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
+ 
