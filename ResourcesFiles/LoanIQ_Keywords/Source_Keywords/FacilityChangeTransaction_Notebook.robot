@@ -668,7 +668,7 @@ Verification of Borrower Base Created in Facility Change Transaction
 
     [Return]    ${BorrowerBase_Collateral}    ${BorrowerBase_Lendable}    ${BorrowerBase_Advance}    ${BorrowerBase_Value}  
 
-Validate Maturity and Expiry Date in Facility Change Transaction
+Validate and Compare Maturity and Expiry Date in Facility Change Transaction
     [Documentation]    This keyword is used to validate if the changes in Maturity Date and Expiry Date are correct and same. 
     ...    @author: javinzon	04FEB2021    - Initial create
     [Arguments]    ${sMaturity_Date}    ${sEffective_Date}

@@ -4479,7 +4479,7 @@ Add Multiple Amortization Schedule for Facility
     \    Add Amortization Schedule for Facility    Decrease    ${LimitChangeDecreaseAmount}    ${LimitChangeDecreaseAmtSched}     
     \    Sleep    10s
 
-Validate an Event in Events Tab
+Validate an Event in Events Tab of Facility Notebook
     [Documentation]    This keyword is used to validate an event in Facility - Events Tab
     ...    @author: javinzon    08FEB2021    - Initial create
     [Arguments]    ${sFacility_Event}

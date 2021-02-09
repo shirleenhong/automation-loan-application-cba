@@ -76,7 +76,7 @@ Change Facility Expiry Date for LBT Bilateral Deal
     ### Validate Released Event ###
     Launch Existing Facility    ${Deal_Name}    ${Facility_Name}
     Validate Released Facility Change Transaction
-    Validate Maturity and Expiry Date in Facility Change Transaction	&{ExcelPath}[MaturityDate]    &{ExcelPath}[New_ExpiryDate]
+    Validate and Compare Maturity and Expiry Date in Facility Change Transaction	&{ExcelPath}[MaturityDate]    &{ExcelPath}[New_ExpiryDate]
     Close All Windows on LIQ
 
 Create Pricing Change Transaction for LBT Bilateral Deal

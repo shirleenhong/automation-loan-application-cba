@@ -632,7 +632,6 @@ Validate Updated Ongoing Fees in Facility Notebook
     ...    @author: rtarayao
     ...    @update: amansuet    26MAY2020    - updated to align with automation standards and added take screenshot
     ...                                      - modified keyword to make it dynamic  and remove read data from excel and fixed hardcorded locators
-    ...    @update: javinzon    09FEB2021    - updated the argument from 28 to 32 to get the correct substring 
     [Arguments]    ${sPricingChange_OngoingFeeRate_SavedStr}
 
     ### Keyword Pre-processing ###
@@ -840,7 +839,10 @@ Insert Add in Modify Ongoing Fees of Pricing Change Transaction
     Mx LoanIQ Select Combo Box Value    ${LIQ_FeeSelection_Type_List}    ${FeeType} 
     Mx LoanIQ Select Combo Box Value    ${LIQ_FeeSelection_RateBasis_List}    ${RateBasisOngoingFeePricing} 
     mx LoanIQ click    ${LIQ_FacilityPricing_OngoingFees_FreeSelection_OK_Button}
-    Run Keyword And Continue On Failure    Mx LoanIQ Verify Object Exist    JavaWindow("title:=.*Ongoing Fee Pricing.*").JavaTree("developer name:=.*${FacilityItem}.*")    VerificationData="Yes"
+    
+    ${FacilityItem}    Replace Variables    ${FacilityItem}
+    ${LIQ_PricingChangeTransaction_OngoingFeePricingWindow_FacilityItemValue_Item}    Replace Variables    ${LIQ_PricingChangeTransaction_OngoingFeePricingWindow_FacilityItemValue_Item}
+    Run Keyword And Continue On Failure    Mx LoanIQ Verify Object Exist    ${LIQ_PricingChangeTransaction_OngoingFeePricingWindow_FacilityItemValue_Item}    VerificationData="Yes"
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/OngoingFeePricing
 
 Insert After in Modify Ongoing Fees of Pricing Change Transaction
@@ -854,13 +856,11 @@ Insert After in Modify Ongoing Fees of Pricing Change Transaction
     
     mx LoanIQ click    ${LIQ_PricingChangeTransaction_OngoingFeePricingWindow_After_Button}
     Mx LoanIQ Select Combo Box Value    ${LIQ_Facility_InterestPricing_AddItem_List}    ${FacilityItemAfter}
-    Run Keyword And Continue On Failure    Mx LoanIQ Verify Object Exist    ${LIQ_FacilityPricing_OngoingFees_AddItem_OK_Button}    VerificationData="Yes"
-    Run Keyword And Continue On Failure    Mx LoanIQ Verify Object Exist    ${LIQ_FacilityPricing_OngoingFees_AddItem_Cancel_Button}       VerificationData="Yes"
     mx LoanIQ click    ${LIQ_FacilityPricing_OngoingFees_AddItem_OK_Button}
     mx LoanIQ enter    ${LIQ_FacilityPricing_FormulaCategory_Percent_Radiobutton}    ${ON}
     mx LoanIQ activate window    ${LIQ_FormulaCategory_Window}
     mx LoanIQ enter    ${LIQ_FacilityPricing_FormulaCategory_Percent_Textfield}    ${FacilityPercent}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/OngoingFeePricing
     mx LoanIQ click    ${LIQ_FacilityPricing_FormulaCategory_OK_Button}    
-    Sleep    10s
+    mx LoanIQ activate window    ${LIQ_PricingChangeTransaction_OngoingFeePricing_Window}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/OngoingFeePricing
