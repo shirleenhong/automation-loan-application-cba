@@ -115,8 +115,7 @@ PDS Syndicated Deal Approval and Close
     Verify Facility Status After Deal Close    ${FacilityName_2}
     Verify Deal Status After Deal Close
     Validate Deal Closing Cmt With Facility Total Global Current Cmt
-    ${Deal_ClosingCmt}    Get Deal Closing Cmt
-    
+        
     Close All Windows on LIQ
     Logout from Loan IQ
     Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
