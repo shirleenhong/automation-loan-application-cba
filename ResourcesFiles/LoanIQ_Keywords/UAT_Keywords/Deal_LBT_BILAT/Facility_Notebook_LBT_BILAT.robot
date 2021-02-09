@@ -117,7 +117,7 @@ Create Pricing Change Transaction for LBT Bilateral Deal
    
     ### Validate Released Event ###
     Navigate to Facility Notebook    ${Deal_Name}    ${Facility_Name}
-    Validate an Event in Events Tab    ${PRICING_CHANGE_TRANSACTION_RELEASED}
+    Validate an Event in Events Tab of Facility Notebook    ${PRICING_CHANGE_TRANSACTION_RELEASED}
     Validate Updated Ongoing Fees in Facility Notebook    &{ExcelPath}[OngoingFee_NewRate]
     Close All Windows on LIQ
     Open Deal Notebook If Not Present    ${Deal_Name}

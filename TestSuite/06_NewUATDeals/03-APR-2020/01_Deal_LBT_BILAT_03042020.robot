@@ -19,8 +19,8 @@ Change Facility Expiry Date from (3/4/2020 to 30/9/2021)
 
 Change Ongoing Fee Pricing Rule and Actual Due Date
     Mx Execute Template With Multiple Data    Create Pricing Change Transaction for LBT Bilateral Deal    ${ExcelPath}    ${rowid}    AMCH06_PricingChangeTransaction
-    # Set Test Variable    ${rowid}    2
-    # Mx Execute Template With Multiple Data    Update Actual Due Date and Cycle Frequency for LBT Bilateral Deal    ${ExcelPath}    ${rowid}    AMCH5_FacilityChangeTransaction   
+    Set Test Variable    ${rowid}    2
+    Mx Execute Template With Multiple Data    Update Actual Due Date and Cycle Frequency for LBT Bilateral Deal    ${ExcelPath}    ${rowid}    AMCH5_FacilityChangeTransaction   
 
     
     
