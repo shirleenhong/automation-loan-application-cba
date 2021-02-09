@@ -45,3 +45,82 @@ Create Class A Note Facility for LBT Bilateral Deal
     ### Facility Notebook - Sublimit/Cust Tab ###
     Add Borrower    &{ExcelPath}[Facility_Currency]    ${Facility_BorrowerSGName}    &{ExcelPath}[Facility_BorrowerPercent]    ${Facility_Borrower}
     ...    &{ExcelPath}[Facility_GlobalLimit]    &{ExcelPath}[Facility_BorrowerMaturity]    &{ExcelPath}[Facility_EffectiveDate]
+
+Change Facility Expiry Date for LBT Bilateral Deal
+    [Documentation]    This keyword is used to update the Facility Expiry Date of LBT Bilateral Deal via Facility Change Transaction
+    ...    @author: javinzon    05FEB2021    - Initial create
+    [Arguments]    ${ExcelPath}
+   
+    ${Deal_Name}    Read Data From Excel    CRED01_DealSetup    Deal_Name    ${rowid}
+    ${Facility_Name}    Read Data From Excel    CRED01_FacilitySetup    Facility_Name    ${rowid}
+    
+    Logout from Loan IQ
+    Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
+    Launch Existing Facility    ${Deal_Name}    ${Facility_Name}
+    Add Facility Change Transaction
+    Update Expiry Date in Facility Change Transaction	&{ExcelPath}[New_ExpiryDate]
+
+    ### Send To Approval ###
+    Send to Approval Facility Change Transaction
+
+    ### Approval ###
+    Logout from Loan IQ
+    Login to Loan IQ    ${MANAGER_USERNAME}    ${MANAGER_PASSWORD}
+    Approve Facility Change Transaction    ${Deal_Name}
+
+    ### Release ###
+    Logout from Loan IQ
+    Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
+    Release Facility Change Transaction    ${Deal_Name}
+
+    ### Validate Released Event ###
+    Launch Existing Facility    ${Deal_Name}    ${Facility_Name}
+    Validate Released Facility Change Transaction
+    Validate Maturity and Expiry Date in Facility Change Transaction	&{ExcelPath}[MaturityDate]    &{ExcelPath}[New_ExpiryDate]
+    Close All Windows on LIQ
+
+Create Pricing Change Transaction for LBT Bilateral Deal
+    [Documentation]    The keyword will Create Pricing Change Transaction for LBT Bilateral Deal.
+    ...    @author: javinzon    05FEB2021    - Initial create
+    [Arguments]    ${ExcelPath}
+
+    ${Deal_Name}    Read Data From Excel    CRED01_DealSetup    Deal_Name    ${rowid}
+    ${Facility_Name}    Read Data From Excel    CRED01_FacilitySetup    Facility_Name    ${rowid}
+    
+    ### Update Ongoing Fee and Interest Pricing ###
+    Navigate to Facility Notebook    ${Deal_Name}    ${Facility_Name}
+    Navigate to Pricing Change Transaction Menu
+    Input Pricing Change Transaction General Information    ${Deal_Name}    ${Facility_Name}    &{ExcelPath}[PricingChange_TransactionNo]    &{ExcelPath}[PricingChange_EffectiveDate]    &{ExcelPath}[PricingChange_Desc]
+    Navigate to Modify Ongoing Fees Window from PCT Notebook
+    Clear Ongoing Fee Pricing Current Values
+    Insert Add in Modify Ongoing Fees of Pricing Change Transaction    &{ExcelPath}[Facility_Item]    &{ExcelPath}[Fee_Type]    &{ExcelPath}[Rate_Basis]  
+    Insert After in Modify Ongoing Fees of Pricing Change Transaction    &{ExcelPath}[Facility_Item_After]    &{ExcelPath}[Facility_Percent]
+    Validate Ongoing Fee or Interest
+    Click OK Button in Ongoing Fees Window
+    
+    ### Send to Approval ###
+    Select Pricing Change Transaction Send to Approval
+    Logout from Loan IQ
+
+    ### Approval ###
+    Login to Loan IQ    ${SUPERVISOR_USERNAME}    ${SUPERVISOR_PASSWORD}
+    Navigate to Facility Notebook    ${Deal_Name}    ${Facility_Name}
+    Navigate to Pricing Change Transaction Menu
+    Approve Price Change Transaction
+    Logout from Loan IQ
+
+    ### Release ###
+    Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
+    Select Item in Work in Process    ${FACILITIES_TRANSACTION}    ${AWAITING_RELEASE_STATUS}    ${PRICING_CHANGE_TRANSACTION}     ${Facility_Name}
+    Select Pricing Change Transaction Release
+    Close All Windows on LIQ
+   
+    ### Validate Released Event ###
+    Navigate to Facility Notebook    ${Deal_Name}    ${Facility_Name}
+    Validate an Event in Events Tab    ${PRICING_CHANGE_TRANSACTION_RELEASED}
+    Validate Updated Ongoing Fees in Facility Notebook    &{ExcelPath}[OngoingFee_NewRate]
+    Close All Windows on LIQ
+    Open Deal Notebook If Not Present    ${Deal_Name}
+    Navigate Directly to Commitment Fee Notebook from Deal Notebook    ${Facility_Name}
+    Validate New Rate in General Tab of Commitment Fee Notebook    &{ExcelPath}[PricingFormula_InEffect]    &{ExcelPath}[Current_Rate]
+    

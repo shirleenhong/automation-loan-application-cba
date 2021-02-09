@@ -174,6 +174,7 @@ OUTSTANDINGS_TRANSACTION = "Outstandings"
 FACILITIES_TRANSACTION = "Facilities"
 CIRCLES_TRANSACTION = "Circles"
 FACILITY_CHANGE_TRANSACTION = "Facility Change Transaction"
+FACILITY_CHANGE_TRANSACTION_RELEASED = 'Facility Change Transaction Released'
 AWAITING_APPROVAL_STATUS = "Awaiting Approval"
 AWAITING_RELEASE_STATUS = "Awaiting Release"
 SEND_TO_APPROVAL_STATUS = "Send to Approval"
@@ -236,6 +237,8 @@ LOAN_INCREASE = "Loan Increase"
 AWAITING_GENERATE_INTENT_NOTICES_STATUS = "Awaiting Generate Intent Notices"
 AWAITING_RATE_SETTING = "Awaiting Rate Setting"
 REVERSE_FEE_PAYMENT_TRANSACTION= "Reverse Fee Payment"
+PRICING_CHANGE_TRANSACTION = "Pricing Change Transaction"
+PRICING_CHANGE_TRANSACTION_RELEASED = "Pricing Change Transaction Released"
 
 
 ### Bank Role ###

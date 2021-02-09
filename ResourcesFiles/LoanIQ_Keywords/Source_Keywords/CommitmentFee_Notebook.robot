@@ -1722,6 +1722,7 @@ Update Commitment Fee
     ...    @author: mcastro    03DEC2020    - Initial Create
     ...    @update: kmagday    12JAN2021    - added selecting cycle frequency
     ...    @update: kmagday    14JAN2021    - remove extra space after OR that makes the script failing
+    ...    @update: javinzon    09FEB2021    - added conditions for entering value in Effective Date
     [Arguments]    ${sFeePayment_EffectiveDate}    ${sFeePayment_ActualDate}    ${sFeePayment_AdjustedDueDate}    ${sAccrue}    ${sFeePayment_AccrualEndDate}    ${sCycle_Frequency}=None   
 
     ### Keyword Pre-processing ###
@@ -1736,8 +1737,9 @@ Update Commitment Fee
     Mx LoanIQ Select Window Tab    ${LIQ_CommitmentFee_Tab}    ${GENERAL_TAB}
     Run Keyword And Continue On Failure    Mx LoanIQ click element if present    ${LIQ_CommitmentFee_InquiryMode_Button}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/CommitmentFeeNotebook_General
-    Mx LoanIQ Enter    ${LIQ_CommitmentFee_EffectiveDate_Field}    ${FeePayment_EffectiveDate}
-    Mx LoanIQ Enter    ${LIQ_CommitmentFee_FloatRateStartDate_Field}    ${FeePayment_EffectiveDate}
+    Run Keyword If    '${FeePayment_EffectiveDate}'!='None'    Run Keywords    Mx LoanIQ Enter    ${LIQ_CommitmentFee_EffectiveDate_Field}    ${FeePayment_EffectiveDate}
+    ...    AND    Mx LoanIQ Enter    ${LIQ_CommitmentFee_FloatRateStartDate_Field}    ${FeePayment_EffectiveDate}
+    ...    ELSE    Log    Updating Effective Date is not required for the transaction.
     Run Keyword If    '${Cycle_Frequency}'!='None' or '${Cycle_Frequency}'!=''    mx LoanIQ Select Combo Box Value    ${LIQ_CommitmentFee_Cycle_Frequency_Dropdown}    ${Cycle_Frequency}
     Mx LoanIQ Enter    ${LIQ_CommitmentFee_ActualDueDate_Field}    ${FeePayment_ActualDate}
     Mx LoanIQ Enter    ${LIQ_CommitmentFee_AdjustedDueDate}    ${FeePayment_AdjustedDueDate}
@@ -1965,7 +1967,7 @@ Perform Reverse Payment Under Events Tab in Commitment Fee Notebook
 
     Run Keyword If    ${EffectiveDateReversal_status}==${True}    Log    Effective Date of Fee Payment and Reversal matched.
     ...    ELSE    Log    Discrepancy in Fee payment effective date and reversal payment date.    level=Error          
-            
+    
     mx LoanIQ enter    ${LIQ_ReversePayment_Comment_Textfield}    ${Reversal_Comment}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/ReversalPayment
   
@@ -2088,3 +2090,20 @@ Navigate and Verify Line Fee Accrual Tab
     Save Values of Runtime Execution on Excel File    ${RunVar_DueDate}    ${OngoingFee_DueDate}
     
     [Return]    ${OngoingFee_EffectiveDate}    ${OngoingFee_AccrualEndDate}    ${OngoingFee_DueDate}
+
+Validate New Rate in General Tab of Commitment Fee Notebook
+    [Documentation]    This keyword is used to validate if rates in Pricing Formula In Effect and Current rate fields are correct.
+    ...    @author: javinzon    09FEB2021    - Initial Create
+    [Arguments]    ${sPricing_Formula_In_Effect}    ${sCurrent_Rate}
+    
+    ### Keyword Pre-processing ###
+    ${Pricing_Formula_In_Effect}    Acquire Argument Value    ${sPricing_Formula_In_Effect}
+    ${Current_Rate}    Acquire Argument Value    ${sCurrent_Rate}
+    
+    mx LoanIQ activate window    ${LIQ_CommitmentFee_Window}
+    Mx LoanIQ Select Window Tab    ${LIQ_CommitmentFee_Tab}    ${GENERAL_TAB}
+    Validate Loan IQ Details    ${Pricing_Formula_In_Effect}    ${LIQ_CommitmentFee_PricingFormulaInEffect_TextField}    
+    Validate Loan IQ Details    ${Current_Rate}    ${LIQ_CommitmentFee_CurrentRate_Field} 
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/CommitmentFeeWindow_GeneralTab_NewRate
+    
+    

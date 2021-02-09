@@ -655,13 +655,14 @@ Validate Ongoing Fee or Interest
     ...    @update: rtarayao    04MAR2019    Added an action to Click on OK button to close the window.
     ...    @update: bernchua    20AUG2019    Added click element if present for warning message
     ...    @update: dahijara    26JUN2020    - added keyword for screenshot
+    ...    @update: javinzon    09FEB2021    - updated keyword 'mx LoanIQ click' to 'mx LoanIQ click element if present'
     mx LoanIQ click    ${LIQ_FacilityPricing_OngoingFeeInterest_Validate_Button}
     mx LoanIQ activate    ${LIQ_Congratulations_Window}    
     Run Keyword And Continue On Failure    Mx LoanIQ Verify Object Exist    ${LIQ_Congratulations_Window}        VerificationData="Yes"
     ${OngoingFee_ValidationPassed}    Run Keyword And Return Status    Mx LoanIQ Verify Runtime Property    ${LIQ_Congratulations_MessageBox}    value%Validation completed successfully.
     Run Keyword If    ${OngoingFee_ValidationPassed}==True    Run Keywords    Log    Ongoing Fee Validation Passed.
     ...    AND    mx LoanIQ click element if present    ${LIQ_Congratulations_OK_Button}
-    ...    AND    mx LoanIQ click    ${LIQ_FacilityPricing_OngoingFees_OK_Button}
+    ...    AND    mx LoanIQ click element if present    ${LIQ_FacilityPricing_OngoingFees_OK_Button}
     ...    AND    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
     mx LoanIQ click element if present    ${LIQ_FacilityPricing_OngoingFeeInterest_OK_Button}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/FacilityNotebook_OngoingFeePricing
@@ -4477,3 +4478,19 @@ Add Multiple Amortization Schedule for Facility
     \    ${LimitChangeDecreaseAmtSched}    Get From List    ${Facility_LimitChangeDecreaseAmtSched_List}    ${INDEX}
     \    Add Amortization Schedule for Facility    Decrease    ${LimitChangeDecreaseAmount}    ${LimitChangeDecreaseAmtSched}     
     \    Sleep    10s
+
+Validate an Event in Events Tab
+    [Documentation]    This keyword is used to validate an event in Facility - Events Tab
+    ...    @author: javinzon    08FEB2021    - Initial create
+    [Arguments]    ${sFacility_Event}
+
+    ### Keyword Pre-processing ###
+    ${Facility_Event}    Acquire Argument Value    ${sFacility_Event}
+    
+    Mx LoanIQ Select Window Tab    ${LIQ_FacilityNotebook_Tab}    ${EVENTS_TAB}
+    ${Status}    Run Keyword And Return Status    Mx LoanIQ Verify Text In Javatree    ${LIQ_FacilityEvents_JavaTree}    ${Facility_Event}%yes
+    Run Keyword If    ${Status}==${True}    Log    ${Facility_Event} is present in Events Tab
+    ...    ELSE    Run Keyword And Continue On Failure    Fail    ${Facility_Event} is not present in Events Tab
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/Facility_EventsTab    
+
+
