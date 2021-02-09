@@ -29,6 +29,10 @@ LIQ_OngoingFeePayment_UpdateMode_Button = 'JavaWindow("title:=.* Payment .*","di
 LIQ_OngoingFeePayment_InquiryMode_Button = 'JavaWindow("title:=.* Payment .*","displayed:=1").JavaButton("attached text:=Notebook in Inquiry Mode - F7")'
 LIQ_OngoingFeePayment_ViewUpdateLenderShares_Menu = 'JavaWindow("title:=.* Payment .*").JavaMenu("label:=Options").JavaMenu("label:=View/Update Lender Shares")'
 LIQ_OngoingFeePayment_AwaitingReleaseWindow = 'JavaWindow("title:=.*Ongoing Fee Payment.*.*Awaiting Release.*","displayed:=1")'
+LIQ_OngoingFeePayment_CurrentCycleDue_TextField = 'JavaWindow("title:=.* Payment .*","displayed:=1").JavaEdit("labeled_containers_path:=Tab:General;Group: Amounts ;","index:=3")'
+LIQ_OngoingFeePayment_ProjectedCycleDue_TextField = 'JavaWindow("title:=.* Payment .*","displayed:=1").JavaEdit("labeled_containers_path:=Tab:General;Group: Amounts ;","index:=1")'
+LIQ_OngoingFeePayment_File_Save_Dropdown = 'JavaWindow("title:=Commitment Fee Ongoing Fee.*").JavaMenu("label:=File").JavaMenu("label:=Save")'
+LIQ_OngoingFeePayment_File_Exit_Dropdown = 'JavaWindow("title:=Commitment Fee Ongoing Fee.*").JavaMenu("label:=File").JavaMenu("label:=Exit")'
 
 LIQ_OngoingFeePayment_Tab = 'JavaWindow("title:=.*Fee.*Ongoing Fee Payment.*","displayed:=1").JavaTab("tagname:=TabFolder")'  
 LIQ_OngoingFeePayment_WorkflowItems = 'JavaWindow("title:=.*Fee.*Ongoing Fee Payment.*").JavaTree("attached text:=Drill down to perform Workflow item")'
@@ -147,3 +151,6 @@ LIQ_IntentNotice_Window = 'JavaWindow("title:=.* Notice Group.*")'
 ### Fee Expiry Date ###
 LIQ_FeeExpiryDate_Textfield = 'JavaWindow("title:=Fee Expiry Date").JavaEdit("attached text:=Expiry Date :")'
 LIQ_FeeExpiryDate_Ok_Button = 'JavaWindow("title:=Fee Expiry Date").JavaButton("attached text:=OK")'
+
+###Commitment Fee Reverse Fee- Events###   
+LIQ_ReverseFee_Events_Javatree = 'JavaWindow("title:=Commitment Fee Reverse Fee.*").JavaTree("tagname:=Select event to view details")'   

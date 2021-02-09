@@ -716,7 +716,6 @@ Compute New Facility Available to Draw Amount
     
     [Return]    ${Computed_AvailToDrawAmt}
 
-
 Get Current Commitment Amount
     [Documentation]    This keyword gets  Current Commitment Amount of the Facility.
     ...    @author: rtarayao
@@ -737,7 +736,6 @@ Get Current Commitment Amount
     Save Values of Runtime Execution on Excel File    ${sRunTimeVar_CurrentCmtAmt}    ${CurrentCmtAmt}
 
     [Return]    ${CurrentCmtAmt}
-    
 
 Validate Global Facility Amounts - Balanced
     [Documentation]    This keyword validates that the Sum of Outstandings and Avail to Draw Amount less the Current Commitment Amount is equal to zero(0).
@@ -784,8 +782,6 @@ Validate Global Facility Amounts - Balanced for Term Loan Drawdown for SYNDICATE
     ${result}    Run Keyword And Return Status    Run Keyword And Continue On Failure    Should Be Equal    ${DiffAmount}    0.0    
     Run Keyword If   '${result}'=='True'    Log    Amounts are correct! Facility reflected the correct amount! 
     ...     ELSE    Log    Amounts are not correct! Please recheck your facility and loan!      
-
-
     
 Navigate to Initial Drawdown Notebook from Loan Notebook
     [Documentation]    This keyword navigates the User to the Initial Drawdown Notebook from the Loan Notebook.
@@ -795,7 +791,6 @@ Navigate to Initial Drawdown Notebook from Loan Notebook
     Mx LoanIQ Select Window Tab    ${LIQ_Loan_Tab}    Events   
     Mx LoanIQ Select Or DoubleClick In Javatree    ${LIQ_Loan_Events_List}    Released%d     
     mx LoanIQ activate window    ${LIQ_Drawdown_Window}
-
 
 ########Ge and Ritz Code#########
 
@@ -819,7 +814,7 @@ Release Loan Initial Drawdown after Interest Capitalization
     mx LoanIQ click element if present    ${LIQ_Question_Yes_Button} 
     # Mx LoanIQ Verify Object Exist    ${LIQ_Information_Window}
     mx LoanIQ click element if present    ${LIQ_Information_OK_Button}   
-    
+
     mx LoanIQ click element if present    ${LIQ_Cashflows_OK_Button}
 
 Navigate to Outstanding Select Window from Deal
@@ -1283,7 +1278,6 @@ Enter Initial Loan Drawdown Details
     ### ConstRuntime Keyword Post-processing ###
     Save Values of Runtime Execution on Excel File    ${sRunVar_Loan_Alias}    ${loan_alias}
     [Return]    ${loan_alias}
- 
     
 Enter Loan Drawdown Details for USD Libor Option
     [Documentation]    This keyword is used to enter Loan Drawdown Details for USD Libor Option
@@ -1330,7 +1324,6 @@ Enter Loan Drawdown Details for USD Libor Option
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/InitialDrawdown
     mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}    
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/InitialDrawdown
-    
  
 Enter Loan Drawdown Details
     [Documentation]    This keyword is used to enter Loan Drawdown Details Prior to Interest Capitalization
@@ -1413,7 +1406,7 @@ Create Repayment Schedule - Fixed Principal Plus Interest Due
             
     mx LoanIQ select    ${LIQ_RepaymentSchedule_Options_Reschedule}
     mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
-                
+
 Verify Fixed Principal Payment Amount
     [Documentation]    This keyword is used to verify if the Fixed Principal Payment Amount is correct
     ...    @author: ghabal
@@ -1433,7 +1426,7 @@ Verify Fixed Principal Payment Amount
     ### ConstRuntime Keyword Post-processing ###
     Save Values of Runtime Execution on Excel File    ${sRunVar_DisplayFixedPrincipalPaymentAmount}    ${DisplayFixedPrincipalPaymentAmount}
     [Return]    ${DisplayFixedPrincipalPaymentAmount}
-          
+
 Validate Total Amount of the Repayment Schedule vs Current Host Bank Amount
     [Documentation]    This keyword is used to validate Total Amount of the Repayment Schedule vs Current Host Bank Amount
     ...    @author: ghabal
@@ -1919,7 +1912,6 @@ Add Fixed PI Items in Flexible Schedule
    ...    ELSE    Fail    Log    Number of Days Field does not exist
    
    ###Populate the required fields###
-   
    mx LoanIQ enter    ${LIQ_FSched_AddItems_NoOFPayments_Field}    ${Item_NoOFPayments}
    Mx LoanIQ Select Combo Box Value    ${LIQ_FSched_AddItems_Frequency_Field}    ${Item_Frequency} 
    Mx LoanIQ Select Combo Box Value    ${LIQ_FSched_AddItems_Type_Field}    ${Item_type} 
@@ -1937,6 +1929,7 @@ Add Fixed PI Items in Flexible Schedule
    Run Keyword And Continue On Failure    Mx LoanIQ Verify Text In Javatree   ${LIQ_FlexibleSchedule_JavaTree}    ${Item_type}%yes
    Run Keyword And Continue On Failure    Mx LoanIQ Verify Runtime Property    ${LIQ_FlexibleSchedule_JavaTree}    items count%${Item_NoOFPayments}       
    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/FlexibleSchedule
+
    ### Keyword Post-processing ###
    Save Values of Runtime Execution on Excel File    ${sRunTimeVar_FixedPIDate}    ${sDate}
 
@@ -2247,7 +2240,6 @@ Accept Loan Drawdown Rates for Term Facility
     Should Be Equal    ${Borrower_BaseRate}    ${baseRate}     
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/InitialDrawdown_BorrowerBaseRate
     mx LoanIQ click    ${LIQ_InitialDrawdown_SetBaseRate_OK_Button}        
-
 
 Validate Rate Set
     [Documentation]    This keyword will validate the rate set on events tab
@@ -2595,7 +2587,6 @@ Generate Loan with Flex Schedule Rate Setting Notices
     Take Screenshot
     mx LoanIQ close window    ${LIQ_Notice_RateSettingNotice_Window}                        
     mx LoanIQ click    ${LIQ_Notice_Exit_Button} 
-
 
 Validate Global Facility Amounts - Loan Split
     [Documentation]    This keyword validates that the Sum of Outstandings and Avail to Draw Amount less the Current Commitment Amount is equal to zero(0).
@@ -3223,7 +3214,6 @@ Compute 'Amounts in Facility Currency' In Initial Drawdown Notebook
     
     [Return]    ${Computed_Current}    ${Computed_HostBankGross}    ${Computed_HostBanknet}
 
-    
 Go To Initial Drawdown GL Entries
     [Documentation]    This keyword goes to the GL Entries from the Initial Drawdown Notebook.
     ...                @author: bernchua
@@ -3515,6 +3505,17 @@ Navigate to Loan Drawdown Workflow and Proceed With Transaction
     Navigate Notebook Workflow    ${LIQ_InitialDrawdown_Window}    ${LIQ_InitialDrawdown_Tab}    ${LIQ_InitialDrawdown_WorkflowAction}    ${Transaction}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LoanDradown_Workflow
 
+Navigate to Loan Drawdown Workflow and Proceed with Rate Setting
+    [Documentation]    This keyword navigates to the Loan Drawdown Workflow using the Rate Settings
+    ...  @author: makcamps    08FEB2021    Initial create
+    [Arguments]    ${sTransaction}
+
+    ### Keyword Pre-processing ###
+    ${Transaction}    Acquire Argument Value    ${sTransaction}
+
+    Navigate to Workflow and Select Rate Setting to No    ${LIQ_InitialDrawdown_Window}    ${LIQ_InitialDrawdown_Tab}    ${LIQ_InitialDrawdown_WorkflowAction}    ${Transaction}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LoanDradown_Workflow
+
 Navigate to Loan Pending Tab and Proceed with the Transaction
     [Documentation]    This keyword navigates to the Loan Drawdown Pending Tab and Proceeds with the transaction
     ...  @author: hstone    28AMAY2020    Initial create
@@ -3715,8 +3716,7 @@ Add Items in Flexible Reschedule Add Window
     \    Exit For Loop If    ${Warning_Displayed}==False
     mx LoanIQ click element if present    ${LIQ_Question_Yes_Button}
     mx LoanIQ click element if present    ${LIQ_Information_OK_Button}
-    
-   
+
 Create Temporary Payment Plan After Reschedule
     [Documentation]    This keyword is used for creating temporary payment plan on repayment schedule window after reschedule.
     ...    @author:    sahalder    27JUL2020    Initial Create
@@ -4050,6 +4050,7 @@ Validate Loan Drawdown Amounts in General Tab
     ...    ELSE    Run Keyword And Continue On Failure    Fail    Loan Host Bank Net Amount is incorrect. Expected: ${Orig_LoanHostBankNet} - Actual: ${New_LoanHostBankNet}
     
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LoanWindow
+
 Validate Loan Drawdown Rates in Rates Tab
     [Documentation]    This keyword validates the loan drawdown rates in Rates Tab.
     ...    @author: dahijara    16DEC2020    - Initial create
@@ -4087,7 +4088,7 @@ Validate Loan Drawdown Rates in Rates Tab
     ...    ELSE    Run Keyword And Continue On Failure    Fail    Loan All-In-Rate is incorrect. Expected: ${Loan_AllInRate} - Actual: ${UI_LoanAllInRate}
 
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LoanWindow
-    
+
 Validate Loan Drawdown General Details in General Tab
     [Documentation]    This keyword validates the loan drawdown general details in General Tab.
     ...    @author: dahijara    16DEC2020    - Initial create
@@ -4143,7 +4144,7 @@ Validate Loan Drawdown General Details in General Tab
     ${Status}    Run Keyword And Return Status    Should Be Equal    ${UI_IntCycleFrequency}    ${Loan_IntCycleFrequency}
     Run Keyword If    ${Status}==${True}    Log    Loan Int Cycle Frequency is correct.
     ...    ELSE    Run Keyword And Continue On Failure    Fail    Loan Int Cycle Frequency is incorrect. Expected: ${Loan_IntCycleFrequency} - Actual: ${UI_IntCycleFrequency}
-    
+
 Set Spread Rate as Fixed in Rates Tab of Loan Drawdown
     [Documentation]    This keyword sets the 'Spread is Fixed' checkbox to ON in Initial Drawdown - Rates Tab
     ...    @author: javinzon    26JAN2021    - Initial create
@@ -4166,4 +4167,3 @@ Validate if Loan is Inactive
     ${Status}    Run Keyword And Return Status    Mx LoanIQ Verify Object Exist    ${LIQ_InactiveLoan_Tab}    VerificationData="Yes"
     Run Keyword If    ${Status}==${True}    Log    Loan is in Inactive Status
     ...    ELSE    Run Keyword And COntinue On Failure    Fail    Loan is not in Inactive state. 
-

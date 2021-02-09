@@ -185,6 +185,7 @@ APPROVAL_STATUS = "Approval"
 RELEASE_STATUS = "Release"
 RELEASED_STATUS = "Released"
 FEE_ACCRUAL_SHARES_ADJUSTMENT_TYPE = "Fee Accrual Shares Adjustment"
+ACCRUAL_SHARES_ADJUSTMENT_APPLIED = "Accrual Shares Adjustment Applied"
 SBLC_GUARANTEE_DECREASE_TYPE = "SBLC/Guarantee Decrease"
 CREATE_CASHFLOWS_TYPE = "Create Cashflows"
 RELEASE_CASHFLOWS_TYPE = "Release Cashflows"
@@ -224,6 +225,7 @@ FACILITIES = "Facilities"
 PORTFOLIO_SETTLED_DISCOUNT_ADJUSTMENT = "Portfolio Settled Discount Adjustment"
 ONGOING_FEE_PAYMENT_TRANSACTION= "Ongoing Fee Payment"
 LOAN_PRINCIPAL_PREPAYMENT_TRANSACTION = "Loan Principal Prepayment"
+LOAN_CONVERSION_TRANSACTION = "Loan Conversion to New (Part of Repricing)"
 RATE_SETTING_TRANSACTION = "Rate Setting"
 AWAITING_SEND_TO_SETTLEMENT_APPROVAL_TRANSACTION = "Awaiting Send to Settlement Approval"
 AWAITING_CLOSE_TRANSACTION= "Awaiting Close"
@@ -234,6 +236,8 @@ PENDING_STATUS = "Pending"
 LOAN_INCREASE = "Loan Increase"
 AWAITING_GENERATE_INTENT_NOTICES_STATUS = "Awaiting Generate Intent Notices"
 AWAITING_RATE_SETTING = "Awaiting Rate Setting"
+REVERSE_FEE_PAYMENT_TRANSACTION= "Reverse Fee Payment"
+
 
 ### Bank Role ###
 REFERENCE_BANK_ROLE = "Reference Bank"
@@ -271,6 +275,7 @@ EVENTS_TAB = "Events"
 ### Window Title ###
 ADMIN_FEE_PAYMENT_TITLE = "Admin Fee Payment"
 INITIAL_DRAWDOWN_TITLE = "Initial Drawdown"
+FEE_REVERSE_FEE_WINDOW_TITLE = "Fee Reverse Fee"
 
 ### Workflow ###
 PAYMENT_WORKFLOW = "Payment"
