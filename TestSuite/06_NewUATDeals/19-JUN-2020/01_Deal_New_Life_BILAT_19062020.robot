@@ -23,3 +23,7 @@ Expire the fee by amending the expiry date to start date 14 May 20 (create negat
 Reverse the payment and send to SPAP
     Set Test Variable    ${rowid}    14
     Mx Execute Template With Multiple Data    Create Reversal Payment for New Life Bilat    ${ExcelPath}    ${rowid}    SERV29_CommitmentFeePayment
+
+Create New Fee Notebook for Fee Period 14May20 to 16Jun20, Due Date 19Jun20
+    Set Test Variable    ${rowid}    15
+    Mx Execute Template With Multiple Data    Create New Fee for New Life Bilat    ${ExcelPath}    ${rowid}    SERV29_CommitmentFeePayment
