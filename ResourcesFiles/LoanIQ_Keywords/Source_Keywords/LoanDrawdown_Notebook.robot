@@ -3508,12 +3508,13 @@ Navigate to Loan Drawdown Workflow and Proceed With Transaction
 Navigate to Loan Drawdown Workflow and Proceed with Rate Setting
     [Documentation]    This keyword navigates to the Loan Drawdown Workflow using the Rate Settings
     ...  @author: makcamps    08FEB2021    Initial create
-    [Arguments]    ${sTransaction}
+    [Arguments]    ${sTransaction}    ${sAcceptRate_FromInterpolation}=N
 
     ### Keyword Pre-processing ###
     ${Transaction}    Acquire Argument Value    ${sTransaction}
+    ${AcceptRate_FromInterpolation}    Acquire Argument Value    ${sAcceptRate_FromInterpolation}
 
-    Navigate to Workflow and Select Rate Setting to No    ${LIQ_InitialDrawdown_Window}    ${LIQ_InitialDrawdown_Tab}    ${LIQ_InitialDrawdown_WorkflowAction}    ${Transaction}
+    Navigate to Workflow and Select Rate Setting    ${LIQ_InitialDrawdown_Window}    ${LIQ_InitialDrawdown_Tab}    ${LIQ_InitialDrawdown_WorkflowAction}    ${Transaction}    ${AcceptRate_FromInterpolation}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LoanDradown_Workflow
 
 Navigate to Loan Pending Tab and Proceed with the Transaction
@@ -4167,22 +4168,3 @@ Validate if Loan is Inactive
     ${Status}    Run Keyword And Return Status    Mx LoanIQ Verify Object Exist    ${LIQ_InactiveLoan_Tab}    VerificationData="Yes"
     Run Keyword If    ${Status}==${True}    Log    Loan is in Inactive Status
     ...    ELSE    Run Keyword And COntinue On Failure    Fail    Loan is not in Inactive state. 
-
-Navigate to Rate Setting Transaction from Loan Drawdown Notebook
-    [Documentation]    This keyword is used to navigate to rate setting transaction and select Yes or No on Rate setting Interpolation pop-up
-    ...    @author: mcastro    05FEB2021    - Initial create
-    [Arguments]    ${sAcceptRate_FromInterpolation}=N    
-
-    ###Pre-processing Keyword##
-    ${AcceptRate_FromInterpolation}    Acquire Argument Value    ${sAcceptRate_FromInterpolation} 
-
-    Mx LoanIQ activate window    ${LIQ_InitialDrawdown_Window}
-    Mx LoanIQ Select Window Tab    ${LIQ_InitialDrawdown_Tab}    ${WORKFLOW_TAB}
-    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/RateSetting
-    Mx LoanIQ Select Or DoubleClick In Javatree    ${LIQ_InitialDrawdown_WorkflowAction}    ${RATE_SETTING_TRANSACTION}%d
-    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/RateSetting
-    Mx LoanIQ click element if present    ${LIQ_LoanRepricing_ConfirmationWindow_Yes_Button}
-    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/RateSetting
-    Run Keyword If    '${AcceptRate_FromInterpolation}'=='N'    Mx LoanIQ click element if present    ${LIQ_Question_No_Button}
-    ...    ELSE    Mx LoanIQ click element if present    ${LIQ_Question_Yes_Button}
-    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/RateSetting

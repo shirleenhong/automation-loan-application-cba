@@ -991,11 +991,11 @@ Create Loan Drawdown for CH EDU Bilateral Deal - Outstanding Z
     Exit Notice Window
 
     # ### Rate Setting ###  #Workaround steps for rate setting while there's an issue on Interpolation
-    # Navigate to Loan Drawdown Workflow and Proceed With Transaction        ${RATE_SETTING_TRANSACTION}
+    # Navigate to Loan Drawdown Workflow and Proceed with Rate Setting        ${RATE_SETTING_TRANSACTION}
     # Set Base Rate Details    &{ExcelPath}[BorrowerBaseRate]    &{ExcelPath}[AcceptRate_FromPricing]
 
     ### Rate Setting ###    #Use these steps once issue on Interpolation is fixed
-    Navigate to Rate Setting Transaction from Loan Drawdown Notebook        &{ExcelPath}[AcceptRate_FromInterpolation]
+    Navigate to Loan Drawdown Workflow and Proceed with Rate Setting        ${RATE_SETTING_TRANSACTION}    &{ExcelPath}[AcceptRate_FromInterpolation]
     Set Base Rate Details    &{ExcelPath}[BorrowerBaseRate]    &{ExcelPath}[AcceptRate_FromPricing]    &{ExcelPath}[AcceptRate_FromInterpolation]
 
     ### Send to Rate Approval ###
