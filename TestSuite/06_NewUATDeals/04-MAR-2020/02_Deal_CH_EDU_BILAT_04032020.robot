@@ -18,3 +18,7 @@ Rollover Outstanding ABC
 Generate and Send Repricing Intent Notice for Rollover Outstanding ABC
     Set Test Variable    ${rowid}    5
     Mx Execute Template With Multiple Data    Send Repricing Intent Notice for CH EDU Bilateral Deal    ${ExcelPath}    ${rowid}    Correspondence
+
+Generate and Send Repricing Rate Setting Notice for Rollover Outstanding ABC
+    Set Test Variable    ${rowid}    6
+    Mx Execute Template With Multiple Data    Send Repricing Rate Setting Notice for CH EDU Bilateral Deal    ${ExcelPath}    ${rowid}    Correspondence
