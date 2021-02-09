@@ -9,3 +9,6 @@ Facility Extension
     Mx Execute Template With Multiple Data    Update Facility Expiry and Maturity Date Through FCT    ${ExcelPath}    ${rowid}    CRED02_FacilitySetup
     Mx Execute Template With Multiple Data    Update Borrowers External Credit Rating History    ${ExcelPath}    ${rowid}    CRED08_OngoingFeeSetup
     Mx Execute Template With Multiple Data    Create PCT for Pricing Matrix    ${ExcelPath}    ${rowid}    AMCH06_PricingChangeTransaction
+    
+Rollover and Additional Drawdown
+    Mx Execute Template With Multiple Data    Create Comprehensive Repricing for LLA Syndicated Deal    ${ExcelPath}    ${rowid}    SERV08_ComprehensiveRepricing
