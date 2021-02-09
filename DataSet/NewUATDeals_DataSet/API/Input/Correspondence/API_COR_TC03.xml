@@ -1,46 +1,80 @@
 <liqInfo>
-    {"event_schema_id":"2148","event":{"header":{"correlationId":"LIQ-!*EO2SI7-A#EO2PVG-2","processPath":{"array":[{"source":"FINASTRA_CCB","timestamp":"2021-02-08T20:45:19.408+08:00"}]}},"sourceSystem":{"string":"FINASTRA_CCB"},"ttl":{"au.com.cba.avro.customermanagement.noticesnotify.ttl":{"ttlDuration":"300","ttlSourceTime":"2021-02-08T20:45:19.408+08:00"}},"cifIds":{"array":[{"string":"1711726"}]},"documentInfo":{"documentPackage":{"businessChannel":"LOANIQ","name":null,"version":null,"templateId":null,"fileType":null,"content":"
+    {"event_schema_id":"2148","event":{"header":{"correlationId":"LIQ-F9EO398J-FFEO389U-2","processPath":{"array":[{"source":"FINASTRA_CCB","timestamp":"2021-02-09T16:06:35.081+08:00"}]}},"sourceSystem":{"string":"FINASTRA_CCB"},"ttl":{"au.com.cba.avro.customermanagement.noticesnotify.ttl":{"ttlDuration":"300","ttlSourceTime":"2021-02-09T16:06:35.076+08:00"}},"cifIds":{"array":[{"string":"10"}]},"documentInfo":{"documentPackage":{"businessChannel":"LOANIQ","name":null,"version":null,"templateId":null,"fileType":null,"content":"
     <FinastraApplication>
         <StandardNotice>
             <ProcessingArea>AUSAG</ProcessingArea>
             <Address>
-                <line>Date: 08-Feb-2021</line>
-                <line>TO  : LLA Pty Ltd 1711726</line>
-                <line>ATTN: George Lippman</line>
-                <line>Re  : LLA SYND DEAL AUD 500M 23NOV1848142 REVOLVING CASH ADV FAC56105</line>
+                <line>Date: 09-Feb-2021</line>
+                <line>TO  : LEND01292020</line>
+                <line>ATTN: KUYA KESO</line>
+                <line>Re  : LLA SYND DEAL AUD 500M 23NOV1848142</line>
             </Address>
             <BodyContent>
                 <section>
-                    <line>                          *** DRAWDOWN RATE SET NOTICE ***</line>
+                    <line>                            *** ROLLOVER INTENT NOTICE ***</line>
                     <line/>
-                    <line>In accordance with the facility agreement, we advise the following drawing has been requested by LLA Pty Ltd 1711726</line>
+                    <line>In accordance with the facility agreement, we advise the following has been requested.</line>
                     <line/>
-                    <line>Description: BBSY - Bid Borrowing </line>
+                    <line>Description: AUD Loan Repricing for the Deal LLA SYND DEAL AUD 500M 23NOV1848142. - Increase</line>
                     <line/>
-                    <line>Effective Date: 16-Dec-2019</line>
-                    <line>LLA Pty Ltd 1711726 has elected to borrow a total of AUD 90,000,000.00. </line>
-                    <line/>
-                    <line>Please see details below:</line>
-                    <line/>
-                    <line>Term: 16-Dec-2019 - 03-Jan-2020</line>
-                    <line>BBSY - Bid: 0.899600%</line>
-                    <line>The Margin is: 0.660000%</line>
-                    <line>The all-in rate is: 1.559600%</line>
+                    <line>Effective Date: 03-Jan-2020 </line>
                 </section>
                 <section>
-                    <line>The interest due on 03-Jan-2020 is AUD 69,220.60.</line>
-                </section>
-                <section>
-                    <line>We will credit your nominated account for an amount of AUD 90,000,000.00 on the effective date.</line>
-                </section>
-                <section>
-                    <line>For: LLA Pty Ltd 1711726</line>
+                    <line>Borrower LLA Pty Ltd 1711726 in REVOLVING CASH ADV FAC56105 has the following LOANS repricing: </line>
                     <line/>
-                    <line>Account Number:   </line>
-                    <line>122 33345</line>
-                    <line>Account Name:  </line>
-                    <line>LLA Pty Ltd</line>
-                    <line>Routing Number:</line>
+                    <line>                                                                            Current    </line>
+                    <line>                                                                            End        </line>
+                    <line>Description                                      Amount     Your Share      Date       </line>
+                    <line>----------------------------------------------------------------------------------------</line>
+                    <line> BBSY - Bid Loan                           90,000,000.00    63,000,000.00    03-Jan-2020   </line>
+                    <line/>
+                    <line>Borrower LLA Pty Ltd 1711726 in REVOLVING CASH ADV FAC56105 has elected to increase outstandings as follows:</line>
+                    <line/>
+                    <line>Borrower Net Increase                    Total Increase     Your Share</line>
+                    <line>----------------------------------------------------------------------------------------</line>
+                    <line> 5,000,000.00                               5,000,000.00     3,500,000.00</line>
+                </section>
+                <section>
+                    <line>Borrower LLA Pty Ltd 1711726 in REVOLVING CASH ADV FAC56105 will make the following INTEREST payments: </line>
+                    <line/>
+                    <line>Description                          Amount      Your Share</line>
+                    <line>--------------------------------------------------------------------------------</line>
+                    <line> BBSY - Bid                        69,220.60         48,454.42</line>
+                    <line/>
+                    <line>Calculated as follows:</line>
+                    <line/>
+                    <line>Rate Basis:  Actual/365</line>
+                    <line/>
+                    <line>Start       End         Days CCY Amount        All        Amount   </line>
+                    <line>                                               In Rate             </line>
+                    <line>___________ ___________ ____ ___ _____________ __________ _________</line>
+                    <line/>
+                    <line>16-Dec-2019 31-Dec-2019 16   AUD 63,000,000.00 1.559600%  43,070.60</line>
+                    <line>01-Jan-2020 02-Jan-2020 2    AUD 63,000,000.00 1.559600%  5,383.82 </line>
+                </section>
+                <section>
+                    <line/>
+                    <line>Borrower LLA Pty Ltd 1711726 in REVOLVING CASH ADV FAC56105 will have the following new LOANS: </line>
+                    <line/>
+                    <line>                                                                            Next       </line>
+                    <line>Pricing                                                                     End        </line>
+                    <line>Option                                           Amount     Your Share      Date       </line>
+                    <line>----------------------------------------------------------------------------------------</line>
+                    <line> BBSY - Bid                                 95,000,000.00   66,500,000.00    03-Feb-2020   </line>
+                </section>
+                <section>
+                    <line>Rates will be set on: 03-Jan-2020</line>
+                    <line>Your share will increase by AUD 3,500,000.00</line>
+                </section>
+                <section>
+                    <line>Your share of the increase and the portion of the interest due to you will be netted.</line>
+                    <line/>
+                    <line>Please remit AUD 3,451,545.58 into our nominated account below for value on the effective date.</line>
+                    <line/>
+                    <line>For: LEND01292020</line>
+                    <line>Correspondent Bank: COMMONWEALTH BANK OF AUSTRALIA SYDNEY (Swift ID: CTBAAU2SXXX) </line>
+                    <line>Account Number: 06200010295080 </line>
+                    <line>Account Name: INSTITUTIONAL BANKING SUNDRY PARTIES</line>
                 </section>
                 <section>
                     <line>Reference: AUSAG1002414</line>
@@ -51,6 +85,6 @@
             </BodyContent>
         </StandardNotice>
     </FinastraApplication>
-    "},"documentStorage":{"status":null,"fileName":null,"inputSource":null,"inputSourceDetail":null,"scanDate":null,"departmentId":{"string":"RE_RES"},"retrievalId":null,"documentumType":null,"applicationNumber":null,"purgeDate":null,"boxLocation":null,"recordManager":null,"description":null,"processes":{"array":[{"string":"A#EO2PVG"}]},"services":{"array":[{"string":"1002414"}]},"accountNumbers":{"array":[{"source":{"string":"LOANIQ"},"productCode":{"string":"OST"},"number":{"string":"60002956"}}]},"processFlags":{"array":[{"name":null,"value":null}]}}},"emailSecureMessageDetails":{"subject":"1002414 LLA SYND DEAL AUD 500M 23NOV1848142","senderEmail":"AGENCY@CBA.AU.COM","toRecipientEmail":"phamv@cba.com.au","ccRecipientEmail":{"string":"JOHN.DOE@CBA.AU.COM"},"mimeType":null,"messageID":"LIQ-!*EO2SI7-A#EO2PVG-2","body":null,"attachment":null,"inBandAttachment":null,"deliveredToEmail":null,"undeliveredToEmail":null,"systemCode":null,"systemName":null,"identifier":{"string":"AUSAG"},"digitalSignature":null}}}
+    "},"documentStorage":{"status":null,"fileName":null,"inputSource":null,"inputSourceDetail":null,"scanDate":null,"departmentId":{"string":"RE_RES"},"retrievalId":null,"documentumType":null,"applicationNumber":null,"purgeDate":null,"boxLocation":null,"recordManager":null,"description":null,"processes":{"array":[{"string":"FFEO389U"}]},"services":{"array":[{"string":"1002414"}]},"accountNumbers":{"array":[{"source":{"string":"LOANIQ"},"productCode":{"string":"OST"},"number":{"string":"60002956"}}]},"processFlags":{"array":[{"name":null,"value":null}]}}},"emailSecureMessageDetails":{"subject":"1002414 LLA SYND DEAL AUD 500M 23NOV1848142","senderEmail":"AGENCY@CBA.AU.COM","toRecipientEmail":"kuyakeso@email.com","ccRecipientEmail":{"string":"JOHN.DOE@CBA.AU.COM"},"mimeType":null,"messageID":"LIQ-F9EO398J-FFEO389U-2","body":null,"attachment":null,"inBandAttachment":null,"deliveredToEmail":null,"undeliveredToEmail":null,"systemCode":null,"systemName":null,"identifier":{"string":"AUSAG"},"digitalSignature":null}}}
 
 </liqInfo>

@@ -397,12 +397,14 @@ Validate the Notice Window in LIQ
     ...    @update: fluberio    26OCT2020    - added argument for Upfront Fee From Borrower/Agent/Third Party Intent Notice
     ...    @update: makcamps    05NOV2020    - added argument for Interest Payment Notice
     ...    @update: makcamps    15JAN2021    - added argument for Line Fee in Advance Payment Notice
+    ...    @update: makcamps    09FEB2021    - added argument for Repricing Intent Notice
     [Arguments]    ${sSearch_By}    ${sNotice_Identifier}    ${sFrom_Date}    ${sThru_Date}    ${sNotice_Status}    ${sNotice_Customer_LegalName}    
     ...    ${sContact}    ${sNoticeGroup_UserID}    ${sNotice_Method}
     ...    ${sNotice_Type}    ${sPath_XMLFile}    ${sDeal_Name}    ${sXML_NoticeType}    ${sLoan_PricingOption}    
     ...    ${iLoan_BaseRate}    ${iLoan_Spread}    ${iNotice_AllInRate}    ${sOngoingFee_Type}    ${sNotice_Amount}    ${sBalance_Amount}    ${sRate_Basis}
     ...    ${sLoan_EffectiveDate}    ${sLoan_MaturityDate}    ${sLoan_GlobalOriginal}    ${sLoan_RateSetting_DueDate}    ${sLoan_RepricingDate}
     ...    ${sEffectiveDate}=None    ${sUpfrontFee_Amount}=None    ${sFee_Type}=None    ${sCurrency}=None    ${sAccount_Name}=None
+    ...    ${sLoan_BorrowerAmount}=None    ${sLoan_LenderAmount}=None    ${sLoan_PaymentAmount}=None
     
     Refresh Tables in LIQ
     Navigate to Notice Select Window
@@ -423,6 +425,9 @@ Validate the Notice Window in LIQ
     ...    ${sNotice_Customer_LegalName}    ${sCurrency}    ${sNotice_Amount}
     ...    ELSE IF    '${sNotice_Type}' == 'Line Fee in Advance Payment Notice'    Run Keyword    Validate Line Fee in Advance Notice Details    ${sPath_XMLFile}    ${sNotice_Customer_LegalName}    ${sContact}    
     ...    ${sDeal_Name}    ${sXML_NoticeType}    ${sOngoingFee_Type}    ${iNotice_AllInRate}    ${sNotice_Amount}    ${sRate_Basis}
+    ...    ELSE IF    '${sNotice_Type}' == 'Repricing Intent Notice'    Run Keyword    Validate Rollover Intent Notice Details    ${sPath_XMLFile}    ${sNotice_Customer_LegalName}    ${sContact}    ${sDeal_Name}
+    ...    ${sXML_NoticeType}    ${iNotice_AllInRate}    ${sRate_Basis}    ${sEffectiveDate}    ${sLoan_RepricingDate}    ${sLoan_PricingOption}    ${sCurrency}
+    ...    ${sLoan_BorrowerAmount}    ${sLoan_LenderAmount}    ${sLoan_PaymentAmount}
 
 Validate the Paperclip Notice Window in LIQ
     [Documentation]    This keyword validates the fields, status and Data in Paperclip Notice Window.
@@ -1029,4 +1034,79 @@ Validate Line Fee in Advance Notice Details
     ###Rate Basis Validation###
     ${Status}    Run Keyword And Return Status    Should Contain    ${XMLFile}    ${sRate_Basis}
     Run Keyword If    ${Status}==True    Log    ${sRate_Basis} is present
+    ...    ELSE    Run Keyword and Continue on Failure    Fail    ${sRate_Basis} is not present  
+    
+Validate Rollover Intent Notice Details
+    [Documentation]    This keyword validates the Notice details in XML.
+    ...    @author: makcamps    08FEB2021    - initial create
+    [Arguments]    ${sPath_XMLFile}    ${sNotice_Customer_LegalName}    ${sContact}    ${sDeal_Name}    ${sXML_NoticeType}
+    ...    ${sNotice_AllInRate}    ${sRate_Basis}    ${sEffectiveDate}    ${sLoan_RepricingDate}    ${sLoan_PricingOption}
+    ...    ${sCurrency}    ${sLoan_BorrowerAmount}    ${sLoan_LenderAmount}    ${sLoan_PaymentAmount}
+
+
+    ${XMLFile}    OperatingSystem.Get File    ${sPath_XMLFile} 
+    
+    ###Customer Legal Name Validation###
+    ${Status}    Run Keyword And Return Status    Should Contain    ${XMLFile}    ${sNotice_Customer_LegalName}
+    Run Keyword If    ${Status}==${True}    Log    ${sNotice_Customer_LegalName} is present
+    ...    ELSE    Run Keyword and Continue on Failure    Fail    ${sNotice_Customer_LegalName} is not present
+    
+    ###Contact Validation###
+    ${Status}    Run Keyword And Return Status    Should Contain    ${XMLFile}    ${sContact}
+    Run Keyword If    ${Status}==${True}    Log    ${sContact} is present
+    ...    ELSE    Run Keyword and Continue on Failure    Fail    ${sContact} is not present
+    
+    ###Deal Validation###
+    ${Status}    Run Keyword And Return Status    Should Contain    ${XMLFile}    ${sDeal_Name}
+    Run Keyword If    ${Status}==${True}    Log    ${sDeal_Name} is present
+    ...    ELSE    Run Keyword and Continue on Failure    Fail    ${sDeal_Name} is not present
+    
+    ###Notice Type Validation###
+    ${Status}    Run Keyword And Return Status    Should Contain    ${XMLFile}    ${sXML_NoticeType}
+    Run Keyword If    ${Status}==${True}    Log    ${sXML_NoticeType} is present
+    ...    ELSE    Run Keyword and Continue on Failure    Fail    ${sXML_NoticeType} is not present
+    
+    ###Amount Validation###
+    ${Status}    Run Keyword And Return Status    Should Contain    ${XMLFile}    ${sNotice_AllInRate}
+    Run Keyword If    ${Status}==${True}    Log    ${sNotice_AllInRate} is present
+    ...    ELSE    Run Keyword and Continue on Failure    Fail    ${sNotice_AllInRate} is not present
+    
+    ###Rate Basis Validation###
+    ${Status}    Run Keyword And Return Status    Should Contain    ${XMLFile}    ${sRate_Basis}
+    Run Keyword If    ${Status}==${True}    Log    ${sRate_Basis} is present
     ...    ELSE    Run Keyword and Continue on Failure    Fail    ${sRate_Basis} is not present 
+    
+    ###Effective Validation###
+    ${Status}    Run Keyword And Return Status    Should Contain    ${XMLFile}    ${sEffectiveDate}
+    Run Keyword If    ${Status}==${True}    Log    ${sEffectiveDate} is present
+    ...    ELSE    Run Keyword And Continue On Failure    Fail    ${sEffectiveDate} is not present 
+    
+    ###Repricing Date Validation###
+    ${Status}    Run Keyword And Return Status    Should Contain    ${XMLFile}    ${sLoan_RepricingDate}
+    Run Keyword If    ${Status}==${True}    Log    ${sLoan_RepricingDate} is present
+    ...    ELSE    Run Keyword And Continue On Failure    Fail    ${sLoan_RepricingDate} is not present
+    
+    ###Loan Pricing Option Validation###
+    ${Status}    Run Keyword And Return Status    Should Contain    ${XMLFile}    ${sLoan_PricingOption}
+    Run Keyword If    ${Status}==${True}    Log    ${sLoan_PricingOption} is present
+    ...    ELSE    Fail    ${sLoan_PricingOption} is not present 
+    
+    ###Currency Validation###
+    ${Status}    Run Keyword And Return Status    Should Contain    ${XMLFile}    ${sCurrency}
+    Run Keyword If    ${Status}==${True}    Log    ${sCurrency} is present
+    ...    ELSE    Run Keyword And Continue On Failure    Fail    ${sCurrency} is not present 
+    
+    ###Loan Borrower Amount Validation###
+    ${Status}    Run Keyword And Return Status    Should Contain    ${XMLFile}    ${sLoan_BorrowerAmount}
+    Run Keyword If    ${Status}==${True}    Log    ${sLoan_BorrowerAmount} is present
+    ...    ELSE    Run Keyword And Continue On Failure    Fail    ${sLoan_BorrowerAmount} is not present
+    
+    ###Loan Lender Amount Validation###
+    ${Status}    Run Keyword And Return Status    Should Contain    ${XMLFile}    ${sLoan_LenderAmount}
+    Run Keyword If    ${Status}==${True}    Log    ${sLoan_LenderAmount} is present
+    ...    ELSE    Fail    ${sLoan_LenderAmount} is not present 
+    
+    ###Loan Payment Validation###
+    ${Status}    Run Keyword And Return Status    Should Contain    ${XMLFile}    ${sLoan_PaymentAmount}
+    Run Keyword If    ${Status}==${True}    Log    ${sLoan_PaymentAmount} is present
+    ...    ELSE    Run Keyword And Continue On Failure    Fail    ${sLoan_PaymentAmount} is not present 
