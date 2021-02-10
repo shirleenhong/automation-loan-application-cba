@@ -1,0 +1,54 @@
+<liqInfo>
+    {"event_schema_id":"2148","event":{"header":{"correlationId":"LIQ-RPEN72EK-;WEN71G3-6","processPath":{"array":[{"source":"FINASTRA_CCB","timestamp":"2021-01-26T15:18:55.652+08:00"}]}},"sourceSystem":{"string":"FINASTRA_CCB"},"ttl":{"au.com.cba.avro.customermanagement.noticesnotify.ttl":{"ttlDuration":"300","ttlSourceTime":"2021-01-26T15:18:55.652+08:00"}},"cifIds":{"array":[{"string":"1711726"}]},"documentInfo":{"documentPackage":{"businessChannel":"LOANIQ","name":null,"version":null,"templateId":null,"fileType":null,"content":"
+    <FinastraApplication>
+        <StandardNotice>
+            <ProcessingArea>AUSAG</ProcessingArea>
+            <Address>
+                <line>Date: 26-Jan-2021</line>
+                <line>TO  : LLA Pty Ltd 1711726</line>
+                <line>ATTN: George Lippman</line>
+                <line>Re  : LLA SYND DEAL AUD 500M 23NOV1858142 REVOLVING CASH ADV FAC05119</line>
+            </Address>
+            <BodyContent>
+                <section>
+                    <line/>
+                    <line>                            *** DRAWDOWN INTENT NOTICE ***</line>
+                    <line/>
+                    <line>In accordance with the facility agreement, we advise the following drawing has been requested by LLA Pty Ltd 1711726. </line>
+                    <line/>
+                    <line>Description: BBSY - Bid Borrowing</line>
+                    <line/>
+                    <line>Effective Date: 16-Dec-2019</line>
+                    <line>LLA Pty Ltd 1711726 has elected to borrow a total of AUD 90,000,000.00.</line>
+                    <line/>
+                    <line>Please see details below:</line>
+                    <line/>
+                    <line>Term: 16-Dec-2019 - 03-Jan-2020</line>
+                </section>
+                <section>
+                    <line>Rates will be set on 16-Dec-2019.</line>
+                </section>
+                <section>
+                    <line>We will credit your nominated account for an amount of AUD 90,000,000.00 on the effective date.</line>
+                </section>
+                <section>
+                    <line>For: LLA Pty Ltd 1711726</line>
+                    <line/>
+                    <line>Account Number:   </line>
+                    <line>122 33345</line>
+                    <line>Account Name:  </line>
+                    <line>LLA Pty Ltd</line>
+                    <line>Routing Number:</line>
+                </section>
+                <section>
+                    <line>Reference: AUSAG1002242</line>
+                </section>
+                <section>
+                    <line/>
+                </section>
+            </BodyContent>
+        </StandardNotice>
+    </FinastraApplication>
+    "},"documentStorage":{"status":null,"fileName":null,"inputSource":null,"inputSourceDetail":null,"scanDate":null,"departmentId":{"string":"RE_RES"},"retrievalId":null,"documentumType":null,"applicationNumber":null,"purgeDate":null,"boxLocation":null,"recordManager":null,"description":null,"processes":{"array":[{"string":";WEN71G3"}]},"services":{"array":[{"string":"1002242"}]},"accountNumbers":{"array":[{"source":{"string":"LOANIQ"},"productCode":{"string":"OST"},"number":{"string":"60002483"}}]},"processFlags":{"array":[{"name":null,"value":null}]}}},"emailSecureMessageDetails":{"subject":"1002242 LLA SYND DEAL AUD 500M 23NOV1858142","senderEmail":"AGENCY@CBA.AU.COM","toRecipientEmail":"phamv@cba.com.au","ccRecipientEmail":{"string":"JOHN.DOE@CBA.AU.COM"},"mimeType":null,"messageID":"LIQ-RPEN72EK-;WEN71G3-6","body":null,"attachment":null,"inBandAttachment":null,"deliveredToEmail":null,"undeliveredToEmail":null,"systemCode":null,"systemName":null,"identifier":{"string":"AUSAG"},"digitalSignature":null}}}
+
+</liqInfo>

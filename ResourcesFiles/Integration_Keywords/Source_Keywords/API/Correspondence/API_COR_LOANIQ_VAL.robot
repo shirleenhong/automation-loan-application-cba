@@ -397,7 +397,8 @@ Validate the Notice Window in LIQ
     ...    @update: fluberio    26OCT2020    - added argument for Upfront Fee From Borrower/Agent/Third Party Intent Notice
     ...    @update: makcamps    05NOV2020    - added argument for Interest Payment Notice
     ...    @update: makcamps    15JAN2021    - added argument for Line Fee in Advance Payment Notice
-    ...    @update: makcamps    09FEB2021    - added argument for Repricing Intent Notice
+    ...    @update: makcamps    09FEB2021    - added argument for Rollover Intent Notice
+    ...    @update: makcamps    10FEB2021    - added argument for Rollover Rate Setting Notice
     [Arguments]    ${sSearch_By}    ${sNotice_Identifier}    ${sFrom_Date}    ${sThru_Date}    ${sNotice_Status}    ${sNotice_Customer_LegalName}    
     ...    ${sContact}    ${sNoticeGroup_UserID}    ${sNotice_Method}
     ...    ${sNotice_Type}    ${sPath_XMLFile}    ${sDeal_Name}    ${sXML_NoticeType}    ${sLoan_PricingOption}    

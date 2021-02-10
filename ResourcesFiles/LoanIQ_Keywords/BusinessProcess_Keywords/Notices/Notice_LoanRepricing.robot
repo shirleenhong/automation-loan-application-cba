@@ -4,8 +4,9 @@ Resource     ../../../../Configurations/LoanIQ_Import_File.robot
 *** Keywords ***
 
 Send Notice for Loan Repricing
-    [Documentation]    This keyword is use to successfully sent out a Repricing Intent Notice via Notice Application without validation in FFC
+    [Documentation]    This keyword is use to successfully sent out a Repricing Notice via Notice Application without validation in FFC
     ...    @author: makcamps    09FEB2021    - initial create
+    ...    @author: makcamps    10FEB2021    - updated Keyword Name, removed "Intent" so it can be generic
     [Arguments]    ${ExcelPath}
 
     ${Borrower_LoanAlias}    Read Data From Excel    SERV08_ComprehensiveRepricing    Loan_Alias    1
