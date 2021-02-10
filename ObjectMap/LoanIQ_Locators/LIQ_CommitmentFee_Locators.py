@@ -111,6 +111,7 @@ LIQ_CommitmentFee_CapitalizationEditor_OK_Button = 'JavaWindow("title:=Facility 
 LIQ_CommitmentFee_Currency_Text = 'JavaWindow("title:=Commitment Fee.*").JavaStaticText("Index:=17")'
 LIQ_CommitmentFee_ActualExpiryDate_Text = 'JavaWindow("title:=Commitment Fee.*").JavaStaticText("Index:=1")'
 LIQ_CommitmentFee_ChangeExpiryDate_Menu = 'JavaWindow("title:=Commitment Fee.*").JavaMenu("label:=Options").JavaMenu("label:=Change Expiry Date")'
+LIQ_CommitmentFee_PricingFormulaInEffect_TextField = 'JavaWindow("title:=Commitment Fee.*").JavaEdit("attached text:=Pricing Formula In Effect:")'
 
 ###Commitment Fee - Lender Shares###
 LIQ_CommitmentFee_LenderShares_Window = 'JavaWindow("title:=Shares for.*")'
@@ -129,6 +130,7 @@ LIQ_GLEntries_Window = 'JavaWindow("title:=GL Entries For.*")'
 
 ###Ongoing Fee List###
 LIQ_Facility_FeeList_JavaTree = 'JavaWindow("label:=Fee List for.*").JavaTree("attached text:=Drill down to view details")'
+LIQ_Facility_FeeList_CreateOngoingFeeButton = 'JavaWindow("label:=Fee List for.*").JavaButton("attached text:=Create Ongoing Fee")'
 
 ###Reverse Payment###
 LIQ_ReverseFee_Window = 'JavaWindow("title:=.*Fee Reverse Fee.*")'

@@ -15,6 +15,7 @@ Setup Repricing
     ...    @update: hstone      28MAY2020    - Added Keyword Pre-processing
     ...                                      - Added Optional Argument: ${sRunTimeVar_NewLoanAlias}
     ...                                      - Added Keyword Post-processing
+    ...    @update: makcamps    08FEB2021    - updated condition, added else
     [Arguments]    ${sRepricingType}    ${sBase_Rate}    ${sPricing_Option}    ${sRollover_Amount}    ${sRepricing_Frequency}    ${sAcceptRepricingFrequency}=N    ${sLoanRepricing}=Setup
     ...    ${sRunTimeVar_NewLoanAlias}=None
 
@@ -28,10 +29,12 @@ Setup Repricing
     ${loanRepricing}    Acquire Argument Value    ${sLoanRepricing}
 
     mx LoanIQ activate window    ${LIQ_LoanRepricingForDeal_Window}
-    Run keyword if    '${loanRepricing}' == 'Setup'    Run Keywords
+
+    Run Keyword If    '${loanRepricing}' == 'Setup'    Run Keywords
     ...    Mx LoanIQ Select Window Tab    ${LIQ_LoanRepricingForDeal_Workflow_Tab}    Workflow  
-    ...    AND    Run keyword if    '${loanRepricing}' == 'Setup'    Mx LoanIQ DoubleClick    ${LIQ_LoanRepricingForDeal_Workflow_JavaTree}    Setup  
+    ...    AND    Run Keyword If    '${loanRepricing}' == 'Setup'    Mx LoanIQ DoubleClick    ${LIQ_LoanRepricingForDeal_Workflow_JavaTree}    Setup  
     ...    ELSE IF    '${loanRepricing}' == 'Add'    mx LoanIQ click    ${LIQ_LoanRepricingForDeal_Add_Button}
+
     mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
     mx LoanIQ activate window    ${LIQ_RepricingDetail_Window}    
     Select Repricing Detail Add Options    ${RepricingType}    ${Pricing_Option}
@@ -39,7 +42,9 @@ Setup Repricing
     mx LoanIQ click element if present    ${LIQ_Information_OK_Button} 
     
     Run Keyword If    '${RepricingType}'!='Auto Generate Interest Payment'    mx LoanIQ activate window    ${LIQ_PendingRollover_Window}
-    ${NewLoanAlias}    Run Keyword If    '${RepricingType}'!='Auto Generate Interest Payment'    Mx LoanIQ Get Data    ${LIQ_RolloverConversion_Alias_Textfield}    NewLoanAlias 
+
+    ${NewLoanAlias}    Run Keyword If    '${RepricingType}'!='Auto Generate Interest Payment'    Mx LoanIQ Get Data    ${LIQ_RolloverConversion_Alias_Textfield}    NewLoanAlias
+
     Run Keyword If    '${RepricingType}'!='Auto Generate Interest Payment'    Run Keywords    mx LoanIQ enter    ${LIQ_PendingRollover_RequestedAmt_JavaEdit}    ${Rollover_Amount}
     ...    AND    Log    ${Repricing_Frequency}
     ...    AND    Mx LoanIQ Select Combo Box Value   ${LIQ_PendingRollover_RepricingFrequency_Dropdown}    ${Repricing_Frequency}
@@ -47,15 +52,19 @@ Setup Repricing
     ...    AND    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
     ...    AND    mx LoanIQ select    ${LIQ_PendingRollover_Save_Submenu}
     ...    AND    Verify If Warning Is Displayed
-    ...    AND    Mx LoanIQ Select Window Tab    ${LIQ_PendingRollover_Tab}    Rates
+
+    Run Keyword If    '${RepricingType}'!='Auto Generate Interest Payment' and '${acceptRepricingFrequency}'!='None'    Run Keywords
+    ...    Mx LoanIQ Select Window Tab    ${LIQ_PendingRollover_Tab}    Rates
     ...    AND    mx LoanIQ click    ${LIQ_PendingRollover_BaseRate_Button}
     ...    AND    Verify If Warning Is Displayed
     
-    Run keyword if    '${acceptRepricingFrequency}'=='Y' and '${RepricingType}'!='Auto Generate Interest Payment'    mx LoanIQ click    ${LIQ_InitialDrawdown_AcceptBaseRate}
+    Run Keyword If    '${acceptRepricingFrequency}'=='Y' and '${RepricingType}'!='Auto Generate Interest Payment'    mx LoanIQ click    ${LIQ_InitialDrawdown_AcceptBaseRate}
+    ...    ELSE    Log    No changes in rates needed.
     Log    ${Base_Rate}        
     
-    ${UIBaseRate}    Run keyword if    '${acceptRepricingFrequency}'=='Y' and '${RepricingType}'!='Auto Generate Interest Payment'    Get and Validate Borrower Base Rate    ${Base_Rate}
+    ${UIBaseRate}    Run Keyword If    '${acceptRepricingFrequency}'=='Y' and '${RepricingType}'!='Auto Generate Interest Payment'    Get and Validate Borrower Base Rate    ${Base_Rate}
     ...    ELSE IF    '${acceptRepricingFrequency}'=='N'    Set Base Rate    ${Base_Rate}
+    ...    ELSE    Log    No changes in rates needed.
 
     ### Keyword Post-processing ###
     Save Values of Runtime Execution on Excel File    ${sRunTimeVar_NewLoanAlias}    ${NewLoanAlias}
@@ -148,14 +157,17 @@ Approve Loan Repricing
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LoanRepricingApproval
     Validate if Question or Warning Message is Displayed
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LoanRepricingApproval 
+    
 Send to Rate Approval
     [Documentation]    This keyword is used to Send the Transaction Rates for approval and approve it with different user
     ...    @author: ritragel
     ...    @update: clanding    13AUG2020    - added screenshot; updated hard coded values to global variables
+    ...    @update: songchan    09FEB2021    - added selecting Yes button when question message is displayed
     mx LoanIQ activate window    ${LIQ_LoanRepricingForDeal_Window}
     Mx LoanIQ Select Window Tab    ${LIQ_LoanRepricingForDeal_Workflow_Tab}    ${WORKFLOW_TAB}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LoanRepricingWindow_WorkflowTab
     Mx LoanIQ DoubleClick    ${LIQ_LoanRepricingForDeal_Workflow_JavaTree}    ${SEND_TO_RATE_APPROVAL_STATUS}
+    mx LoanIQ click element if present    ${LIQ_Question_Yes_Button}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LoanRepricingWindow_WorkflowTab_Approval
     
 Approve Rate Setting Notice

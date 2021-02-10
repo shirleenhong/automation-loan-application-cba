@@ -159,6 +159,7 @@ Complete Cycle Shares Adjustment for LBT Bilateral Deal
 Fee Payment for LBT Bilateral Deal
     [Documentation]    This keyword is used to create Fee Payment for LBT Bilateral Deal
     ...    @author: javinzon    03FEB2021    - Initial create
+    ...    @update: javinzon    05FEB2021    - Added required arguments in keyword 'Validate Dues on Accrual Tab for Commitment Fee'
     [Arguments]    ${ExcelPath}
     
     ${Deal_Name}    Read Data From Excel    CRED01_DealSetup    Deal_Name    ${rowid}
@@ -202,5 +203,14 @@ Fee Payment for LBT Bilateral Deal
     Navigate to Commitment Fee Notebook    &{ExcelPath}[OngoingFee_Type]
     Validate release of Ongoing Fee Payment
     Close Ongoing Fee Payment Notebook Window
-    Validate Dues on Accrual Tab for Commitment Fee    &{ExcelPath}[AfterPayment_CycleDueAmt]    &{ExcelPath}[Cycle_No]    &{ExcelPath}[AfterPayment_PaidToDate]   
+    Validate Dues on Accrual Tab for Commitment Fee    &{ExcelPath}[AfterPayment_CycleDueAmt]    &{ExcelPath}[Cycle_No]    &{ExcelPath}[AfterPayment_Projected_EOCAccrual]    &{ExcelPath}[AfterPayment_Projected_EOCDue]    &{ExcelPath}[AfterPayment_PaidToDate]   
+    Close All Windows on LIQ
+
+Update Actual Due Date and Cycle Frequency for LBT Bilateral Deal
+    [Documentation]    This keyword is used to update the Cycle Frequency and Actual Due Date of Commitment fee for LBT Bilateral Deal.
+    ...    @author: javinzon    - Initial create
+    [Arguments]    ${ExcelPath}
+
+    Update Commitment Fee    &{ExcelPath}[New_EffectiveDate]    &{ExcelPath}[New_ActualDueDate]    &{ExcelPath}[New_AdjustedDueDate]    &{ExcelPath}[New_Accrue]    &{ExcelPath}[New_AccrualEndDate]    &{ExcelPath}[New_CycleFrequency]   
+    Get and Validate Dates in Accrual Tab    &{ExcelPath}[Cycle_No]    &{ExcelPath}[StartDate]    &{ExcelPath}[New_AccrualEndDate]
     Close All Windows on LIQ

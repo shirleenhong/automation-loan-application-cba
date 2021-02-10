@@ -9,6 +9,7 @@ Setup Syndicated Deal for LLA Syndicated
     ...    @update: makcamps    07JAN2021    - added write methods for new sheets created
     ...    @update: makcamps    11JAN2021    - added write methods for new sheets created
     ...    @update: makcamps    20JAN2021    - added write methods for notice
+    ...    @update: makcamps    08FEB2021    - added write methods for notice
     [Arguments]    ${ExcelPath}
 
     ###Data Generation###
@@ -24,17 +25,36 @@ Setup Syndicated Deal for LLA Syndicated
     ${Lender_ShortName}    Read Data From Excel    CRED08_OngoingFeeSetup    Lender_ShortName    &{ExcelPath}[rowid] 
 
     Write Data To Excel    CRED01_DealSetup    Deal_Name    &{ExcelPath}[rowid]    ${Deal_Name}
-    Write Data To Excel    CRED01_DealSetup    Deal_Alias    &{ExcelPath}[rowid]    ${Deal_Alias}
     Write Data To Excel    CRED02_FacilitySetup    Deal_Name    &{ExcelPath}[rowid]    ${Deal_Name}
-    Write Data To Excel    CRED02_FacilitySetup    Borrower_ShortName    &{ExcelPath}[rowid]    ${Borrower_ShortName}
-    Write Data To Excel    CRED02_FacilitySetup    Facility_Borrower    &{ExcelPath}[rowid]    ${Borrower_ShortName}
-    Write Data To Excel    CRED02_FacilitySetup    Facility_BorrowerSGName    &{ExcelPath}[rowid]    ${Borrower_SG_Name}
     Write Data To Excel    CRED08_OngoingFeeSetup    Deal_Name    &{ExcelPath}[rowid]    ${Deal_Name}
-    Write Data To Excel    CRED08_OngoingFeeSetup    Borrower_ShortName    &{ExcelPath}[rowid]    ${Borrower_ShortName}
     Write Data To Excel    SYND02_PrimaryAllocation    Deal_Name    &{ExcelPath}[rowid]    ${Deal_Name}
+    Write Data To Excel    AMCH06_PricingChangeTransaction    Deal_Name    &{ExcelPath}[rowid]    ${Deal_Name}
+    Write Data To Excel    SERV08_ComprehensiveRepricing    Deal_Name    &{ExcelPath}[rowid]    ${Deal_Name}
     Write Data To Excel    Correspondence    Deal_Name    ${rowid}    ${Deal_Name}    multipleValue=Y    bTestCaseColumn=True    sColumnReference=rowid
-    Write Data To Excel    Correspondence    Notice_Customer_LegalName    1    ${Lender_ShortName}    bTestCaseColumn=True    sColumnReference=rowid
+    Write Data To Excel    CRED01_DealSetup    Deal_Alias    &{ExcelPath}[rowid]    ${Deal_Alias}
+    Write Data To Excel    CRED02_FacilitySetup    Facility_BorrowerSGName    &{ExcelPath}[rowid]    ${Borrower_SG_Name}
+    Write Data To Excel    CRED02_FacilitySetup    Facility_Borrower    &{ExcelPath}[rowid]    ${Borrower_ShortName}
+    Write Data To Excel    CRED02_FacilitySetup    Borrower_ShortName    &{ExcelPath}[rowid]    ${Borrower_ShortName}
+    Write Data To Excel    CRED08_OngoingFeeSetup    Borrower_ShortName    &{ExcelPath}[rowid]    ${Borrower_ShortName}
+    Write Data To Excel    SERV01_LoanDrawdown    Borrower_ShortName    ${rowid}    ${Borrower_ShortName}    multipleValue=Y    bTestCaseColumn=True    sColumnReference=rowid
+    Write Data To Excel    SERV29_PaymentFees    Borrower_ShortName    &{ExcelPath}[rowid]    ${Borrower_ShortName}
+    Write Data To Excel    SERV08_ComprehensiveRepricing    Borrower_ShortName    &{ExcelPath}[rowid]    ${Borrower_ShortName}
+    Write Data To Excel    SERV08_ComprehensiveRepricing    Lender1_ShortName    &{ExcelPath}[rowid]    ${Borrower_ShortName}
     Write Data To Excel    Correspondence    Notice_Customer_LegalName    2    ${Borrower_ShortName}    bTestCaseColumn=True    sColumnReference=rowid
+    Write Data To Excel    Correspondence    Notice_Customer_LegalName    4    ${Borrower_ShortName}    bTestCaseColumn=True    sColumnReference=rowid
+    Write Data To Excel    Correspondence    Notice_Customer_LegalName    6    ${Borrower_ShortName}    bTestCaseColumn=True    sColumnReference=rowid
+    Write Data To Excel    Correspondence    Notice_Customer_LegalName    8    ${Borrower_ShortName}    bTestCaseColumn=True    sColumnReference=rowid
+    Write Data To Excel    Correspondence    Notice_Customer_LegalName    10    ${Borrower_ShortName}    bTestCaseColumn=True    sColumnReference=rowid
+    Write Data To Excel    CRED08_OngoingFeeSetup    Lender_ShortName    &{ExcelPath}[rowid]    ${Lender_ShortName}
+    Write Data To Excel    SYND02_PrimaryAllocation    Primary_Lender2    &{ExcelPath}[rowid]    ${Lender_ShortName}
+    Write Data To Excel    SERV01_LoanDrawdown    Lender_ShortName    ${rowid}    ${Lender_ShortName}    multipleValue=Y    bTestCaseColumn=True    sColumnReference=rowid
+    Write Data To Excel    SERV29_PaymentFees    Lender_ShortName    &{ExcelPath}[rowid]    ${Lender_ShortName}
+    Write Data To Excel    SERV08_ComprehensiveRepricing    Lender2_ShortName    &{ExcelPath}[rowid]    ${Lender_ShortName}
+    Write Data To Excel    Correspondence    Notice_Customer_LegalName    1    ${Lender_ShortName}    bTestCaseColumn=True    sColumnReference=rowid
+    Write Data To Excel    Correspondence    Notice_Customer_LegalName    3    ${Lender_ShortName}    bTestCaseColumn=True    sColumnReference=rowid
+    Write Data To Excel    Correspondence    Notice_Customer_LegalName    5    ${Lender_ShortName}    bTestCaseColumn=True    sColumnReference=rowid
+    Write Data To Excel    Correspondence    Notice_Customer_LegalName    7    ${Lender_ShortName}    bTestCaseColumn=True    sColumnReference=rowid
+    Write Data To Excel    Correspondence    Notice_Customer_LegalName    9    ${Lender_ShortName}    bTestCaseColumn=True    sColumnReference=rowid
     
     ###Deal Select Window###
     Create New Deal    ${Deal_Name}    ${Deal_Alias}    &{ExcelPath}[Deal_Currency]    &{ExcelPath}[Deal_Department]

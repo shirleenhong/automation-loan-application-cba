@@ -320,6 +320,7 @@ Enter Line Fee Details
     ...    @update: makcamps    14JAN2021    - added condition that if pay type is provided, update pay type
     ...    @update: makcamps    20JAN2021    - updated sequence for updating line fee
     ...    @update: songchan    25JAN2021    - updated sequence for updating Pay type and Cycle Frequency
+    ...    @update: makcamps    08FEB2021    - updated click inquiry button if present
     [Arguments]    ${sEffectiveDate}    ${sActual_DueDate}    ${sAdjusted_DueDate}    ${sCycle_Frequency}    ${sAccrue}    ${sFloatRateDate}=None    ${sPayType}=None
     
     ### Keyword Pre-processing ###
@@ -332,7 +333,7 @@ Enter Line Fee Details
     ${PayType}    Acquire Argument Value    ${sPayType}
 
     mx LoanIQ activate window    ${LIQ_LineFeeNotebook_Window}
-    mx LoanIQ click    ${LIQ_LineFee_InquiryMode_Button}  
+    Mx Click Element If Present    ${LIQ_LineFee_InquiryMode_Button}  
     Run Keyword If    '${PayType}'!='None'    mx LoanIQ Select Combo Box Value    ${LIQ_LineFee_PayType_Dropdown}    ${PayType}
     mx LoanIQ enter    ${LIQ_LineFee_EffectiveDate_Field}    ${EffectiveDate} 
     Mx Press Combination    Key.ENTER 
@@ -930,3 +931,36 @@ Validate Line Fee Events Tab
     ...    ELSE    Run Keyword And Continue On Failure    Fail    ${Event_Name} is NOT shown in the Events list of Line Fee Notebook.
 
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LineFeeWindow_EventsTab_Released
+
+Create New Ongoing Fee
+    [Documentation]    This keyword will create new ongoing fee
+    ...    @author: kmagday    9FEB2021    - initial create  
+
+    mx LoanIQ activate window    ${LIQ_FacilityNotebook_Window}
+    mx LoanIQ select    ${LIQ_FacilityNotebook_Queries_OngoingFeeList}
+    mx LoanIQ activate window    ${LIQ_Facility_FeeList}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/FacilityWindow
+    Mx LoanIQ Click    ${LIQ_Facility_FeeList_CreateOngoingFeeButton}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/FacilityWindow
+    Validate if Question or Warning Message is Displayed
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/FacilityWindow
+
+    ${FeeAlias}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_Facility_FeeList_JavaTree}    ${PENDING_STATUS}%Fee Alias%value
+    Mx LoanIQ Select Or DoubleClick In Javatree    ${LIQ_Facility_FeeList_JavaTree}    ${FeeAlias}%d
+
+    [Return]    ${FeeAlias}
+
+Navigate to Ongoing Fee Notebook
+    [Documentation]    This keyword is used for navigating to Line Fee Notebook
+    ...    @author:kmagday    10FEB2021    - initial create
+    [Arguments]    ${sOngoingFee_Alias} 
+       
+    ### GetRuntime Keyword Pre-processing ###
+    ${OngoingFee_Alias}    Acquire Argument Value    ${sOngoingFee_Alias}
+
+    mx LoanIQ activate window    ${LIQ_FacilityNotebook_Window}
+    mx LoanIQ select    ${LIQ_FacilityNotebook_Queries_OngoingFeeList}
+    mx LoanIQ activate window    ${LIQ_Facility_FeeList}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/FacilityWindow
+    Mx LoanIQ Select Or DoubleClick In Javatree    ${LIQ_Facility_FeeList_JavaTree}    ${OngoingFee_Alias}%d
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/FacilityWindow
