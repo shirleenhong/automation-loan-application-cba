@@ -398,6 +398,7 @@ Add New Outstandings
 
     ### Keyword Post-processing ###
     Save Values of Runtime Execution on Excel File    ${sRunTimeVar_NewLoanAlias}    ${NewLoanAlias}
+
     [Return]    ${NewLoanAlias}
       
 Create Cashflow for Loan Repricing
@@ -1295,7 +1296,6 @@ Validation on the Facility Notebook after Merge
     ...    ${GlobalFacility_HostAvailableToDraw_Expected}
     
     ## Recheck Values for computed contr gross, outstanding and avail to draw for Host Banks ##
-    
     Should Be Equal    ${GlobalFacility_HostContrGross_Expected}    ${HostBank_ContrGrossAfterMerge}
     Should Be Equal    ${GlobalFacility_HostOutstandings_Expected}    ${HostBank_OutstandingsAfterMerge}
     Should Be Equal    ${GlobalFacility_HostAvailableToDraw_Expected}    ${HostBank_AvailToDrawAfterMerge}
@@ -1305,8 +1305,7 @@ Validation on the Facility Notebook after Merge
     Validate Circle Notebook on Facility after Merge    ${LegalEntity}    ${Facility}    ${GlobalFacility_CurrentCmtBeforeMerge_WithComma}
     
     Validate Outstanding Loans List after Merge    ${Facility}    ${Loan1_Alias}    ${Loan2_Alias}    ${LoanMerge_Alias}    ${Loan1_Amount}    ${Loan2_Amount}    ${LoanMerge_Amount}
-   
-    
+
 Validate Lender Share on Facility after Merge
     [Documentation]    This keyword validates Lender Share data on the Facility Notebook after Loan Merge.
     ...    @author: chanario
@@ -1315,7 +1314,6 @@ Validate Lender Share on Facility after Merge
     mx LoanIQ select    ${LIQ_FacilityNotebook_Queries_LenderShares}
     
     ###Get Lender Share Amounts###
-    
     ${ActualAmount_Host}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_Facility_Queries_LenderShares_JavaTree}    ${HostBank}%Actual Amount%ActualAmount_Host
     ${ActualAmount_Lender1}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_Facility_Queries_LenderShares_JavaTree}    ${Lender1}%Actual Amount%ActualAmount_Lender1
     ${ActualAmount_Lender2}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_Facility_Queries_LenderShares_JavaTree}    ${Lender2}%Actual Amount%ActualAmount_Lender2           
@@ -1391,7 +1389,6 @@ Validate Outstanding Loans List after Merge
     mx LoanIQ activate window    ${LIQ_ExistingLoansForFacility_Window}
     
     ###Get Existing Loans Amounts###
-    
     ${Loan1CurrentAmt}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_ExistingLoansForFacility_JavaTree}    ${Loan1_Alias}%Current Amount%Loan1CurrentAmt
     ${Loan2CurrentAmt}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_ExistingLoansForFacility_JavaTree}    ${Loan2_Alias}%Current Amount%Loan2CurrentAmt
     ${LoanMergeCurrentAmt}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_ExistingLoansForFacility_JavaTree}    ${LoanMerge_Alias}%Current Amount%LoanMergeCurrentAmt
@@ -1401,7 +1398,6 @@ Validate Outstanding Loans List after Merge
     ${LoanMergeOriginalAmt}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_ExistingLoansForFacility_JavaTree}    ${LoanMerge_Alias}%Original Amount%LoanMergeOriginalAmt
     
     ###Validate Expected Values vs Current Values###
-    
     Should Be Equal    ${Loan1CurrentAmt}    0.00
     Should Be Equal    ${Loan2CurrentAmt}    0.00
     Should Be Equal    ${LoanMergeCurrentAmt}    ${LoanMerge_Amount}
@@ -1555,7 +1551,7 @@ Validate Loan Repricing Effective Date
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LoanRepricing_Outstanding
     Run Keyword If    ${VALIDATE_EFFECTIVEDATE}==True    Log    Loan Repricing Effective Date successfully validated.
     ...    ELSE    Fail    Loan Repricing Effective Date not validated successfully.
-    
+
 Confirm Cashflows for Loan Repricing
     [Documentation]    This keyword is used to confirm Cashflows for Loan Repricing
     ...    @author: hstone
@@ -1568,7 +1564,6 @@ Select Loan to Process
     mx LoanIQ activate window    ${LIQ_LoanRepricing_Window}
     Mx LoanIQ Select String    ${LIQ_LoanRepricingForDealAdd_JavaTree}    ${sLoanAlias}
     Log    ${sLoanAlias} is selected
-    
 
 Add Repricing Details
     [Documentation]    This keyword is used for flexible roll over selection
@@ -1768,7 +1763,6 @@ Get Calculated Cycle Due Amount and Validate
 
     [Return]    ${Calculated_CycleDue}
 
-
 Navigate to Existing Outstanding
     [Documentation]    This keyword is for navigating to the existing outstanding inside the facility notebook
     ...    @author: sahalder    09JUL2020    - initial create
@@ -1930,6 +1924,50 @@ Validate Loan Amount was Updated after Repricing
     Run Keyword If    ${Status}==${True}    Log    Current Hostbank Net is the expected Loan amount after repricing
     ...    ELSE    Run Keyword and Continue on Failure    Fail    Current amount is incorrect. Expected amount is ${New_LoanAmount}
 
+Validate Updated Global and Host Bank Amount after Repricing
+    [Documentation]    This keyword validates the expected Loan amount on Loan Notebook after Repricing.
+    ...    @author: makcamps    04FEB2021    - Initial Create
+    [Arguments]    ${sNew_GlobalAmount}    ${sNew_HostBankAmount}
+    
+    ### Pre-processing Keyword ##
+    ${New_GlobalAmount}    Acquire Argument Value    ${sNew_GlobalAmount}
+    ${New_HostBankAmount}    Acquire Argument Value    ${sNew_HostBankAmount}
+
+    Mx LoanIQ activate window    ${LIQ_Loan_Window}
+    Mx LoanIQ Select Window Tab    ${LIQ_Loan_Tab}    General    
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LoanWindow
+
+    ${New_GlobalAmount}    Remove Comma and Convert to Number    ${New_GlobalAmount}
+    ${New_HostBankAmount}    Remove Comma and Convert to Number    ${New_HostBankAmount}
+    
+    ${ExistingOriginal}    Mx LoanIQ Get Data    ${LIQ_Loan_GlobalOriginal_Field}    ExistingOriginal
+    ${ExistingOriginal}    Remove Comma and Convert to Number    ${ExistingOriginal}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LoanWindow_GeneralTab
+    ${Status}    Run Keyword and Return Status    Should Be Equal    ${New_GlobalAmount}    ${ExistingOriginal}
+    Run Keyword If    ${Status}==${True}    Log    Global original amount is the expected Loan amount after repricing
+    ...    ELSE    Run Keyword and Continue on Failure    Fail    Current amount is incorrect. Expected amount is ${New_GlobalAmount}
+
+    ${ExistingCurrent}    Mx LoanIQ Get Data    ${LIQ_Loan_GlobalCurrent_Field}    ExistingCurrent
+    ${ExistingCurrent}    Remove Comma and Convert to Number    ${ExistingCurrent}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LoanWindow_GeneralTab
+    ${Status}    Run Keyword and Return Status    Should Be Equal    ${New_GlobalAmount}    ${ExistingCurrent}
+    Run Keyword If    ${Status}==${True}    Log    Current amount is the expected Loan amount after repricing
+    ...    ELSE    Run Keyword and Continue on Failure    Fail    Current amount is incorrect. Expected amount is ${New_GlobalAmount}
+
+    ${ExistingGross}    Mx LoanIQ Get Data    ${LIQ_Loan_HostBankGross_Field}    ExistingGross
+    ${ExistingGross}    Remove Comma and Convert to Number    ${ExistingGross}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LoanWindow_GeneralTab
+    ${Status}    Run Keyword and Return Status    Should Be Equal    ${New_HostBankAmount}    ${ExistingGross}
+    Run Keyword If    ${Status}==${True}    Log    Current Hostbank Gross is the expected Loan amount after repricing
+    ...    ELSE    Run Keyword and Continue on Failure    Fail    Current amount is incorrect. Expected amount is ${New_HostBankAmount}
+
+    ${ExistingNet}    Mx LoanIQ Get Data    ${LIQ_Loan_HostBankNet_Field}    ExistingNet
+    ${ExistingNet}    Remove Comma and Convert to Number    ${ExistingNet}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LoanWindow_GeneralTab
+    ${Status}    Run Keyword and Return Status    Should Be Equal    ${New_HostBankAmount}    ${ExistingNet}
+    Run Keyword If    ${Status}==${True}    Log    Current Hostbank Net is the expected Loan amount after repricing
+    ...    ELSE    Run Keyword and Continue on Failure    Fail    Current amount is incorrect. Expected amount is ${New_HostBankAmount}
+
 Navigate to Choose a Payment Window
     [Documentation]    This keyword is used navigate to choose a payment window from loan notebook
     ...    @author: mcastro    15DEC2020    - initial create
@@ -1978,7 +2016,6 @@ Validate Rollover/Conversion General tab
     Save Values of Runtime Execution on Excel File    ${sRunVar_LoanMergeAlias}    ${LoanMergeAlias}
 
     [Return]    ${LoanMergeAlias}
-
 
 Validate and Add Interest Payment for Loan Repricing
     [Documentation]    This keyword adds and validate Interest Payment for the loan repricing
@@ -2236,9 +2273,6 @@ Evaluate Three Loans then Validate the Total Amount of Existing Outstandings
     Save Values of Runtime Execution on Excel File    ${sRunVar_TotalExistingOutstanding_Expected}    ${TotalExistingOutstanding_Expected}
     
     [Return]    ${TotalExistingOutstanding_Expected}
-    
-
-
 
 Update Rollover/Conversion Repricing Date
     [Documentation]    This keyword is used to verify values on the Rollover/Conversion window General Tab information

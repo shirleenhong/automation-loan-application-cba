@@ -385,19 +385,26 @@ Validate Pricing Change General Information
     [Documentation]    This keyword is used to validate the inputted values are accepted in the general tab when doing Pricing Change Transaction.
     ...    @author: rtarayao
     ...    @update: amansuet    26MAY2020    - updated to align with automation standards and fixed hardcoded locators
+    ...    @update: javinzon    08FEB2021    - updated keyword from 'Mx LoanIQ Verify Object Exist' to 'Mx LoanIQ Get Data',
+    ...                                        added keyword 'Remove String' for Description validation, added keyword pre-processing
     [Arguments]    ${sPricingChange_TransactionNo}    ${sPricingChange_EffectiveDate}    ${sPricingChange_Desc}
     
-    ${PricingChange_TransactionNo}    Replace Variables    ${sPricingChange_TransactionNo}
+    ### Keyword Pre-processing ###
+    ${PricingChange_TransactionNo}    Acquire Argument Value    ${sPricingChange_TransactionNo}
+    ${PricingChange_EffectiveDate}    Acquire Argument Value    ${sPricingChange_EffectiveDate}
+    ${PricingChange_Desc}    Acquire Argument Value    ${sPricingChange_Desc}
+    
+    ${PricingChange_TransactionNo}    Replace Variables    ${PricingChange_TransactionNo}
     ${LIQ_PricingChangeTransaction_GeneralTab_TransactionNumber}    Replace Variables    ${LIQ_PricingChangeTransaction_GeneralTab_TransactionNumber}
     Mx LoanIQ Verify Object Exist    ${LIQ_PricingChangeTransaction_GeneralTab_TransactionNumber}    VerificationData="Yes"
 
-    ${PricingChange_EffectiveDate}    Replace Variables    ${sPricingChange_EffectiveDate}
+    ${PricingChange_EffectiveDate}    Replace Variables    ${PricingChange_EffectiveDate}
     ${LIQ_PricingChangeTransaction_GeneralTab_EffectiveDate}    Replace Variables    ${LIQ_PricingChangeTransaction_GeneralTab_EffectiveDate}
     Mx LoanIQ Verify Object Exist    ${LIQ_PricingChangeTransaction_GeneralTab_EffectiveDate}    VerificationData="Yes"
 
-    ${PricingChange_Desc}    Replace Variables    ${sPricingChange_Desc}
-    ${LIQ_PricingChangeTransaction_GeneralTab_PricingChangeDescription}    Replace Variables    ${LIQ_PricingChangeTransaction_GeneralTab_PricingChangeDescription}
-    Mx LoanIQ Verify Object Exist    ${LIQ_PricingChangeTransaction_GeneralTab_PricingChangeDescription}    VerificationData="Yes"
+    ${Description_UI}    Mx LoanIQ Get Data    ${LIQ_PricingChangeTransaction_GeneralTab_PricingChangeDescription}    value%Description
+    Compare Two Strings    ${Description_UI}    ${PricingChange_Desc} 
+   
   
 Modify Ongoing Fees
     [Documentation]    This keyword is used to update and verify the values of the Ongoing Fees in the Pricing Change Transaction notebook.
@@ -406,6 +413,7 @@ Modify Ongoing Fees
     ...                                      - fixed hardcoded locators
     ...                                      - removed unused keywords
     ...                                      - modified keyword as current process is not applicable anymore
+    ...    @update: javinzon    05FEB2021    - added keyword to use when Warning message is present
     [Arguments]    ${sPricingChange_OngoingFeeStr}    ${sOngoingFeePercent}    ${sUnutilizedRate}
 
     ### Keyword Pre-processing ###
@@ -413,7 +421,8 @@ Modify Ongoing Fees
     ${OngoingFeePercent}    Acquire Argument Value    ${sOngoingFeePercent}
     ${UnutilizedRate}    Acquire Argument Value    ${sUnutilizedRate}
 
-    Mx LoanIQ Select Window Tab    ${LIQ_PricingChangeTransaction_Tab}    Pricing   
+    Mx LoanIQ Select Window Tab    ${LIQ_PricingChangeTransaction_Tab}    Pricing 
+    Mx LoanIQ Click Element If Present    ${LIQ_Warning_Yes_Button}  
     Mx LoanIQ Click    ${LIQ_PricingChangeTransaction_ModifyOngoingFees_Button}
     Mx LoanIQ Click Element If Present    ${LIQ_Warning_Yes_Button}
     Verify If Information Message is Displayed
@@ -801,3 +810,57 @@ Select Financial Ratio in Interest Pricing List
     mx LoanIQ activate    ${LIQ_Facility_InterestPricing_Window}
 	Mx LoanIQ Select Or DoubleClick In Javatree    ${LIQ_PCT_InterestPricing_List}    ${PCT_FinancialRatioType}%s
 	Take Screenshot    ${Screenshot_Path}/Screenshots/LoanIQ/InterestPricingWindow
+
+Clear Ongoing Fee Pricing Current Values
+     [Documentation]    This keyword is used to clear current Ongoing Fee Pricing values.
+    ...    @author: javinzon    08FEB2021    - initial create
+
+    mx LoanIQ activate window     ${LIQ_PricingChangeTransaction_OngoingFeePricing_Window}
+    mx LoanIQ click element if present    ${LIQ_Information_OK_Button}
+    mx LoanIQ click    ${LIQ_PricingChangeTransaction_OngoingFeePricingWindow_Clear_Button}
+    mx LoanIQ click    ${LIQ_Question_Yes_Button}
+    mx LoanIQ activate window     ${LIQ_PricingChangeTransaction_OngoingFeePricing_Window}
+    
+Insert Add in Modify Ongoing Fees of Pricing Change Transaction
+    [Documentation]    This keyword adds ongoing fee in a Pricing Change Transaction.
+    ...    @author: javinzon    08FEB2021    - initial create
+    [Arguments]    ${sFacilityItem}    ${sFeeType}    ${sRateBasisOngoingFeePricing} 
+    
+    ### GetRuntime Keyword Pre-processing ###
+	${FacilityItem}    Acquire Argument Value    ${sFacilityItem}
+	${FeeType}    Acquire Argument Value    ${sFeeType}
+	${RateBasisOngoingFeePricing}    Acquire Argument Value    ${sRateBasisOngoingFeePricing}
+
+    mx LoanIQ click    ${LIQ_PricingChangeTransaction_OngoingFeePricingWindow_Add_Button}
+    mx LoanIQ activate window    ${LIQ_Facility_InterestPricing_AddItem_Window}
+    Mx LoanIQ Select Combo Box Value    ${LIQ_FacilityPricing_OngoingFees_AddItemList}    ${FacilityItem}   
+    mx LoanIQ click    ${LIQ_FacilityPricing_OngoingFees_AddItem_OK_Button}
+    Mx LoanIQ Select Combo Box Value    ${LIQ_FeeSelection_Category_List}    ${FacilityItem}
+    Mx LoanIQ Select Combo Box Value    ${LIQ_FeeSelection_Type_List}    ${FeeType} 
+    Mx LoanIQ Select Combo Box Value    ${LIQ_FeeSelection_RateBasis_List}    ${RateBasisOngoingFeePricing} 
+    mx LoanIQ click    ${LIQ_FacilityPricing_OngoingFees_FreeSelection_OK_Button}
+    
+    ${FacilityItem}    Replace Variables    ${FacilityItem}
+    ${LIQ_PricingChangeTransaction_OngoingFeePricingWindow_FacilityItemValue_Item}    Replace Variables    ${LIQ_PricingChangeTransaction_OngoingFeePricingWindow_FacilityItemValue_Item}
+    Run Keyword And Continue On Failure    Mx LoanIQ Verify Object Exist    ${LIQ_PricingChangeTransaction_OngoingFeePricingWindow_FacilityItemValue_Item}    VerificationData="Yes"
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/OngoingFeePricing
+
+Insert After in Modify Ongoing Fees of Pricing Change Transaction
+    [Documentation]    This keyword adds ongoing fee - after on facility.
+    ...    @author: javinzon    08FEB2021    - initial create
+    [Arguments]    ${sFacilityItemAfter}    ${sFacilityPercent}  
+    
+    ### GetRuntime Keyword Pre-processing ###
+	${FacilityItemAfter}    Acquire Argument Value    ${sFacilityItemAfter}
+	${FacilityPercent}    Acquire Argument Value    ${sFacilityPercent}
+    
+    mx LoanIQ click    ${LIQ_PricingChangeTransaction_OngoingFeePricingWindow_After_Button}
+    Mx LoanIQ Select Combo Box Value    ${LIQ_Facility_InterestPricing_AddItem_List}    ${FacilityItemAfter}
+    mx LoanIQ click    ${LIQ_FacilityPricing_OngoingFees_AddItem_OK_Button}
+    mx LoanIQ enter    ${LIQ_FacilityPricing_FormulaCategory_Percent_Radiobutton}    ${ON}
+    mx LoanIQ activate window    ${LIQ_FormulaCategory_Window}
+    mx LoanIQ enter    ${LIQ_FacilityPricing_FormulaCategory_Percent_Textfield}    ${FacilityPercent}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/OngoingFeePricing
+    mx LoanIQ click    ${LIQ_FacilityPricing_FormulaCategory_OK_Button}    
+    mx LoanIQ activate window    ${LIQ_PricingChangeTransaction_OngoingFeePricing_Window}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/OngoingFeePricing

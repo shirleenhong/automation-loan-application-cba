@@ -6,6 +6,7 @@ Resource    ../../../../Configurations/LoanIQ_Import_File.robot
 Send Upfront Fee Intent Notice for CH EDU Bilateral Deal
     [Documentation]    This keyword is use to successfully send Upfront Fee Payment Intent Notice
     ...    @author: dahijara    15DEC2020    Initial Create
+    ...    @update: mcastro    05FEB2021    Removed ${ExcelPath} on Writing Data to Excel
     [Arguments]    ${ExcelPath}
     
     ${Deal_Name}    Read Data From Excel    CRED01_DealSetup    Deal_Name    &{ExcelPath}[rowid]
@@ -18,9 +19,9 @@ Send Upfront Fee Intent Notice for CH EDU Bilateral Deal
 
     Search Existing Deal    ${Deal_Name}
     ${NoticeIdentifier}    ${NoticeCustomerLegalName}    ${Contact}    Get Notice ID via Deal Notebook    ${FromDate}    ${ThruDate}    &{ExcelPath}[Notice_Type]
-    Write Data To Excel    Correspondence    Notice_Identifier    ${rowid}     ${NoticeIdentifier}    ${ExcelPath}    bTestCaseColumn=True    sColumnReference=rowid
-    Write Data To Excel    Correspondence    Notice_Customer_LegalName    ${rowid}     ${NoticeCustomerLegalName}    ${ExcelPath}    bTestCaseColumn=True    sColumnReference=rowid
-    Write Data To Excel    Correspondence    Contact    ${rowid}     ${Contact}    ${ExcelPath}    bTestCaseColumn=True    sColumnReference=rowid
+    Write Data To Excel    Correspondence    Notice_Identifier    ${rowid}     ${NoticeIdentifier}    bTestCaseColumn=True    sColumnReference=rowid
+    Write Data To Excel    Correspondence    Notice_Customer_LegalName    ${rowid}     ${NoticeCustomerLegalName}    bTestCaseColumn=True    sColumnReference=rowid
+    Write Data To Excel    Correspondence    Contact    ${rowid}     ${Contact}    bTestCaseColumn=True    sColumnReference=rowid
     
     ### Validate and Send Notice ###
     Send Notice via WIP in LIQ    ${NoticeIdentifier}    ${NoticeCustomerLegalName}    &{ExcelPath}[Notice_Method]    Awaiting release        
