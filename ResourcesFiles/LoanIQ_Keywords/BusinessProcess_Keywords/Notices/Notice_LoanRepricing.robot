@@ -3,7 +3,7 @@ Resource     ../../../../Configurations/LoanIQ_Import_File.robot
 
 *** Keywords ***
 
-Send Intent Notice for Loan Repricing
+Send Notice for Loan Repricing
     [Documentation]    This keyword is use to successfully sent out a Repricing Intent Notice via Notice Application without validation in FFC
     ...    @author: makcamps    09FEB2021    - initial create
     [Arguments]    ${ExcelPath}
@@ -59,14 +59,13 @@ Send Intent Notice for Loan Repricing
     ### Notice Window Validation ### 
     ${Contact}    Read Data From Excel    Correspondence    Contact   ${rowid}
     ${Notice_AllInRate}    Read Data From Excel    Correspondence    Notice_AllInRate   ${rowid}
-    ${Rate_Basis}    Read Data From Excel    Correspondence    Rate_Basis   ${rowid}
     ${Loan_EffectiveDate}    Read Data From Excel    Correspondence    Loan_EffectiveDate   ${rowid}
     ${Loan_RepricingDate}    Read Data From Excel    Correspondence    Loan_RepricingDate   ${rowid}
     ${Currency}    Read Data From Excel    Correspondence    Currency   ${rowid}
     ${Borrower_Amount}    Read Data From Excel    Correspondence    Loan_BorrowerAmount   ${rowid}
     ${Lender_Amount}    Read Data From Excel    Correspondence    Loan_LenderAmount   ${rowid}
     ${Payment_Amount}    Read Data From Excel    Correspondence    Loan_PaymentAmount   ${rowid}
-    
+    ${Rate_Basis}    Read Data From Excel    Correspondence    Rate_Basis   ${rowid}
     ${Loan_BaseRate}    Read Data From Excel    Correspondence    Loan_BaseRate   ${rowid}
     ${Loan_Spread}    Read Data From Excel    Correspondence    Loan_Spread   ${rowid}
     ${Notice_Amount}    Read Data From Excel    Correspondence    Notice_Amount   ${rowid}
