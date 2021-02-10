@@ -9,6 +9,7 @@ Setup Syndicated Deal for PT Health Syndicated
     ...    @update: songchan    25JAN2021    - Added writing of deal name in other sheet for data set
     ...    @update: songchan    29JAN2021    - Added writing of Deal and Borrower name for Loan drawdown
     ...    @update: songchan    01FEB2021    - Added writing of Deal Name in Ongoing Fee Setup sheet
+    ...    @update: songchan    09FEB2021    - Added writing of Deal and Borrower Name in Comprehensive Repricing sheet
     [Arguments]    ${ExcelPath}
     
     ###Data Generation###
@@ -30,6 +31,8 @@ Setup Syndicated Deal for PT Health Syndicated
     Write Data To Excel    SERV01_LoanDrawdown    Deal_Name    &{ExcelPath}[rowid]    ${Deal_Name}
     Write Data To Excel    SERV01_LoanDrawdown    Borrower_Name    ${rowid}    ${Borrower_ShortName}
     Write Data To Excel    CRED08_OngoingFeeSetup    Deal_Name    ${rowid}    ${Deal_Name}
+    Write Data To Excel    SERV08_ComprehensiveRepricing    Deal_Name    ${row_id}    ${Deal_Name}
+    Write Data To Excel    SERV08_ComprehensiveRepricing    Borrower_Name    ${row_id}    ${Borrower_ShortName}
     
     ###Deal Select Window###
     Create New Deal    ${Deal_Name}    ${Deal_Alias}    &{ExcelPath}[Deal_Currency]    &{ExcelPath}[Deal_Department]
