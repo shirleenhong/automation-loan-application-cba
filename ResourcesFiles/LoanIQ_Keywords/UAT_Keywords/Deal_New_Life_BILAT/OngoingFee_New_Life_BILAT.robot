@@ -181,3 +181,6 @@ Create New Fee for New Life Bilat
     
     Logout from Loan IQ
     Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
+    Launch Existing Facility    &{ExcelPath}[Deal_Name]    &{ExcelPath}[Facility_Name]
+    Navigate to Ongoing Fee Notebook     ${Fee_Alias}
+    Validate release of Ongoing Fee Payment
