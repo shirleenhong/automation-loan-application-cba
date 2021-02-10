@@ -26,4 +26,15 @@ Setup Repayment Schedule for Facility A
 
 Establish Facility B - CRED02
     Mx Execute Template With Multiple Data    Create Facility B for PDS Syndicate Deal    ${ExcelPath}    ${rowid}    CRED02_FacilitySetup_B
+
+Establish Commitment Fee for Facility B - CRED08
+    Mx Execute Template With Multiple Data    Setup Commitment Fee for PDS Syndicate Deal    ${ExcelPath}    ${rowid}    CRED08_OngoingFeeSetup_B
+    
+Setup Repayment Schedule for Facility B
     Mx Execute Template With Multiple Data    Add Repayment Schedule for PDS Syndicate Deal - Facility B    ${ExcelPath}    ${rowid}    CRED02_FacilitySetup_B
+
+Setup Primaries and Close Deal
+    Mx Execute Template With Multiple Data    Setup Primaries for PDS Syndicate Deal    ${ExcelPath}    ${rowid}    SYND02_PrimaryAllocation
+    Mx Execute Template With Multiple Data    PDS Syndicated Deal Approval and Close    ${ExcelPath}    ${rowid}    SYND02_PrimaryAllocation
+    Mx Execute Template With Multiple Data    Release Ongoing Fee for PDS Syndicate Deal    ${ExcelPath}    ${rowid}    CRED08_OngoingFeeSetup_A
+    Mx Execute Template With Multiple Data    Release Ongoing Fee for PDS Syndicate Deal    ${ExcelPath}    ${rowid}    CRED08_OngoingFeeSetup_B

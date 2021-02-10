@@ -7,10 +7,12 @@ Create Facility A for PDS Syndicate Deal
     [Documentation]    This keyword creates Facility A for PDS Syndicated Deal
     ...    @author: shirhong    18JAN2021    - Intial Create
     ...    @update: shirhong    28JAN2021    - Updated keyword name to specific Facility
+    ...    @update: shirhong    09FEB2021    - Added writing of Facility Name in Ongoing Fee Setup sheet
     [Arguments]    ${ExcelPath}
 
     ${Facility_Name}    Auto Generate Only 5 Numeric Test Data    &{ExcelPath}[Facility_NamePrefix]
     Write Data To Excel    CRED02_FacilitySetup_A    Facility_Name    ${rowid}    ${Facility_Name}    bTestCaseColumn=True    sColumnReference=rowid
+    Write Data To Excel    CRED08_OngoingFeeSetup_A    Facility_Name    ${rowid}    ${Facility_Name}
     ${Facility_BorrowerSGName}    Read Data From Excel    PTY001_QuickPartyOnboarding    Borrower_SG_Name    &{ExcelPath}[rowid]
     ${Facility_Borrower}    Read Data From Excel    PTY001_QuickPartyOnboarding    LIQCustomer_ShortName    &{ExcelPath}[rowid]
     ${Deal_Name}    Read Data From Excel    CRED01_DealSetup    Deal_Name    &{ExcelPath}[rowid]
@@ -39,7 +41,7 @@ Create Facility A for PDS Syndicate Deal
 Add Repayment Schedule for PDS Syndicate Deal - Facility A
     [Documentation]    This keyword creates Repayment Schedule for Facility A
     ...    @author: shirhong    25JAN2021    - Intial Create
-    ...    @author: shirhong    28JAN2021    - Updated modify schdule item keyword
+    ...    @update: shirhong    28JAN2021    - Updated modify schdule item keyword
     [Arguments]    ${ExcelPath}
 
     ### Add Amortization / Repayment Schedule ###
@@ -62,10 +64,12 @@ Add Repayment Schedule for PDS Syndicate Deal - Facility A
 Create Facility B for PDS Syndicate Deal
     [Documentation]    This keyword creates Facility B for PDS Syndicated Deal
     ...    @author: shirhong    28JAN2021    - Intial Create
+    ...    @update: shirhong    09FEB2021    - Added writing of Facility Name in Ongoing Fee Setup sheet
     [Arguments]    ${ExcelPath}
 
     ${Facility_Name}    Auto Generate Only 5 Numeric Test Data    &{ExcelPath}[Facility_NamePrefix]
     Write Data To Excel    CRED02_FacilitySetup_B    Facility_Name    ${rowid}    ${Facility_Name}    bTestCaseColumn=True    sColumnReference=rowid
+    Write Data To Excel    CRED08_OngoingFeeSetup_B    Facility_Name    ${rowid}    ${Facility_Name}
     ${Facility_BorrowerSGName}    Read Data From Excel    PTY001_QuickPartyOnboarding    Borrower_SG_Name    &{ExcelPath}[rowid]
     ${Facility_Borrower}    Read Data From Excel    PTY001_QuickPartyOnboarding    LIQCustomer_ShortName    &{ExcelPath}[rowid]
     ${Deal_Name}    Read Data From Excel    CRED01_DealSetup    Deal_Name    &{ExcelPath}[rowid]
