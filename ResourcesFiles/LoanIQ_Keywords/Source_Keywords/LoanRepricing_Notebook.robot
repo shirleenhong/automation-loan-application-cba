@@ -754,11 +754,15 @@ Validate Loan Repricing from Facility
 Validate Repricing Loan from Facility 
     [Documentation]    This keyword is use to validate loan repricing on facility notebook from Loan Notebook
     ...    @author: songchan     - Initial Create
-    [Arguments]    ${NewRequestedAmout}    ${Current_Commitment}
+    [Arguments]    ${sNewRequestedAmount}    ${sCurrent_Commitment}
+    
+    ${NewRequestedAmount}    Acquire Argument Value    ${sNewRequestedAmount}
+    ${Current_Commitment}    Acquire Argument Value    ${sCurrent_Commitment}
+    
     mx LoanIQ activate window    ${LIQ_Loan_Window}
     mx LoanIQ select    ${LIQ_LoanNotebook_FacilityNotebook_Menu}
     
-    #Avail to Draw Validation
+    ### Avail to Draw Validation ###
     ${CurrentCmt}    Mx LoanIQ Get Data    ${LIQ_FacilitySummary_GlobalFacAmt_CurrentCmt_Amount}    CurrentCmt
     ${Outstandings}    Mx LoanIQ Get Data    ${LIQ_FacilitySummary_GlobalFacAmt_Outstandings_Amount}    Outstandings
     ${ConvertedCurrentCmt}    Remove Comma and Convert to Number    ${CurrentCmt}
@@ -767,13 +771,13 @@ Validate Repricing Loan from Facility
     ${ComputedAvailToDraw}    Evaluate    "%.2f" % ${ComputedAvailToDraw}
     ${FetchedAvailToDraw}    Mx LoanIQ Get Data    ${LIQ_FacilitySummary_GlobalFacAmt_AvailToDraw_Amount}    AvailToDraw
     ${ConvertedFetchedAvailToDraw}    Remove Comma and Convert to Number    ${FetchedAvailToDraw}
-    Should Be Equal    ${ComputedAvailToDraw}    ${ConvertedFetchedAvailToDraw}    
+    Compare Two Strings    ${ComputedAvailToDraw}    ${ConvertedFetchedAvailToDraw}    
     
-    #Current Commitment
-    Should Be Equal    ${Current_Commitment}    ${ConvertedCurrentCmt}
+    ### Current Commitment ###
+    Compare Two Strings    ${Current_Commitment}    ${ConvertedCurrentCmt}
     
-    #Outstandings
-    Should Be Equal    ${NewRequestedAmout}    ${ConvertedOutstandings}   
+    ### Outstandings ###
+    Compare Two Strings    ${NewRequestedAmount}    ${ConvertedOutstandings}   
         
 Validate Existing and New Loans
     [Documentation]    This keyword is use to validate existing loan and the newly created loan from loan repricing in loan notebook
