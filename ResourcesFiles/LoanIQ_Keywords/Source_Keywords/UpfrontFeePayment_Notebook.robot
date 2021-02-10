@@ -27,6 +27,7 @@ Populate Fee Details Window
     ...    @update: archana     14JUL2020    - Added Pre-processing keywords and Screenshot path                  
     ...    @update: hstone      21JUL2020    - Replaced 'Mx Native Type' with 'Mx Press Combination'
     ...    @update: jloretiz    06AUG2020    - updated the variable name to use Fee Details
+    ...    @update: javinzon	10FEB2021	 - added 'Take Screenshot' to capture other details
     [Arguments]    ${sFee_Type}    ${sUpfrontFeePayment_Comment}
     
     ###Pre-processing keyword###
@@ -48,6 +49,7 @@ Populate Fee Details Window
     Run Keyword And Continue On Failure    Mx LoanIQ Verify Object Exist    ${LIQ_FeeDetail_Window}    VerificationData="Yes"
     mx LoanIQ select    ${LIQ_FeeDetail_FeeType_List}    ${Fee_Type}
     mx LoanIQ click    ${LIQ_FeeDetail_FeeType_OK_Button} 
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/FeeDetails
     
     mx LoanIQ click    ${LIQ_FeeDetails_OK_Button}
     mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
