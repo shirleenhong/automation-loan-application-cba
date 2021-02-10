@@ -67,10 +67,22 @@ Send Intent Notice for Loan Repricing
     ${Lender_Amount}    Read Data From Excel    Correspondence    Loan_LenderAmount   ${rowid}
     ${Payment_Amount}    Read Data From Excel    Correspondence    Loan_PaymentAmount   ${rowid}
     
+    ${Loan_BaseRate}    Read Data From Excel    Correspondence    Loan_BaseRate   ${rowid}
+    ${Loan_Spread}    Read Data From Excel    Correspondence    Loan_Spread   ${rowid}
+    ${Notice_Amount}    Read Data From Excel    Correspondence    Notice_Amount   ${rowid}
+    ${Balance_Amount}    Read Data From Excel    Correspondence    Balance_Amount   ${rowid}
+    ${Effective_Date}    Read Data From Excel    Correspondence    Effective_Date   ${rowid}
+    ${Loan_MaturityDate}    Read Data From Excel    Correspondence    Loan_MaturityDate   ${rowid}
+    ${Loan_GlobalOriginal}    Read Data From Excel    Correspondence    Loan_GlobalOriginal   ${rowid}
+    ${Loan_RateSetting_DueDate}    Read Data From Excel    Correspondence    Loan_RateSetting_DueDate   ${rowid}
+    ${Upfront_Fee}    Read Data From Excel    Correspondence    Upfront_Fee   ${rowid}
+    ${Fee_Type}    Read Data From Excel    Correspondence    Fee_Type   ${rowid}
+    ${AccountName}    Read Data From Excel    Correspondence    AccountName   ${rowid}
+
     Validate the Notice Window in LIQ    &{ExcelPath}[Search_By]    ${NoticeIdentifier}    ${FromDate}    ${ThruDate}    &{ExcelPath}[Notice_Status]    ${NoticeCustomerLegalName}
     ...    ${Contact}    &{ExcelPath}[NoticeGroup_UserID]    &{ExcelPath}[Notice_Method]
     ...    &{ExcelPath}[Notice_Type]    ${dataset_path}&{ExcelPath}[InputFilePath]&{ExcelPath}[XML_File].xml    &{ExcelPath}[Deal_Name]    &{ExcelPath}[XML_NoticeType]    ${Pricing_Option}
-    ...    None    None    ${Notice_AllInRate}    None    None    None    ${Rate_Basis}
-    ...    None    None    None    None    ${Loan_RepricingDate}
-    ...    ${Loan_EffectiveDate}    None    None    ${Currency}    None
+    ...    ${Loan_BaseRate}    ${Loan_Spread}    ${Notice_AllInRate}    ${Fee_Type}    ${Notice_Amount}    ${Balance_Amount}    ${Rate_Basis}
+    ...    ${Effective_Date}    ${Loan_MaturityDate}    ${Loan_GlobalOriginal}    ${Loan_RateSetting_DueDate}    ${Loan_RepricingDate}
+    ...    ${Loan_EffectiveDate}    ${Upfront_Fee}    ${Fee_Type}    ${Currency}    ${AccountName}
     ...    ${Borrower_Amount}    ${Lender_Amount}    ${Payment_Amount}

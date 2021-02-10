@@ -15,4 +15,4 @@ Rollover and Additional Drawdown
     Set Test Variable    ${rowid}    7
     Mx Execute Template With Multiple Data    Send Intent Notice for Loan Repricing    ${ExcelPath}    ${rowid}    Correspondence
     Set Test Variable    ${rowid}    8
-    Mx Execute Template With Multiple Data    Send Intent Notice for Loan Drawdown    ${ExcelPath}    ${rowid}    Correspondence
+    Mx Execute Template With Multiple Data    Send Intent Notice for Loan Repricing    ${ExcelPath}    ${rowid}    Correspondence

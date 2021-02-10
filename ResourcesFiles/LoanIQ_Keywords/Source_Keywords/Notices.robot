@@ -378,7 +378,9 @@ Get Notice Details via Loan Repricing Notebook
     [Documentation]    Get Notice Details (Effective, Repricing, and Maturity Date, Pricing Option, Borrower, Lender and Payment Amount) via Loan Repricing Notebook in LIQ
     ...    @author: makcamps    22JAN2021    - initial create
     ...    @update: makcamps    26JAN2021    - added get data and return value for pricing option
-    [Arguments]    ${sFacilityName}    ${sDealName}    ${sBorrower_LoanAlias}    ${sLender_LoanAlias}    ${sPaymentType}
+    [Arguments]    ${sFacilityName}    ${sDealName}    ${sBorrower_LoanAlias}    ${sLender_LoanAlias}    ${sPaymentType}    ${sRunVar_Effective_Date}
+    ...    ${sRunVar_Repricing_Date}    ${sRunVar_Maturity_Date}    ${sRunVar_Pricing_Option}    ${sRunVar_Borrower_Amount}    ${sRunVar_Lender_Amount}
+    ...    ${sRunVar_Payment_Amount}
 
     ### Keyword Pre-processing ###
     ${FacilityName}    Acquire Argument Value    ${sFacilityName}    
@@ -418,8 +420,17 @@ Get Notice Details via Loan Repricing Notebook
     ${Payment_Amount}    Mx LoanIQ Store TableCell To Clipboard   ${LIQ_LoanRepricingForDeal_Workflow_JavaTree}    ${Pricing_Option} ${PaymentType} (${Borrower_LoanAlias})%Amount%var
     Take Screenshot    ${screenshot_path}/Screenshots/Integration/Correspondence_LoanRepricing_GeneralTab
 
-    Close All Windows on LIQ
-        
+    Close All Windows on LIQ    
+	
+    ### ConstRuntime Keyword Post-processing ###
+    Save Values of Runtime Execution on Excel File    ${sRunVar_Effective_Date}    ${Effective_Date}
+    Save Values of Runtime Execution on Excel File    ${sRunVar_Repricing_Date}    ${Repricing_Date}
+    Save Values of Runtime Execution on Excel File    ${sRunVar_Maturity_Date}    ${Maturity_Date}
+    Save Values of Runtime Execution on Excel File    ${sRunVar_Pricing_Option}    ${Pricing_Option}
+    Save Values of Runtime Execution on Excel File    ${sRunVar_Borrower_Amount}    ${Borrower_Amount}
+    Save Values of Runtime Execution on Excel File    ${sRunVar_Lender_Amount}    ${Lender_Amount}
+    Save Values of Runtime Execution on Excel File    ${sRunVar_PaymentType}    ${Payment_Amount}
+
     [Return]    ${Effective_Date}    ${Repricing_Date}    ${Maturity_Date}    ${Pricing_Option}    ${Borrower_Amount}    ${Lender_Amount}    ${Payment_Amount}
 
 Select Notice Group
