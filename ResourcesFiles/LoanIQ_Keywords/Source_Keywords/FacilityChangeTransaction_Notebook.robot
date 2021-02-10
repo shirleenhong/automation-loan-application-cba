@@ -666,4 +666,31 @@ Verification of Borrower Base Created in Facility Change Transaction
      Save Values of Runtime Execution on Excel File    ${RunTimeVar_BorrowerBase_Advance}    ${BorrowerBase_Advance}
      Save Values of Runtime Execution on Excel File    ${RunTimeVar_BorrowerBase_Value}    ${BorrowerBase_Value}
 
-    [Return]    ${BorrowerBase_Collateral}    ${BorrowerBase_Lendable}    ${BorrowerBase_Advance}    ${BorrowerBase_Value}        
+    [Return]    ${BorrowerBase_Collateral}    ${BorrowerBase_Lendable}    ${BorrowerBase_Advance}    ${BorrowerBase_Value}  
+
+Validate and Compare Maturity and Expiry Date in Facility Change Transaction
+    [Documentation]    This keyword is used to validate if the changes in Maturity Date and Expiry Date are correct and same. 
+    ...    @author: javinzon	04FEB2021    - Initial create
+    [Arguments]    ${sMaturity_Date}    ${sEffective_Date}
+
+    ### Keyword Pre-processing ###
+    ${Maturity_Date}    Acquire Argument Value    ${sMaturity_Date}
+	${Effective_Date}    Acquire Argument Value    ${sEffective_Date}
+
+    Mx LoanIQ Select Window Tab    ${LIQ_FacilityNotebook_Tab}    ${SUMMARY_TAB}
+	${UI_MaturityDate}    Mx LoanIQ Get Data    ${LIQ_FacilitySummary_FinalMaturityDate_Datefield}    value%MaturityDate
+	${UI_ExpiryDate}    Mx LoanIQ Get Data    ${LIQ_FacilitySummary_ExpiryDate_Datefield}    value%ExpiryDate
+	Compare Two Strings    ${UI_MaturityDate}    ${UI_ExpiryDate}
+	Compare Two Strings    ${UI_MaturityDate}    ${Maturity_Date}
+	Compare Two Strings    ${UI_ExpiryDate}    ${Effective_Date}
+	Take Screenshot    ${Screenshot_Path}/Screenshots/LoanIQ/FacilityWindow_SummaryTab  
+
+Validate Released Facility Change Transaction   
+    [Documentation]    This keyword is used to Released Facility Change Transaction in Facility Notebook - Events Tab. 
+    ...    @author: javinzon	04FEB2021    - Initial create
+
+    Mx LoanIQ Select Window Tab    ${LIQ_FacilityNotebook_Tab}    ${EVENTS_TAB}
+    ${Status}    Run Keyword And Return Status    Mx LoanIQ Verify Text In Javatree    ${LIQ_FacilityEvents_JavaTree}    ${FACILITY_CHANGE_TRANSACTION_RELEASED}%yes
+    Run Keyword If    ${Status}==${True}    Log    Facility Change Transaction is successfully released.
+    ...    ELSE    Run Keyword And Continue On Failure    Fail    Facility Change Transaction is NOT successfully released. 
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/EventsTab 
