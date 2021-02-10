@@ -5,6 +5,7 @@ Resource    ../../../../Configurations/LoanIQ_Import_File.robot
 Create Initial Loan Drawdown for PT Health
     [Documentation]    This high-level keyword is used to setup the outstanding for PT Health Syndicated facility
     ...    @author: songchan    27JAN2021    - initial create
+    ...    @update: songchan    09FEB2021    - Added writing of Loan Alias in Comprehensive Repricing sheet
     [Arguments]    ${ExcelPath}
 
     Logout from Loan IQ
@@ -16,7 +17,7 @@ Create Initial Loan Drawdown for PT Health
     ${Loan_Alias}    New Outstanding Select    &{ExcelPath}[Deal_Name]    &{ExcelPath}[Facility_Name]    &{ExcelPath}[Borrower_Name]    &{ExcelPath}[Outstanding_Type]    &{ExcelPath}[Pricing_Option]    &{ExcelPath}[Outstanding_Currency]
     
     Write Data To Excel    SERV01_LoanDrawdown    Loan_Alias    ${rowid}    ${Loan_Alias}
-
+    Write Data To Excel    SERV08_ComprehensiveRepricing    Loan_Alias    ${rowid}    ${Loan_Alias}
 
     Input General Loan Drawdown Details    &{ExcelPath}[Loan_RequestedAmount]    &{ExcelPath}[Loan_EffectiveDate]    &{ExcelPath}[Loan_MaturityDate]    &{ExcelPath}[Loan_RepricingFrequency]    
     ...    &{ExcelPath}[Loan_IntCycleFrequency]    &{ExcelPath}[Loan_Accrue]    &{ExcelPath}[Loan_RepricingDate]
