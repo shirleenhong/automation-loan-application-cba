@@ -952,7 +952,7 @@ Create New Ongoing Fee
 
 Navigate to Ongoing Fee Notebook
     [Documentation]    This keyword is used for navigating to Line Fee Notebook
-    ...    @author:kmagday    10FEB2021
+    ...    @author:kmagday    10FEB2021    - initial create
     [Arguments]    ${sOngoingFee_Alias} 
        
     ### GetRuntime Keyword Pre-processing ###
