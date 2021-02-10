@@ -749,7 +749,31 @@ Validate Loan Repricing from Facility
     
     #Outstandings
     Should Be Equal As Integers    ${NewRequestedAmout}    ${ConvertedOutstandings}    
+
+Validate Repricing Loan from Facility 
+    [Documentation]    This keyword is use to validate loan repricing on facility notebook from Loan Notebook
+    ...    @author: songchan     - Initial Create
+    [Arguments]    ${NewRequestedAmout}    ${Current_Commitment}
+    mx LoanIQ activate window    ${LIQ_Loan_Window}
+    mx LoanIQ select    ${LIQ_LoanNotebook_FacilityNotebook_Menu}
     
+    #Avail to Draw Validation
+    ${CurrentCmt}    Mx LoanIQ Get Data    ${LIQ_FacilitySummary_GlobalFacAmt_CurrentCmt_Amount}    CurrentCmt
+    ${Outstandings}    Mx LoanIQ Get Data    ${LIQ_FacilitySummary_GlobalFacAmt_Outstandings_Amount}    Outstandings
+    ${ConvertedCurrentCmt}    Remove Comma and Convert to Number    ${CurrentCmt}
+    ${ConvertedOutstandings}    Remove Comma and Convert to Number    ${Outstandings}
+    ${ComputedAvailToDraw}    Evaluate    ${ConvertedCurrentCmt}-${ConvertedOutstandings}
+    ${ComputedAvailToDraw}    Evaluate    "%.2f" % ${ComputedAvailToDraw}
+    ${FetchedAvailToDraw}    Mx LoanIQ Get Data    ${LIQ_FacilitySummary_GlobalFacAmt_AvailToDraw_Amount}    AvailToDraw
+    ${ConvertedFetchedAvailToDraw}    Remove Comma and Convert to Number    ${FetchedAvailToDraw}
+    Should Be Equal    ${ComputedAvailToDraw}    ${ConvertedFetchedAvailToDraw}    
+    
+    #Current Commitment
+    Should Be Equal    ${Current_Commitment}    ${ConvertedCurrentCmt}
+    
+    #Outstandings
+    Should Be Equal    ${NewRequestedAmout}    ${ConvertedOutstandings}   
+        
 Validate Existing and New Loans
     [Documentation]    This keyword is use to validate existing loan and the newly created loan from loan repricing in loan notebook
     ...    @author: jdelacru    

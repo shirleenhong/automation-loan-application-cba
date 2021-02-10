@@ -148,14 +148,17 @@ Approve Loan Repricing
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LoanRepricingApproval
     Validate if Question or Warning Message is Displayed
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LoanRepricingApproval 
+    
 Send to Rate Approval
     [Documentation]    This keyword is used to Send the Transaction Rates for approval and approve it with different user
     ...    @author: ritragel
     ...    @update: clanding    13AUG2020    - added screenshot; updated hard coded values to global variables
+    ...    @update: songchan    09FEB2021    - added selecting Yes button when question message is displayed
     mx LoanIQ activate window    ${LIQ_LoanRepricingForDeal_Window}
     Mx LoanIQ Select Window Tab    ${LIQ_LoanRepricingForDeal_Workflow_Tab}    ${WORKFLOW_TAB}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LoanRepricingWindow_WorkflowTab
     Mx LoanIQ DoubleClick    ${LIQ_LoanRepricingForDeal_Workflow_JavaTree}    ${SEND_TO_RATE_APPROVAL_STATUS}
+    mx LoanIQ click element if present    ${LIQ_Question_Yes_Button}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LoanRepricingWindow_WorkflowTab_Approval
     
 Approve Rate Setting Notice
