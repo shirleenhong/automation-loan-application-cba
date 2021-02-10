@@ -379,8 +379,8 @@ Get Notice Details via Loan Repricing Notebook
     ...    @author: makcamps    22JAN2021    - initial create
     ...    @update: makcamps    26JAN2021    - added get data and return value for pricing option
     [Arguments]    ${sFacilityName}    ${sDealName}    ${sBorrower_LoanAlias}    ${sLender_LoanAlias}    ${sPaymentType}    ${sRunVar_Effective_Date}
-    ...    ${sRunVar_Repricing_Date}    ${sRunVar_Maturity_Date}    ${sRunVar_Pricing_Option}    ${sRunVar_Borrower_Amount}    ${sRunVar_Lender_Amount}
-    ...    ${sRunVar_Payment_Amount}
+    ...    ${sRunVar_Repricing_Date}=None    ${sRunVar_Maturity_Date}=None    ${sRunVar_Pricing_Option}=None    ${sRunVar_Borrower_Amount}=None    ${sRunVar_Lender_Amount}=None
+    ...    ${sRunVar_Payment_Amount}=None
 
     ### Keyword Pre-processing ###
     ${FacilityName}    Acquire Argument Value    ${sFacilityName}    
