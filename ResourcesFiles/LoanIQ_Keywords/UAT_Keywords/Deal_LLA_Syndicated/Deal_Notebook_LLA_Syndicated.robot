@@ -169,4 +169,50 @@ LLA Syndicated Deal Approval and Close
     Close All Windows on LIQ
     Logout from Loan IQ
     Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
-   
+    
+Charge Upfront Fee for LLA Syndicated Deal
+    [Documentation]    This keywords charges Upfront Fee for LLA Syndicated Deal.
+    ...    @author: makcamps    11FEB2021    - initial create
+    [Arguments]    ${ExcelPath}
+    
+    # ###Close all windows and Login as original user###
+    # Close All Windows on LIQ
+    # Logout from Loan IQ
+    # Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
+    
+    ###Deal Notebook###
+    Open Existing Deal    &{ExcelPath}[Deal_Name]
+
+    ###Upfront Fee Payment-General Tab###
+    Populate Upfront Fee Payment Notebook    &{Excelpath}[UpfrontFee_Amount]    &{Excelpath}[UpfrontFee_EffectiveDate]
+    Populate Fee Details Window    &{ExcelPath}[Fee_Type]    &{ExcelPath}[UpfrontFeePayment_Comment]
+    
+    ### Upfront Fee Payment Workflow Tab- Create Cashflow Item ###
+    Navigate to Upfront Fee Payment Workflow and Proceed With Transaction    ${CREATE_CASHFLOWS_TYPE}
+    Verify if Method has Remittance Instruction    &{ExcelPath}[Borrower_ShortName]    &{ExcelPath}[Borrower_RemittanceDesc]    &{ExcelPath}[Borrower_RemittanceInstruction]
+    Verify if Status is set to Do It    &{ExcelPath}[Borrower_ShortName]
+    Set All Items to Do It
+
+    ### Intent Notice ###
+    Navigate to Upfront Fee Payment Workflow and Proceed With Transaction    ${GENERATE_INTENT_NOTICES}
+    Exit Notice Window
+ 
+    ### Upfront Fee Payment Workflow Tab- Send to Approval Item ###
+    Send to Approval Upfront Fee Payment    
+    
+    ### Upfront Fee Payment Workflow Tab- Approval Item ###
+    Logout from Loan IQ
+    Login to Loan IQ    ${SUPERVISOR_USERNAME}   ${SUPERVISOR_PASSWORD}
+    Navigate to Payment Notebook via WIP    ${PAYMENTS_TRANSACTION}    ${AWAITING_APPROVAL_STATUS}    ${FEE_PAYMENT_FROM_BORROWER_TYPE}    &{ExcelPath}[Deal_Name]
+    Approve Upfront Fee Payment
+    
+    ### Upfront Fee Payment Workflow Tab- Release Item ###
+    Logout from Loan IQ
+    Login to Loan IQ    ${MANAGER_USERNAME}    ${MANAGER_PASSWORD}
+    Navigate to Payment Notebook via WIP    ${PAYMENTS_TRANSACTION}    ${AWAITING_RELEASE_STATUS}    ${FEE_PAYMENT_FROM_BORROWER_TYPE}    &{ExcelPath}[Deal_Name]
+    Navigate to Upfront Fee Payment Workflow and Proceed With Transaction    ${RELEASE_STATUS}
+
+    ### Close all windows and Login as original user ###
+    Close All Windows on LIQ
+    Logout from Loan IQ
+    Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
