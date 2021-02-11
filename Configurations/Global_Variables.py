@@ -241,7 +241,7 @@ AWAITING_RATE_SETTING = "Awaiting Rate Setting"
 REVERSE_FEE_PAYMENT_TRANSACTION= "Reverse Fee Payment"
 PRICING_CHANGE_TRANSACTION = "Pricing Change Transaction"
 PRICING_CHANGE_TRANSACTION_RELEASED = "Pricing Change Transaction Released"
-UPFRONTFEE_PAYMENT_FROM_BORROWE_AGENT_RELEASED = "Upfront Fee Payment from Borrower/Agent Released"
+UPFRONTFEE_PAYMENT_FROM_BORROWER_AGENT_RELEASED = "Upfront Fee Payment from Borrower/Agent Released"
 BREAKFUNDING_FEE_APPLIED = "Breakfunding Fee Applied"
 
 

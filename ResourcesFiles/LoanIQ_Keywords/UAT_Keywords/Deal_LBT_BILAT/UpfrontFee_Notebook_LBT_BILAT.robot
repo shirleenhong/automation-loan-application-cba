@@ -43,5 +43,5 @@ Charge Upfront Fee for LBT Bilateral Deal
     ### Validate Released Event ###
     Close All Windows on LIQ
     Search Existing Deal    ${Deal_Name}
-	Validate an Event in Events Tab of Deal Notebook    ${UPFRONTFEE_PAYMENT_FROM_BORROWE_AGENT_RELEASED}    
+	Validate an Event in Events Tab of Deal Notebook    ${UPFRONTFEE_PAYMENT_FROM_BORROWER_AGENT_RELEASED}    
 	Close All Windows on LIQ
