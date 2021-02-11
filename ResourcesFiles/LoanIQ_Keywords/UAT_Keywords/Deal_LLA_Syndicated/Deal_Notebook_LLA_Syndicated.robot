@@ -175,10 +175,10 @@ Charge Upfront Fee for LLA Syndicated Deal
     ...    @author: makcamps    11FEB2021    - initial create
     [Arguments]    ${ExcelPath}
     
-    # ###Close all windows and Login as original user###
-    # Close All Windows on LIQ
-    # Logout from Loan IQ
-    # Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
+    ###Close all windows and Login as original user###
+    Close All Windows on LIQ
+    Logout from Loan IQ
+    Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
     
     ###Deal Notebook###
     Open Existing Deal    &{ExcelPath}[Deal_Name]
