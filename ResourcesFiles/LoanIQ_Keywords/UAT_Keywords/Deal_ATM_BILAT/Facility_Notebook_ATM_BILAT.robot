@@ -9,6 +9,7 @@ Create Facility for ATM BILAT
     [Documentation]    This keyword is used to create a Facility for ATM BILAT deal
     ...    @author: ccarriedo    20JAN2021    Initial Create
     ...    @update: ccarriedo    02FEB2021    - Added writing to SYND02_PrimaryAllocation and CRED08_OngoingFeeSetup sheets. Removed unnecessary writing to SERV15_SchComittmentDecrease
+    ...    @update: ccarriedo    09FEB2021    - Added writing to SERV01_LoanDrawdown Facilities. 
     [Arguments]    ${ExcelPath}
     
     ### Login to LoanIQ ###
@@ -25,6 +26,9 @@ Create Facility for ATM BILAT
     Write Data To Excel    CRED08_OngoingFeeSetup    Facility_Name2    ${rowid}    ${Facility_Name2}
     Write Data To Excel    SYND02_PrimaryAllocation    Facility_Name2    ${rowid}    ${Facility_Name2}
     Write Data To Excel    CRED08_OngoingFeeSetup    Deal_Name    ${rowid}    ${Deal_Name}
+    Write Data To Excel    SERV01_LoanDrawdown    Deal_Name    &{ExcelPath}[rowid]    ${Deal_Name}
+    Write Data To Excel    SERV01_LoanDrawdown     Facility_Name1    ${rowid}    ${Facility_Name1}
+    Write Data To Excel    SERV01_LoanDrawdown    Facility_Name2    ${rowid}    ${Facility_Name2}
     
     ###Open Deal Notebook If Not present###
     Open Deal Notebook If Not Present    ${Deal_Name}
