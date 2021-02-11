@@ -378,7 +378,8 @@ Get Notice Details via Loan Repricing Notebook
     [Documentation]    Get Notice Details (Effective, Repricing, and Maturity Date, Pricing Option, Borrower, Lender and Payment Amount) via Loan Repricing Notebook in LIQ
     ...    @author: makcamps    22JAN2021    - initial create
     ...    @update: makcamps    26JAN2021    - added get data and return value for pricing option
-    [Arguments]    ${sFacilityName}    ${sDealName}    ${sBorrower_LoanAlias}    ${sLender_LoanAlias}    ${sPaymentType}    ${sRunVar_Effective_Date}
+    ...    @update: makcamps    10FEB2021    - added post processing variables and set default variable to None
+    [Arguments]    ${sFacilityName}    ${sDealName}    ${sBorrower_LoanAlias}    ${sLender_LoanAlias}    ${sPaymentType}    ${sRunVar_Effective_Date}=None
     ...    ${sRunVar_Repricing_Date}=None    ${sRunVar_Maturity_Date}=None    ${sRunVar_Pricing_Option}=None    ${sRunVar_Borrower_Amount}=None    ${sRunVar_Lender_Amount}=None
     ...    ${sRunVar_Payment_Amount}=None
 
@@ -429,7 +430,7 @@ Get Notice Details via Loan Repricing Notebook
     Save Values of Runtime Execution on Excel File    ${sRunVar_Pricing_Option}    ${Pricing_Option}
     Save Values of Runtime Execution on Excel File    ${sRunVar_Borrower_Amount}    ${Borrower_Amount}
     Save Values of Runtime Execution on Excel File    ${sRunVar_Lender_Amount}    ${Lender_Amount}
-    Save Values of Runtime Execution on Excel File    ${sRunVar_PaymentType}    ${Payment_Amount}
+    Save Values of Runtime Execution on Excel File    ${sRunVar_Payment_Amount}    ${Payment_Amount}
 
     [Return]    ${Effective_Date}    ${Repricing_Date}    ${Maturity_Date}    ${Pricing_Option}    ${Borrower_Amount}    ${Lender_Amount}    ${Payment_Amount}
 
