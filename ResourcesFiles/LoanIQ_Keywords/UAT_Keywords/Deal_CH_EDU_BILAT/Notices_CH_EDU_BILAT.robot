@@ -214,3 +214,52 @@ Send Repricing Rate Setting Notice for CH EDU Bilateral Deal
     Search Existing Notice    &{ExcelPath}[Search_By]    ${NoticeIdentifier}    ${FromDate}    ${ThruDate}
     Validate Notice Status    ${NoticeIdentifier}    &{ExcelPath}[Notice_Status]    ${NoticeCustomerLegalName}
     ...    ${Contact}    ${NoticeGroup_UserID}    &{ExcelPath}[Notice_Method]
+
+Send a Drawdown Intent Notice for CH EDU Bilateral Deal
+    [Documentation]    This keyword is used to successfully send drawdown intent notice
+    ...    @author: mcastro    09FEB2021    - Initial create
+    [Arguments]    ${ExcelPath}
+    
+    ${Deal_Name}    Read Data From Excel    CRED01_DealSetup    Deal_Name    1
+
+    ${FromDate}    ${ThruDate}    Generate From and Thru Dates for Notices    &{ExcelPath}[SubAdd_Days]
+    Write Data To Excel    Correspondence    From_Date    ${rowid}    ${FromDate}
+    Write Data To Excel   Correspondence    Thru_Date    ${rowid}    ${ThruDate}
+
+    ### Get Notice Details in LIQ ###
+    Logout from Loan IQ
+    Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
+    Search Existing Deal    ${DealName}
+    ${NoticeIdentifier}    ${NoticeCustomerLegalName}    ${Contact}    Get Notice ID via Deal Notebook    ${FromDate}    ${ThruDate}    &{ExcelPath}[Notice_Type]
+    Write Data To Excel    Correspondence    Notice_Identifier    ${rowid}     ${NoticeIdentifier}    
+    Write Data To Excel    Correspondence    Notice_Customer_LegalName    ${rowid}     ${NoticeCustomerLegalName}    
+    Write Data To Excel    Correspondence    Contact    ${rowid}     ${Contact}    
+
+    ### Send Notices via LIQ ###
+    Send Notice via Notices Application in LIQ     &{ExcelPath}[Search_By]    ${NoticeIdentifier}    ${FromDate}    ${ThruDate}    
+    ...    ${NoticeCustomerLegalName}    &{ExcelPath}[Notice_Method]
+
+    ### Validate Notices in LIQ ###
+    ${StartEndDate}    ${CorrelationID}    Validate Notice in Business Event Output Window in LIQ    ${rowid}    &{ExcelPath}[Customer_IdentifiedBy]    ${NoticeCustomerLegalName}    ${NoticeIdentifier}
+    ...    ${dataset_path}&{ExcelPath}[InputFilePath]&{ExcelPath}[XML_File].xml
+    ...    ${dataset_path}&{ExcelPath}[InputFilePath]&{ExcelPath}[Temp_File].json    &{ExcelPath}[Field_Name]
+
+    ### Write Data from Dataset ###
+    Write Data To Excel    Correspondence    BEO_StartDate    ${rowid}    ${StartEndDate}    bTestCaseColumn=True
+    Write Data To Excel    Correspondence    BEO_EndDate    ${rowid}    ${StartEndDate}    bTestCaseColumn=True
+    Write Data To Excel    Correspondence    Correlation_ID    ${rowid}    ${CorrelationID}    bTestCaseColumn=True
+    
+    ### Send Call Back thru Postman ###
+    ${MessageIdDecode}    Encode and Decode Bytes to String    ${CorrelationID}
+
+    Update Key Values of input JSON file for Correspondence API    ${MessageIdDecode}    &{ExcelPath}[CallBack_Status]    &{ExcelPath}[errorMessage]    
+    ...    &{ExcelPath}[InputFilePath]&{ExcelPath}[InputJson].json
+    Correspondence POST API    &{ExcelPath}[InputFilePath]    &{ExcelPath}[InputJson]    &{ExcelPath}[OutputFilePath]    &{ExcelPath}[OutputAPIResponse]    &{ExcelPath}[OutputAPIResponse]    
+    ...    ${RESPONSECODE_200}
+
+    ### Validate Notice Status ###
+    Refresh Tables in LIQ
+    Navigate to Notice Select Window
+    Search Existing Notice    $&{ExcelPath}[Search_By]    ${NoticeIdentifier}    ${FromDate}    ${ThruDate}
+    Validate Notice Status    ${NoticeIdentifier}    &{ExcelPath}[Notice_Status]    ${NoticeCustomerLegalName}    ${Contact}    &{ExcelPath}[NoticeGroup_UserID]    &{ExcelPath}[Notice_Method]
+    
