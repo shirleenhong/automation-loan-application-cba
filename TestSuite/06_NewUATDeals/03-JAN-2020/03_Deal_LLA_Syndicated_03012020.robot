@@ -12,3 +12,11 @@ Facility Extension
     
 Rollover and Additional Drawdown
     Mx Execute Template With Multiple Data    Create Comprehensive Repricing for LLA Syndicated Deal    ${ExcelPath}    ${rowid}    SERV08_ComprehensiveRepricing
+    Set Test Variable    ${rowid}    7
+    Mx Execute Template With Multiple Data    Send Notice for Loan Repricing    ${ExcelPath}    ${rowid}    Correspondence
+    Set Test Variable    ${rowid}    8
+    Mx Execute Template With Multiple Data    Send Notice for Loan Repricing    ${ExcelPath}    ${rowid}    Correspondence
+    Set Test Variable    ${rowid}    9
+    Mx Execute Template With Multiple Data    Send Notice for Loan Repricing    ${ExcelPath}    ${rowid}    Correspondence
+    Set Test Variable    ${rowid}    10
+    Mx Execute Template With Multiple Data    Send Notice for Loan Repricing    ${ExcelPath}    ${rowid}    Correspondence

@@ -7,6 +7,7 @@ Break Cost for Full Prepayment for LBT Bilateral Deal - Outstanding Z
     ...    Intent Notice for LBT Bilateral Deal - Outstanding Z
     ...    @author: javinzon    14JAN2021    - Initial Create
     ...    @update: javinzon    29JAN2021    - Added validation if Loan is Inactive
+    ...    @update: javinzon    10FEB2021    - Added validation for Released Breakfunding
     [Arguments]    ${ExcelPath}
 
     ${Deal_Name}    Read Data From Excel    SERV01_LoanDrawdown    Deal_Name    ${rowid}
@@ -66,5 +67,8 @@ Break Cost for Full Prepayment for LBT Bilateral Deal - Outstanding Z
     Open Existing Loan    ${Loan_Alias}
     Validate Loan Drawdown Amounts in General Tab    &{ExcelPath}[Expctd_LoanGlobalOriginal]    &{ExcelPath}[Expctd_LoanGlobalCurrent]    &{ExcelPath}[Expctd_LoanHostBankGross]    &{ExcelPath}[Expctd_LoanHostBankNet]
     Validate if Loan is Inactive
+    Validate an Event in Events Tab of Loan Notebook    ${BREAKFUNDING_FEE_APPLIED}    ${Y}
+    Validate Release of Breakfunding
+    Validate Fees of Breakfunding on General Tab    &{ExcelPath}[Legal_Entity_Amount]
     Close All Windows on LIQ
     

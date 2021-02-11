@@ -130,6 +130,7 @@ LIQ_GLEntries_Window = 'JavaWindow("title:=GL Entries For.*")'
 
 ###Ongoing Fee List###
 LIQ_Facility_FeeList_JavaTree = 'JavaWindow("label:=Fee List for.*").JavaTree("attached text:=Drill down to view details")'
+LIQ_Facility_FeeList_CreateOngoingFeeButton = 'JavaWindow("label:=Fee List for.*").JavaButton("attached text:=Create Ongoing Fee")'
 
 ###Reverse Payment###
 LIQ_ReverseFee_Window = 'JavaWindow("title:=.*Fee Reverse Fee.*")'
