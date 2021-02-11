@@ -297,7 +297,7 @@ Verify if Work Item List is Empty for Upfront Fee Payment
     Run Keyword And Continue On Failure    Mx LoanIQ Verify Object Exist    ${LIQ_UpfrontFeePaymentNotebook_WorkflowTab_NoItems}    VerificationData="Yes"
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/UpfrontFeePaymentWindow
 
-Validate Release of Upfront Fee Payment
+Validate Event from Upfront Fee Payment Events List
     [Documentation]    This keyword validates the release of Upfront Fee on Events.
     ...    @author: makcamps    11FEB2021    - Initial Create
     [Arguments]    ${sEvent_Name}

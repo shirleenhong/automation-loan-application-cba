@@ -223,7 +223,7 @@ Charge Upfront Fee for LLA Syndicated Deal
     ### Validation of Upfront Fee Payment ###
     Open Existing Deal    &{ExcelPath}[Deal_Name]
     Navigate to Released Upfront Fee Payment
-    Validate Release of Upfront Fee Payment    &{ExcelPath}[Event_Name]
+    Validate Event from Upfront Fee Payment Events List    &{ExcelPath}[Event_Name]
 
     Close All Windows on LIQ
     Logout from Loan IQ
