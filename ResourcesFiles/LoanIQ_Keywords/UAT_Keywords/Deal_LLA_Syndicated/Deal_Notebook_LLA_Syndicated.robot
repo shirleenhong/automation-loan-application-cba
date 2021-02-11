@@ -10,6 +10,7 @@ Setup Syndicated Deal for LLA Syndicated
     ...    @update: makcamps    11JAN2021    - added write methods for new sheets created
     ...    @update: makcamps    20JAN2021    - added write methods for notice
     ...    @update: makcamps    08FEB2021    - added write methods for notice
+    ...    @update: makcamps    11FEB2021    - added write methods for upfront fee payment
     [Arguments]    ${ExcelPath}
 
     ###Data Generation###
@@ -30,6 +31,7 @@ Setup Syndicated Deal for LLA Syndicated
     Write Data To Excel    SYND02_PrimaryAllocation    Deal_Name    &{ExcelPath}[rowid]    ${Deal_Name}
     Write Data To Excel    AMCH06_PricingChangeTransaction    Deal_Name    &{ExcelPath}[rowid]    ${Deal_Name}
     Write Data To Excel    SERV08_ComprehensiveRepricing    Deal_Name    &{ExcelPath}[rowid]    ${Deal_Name}
+    Write Data To Excel    CRED07_UpfrontFee_Payment    Deal_Name    &{ExcelPath}[rowid]    ${Deal_Name}
     Write Data To Excel    Correspondence    Deal_Name    ${rowid}    ${Deal_Name}    multipleValue=Y    bTestCaseColumn=True    sColumnReference=rowid
     Write Data To Excel    CRED01_DealSetup    Deal_Alias    &{ExcelPath}[rowid]    ${Deal_Alias}
     Write Data To Excel    CRED02_FacilitySetup    Facility_BorrowerSGName    &{ExcelPath}[rowid]    ${Borrower_SG_Name}
@@ -40,6 +42,7 @@ Setup Syndicated Deal for LLA Syndicated
     Write Data To Excel    SERV29_PaymentFees    Borrower_ShortName    &{ExcelPath}[rowid]    ${Borrower_ShortName}
     Write Data To Excel    SERV08_ComprehensiveRepricing    Borrower_ShortName    &{ExcelPath}[rowid]    ${Borrower_ShortName}
     Write Data To Excel    SERV08_ComprehensiveRepricing    Lender1_ShortName    &{ExcelPath}[rowid]    ${Borrower_ShortName}
+    Write Data To Excel    CRED07_UpfrontFee_Payment    Borrower_ShortName    &{ExcelPath}[rowid]    ${Borrower_ShortName}
     Write Data To Excel    Correspondence    Notice_Customer_LegalName    2    ${Borrower_ShortName}    bTestCaseColumn=True    sColumnReference=rowid
     Write Data To Excel    Correspondence    Notice_Customer_LegalName    4    ${Borrower_ShortName}    bTestCaseColumn=True    sColumnReference=rowid
     Write Data To Excel    Correspondence    Notice_Customer_LegalName    6    ${Borrower_ShortName}    bTestCaseColumn=True    sColumnReference=rowid
@@ -213,6 +216,15 @@ Charge Upfront Fee for LLA Syndicated Deal
     Navigate to Upfront Fee Payment Workflow and Proceed With Transaction    ${RELEASE_STATUS}
 
     ### Close all windows and Login as original user ###
+    Close All Windows on LIQ
+    Logout from Loan IQ
+    Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
+
+    ### Validation of Upfront Fee Payment ###
+    Open Existing Deal    &{ExcelPath}[Deal_Name]
+    Navigate to Released Upfront Fee Payment
+    Validate Release of Upfront Fee Payment    &{ExcelPath}[Event_Name]
+
     Close All Windows on LIQ
     Logout from Loan IQ
     Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
