@@ -12,6 +12,8 @@ Facility Extension
 
 Charge facility extension fee
     Mx Execute Template With Multiple Data    Charge Upfront Fee for LLA Syndicated Deal    ${ExcelPath}    ${rowid}    CRED07_UpfrontFee_Payment
+    Set Test Variable    ${rowid}    11
+    Mx Execute Template With Multiple Data    Send Notice by Notice Application    ${ExcelPath}    ${rowid}    Correspondence
 
 Rollover and Additional Drawdown
     Mx Execute Template With Multiple Data    Create Comprehensive Repricing for LLA Syndicated Deal    ${ExcelPath}    ${rowid}    SERV08_ComprehensiveRepricing
