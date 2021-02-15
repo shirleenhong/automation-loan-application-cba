@@ -1,0 +1,55 @@
+<liqInfo>
+    {"event_schema_id":"2148","event":{"header":{"correlationId":"LIQ-8BEO7XG5-8BEO7XC0-2","processPath":{"array":[{"source":"FINASTRA_CCB","timestamp":"2021-02-11T16:20:57.254+08:00"}]}},"sourceSystem":{"string":"FINASTRA_CCB"},"ttl":{"au.com.cba.avro.customermanagement.noticesnotify.ttl":{"ttlDuration":"300","ttlSourceTime":"2021-02-11T16:20:57.249+08:00"}},"cifIds":{"array":[{"string":"1711726"}]},"documentInfo":{"documentPackage":{"businessChannel":"LOANIQ","name":null,"version":null,"templateId":null,"fileType":null,"content":"
+    <FinastraApplication>
+        <StandardNotice>
+            <ProcessingArea>AUSAG</ProcessingArea>
+            <Address>
+                <line>Date: 11-Feb-2021</line>
+                <line>TO  : LLA Pty Ltd 1711726</line>
+                <line>ATTN: George Lippman</line>
+                <line>Re  : Establishment/Extension Fee for LLA SYND DEAL AUD 500M 23NOV1848142</line>
+            </Address>
+            <BodyContent>
+                <section>
+                    <line>                                *** FEE INVOICE ***</line>
+                    <line/>
+                    <line>Description: Establishment/Extension Fee </line>
+                    <line/>
+                    <line>In accordance with the facility agreement, we advise the following.</line>
+                    <line/>
+                    <line>Effective 03-Jan-2020, Establishment/Extension Fee totalling AUD 100,000.00 are due.</line>
+                </section>
+                <section>
+                    <line>Fee                                Amount                Total</line>
+                    <line>____________________ ____________________ ____________________</line>
+                    <line/>
+                    <line>Establishment/Extens           100,000.00           100,000.00</line>
+                    <line>ion Fee                                                       </line>
+                    <line>____________________ ____________________ ____________________</line>
+                    <line/>
+                    <line>TOTAL:                         100,000.00           100,000.00</line>
+                </section>
+                <section>
+                    <line>We will debit your nominated account for an amount of AUD 100,000.00 on the effective date.</line>
+                </section>
+                <section>
+                    <line>For: LLA Pty Ltd 1711726</line>
+                    <line/>
+                    <line>Account Number:   </line>
+                    <line>122 33345</line>
+                    <line>Account Name:  </line>
+                    <line>LLA Pty Ltd</line>
+                    <line>Routing Number:</line>
+                </section>
+                <section>
+                    <line>Reference: AUSAG1002414</line>
+                </section>
+                <section>
+                    <line/>
+                </section>
+            </BodyContent>
+        </StandardNotice>
+    </FinastraApplication>
+    "},"documentStorage":{"status":null,"fileName":null,"inputSource":null,"inputSourceDetail":null,"scanDate":null,"departmentId":{"string":"RE_RES"},"retrievalId":null,"documentumType":null,"applicationNumber":null,"purgeDate":null,"boxLocation":null,"recordManager":null,"description":null,"processes":{"array":[{"string":"8BEO7XC0"}]},"services":{"array":[{"string":"1002414"}]},"accountNumbers":{"array":[{"source":{"string":"LOANIQ"},"productCode":{"string":"DEA"},"number":{"string":"1002414"}}]},"processFlags":{"array":[{"name":null,"value":null}]}}},"emailSecureMessageDetails":{"subject":"1002414 LLA SYND DEAL AUD 500M 23NOV1848142","senderEmail":"AGENCY@CBA.AU.COM","toRecipientEmail":"phamv@cba.com.au","ccRecipientEmail":{"string":"JOHN.DOE@CBA.AU.COM"},"mimeType":null,"messageID":"LIQ-8BEO7XG5-8BEO7XC0-2","body":null,"attachment":null,"inBandAttachment":null,"deliveredToEmail":null,"undeliveredToEmail":null,"systemCode":null,"systemName":null,"identifier":{"string":"AUSAG"},"digitalSignature":null}}}
+
+</liqInfo>
