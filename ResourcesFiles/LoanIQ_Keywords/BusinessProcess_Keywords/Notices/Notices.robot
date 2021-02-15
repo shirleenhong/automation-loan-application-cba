@@ -5,7 +5,7 @@ Resource     ../../../../Configurations/LoanIQ_Import_File.robot
 
 Send Notice by Notice Application
     [Documentation]    This keyword is used to successfully sent out a NOTICE by Notice Application without FFC Validation
-    ...    @author: makcamps    119DEC2020    - Initial Create                            
+    ...    @author: makcamps    11FEB2021    - Initial Create                            
     [Arguments]    ${ExcelPath}
 
     Search Existing Deal    &{ExcelPath}[Deal_Name]
