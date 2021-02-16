@@ -53,6 +53,10 @@ Generate and Send Drawdown Intent Notice
     Set Test Variable    ${rowid}    7
     Mx Execute Template With Multiple Data    Send a Drawdown Intent Notice for CH EDU Bilateral Deal    ${ExcelPath}    ${rowid}    Correspondence
 
+Generate and Send Drawdown Rate Setting Notice
+    Set Test Variable    ${rowid}    8
+    Mx Execute Template With Multiple Data    Send Drawdown Rate Setting Notice for CH EDU Bilateral Deal    ${ExcelPath}    ${rowid}    Correspondence
+
 Create Drawdown and Back Date to 4/12/2019
     Set Test Variable    ${rowid}    3
     Mx Execute Template With Multiple Data    Create Loan Drawdown for CH EDU Bilateral Deal - Outstanding A    ${ExcelPath}    ${rowid}    SERV01_LoanDrawdown
