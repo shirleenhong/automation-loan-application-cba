@@ -33,6 +33,7 @@ LIQ_OngoingFeePayment_CurrentCycleDue_TextField = 'JavaWindow("title:=.* Payment
 LIQ_OngoingFeePayment_ProjectedCycleDue_TextField = 'JavaWindow("title:=.* Payment .*","displayed:=1").JavaEdit("labeled_containers_path:=Tab:General;Group: Amounts ;","index:=1")'
 LIQ_OngoingFeePayment_File_Save_Dropdown = 'JavaWindow("title:=Commitment Fee Ongoing Fee.*").JavaMenu("label:=File").JavaMenu("label:=Save")'
 LIQ_OngoingFeePayment_File_Exit_Dropdown = 'JavaWindow("title:=Commitment Fee Ongoing Fee.*").JavaMenu("label:=File").JavaMenu("label:=Exit")'
+LIQ_OngoingFeePayment_Comment_TextField = 'JavaWindow("title:=.* Payment .*","displayed:=1").JavaEdit("attached text:=Comment.*")'
 
 LIQ_OngoingFeePayment_Tab = 'JavaWindow("title:=.*Fee.*Ongoing Fee Payment.*","displayed:=1").JavaTab("tagname:=TabFolder")'  
 LIQ_OngoingFeePayment_WorkflowItems = 'JavaWindow("title:=.*Fee.*Ongoing Fee Payment.*").JavaTree("attached text:=Drill down to perform Workflow item")'
@@ -130,6 +131,7 @@ LIQ_GLEntries_Window = 'JavaWindow("title:=GL Entries For.*")'
 
 ###Ongoing Fee List###
 LIQ_Facility_FeeList_JavaTree = 'JavaWindow("label:=Fee List for.*").JavaTree("attached text:=Drill down to view details")'
+LIQ_Facility_FeeList_CreateOngoingFeeButton = 'JavaWindow("label:=Fee List for.*").JavaButton("attached text:=Create Ongoing Fee")'
 
 ###Reverse Payment###
 LIQ_ReverseFee_Window = 'JavaWindow("title:=.*Fee Reverse Fee.*")'

@@ -27,6 +27,7 @@ Populate Fee Details Window
     ...    @update: archana     14JUL2020    - Added Pre-processing keywords and Screenshot path                  
     ...    @update: hstone      21JUL2020    - Replaced 'Mx Native Type' with 'Mx Press Combination'
     ...    @update: jloretiz    06AUG2020    - updated the variable name to use Fee Details
+    ...    @update: javinzon	10FEB2021	 - added 'Take Screenshot' to capture other details
     [Arguments]    ${sFee_Type}    ${sUpfrontFeePayment_Comment}
     
     ###Pre-processing keyword###
@@ -48,6 +49,7 @@ Populate Fee Details Window
     Run Keyword And Continue On Failure    Mx LoanIQ Verify Object Exist    ${LIQ_FeeDetail_Window}    VerificationData="Yes"
     mx LoanIQ select    ${LIQ_FeeDetail_FeeType_List}    ${Fee_Type}
     mx LoanIQ click    ${LIQ_FeeDetail_FeeType_OK_Button} 
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/FeeDetails
     
     mx LoanIQ click    ${LIQ_FeeDetails_OK_Button}
     mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
@@ -294,3 +296,18 @@ Verify if Work Item List is Empty for Upfront Fee Payment
     mx LoanIQ activate    ${LIQ_UpfrontFeePayment_Notebook}
     Run Keyword And Continue On Failure    Mx LoanIQ Verify Object Exist    ${LIQ_UpfrontFeePaymentNotebook_WorkflowTab_NoItems}    VerificationData="Yes"
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/UpfrontFeePaymentWindow
+
+Validate Event from Upfront Fee Payment Events List
+    [Documentation]    This keyword validates the release of Upfront Fee on Events.
+    ...    @author: makcamps    11FEB2021    - Initial Create
+    [Arguments]    ${sEvent_Name}
+    
+    ### Pre-processing Keyword ##
+    ${Event_Name}    Acquire Argument Value    ${sEvent_Name}
+
+    Mx LoanIQ activate window    ${LIQ_UpfrontFeePayment_Notebook}
+    Mx LoanIQ Select Window Tab    ${LIQ_UpfrontFeePayment_Tab}    ${EVENTS_TAB}
+    ${Event_Selected}    Run Keyword And Return Status    Mx LoanIQ Select String    ${LIQ_UpfrontFeePayment_Events_Items}    ${Event_Name}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/UpfrontFeePaymentWindow_EventsTab
+    Run Keyword If    ${Event_Selected}==${True}    Log    ${Event_Name} is shown in the Events list of the Upfront Fee Payment notebook.
+    ...    ELSE    Run Keyword and Continue on Failure    Fail    Upfront Fee Payment is not Released.

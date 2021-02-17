@@ -196,11 +196,13 @@ Resource    ../ResourcesFiles/LoanIQ_Keywords/BusinessProcess_Keywords/Miscellan
 Resource    ../ResourcesFiles/LoanIQ_Keywords/BusinessProcess_Keywords/Miscellaneous/MTAM12_ManualGL_NewOrExistingWIPItem.robot
 Resource    ../ResourcesFiles/LoanIQ_Keywords/BusinessProcess_Keywords/Miscellaneous/MTAM13_ManualCashflow_Incoming_NewOrExistingWIPItem.robot
 Resource    ../ResourcesFiles/LoanIQ_Keywords/BusinessProcess_Keywords/Miscellaneous/MTAM14_ManualCashflow_Outgoing_NewOrExistingWIPItem.robot
+Resource    ../ResourcesFiles/LoanIQ_Keywords/BusinessProcess_Keywords/Notices/Notices.robot
 Resource    ../ResourcesFiles/LoanIQ_Keywords/BusinessProcess_Keywords/Notices/Notice_UpfrontFeePayment.robot
 Resource    ../ResourcesFiles/LoanIQ_Keywords/BusinessProcess_Keywords/Notices/Notice_InterestPayment.robot
 Resource    ../ResourcesFiles/LoanIQ_Keywords/BusinessProcess_Keywords/Notices/Notice_PrincipalPayment.robot
 Resource    ../ResourcesFiles/LoanIQ_Keywords/BusinessProcess_Keywords/Notices/Notice_LineFeePayment.robot
 Resource    ../ResourcesFiles/LoanIQ_Keywords/BusinessProcess_Keywords/Notices/Notice_LoanDrawdown.robot
+Resource    ../ResourcesFiles/LoanIQ_Keywords/BusinessProcess_Keywords/Notices/Notice_LoanRepricing.robot
 Resource    ../ResourcesFiles/LoanIQ_Keywords/BusinessProcess_Keywords/Payments/SERV18_ScheduledPrincipalPayment.robot
 Resource    ../ResourcesFiles/LoanIQ_Keywords/BusinessProcess_Keywords/Payments/SERV19_UnscheduledPrincipalPaymentNoSchedule.robot
 Resource    ../ResourcesFiles/LoanIQ_Keywords/BusinessProcess_Keywords/Payments/SERV20_UnschedulePrincipalPayment.robot
@@ -465,6 +467,8 @@ Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/Deal_LBT_BILAT/Outsta
 Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/Deal_LBT_BILAT/Paperclip_LBT_BILAT.robot
 Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/Deal_LBT_BILAT/Notices_LBT_BILAT.robot
 Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/Deal_LBT_BILAT/Breakfunding_LBT_BILAT.robot
+Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/Deal_LBT_BILAT/UpfrontFee_Notebook_LBT_BILAT.robot
+Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/Deal_LBT_BILAT/Portfolio_Notebook_LBT_BILAT.robot
 
 ### New UAT LLA Syndicated Deal ###
 Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/Deal_LLA_Syndicated/Deal_Borrower_LLA_Syndicated.robot
@@ -488,6 +492,7 @@ Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/Deal_ATM_BILAT/Deal_B
 Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/Deal_ATM_BILAT/Deal_Notebook_ATM_BILAT.robot
 Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/Deal_ATM_BILAT/Facility_Notebook_ATM_BILAT.robot
 Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/Deal_ATM_BILAT/OngoingFee_ATM_BILAT.robot
+Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/Deal_ATM_BILAT/Outstandings_ATM_BILAT.robot
 
 ### NEW UAT Deal TL ###
 Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/UAT_TL_Keywords/TL_FX_Rates.robot
@@ -512,3 +517,4 @@ Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/Deal_PT_Health_Syndic
 Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/Deal_PT_Health_Syndicated/Facility_Notebook_PT_Health_Syndicated.robot
 Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/Deal_PT_Health_Syndicated/Outstandings_PT_Health_Syndicated.robot
 Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/Deal_PT_Health_Syndicated/OngoingFee_Notebook_PT_Health_Syndicated.robot
+Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/Deal_PT_Health_Syndicated/Repricing_PT_Health_Syndicated.robot

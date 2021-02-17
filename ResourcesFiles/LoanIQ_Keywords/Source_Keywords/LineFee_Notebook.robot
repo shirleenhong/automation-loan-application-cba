@@ -932,6 +932,39 @@ Validate Line Fee Events Tab
 
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LineFeeWindow_EventsTab_Released
 
+Create New Ongoing Fee
+    [Documentation]    This keyword will create new ongoing fee
+    ...    @author: kmagday    9FEB2021    - initial create  
+
+    mx LoanIQ activate window    ${LIQ_FacilityNotebook_Window}
+    mx LoanIQ select    ${LIQ_FacilityNotebook_Queries_OngoingFeeList}
+    mx LoanIQ activate window    ${LIQ_Facility_FeeList}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/FacilityWindow
+    Mx LoanIQ Click    ${LIQ_Facility_FeeList_CreateOngoingFeeButton}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/FacilityWindow
+    Validate if Question or Warning Message is Displayed
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/FacilityWindow
+
+    ${FeeAlias}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_Facility_FeeList_JavaTree}    ${PENDING_STATUS}%Fee Alias%value
+    Mx LoanIQ Select Or DoubleClick In Javatree    ${LIQ_Facility_FeeList_JavaTree}    ${FeeAlias}%d
+
+    [Return]    ${FeeAlias}
+
+Navigate to Ongoing Fee Notebook
+    [Documentation]    This keyword is used for navigating to Line Fee Notebook
+    ...    @author:kmagday    10FEB2021    - initial create
+    [Arguments]    ${sOngoingFee_Alias} 
+       
+    ### GetRuntime Keyword Pre-processing ###
+    ${OngoingFee_Alias}    Acquire Argument Value    ${sOngoingFee_Alias}
+
+    mx LoanIQ activate window    ${LIQ_FacilityNotebook_Window}
+    mx LoanIQ select    ${LIQ_FacilityNotebook_Queries_OngoingFeeList}
+    mx LoanIQ activate window    ${LIQ_Facility_FeeList}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/FacilityWindow
+    Mx LoanIQ Select Or DoubleClick In Javatree    ${LIQ_Facility_FeeList_JavaTree}    ${OngoingFee_Alias}%d
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/FacilityWindow
+
 Navigate Line Fee Notebook from Deal Notebook
     [Documentation]    This keyword navigates LIQ User to the Line Fee Notebook from Deal Notebook.
     ...    @author: dahijara    16FEB2021    Initial create
