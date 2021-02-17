@@ -975,4 +975,22 @@ Validate the Merged Loan in Existing Loans
     Mx LoanIQ Close Window    ${LIQ_ExistingOutstandings_Window}
     Mx LoanIQ Activate Window    ${LIQ_Loan_Window}
     Take Screenshot    ${Screenshot_Path}/Screenshots/LoanIQ/LoanWindow
+
+Validate an Event in Events Tab of Loan Notebook
+    [Documentation]    This keyword is used to validate an event in Loan Notebook - Events Tab
+    ...    @author: javinzon    10FEB2021    - Initial create
+    [Arguments]    ${sEvent}    ${sCheckReleasedEvent}=None
+
+    ### Keyword Pre-processing ###
+    ${Event}    Acquire Argument Value    ${sEvent}
+    ${CheckReleasedEvent}    Acquire Argument Value    ${sCheckReleasedEvent}
+    
+    Mx LoanIQ Select Window Tab    ${LIQ_Loan_Tab}    ${EVENTS_TAB}
+    ${Status}    Run Keyword And Return Status    Mx LoanIQ Verify Text In Javatree    ${LIQ_Loan_Event_JavaTree}    ${Event}%yes
+    Run Keyword If    ${Status}==${True}    Log    ${Event} is present in Events Tab
+    ...    ELSE    Run Keyword And Continue On Failure    Fail    ${Event} is not present in Events Tab
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/Loan_EventsTab    
+
+    Run Keyword If    '${CheckReleasedEvent}'!='None'    Mx LoanIQ Select Or DoubleClick In Javatree    ${LIQ_Loan_Events_List}    ${Event}%d  
+    ...    ELSE    Log    Checking of Released Event details not required for the transaction.
 	

@@ -1,0 +1,54 @@
+<liqInfo>
+    {"event_schema_id":"2148","event":{"header":{"correlationId":"LIQ-ZAEO45GT-F0EO44NF-8","processPath":{"array":[{"source":"FINASTRA_CCB","timestamp":"2021-02-11T09:22:16.451+08:00"}]}},"sourceSystem":{"string":"FINASTRA_CCB"},"ttl":{"au.com.cba.avro.customermanagement.noticesnotify.ttl":{"ttlDuration":"300","ttlSourceTime":"2021-02-11T09:22:16.448+08:00"}},"cifIds":{"array":[{"string":"1710818"}]},"documentInfo":{"documentPackage":{"businessChannel":"LOANIQ","name":null,"version":null,"templateId":null,"fileType":null,"content":"
+    <FinastraApplication>
+        <StandardNotice>
+            <ProcessingArea>AUSAG</ProcessingArea>
+            <Address>
+                <line>Date: 11-Feb-2021</line>
+                <line>TO  : CH EDU Limited 1710818</line>
+                <line>ATTN: Linda Chu</line>
+                <line>Re  : CH EDU BILAT DEAL AUD 158.2M 17DEC190947 CAPITALISATION_FAC_17131</line>
+            </Address>
+            <BodyContent>
+                <section>
+                    <line/>
+                    <line>                            *** DRAWDOWN INTENT NOTICE ***</line>
+                    <line/>
+                    <line>In accordance with the facility agreement, we advise the following drawing has been requested by CH EDU Limited 1710818. </line>
+                    <line/>
+                    <line>Description: BBSY - Bid Borrowing</line>
+                    <line/>
+                    <line>Effective Date: 18-Dec-2019</line>
+                    <line>CH EDU Limited 1710818 has elected to borrow a total of AUD 36,500,000.00.</line>
+                    <line/>
+                    <line>Please see details below:</line>
+                    <line/>
+                    <line>Term: 18-Dec-2019 - 16-Mar-2020</line>
+                </section>
+                <section>
+                    <line>Rates will be set on 18-Dec-2019.</line>
+                </section>
+                <section>
+                    <line>We will credit your nominated account for an amount of AUD 36,500,000.00 on the effective date.</line>
+                </section>
+                <section>
+                    <line>For: CH EDU Limited 1710818</line>
+                    <line/>
+                    <line>Account Number:   </line>
+                    <line>4444 55555</line>
+                    <line>Account Name:  </line>
+                    <line>CH EDU Limited</line>
+                    <line>Routing Number:</line>
+                </section>
+                <section>
+                    <line>Reference: AUSAG1002378</line>
+                </section>
+                <section>
+                    <line/>
+                </section>
+            </BodyContent>
+        </StandardNotice>
+    </FinastraApplication>
+    "},"documentStorage":{"status":null,"fileName":null,"inputSource":null,"inputSourceDetail":null,"scanDate":null,"departmentId":{"string":"TM_COL"},"retrievalId":null,"documentumType":null,"applicationNumber":null,"purgeDate":null,"boxLocation":null,"recordManager":null,"description":null,"processes":{"array":[{"string":"F0EO44NF"}]},"services":{"array":[{"string":"1002378"}]},"accountNumbers":{"array":[{"source":{"string":"LOANIQ"},"productCode":{"string":"OST"},"number":{"string":"60002979"}}]},"processFlags":{"array":[{"name":null,"value":null}]}}},"emailSecureMessageDetails":{"subject":"1002378 CH EDU BILAT DEAL AUD 158.2M 17DEC190947","senderEmail":"AGENCY@CBA.AU.COM","toRecipientEmail":"IwantToTest@nowhere.com.test","ccRecipientEmail":{"string":"JOHN.DOE@CBA.AU.COM"},"mimeType":null,"messageID":"LIQ-ZAEO45GT-F0EO44NF-8","body":null,"attachment":null,"inBandAttachment":null,"deliveredToEmail":null,"undeliveredToEmail":null,"systemCode":null,"systemName":null,"identifier":{"string":"AUSAG"},"digitalSignature":null}}}
+
+</liqInfo>

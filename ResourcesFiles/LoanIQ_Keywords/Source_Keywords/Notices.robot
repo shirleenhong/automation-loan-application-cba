@@ -374,6 +374,66 @@ Get Notice Details via Loan Notebook
     [Return]    ${Effective_Date}    ${Repricing_Date}    ${Maturity_Date}    ${Base_Rate}    ${Spread}
     ...    ${AllIn_Rate}    ${Cycle_Due}    ${Global_Original}    ${RateSetting_DueDate}    ${Pricing_Option}
 
+Get Notice Details via Loan Repricing Notebook
+    [Documentation]    Get Notice Details (Effective, Repricing, and Maturity Date, Pricing Option, Borrower, Lender and Payment Amount) via Loan Repricing Notebook in LIQ
+    ...    @author: makcamps    22JAN2021    - initial create
+    ...    @update: makcamps    26JAN2021    - added get data and return value for pricing option
+    ...    @update: makcamps    10FEB2021    - added post processing variables and set default variable to None
+    [Arguments]    ${sFacilityName}    ${sDealName}    ${sBorrower_LoanAlias}    ${sLender_LoanAlias}    ${sPaymentType}    ${sRunVar_Effective_Date}=None
+    ...    ${sRunVar_Repricing_Date}=None    ${sRunVar_Maturity_Date}=None    ${sRunVar_Pricing_Option}=None    ${sRunVar_Borrower_Amount}=None    ${sRunVar_Lender_Amount}=None
+    ...    ${sRunVar_Payment_Amount}=None
+
+    ### Keyword Pre-processing ###
+    ${FacilityName}    Acquire Argument Value    ${sFacilityName}    
+    ${DealName}    Acquire Argument Value    ${sDealName}
+    ${Borrower_LoanAlias}    Acquire Argument Value    ${sBorrower_LoanAlias}
+    ${Lender_LoanAlias}    Acquire Argument Value    ${sLender_LoanAlias}
+    ${PaymentType}    Acquire Argument Value    ${sPaymentType}
+
+    ### Navigate to Existing Loans For Facility Window ###
+    Search for Deal    ${DealName}
+    Search for Existing Outstanding    Loan    ${FacilityName}
+    
+    ###Existing Loans For Facility Window###
+    mx LoanIQ activate window    ${LIQ_ExistingLoansForFacility_Window}
+    ${Effective_Date}    Mx LoanIQ Store TableCell To Clipboard   ${LIQ_ExistingLoansForFacility_Loan_List}    ${Lender_LoanAlias}%Effective Date%var
+    ${Effective_Date}    Convert Date    ${Effective_Date}    result_format=%d-%b-%Y    date_format=%d-%b-%Y
+    ${Repricing_Date}    Mx LoanIQ Store TableCell To Clipboard   ${LIQ_ExistingLoansForFacility_Loan_List}    ${Lender_LoanAlias}%Repricing Date%var
+    ${Repricing_Date}    Convert Date    ${Repricing_Date}    result_format=%d-%b-%Y    date_format=%d-%b-%Y
+    ${Maturity_Date}    Mx LoanIQ Store TableCell To Clipboard   ${LIQ_ExistingLoansForFacility_Loan_List}    ${Lender_LoanAlias}%Maturity Date%var
+    ${Maturity_Date}    Convert Date    ${Maturity_Date}    result_format=%d-%b-%Y    date_format=%d-%b-%Y
+    ${Pricing_Option}    Mx LoanIQ Store TableCell To Clipboard   ${LIQ_ExistingLoansForFacility_Loan_List}    ${Lender_LoanAlias}%Pricing Option%var
+    Take Screenshot    ${screenshot_path}/Screenshots/Integration/Correspondence_Loan_ExistingLoansForFacility
+    
+    ### Navigate to Loan Notebook ###
+    Open Existing Loan    ${Lender_LoanAlias}
+    
+    ###Loan Notebook - Events Tab###
+    mx LoanIQ activate window    ${LIQ_Loan_Window}
+    Mx LoanIQ Select Window Tab    ${LIQ_Loan_AnyStatus_Tab}    Events
+    Mx LoanIQ Select Or DoubleClick In Javatree    ${LIQ_Loan_Events_List}    Released%d
+    
+    ###Loan Repricing Notebook - General Tab###
+    mx LoanIQ activate window    ${LIQ_LoanRepricingForDeal_Window}
+    Mx LoanIQ Select Window Tab    ${LIQ_LoanRepricingForDeal_Tab}    General
+    ${Borrower_Amount}    Mx LoanIQ Store TableCell To Clipboard   ${LIQ_LoanRepricingForDeal_Workflow_JavaTree}    ${Pricing_Option} (${Borrower_LoanAlias})%Amount%var
+    ${Lender_Amount}    Mx LoanIQ Store TableCell To Clipboard   ${LIQ_LoanRepricingForDeal_Workflow_JavaTree}    ${Pricing_Option} (${Lender_LoanAlias})%Amount%var
+    ${Payment_Amount}    Mx LoanIQ Store TableCell To Clipboard   ${LIQ_LoanRepricingForDeal_Workflow_JavaTree}    ${Pricing_Option} ${PaymentType} (${Borrower_LoanAlias})%Amount%var
+    Take Screenshot    ${screenshot_path}/Screenshots/Integration/Correspondence_LoanRepricing_GeneralTab
+
+    Close All Windows on LIQ    
+	
+    ### ConstRuntime Keyword Post-processing ###
+    Save Values of Runtime Execution on Excel File    ${sRunVar_Effective_Date}    ${Effective_Date}
+    Save Values of Runtime Execution on Excel File    ${sRunVar_Repricing_Date}    ${Repricing_Date}
+    Save Values of Runtime Execution on Excel File    ${sRunVar_Maturity_Date}    ${Maturity_Date}
+    Save Values of Runtime Execution on Excel File    ${sRunVar_Pricing_Option}    ${Pricing_Option}
+    Save Values of Runtime Execution on Excel File    ${sRunVar_Borrower_Amount}    ${Borrower_Amount}
+    Save Values of Runtime Execution on Excel File    ${sRunVar_Lender_Amount}    ${Lender_Amount}
+    Save Values of Runtime Execution on Excel File    ${sRunVar_Payment_Amount}    ${Payment_Amount}
+
+    [Return]    ${Effective_Date}    ${Repricing_Date}    ${Maturity_Date}    ${Pricing_Option}    ${Borrower_Amount}    ${Lender_Amount}    ${Payment_Amount}
+
 Select Notice Group
     [Documentation]    This keyword selects a notice group in the Notice Group window
     ...    @update: ehugo       15AUG2019    - initial create
@@ -641,3 +701,10 @@ Validate Notice Status for Event Fee Payment Notice
     Take Screenshot    ${screenshot_path}/Screenshots/Integration/Correspondence_Notice_PostStatus
     
     Close All Windows on LIQ   
+
+Close Commitment Change Group Window
+    [Documentation]    This keyword closes the Commitment Change Group Window
+    ...    @author: dahijara    15FEB2021    - Initial Create
+
+    Take Screenshot    ${screenshot_path}/Screenshots/Integration/Notice
+    Mx LoanIQ Close Window    ${LIQ_Notice_CommitmentChangeGroup_Window}

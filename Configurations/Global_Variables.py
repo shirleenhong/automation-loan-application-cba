@@ -224,6 +224,7 @@ MANUAL_GL_TRANSACTION = "Manual GL Transaction"
 MANUAL_CASHFLOW_TRANSACTION = "Manual Cashflow Transaction"
 FACILITIES = "Facilities"
 PORTFOLIO_SETTLED_DISCOUNT_ADJUSTMENT = "Portfolio Settled Discount Adjustment"
+PORTFOLIO_SETTLED_DISCOUNT_CHANGE_RELEASED = "Portfolio Settled Discount Change Released"
 ONGOING_FEE_PAYMENT_TRANSACTION= "Ongoing Fee Payment"
 LOAN_PRINCIPAL_PREPAYMENT_TRANSACTION = "Loan Principal Prepayment"
 LOAN_CONVERSION_TRANSACTION = "Loan Conversion to New (Part of Repricing)"
@@ -240,7 +241,10 @@ AWAITING_RATE_SETTING = "Awaiting Rate Setting"
 REVERSE_FEE_PAYMENT_TRANSACTION= "Reverse Fee Payment"
 PRICING_CHANGE_TRANSACTION = "Pricing Change Transaction"
 PRICING_CHANGE_TRANSACTION_RELEASED = "Pricing Change Transaction Released"
-
+UPFRONTFEE_PAYMENT_FROM_BORROWER_AGENT_RELEASED = "Upfront Fee Payment from Borrower/Agent Released"
+BREAKFUNDING_FEE_APPLIED = "Breakfunding Fee Applied"
+SCHEDULED_COMMITMENT_INCREASE_TRANSACTION = "Scheduled Commitment Increase"
+COMMITMENT_INCREASE_RELEASED = "Commitment Increase Released"
 
 ### Bank Role ###
 REFERENCE_BANK_ROLE = "Reference Bank"
@@ -267,6 +271,7 @@ CONTACTS_TAB = "Contacts"
 CURRENCY_TAB = "Currency"
 RATIOS_CONDS_TAB = "Ratios/Conds"
 AMTS_DATES_TAB = 'Amts/Dates'
+INC_DEC_SCHEDULE_TAB = 'Inc/Dec Schedule'
 
 ### Payment Type ###
 FEE_PAYMENT_FROM_BORROWER_TYPE = "Fee Payment From Borrower"

@@ -3262,3 +3262,18 @@ Close Deal Notebook Window
     ...    @update: ccarriedo    20JAN2021    - Changed the locator
 
     mx LoanIQ click    ${LIQ_DealBorrower_Ok_Button}
+    
+Validate an Event in Events Tab of Deal Notebook
+    [Documentation]    This keyword is used to validate an event in Events Tab of Deal Notebook 
+    ...    @author: javinzon    10FEB2021    - Initial create
+    [Arguments]    ${sEvent}
+
+    ### Keyword Pre-processing ###
+    ${Event}    Acquire Argument Value    ${sEvent}
+    
+    Mx LoanIQ Select Window Tab    ${LIQ_DealNotebook_Tab}    ${EVENTS_TAB}
+    ${Status}    Run Keyword And Return Status    Mx LoanIQ Verify Text In Javatree    ${LIQ_Events_Javatree}    ${Event}%yes
+    Run Keyword If    ${Status}==${True}    Log    ${Event} is present in Events Tab
+    ...    ELSE    Run Keyword And Continue On Failure    Fail    ${Event} is not present in Events Tab
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/DealNotebook_EventsTab    
+

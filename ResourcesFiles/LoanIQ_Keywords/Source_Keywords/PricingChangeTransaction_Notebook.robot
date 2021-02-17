@@ -864,3 +864,171 @@ Insert After in Modify Ongoing Fees of Pricing Change Transaction
     mx LoanIQ click    ${LIQ_FacilityPricing_FormulaCategory_OK_Button}    
     mx LoanIQ activate window    ${LIQ_PricingChangeTransaction_OngoingFeePricing_Window}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/OngoingFeePricing
+
+Add Facility Ongoing Fee - Matrix for Pricing Change Transaction
+    [Documentation]    Adds Ongoing Fee Matrix on the Facility Notebook's Ongoing Fee Pricing window for Pricing Change Transaction.
+    ...    @author: dahijara    16FEB2021    - Initial create
+    [Arguments]    ${sOngoingFee_Category}    ${sOngoingFee_Type}    ${sOngoingFee_RateBasis}
+    ...    ${sOngoingFee_AfterItem}    ${sOngoingFee_AfterItem_Type}
+
+    ### GetRuntime Keyword Pre-processing ###
+	${OngoingFee_Category}    Acquire Argument Value    ${sOngoingFee_Category}
+    ${OngoingFee_Type}    Acquire Argument Value    ${sOngoingFee_Type}
+    ${OngoingFee_RateBasis}    Acquire Argument Value    ${sOngoingFee_RateBasis}
+    ${OngoingFee_AfterItem}    Acquire Argument Value    ${sOngoingFee_AfterItem}
+    ${OngoingFee_AfterItem_Type}    Acquire Argument Value    ${sOngoingFee_AfterItem_Type}
+
+    ${status}    Run Keyword And Return Status    Mx LoanIQ Verify Object Exist    ${LIQ_PricingChangeTransaction_PricingWindow_ZeroCount_Tree}    VerificationData="Yes"
+    Run Keyword If    ${status}==${False}    Mx Press Combination    KEY.UP
+    ${ContinueAdd}    Run Keyword    Add Item to Facility Ongoing Fee or Interest for Pricing Change Transaction   ${OngoingFee_Category}    ${OngoingFee_Type}
+    Run Keyword If    ${ContinueAdd}==${True}    Run Keywords
+    ...    Set Fee Selection Details    ${OngoingFee_Category}    ${OngoingFee_Type}    ${OngoingFee_RateBasis}
+    ...    AND    Add After Item to Facility Ongoing Fee for Pricing Change Transaction    ${OngoingFee_Type}    ${OngoingFee_AfterItem}    ${OngoingFee_AfterItem_Type}
+
+Add Item to Facility Ongoing Fee or Interest for Pricing Change Transaction
+    [Documentation]    Adds a new Ongoing Fee or Interest in the Pricing tab for Pricing Change Transaction.
+    ...    @author: dahijara    16FEB2021    - Initial create
+    [Arguments]    ${sFee_Interest_Category}    ${sFee_Interest_Type}
+
+    ### GetRuntime Keyword Pre-processing ###
+	${Fee_Interest_Category}    Acquire Argument Value    ${sFee_Interest_Category}
+    ${Fee_Interest_Type}    Acquire Argument Value    ${sFee_Interest_Type}
+
+    ${FinancialRatio_AddItem}    Run Keyword And Return Status    Mx LoanIQ Verify Object Exist    ${LIQ_PricingChangeTransaction_PricingWindow_FinancialRatio_Tree}    VerificationData="Yes"
+    Run Keyword If    ${FinancialRatio_AddItem}==${False}    mx LoanIQ click    ${LIQ_PricingChangeTransaction_PricingWindow_Add_Button}
+    ...    ELSE IF    ${FinancialRatio_AddItem}==${True}    mx LoanIQ click    ${LIQ_PricingChangeTransaction_PricingWindow_After_Button}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/FeePricing
+    ${AddItem_WindowExists}    Run Keyword And Return Status    Mx LoanIQ Verify Object Exist    ${LIQ_AddItem_Window}    VerificationData="Yes"
+    Run Keyword If    ${AddItem_WindowExists} == ${True}    Mx LoanIQ Optional Select    ${LIQ_AddItem_List}    ${Fee_Interest_Category}
+    ${ItemType_IsEmpty}    Run Keyword    Check Add Item Type If Value Exists    ${Fee_Interest_Type}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/FeePricing
+    Run Keyword If    ${ItemType_IsEmpty}==${True}    mx LoanIQ click    ${LIQ_AddItem_Cancel_Button}
+    ...    ELSE    Run Keywords    Mx LoanIQ Optional Select    ${LIQ_AddItemType_List}    ${Fee_Interest_Type}
+    ...    AND    mx LoanIQ click    ${LIQ_AddItem_OK_Button}
+    ...    AND    Return From Keyword    True
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/FeePricing
+
+Add After Item to Facility Ongoing Fee for Pricing Change Transaction
+    [Documentation]    Adds an After Item to an Ongoing Fee  for Pricing Change Transaction.
+    ...    @author: dahijara    16FEB2021    - Initial create
+    [Arguments]    ${sOngoingFee_Type}    ${sOngoingFee_AfterItem}    ${sOngoingFee_AfterItem_Type}
+
+    ### GetRuntime Keyword Pre-processing ###
+	${OngoingFee_Type}    Acquire Argument Value    ${sOngoingFee_Type}
+    ${OngoingFee_AfterItem}    Acquire Argument Value    ${sOngoingFee_AfterItem}
+    ${OngoingFee_AfterItem_Type}    Acquire Argument Value    ${sOngoingFee_AfterItem_Type}
+
+    Mx LoanIQ Select Or DoubleClick In Javatree    ${LIQ_PricingChangeTransaction_PricingWindow_Tree}    ${OngoingFee_Type}%s
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/FeePricing
+    mx LoanIQ click    ${LIQ_PricingChangeTransaction_PricingWindow_After_Button}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/FeePricing
+    Mx LoanIQ Optional Select    ${LIQ_AddItem_List}    ${OngoingFee_AfterItem}
+    Mx LoanIQ Optional Select    ${LIQ_AddItemType_List}    ${OngoingFee_AfterItem_Type}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/FeePricing
+    mx LoanIQ click    ${LIQ_AddItem_OK_Button}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/FeePricing
+
+Set Financial Ratio for Pricing Change Transaction
+    [Documentation]    This keyword sets the Financial Ratio for Pricing Change Transaction.
+    ...    | Arguments |
+    ...    'RatioType' = The name of the Financial Ratio to be used.
+    ...    'MnemonicStatus' = Accepts 'ON' or 'OFF' values.
+    ...                       If 'ON', will tick Mnemonic checkbox and set MaximumValue to "Maximum".
+    ...                       If 'OFF', will leave Mnemonic checkbox unticked and will require a MaximumValue.
+    ...    'GreaterThan', 'LessThan' = Accepts '0' or '1' values.
+    ...                                If '0', will enable "Greater/Less Than or Equal" radio button.
+    ...                                If '1', will enable "Greater/Less Than" radio button.
+    ...    'MinimumValue' = The minimum value of the matrix.
+    ...    'MaximumValue' = The maximum value of the matrix. Will require numeric value if Mnemonic checkbox is unticked.
+    ...    
+    ...    @author: dahijara    16FEB2021    - Initial create
+    [Arguments]    ${sRatioType}    ${sMnemonicStatus}    ${iGreaterThan}    ${iLessThan}    ${sMinimumValue}    ${sMaximumValue}=Maximum
+
+    ### Keyword Pre-processing ###
+    ${RatioType}    Acquire Argument Value    ${sRatioType}
+    ${MnemonicStatus}    Acquire Argument Value    ${sMnemonicStatus}
+    ${GreaterThan}    Acquire Argument Value    ${iGreaterThan}
+    ${LessThan}    Acquire Argument Value    ${iLessThan}
+    ${MinimumValue}    Acquire Argument Value    ${sMinimumValue}
+    ${MaximumValue}    Acquire Argument Value    ${sMaximumValue}
+
+    mx LoanIQ activate    ${LIQ_FinancialRatio_Window}
+    Mx LoanIQ Select Combo Box Value    ${LIQ_FinancialRatio_Type_Combobox}    ${RatioType}
+    Run Keyword If    '${GreaterThan}'=='0'    Mx LoanIQ Set    ${LIQ_FinancialRatio_GreaterThanEqual_RadioButton}    ON
+    ...    ELSE IF    '${GreaterThan}'=='1'    Mx LoanIQ Set    ${LIQ_FinancialRatio_GreaterThan_RadioButton}    ON
+    mx LoanIQ enter    ${LIQ_FinancialRatio_MinimumValue_Field}    ${MinimumValue}
+    Run Keyword If    '${MnemonicStatus}'=='ON'    Run Keywords
+    ...    Mx LoanIQ Set    ${LIQ_FinancialRatio_Mnemonic_CheckBox}    ON
+    ...    AND    Mx LoanIQ Verify Runtime Property    ${LIQ_FinancialRatio_LessThanEqual_RadioButton}    enabled%1
+    ...    AND    Mx LoanIQ Verify Runtime Property    ${LIQ_FinancialRatio_Mnemonic_List}    value%${MaximumValue}
+    Run Keyword If    '${MnemonicStatus}'=='OFF'    Set Financial Ratio Maximum    ${LessThan}    ${MaximumValue}
+    mx LoanIQ click    ${LIQ_FinancialRatio_OK_Button}
+    
+    ${RatioType_ToVerify}    Regexp Escape    ${RatioType}
+    ${RatioType_ToVerify}    Replace Variables    ${RatioType_ToVerify}
+    ${MinimumValue}    Replace Variables    ${MinimumValue}
+    ${MaximumValue}    Replace Variables    ${MaximumValue}
+    ${LIQ_PricingChangeTransaction_PricingWindow_RatioString_Tree}    Replace Variables    ${LIQ_PricingChangeTransaction_PricingWindow_RatioString_Tree}
+    ${status}    Run Keyword And Return Status    Mx LoanIQ Verify Object Exist    ${LIQ_PricingChangeTransaction_PricingWindow_RatioString_Tree}    VerificationData="Yes"
+    Run Keyword If    ${status}==${True}    Log    ${RatioType} with minimum value ${MinimumValue} and maximum value ${MaximumValue} has been successfully added.
+    ...    ELSE    Run Keyword And Continue On Failure    Fail    Financial Ratio has not been added.
+
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/FinancialRatioWindow_SetFinancialRatio
+
+Add Facility Matrix to Ongoing Fee or Interest Pricing with Existing Matrix for Pricing Change Transaction
+    [Documentation]    Adds Ongoing Fee Matrix  for Pricing Change Transaction's Ongoing Fee Pricing window.
+    ...    @author: dahijara    16FEB2021    - Initial create
+    [Arguments]    ${sOngoingFee_MatrixType}    ${sOngoingFee_Item}    ${sOngoingFee_Item_Type}
+
+    ### Keyword Pre-processing ###
+    ${OngoingFee_MatrixType}    Acquire Argument Value    ${sOngoingFee_MatrixType}
+    ${OngoingFee_Item}    Acquire Argument Value    ${sOngoingFee_Item}
+    ${OngoingFee_Item_Type}    Acquire Argument Value    ${sOngoingFee_Item_Type}
+
+    Mx LoanIQ Select Or DoubleClick In Javatree    ${LIQ_PricingChangeTransaction_PricingWindow_Tree}    ${OngoingFee_MatrixType}%s
+    Add Item to Ongoing Fee or Interest Pricing for Pricing Change Transaction    ${OngoingFee_Item}    ${OngoingFee_Item_Type}
+
+Add Item to Ongoing Fee or Interest Pricing for Pricing Change Transaction
+    [Documentation]    Adds an Item to an Existing Selection  for Pricing Change Transaction Pricing Notebook.
+    ...    @author: dahijara    16FEB2021    - Initial create
+    [Arguments]    ${sOngoingFee_AfterItem}    ${sOngoingFee_AfterItem_Type}
+
+    ### Keyword Pre-processing ###
+    ${OngoingFee_AfterItem}    Acquire Argument Value    ${sOngoingFee_AfterItem}
+    ${OngoingFee_AfterItem_Type}    Acquire Argument Value    ${sOngoingFee_AfterItem_Type}
+
+    mx LoanIQ click    ${LIQ_PricingChangeTransaction_PricingWindow_Add_Button}
+    Mx LoanIQ Optional Select    ${LIQ_AddItem_List}    ${OngoingFee_AfterItem}
+    Mx LoanIQ Optional Select    ${LIQ_AddItemType_List}    ${OngoingFee_AfterItem_Type}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/FeePricing_OngoingFeeInterest_Window
+    mx LoanIQ click    ${LIQ_AddItem_OK_Button}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/FeePricing_OngoingFeeInterest_Window
+
+Clear Pricing Window Current Values
+     [Documentation]    This keyword is used to clear current Pricing values.
+    ...    @author: dahijara    16FEB2021    - Initial create
+
+    mx LoanIQ activate window     ${LIQ_PricingChangeTransaction_PricingWindow}
+    mx LoanIQ click element if present    ${LIQ_Information_OK_Button}
+    mx LoanIQ click    ${LIQ_PricingChangeTransaction_PricingWindow_Clear_Button}
+    mx LoanIQ click    ${LIQ_Question_Yes_Button}
+    mx LoanIQ activate window     ${LIQ_PricingChangeTransaction_PricingWindow}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/FeePricing_OngoingFeeInterest_Window
+
+Click OK Button in Pricing Window
+    [Documentation]    This keyword is used to click ok inPricing window
+    ...    @author: dahijara    16FEB2021    - Initial create
+    
+    ### Interest Pricing Window ###
+    Mx LoanIQ Activate Window    ${LIQ_PricingChangeTransaction_PricingWindow}
+    Mx LoanIQ click    ${LIQ_PricingChangeTransaction_PricingWindow_OK_Button}
+    Take Screenshot    ${Screenshot_Path}/Screenshots/LoanIQ/ModifyPricingWindow
+
+Click Refresh Button in Pricing Window
+    [Documentation]    This keyword is used to click Refresh in Pricing window
+    ...    @author: dahijara    16FEB2021    - Initial create
+    
+    ### Interest Pricing Window ###
+    Mx LoanIQ Activate Window    ${LIQ_PricingChangeTransaction_PricingWindow}
+    Mx LoanIQ click    ${LIQ_PricingChangeTransaction_PricingWindow_Refresh_Button}
+    Take Screenshot    ${Screenshot_Path}/Screenshots/LoanIQ/ModifyPricingWindow
