@@ -14,3 +14,7 @@ Refinance Revolver Facility for CH EDU Bilateral Deal
     Mx Execute Template With Multiple Data    Increase Commitment for Revolver Facility for CH EDU Bilateral Deal    ${ExcelPath}    ${rowid}    AMCH05_FacilityChangeTrans
     Set Test Variable    ${rowid}    1
     Mx Execute Template With Multiple Data    Update Ongoing Fee and Interest Fee Pricing for CH EDU Bilateral Deal    ${ExcelPath}    ${rowid}    AMCH06_PricingChangeTransaction
+
+Generate & Send Commitment Change (Increase) Notice
+    Set Test Variable    ${rowid}    9
+    Mx Execute Template With Multiple Data    Send Commitment Change Notice for CH EDU Bilateral Deal    ${ExcelPath}    ${rowid}    Correspondence
