@@ -155,8 +155,8 @@ Cycle Shares Adjustment for PT Health
     Launch Existing Facility    ${Deal_Name}    ${Facility_Name}
     Navigate to Commitment Fee Notebook    &{ExcelPath}[OngoingFee_Type]
     
-    Validate Manual Adjustment Value - Line Fee    &{ExcelPath}[Cycle_No]    &{ExcelPath}[Requested_Amount] 
-    Validate Cycle Due New Value - Line Fee    &{ExcelPath}[Cycle_No]    &{ExcelPath}[Current_Cycle_Due]     &{ExcelPath}[Requested_Amount]
-    Validate Projected EOC Due New Value - Line Fee    &{ExcelPath}[Cycle_No]    &{ExcelPath}[Projected_Cycle_Due]     &{ExcelPath}[Requested_Amount]        
-    Validate Accrual Shares Adjustment Applied Event - Line Fee
+    Validate Manual Adjustment Value in Line Fee    &{ExcelPath}[Cycle_No]    &{ExcelPath}[Requested_Amount] 
+    Validate Cycle Due New Value in Line Fee    &{ExcelPath}[Cycle_No]    &{ExcelPath}[Current_Cycle_Due]     &{ExcelPath}[Requested_Amount]
+    Validate Projected EOC Due New Value in Line Fee    &{ExcelPath}[Cycle_No]    &{ExcelPath}[Projected_Cycle_Due]     &{ExcelPath}[Requested_Amount]        
+    Validate Accrual Shares Adjustment Applied Event in Line Fee
     Close All Windows on LIQ 

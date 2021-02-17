@@ -965,7 +965,7 @@ Navigate to Ongoing Fee Notebook
     Mx LoanIQ Select Or DoubleClick In Javatree    ${LIQ_Facility_FeeList_JavaTree}    ${OngoingFee_Alias}%d
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/FacilityWindow
     
-Validate Manual Adjustment Value - Line Fee
+Validate Manual Adjustment Value in Line Fee
     [Documentation]    This keyword is used for navigating back to Line Notebook to validate if the requested amount reflects in Manual Adjustment column.
     ...    @author: songchan    17FEB2021    - Initial Create
     [Arguments]    ${sCycleNo}    ${sRequested_Amount}    
@@ -979,7 +979,7 @@ Validate Manual Adjustment Value - Line Fee
     
     Compare Two Strings    ${Requested_Amount}    ${ManualAdj_Value}
     
-Validate Cycle Due New Value - Line Fee
+Validate Cycle Due New Value in Line Fee
     [Documentation]    This keyword is used for navigating back to Line Notebook to validate if the requested amount added in Cycle Due column.
     ...    @author:songchan    17FEB2021    - Initial Create
     [Arguments]    ${sCycleNo}    ${sCycleDue}    ${sRequested_Amount}     
@@ -990,16 +990,13 @@ Validate Cycle Due New Value - Line Fee
 
     ###Get the New Cycle Due and Convert to Number###
     ${CycleDue_NewValue}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_LineFee_Accrual_Cycles_JavaTree}    ${CycleNo}%Cycle Due%value
-    ${CycleDue_NewValue}    Remove String    ${CycleDue_NewValue}    ,
-    ${CycleDue_NewValue}    Convert To Number    ${CycleDue_NewValue}    2 
+    ${CycleDue_NewValue}    Remove Comma and Convert to Number    ${CycleDue_NewValue}
     
     ###Cycle Due Original Value - Convert to Number###
-    ${CycleDue_OriginalValue}    Remove String    ${CycleDue}    ,
-    ${CycleDue_OriginalValue}    Convert To Number    ${CycleDue_OriginalValue}    2 
+    ${CycleDue_OriginalValue}    Remove Comma and Convert to Number    ${CycleDue}
     
     ###Calculate the New Cycle Due based on the adjustment###
-    ${Requested_Amount}    Remove String    ${Requested_Amount}    ,
-    ${Requested_Amount}    Convert To Number    ${Requested_Amount}    2 
+    ${Requested_Amount}    Remove Comma and Convert to Number    ${Requested_Amount}
     
     ${Calculated_CycleDue}    Evaluate    ${CycleDue_OriginalValue}+${Requested_Amount}         
     ${Calculated_CycleDue}    Convert To Number    ${Calculated_CycleDue}    2
@@ -1007,7 +1004,7 @@ Validate Cycle Due New Value - Line Fee
     
     Compare Two Strings    ${Calculated_CycleDue}    ${CycleDue_NewValue}
     
-Validate Projected EOC Due New Value - Line Fee
+Validate Projected EOC Due New Value in Line Fee
     [Documentation]    This keyword is used for navigating back to Line Fee Notebook to validate if the requested amount added in Projected EOC due column.
     ...    @author:  songchan    17FEB2021    - Initial Create
     [Arguments]    ${sCycleNo}    ${sProjectedCycleDue}    ${sRequested_Amount}     
@@ -1019,16 +1016,13 @@ Validate Projected EOC Due New Value - Line Fee
 
     ###Get the New Cycle Due and Convert to Number###
     ${PEOCDue_NewValue}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_LineFee_Accrual_Cycles_JavaTree}    ${CycleNo}%Projected EOC due%value
-    ${PEOCDue_NewValue}    Remove String    ${PEOCDue_NewValue}    ,
-    ${PEOCDue_NewValue}    Convert To Number    ${PEOCDue_NewValue}    2 
-    
+    ${PEOCDue_NewValue}    Remove Comma and Convert to Number    ${PEOCDue_NewValue}
+
     ###Cycle Due Original Value - Convert to Number###
-    ${PEOCDue_OriginalValue}    Remove String    ${ProjectedCycleDue}    ,
-    ${PEOCDue_OriginalValue}    Convert To Number    ${PEOCDue_OriginalValue}    2 
+    ${PEOCDue_OriginalValue}    Remove Comma and Convert to Number   ${ProjectedCycleDue}
     
     ###Calculate the New Cycle Due based on the adjustment###
-    ${Requested_Amount}    Remove String    ${Requested_Amount}    ,
-    ${Requested_Amount}    Convert To Number    ${Requested_Amount}    2 
+    ${Requested_Amount}    Remove Comma and Convert to Number    ${Requested_Amount}
     
     ${Calculated_PEOCDue}    Evaluate    ${PEOCDue_OriginalValue}+${Requested_Amount}
     ${Calculated_PEOCDue}    Convert To Number    ${Calculated_PEOCDue}    2         
@@ -1036,7 +1030,7 @@ Validate Projected EOC Due New Value - Line Fee
 
     Compare Two Strings    ${Calculated_PEOCDue}    ${PEOCDue_NewValue}
     
-Validate Accrual Shares Adjustment Applied Event - Line Fee
+Validate Accrual Shares Adjustment Applied Event in Line Fee
     [Documentation]    This keyword validates Accrual Shares Adjustment Applied Event on Events Tab.
     ...    @author: songchan    17FEB2021    - Initial create
 
