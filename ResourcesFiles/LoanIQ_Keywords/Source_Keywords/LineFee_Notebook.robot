@@ -964,3 +964,85 @@ Navigate to Ongoing Fee Notebook
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/FacilityWindow
     Mx LoanIQ Select Or DoubleClick In Javatree    ${LIQ_Facility_FeeList_JavaTree}    ${OngoingFee_Alias}%d
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/FacilityWindow
+    
+Validate Manual Adjustment Value - Line Fee
+    [Documentation]    This keyword is used for navigating back to Line Notebook to validate if the requested amount reflects in Manual Adjustment column.
+    ...    @author: songchan    17FEB2021    - Initial Create
+    [Arguments]    ${sCycleNo}    ${sRequested_Amount}    
+    ### GetRuntime Keyword Pre-processing ###
+    ${CycleNo}    Acquire Argument Value    ${sCycleNo}
+    ${Requested_Amount}    Acquire Argument Value    ${sRequested_Amount}
+    
+    Mx LoanIQ Select Window Tab    ${LIQ_LineFee_Tab}    Accrual
+    ${ManualAdj_Value}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_LineFee_Accrual_Cycles_JavaTree}    ${CycleNo}%Manual adjustmt%value    
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LineFee_Accrual
+    
+    Compare Two Strings    ${Requested_Amount}    ${ManualAdj_Value}
+    
+Validate Cycle Due New Value - Line Fee
+    [Documentation]    This keyword is used for navigating back to Line Notebook to validate if the requested amount added in Cycle Due column.
+    ...    @author:songchan    17FEB2021    - Initial Create
+    [Arguments]    ${sCycleNo}    ${sCycleDue}    ${sRequested_Amount}     
+    ### GetRuntime Keyword Pre-processing ###
+    ${CycleNo}    Acquire Argument Value    ${sCycleNo}
+    ${CycleDue}    Acquire Argument Value    ${sCycleDue}
+    ${Requested_Amount}    Acquire Argument Value    ${sRequested_Amount}
+
+    ###Get the New Cycle Due and Convert to Number###
+    ${CycleDue_NewValue}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_LineFee_Accrual_Cycles_JavaTree}    ${CycleNo}%Cycle Due%value
+    ${CycleDue_NewValue}    Remove String    ${CycleDue_NewValue}    ,
+    ${CycleDue_NewValue}    Convert To Number    ${CycleDue_NewValue}    2 
+    
+    ###Cycle Due Original Value - Convert to Number###
+    ${CycleDue_OriginalValue}    Remove String    ${CycleDue}    ,
+    ${CycleDue_OriginalValue}    Convert To Number    ${CycleDue_OriginalValue}    2 
+    
+    ###Calculate the New Cycle Due based on the adjustment###
+    ${Requested_Amount}    Remove String    ${Requested_Amount}    ,
+    ${Requested_Amount}    Convert To Number    ${Requested_Amount}    2 
+    
+    ${Calculated_CycleDue}    Evaluate    ${CycleDue_OriginalValue}+${Requested_Amount}         
+    ${Calculated_CycleDue}    Convert To Number    ${Calculated_CycleDue}    2
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LineFee_Accrual
+    
+    Compare Two Strings    ${Calculated_CycleDue}    ${CycleDue_NewValue}
+    
+Validate Projected EOC Due New Value - Line Fee
+    [Documentation]    This keyword is used for navigating back to Line Fee Notebook to validate if the requested amount added in Projected EOC due column.
+    ...    @author:  songchan    17FEB2021    - Initial Create
+    [Arguments]    ${sCycleNo}    ${sProjectedCycleDue}    ${sRequested_Amount}     
+  
+    ### GetRuntime Keyword Pre-processing ###
+    ${CycleNo}    Acquire Argument Value    ${sCycleNo}
+    ${ProjectedCycleDue}    Acquire Argument Value    ${sProjectedCycleDue}
+    ${Requested_Amount}    Acquire Argument Value    ${sRequested_Amount}
+
+    ###Get the New Cycle Due and Convert to Number###
+    ${PEOCDue_NewValue}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_LineFee_Accrual_Cycles_JavaTree}    ${CycleNo}%Projected EOC due%value
+    ${PEOCDue_NewValue}    Remove String    ${PEOCDue_NewValue}    ,
+    ${PEOCDue_NewValue}    Convert To Number    ${PEOCDue_NewValue}    2 
+    
+    ###Cycle Due Original Value - Convert to Number###
+    ${PEOCDue_OriginalValue}    Remove String    ${ProjectedCycleDue}    ,
+    ${PEOCDue_OriginalValue}    Convert To Number    ${PEOCDue_OriginalValue}    2 
+    
+    ###Calculate the New Cycle Due based on the adjustment###
+    ${Requested_Amount}    Remove String    ${Requested_Amount}    ,
+    ${Requested_Amount}    Convert To Number    ${Requested_Amount}    2 
+    
+    ${Calculated_PEOCDue}    Evaluate    ${PEOCDue_OriginalValue}+${Requested_Amount}
+    ${Calculated_PEOCDue}    Convert To Number    ${Calculated_PEOCDue}    2         
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LineFee_Accrual
+
+    Compare Two Strings    ${Calculated_PEOCDue}    ${PEOCDue_NewValue}
+    
+Validate Accrual Shares Adjustment Applied Event - Line Fee
+    [Documentation]    This keyword validates Accrual Shares Adjustment Applied Event on Events Tab.
+    ...    @author: songchan    17FEB2021    - Initial create
+
+    mx LoanIQ activate window    ${LIQ_LineFee_Window}
+    Mx LoanIQ Select Window Tab    ${LIQ_LineFee_Tab}    ${EVENTS_TAB}
+    ${Status}    Run Keyword And Return Status    Mx LoanIQ Select String    ${LIQ_LineFee_Events_Javatree}   ${ACCRUAL_SHARES_ADJUSTMENT_APPLIED}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LineFeeWindow_EventsTab
+    Run Keyword If    ${Status}==${True}    Log    ${ACCRUAL_SHARES_ADJUSTMENT_APPLIED} is shown in the Events list of Line Fee notebook.
+    ...    ELSE    Run Keyword and Continue on Failure    Fail    Accrual Shares Adjustment is not successfully applied.
