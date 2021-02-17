@@ -14,5 +14,5 @@ Combine ABCDE & F, Partial Repayment $17.760M and Rollover
     
 Create Loan Drawdown for LBT Bilateral Deal 
     Set Test Variable    ${rowid}    8
-    Mx Execute Template With Multiple Data    Create Loan Drawdown for LBT Bilateral Deal    ${ExcelPath}    ${rowid}    SERV01_LoanDrawdown
+    Mx Execute Template With Multiple Data    Create Loan Drawdown for LBT Bilateral Deal - Outstanding G  ${ExcelPath}    ${rowid}    SERV01_LoanDrawdown
       
