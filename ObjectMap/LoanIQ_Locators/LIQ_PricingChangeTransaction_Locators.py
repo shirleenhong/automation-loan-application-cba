@@ -122,3 +122,6 @@ LIQ_PricingChangeTransaction_PricingWindow_Tree = 'JavaWindow("title:=.*Current.
 LIQ_PricingChangeTransaction_PricingWindow_Clear_Button = 'JavaWindow("title:=.*Current.*Pricing").JavaButton("attached text:=Clear")'
 LIQ_PricingChangeTransaction_PricingWindow_OK_Button = 'JavaWindow("title:=.*Current.*Pricing").JavaButton("attached text:=OK")'
 LIQ_PricingChangeTransaction_PricingWindow_Refresh_Button = 'JavaWindow("title:=.*Current.*Pricing").JavaButton("attached text:=Refresh")'
+LIQ_PricingChangeTransaction_PricingWindow_ZeroCount_Tree = 'JavaWindow("title:=.*Current.*Pricing").JavaTree("items count:=0")'
+LIQ_PricingChangeTransaction_PricingWindow_FinancialRatio_Tree = 'JavaWindow("title:=.*Current.*Pricing").JavaTree("developer name:=.*Financial Ratio.*")'
+LIQ_PricingChangeTransaction_PricingWindow_RatioString_Tree = 'JavaWindow("title:=.*Current.*Pricing").JavaTree("developer name:=.*Financial Ratio.*${RatioType_ToVerify}.*${MinimumValue}.*${MaximumValue}.*")'

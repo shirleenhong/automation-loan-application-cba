@@ -717,7 +717,7 @@ Create Facility Increase/Decrease Schedule
     :FOR    ${i}    IN RANGE    3
     \    ${Warning_Status}    Run Keyword And Return Status    Mx LoanIQ Verify Object Exist    ${LIQ_Warning_Window}     VerificationData="Yes"
     \    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/FacilityChangeTransaction_Warning
-    \    Exit For Loop If    ${Warning_Status}==False
+    \    Exit For Loop If    ${Warning_Status}==${False}
     \    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
 
 Add Amortization Schedule
@@ -733,7 +733,9 @@ Add Amortization Schedule
     Mx LoanIQ Activate Window    ${LIQ_FacilityChangeTransaction_AmortizationSchedule_Window}
     Mx LoanIQ click    ${LIQ_FacilityChangeTransaction_AmortizationSchedule_AddButton}
     Mx LoanIQ Activate Window    ${LIQ_AddSchedItem_Window}
-    Mx LoanIQ enter    JavaWindow("title:=Add Schedule Item").JavaRadiobutton("attached text:=${ItemChangeType}")    ON
+    ${ItemChangeType}    Replace Variables    ${ItemChangeType}
+    ${LIQ_AddSchedItem_RadioButton}    Replace Variables    ${LIQ_AddSchedItem_RadioButton}
+    Mx LoanIQ enter    ${LIQ_AddSchedItem_RadioButton}    ON
     Mx LoanIQ enter    ${LIQ_AddSchedItem_Amount_Field}    ${Amount}
     Mx Press Combination    KEY.TAB
     Mx LoanIQ enter    ${LIQ_AddSchedItem_ScheduleDate_Field}    ${ScheduleDate}
@@ -764,7 +766,7 @@ Select Schedule Frequency
     ${Frequency}    Acquire Argument Value    ${sFrequency}
 
     Mx LoanIQ Activate Window    ${LIQ_FacilityChangeTransaction_AmortizationSchedule_Window}
-    Mx LoanIQ Select List    ${LIQ_FacilityChangeTransaction_AmortizationSchedule_Frequency}    ${sFrequency}
+    Mx LoanIQ Select List    ${LIQ_FacilityChangeTransaction_AmortizationSchedule_Frequency}    ${Frequency}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/FacilityChangeTransaction_SelectFrequency
 
 Verify Amortization Schedule Details
@@ -778,7 +780,7 @@ Verify Amortization Schedule Details
     ${ScheduledDate}    Acquire Argument Value    ${sScheduledDate}
     
     Mx LoanIQ Activate Window    ${LIQ_FacilityChangeTransaction_AmortizationSchedule_Window}
-    Run Keyword And Continue On Failure    Mx LoanIQ Verify Object Exist    ${LIQ_FacilityChangeTransaction_AmortizationSchedule_JavaTree}            VerificationData="Yes"
+    Run Keyword And Continue On Failure    Mx LoanIQ Verify Object Exist    ${LIQ_FacilityChangeTransaction_AmortizationSchedule_JavaTree}    VerificationData="Yes"
     
     ${UI_Amount}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_FacilityChangeTransaction_AmortizationSchedule_JavaTree}    ${ItemNumber}%Amount%value    
     ${UI_Date}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_FacilityChangeTransaction_AmortizationSchedule_JavaTree}    ${ItemNumber}%Date%value
@@ -794,7 +796,7 @@ Verify Amortization Schedule Details
     Run Keyword If    ${Status}==${True}    Log    Amortization Scheduled Date is correct.
     ...    ELSE    Run Keyword And Continue On Failure    Fail    Amortization Scheduled Date is correct. Expected: ${ScheduledDate} - Actual: ${UI_Date}
 
-Navigate to Facility Change Transaction Workflow and Proceed With Transaction
+Navigate to Facility Change Transaction Workflow and Proceed with Transaction
     [Documentation]    This keyword navigates to the Loan Drawdown Workflow using the desired Transaction
     ...    @author: dahijara    10FEB2021    - Initial create
     [Arguments]    ${sTransaction}
@@ -805,7 +807,7 @@ Navigate to Facility Change Transaction Workflow and Proceed With Transaction
     Navigate Notebook Workflow    ${LIQ_FacilityChangeTransaction_Window}    ${LIQ_FacilityChangeTransaction_Tab}    ${LIQ_FacilityChangeTransaction_Workflow_JavaTree}    ${Transaction}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/FacilityChangeTransaction_Workflow
 
-Navigate to Scheduled Commitment Workflow and Proceed With Transaction
+Navigate to Scheduled Commitment Workflow and Proceed with Transaction
     [Documentation]    This keyword navigates to the Scheduled Commitment Workflow using the desired Transaction
     ...    @author: dahijara    10FEB2021    - Initial create
     [Arguments]    ${sTransaction}

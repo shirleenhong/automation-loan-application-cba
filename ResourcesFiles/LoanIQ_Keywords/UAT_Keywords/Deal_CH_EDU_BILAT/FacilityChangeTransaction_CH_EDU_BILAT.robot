@@ -31,19 +31,19 @@ Add Increase Schedule via Facility Change Transaction for CH EDu Bilateral Deal
     Save and Exit Amortization Schedule
 
     ### Send to Approval ###
-    Navigate to Facility Change Transaction Workflow and Proceed With Transaction    ${SEND_TO_APPROVAL_STATUS}
+    Navigate to Facility Change Transaction Workflow and Proceed with Transaction    ${SEND_TO_APPROVAL_STATUS}
 
     ### Approval ###
     Logout from Loan IQ
     Login to Loan IQ    ${SUPERVISOR_USERNAME}    ${SUPERVISOR_PASSWORD}
     Navigate Transaction in WIP    ${FACILITIES}    ${AWAITING_APPROVAL_STATUS}    ${FACILITY_CHANGE_TRANSACTION}    ${Deal_Name}
-    Navigate to Facility Change Transaction Workflow and Proceed With Transaction    ${APPROVAL_STATUS}
+    Navigate to Facility Change Transaction Workflow and Proceed with Transaction    ${APPROVAL_STATUS}
 
     ### Release ###
     Logout from Loan IQ
     Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
     Navigate Transaction in WIP    ${FACILITIES}    ${AWAITING_RELEASE_STATUS}    ${FACILITY_CHANGE_TRANSACTION}    ${Deal_Name}
-    Navigate to Facility Change Transaction Workflow and Proceed With Transaction    ${RELEASE_STATUS}
+    Navigate to Facility Change Transaction Workflow and Proceed with Transaction    ${RELEASE_STATUS}
     Validate Window Title Status    ${FACILITY_CHANGE_TRANSACTION}    ${RELEASED_STATUS}
     Close All Windows on LIQ
 
@@ -69,22 +69,22 @@ Increase Commitment for Revolver Facility for CH EDU Bilateral Deal
     Go to Facility Notebook Update Mode
     Create Pending Transaction in Facility Schedule    &{ExcelPath}[ScheduleItemNumber]    &{ExcelPath}[ScheduleDate]
     Enter Facility Schedule Commitment Details    &{ExcelPath}[Comment]
-    Navigate to Scheduled Commitment Workflow and Proceed With Transaction    ${GENERATE_INTENT_NOTICES}
+    Navigate to Scheduled Commitment Workflow and Proceed with Transaction    ${GENERATE_INTENT_NOTICES}
     Select Notices Recipients
     Close Commitment Change Group Window
-    Navigate to Scheduled Commitment Workflow and Proceed With Transaction    ${SEND_TO_APPROVAL_STATUS}
+    Navigate to Scheduled Commitment Workflow and Proceed with Transaction    ${SEND_TO_APPROVAL_STATUS}
 
     ### Approval ###
     Logout from Loan IQ
     Login to Loan IQ    ${SUPERVISOR_USERNAME}    ${SUPERVISOR_PASSWORD}
     Navigate Transaction in WIP    ${FACILITIES}    ${AWAITING_APPROVAL_STATUS}    ${SCHEDULED_COMMITMENT_INCREASE_TRANSACTION}    ${FacilityName}
-    Navigate to Scheduled Commitment Workflow and Proceed With Transaction    ${APPROVAL_STATUS}
+    Navigate to Scheduled Commitment Workflow and Proceed with Transaction    ${APPROVAL_STATUS}
 
     ### Release ###
     Logout from Loan IQ
     Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
     Navigate Transaction in WIP    ${FACILITIES}    ${AWAITING_RELEASE_STATUS}    ${SCHEDULED_COMMITMENT_INCREASE_TRANSACTION}    ${FacilityName}
-    Navigate to Scheduled Commitment Workflow and Proceed With Transaction    ${RELEASE_STATUS}
+    Navigate to Scheduled Commitment Workflow and Proceed with Transaction    ${RELEASE_STATUS}
     Validate Window Title Status    ${SCHEDULED_COMMITMENT_INCREASE_TRANSACTION}    ${RELEASED_STATUS}
     Close All Windows on LIQ
 

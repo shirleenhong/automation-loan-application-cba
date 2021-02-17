@@ -878,10 +878,10 @@ Add Facility Ongoing Fee - Matrix for Pricing Change Transaction
     ${OngoingFee_AfterItem}    Acquire Argument Value    ${sOngoingFee_AfterItem}
     ${OngoingFee_AfterItem_Type}    Acquire Argument Value    ${sOngoingFee_AfterItem_Type}
 
-    ${status}    Run Keyword And Return Status    Mx LoanIQ Verify Object Exist    JavaWindow("title:=.*Current.*Pricing").JavaTree("items count:=0")    VerificationData="Yes"
-    Run Keyword If    ${status}==False    Mx Press Combination    KEY.UP
+    ${status}    Run Keyword And Return Status    Mx LoanIQ Verify Object Exist    ${LIQ_PricingChangeTransaction_PricingWindow_ZeroCount_Tree}    VerificationData="Yes"
+    Run Keyword If    ${status}==${False}    Mx Press Combination    KEY.UP
     ${ContinueAdd}    Run Keyword    Add Item to Facility Ongoing Fee or Interest for Pricing Change Transaction   ${OngoingFee_Category}    ${OngoingFee_Type}
-    Run Keyword If    ${ContinueAdd}==True    Run Keywords
+    Run Keyword If    ${ContinueAdd}==${True}    Run Keywords
     ...    Set Fee Selection Details    ${OngoingFee_Category}    ${OngoingFee_Type}    ${OngoingFee_RateBasis}
     ...    AND    Add After Item to Facility Ongoing Fee for Pricing Change Transaction    ${OngoingFee_Type}    ${OngoingFee_AfterItem}    ${OngoingFee_AfterItem_Type}
 
@@ -894,15 +894,15 @@ Add Item to Facility Ongoing Fee or Interest for Pricing Change Transaction
 	${Fee_Interest_Category}    Acquire Argument Value    ${sFee_Interest_Category}
     ${Fee_Interest_Type}    Acquire Argument Value    ${sFee_Interest_Type}
 
-    ${FinancialRatio_AddItem}    Run Keyword And Return Status    Mx LoanIQ Verify Object Exist    JavaWindow("title:=.*Current.*Pricing").JavaTree("developer name:=.*Financial Ratio.*")    VerificationData="Yes"
-    Run Keyword If    ${FinancialRatio_AddItem}==False    mx LoanIQ click    ${LIQ_PricingChangeTransaction_PricingWindow_Add_Button}
-    ...    ELSE IF    ${FinancialRatio_AddItem}==True    mx LoanIQ click    ${LIQ_PricingChangeTransaction_PricingWindow_After_Button}
+    ${FinancialRatio_AddItem}    Run Keyword And Return Status    Mx LoanIQ Verify Object Exist    ${LIQ_PricingChangeTransaction_PricingWindow_FinancialRatio_Tree}    VerificationData="Yes"
+    Run Keyword If    ${FinancialRatio_AddItem}==${False}    mx LoanIQ click    ${LIQ_PricingChangeTransaction_PricingWindow_Add_Button}
+    ...    ELSE IF    ${FinancialRatio_AddItem}==${True}    mx LoanIQ click    ${LIQ_PricingChangeTransaction_PricingWindow_After_Button}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/FeePricing
     ${AddItem_WindowExists}    Run Keyword And Return Status    Mx LoanIQ Verify Object Exist    ${LIQ_AddItem_Window}    VerificationData="Yes"
-    Run Keyword If    ${AddItem_WindowExists} == True    Mx LoanIQ Optional Select    ${LIQ_AddItem_List}    ${Fee_Interest_Category}
+    Run Keyword If    ${AddItem_WindowExists} == ${True}    Mx LoanIQ Optional Select    ${LIQ_AddItem_List}    ${Fee_Interest_Category}
     ${ItemType_IsEmpty}    Run Keyword    Check Add Item Type If Value Exists    ${Fee_Interest_Type}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/FeePricing
-    Run Keyword If    ${ItemType_IsEmpty}==True    mx LoanIQ click    ${LIQ_AddItem_Cancel_Button}
+    Run Keyword If    ${ItemType_IsEmpty}==${True}    mx LoanIQ click    ${LIQ_AddItem_Cancel_Button}
     ...    ELSE    Run Keywords    Mx LoanIQ Optional Select    ${LIQ_AddItemType_List}    ${Fee_Interest_Type}
     ...    AND    mx LoanIQ click    ${LIQ_AddItem_OK_Button}
     ...    AND    Return From Keyword    True
@@ -965,10 +965,13 @@ Set Financial Ratio for Pricing Change Transaction
     mx LoanIQ click    ${LIQ_FinancialRatio_OK_Button}
     
     ${RatioType_ToVerify}    Regexp Escape    ${RatioType}
-    ${status}    Run Keyword And Return Status    Mx LoanIQ Verify Object Exist    JavaWindow("title:=.*Current.*Pricing").JavaTree("developer name:=.*Financial Ratio.*${RatioType_ToVerify}.*${MinimumValue}.*${MaximumValue}.*")        VerificationData="Yes"        VerificationData="Yes"
-    ...    VerificationData="Yes"
-    Run Keyword If    ${status}==True    Log    ${RatioType} with minimum value ${MinimumValue} and maximum value ${MaximumValue} has been successfully added.
-    ...    ELSE    Fail    Financial Ratio has not been added.
+    ${RatioType_ToVerify}    Replace Variables    ${RatioType_ToVerify}
+    ${MinimumValue}    Replace Variables    ${MinimumValue}
+    ${MaximumValue}    Replace Variables    ${MaximumValue}
+    ${LIQ_PricingChangeTransaction_PricingWindow_RatioString_Tree}    Replace Variables    ${LIQ_PricingChangeTransaction_PricingWindow_RatioString_Tree}
+    ${status}    Run Keyword And Return Status    Mx LoanIQ Verify Object Exist    ${LIQ_PricingChangeTransaction_PricingWindow_RatioString_Tree}    VerificationData="Yes"
+    Run Keyword If    ${status}==${True}    Log    ${RatioType} with minimum value ${MinimumValue} and maximum value ${MaximumValue} has been successfully added.
+    ...    ELSE    Run Keyword And Continue On Failure    Fail    Financial Ratio has not been added.
 
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/FinancialRatioWindow_SetFinancialRatio
 
@@ -982,7 +985,7 @@ Add Facility Matrix to Ongoing Fee or Interest Pricing with Existing Matrix for 
     ${OngoingFee_Item}    Acquire Argument Value    ${sOngoingFee_Item}
     ${OngoingFee_Item_Type}    Acquire Argument Value    ${sOngoingFee_Item_Type}
 
-    Mx LoanIQ Select Or DoubleClick In Javatree    ${LIQ_PricingChangeTransaction_PricingWindow_Tree}    ${sOngoingFee_MatrixType}%s
+    Mx LoanIQ Select Or DoubleClick In Javatree    ${LIQ_PricingChangeTransaction_PricingWindow_Tree}    ${OngoingFee_MatrixType}%s
     Add Item to Ongoing Fee or Interest Pricing for Pricing Change Transaction    ${OngoingFee_Item}    ${OngoingFee_Item_Type}
 
 Add Item to Ongoing Fee or Interest Pricing for Pricing Change Transaction
