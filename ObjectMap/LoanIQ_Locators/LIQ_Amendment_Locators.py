@@ -104,6 +104,7 @@ LIQ_AddSchedItem_PercentofCurrentBal_Field= 'JavaWindow("title:=Add Schedule Ite
 LIQ_AddSchedItem_ScheduleDate_Field= 'JavaWindow("title:=Add Schedule Item").JavaEdit("attached text:=Schedule Date:.*")'
 LIQ_AddSchedItem_OK_Button= 'JavaWindow("title:=Add Schedule Item").JavaButton("attached text:=OK")'
 LIQ_AddSchedItem_Cancel_Button= 'JavaWindow("title:=Add Schedule Item").JavaButton("attached text:=Cancel")'
+LIQ_AddSchedItem_RadioButton= 'JavaWindow("title:=Add Schedule Item").JavaRadiobutton("attached text:=${ItemChangeType}")'
 
 
 LIQ_AmortSched_CreateGroupAddressedNotice_Window = 'JavaWindow("title:=Create a Group Addressed Notice")'

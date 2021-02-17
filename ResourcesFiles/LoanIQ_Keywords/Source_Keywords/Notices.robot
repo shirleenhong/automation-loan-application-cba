@@ -700,4 +700,11 @@ Validate Notice Status for Event Fee Payment Notice
     
     Take Screenshot    ${screenshot_path}/Screenshots/Integration/Correspondence_Notice_PostStatus
     
-    Close All Windows on LIQ
+    Close All Windows on LIQ   
+
+Close Commitment Change Group Window
+    [Documentation]    This keyword closes the Commitment Change Group Window
+    ...    @author: dahijara    15FEB2021    - Initial Create
+
+    Take Screenshot    ${screenshot_path}/Screenshots/Integration/Notice
+    Mx LoanIQ Close Window    ${LIQ_Notice_CommitmentChangeGroup_Window}
