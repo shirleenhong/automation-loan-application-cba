@@ -964,3 +964,32 @@ Navigate to Ongoing Fee Notebook
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/FacilityWindow
     Mx LoanIQ Select Or DoubleClick In Javatree    ${LIQ_Facility_FeeList_JavaTree}    ${OngoingFee_Alias}%d
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/FacilityWindow
+
+Navigate Line Fee Notebook from Deal Notebook
+    [Documentation]    This keyword navigates LIQ User to the Line Fee Notebook from Deal Notebook.
+    ...    @author: dahijara    16FEB2021    Initial create
+    [Arguments]    ${sFacility_Name}
+
+    ### GetRuntime Keyword Pre-processing ###
+    ${Facility_Name}    Acquire Argument Value    ${sFacility_Name}
+
+    mx LoanIQ activate window    ${LIQ_DealNotebook_Window}   
+    mx LoanIQ select    ${LIQ_DealNotebook_Options_OngoingFeeList_Menu}
+    mx LoanIQ activate window    ${LIQ_DealNotebook_FeeList_Window}
+    Mx LoanIQ Select Or DoubleClick In Javatree    ${LIQ_FeeList_JavaTree}    ${Facility_Name}%d
+    mx LoanIQ activate window    ${LIQ_LineFeeNotebook_Window} 
+
+Validate Rate in Line Fee Notebook - General Tab
+    [Documentation]    This keyword is used to validate if rates in Pricing Formula In Effect and Current rate fields are correct.
+    ...    @author: dahijara    16FEB2021    Initial create
+    [Arguments]    ${sPricing_Formula_In_Effect}    ${sCurrent_Rate}
+    
+    ### Keyword Pre-processing ###
+    ${Pricing_Formula_In_Effect}    Acquire Argument Value    ${sPricing_Formula_In_Effect}
+    ${Current_Rate}    Acquire Argument Value    ${sCurrent_Rate}
+    
+    mx LoanIQ activate window    ${LIQ_LineFeeNotebook_Window}
+    Mx LoanIQ Select Window Tab    ${LIQ_Fee_Tab}    ${GENERAL_TAB}
+    Validate Loan IQ Details    ${Pricing_Formula_In_Effect}    ${LIQ_LineFee_PricingFormulaInEffect_TextField}    
+    Validate Loan IQ Details    ${Current_Rate}    ${LIQ_LineFee_CurrentRate_Field} 
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/CommitmentFeeWindow_GeneralTab_NewRate

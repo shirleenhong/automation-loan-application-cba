@@ -2923,3 +2923,22 @@ Split String and Return as a List
 
     @{SplittedString}    Split String    ${Data}    ${Delimeter}
     [Return]    @{SplittedString}
+
+Navigate Notebook Events
+    [Documentation]     This keyword navigates to Events Tab and open the specific event
+    ...    @author: mcastro    16FEB2021    - Initial Create
+    [Arguments]    ${sNotebook_Locator}    ${sNotebookTab_Locator}    ${sNotebookEvents_Locator}    ${sEvents}    
+
+    ### Pre-processing Keyword ###
+    ${Notebook_Locator}    Acquire Argument Value    ${sNotebook_Locator}
+    ${NotebookTab_Locator}    Acquire Argument Value    ${sNotebookTab_Locator}
+    ${NotebookEvents_Locator}    Acquire Argument Value    ${sNotebookEvents_Locator}
+    ${Events}    Acquire Argument Value    ${sEvents}
+
+    Mx LoanIQ activate window    ${Notebook_Locator}
+    Mx LoanIQ Select Window Tab    ${NotebookTab_Locator}    ${EVENTS_TAB}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/NotebookEvents
+    Mx LoanIQ Select Or DoubleClick In Javatree    ${NotebookEvents_Locator}    ${Events}%d
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/NotebookEvents
+    Validate if Question or Warning Message is Displayed
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/NotebookEvents
