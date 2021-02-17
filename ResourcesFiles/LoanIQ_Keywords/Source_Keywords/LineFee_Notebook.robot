@@ -964,7 +964,6 @@ Navigate to Ongoing Fee Notebook
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/FacilityWindow
     Mx LoanIQ Select Or DoubleClick In Javatree    ${LIQ_Facility_FeeList_JavaTree}    ${OngoingFee_Alias}%d
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/FacilityWindow
-<<<<<<< HEAD
     
 Validate Manual Adjustment Value in Line Fee
     [Documentation]    This keyword is used for navigating back to Line Notebook to validate if the requested amount reflects in Manual Adjustment column.
@@ -1041,7 +1040,6 @@ Validate Accrual Shares Adjustment Applied Event in Line Fee
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LineFeeWindow_EventsTab
     Run Keyword If    ${Status}==${True}    Log    ${ACCRUAL_SHARES_ADJUSTMENT_APPLIED} is shown in the Events list of Line Fee notebook.
     ...    ELSE    Run Keyword and Continue on Failure    Fail    Accrual Shares Adjustment is not successfully applied.
-=======
 
 Navigate Line Fee Notebook from Deal Notebook
     [Documentation]    This keyword navigates LIQ User to the Line Fee Notebook from Deal Notebook.
@@ -1071,4 +1069,3 @@ Validate Rate in Line Fee Notebook - General Tab
     Validate Loan IQ Details    ${Pricing_Formula_In_Effect}    ${LIQ_LineFee_PricingFormulaInEffect_TextField}    
     Validate Loan IQ Details    ${Current_Rate}    ${LIQ_LineFee_CurrentRate_Field} 
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/CommitmentFeeWindow_GeneralTab_NewRate
->>>>>>> 323c0265b40d687e2496b7dbac150a2a029792de
