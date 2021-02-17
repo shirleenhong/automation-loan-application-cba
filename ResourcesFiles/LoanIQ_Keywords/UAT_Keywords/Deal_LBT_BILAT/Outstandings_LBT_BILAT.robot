@@ -10,6 +10,7 @@ Create Loan Drawdown for LBT Bilateral Deal
     ...    @update: javinzon    13JAN2021    - Added keyword Write Data to Excel for Loan_Alias of Correspondence
     ...    @update: javinzon    14JAN2021    - Removed keywords Write Data To Excel
     ...    @update: javinzon    26JAN2021    - Added condition to Run 'Enter Initial Loan Drawdown Spread Rate' keyword if rowid is 5
+    ...    @update: javinzon    17FEB2021    - Added condition to execute 'Navigate to Loan Drawdown Workflow and Proceed with Rate Setting'
     [Arguments]    ${ExcelPath}
     
     Logout from Loan IQ
@@ -48,7 +49,8 @@ Create Loan Drawdown for LBT Bilateral Deal
     Mx LoanIQ Close Window    ${LIQ_NoticeGroup_Window}
 
     ### Rate Setting ###
-    Navigate to Loan Drawdown Workflow and Proceed With Transaction    ${RATE_SETTING_TRANSACTION}
+    Run Keyword If    '${rowid}'=='8'    Navigate to Loan Drawdown Workflow and Proceed with Rate Setting    ${RATE_SETTING_TRANSACTION}
+    ...    ELSE    Navigate to Loan Drawdown Workflow and Proceed With Transaction    ${RATE_SETTING_TRANSACTION}
     Set Base Rate Details    &{ExcelPath}[AcceptRate_BorrowerBaseRate]    &{ExcelPath}[AcceptRate_FromPricing]
     Send Initial Drawdown to Rate Approval
     
