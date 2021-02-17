@@ -694,3 +694,124 @@ Validate Released Facility Change Transaction
     Run Keyword If    ${Status}==${True}    Log    Facility Change Transaction is successfully released.
     ...    ELSE    Run Keyword And Continue On Failure    Fail    Facility Change Transaction is NOT successfully released. 
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/EventsTab 
+
+Navigate to Facility Change Transaction Tab
+    [Documentation]    This keyword is used to navigate to a specific Facility Change Transaction tab. 
+    ...    @author: dahijara	10FEB2021    - Initial create
+    [Arguments]    ${sWindowTabName}
+
+    ### Keyword Pre-processing ###
+    ${WindowTabName}    Acquire Argument Value    ${sWindowTabName}
+
+    Mx LoanIQ Activate Window    ${LIQ_FacilityChangeTransaction_Window}
+    Mx LoanIQ Select Window Tab    ${LIQ_FacilityChangeTransaction_Tab}    ${WindowTabName}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/FacilityChangeTransaction_Tab
+
+Create Facility Increase/Decrease Schedule
+    [Documentation]    This keyword is used for the navigation to Facility Increase/Decrease in Facility Change Transaction
+    ...    @author: dahijara    10FEB2021    - Initial Create
+
+    Mx LoanIQ Activate Window    ${LIQ_FacilityChangeTransaction_Window}
+    Mx LoanIQ click element if present    ${LIQ_FacilityChangeTransaction_InquiryMode_Button}
+    Mx LoanIQ click    ${LIQ_FacilityChangeTransaction_CreateModifySchedule_Button}
+    :FOR    ${i}    IN RANGE    3
+    \    ${Warning_Status}    Run Keyword And Return Status    Mx LoanIQ Verify Object Exist    ${LIQ_Warning_Window}     VerificationData="Yes"
+    \    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/FacilityChangeTransaction_Warning
+    \    Exit For Loop If    ${Warning_Status}==False
+    \    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
+
+Add Amortization Schedule
+    [Documentation]    This keyword is used for Adding an Amortization Schedule Item in Facility Change Transaction
+    ...    @author: dahijara    10FEB2021    - Initial Create
+    [Arguments]    ${sItemChangeType}    ${sAmount}    ${sScheduleDate}
+
+    ### Keyword Pre-processing ###
+    ${ItemChangeType}    Acquire Argument Value    ${sItemChangeType}
+    ${Amount}    Acquire Argument Value    ${sAmount}
+    ${ScheduleDate}    Acquire Argument Value    ${sScheduleDate}
+
+    Mx LoanIQ Activate Window    ${LIQ_FacilityChangeTransaction_AmortizationSchedule_Window}
+    Mx LoanIQ click    ${LIQ_FacilityChangeTransaction_AmortizationSchedule_AddButton}
+    Mx LoanIQ Activate Window    ${LIQ_AddSchedItem_Window}
+    Mx LoanIQ enter    JavaWindow("title:=Add Schedule Item").JavaRadiobutton("attached text:=${ItemChangeType}")    ON
+    Mx LoanIQ enter    ${LIQ_AddSchedItem_Amount_Field}    ${Amount}
+    Mx Press Combination    KEY.TAB
+    Mx LoanIQ enter    ${LIQ_AddSchedItem_ScheduleDate_Field}    ${ScheduleDate}
+    Mx Press Combination    KEY.TAB
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/FacilityChangeTransaction_AddSchedule
+    Mx LoanIQ click    ${LIQ_AddSchedItem_OK_Button}
+    Mx LoanIQ Activate Window    ${LIQ_FacilityChangeTransaction_AmortizationSchedule_Window}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/FacilityChangeTransaction_AddSchedule
+
+Save and Exit Amortization Schedule
+    [Documentation]    This keyword is used for saving and exiting Amortization Schedule in Facility Change Transaction
+    ...    @author: dahijara    10FEB2021    - Initial Create
+    mx LoanIQ click    ${LIQ_AMD_AmortSched_Save_Button}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/FacilityChangeTransaction_AddSchedule
+    mx LoanIQ click element if present    ${LIQ_Information_OK_Button}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/FacilityChangeTransaction_AddSchedule
+    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/FacilityChangeTransaction_AddSchedule
+    mx LoanIQ click    ${LIQ_AMD_AmortSched_Exit_Button}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/FacilityChangeTransaction_AddSchedule
+
+Select Schedule Frequency
+    [Documentation]    This keyword is used to select Frequency in current schedule for an Amortization Schedule Item in Facility Change Transaction
+    ...    @author: dahijara    10FEB2021    - Initial Create
+    [Arguments]    ${sFrequency}
+
+    ### Keyword Pre-processing ###
+    ${Frequency}    Acquire Argument Value    ${sFrequency}
+
+    Mx LoanIQ Activate Window    ${LIQ_FacilityChangeTransaction_AmortizationSchedule_Window}
+    Mx LoanIQ Select List    ${LIQ_FacilityChangeTransaction_AmortizationSchedule_Frequency}    ${sFrequency}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/FacilityChangeTransaction_SelectFrequency
+
+Verify Amortization Schedule Details
+    [Documentation]    This keyword is used to verifiy details in Amortization schedule table.
+    ...    @author: dahijara    10FEB2021    - initial create
+    [Arguments]    ${sItemNumber}    ${sScheduledAmount}    ${sScheduledDate}
+
+    ### GetRuntime Keyword Pre-processing ###
+    ${ItemNumber}    Acquire Argument Value    ${sItemNumber}
+    ${ScheduledAmount}    Acquire Argument Value    ${sScheduledAmount}
+    ${ScheduledDate}    Acquire Argument Value    ${sScheduledDate}
+    
+    Mx LoanIQ Activate Window    ${LIQ_FacilityChangeTransaction_AmortizationSchedule_Window}
+    Run Keyword And Continue On Failure    Mx LoanIQ Verify Object Exist    ${LIQ_FacilityChangeTransaction_AmortizationSchedule_JavaTree}            VerificationData="Yes"
+    
+    ${UI_Amount}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_FacilityChangeTransaction_AmortizationSchedule_JavaTree}    ${ItemNumber}%Amount%value    
+    ${UI_Date}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_FacilityChangeTransaction_AmortizationSchedule_JavaTree}    ${ItemNumber}%Date%value
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/FacilityChangeTransaction_AddSchedule
+	
+    ### Amount ###
+    ${Status}    Run Keyword And Return Status    Should Be Equal    ${ScheduledAmount}    ${UI_Amount}
+    Run Keyword If    ${Status}==${True}    Log    Amortization Scheduled Amount is correct.
+    ...    ELSE    Run Keyword And Continue On Failure    Fail    Amortization Scheduled Amount is correct. Expected: ${ScheduledAmount} - Actual: ${UI_Amount}
+
+    ### Date ###
+    ${Status}    Run Keyword And Return Status    Should Be Equal    ${ScheduledDate}    ${UI_Date}
+    Run Keyword If    ${Status}==${True}    Log    Amortization Scheduled Date is correct.
+    ...    ELSE    Run Keyword And Continue On Failure    Fail    Amortization Scheduled Date is correct. Expected: ${ScheduledDate} - Actual: ${UI_Date}
+
+Navigate to Facility Change Transaction Workflow and Proceed With Transaction
+    [Documentation]    This keyword navigates to the Loan Drawdown Workflow using the desired Transaction
+    ...    @author: dahijara    10FEB2021    - Initial create
+    [Arguments]    ${sTransaction}
+
+    ### Keyword Pre-processing ###
+    ${Transaction}    Acquire Argument Value    ${sTransaction}
+
+    Navigate Notebook Workflow    ${LIQ_FacilityChangeTransaction_Window}    ${LIQ_FacilityChangeTransaction_Tab}    ${LIQ_FacilityChangeTransaction_Workflow_JavaTree}    ${Transaction}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/FacilityChangeTransaction_Workflow
+
+Navigate to Scheduled Commitment Workflow and Proceed With Transaction
+    [Documentation]    This keyword navigates to the Scheduled Commitment Workflow using the desired Transaction
+    ...    @author: dahijara    10FEB2021    - Initial create
+    [Arguments]    ${sTransaction}
+
+    ### Keyword Pre-processing ###
+    ${Transaction}    Acquire Argument Value    ${sTransaction}
+
+    Navigate Notebook Workflow    ${LIQ_ScheduledCommitment_Notebook}    ${LIQ_ScheduledCommitment_Tab}    ${LIQ_ScheduledCommitment_Workflow_JavaTree}    ${Transaction}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/FacilityChangeTransaction_Workflow

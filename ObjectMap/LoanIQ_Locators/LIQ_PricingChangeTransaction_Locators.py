@@ -113,3 +113,12 @@ LIQ_PricingChangeTransaction_InterestPricing_Window = 'JavaWindow("title:=.*Inte
 LIQ_PricingChangeTransaction_InterestPricingWindow_Item_Javatree = 'JavaWindow("title:=.*Interest Pricing.*").JavaTree("tagname:=Tree")'
 LIQ_PricingChangeTransaction_InterestPricingWindow_InterestPricing_Item = 'JavaWindow("title:=.*Interest Pricing.*").JavaTree("tagname:=Tree", "developer name:=.*${OptionName}.*")'
 LIQ_PricingChangeTransaction_InterestPricingWindow_FixRateOptionValue_Item = 'JavaWindow("title:=.*Interest Pricing.*").JavaTree("developer name:=.*${Spread}%.*")'
+
+###Pricing Change Transaction - Pricing Window###
+LIQ_PricingChangeTransaction_PricingWindow = 'JavaWindow("title:=.*Current.*Pricing")'
+LIQ_PricingChangeTransaction_PricingWindow_Add_Button = 'JavaWindow("title:=.*Current.*Pricing").JavaButton("label:=Add")'
+LIQ_PricingChangeTransaction_PricingWindow_After_Button = 'JavaWindow("title:=.*Current.*Pricing").JavaButton("label:=After")'  
+LIQ_PricingChangeTransaction_PricingWindow_Tree = 'JavaWindow("title:=.*Current.*Pricing").JavaTree("index:=0")'
+LIQ_PricingChangeTransaction_PricingWindow_Clear_Button = 'JavaWindow("title:=.*Current.*Pricing").JavaButton("attached text:=Clear")'
+LIQ_PricingChangeTransaction_PricingWindow_OK_Button = 'JavaWindow("title:=.*Current.*Pricing").JavaButton("attached text:=OK")'
+LIQ_PricingChangeTransaction_PricingWindow_Refresh_Button = 'JavaWindow("title:=.*Current.*Pricing").JavaButton("attached text:=Refresh")'

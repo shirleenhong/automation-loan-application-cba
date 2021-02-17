@@ -3253,22 +3253,39 @@ Open Pending Ongoing Fee from Ongoing Fee List
 Create Pending Transaction in Facility Schedule
     [Documentation]    This keyword is used to create a Pending Transaction in a Facility Schedule
     ...    @author: ritragel    23SEP2019    Initial Create
+    ...    @update: dahijara    11FEB2021    Added keyword pre=processing and screenshot
     [Arguments]    ${sCycleNumber}    ${sEffectiveDate}
+
+    ### GetRuntime Keyword Pre-processing ###
+    ${CycleNumber}    Acquire Argument Value    ${sCycleNumber}
+    ${EffectiveDate}    Acquire Argument Value    ${sEffectiveDate}
+
     mx LoanIQ activate window     ${LIQ_FacilityNotebook_Window}
     Select Menu Item    ${LIQ_FacilityNotebook_Window}    Options    Increase/Decrease Schedule...
     mx LoanIQ activate window    ${LIQ_AMD_AmortizationSchedforFacility_Window}
-    Mx LoanIQ Select Or DoubleClick In Javatree    ${AmortizationSchedforFacility_CurrentSchedule}    ${sCycleNumber}%s
+    Mx LoanIQ Select Or DoubleClick In Javatree    ${AmortizationSchedforFacility_CurrentSchedule}    ${CycleNumber}%s
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/AmortizationSchedforFacility
     mx LoanIQ click    ${LIQ_AMD_AmortSched_CreatePending_Button}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/AmortizationSchedforFacility
     mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
-    mx LoanIQ enter    ${LIQ_FacilityChangeTransaction_CreatePending_EffectiveDateField}    ${sEffectiveDate}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/AmortizationSchedforFacility
+    mx LoanIQ enter    ${LIQ_FacilityChangeTransaction_CreatePending_EffectiveDateField}    ${EffectiveDate}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/AmortizationSchedforFacility
     mx LoanIQ click    ${LIQ_FacilityChangeTransaction_CreatePending_OKButton}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/AmortizationSchedforFacility
 
 Enter Facility Schedule Commitment Details
     [Documentation]    This keyword is used to enter details in Schedule Commitment window
     ...    @author: ritragel    23SEP2019    Initial Create
+    ...    @update: dahijara    11FEB2021    Added keyword pre=processing and screenshot
     [Arguments]    ${sMessage}=Testing
+
+    ### GetRuntime Keyword Pre-processing ###
+    ${Message}    Acquire Argument Value    ${sMessage}
+
     mx LoanIQ activate window    ${LIQ_ScheduledCommitment_Notebook}
-    mx LoanIQ enter    ${LIQ_ScheduledCommitment_Comment_JavaEdit}    ${sMessage}
+    mx LoanIQ enter    ${LIQ_ScheduledCommitment_Comment_JavaEdit}    ${Message}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/ScheduledCommitment
     Select Menu Item    ${LIQ_ScheduledCommitment_Notebook}    File    Save
 
 Rename Facility Name at Facility Notebook
@@ -4280,12 +4297,14 @@ Add Item to Ongoing Fee or Interest Pricing For Facility Pricing
 Navigate to Facitily Interest Pricing Window
     [Documentation]    This keyword adds interest pricing on facility.
     ...    @author: dahijara    09DEC2020    - Initial create
+    ...    @update: dahijara    15FEB2021    - Added code to check if informational message is displayed.
 
     mx LoanIQ activate window     ${LIQ_FacilityNotebook_Window}
     Mx LoanIQ Select Window Tab     ${LIQ_FacilityNotebook_Tab}    ${PRICING_TAB}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/FacilityPricing_Tab
     mx LoanIQ click    ${LIQ_FacilityPricing_ModifyInterestPricing_Button}
     mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}    
+    Verify If Information Message is Displayed
     mx LoanIQ activate window     ${LIQ_Facility_InterestPricing_Window}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/FacilityPricing_Window
 
@@ -4493,4 +4512,12 @@ Validate an Event in Events Tab of Facility Notebook
     ...    ELSE    Run Keyword And Continue On Failure    Fail    ${Facility_Event} is not present in Events Tab
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/Facility_EventsTab    
 
-
+Validate Current Commitment Amount for Facility
+    [Documentation]    This keyword validates the Facility CUrrent Cmt Amount
+    ...    @author: dahijara    15FEB2021    Initial create
+    [Arguments]    ${sFacility_CurrCmtAmt}
+    ### Keyword Pre-processing ###
+    ${Facility_CurrCmtAmt}    Acquire Argument Value    ${sFacility_CurrCmtAmt}
+    Mx LoanIQ Select Window Tab    ${LIQ_FacilityNotebook_Tab}    ${SUMMARY_TAB}
+    Validate Loan IQ Details    ${Facility_CurrCmtAmt}    ${LIQ_FacilitySummary_CurrentCmt_Textfield}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/Facility_SummaryTab
