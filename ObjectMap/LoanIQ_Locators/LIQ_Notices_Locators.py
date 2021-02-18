@@ -69,4 +69,5 @@ LIQ_Notice_CommentEdit_Comment_Textbox = 'JavaWindow("title:=Comment Edit","disp
 LIQ_Notice_CommentEdit_OK_Button = 'JavaWindow("title:=Comment Edit","displayed:=1").JavaButton("attached text:=OK")'
 
 ### Commitment Change Group Locators ###
-LIQ_Notice_CommitmentChangeGroup_Window = 'JavaWindow("title:=.*Commitment Change Group.*","displayed:=1")'LIQ_CommitmentChange_NoticeID_Field = 'JavaWindow("title:=Commitment Change created by.*","displayed:=1").JavaEdit("attached text:=Notice ID:")'
+LIQ_Notice_CommitmentChangeGroup_Window = 'JavaWindow("title:=.*Commitment Change Group.*","displayed:=1")'
+LIQ_CommitmentChange_NoticeID_Field = 'JavaWindow("title:=Commitment Change created by.*","displayed:=1").JavaEdit("attached text:=Notice ID:")'
