@@ -510,6 +510,7 @@ Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/Deal_PDS_SYND/Deal_Bo
 Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/Deal_PDS_SYND/Deal_Notebook_PDS_SYND.robot
 Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/Deal_PDS_SYND/Facility_Notebook_PDS_SYND.robot
 Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/Deal_PDS_SYND/OngoingFee_Notebook_PDS_SYND.robot
+Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/Deal_PDS_SYND/Outstandings_PDS_SYND.robot
 
 ### New PT Health UAT Deal ###
 Resource    ../ResourcesFiles/LoanIQ_Keywords/UAT_Keywords/Deal_PT_Health_Syndicated/Deal_Notebook_PT_Health_Syndicated.robot
