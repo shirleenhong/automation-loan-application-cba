@@ -808,9 +808,10 @@ Validate Release of Paper Clip Payment from Deal Notebook
 Select Multiple Cycles Item
     [Documentation]    This keyword will select multiple items in the 'Cycles for Line Fee Fee' window and select a specific 'Prorate With' option.
     ...    @author: ccarriedo    17FEB2021    - Initial Create
-    [Arguments]    ${Paperclip_Name_Alias}    ${sProrate_With}    ${sLoan_DueDates}    ${sDelimiter}
+    [Arguments]    ${sPaperclip_Name_Alias}    ${sProrate_With}    ${sLoan_DueDates}    ${sDelimiter}
 
     ### Pre-processing Keyword ###
+    ${Paperclip_Name_Alias}    Acquire Argument Value    ${sPaperclip_Name_Alias}
     ${Prorate_With}    Acquire Argument Value    ${sProrate_With}
     ${Loan_DueDates}    Acquire Argument Value    ${sLoan_DueDates}
     ${Delimiter}    Acquire Argument Value    ${sDelimiter}
@@ -823,10 +824,8 @@ Select Multiple Cycles Item
     \    mx LoanIQ click    ${LIQ_PendingPaperClip_AddTransactionType_Button}
     \    Mx LoanIQ activate window    ${LIQ_Loan_CyclesforLoan_Window}
     \    Mx LoanIQ Set    JavaWindow("title:=Cycles for Line Fee Fee*").JavaRadioButton("label:=${Prorate_With}")    ON
-    # \    Run Keyword If    '${Prorate_With}'=='Projected Due'    Set Test Variable    ${ProrateWith}    Projected Cycle Due
     \    Mx LoanIQ Select String    ${LIQ_LineFee_Cycles_List}    ${Loan_DueDate}
-    \    Sleep    10s
-    \    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/CyclesForLoan
+    \    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/CyclesForLineFeeFee
     \    mx LoanIQ click    ${LIQ_LineFee_Cycles_OKButton}
 
     

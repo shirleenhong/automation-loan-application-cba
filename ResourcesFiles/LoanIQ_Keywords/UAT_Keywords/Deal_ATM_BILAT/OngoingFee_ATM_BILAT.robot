@@ -54,7 +54,7 @@ Release Ongoing Fee for ATM BILAT
     Logout from Loan IQ
     
 Pay Line Fee with Online Accrual for Facility ATM
-    [Documentation]    This keyword will setup an online accrual and payment for Line Fee
+    [Documentation]    This keyword will setup an online accrual and payment for Line Fee Fee
     ...    @author: ccarriedo    17FEB2021    - initial create
     [Arguments]    ${ExcelPath}
     

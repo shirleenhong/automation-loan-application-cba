@@ -10,7 +10,7 @@ Create Facility for ATM BILAT
     ...    @author: ccarriedo    20JAN2021    Initial Create
     ...    @update: ccarriedo    02FEB2021    - Added writing to SYND02_PrimaryAllocation and CRED08_OngoingFeeSetup sheets. Removed unnecessary writing to SERV15_SchComittmentDecrease
     ...    @update: ccarriedo    09FEB2021    - Added writing to SERV01_LoanDrawdown Facilities.
-    ...    @update: ccarriedo    16FEB2021    - Added multipleValue=Y to writing of Facility_Name1, Facility_Name2 and Deal_Name
+    ...    @update: ccarriedo    16FEB2021    - Added multipleValue=Y to writing of Facility_Name1, Facility_Name2 and Deal_Name. All columns will have the same values
     [Arguments]    ${ExcelPath}
     
     ### Login to LoanIQ ###
