@@ -6,6 +6,7 @@ Create Deal Borrower in Quick Party Onboarding for ATM BILAT
     [Documentation]    This keyword creates a Deal Borrower in Quick Party Onboarding.
     ...    @author:    nbautist    07DEC2020    - Initial Create
     ...    @author:    ccarriedo    12JAN2021    - Removed keyword Get Short Name Value and Return and replaced with simple Catenate as the required shortname should not have space
+    ...    @author:    ccarriedo    18FEB2021    - Deleted writing SERV01_LoanDrawdown Borrower_Name 
     [Arguments]    ${ExcelPath}
     ### INPUTTER ###
     Login User to Party    ${PARTY_USERNAME}    ${PARTY_PASSWORD}    ${USER_LINK}    ${USER_PORT}    ${PARTY_URL_SUFFIX}    ${PARTY_HTML_USER_CREDENTIALS}    ${SSO_ENABLED}    ${PARTY_URL} 
@@ -38,7 +39,6 @@ Create Deal Borrower in Quick Party Onboarding for ATM BILAT
     Write Data To Excel    ORIG03_Customer    LIQCustomer_ShortName    ${rowid}    ${Short_Name}
     Write Data To Excel    CRED01_DealSetup    Borrower_ShortName    ${rowid}    ${Short_Name}                      
     Write Data To Excel    CRED02_FacilitySetup    Facility_Borrower    ${rowid}    ${Enterprise_Name}   
-    Write Data To Excel    SERV01_LoanDrawdown    Borrower_Name    ${rowid}    ${Enterprise_Name}   
 
     Run Keyword If    '${SSO_ENABLED}'=='NO'    Logout User on Party
     Close Browser

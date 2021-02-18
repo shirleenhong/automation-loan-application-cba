@@ -39,4 +39,9 @@ Create Drawdown and Back Date to 21/09/2019
 Create Drawdown and Back Date to 04/09/2019
     Set Test Variable    ${rowid}    2
     Mx Execute Template With Multiple Data    Create Loan Drawdown for ATM Bilateral Deal - Outstanding B    ${ExcelPath}    ${rowid}    SERV01_LoanDrawdown
-
+    
+Establish and Collection of Line Fee In Advance For Facility ATM (Period 1 and Period 2 (PaperClip))
+    Set Test Variable    ${rowid}    2
+    Mx Execute Template With Multiple Data    Pay Line Fee with Online Accrual for Facility ATM    ${ExcelPath}    ${rowid}    CRED08_OngoingFeeSetup
+    Set Test Variable    ${rowid}    1
+    Mx Execute Template With Multiple Data    Collect Full Prepayment via Paper Clip for Facility ATM    ${ExcelPath}    ${rowid}    SERV23_LoanPaperClip
