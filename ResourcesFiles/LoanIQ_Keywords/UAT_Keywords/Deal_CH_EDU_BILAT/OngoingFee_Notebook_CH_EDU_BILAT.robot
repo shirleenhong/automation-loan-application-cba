@@ -172,3 +172,96 @@ Pay Line Fee for CH EDU Bilateral Deal
     Navigate to Existing Ongoing Fee Notebook    &{ExcelPath}[Fee_Type]
     Validate Payment Release of Ongoing Line Fee
     Validate After Payment Details on Acrual Tab - Line Fee    &{ExcelPath}[Expected_CycleDueAmt]    &{ExcelPath}[Cycle_Number]
+
+Pay Commitment Fee for CH EDU Bilateral Deal
+    [Documentation]    This keyword is used for commitment fee payment for CH EDU Bilateral Deal
+    ...    @author: mcastro    15FEB2021    - Initial create
+    [Arguments]    ${ExcelPath} 
+
+    ${Deal_Name}    Read Data From Excel    CRED01_DealSetup    Deal_Name    1
+    ${FacilityName}    Read Data From Excel    CRED02_FacilitySetup_A    Facility_Name    1
+
+    ### LIQ Window ###
+    Logout from Loan IQ
+    Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
+
+    ### Ongoing Fee Payment ###
+    Navigate to Facility Notebook    ${Deal_Name}    ${FacilityName}
+    Navigate to Existing Ongoing Fee Notebook    &{ExcelPath}[Fee_Type]
+
+    Validate Dues on Accrual Tab for Commitment Fee    &{ExcelPath}[ProjectedCycleDue]    &{ExcelPath}[Cycle_Number]    &{ExcelPath}[Projected_EOCAccrual]    
+    ...    &{ExcelPath}[Projected_EOCDue]    &{ExcelPath}[Expected_PaidToDate]
+
+    Select Cycle Fee Payment 
+    Enter Effective Date for Ongoing Fee Payment    &{ExcelPath}[Effective_Date]    &{ExcelPath}[ProjectedCycleDue]
+    Enter Ongoing Fee Comment    &{ExcelPath}[Fee_Comment]
+    
+    ### Create Cashflows ###
+    Navigate to Payment Workflow and Proceed With Transaction    ${CREATE_CASHFLOWS_TYPE}
+    Set All Items to None
+
+    ### Generate Intent Notice ###
+    Navigate to Payment Workflow and Proceed With Transaction        ${GENERATE_INTENT_NOTICES}
+    Select Notices Recipients
+    Add Group Comment for Notices    &{Excelpath}[Notice_Subject]    &{Excelpath}[Notice_Comment]   
+    Exit Notice Window
+
+    ### Sending Payment For Approval ###
+    Navigate to Payment Workflow and Proceed With Transaction    ${SEND_TO_APPROVAL_STATUS}
+    Close All Windows on LIQ
+
+    ###Loan IQ Desktop###
+    Logout from Loan IQ
+    Login to Loan IQ    ${SUPERVISOR_USERNAME}    ${SUPERVISOR_PASSWORD}
+    
+    ### Payment Approval ####
+    Navigate Transaction in WIP     ${PAYMENTS_TRANSACTION}    ${AWAITING_APPROVAL_STATUS}    ${ONGOING_FEE_PAYMENT_TRANSACTION}    ${FacilityName}
+    Navigate to Payment Workflow and Proceed With Transaction    ${APPROVAL_STATUS}
+    Close All Windows on LIQ
+    
+    ### Loan IQ Desktop ###
+    Logout from Loan IQ
+    Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
+
+    ### Release Payment ###
+    Navigate Transaction in WIP     ${PAYMENTS_TRANSACTION}    ${AWAITING_RELEASE_STATUS}    ${ONGOING_FEE_PAYMENT_TRANSACTION}    ${FacilityName}
+    Navigate to Payment Workflow and Proceed With Transaction    ${RELEASE_STATUS}
+    Close All Windows on LIQ
+   
+    ### Validation ###
+    Navigate to Facility Notebook    ${Deal_Name}    ${FacilityName}
+    Navigate to Existing Ongoing Fee Notebook    &{ExcelPath}[Fee_Type]
+    Validate Details on Acrual Tab - Commitment Fee    &{ExcelPath}[ProjectedCycleDue]    &{ExcelPath}[Cycle_Number]
+    Validate release of Ongoing Fee Payment
+    Close All Windows on LIQ 
+
+Complete Commitment Fee Cashflow for CH EDU Bilateral Deal 
+    [Documentation]    This keyword is used for completing commitment fee cashflow for CH EDU Bilateral Deal
+    ...    @author: mcastro    16FEB2021    - Initial create
+    [Arguments]    ${ExcelPath}
+
+    ${Deal_Name}    Read Data From Excel    CRED01_DealSetup    Deal_Name    1
+    ${FacilityName}    Read Data From Excel    CRED02_FacilitySetup_A    Facility_Name    1
+    ${Borrower_Name}    Read Data From Excel    PTY001_QuickPartyOnboarding    LIQCustomer_ShortName    1
+    ${Expense_Code}    Read Data From Excel    CRED01_DealSetup    Deal_ExpenseCode    1
+
+    ### LIQ Window ###
+    Logout from Loan IQ
+    Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
+
+    ### Ongoing Fee List ###
+    Navigate to Facility Notebook    ${Deal_Name}    ${FacilityName}
+    Navigate to Existing Ongoing Fee Notebook    &{ExcelPath}[Fee_Type]
+
+    ### Commitment Fee Notebook ###
+    Navigate Notebook Events    ${LIQ_CommitmentFee_Window}    ${LIQ_CommitmentFee_Tab}    ${LIQ_CommitmentFee_Events_Javatree}   ${FEE_PAYMENT_RELEASED_STATUS}
+    
+    ### Ongoing Fee Payment Notebook ###
+    Navigate to Payment Workflow and Proceed With Transaction    ${COMPLETE_CASHFLOWS_WORKFLOW}
+    Match and Verify WIP Items    ${Borrower_Name}    &{ExcelPath}[GLShortName]    &{ExcelPath}[Commitment_EffectiveDate]    &{ExcelPath}[Fee_Amount]    ${Expense_Code}
+    Verify Customer Status in Cashflow Window    ${Borrower_Name}    &{ExcelPath}[CashFlow_AfterStatus]
+    Verify Customer Method in Cashflow Window    ${Borrower_Name}    &{ExcelPath}[CashFlow_AfterMethod]
+    Click OK In Cashflows
+    Verify if Cashflow is Completed for Ongoing Fee Payment
+
+    Close All Windows on LIQ

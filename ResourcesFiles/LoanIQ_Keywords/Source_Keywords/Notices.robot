@@ -565,6 +565,7 @@ Get Notice ID via Deal Notebook
     [Documentation]    This keyword gets the Notice ID by navigating into Notices Window thru Deal Notebook.
     ...    @author: dahijara    15DEC2020    - Initial create
     ...    @update: mcastro    15JAN2021   - Added condition to handle Event Fee Payment Notice Window
+    ...    @update: dahijara    17FEB2021    - Updated logic in getting notice ID for various Notice Window
     [Arguments]    ${sFrom_Date}    ${sThru_Date}    ${sNotice_Type}    ${sRunVal_Notice_ID}=None    ${sRunVal_Notice_Customer_LegalName}=None    ${sRunVal_Contact}=None
     ### Keyword Pre-processing ###
     ${From_Date}    Acquire Argument Value    ${sFrom_Date}
@@ -597,10 +598,10 @@ Get Notice ID via Deal Notebook
     mx LoanIQ click    ${LIQ_NoticeGroup_EditHighlightNotices}
     mx LoanIQ activate window    ${LIQ_Notice_Window}
 
-    ${Status}    Run Keyword and Return Status   Should Contain    ${Window_title}    Event Fee Payment
-    ${Notice_ID}    Run Keyword If    ${Status}==${True}    Mx LoanIQ Get Data    ${LIQ_EventFeePaymentGroup_NoticeID_Field}    value%ID
+    ${Notice_ID}    Run Keyword If    'Event Fee Payment' in '${Window_title}'     Mx LoanIQ Get Data    ${LIQ_EventFeePaymentGroup_NoticeID_Field}    value%ID
+    ...    ELSE IF    'Commitment Change' in '${Window_title}'    Mx LoanIQ Get Data    ${LIQ_CommitmentChange_NoticeID_Field}    value%ID
     ...    ELSE    Mx LoanIQ Get Data    ${LIQ_Notice_NoticeID_Field}    value%ID
-    
+
     Take Screenshot    ${screenshot_path}/Screenshots/Integration/Correspondence_Notice_NoticeGroup
     Close All Windows on LIQ
 
@@ -700,4 +701,11 @@ Validate Notice Status for Event Fee Payment Notice
     
     Take Screenshot    ${screenshot_path}/Screenshots/Integration/Correspondence_Notice_PostStatus
     
-    Close All Windows on LIQ
+    Close All Windows on LIQ   
+
+Close Commitment Change Group Window
+    [Documentation]    This keyword closes the Commitment Change Group Window
+    ...    @author: dahijara    15FEB2021    - Initial Create
+
+    Take Screenshot    ${screenshot_path}/Screenshots/Integration/Notice
+    Mx LoanIQ Close Window    ${LIQ_Notice_CommitmentChangeGroup_Window}
