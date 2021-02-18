@@ -823,8 +823,9 @@ Select Multiple Cycles Item
     \    Select Outstanding Item    ${Paperclip_Name_Alias}
     \    mx LoanIQ click    ${LIQ_PendingPaperClip_AddTransactionType_Button}
     \    Mx LoanIQ activate window    ${LIQ_Loan_CyclesforLoan_Window}
-    \    Mx LoanIQ Set    ${LIQ_LineFee_Cycles_Prorate_With}    ON
     \    ${Prorate_With}    Replace Variables    ${Prorate_With}
+    \    ${LIQ_LineFee_Cycles_Prorate_With}    Replace Variables    ${LIQ_LineFee_Cycles_Prorate_With}
+    \    Mx LoanIQ Set    ${LIQ_LineFee_Cycles_Prorate_With}    ON
     \    Mx LoanIQ Select String    ${LIQ_LineFee_Cycles_List}    ${Loan_DueDate}
     \    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/CyclesForLineFeeFee
     \    mx LoanIQ click    ${LIQ_LineFee_Cycles_OKButton}
