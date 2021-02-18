@@ -528,7 +528,6 @@ Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/Extr
 Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/Extracts/DNR_LIQ/DNR_LoanDrawdown.robot
 Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/Extracts/DNR_LIQ/DNR_Payments.robot
 Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/Extracts/DNR_LIQ/DNR_PrimaryAllocation.robot
-Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/Extracts/DNR_LIQ/DNR_AdminFeeSetup.robot
 Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/Extracts/DNR_LIQ/DNR_OngoingFeeSetup.robot
 Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/Extracts/DNR_LIQ/DNR_LoanDrawdown.robot
 Resource    ../ResourcesFiles/Integration_Keywords/BusinessProcess_Keywords/Extracts/DNR_LIQ/DNR_LoanSplit.robot
