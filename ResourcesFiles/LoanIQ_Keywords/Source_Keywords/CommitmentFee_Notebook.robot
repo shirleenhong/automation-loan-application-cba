@@ -88,6 +88,7 @@ Enter Effective Date for Ongoing Fee Payment
     ...    @author: fmamaril 
     ...    @update: ritragel    08AUG2019    Updated to accommodate testcase that no need to enter cycle due
     ...    @update: ehugo    05JUN2020    - added keyword pre-processing; added screenshot
+    ...    @update: mcastro    15FEB2021    - Added saving of fee notebook
     [Arguments]    ${sFeePayment_EffectiveDate}    ${sProjectedCycleDue}
 
     ### GetRuntime Keyword Pre-processing ###
@@ -97,7 +98,8 @@ Enter Effective Date for Ongoing Fee Payment
     mx LoanIQ activate window    ${LIQ_OngoingFeePayment_Window}
     mx LoanIQ enter    ${LIQ_OngoingFeePayment_EffectiveDate_Field}    ${FeePayment_EffectiveDate}
     mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}    
-    Run Keyword If    "${ProjectedCycleDue}" != "null"    mx LoanIQ enter    ${LIQ_Payment_RequestedAmount_Textfield}    ${ProjectedCycleDue}     
+    Run Keyword If    "${ProjectedCycleDue}" != "null"    mx LoanIQ enter    ${LIQ_Payment_RequestedAmount_Textfield}    ${ProjectedCycleDue} 
+    Select Menu Item    ${LIQ_OngoingFeePayment_Window}    File    Save    
 
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/OngoingFeePaymentWindow_EffectiveDate
 
@@ -2105,5 +2107,28 @@ Validate New Rate in General Tab of Commitment Fee Notebook
     Validate Loan IQ Details    ${Pricing_Formula_In_Effect}    ${LIQ_CommitmentFee_PricingFormulaInEffect_TextField}    
     Validate Loan IQ Details    ${Current_Rate}    ${LIQ_CommitmentFee_CurrentRate_Field} 
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/CommitmentFeeWindow_GeneralTab_NewRate
+
+Verify if Cashflow is Completed for Ongoing Fee Payment
+    [Documentation]    This keyword validates that Complete Cashflow is not in the list of Ongoing Fee workflow tab.
+    ...    @author: mcastro    16FEB2021    - Initial create
+
+    Mx LoanIQ activate    ${LIQ_OngoingFeePayment_Window}
+    ${Status}    Run Keyword And Return Status    Mx LoanIQ Verify Text In Javatree    ${LIQ_OngoingFeePayment_WorkflowItems}    ${COMPLETE_CASHFLOWS_WORKFLOW}%no
+    Run Keyword If    ${Status}==${True}    Log    Complete Cashflow is no longer displayed.
+    ...    ELSE    Run Keyword And Continue On Failure    Fail    Complete Cashflow is still displayed.
     
-    
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/OngoingFeeWindow_Workflow
+
+Enter Ongoing Fee Comment
+    [Documentation]    This keywod populates the Comment box for ongoing fee payment.
+    ...    @author: mcastro    17FEB2021    - Initial Create
+    [Arguments]    ${sFee_Comment}
+
+    ### Pre-processing Keyword ###
+    ${Fee_Comment}    Acquire Argument Value    ${sFee_Comment}
+
+    mx LoanIQ activate window    ${LIQ_OngoingFeePayment_Window}
+    mx LoanIQ enter    ${LIQ_OngoingFeePayment_Comment_TextField}    ${Fee_Comment}   
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/OngoingFeePaymentWindow_Comment
+    Select Menu Item    ${LIQ_OngoingFeePayment_Window}    File    Save    
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/OngoingFeePaymentWindow_Comment
