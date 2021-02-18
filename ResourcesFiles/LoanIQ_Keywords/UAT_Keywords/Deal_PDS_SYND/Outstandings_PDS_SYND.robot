@@ -5,7 +5,7 @@ Resource    ../../../../Configurations/LoanIQ_Import_File.robot
 *** Keywords ***
 Create Loan Drawdown for PDS Syndicate Deal - Outstanding A
     [Documentation]    This high-level keyword is used to setup the loan drawdown for PDS Syndicated Deal Outsanding A - 09/18/19
-    ...    @author:    shirhong    10FEB2021    - Initial Create
+    ...    @author: shirhong    10FEB2021    - Initial Create
     [Arguments]    ${ExcelPath}
 
     ${Deal_Name}    Read Data From Excel    CRED01_DealSetup    Deal_Name    1
@@ -42,14 +42,14 @@ Create Loan Drawdown for PDS Syndicate Deal - Outstanding A
     Select Item in Work in Process    ${OUTSTANDINGS_TRANSACTION}    ${AWAITING_APPROVAL_STATUS}    ${LOAN_INITIAL_DRAWDOWN_TYPE}     ${Loan_Alias}
     Navigate to Loan Drawdown Workflow and Proceed With Transaction    ${APPROVAL_STATUS}
 
-    ## Rate Setting ###
+    ### Rate Setting ###
     Logout from Loan IQ
     Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
     Select Item in Work in Process    ${OUTSTANDINGS_TRANSACTION}    ${AWAITING_RATE_SETTING}    ${LOAN_INITIAL_DRAWDOWN_TYPE}     ${Loan_Alias}
     Set Notebook to Update Mode    ${LIQ_InitialDrawdown_Window}    ${LIQ_LoanInquiry_InitialDrawdown_Button}
     Navigate to Loan Drawdown Workflow and Proceed with Rate Setting    ${RATE_SETTING_TRANSACTION}
     Set Base Rate Details    &{ExcelPath}[Borrower_BaseRate]    &{ExcelPath}[AcceptRate_FromPricing]
-    Navigate to Loan Drawdown Workflow and Proceed With Transaction        ${SEND_TO_RATE_APPROVAL_STATUS}
+    Navigate to Loan Drawdown Workflow and Proceed With Transaction    ${SEND_TO_RATE_APPROVAL_STATUS}
 
     ### Rate Approval ###
     Logout from Loan IQ
