@@ -6,6 +6,7 @@ Create Loan Drawdown for ATM Bilateral Deal - Outstanding B
     [Documentation]    This high-level keyword is used to setup the loan drawdown for ATM Bilateral Deal Facility ATM
     ...    Outsanding B - Drawdown and back date to 4/9/19
     ...    @author: ccarriedo    10FEB2021    - Initial Create
+    ...    @author: ccarriedo    16FEB2021    - Added writing of LIQCustomer_ShortName in SERV01_LoanDrawdown sheet
     [Arguments]    ${ExcelPath}
 
     ${Deal_Name}    Read Data From Excel    SERV01_LoanDrawdown    Deal_Name    &{ExcelPath}[rowid]
@@ -19,6 +20,7 @@ Create Loan Drawdown for ATM Bilateral Deal - Outstanding B
     Navigate to Outstanding Select Window from Deal
     ${Loan_Alias}    New Outstanding Select    ${Deal_Name}    ${FacilityName}    ${Borrower_Name}    &{ExcelPath}[Outstanding_Type]    &{ExcelPath}[Pricing_Option]    &{ExcelPath}[Outstanding_Currency]
     Write Data To Excel    SERV01_LoanDrawdown    Loan_Alias    &{ExcelPath}[rowid]    ${Loan_Alias}
+    Write Data To Excel    SERV01_LoanDrawdown    LIQCustomer_ShortName    &{ExcelPath}[rowid]    ${Borrower_Name}
 
     Input General Loan Drawdown Details    &{ExcelPath}[Loan_RequestedAmount]    &{ExcelPath}[Loan_EffectiveDate]    &{ExcelPath}[Loan_MaturityDate]    &{ExcelPath}[Loan_RepricingFrequency]    
     ...    &{ExcelPath}[Loan_IntCycleFrequency]    &{ExcelPath}[Loan_Accrue]    &{ExcelPath}[Loan_RepricingDate]
