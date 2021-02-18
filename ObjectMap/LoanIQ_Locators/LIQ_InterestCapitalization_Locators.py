@@ -14,6 +14,7 @@ LIQ_InterestCapitalization_CapitalizeFrom_TextField = 'JavaWindow("title:=Loan C
 ###Circle Notebook - Dropdown###
 LIQ_InterestCapitalization_CapitalizationFrequency_DropdownList = 'JavaWindow("title:=Loan Capitalization Editor.*","displayed:=1").JavaList("attached text:=Capitalization Frequency:")'
 LIQ_InterestCapitalization_ToLoan_DropdownList = 'JavaWindow("title:=Loan Capitalization Editor.*","displayed:=1").JavaList("attached text:=To Loan")'
+LIQ_InterestCapitalization_ToFacility_DropdownList = 'JavaWindow("title:=Loan Capitalization Editor.*","displayed:=1").JavaList("attached text:=To Facility")'
 
 ###Circle Notebook - Button###
 LIQ_InterestCapitalization_OKButton = 'JavaWindow("title:=Loan Capitalization Editor.*","displayed:=1").JavaButton("label:=OK")'
