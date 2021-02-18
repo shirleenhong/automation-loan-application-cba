@@ -31,11 +31,12 @@ Setup Primaries and Close Deal
     Mx Execute Template With Multiple Data    Setup Primaries for ATM BILAT    ${ExcelPath}    ${rowid}    SYND02_PrimaryAllocation
     Mx Execute Template With Multiple Data    Approve and Close ATM BILAT    ${ExcelPath}    ${rowid}    SYND02_PrimaryAllocation
     Mx Execute Template With Multiple Data    Release Ongoing Fee for ATM BILAT    ${ExcelPath}    ${rowid}    CRED08_OngoingFeeSetup
-    
-Create Drawdown and Back Date to 04/09/2019
-    Set Test Variable    ${rowid}    2
-    Mx Execute Template With Multiple Data    Create Loan Drawdown for ATM Bilateral Deal - Outstanding B    ${ExcelPath}    ${rowid}    SERV01_LoanDrawdown
 
 Create Drawdown and Back Date to 21/09/2019
     Set Test Variable    ${rowid}    1
     Mx Execute Template With Multiple Data    Create Loan Drawdown for ATM Bilateral Deal - Outstanding A    ${ExcelPath}    ${rowid}    SERV01_LoanDrawdown
+   
+Create Drawdown and Back Date to 04/09/2019
+    Set Test Variable    ${rowid}    2
+    Mx Execute Template With Multiple Data    Create Loan Drawdown for ATM Bilateral Deal - Outstanding B    ${ExcelPath}    ${rowid}    SERV01_LoanDrawdown
+
