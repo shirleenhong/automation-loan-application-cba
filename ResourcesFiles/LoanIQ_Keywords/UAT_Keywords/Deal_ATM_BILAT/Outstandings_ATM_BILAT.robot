@@ -152,9 +152,6 @@ Create Loan Drawdown for ATM Bilateral Deal - Outstanding A
     ### Release ###
     Navigate to Loan Drawdown Workflow and Proceed With Transaction    ${RELEASE_STATUS}
 
-    ### Review Schedule ###
-    Navigate to Loan Drawdown Workflow and Proceed With Transaction    ${REVIEW_SCHEDULE_STATUS}
-
     ### Validate Loan Details ###
     Close All Windows on LIQ
     Open Existing Deal    ${Deal_Name}
