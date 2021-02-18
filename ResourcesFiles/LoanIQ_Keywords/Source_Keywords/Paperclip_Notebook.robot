@@ -804,3 +804,29 @@ Validate Release of Paper Clip Payment from Deal Notebook
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/DealNotebook_EventsTab
     Run Keyword If    ${Event_Selected}==${True}    Log    'Paper Clip Transaction Released' is shown in the Events list of the Paper Clip notebook.
     ...    ELSE    Run Keyword and Continue on Failure    Fail    Paper clip payment is not Released.
+
+Select Multiple Cycles Item
+    [Documentation]    This keyword will select multiple items in the 'Cycles for Line Fee Fee' window and select a specific 'Prorate With' option.
+    ...    @author: ccarriedo    17FEB2021    - Initial Create
+    [Arguments]    ${Paperclip_Name_Alias}    ${sProrate_With}    ${sLoan_DueDates}    ${sDelimiter}
+
+    ### Pre-processing Keyword ###
+    ${Prorate_With}    Acquire Argument Value    ${sProrate_With}
+    ${Loan_DueDates}    Acquire Argument Value    ${sLoan_DueDates}
+    ${Delimiter}    Acquire Argument Value    ${sDelimiter}
+    
+    ${Loan_DueDates_List}    ${Loan_DueDates_Count}    Split String with Delimiter and Get Length of the List    ${Loan_DueDates}    ${Delimiter}
+    
+    :FOR    ${INDEX}    IN RANGE    ${Loan_DueDates_Count}
+    \    ${Loan_DueDate}    Get From List    ${Loan_DueDates_List}    ${INDEX}
+    \    Select Outstanding Item    ${Paperclip_Name_Alias}
+    \    mx LoanIQ click    ${LIQ_PendingPaperClip_AddTransactionType_Button}
+    \    Mx LoanIQ activate window    ${LIQ_Loan_CyclesforLoan_Window}
+    \    Mx LoanIQ Set    JavaWindow("title:=Cycles for Line Fee Fee*").JavaRadioButton("label:=${Prorate_With}")    ON
+    # \    Run Keyword If    '${Prorate_With}'=='Projected Due'    Set Test Variable    ${ProrateWith}    Projected Cycle Due
+    \    Mx LoanIQ Select String    ${LIQ_LineFee_Cycles_List}    ${Loan_DueDate}
+    \    Sleep    10s
+    \    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/CyclesForLoan
+    \    mx LoanIQ click    ${LIQ_LineFee_Cycles_OKButton}
+
+    

@@ -9,7 +9,8 @@ Create Facility for ATM BILAT
     [Documentation]    This keyword is used to create a Facility for ATM BILAT deal
     ...    @author: ccarriedo    20JAN2021    Initial Create
     ...    @update: ccarriedo    02FEB2021    - Added writing to SYND02_PrimaryAllocation and CRED08_OngoingFeeSetup sheets. Removed unnecessary writing to SERV15_SchComittmentDecrease
-    ...    @update: ccarriedo    09FEB2021    - Added writing to SERV01_LoanDrawdown Facilities. 
+    ...    @update: ccarriedo    09FEB2021    - Added writing to SERV01_LoanDrawdown Facilities.
+    ...    @update: ccarriedo    16FEB2021    - Added multipleValue=Y to writing of Facility_Name1, Facility_Name2 and Deal_Name
     [Arguments]    ${ExcelPath}
     
     ### Login to LoanIQ ###
@@ -19,16 +20,16 @@ Create Facility for ATM BILAT
 	${Facility_Name2}    Read Data From Excel    CRED02_FacilitySetup    Facility_Name2    &{ExcelPath}[rowid]
 	${Deal_Name}    Read Data From Excel    CRED01_DealSetup    Deal_Name    &{ExcelPath}[rowid]
     Write Data To Excel    CRED01_DealSetup    Facility_Name1    ${rowid}    ${Facility_Name1}
-    Write Data To Excel    CRED08_OngoingFeeSetup    Facility_Name1    ${rowid}    ${Facility_Name1}
+    Write Data To Excel    CRED08_OngoingFeeSetup    Facility_Name1    ${rowid}    ${Facility_Name1}    multipleValue=Y
     Write Data To Excel    SYND02_PrimaryAllocation    Deal_Name    ${rowid}    ${Deal_Name}
     Write Data To Excel    SYND02_PrimaryAllocation    Facility_Name1    ${rowid}    ${Facility_Name1}
     Write Data To Excel    CRED01_DealSetup    Facility_Name2    ${rowid}    ${Facility_Name2}
-    Write Data To Excel    CRED08_OngoingFeeSetup    Facility_Name2    ${rowid}    ${Facility_Name2}
+    Write Data To Excel    CRED08_OngoingFeeSetup    Facility_Name2    ${rowid}    ${Facility_Name2}    multipleValue=Y
     Write Data To Excel    SYND02_PrimaryAllocation    Facility_Name2    ${rowid}    ${Facility_Name2}
-    Write Data To Excel    CRED08_OngoingFeeSetup    Deal_Name    ${rowid}    ${Deal_Name}
-    Write Data To Excel    SERV01_LoanDrawdown    Deal_Name    &{ExcelPath}[rowid]    ${Deal_Name}
-    Write Data To Excel    SERV01_LoanDrawdown     Facility_Name1    ${rowid}    ${Facility_Name1}
-    Write Data To Excel    SERV01_LoanDrawdown    Facility_Name2    ${rowid}    ${Facility_Name2}
+    Write Data To Excel    CRED08_OngoingFeeSetup    Deal_Name    ${rowid}    ${Deal_Name}    multipleValue=Y
+    Write Data To Excel    SERV01_LoanDrawdown    Deal_Name    &{ExcelPath}[rowid]    ${Deal_Name}    multipleValue=Y
+    Write Data To Excel    SERV01_LoanDrawdown     Facility_Name1    ${rowid}    ${Facility_Name1}    multipleValue=Y
+    Write Data To Excel    SERV01_LoanDrawdown    Facility_Name2    ${rowid}    ${Facility_Name2}    multipleValue=Y
     
     ###Open Deal Notebook If Not present###
     Open Deal Notebook If Not Present    ${Deal_Name}
