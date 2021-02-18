@@ -27,6 +27,7 @@ LIQ_LineFee_ActualExpiryDate_Text = 'JavaWindow("title:=Line Fee.*").JavaStaticT
 LIQ_LineFee_CycleStartDate_Text = 'JavaWindow("title:=Line Fee.*").JavaStaticText("labeled_containers_path:=Tab:General;", "Index:=2")'
 LIQ_Fee_Tab = 'JavaWindow("title:=.* Fee.*").JavaTab("tagname:=TabFolder")' 
 LIQ_Fee_Window = 'JavaWindow("title:=.* Fee.*")'
+LIQ_LineFee_PricingFormulaInEffect_TextField = 'JavaWindow("title:=Line Fee.*").JavaEdit("attached text:=Pricing Formula In Effect:")'
 
 ###Line Fee Notebook - Facility Ongoing Fee Capitalization Editor### 
 LIQ_LineFee_CapitalizationEditor_Window = 'JavaWindow("title:=Facility Ongoing Fee Capitalization Editor")'
