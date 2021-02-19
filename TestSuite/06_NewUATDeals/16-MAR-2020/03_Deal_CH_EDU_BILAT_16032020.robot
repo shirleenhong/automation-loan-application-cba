@@ -11,3 +11,7 @@ Get Dataset for CH EDU Bilateral Deal
 Combine YZ + Interest Capitalisation and Rollover
     Set Test Variable    ${rowid}    5
     Mx Execute Template With Multiple Data    Combine Loan Y and Z and Capitalized Interest    ${ExcelPath}    ${rowid}    SERV11_LoanMerge
+
+Generate And Send Repricing Intent Notice - Interest and Fee Capitalisation
+    Set Test Variable    ${rowid}    10
+    Mx Execute Template With Multiple Data    Send Repricing Intent Notice for CH EDU Bilateral Deal    ${ExcelPath}    ${rowid}    Correspondence
