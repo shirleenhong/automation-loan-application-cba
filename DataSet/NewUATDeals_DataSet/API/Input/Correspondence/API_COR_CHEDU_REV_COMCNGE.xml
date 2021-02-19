@@ -1,0 +1,34 @@
+<liqInfo>
+    {"event_schema_id":"2148","event":{"header":{"correlationId":"LIQ-;$EOH2X0-;CEOH1Q8-3","processPath":{"array":[{"source":"FINASTRA_CCB","timestamp":"2021-02-17T18:48:29.164+08:00"}]}},"sourceSystem":{"string":"FINASTRA_CCB"},"ttl":{"au.com.cba.avro.customermanagement.noticesnotify.ttl":{"ttlDuration":"300","ttlSourceTime":"2021-02-17T18:48:29.164+08:00"}},"cifIds":{"array":[{"string":"1710818"}]},"documentInfo":{"documentPackage":{"businessChannel":"LOANIQ","name":null,"version":null,"templateId":null,"fileType":null,"content":"
+    <FinastraApplication>
+        <StandardNotice>
+            <ProcessingArea>AUSNA</ProcessingArea>
+            <Address>
+                <line>Date: 17-Feb-2021</line>
+                <line>TO  : CH EDU Limited 1710818</line>
+                <line>ATTN: Linda Chu</line>
+                <line>Re  : CH EDU BILAT DEAL AUD 158.2M 17DEC191610, REV_CASH_ADVANCE_FAC_38121</line>
+            </Address>
+            <BodyContent>
+                <section>
+                    <line>                 Description: Scheduled Commitment Increase</line>
+                </section>
+                <section>
+                    <line>BORROWER: CH EDU Limited 1710818</line>
+                    <line>DEAL NAME: CH EDU BILAT DEAL AUD 158.2M 17DEC191610</line>
+                    <line/>
+                    <line>COMMITMENT INCREASE</line>
+                    <line>Effective 20-Mar-2020, the commitment for CH EDU Limited 1710818</line>
+                    <line>will be increased from AUD 112,000,000.00 to AUD 120,000,000.00.</line>
+                </section>
+                <section>
+                    <line> If you have any questions, please call the undersigned.</line>
+                    <line/>
+                    <line/>
+                </section>
+            </BodyContent>
+        </StandardNotice>
+    </FinastraApplication>
+    "},"documentStorage":{"status":null,"fileName":null,"inputSource":null,"inputSourceDetail":null,"scanDate":null,"departmentId":{"string":"TM_COL"},"retrievalId":null,"documentumType":null,"applicationNumber":null,"purgeDate":null,"boxLocation":null,"recordManager":null,"description":null,"processes":{"array":[{"string":";CEOH1Q8"}]},"services":{"array":[{"string":"1001789"}]},"accountNumbers":{"array":[{"source":{"string":"LOANIQ"},"productCode":{"string":"FAC"},"number":{"string":"3001429"}}]},"processFlags":{"array":[{"name":null,"value":null}]}}},"emailSecureMessageDetails":{"subject":"1001789 CH EDU BILAT DEAL AUD 158.2M 17DEC191610","senderEmail":"NON-AGENCY@CBA.AU.COM","toRecipientEmail":"IwantToTest@nowhere.com.test","ccRecipientEmail":{"string":"JOHN.DOE_1@CBA.AU.COM"},"mimeType":null,"messageID":"LIQ-;$EOH2X0-;CEOH1Q8-3","body":null,"attachment":null,"inBandAttachment":null,"deliveredToEmail":null,"undeliveredToEmail":null,"systemCode":null,"systemName":null,"identifier":{"string":"AUSNA"},"digitalSignature":null}}}
+
+</liqInfo>
