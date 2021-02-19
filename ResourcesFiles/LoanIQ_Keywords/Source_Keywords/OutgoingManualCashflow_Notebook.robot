@@ -53,6 +53,7 @@ Populate Outgoing Manual Cashflow Notebook - General Tab
     ...    ELSE    Run Keywords    Log    Deal Expense Code filled-out does not match the test data. Test Script will proceed with expense code selection based from test data.
     ...    AND    mx LoanIQ click    ${LIQ_OutgoingManualCashflow_Expense_Button}
     ...    AND    mx LoanIQ activate window    ${LIQ_SelectExpenseCode_Window}
+    ...    AND    mx LoanIQ enter    ${LIQ_SelectExpenseCode_Search_Field}    ${Deal_ExpenseCode}
     ...    AND    Mx LoanIQ Select Or DoubleClick In Javatree    ${LIQ_SelectExpenseCode_JavaTree}    ${Deal_ExpenseCode}%s
     ...    AND    mx LoanIQ click    ${LIQ_SelectExpenseCode_OK_Button}
 
@@ -89,6 +90,32 @@ Add Debit Offset in Outgoing Manual Cashflow Notebook
     
     mx LoanIQ activate window    ${LIQ_DebitGLOffsetDetails_Window}
     Mx LoanIQ Set    ${LIQ_DebitGLOffsetDetails_NewWIP_RadioButton}    ON
+    mx LoanIQ enter    ${LIQ_DebitGLOffsetDetails_Amount_Field}    ${UpfrontFee_Amount}
+    mx LoanIQ select list    ${LIQ_DebitGLOffsetDetails_GLShortName_List}    ${GL_ShortName}
+    Run Keyword If    '${sPortfolioCode}'!='None'    Run Keywords    mx LoanIQ click    ${LIQ_DebitGLOffsetDetails_Portfolio_Button}
+    ...    AND    mx LoanIQ activate window    ${LIQ_SelectPortfolioCode_Window}
+    ...    AND    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/SelectPortfolioCode
+    ...    AND    Mx LoanIQ Select Or DoubleClick In Javatree    ${LIQ_SelectPortfolioCode_JavaTree}    ${PortfolioCode}%s
+    ...    AND    mx LoanIQ click    ${LIQ_SelectPortfolioCode_OK_Button}
+    mx LoanIQ activate window    ${LIQ_DebitGLOffsetDetails_Window}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/DebitGLOffsetDetails
+    mx LoanIQ click    ${LIQ_DebitGLOffsetDetails_OK_Button}
+
+Add Debit Offset Fee Income in Outgoing Manual Cashflow Notebook
+    [Documentation]    This keyword is for adding Debit in Outgoing Manual Cashflow Notebook.
+    ...    @author: makcamps     17FEB2021      - Initial Create
+    [Arguments]    ${sUpfrontFee_Amount}    ${sGL_ShortName}    ${sPortfolioCode}=None
+    
+    ### Keyword Pre-processing ###
+    ${UpfrontFee_Amount}    Acquire Argument Value    ${sUpfrontFee_Amount}
+    ${GL_ShortName}    Acquire Argument Value    ${sGL_ShortName}
+    ${PortfolioCode}    Acquire Argument Value    ${sPortfolioCode}
+
+    mx LoanIQ activate window    ${LIQ_OutgoingManualCashflow_Window}
+    mx LoanIQ click    ${LIQ_OutgoingManualCashflow_AddDebittOffset_Button}
+    
+    mx LoanIQ activate window    ${LIQ_DebitGLOffsetDetails_Window}
+    Mx LoanIQ Set    ${LIQ_DebitGLOffsetDetails_FeeIncome_RadioButton}    ON
     mx LoanIQ enter    ${LIQ_DebitGLOffsetDetails_Amount_Field}    ${UpfrontFee_Amount}
     mx LoanIQ select list    ${LIQ_DebitGLOffsetDetails_GLShortName_List}    ${GL_ShortName}
     Run Keyword If    '${sPortfolioCode}'!='None'    Run Keywords    mx LoanIQ click    ${LIQ_DebitGLOffsetDetails_Portfolio_Button}
@@ -264,7 +291,7 @@ Open Existing Outgoing Manual Cashflow Notebook
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/ManualCashflowTransactionList
     Mx LoanIQ Set    ${LIQ_ManualCashflowTransactionList_RemainOpenAfterSelection_CheckBox}    OFF
     Mx LoanIQ Set    ${LIQ_ManualCashflowTransactionList_OpenNotebookInUpdateMode_CheckBox}    ON
-    Mx LoanIQ Select Or DoubleClick In Javatree    ${LIQ_ManualCashflowTransactionList_JavaTree}    ${Description}%s
+    # Run Keyword And Continue On Failure    Mx LoanIQ Select Or DoubleClick In Javatree    ${LIQ_ManualCashflowTransactionList_JavaTree}    ${Description}%s
     mx LoanIQ click    ${LIQ_ManualCashflowTransactionList_OK_Button}
 
     mx LoanIQ activate window    ${LIQ_OutgoingManualCashflow_Window}
