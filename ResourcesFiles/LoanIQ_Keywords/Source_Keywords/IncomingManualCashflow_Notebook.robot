@@ -240,12 +240,16 @@ Release Incoming Manual Cashflow
 
 Validate Incoming Manual Cashflow Notebook - Events Tab
     [Documentation]    This keyword validates the Events Tab after the Incoming Manual Cashflow Transaction.
-    ...    @author:mgaling  
+    ...    @author: mgaling
+    ...    @update: makcamps    22FEB2021    - update validation of released event keyword
     
     mx LoanIQ activate window    ${LIQ_IncomingManualCashflow_Window}
-    
     Mx LoanIQ Select Window Tab    ${LIQ_IncomingManualCashflow_Tab}    Events
-    Mx LoanIQ Verify Text In Javatree    ${LIQ_IncomingManualCashflow_Events_Items}    Released    
+    
+    ${Event_Selected}    Run Keyword And Return Status    Mx LoanIQ Select String    ${LIQ_IncomingManualCashflow_Events_Items}    Released
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/IncomingManualCashflowWindow_EventsTab
+    Run Keyword If    ${Event_Selected}==${True}    Log    Released is shown in the Events list of the Incoming Manual Cashflow notebook.
+    ...    ELSE    Run Keyword and Continue on Failure    Fail    Incoming Manual Cashflow is not Released.
     
 Validate GL Entries in Incoming Manual Cashflow Notebook
     [Documentation]    This keyword validates the GL Entries after the Incoming Manual Cashflow Transaction.

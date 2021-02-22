@@ -197,7 +197,11 @@ Validate Outgoing Manual Cashflow Notebook - Events Tab
     
     mx LoanIQ activate window    ${LIQ_OutgoingManualCashflow_Window}
     Mx LoanIQ Select Window Tab    ${LIQ_OutgoingManualCashflow_Tab}    Events
-    Mx LoanIQ Verify Text In Javatree    ${LIQ_OutgoingManualCashflow_EventsItems}    Released
+    
+    ${Event_Selected}    Run Keyword And Return Status    Mx LoanIQ Select String    ${LIQ_OutgoingManualCashflow_EventsItems}    Released
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/OutgoingManualCashflowWindow_EventsTab
+    Run Keyword If    ${Event_Selected}==${True}    Log    Released is shown in the Events list of the Outgoing Manual Cashflow notebook.
+    ...    ELSE    Run Keyword and Continue on Failure    Fail    Outgoing Manual Cashflow is not Released.
     
 Validate GL Entries in Outgoing Manual Cashflow Notebook
     [Documentation]    This keyword validates the GL Entries after the Outgoing Manual Cashflow Transaction.
