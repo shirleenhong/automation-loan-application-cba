@@ -19,6 +19,7 @@ Populate Outgoing Manual Cashflow Notebook - General Tab
     [Documentation]    This Keyword is used for populating Outgoing Manual Cashflow Notebook - General Tab.
     ...    @author: hstone     07JUL2020      - Initial Create
     ...    @update: hstone     13JUL2020      - Used actual locator for verifying attached text of a static text
+    ...    @update: makcamps   17FEB2021      - added search deal expense code before clicking expense code from tree
     [Arguments]    ${sBranch_Code}    ${sEffective_Date}    ${sCurrency}    ${sUpfrontFee_Amount}    ${sDescription}    ${sProc_Area}    ${sDeal_ExpenseCode}    ${sDeal_Borrower}
     ...    ${sCustomer_ServicingGroup}    ${sBranch_ServicingGroup}    ${sDeal_Name}=None    ${sFacility_Name}=None
     
@@ -291,7 +292,7 @@ Open Existing Outgoing Manual Cashflow Notebook
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/ManualCashflowTransactionList
     Mx LoanIQ Set    ${LIQ_ManualCashflowTransactionList_RemainOpenAfterSelection_CheckBox}    OFF
     Mx LoanIQ Set    ${LIQ_ManualCashflowTransactionList_OpenNotebookInUpdateMode_CheckBox}    ON
-    # Run Keyword And Continue On Failure    Mx LoanIQ Select Or DoubleClick In Javatree    ${LIQ_ManualCashflowTransactionList_JavaTree}    ${Description}%s
+    Mx LoanIQ Select Or DoubleClick In Javatree    ${LIQ_ManualCashflowTransactionList_JavaTree}    ${Description}%s
     mx LoanIQ click    ${LIQ_ManualCashflowTransactionList_OK_Button}
 
     mx LoanIQ activate window    ${LIQ_OutgoingManualCashflow_Window}
