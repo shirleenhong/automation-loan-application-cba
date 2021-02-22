@@ -29,6 +29,7 @@ LIQ_Notice_Status_StaticText = 'JavaWindow("title:=.* created by .*","displayed:
 LIQ_Notice_FileSave_Menu = 'JavaWindow("title:=.* created by .*","displayed:=1").JavaMenu("label:=File").JavaMenu("label:=Save")'
 LIQ_Notice_OptionsSend_Menu = 'JavaWindow("title:=.* created by .*","displayed:=1").JavaMenu("label:=Options").JavaMenu("label:=Send")'
 LIQ_Notice_OptionsEnableForResend_Menu = 'JavaWindow("title:=.* created by .*","displayed:=1").JavaMenu("label:=Options").JavaMenu("label:=Enable for resend")'
+LIQ_Notice_NoticeID_Text = 'JavaWindow("title:=.* created by .*","displayed:=1").JavaEdit("attached text:=Notice ID:")'
 
 LIQ_Notice_Customer_Button = 'JavaWindow("title:=.* created by .*","displayed:=1").JavaButton("attached text:=Customer:")'
 LIQ_Notice_Contact_Button = 'JavaWindow("title:=.* created by .*","displayed:=1").JavaButton("attached text:=Contact:")'
