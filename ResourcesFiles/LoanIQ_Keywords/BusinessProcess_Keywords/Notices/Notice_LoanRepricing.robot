@@ -6,15 +6,14 @@ Resource     ../../../../Configurations/LoanIQ_Import_File.robot
 Send Notice for Loan Repricing
     [Documentation]    This keyword is use to successfully sent out a Repricing Notice via Notice Application without validation in FFC
     ...    @author: makcamps    09FEB2021    - initial create
-    ...    @author: makcamps    10FEB2021    - updated Keyword Name, removed "Intent" so it can be generic
-    ...    @author: makcamps    17FEB2021    - updated data set column name
+    ...    @update: makcamps    10FEB2021    - updated Keyword Name, removed "Intent" so it can be generic
+    ...    @update: makcamps    17FEB2021    - updated data set column name
+    ...    @update: makcamps    22FEB2021    - changed Get Notice Details via Loan Repricing Notebook to one line
     [Arguments]    ${ExcelPath}
 
     ${Borrower_LoanAlias}    Read Data From Excel    SERV08_ComprehensiveRepricing    Loan_Alias    1
 
-    ${Effective_Date}    ${Repricing_Date}    ${Maturity_Date}    ${Pricing_Option}    ${Borrower_Amount}    ${Lender_Amount}
-    ...    ${Payment_Amount}    Get Notice Details via Loan Repricing Notebook    &{ExcelPath}[Facility_Name]    &{ExcelPath}[Deal_Name]
-    ...    ${Borrower_LoanAlias}    &{ExcelPath}[Loan_Alias]    &{ExcelPath}[Payment_Type]
+    ${Effective_Date}    ${Repricing_Date}    ${Maturity_Date}    ${Pricing_Option}    ${Borrower_Amount}    ${Lender_Amount}    ${Payment_Amount}    Get Notice Details via Loan Repricing Notebook    &{ExcelPath}[Facility_Name]    &{ExcelPath}[Deal_Name]    ${Borrower_LoanAlias}    &{ExcelPath}[Loan_Alias]    &{ExcelPath}[Payment_Type]
 
     Get the Notice Details of Specific Contact in LIQ    &{ExcelPath}[SubAdd_Days]    &{ExcelPath}[Deal_Name]    &{ExcelPath}[Notice_Type]    &{ExcelPath}[Zero_TempPath]    &{ExcelPath}[Contact]
 
