@@ -16,7 +16,7 @@ Send Notice by Notice Application
     Write Data To Excel   Correspondence    Thru_Date    ${rowid}    ${ThruDate}    bTestCaseColumn=True    sColumnReference=rowid
 
     ### Get Notice Details in LIQ ###
-    ${NoticeIdentifier}    ${NoticeCustomerLegalName}    ${Contact}    Get Notice ID via Deal Notebook    ${FromDate}    ${ThruDate}    &{ExcelPath}[Notice_Type]
+    ${NoticeIdentifier}    ${NoticeCustomerLegalName}    ${Contact}    Get Notice ID thru Deal Notebook of Specific Contact    ${FromDate}    ${ThruDate}    &{ExcelPath}[Notice_Type]    &{ExcelPath}[Contact]
     Write Data To Excel    Correspondence    Notice_Identifier    ${rowid}     ${NoticeIdentifier}    bTestCaseColumn=True    sColumnReference=rowid
     Write Data To Excel    Correspondence    Notice_Customer_LegalName    ${rowid}     ${NoticeCustomerLegalName}    bTestCaseColumn=True    sColumnReference=rowid
     Write Data To Excel    Correspondence    Contact    ${rowid}     ${Contact}    bTestCaseColumn=True    sColumnReference=rowid
