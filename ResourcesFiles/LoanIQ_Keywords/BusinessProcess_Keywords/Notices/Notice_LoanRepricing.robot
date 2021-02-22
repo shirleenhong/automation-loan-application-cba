@@ -8,12 +8,13 @@ Send Notice for Loan Repricing
     ...    @author: makcamps    09FEB2021    - initial create
     ...    @update: makcamps    10FEB2021    - updated Keyword Name, removed "Intent" so it can be generic
     ...    @update: makcamps    17FEB2021    - updated data set column name
-    ...    @update: makcamps    22FEB2021    - changed Get Notice Details via Loan Repricing Notebook to one line
+    ...    @update: makcamps    22FEB2021    - changed Get Notice Details via Loan Repricing Notebook to two lines
     [Arguments]    ${ExcelPath}
 
     ${Borrower_LoanAlias}    Read Data From Excel    SERV08_ComprehensiveRepricing    Loan_Alias    1
 
-    ${Effective_Date}    ${Repricing_Date}    ${Maturity_Date}    ${Pricing_Option}    ${Borrower_Amount}    ${Lender_Amount}    ${Payment_Amount}    Get Notice Details via Loan Repricing Notebook    &{ExcelPath}[Facility_Name]    &{ExcelPath}[Deal_Name]    ${Borrower_LoanAlias}    &{ExcelPath}[Loan_Alias]    &{ExcelPath}[Payment_Type]
+    ${Effective_Date}    ${Repricing_Date}    ${Maturity_Date}    ${Pricing_Option}    ${Borrower_Amount}    ${Lender_Amount}    ${Payment_Amount}    Get Notice Details via Loan Repricing Notebook
+    ...    &{ExcelPath}[Facility_Name]    &{ExcelPath}[Deal_Name]    ${Borrower_LoanAlias}    &{ExcelPath}[Loan_Alias]    &{ExcelPath}[Payment_Type]
 
     Get the Notice Details of Specific Contact in LIQ    &{ExcelPath}[SubAdd_Days]    &{ExcelPath}[Deal_Name]    &{ExcelPath}[Notice_Type]    &{ExcelPath}[Zero_TempPath]    &{ExcelPath}[Contact]
 
