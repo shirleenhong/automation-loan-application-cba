@@ -189,7 +189,19 @@ Release Outgoing Manual Cashflow
     Mx LoanIQ Select Window Tab    ${LIQ_OutgoingManualCashflow_Tab}    Workflow
     
     Mx LoanIQ DoubleClick    ${LIQ_OutgoingManualCashflow_WorkflowItems}    Release
-    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
+    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}  
+
+Validate Outgoing Manual Cashflow Notebook - Events Tab
+    [Documentation]    This keyword verifies if Outgoing Manual Cashflow Transaction Released event is displayed.
+    ...    @author: makcamps    22FEB2021      - Initial Create
+    
+    mx LoanIQ activate window    ${LIQ_OutgoingManualCashflow_Window}
+    Mx LoanIQ Select Window Tab    ${LIQ_OutgoingManualCashflow_Tab}    Events
+    
+    ${Event_Selected}    Run Keyword And Return Status    Mx LoanIQ Select String    ${LIQ_OutgoingManualCashflow_EventsItems}    Released
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/OutgoingManualCashflowWindow_EventsTab
+    Run Keyword If    ${Event_Selected}==${True}    Log    Released is shown in the Events list of the Outgoing Manual Cashflow notebook.
+    ...    ELSE    Run Keyword and Continue on Failure    Fail    Outgoing Manual Cashflow is not Released.
     
 Validate GL Entries in Outgoing Manual Cashflow Notebook
     [Documentation]    This keyword validates the GL Entries after the Outgoing Manual Cashflow Transaction.
