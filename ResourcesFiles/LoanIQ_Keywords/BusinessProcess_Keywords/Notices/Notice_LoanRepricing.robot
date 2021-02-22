@@ -7,6 +7,7 @@ Send Notice for Loan Repricing
     [Documentation]    This keyword is use to successfully sent out a Repricing Notice via Notice Application without validation in FFC
     ...    @author: makcamps    09FEB2021    - initial create
     ...    @author: makcamps    10FEB2021    - updated Keyword Name, removed "Intent" so it can be generic
+    ...    @author: makcamps    17FEB2021    - updated data set column name
     [Arguments]    ${ExcelPath}
 
     ${Borrower_LoanAlias}    Read Data From Excel    SERV08_ComprehensiveRepricing    Loan_Alias    1
@@ -75,9 +76,9 @@ Send Notice for Loan Repricing
     ${Loan_MaturityDate}    Read Data From Excel    Correspondence    Loan_MaturityDate   ${rowid}
     ${Loan_GlobalOriginal}    Read Data From Excel    Correspondence    Loan_GlobalOriginal   ${rowid}
     ${Loan_RateSetting_DueDate}    Read Data From Excel    Correspondence    Loan_RateSetting_DueDate   ${rowid}
-    ${Upfront_Fee}    Read Data From Excel    Correspondence    Upfront_Fee   ${rowid}
+    ${Upfront_Fee}    Read Data From Excel    Correspondence    UpfrontFee_Amount   ${rowid}
     ${Fee_Type}    Read Data From Excel    Correspondence    Fee_Type   ${rowid}
-    ${AccountName}    Read Data From Excel    Correspondence    AccountName   ${rowid}
+    ${AccountName}    Read Data From Excel    Correspondence    Account_Name   ${rowid}
 
     Validate the Notice Window in LIQ    &{ExcelPath}[Search_By]    ${NoticeIdentifier}    ${FromDate}    ${ThruDate}    &{ExcelPath}[Notice_Status]    ${NoticeCustomerLegalName}
     ...    ${Contact}    &{ExcelPath}[NoticeGroup_UserID]    &{ExcelPath}[Notice_Method]
