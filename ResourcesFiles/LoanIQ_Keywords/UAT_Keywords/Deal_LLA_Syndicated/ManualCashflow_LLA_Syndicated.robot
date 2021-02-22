@@ -98,5 +98,5 @@ Process Outgoing Cash Movements Outside of Transaction Notebooks
     ### Validate Outgoing Manual Cashflow ###
     Validate Debit Offset Detail at Outgoing Manual Cashflow Table    &{ExcelPath}[Outgoing_Amount]    &{ExcelPath}[Expected_GLShortName]    &{ExcelPath}[Expected_ExpenseCode]
     Validate GL Entries in Outgoing Manual Cashflow Notebook    &{ExcelPath}[Outgoing_Amount]    &{ExcelPath}[GL_Entries_RIMethod]    &{ExcelPath}[GL_Entries_ShortName]
-    Validate Outgoing Manual Cashflow Release
+    Validate Outgoing Manual Cashflow Notebook - Events Tab
     Close All Windows on LIQ
