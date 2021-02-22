@@ -22,6 +22,7 @@ Populate Incoming Manual Cashflow Notebook - General Tab
     ...    @update: hstone      02JUL2020      - Added Keyword Pre-processing
     ...                                        - Removed extra spaces
     ...    @update: hstone      13JUL2020      - Used actual locator for verifying attached text of a static text
+    ...    @update: makcamps    17FEB2021      - added search deal expense code before clicking expense code from tree
     [Arguments]    ${sBranch_Code}    ${sEffective_Date}    ${sCurrency}    ${sUpfrontFee_Amount}    ${sDescription}    ${sProc_Area}    ${sDeal_ExpenseCode}    ${sDeal_Borrower}
     ...    ${sCustomer_ServicingGroup}    ${sBranch_ServicingGroup}    ${sDeal_Name}=None    ${sFacility_Name}=None
     
@@ -56,6 +57,7 @@ Populate Incoming Manual Cashflow Notebook - General Tab
     ...    ELSE    Run Keywords    Log    Deal Expense Code filled-out does not match the test data. Test Script will proceed with expense code selection based from test data.
     ...    AND    mx LoanIQ click    ${LIQ_IncomingManualCashflow_Expense_Button}
     ...    AND    mx LoanIQ activate window    ${LIQ_SelectExpenseCode_Window}
+    ...    AND    mx LoanIQ enter    ${LIQ_SelectExpenseCode_Search_Field}    ${Deal_ExpenseCode}
     ...    AND    Mx LoanIQ Select Or DoubleClick In Javatree    ${LIQ_SelectExpenseCode_JavaTree}    ${Deal_ExpenseCode}%s
     ...    AND    mx LoanIQ click    ${LIQ_SelectExpenseCode_OK_Button}
 
@@ -95,6 +97,32 @@ Add Credit Offset in Incoming Manual Cashflow Notebook
     
     mx LoanIQ activate window    ${LIQ_CreditGLOffsetDetails_Window}
     Mx LoanIQ Set    ${LIQ_CreditGLOffsetDetails_NewWIP_RadioButton}    ON
+    mx LoanIQ enter    ${LIQ_CreditGLOffsetDetails_Amount_Field}    ${UpfrontFee_Amount}
+    Mx LoanIQ Select Combo Box Value    ${LIQ_CreditGLOffsetDetails_GLShortName_List}    ${GL_ShortName}
+    Run Keyword If    '${sPortfolioCode}'!='None'    Run Keywords    mx LoanIQ click    ${LIQ_CreditGLOffsetDetails_Portfolio_Button}
+    ...    AND    mx LoanIQ activate window    ${LIQ_SelectPortfolioCode_Window}
+    ...    AND    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/SelectPortfolioCode
+    ...    AND    Mx LoanIQ Select Or DoubleClick In Javatree    ${LIQ_SelectPortfolioCode_JavaTree}    ${PortfolioCode}%s
+    ...    AND    mx LoanIQ click    ${LIQ_SelectPortfolioCode_OK_Button}
+    mx LoanIQ activate window    ${LIQ_CreditGLOffsetDetails_Window}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/CreditGLOffsetDetails
+    mx LoanIQ click    ${LIQ_CreditGLOffsetDetails_OK_Button}
+
+Add Credit Offset Fee Income in Incoming Manual Cashflow Notebook
+    [Documentation]    This keyword is for adding Credit (Fee Income) in Incoming Manual Cashflow Notebook.
+    ...    @author: makcamps    17FEB2021    - initial create
+    [Arguments]    ${sUpfrontFee_Amount}    ${sGL_ShortName}    ${sPortfolioCode}=None
+    
+    ### Keyword Pre-processing ###
+    ${UpfrontFee_Amount}    Acquire Argument Value    ${sUpfrontFee_Amount}
+    ${GL_ShortName}    Acquire Argument Value    ${sGL_ShortName}
+    ${PortfolioCode}    Acquire Argument Value    ${sPortfolioCode}
+
+    mx LoanIQ activate window    ${LIQ_IncomingManualCashflow_Window}
+    mx LoanIQ click    ${LIQ_IncomingManualCashflow_AddCreditOffset_Button}
+    
+    mx LoanIQ activate window    ${LIQ_CreditGLOffsetDetails_Window}
+    Mx LoanIQ Set    ${LIQ_CreditGLOffsetDetails_FeeIncome_RadioButton}    ON
     mx LoanIQ enter    ${LIQ_CreditGLOffsetDetails_Amount_Field}    ${UpfrontFee_Amount}
     Mx LoanIQ Select Combo Box Value    ${LIQ_CreditGLOffsetDetails_GLShortName_List}    ${GL_ShortName}
     Run Keyword If    '${sPortfolioCode}'!='None'    Run Keywords    mx LoanIQ click    ${LIQ_CreditGLOffsetDetails_Portfolio_Button}
@@ -212,12 +240,16 @@ Release Incoming Manual Cashflow
 
 Validate Incoming Manual Cashflow Notebook - Events Tab
     [Documentation]    This keyword validates the Events Tab after the Incoming Manual Cashflow Transaction.
-    ...    @author:mgaling  
+    ...    @author: mgaling
+    ...    @update: makcamps    22FEB2021    - update validation of released event keyword
     
     mx LoanIQ activate window    ${LIQ_IncomingManualCashflow_Window}
-    
     Mx LoanIQ Select Window Tab    ${LIQ_IncomingManualCashflow_Tab}    Events
-    Mx LoanIQ Verify Text In Javatree    ${LIQ_IncomingManualCashflow_Events_Items}    Released    
+    
+    ${Event_Selected}    Run Keyword And Return Status    Mx LoanIQ Select String    ${LIQ_IncomingManualCashflow_Events_Items}    Released
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/IncomingManualCashflowWindow_EventsTab
+    Run Keyword If    ${Event_Selected}==${True}    Log    Released is shown in the Events list of the Incoming Manual Cashflow notebook.
+    ...    ELSE    Run Keyword and Continue on Failure    Fail    Incoming Manual Cashflow is not Released.
     
 Validate GL Entries in Incoming Manual Cashflow Notebook
     [Documentation]    This keyword validates the GL Entries after the Incoming Manual Cashflow Transaction.

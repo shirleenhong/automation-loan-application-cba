@@ -1,13 +1,13 @@
 <liqInfo>
-    {"event_schema_id":"2148","event":{"header":{"correlationId":"LIQ-K9EN3EWI-K9EN3ES5-2","processPath":{"array":[{"source":"FINASTRA_CCB","timestamp":"2021-01-20T16:31:57.646+08:00"}]}},"sourceSystem":{"string":"FINASTRA_CCB"},"ttl":{"au.com.cba.avro.customermanagement.noticesnotify.ttl":{"ttlDuration":"300","ttlSourceTime":"2021-01-20T16:31:57.646+08:00"}},"cifIds":{"array":[{"string":"1014912"}]},"documentInfo":{"documentPackage":{"businessChannel":"LOANIQ","name":null,"version":null,"templateId":null,"fileType":null,"content":"
+    {"event_schema_id":"2148","event":{"header":{"correlationId":"LIQ-?JEOJI0G-?JEOJHWH-2","processPath":{"array":[{"source":"FINASTRA_CCB","timestamp":"2021-02-17T20:36:02.857+08:00"}]}},"sourceSystem":{"string":"FINASTRA_CCB"},"ttl":{"au.com.cba.avro.customermanagement.noticesnotify.ttl":{"ttlDuration":"300","ttlSourceTime":"2021-02-17T20:36:02.857+08:00"}},"cifIds":{"array":[{"string":"1711726"}]},"documentInfo":{"documentPackage":{"businessChannel":"LOANIQ","name":null,"version":null,"templateId":null,"fileType":null,"content":"
     <FinastraApplication>
         <StandardNotice>
             <ProcessingArea>AUSAG</ProcessingArea>
             <Address>
-                <line>Date: 20-Jan-2021</line>
-                <line>TO  : LLA Pty Ltd 1014912</line>
+                <line>Date: 17-Feb-2021</line>
+                <line>TO  : LLA Pty Ltd 1711726</line>
                 <line>ATTN: George Lippman</line>
-                <line>Re  : LLA SYND DEAL AUD 500M 23NOV1840120 REVOLVING CASH ADV FAC56153</line>
+                <line>Re  : LLA SYND DEAL AUD 500M 23NOV1830136 REVOLVING CASH ADV FAC56145</line>
             </Address>
             <BodyContent>
                 <section>
@@ -17,7 +17,7 @@
                     <line/>
                     <line>In accordance with the facility agreement, we advise the following.</line>
                     <line/>
-                    <line>Effective 27-Dec-2019, the following Line Fee totalling AUD 554,520.55 for LLA Pty Ltd 1014912 becomes due.</line>
+                    <line>Effective 27-Dec-2019, the following Line Fee totalling AUD 554,520.55 for LLA Pty Ltd 1711726 becomes due.</line>
                 </section>
                 <section>
                     <line>Calculated as follows:</line>
@@ -34,16 +34,16 @@
                     <line>We will debit your nominated account for an amount of AUD 554,520.55 on the effective date.</line>
                 </section>
                 <section>
-                    <line>For: LLA Pty Ltd 1014912</line>
+                    <line>For: LLA Pty Ltd 1711726</line>
                     <line/>
                     <line>Account Number:   </line>
-                    <line>111 22233</line>
+                    <line>122 33345</line>
                     <line>Account Name:  </line>
                     <line>LLA Pty Ltd</line>
                     <line>Routing Number:</line>
                 </section>
                 <section>
-                    <line>Reference: AUSAG1002197</line>
+                    <line>Reference: AUSAG1002441</line>
                 </section>
                 <section>
                     <line/>
@@ -51,6 +51,6 @@
             </BodyContent>
         </StandardNotice>
     </FinastraApplication>
-    "},"documentStorage":{"status":null,"fileName":null,"inputSource":null,"inputSourceDetail":null,"scanDate":null,"departmentId":{"string":"RE_RES"},"retrievalId":null,"documentumType":null,"applicationNumber":null,"purgeDate":null,"boxLocation":null,"recordManager":null,"description":null,"processes":{"array":[{"string":"K9EN3ES5"}]},"services":{"array":[{"string":"1002197"}]},"accountNumbers":{"array":[{"source":{"string":"LOANIQ"},"productCode":{"string":"FAC"},"number":{"string":"3001688"}}]},"processFlags":{"array":[{"name":null,"value":null}]}}},"emailSecureMessageDetails":{"subject":"1002197 LLA SYND DEAL AUD 500M 23NOV1840120","senderEmail":"AGENCY@CBA.AU.COM","toRecipientEmail":"phamv@cba.com.au","ccRecipientEmail":{"string":"JOHN.DOE@CBA.AU.COM"},"mimeType":null,"messageID":"LIQ-K9EN3EWI-K9EN3ES5-2","body":null,"attachment":null,"inBandAttachment":null,"deliveredToEmail":null,"undeliveredToEmail":null,"systemCode":null,"systemName":null,"identifier":{"string":"AUSAG"},"digitalSignature":null}}}
+    "},"documentStorage":{"status":null,"fileName":null,"inputSource":null,"inputSourceDetail":null,"scanDate":null,"departmentId":{"string":"RE_RES"},"retrievalId":null,"documentumType":null,"applicationNumber":null,"purgeDate":null,"boxLocation":null,"recordManager":null,"description":null,"processes":{"array":[{"string":"?JEOJHWH"}]},"services":{"array":[{"string":"1002441"}]},"accountNumbers":{"array":[{"source":{"string":"LOANIQ"},"productCode":{"string":"FAC"},"number":{"string":"3001966"}}]},"processFlags":{"array":[{"name":null,"value":null}]}}},"emailSecureMessageDetails":{"subject":"1002441 LLA SYND DEAL AUD 500M 23NOV1830136","senderEmail":"AGENCY@CBA.AU.COM","toRecipientEmail":"phamv@cba.com.au","ccRecipientEmail":{"string":"JOHN.DOE@CBA.AU.COM"},"mimeType":null,"messageID":"LIQ-?JEOJI0G-?JEOJHWH-2","body":null,"attachment":null,"inBandAttachment":null,"deliveredToEmail":null,"undeliveredToEmail":null,"systemCode":null,"systemName":null,"identifier":{"string":"AUSAG"},"digitalSignature":null}}}
 
 </liqInfo>
