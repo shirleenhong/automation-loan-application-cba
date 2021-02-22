@@ -203,12 +203,13 @@ Validate Buttons and Fields in Notice Window
                  
 Validate Notice Status
     [Documentation]    This Keyword validates the status of Notice in Notice Window and Notice Group after POST API transaction.
-    ...    @author:mgaling
+    ...    @author: mgaling
+    ...    @update: mcastro   22FEB2021    - Updated locator from '${LIQ_Notice_NoticeID_Field}' to ${LIQ_Notice_NoticeID_Text} 
     [Arguments]    ${Notice_Identifier}    ${Notice_Status}     ${Notice_Customer_LegalName}    ${Contact}    ${NoticeGroup_UserID}    ${Notice_Method}                
     
     ###Notice Window Validation###
     mx LoanIQ activate window    ${LIQ_Notice_Window}
-    Validate Loan IQ Details    ${Notice_Identifier}    ${LIQ_Notice_NoticeID_Field}
+    Validate Loan IQ Details    ${Notice_Identifier}    ${LIQ_Notice_NoticeID_Text}
     Run Keyword And Continue On Failure    Mx LoanIQ Verify Runtime Property    ${LIQ_Notice_Status_StaticText}    attached text%${Notice_Status}
     Log    ${Notice_Status}    
     

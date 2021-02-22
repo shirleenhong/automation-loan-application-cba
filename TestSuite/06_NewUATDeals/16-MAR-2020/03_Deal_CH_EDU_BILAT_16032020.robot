@@ -15,3 +15,7 @@ Combine YZ + Interest Capitalisation and Rollover
 Generate And Send Repricing Intent Notice - Interest and Fee Capitalisation
     Set Test Variable    ${rowid}    10
     Mx Execute Template With Multiple Data    Send Repricing Intent Notice for CH EDU Bilateral Deal    ${ExcelPath}    ${rowid}    Correspondence
+
+Generate And Send Repricing Rate Setting Notice - Interest and Fee Capitalisation
+    Set Test Variable    ${rowid}    11
+    Mx Execute Template With Multiple Data    Send Repricing Rate Setting Notice for CH EDU Bilateral Deal    ${ExcelPath}    ${rowid}    Correspondence
