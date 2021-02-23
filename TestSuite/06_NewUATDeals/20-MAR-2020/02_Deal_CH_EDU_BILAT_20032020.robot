@@ -18,3 +18,7 @@ Refinance Revolver Facility for CH EDU Bilateral Deal
 Generate & Send Commitment Change (Increase) Notice
     Set Test Variable    ${rowid}    9
     Mx Execute Template With Multiple Data    Send Commitment Change Notice for CH EDU Bilateral Deal    ${ExcelPath}    ${rowid}    Correspondence
+
+Generate & Send Rate Setting Notice - Rollover With Facility Extension and Pricing Matrix Update
+    Set Test Variable    ${rowid}    12
+    Mx Execute Template With Multiple Data    Send Repricing Intent Notice for CH EDU Bilateral Deal    ${ExcelPath}    ${rowid}    Correspondence
