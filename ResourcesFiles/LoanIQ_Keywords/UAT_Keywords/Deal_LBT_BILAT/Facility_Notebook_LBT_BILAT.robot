@@ -123,4 +123,18 @@ Create Pricing Change Transaction for LBT Bilateral Deal
     Open Deal Notebook If Not Present    ${Deal_Name}
     Navigate Directly to Commitment Fee Notebook from Deal Notebook    ${Facility_Name}
     Validate New Rate in General Tab of Commitment Fee Notebook    &{ExcelPath}[PricingFormula_InEffect]    &{ExcelPath}[Current_Rate]
+
+Update As of Accrual Date in Facility for LBT Bilateral Deal
+    [Documentation]    The keyword is used to Update As of Accrual Date in Facility for LBT Bilateral Deal
+    ...    @author: javinzon    22FEB2021    - Initial create
+    [Arguments]    ${ExcelPath}
+
+    ${Deal_Name}    Read Data From Excel    CRED01_DealSetup    Deal_Name    1
+    ${Facility_Name}    Read Data From Excel    CRED01_FacilitySetup    Facility_Name    1
+    
+    Close All Windows on LIQ
+    
+    Navigate to Facility Notebook    ${Deal_Name}    ${Facility_Name}
+    Perform As of Accrual Date in Facility Notebook    ${ExcelPath}[AsOf_AccrualDate]
+    Perform Online Accrual in Facility Notebook
     

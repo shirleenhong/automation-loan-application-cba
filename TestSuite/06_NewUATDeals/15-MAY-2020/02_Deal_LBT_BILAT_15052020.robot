@@ -11,3 +11,16 @@ Get Dataset for LBT BILAT
 Combine ABCDEF & G, Partial Repayment $357.540M and Rollover
     Set Test Variable    ${rowid}    5
     Mx Execute Template With Multiple Data    Combine Drawdown ABCDEFG and Make Partial Repayment for LBT Bilateral Deal    ${ExcelPath}    ${rowid}    SERV11_LoanMerge
+    
+Update Commitment Fee Expiry Date then Perform Online Accrual
+    Set Test Variable    ${rowid}    2
+    Mx Execute Template With Multiple Data    Change Commitment Fee Expiry Date for LBT Bilateral Deal    ${ExcelPath}    ${rowid}    CRED08_OngoingFeeSetup
+   
+Update As of Accrual Date in Facility then Perform Online Accrual
+    Set Test Variable    ${rowid}    2
+    Mx Execute Template With Multiple Data    Update As of Accrual Date in Facility for LBT Bilateral Deal    ${ExcelPath}    ${rowid}    CRED01_FacilitySetup
+    
+Create Ongoing Fee Payment then Perform Online Accrual
+    Set Test Variable    ${rowid}    3
+    Mx Execute Template With Multiple Data    Create New Ongoing Fee for LBT Bilateral Deal    ${ExcelPath}    ${rowid}    CRED08_OngoingFeeSetup
+    
