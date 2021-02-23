@@ -1,0 +1,58 @@
+<liqInfo>
+    {"event_schema_id":"2148","event":{"header":{"correlationId":"LIQ-I$EOKVXY-I$EOKVUU-2","processPath":{"array":[{"source":"FINASTRA_CCB","timestamp":"2021-02-18T16:16:58.355+08:00"}]}},"sourceSystem":{"string":"FINASTRA_CCB"},"ttl":{"au.com.cba.avro.customermanagement.noticesnotify.ttl":{"ttlDuration":"300","ttlSourceTime":"2021-02-18T16:16:58.355+08:00"}},"cifIds":{"array":[{"string":"1711726"}]},"documentInfo":{"documentPackage":{"businessChannel":"LOANIQ","name":null,"version":null,"templateId":null,"fileType":null,"content":"
+    <FinastraApplication>
+        <StandardNotice>
+            <ProcessingArea>AUSAG</ProcessingArea>
+            <Address>
+                <line>Date: 18-Feb-2021</line>
+                <line>TO  : LLA Pty Ltd 1711726</line>
+                <line>ATTN: George Lippman</line>
+                <line>Re  : Payments against LLA SYND DEAL AUD 500M 23NOV1830136</line>
+            </Address>
+            <BodyContent>
+                <section>
+                    <line>                              *** PAYMENT NOTICE ***</line>
+                    <line/>
+                    <line>In accordance with the facility agreement, we advise the following has been requested.</line>
+                    <line/>
+                    <line>On 03-Jan-2020 the following transaction(s) totalling: AUD 50,130,410.95 will be made in relation to LLA SYND DEAL AUD 500M 23NOV1830136 REVOLVING CASH ADV FAC56145.</line>
+                    <line/>
+                    <line>Please see details below:</line>
+                </section>
+                <section>
+                    <line>*BBSY Interest Payment* </line>
+                    <line>LLA Pty Ltd 1711726 will pay interest on the BBSY - Bid loan effective 08-Nov-2019, scheduled to reprice on 06-Jan-2020, totalling AUD 130,410.95.  </line>
+                </section>
+                <section>
+                    <line>*BBSY Principal Payment*</line>
+                    <line>LLA Pty Ltd 1711726 will pay principal on the BBSY - Bid loan effective 08-Nov-2019, scheduled to reprice on 06-Jan-2020, totalling AUD 50,000,000.00.  </line>
+                </section>
+                <section>
+                    <line/>
+                </section>
+                <section>
+                    <line/>
+                    <line/>
+                    <line>We will debit your nominated account for an amount of AUD 50,130,410.95 on the effective date.</line>
+                </section>
+                <section>
+                    <line>For: LLA Pty Ltd 1711726</line>
+                    <line/>
+                    <line>Account Number:   </line>
+                    <line>122 33345</line>
+                    <line>Account Name:  </line>
+                    <line>LLA Pty Ltd</line>
+                    <line>Routing Number:</line>
+                </section>
+                <section>
+                    <line>Reference: AUSAG1002441</line>
+                </section>
+                <section>
+                    <line/>
+                </section>
+            </BodyContent>
+        </StandardNotice>
+    </FinastraApplication>
+    "},"documentStorage":{"status":null,"fileName":null,"inputSource":null,"inputSourceDetail":null,"scanDate":null,"departmentId":{"string":"RE_RES"},"retrievalId":null,"documentumType":null,"applicationNumber":null,"purgeDate":null,"boxLocation":null,"recordManager":null,"description":null,"processes":{"array":[{"string":"I$EOKVUU"}]},"services":{"array":[{"string":"1002441"}]},"accountNumbers":{"array":[{"source":{"string":"LOANIQ"},"productCode":{"string":"DEA"},"number":{"string":"1002441"}}]},"processFlags":{"array":[{"name":null,"value":null}]}}},"emailSecureMessageDetails":{"subject":"1002441 LLA SYND DEAL AUD 500M 23NOV1830136","senderEmail":"AGENCY@CBA.AU.COM","toRecipientEmail":"phamv@cba.com.au","ccRecipientEmail":{"string":"JOHN.DOE@CBA.AU.COM"},"mimeType":null,"messageID":"LIQ-I$EOKVXY-I$EOKVUU-2","body":null,"attachment":null,"inBandAttachment":null,"deliveredToEmail":null,"undeliveredToEmail":null,"systemCode":null,"systemName":null,"identifier":{"string":"AUSAG"},"digitalSignature":null}}}
+
+</liqInfo>
