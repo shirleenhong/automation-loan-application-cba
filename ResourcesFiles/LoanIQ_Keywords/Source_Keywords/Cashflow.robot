@@ -716,3 +716,49 @@ Set All Items to Undo It
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/CashflowWindow
     Mx LoanIQ click    ${LIQ_Cashflows_OK_Button}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/CashflowWindow
+
+Navigate to Split Cashflow
+    [Documentation]    This keyword will navigate to split cashflow window
+    ...    @author: dahijara    22FEB2021    - Initial create
+
+    Mx LoanIQ Activate    ${LIQ_Cashflows_Window}
+    Mx LoanIQ select    ${LIQ_Cashflow_Options_SplitCashflows}
+    Mx LoanIQ activate window    ${LIQ_SplitCashflows_Window}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/CashflowWindow
+
+Add Split Cashflow - Split Principal Amount
+    [Documentation]    This keyword is for split Cashflow amount.
+    ...    @author: dahijara    22FEB2021    - Initial create
+    [Arguments]    ${sSplitPrincipalAmount}
+    
+    ### Keyword Pre-processing ###
+    ${SplitPrincipalAmount}    Acquire Argument Value    ${sSplitPrincipalAmount}
+
+    Mx LoanIQ Activate Window   ${LIQ_SplitCashflows_Window}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/SplitCashflowWindow
+    Mx LoanIQ Click    ${LIQ_SplitCashflows_Add_Button}
+    mx LoanIQ Activate Window    ${LIQ_SplitCashflowsDetail_Window}
+
+    Mx LoanIQ Enter    ${LIQ_SplitCashflowsDetail_SplitPrincipal_Field}    ${SplitPrincipalAmount}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/SplitCashflowDetailsWindow
+    Mx LoanIQ Click    ${LIQ_SplitCashflowsDetail_OK_Button}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/SplitCashflowWindow
+    Mx LoanIQ Activate Window   ${LIQ_SplitCashflows_Window}
+
+    Mx LoanIQ Click    ${LIQ_SplitCashflows_Exit_Button}
+    Mx LoanIQ Activate Window    ${LIQ_Cashflows_Window}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/CashflowWindow
+
+Verify Cashflow Item Method
+    [Documentation]    This keyword will verify cashflow item method based on the expected item method
+    ...    @author: dahijara    22FEB2021    - Initial create
+    [Arguments]    ${sItemLocator}    ${sExpectedItemMethod}
+
+    ### Keyword Pre-processing ###
+    ${ItemLocator}    Acquire Argument Value    ${sItemLocator}
+    ${ExpectedItemMethod}    Acquire Argument Value    ${sExpectedItemMethod}
+
+    ${CashflowMethod}    Mx LoanIQ Store TableCell To Clipboard   ${LIQ_Cashflows_Tree}    ${sItemLocator}%Method%var
+    Run Keyword If    '${CashflowMethod}'=='${sExpectedItemMethod}'    Log    Cashflow Method (${CashflowMethod}) is correct!
+    ...    ELSE    Run Keyword And Continue On Failure    Fail    Cashflow method for (${CashflowMethod}) is incorrect. Expected: ${sExpectedItemMethod} - Actual: ${CashflowMethod}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/CashflowWindow
