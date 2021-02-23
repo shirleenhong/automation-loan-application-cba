@@ -2136,7 +2136,7 @@ Enter Ongoing Fee Comment
 Validate General Tab of Commitment Fee Notebook
     [Documentation]     This keyword is used to validate fields in General Tab of Commitment Fee Notebook
     ...    @author: javinzon    22FEB2021    - Initial create
-    [Arguments]    ${sEffective_Date}    ${sCycle_Frequency}    ${sActual_DueDate}    ${sAdjusted_DueDate}    ${sAccrual_EndDate}    ${sAccrue}    ${sFloatRate_StartDate}=None    ${sActual_ExpiryDate}=None    ${sOriginal_ExpiryDate}=None
+    [Arguments]    ${sEffective_Date}    ${sCycle_Frequency}    ${sActual_DueDate}    ${sAdjusted_DueDate}    ${sAccrual_EndDate}    ${sAccrue}    ${sActual_ExpiryDate}=None    ${sOriginal_ExpiryDate}=None
 
     ### Pre-processing Keyword ###
     ${Effective_Date}    Acquire Argument Value    ${sEffective_Date}

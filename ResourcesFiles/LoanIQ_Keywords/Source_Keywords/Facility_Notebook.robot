@@ -4531,13 +4531,13 @@ Perform As of Accrual Date in Facility Notebook
     ${AsOfAccrualDate}    Acquire Argument Value    ${sAsOfAccrualDate}
 
     mx LoanIQ activate window    ${LIQ_FacilityNotebook_Window}
-    Run Keyword And Continue On Failure    Mx LoanIQ click element if present    ${LIQ_FacilityNotebook_InquiryMode_Button}
+    Mx LoanIQ click element if present    ${LIQ_FacilityNotebook_InquiryMode_Button}
     Select Menu Item    ${LIQ_FacilityNotebook_Window}    ${ACCOUNTING}    ${AS_OF_ACCRUAL_TRIGGER}   
 
-    mx LoanIQ activate window    ${LIQ_FacilityNotebook_Accounting__EnterAsOfAccrualDate_Window}
-    Mx LoanIQ Enter    ${LIQ_FacilityNotebook_Accounting__EnterAsOfAccrualDate_AsOfDate_TextField}    ${AsOfAccrualDate}
+    mx LoanIQ activate window    ${LIQ_FacilityNotebook_Accounting_EnterAsOfAccrualDate_Window}
+    Mx LoanIQ Enter    ${LIQ_FacilityNotebook_Accounting_EnterAsOfAccrualDate_AsOfDate_TextField}    ${AsOfAccrualDate}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/CommitmentFeeNotebook_ChangeAsOfAccrualDate
-    Mx LoanIQ click    ${LIQ_FacilityNotebook_Accounting__EnterAsOfAccrualDate_OK_Button}
+    Mx LoanIQ click    ${LIQ_FacilityNotebook_Accounting_EnterAsOfAccrualDate_OK_Button}
     mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button} 
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/CommitmentFeeNotebook_ChangeAsOfAccrualDate
     
@@ -4546,11 +4546,11 @@ Perform Online Accrual in Facility Notebook
     ...   @author: javinzon    22FEB2021    - Initial create
 
     mx LoanIQ activate window    ${LIQ_FacilityNotebook_Window}
-    Run Keyword And Continue On Failure    Mx LoanIQ click element if present    ${LIQ_FacilityNotebook_InquiryMode_Button}
+    Mx LoanIQ click element if present    ${LIQ_FacilityNotebook_InquiryMode_Button}
     Select Menu Item    ${LIQ_FacilityNotebook_Window}    ${ACCOUNTING}    ${PERFORM_ONLINE_ACCRUAL}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/Facility_SummaryTab
 
-    # Verify If Warning Is Displayed
+    ### Verify If Warning Is Displayed ###
     Mx LoanIQ click element if present    ${LIQ_Information_OK_Button}
     Log    Perform Online Accrual - Perform Online Accrual is complete
 
