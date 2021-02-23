@@ -135,7 +135,6 @@ Create Loan Drawdown for PDS Syndicate Deal - Outstanding B
     Logout from Loan IQ
     Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
     Select Item in Work in Process    ${OUTSTANDINGS_TRANSACTION}    ${AWAITING_RELEASE_STATUS}    ${LOAN_INITIAL_DRAWDOWN_TYPE}     ${Loan_Alias}
-    Set Test Variable    ${Loan_Alias}    60003054
     Navigate to Loan Drawdown Workflow and Proceed With Transaction    ${RELEASE_STATUS}
     
     ### Validate Drawdown Released Event ###
