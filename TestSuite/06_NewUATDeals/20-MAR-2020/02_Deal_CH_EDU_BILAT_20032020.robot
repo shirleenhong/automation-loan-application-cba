@@ -18,3 +18,7 @@ Refinance Revolver Facility for CH EDU Bilateral Deal
 Generate & Send Commitment Change (Increase) Notice
     Set Test Variable    ${rowid}    9
     Mx Execute Template With Multiple Data    Send Commitment Change Notice for CH EDU Bilateral Deal    ${ExcelPath}    ${rowid}    Correspondence
+
+Rollover and Partial Repayment -$3.9M (NONE) [Net-Off with DEF(1)]
+    Set Test Variable    ${rowid}    6
+    Mx Execute Template With Multiple Data    Rollover Outstanding ABC with Partial Repayment for CH EDU Bilateral Deal    ${ExcelPath}    ${rowid}    SERV11_LoanMerge
