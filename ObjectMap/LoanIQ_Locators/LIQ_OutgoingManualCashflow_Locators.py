@@ -25,3 +25,6 @@ LIQ_OutgoingManualCashflow_Facility_Dropdown = 'JavaWindow("title:=Outgoing Manu
 
 ###OutgoingManualCashflow-Workflow Tab###
 LIQ_OutgoingManualCashflow_WorkflowItems = 'JavaWindow("title:=Outgoing Manual Cashflow .*").JavaTree("attached text:=Drill down to perform Workflow item")'
+
+###OutgoingManualCashflow-Events Tab###
+LIQ_OutgoingManualCashflow_EventsItems = 'JavaWindow("title:=Outgoing Manual Cashflow .*").JavaTree("attached text:=Select event to view details")'
