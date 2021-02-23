@@ -2361,7 +2361,4 @@ Add Principal Payment after Rollover Decrease Amount
     ${TotalExistingOutstanding}    Remove Comma and Convert to Number    ${TotalExistingOutstanding}
     ${ExpectedPrincipalPayment}    Evaluate    ${TotalExistingOutstanding}-${NewRequestedAmt}
     Compare Two Numbers    ${ExpectedPrincipalPayment}    ${ActualPrincipalPayment}
-    ${status}    Run Keyword And Return Status     Should Be Equal As Numbers    ${ExpectedPrincipalPayment}    ${ActualPrincipalPayment}
-    Run Keyword If    ${status}==${True}    Log    Principal Amount is Correct! 
-    ...    ELSE    Run Keyword And Continue On Failure    Fail    Principal Payment Amount displayed is  ${ActualPrincipalPayment} instead of ${ExpectedPrincipalPayment}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/RolloverPrincipalAmount
