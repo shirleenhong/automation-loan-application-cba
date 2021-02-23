@@ -2341,3 +2341,24 @@ Validate Loan Amounts of Existing Outstandings
     ${Actual_TotalLoan_Amount}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_LoanRepricingForDealAdd_JavaTree}    Total:%Amount%Actual_TotalLoan_Amount
     Compare Two Strings    ${Actual_TotalLoan_Amount}    ${Total_LoanAmount}    Total Loan Amounts
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/TotalExistingOutstandingAmount
+
+Add Principal Payment after Rollover Decrease Amount
+    [Documentation]    This keyword is used to add and validate the principal payment after rollover decrease amount
+    ...    @author: dahijara    22FEB2021    - Initial create
+    [Arguments]    ${sPricing_Option}    ${sNewRequestedAmt}
+
+    ### Keyword Pre-processing ###
+    ${Pricing_Option}    Acquire Argument Value    ${sPricing_Option}
+    ${NewRequestedAmt}    Acquire Argument Value    ${sNewRequestedAmt}
+
+    Mx LoanIQ Activate Window    ${LIQ_LoanRepricingForDeal_Window}
+    ${TotalExistingOutstanding}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_LoanRepricingForDealAdd_JavaTree}    Total:%Amount%TotalExistingOutstanding 
+    mx LoanIQ click    ${LIQ_LoanRepricingForDeal_Add_Button}
+    Select Repricing Detail Add Options    Principal Payment    ${Pricing_Option}
+    ${ActualPrincipalPayment}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_LoanRepricingForDealAdd_JavaTree}    *** Principal Payment:%Amount%TotalPrincipalPayment 
+    ${ActualPrincipalPayment}    Remove Comma and Convert to Number    ${ActualPrincipalPayment}
+    ${NewRequestedAmt}    Remove Comma and Convert to Number    ${NewRequestedAmt}
+    ${TotalExistingOutstanding}    Remove Comma and Convert to Number    ${TotalExistingOutstanding}
+    ${ExpectedPrincipalPayment}    Evaluate    ${TotalExistingOutstanding}-${NewRequestedAmt}
+    Compare Two Numbers    ${ExpectedPrincipalPayment}    ${ActualPrincipalPayment}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/RolloverPrincipalAmount
