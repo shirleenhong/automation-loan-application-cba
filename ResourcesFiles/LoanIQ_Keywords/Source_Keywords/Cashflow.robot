@@ -42,6 +42,24 @@ Verify if Method has Remittance Instruction
 
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/CashflowNotebook
     
+Verify if Method has Remittance Instruction As None
+    [Documentation]    This keyword is used to validate the Cashflow Information.
+    ...    @author: makcamps    17FEB2021    - initial create
+    [Arguments]    ${sCustomerShortName}    ${sRemittanceDescription}    ${sRemittanceInstruction}    ${sTransactionAmount}=None    ${sCurrency}=None
+
+    ### Keyword Pre-processing ###   
+    ${CustomerShortName}    Acquire Argument Value    ${sCustomerShortName}
+    ${RemittanceDescription}    Acquire Argument Value    ${sRemittanceDescription}
+    ${RemittanceInstruction}    Acquire Argument Value    ${sRemittanceInstruction}
+    ${TransactionAmount}    Acquire Argument Value    ${sTransactionAmount}
+    ${Currency}    Acquire Argument Value    ${sCurrency}
+
+    ${CashflowMethod}    Set Variable    NONE
+    Run Keyword If    '${CashflowMethod}'!='${RemittanceInstruction}'    Add Remittance Instructions from None to Declared Value    NONE    ${RemittanceDescription}    ${TransactionAmount}    ${Currency}
+    ...    ELSE    Log    Remittance Instruction is already correct
+
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/CashflowNotebook
+    
 Add Remittance Instructions
     [Documentation]    This keyword is used to select remittance instruction thru the Cashflow window.
     ...    @author: ritragel
@@ -75,6 +93,60 @@ Add Remittance Instructions
     mx LoanIQ click    ${LIQ_Cashflows_DetailsForCashflow_SelectRI_Button}  
     mx LoanIQ activate    ${LIQ_Cashflows_ChooseRemittanceInstructions_Window}
     Mx LoanIQ Select Or DoubleClick In Javatree    ${LIQ_Cashflows_ChooseRemittanceInstructions_Tree}    ${sRemittanceDescription}%s         
+    mx LoanIQ click    ${LIQ_Cashflows_ChooseRemittanceInstructions_OK_Button}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/CashflowVerification
+    mx LoanIQ click    ${LIQ_Cashflows_DetailsForCashflow_OK_Button}
+    
+Add Remittance Instructions from None to Declared Value
+    [Documentation]    This keyword is used to select remittance instruction thru the Cashflow window.
+    ...    @author: makcamps    17FEB2021    - initial create
+    [Arguments]    ${sCustomerShortName}    ${sRemittanceDescription}    ${sTransactionAmount}=None    ${sCurrency}=None    ${sLoanGlobalInterest}=None
+
+    ### Keyword Pre-processing ###   
+    ${CustomerShortName}    Acquire Argument Value    ${sCustomerShortName}
+    ${RemittanceDescription}    Acquire Argument Value    ${sRemittanceDescription}
+    ${TransactionAmount}    Acquire Argument Value    ${sTransactionAmount}
+    ${Currency}    Acquire Argument Value    ${sCurrency}
+    ${LoanGlobalInterest}    Acquire Argument Value    ${sLoanGlobalInterest}
+    
+    Log    ${LoanGlobalInterest}
+    Log    ${TransactionAmount}
+    
+    ${LoanGlobalInterest}    Run Keyword If    '${LoanGlobalInterest}'!='None'    Remove Comma and Convert to Number    ${LoanGlobalInterest}
+    ...    ELSE    Log    Loan Global Interest is set to None.
+    ${TransactionAmount}    Run Keyword If    '${TransactionAmount}'!='None'    Remove Comma and Convert to Number    ${TransactionAmount}
+    ...    ELSE    Log    Transaction amount is set to None.
+
+    ${TotalTransactionAmount}    Run Keyword If    '${LoanGlobalInterest}'!='None'    Evaluate    ${TransactionAmount}+${LoanGlobalInterest}
+    ...    ELSE    Set Variable    ${TransactionAmount}  
+    
+    Run Keyword If    '${TransactionAmount}'=='None'    Run Keywords    Mx LoanIQ Click Javatree Cell    ${LIQ_Cashflows_Tree}    ${CustomerShortName}%${CustomerShortName}%Method
+    ...    AND    Mx Press Combination    Key.ENTER
+    ...    ELSE    Log    Transaction amount is not set to None.
+    
+    Run Keyword If    '${TransactionAmount}'!='None'    Run Keywords    Log    ${TotalTransactionAmount}${SPACE}${Currency}%${TotalTransactionAmount}${SPACE}${Currency}%Original Amount/CCY
+    ...    AND    Log    ${TransactionAmount}
+    ...    ELSE    Log    Transaction amount is set to None.
+    
+    ${TotalTransactionAmount}    Run Keyword If    '${TransactionAmount}'!='None'    Remove Comma and Convert to Number    ${TransactionAmount}
+    ...    ELSE    Log    Transaction amount is set to None.
+    ${TotalTransactionAmount}    Run Keyword If    '${TransactionAmount}'!='None'    Evaluate    "%.2f" % ${TotalTransactionAmount}
+    ...    ELSE    Log    Transaction amount is set to None.
+    ${TotalTransactionAmount}    Run Keyword If    '${TransactionAmount}'!='None'    Convert Number With Comma Separators    ${TotalTransactionAmount}
+    ...    ELSE    Log    Transaction amount is set to None.
+    
+    Run Keyword If    '${TransactionAmount}'!='None'    Run Keywords    Log    ${TotalTransactionAmount}${SPACE}${Currency}%${TotalTransactionAmount}${SPACE}${Currency}%Original Amount/CCY
+    ...    AND    Log    ${TotalTransactionAmount}
+    ...    ELSE    Log    Transaction amount is set to None.
+    
+    Run Keyword If    '${TransactionAmount}'!='None'    Run keywords    Mx LoanIQ Click Javatree Cell    ${LIQ_Cashflows_Tree}    ${TotalTransactionAmount}${SPACE}${Currency}%${TotalTransactionAmount}${SPACE}${Currency}%Original Amount/CCY
+    ...    AND    Mx Press Combination    Key.ENTER
+    ...    ELSE    Log    Transaction amount is set to None.
+    
+    mx LoanIQ activate    ${LIQ_Cashflows_DetailsForCashflow_Window}
+    mx LoanIQ click    ${LIQ_Cashflows_DetailsForCashflow_SelectRI_Button}  
+    mx LoanIQ activate    ${LIQ_Cashflows_ChooseRemittanceInstructions_Window}
+    Mx LoanIQ Select Or DoubleClick In Javatree    ${LIQ_Cashflows_ChooseRemittanceInstructions_Tree}    ${RemittanceDescription}%s         
     mx LoanIQ click    ${LIQ_Cashflows_ChooseRemittanceInstructions_OK_Button}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/CashflowVerification
     mx LoanIQ click    ${LIQ_Cashflows_DetailsForCashflow_OK_Button}

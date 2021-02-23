@@ -9,6 +9,7 @@ Create Revolver Facility for LLA Syndicated Deal
     ...    @update: makcamps    20JAN2021    - added write method for notice
     ...    @update: makcamps    02FEB2021    - fixed arguments for Add Arguments
     ...    @update: makcamps    08FEB2021    - added writing methods
+    ...    @update: makcamps    17FEB2021    - added writing methods for manual cashflow
     [Arguments]    ${ExcelPath}
     
     ###Test Data Generation and Writings###
@@ -18,6 +19,8 @@ Create Revolver Facility for LLA Syndicated Deal
     Write Data To Excel    CRED08_OngoingFeeSetup    Facility_Name    ${rowid}    ${FacilityName}
     Write Data To Excel    AMCH06_PricingChangeTransaction    Facility_Name    ${rowid}    ${FacilityName}
     Write Data To Excel    SERV08_ComprehensiveRepricing    Facility_Name    ${rowid}    ${FacilityName}
+    Write Data To Excel    MTAM13_ManualCashflow_Incoming    Facility_Name    ${rowid}    ${FacilityName}
+    Write Data To Excel    MTAM14_ManualCashflow_Outgoing    Facility_Name    ${rowid}    ${FacilityName}
     Write Data To Excel    Correspondence    Facility_Name    ${rowid}    ${FacilityName}    multipleValue=Y    bTestCaseColumn=True    sColumnReference=rowid
 	Set To Dictionary    ${ExcelPath}    Facility_Name=${FacilityName}
 	

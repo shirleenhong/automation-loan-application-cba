@@ -214,3 +214,59 @@ Update Actual Due Date and Cycle Frequency for LBT Bilateral Deal
     Update Commitment Fee    &{ExcelPath}[New_EffectiveDate]    &{ExcelPath}[New_ActualDueDate]    &{ExcelPath}[New_AdjustedDueDate]    &{ExcelPath}[New_Accrue]    &{ExcelPath}[New_AccrualEndDate]    &{ExcelPath}[New_CycleFrequency]   
     Get and Validate Dates in Accrual Tab    &{ExcelPath}[Cycle_No]    &{ExcelPath}[StartDate]    &{ExcelPath}[New_AccrualEndDate]
     Close All Windows on LIQ
+
+Change Commitment Fee Expiry Date for LBT Bilateral Deal
+    [Documentation]    This keyword change the expiry date of the commitment fee for LBT Bilateral Deal.
+    ...    @author: javinzon    19FEB2021    - Initial create
+    [Arguments]    ${ExcelPath}
+
+    ${Deal_Name}    Read Data From Excel    CRED01_DealSetup    Deal_Name    1
+	${Facility_Name}    Read Data From Excel    CRED01_FacilitySetup    Facility_Name    1
+	
+    Logout from Loan IQ
+    Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
+        
+    ### Launch Facility ###
+    Launch Existing Facility    ${Deal_Name}    ${Facility_Name}
+    Navigate to Existing Ongoing Fee Notebook    &{ExcelPath}[OngoingFee_Type]
+
+    ### Commitment Fee Notebook - General Tab ###  
+    Update Cycle on Commitment Fee    ${ExcelPath}[Cycle_Frequency]
+    Change Expiry Date    ${ExcelPath}[Actual_ExpiryDate]
+    Validate General Tab of Commitment Fee Notebook    &{ExcelPath}[OngoingFee_EffectiveDate]    &{ExcelPath}[Cycle_Frequency]    &{ExcelPath}[OngoingFee_ActualDate]    &{ExcelPath}[OngoingFee_AdjustedDueDate]    &{ExcelPath}[OngoingFee_AccrualEndDate]    &{ExcelPath}[OngoingFee_Accrue]    &{ExcelPath}[Actual_ExpiryDate]    &{ExcelPath}[Original_ExpiryDate] 
+
+    ### Perform Online Accrual ###
+    Perform Online Accrual in Commitment Fee Notebook
+    Close All Windows on LIQ
+    
+Create New Ongoing Fee for LBT Bilateral Deal
+    [Documentation]    This keyword willcreate new ongoing fee for LB Bilateral Deal 
+    ...    @author: javinzon	22FEB2021    - Initial create
+    [Arguments]    ${ExcelPath}
+
+    ${Deal_Name}    Read Data From Excel    CRED01_DealSetup    Deal_Name    1
+	${Facility_Name}    Read Data From Excel    CRED01_FacilitySetup    Facility_Name    1
+    
+    Close All Windows on LIQ
+        
+    ### Launch Facility ###
+    Launch Existing Facility    ${Deal_Name}    ${Facility_Name}
+    ${Fee_Alias}    Create New Ongoing Fee
+
+    ### Update and Release Commitment Fee ###
+    Update Commitment Fee    &{ExcelPath}[OngoingFee_EffectiveDate]    &{ExcelPath}[OngoingFee_ActualDate]    &{ExcelPath}[OngoingFee_AdjustedDueDate]    &{ExcelPath}[OngoingFee_Accrue]    &{ExcelPath}[OngoingFee_AccrualEndDate]    ${ExcelPath}[Cycle_Frequency] 
+    Navigate Notebook Workflow    ${LIQ_CommitmentFee_Window}    ${LIQ_CommitmentFee_Tab}    ${LIQ_CommitmentFeeNotebook_Workflow_JavaTree}    ${RELEASE_STATUS}
+    
+    ### Validate Released Event ###
+    Validate an Event in Events Tab of Commitment Fee Notebook    ${RELEASED_STATUS}
+    
+    ### Perform Online Accrual ### 
+    Perform Online Accrual in Commitment Fee Notebook
+    
+    ### Validate General Tab and Accruals Tab ###
+    Validate General Tab of Commitment Fee Notebook    &{ExcelPath}[OngoingFee_EffectiveDate]    &{ExcelPath}[Cycle_Frequency]    &{ExcelPath}[OngoingFee_ActualDate]    &{ExcelPath}[OngoingFee_AdjustedDueDate]    &{ExcelPath}[OngoingFee_AccrualEndDate]    &{ExcelPath}[OngoingFee_Accrue]
+    Get and Validate Dates in Accrual Tab    &{ExcelPath}[Cycle_Number1]    &{ExcelPath}[OngoingFee_EffectiveDate]    &{ExcelPath}[OngoingFee_AccrualEndDate]
+    Validate Dues on Accrual Tab for Commitment Fee    &{ExcelPath}[Cycle1_CycleDueAmt]    &{ExcelPath}[Cycle_Number1]    &{ExcelPath}[Cycle1_Projected_EOCAccrual]    &{ExcelPath}[Cycle1_Projected_EOCDue]   
+    Get and Validate Dates in Accrual Tab    &{ExcelPath}[Cycle_Number2]    &{ExcelPath}[Cycle2_StartDate]    &{ExcelPath}[Cycle2_EndDate]
+    Validate Dues on Accrual Tab for Commitment Fee    &{ExcelPath}[Cycle2_CycleDueAmt]    &{ExcelPath}[Cycle_Number2]    &{ExcelPath}[Cycle2_Projected_EOCAccrual]    &{ExcelPath}[Cycle2_Projected_EOCDue]   
+    
