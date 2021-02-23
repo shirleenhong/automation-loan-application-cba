@@ -2132,3 +2132,52 @@ Enter Ongoing Fee Comment
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/OngoingFeePaymentWindow_Comment
     Select Menu Item    ${LIQ_OngoingFeePayment_Window}    File    Save    
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/OngoingFeePaymentWindow_Comment
+
+Validate General Tab of Commitment Fee Notebook
+    [Documentation]     This keyword is used to validate fields in General Tab of Commitment Fee Notebook
+    ...    @author: javinzon    22FEB2021    - Initial create
+    [Arguments]    ${sEffective_Date}    ${sCycle_Frequency}    ${sActual_DueDate}    ${sAdjusted_DueDate}    ${sAccrual_EndDate}    ${sAccrue}    ${sFloatRate_StartDate}=None    ${sActual_ExpiryDate}=None    ${sOriginal_ExpiryDate}=None
+
+    ### Pre-processing Keyword ###
+    ${Effective_Date}    Acquire Argument Value    ${sEffective_Date}
+    ${Cycle_Frequency}    Acquire Argument Value    ${sCycle_Frequency}
+    ${Actual_DueDate}    Acquire Argument Value    ${sActual_DueDate}
+    ${Adjusted_DueDate}    Acquire Argument Value    ${sAdjusted_DueDate}
+    ${Accrual_EndDate}    Acquire Argument Value    ${sAccrual_EndDate}
+    ${Accrue}    Acquire Argument Value    ${sAccrue}
+    ${Actual_ExpiryDate}    Acquire Argument Value    ${sActual_ExpiryDate}
+    ${Original_ExpiryDate}    Acquire Argument Value    ${sOriginal_ExpiryDate}
+
+    mx LoanIQ activate window    ${LIQ_CommitmentFee_Window}
+    Mx LoanIQ Select Window Tab    ${LIQ_CommitmentFee_Tab}    ${GENERAL_TAB}
+    Validate Loan IQ Details    ${Effective_Date}    ${LIQ_CommitmentFee_EffectiveDate_Field} 
+    Validate Loan IQ Details    ${Cycle_Frequency}    ${LIQ_CommitmentFee_Cycle_Frequency_Dropdown} 
+    Validate Loan IQ Details    ${Actual_DueDate}    ${LIQ_CommitmentFee_ActualDueDate_Field}    
+    Validate Loan IQ Details    ${Adjusted_DueDate}    ${LIQ_CommitmentFee_AdjustedDueDate} 
+    Validate Loan IQ Details    ${Accrual_EndDate}    ${LIQ_CommitmentFee_AccrualEndDate_Field} 
+    Validate Loan IQ Details    ${Accrue}    ${LIQ_CommitmentFee_Accrue_Dropdown} 
+    
+    Run Keyword If    '${Actual_ExpiryDate}'!='None'    Validate Loan IQ Details    ${Actual_ExpiryDate}    ${LIQ_CommitmentFee_ActualExpiryDate_Text}
+    ...    ELSE    Log    Validation for Actual Expiry Date is not required
+    Run Keyword If    '${Original_ExpiryDate}'!='None'    Validate Loan IQ Details    ${Original_ExpiryDate}    ${LIQ_CommitmentFee_OriginalExpiryDate_Text} 
+     ...    ELSE    Log    Validation for Original Expiry Date is not required
+     
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/CommitmentFee_GeneralTab_Dates
+    
+Validate an Event in Events Tab of Commitment Fee Notebook
+    [Documentation]    This keyword is used to validate an event in Commitment Fee - Events Tab
+    ...    @author: javinzon    22FEB2021    - Initial create
+    [Arguments]    ${sFacility_Event}
+
+    ### Keyword Pre-processing ###
+    ${Facility_Event}    Acquire Argument Value    ${sFacility_Event}
+    
+    Mx LoanIQ Select Window Tab    ${LIQ_CommitmentFee_Tab}    ${EVENTS_TAB}
+    ${Status}    Run Keyword And Return Status    Mx LoanIQ Verify Text In Javatree    ${LIQ_CommitmentFee_Events_Javatree}    ${Facility_Event}%yes
+    Run Keyword If    ${Status}==${True}    Log    ${Facility_Event} is present in Events Tab
+    ...    ELSE    Run Keyword And Continue On Failure    Fail    ${Facility_Event} is not present in Events Tab
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/Commitment_EventsTab    
+    
+   
+    
+    

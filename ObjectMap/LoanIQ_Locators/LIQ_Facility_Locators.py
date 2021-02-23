@@ -687,3 +687,9 @@ LIQ_FacilityNotebook_CommentEdit_Comment_Textbox = 'JavaWindow("title:=Comment E
 LIQ_FacilityNotebook_CommentEdit_OK_Button = 'JavaWindow("title:=Comment Edit").JavaButton("attached text:=OK")'
 LIQ_FacilityNotebook_CommentEdit_Cancel_Button = 'JavaWindow("title:=Comment Edit").JavaButton("attached text:=Cancel")'
 LIQ_FacilityNotebook_CommentEdit_Delete_Button = 'JavaWindow("title:=Comment Edit").JavaButton("attached text:=Delete")'
+
+### Facility Notebook - Enter As-Of Accrual Window ###
+LIQ_FacilityNotebook_Accounting__EnterAsOfAccrualDate_Window = 'JavaWindow("title:=Enter As-Of Accrual Date:")'
+LIQ_FacilityNotebook_Accounting__EnterAsOfAccrualDate_AsOfDate_TextField = 'JavaWindow("title:=Enter As-Of Accrual Date:").JavaEdit("attached text:=As-Of Date:")'
+LIQ_FacilityNotebook_Accounting__EnterAsOfAccrualDate_OK_Button = 'JavaWindow("title:=Enter As-Of Accrual Date:").JavaButton("attached text:=OK")'
+LIQ_FacilityNotebook_Accounting__EnterAsOfAccrualDate_Cancel_Button = 'JavaWindow("title:=Enter As-Of Accrual Date:").JavaButton("attached text:=Cancel")'
