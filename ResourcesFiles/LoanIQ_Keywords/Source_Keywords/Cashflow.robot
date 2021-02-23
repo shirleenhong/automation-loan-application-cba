@@ -726,7 +726,7 @@ Navigate to Split Cashflow
     Mx LoanIQ activate window    ${LIQ_SplitCashflows_Window}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/CashflowWindow
 
-Add Split Cashflow - Split Principal Amount
+Add Split Cashflow for Split Principal Amount
     [Documentation]    This keyword is for split Cashflow amount.
     ...    @author: dahijara    22FEB2021    - Initial create
     [Arguments]    ${sSplitPrincipalAmount}
@@ -758,7 +758,7 @@ Verify Cashflow Item Method
     ${ItemLocator}    Acquire Argument Value    ${sItemLocator}
     ${ExpectedItemMethod}    Acquire Argument Value    ${sExpectedItemMethod}
 
-    ${CashflowMethod}    Mx LoanIQ Store TableCell To Clipboard   ${LIQ_Cashflows_Tree}    ${sItemLocator}%Method%var
-    Run Keyword If    '${CashflowMethod}'=='${sExpectedItemMethod}'    Log    Cashflow Method (${CashflowMethod}) is correct!
-    ...    ELSE    Run Keyword And Continue On Failure    Fail    Cashflow method for (${CashflowMethod}) is incorrect. Expected: ${sExpectedItemMethod} - Actual: ${CashflowMethod}
+    ${CashflowMethod}    Mx LoanIQ Store TableCell To Clipboard   ${LIQ_Cashflows_Tree}    ${ItemLocator}%Method%var
+    Run Keyword If    '${CashflowMethod}'=='${ExpectedItemMethod}'    Log    Cashflow Method (${CashflowMethod}) is correct!
+    ...    ELSE    Run Keyword And Continue On Failure    Fail    Cashflow method for (${CashflowMethod}) is incorrect. Expected: ${ExpectedItemMethod} - Actual: ${CashflowMethod}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/CashflowWindow

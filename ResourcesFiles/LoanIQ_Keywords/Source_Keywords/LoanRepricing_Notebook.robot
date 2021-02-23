@@ -2342,7 +2342,7 @@ Validate Loan Amounts of Existing Outstandings
     Compare Two Strings    ${Actual_TotalLoan_Amount}    ${Total_LoanAmount}    Total Loan Amounts
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/TotalExistingOutstandingAmount
 
-Add Principal Payment After Rollover Decrease Amount
+Add Principal Payment after Rollover Decrease Amount
     [Documentation]    This keyword is used to add and validate the principal payment after rollover decrease amount
     ...    @author: dahijara    22FEB2021    - Initial create
     [Arguments]    ${sPricing_Option}    ${sNewRequestedAmt}
@@ -2356,13 +2356,12 @@ Add Principal Payment After Rollover Decrease Amount
     mx LoanIQ click    ${LIQ_LoanRepricingForDeal_Add_Button}
     Select Repricing Detail Add Options    Principal Payment    ${Pricing_Option}
     ${ActualPrincipalPayment}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_LoanRepricingForDealAdd_JavaTree}    *** Principal Payment:%Amount%TotalPrincipalPayment 
-    ${iActualPrincipalPayment}    Remove Comma and Convert to Number    ${ActualPrincipalPayment}
-    ${iNewRequestedAmt}    Remove Comma and Convert to Number    ${NewRequestedAmt}
+    ${ActualPrincipalPayment}    Remove Comma and Convert to Number    ${ActualPrincipalPayment}
+    ${NewRequestedAmt}    Remove Comma and Convert to Number    ${NewRequestedAmt}
     ${TotalExistingOutstanding}    Remove Comma and Convert to Number    ${TotalExistingOutstanding}
-    ${ExpectedPrincipalPayment}    Evaluate    ${TotalExistingOutstanding}-${iNewRequestedAmt}
-    ${status}    Run Keyword And Return Status     Should Be Equal As Numbers    ${ExpectedPrincipalPayment}    ${iActualPrincipalPayment}
+    ${ExpectedPrincipalPayment}    Evaluate    ${TotalExistingOutstanding}-${NewRequestedAmt}
+    Compare Two Numbers    ${ExpectedPrincipalPayment}    ${ActualPrincipalPayment}
+    ${status}    Run Keyword And Return Status     Should Be Equal As Numbers    ${ExpectedPrincipalPayment}    ${ActualPrincipalPayment}
     Run Keyword If    ${status}==${True}    Log    Principal Amount is Correct! 
-    ...    ELSE    Run Keyword And Continue On Failure    Fail    Principal Payment Amount displayed is  ${iActualPrincipalPayment} instead of ${ExpectedPrincipalPayment}
+    ...    ELSE    Run Keyword And Continue On Failure    Fail    Principal Payment Amount displayed is  ${ActualPrincipalPayment} instead of ${ExpectedPrincipalPayment}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/RolloverPrincipalAmount
-
-    [Return]    ${ActualPrincipalPayment}

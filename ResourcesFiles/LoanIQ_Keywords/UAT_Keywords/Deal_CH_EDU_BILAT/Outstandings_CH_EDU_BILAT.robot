@@ -1260,7 +1260,7 @@ Rollover Outstanding ABC with Partial Repayment for CH EDU Bilateral Deal
     Validate New Outstanding Amount for Loan Repricing    ${BaseRate_OptionName}    ${NewLoanAlias}    &{ExcelPath}[LoanMerge_Amount]
 
     ### Add Principal Payment ###
-    Add Principal Payment After Rollover Decrease Amount    ${BaseRate_OptionName}    &{ExcelPath}[LoanMerge_Amount]
+    Add Principal Payment after Rollover Decrease Amount    ${BaseRate_OptionName}    &{ExcelPath}[LoanMerge_Amount]
 
     ### Add Interest Payment ###
     Validate and Add Interest Payment for Loan Repricing    ${Outstanding_ABC_Alias}    &{ExcelPath}[Outstanding_1_IntAmt]
@@ -1268,7 +1268,7 @@ Rollover Outstanding ABC with Partial Repayment for CH EDU Bilateral Deal
     ### Create Cashflow ###
     Navigate to Loan Repricing Workflow and Proceed With Transaction    ${CREATE_CASHFLOWS_TYPE}
     Navigate to Split Cashflow
-    Add Split Cashflow - Split Principal Amount    &{ExcelPath}[SplitPrincipalAmount]
+    Add Split Cashflow for Split Principal Amount    &{ExcelPath}[SplitPrincipalAmount]
     Verify if Status is set to Do It    ${Borrower_Name}    sTransactionAmount=&{ExcelPath}[Outstanding_1_IntAmt]
     Verify Cashflow Item Method    &{ExcelPath}[Outstanding_1_IntAmt]    &{ExcelPath}[Exptd_CashflowMethod1]
     Verify Cashflow Item Method    &{ExcelPath}[SplitPrincipalAmount]    &{ExcelPath}[Exptd_CashflowMethod2]
