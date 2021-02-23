@@ -116,7 +116,7 @@ Create Loan Drawdown for PDS Syndicate Deal - Outstanding B
     Select Item in Work in Process    ${OUTSTANDINGS_TRANSACTION}    ${AWAITING_APPROVAL_STATUS}    ${LOAN_INITIAL_DRAWDOWN_TYPE}     ${Loan_Alias}
     Navigate to Loan Drawdown Workflow and Proceed With Transaction    ${APPROVAL_STATUS}
 
-    ## Rate Setting ###
+    ### Rate Setting ###
     Logout from Loan IQ
     Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
     Select Item in Work in Process    ${OUTSTANDINGS_TRANSACTION}    ${AWAITING_RATE_SETTING}    ${LOAN_INITIAL_DRAWDOWN_TYPE}     ${Loan_Alias}
