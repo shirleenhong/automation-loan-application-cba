@@ -823,6 +823,7 @@ Navigate to Workflow and Select Rate Setting
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/NotebookWorkflow
     Mx LoanIQ Select Or DoubleClick In Javatree    ${NotebookWorkflow_Locator}    ${Transaction}%d
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/NotebookWorkflow
+    Repeat Keyword    3 times    mx LoanIQ click element if present    ${LIQ_Confirmation_Yes_Button}
     Run Keyword If    '${AcceptRate_FromInterpolation}'=='N'    Mx LoanIQ click element if present    ${LIQ_Question_No_Button}
     ...    ELSE    Mx LoanIQ click element if present    ${LIQ_Question_Yes_Button}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/NotebookWorkflow
