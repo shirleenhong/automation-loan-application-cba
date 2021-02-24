@@ -22,13 +22,14 @@ LIQ_NoticeListing_NoticeGroup_Button = 'JavaWindow("title:=Notice Listing for .*
 ###Notice Window###
 
 LIQ_Notice_Window = 'JavaWindow("title:=.* created by .*","displayed:=1")'
-LIQ_Notice_NoticeID_Field = 'JavaWindow("title:=.* created by .*","displayed:=1").JavaEdit("attached text:=Notice ID:")'
+LIQ_Notice_NoticeID_Field = 'JavaWindow("title:=.* Notice created by .*","displayed:=1").JavaEdit("attached text:=Notice ID:")'
 LIQ_Notice_Customer_Field = 'JavaWindow("title:=.* created by .*","displayed:=1").JavaEdit("tagname:=Text","index:=2")'
 LIQ_Notice_NoticeMethod_List = 'JavaWindow("title:=.* created by .*","displayed:=1").JavaList("attached text:=Notice Method:")'
 LIQ_Notice_Status_StaticText = 'JavaWindow("title:=.* created by .*","displayed:=1").JavaStaticText("labeled_containers_path:=Group:Status;","index:=7")'
 LIQ_Notice_FileSave_Menu = 'JavaWindow("title:=.* created by .*","displayed:=1").JavaMenu("label:=File").JavaMenu("label:=Save")'
 LIQ_Notice_OptionsSend_Menu = 'JavaWindow("title:=.* created by .*","displayed:=1").JavaMenu("label:=Options").JavaMenu("label:=Send")'
 LIQ_Notice_OptionsEnableForResend_Menu = 'JavaWindow("title:=.* created by .*","displayed:=1").JavaMenu("label:=Options").JavaMenu("label:=Enable for resend")'
+LIQ_Notice_NoticeID_Text = 'JavaWindow("title:=.* created by .*","displayed:=1").JavaEdit("attached text:=Notice ID:")'
 
 LIQ_Notice_Customer_Button = 'JavaWindow("title:=.* created by .*","displayed:=1").JavaButton("attached text:=Customer:")'
 LIQ_Notice_Contact_Button = 'JavaWindow("title:=.* created by .*","displayed:=1").JavaButton("attached text:=Contact:")'
@@ -69,4 +70,5 @@ LIQ_Notice_CommentEdit_Comment_Textbox = 'JavaWindow("title:=Comment Edit","disp
 LIQ_Notice_CommentEdit_OK_Button = 'JavaWindow("title:=Comment Edit","displayed:=1").JavaButton("attached text:=OK")'
 
 ### Commitment Change Group Locators ###
-LIQ_Notice_CommitmentChangeGroup_Window = 'JavaWindow("title:=.*Commitment Change Group.*","displayed:=1")'LIQ_CommitmentChange_NoticeID_Field = 'JavaWindow("title:=Commitment Change created by.*","displayed:=1").JavaEdit("attached text:=Notice ID:")'
+LIQ_Notice_CommitmentChangeGroup_Window = 'JavaWindow("title:=.*Commitment Change Group.*","displayed:=1")'
+LIQ_CommitmentChange_NoticeID_Field = 'JavaWindow("title:=Commitment Change created by.*","displayed:=1").JavaEdit("attached text:=Notice ID:")'

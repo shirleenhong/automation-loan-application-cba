@@ -5,7 +5,8 @@ Resource     ../../../../Configurations/LoanIQ_Import_File.robot
 
 Send Notice by Notice Application
     [Documentation]    This keyword is used to successfully sent out a NOTICE by Notice Application without FFC Validation
-    ...    @author: makcamps    11FEB2021    - Initial Create                            
+    ...    @author: makcamps    11FEB2021    - Initial Create
+    ...    @author: makcamps    22FEB2021    - changed getting notice ID keyword to Get Notice ID thru Deal Notebook of Specific Contact
     [Arguments]    ${ExcelPath}
 
     Search Existing Deal    &{ExcelPath}[Deal_Name]
@@ -16,7 +17,7 @@ Send Notice by Notice Application
     Write Data To Excel   Correspondence    Thru_Date    ${rowid}    ${ThruDate}    bTestCaseColumn=True    sColumnReference=rowid
 
     ### Get Notice Details in LIQ ###
-    ${NoticeIdentifier}    ${NoticeCustomerLegalName}    ${Contact}    Get Notice ID via Deal Notebook    ${FromDate}    ${ThruDate}    &{ExcelPath}[Notice_Type]
+    ${NoticeIdentifier}    ${NoticeCustomerLegalName}    ${Contact}    Get Notice ID thru Deal Notebook of Specific Contact    ${FromDate}    ${ThruDate}    &{ExcelPath}[Notice_Type]    &{ExcelPath}[Contact]
     Write Data To Excel    Correspondence    Notice_Identifier    ${rowid}     ${NoticeIdentifier}    bTestCaseColumn=True    sColumnReference=rowid
     Write Data To Excel    Correspondence    Notice_Customer_LegalName    ${rowid}     ${NoticeCustomerLegalName}    bTestCaseColumn=True    sColumnReference=rowid
     Write Data To Excel    Correspondence    Contact    ${rowid}     ${Contact}    bTestCaseColumn=True    sColumnReference=rowid

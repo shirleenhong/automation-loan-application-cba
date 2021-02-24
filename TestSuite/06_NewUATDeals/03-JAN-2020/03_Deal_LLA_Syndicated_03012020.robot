@@ -25,3 +25,13 @@ Rollover and Additional Drawdown
     Mx Execute Template With Multiple Data    Send Notice for Loan Repricing    ${ExcelPath}    ${rowid}    Correspondence
     Set Test Variable    ${rowid}    10
     Mx Execute Template With Multiple Data    Send Notice for Loan Repricing    ${ExcelPath}    ${rowid}    Correspondence
+
+Early Partial Prepayment $50M for Outstanding B
+    Mx Execute Template With Multiple Data    Collect Early Prepayment via Paper Clip For LLA Syndicated Deal    ${ExcelPath}    ${rowid}    SERV23_LoanPaperClip
+    Set Test Variable    ${rowid}    12
+    Mx Execute Template With Multiple Data    Send Notice by Notice Application    ${ExcelPath}    ${rowid}    Correspondence
+    Set Test Variable    ${rowid}    13
+    Mx Execute Template With Multiple Data    Send Notice by Notice Application    ${ExcelPath}    ${rowid}    Correspondence
+    Mx Execute Template With Multiple Data    Process Incoming Cash Movements Outside of Transaction Notebooks    ${ExcelPath}    ${rowid}    MTAM13_ManualCashflow_Incoming
+    Mx Execute Template With Multiple Data    Process Outgoing Cash Movements Outside of Transaction Notebooks    ${ExcelPath}    ${rowid}    MTAM14_ManualCashflow_Outgoing
+    

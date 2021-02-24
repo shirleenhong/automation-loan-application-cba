@@ -6,14 +6,15 @@ Resource     ../../../../Configurations/LoanIQ_Import_File.robot
 Send Notice for Loan Repricing
     [Documentation]    This keyword is use to successfully sent out a Repricing Notice via Notice Application without validation in FFC
     ...    @author: makcamps    09FEB2021    - initial create
-    ...    @author: makcamps    10FEB2021    - updated Keyword Name, removed "Intent" so it can be generic
+    ...    @update: makcamps    10FEB2021    - updated Keyword Name, removed "Intent" so it can be generic
+    ...    @update: makcamps    17FEB2021    - updated data set column name
+    ...    @update: makcamps    22FEB2021    - changed Get Notice Details via Loan Repricing Notebook to two lines
     [Arguments]    ${ExcelPath}
 
     ${Borrower_LoanAlias}    Read Data From Excel    SERV08_ComprehensiveRepricing    Loan_Alias    1
 
-    ${Effective_Date}    ${Repricing_Date}    ${Maturity_Date}    ${Pricing_Option}    ${Borrower_Amount}    ${Lender_Amount}
-    ...    ${Payment_Amount}    Get Notice Details via Loan Repricing Notebook    &{ExcelPath}[Facility_Name]    &{ExcelPath}[Deal_Name]
-    ...    ${Borrower_LoanAlias}    &{ExcelPath}[Loan_Alias]    &{ExcelPath}[Payment_Type]
+    ${Effective_Date}    ${Repricing_Date}    ${Maturity_Date}    ${Pricing_Option}    ${Borrower_Amount}    ${Lender_Amount}    ${Payment_Amount}    Get Notice Details via Loan Repricing Notebook    &{ExcelPath}[Facility_Name]
+    ...    &{ExcelPath}[Deal_Name]    ${Borrower_LoanAlias}    &{ExcelPath}[Loan_Alias]    &{ExcelPath}[Payment_Type]
 
     Get the Notice Details of Specific Contact in LIQ    &{ExcelPath}[SubAdd_Days]    &{ExcelPath}[Deal_Name]    &{ExcelPath}[Notice_Type]    &{ExcelPath}[Zero_TempPath]    &{ExcelPath}[Contact]
 
@@ -75,9 +76,9 @@ Send Notice for Loan Repricing
     ${Loan_MaturityDate}    Read Data From Excel    Correspondence    Loan_MaturityDate   ${rowid}
     ${Loan_GlobalOriginal}    Read Data From Excel    Correspondence    Loan_GlobalOriginal   ${rowid}
     ${Loan_RateSetting_DueDate}    Read Data From Excel    Correspondence    Loan_RateSetting_DueDate   ${rowid}
-    ${Upfront_Fee}    Read Data From Excel    Correspondence    Upfront_Fee   ${rowid}
+    ${Upfront_Fee}    Read Data From Excel    Correspondence    UpfrontFee_Amount   ${rowid}
     ${Fee_Type}    Read Data From Excel    Correspondence    Fee_Type   ${rowid}
-    ${AccountName}    Read Data From Excel    Correspondence    AccountName   ${rowid}
+    ${AccountName}    Read Data From Excel    Correspondence    Account_Name   ${rowid}
 
     Validate the Notice Window in LIQ    &{ExcelPath}[Search_By]    ${NoticeIdentifier}    ${FromDate}    ${ThruDate}    &{ExcelPath}[Notice_Status]    ${NoticeCustomerLegalName}
     ...    ${Contact}    &{ExcelPath}[NoticeGroup_UserID]    &{ExcelPath}[Notice_Method]

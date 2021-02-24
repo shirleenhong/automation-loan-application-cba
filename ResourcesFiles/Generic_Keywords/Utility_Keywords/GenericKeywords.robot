@@ -2467,10 +2467,17 @@ Convert to Boolean Type if String is True of False
 
 Compare Two Numbers
     [Documentation]    This keyword is used for comparison of two numbers if they are equal or not
-    ...                @author: hstone    19MAY2020    Initial create
-    [Arguments]    ${Num1}    ${Num2}
+    ...    @author: hstone    19MAY2020    Initial create
+    ...    @update: dahijara    23FEB2021    Added Pre-processing keyword. Added logging of passed or failed message
+    [Arguments]    ${sNum1}    ${sNum2}
 
-    Run Keyword And Continue On Failure    Should Be Equal As Numbers    ${Num1}    ${Num2}
+    ### Keyword Pre-processing ###
+    ${Num1}    Acquire Argument Value    ${sNum1}
+    ${Num2}    Acquire Argument Value    ${sNum2}
+
+    ${status}    Run Keyword And Return Status     Should Be Equal As Numbers    ${Num1}    ${Num2}
+    Run Keyword If    ${status}==${True}    Log    ${Num1} and ${Num2} Matched! 
+    ...    ELSE    Run Keyword And Continue On Failure    Fail    ${Num1} and ${Num2} is NOT Equal! 
 
 Convert Number to Percentage Format
     [Documentation]    This keyword converts a number (String) to percentage Format

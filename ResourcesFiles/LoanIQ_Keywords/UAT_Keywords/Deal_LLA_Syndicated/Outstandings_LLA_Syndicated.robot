@@ -95,6 +95,7 @@ Create Loan Drawdown for LLA Syndicated Deal - Outstanding B
     ...    Outsanding B - Drawdown and back date to 11/08/2019
     ...    @author: makcamps    26JAN2021    - Initial Create
     ...    @update: makcamps    08FEB2021    - fixed arguments for creating drawdown
+    ...    @update: makcamps    17FEB2021    - fixed loan alias value for argument
     [Arguments]    ${ExcelPath}
 
     ${Deal_Name}    Read Data From Excel    CRED01_DealSetup    Deal_Name    1
@@ -147,13 +148,13 @@ Create Loan Drawdown for LLA Syndicated Deal - Outstanding B
     ### Rate Approval ###
     Logout from Loan IQ
     Login to Loan IQ    ${SUPERVISOR_USERNAME}    ${SUPERVISOR_PASSWORD}
-    Navigate Transaction in WIP    ${OUTSTANDINGS_TRANSACTION}    ${AWAITING_RATE_APPROVAL_STATUS}    ${LOAN_INITIAL_DRAWDOWN_TYPE}    60002959
+    Navigate Transaction in WIP    ${OUTSTANDINGS_TRANSACTION}    ${AWAITING_RATE_APPROVAL_STATUS}    ${LOAN_INITIAL_DRAWDOWN_TYPE}    ${Loan_Alias}
     Navigate to Loan Drawdown Workflow and Proceed With Transaction        ${RATE_APPROVAL_STATUS}
 
     ### Generate Rate Setting Notice ###
     Logout from Loan IQ
     Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
-    Navigate Transaction in WIP    ${OUTSTANDINGS_TRANSACTION}    ${AWAITING_GENERATE_RATE_SETTING_NOTICES_STATUS}    ${LOAN_INITIAL_DRAWDOWN_TYPE}    60002959
+    Navigate Transaction in WIP    ${OUTSTANDINGS_TRANSACTION}    ${AWAITING_GENERATE_RATE_SETTING_NOTICES_STATUS}    ${LOAN_INITIAL_DRAWDOWN_TYPE}    ${Loan_Alias}
     Navigate to Loan Drawdown Workflow and Proceed With Transaction        ${GENERATE_RATE_SETTING_NOTICES_TRANSACTION}
     Select Notices Recipients
     Exit Notice Window
@@ -165,7 +166,7 @@ Create Loan Drawdown for LLA Syndicated Deal - Outstanding B
     Close All Windows on LIQ
     Open Existing Deal    ${Deal_Name}
     Navigate to Outstanding Select Window from Deal
-    Navigate to Existing Loan    &{ExcelPath}[Outstanding_Type]    ${FacilityName}    60002959
+    Navigate to Existing Loan    &{ExcelPath}[Outstanding_Type]    ${FacilityName}    ${Loan_Alias}
     Validate Loan Drawdown Amounts in General Tab    &{ExcelPath}[Expctd_LoanGlobalOriginal]    &{ExcelPath}[Expctd_LoanGlobalCurrent]
     ...    &{ExcelPath}[Expctd_LoanHostBankGross]    &{ExcelPath}[Expctd_LoanHostBankNet]
     Validate Loan Drawdown General Details in General Tab    &{ExcelPath}[Pricing_Option]    &{ExcelPath}[Loan_EffectiveDate]

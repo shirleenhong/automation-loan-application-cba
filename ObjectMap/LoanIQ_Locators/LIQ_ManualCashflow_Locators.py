@@ -25,6 +25,7 @@ LIQ_ManualCashflowTransactionList_OK_Button = 'JavaWindow("title:=Manual Cashflo
 
 ###Select Expense Code Window###
 LIQ_SelectExpenseCode_Window = 'JavaWindow("title:=Select Expense Code","displayed:=1")'
+LIQ_SelectExpenseCode_Search_Field = 'JavaWindow("title:=Select Expense Code","displayed:=1").JavaEdit("displayed:=1")'
 LIQ_SelectExpenseCode_JavaTree = 'JavaWindow("title:=Select Expense Code","displayed:=1").JavaTree("attached text:=Search by code:")'
 LIQ_SelectExpenseCode_OK_Button = 'JavaWindow("title:=Select Expense Code","displayed:=1").JavaButton("attached text:=OK")'
 
@@ -36,6 +37,7 @@ LIQ_ExistingServicingGroup_OK_Button = 'JavaWindow("title:=Select Existing Servi
 ###Credit GL Offset Details###
 LIQ_CreditGLOffsetDetails_Window = 'JavaWindow("title:=Credit GL Offset Details","displayed:=1")'
 LIQ_CreditGLOffsetDetails_NewWIP_RadioButton = 'JavaWindow("title:=Credit GL Offset Details").JavaRadioButton("attached text:=New WIP")'
+LIQ_CreditGLOffsetDetails_FeeIncome_RadioButton = 'JavaWindow("title:=Credit GL Offset Details").JavaRadioButton("attached text:=Fee Income")'
 LIQ_CreditGLOffsetDetails_Amount_Field = 'JavaWindow("title:=Credit GL Offset Details").JavaEdit("attached text:=Amount:")'
 LIQ_CreditGLOffsetDetails_GLShortName_List = 'JavaWindow("title:=Credit GL Offset Details").JavaList("attached text:=G.*L Short Name:")'
 LIQ_CreditGLOffsetDetails_Portfolio_Button = 'JavaWindow("title:=Credit GL Offset Details").JavaButton("attached text:=Portfolio:")'
@@ -44,6 +46,7 @@ LIQ_CreditGLOffsetDetails_OK_Button = 'JavaWindow("title:=Credit GL Offset Detai
 ###Debit GL Offset Details###
 LIQ_DebitGLOffsetDetails_Window = 'JavaWindow("title:=Debit GL Offset Details","displayed:=1")'
 LIQ_DebitGLOffsetDetails_NewWIP_RadioButton = 'JavaWindow("title:=Debit GL Offset Details").JavaRadioButton("attached text:=New WIP")'
+LIQ_DebitGLOffsetDetails_FeeIncome_RadioButton = 'JavaWindow("title:=Debit GL Offset Details").JavaRadioButton("attached text:=Fee Income")'
 LIQ_DebitGLOffsetDetails_Amount_Field = 'JavaWindow("title:=Debit GL Offset Details").JavaEdit("attached text:=Amount:")'
 LIQ_DebitGLOffsetDetails_GLShortName_List = 'JavaWindow("title:=Debit GL Offset Details").JavaList("attached text:=G.*L Short Name:")'
 LIQ_DebitGLOffsetDetails_Portfolio_Button = 'JavaWindow("title:=Debit GL Offset Details").JavaButton("attached text:=Portfolio:")'

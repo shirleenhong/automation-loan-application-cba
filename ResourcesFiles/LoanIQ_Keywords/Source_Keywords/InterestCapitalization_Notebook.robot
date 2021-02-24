@@ -145,16 +145,19 @@ Set Activate Interest Capitalization
 Set Activate Interest Capitalization and Select To Loan Value
     [Documentation]    This keyword is used to set activate Interest capitalization checkbox and select value on To Loan droplist
     ...    @author: mcastro    28JAN2021    - Initial create
-    [Arguments]    ${sInterestCapitalization_Status}    ${sPricing_Option}    ${sLoan_Alias}
+    ...    @update: mcastro    18FEB2021    - Added optional argument for facility name and condition to select facility name in To Facility Droplist
+    [Arguments]    ${sInterestCapitalization_Status}    ${sPricing_Option}    ${sLoan_Alias}    ${sFacility}=None
 
     ### Pre-processing Keyword ###
     ${InterestCapitalization_Status}    Acquire Argument Value    ${sInterestCapitalization_Status}
     ${Pricing_Option}    Acquire Argument Value    ${sPricing_Option}
     ${Loan_Alias}    Acquire Argument Value    ${sLoan_Alias}
+    ${Facility}    Acquire Argument Value    ${sFacility}
 
     Mx LoanIQ activate window    ${LIQ_InterestCapitalization_Window}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LoanInterest_Capitalization_Details
     Mx LoanIQ Set    ${LIQ_InterestCapitalization_ActiveInterestCapitalization_Checkbox}    ${InterestCapitalization_Status}
+    Run Keyword If     '${Facility}'!='None'    Mx LoanIQ Select Combo Box Value    ${LIQ_InterestCapitalization_ToFacility_DropdownList}    ${Facility}
     Mx LoanIQ Select Combo Box Value    ${LIQ_InterestCapitalization_ToLoan_DropdownList}    ${Pricing_Option} Loan (${Loan_Alias})
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LoanInterest_Capitalization_Details
     Mx LoanIQ click    ${LIQ_InterestCapitalization_OKButton}
