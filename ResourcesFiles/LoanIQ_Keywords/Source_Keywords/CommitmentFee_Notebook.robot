@@ -2017,12 +2017,16 @@ Validate Accrual Shares Adjustment Applied Event
 Initiate Commitment Fee Ongoing Fee Payment
     [Documentation]    This keyword initiates Fee Payment, compare Cycle Due vs Requested Amount, 
     ...    validates requested amount and enter effective date.
-    ...    @author: javinzon    03FEB2021    - Initial create   
-    [Arguments]    ${sExpectedCycleDueAmt}    ${sEffectiveDate}
+    ...    @author: javinzon    03FEB2021    - Initial create
+    ...    @update: javinzon    23FEB2021    - added arguments, added and updated validations in LIQ details  
+    [Arguments]    ${sExpected_RequestedAmt}    ${sExpected_CurrentCycleDue}    ${sExpected_ProjectedCycleDue}    ${sEffectiveDate}    ${sComment}=None
     
     ### GetRuntime Keyword Pre-processing ###
-    ${ExpectedCycleDueAmt}    Acquire Argument Value    ${sExpectedCycleDueAmt}
+    ${Expected_RequestedAmt}    Acquire Argument Value    ${sExpected_RequestedAmt}
+    ${Expected_CurrentCycleDue}    Acquire Argument Value    ${sExpected_CurrentCycleDue}
+    ${Expected_ProjectedCycleDue}    Acquire Argument Value    ${sExpected_ProjectedCycleDue}
     ${EffectiveDate}    Acquire Argument Value    ${sEffectiveDate}
+    ${Comment}    Acquire Argument Value    ${sComment}
     
     mx LoanIQ activate window    ${LIQ_CommitmentFee_Window}
     mx LoanIQ select    ${LIQ_CommitmentFee_Payment_Menu}
@@ -2038,11 +2042,12 @@ Initiate Commitment Fee Ongoing Fee Payment
     
     mx LoanIQ activate window    ${LIQ_Payment_Window}
     mx LoanIQ click element if present    ${LIQ_CommitmentFee_InquiryMode_Button} 
-    Validate Loan IQ Details    ${ExpectedCycleDueAmt}    ${LIQ_OngoingFeePayment_CurrentCycleDue_TextField}
-    Validate Loan IQ Details    ${ExpectedCycleDueAmt}    ${LIQ_OngoingFeePayment_ProjectedCycleDue_TextField}
-    Validate Loan IQ Details    ${ExpectedCycleDueAmt}    ${LIQ_OngoingFeePayment_RequestedAmount_Textfield}
+    Validate Loan IQ Details    ${Expected_CurrentCycleDue}    ${LIQ_OngoingFeePayment_CurrentCycleDue_TextField}
+    Validate Loan IQ Details    ${Expected_ProjectedCycleDue}    ${LIQ_OngoingFeePayment_ProjectedCycleDue_TextField}
+    Validate Loan IQ Details    ${Expected_RequestedAmt}    ${LIQ_OngoingFeePayment_RequestedAmount_Textfield}
     mx LoanIQ enter    ${LIQ_OngoingFeePayment_EffectiveDate_DateField}    ${EffectiveDate} 
-    mx LoanIQ enter    ${LIQ_OngoingFeePayment_RequestedAmount_Textfield}    ${ExpectedCycleDueAmt}
+    mx LoanIQ enter    ${LIQ_OngoingFeePayment_RequestedAmount_Textfield}    ${Expected_RequestedAmt}
+    Run Keyword If    '${Comment}'!='None'    mx LoanIQ enter    ${LIQ_OngoingFeePayment_Comment_TextField}    ${Comment}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/FeePayment
     mx LoanIQ select    ${LIQ_OngoingFeePayment_File_Save_Dropdown}
     

@@ -160,6 +160,7 @@ Fee Payment for LBT Bilateral Deal
     [Documentation]    This keyword is used to create Fee Payment for LBT Bilateral Deal
     ...    @author: javinzon    03FEB2021    - Initial create
     ...    @update: javinzon    05FEB2021    - Added required arguments in keyword 'Validate Dues on Accrual Tab for Commitment Fee'
+    ...    @update: javinzon    23FEB2021    - Added required arguments in keyword 'Initiate Commitment Fee Ongoing Fee Payment'
     [Arguments]    ${ExcelPath}
     
     ${Deal_Name}    Read Data From Excel    CRED01_DealSetup    Deal_Name    ${rowid}
@@ -169,7 +170,7 @@ Fee Payment for LBT Bilateral Deal
     Launch Existing Facility    ${Deal_Name}    ${Facility_Name}
     Navigate to Commitment Fee Notebook    &{ExcelPath}[OngoingFee_Type]
     
-    Initiate Commitment Fee Ongoing Fee Payment    &{ExcelPath}[ExpectedCycleDueAmt]    &{ExcelPath}[Effective_Date]
+    Initiate Commitment Fee Ongoing Fee Payment    &{ExcelPath}[Expected_RequestedAmt]    &{ExcelPath}[Expected_CurrentCycleDue]    &{ExcelPath}[Expected_ProjectedCycleDue]    &{ExcelPath}[Effective_Date]    &{ExcelPath}[Comment]
     
     ### Create Cashflows ###
     Navigate to Payment Workflow and Proceed With Transaction    ${CREATE_CASHFLOWS_TYPE}
@@ -240,8 +241,9 @@ Change Commitment Fee Expiry Date for LBT Bilateral Deal
     Close All Windows on LIQ
     
 Create New Ongoing Fee for LBT Bilateral Deal
-    [Documentation]    This keyword willcreate new ongoing fee for LB Bilateral Deal 
+    [Documentation]    This keyword will create new ongoing fee for LBT Bilateral Deal 
     ...    @author: javinzon	22FEB2021    - Initial create
+    ...    @update: javinzon    23FEB2021    - Added Keyword 'Write Data to Excel' and updated documentation
     [Arguments]    ${ExcelPath}
 
     ${Deal_Name}    Read Data From Excel    CRED01_DealSetup    Deal_Name    1
@@ -252,6 +254,7 @@ Create New Ongoing Fee for LBT Bilateral Deal
     ### Launch Facility ###
     Launch Existing Facility    ${Deal_Name}    ${Facility_Name}
     ${Fee_Alias}    Create New Ongoing Fee
+    Write Data To Excel    CRED08_OngoingFeeSetup    Fee_Alias    ${rowid}    ${Fee_Alias}
 
     ### Update and Release Commitment Fee ###
     Update Commitment Fee    &{ExcelPath}[OngoingFee_EffectiveDate]    &{ExcelPath}[OngoingFee_ActualDate]    &{ExcelPath}[OngoingFee_AdjustedDueDate]    &{ExcelPath}[OngoingFee_Accrue]    &{ExcelPath}[OngoingFee_AccrualEndDate]    ${ExcelPath}[Cycle_Frequency] 
@@ -270,3 +273,52 @@ Create New Ongoing Fee for LBT Bilateral Deal
     Get and Validate Dates in Accrual Tab    &{ExcelPath}[Cycle_Number2]    &{ExcelPath}[Cycle2_StartDate]    &{ExcelPath}[Cycle2_EndDate]
     Validate Dues on Accrual Tab for Commitment Fee    &{ExcelPath}[Cycle2_CycleDueAmt]    &{ExcelPath}[Cycle_Number2]    &{ExcelPath}[Cycle2_Projected_EOCAccrual]    &{ExcelPath}[Cycle2_Projected_EOCDue]   
     
+Charge Monthly Commitment Fee for LBT Bilateral Deal (3/4/2020 to 15/5/2020)
+    [Documentation]    This keyword is used to charge commitment fee (3/4/2020 to 15/5/2020) for LBT Bilateral Deal
+    ...    @author: javinzon    23FEB2021    - Initial create
+    [Arguments]    ${ExcelPath}
+    
+    ${Deal_Name}    Read Data From Excel    CRED01_DealSetup    Deal_Name    1
+	${Facility_Name}    Read Data From Excel    CRED01_FacilitySetup    Facility_Name    1
+    ${Borrower_Name}    Read Data From Excel    PTY001_QuickPartyOnboarding    LIQCustomer_ShortName    1
+    ${Fee_Alias}    Read Data From Excel    CRED08_OngoingFeeSetup    Fee_Alias    3
+    
+    Close All Windows on LIQ
+    Launch Existing Facility    ${Deal_Name}    ${Facility_Name}
+    Navigate to Ongoing Fee Notebook    ${Fee_Alias}
+    Initiate Commitment Fee Ongoing Fee Payment    &{ExcelPath}[Expected_RequestedAmt]    &{ExcelPath}[Expected_CurrentCycleDue]    &{ExcelPath}[Expected_ProjectedCycleDue]    &{ExcelPath}[Effective_Date]    &{ExcelPath}[Comment]
+    
+    ### Create Cashflows ###
+    Navigate to Payment Workflow and Proceed With Transaction    ${CREATE_CASHFLOWS_TYPE}
+    Set All Items to Do It
+
+    ### Generate Intent Notice ###
+    Navigate to Payment Workflow and Proceed With Transaction        ${GENERATE_INTENT_NOTICES}
+    Select Notices Recipients
+    Exit Notice Window
+
+    ### Sending Payment For Approval ###
+    Navigate to Payment Workflow and Proceed With Transaction    ${SEND_TO_APPROVAL_STATUS}
+    Close All Windows on LIQ
+    Logout from Loan IQ
+    
+    ### Payment Approval ####
+    Login to Loan IQ    ${SUPERVISOR_USERNAME}    ${SUPERVISOR_PASSWORD}
+    Navigate Transaction in WIP     ${PAYMENTS_TRANSACTION}    ${AWAITING_APPROVAL_STATUS}    ${ONGOING_FEE_PAYMENT_TRANSACTION}    ${Facility_Name}
+    Navigate to Payment Workflow and Proceed With Transaction    ${APPROVAL_STATUS}
+    Close All Windows on LIQ
+    Logout from Loan IQ
+    
+    ### Release Payment ###
+    Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
+    Navigate Transaction in WIP     ${PAYMENTS_TRANSACTION}    ${AWAITING_RELEASE_STATUS}    ${ONGOING_FEE_PAYMENT_TRANSACTION}    ${Facility_Name}
+    Navigate to Payment Workflow and Proceed With Transaction    ${RELEASE_STATUS}
+    Close All Windows on LIQ
+   
+    ### Validation ###
+    Navigate to Facility Notebook    ${Deal_Name}    ${Facility_Name}
+    Navigate to Ongoing Fee Notebook    ${Fee_Alias}
+    Validate release of Ongoing Fee Payment
+    Close Ongoing Fee Payment Notebook Window
+    Validate Dues on Accrual Tab for Commitment Fee    &{ExcelPath}[AfterPayment_CycleDueAmt]    &{ExcelPath}[Cycle_No]    &{ExcelPath}[AfterPayment_Projected_EOCAccrual]    &{ExcelPath}[AfterPayment_Projected_EOCDue]    &{ExcelPath}[AfterPayment_PaidToDate]   
+    Close All Windows on LIQ
