@@ -24,3 +24,7 @@ Create Ongoing Fee Payment then Perform Online Accrual
     Set Test Variable    ${rowid}    3
     Mx Execute Template With Multiple Data    Create New Ongoing Fee for LBT Bilateral Deal    ${ExcelPath}    ${rowid}    CRED08_OngoingFeeSetup
     
+Charge monthly commitment fee (3/4/2020 - 15/5/2020)
+	Set Test Variable    ${rowid}    2
+	Mx Execute Template With Multiple Data    Charge Monthly Commitment Fee for LBT Bilateral Deal (3/4/2020 to 15/5/2020)    ${ExcelPath}    ${rowid}    SERV21_FeePayment
+    
