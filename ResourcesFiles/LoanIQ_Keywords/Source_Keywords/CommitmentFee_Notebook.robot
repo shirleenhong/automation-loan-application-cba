@@ -2132,3 +2132,42 @@ Enter Ongoing Fee Comment
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/OngoingFeePaymentWindow_Comment
     Select Menu Item    ${LIQ_OngoingFeePayment_Window}    File    Save    
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/OngoingFeePaymentWindow_Comment
+
+Navigate to Capitalize Interest Payment from Ongoing Fee Notebook
+    [Documentation]    This keyword is used to open loan capitalization window from Ongoing Fee Notebook
+    ...    @author: mcastro    23FEB2021    - Initial create
+
+    Mx LoanIQ activate window    ${LIQ_OngoingFeePayment_Window}
+    Mx LoanIQ click element if present    ${LIQ_OngoingFee_InquiryMode_Button}
+    Mx LoanIQ select    ${LIQ_CommitmentFee_Capitalization_Menu}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/OngoingFeePayment_FeeCapitalization 
+    Mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/OngoingFeePayment_FeeCapitalization
+
+Enter Fee Capitalization Details
+    [Documentation]    This keyword is used to enter Fee Capitalization details for commitment fee
+    ...    @author: mcastro    23FEB2021    - Initial create
+    [Arguments]    ${sFeeCapitalization_Status}    ${sFrom_Date}    ${sTo_Date}    ${sLoan_Alias}    ${sPricing_Option}    ${sFacility}=None
+    
+    ### GetRuntime Keyword Pre-processing ###
+    ${FeeCapitalization_Status}    Acquire Argument Value    ${sFeeCapitalization_Status}
+    ${From_Date}    Acquire Argument Value    ${sFrom_Date}
+    ${To_Date}    Acquire Argument Value    ${sTo_Date}
+    ${Loan_Alias}    Acquire Argument Value    ${sLoan_Alias}
+    ${Pricing_Option}    Acquire Argument Value    ${sPricing_Option}
+    ${Facility}    Acquire Argument Value    ${sFacility}
+	
+    Mx LoanIQ activate window    ${LIQ_CommitmentFee_CapitalizationEditor_Window}
+    Mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/Fee_Capalization_Window 
+
+    Mx LoanIQ Set    ${LIQ_CommitmentFee_CapitalizationEditor_ActivateFeeCap_CheckBox}    ${FeeCapitalization_Status}
+    Mx LoanIQ enter    ${LIQ_CommitmentFee_CapitalizationEditor_FromDate_Textfield}    ${From_Date}
+    Mx LoanIQ enter    ${LIQ_CommitmentFee_CapitalizationEditor_ToDate_Textfield}    ${To_Date} 
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/Fee_Capalization_Window    
+    Run Keyword If     '${Facility}'!='None'    Mx LoanIQ Select Combo Box Value    ${LIQ_CommitmentFee_CapitalizationEditor_ToFacility_DropdownList}    ${Facility}
+    Mx LoanIQ Select Combo Box Value    ${LIQ_CommitmentFee_CapitalizationEditor_ToLoan_DropdownList}    ${Pricing_Option} Loan (${Loan_Alias})
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/Fee_Capalization_Window
+    Mx LoanIQ click    ${LIQ_CommitmentFee_CapitalizationEditor_OK_Button}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/Fee_Capalization_Window    
+    
