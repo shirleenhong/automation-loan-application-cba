@@ -96,6 +96,7 @@ Create Loan Drawdown for LLA Syndicated Deal - Outstanding B
     ...    @author: makcamps    26JAN2021    - Initial Create
     ...    @update: makcamps    08FEB2021    - fixed arguments for creating drawdown
     ...    @update: makcamps    17FEB2021    - fixed loan alias value for argument
+    ...    @update: makcamps    24FEB2021    - fixed spacing
     [Arguments]    ${ExcelPath}
 
     ${Deal_Name}    Read Data From Excel    CRED01_DealSetup    Deal_Name    1
@@ -350,7 +351,7 @@ Create Loan Merge for Outstanding B1 and C for LLA Syndicated Deal
     ...    @author: makcamps    23FEB2021    - Initial Create
     [Arguments]    ${ExcelPath}
     
-    ### Retrieve Base Rate Payload Values ###
+    ### Retrieve Loan Values for Loan Merge ###
     ${Outstanding_B_Alias}    Read Data From Excel    SERV01_LoanDrawdown    Loan_Alias    2
     ${Outstanding_C_Alias}    Read Data From Excel    SERV01_LoanDrawdown    Loan_Alias    3
     ${Outstanding_C_LoanAmt}    Read Data From Excel    SERV01_LoanDrawdown    Loan_RequestedAmount    3
@@ -438,5 +439,6 @@ Create Loan Merge for Outstanding B1 and C for LLA Syndicated Deal
     Open Existing Deal    &{ExcelPath}[Deal_Name]
     Navigate to Outstanding Select Window from Deal
     Navigate to Existing Loan    &{ExcelPath}[OutstandingSelect_Type]    &{ExcelPath}[Facility_Name]    &{ExcelPath}[New_Loan_Alias]
+    Validate Updated Global and Host Bank Amount after Repricing    &{ExcelPath}[New_LoanAmount]    &{ExcelPath}[New_HostBankAmount]
     Validate Event Status in Loan Events Tab    ${RELEASED_STATUS}
     Close All Windows on LIQ

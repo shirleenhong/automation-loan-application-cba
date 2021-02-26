@@ -5,6 +5,10 @@ Resource    ../../../Configurations/LoanIQ_Import_File.robot
 ${rowid}    1
 
 *** Test Cases ***
+
+Get Dataset for LLA Syndicated Deal
+    Mx Execute Template With Specific Test Case Name    Get Correct Dataset From Dataset List    ${NEW_UAT_DEALS_ExcelPath}    UAT_Deal_Scenario_Name    LLA_SYND    UAT_Deal_Scenarios
+
 Facility Extension
     Mx Execute Template With Multiple Data    Update Facility Expiry and Maturity Date Through FCT    ${ExcelPath}    ${rowid}    CRED02_FacilitySetup
     Mx Execute Template With Multiple Data    Update Borrowers External Credit Rating History    ${ExcelPath}    ${rowid}    CRED08_OngoingFeeSetup

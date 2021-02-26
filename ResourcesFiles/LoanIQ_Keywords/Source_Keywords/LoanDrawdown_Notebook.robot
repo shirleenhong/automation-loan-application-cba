@@ -3509,13 +3509,13 @@ Navigate to Loan Drawdown Workflow and Proceed with Rate Setting
     [Documentation]    This keyword navigates to the Loan Drawdown Workflow using the Rate Settings
     ...    @author: makcamps    08FEB2021    Initial create
     ...    @update: mcastro    09FEB2021    - Added  ${sAcceptRate_FromInterpolation} argument; Updated keyword used from 'Navigate to Workflow and Select Rate Setting to No' to 'Navigate to Workflow and Select Rate Setting'
-    [Arguments]    ${sTransaction}    ${sAcceptRate_FromInterpolation}=N    ${Notebook_Window}=${LIQ_InitialDrawdown_Window}    ${Notebook_Tab}=${LIQ_InitialDrawdown_Tab}    ${Notebook_WorkflowAction}=${LIQ_InitialDrawdown_WorkflowAction}
+    [Arguments]    ${sTransaction}    ${sAcceptRate_FromInterpolation}=N
 
     ### Keyword Pre-processing ###
     ${Transaction}    Acquire Argument Value    ${sTransaction}
     ${AcceptRate_FromInterpolation}    Acquire Argument Value    ${sAcceptRate_FromInterpolation}
 
-    Navigate to Workflow and Select Rate Setting    ${Notebook_Window}    ${Notebook_Tab}    ${Notebook_WorkflowAction}    ${Transaction}    ${AcceptRate_FromInterpolation}
+    Navigate to Workflow and Select Rate Setting    ${LIQ_InitialDrawdown_Window}    ${LIQ_InitialDrawdown_Tab}    ${LIQ_InitialDrawdown_WorkflowAction}    ${Transaction}    ${AcceptRate_FromInterpolation}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LoanDradown_Workflow
 
 Navigate to Loan Pending Tab and Proceed with the Transaction
