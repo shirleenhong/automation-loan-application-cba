@@ -20,7 +20,7 @@ LIQ_LineFee_AdjustedDue_Date = 'JavaWindow("title:=Line Fee.*").JavaEdit("attach
 LIQ_LineFee_AccrualEnd_Date = 'JavaWindow("title:=Line Fee.*").JavaEdit("attached text:=Accrual End Date:")'
 LIQ_LineFee_Cycle = 'JavaWindow("title:=Line Fee.*").JavaList("attached text:=Cycle Frequency:")' 
 LIQ_LineFee_Accrue_Dropdown = 'JavaWindow("title:=Line Fee.*").JavaList("attached text:=Accrue.*")' 
-LIQ_LineFee_PayType_Dropdown = 'JavaWindow("title:=Line Fee.*").JavaList("attached text:=Actual/365.*")' 
+LIQ_LineFee_PayType_Dropdown = 'JavaWindow("title:=Line Fee.*").JavaList("attached text:=Rate Basis.*")'
 LIQ_LineFeeReleasedNotebook_Window = 'JavaWindow("title:=Line Fee.* / Released:.*")'
 LIQ_LineFee_Currency_Text = 'JavaWindow("title:=Line Fee.*").JavaStaticText("labeled_containers_path:=Tab:General;", "Index:=16")'
 LIQ_LineFee_ActualExpiryDate_Text = 'JavaWindow("title:=Line Fee.*").JavaStaticText("labeled_containers_path:=Tab:General;", "Index:=1")'

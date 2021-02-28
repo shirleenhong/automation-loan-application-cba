@@ -10,3 +10,7 @@ Get Dataset for PT Health Syndicated Deal
     
 Accrual Adjustment for Fee Period 24/01/2020 to 24/04/2020 (Period 2)
     Mx Execute Template With Multiple Data    Cycle Shares Adjustment for PT Health    ${ExcelPath}    ${rowid}    MTAM06_AccrualsAdjustment
+    
+Collection Line Fee Period 3 for PT Health Syndicated Deal
+    Set Test Variable    ${rowid}    3
+    Mx Execute Template With Multiple Data    Pay Line Fee without Online Accrual for PT Health Syndicated Deal    ${ExcelPath}    ${rowid}    CRED08_OngoingFeeSetup
