@@ -287,7 +287,11 @@ Add Interest Payment for Loan Repricing
     ### Loan Repricing Window ###
     Mx LoanIQ Activate Window    ${LIQ_LoanRepricing_Window}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LoanRepricingWindow_GeneralTab
-    Mx LoanIQ Enter    ${LIQ_LoanRepricing_AutoReduceFacility_Checkbox}    ${ON}
+
+    ${AutoReduceFacility_Checkbox}    Run Keyword and Return Status    Validate if Element is Enabled    ${LIQ_LoanRepricing_AutoReduceFacility_Checkbox}    AutoReduceFacility_Checkbox
+    Run Keyword if    '${AutoReduceFacility_Checkbox}'=='${TRUE}'    Mx LoanIQ Enter    ${LIQ_LoanRepricing_AutoReduceFacility_Checkbox}    ${ON}
+    
+
     Mx LoanIQ Click    ${LIQ_LoanRepricingForDeal_Add_Button}
     Mx LoanIQ Click Element If Present    ${LIQ_Warning_Yes_Button}
 
@@ -2341,3 +2345,23 @@ Validate Loan Amounts of Existing Outstandings
     ${Actual_TotalLoan_Amount}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_LoanRepricingForDealAdd_JavaTree}    Total:%Amount%Actual_TotalLoan_Amount
     Compare Two Strings    ${Actual_TotalLoan_Amount}    ${Total_LoanAmount}    Total Loan Amounts
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/TotalExistingOutstandingAmount
+
+Select Existing Outstandings for Loan Repricing and Update the Requested Amount
+    [Documentation]    High level keyword to select the existing loan and update the amount
+    [Arguments]    ${sLoan_Alias}    ${sRequested_Amount}
+    
+    ### GetRuntime Keyword Pre-processing ###
+    ${Loan_Alias}    Acquire Argument Value    ${sLoan_Alias}
+    ${Requested_Amount}    Acquire Argument Value    ${sRequested_Amount}
+
+    mx LoanIQ activate window    ${LIQ_LoanRepricingForDeal_Window}
+    Mx LoanIQ Select Or DoubleClick In Javatree    ${LIQ_LoanRepricing_Outstanding_List}    ${sLoan_Alias}%d
+    Mx LoanIQ select    ${LIQ_RolloverConversion_Option_ModifyRequestedAmount}
+
+    Mx LoanIQ enter    ${LIQ_UpdateRequestedAmount_RequestedAmount_RequestedAmountTextfield}    ${sRequested_Amount}
+    Takescreenshot    ${screenshot_path}/LoanRepricing
+    Mx LoanIQ click    ${LIQ_UpdateRequestedAmount_Ok_Button}
+    Takescreenshot    ${screenshot_path}/LoanRepricing
+    Mx LoanIQ select    ${LIQ_RolloverConversion_File_Exit}
+
+    
