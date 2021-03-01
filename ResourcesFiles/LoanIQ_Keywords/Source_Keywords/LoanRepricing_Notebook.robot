@@ -2382,9 +2382,9 @@ Select Existing Outstandings for Loan Repricing and Update the Requested Amount
     Mx LoanIQ select    ${LIQ_RolloverConversion_Option_ModifyRequestedAmount}
 
     Mx LoanIQ enter    ${LIQ_UpdateRequestedAmount_RequestedAmount_RequestedAmountTextfield}    ${Requested_Amount}
-    Takescreenshot    ${screenshot_path}/LoanRepricing
+    Takescreenshot    ${screenshot_path}/Screenshots/LoanIQ/LoanRepricing
     Mx LoanIQ click    ${LIQ_UpdateRequestedAmount_Ok_Button}
-    Takescreenshot    ${screenshot_path}/LoanRepricing
+    Takescreenshot    ${screenshot_path}/Screenshots/LoanIQ/LoanRepricing
     Mx LoanIQ select    ${LIQ_RolloverConversion_File_Exit}
 
     
