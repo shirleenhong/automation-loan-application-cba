@@ -8,7 +8,7 @@ ${rowid}    1
 Get Dataset for ATM BILAT
     Mx Execute Template With Specific Test Case Name    Get Correct Dataset From Dataset List    ${NEW_UAT_DEALS_ExcelPath}    UAT_Deal_Scenario_Name    ATM_BILAT    UAT_Deal_Scenarios
 
-Rollover - repayment schedule
+Rollover - Repayment Schedule for Facility Renew
     Set Test Variable    ${rowid}    1
     Mx Execute Template With Multiple Data    Create Rollover Repayment Schedule for ATM BILAT   ${ExcelPath}    ${rowid}    SERV08_ComprehensiveRepricing
 

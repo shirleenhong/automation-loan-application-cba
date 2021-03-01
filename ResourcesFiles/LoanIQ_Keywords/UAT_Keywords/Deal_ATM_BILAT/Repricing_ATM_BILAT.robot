@@ -22,7 +22,7 @@ Create Rollover Repayment Schedule for ATM BILAT
     Select Repricing Type    &{ExcelPath}[Repricing_Type]
     Select Loan Repricing for Deal    ${Loan_Alias}
 
-    ## Update the existing Loan ###
+    ### Update the existing Loan ###
     Select Existing Outstandings for Loan Repricing and Update the Requested Amount    ${Loan_Alias}    ${Loan_RequestedAmount}
 
        

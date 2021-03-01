@@ -278,6 +278,7 @@ Add Interest Payment for Loan Repricing
     ...                                        - added return value as this will be use for Cashflow calculations
     ...                                        - Updated take screenshot
     ...    @update: clanding    13AUG2020     - Updated hardcoded values to global variables
+    ...    @update: kmagday     01MAR2021     - Added checking of AutoReduceFacility_Checkbox if enabled before ticking
     [Arguments]    ${sCyclesForLoan}=None    ${sInterestRequestedAmount}=None    ${sRunTimeVar_InterestPaymentRequestedAmount}=None
 
     ### Keyword Pre-processing ###
@@ -2369,6 +2370,7 @@ Validate Loan Amounts of Existing Outstandings
 
 Select Existing Outstandings for Loan Repricing and Update the Requested Amount
     [Documentation]    High level keyword to select the existing loan and update the amount
+    ...    @author: kmagday    01MAR2021    - Initial create
     [Arguments]    ${sLoan_Alias}    ${sRequested_Amount}
     
     ### GetRuntime Keyword Pre-processing ###
@@ -2376,10 +2378,10 @@ Select Existing Outstandings for Loan Repricing and Update the Requested Amount
     ${Requested_Amount}    Acquire Argument Value    ${sRequested_Amount}
 
     mx LoanIQ activate window    ${LIQ_LoanRepricingForDeal_Window}
-    Mx LoanIQ Select Or DoubleClick In Javatree    ${LIQ_LoanRepricing_Outstanding_List}    ${sLoan_Alias}%d
+    Mx LoanIQ Select Or DoubleClick In Javatree    ${LIQ_LoanRepricing_Outstanding_List}    ${Loan_Alias}%d
     Mx LoanIQ select    ${LIQ_RolloverConversion_Option_ModifyRequestedAmount}
 
-    Mx LoanIQ enter    ${LIQ_UpdateRequestedAmount_RequestedAmount_RequestedAmountTextfield}    ${sRequested_Amount}
+    Mx LoanIQ enter    ${LIQ_UpdateRequestedAmount_RequestedAmount_RequestedAmountTextfield}    ${Requested_Amount}
     Takescreenshot    ${screenshot_path}/LoanRepricing
     Mx LoanIQ click    ${LIQ_UpdateRequestedAmount_Ok_Button}
     Takescreenshot    ${screenshot_path}/LoanRepricing

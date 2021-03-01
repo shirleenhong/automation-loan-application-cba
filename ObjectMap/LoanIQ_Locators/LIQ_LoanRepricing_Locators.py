@@ -123,12 +123,12 @@ LIQ_LoanRepricing_QuickRepricing_EffectiveDate_Textfield = 'JavaWindow("title:=.
  
 
 ### Rollover/conversion window ###
-LIQ_RolloverConversion_Window = 'JavaWindow("title:=.*Pending Rollover/Conversion.*")'
-LIQ_RolloverConversion_Option_ModifyRequestedAmount = 'JavaWindow("title:=.*Pending Rollover/Conversion.*").JavaMenu("label:=Options").JavaMenu("label:=Modify Requested Amount")'
-LIQ_RolloverConversion_File_Save = 'JavaWindow("title:=.*Pending Rollover/Conversion.*").JavaMenu("label:=File").JavaMenu("label:=Save")'
-LIQ_RolloverConversion_File_Exit = 'JavaWindow("title:=.*Pending Rollover/Conversion.*").JavaMenu("label:=File").JavaMenu("label:=Exit")'
+LIQ_RolloverConversion_Window = 'JavaWindow("title:=.*Rollover/Conversion.*")'
+LIQ_RolloverConversion_Option_ModifyRequestedAmount = 'JavaWindow("title:=.*Rollover/Conversion.*").JavaMenu("label:=Options").JavaMenu("label:=Modify Requested Amount")'
+LIQ_RolloverConversion_File_Save = 'JavaWindow("title:=.*Rollover/Conversion.*").JavaMenu("label:=File").JavaMenu("label:=Save")'
+LIQ_RolloverConversion_File_Exit = 'JavaWindow("title:=.*Rollover/Conversion.*").JavaMenu("label:=File").JavaMenu("label:=Exit")'
 
 
-LIQ_UpdateRequestedAmount_RequestedAmount_Window = 'JavaWindow("title:=.*Pending Rollover/Conversion.*").JavaWindow("title:=.*Update Requested Amount.*")'
-LIQ_UpdateRequestedAmount_RequestedAmount_RequestedAmountTextfield = 'JavaWindow("title:=.*Pending Rollover/Conversion.*").JavaWindow("title:=.*Update Requested Amount.*").JavaEdit("index:=0")'
-LIQ_UpdateRequestedAmount_Ok_Button = 'JavaWindow("title:=.*Pending Rollover/Conversion.*").JavaWindow("title:=.*Update Requested Amount.*").JavaButton("label:=OK")'
+LIQ_UpdateRequestedAmount_RequestedAmount_Window = 'JavaWindow("title:=.*Rollover/Conversion.*").JavaWindow("title:=.*Update Requested Amount.*")'
+LIQ_UpdateRequestedAmount_RequestedAmount_RequestedAmountTextfield = 'JavaWindow("title:=.*Rollover/Conversion.*").JavaWindow("title:=.*Update Requested Amount.*").JavaEdit("index:=0")'
+LIQ_UpdateRequestedAmount_Ok_Button = 'JavaWindow("title:=.*Rollover/Conversion.*").JavaWindow("title:=.*Update Requested Amount.*").JavaButton("label:=OK")'
