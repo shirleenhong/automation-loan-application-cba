@@ -121,3 +121,14 @@ LIQ_LoanRepricing_QuickRepricingForDeal_Workflow_JavaTree = 'JavaWindow("title:=
 LIQ_LoanRepricing_QuickRepricing_Alias_Textfield = 'JavaWindow("title:=.*Quick Repricing For Alias.*").JavaStaticText("x:=160","y:=151")'
 LIQ_LoanRepricing_QuickRepricing_EffectiveDate_Textfield = 'JavaWindow("title:=.*Quick Repricing For Alias.*").JavaEdit("attached text:=Effective Date.*")'
  
+
+### Rollover/conversion window ###
+LIQ_RolloverConversion_Window = 'JavaWindow("title:=.*Rollover/Conversion.*")'
+LIQ_RolloverConversion_Option_ModifyRequestedAmount = 'JavaWindow("title:=.*Rollover/Conversion.*").JavaMenu("label:=Options").JavaMenu("label:=Modify Requested Amount")'
+LIQ_RolloverConversion_File_Save = 'JavaWindow("title:=.*Rollover/Conversion.*").JavaMenu("label:=File").JavaMenu("label:=Save")'
+LIQ_RolloverConversion_File_Exit = 'JavaWindow("title:=.*Rollover/Conversion.*").JavaMenu("label:=File").JavaMenu("label:=Exit")'
+
+
+LIQ_UpdateRequestedAmount_RequestedAmount_Window = 'JavaWindow("title:=.*Rollover/Conversion.*").JavaWindow("title:=.*Update Requested Amount.*")'
+LIQ_UpdateRequestedAmount_RequestedAmount_RequestedAmountTextfield = 'JavaWindow("title:=.*Rollover/Conversion.*").JavaWindow("title:=.*Update Requested Amount.*").JavaEdit("index:=0")'
+LIQ_UpdateRequestedAmount_Ok_Button = 'JavaWindow("title:=.*Rollover/Conversion.*").JavaWindow("title:=.*Update Requested Amount.*").JavaButton("label:=OK")'
