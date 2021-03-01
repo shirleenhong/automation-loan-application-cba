@@ -16,3 +16,7 @@ Combine B1&C and Rollover
     Mx Execute Template With Multiple Data    Send Notice for Loan Repricing    ${ExcelPath}    ${rowid}    Correspondence
     Set Test Variable    ${rowid}    15
     Mx Execute Template With Multiple Data    Send Notice for Loan Repricing    ${ExcelPath}    ${rowid}    Correspondence
+    Set Test Variable    ${rowid}    16
+    Mx Execute Template With Multiple Data    Send Notice for Loan Repricing    ${ExcelPath}    ${rowid}    Correspondence
+    Set Test Variable    ${rowid}    17
+    Mx Execute Template With Multiple Data    Send Notice for Loan Repricing    ${ExcelPath}    ${rowid}    Correspondence

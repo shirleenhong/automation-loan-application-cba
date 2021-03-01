@@ -399,7 +399,7 @@ Validate the Notice Window in LIQ
     ...    @update: makcamps    15JAN2021    - added argument for Line Fee in Advance Payment Notice
     ...    @update: makcamps    09FEB2021    - added argument for Rollover Intent Notice
     ...    @update: makcamps    10FEB2021    - added argument for Rollover Rate Setting Notice
-    ...    @update: makcamps    01MAR2021    - removed an argument from Rollover Intent Notice
+    ...    @update: makcamps    01MAR2021    - removed an argument for Rollover Rate Setting Notice and Rollover Intent Notice
     [Arguments]    ${sSearch_By}    ${sNotice_Identifier}    ${sFrom_Date}    ${sThru_Date}    ${sNotice_Status}    ${sNotice_Customer_LegalName}    
     ...    ${sContact}    ${sNoticeGroup_UserID}    ${sNotice_Method}
     ...    ${sNotice_Type}    ${sPath_XMLFile}    ${sDeal_Name}    ${sXML_NoticeType}    ${sLoan_PricingOption}    
@@ -467,7 +467,7 @@ Validate the Notice Window in LIQ
     ...    ${XML_NoticeType}    ${Rate_Basis}    ${EffectiveDate}    ${Loan_RepricingDate}    ${Loan_PricingOption}    ${Currency}
     ...    ${Loan_BorrowerAmount}    ${Loan_LenderAmount}    ${Loan_PaymentAmount}
     ...    ELSE IF    '${Notice_Type}' == 'Deal Level Loan Repricing Rate Setting Notice'    Run Keyword    Validate Rollover Rate Setting Notice Details    ${Path_XMLFile}    ${Notice_Customer_LegalName}
-    ...    ${Contact}    ${Deal_Name}    ${XML_NoticeType}    ${Notice_AllInRate}    ${EffectiveDate}    ${Loan_RepricingDate}    ${Loan_PricingOption}    ${Currency}
+    ...    ${Contact}    ${Deal_Name}    ${XML_NoticeType}    ${EffectiveDate}    ${Loan_RepricingDate}    ${Loan_PricingOption}    ${Currency}
     ...    ${Loan_BorrowerAmount}    ${Loan_LenderAmount}    ${Loan_PaymentAmount}
 
 Validate the Paperclip Notice Window in LIQ
@@ -551,7 +551,7 @@ Validate Resent Notice in Business Event Output Window in LIQ and Return Current
                 
     Write Data To Excel for API_Data    Correspondence    Correlation_ID    ${rowid}    ${Field_Value}
     [Return]    ${CurrentDate}    ${FieldValue}    
-
+ 
 Validate Failed Notice in Logged Exception List Window in LIQ
     [Documentation]    This keyword navigates to Logged Exception List Window thru Exception Queue option item in WIP.
     ...    @author: mgaling
@@ -561,7 +561,7 @@ Validate Failed Notice in Logged Exception List Window in LIQ
     Refresh Tables in LIQ
     Navigate to Logged Exception List Window
     Validate Logged Exception List Window - Failed    ${sDeal_Name}    ${sNotice_Identifier}    ${sWIP_ExceptionQueueDescription}    
-      
+
 Validate the Notice Window in LIQ thru WIP
     [Documentation]    This keyword navigates back to Notice Window thru WIP and validates data.
     ...    @author: mgaling
@@ -1116,7 +1116,7 @@ Validate Rollover Intent Notice Details
     ${Status}    Run Keyword And Return Status    Should Contain    ${XMLFile}    ${XML_NoticeType}
     Run Keyword If    ${Status}==${True}    Log    ${XML_NoticeType} is present
     ...    ELSE    Run Keyword and Continue on Failure    Fail    ${XML_NoticeType} is not present
-    
+
     ###Rate Basis Validation###
     ${Status}    Run Keyword And Return Status    Should Contain    ${XMLFile}    ${Rate_Basis}
     Run Keyword If    ${Status}==${True}    Log    ${Rate_Basis} is present
@@ -1160,8 +1160,9 @@ Validate Rollover Intent Notice Details
 Validate Rollover Rate Setting Notice Details
     [Documentation]    This keyword validates the Notice details in XML.
     ...    @author: makcamps    10FEB2021    - initial create
+    ...    @update: makcamps    01MAR2021    - removed notice all in rate validation
     [Arguments]    ${sPath_XMLFile}    ${sNotice_Customer_LegalName}    ${sContact}    ${sDeal_Name}    ${sXML_NoticeType}
-    ...    ${sNotice_AllInRate}    ${sEffectiveDate}    ${sLoan_RepricingDate}    ${sLoan_PricingOption}
+    ...    ${sEffectiveDate}    ${sLoan_RepricingDate}    ${sLoan_PricingOption}
     ...    ${sCurrency}    ${sLoan_BorrowerAmount}    ${sLoan_LenderAmount}    ${sLoan_PaymentAmount}
     
     ### Keyword Pre-processing ###
@@ -1170,7 +1171,6 @@ Validate Rollover Rate Setting Notice Details
     ${Contact}    Acquire Argument Value    ${sContact}
     ${Deal_Name}    Acquire Argument Value    ${sDeal_Name}
     ${XML_NoticeType}    Acquire Argument Value    ${sXML_NoticeType}
-    ${Notice_AllInRate}    Acquire Argument Value    ${sNotice_AllInRate}
     ${EffectiveDate}    Acquire Argument Value    ${sEffectiveDate}
     ${Loan_RepricingDate}    Acquire Argument Value    ${sLoan_RepricingDate}
     ${Loan_PricingOption}    Acquire Argument Value    ${sLoan_PricingOption}
@@ -1200,11 +1200,6 @@ Validate Rollover Rate Setting Notice Details
     ${Status}    Run Keyword And Return Status    Should Contain    ${XMLFile}    ${XML_NoticeType}
     Run Keyword If    ${Status}==${True}    Log    ${XML_NoticeType} is present
     ...    ELSE    Run Keyword and Continue on Failure    Fail    ${XML_NoticeType} is not present
-    
-    ###Amount Validation###
-    ${Status}    Run Keyword And Return Status    Should Contain    ${XMLFile}    ${Notice_AllInRate}
-    Run Keyword If    ${Status}==${True}    Log    ${Notice_AllInRate} is present
-    ...    ELSE    Run Keyword and Continue on Failure    Fail    ${Notice_AllInRate} is not present
     
     ###Effective Validation###
     ${Status}    Run Keyword And Return Status    Should Contain    ${XMLFile}    ${EffectiveDate}
