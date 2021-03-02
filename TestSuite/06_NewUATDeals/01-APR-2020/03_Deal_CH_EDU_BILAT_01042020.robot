@@ -20,3 +20,7 @@ Combine W + Interest and Fee Capitalisation (1 Jan 20 - 1 April 20) and Rollover
 Generate and Send Repricing Intent Notice
     Set Test Variable    ${rowid}    14
     Mx Execute Template With Multiple Data    Send Repricing Intent Notice for CH EDU Bilateral Deal    ${ExcelPath}    ${rowid}    Correspondence
+
+Generate and Send Rate Setting Intent Notice
+    Set Test Variable    ${rowid}    15
+    Mx Execute Template With Multiple Data    Send Repricing Rate Setting Notice for CH EDU Bilateral Deal    ${ExcelPath}    ${rowid}    Correspondence
