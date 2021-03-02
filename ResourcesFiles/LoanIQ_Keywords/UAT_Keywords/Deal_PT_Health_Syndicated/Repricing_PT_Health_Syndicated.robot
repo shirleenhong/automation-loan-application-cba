@@ -24,7 +24,7 @@ Create Comprehensive Repricing for PT Health
     ### Repricing Notebook - Add > Rolllover/Conversion to New ###  
     Cick Add in Loan Repricing Notebook
     Set Repricing Detail Add Options     &{ExcelPath}[Repricing_Add_Option_Setup]    &{ExcelPath}[Pricing_Option]    &{ExcelPath}[Facility_Name]    &{ExcelPath}[Borrower_Name]
-    ${Effective_Date}    ${NewLoan_Alias}    Set RolloverConversion Notebook General Details    &{ExcelPath}[Loan_RequestedAmount]    &{ExcelPath}[Repricing_Frequency]
+    ${Effective_Date}    ${NewLoan_Alias}    Set RolloverConversion Notebook General Details    &{ExcelPath}[Loan_RequestedAmount]    &{ExcelPath}[Repricing_Frequency]    &{ExcelPath}[Repricing_Date]
     Save Notebook Transaction    ${LIQ_RolloverConversion_Window}    ${LIQ_RolloverConversion_Save_Menu}
     Close RolloverConversion Notebook
     
