@@ -349,6 +349,7 @@ Create Comprehensive Repricing for LLA Syndicated Deal
 Create Loan Merge for Outstanding B1 and C for LLA Syndicated Deal
     [Documentation]    This is a high-level keyword to combine outstanding B1 and C for LLA Syndicated Deal.
     ...    @author: makcamps    23FEB2021    - Initial Create
+    ...    @update: makcamps    01MAR2021    - added writing of notice details
     [Arguments]    ${ExcelPath}
     
     ### Retrieve Loan Values for Loan Merge ###
@@ -381,6 +382,10 @@ Create Loan Merge for Outstanding B1 and C for LLA Syndicated Deal
     
     Write Data To Excel    SERV08_ComprehensiveRepricing    New_LoanAmount    ${rowid}    &{ExcelPath}[Rollover_Amount]
     Write Data To Excel    SERV08_ComprehensiveRepricing    New_Loan_Alias    ${rowid}    ${Alias_LoanMerge}
+    Write Data To Excel    Correspondence    Loan_Alias    14    ${Alias_LoanMerge}    bTestCaseColumn=True    sColumnReference=rowid
+    Write Data To Excel    Correspondence    Loan_Alias    15    ${Alias_LoanMerge}    bTestCaseColumn=True    sColumnReference=rowid
+    Write Data To Excel    Correspondence    Loan_Alias    16    ${Alias_LoanMerge}    bTestCaseColumn=True    sColumnReference=rowid
+    Write Data To Excel    Correspondence    Loan_Alias    17    ${Alias_LoanMerge}    bTestCaseColumn=True    sColumnReference=rowid
     Validate New Outstanding Amount for Loan Repricing    ${BaseRate_OptionName}    ${Alias_LoanMerge}    &{ExcelPath}[Rollover_Amount]
     Validate and Add Interest Payment for Loan Repricing    ${Outstanding_C_Alias}    &{ExcelPath}[Outstanding_C_IntAmt]
     Validate and Add Interest Payment for Loan Repricing    ${Outstanding_B_Alias}    &{ExcelPath}[Outstanding_B_IntAmt]
