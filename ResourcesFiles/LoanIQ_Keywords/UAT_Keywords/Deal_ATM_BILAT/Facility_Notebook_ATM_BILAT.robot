@@ -57,7 +57,8 @@ Create Facility for ATM BILAT
 
 Add Another Facility with Ongoing Fees for ATM BILAT
     [Documentation]    This keyword is used to add another facility for ATM BILAT deal
-    ...    @author: ccarriedo    21JAN2021    Initial Create
+    ...    @author: ccarriedo    21JAN2021    - Initial Create
+    ...    @update: ccarriedo    23FEB2021    - In keyword Setup Interest Pricing for ATM Bilateral Deal, changed &{ExcelPath}[Interest_SpreadAmt] to &{ExcelPath}[Interest_SpreadAmt2]
     [Arguments]    ${ExcelPath}
     
     ### Login to LoanIQ ###
@@ -87,7 +88,7 @@ Add Another Facility with Ongoing Fees for ATM BILAT
     Add Borrower    &{ExcelPath}[Facility_Currency]    &{ExcelPath}[Facility_BorrowerSGName]    &{ExcelPath}[Facility_BorrowerPercent]    &{ExcelPath}[Facility_Borrower2]
     ...    &{ExcelPath}[Facility_GlobalLimit]    &{ExcelPath}[Facility_BorrowerMaturity]    &{ExcelPath}[Facility_EffectiveDate2]
 
-    Setup Interest Pricing for ATM Bilateral Deal    &{ExcelPath}[Interest_AddItem]    &{ExcelPath}[Interest_OptionName]    &{ExcelPath}[Interest_RateBasis]    &{ExcelPath}[Interest_SpreadAmt]
+    Setup Interest Pricing for ATM Bilateral Deal    &{ExcelPath}[Interest_AddItem]    &{ExcelPath}[Interest_OptionName]    &{ExcelPath}[Interest_RateBasis]    &{ExcelPath}[Interest_SpreadAmt2]
 
     ### Facility Penalty Spread ###
     Set Facility Pricing Penalty Spread    &{ExcelPath}[Penalty_Spread]    &{ExcelPath}[Penalty_Status]

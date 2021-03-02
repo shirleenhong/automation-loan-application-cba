@@ -2341,3 +2341,52 @@ Validate Loan Amounts of Existing Outstandings
     ${Actual_TotalLoan_Amount}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_LoanRepricingForDealAdd_JavaTree}    Total:%Amount%Actual_TotalLoan_Amount
     Compare Two Strings    ${Actual_TotalLoan_Amount}    ${Total_LoanAmount}    Total Loan Amounts
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/TotalExistingOutstandingAmount
+    
+
+Validate General Tab of Pending Rollover/Conversion Notebook After Comprehensive Repricing
+    [Documentation]    This keyword is used to validate fields in General Tab of Pending Rollover/Conversion Notebook after Comprehensive Repricing
+    ...    @author: ccarriedo    21JAN2021    - Initial create
+    [Arguments]    ${sRepricing_EffectiveDate}    ${sRepricing_MaturityDate}    ${sRepricing_Frequency}    ${sRepricing_Date}    ${sRepricing_Payment_Mode}    
+    ...    ${sRepricing_Int_Cycle_Freq}    ${sRepricing_Actual_Due_Date}    ${sRepricing_Adjusted_Due_Date}    ${sRepricing_Accrue}    ${sRepricing_Accrual_End_Date}
+
+    ### GetRuntime Keyword Pre-processing ###
+    ${Loan_EffectiveDate}    Acquire Argument Value    ${sRepricing_EffectiveDate}
+    ${Loan_MaturityDate}    Acquire Argument Value    ${sRepricing_MaturityDate}
+    ${Loan_RepricingFrequency}    Acquire Argument Value    ${sRepricing_Frequency}
+    ${Loan_RepricingDate}    Acquire Argument Value    ${sRepricing_Date}
+    ${Loan_PaymentMode}    Acquire Argument Value    ${sRepricing_Payment_Mode}
+    ${Loan_IntCycleFrequency}    Acquire Argument Value    ${sRepricing_Int_Cycle_Freq}
+    ${Loan_ActualDueDate}    Acquire Argument Value    ${sRepricing_Actual_Due_Date}
+    ${Loan_AdjustedDueDate}    Acquire Argument Value    ${sRepricing_Adjusted_Due_Date}
+    ${Loan_Accrue}    Acquire Argument Value    ${sRepricing_Accrue}
+    ${Loan_AccrualEndDate}    Acquire Argument Value    ${sRepricing_Accrual_End_Date}
+
+    mx LoanIQ activate window    ${LIQ_RolloverConversion_Window}
+
+    Validate Loan IQ Details    ${Loan_EffectiveDate}    ${LIQ_RolloverConversion_EffectiveDate_Textfield}
+    Validate Loan IQ Details    ${Loan_MaturityDate}    ${LIQ_RolloverConversion_MaturityDate_Textfield}
+    Validate Loan IQ Details    ${Loan_RepricingFrequency}    ${LIQ_RolloverConversion_RepricingFrequency_List}
+    Validate Loan IQ Details    ${Loan_RepricingDate}    ${LIQ_RolloverConversion_RepricingDate_Textfield}
+    Validate Loan IQ Details    ${Loan_PaymentMode}    ${LIQ_RolloverConversion_PaymentMode_List}
+    Validate Loan IQ Details    ${Loan_IntCycleFrequency}    ${LIQ_RolloverConversion_IntCycleFreq_Dropdown}
+    Validate Loan IQ Details    ${Loan_ActualDueDate}    ${LIQ_RolloverConversion_ActualDueDate_Textfield}
+    Validate Loan IQ Details    ${Loan_AdjustedDueDate}    ${LIQ_RolloverConversion_AdjustedDueDate_Textfield}
+    Validate Loan IQ Details    ${Loan_Accrue}    ${LIQ_RolloverConversion_Accrue_List}
+    Validate Loan IQ Details    ${Loan_AccrualEndDate}    ${LIQ_RolloverConversion_AccrualEndDate_Textfield}
+
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/RolloverGeneralTabAfterComprehensiveRepricing
+    
+Select New Outstandings for Loan Repricing
+    [Documentation]    Low-level keyword used to select an New Outstanding in the Loan Repricing Notebook
+    ...    @update: ccarriedo    26FEB2021    - Initial create
+    [Arguments]    ${sPricing_Option}    ${sNewLoan_Alias}
+    
+    ### GetRuntime Keyword Pre-processing ###
+    ${Pricing_Option}    Acquire Argument Value    ${sPricing_Option}
+    ${NewLoan_Alias}    Acquire Argument Value    ${sNewLoan_Alias}
+
+    ${New_Outstanding}    Set Variable    ${Pricing_Option} (${NewLoan_Alias})
+    mx LoanIQ activate window    ${LIQ_LoanRepricingForDeal_Window}
+    ${Amount}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_LoanRepricing_Outstanding_List}    ${New_Outstanding}%Amount%amount
+    Mx LoanIQ Select String    ${LIQ_LoanRepricing_Outstanding_List}    ${New_Outstanding}
+    [Return]    ${Amount}
