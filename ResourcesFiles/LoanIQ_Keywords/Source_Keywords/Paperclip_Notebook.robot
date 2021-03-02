@@ -318,7 +318,12 @@ Release Paperclip Transaction
     ...    @author: ritragel
     ...    @update: mcastro    16DEC2020    - Added additional validation of question or warning if displayed, added Take screenshot
     ...    @update: mcastro    17DEC2020    - Added additional Closing of Cashflow window if present
+    ...    @update: makcamps   17FEB2021    - added argument and condition for when you need to click break funding  yes or no button
+    [Arguments]    ${sBreakFunding_Value}=${LIQ_BreakFunding_Yes_Button}
 
+    ### Keyword Preprocessing ###
+    ${BreakFunding_Value}    Acquire Argument Value    ${sBreakFunding_Value}
+    
     Mx LoanIQ activate window    ${LIQ_PendingPaperClip_Window}
     Mx LoanIQ Select Window Tab    ${LIQ_PaperClip_Tabs}    Workflow
     Mx LoanIQ DoubleClick    ${LIQ_PaperClip_Workflow_Tab}    Release
@@ -326,7 +331,7 @@ Release Paperclip Transaction
     mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
     mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}  
     Validate if Question or Warning Message is Displayed
-    Repeat Keyword    3 times    Mx LoanIQ click element if present    ${LIQ_BreakFunding_Yes_Button}
+    Repeat Keyword    3 times    Mx LoanIQ click element if present    ${BreakFunding_Value}
     Mx LoanIQ click element if present    ${LIQ_Information_OK_Button}
     Mx LoanIQ click element if present    ${LIQ_Cashflows_OK_Button}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/ReleasePaperClip    

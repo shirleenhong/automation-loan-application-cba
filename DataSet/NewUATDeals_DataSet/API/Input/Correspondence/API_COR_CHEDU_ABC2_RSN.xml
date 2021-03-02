@@ -1,0 +1,97 @@
+<liqInfo>
+    {"event_schema_id":"2148","event":{"header":{"correlationId":"LIQ-O6EOU9K4-8*EOU7O7-2","processPath":{"array":[{"source":"FINASTRA_CCB","timestamp":"2021-02-24T12:11:01.899+08:00"}]}},"sourceSystem":{"string":"FINASTRA_CCB"},"ttl":{"au.com.cba.avro.customermanagement.noticesnotify.ttl":{"ttlDuration":"300","ttlSourceTime":"2021-02-24T12:11:01.896+08:00"}},"cifIds":{"array":[{"string":"1710818"}]},"documentInfo":{"documentPackage":{"businessChannel":"LOANIQ","name":null,"version":null,"templateId":null,"fileType":null,"content":"
+    <FinastraApplication>
+        <StandardNotice>
+            <ProcessingArea>AUSNA</ProcessingArea>
+            <Address>
+                <line>Date: 24-Feb-2021</line>
+                <line>TO  : CH EDU Limited 1710818</line>
+                <line>ATTN: Linda Chu</line>
+                <line>Re  : CH EDU BILAT DEAL AUD 158.2M 17DEC191610</line>
+            </Address>
+            <BodyContent>
+                <section>
+                    <line>                          *** ROLLOVER RATE SET NOTICE ***</line>
+                    <line/>
+                    <line>In accordance with the facility agreement, we advise the following has been requested.</line>
+                    <line/>
+                    <line>Description: AUD Loan Repricing for the Deal CH EDU BILAT DEAL AUD 158.2M 17DEC191610. - Decrease</line>
+                    <line/>
+                    <line>Effective Date: 20-Mar-2020 </line>
+                    <line/>
+                    <line>Borrower CH EDU Limited 1710818 in REV_CASH_ADVANCE_FAC_38121 has the following LOANS repricing: </line>
+                    <line/>
+                    <line>                                                             Current    </line>
+                    <line>                                                             End        </line>
+                    <line>Description                                        Amount    Date       </line>
+                    <line>----------------------------------------------------------------------------------------</line>
+                    <line> BBSY - Bid Loan                             24,350,000.00    20-Mar-2020  </line>
+                    <line/>
+                    <line>Borrower CH EDU Limited 1710818 in REV_CASH_ADVANCE_FAC_38121 has elected to repay outstandings as follows:</line>
+                    <line/>
+                    <line>Description                                        Amount</line>
+                    <line>--------------------------------------------------------------------------------</line>
+                    <line> Principal Payment                            3,900,000.00 </line>
+                </section>
+                <section>
+                    <line>Borrower CH EDU Limited 1710818 in REV_CASH_ADVANCE_FAC_38121 will make the following INTEREST payments: </line>
+                    <line/>
+                    <line>Description                                        Amount</line>
+                    <line>--------------------------------------------------------------------------------</line>
+                    <line> BBSY - Bid                                      14,448.29 </line>
+                </section>
+                <section>
+                    <line>Borrower CH EDU Limited 1710818 in REV_CASH_ADVANCE_FAC_38121 will have the following new LOANS: </line>
+                    <line/>
+                    <line>                                                           Next       </line>
+                    <line>Pricing                                                    End        </line>
+                    <line>Option                                           Amount    Date       </line>
+                    <line>----------------------------------------------------------------------------------------</line>
+                    <line> BBSY - Bid                                 20,450,000.00   03-Apr-2020  </line>
+                </section>
+                <section>
+                    <line>Borrower CH EDU Limited 1710818 in REV_CASH_ADVANCE_FAC_38121 rates have been set as follows:</line>
+                </section>
+                <section>
+                    <line>                                                                      Next       </line>
+                    <line>Pricing                                                               End        </line>
+                    <line>Option                                      Amount   All In Rate      Date       </line>
+                    <line>----------------------------------------------------------------------------------------</line>
+                    <line> BBSY - Bid                            20,450,000.00      1.555000%     03-Apr-2020  </line>
+                    <line> BBSY - Bid: 0.855000%</line>
+                    <line> Margin: 0.700000%</line>
+                    <line> Interest Due: AUD 12,197.16  </line>
+                    <line> Interest Due Date: 03-Apr-2020</line>
+                </section>
+                <section>
+                    <line/>
+                    <line>We will debit your nominated account for an amount of AUD 14,448.29 on the effective date.</line>
+                    <line/>
+                    <line>For: CH EDU Limited 1710818</line>
+                    <line/>
+                    <line>Account Number:   </line>
+                    <line>4444 55555</line>
+                    <line>Account Name:  </line>
+                    <line>CH EDU Limited</line>
+                    <line>Routing Number:</line>
+                </section>
+                <section>
+                    <line>Reference: AUSNA1001789</line>
+                </section>
+                <section>
+                    <line>Please remit AUD 3,900,000.00 into our nominated account below for value on the effective date.</line>
+                    <line/>
+                    <line>For: CH EDU Limited 1710818</line>
+                </section>
+                <section>
+                    <line>Reference: AUSNA1001789</line>
+                </section>
+                <section>
+                    <line/>
+                </section>
+            </BodyContent>
+        </StandardNotice>
+    </FinastraApplication>
+    "},"documentStorage":{"status":null,"fileName":null,"inputSource":null,"inputSourceDetail":null,"scanDate":null,"departmentId":{"string":"TM_COL"},"retrievalId":null,"documentumType":null,"applicationNumber":null,"purgeDate":null,"boxLocation":null,"recordManager":null,"description":null,"processes":{"array":[{"string":"8*EOU7O7"}]},"services":{"array":[{"string":"1001789"}]},"accountNumbers":{"array":[{"source":{"string":"LOANIQ"},"productCode":{"string":"OST"},"number":{"string":"60002857"}}]},"processFlags":{"array":[{"name":null,"value":null}]}}},"emailSecureMessageDetails":{"subject":"1001789 CH EDU BILAT DEAL AUD 158.2M 17DEC191610","senderEmail":"NON-AGENCY@CBA.AU.COM","toRecipientEmail":"IwantToTest@nowhere.com.test","ccRecipientEmail":{"string":"JOHN.DOE_1@CBA.AU.COM"},"mimeType":null,"messageID":"LIQ-O6EOU9K4-8*EOU7O7-2","body":null,"attachment":null,"inBandAttachment":null,"deliveredToEmail":null,"undeliveredToEmail":null,"systemCode":null,"systemName":null,"identifier":{"string":"AUSNA"},"digitalSignature":null}}}
+
+</liqInfo>

@@ -246,6 +246,9 @@ BREAKFUNDING_FEE_APPLIED = "Breakfunding Fee Applied"
 REVIEW_SCHEDULE_STATUS = "Review Schedule"
 SCHEDULED_COMMITMENT_INCREASE_TRANSACTION = "Scheduled Commitment Increase"
 COMMITMENT_INCREASE_RELEASED = "Commitment Increase Released"
+ACCOUNTING = 'Accounting'
+PERFORM_ONLINE_ACCRUAL = 'Perform Online Accrual'
+AS_OF_ACCRUAL_TRIGGER = 'Create As-Of Accrual Trigger...'
 
 ### Bank Role ###
 REFERENCE_BANK_ROLE = "Reference Bank"

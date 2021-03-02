@@ -1,0 +1,86 @@
+<liqInfo>
+    {"event_schema_id":"2148","event":{"header":{"correlationId":"LIQ-RGEOWPPE-RLEOWO5U-3","processPath":{"array":[{"source":"FINASTRA_CCB","timestamp":"2021-03-01T12:07:35.042+08:00"}]}},"sourceSystem":{"string":"FINASTRA_CCB"},"ttl":{"au.com.cba.avro.customermanagement.noticesnotify.ttl":{"ttlDuration":"300","ttlSourceTime":"2021-03-01T12:07:35.042+08:00"}},"cifIds":{"array":[{"string":"82"}]},"documentInfo":{"documentPackage":{"businessChannel":"LOANIQ","name":null,"version":null,"templateId":null,"fileType":null,"content":"
+    <FinastraApplication>
+        <StandardNotice>
+            <ProcessingArea>AUSAG</ProcessingArea>
+            <Address>
+                <line>Date: 01-Mar-2021</line>
+                <line>TO  : WESTPAC BANKING CORP</line>
+                <line>ATTN: JOHN BLACK</line>
+                <line>Re  : LLA SYND DEAL AUD 500M 23NOV1830136</line>
+            </Address>
+            <BodyContent>
+                <section>
+                    <line>                            *** ROLLOVER INTENT NOTICE ***</line>
+                    <line/>
+                    <line>In accordance with the facility agreement, we advise the following has been requested.</line>
+                    <line/>
+                    <line>Description: AUD Loan Repricing for the Deal LLA SYND DEAL AUD 500M 23NOV1830136.</line>
+                    <line/>
+                    <line>Effective Date: 06-Jan-2020 </line>
+                </section>
+                <section>
+                    <line>Borrower LLA Pty Ltd 1711726 in REVOLVING CASH ADV FAC56145 has the following LOANS repricing: </line>
+                    <line/>
+                    <line>                                                                            Current    </line>
+                    <line>                                                                            End        </line>
+                    <line>Description                                      Amount     Your Share      Date       </line>
+                    <line>----------------------------------------------------------------------------------------</line>
+                    <line> BBSY - Bid Loan                           35,000,000.00    24,500,000.00    06-Jan-2020   </line>
+                    <line> BBSY - Bid Loan                          260,000,000.00   182,000,000.00    06-Jan-2020   </line>
+                </section>
+                <section>
+                    <line>Borrower LLA Pty Ltd 1711726 in REVOLVING CASH ADV FAC56145 will make the following INTEREST payments: </line>
+                    <line/>
+                    <line>Description                          Amount      Your Share</line>
+                    <line>--------------------------------------------------------------------------------</line>
+                    <line> BBSY - Bid                        45,926.71         32,148.70</line>
+                    <line> BBSY - Bid                       714,465.76        500,126.03</line>
+                    <line/>
+                    <line>Calculated as follows:</line>
+                    <line/>
+                    <line>Rate Basis:  Actual/365</line>
+                    <line/>
+                    <line>Start       End         Days CCY Amount        All        Amount   </line>
+                    <line>                                               In Rate             </line>
+                    <line>___________ ___________ ____ ___ _____________ __________ _________</line>
+                    <line/>
+                    <line>06-Dec-2019 31-Dec-2019 26   AUD 24,500,000.00 1.545000%  26,963.42</line>
+                    <line>01-Jan-2020 05-Jan-2020 5    AUD 24,500,000.00 1.545000%  5,185.28 </line>
+                </section>
+                <section>
+                    <line/>
+                    <line>Borrower LLA Pty Ltd 1711726 in REVOLVING CASH ADV FAC56145 will have the following new LOANS: </line>
+                    <line/>
+                    <line>                                                                            Next       </line>
+                    <line>Pricing                                                                     End        </line>
+                    <line>Option                                           Amount     Your Share      Date       </line>
+                    <line>----------------------------------------------------------------------------------------</line>
+                    <line> BBSY - Bid                                295,000,000.00  206,500,000.00    24-Feb-2020   </line>
+                </section>
+                <section>
+                    <line>Rates will be set on: 06-Jan-2020</line>
+                </section>
+                <section>
+                    <line>We will credit your nominated account for an amount of AUD 532,274.73 on the effective date.</line>
+                    <line/>
+                    <line>For: WESTPAC BANKING CORP</line>
+                    <line/>
+                    <line>Account Number:   </line>
+                    <line>032916100059</line>
+                    <line>Account Name:  </line>
+                    <line>WESTPAC BANKING CORPORATION SYDNEY</line>
+                    <line>Routing Number:</line>
+                </section>
+                <section>
+                    <line>Reference: AUSAG1002441</line>
+                </section>
+                <section>
+                    <line/>
+                </section>
+            </BodyContent>
+        </StandardNotice>
+    </FinastraApplication>
+    "},"documentStorage":{"status":null,"fileName":null,"inputSource":null,"inputSourceDetail":null,"scanDate":null,"departmentId":{"string":"RE_RES"},"retrievalId":null,"documentumType":null,"applicationNumber":null,"purgeDate":null,"boxLocation":null,"recordManager":null,"description":null,"processes":{"array":[{"string":"RLEOWO5U"}]},"services":{"array":[{"string":"1002441"}]},"accountNumbers":{"array":[{"source":{"string":"LOANIQ"},"productCode":{"string":"OST"},"number":{"string":"60003060"}}]},"processFlags":{"array":[{"name":null,"value":null}]}}},"emailSecureMessageDetails":{"subject":"1002441 LLA SYND DEAL AUD 500M 23NOV1830136","senderEmail":"AGENCY@CBA.AU.COM","toRecipientEmail":"johncarlo.delacruz@finastra.com","ccRecipientEmail":{"string":"JOHN.DOE@CBA.AU.COM"},"mimeType":null,"messageID":"LIQ-RGEOWPPE-RLEOWO5U-3","body":null,"attachment":null,"inBandAttachment":null,"deliveredToEmail":null,"undeliveredToEmail":null,"systemCode":null,"systemName":null,"identifier":{"string":"AUSAG"},"digitalSignature":null}}}
+
+</liqInfo>

@@ -10,6 +10,8 @@ ${SCENARIO}
 Create Deal Borrower Initial Details in Quick Party Onboarding for LLA Syndicated Deal
     [Documentation]    This keyword creates a Deal Borrower in Quick Party Onboarding for LLA Syndicated Deal.
     ...    @author:    makcamps    17DEC2020    Initial Create
+    ...    @update:    makcamps    22FEB2021    added writing of notice details
+    ...    @update:    makcamps    01MAR2021    added writing of notice details
     [Arguments]    ${ExcelPath}
 
     ### INPUTTER ###
@@ -30,6 +32,16 @@ Create Deal Borrower Initial Details in Quick Party Onboarding for LLA Syndicate
     Write Data To Excel    PTY001_QuickPartyOnboarding    Party_ID    ${rowid}    ${Party_ID}
     Write Data To Excel    PTY001_QuickPartyOnboarding    LIQCustomer_ShortName    ${rowid}    ${Short_Name.upper()}
     Write Data To Excel    PTY001_QuickPartyOnboarding    LIQBorrower_LegalName    ${rowid}    ${Enterprise_Name}
+    
+    Write Data To Excel    Correspondence    Notice_Customer_LegalName    2    ${Enterprise_Name}    bTestCaseColumn=True    sColumnReference=rowid
+    Write Data To Excel    Correspondence    Notice_Customer_LegalName    4    ${Enterprise_Name}    bTestCaseColumn=True    sColumnReference=rowid
+    Write Data To Excel    Correspondence    Notice_Customer_LegalName    6    ${Enterprise_Name}    bTestCaseColumn=True    sColumnReference=rowid
+    Write Data To Excel    Correspondence    Notice_Customer_LegalName    8    ${Enterprise_Name}    bTestCaseColumn=True    sColumnReference=rowid
+    Write Data To Excel    Correspondence    Notice_Customer_LegalName    10    ${Enterprise_Name}    bTestCaseColumn=True    sColumnReference=rowid
+    Write Data To Excel    Correspondence    Notice_Customer_LegalName    11    ${Enterprise_Name}    bTestCaseColumn=True    sColumnReference=rowid
+    Write Data To Excel    Correspondence    Notice_Customer_LegalName    13    ${Enterprise_Name}    bTestCaseColumn=True    sColumnReference=rowid
+    Write Data To Excel    Correspondence    Notice_Customer_LegalName    15    ${Enterprise_Name}    bTestCaseColumn=True    sColumnReference=rowid
+    Write Data To Excel    Correspondence    Notice_Customer_LegalName    17    ${Enterprise_Name}    bTestCaseColumn=True    sColumnReference=rowid
     
     Populate Quick Enterprise Party    ${Party_ID}    &{ExcelPath}[Country_of_Tax_Domicile]    &{ExcelPath}[Country_of_Registration]
     ...    &{ExcelPath}[Address_Type]    &{ExcelPath}[Country_Region]    &{ExcelPath}[Post_Code]    &{ExcelPath}[Document_Collection_Status]

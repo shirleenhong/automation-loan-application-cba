@@ -19,6 +19,7 @@ Populate Outgoing Manual Cashflow Notebook - General Tab
     [Documentation]    This Keyword is used for populating Outgoing Manual Cashflow Notebook - General Tab.
     ...    @author: hstone     07JUL2020      - Initial Create
     ...    @update: hstone     13JUL2020      - Used actual locator for verifying attached text of a static text
+    ...    @update: makcamps   17FEB2021      - added search deal expense code before clicking expense code from tree
     [Arguments]    ${sBranch_Code}    ${sEffective_Date}    ${sCurrency}    ${sUpfrontFee_Amount}    ${sDescription}    ${sProc_Area}    ${sDeal_ExpenseCode}    ${sDeal_Borrower}
     ...    ${sCustomer_ServicingGroup}    ${sBranch_ServicingGroup}    ${sDeal_Name}=None    ${sFacility_Name}=None
     
@@ -53,6 +54,7 @@ Populate Outgoing Manual Cashflow Notebook - General Tab
     ...    ELSE    Run Keywords    Log    Deal Expense Code filled-out does not match the test data. Test Script will proceed with expense code selection based from test data.
     ...    AND    mx LoanIQ click    ${LIQ_OutgoingManualCashflow_Expense_Button}
     ...    AND    mx LoanIQ activate window    ${LIQ_SelectExpenseCode_Window}
+    ...    AND    mx LoanIQ enter    ${LIQ_SelectExpenseCode_Search_Field}    ${Deal_ExpenseCode}
     ...    AND    Mx LoanIQ Select Or DoubleClick In Javatree    ${LIQ_SelectExpenseCode_JavaTree}    ${Deal_ExpenseCode}%s
     ...    AND    mx LoanIQ click    ${LIQ_SelectExpenseCode_OK_Button}
 
@@ -89,6 +91,32 @@ Add Debit Offset in Outgoing Manual Cashflow Notebook
     
     mx LoanIQ activate window    ${LIQ_DebitGLOffsetDetails_Window}
     Mx LoanIQ Set    ${LIQ_DebitGLOffsetDetails_NewWIP_RadioButton}    ON
+    mx LoanIQ enter    ${LIQ_DebitGLOffsetDetails_Amount_Field}    ${UpfrontFee_Amount}
+    mx LoanIQ select list    ${LIQ_DebitGLOffsetDetails_GLShortName_List}    ${GL_ShortName}
+    Run Keyword If    '${sPortfolioCode}'!='None'    Run Keywords    mx LoanIQ click    ${LIQ_DebitGLOffsetDetails_Portfolio_Button}
+    ...    AND    mx LoanIQ activate window    ${LIQ_SelectPortfolioCode_Window}
+    ...    AND    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/SelectPortfolioCode
+    ...    AND    Mx LoanIQ Select Or DoubleClick In Javatree    ${LIQ_SelectPortfolioCode_JavaTree}    ${PortfolioCode}%s
+    ...    AND    mx LoanIQ click    ${LIQ_SelectPortfolioCode_OK_Button}
+    mx LoanIQ activate window    ${LIQ_DebitGLOffsetDetails_Window}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/DebitGLOffsetDetails
+    mx LoanIQ click    ${LIQ_DebitGLOffsetDetails_OK_Button}
+
+Add Debit Offset Fee Income in Outgoing Manual Cashflow Notebook
+    [Documentation]    This keyword is for adding Debit in Outgoing Manual Cashflow Notebook.
+    ...    @author: makcamps     17FEB2021      - Initial Create
+    [Arguments]    ${sUpfrontFee_Amount}    ${sGL_ShortName}    ${sPortfolioCode}=None
+    
+    ### Keyword Pre-processing ###
+    ${UpfrontFee_Amount}    Acquire Argument Value    ${sUpfrontFee_Amount}
+    ${GL_ShortName}    Acquire Argument Value    ${sGL_ShortName}
+    ${PortfolioCode}    Acquire Argument Value    ${sPortfolioCode}
+
+    mx LoanIQ activate window    ${LIQ_OutgoingManualCashflow_Window}
+    mx LoanIQ click    ${LIQ_OutgoingManualCashflow_AddDebittOffset_Button}
+    
+    mx LoanIQ activate window    ${LIQ_DebitGLOffsetDetails_Window}
+    Mx LoanIQ Set    ${LIQ_DebitGLOffsetDetails_FeeIncome_RadioButton}    ON
     mx LoanIQ enter    ${LIQ_DebitGLOffsetDetails_Amount_Field}    ${UpfrontFee_Amount}
     mx LoanIQ select list    ${LIQ_DebitGLOffsetDetails_GLShortName_List}    ${GL_ShortName}
     Run Keyword If    '${sPortfolioCode}'!='None'    Run Keywords    mx LoanIQ click    ${LIQ_DebitGLOffsetDetails_Portfolio_Button}
@@ -161,7 +189,19 @@ Release Outgoing Manual Cashflow
     Mx LoanIQ Select Window Tab    ${LIQ_OutgoingManualCashflow_Tab}    Workflow
     
     Mx LoanIQ DoubleClick    ${LIQ_OutgoingManualCashflow_WorkflowItems}    Release
-    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
+    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}  
+
+Validate Outgoing Manual Cashflow Notebook - Events Tab
+    [Documentation]    This keyword verifies if Outgoing Manual Cashflow Transaction Released event is displayed.
+    ...    @author: makcamps    22FEB2021      - Initial Create
+    
+    mx LoanIQ activate window    ${LIQ_OutgoingManualCashflow_Window}
+    Mx LoanIQ Select Window Tab    ${LIQ_OutgoingManualCashflow_Tab}    Events
+    
+    ${Event_Selected}    Run Keyword And Return Status    Mx LoanIQ Select String    ${LIQ_OutgoingManualCashflow_EventsItems}    Released
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/OutgoingManualCashflowWindow_EventsTab
+    Run Keyword If    ${Event_Selected}==${True}    Log    Released is shown in the Events list of the Outgoing Manual Cashflow notebook.
+    ...    ELSE    Run Keyword and Continue on Failure    Fail    Outgoing Manual Cashflow is not Released.
     
 Validate GL Entries in Outgoing Manual Cashflow Notebook
     [Documentation]    This keyword validates the GL Entries after the Outgoing Manual Cashflow Transaction.

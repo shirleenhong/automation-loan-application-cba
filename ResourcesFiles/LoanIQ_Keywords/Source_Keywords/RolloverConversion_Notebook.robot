@@ -133,15 +133,13 @@ Send Loan Repricing for Approval
     ...    @author: ritragel
     ...    @update: jdelacru    12MAR2019    - Added error handler to cater those scenario with no Cashflows
     ...    @update: clanding    13AUG2020    - updated hard coded values to global variables; added screenshot
+    ...    @update: kmagday     01MAR2021    - change clicking of warning and question to Validate if Question or Warning Message is Displayed
     mx LoanIQ click element if present    ${LIQ_Error_OK_Button}
     mx LoanIQ activate window    ${LIQ_LoanRepricingForDeal_Window}
     Mx LoanIQ Select Window Tab    ${LIQ_LoanRepricingForDeal_Workflow_Tab}    ${WORKFLOW_TAB}  
     Mx LoanIQ DoubleClick    ${LIQ_LoanRepricingForDeal_Workflow_JavaTree}    ${SEND_TO_APPROVAL_STATUS}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LoanRepricingForDealWindow
-    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
-    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LoanRepricingForDealWindow 
-    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
-    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
+    Validate if Question or Warning Message is Displayed
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LoanRepricingForDealWindow
     
 Approve Loan Repricing
@@ -173,12 +171,11 @@ Send to Rate Approval
 Approve Rate Setting Notice
     [Documentation]    This keyword is used to Approved Rate Setting Notice
     ...    @author: ritragel
+    ...    @update: kmagday    01MAR2021    - change clicking of warning and question to Validate if Question or Warning Message is Displayed
     mx LoanIQ activate window    ${LIQ_LoanRepricingForDeal_Window}
     Mx LoanIQ Select Window Tab    ${LIQ_LoanRepricingForDeal_Workflow_Tab}    Workflow  
     Mx LoanIQ DoubleClick    ${LIQ_LoanRepricingForDeal_Workflow_JavaTree}    Rate Approval 
-    mx LoanIQ click element if present    ${LIQ_Question_Yes_Button}    
-    mx LoanIQ click element if present    ${LIQ_Question_Yes_Button}    
-    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
+    Validate if Question or Warning Message is Displayed
     
 Generate Rate Setting Notices
     [Documentation]    This keyword is used to Generate Rate Setting Notices
