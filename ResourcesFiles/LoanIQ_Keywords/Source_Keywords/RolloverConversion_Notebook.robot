@@ -324,7 +324,7 @@ Set RolloverConversion Notebook General Details
     Mx LoanIQ Enter    ${LIQ_RolloverConversion_RequestedAmt_Textfield}    ${Requested_Amount}
     Verify If Warning Is Displayed
     Mx LoanIQ Select Combo Box Value    ${LIQ_RolloverConversion_RepricingFrequency_List}    ${Repricing_Frequency}
-    Run Keyword If    ${Repricing_Date} != 'None'    Mx LoanIQ Enter    ${LIQ_RolloverConversion_RepricingDate_Textfield}    ${Repricing_Date}
+    Run Keyword If    '${Repricing_Date}'!='None'    Mx LoanIQ Enter    ${LIQ_RolloverConversion_RepricingDate_Textfield}    ${Repricing_Date}
     ${Effective_Date}    Mx LoanIQ Get Data    ${LIQ_RolloverConversion_EffectiveDate_Textfield}    value%date
     ${Loan_Alias}    Mx LoanIQ Get Data    ${LIQ_RolloverConversion_Alias_Textfield}    value%alias
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/RolloverConversion
