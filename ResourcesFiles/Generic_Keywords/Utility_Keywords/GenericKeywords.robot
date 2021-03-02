@@ -774,6 +774,7 @@ Navigate Notebook Workflow
     ...    @update: dahijara    26JAN2021    Added clicking of Yes on confirmation window when present for Rate Setting
     ...    @update: songchan    29JAN2021    Added Setting of Notebook to Update Mode
     ...    @update: dahijara    02FEB2021    Removed Setting of Notebook to Update Mode and Handled update mode for Rate Setting. <change in code was coordinated with songchan>
+    ...    @update: kmagday     01MAR2021    Added Validate if Question or Warning Message is Displayed
     [Arguments]    ${sNotebook_Locator}    ${sNotebookTab_Locator}    ${sNotebookWorkflow_Locator}    ${sTransaction}    
 
     ###Pre-processing Keyword##
@@ -803,6 +804,7 @@ Navigate Notebook Workflow
     ...    AND     mx LoanIQ click element if present    ${LIQ_Question_Yes_Button}
     ...    ELSE IF    '${Transaction}'=='Close'    mx LoanIQ click element if present    ${LIQ_Information_OK_Button}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/NotebookWorkflow
+    Validate if Question or Warning Message is Displayed
 
 Navigate to Workflow and Select Rate Setting
     [Documentation]    This keyword navigates the Workflow tab of a Notebook, and does a Rate Setting and click No for Question.
@@ -823,6 +825,7 @@ Navigate to Workflow and Select Rate Setting
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/NotebookWorkflow
     Mx LoanIQ Select Or DoubleClick In Javatree    ${NotebookWorkflow_Locator}    ${Transaction}%d
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/NotebookWorkflow
+    Repeat Keyword    3 times    mx LoanIQ click element if present    ${LIQ_Confirmation_Yes_Button}
     Run Keyword If    '${AcceptRate_FromInterpolation}'=='N'    Mx LoanIQ click element if present    ${LIQ_Question_No_Button}
     ...    ELSE    Mx LoanIQ click element if present    ${LIQ_Question_Yes_Button}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/NotebookWorkflow
@@ -835,7 +838,7 @@ Navigate to Workflow and Select Rate Setting
 Validate if Question or Warning Message is Displayed
     [Documentation]    This keyword checks continously if a Question or Warning message is displayed, and clicks OK.
     ...    @author: bernchua
-    :FOR    ${i}    IN RANGE    10
+    :FOR    ${i}    IN RANGE    30
     \    ${Question_Displayed}    Run Keyword And Return Status    Mx LoanIQ Verify Object Exist    ${LIQ_Question_Yes_Button}    VerificationData="Yes"
     \    Run Keyword If    ${Question_Displayed}==True    mx LoanIQ click element if present    ${LIQ_Question_Yes_Button}
     \    ${Warning_Displayed}    Run Keyword And Return Status    Mx LoanIQ Verify Object Exist    ${LIQ_Warning_Yes_Button}    VerificationData="Yes"

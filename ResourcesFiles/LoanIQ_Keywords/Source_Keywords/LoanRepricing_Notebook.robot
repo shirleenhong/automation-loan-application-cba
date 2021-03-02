@@ -195,7 +195,7 @@ Select Repricing Detail Add Options
     mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
     Log    Repricing Detail Add Options is selected successfully  
     
-#########=================================++++++++++++++++++++++++++++++++######################    
+#########==============================++++++++++++++++++++++++++++++++######################    
 #### CASHFLOW LOAN REPRICING #####
 
 Verify if Status is set to Do It - Loan Repricing
@@ -278,6 +278,7 @@ Add Interest Payment for Loan Repricing
     ...                                        - added return value as this will be use for Cashflow calculations
     ...                                        - Updated take screenshot
     ...    @update: clanding    13AUG2020     - Updated hardcoded values to global variables
+    ...    @update: kmagday     01MAR2021     - Added checking of AutoReduceFacility_Checkbox if enabled before ticking
     [Arguments]    ${sCyclesForLoan}=None    ${sInterestRequestedAmount}=None    ${sRunTimeVar_InterestPaymentRequestedAmount}=None
 
     ### Keyword Pre-processing ###
@@ -287,7 +288,11 @@ Add Interest Payment for Loan Repricing
     ### Loan Repricing Window ###
     Mx LoanIQ Activate Window    ${LIQ_LoanRepricing_Window}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LoanRepricingWindow_GeneralTab
-    Mx LoanIQ Enter    ${LIQ_LoanRepricing_AutoReduceFacility_Checkbox}    ${ON}
+
+    ${AutoReduceFacility_Checkbox}    Run Keyword and Return Status    Validate if Element is Enabled    ${LIQ_LoanRepricing_AutoReduceFacility_Checkbox}    AutoReduceFacility_Checkbox
+    Run Keyword if    '${AutoReduceFacility_Checkbox}'=='${TRUE}'    Mx LoanIQ Enter    ${LIQ_LoanRepricing_AutoReduceFacility_Checkbox}    ${ON}
+    
+
     Mx LoanIQ Click    ${LIQ_LoanRepricingForDeal_Add_Button}
     Mx LoanIQ Click Element If Present    ${LIQ_Warning_Yes_Button}
 
@@ -1678,6 +1683,18 @@ Navigate to Loan Repricing Workflow and Proceed With Transaction
     Navigate Notebook Workflow    ${LIQ_LoanRepricingForDeal_Window}    ${LIQ_LoanRepricingForDeal_Workflow_Tab}    ${LIQ_LoanRepricingForDeal_Workflow_JavaTree}    ${Transaction}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LoanRepricingWindow_WorkflowTab
 
+Navigate to Loan Repricing Workflow and Proceed With Rate Setting
+    [Documentation]    This keyword navigates to the Loan Drawdown Workflow using the Rate Setting
+    ...    @author: makcamps    24FEB2021    Initial create
+    [Arguments]    ${sTransaction}    ${sAcceptRate_FromInterpolation}=N
+
+    ### Keyword Pre-processing ###
+    ${Transaction}    Acquire Argument Value    ${sTransaction}
+    ${AcceptRate_FromInterpolation}    Acquire Argument Value    ${sAcceptRate_FromInterpolation}
+
+    Navigate to Workflow and Select Rate Setting    ${LIQ_LoanRepricingForDeal_Window}    ${LIQ_LoanRepricingForDeal_Workflow_Tab}    ${LIQ_LoanRepricingForDeal_Workflow_JavaTree}    ${Transaction}    ${AcceptRate_FromInterpolation}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LoanRepricingWindow_WorkflowTab
+
 Add Rollover Conversion to New
     [Documentation]    This keyword is used to Rollover Conversion to New.
     ...    @author: hstone     28MAY2020     - Initial Create
@@ -1984,12 +2001,14 @@ Navigate to Choose a Payment Window
 Validate Rollover/Conversion General tab
     [Documentation]    This keyword is used to verify values on the Rollover/Conversion window General Tab information
     ...    @author: dahijara    18JAN2021    - Initial Create
-    [Arguments]    ${sRepricingFrequency_Expected}    ${sLoanMerge_Amount}    ${sRisk_Type}    ${sRunVar_LoanMergeAlias}=None
+    ...    @update: makcamps    24FEB2021    - added conditions for when repricing date is provided
+    [Arguments]    ${sRepricingFrequency_Expected}    ${sLoanMerge_Amount}    ${sRisk_Type}    ${sRepricingDate_Expected}=None    ${sRunVar_LoanMergeAlias}=None
     
     ### GetRuntime Keyword Pre-processing ###
     ${RepricingFrequency_Expected}    Acquire Argument Value    ${sRepricingFrequency_Expected}
     ${LoanMerge_Amount}    Acquire Argument Value    ${sLoanMerge_Amount}
     ${Risk_Type}    Acquire Argument Value    ${sRisk_Type}
+    ${RepricingDate_Expected}    Acquire Argument Value    ${sRepricingDate_Expected}
 
     mx LoanIQ activate window    ${LIQ_Rollover_Window}
     
@@ -2010,6 +2029,13 @@ Validate Rollover/Conversion General tab
     ...    mx LoanIQ select list    ${LIQ_AwaitingSendToApprovalRollover_RepricingFreq_DropdownList}    ${RepricingFrequency_Expected}           
     ...    AND    mx LoanIQ click element if present    ${LIQ_Error_OK_Button}
     ...    ELSE    Log    Correct Repricing Frequency!
+    
+    ${RepricingDate}    Run Keyword If    '${RepricingDate_Expected}'!='None'    Mx LoanIQ Get Data    ${LIQ_AwaitingSendToApprovalRollover_RepricingDate_Textfield}    value%RepricingDate
+    ${RepricingDate_status}    Run Keyword If    '${RepricingDate_Expected}'!='None'    Run Keyword And Return Status    Should Be Equal    ${RepricingDate}    ${RepricingDate_Expected}
+    Run Keyword If    '${RepricingDate_Expected}'!='None' and ${RepricingDate_status}==${False}    Run Keywords
+    ...    mx LoanIQ enter    ${LIQ_AwaitingSendToApprovalRollover_RepricingDate_Textfield}    ${RepricingDate_Expected}           
+    ...    AND    mx LoanIQ click element if present    ${LIQ_Error_OK_Button}
+    ...    ELSE    Log    Correct Repricing Date!
 
     ${LoanMergeAlias}    Mx LoanIQ Get Data    ${LIQ_RolloverConversion_Alias_Textfield}    label%alias
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LoanMerge_Rollover_GeneralTab
@@ -2342,6 +2368,26 @@ Validate Loan Amounts of Existing Outstandings
     Compare Two Strings    ${Actual_TotalLoan_Amount}    ${Total_LoanAmount}    Total Loan Amounts
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/TotalExistingOutstandingAmount
 
+Select Existing Outstandings for Loan Repricing and Update the Requested Amount
+    [Documentation]    High level keyword to select the existing loan and update the amount
+    ...    @author: kmagday    01MAR2021    - Initial create
+    [Arguments]    ${sLoan_Alias}    ${sRequested_Amount}
+    
+    ### GetRuntime Keyword Pre-processing ###
+    ${Loan_Alias}    Acquire Argument Value    ${sLoan_Alias}
+    ${Requested_Amount}    Acquire Argument Value    ${sRequested_Amount}
+
+    mx LoanIQ activate window    ${LIQ_LoanRepricingForDeal_Window}
+    Mx LoanIQ Select Or DoubleClick In Javatree    ${LIQ_LoanRepricing_Outstanding_List}    ${Loan_Alias}%d
+    Mx LoanIQ select    ${LIQ_RolloverConversion_Option_ModifyRequestedAmount}
+
+    Mx LoanIQ enter    ${LIQ_UpdateRequestedAmount_RequestedAmount_RequestedAmountTextfield}    ${Requested_Amount}
+    Takescreenshot    ${screenshot_path}/Screenshots/LoanIQ/LoanRepricing
+    Mx LoanIQ click    ${LIQ_UpdateRequestedAmount_Ok_Button}
+    Takescreenshot    ${screenshot_path}/Screenshots/LoanIQ/LoanRepricing
+    Mx LoanIQ select    ${LIQ_RolloverConversion_File_Exit}
+
+    
 Add Principal Payment after Rollover Decrease Amount
     [Documentation]    This keyword is used to add and validate the principal payment after rollover decrease amount
     ...    @author: dahijara    22FEB2021    - Initial create
