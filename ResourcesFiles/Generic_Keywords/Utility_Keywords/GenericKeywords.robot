@@ -2472,11 +2472,15 @@ Compare Two Numbers
     [Documentation]    This keyword is used for comparison of two numbers if they are equal or not
     ...    @author: hstone    19MAY2020    Initial create
     ...    @update: dahijara    23FEB2021    Added Pre-processing keyword. Added logging of passed or failed message
+    ...    @update: shirhong    03MAR2021    Added step to remove comma and convert to number for the arguments
     [Arguments]    ${sNum1}    ${sNum2}
 
     ### Keyword Pre-processing ###
     ${Num1}    Acquire Argument Value    ${sNum1}
     ${Num2}    Acquire Argument Value    ${sNum2}
+
+    ${Num1}    Remove Comma and Convert to Number    ${Num1}
+    ${Num2}    Remove Comma and Convert to Number    ${Num2}
 
     ${status}    Run Keyword And Return Status     Should Be Equal As Numbers    ${Num1}    ${Num2}
     Run Keyword If    ${status}==${True}    Log    ${Num1} and ${Num2} Matched! 
