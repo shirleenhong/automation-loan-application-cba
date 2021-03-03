@@ -309,6 +309,7 @@ Set RolloverConversion Notebook General Details
     ...                @update: sahalder    25JUN2020    Added keyword Pre-Processing steps
     ...                @update: dahijara    25AUG2020    Added steps for saving. Added post processing and screenshot.
     ...                @update: songchan    26FEB2021    Added Repricing Date
+    ...                @update: shirhong    03MAR2021    Added handling of warning message if Repricing Date is a holiday
     [Arguments]    ${sRequested_Amount}    ${sRepricing_Frequency}    ${sRepricing_Date}=None    ${sRunVar_Effective_Date}=None    ${sRunVar_Loan_Alias}=None
     
     ### GetRuntime Keyword Pre-processing ###
@@ -322,6 +323,7 @@ Set RolloverConversion Notebook General Details
     Verify If Warning Is Displayed
     Mx LoanIQ Select Combo Box Value    ${LIQ_RolloverConversion_RepricingFrequency_List}    ${Repricing_Frequency}
     Run Keyword If    '${Repricing_Date}'!='None'    Mx LoanIQ Enter    ${LIQ_RolloverConversion_RepricingDate_Textfield}    ${Repricing_Date}
+    Run Keyword If    '${Repricing_Date}'!= 'None'    Verify If Warning Is Displayed
     ${Effective_Date}    Mx LoanIQ Get Data    ${LIQ_RolloverConversion_EffectiveDate_Textfield}    value%date
     ${Loan_Alias}    Mx LoanIQ Get Data    ${LIQ_RolloverConversion_Alias_Textfield}    value%alias
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/RolloverConversion

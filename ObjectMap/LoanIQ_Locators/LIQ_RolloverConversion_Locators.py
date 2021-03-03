@@ -3,6 +3,7 @@ LIQ_RolloverConversion_Window = 'JavaWindow("title:=.* Rollover/Conversion.*")'
 LIQ_RolloverConversion_Tab = 'JavaWindow("title:=.* Rollover/Conversion.*").JavaTab("tagname:=TabFolder")'
 LIQ_RolloverConversion_FileExit_Menu = 'JavaWindow("title:=.* Rollover/Conversion.*").JavaMenu("label:=File").JavaMenu("label:=Exit")'
 LIQ_RolloverConversion_Save_Menu = 'JavaWindow("title:=.* Rollover/Conversion.*").JavaMenu("label:=File").JavaMenu("label:=.*Save.*")'
+LIQ_RolloverConversion_Inquiry_Button = 'JavaWindow("title:=.* Rollover/Conversion.*").JavaButton("attached text:=Notebook in Inquiry Mode - F7.*")'
 
 ###General Tab###
 LIQ_RolloverConversion_RequestedAmt_Textfield = 'JavaWindow("title:=.* Rollover/Conversion.*").JavaEdit("attached text:=Requested Amt:")'
