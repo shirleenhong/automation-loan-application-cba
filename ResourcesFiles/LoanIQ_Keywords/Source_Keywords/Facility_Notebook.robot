@@ -4569,5 +4569,5 @@ Validate the Amount from Comment in Amortization Schedule for Facility
     Log    ${Comment_Value}
 
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/AmortizationSchedComment
-    Should Be Equal    ${Comment_Value}    ${Expected_CommentAmount}
+    Compare Two Numbers    ${Comment_Value}    ${Expected_CommentAmount}
     
