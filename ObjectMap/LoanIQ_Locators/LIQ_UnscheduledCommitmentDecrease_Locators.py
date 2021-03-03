@@ -10,6 +10,7 @@ LIQ_AmortizationScheduleforFacility_Add_Button = 'JavaWindow("title:=Amortizatio
 LIQ_AmortizationScheduleforFacility_Save_Button = 'JavaWindow("title:=Amortization Schedule For Facility -.*").JavaButton("attached text:=Save")'
 LIQ_AmortizationScheduleforFacility_Exit_Button = 'JavaWindow("title:=Amortization Schedule For Facility -.*").JavaButton("attached text:=Exit")'
 LIQ_AmortizationScheduleforFacility_Frequency_List = 'JavaWindow("title:=Amortization Schedule For Facility -.*").JavaList("attached text:=Frequency:")'
+LIQ_AmortizationScheduleforFacility_History_Tree = 'JavaWindow("title:=Amortization Schedule For Facility -.*").JavaTree("attached text:=History")'
 
 ###Schedule Item Window###
 LIQ_ScheduleItem_Window = 'JavaWindow("title:=Add Schedule Item")'

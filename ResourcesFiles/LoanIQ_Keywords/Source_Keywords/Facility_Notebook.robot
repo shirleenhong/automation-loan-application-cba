@@ -4554,4 +4554,20 @@ Perform Online Accrual in Facility Notebook
     Mx LoanIQ click element if present    ${LIQ_Information_OK_Button}
     Log    Perform Online Accrual - Perform Online Accrual is complete
 
+Validate the Amount from Comment in Amortization Schedule for Facility
+    [Documentation]    This keyword is used verify the amount from comment in amortization schedule for facility
+    ...    @author: shirhong    02MAR2021    - Initial create
+    [Arguments]    ${sHistory_Effective_Date}    ${sExpected_CommentAmount}
+    
+    ### Keyword Pre-processing ###
+    ${History_Effective_Date}    Acquire Argument Value    ${sHistory_Effective_Date}
+    ${Expected_CommentAmount}    Acquire Argument Value    ${sExpected_CommentAmount}
+    
+    Mx LoanIQ Activate Window    ${LIQ_AmortizationScheduleforFacility_Window}    
+    ${Comment_Value}    Mx LoanIQ Store TableCell To Clipboard     ${LIQ_AmortizationScheduleforFacility_History_Tree}   ${History_Effective_Date}%Comment%comment
+    ${Comment_Value}    Fetch From Right    ${Comment_Value}    ${SPACE}
+    Log    ${Comment_Value}
 
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/AmortizationSchedComment
+    Should Be Equal    ${Comment_Value}    ${Expected_CommentAmount}
+    

@@ -46,3 +46,5 @@ Create Drawdown and Back Date to 09/18/19
 	Set Test Variable    ${rowid}    2
     Mx Execute Template With Multiple Data    Create Loan Drawdown for PDS Syndicate Deal - Outstanding B    ${ExcelPath}    ${rowid}    SERV01_LoanDrawdown
 	
+Rollover Outstanding A1 - Repayment as Per Schedule
+    Mx Execute Template With Multiple Data    Rollover Outstanding A1 for PDS Syndicate Deal    ${ExcelPath}    ${rowid}    SERV08_ComprehensiveRepricing
