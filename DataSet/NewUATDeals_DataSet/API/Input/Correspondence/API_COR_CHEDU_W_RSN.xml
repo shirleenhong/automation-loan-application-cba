@@ -1,0 +1,76 @@
+<liqInfo>
+    {"event_schema_id":"2148","event":{"header":{"correlationId":"LIQ-H;EOZJNJ-HEEOZHQP-2","processPath":{"array":[{"source":"FINASTRA_CCB","timestamp":"2021-03-02T16:54:33.243+08:00"}]}},"sourceSystem":{"string":"FINASTRA_CCB"},"ttl":{"au.com.cba.avro.customermanagement.noticesnotify.ttl":{"ttlDuration":"300","ttlSourceTime":"2021-03-02T16:54:33.243+08:00"}},"cifIds":{"array":[{"string":"1710818"}]},"documentInfo":{"documentPackage":{"businessChannel":"LOANIQ","name":null,"version":null,"templateId":null,"fileType":null,"content":"
+    <FinastraApplication>
+        <StandardNotice>
+            <ProcessingArea>AUSAG</ProcessingArea>
+            <Address>
+                <line>Date: 02-Mar-2021</line>
+                <line>TO  : CH EDU Limited 1710818</line>
+                <line>ATTN: Linda Chu</line>
+                <line>Re  : CH EDU BILAT DEAL AUD 158.2M 17DEC190947</line>
+            </Address>
+            <BodyContent>
+                <section>
+                    <line>                          *** ROLLOVER RATE SET NOTICE ***</line>
+                    <line/>
+                    <line>In accordance with the facility agreement, we advise the following has been requested.</line>
+                    <line/>
+                    <line>Description: AUD Loan Repricing for the Deal CH EDU BILAT DEAL AUD 158.2M 17DEC190947. - Increase</line>
+                    <line/>
+                    <line>Effective Date: 01-Apr-2020 </line>
+                    <line/>
+                    <line>Borrower CH EDU Limited 1710818 in CAPITALISATION_FAC_17131 has the following LOANS repricing: </line>
+                    <line/>
+                    <line>                                                             Current    </line>
+                    <line>                                                             End        </line>
+                    <line>Description                                        Amount    Date       </line>
+                    <line>----------------------------------------------------------------------------------------</line>
+                    <line> BBSY - Bid Loan                                  4,014.24    01-Apr-2020  </line>
+                    <line/>
+                    <line>Borrower CH EDU Limited 1710818 in CAPITALISATION_FAC_17131 has elected to increase outstandings as follows:</line>
+                    <line/>
+                    <line>Description                                        Amount</line>
+                    <line>----------------------------------------------------------------------------------------</line>
+                    <line> Outstandings Increase                                9.40 </line>
+                </section>
+                <section>
+                    <line>Borrower CH EDU Limited 1710818 in CAPITALISATION_FAC_17131 will make the following INTEREST payments: </line>
+                    <line/>
+                    <line>Description                                        Amount</line>
+                    <line>--------------------------------------------------------------------------------</line>
+                    <line> BBSY - Bid                                           9.40 </line>
+                    <line>Capitalised Amount: AUD 9.40   Net Payment: AUD 0.00</line>
+                </section>
+                <section>
+                    <line/>
+                    <line>Borrower CH EDU Limited 1710818 in CAPITALISATION_FAC_17131 will have the following new LOANS: </line>
+                    <line/>
+                    <line>                                                           Next       </line>
+                    <line>Pricing                                                    End        </line>
+                    <line>Option                                           Amount    Date       </line>
+                    <line>----------------------------------------------------------------------------------------</line>
+                    <line> BBSY - Bid                                      4,023.64   16-Jun-2020  </line>
+                </section>
+                <section>
+                    <line>Borrower CH EDU Limited 1710818 in CAPITALISATION_FAC_17131 rates have been set as follows:</line>
+                </section>
+                <section>
+                    <line>                                                                      Next       </line>
+                    <line>Pricing                                                               End        </line>
+                    <line>Option                                      Amount   All In Rate      Date       </line>
+                    <line>----------------------------------------------------------------------------------------</line>
+                    <line> BBSY - Bid                                 4,023.64      2.935000%     16-Jun-2020  </line>
+                    <line> BBSY - Bid: 0.935000%</line>
+                    <line> Margin: 2.000000%</line>
+                    <line> Interest Due: AUD 24.59  </line>
+                    <line> Interest Due Date: 16-Jun-2020</line>
+                </section>
+                <section>
+                    <line/>
+                </section>
+            </BodyContent>
+        </StandardNotice>
+    </FinastraApplication>
+    "},"documentStorage":{"status":null,"fileName":null,"inputSource":null,"inputSourceDetail":null,"scanDate":null,"departmentId":{"string":"TM_COL"},"retrievalId":null,"documentumType":null,"applicationNumber":null,"purgeDate":null,"boxLocation":null,"recordManager":null,"description":null,"processes":{"array":[{"string":"HEEOZHQP"}]},"services":{"array":[{"string":"1002378"}]},"accountNumbers":{"array":[{"source":{"string":"LOANIQ"},"productCode":{"string":"OST"},"number":{"string":"60003028"}}]},"processFlags":{"array":[{"name":null,"value":null}]}}},"emailSecureMessageDetails":{"subject":"1002378 CH EDU BILAT DEAL AUD 158.2M 17DEC190947","senderEmail":"AGENCY@CBA.AU.COM","toRecipientEmail":"IwantToTest@nowhere.com.test","ccRecipientEmail":{"string":"JOHN.DOE@CBA.AU.COM"},"mimeType":null,"messageID":"LIQ-H;EOZJNJ-HEEOZHQP-2","body":null,"attachment":null,"inBandAttachment":null,"deliveredToEmail":null,"undeliveredToEmail":null,"systemCode":null,"systemName":null,"identifier":{"string":"AUSAG"},"digitalSignature":null}}}
+
+</liqInfo>
