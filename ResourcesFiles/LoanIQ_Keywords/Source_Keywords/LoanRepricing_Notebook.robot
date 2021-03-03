@@ -2411,7 +2411,7 @@ Add Principal Payment after Rollover Decrease Amount
     
 Validate General Tab of Pending Rollover/Conversion Notebook After Comprehensive Repricing
     [Documentation]    This keyword is used to validate fields in General Tab of Pending Rollover/Conversion Notebook after Comprehensive Repricing
-    ...    @author: ccarriedo    21JAN2021    - Initial create
+    ...    @author: ccarriedo    03MAR2021    - Initial create
     [Arguments]    ${sLoan_Alias}    ${sRequested_Amount}    ${sRepricing_EffectiveDate}    ${sRepricing_MaturityDate}    ${sRepricing_Frequency}    ${sRepricing_Date}    ${sRepricing_Payment_Mode}    
     ...    ${sRepricing_Int_Cycle_Freq}    ${sRepricing_Actual_Due_Date}    ${sRepricing_Adjusted_Due_Date}    ${sRepricing_Accrue}    ${sRepricing_Accrual_End_Date}
 
