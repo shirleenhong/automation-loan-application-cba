@@ -94,3 +94,88 @@ Create Rollover Repayment Schedule for ATM BILAT
     Open Existing Loan    &{ExcelPath}[NewLoan_Alias]
     Validate Loan Amount was Updated after Repricing    &{ExcelPath}[New_LoanAmount]
     
+Create Rollover and Generate Interest Payment for ATM BILAT
+    [Documentation]    This is a high-level keyword to Create Comprehensive Repricing for ATM BILAT
+    ...    @author: ccarriedo    02MAR2021    - Initial Create 
+    [Arguments]    ${ExcelPath}
+
+    ${Loan_Alias}    Read Data From Excel    SERV01_LoanDrawdown    Loan_Alias    &{ExcelPath}[rowid]
+    ${Rollover_Amount}    Read Data From Excel    SERV08_ComprehensiveRepricing    New_LoanAmount    &{ExcelPath}[rowid]
+    Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
+    
+    ### Open Loan Notebook ###
+    Navigate to an Existing Loan    &{ExcelPath}[Deal_Name]    &{ExcelPath}[Facility_Name2]    ${Loan_Alias}
+
+    ### Create Repricing ###
+    Navigate to Create Repricing Window  
+    Select Repricing Type    &{ExcelPath}[Repricing_Type]
+    Select Loan Repricing for Deal    ${Loan_Alias}
+       
+    ### Repricing Notebook - Add > Rolllover/Conversion to New ###  
+    Cick Add in Loan Repricing Notebook
+    Set Repricing Detail Add Options     &{ExcelPath}[Repricing_Add_Option_Setup]    &{ExcelPath}[Pricing_Option]    &{ExcelPath}[Facility_Name2]    &{ExcelPath}[Borrower_Name]
+    ${Effective_Date}    ${NewLoan_Alias}    Set RolloverConversion Notebook General Details    ${Rollover_Amount}    &{ExcelPath}[Repricing_Frequency]    &{ExcelPath}[Repricing_Date]
+    Validate General Tab of Pending Rollover/Conversion Notebook After Comprehensive Repricing    ${NewLoan_Alias}    &{ExcelPath}[Loan_RequestedAmount]    &{ExcelPath}[Repricing_Effective_Date]    &{ExcelPath}[Repricing_Maturity_Date]    &{ExcelPath}[Repricing_Frequency]    &{ExcelPath}[Repricing_Date]
+    ...    &{ExcelPath}[Repricing_Payment_Mode]    &{ExcelPath}[Repricing_Int_Cycle_Freq]    &{ExcelPath}[Repricing_Actual_Due_Date]    &{ExcelPath}[Repricing_Adjusted_Due_Date]    &{ExcelPath}[Repricing_Accrue]    &{ExcelPath}[Repricing_Accrual_End_Date]
+
+    Write Data To Excel    SERV08_ComprehensiveRepricing    NewLoan_Alias    ${rowid}    ${NewLoan_Alias}
+
+    ### Repricing Notebook - Add > Add > Interest Payment ###  
+    Add Interest Payment for Loan Repricing
+    
+    Validate General Tab of Pending Rollover/Conversion Notebook After Comprehensive Repricing    ${NewLoan_Alias}    &{ExcelPath}[New_LoanAmount]    &{ExcelPath}[Repricing_Effective_Date]    &{ExcelPath}[Repricing_Maturity_Date]    &{ExcelPath}[Repricing_Frequency]    &{ExcelPath}[Repricing_Date]
+    ...    &{ExcelPath}[Repricing_Payment_Mode]    &{ExcelPath}[Repricing_Int_Cycle_Freq]    &{ExcelPath}[Repricing_Actual_Due_Date]    &{ExcelPath}[Repricing_Adjusted_Due_Date]    &{ExcelPath}[Repricing_Accrue]    &{ExcelPath}[Repricing_Accrual_End_Date]
+    
+    ### Loan Repricing Workflow Tab  - Send to approval ###
+    Navigate to Loan Repricing Workflow and Proceed With Transaction    ${CREATE_CASHFLOWS_TYPE}
+    Set All Items to Do It
+    Send Loan Repricing for Approval
+    Close All Windows on LIQ
+
+    ### Approve Loan Repricing ###
+    Logout from Loan IQ
+    Login to Loan IQ    ${SUPERVISOR_USERNAME}    ${SUPERVISOR_PASSWORD}
+    Navigate Transaction in WIP    ${OUTSTANDINGS_TRANSACTION}    ${AWAITING_APPROVAL_STATUS}    ${LOAN_REPRICING}    &{ExcelPath}[Deal_Name]
+    Navigate to Loan Repricing Workflow and Proceed With Transaction    ${APPROVAL_STATUS}
+    
+    ## Generate Intent Notice ###
+    Logout from Loan IQ
+    Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
+    Select Item in Work in Process    ${OUTSTANDINGS_TRANSACTION}    ${GENERATE_INTENT_NOTICES}    ${LOAN_REPRICING}     &{ExcelPath}[Facility_Name2]
+    Navigate to Loan Repricing Workflow and Proceed With Transaction    ${GENERATE_INTENT_NOTICES} 
+    Generate Intent Notices    &{ExcelPath}[Borrower_Name]
+    Close Generate Notice Window
+
+    ### Rate Setting ###
+    Navigate to Loan Repricing Workflow and Proceed With Transaction    ${RATE_SETTING_TRANSACTION}
+    Set Base Rate Details    &{ExcelPath}[Base_Rate]    &{ExcelPath}[AcceptRate_FromPricing]
+    Send to Rate Approval
+
+    ### Rate Approval ###
+    Logout from Loan IQ
+    Login to Loan IQ    ${SUPERVISOR_USERNAME}    ${SUPERVISOR_PASSWORD}
+    Select Item in Work in Process    ${OUTSTANDINGS_TRANSACTION}    ${AWAITING_RATE_APPROVAL_STATUS}    ${LOAN_REPRICING}     &{ExcelPath}[Facility_Name2]
+    Approve Rate Setting Notice
+    
+    ### Generate Rate Setting Notice and Release Loan ###
+    Logout from Loan IQ
+    Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
+    Select Item in Work in Process    ${OUTSTANDINGS_TRANSACTION}    ${AWAITING_GENERATE_RATE_SETTING_NOTICES_STATUS}    ${LOAN_REPRICING}    &{ExcelPath}[Facility_Name2]
+   
+    ### Get the enterprise name from quick partyonboarding sheet because borrower_name doesn't have PRIVATE in name ###
+    ${Enterprise_Name}    Read Data From Excel    PTY001_QuickPartyOnboarding    Enterprise_Name    1
+    Generate Rate Setting Notices    ${Enterprise_Name}    ${AWAITING_RELEASE_NOTICE_STATUS}
+
+    ### Release Repricing ###
+    Navigate to Loan Repricing Workflow and Proceed With Transaction    ${RELEASE_STATUS}
+
+    ### Loan Notebook ###
+    Validate Release of Loan Repricing    ${RELEASED_STATUS}
+    Close All Windows on LIQ
+
+    ### Validate New Loan Amount ###
+    Search for Deal    &{ExcelPath}[Deal_Name]
+    Search for Existing Outstanding    &{ExcelPath}[OutstandingSelect_Type]    &{ExcelPath}[Facility_Name2]
+    Open Existing Loan    &{ExcelPath}[NewLoan_Alias]
+    Validate Loan Amount was Updated after Repricing    &{ExcelPath}[New_LoanAmount]
+    

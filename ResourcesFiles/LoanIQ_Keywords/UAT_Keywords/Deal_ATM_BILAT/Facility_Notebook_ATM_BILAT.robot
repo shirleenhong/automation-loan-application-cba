@@ -11,6 +11,8 @@ Create Facility for ATM BILAT
     ...    @update: ccarriedo    02FEB2021    - Added writing to SYND02_PrimaryAllocation and CRED08_OngoingFeeSetup sheets. Removed unnecessary writing to SERV15_SchComittmentDecrease
     ...    @update: ccarriedo    09FEB2021    - Added writing to SERV01_LoanDrawdown Facilities.
     ...    @update: ccarriedo    16FEB2021    - Added multipleValue=Y to writing of Facility_Name1, Facility_Name2 and Deal_Name. All columns will have the same values
+    ...    @update: ccarriedo    01MAR2021    - Added multipleValue=Y to writing of Facility_Name1,Facility_Name2 and Deal_Name to SERV08_ComprehensiveRepricing. All columns will have the same values.
+    ...    @update: ccarriedo    02MAR2021    - Added writing of Borrower_Name to SERV08_ComprehensiveRepricing rows 1 and 2.
     [Arguments]    ${ExcelPath}
     
     ### Login to LoanIQ ###
@@ -19,6 +21,8 @@ Create Facility for ATM BILAT
 	${Facility_Name1}    Read Data From Excel    CRED02_FacilitySetup    Facility_Name1    &{ExcelPath}[rowid]
 	${Facility_Name2}    Read Data From Excel    CRED02_FacilitySetup    Facility_Name2    &{ExcelPath}[rowid]
 	${Deal_Name}    Read Data From Excel    CRED01_DealSetup    Deal_Name    &{ExcelPath}[rowid]
+	${Borrower_Name1}    Read Data From Excel    CRED02_FacilitySetup    Facility_Borrower1    &{ExcelPath}[rowid]
+	${Borrower_Name2}    Read Data From Excel    CRED02_FacilitySetup    Facility_Borrower2    &{ExcelPath}[rowid]
     Write Data To Excel    CRED01_DealSetup    Facility_Name1    ${rowid}    ${Facility_Name1}
     Write Data To Excel    CRED08_OngoingFeeSetup    Facility_Name1    ${rowid}    ${Facility_Name1}    multipleValue=Y
     Write Data To Excel    SYND02_PrimaryAllocation    Deal_Name    ${rowid}    ${Deal_Name}
@@ -30,6 +34,11 @@ Create Facility for ATM BILAT
     Write Data To Excel    SERV01_LoanDrawdown    Deal_Name    &{ExcelPath}[rowid]    ${Deal_Name}    multipleValue=Y
     Write Data To Excel    SERV01_LoanDrawdown     Facility_Name1    ${rowid}    ${Facility_Name1}    multipleValue=Y
     Write Data To Excel    SERV01_LoanDrawdown    Facility_Name2    ${rowid}    ${Facility_Name2}    multipleValue=Y
+    Write Data To Excel    SERV08_ComprehensiveRepricing    Deal_Name    &{ExcelPath}[rowid]    ${Deal_Name}    multipleValue=Y
+    Write Data To Excel    SERV08_ComprehensiveRepricing     Facility_Name1    ${rowid}    ${Facility_Name1}    multipleValue=Y
+    Write Data To Excel    SERV08_ComprehensiveRepricing    Facility_Name2    ${rowid}    ${Facility_Name2}    multipleValue=Y
+    Write Data To Excel    SERV08_ComprehensiveRepricing    Borrower_Name    ${rowid}    ${Borrower_Name1}
+    Write Data To Excel    SERV08_ComprehensiveRepricing    Borrower_Name    2    ${Borrower_Name2}
     
     ###Open Deal Notebook If Not present###
     Open Deal Notebook If Not Present    ${Deal_Name}
@@ -58,7 +67,7 @@ Create Facility for ATM BILAT
 Add Another Facility with Ongoing Fees for ATM BILAT
     [Documentation]    This keyword is used to add another facility for ATM BILAT deal
     ...    @author: ccarriedo    21JAN2021    - Initial Create
-    ...    @update: ccarriedo    23FEB2021    - In keyword Setup Interest Pricing for ATM Bilateral Deal, changed &{ExcelPath}[Interest_SpreadAmt] to &{ExcelPath}[Interest_SpreadAmt2]
+    ...    @update: ccarriedo    26FEB2021    - In keyword Setup Interest Pricing for ATM Bilateral Deal, changed &{ExcelPath}[Interest_SpreadAmt] to &{ExcelPath}[Interest_SpreadAmt2]
     [Arguments]    ${ExcelPath}
     
     ### Login to LoanIQ ###
