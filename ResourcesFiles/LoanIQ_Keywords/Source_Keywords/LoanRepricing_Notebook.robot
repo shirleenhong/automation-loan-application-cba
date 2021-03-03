@@ -2409,7 +2409,7 @@ Add Principal Payment after Rollover Decrease Amount
     Compare Two Numbers    ${ExpectedPrincipalPayment}    ${ActualPrincipalPayment}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/RolloverPrincipalAmount
     
-Validate General Tab of Pending Rollover/Conversion Notebook After Comprehensive Repricing
+Validate General Tab of Pending Rollover/Conversion Notebook after Comprehensive Repricing
     [Documentation]    This keyword is used to validate fields in General Tab of Pending Rollover/Conversion Notebook after Comprehensive Repricing
     ...    @author: ccarriedo    03MAR2021    - Initial create
     [Arguments]    ${sLoan_Alias}    ${sRequested_Amount}    ${sRepricing_EffectiveDate}    ${sRepricing_MaturityDate}    ${sRepricing_Frequency}    ${sRepricing_Date}    ${sRepricing_Payment_Mode}    

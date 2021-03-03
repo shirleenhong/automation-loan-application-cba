@@ -115,7 +115,7 @@ Create Rollover and Generate Interest Payment for ATM BILAT
     Cick Add in Loan Repricing Notebook
     Set Repricing Detail Add Options     &{ExcelPath}[Repricing_Add_Option_Setup]    &{ExcelPath}[Pricing_Option]    &{ExcelPath}[Facility_Name2]    &{ExcelPath}[Borrower_Name]
     ${Effective_Date}    ${NewLoan_Alias}    Set RolloverConversion Notebook General Details    ${Rollover_Amount}    &{ExcelPath}[Repricing_Frequency]    &{ExcelPath}[Repricing_Date]
-    Validate General Tab of Pending Rollover/Conversion Notebook After Comprehensive Repricing    ${NewLoan_Alias}    &{ExcelPath}[Loan_RequestedAmount]    &{ExcelPath}[Repricing_Effective_Date]    &{ExcelPath}[Repricing_Maturity_Date]    &{ExcelPath}[Repricing_Frequency]    &{ExcelPath}[Repricing_Date]
+    Validate General Tab of Pending Rollover/Conversion Notebook after Comprehensive Repricing    ${NewLoan_Alias}    &{ExcelPath}[Loan_RequestedAmount]    &{ExcelPath}[Repricing_Effective_Date]    &{ExcelPath}[Repricing_Maturity_Date]    &{ExcelPath}[Repricing_Frequency]    &{ExcelPath}[Repricing_Date]
     ...    &{ExcelPath}[Repricing_Payment_Mode]    &{ExcelPath}[Repricing_Int_Cycle_Freq]    &{ExcelPath}[Repricing_Actual_Due_Date]    &{ExcelPath}[Repricing_Adjusted_Due_Date]    &{ExcelPath}[Repricing_Accrue]    &{ExcelPath}[Repricing_Accrual_End_Date]
 
     Write Data To Excel    SERV08_ComprehensiveRepricing    NewLoan_Alias    ${rowid}    ${NewLoan_Alias}
@@ -123,7 +123,7 @@ Create Rollover and Generate Interest Payment for ATM BILAT
     ### Repricing Notebook - Add > Add > Interest Payment ###  
     Add Interest Payment for Loan Repricing
     
-    Validate General Tab of Pending Rollover/Conversion Notebook After Comprehensive Repricing    ${NewLoan_Alias}    &{ExcelPath}[New_LoanAmount]    &{ExcelPath}[Repricing_Effective_Date]    &{ExcelPath}[Repricing_Maturity_Date]    &{ExcelPath}[Repricing_Frequency]    &{ExcelPath}[Repricing_Date]
+    Validate General Tab of Pending Rollover/Conversion Notebook after Comprehensive Repricing    ${NewLoan_Alias}    &{ExcelPath}[New_LoanAmount]    &{ExcelPath}[Repricing_Effective_Date]    &{ExcelPath}[Repricing_Maturity_Date]    &{ExcelPath}[Repricing_Frequency]    &{ExcelPath}[Repricing_Date]
     ...    &{ExcelPath}[Repricing_Payment_Mode]    &{ExcelPath}[Repricing_Int_Cycle_Freq]    &{ExcelPath}[Repricing_Actual_Due_Date]    &{ExcelPath}[Repricing_Adjusted_Due_Date]    &{ExcelPath}[Repricing_Accrue]    &{ExcelPath}[Repricing_Accrual_End_Date]
     
     ### Loan Repricing Workflow Tab  - Send to approval ###
