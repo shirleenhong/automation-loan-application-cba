@@ -266,9 +266,9 @@ Complete Commitment Fee Cashflow for CH EDU Bilateral Deal
 
     Close All Windows on LIQ
 
-Capitalize Interest and Pay Commitment Fee for CH EDU Bilateral Deal
-    [Documentation]    This keyword is used to capitalize interest and pay commitment fee for CH EDU Bilateral Deal
-    ...    @author: mcastro    23FEB2021    - Initial create
+Capitalize Interest for Commitment Fee for CH EDU Bilateral Deal
+    [Documentation]    This keyword is used to capitalize interest of commitment fee for CH EDU Bilateral Deal
+    ...    @author: mcastro    01MAR2021    - Initial create
     [Arguments]    ${ExcelPath} 
 
     ### Retrieve Data from Excel Data Sheet ###
@@ -288,6 +288,24 @@ Capitalize Interest and Pay Commitment Fee for CH EDU Bilateral Deal
     Navigate to Capitalize Interest Payment from Ongoing Fee Notebook
     Enter Fee Capitalization Details    &{ExcelPath}[InterestCapitalization_Status]    &{ExcelPath}[Cycle_StartDate]    &{ExcelPath}[Cycle_DueDate]
     ...    ${Loan_Alias}    ${Pricing_Option}    ${FacilityName}
+    Close All Windows on LIQ
+
+Pay Commitment Fee without Cashflow for CH EDU Bilateral Deal
+    [Documentation]    This keyword is used pay commitment fee for CH EDU Bilateral Deal
+    ...    @author: mcastro    23FEB2021    - Initial create
+    ...    @update: mcastro    01MAR2021    - Removed the steps to capitalize interest
+    [Arguments]    ${ExcelPath} 
+
+    ### Retrieve Data from Excel Data Sheet ###
+    ${Deal_Name}    Read Data From Excel    CRED01_DealSetup    Deal_Name    1
+    ${FacilityName}    Read Data From Excel    CRED02_FacilitySetup_A    Facility_Name    1
+
+    Logout from Loan IQ
+    Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
+
+    ### Ongoing Fee Payment ###
+    Navigate to Facility Notebook    ${Deal_Name}    ${FacilityName}
+    Navigate to Existing Ongoing Fee Notebook    &{ExcelPath}[Fee_Type]
 
     ### Commitment Fee Accrual Tab ###
     Validate Dues on Accrual Tab for Commitment Fee    &{ExcelPath}[ProjectedCycleDue]    &{ExcelPath}[Cycle_Number]    &{ExcelPath}[Projected_EOCAccrual]    

@@ -307,8 +307,8 @@ Set RolloverConversion Notebook General Details
     ...                This keyword will return the 'Effective Date' and 'Loan_Alias' to be used in succeeding validations/transactions.
     ...                @author: bernchua    26AUG2019    Initial create
     ...                @update: sahalder    25JUN2020    Added keyword Pre-Processing steps
-    ...    @update: dahijara    25AUG2020    Added steps for saving. Added post processing and screenshot.
-    ...    @update: ccarriedo    02MAR2021    - Interchanged selecting repricing frequency and setting the repricing date
+    ...                @update: dahijara    25AUG2020    Added steps for saving. Added post processing and screenshot.
+    ...                @update: songchan    26FEB2021    Added Repricing Date
     [Arguments]    ${sRequested_Amount}    ${sRepricing_Frequency}    ${sRepricing_Date}=None    ${sRunVar_Effective_Date}=None    ${sRunVar_Loan_Alias}=None
     
     ### GetRuntime Keyword Pre-processing ###
@@ -318,11 +318,10 @@ Set RolloverConversion Notebook General Details
 
     mx LoanIQ activate window    ${LIQ_RolloverConversion_Window}
     Mx LoanIQ Select Window Tab    ${LIQ_RolloverConversion_Tab}    General
-    mx LoanIQ enter    ${LIQ_RolloverConversion_RequestedAmt_Textfield}    ${Requested_Amount}
-    Mx LoanIQ Select Combo Box Value    ${LIQ_RolloverConversion_RepricingFrequency_List}    ${Repricing_Frequency}
-    
+    Mx LoanIQ Enter    ${LIQ_RolloverConversion_RequestedAmt_Textfield}    ${Requested_Amount}
     Verify If Warning Is Displayed
-    Run Keyword If    '${Repricing_Date}'!='None'    mx LoanIQ enter    ${LIQ_RolloverConversion_RepricingDate_Textfield}    ${Repricing_Date}
+    Mx LoanIQ Select Combo Box Value    ${LIQ_RolloverConversion_RepricingFrequency_List}    ${Repricing_Frequency}
+    Run Keyword If    '${Repricing_Date}'!='None'    Mx LoanIQ Enter    ${LIQ_RolloverConversion_RepricingDate_Textfield}    ${Repricing_Date}
     ${Effective_Date}    Mx LoanIQ Get Data    ${LIQ_RolloverConversion_EffectiveDate_Textfield}    value%date
     ${Loan_Alias}    Mx LoanIQ Get Data    ${LIQ_RolloverConversion_Alias_Textfield}    value%alias
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/RolloverConversion
