@@ -138,7 +138,7 @@ Create Rollover and Generate Interest Payment for ATM BILAT
     Navigate Transaction in WIP    ${OUTSTANDINGS_TRANSACTION}    ${AWAITING_APPROVAL_STATUS}    ${LOAN_REPRICING}    &{ExcelPath}[Deal_Name]
     Navigate to Loan Repricing Workflow and Proceed With Transaction    ${APPROVAL_STATUS}
     
-    ## Generate Intent Notice ###
+    ### Generate Intent Notice ###
     Logout from Loan IQ
     Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
     Select Item in Work in Process    ${OUTSTANDINGS_TRANSACTION}    ${GENERATE_INTENT_NOTICES}    ${LOAN_REPRICING}     &{ExcelPath}[Facility_Name2]
