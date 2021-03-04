@@ -931,6 +931,41 @@ Validate Line Fee Events Tab
     ...    ELSE    Run Keyword And Continue On Failure    Fail    ${Event_Name} is NOT shown in the Events list of Line Fee Notebook.
 
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LineFeeWindow_EventsTab_Released
+    
+Validate Line Items details from Line Fee
+    [Documentation]    This keyword will validate Line Items from Line Fee transaction.
+    ...    @author: makcamps    03MAR2021    - initial create
+    [Arguments]    ${sEndDate}    ${sExpect_AmountAccrued}
+
+    ### GetRuntime Keyword Pre-processing ###
+    ${EndDate}    Acquire Argument Value    ${sEndDate}
+    ${Expect_AmountAccrued}    Acquire Argument Value    ${sExpect_AmountAccrued}
+
+    ###Accrual Tab###
+    mx LoanIQ activate window    ${LIQ_LineFeeReleasedNotebook_Window}
+    Mx LoanIQ Select Window Tab    ${LIQ_LineFee_Tab}    Accrual 
+    Mx LoanIQ Select String    ${LIQ_LineFee_Accrual_Cycles_JavaTree}    ${EndDate}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LineFeeWindow_AccrualTab
+    Mx Press Combination    Key.ENTER
+    
+    ###Accrual Cycle Detail Window###
+    mx LoanIQ activate window    ${LIQ_AccrualCycleDetail_Window}
+    mx LoanIQ click    ${LIQ_AccrualCycleDetail_LineItems_Button}
+    
+    ###Line Items for Window###
+    mx LoanIQ activate window    ${LIQ_LineItemsFor_Window}
+    ${Amount_Accrued}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_LineItemsFor_JavaTree}    ${EndDate}%Amount Accrued%var
+    
+    ${Status}    Run Keyword If    '${Expect_AmountAccrued}'=='None'    Run Keyword And Return Status    Should Be Equal    0.00    ${Amount_Accrued}
+    ...    ELSE    Run Keyword And Return Status    Should Be Equal    ${Expect_AmountAccrued}    ${Amount_Accrued}
+    ${Expect_AmountAccrued}    Run Keyword If    '${Expect_AmountAccrued}'=='None'    Set Variable    0.00
+    Run Keyword If    ${Status}==${True}    Log    Amount Accrued is correct.
+    ...    ELSE    Run Keyword And Continue On Failure    Fail    Amount Accrued is NOT correct. Expected: ${Expect_AmountAccrued} - Actual: ${Amount_Accrued}
+
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LineItemsWindow
+    
+    mx LoanIQ close window    ${LIQ_LineItemsFor_Window}
+    mx LoanIQ close window    ${LIQ_AccrualCycleDetail_Window}
 
 Create New Ongoing Fee
     [Documentation]    This keyword will create new ongoing fee

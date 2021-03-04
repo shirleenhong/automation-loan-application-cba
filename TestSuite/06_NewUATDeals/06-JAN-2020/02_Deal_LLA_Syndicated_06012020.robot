@@ -20,3 +20,9 @@ Combine B1&C and Rollover
     Mx Execute Template With Multiple Data    Send Notice for Loan Repricing    ${ExcelPath}    ${rowid}    Correspondence
     Set Test Variable    ${rowid}    17
     Mx Execute Template With Multiple Data    Send Notice for Loan Repricing    ${ExcelPath}    ${rowid}    Correspondence
+
+Fee Period 1/1/2020 - 1/4/2020
+    Set Test Variable    ${rowid}    2
+    Mx Execute Template With Multiple Data    Manual Adjustment of Line Fee for LLA Syndicated Deal    ${ExcelPath}    ${rowid}    SERV29_PaymentFees
+    Mx Execute Template With Multiple Data    Update Facility Fee Expiry Date for LLA Syndicated Deal    ${ExcelPath}    ${rowid}    SERV29_PaymentFees
+    
