@@ -190,7 +190,7 @@ Manual Adjustment of Line Fee for LLA Syndicated Deal
     Validate Manual Adjustment Value in Line Fee    &{ExcelPath}[Cycle_Number]    &{ExcelPath}[RequestedAmount]
     Validate Cycle Due New Value in Line Fee    &{ExcelPath}[Cycle_Number]    &{ExcelPath}[Expected_CycleDueAmt]     &{ExcelPath}[RequestedAmount]
     Validate Projected EOC Due New Value in Line Fee    &{ExcelPath}[Cycle_Number]    &{ExcelPath}[ProjectedCycleDue]     &{ExcelPath}[RequestedAmount]
-    Validate Line Items Details from Line Fee    &{ExcelPath}[Cycle_EndDate]    &{ExcelPath}[Expected_PaidToDate]
+    Validate Line Items Details from Line Fee    &{ExcelPath}[Cycle_EndDate]    &{ExcelPath}[Expected_PaidToDate]    #Expected_PaidToDate value is based on screenshots provided
     Validate Accrual Shares Adjustment Applied Event in Line Fee
     Close All Windows on LIQ
     
