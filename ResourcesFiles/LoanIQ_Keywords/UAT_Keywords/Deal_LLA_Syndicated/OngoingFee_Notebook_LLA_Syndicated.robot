@@ -141,3 +141,83 @@ Pay Line Fee for LLA Syndicated Deal
     Navigate to Existing Ongoing Fee Notebook    &{ExcelPath}[Fee_Type]
     Validate Payment Release of Ongoing Line Fee
     Validate After Payment Details on Acrual Tab - Line Fee    &{ExcelPath}[Expected_PaidToDate]    &{ExcelPath}[Cycle_Number]    &{ExcelPath}[Expected_CycleDueAmt]
+    
+Manual Adjustment of Line Fee for LLA Syndicated Deal
+    [Documentation]    This keyword is used for adjusting line fee payment for LLA Syndicated Deal
+    ...    @author: makcamps    02MAR2021    - Initial Create
+    [Arguments]    ${ExcelPath} 
+
+    ${Deal_Name}    Read Data From Excel    CRED01_DealSetup    Deal_Name    1
+    ${FacilityName}    Read Data From Excel    CRED02_FacilitySetup    Facility_Name    1
+
+    ### LIQ Window ###
+    Logout from Loan IQ
+    Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
+
+    ### Ongoing Fee Payment ###
+    Navigate to Facility Notebook    ${Deal_Name}    ${FacilityName}
+    Navigate to Existing Ongoing Fee Notebook    &{ExcelPath}[Fee_Type]
+    Verify Details in Accrual Tab for Line Fee    &{ExcelPath}[Cycle_Number]    &{ExcelPath}[Cycle_StartDate]    &{ExcelPath}[Cycle_EndDate]
+    ...    &{ExcelPath}[Cycle_DueDate]    &{ExcelPath}[Expected_CycleDueAmt]    &{ExcelPath}[ProjectedCycleDue]
+
+    ###Accrual Share Adjustment Notebook###
+    Navigate Line Fee and Verify Accrual Share Adjustment Notebook    &{ExcelPath}[Cycle_StartDate]    ${Deal_Name}    ${FacilityName}    &{ExcelPath}[Fee_Type]
+    ...    &{ExcelPath}[Expected_CycleDueAmt]    &{ExcelPath}[ProjectedCycleDue] 
+    Input Requested Amount, Effective Date, and Comment    &{ExcelPath}[RequestedAmount]    &{ExcelPath}[Effective_Date]     &{ExcelPath}[Accrual_Comment]
+    Save the Requested Amount, Effective Date, and Comment    &{ExcelPath}[RequestedAmount]    &{ExcelPath}[Effective_Date]     &{ExcelPath}[Accrual_Comment]
+
+    ###Accrual Share Adjustment Notebook - Workflow Items (INPUTTER)###
+    Send Adjustment to Approval
+    Logout from Loan IQ
+    
+    ###Accrual Share Adjustment Notebook - Workflow Items (APPROVER)###
+    Login to Loan IQ    ${SUPERVISOR_USERNAME}    ${SUPERVISOR_PASSWORD}
+    Select Item in Work in Process    &{ExcelPath}[WIPTransaction_Type]    ${AWAITING_APPROVAL_STATUS}    &{ExcelPath}[FacilitiesTransaction_Type]     ${Deal_Name}
+    Approve Fee Accrual Shares Adjustment
+    Logout from Loan IQ
+    
+    ###Accrual Share Adjustment Notebook - Workflow Items (APPROVER2)###
+    Login to Loan IQ    ${MANAGER_USERNAME}    ${MANAGER_PASSWORD}
+    Select Item in Work in Process    &{ExcelPath}[WIPTransaction_Type]    ${AWAITING_RELEASE_STATUS}    &{ExcelPath}[FacilitiesTransaction_Type]     ${Deal_Name}
+    Release Fee Accrual Shares Adjustment
+    Close Accrual Shares Adjustment Window
+    Logout from Loan IQ
+    
+    ###Verify the Updates in Accrual Tab###
+    Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
+    Launch Existing Facility    ${Deal_Name}    ${FacilityName}
+    Navigate to Commitment Fee Notebook    &{ExcelPath}[Fee_Type]
+    Validate Manual Adjustment Value in Line Fee    &{ExcelPath}[Cycle_Number]    &{ExcelPath}[RequestedAmount]
+    Validate Cycle Due New Value in Line Fee    &{ExcelPath}[Cycle_Number]    &{ExcelPath}[Expected_CycleDueAmt]     &{ExcelPath}[RequestedAmount]
+    Validate Projected EOC Due New Value in Line Fee    &{ExcelPath}[Cycle_Number]    &{ExcelPath}[ProjectedCycleDue]     &{ExcelPath}[RequestedAmount]
+    Validate Line Items Details from Line Fee    &{ExcelPath}[Cycle_EndDate]    &{ExcelPath}[Expected_PaidToDate]    #Expected_PaidToDate value is based on screenshots provided
+    Validate Accrual Shares Adjustment Applied Event in Line Fee
+    Close All Windows on LIQ
+    
+Update Facility Fee Expiry Date for LLA Syndicated Deal
+    [Documentation]    This high-level keyword updates Ongoing Fee Expiry Date for Facility.
+    ...    @author: makcamps    04MAR2021    - Initial Create
+    [Arguments]    ${ExcelPath}
+    
+    ###LIQ Login###
+    Logout from Loan IQ
+    Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
+    
+    ###Read Deal Name, Facility Name and Facility Fee### 
+    ${Deal_Name}    Read Data From Excel    CRED01_DealSetup    Deal_Name    1
+    ${FacilityName}    Read Data From Excel    CRED02_FacilitySetup    Facility_Name    1
+
+    ###Search Deal and Write Facility Name for ComSee
+    Open Existing Deal    ${DealName}
+    
+    ###Navigate to Line Fee Notebook From Facility###
+    Navigate to Facility Notebook from Deal Notebook    ${FacilityName}
+    Navigate to Commitment Fee List
+    Close Facility Fee List Window
+    Navigate to Commitment Fee Notebook    &{ExcelPath}[Fee_Type]
+    
+    ###Updating Expiry Date on Line Fee Notebook###
+    Change Expiry Date of Line Fee    &{ExcelPath}[Cycle_StartDate]
+    
+    Close All Windows on LIQ
+    Logout from Loan IQ
