@@ -40,6 +40,7 @@ LIQ_Loan_ChoosePayment_Cancel_Button = 'JavaWindow("title:=Choose a Payment").Ja
 LIQ_Loan_Options_Reprice_Menu = 'JavaWindow("title:=.*Loan.*Active").JavaMenu("label:=Options").JavaMenu("label:=Reprice .*")'
 LIQ_Loan_Options_CapitalizeInterest = 'JavaWindow("title:=.*Loan.*Active","displayed:=1").JavaMenu("label:=Options").JavaMenu("label:=Capitalize Interest.*")'
 LIQ_Loan_Options_Increase = 'JavaWindow("title:=.*Loan.*Active","displayed:=1").JavaMenu("label:=Options").JavaMenu("label:=Increase")'
+LIQ_Loan_GeneralTab_ActualDueDate_Textfield = 'JavaWindow("title:=.*Loan.*Active").JavaEdit("attached text:=Actual Due Date:")'
 
 ###Repricing Loan Notebook - General Tab###
 LIQ_Repricing_Loan_RiskType_Text = 'JavaWindow("title:=.*Loan.*Active").JavaStaticText("labeled_containers_path:=Tab:General;", "Index:=2")'

@@ -2408,3 +2408,43 @@ Add Principal Payment after Rollover Decrease Amount
     ${ExpectedPrincipalPayment}    Evaluate    ${TotalExistingOutstanding}-${NewRequestedAmt}
     Compare Two Numbers    ${ExpectedPrincipalPayment}    ${ActualPrincipalPayment}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/RolloverPrincipalAmount
+    
+Validate General Tab of Pending Rollover/Conversion Notebook after Comprehensive Repricing
+    [Documentation]    This keyword is used to validate fields in General Tab of Pending Rollover/Conversion Notebook after Comprehensive Repricing
+    ...    @author: ccarriedo    03MAR2021    - Initial create
+    [Arguments]    ${sLoan_Alias}    ${sRequested_Amount}    ${sRepricing_EffectiveDate}    ${sRepricing_MaturityDate}    ${sRepricing_Frequency}    ${sRepricing_Date}    ${sRepricing_Payment_Mode}    
+    ...    ${sRepricing_Int_Cycle_Freq}    ${sRepricing_Actual_Due_Date}    ${sRepricing_Adjusted_Due_Date}    ${sRepricing_Accrue}    ${sRepricing_Accrual_End_Date}
+
+    ### GetRuntime Keyword Pre-processing ###
+    ${Loan_Alias}    Acquire Argument Value    ${sLoan_Alias}
+    ${Loan_Requested_Amount}    Acquire Argument Value    ${sRequested_Amount}
+    ${Loan_EffectiveDate}    Acquire Argument Value    ${sRepricing_EffectiveDate}
+    ${Loan_MaturityDate}    Acquire Argument Value    ${sRepricing_MaturityDate}
+    ${Loan_RepricingFrequency}    Acquire Argument Value    ${sRepricing_Frequency}
+    ${Loan_RepricingDate}    Acquire Argument Value    ${sRepricing_Date}
+    ${Loan_PaymentMode}    Acquire Argument Value    ${sRepricing_Payment_Mode}
+    ${Loan_IntCycleFrequency}    Acquire Argument Value    ${sRepricing_Int_Cycle_Freq}
+    ${Loan_ActualDueDate}    Acquire Argument Value    ${sRepricing_Actual_Due_Date}
+    ${Loan_AdjustedDueDate}    Acquire Argument Value    ${sRepricing_Adjusted_Due_Date}
+    ${Loan_Accrue}    Acquire Argument Value    ${sRepricing_Accrue}
+    ${Loan_AccrualEndDate}    Acquire Argument Value    ${sRepricing_Accrual_End_Date}
+
+    mx LoanIQ activate window    ${LIQ_LoanRepricingForDeal_Window}
+    Mx LoanIQ Select Or DoubleClick In Javatree    ${LIQ_LoanRepricing_Outstanding_List}    ${Loan_Alias}%d
+
+    Validate Loan IQ Details    ${Loan_Requested_Amount}    ${LIQ_RolloverConversion_RequestedAmt_Textfield}
+    Validate Loan IQ Details    ${Loan_EffectiveDate}    ${LIQ_RolloverConversion_EffectiveDate_Textfield}
+    Validate Loan IQ Details    ${Loan_MaturityDate}    ${LIQ_RolloverConversion_MaturityDate_Textfield}
+    Validate Loan IQ Details    ${Loan_RepricingFrequency}    ${LIQ_RolloverConversion_RepricingFrequency_List}
+    Validate Loan IQ Details    ${Loan_RepricingDate}    ${LIQ_RolloverConversion_RepricingDate_Textfield}
+    Validate Loan IQ Details    ${Loan_PaymentMode}    ${LIQ_RolloverConversion_PaymentMode_List}
+    Validate Loan IQ Details    ${Loan_IntCycleFrequency}    ${LIQ_RolloverConversion_IntCycleFreq_Dropdown}
+    Validate Loan IQ Details    ${Loan_ActualDueDate}    ${LIQ_RolloverConversion_ActualDueDate_Textfield}
+    Validate Loan IQ Details    ${Loan_AdjustedDueDate}    ${LIQ_RolloverConversion_AdjustedDueDate_Textfield}
+    Validate Loan IQ Details    ${Loan_Accrue}    ${LIQ_RolloverConversion_Accrue_List}
+    Validate Loan IQ Details    ${Loan_AccrualEndDate}    ${LIQ_RolloverConversion_AccrualEndDate_Textfield}
+
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/RolloverGeneralTabAfterComprehensiveRepricing
+    
+    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}   
+    Mx LoanIQ select    ${LIQ_RolloverConversion_File_Exit}   
