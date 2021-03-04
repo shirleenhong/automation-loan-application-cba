@@ -71,8 +71,8 @@ LIQ_FeeList_JavaTree = 'JavaWindow("title:=Fee List for.*").JavaTree("tagname:=D
 ###Commitment Fee - Accrual###   
 LIQ_CommitmentFee_Acrual_JavaTree = 'JavaWindow("title:=Commitment Fee.*").JavaTree("tagname:=Cycles:")'
 LIQ_CommitmentFee_Window = 'JavaWindow("title:=Commitment Fee.*")'
-LIQ_CommitmentFeeNotebook_CycleShareAdjustment_Button = 'JavaWindow("title:=Commitment Fee Fee / Released:.*").JavaButton("attached text:=Cycle Shares Adjustment")'
-LIQ_CommitmentFeeNotebook_Accrual_JavaTree = 'JavaWindow("title:=Commitment Fee Fee / Released:.*").JavaTree("labeled_containers_path:=Tab:Accrual;","attached text:=Cycles:")'
+LIQ_CommitmentFeeNotebook_CycleShareAdjustment_Button = 'JavaWindow("title:=Commitment Fee Fee /.*").JavaButton("attached text:=Cycle Shares Adjustment")'
+LIQ_CommitmentFeeNotebook_Accrual_JavaTree = 'JavaWindow("title:=Commitment Fee Fee /.*").JavaTree("labeled_containers_path:=Tab:Accrual;","attached text:=Cycles:")'
 
 ###Commitment Fee - Workflow###   
 LIQ_CommitmentFeeNotebook_Workflow_JavaTree = 'JavaWindow("title:=Commitment Fee.*").JavaTree("tagname:=Drill down to perform.*","index:=0")'
