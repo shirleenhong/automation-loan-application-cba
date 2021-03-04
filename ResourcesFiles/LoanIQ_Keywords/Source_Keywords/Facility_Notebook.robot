@@ -4556,6 +4556,7 @@ Perform Online Accrual in Facility Notebook
 
 Validate the Amount from Comment in Amortization Schedule for Facility
     [Documentation]    This keyword is used verify the amount from comment in amortization schedule for facility
+    ...    Note: Please recheck this keyword when reexecuting Rollover for PDS Syndicated Bilateral Deal using the correct business date from runbook, might need to revise.
     ...    @author: shirhong    02MAR2021    - Initial create
     [Arguments]    ${sHistory_Effective_Date}    ${sExpected_CommentAmount}
     
