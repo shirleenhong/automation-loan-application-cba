@@ -956,9 +956,7 @@ Validate Line Items Details from Line Fee
     mx LoanIQ activate window    ${LIQ_LineItemsFor_Window}
     ${Amount_Accrued}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_LineItemsFor_JavaTree}    ${EndDate}%Amount Accrued%var
     
-    ${Status}    Run Keyword And Return Status    Should Be Equal    ${Expect_AmountAccrued}    ${Amount_Accrued}
-    Run Keyword If    ${Status}==${True}    Log    Amount Accrued is correct.
-    ...    ELSE    Run Keyword And Continue On Failure    Fail    Amount Accrued is NOT correct. Expected: ${Expect_AmountAccrued} - Actual: ${Amount_Accrued}
+    Compare Two Numbers    ${Expect_AmountAccrued}    ${Amount_Accrued}
 
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LineItemsWindow
     
