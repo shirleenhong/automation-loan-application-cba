@@ -12,6 +12,7 @@ Setup Syndicated Deal for LLA Syndicated
     ...    @update: makcamps    08FEB2021    - added write methods for notice
     ...    @update: makcamps    11FEB2021    - added write methods for upfront fee payment
     ...    @update: makcamps    17FEB2021    - added write methods for paperclip and manual cashflow
+    ...    @update: makcamps    01MAR2021    - added writing of notice details
     [Arguments]    ${ExcelPath}
 
     ###Data Generation###
@@ -59,7 +60,9 @@ Setup Syndicated Deal for LLA Syndicated
     Write Data To Excel    Correspondence    Notice_Customer_LegalName    5    ${Lender_ShortName}    bTestCaseColumn=True    sColumnReference=rowid
     Write Data To Excel    Correspondence    Notice_Customer_LegalName    7    ${Lender_ShortName}    bTestCaseColumn=True    sColumnReference=rowid
     Write Data To Excel    Correspondence    Notice_Customer_LegalName    9    ${Lender_ShortName}    bTestCaseColumn=True    sColumnReference=rowid
-    Write Data To Excel    Correspondence    Notice_Customer_LegalName    13    ${Lender_ShortName}    bTestCaseColumn=True    sColumnReference=rowid
+    Write Data To Excel    Correspondence    Notice_Customer_LegalName    12    ${Lender_ShortName}    bTestCaseColumn=True    sColumnReference=rowid
+    Write Data To Excel    Correspondence    Notice_Customer_LegalName    14    ${Lender_ShortName}    bTestCaseColumn=True    sColumnReference=rowid
+    Write Data To Excel    Correspondence    Notice_Customer_LegalName    16    ${Lender_ShortName}    bTestCaseColumn=True    sColumnReference=rowid
     
     ###Deal Select Window###
     Create New Deal    ${Deal_Name}    ${Deal_Alias}    &{ExcelPath}[Deal_Currency]    &{ExcelPath}[Deal_Department]

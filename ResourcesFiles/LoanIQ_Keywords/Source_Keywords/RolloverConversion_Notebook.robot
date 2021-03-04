@@ -133,15 +133,13 @@ Send Loan Repricing for Approval
     ...    @author: ritragel
     ...    @update: jdelacru    12MAR2019    - Added error handler to cater those scenario with no Cashflows
     ...    @update: clanding    13AUG2020    - updated hard coded values to global variables; added screenshot
+    ...    @update: kmagday     01MAR2021    - change clicking of warning and question to Validate if Question or Warning Message is Displayed
     mx LoanIQ click element if present    ${LIQ_Error_OK_Button}
     mx LoanIQ activate window    ${LIQ_LoanRepricingForDeal_Window}
     Mx LoanIQ Select Window Tab    ${LIQ_LoanRepricingForDeal_Workflow_Tab}    ${WORKFLOW_TAB}  
     Mx LoanIQ DoubleClick    ${LIQ_LoanRepricingForDeal_Workflow_JavaTree}    ${SEND_TO_APPROVAL_STATUS}
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LoanRepricingForDealWindow
-    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
-    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LoanRepricingForDealWindow 
-    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
-    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
+    Validate if Question or Warning Message is Displayed
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LoanRepricingForDealWindow
     
 Approve Loan Repricing
@@ -173,12 +171,11 @@ Send to Rate Approval
 Approve Rate Setting Notice
     [Documentation]    This keyword is used to Approved Rate Setting Notice
     ...    @author: ritragel
+    ...    @update: kmagday    01MAR2021    - change clicking of warning and question to Validate if Question or Warning Message is Displayed
     mx LoanIQ activate window    ${LIQ_LoanRepricingForDeal_Window}
     Mx LoanIQ Select Window Tab    ${LIQ_LoanRepricingForDeal_Workflow_Tab}    Workflow  
     Mx LoanIQ DoubleClick    ${LIQ_LoanRepricingForDeal_Workflow_JavaTree}    Rate Approval 
-    mx LoanIQ click element if present    ${LIQ_Question_Yes_Button}    
-    mx LoanIQ click element if present    ${LIQ_Question_Yes_Button}    
-    mx LoanIQ click element if present    ${LIQ_Warning_Yes_Button}
+    Validate if Question or Warning Message is Displayed
     
 Generate Rate Setting Notices
     [Documentation]    This keyword is used to Generate Rate Setting Notices
@@ -310,18 +307,23 @@ Set RolloverConversion Notebook General Details
     ...                This keyword will return the 'Effective Date' and 'Loan_Alias' to be used in succeeding validations/transactions.
     ...                @author: bernchua    26AUG2019    Initial create
     ...                @update: sahalder    25JUN2020    Added keyword Pre-Processing steps
-    ...    @update: dahijara    25AUG2020    Added steps for saving. Added post processing and screenshot.
-    [Arguments]    ${sRequested_Amount}    ${sRepricing_Frequency}    ${sRunVar_Effective_Date}=None    ${sRunVar_Loan_Alias}=None
+    ...                @update: dahijara    25AUG2020    Added steps for saving. Added post processing and screenshot.
+    ...                @update: songchan    26FEB2021    Added Repricing Date
+    ...                @update: shirhong    03MAR2021    Added handling of warning message if Repricing Date is a holiday
+    [Arguments]    ${sRequested_Amount}    ${sRepricing_Frequency}    ${sRepricing_Date}=None    ${sRunVar_Effective_Date}=None    ${sRunVar_Loan_Alias}=None
     
     ### GetRuntime Keyword Pre-processing ###
     ${Requested_Amount}    Acquire Argument Value    ${sRequested_Amount}
     ${Repricing_Frequency}    Acquire Argument Value    ${sRepricing_Frequency}
+    ${Repricing_Date}    Acquire Argument Value    ${sRepricing_Date}
 
     mx LoanIQ activate window    ${LIQ_RolloverConversion_Window}
     Mx LoanIQ Select Window Tab    ${LIQ_RolloverConversion_Tab}    General
-    mx LoanIQ enter    ${LIQ_RolloverConversion_RequestedAmt_Textfield}    ${Requested_Amount}
+    Mx LoanIQ Enter    ${LIQ_RolloverConversion_RequestedAmt_Textfield}    ${Requested_Amount}
     Verify If Warning Is Displayed
     Mx LoanIQ Select Combo Box Value    ${LIQ_RolloverConversion_RepricingFrequency_List}    ${Repricing_Frequency}
+    Run Keyword If    '${Repricing_Date}'!='None'    Mx LoanIQ Enter    ${LIQ_RolloverConversion_RepricingDate_Textfield}    ${Repricing_Date}
+    Run Keyword If    '${Repricing_Date}'!= 'None'    Verify If Warning Is Displayed
     ${Effective_Date}    Mx LoanIQ Get Data    ${LIQ_RolloverConversion_EffectiveDate_Textfield}    value%date
     ${Loan_Alias}    Mx LoanIQ Get Data    ${LIQ_RolloverConversion_Alias_Textfield}    value%alias
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/RolloverConversion
