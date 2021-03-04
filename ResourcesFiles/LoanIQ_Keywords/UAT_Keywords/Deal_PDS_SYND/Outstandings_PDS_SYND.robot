@@ -213,12 +213,6 @@ Rollover Outstanding A1 for PDS Syndicate Deal
     Navigate Transaction in WIP    ${OUTSTANDINGS_TRANSACTION}    ${AWAITING_APPROVAL_STATUS}    ${LOAN_REPRICING}    ${Deal_Name}
     Navigate to Loan Repricing Workflow and Proceed With Transaction    ${APPROVAL_STATUS}
 
-    ### Approval ###
-    Logout from Loan IQ
-    Login to Loan IQ    ${SUPERVISOR_USERNAME}    ${SUPERVISOR_PASSWORD}
-    Navigate Transaction in WIP    ${OUTSTANDINGS_TRANSACTION}    ${AWAITING_APPROVAL_STATUS}    ${LOAN_REPRICING}    ${Deal_Name}
-    Navigate to Loan Repricing Workflow and Proceed With Transaction    ${APPROVAL_STATUS}
-
     ### Login as Inputter and Rate Setting ###
     Logout from Loan IQ
     Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
@@ -226,7 +220,7 @@ Rollover Outstanding A1 for PDS Syndicate Deal
     ### Rate Setting in Loan Repricing Notebook ###
     Open Existing Deal    ${Deal_Name}
     Navigate to Outstanding Select Window from Deal
-    Navigate to Existing Loan    &{ExcelPath}[OutstandingSelect_Type]   ${FacilityName}    ${Outstanding_B_Alias}
+    Navigate to Existing Loan    &{ExcelPath}[OutstandingSelect_Type]   ${FacilityName}    ${Outstanding_A_Alias}
     Navigate to Loan Pending Tab and Proceed with the Pending Transaction    Awaiting Send to Rate Approval
     Set Notebook to Update Mode    ${LIQ_LoanRepricingForDeal_Window}    ${LIQ_LoanRepricingForDeal_Inquiry_Button}
     Navigate to Loan Repricing Workflow and Proceed With Transaction    ${RATE_SETTING_TRANSACTION}
