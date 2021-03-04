@@ -249,6 +249,8 @@ COMMITMENT_INCREASE_RELEASED = "Commitment Increase Released"
 ACCOUNTING = 'Accounting'
 PERFORM_ONLINE_ACCRUAL = 'Perform Online Accrual'
 AS_OF_ACCRUAL_TRIGGER = 'Create As-Of Accrual Trigger...'
+REVERSE_PAYMENT_RELEASED = 'Reverse Payment Released'
+
 
 ### Bank Role ###
 REFERENCE_BANK_ROLE = "Reference Bank"
@@ -276,6 +278,7 @@ CURRENCY_TAB = "Currency"
 RATIOS_CONDS_TAB = "Ratios/Conds"
 AMTS_DATES_TAB = 'Amts/Dates'
 INC_DEC_SCHEDULE_TAB = 'Inc/Dec Schedule'
+ACCRUAL_TAB = 'Accrual'
 
 ### Payment Type ###
 FEE_PAYMENT_FROM_BORROWER_TYPE = "Fee Payment From Borrower"
