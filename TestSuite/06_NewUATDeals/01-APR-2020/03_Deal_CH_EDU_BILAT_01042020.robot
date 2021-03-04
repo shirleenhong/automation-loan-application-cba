@@ -24,3 +24,7 @@ Generate and Send Repricing Intent Notice
 Generate and Send Rate Setting Intent Notice
     Set Test Variable    ${rowid}    15
     Mx Execute Template With Multiple Data    Send Repricing Rate Setting Notice for CH EDU Bilateral Deal    ${ExcelPath}    ${rowid}    Correspondence
+
+Generate and Send Fee Payment Capitalisation Notice
+    Set Test Variable    ${rowid}    16
+    Mx Execute Template With Multiple Data    Send Ongoing Fee Payment Intent Notice for CH EDU Bilateral Deal    ${ExcelPath}    ${rowid}    Correspondence
