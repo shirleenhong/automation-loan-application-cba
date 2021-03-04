@@ -932,7 +932,7 @@ Validate Line Fee Events Tab
 
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LineFeeWindow_EventsTab_Released
     
-Validate Line Items details from Line Fee
+Validate Line Items Details from Line Fee
     [Documentation]    This keyword will validate Line Items from Line Fee transaction.
     ...    @author: makcamps    03MAR2021    - initial create
     [Arguments]    ${sEndDate}    ${sExpect_AmountAccrued}
@@ -956,9 +956,7 @@ Validate Line Items details from Line Fee
     mx LoanIQ activate window    ${LIQ_LineItemsFor_Window}
     ${Amount_Accrued}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_LineItemsFor_JavaTree}    ${EndDate}%Amount Accrued%var
     
-    ${Status}    Run Keyword If    '${Expect_AmountAccrued}'=='None'    Run Keyword And Return Status    Should Be Equal    0.00    ${Amount_Accrued}
-    ...    ELSE    Run Keyword And Return Status    Should Be Equal    ${Expect_AmountAccrued}    ${Amount_Accrued}
-    ${Expect_AmountAccrued}    Run Keyword If    '${Expect_AmountAccrued}'=='None'    Set Variable    0.00
+    ${Status}    Run Keyword And Return Status    Should Be Equal    ${Expect_AmountAccrued}    ${Amount_Accrued}
     Run Keyword If    ${Status}==${True}    Log    Amount Accrued is correct.
     ...    ELSE    Run Keyword And Continue On Failure    Fail    Amount Accrued is NOT correct. Expected: ${Expect_AmountAccrued} - Actual: ${Amount_Accrued}
 

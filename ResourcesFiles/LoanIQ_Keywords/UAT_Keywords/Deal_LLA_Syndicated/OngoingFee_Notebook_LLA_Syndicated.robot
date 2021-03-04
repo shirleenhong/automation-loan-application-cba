@@ -190,7 +190,7 @@ Manual Adjustment of Line Fee for LLA Syndicated Deal
     Validate Manual Adjustment Value in Line Fee    &{ExcelPath}[Cycle_Number]    &{ExcelPath}[RequestedAmount]
     Validate Cycle Due New Value in Line Fee    &{ExcelPath}[Cycle_Number]    &{ExcelPath}[Expected_CycleDueAmt]     &{ExcelPath}[RequestedAmount]
     Validate Projected EOC Due New Value in Line Fee    &{ExcelPath}[Cycle_Number]    &{ExcelPath}[ProjectedCycleDue]     &{ExcelPath}[RequestedAmount]
-    Validate Line Items details from Line Fee    &{ExcelPath}[Cycle_EndDate]    &{ExcelPath}[Expected_PaidToDate]
+    Validate Line Items Details from Line Fee    &{ExcelPath}[Cycle_EndDate]    &{ExcelPath}[Expected_PaidToDate]
     Validate Accrual Shares Adjustment Applied Event in Line Fee
     Close All Windows on LIQ
     
@@ -199,9 +199,9 @@ Update Facility Fee Expiry Date for LLA Syndicated Deal
     ...    @author: makcamps    04MAR2021    - Initial Create
     [Arguments]    ${ExcelPath}
     
-    # ###LIQ Login###
-    # Logout from Loan IQ
-    # Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
+    ###LIQ Login###
+    Logout from Loan IQ
+    Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
     
     ###Read Deal Name, Facility Name and Facility Fee### 
     ${Deal_Name}    Read Data From Excel    CRED01_DealSetup    Deal_Name    1
@@ -220,4 +220,4 @@ Update Facility Fee Expiry Date for LLA Syndicated Deal
     Change Expiry Date of Line Fee    &{ExcelPath}[Cycle_StartDate]
     
     Close All Windows on LIQ
-    # Logout from Loan IQ
+    Logout from Loan IQ
