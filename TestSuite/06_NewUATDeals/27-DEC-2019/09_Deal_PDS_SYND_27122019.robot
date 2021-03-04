@@ -39,12 +39,10 @@ Setup Primaries and Close Deal
     Mx Execute Template With Multiple Data    Release Ongoing Fee for PDS Syndicate Deal    ${ExcelPath}    ${rowid}    CRED08_OngoingFeeSetup_A
     Mx Execute Template With Multiple Data    Release Ongoing Fee for PDS Syndicate Deal    ${ExcelPath}    ${rowid}    CRED08_OngoingFeeSetup_B
 
-Create Drawdown and Back Date to 09/18/19
+Create Drawdown A and Back Date to 09/18/19
     Mx Execute Template With Multiple Data    Create Loan Drawdown for PDS Syndicate Deal - Outstanding A    ${ExcelPath}    ${rowid}    SERV01_LoanDrawdown
 
-Create Drawdown and Back Date to 09/18/19
+Create Drawdown B and Back Date to 09/18/19
 	Set Test Variable    ${rowid}    2
     Mx Execute Template With Multiple Data    Create Loan Drawdown for PDS Syndicate Deal - Outstanding B    ${ExcelPath}    ${rowid}    SERV01_LoanDrawdown
 	
-Rollover Outstanding A1 - Repayment as Per Schedule
-    Mx Execute Template With Multiple Data    Rollover Outstanding A1 for PDS Syndicate Deal    ${ExcelPath}    ${rowid}    SERV08_ComprehensiveRepricing

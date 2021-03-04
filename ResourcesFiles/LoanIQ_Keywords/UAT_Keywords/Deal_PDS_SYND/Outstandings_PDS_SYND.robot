@@ -153,7 +153,8 @@ Create Loan Drawdown for PDS Syndicate Deal - Outstanding B
 
 Rollover Outstanding A1 for PDS Syndicate Deal
     [Documentation]    This is a high-level keyword to rollover outstanding A1 for PDS Syndicate Deal.
-    ...    @author: shirhong    03FEB2021    - Initial Create
+    ...    @author: shirhong    23FEB2021    - Initial Create
+    ...    @update: shirhong    03MAR2021    - Updated the correct step for Rate Setting. Remove unnecessary retrieve data from dataset.
     [Arguments]    ${ExcelPath}
     
     ### Retrieve Data from Excel Data Sheet ###
@@ -162,8 +163,6 @@ Rollover Outstanding A1 for PDS Syndicate Deal
     ${Outstanding_A_Alias}    Read Data From Excel    SERV01_LoanDrawdown    Loan_Alias    1
     ${Borrower_Name}    Read Data From Excel    PTY001_QuickPartyOnboarding    LIQCustomer_ShortName    1
     ${Customer_Name}    Read Data From Excel    CRED01_DealSetup    Deal_AdminAgent    1
-    ${BaseRate_OptionName}    Read Data From Excel    CRED01_DealSetup    Deal_PricingOption    1
-	${Rollover_Amount}    Read Data From Excel    SERV01_LoanDrawdown    Loan_RequestedAmount    1
 
     ### Login using Inputter ###
     Logout from Loan IQ
@@ -208,6 +207,12 @@ Rollover Outstanding A1 for PDS Syndicate Deal
     Navigate to Loan Repricing Workflow and Proceed With Transaction    ${SEND_TO_APPROVAL_STATUS}
     Close All Windows on LIQ
     
+     ### Approval ###
+    Logout from Loan IQ
+    Login to Loan IQ    ${SUPERVISOR_USERNAME}    ${SUPERVISOR_PASSWORD}
+    Navigate Transaction in WIP    ${OUTSTANDINGS_TRANSACTION}    ${AWAITING_APPROVAL_STATUS}    ${LOAN_REPRICING}    ${Deal_Name}
+    Navigate to Loan Repricing Workflow and Proceed With Transaction    ${APPROVAL_STATUS}
+
     ### Approval ###
     Logout from Loan IQ
     Login to Loan IQ    ${SUPERVISOR_USERNAME}    ${SUPERVISOR_PASSWORD}
@@ -218,10 +223,120 @@ Rollover Outstanding A1 for PDS Syndicate Deal
     Logout from Loan IQ
     Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
 
-    Navigate Transaction in WIP    ${OUTSTANDINGS_TRANSACTION}    ${AWAITING_RATE_SETTING}    ${LOAN_REPRICING}    ${Deal_Name}
+    ### Rate Setting in Loan Repricing Notebook ###
+    Open Existing Deal    ${Deal_Name}
+    Navigate to Outstanding Select Window from Deal
+    Navigate to Existing Loan    &{ExcelPath}[OutstandingSelect_Type]   ${FacilityName}    ${Outstanding_B_Alias}
+    Navigate to Loan Pending Tab and Proceed with the Pending Transaction    Awaiting Send to Rate Approval
+    Set Notebook to Update Mode    ${LIQ_LoanRepricingForDeal_Window}    ${LIQ_LoanRepricingForDeal_Inquiry_Button}
     Navigate to Loan Repricing Workflow and Proceed With Transaction    ${RATE_SETTING_TRANSACTION}
+    
     Set Base Rate Details    &{ExcelPath}[Base_Rate]    &{ExcelPath}[AcceptRate_FromPricing]
+	
+    ### Send to Rate Approval ###
+    Navigate to Loan Repricing Workflow and Proceed With Transaction    ${SEND_TO_RATE_APPROVAL_STATUS}
 
+    ### Rate Approval ###
+    Logout from Loan IQ
+    Login to Loan IQ    ${SUPERVISOR_USERNAME}    ${SUPERVISOR_PASSWORD}
+    Navigate Transaction in WIP    ${OUTSTANDINGS_TRANSACTION}    ${AWAITING_RATE_APPROVAL_STATUS}    ${LOAN_REPRICING}    ${Deal_Name}
+    Navigate to Loan Repricing Workflow and Proceed With Transaction    ${RATE_APPROVAL_STATUS}
+
+    ### Release Loan Repricing ###
+    Logout from Loan IQ
+    Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
+    Navigate Transaction in WIP    ${OUTSTANDINGS_TRANSACTION}    ${AWAITING_RELEASE_STATUS}    ${LOAN_REPRICING}    ${Deal_Name}
+    Navigate to Loan Repricing Workflow and Proceed With Transaction    ${RELEASE_STATUS}
+    Validate Window Title Status    ${LOAN_REPRICING}    ${RELEASED_STATUS}
+
+    ### Validate New Loan Amount ###
+    Search for Deal    ${Deal_Name}
+    Search for Existing Outstanding    &{ExcelPath}[OutstandingSelect_Type]    ${FacilityName}
+    Open Existing Loan    ${NewLoan_Alias}
+    Validate Updated Global and Host Bank Amount after Repricing    &{ExcelPath}[New_LoanAmount]    &{ExcelPath}[HostBank_Amount]
+    Close All Windows on LIQ
+
+    ### Validate Amount in Amortization Schedule ###
+    Navigate to Facility Notebook    ${Deal_Name}    ${FacilityName}
+    Navigate to Increase Decrease Schedule from Facility Notebook Window
+    Validate the Amount from Comment in Amortization Schedule for Facility    &{ExcelPath}[AmortizationSched_EffectiveDate]    &{ExcelPath}[PrincipalPayment_FromRepricing]
+    Close All Windows on LIQ
+
+Rollover Outstanding B1 for PDS Syndicate Deal
+    [Documentation]    This is a high-level keyword to rollover outstanding B1 for PDS Syndicate Deal.
+    ...    @author: shirhong    03MAR2021    - Initial Create
+    [Arguments]    ${ExcelPath}
+    
+    ### Retrieve Data from Excel Data Sheet ###
+    ${Deal_Name}    Read Data From Excel    CRED01_DealSetup    Deal_Name    1
+    ${FacilityName}    Read Data From Excel    CRED02_FacilitySetup_B    Facility_Name    1
+    ${Outstanding_B_Alias}    Read Data From Excel    SERV01_LoanDrawdown    Loan_Alias    2
+    ${Borrower_Name}    Read Data From Excel    PTY001_QuickPartyOnboarding    LIQCustomer_ShortName    1
+    ${Customer_Name}    Read Data From Excel    CRED01_DealSetup    Deal_AdminAgent    1
+
+    ### Login using Inputter ###
+    Logout from Loan IQ
+    Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
+
+    ### Search for Existing Deal and Facility ###
+    Launch Existing Facility    ${Deal_Name}    ${FacilityName}
+
+    ### Search for Existing Outstanding ###
+    Navigate to Existing Outstanding    &{ExcelPath}[OutstandingSelect_Type]    ${FacilityName}
+        
+    ### Select Loan to Rollover ###
+    Select Loan to Reprice    ${Outstanding_B_Alias}
+    Select Repricing Type    &{ExcelPath}[Repricing_Type]
+    Select Loan Repricing for Deal    ${Outstanding_B_Alias}
+    
+    ### Repricing Notebook - Setup Repricing ###  
+    Cick Add in Loan Repricing Notebook
+    Set Repricing Detail Add Options     &{ExcelPath}[Repricing_Add_Option_Setup]    &{ExcelPath}[Pricing_Option]    ${FacilityName}    ${Borrower_Name}
+    ${Effective_Date}    ${NewLoan_Alias}    Set RolloverConversion Notebook General Details    &{ExcelPath}[New_LoanAmount]    &{ExcelPath}[Repricing_Frequency]    &{ExcelPath}[Repricing_Date]
+    Save Notebook Transaction    ${LIQ_RolloverConversion_Window}    ${LIQ_RolloverConversion_Save_Menu}
+    Close RolloverConversion Notebook
+
+    Write Data To Excel    SERV08_ComprehensiveRepricing    NewLoan_Alias    ${rowid}    ${NewLoan_Alias}
+
+    ### Adding of Interest Payment ###
+    Add Interest Payment for Loan Repricing
+
+    ###Add Principal Payment###
+    Add Principal Payment after New Outstanding Addition    &{ExcelPath}[Pricing_Option]    &{ExcelPath}[New_LoanAmount]
+
+    ### Create Cashflow ###
+    Navigate Notebook Workflow    ${LIQ_LoanRepricingForDeal_Window}    ${LIQ_LoanRepricingForDeal_Workflow_Tab}    ${LIQ_LoanRepricingForDeal_Workflow_JavaTree}    Create Cashflows
+
+    ### Remittance Instruction per Cashflow ###
+    Verify if Method has Remittance Instruction    ${Customer_Name}    &{ExcelPath}[RI_Description]    &{ExcelPath}[Remittance_Instruction]    &{ExcelPath}[TranAmount_1]    &{ExcelPath}[Currency]
+    Verify if Method has Remittance Instruction As None    ${Customer_Name}    &{ExcelPath}[RI_Description]    &{ExcelPath}[Remittance_Instruction]    &{ExcelPath}[TranAmount_2]    &{ExcelPath}[Currency]
+
+    Set All Items to Do It
+
+    ### Send to Approval ###
+    Navigate to Loan Repricing Workflow and Proceed With Transaction    ${SEND_TO_APPROVAL_STATUS}
+    Close All Windows on LIQ
+
+    ### Approval ###
+    Logout from Loan IQ
+    Login to Loan IQ    ${SUPERVISOR_USERNAME}    ${SUPERVISOR_PASSWORD}
+    Navigate Transaction in WIP    ${OUTSTANDINGS_TRANSACTION}    ${AWAITING_APPROVAL_STATUS}    ${LOAN_REPRICING}    ${Deal_Name}
+    Navigate to Loan Repricing Workflow and Proceed With Transaction    ${APPROVAL_STATUS}
+
+    ### Login as Inputter and Rate Setting ###
+    Logout from Loan IQ
+    Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
+
+    ### Rate Setting in Loan Repricing Notebook ###
+    Open Existing Deal    ${Deal_Name}
+    Navigate to Outstanding Select Window from Deal
+    Navigate to Existing Loan    &{ExcelPath}[OutstandingSelect_Type]   ${FacilityName}    ${Outstanding_B_Alias}
+    Navigate to Loan Pending Tab and Proceed with the Pending Transaction    Awaiting Send to Rate Approval
+    Set Notebook to Update Mode    ${LIQ_LoanRepricingForDeal_Window}    ${LIQ_LoanRepricingForDeal_Inquiry_Button}
+    Navigate to Loan Repricing Workflow and Proceed With Transaction    ${RATE_SETTING_TRANSACTION}
+    
+    Set Base Rate Details    &{ExcelPath}[Base_Rate]    &{ExcelPath}[AcceptRate_FromPricing]
+	
     ### Send to Rate Approval ###
     Navigate to Loan Repricing Workflow and Proceed With Transaction    ${SEND_TO_RATE_APPROVAL_STATUS}
     
@@ -242,8 +357,7 @@ Rollover Outstanding A1 for PDS Syndicate Deal
     Search for Deal    ${Deal_Name}
     Search for Existing Outstanding    &{ExcelPath}[OutstandingSelect_Type]    ${FacilityName}
     Open Existing Loan    ${NewLoan_Alias}
-    Validate Updated Global and Host Bank Amount after Repricing    &{ExcelPath}[New_LoanAmount]    &{ExcelPath}[HostBank_Amount]
-	
+    Validate Updated Global and Host Bank Amount after Repricing    &{ExcelPath}[New_LoanAmount]    &{ExcelPath}[HostBank_Amount]	
     Close All Windows on LIQ
 
     ### Validate Amount in Amortization Schedule ###
