@@ -6,6 +6,8 @@ Setup Commitment Fee for LBT Bilateral Deal
     [Documentation]    This keyword is used to set up Commitment Fee for LBT Bilateral Deal.
     ...    @author: javinzon    10DEC2020    - Initial create
     ...    @update: javinzon    17DEC2020    - Added keyword 'Set Facility Pricing Penalty Spread'
+    ...    @update: javinzon    01MAR2020    - Replaced keyword 'Navigate to Commitment Fee Notebook' with 'Navigate Ongoing Fee 
+    ...                                        Notebook', Added keyword to get Fee Alias and Write to Excel
     [Arguments]    ${ExcelPath}
     
     ${Borrower_ShortName}    Read Data From Excel    PTY001_QuickPartyOnboarding    LIQCustomer_ShortName    &{ExcelPath}[rowid]
@@ -58,7 +60,9 @@ Setup Commitment Fee for LBT Bilateral Deal
     Validate Ongoing Fee or Interest
     
     ### Ongoing Fee - Update Details ###
-    Navigate to Existing Ongoing Fee Notebook    &{ExcelPath}[OngoingFee_Type]
+    ${Fee_Alias}    Get Fee Alias using Status from Ongoing Fee List    ${PENDING_STATUS}
+    Write Data To Excel    CRED08_OngoingFeeSetup    Fee_Alias    ${rowid}    ${Fee_Alias}
+    Navigate to Ongoing Fee Notebook    ${Fee_Alias}
 
     Update Ongoing Fee General Information    &{ExcelPath}[OngoingFee_EffectiveDate]    &{ExcelPath}[OngoingFee_ActualDate]    &{ExcelPath}[OngoingFee_AdjustedDueDate]    &{ExcelPath}[OngoingFee_Accrue]    &{ExcelPath}[OngoingFee_AccrualEndDate]    &{ExcelPath}[Cycle_Frequency]
 
@@ -322,3 +326,173 @@ Charge Monthly Commitment Fee for LBT Bilateral Deal (3/4/2020 to 15/5/2020)
     Close Ongoing Fee Payment Notebook Window
     Validate Dues on Accrual Tab for Commitment Fee    &{ExcelPath}[AfterPayment_CycleDueAmt]    &{ExcelPath}[Cycle_No]    &{ExcelPath}[AfterPayment_Projected_EOCAccrual]    &{ExcelPath}[AfterPayment_Projected_EOCDue]    &{ExcelPath}[AfterPayment_PaidToDate]   
     Close All Windows on LIQ
+
+Create Reversal Payment for LBT Bilateral Deal
+    [Documentation]    This keyword initiates payment reversal for LBT Bilateral Deal
+    ...    @author: javinzon    01MAR2021    - Initial create
+    [Arguments]    ${ExcelPath}
+
+    ${Deal_Name}    Read Data From Excel    CRED01_DealSetup    Deal_Name    1
+	${Facility_Name}    Read Data From Excel    CRED01_FacilitySetup    Facility_Name    1
+	${Fee_Alias}    Read Data From Excel    CRED08_OngoingFeeSetup    Fee_Alias    1
+	${Borrower_Shortname}    Read Data From Excel    PTY001_QuickPartyOnboarding    LIQCustomer_ShortName    1
+        
+    ### Launch Facility ###
+    Launch Existing Facility    ${Deal_Name}    ${Facility_Name}
+    Navigate to Ongoing Fee Notebook    ${Fee_Alias}
+
+    ### Create Payment reversal ###
+    Perform Reverse Payment Under Events Tab in Commitment Fee Notebook    &{ExcelPath}[Event]    &{ExcelPath}[Comment]    &{ExcelPath}[Effective_Date]    &{ExcelPath}[Expected_RequestedAmt]
+
+    ### Create Cashflow ###
+    Navigate Notebook Workflow    ${LIQ_ReverseFee_Window}    ${LIQ_ReversePayment_Tab}    ${LIQ_ReversePayment_WorkflowItems_Tree}    ${CREATE_CASHFLOW_TYPE}
+    Set the Status to Send all to SPAP
+    Verify if Status is set to Do It    ${Borrower_Shortname}  
+    Close GL Entries and Cashflow Window
+
+    ### Send to Approval and Approve ###
+    Navigate Notebook Workflow    ${LIQ_ReverseFee_Window}    ${LIQ_ReversePayment_Tab}    ${LIQ_ReversePayment_WorkflowItems_Tree}    ${SEND_TO_APPROVAL_STATUS}
+    Logout from Loan IQ
+    Login to Loan IQ    ${SUPERVISOR_USERNAME}    ${SUPERVISOR_PASSWORD}
+    Select Item in Work in Process    ${PAYMENTS_TRANSACTION}    ${AWAITING_APPROVAL_STATUS}    ${REVERSE_FEE_PAYMENT_TRANSACTION}     ${Facility_Name}
+    Navigate Notebook Workflow    ${LIQ_ReverseFee_Window}    ${LIQ_ReversePayment_Tab}    ${LIQ_ReversePayment_WorkflowItems_Tree}    ${APPROVAL_STATUS}
+    
+    ### Generate Intent Notice ###
+    Logout from Loan IQ
+    Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
+    Select Item in Work in Process    ${PAYMENTS_TRANSACTION}    ${AWAITING_GENERATE_INTENT_NOTICES_STATUS}    ${REVERSE_FEE_PAYMENT_TRANSACTION}     ${Facility_Name}
+    Navigate Notebook Workflow    ${LIQ_ReverseFee_Window}    ${LIQ_ReversePayment_Tab}    ${LIQ_ReversePayment_WorkflowItems_Tree}    ${GENERATE_INTENT_NOTICES}
+    Generate Intent Notices    ${Borrower_Shortname}
+    Close Generate Notice Window
+    Navigate Notebook Workflow    ${LIQ_ReverseFee_Window}    ${LIQ_ReversePayment_Tab}    ${LIQ_ReversePayment_WorkflowItems_Tree}    ${RELEASE_STATUS}
+    
+    ### Validate Released Event and Accruals ###
+    Close All Windows on LIQ
+    Launch Existing Facility    ${Deal_Name}    ${Facility_Name}
+    Navigate to Ongoing Fee Notebook    ${Fee_Alias}
+    Validate an Event in Events Tab of Commitment Fee Notebook    ${REVERSE_PAYMENT_RELEASED}
+    Validate Payment Reversal in Accrual Tab    &{ExcelPath}[Cycle_No]    &{ExcelPath}[AfterPayment_CycleDueAmt]    &{ExcelPath}[AfterPayment_PaidToDate]
+    
+Complete Cycle Shares Adjustment to Correct Annual Fee Notebook for LBT Bilateral Deal 
+    [Documentation]    This is a high-level keyword to complete cycle shares adjustment to correct Annual Fee Notebook for LBT Bilateral Deal 
+    ...    @author: javinzon    02MAR2021    - Initial create 
+    [Arguments]    ${ExcelPath}
+
+	${Deal_Name}    Read Data From Excel    CRED01_DealSetup    Deal_Name    1
+	${Facility_Name}    Read Data From Excel    CRED01_FacilitySetup    Facility_Name    1
+    ${Borrower_Name}    Read Data From Excel    PTY001_QuickPartyOnboarding    LIQCustomer_ShortName    1
+    ${Fee_Alias}    Read Data From Excel    CRED08_OngoingFeeSetup    Fee_Alias    1
+
+    ### Accrual Share Adjustment Notebook ###
+    Navigate and Verify Accrual Share Adjustment Notebook    ${ExcelPath}[Start_Date]    ${Deal_Name}    ${Facility_Name}    ${Borrower_Name}    &{ExcelPath}[OngoingFee_Type]    &{ExcelPath}[Current_Cycle_Due]
+    ...    &{ExcelPath}[Projected_Cycle_Due]    
+    Input Requested Amount, Effective Date, and Comment    &{ExcelPath}[Requested_Amount]    ${ExcelPath}[Effective_Date]     &{ExcelPath}[Accrual_Comment]
+    Save the Requested Amount, Effective Date, and Comment    &{ExcelPath}[Requested_Amount]    ${ExcelPath}[Effective_Date]     &{ExcelPath}[Accrual_Comment]
+ 
+    ### Send to Approval ###
+    Send Adjustment to Approval
+    Logout from Loan IQ
+    
+    ### Approval ###
+    Login to Loan IQ    ${SUPERVISOR_USERNAME}    ${SUPERVISOR_PASSWORD}
+    Select Item in Work in Process    &{ExcelPath}[WIPTransaction_Type]    ${AWAITING_APPROVAL_STATUS}    &{ExcelPath}[FacilitiesTransaction_Type]     ${Deal_Name}
+    Approve Fee Accrual Shares Adjustment
+    Logout from Loan IQ
+    
+    ### Release ###
+    Login to Loan IQ    ${MANAGER_USERNAME}    ${MANAGER_PASSWORD}
+    Select Item in Work in Process    &{ExcelPath}[WIPTransaction_Type]    ${AWAITING_RELEASE_STATUS}    &{ExcelPath}[FacilitiesTransaction_Type]     ${Deal_Name}
+    Release Fee Accrual Shares Adjustment
+    Close Accrual Shares Adjustment Window
+    Logout from Loan IQ
+    
+    ### Verify the Updates in Accrual Tab ###
+    Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
+    Launch Existing Facility    ${Deal_Name}    ${Facility_Name}
+    Navigate to Ongoing Fee Notebook    ${Fee_Alias}
+    
+    Validate Accrual Shares Adjustment Applied Event
+    Validate Accrual Adjustment Value    &{ExcelPath}[Cycle_No]    &{ExcelPath}[AccrualAdjustment_Amount] 
+    Validate Manual Adjustment Value    &{ExcelPath}[Cycle_No]    &{ExcelPath}[ManualAdjustment_Amount] 
+    Validate Cycle Due New Value    &{ExcelPath}[Cycle_No]    &{ExcelPath}[Current_Cycle_Due]     &{ExcelPath}[Requested_Amount]
+    Validate Projected EOC Due New Value    &{ExcelPath}[Cycle_No]    &{ExcelPath}[Projected_Cycle_Due]     &{ExcelPath}[Requested_Amount]    
+    
+Change Commitment Fee Expiry Date for LBT Bilateral Deal (4/3/2019) 
+    [Documentation]    This keyword change the expiry date of the commitment fee to 03/04/2019 for LBT Bilateral Deal.
+    ...    @author: javinzon    03MAR2021    - Initial create
+    [Arguments]    ${ExcelPath}
+
+    ${Deal_Name}    Read Data From Excel    CRED01_DealSetup    Deal_Name    1
+	${Facility_Name}    Read Data From Excel    CRED01_FacilitySetup    Facility_Name    1
+	${Fee_Alias}    Read Data From Excel    CRED08_OngoingFeeSetup    Fee_Alias    1
+	
+    ### Commitment Fee Notebook - General Tab ###  
+    Change Expiry Date    ${ExcelPath}[Actual_ExpiryDate]
+    Validate General Tab of Commitment Fee Notebook    &{ExcelPath}[OngoingFee_EffectiveDate]    &{ExcelPath}[Cycle_Frequency]    &{ExcelPath}[OngoingFee_ActualDate]    &{ExcelPath}[OngoingFee_AdjustedDueDate]    &{ExcelPath}[OngoingFee_AccrualEndDate]    &{ExcelPath}[OngoingFee_Accrue]    &{ExcelPath}[Actual_ExpiryDate]    &{ExcelPath}[Original_ExpiryDate] 
+
+    ### Perform Online Accrual ###
+    Perform Online Accrual in Commitment Fee Notebook
+    
+    ### Validate Accruals ###
+    Close All Windows on LIQ
+    Launch Existing Facility    ${Deal_Name}    ${Facility_Name}
+    Navigate to Ongoing Fee Notebook    ${Fee_Alias}
+    Validate Dues on Accrual Tab for Commitment Fee    &{ExcelPath}[Cycle1_CycleDueAmt]    &{ExcelPath}[Cycle_Number1]    &{ExcelPath}[Cycle1_Projected_EOCAccrual]    &{ExcelPath}[Cycle1_Projected_EOCDue]
+    
+Create New Ongoing Fee and Check Line Items for LBT Bilateral Deal
+    [Documentation]    This keyword will create new ongoing fee and check line items for LBT Bilateral Deal 
+    ...    @author: javinzon	03MAR2021    - Initial create
+    [Arguments]    ${ExcelPath}
+
+    ${Deal_Name}    Read Data From Excel    CRED01_DealSetup    Deal_Name    1
+	${Facility_Name}    Read Data From Excel    CRED01_FacilitySetup    Facility_Name    1
+	${Fee_Alias}    Read Data From Excel    CRED08_OngoingFeeSetup    Fee_Alias    5
+    
+    Close All Windows on LIQ
+        
+    ### Launch Facility ###
+    Launch Existing Facility    ${Deal_Name}    ${Facility_Name}
+    ${Fee_Alias}    Create New Ongoing Fee
+    Write Data To Excel    CRED08_OngoingFeeSetup    Fee_Alias    ${rowid}    ${Fee_Alias}
+
+    ### Update and Release Commitment Fee ###
+    Update Commitment Fee    &{ExcelPath}[OngoingFee_EffectiveDate]    &{ExcelPath}[OngoingFee_ActualDate]    &{ExcelPath}[OngoingFee_AdjustedDueDate]    &{ExcelPath}[OngoingFee_Accrue]    &{ExcelPath}[OngoingFee_AccrualEndDate]    ${ExcelPath}[Cycle_Frequency] 
+    Navigate Notebook Workflow    ${LIQ_CommitmentFee_Window}    ${LIQ_CommitmentFee_Tab}    ${LIQ_CommitmentFeeNotebook_Workflow_JavaTree}    ${RELEASE_STATUS}
+    
+    ### Validate Released Event ###
+    Validate an Event in Events Tab of Commitment Fee Notebook    ${RELEASED_STATUS}
+    
+    ### Perform Online Accrual ### 
+    Perform Online Accrual in Commitment Fee Notebook
+    
+    ### Validate General Tab and Accruals Tab ###
+    Close All Windows on LIQ
+    Launch Existing Facility    ${Deal_Name}    ${Facility_Name}
+    Navigate to Ongoing Fee Notebook    ${Fee_Alias}
+    Validate General Tab of Commitment Fee Notebook    &{ExcelPath}[OngoingFee_EffectiveDate]    &{ExcelPath}[Cycle_Frequency]    &{ExcelPath}[OngoingFee_ActualDate]    &{ExcelPath}[OngoingFee_AdjustedDueDate]    &{ExcelPath}[OngoingFee_AccrualEndDate]    &{ExcelPath}[OngoingFee_Accrue]
+    Get and Validate Dates in Accrual Tab    &{ExcelPath}[Cycle_Number1]    &{ExcelPath}[OngoingFee_EffectiveDate]    &{ExcelPath}[OngoingFee_AccrualEndDate]
+    Get and Validate Dates in Accrual Tab    &{ExcelPath}[Cycle_Number2]    &{ExcelPath}[Cycle2_StartDate]    &{ExcelPath}[Cycle2_EndDate]
+    Navigate to Line Items from Accrual Tab of Commitment Fee Notebook    &{ExcelPath}[Cycle_Number1]
+    
+Change Commitment Fee Expiry Date for LBT Bilateral Deal (4/3/2020) 
+    [Documentation]    This keyword change the expiry date of the commitment fee to 4/3/2020 for LBT Bilateral Deal.
+    ...    @author: javinzon    03MAR2021    - Initial create
+    [Arguments]    ${ExcelPath}
+	
+    ${Deal_Name}    Read Data From Excel    CRED01_DealSetup    Deal_Name    1
+	${Facility_Name}    Read Data From Excel    CRED01_FacilitySetup    Facility_Name    1
+	${Fee_Alias}    Read Data From Excel    CRED08_OngoingFeeSetup    Fee_Alias    5
+
+    Close All Windows on LIQ
+    Launch Existing Facility    ${Deal_Name}    ${Facility_Name}
+    Navigate to Ongoing Fee Notebook    ${Fee_Alias}
+    
+    ### Commitment Fee Notebook - General Tab ###  
+    Change Expiry Date    ${ExcelPath}[Actual_ExpiryDate]
+    
+    ### Commitment Fee Notebook - Check Accruals Tab ###
+    Validate Dues on Accrual Tab for Commitment Fee    &{ExcelPath}[Cycle1_CycleDueAmt]    &{ExcelPath}[Cycle_Number1]    &{ExcelPath}[Cycle1_Projected_EOCAccrual]    &{ExcelPath}[Cycle1_Projected_EOCDue]   
+    Validate Dues on Accrual Tab for Commitment Fee    &{ExcelPath}[Cycle2_CycleDueAmt]    &{ExcelPath}[Cycle_Number2]    &{ExcelPath}[Cycle2_Projected_EOCAccrual]    &{ExcelPath}[Cycle2_Projected_EOCDue]   
+    
+    
+    
