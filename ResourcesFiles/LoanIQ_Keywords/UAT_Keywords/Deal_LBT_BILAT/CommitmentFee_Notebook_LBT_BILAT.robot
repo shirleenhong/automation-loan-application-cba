@@ -60,7 +60,7 @@ Setup Commitment Fee for LBT Bilateral Deal
     Validate Ongoing Fee or Interest
     
     ### Ongoing Fee - Update Details ###
-    ${Fee_Alias}    Get Fee Alias from Ongoing Fee List    ${PENDING_STATUS}
+    ${Fee_Alias}    Get Fee Alias using Status from Ongoing Fee List    ${PENDING_STATUS}
     Write Data To Excel    CRED08_OngoingFeeSetup    Fee_Alias    ${rowid}    ${Fee_Alias}
     Navigate to Ongoing Fee Notebook    ${Fee_Alias}
 

@@ -10,7 +10,7 @@ LIQ_UpdateMode_Button = 'JavaWindow("title:=Deal.*").JavaButton("attached text:=
 LIQ_InquiryMode_Button = 'JavaWindow("title:=Deal.*").JavaButton("attached text:=Notebook in Inquiry Mode.*")'    
 LIQ_Exiting_SaveExit_Button = 'JavaWindow("title:=Exiting").JavaButton("attached text:=Save & Exit")'    
 LIQ_Logout_AsDifferentUser_RadioButton = 'JavaWindow("title:=.*LoanIQ.*").JavaRadioButton("label:=.*Log on as.*")'   
-LIQ_Logout_OK_Button = 'JavaWindow("title:=.*LoanIQ.*").JavaButton("label:=OK")'   
+LIQ_Logout_OK_Button = 'JavaWindow("title:=.*LoanIQ.*").JavaButton("label:=OK")'  
 LIQ_Username_Field = 'JavaWindow("title:=Fusion Loan IQ.*").JavaEdit("tagname:=Text","index:=0")'
 LIQ_Password_Field = 'JavaWindow("title:=Fusion Loan IQ.*").JavaEdit("tagname:=Text","index:=1")'
 LIQ_SignIn_Button = 'JavaWindow("title:=Fusion Loan IQ.*").JavaButton("label:=Login")'
@@ -23,8 +23,8 @@ LIQ_Options_RefreshAllCodeTables = 'JavaWindow("title:=.*Fusion Loan IQ.*").Java
 LIQ_Options_RIDSelect = 'JavaWindow("title:=.*Fusion Loan IQ.*").JavaMenu("label:=Options").JavaMenu("label:=RID Select")'
 
 
-LIQ_LogoutRadioButton = 'JavaWindow("title:=.*Loan.*.*IQ.*.*7.*").JavaRadioButton("label:=Log on as a different user")'
-LIQ_LogoutButton = 'JavaWindow("title:=..*Loan.*.*IQ.*.*7.*").JavaButton("label:=OK")'
+LIQ_LogoutRadioButton = 'JavaWindow("title:=.*Loan.*.*IQ.*").JavaRadioButton("label:=Log on as a different user")'
+LIQ_LogoutButton = 'JavaWindow("title:=..*Loan.*.*IQ.*").JavaButton("label:=OK")'
 
 
 ###Information Window###    
@@ -177,4 +177,3 @@ LIQ_Alerts_OK_Button = 'JavaWindow("text:=Alerts").JavaButton("attached text:=OK
 
 ### Deal Change Java Window ###
 LIQ_DealChange_JavaWindow = 'JavaWindow("title:= Released.*")'
-

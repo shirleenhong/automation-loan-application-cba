@@ -668,7 +668,7 @@ Validate Accrual Adjustment Value
     ${Accrual_Adjustment}    Acquire Argument Value    ${sAccrual_Adjustment}
     
     Mx LoanIQ Select Window Tab    ${LIQ_CommitmentFee_Tab}    ${ACCRUAL_TAB}
-    ${sAccrual_Adjustment_UI}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_CommitmentFeeNotebook_Accrual_JavaTree}    ${CycleNo}%Manual adjustmt%value    
+    ${sAccrual_Adjustment_UI}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_CommitmentFeeNotebook_Accrual_JavaTree}    ${CycleNo}%Accrual adjustmt%value    
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/CommitmentFee_Accrual
     
     Compare Two Strings    ${sAccrual_Adjustment_UI}    ${Accrual_Adjustment}
@@ -2236,7 +2236,7 @@ Validate an Event in Events Tab of Commitment Fee Notebook
     ...    ELSE    Run Keyword And Continue On Failure    Fail    ${Facility_Event} is not present in Events Tab
     Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/Commitment_EventsTab  
     
-Get Fee Alias from Ongoing Fee List 
+Get Fee Alias using Status from Ongoing Fee List 
     [Documentation]    This keyword will get Fee Alias from Ongoing Fee List
     ...    @author: javinzon    01MAR2021    - Initial create  
     [Arguments]    ${sStatus}    ${sRunTimeVar_FeeAlias}=None
