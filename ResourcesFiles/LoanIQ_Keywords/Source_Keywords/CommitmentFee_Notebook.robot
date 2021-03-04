@@ -657,7 +657,22 @@ Navigate and Verify Accrual Share Adjustment Notebook
     ${Num_ProjectedCycleDue_UI}    Remove String    ${ProjectedCycleDue_UI}    ,    .    \
     ${Num_ProjectedCycleDue_Value}    Remove String    ${ProjectedCycleDue_Value}    ,    .
     Compare Two Strings    ${Num_ProjectedCycleDue_UI}    ${Num_ProjectedCycleDue_Value}
+
+Validate Accrual Adjustment Value
+    [Documentation]    This keyword validates the Accrual adjustment on Accrual Tab of a cycle.
+    ...    @author: javinzon    02MAR2021    - Initial create
+    [Arguments]    ${sCycleNo}    ${sAccrual_Adjustment}  
+
+    ### GetRuntime Keyword Pre-processing ###
+    ${CycleNo}    Acquire Argument Value    ${sCycleNo}
+    ${Accrual_Adjustment}    Acquire Argument Value    ${sAccrual_Adjustment}
     
+    Mx LoanIQ Select Window Tab    ${LIQ_CommitmentFee_Tab}    ${ACCRUAL_TAB}
+    ${sAccrual_Adjustment_UI}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_CommitmentFeeNotebook_Accrual_JavaTree}    ${CycleNo}%Accrual adjustmt%value    
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/CommitmentFee_Accrual
+    
+    Compare Two Strings    ${sAccrual_Adjustment_UI}    ${Accrual_Adjustment}
+
 Validate Manual Adjustment Value
     [Documentation]    This keyword is used for navigating back to Commitment Notebook to validate if the requested amount reflects in Manual Adjustment column.
     ...    @author:mgaling
@@ -2219,7 +2234,53 @@ Validate an Event in Events Tab of Commitment Fee Notebook
     ${Status}    Run Keyword And Return Status    Mx LoanIQ Verify Text In Javatree    ${LIQ_CommitmentFee_Events_Javatree}    ${Facility_Event}%yes
     Run Keyword If    ${Status}==${True}    Log    ${Facility_Event} is present in Events Tab
     ...    ELSE    Run Keyword And Continue On Failure    Fail    ${Facility_Event} is not present in Events Tab
-    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/Commitment_EventsTab    
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/Commitment_EventsTab  
+    
+Get Fee Alias using Status from Ongoing Fee List 
+    [Documentation]    This keyword will get Fee Alias from Ongoing Fee List
+    ...    @author: javinzon    01MAR2021    - Initial create  
+    [Arguments]    ${sStatus}    ${sRunTimeVar_FeeAlias}=None
+
+    ### Keyword Pre-processing ###
+    ${Status}    Acquire Argument Value    ${sStatus}
+
+    mx LoanIQ activate window    ${LIQ_FacilityNotebook_Window}
+    mx LoanIQ select    ${LIQ_FacilityNotebook_Queries_OngoingFeeList}
+    mx LoanIQ activate window    ${LIQ_Facility_FeeList}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/FacilityWindow
+
+    ${Fee_Alias}    Mx LoanIQ Store TableCell To Clipboard    ${LIQ_Facility_FeeList_JavaTree}    ${Status}%Fee Alias%value
+
+    ### Keyword Post-processing ###
+    Save Values of Runtime Execution on Excel File    ${sRunTimeVar_FeeAlias}    ${Fee_Alias}
+
+    [Return]    ${Fee_Alias}
+    
+Navigate to Line Items from Accrual Tab of Commitment Fee Notebook
+    [Documentation]    This keyword will navigate to Line Items from Accrual Tab of Commitment Fee Notebook
+    ...    @author: javinzon    03MAR2021    - Initial create  
+    [Arguments]    ${iCycleNumber}  
+
+    ### Keyword Pre-processing ###
+    ${CycleNumber}    Acquire Argument Value    ${iCycleNumber}
+
+    mx LoanIQ activate window    ${LIQ_CommitmentFee_Window}
+    Mx LoanIQ Select Window Tab    ${LIQ_CommitmentFee_Tab}    ${ACCRUAL_TAB}
+
+    Mx LoanIQ Select Or DoubleClick In Javatree    ${LIQ_CommitmentFeeNotebook_Accrual_JavaTree}    ${CycleNumber}%d
+    mx LoanIQ activate window    ${LIQ_AccrualCycleDetail_Window}
+    mx LoanIQ click    ${LIQ_AccrualCycleDetail_LineItems_Button}
+    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LineItems
+    
+    ${Status}    Run Keyword And Return Status    Mx LoanIQ Verify Object Exist    ${LIQ_LineItemsFor_Window} 
+    Run Keyword If    ${Status}==${True}    Take Screenshot    ${screenshot_path}/Screenshots/LoanIQ/LineItems
+    ...    ELSE    Run Keywords    mx LoanIQ click element if present    ${LIQ_Error_OK_Button}
+    ...    AND    Run Keyword And Continue On Failure    Fail    Line Items are not available  
+
+
+    
+    
+   
     
    
     
