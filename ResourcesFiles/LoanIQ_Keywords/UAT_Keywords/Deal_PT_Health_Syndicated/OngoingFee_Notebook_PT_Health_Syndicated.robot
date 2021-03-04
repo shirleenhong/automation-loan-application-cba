@@ -113,23 +113,20 @@ Pay Line Fee without Online Accrual for PT Health Syndicated Deal
 Cycle Shares Adjustment for PT Health
     [Documentation]    This is a high-level keyword to complete cycle shares adjustment for PT Health
     ...    @author: songchan    10FEB2021    - Initial Create 
+    ...    @update: songchan    02MAR2021    - Added column for Deal Name, Facility Name and Borrower Shortname
     [Arguments]    ${ExcelPath}
-
-	${Deal_Name}    Read Data From Excel    CRED01_DealSetup    Deal_Name    ${rowid}
-	${Facility_Name}    Read Data From Excel    CRED02_FacilitySetup    Facility_Name    ${rowid}
-    ${Borrower_Name}    Read Data From Excel    PTY001_QuickPartyOnboarding    LIQCustomer_ShortName    ${rowid}
 	
 	Logout from Loan IQ
     Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
     
     ### Open Accrual in Commitment Fee Notebook ###
-    Launch Existing Facility    ${Deal_Name}    ${Facility_Name}
+    Launch Existing Facility    &{ExcelPath}[Deal_Name]    &{ExcelPath}[Facility_Name]
     Navigate to Commitment Fee Notebook    &{ExcelPath}[OngoingFee_Type]
     Verify Details in Accrual Tab for Line Fee    &{ExcelPath}[Cycle_No]    &{ExcelPath}[Start_Date]    &{ExcelPath}[End_Date]    &{ExcelPath}[Due_Date]
     ...    &{ExcelPath}[Current_Cycle_Due]    &{ExcelPath}[Projected_Cycle_Due]
 
     ### Accrual Share Adjustment Notebook ###
-    Navigate Line Fee and Verify Accrual Share Adjustment Notebook    &{ExcelPath}[Start_Date]    ${Deal_Name}    ${Facility_Name}    &{ExcelPath}[OngoingFee_Type]    &{ExcelPath}[Current_Cycle_Due]    &{ExcelPath}[Projected_Cycle_Due]   
+    Navigate Line Fee and Verify Accrual Share Adjustment Notebook    &{ExcelPath}[Start_Date]    &{ExcelPath}[Deal_Name]    &{ExcelPath}[Facility_Name]    &{ExcelPath}[OngoingFee_Type]    &{ExcelPath}[Current_Cycle_Due]    &{ExcelPath}[Projected_Cycle_Due]   
     Input Requested Amount, Effective Date, and Comment    &{ExcelPath}[Requested_Amount]    ${ExcelPath}[Effective_Date]     &{ExcelPath}[Accrual_Comment]
     Save the Requested Amount, Effective Date, and Comment    &{ExcelPath}[Requested_Amount]    ${ExcelPath}[Effective_Date]     &{ExcelPath}[Accrual_Comment]
  
@@ -139,20 +136,20 @@ Cycle Shares Adjustment for PT Health
     
     ### Approval ###
     Login to Loan IQ    ${SUPERVISOR_USERNAME}    ${SUPERVISOR_PASSWORD}
-    Select Item in Work in Process    &{ExcelPath}[WIPTransaction_Type]    ${AWAITING_APPROVAL_STATUS}    &{ExcelPath}[FacilitiesTransaction_Type]     ${Deal_Name}
+    Select Item in Work in Process    &{ExcelPath}[WIPTransaction_Type]    ${AWAITING_APPROVAL_STATUS}    &{ExcelPath}[FacilitiesTransaction_Type]     &{ExcelPath}[Deal_Name]
     Approve Fee Accrual Shares Adjustment
     Logout from Loan IQ
     
     ### Release ###
     Login to Loan IQ    ${MANAGER_USERNAME}    ${MANAGER_PASSWORD}
-    Select Item in Work in Process    &{ExcelPath}[WIPTransaction_Type]    ${AWAITING_RELEASE_STATUS}    &{ExcelPath}[FacilitiesTransaction_Type]     ${Deal_Name}
+    Select Item in Work in Process    &{ExcelPath}[WIPTransaction_Type]    ${AWAITING_RELEASE_STATUS}    &{ExcelPath}[FacilitiesTransaction_Type]     &{ExcelPath}[Deal_Name]
     Release Fee Accrual Shares Adjustment
     Close Accrual Shares Adjustment Window
     Logout from Loan IQ
     
     ### Verify the Updates in Accrual Tab ###
     Login to Loan IQ    ${INPUTTER_USERNAME}    ${INPUTTER_PASSWORD}
-    Launch Existing Facility    ${Deal_Name}    ${Facility_Name}
+    Launch Existing Facility    &{ExcelPath}[Deal_Name]    &{ExcelPath}[Facility_Name]
     Navigate to Commitment Fee Notebook    &{ExcelPath}[OngoingFee_Type]
     
     Validate Manual Adjustment Value in Line Fee    &{ExcelPath}[Cycle_No]    &{ExcelPath}[Requested_Amount] 
