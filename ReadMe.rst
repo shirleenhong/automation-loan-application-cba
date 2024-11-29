@@ -42,9 +42,3 @@ Documentation
   <http://robot-framework.readthedocs.org>`_
 - `General documentation and demos
   <http://robotframework.org/#documentation>`_
-
-Support and contact
--------------------
-
-- Francis Mamaril (FrancisJoseph.Mamaril@finastra.com)
-- Ritz Kevin Ragel (RitzKevin.Ragel@finastra.com)
